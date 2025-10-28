@@ -249,14 +249,11 @@ serve(async (req) => {
         hazardCategoriesFound: hsKnowledge?.healthSafetyDocs?.length || 0
       });
     } catch (contextError) {
-      logger.error('Failed to build context', {
+      logger.error('Failed to build context - aborting', {
         error: contextError instanceof Error ? contextError.message : String(contextError),
         stack: contextError instanceof Error ? contextError.stack : undefined
       });
-      
-      // Provide minimal fallback to continue processing
-      hsContext = 'Apply general electrical safety best practices per HSE guidance and BS 7671.';
-      structuredHazards = '';
+      throw new Error(`Context building failed: ${contextError instanceof Error ? contextError.message : String(contextError)}`);
     }
 
     // Build HIGH-LEVEL INSTALL KNOWLEDGE from installer output
@@ -940,155 +937,13 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       }
       
       if (validatedRiskAssessment.hazards.length === 0) {
-      logger.warn('No hazards generated, adding fallback hazards');
-      validatedRiskAssessment.hazards = [
-        {
-          hazard: "Electrical work hazards",
-          risk: "Various electrical risks per BS 7671",
-          likelihood: 3,
-          severity: 4,
-          riskRating: 12,
-          controls: "Follow BS 7671 requirements; Use appropriate PPE; Competent person supervision",
-          residualRisk: 6
-        }
-      ];
-    }
+        logger.error('🚨 AI generated zero hazards - aborting');
+        throw new Error('AI generated no hazards - empty response');
+      }
 
     if (!validatedRiskAssessment.ppeDetails || validatedRiskAssessment.ppeDetails.length === 0) {
-      logger.warn('⚠️ No PPE in AI response, using context-aware fallback');
-      
-      // Analyze job description for context clues
-      const jobLower = (query + ' ' + workType + ' ' + location).toLowerCase();
-      const hasHeight = jobLower.includes('height') || jobLower.includes('ladder') || jobLower.includes('mewp') || 
-                        jobLower.includes('scaffold') || jobLower.includes('roof') || jobLower.includes('elevated');
-      const hasNoise = jobLower.includes('drilling') || jobLower.includes('cutting') || jobLower.includes('grinding') || 
-                       jobLower.includes('noisy') || jobLower.includes('power tool');
-      const hasChemicals = jobLower.includes('asbestos') || jobLower.includes('dust') || jobLower.includes('fumes') || 
-                          jobLower.includes('confined space') || jobLower.includes('chemical');
-      const hasLiveWork = jobLower.includes('live') || jobLower.includes('energised') || jobLower.includes('switching') || 
-                         jobLower.includes('isolation');
-      const is3Phase = jobLower.includes('3-phase') || jobLower.includes('three phase') || jobLower.includes('distribution') || 
-                       jobLower.includes('switchgear') || jobLower.includes('high voltage');
-      const isOutdoor = jobLower.includes('outdoor') || jobLower.includes('outside') || jobLower.includes('external') || 
-                       jobLower.includes('site');
-      const hasConfinedSpace = jobLower.includes('confined') || jobLower.includes('void') || jobLower.includes('tank') || 
-                              jobLower.includes('manhole');
-      
-      logger.info(`🔍 Job context analysis: height=${hasHeight}, noise=${hasNoise}, chemicals=${hasChemicals}, live=${hasLiveWork}, 3phase=${is3Phase}, outdoor=${isOutdoor}, confined=${hasConfinedSpace}`);
-      
-      // Build context-specific PPE list
-      validatedRiskAssessment.ppeDetails = [
-        {
-          itemNumber: 1,
-          ppeType: hasHeight ? "Safety helmet with chin strap" : "Safety helmet",
-          standard: "BS EN 397",
-          mandatory: true,
-          purpose: hasHeight 
-            ? "Mandatory head protection when working at height to prevent head injuries from falling objects and impacts" 
-            : "Protection against head injuries from falling objects, impact with fixed objects, and overhead hazards"
-        },
-        {
-          itemNumber: 2,
-          ppeType: "Safety boots",
-          standard: "BS EN ISO 20345 S3",
-          mandatory: true,
-          purpose: "Protection against electrical hazards, crushing injuries, penetration from sharp objects, and slip resistance"
-        },
-        {
-          itemNumber: 3,
-          ppeType: "Safety glasses",
-          standard: "BS EN 166",
-          mandatory: true,
-          purpose: "Eye protection against debris, dust particles, and arc flash during electrical work"
-        }
-      ];
-
-      let itemNum = 4;
-
-      // Add context-specific PPE based on job type
-      if (hasLiveWork || is3Phase) {
-        validatedRiskAssessment.ppeDetails.push({
-          itemNumber: itemNum++,
-          ppeType: "Insulated gloves",
-          standard: is3Phase ? "BS EN 60903 Class 00/0" : "BS EN 60903 Class 0",
-          mandatory: true,
-          purpose: is3Phase 
-            ? "Mandatory protection against electrical shock from live conductors - rated for voltages up to 1000V AC" 
-            : "Protection against electrical shock from live conductors up to 500V AC"
-        });
-      }
-
-      if (is3Phase) {
-        validatedRiskAssessment.ppeDetails.push({
-          itemNumber: itemNum++,
-          ppeType: "Arc-rated protective clothing",
-          standard: "IEC 61482-2 Class 1",
-          mandatory: true,
-          purpose: "Mandatory protection against arc flash hazards when working on 3-phase distribution equipment or switchgear"
-        });
-      }
-
-      if (hasHeight) {
-        validatedRiskAssessment.ppeDetails.push({
-          itemNumber: itemNum++,
-          ppeType: "Fall arrest harness with shock absorbing lanyard",
-          standard: "BS EN 361 / BS EN 355",
-          mandatory: true,
-          purpose: "Mandatory fall protection when working at height above 2 metres using MEWP, scaffold, or near unprotected edges (Work at Height Regulations 2005)"
-        });
-        
-        validatedRiskAssessment.ppeDetails.push({
-          itemNumber: itemNum++,
-          ppeType: "Tool lanyard",
-          standard: "BS 8437",
-          mandatory: true,
-          purpose: "Prevention of dropped tools and objects when working at height - protects workers below"
-        });
-      }
-
-      if (isOutdoor && hasHeight) {
-        validatedRiskAssessment.ppeDetails.push({
-          itemNumber: itemNum++,
-          ppeType: "High-visibility vest or jacket",
-          standard: "EN ISO 20471 Class 2/3",
-          mandatory: true,
-          purpose: "Mandatory high-visibility clothing for outdoor site work to ensure visibility to plant operators and traffic"
-        });
-      }
-
-      if (hasNoise) {
-        validatedRiskAssessment.ppeDetails.push({
-          itemNumber: itemNum++,
-          ppeType: "Hearing protection (ear defenders or plugs)",
-          standard: "BS EN 352-2 / BS EN 352-1",
-          mandatory: false,
-          purpose: "Recommended protection against noise when using power tools for extended periods (>2 hours continuous use or >85dB exposure)"
-        });
-      }
-
-      if (hasChemicals || hasConfinedSpace) {
-        validatedRiskAssessment.ppeDetails.push({
-          itemNumber: itemNum++,
-          ppeType: hasConfinedSpace ? "Respiratory protective equipment (BA set or FFP3 mask)" : "Respiratory protective equipment (FFP3 mask)",
-          standard: hasConfinedSpace ? "BS EN 137 / BS EN 149 FFP3" : "BS EN 149 FFP3",
-          mandatory: true,
-          purpose: hasConfinedSpace 
-            ? "Mandatory breathing apparatus for confined space entry where oxygen levels may be <19.5% or contaminants present" 
-            : "Essential protection against asbestos fibres, harmful dust, or chemical fumes"
-        });
-      }
-
-      if (hasConfinedSpace) {
-        validatedRiskAssessment.ppeDetails.push({
-          itemNumber: itemNum++,
-          ppeType: "Multi-gas detector",
-          standard: "BS EN 60079-29-1",
-          mandatory: true,
-          purpose: "Mandatory gas monitoring for oxygen, flammable gases, CO, and H2S before and during confined space entry"
-        });
-      }
-
-      logger.info(`✅ Generated ${validatedRiskAssessment.ppeDetails.length} context-specific PPE items`);
+      logger.error('🚨 AI generated zero PPE items - aborting');
+      throw new Error('AI generated no PPE items - incomplete response');
     }
 
     if (!validatedRiskAssessment.emergencyProcedures || validatedRiskAssessment.emergencyProcedures.length === 0) {

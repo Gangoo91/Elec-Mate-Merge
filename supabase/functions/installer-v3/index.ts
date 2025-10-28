@@ -577,7 +577,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
     } else if (aiResult.content) {
       // Direct content - parse as JSON
       try {
-        const jsonStr = jsonMatch[1] || aiResult.content;
+        const jsonStr = aiResult.content;
         installResult = JSON.parse(jsonStr.trim());
       } catch (parseError) {
         logger.warn('Failed to parse AI content as JSON, using graceful fallback', { 
