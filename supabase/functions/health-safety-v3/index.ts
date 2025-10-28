@@ -509,7 +509,17 @@ For each job, think like an experienced H&S adviser:
 ❌ BAD: "Electric shock - use PPE"
 ✅ GOOD: "Electric shock from inadvertent contact with concealed live conductors during chasing - Old buildings may have unsleeved cables buried in walls (pre-1960s practice). Control: Cable detection with CAT scanner before any penetration, assume all walls are live until proven dead, use GS38 voltage detector, insulated tools to IEC 60900"
 
-Minimum 10 hazards always required. For complex jobs (3-phase, height, heritage buildings, public spaces), aim for 15-20 comprehensive hazards.
+Identify ALL significant hazards present - no minimum or maximum quota. Simple jobs may have 6-8 hazards, complex jobs may have 20-30. Quality over quantity - every hazard must be real, specific, and relevant to THIS job.
+
+**HAZARD IDENTIFICATION PHILOSOPHY:**
+Think like a senior H&S adviser who has seen the job before:
+- Socket outlet in bedroom → 6-8 hazards (shock, drilling, dust, access, cables)
+- Consumer unit replacement → 12-16 hazards (isolation, arc flash, weight, LOTO, testing)
+- 3-phase motor in factory → 20-25 hazards (voltage, rotation, noise, machinery, permit-to-work)
+- External supply upgrade → 25-30 hazards (DNO, underground, weather, traffic, depth)
+
+Don't pad the list - if a hazard isn't genuinely present, don't include it.
+Don't miss hazards - think 3 steps ahead of what the client would consider.
 
 Example GOOD entry:
 {
@@ -554,10 +564,10 @@ INSTRUCTIONS:
 **MANDATORY PPE ANALYSIS PROCESS:**
 1. Identify ALL hazards present (electrical, height, noise, dust, chemicals, confined space, etc.)
 2. For EACH hazard, determine required PPE with specific standards
-3. Minimum 5 items, but ADD MORE based on job complexity:
-   - Simple domestic socket: 5-6 items
-   - Commercial distribution board: 7-9 items
-   - Complex work (height + live + confined space): 10-12 items
+3. PPE list should match actual hazards - no artificial minimums:
+   - Simple domestic socket: 5-7 items (if that's all that's needed)
+   - Commercial distribution board: 7-10 items (based on actual risks)
+   - Complex work (height + live + confined space): 10-15 items (comprehensive coverage)
 
 **EXAMPLES BY JOB TYPE:**
 
@@ -686,24 +696,24 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         throw new Error('OPENAI_API_KEY not configured');
       }
       
-      // ✅ SUPERCHARGED STEP 4: 2x tokens for comprehensive output
-      let adjustedMaxTokens = 12000;  // Up from 6000 - allows 25-30 comprehensive hazards
+      // ✅ SUPERCHARGED STEP 4: 24k tokens for natural hazard generation
+      let adjustedMaxTokens = 24000;  // Supports natural hazard generation without artificial limits
       const ragDuration = Date.now() - aiCallStart;
 
       if (ragDuration > 10000) {
-        // RAG took >10s, still give plenty of tokens but slightly reduced
-        adjustedMaxTokens = 10000;  // Up from 5000
-        logger.warn(`⚠️ RAG slow (${ragDuration}ms), reducing maxTokens to 10000 for faster generation`);
+        // RAG took >10s, still plenty of tokens
+        adjustedMaxTokens = 20000;  // If RAG slow, still plenty of tokens
+        logger.warn(`⚠️ RAG slow (${ragDuration}ms), reducing maxTokens to 20000 for faster generation`);
       } else {
-        logger.info(`✅ RAG fast (${ragDuration}ms), using full maxTokens: 12000 for comprehensive output`);
+        logger.info(`✅ RAG fast (${ragDuration}ms), using full maxTokens: 24000 for comprehensive output`);
       }
       
       aiResult = await callAI(OPENAI_API_KEY, {
         model: 'gpt-5-mini-2025-08-07',  // GPT-5 Mini: Fast, cost-efficient, perfect for structured outputs
         systemPrompt,
         userPrompt,
-        maxTokens: adjustedMaxTokens,     // Dynamic: 6000 (normal) or 5000 (if RAG slow) - optimised for 120s timeout
-        timeoutMs: 360000,   // 6 minutes - allows GPT-5 Mini to complete comprehensive structured output
+        maxTokens: adjustedMaxTokens,     // Dynamic: 24000 (normal) or 20000 (if RAG slow) - includes ~6000 reasoning tokens
+        timeoutMs: 240000,   // 4 minutes - balanced timeout for GPT-5 Mini structured output
       tools: [{
         type: 'function',
         function: {
