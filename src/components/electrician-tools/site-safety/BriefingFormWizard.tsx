@@ -77,7 +77,7 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
     briefingDescription: initialData?.briefing_description || "",
     hazards: initialData?.hazards || "",
     safetyWarning: initialData?.safety_warning || "",
-    additionalInfo: initialData?.additional_info || "",
+    additionalInfo: initialData?.additional_notes || "",
     
     // Step 5: Photos
     photos: initialData?.photos || [] as any[],
@@ -335,7 +335,7 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
         briefing_description: formData.briefingDescription,
         hazards: formData.hazards,
         safety_warning: formData.safetyWarning,
-        additional_info: formData.additionalInfo,
+        additional_notes: formData.additionalInfo,
         ai_generated: !!aiContent,
         ai_prompt_data: aiContent ? {
           briefingType: formData.briefingType,
