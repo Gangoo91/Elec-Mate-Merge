@@ -215,7 +215,7 @@ serve(async (req) => {
         
         additional_info: {
           paragraphs: briefing.ai_prompt_data?.aiContent?.additionalInfo || 
-                      (briefing.additional_notes || "").split('\n\n')
+                      (briefing.notes || "").split('\n\n')
                         .filter(p => p.trim())
                         .map((p, i) => ({
                           paragraph: i + 1,

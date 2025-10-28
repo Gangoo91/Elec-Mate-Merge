@@ -77,7 +77,7 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
     briefingDescription: initialData?.briefing_description || "",
     hazards: initialData?.hazards || "",
     safetyWarning: initialData?.safety_warning || "",
-    additionalInfo: initialData?.additional_notes || "",
+    additionalInfo: initialData?.notes || "",
     
     // Step 5: Photos
     photos: initialData?.photos || [] as any[],
@@ -316,7 +316,6 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
         briefing_date: formData.briefingDate,
         briefing_time: formData.briefingTime,
         location: formData.location,
-        notes: formData.briefingDescription,
         attendees: formData.attendees,
         completed: !asDraft,
         
@@ -335,7 +334,7 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
         briefing_description: formData.briefingDescription,
         hazards: formData.hazards,
         safety_warning: formData.safetyWarning,
-        additional_notes: formData.additionalInfo,
+        notes: formData.additionalInfo,
         ai_generated: !!aiContent,
         ai_prompt_data: aiContent ? {
           briefingType: formData.briefingType,
