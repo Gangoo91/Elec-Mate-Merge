@@ -43,29 +43,18 @@ Deno.serve(async (req) => {
 
     console.log(`🔍 Calling health-safety-v3 for job: ${jobId}`);
 
-    // Call health-safety-v3
-    const hsResponse = await fetch(
-      `${Deno.env.get('SUPABASE_URL')}/functions/v1/health-safety-v3`,
-      {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          query: job.job_description,
-          userContext: { jobScale: job.job_scale },
-          projectContext: job.project_info
-        })
+    // Call health-safety-v3 via Supabase invoke (avoids bundler analysing deps)
+    const { data: hsData, error: hsError } = await supabase.functions.invoke('health-safety-v3', {
+      body: {
+        query: job.job_description,
+        userContext: { jobScale: job.job_scale },
+        projectContext: job.project_info
       }
-    );
+    });
 
-    if (!hsResponse.ok) {
-      const errorText = await hsResponse.text();
-      throw new Error(`Health-safety agent failed: ${errorText}`);
+    if (hsError || !hsData) {
+      throw new Error(`Health-safety agent failed: ${hsError?.message ?? 'Unknown error'}`);
     }
-
-    const hsData = await hsResponse.json();
     console.log(`✅ Health-safety completed for job: ${jobId}`);
 
     // Update progress
@@ -80,29 +69,18 @@ Deno.serve(async (req) => {
 
     console.log(`🔧 Calling installer-v3 for job: ${jobId}`);
 
-    // Call installer-v3
-    const installerResponse = await fetch(
-      `${Deno.env.get('SUPABASE_URL')}/functions/v1/installer-v3`,
-      {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          query: job.job_description,
-          userContext: { jobScale: job.job_scale },
-          projectContext: job.project_info
-        })
+    // Call installer-v3 via Supabase invoke
+    const { data: installerData, error: installerError } = await supabase.functions.invoke('installer-v3', {
+      body: {
+        query: job.job_description,
+        userContext: { jobScale: job.job_scale },
+        projectContext: job.project_info
       }
-    );
+    });
 
-    if (!installerResponse.ok) {
-      const errorText = await installerResponse.text();
-      throw new Error(`Installer agent failed: ${errorText}`);
+    if (installerError || !installerData) {
+      throw new Error(`Installer agent failed: ${installerError?.message ?? 'Unknown error'}`);
     }
-
-    const installerData = await installerResponse.json();
     console.log(`✅ Installer completed for job: ${jobId}`);
 
     // Mark complete
