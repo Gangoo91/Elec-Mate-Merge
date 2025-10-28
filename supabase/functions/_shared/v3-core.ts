@@ -146,7 +146,7 @@ export async function callLovableAI(
   const {
     model = 'gemini-2.5-flash', // Changed default from gpt-5-mini to Gemini
     temperature = 0.3,
-    maxTokens = 6000, // Increased from 2000 to 6000 for comprehensive RAMS with 17+ hazards
+    maxTokens = 24000, // Increased to 24000 for highly detailed RAMS with extensive hazard coverage
     responseFormat = 'text'
   } = options;
 
