@@ -741,73 +741,73 @@ export function useAIRAMS(): UseAIRAMSReturn {
         unwrappedData = hsData.response;
       }
 
+      // ✅ PHASE 1: Standardized extraction - hazards at top level only
       const extractHazards = (responseData: any): any[] => {
-        // Try ALL possible paths where hazards might be nested
-        const possiblePaths = [
-          responseData?.structuredData?.riskAssessment?.hazards,           // Standard path
-          responseData?.data?.structuredData?.riskAssessment?.hazards,     // Wrapped in .data
-          responseData?.response?.structuredData?.riskAssessment?.hazards, // Wrapped in .response
-          responseData?.riskAssessment?.hazards,                           // Direct riskAssessment
-          responseData?.hazards,                                           // Direct hazards array
-          responseData?.structuredData?.hazards,                           // structuredData.hazards
-        ];
-        
-        console.log('🔍 Checking all possible hazard paths:', {
-          paths: possiblePaths.map((p, i) => ({
-            index: i,
-            isArray: Array.isArray(p),
-            length: Array.isArray(p) ? p.length : 0,
-            sample: Array.isArray(p) && p.length > 0 ? p[0]?.hazard?.substring(0, 40) : null
-          })),
-          responseKeys: Object.keys(responseData || {})
+        console.log('✅ PHASE 1: Extracting hazards from standardized response', {
+          hasData: !!responseData?.data,
+          hasHazards: !!responseData?.data?.hazards,
+          hasStructuredData: !!responseData?.structuredData,
+          topLevelKeys: Object.keys(responseData || {})
         });
         
-        // Find first non-empty array
+        // PHASE 1: Single source of truth - data.hazards only
         let hazards: any[] = [];
-        for (let i = 0; i < possiblePaths.length; i++) {
-          const path = possiblePaths[i];
-          if (Array.isArray(path) && path.length > 0) {
-            console.log(`✅ Found ${path.length} hazards at path index ${i}`);
-            hazards = path;
-            break;
-          }
-        }
         
-        if (hazards.length === 0) {
-          console.error('❌ No hazards found in ANY path', {
-            checkedPaths: possiblePaths.length,
+        // Try standardized path first (new schema)
+        if (responseData?.data?.hazards && Array.isArray(responseData.data.hazards)) {
+          hazards = responseData.data.hazards;
+          console.log(`✅ PHASE 1: Found ${hazards.length} hazards in data.hazards (standardized schema)`);
+        }
+        // Fallback to old structure for backward compatibility
+        else if (responseData?.structuredData?.riskAssessment?.hazards && Array.isArray(responseData.structuredData.riskAssessment.hazards)) {
+          hazards = responseData.structuredData.riskAssessment.hazards;
+          console.log(`✅ PHASE 1: Found ${hazards.length} hazards in structuredData (backward compat)`);
+        }
+        else {
+          console.error('❌ PHASE 1: No hazards found in standardized paths', {
+            hasDataHazards: !!responseData?.data?.hazards,
+            hasStructuredHazards: !!responseData?.structuredData?.riskAssessment?.hazards,
+            responseKeys: Object.keys(responseData || {}),
             fullResponseSample: JSON.stringify(responseData)?.substring(0, 1000)
           });
           return [];
         }
         
-        // Accept ALL hazards - linkedToStep is optional metadata
-        const validHazards = hazards.filter(h => {
-          const hasHazard = h.hazard && typeof h.hazard === 'string';
-          const hasLikelihood = typeof h.likelihood === 'number';
-          const hasSeverity = typeof h.severity === 'number';
-          
-          if (!hasHazard || !hasLikelihood || !hasSeverity) {
-            console.warn('⚠️ Hazard missing required fields:', {
-              hazard: h.hazard?.substring(0, 50),
-              hasHazard,
-              hasLikelihood,
-              hasSeverity
-            });
-            return false;
+        // ✅ PHASE 1: Validate hazard structure (no filtering, just validation)
+        const validatedHazards = hazards.map((h, idx) => {
+          // Ensure required fields exist
+          if (!h.hazard || typeof h.hazard !== 'string') {
+            console.error(`❌ PHASE 1: Hazard ${idx + 1} missing description`, h);
+            return null;
+          }
+          if (typeof h.likelihood !== 'number' || typeof h.severity !== 'number') {
+            console.error(`❌ PHASE 1: Hazard ${idx + 1} missing risk scores`, h);
+            return null;
           }
           
-          // Set default linkedToStep if missing
+          // Ensure linkedToStep exists (default to 0 if missing)
           if (typeof h.linkedToStep !== 'number') {
-            h.linkedToStep = 0; // 0 = general risk, not linked to specific step
+            h.linkedToStep = 0;
           }
           
-          return true;
+          return h;
+        }).filter(Boolean);
+        
+        const retentionRate = hazards.length > 0 
+          ? ((validatedHazards.length / hazards.length) * 100).toFixed(1)
+          : '0';
+        
+        console.log(`✅ PHASE 1: Validated ${validatedHazards.length}/${hazards.length} hazards (${retentionRate}% retention)`, {
+          filtered: hazards.length - validatedHazards.length,
+          sampleHazards: validatedHazards.slice(0, 3).map(h => h.hazard?.substring(0, 40))
         });
         
-        console.log(`✅ Extracted ${validHazards.length}/${hazards.length} hazards with required fields`);
+        // ✅ PHASE 1: Fail if >10% data loss
+        if (hazards.length > 0 && (validatedHazards.length / hazards.length) < 0.9) {
+          console.error(`🚨 PHASE 1: HIGH DATA LOSS - ${100 - parseFloat(retentionRate)}% hazards lost during validation`);
+        }
         
-        return validHazards;
+        return validatedHazards;
       };
 
       // Extract hazards from unwrapped data

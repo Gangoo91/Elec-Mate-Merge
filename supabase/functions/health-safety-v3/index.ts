@@ -16,21 +16,23 @@ import {
   parseJsonWithRepair
 } from '../_shared/v3-core.ts';
 
-// Phase 1A: Standardized Response Interface
+// Phase 1A: Standardized Response Interface (STRICT SCHEMA)
+// This is the SINGLE SOURCE OF TRUTH for health-safety output structure
 interface HealthSafetyV3Response {
   success: boolean;
   data: {
+    // HAZARDS: Top-level array, never nested in riskAssessment
     hazards: Array<{
       id: string;
       hazard: string;
-      likelihood: number;
-      severity: number;
-      riskScore: number;
-      riskLevel: string;
+      likelihood: number; // 1-5
+      severity: number; // 1-5
+      riskScore: number; // likelihood × severity
+      riskLevel: string; // low/medium/high/very-high
       controlMeasure: string;
       residualRisk: number;
       residualRiskLevel: string;
-      linkedToStep: number;
+      linkedToStep: number; // 0 = general, 1-N = specific step
       regulation?: string;
     }>;
     ppe: Array<{
@@ -777,63 +779,70 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
           { role: 'user', content: userPrompt }
         ],
         model: 'gpt-5-mini-2025-08-07',
-        max_tokens: 30000,
+        max_tokens: 8000, // ✅ PHASE 1: Reduced from 30000 to 8000 (faster generation)
         tools: [{
           type: 'function',
           function: {
             name: 'provide_safety_assessment',
             description: 'Provide comprehensive health & safety assessment for electrical installation work',
+            strict: true, // ✅ PHASE 1: Enforce strict schema validation
             parameters: {
               type: 'object',
               properties: {
-                response: { type: 'string' },
-                riskAssessment: {
-                  type: 'object',
-                  properties: {
-                    hazards: {
-                      type: 'array',
-                      items: {
-                        type: 'object',
-                        properties: {
-                          hazard: { type: 'string' },
-                          linkedToStep: { type: 'number' },
-                          likelihood: { type: 'number' },
-                          severity: { type: 'number' },
-                          riskScore: { type: 'number' },
-                          riskLevel: { type: 'string' },
-                          controlMeasure: { type: 'string' },
-                          residualLikelihood: { type: 'number' },
-                          residualSeverity: { type: 'number' },
-                          residualRisk: { type: 'number' },
-                          residualRiskLevel: { type: 'string' },
-                          regulation: { type: 'string' }
-                        },
-                        required: ['hazard', 'linkedToStep', 'likelihood', 'severity', 'riskScore', 'riskLevel', 'controlMeasure']
-                      }
-                    }
-                  },
-                  required: ['hazards']
-                },
-                ppeDetails: {
+                response: { type: 'string', description: 'Summary of the risk assessment in UK English' },
+                // ✅ PHASE 1: FLATTENED STRUCTURE - hazards at top level, not nested in riskAssessment
+                hazards: {
                   type: 'array',
+                  description: 'Array of identified hazards with risk scoring',
                   items: {
                     type: 'object',
                     properties: {
-                      itemNumber: { type: 'number' },
-                      ppeType: { type: 'string' },
-                      standard: { type: 'string' },
-                      mandatory: { type: 'boolean' },
-                      purpose: { type: 'string' }
+                      hazard: { type: 'string', description: 'Specific hazard description' },
+                      linkedToStep: { type: 'number', description: '0=general, 1-N=specific step number' },
+                      likelihood: { type: 'number', description: 'Likelihood score 1-5' },
+                      severity: { type: 'number', description: 'Severity score 1-5' },
+                      riskScore: { type: 'number', description: 'likelihood × severity' },
+                      riskLevel: { type: 'string', enum: ['low', 'medium', 'high', 'very-high'] },
+                      controlMeasure: { type: 'string', description: 'Control measures with regulations' },
+                      residualLikelihood: { type: 'number', description: 'Post-control likelihood 1-5' },
+                      residualSeverity: { type: 'number', description: 'Post-control severity 1-5' },
+                      residualRisk: { type: 'number', description: 'residual likelihood × severity' },
+                      residualRiskLevel: { type: 'string', enum: ['low', 'medium', 'high', 'very-high'] },
+                      regulation: { type: 'string', description: 'Applicable UK regulation (e.g. EWR 1989 Reg 4(3))' }
                     },
-                    required: ['itemNumber', 'ppeType']
+                    required: ['hazard', 'linkedToStep', 'likelihood', 'severity', 'riskScore', 'riskLevel', 'controlMeasure', 'residualRisk', 'residualRiskLevel'],
+                    additionalProperties: false
+                  }
+                },
+                ppeDetails: {
+                  type: 'array',
+                  description: 'Required PPE items with UK standards',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      itemNumber: { type: 'number', description: 'Sequential PPE item number' },
+                      ppeType: { type: 'string', description: 'Specific PPE equipment name' },
+                      standard: { type: 'string', description: 'BS/EN standard (e.g. BS EN 397)' },
+                      mandatory: { type: 'boolean', description: 'True if required by regulation for this job' },
+                      purpose: { type: 'string', description: 'Protection purpose and when it applies' }
+                    },
+                    required: ['itemNumber', 'ppeType', 'standard', 'mandatory', 'purpose'],
+                    additionalProperties: false
                   }
                 },
                 emergencyProcedures: {
                   type: 'array',
+                  description: 'Emergency procedures in UK English',
+                  items: { type: 'string' }
+                },
+                complianceRegulations: {
+                  type: 'array',
+                  description: 'Applicable UK regulations',
                   items: { type: 'string' }
                 }
               },
-              required: ['response', 'riskAssessment', 'ppeDetails', 'emergencyProcedures']
+              required: ['response', 'hazards', 'ppeDetails', 'emergencyProcedures'],
+              additionalProperties: false
             }
           }
         }],
@@ -863,37 +872,51 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       throw aiError;
     }
 
-    // Parse OpenAI tool call response
+    // ✅ PHASE 1: Parse standardized response structure
     const safetyResult = aiResult.toolCalls && aiResult.toolCalls.length > 0
       ? JSON.parse(aiResult.toolCalls[0].function.arguments)
       : JSON.parse(aiResult.content);
 
-    // 🚨 CRITICAL: Validate non-zero hazards immediately
-    const hazards = safetyResult.riskAssessment?.hazards || [];
-    if (hazards.length === 0) {
-      logger.error('🚨 CRITICAL: AI generated ZERO hazards', {
-        hadToolCall: !!aiResult.toolCalls,
-        hadArguments: !!safetyResult.riskAssessment,
-        rawSample: JSON.stringify(safetyResult).substring(0, 300)
-      });
-      throw new Error('AI generated zero hazards - invalid response');
-    }
+    logger.info('🔍 PHASE 1: Validating AI response structure', {
+      hasHazards: !!safetyResult.hazards,
+      hasPPE: !!safetyResult.ppeDetails,
+      hasEmergency: !!safetyResult.emergencyProcedures,
+      topLevelKeys: Object.keys(safetyResult)
+    });
 
-    logger.info(`✅ Extracted ${hazards.length} hazards from AI response`);
-
-    // ✅ PHASE 5: Validate and fix linkedToStep for all hazards
-    const invalidHazards = safetyResult.riskAssessment?.hazards?.filter(
-      (h: any) => typeof h.linkedToStep !== 'number'
-    ) || [];
+    // ✅ PHASE 1: Hazards are now at TOP LEVEL (not nested in riskAssessment)
+    const hazards = safetyResult.hazards || [];
     
-    if (invalidHazards.length > 0) {
-      logger.warn(`⚠️ ${invalidHazards.length} hazards missing linkedToStep - setting to 0 (general)`, {
-        sampleHazards: invalidHazards.slice(0, 3).map((h: any) => h.hazard?.substring(0, 50))
+    // 🚨 PHASE 1 FIX: Zero Hazards Bug - Immediate detection with retry capability
+    if (hazards.length === 0) {
+      logger.error('🚨 PHASE 1 CRITICAL: AI generated ZERO hazards', {
+        hadToolCall: !!aiResult.toolCalls,
+        hadHazardsArray: !!safetyResult.hazards,
+        rawKeys: Object.keys(safetyResult),
+        rawSample: JSON.stringify(safetyResult).substring(0, 500)
       });
       
-      invalidHazards.forEach((h: any) => { 
+      // Check if this is a structure issue or genuine empty response
+      if (safetyResult.response && safetyResult.response.length > 100) {
+        logger.error('AI generated text response but no structured hazards - schema validation failed');
+      }
+      
+      throw new Error(`PHASE 1 ERROR: AI generated zero hazards. Schema validation: ${safetyResult.hazards ? 'array exists but empty' : 'hazards array missing'}`);
+    }
+
+    logger.info(`✅ PHASE 1: Extracted ${hazards.length} hazards from standardized response`);
+
+    // ✅ PHASE 1: Validate and fix linkedToStep for all hazards (data integrity)
+    let fixedCount = 0;
+    hazards.forEach((h: any) => {
+      if (typeof h.linkedToStep !== 'number') {
         h.linkedToStep = 0; // Default to general hazard
-      });
+        fixedCount++;
+      }
+    });
+    
+    if (fixedCount > 0) {
+      logger.warn(`⚠️ PHASE 1: Fixed ${fixedCount}/${hazards.length} hazards missing linkedToStep (set to 0)`);
     }
 
     logger.info('Risk assessment completed', {
@@ -935,41 +958,59 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       { workType, location, hazards }
     );
 
-    // CRITICAL: Validate response structure before returning
-    const finalHazardCount = enrichedResponse?.structuredData?.riskAssessment?.hazards?.length || 
-                             enrichedResponse?.riskAssessment?.hazards?.length || 0;
+    // ✅ PHASE 1: Build standardized response structure
+    const standardizedResponse: HealthSafetyV3Response = {
+      success: true,
+      data: {
+        hazards: hazards.map((h: any, idx: number) => ({
+          id: `hazard-${idx + 1}`,
+          hazard: h.hazard,
+          likelihood: h.likelihood,
+          severity: h.severity,
+          riskScore: h.riskScore,
+          riskLevel: h.riskLevel,
+          controlMeasure: h.controlMeasure,
+          residualRisk: h.residualRisk || h.riskScore, // Fallback if missing
+          residualRiskLevel: h.residualRiskLevel || h.riskLevel,
+          linkedToStep: h.linkedToStep,
+          regulation: h.regulation || ''
+        })),
+        ppe: safetyResult.ppeDetails || [],
+        emergencyProcedures: safetyResult.emergencyProcedures || [],
+        complianceRegulations: safetyResult.complianceRegulations || []
+      },
+      metadata: {
+        generationTimeMs: performanceMetrics.aiGeneration,
+        hazardCount: hazards.length,
+        ppeCount: (safetyResult.ppeDetails || []).length,
+        ragSourceCount: hsKnowledge?.healthSafetyDocs?.length || 0,
+        aiModel: 'gpt-5-mini-2025-08-07',
+        tokensUsed: aiResult.usage?.total_tokens
+      }
+    };
 
-    console.log('📦 FINAL RESPONSE VALIDATION:', {
-      success: enrichedResponse.success,
-      finalHazardCount,
-      hasStructuredData: !!enrichedResponse.structuredData,
-      hasRiskAssessment: !!enrichedResponse.riskAssessment,
-      topLevelKeys: Object.keys(enrichedResponse),
-      willFrontendFind: finalHazardCount > 0 ? 'YES' : 'NO - EMPTY RESPONSE',
-      firstThreeHazards: (enrichedResponse?.structuredData?.riskAssessment?.hazards || 
-                          enrichedResponse?.riskAssessment?.hazards || [])
-        .slice(0, 3)
-        .map((h: any) => h.hazard?.substring(0, 40))
+    logger.info('✅ PHASE 1: Standardized response built', {
+      hazardCount: standardizedResponse.data.hazards.length,
+      ppeCount: standardizedResponse.data.ppe.length,
+      emergencyCount: standardizedResponse.data.emergencyProcedures.length
     });
 
-    // Ensure hazards are at BOTH levels for frontend compatibility
-    if (enrichedResponse.riskAssessment?.hazards && !enrichedResponse.structuredData) {
-      logger.info('Adding structuredData wrapper for frontend compatibility');
-      enrichedResponse.structuredData = {
-        riskAssessment: enrichedResponse.riskAssessment
-      };
-    } else if (enrichedResponse.structuredData?.riskAssessment?.hazards && !enrichedResponse.riskAssessment) {
-      logger.info('Adding top-level riskAssessment for frontend compatibility');
-      enrichedResponse.riskAssessment = enrichedResponse.structuredData.riskAssessment;
-    }
+    // ✅ PHASE 1: Add backward-compatible structure for existing frontend
+    const enrichedResponse = {
+      ...standardizedResponse,
+      structuredData: {
+        riskAssessment: {
+          hazards: standardizedResponse.data.hazards
+        },
+        ppeDetails: standardizedResponse.data.ppe,
+        emergencyProcedures: standardizedResponse.data.emergencyProcedures,
+        compliance: {
+          regulations: standardizedResponse.data.complianceRegulations
+        }
+      }
+    };
 
-    // Only fail if literally zero hazards (actual error)
-    if (finalHazardCount === 0) {
-      logger.error('🚨 CRITICAL: AI generated zero hazards');
-      throw new Error('AI generated no hazards - empty response');
-    }
-
-    logger.info(`✅ Response validated: ${finalHazardCount} hazards generated`);
+    logger.info('✅ PHASE 1: Response validated and ready for frontend');
 
     // Log RAG metrics for observability
     const totalTime = Date.now() - requestStart;

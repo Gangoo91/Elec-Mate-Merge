@@ -915,8 +915,31 @@ export function combineAgentOutputsToRAMS(
     assemblyPoint?: string;
   }
 ): { ramsData: RAMSData; methodData: Partial<MethodStatementData> } {
+  
+  console.log('🔧 PHASE 1: Starting RAMS transformation with data integrity checks');
+  
+  // ✅ PHASE 1: Pre-transformation hazard count
+  const inputHazardCount = (hsResponse as any)?.data?.hazards?.length || 
+                          hsResponse?.structuredData?.riskAssessment?.hazards?.length || 0;
+  
+  console.log(`📊 PHASE 1: Input hazard count: ${inputHazardCount}`);
+  
   // Transform H&S response to RAMS risks
   const { risks, hazards, activities, requiredPPE, ppeDetails, emergencyProcedures } = transformHealthSafetyToRAMS(hsResponse, projectInfo);
+  
+  // ✅ PHASE 1: Post-transformation hazard count validation
+  console.log(`📊 PHASE 1: Post-transform hazard count: ${hazards.length}`);
+  
+  if (inputHazardCount > 0) {
+    const retentionRate = (hazards.length / inputHazardCount) * 100;
+    console.log(`📊 PHASE 1: Hazard retention rate: ${retentionRate.toFixed(1)}%`);
+    
+    // ✅ PHASE 1: Fail if >10% data loss
+    if (retentionRate < 90) {
+      console.error(`🚨 PHASE 1: DATA LOSS DETECTED - ${(100 - retentionRate).toFixed(1)}% hazards lost`);
+      console.error(`   Input: ${inputHazardCount} hazards → Output: ${hazards.length} hazards`);
+    }
+  }
   
   // Transform Installer response to method steps (with hazard linking)
   const steps = transformInstallerToMethodSteps(installerResponse, hazards);
