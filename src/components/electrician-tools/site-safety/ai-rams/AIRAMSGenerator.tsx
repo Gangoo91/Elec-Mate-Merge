@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Sparkles } from 'lucide-react';
+import { ArrowLeft, Sparkles, Clock } from 'lucide-react';
 import { AIRAMSInput } from './AIRAMSInput';
 import { AgentProcessingView } from './AgentProcessingView';
 import { RAMSReviewEditor } from './RAMSReviewEditor';
@@ -9,6 +9,8 @@ import { CompletionCelebration } from './CompletionCelebration';
 import { triggerHaptic } from '@/utils/animation-helpers';
 import { supabase } from '@/integrations/supabase/client';
 import { useRAMSJobPolling } from '@/hooks/useRAMSJobPolling';
+import { useRAMSNotifications } from '@/hooks/useRAMSNotifications';
+import { toast } from '@/hooks/use-toast';
 
 export const AIRAMSGenerator: React.FC = () => {
   const navigate = useNavigate();
@@ -21,8 +23,101 @@ export const AIRAMSGenerator: React.FC = () => {
   const [generationEndTime, setGenerationEndTime] = useState<number>(0);
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const [resumedJob, setResumedJob] = useState(false);
   
   const { job, startPolling, progress, status, currentStep, ramsData, methodData, error } = useRAMSJobPolling(currentJobId);
+  const { requestPermission, showCompletionNotification, showErrorNotification } = useRAMSNotifications();
+
+  // Check for in-progress jobs on mount
+  useEffect(() => {
+    const checkForInProgressJobs = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data: jobs } = await supabase
+        .from('rams_generation_jobs')
+        .select('*')
+        .eq('user_id', user.id)
+        .in('status', ['pending', 'processing'])
+        .order('created_at', { ascending: false })
+        .limit(1);
+
+      if (jobs && jobs.length > 0) {
+        const job = jobs[0];
+        setCurrentJobId(job.id);
+        setShowResults(true);
+        setResumedJob(true);
+        startPolling();
+        
+        toast({
+          title: "Resuming generation",
+          description: `Your RAMS document is ${job.progress}% complete`,
+          variant: 'default'
+        });
+      } else {
+        // Check for recently completed job
+        const { data: completedJobs } = await supabase
+          .from('rams_generation_jobs')
+          .select('*')
+          .eq('user_id', user.id)
+          .eq('status', 'complete')
+          .order('completed_at', { ascending: false })
+          .limit(1);
+
+        if (completedJobs && completedJobs.length > 0) {
+          const completedJob = completedJobs[0];
+          const completedAt = new Date(completedJob.completed_at);
+          const now = new Date();
+          const minutesAgo = (now.getTime() - completedAt.getTime()) / 1000 / 60;
+
+          // If completed in last 10 minutes, show it
+          if (minutesAgo < 10) {
+            setCurrentJobId(completedJob.id);
+            setShowResults(true);
+            startPolling();
+            
+            toast({
+              title: "Your RAMS is ready!",
+              description: `Completed ${Math.floor(minutesAgo)} minute${Math.floor(minutesAgo) !== 1 ? 's' : ''} ago`,
+              variant: 'success'
+            });
+          }
+        }
+      }
+    };
+
+    checkForInProgressJobs();
+  }, []);
+
+  // Request notification permission on first generation
+  useEffect(() => {
+    if (showResults && !resumedJob) {
+      requestPermission();
+    }
+  }, [showResults, resumedJob]);
+
+  // Show notification when job completes
+  useEffect(() => {
+    if (status === 'complete' && ramsData && !celebrationShown) {
+      showCompletionNotification({
+        jobId: currentJobId || '',
+        projectName: ramsData.projectName,
+        onNotificationClick: () => {
+          window.focus();
+          document.getElementById('rams-results')?.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+  }, [status, ramsData, celebrationShown, currentJobId]);
+
+  // Show error notification
+  useEffect(() => {
+    if (status === 'failed' && error) {
+      showErrorNotification({
+        jobId: currentJobId || ''
+      });
+    }
+  }, [status, error, currentJobId]);
 
   // Trigger celebration when generation completes
   useEffect(() => {
@@ -70,6 +165,7 @@ export const AIRAMSGenerator: React.FC = () => {
     setCelebrationShown(false);
     setGenerationStartTime(0);
     setGenerationEndTime(0);
+    setResumedJob(false);
   };
   
   const saveToDatabase = async () => {
@@ -125,6 +221,21 @@ export const AIRAMSGenerator: React.FC = () => {
             />
           ) : (
             <>
+              {/* Resuming banner */}
+              {resumedJob && status !== 'complete' && (
+                <div className="p-3 sm:p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg flex items-center gap-3">
+                  <Clock className="h-5 w-5 text-blue-400 shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-blue-400">
+                      Resuming generation from earlier...
+                    </p>
+                    <p className="text-xs text-blue-400/70 mt-0.5">
+                      Current progress: {progress}%
+                    </p>
+                  </div>
+                </div>
+              )}
+
               <AgentProcessingView
                 steps={[{ 
                   agent: progress < 50 ? 'health-safety' : 'installer', 
@@ -151,7 +262,7 @@ export const AIRAMSGenerator: React.FC = () => {
               )}
 
               {ramsData && methodData && (
-                <div className="px-2">
+                <div id="rams-results" className="px-2">
                   <RAMSReviewEditor
                     ramsData={ramsData}
                     methodData={methodData}

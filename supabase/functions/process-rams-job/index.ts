@@ -36,7 +36,16 @@ Deno.serve(async (req) => {
       .update({ 
         status: 'processing', 
         started_at: new Date().toISOString(),
-        current_step: 'Analyzing safety requirements...',
+        current_step: 'Analysing job description and identifying potential hazards...',
+        progress: 5
+      })
+      .eq('id', jobId);
+
+    // Update: Starting health & safety analysis
+    await supabase
+      .from('rams_generation_jobs')
+      .update({ 
+        current_step: `Evaluating risks for ${job.job_scale} installation work...`,
         progress: 10
       })
       .eq('id', jobId);
@@ -61,9 +70,18 @@ Deno.serve(async (req) => {
     await supabase
       .from('rams_generation_jobs')
       .update({ 
-        progress: 50,
-        current_step: 'Generating installation method...',
+        progress: 40,
+        current_step: 'Generating safety controls and PPE requirements...',
         raw_hs_response: hsData
+      })
+      .eq('id', jobId);
+
+    // Update: Starting method statement
+    await supabase
+      .from('rams_generation_jobs')
+      .update({ 
+        progress: 50,
+        current_step: 'Creating detailed step-by-step installation method...'
       })
       .eq('id', jobId);
 
@@ -83,13 +101,30 @@ Deno.serve(async (req) => {
     }
     console.log(`✅ Installer completed for job: ${jobId}`);
 
+    // Update: Finalizing
+    await supabase
+      .from('rams_generation_jobs')
+      .update({ 
+        progress: 85,
+        current_step: 'Linking hazards to installation steps...'
+      })
+      .eq('id', jobId);
+
+    await supabase
+      .from('rams_generation_jobs')
+      .update({ 
+        progress: 95,
+        current_step: 'Finalising documentation formatting...'
+      })
+      .eq('id', jobId);
+
     // Mark complete
     await supabase
       .from('rams_generation_jobs')
       .update({
         status: 'complete',
         progress: 100,
-        current_step: 'Complete',
+        current_step: '✨ Generation complete!',
         rams_data: hsData.data,
         method_data: installerData.data,
         raw_installer_response: installerData,

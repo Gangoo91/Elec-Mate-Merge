@@ -246,13 +246,13 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                           currentSubStep={step.subStep || null}
                           isComplete={false}
                         />
-                        <div className="text-xs text-elec-light/60 mt-2">
-                          <span className="animate-pulse">
-                            {step.agent === 'health-safety' 
-                              ? 'Identifying hazards and controls...' 
-                              : 'Planning installation sequence...'}
-                          </span>
-                        </div>
+                        {step.reasoning && (
+                          <div className="text-xs sm:text-sm text-elec-light/70 mt-2 p-2 bg-elec-yellow/5 rounded border border-elec-yellow/10">
+                            <span className="animate-pulse">
+                              {step.reasoning}
+                            </span>
+                          </div>
+                        )}
                       </>
                     )}
 

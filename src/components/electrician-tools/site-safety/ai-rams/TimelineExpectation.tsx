@@ -1,20 +1,61 @@
-import React from 'react';
-import { Clock, Zap } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Clock, Zap, Shield, FileText, AlertTriangle } from 'lucide-react';
 
 interface TimelineExpectationProps {
   currentSeconds: number;
   className?: string;
 }
 
+const FUN_FACTS = [
+  {
+    icon: Clock,
+    text: "Professional electricians typically spend 2-4 hours creating RAMS manually",
+    color: "text-blue-400"
+  },
+  {
+    icon: Zap,
+    text: "AI identifies job-specific hazards in seconds, saving hours of research",
+    color: "text-elec-yellow"
+  },
+  {
+    icon: FileText,
+    text: "Method statements are legally required for commercial electrical work",
+    color: "text-purple-400"
+  },
+  {
+    icon: Shield,
+    text: "Comprehensive risk assessments can reduce insurance premiums",
+    color: "text-green-400"
+  },
+  {
+    icon: AlertTriangle,
+    text: "BS 7671 compliant documentation protects both workers and contractors",
+    color: "text-orange-400"
+  }
+];
+
 export const TimelineExpectation: React.FC<TimelineExpectationProps> = ({ 
   currentSeconds,
   className = ''
 }) => {
+  const [currentFactIndex, setCurrentFactIndex] = useState(0);
+
+  // Rotate facts every 10 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentFactIndex((prev) => (prev + 1) % FUN_FACTS.length);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
   const milestones = [
     { seconds: 60, label: '1 min' },
     { seconds: 120, label: '2 min' },
     { seconds: 180, label: '3 min' }
   ];
+
+  const currentFact = FUN_FACTS[currentFactIndex];
+  const FactIcon = currentFact.icon;
 
   return (
     <div className={`space-y-3 ${className}`}>
@@ -42,6 +83,40 @@ export const TimelineExpectation: React.FC<TimelineExpectationProps> = ({
               2-4 hours
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Fun facts carousel */}
+      <div className="p-4 sm:p-5 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-blue-500/10 rounded-lg border border-blue-500/20">
+        <div className="flex items-start gap-3 sm:gap-4 min-h-[60px]">
+          <div className={`shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-${currentFact.color.split('-')[1]}-500/20 to-${currentFact.color.split('-')[1]}-500/10 flex items-center justify-center`}>
+            <FactIcon className={`h-5 w-5 sm:h-6 sm:w-6 ${currentFact.color}`} />
+          </div>
+          <div className="flex-1 pt-1">
+            <p className="text-xs sm:text-sm font-semibold text-muted-foreground mb-1">
+              💡 Did you know?
+            </p>
+            <p 
+              key={currentFactIndex} 
+              className="text-sm sm:text-base text-foreground/90 font-medium leading-relaxed animate-in fade-in slide-in-from-right-4 duration-500"
+            >
+              {currentFact.text}
+            </p>
+          </div>
+        </div>
+        
+        {/* Fact indicator dots */}
+        <div className="flex justify-center gap-1.5 mt-3">
+          {FUN_FACTS.map((_, idx) => (
+            <div
+              key={idx}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                idx === currentFactIndex 
+                  ? 'w-6 bg-elec-yellow' 
+                  : 'w-1.5 bg-muted-foreground/30'
+              }`}
+            />
+          ))}
         </div>
       </div>
 
