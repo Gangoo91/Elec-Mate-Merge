@@ -455,13 +455,21 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
     logger.debug(`Calling ${model}`);
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     
-    const aiResult = await callAI(OPENAI_API_KEY!, {
-      model,
-      systemPrompt,
-      userPrompt,
-      maxTokens: 18000,   // Increased: reasoning + 10-15 detailed installation steps with measurements
-      timeoutMs: 270000,  // 4.5 minutes - adequate for 18k token generation + RAG + validation
-      tools: [{
+    // Progress monitoring for long-running AI calls
+    const progressInterval = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - Date.now()) / 1000);
+      logger.info(`⏱️ AI call in progress: ${elapsed}s elapsed (timeout: 150s)`);
+    }, 30000); // Log every 30 seconds
+
+    let aiResult;
+    try {
+      aiResult = await callAI(OPENAI_API_KEY!, {
+        model,
+        systemPrompt,
+        userPrompt,
+        maxTokens: 8000,   // Reduced from 18000: prevents timeouts while maintaining quality
+        timeoutMs: 150000,  // 2.5 minutes - realistic for 8k tokens
+        tools: [{
         type: 'function',
         function: {
           name: 'provide_installation_guidance',
@@ -541,6 +549,90 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       }],
       toolChoice: { type: 'function', function: { name: 'provide_installation_guidance' } }
     });
+    clearInterval(progressInterval);
+  } catch (error) {
+    clearInterval(progressInterval);
+    
+    // Check if it's a timeout error
+    if (error.message?.includes('timeout') || error.message?.includes('timed out')) {
+      logger.warn('⚠️ GPT-5 Mini timeout, falling back to Gemini 2.5 Flash', { 
+        error: error.message,
+        attemptedModel: model 
+      });
+      
+      // Fallback to Gemini with reduced tokens
+      const GOOGLE_API_KEY = Deno.env.get('GEMINI_API_KEY');
+      if (!GOOGLE_API_KEY) {
+        throw new Error('Gemini API key not configured for fallback');
+      }
+
+      const fallbackModel = 'google/gemini-2.5-flash';
+      logger.info(`🔄 Retrying with ${fallbackModel} (faster, reduced tokens)`);
+      
+      aiResult = await callAI(GOOGLE_API_KEY, {
+        model: fallbackModel,
+        systemPrompt,
+        userPrompt,
+        maxTokens: 6000,   // Further reduced for faster response
+        timeoutMs: 90000,   // 1.5 minutes
+        tools: [{
+          type: 'function',
+          function: {
+            name: 'provide_installation_guidance',
+            description: 'Return comprehensive installation guidance. MUST extract specific measurements from the installation knowledge database.',
+            parameters: {
+              type: 'object',
+              properties: {
+                response: {
+                  type: 'string',
+                  description: 'Natural, conversational response IN UK ENGLISH ONLY (authorised not authorized, realise not realize, organise not organize, metres not meters, whilst not while). Reference previous messages naturally (e.g., "Right, for that 10mm² cable we discussed..."). As long as needed to answer thoroughly.'
+                },
+                installationSteps: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      step: { type: 'number' },
+                      title: { type: 'string' },
+                      description: { 
+                        type: 'string', 
+                        description: 'COMPREHENSIVE step description in UK English (authorised, realise, organise, metres, whilst). MUST include: 1) Overview sentence, 2) Detailed sub-tasks as bullet points or numbered list, 3) Specific measurements/values from knowledge base where applicable (e.g., "400mm clip spacing", "1.8m height", "16mm² cable"), 4) Quality checks. Minimum 3-5 sentences or 80-150 words per step.'
+                      },
+                      tools: { type: 'array', items: { type: 'string' } },
+                      materials: { type: 'array', items: { type: 'string' } },
+                      safetyNotes: { type: 'array', items: { type: 'string' } },
+                      estimatedTime: { type: 'number' }
+                    },
+                    required: ['step', 'title', 'description']
+                  }
+                },
+                practicalTips: {
+                  type: 'array',
+                  items: { type: 'string' }
+                },
+                commonMistakes: {
+                  type: 'array',
+                  items: { type: 'string' }
+                },
+                toolsRequired: {
+                  type: 'array',
+                  items: { type: 'string' }
+                }
+              },
+              required: ['response'],
+              additionalProperties: false
+            }
+          }
+        }],
+        toolChoice: { type: 'function', function: { name: 'provide_installation_guidance' } }
+      });
+
+      logger.info(`✅ Gemini fallback successful`);
+    } else {
+      // Non-timeout error, re-throw
+      throw error;
+    }
+  }
 
     // Parse tool call response (handle both tool calls and JSON-in-content)
     let installResult: any;
