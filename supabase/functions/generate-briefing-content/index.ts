@@ -80,9 +80,10 @@ Generate structured briefing content with:
 - 3-4 clear overview paragraphs
 - Key points as structured list
 - Action items with clear ownership
+- Additional information as focused paragraphs (detail=specific facts, note=reminders, context=background, reference=policy links)
 - Timeline or next steps
 
-Focus on: Clear objectives, key information, action items, next steps.`
+Focus on: Clear objectives, key information, action items, structured additional details.`
   };
 
   return prompts[briefingType] || prompts['general'];
@@ -349,8 +350,21 @@ function getToolDefinitionForType(briefingType: string) {
             description: "Actions required from team"
           },
           additionalInfo: {
-            type: "string",
-            description: "Any additional relevant information"
+            type: "array",
+            description: "Additional relevant information as structured paragraphs",
+            items: {
+              type: "object",
+              properties: {
+                paragraph: { type: "number" },
+                content: { type: "string", description: "Paragraph text (1-3 sentences)" },
+                type: { 
+                  type: "string", 
+                  enum: ["detail", "note", "context", "reference"],
+                  description: "Information category: detail=factual info, note=observations, context=background, reference=links to docs"
+                }
+              },
+              required: ["paragraph", "content", "type"]
+            }
           }
         },
         required: ["briefingOverview", "keyPoints", "actionItems"]

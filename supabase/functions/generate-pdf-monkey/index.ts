@@ -213,6 +213,17 @@ serve(async (req) => {
         
         key_regulations: briefing.ai_prompt_data?.aiContent?.keyRegulations || [],
         
+        additional_info: {
+          paragraphs: briefing.ai_prompt_data?.aiContent?.additionalInfo || 
+                      (briefing.additional_info || "").split('\n\n')
+                        .filter(p => p.trim())
+                        .map((p, i) => ({
+                          paragraph: i + 1,
+                          content: p.trim(),
+                          type: 'detail'
+                        }))
+        },
+        
         additional_notes: briefing.notes || "",
         
         photos: (briefing.photos || []).map((p: any) => ({

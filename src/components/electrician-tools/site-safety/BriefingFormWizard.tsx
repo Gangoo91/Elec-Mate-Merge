@@ -77,6 +77,7 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
     briefingDescription: initialData?.briefing_description || "",
     hazards: initialData?.hazards || "",
     safetyWarning: initialData?.safety_warning || "",
+    additionalInfo: initialData?.additional_info || "",
     
     // Step 5: Photos
     photos: initialData?.photos || [] as any[],
@@ -265,11 +266,20 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
         ? `**${data.content.safetyWarning.level}: ${data.content.safetyWarning.headline}**\n\n${data.content.safetyWarning.details.join('\n- ')}`
         : data.content.safetyWarning || '';
 
+      const additionalInfoText = data.content.additionalInfo
+        ? Array.isArray(data.content.additionalInfo)
+          ? data.content.additionalInfo
+              .map((info: any) => info.content)
+              .join('\n\n')
+          : data.content.additionalInfo
+        : '';
+
       setFormData(prev => ({
         ...prev,
         briefingDescription: briefingDescriptionText,
         hazards: hazardsText,
         safetyWarning: safetyWarningText,
+        additionalInfo: additionalInfoText,
       }));
 
       toast({
@@ -325,6 +335,7 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
         briefing_description: formData.briefingDescription,
         hazards: formData.hazards,
         safety_warning: formData.safetyWarning,
+        additional_info: formData.additionalInfo,
         ai_generated: !!aiContent,
         ai_prompt_data: aiContent ? {
           briefingType: formData.briefingType,
@@ -801,6 +812,17 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
                     placeholder="Any safety warnings or precautions..."
                   />
                 </div>
+
+                {formData.briefingType === 'general' && (
+                  <div className="space-y-2">
+                    <Label className="text-elec-light text-sm">Additional Information</Label>
+                    <FormattedTextDisplay
+                      value={formData.additionalInfo}
+                      onChange={(value) => setFormData(prev => ({ ...prev, additionalInfo: value }))}
+                      placeholder="Any additional relevant information..."
+                    />
+                  </div>
+                )}
 
                 <Button
                   onClick={handleGenerateAI}
