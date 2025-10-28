@@ -438,19 +438,47 @@ export function useAIRAMS(): UseAIRAMSReturn {
     }
   }, [clearProgressIntervals, toast]);
 
+  // Phase 1B: Standardized extraction functions
+  const extractHealthSafetyData = (responseData: any) => {
+    if (!responseData?.success) {
+      throw new Error(responseData?.error || 'Health & Safety agent failed');
+    }
+    if (!responseData?.data) {
+      throw new Error('Invalid response structure');
+    }
+    const { hazards, ppe, emergencyProcedures } = responseData.data;
+    if (!Array.isArray(hazards) || hazards.length === 0) {
+      throw new Error('No hazards generated');
+    }
+    return { hazards, ppe: ppe || [], emergencyProcedures: emergencyProcedures || [], metadata: responseData.metadata };
+  };
+
+  const extractInstallerData = (responseData: any) => {
+    if (!responseData?.success || !responseData?.data) {
+      throw new Error('Invalid installer response');
+    }
+    const { steps, toolsRequired, materialsRequired, practicalTips } = responseData.data;
+    return { steps: steps || [], toolsRequired: toolsRequired || [], materialsRequired: materialsRequired || [], practicalTips: practicalTips || [], metadata: responseData.metadata };
+  };
+
+  // Phase 2: Aggressive Timeout with Real Cancellation
+  const AGENT_TIMEOUT_MS = 45000; // 45 seconds
+  const MAX_RETRIES = 2;
+
   const callAgentWithRetry = async (
     functionName: string,
     body: any,
-    maxRetries = 3  // Increased from 2 to 3 for better reliability
+    maxRetries = MAX_RETRIES
   ): Promise<{ data: any; error: any }> => {
+    
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
-        console.log(`🔄 Attempt ${attempt}/${maxRetries} for ${functionName}`);
+        console.log(`🔄 ${functionName} attempt ${attempt}/${maxRetries}`);
         
-        // Wrap the supabase invoke call with a timeout
+        // Wrap invoke with timeout using Promise.race
         const invokePromise = supabase.functions.invoke(functionName, { body });
         const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('Request timed out after 8 minutes')), 480000)
+          setTimeout(() => reject(new Error(`Timeout after ${AGENT_TIMEOUT_MS}ms`)), AGENT_TIMEOUT_MS)
         );
         
         const { data, error } = await Promise.race([
@@ -458,49 +486,59 @@ export function useAIRAMS(): UseAIRAMSReturn {
           timeoutPromise
         ]) as { data: any; error: any };
         
-        // ✅ SUPERCHARGED STEP 5: Trust the AI - accept any positive hazard count
+        // Check standardized response
         if (!error && data?.success) {
-          const hazardCount = data?.structuredData?.riskAssessment?.hazards?.length || 
-                             data?.riskAssessment?.hazards?.length || 0;
+          const itemCount = data?.data?.hazards?.length || data?.data?.steps?.length || 0;
           
-          // Accept any positive hazard count
-          if (hazardCount > 0) {
-            console.log(`✅ ${functionName} succeeded on attempt ${attempt} with ${hazardCount} hazards`);
+          if (itemCount > 0) {
+            console.log(`✅ ${functionName} succeeded: ${itemCount} items in ${attempt} attempt(s)`);
             return { data, error: null };
           }
           
-          // Only retry if truly empty
-          if (hazardCount === 0) {
-            console.warn(`⚠️ ${functionName} attempt ${attempt}/${maxRetries}: Zero hazards generated`);
-            if (attempt < maxRetries) {
-              console.log(`🔄 Retrying for hazards...`);
-            } else {
-              console.error(`❌ All attempts produced zero hazards`);
-            }
+          console.warn(`⚠️ ${functionName} returned zero items on attempt ${attempt}`);
+        }
+        
+        if (error) {
+          console.error(`❌ ${functionName} error on attempt ${attempt}:`, error);
+        }
+        
+        // Retry with exponential backoff
+        if (attempt < maxRetries) {
+          const backoffMs = 2000 * attempt; // 2s, 4s
+          console.log(`⏳ Retrying in ${backoffMs}ms...`);
+          await new Promise(resolve => setTimeout(resolve, backoffMs));
+        }
+        
+      } catch (err: any) {
+        // Handle timeout
+        if (err.message?.includes('Timeout')) {
+          console.error(`❌ ${functionName} timed out on attempt ${attempt}`);
+          
+          if (attempt === maxRetries) {
+            return { 
+              data: null, 
+              error: new Error(`Request timed out after ${AGENT_TIMEOUT_MS/1000}s`) 
+            };
+          }
+        } else {
+          console.error(`❌ ${functionName} threw error:`, err);
+          
+          if (attempt === maxRetries) {
+            return { data: null, error: err };
           }
         }
         
-        // Exponential backoff before retry
+        // Exponential backoff
         if (attempt < maxRetries) {
-          const backoffMs = Math.min(1000 * Math.pow(2, attempt - 1), 5000); // 1s, 2s, 4s (capped at 5s)
-          console.log(`⏳ Waiting ${backoffMs}ms before retry...`);
-          await new Promise(resolve => setTimeout(resolve, backoffMs));
-        } else {
-          console.error(`❌ ${functionName} failed after ${maxRetries} attempts`, { error, data });
-        }
-      } catch (timeoutError) {
-        console.error(`❌ ${functionName} timed out on attempt ${attempt}`, timeoutError);
-        if (attempt < maxRetries) {
-          const backoffMs = Math.min(1000 * Math.pow(2, attempt - 1), 5000);
-          console.log(`⏳ Waiting ${backoffMs}ms before retry after timeout...`);
-          await new Promise(resolve => setTimeout(resolve, backoffMs));
-        } else {
-          return { data: null, error: timeoutError };
+          await new Promise(resolve => setTimeout(resolve, 2000 * attempt));
         }
       }
     }
     
-    return { data: null, error: new Error(`Failed after ${maxRetries} attempts`) };
+    return { 
+      data: null, 
+      error: new Error(`${functionName} failed after ${maxRetries} attempts`) 
+    };
   };
 
   const generateRAMS = async (
@@ -588,35 +626,33 @@ export function useAIRAMS(): UseAIRAMSReturn {
         // Will fall through to AI call which will timeout and trigger fallback
       }
 
+      // Phase 1B & 2: Call with timeout and extract using standardized structure
+      const hsProgressInterval = startProgressPolling('health-safety', 5, 50, 35000);
+      
       const { data: hsData, error: hsError } = await callAgentWithRetry('health-safety-v3', {
         query: `Create a detailed risk assessment for the following electrical work: ${jobDescription}. Include specific hazards, risk ratings (likelihood and severity), and control measures.`,
         workType: jobScale
       });
-
-      // CRITICAL: Log COMPLETE raw response to find exact path
-      console.log('🔍 COMPLETE RAW RESPONSE FROM EDGE FUNCTION:', {
-        typeOfHsData: typeof hsData,
-        isNull: hsData === null,
-        isUndefined: hsData === undefined,
-        topLevelKeys: hsData ? Object.keys(hsData) : 'NO KEYS',
-        fullResponse: JSON.stringify(hsData, null, 2), // FULL response, not truncated
-        // Check ALL possible nesting levels
-        paths: {
-          'direct.success': hsData?.success,
-          'direct.structuredData': !!hsData?.structuredData,
-          'direct.structuredData.riskAssessment': !!hsData?.structuredData?.riskAssessment,
-          'direct.structuredData.riskAssessment.hazards': hsData?.structuredData?.riskAssessment?.hazards?.length,
-          'wrapped.data.success': hsData?.data?.success,
-          'wrapped.data.structuredData.riskAssessment.hazards': hsData?.data?.structuredData?.riskAssessment?.hazards?.length,
-          'wrapped.response.structuredData.riskAssessment.hazards': hsData?.response?.structuredData?.riskAssessment?.hazards?.length,
-        }
-      });
+      
+      clearInterval(hsProgressInterval);
+      setOverallProgress(55);
 
       if (abortControllerRef.current?.signal.aborted) {
         throw new Error('Generation cancelled');
       }
 
-      // Health & Safety data will be validated and potentially replaced below
+      if (hsError || !hsData?.success) {
+        throw new Error(hsError?.message || 'Health & Safety analysis failed');
+      }
+
+      // Phase 1B: Extract using standardized structure
+      const hsExtracted = extractHealthSafetyData(hsData);
+      
+      setReasoningSteps(prev => prev.map(step => 
+        step.agent === 'health-safety' 
+          ? { ...step, status: 'complete', reasoning: `Generated ${hsExtracted.hazards.length} hazards`, subStep: null }
+          : step
+      ));
       
       // More specific error detection with enhanced diagnostics
       let mutableHsError = hsError; // Create mutable copy since hsError is const
@@ -1005,26 +1041,37 @@ export function useAIRAMS(): UseAIRAMSReturn {
 
       // Start simulated substep progress for installer
       simulateSubStepProgress('installer', INSTALLER_SUBSTEPS);
+      
+      const installerProgressInterval = startProgressPolling('installer', 55, 90, 30000);
 
       const { data: installerData, error: installerError } = await callAgentWithRetry('installer-v3', {
         query: `Create a detailed step-by-step method statement for: ${jobDescription}. Include installation procedures, safety requirements per step, equipment needed, and time estimates.`,
         previousAgentOutputs: [{
           agent: 'health-safety',
-          response: hsDataToUse
+          response: hsData
         }]
       });
+      
+      clearInterval(installerProgressInterval);
+      setOverallProgress(95);
 
       if (abortControllerRef.current?.signal.aborted) {
         throw new Error('Generation cancelled');
       }
 
       if (installerError || !installerData?.success) {
-        console.error('❌ Installer agent failed:', { installerError, installerData });
-        throw new Error(`Installer Agent failed: ${installerError?.message || 'No valid response'}`);
+        console.warn('⚠️ Installer agent failed, proceeding with H&S data only');
       }
 
-      // Store raw installer response
-      setRawInstallerResponse(installerData);
+      const installerExtracted = installerData?.success 
+        ? extractInstallerData(installerData)
+        : { steps: [], toolsRequired: [], materialsRequired: [], practicalTips: [] };
+
+      setReasoningSteps(prev => prev.map(step => 
+        step.agent === 'installer' 
+          ? { ...step, status: 'complete', reasoning: `Generated ${installerExtracted.steps.length} steps`, subStep: null }
+          : step
+      ));
 
       clearProgressIntervals();
       const installerTimeElapsed = Math.round((Date.now() - installerStartTime) / 1000);

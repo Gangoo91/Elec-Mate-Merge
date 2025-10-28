@@ -1,4 +1,4 @@
-// Deployed: 2025-10-12 - Phase 1-5: World-Class RAG Enhancement
+// Deployed: 2025-10-28 - Phase 1A: Standardized Response Structure
 import { serve } from '../_shared/deps.ts';
 import {
   corsHeaders,
@@ -9,6 +9,33 @@ import {
   createClient,
   generateEmbeddingWithRetry
 } from '../_shared/v3-core.ts';
+
+// Phase 1A: Standardized Response Interface
+interface InstallerV3Response {
+  success: boolean;
+  data: {
+    steps: Array<{
+      stepNumber: number;
+      title: string;
+      description: string;
+      safetyRequirements: string[];
+      linkedHazards: number[];
+      equipmentRequired: string[];
+      estimatedTime: string;
+    }>;
+    toolsRequired: string[];
+    materialsRequired: string[];
+    practicalTips: string[];
+    commonMistakes: string[];
+  };
+  metadata: {
+    generationTimeMs: number;
+    stepCount: number;
+    totalEstimatedTime: string;
+    difficultyLevel: string;
+  };
+  error?: string;
+}
 import { callOpenAI } from '../_shared/ai-providers.ts';
 import { retrieveInstallationKnowledge } from '../_shared/rag-installation.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
@@ -655,36 +682,29 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       { installationMethod, cableType, location }
     );
 
-    // Build final response with performance metrics
-    const finalResponse = {
+    // Build standardized response
+    const standardizedResponse: InstallerV3Response = {
       success: true,
-      response: enrichedResponse.response,
-      enrichment: enrichedResponse.enrichment,
-      citations: enrichedResponse.citations,
-      rendering: enrichedResponse.rendering,
-      structuredData: {
-        installationSteps: installResult.installationSteps || [],
-        practicalTips: installResult.practicalTips || [],
-        commonMistakes: installResult.commonMistakes || [],
+      data: {
+        steps: (installResult.installationSteps || []).map((step: any, index: number) => ({
+          stepNumber: step.stepNumber || index + 1,
+          title: step.title,
+          description: step.description,
+          safetyRequirements: step.safetyRequirements || [],
+          linkedHazards: step.linkedHazards || [],
+          equipmentRequired: step.equipmentNeeded || step.equipmentRequired || [],
+          estimatedTime: step.estimatedTime || '15-30 minutes'
+        })),
         toolsRequired: installResult.toolsRequired || [],
         materialsRequired: installResult.materialsRequired || [],
-        totalEstimatedTime: installResult.totalEstimatedTime,
-        difficultyLevel: installResult.difficultyLevel,
-        compliance: installResult.compliance
+        practicalTips: installResult.practicalTips || [],
+        commonMistakes: installResult.commonMistakes || []
       },
-      suggestedNextAgents: suggestNextAgents(
-        'installer',
-        query,
-        installResult.response || '',
-        (previousAgentOutputs || []).map((o: any) => o.agent)
-      ).map((s: any) => ({
-        ...s,
-        contextHint: generateContextHint(s.agent, 'installer', installResult)
-      })),
       metadata: {
-        performanceMs: timings.total,
-        breakdown: timings,
-        knowledgeCount: installKnowledge.length
+        generationTimeMs: timings.total,
+        stepCount: installResult.installationSteps?.length || 0,
+        totalEstimatedTime: installResult.totalEstimatedTime || 'Unknown',
+        difficultyLevel: installResult.difficultyLevel || 'Medium'
       }
     };
 
@@ -695,32 +715,16 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         query_hash: queryHash,
         query_text: query.substring(0, 500),
         agent_name: 'installer-v3',
-        results: finalResponse,
+        results: standardizedResponse,
         created_at: new Date().toISOString(),
-        expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString(), // 1 hour
+        expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
         hit_count: 0
       });
 
     logger.info('Results cached', { queryHash, expiresIn: '1 hour' });
 
-    // Log RAG metrics for observability
-    const totalTime = Date.now() - requestId;
-    const { error: metricsError } = await supabase.from('agent_metrics').insert({
-      function_name: 'installer-v3',
-      request_id: requestId,
-      rag_time: embeddingStart ? Date.now() - embeddingStart : null,
-      total_time: totalTime,
-      regulation_count: installKnowledge?.length || 0,
-      success: true,
-      query_type: installationMethod || 'general'
-    });
-
-    if (metricsError) {
-      logger.warn('Failed to log metrics', { error: metricsError.message });
-    }
-
     return new Response(
-      JSON.stringify(finalResponse),
+      JSON.stringify(standardizedResponse),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 200 

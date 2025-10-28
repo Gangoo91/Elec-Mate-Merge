@@ -1,5 +1,5 @@
-// DEPLOYMENT v4.0.0 - Health & Safety RAMS Generator - 2025-10-27T12:00:00Z
-const VERSION = 'v4.0.0';
+// DEPLOYMENT v4.1.0 - Phase 1A: Standardized Response Structure - 2025-10-28
+const VERSION = 'v4.1.0-standardized-response';
 const BOOT_TIME = new Date().toISOString();
 console.log(`🚀 health-safety-v3 ${VERSION} booting at ${BOOT_TIME}`);
 
@@ -14,6 +14,51 @@ import {
   generateEmbeddingWithRetry,
   parseJsonWithRepair
 } from '../_shared/v3-core.ts';
+
+// Phase 1A: Standardized Response Interface
+interface HealthSafetyV3Response {
+  success: boolean;
+  data: {
+    hazards: Array<{
+      id: string;
+      hazard: string;
+      likelihood: number;
+      severity: number;
+      riskScore: number;
+      riskLevel: string;
+      controlMeasure: string;
+      residualRisk: number;
+      residualRiskLevel: string;
+      linkedToStep: number;
+      regulation?: string;
+    }>;
+    ppe: Array<{
+      itemNumber: number;
+      ppeType: string;
+      standard: string;
+      mandatory: boolean;
+      purpose: string;
+    }>;
+    emergencyProcedures: string[];
+    complianceRegulations: string[];
+  };
+  metadata: {
+    generationTimeMs: number;
+    hazardCount: number;
+    ppeCount: number;
+    ragSourceCount: number;
+    aiModel: string;
+    tokensUsed?: number;
+  };
+  error?: string;
+}
+
+function calculateRiskLevel(riskScore: number): string {
+  if (riskScore >= 15) return 'very-high';
+  if (riskScore >= 10) return 'high';
+  if (riskScore >= 6) return 'medium';
+  return 'low';
+}
 import { callOpenAI } from '../_shared/ai-providers.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
@@ -963,76 +1008,56 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       hasAllRequiredData: true
     });
 
-    // ✅ PHASE 5: Robust response building with validation
-    const responsePayload = {
+    // ✅ PHASE 1A: Build standardized response structure
+    const generationTimeMs = Date.now() - requestStart;
+    const hazardCount = validatedRiskAssessment.hazards?.length || 0;
+    const ppeCount = validatedRiskAssessment.ppeDetails?.length || 0;
+
+    // Build standardized response
+    const standardizedResponse: HealthSafetyV3Response = {
       success: true,
-      response: safetyResult.response,
-      enrichment: safetyResult.enrichment || {},
-      citations: safetyResult.citations || [],
-      rendering: safetyResult.rendering || {},
-      structuredData: { 
-        riskAssessment: validatedRiskAssessment, 
-        methodStatement, 
-        compliance,
-        ragPreview
+      data: {
+        hazards: validatedRiskAssessment.hazards.map((h: any, index: number) => ({
+          id: h.id || `hazard-${index + 1}`,
+          hazard: h.hazard,
+          likelihood: h.likelihood,
+          severity: h.severity,
+          riskScore: h.riskScore || (h.likelihood * h.severity),
+          riskLevel: h.riskLevel || calculateRiskLevel(h.likelihood * h.severity),
+          controlMeasure: h.controlMeasure || h.controls?.[0]?.controlMeasure || '',
+          residualRisk: h.residualRisk || Math.max(1, Math.floor((h.likelihood * h.severity) * 0.3)),
+          residualRiskLevel: h.residualRiskLevel || 'low',
+          linkedToStep: typeof h.linkedToStep === 'number' ? h.linkedToStep : 0,
+          regulation: h.regulation
+        })),
+        ppe: validatedRiskAssessment.ppeDetails?.map((p: any, index: number) => ({
+          itemNumber: p.itemNumber || index + 1,
+          ppeType: p.ppeType,
+          standard: p.standard,
+          mandatory: p.mandatory !== false,
+          purpose: p.purpose
+        })) || [],
+        emergencyProcedures: validatedRiskAssessment.emergencyProcedures || [],
+        complianceRegulations: (validatedRiskAssessment.complianceRegulations || [])
       },
       metadata: {
-        requestId,
-        timestamp: new Date().toISOString(),
-        responseSource: 'gpt-5-mini-2025-08-07',
-        ragDuration: ragStart ? Date.now() - ragStart : null,
-        totalDuration: Date.now() - requestStart,
-        // Quality indicators for transparency
-        qualityMetrics: {
-          hazardCount: finalHazardCount,
-          expectedCount: expectedMinHazards,
-          qualityGrade: finalHazardCount >= expectedMinHazards ? 'EXCELLENT' :
-                         finalHazardCount >= (expectedMinHazards * 0.8) ? 'GOOD' :
-                         finalHazardCount >= (expectedMinHazards * 0.6) ? 'ACCEPTABLE' : 'POOR',
-          meetsThreshold: finalHazardCount >= expectedMinHazards || 
-                          (finalHazardCount / expectedMinHazards) >= 0.7,
-          ppeCount: validatedRiskAssessment.ppeDetails?.length || 0,
-          controlsCount: validatedRiskAssessment.controls?.length || 0,
-          emergencyProceduresCount: validatedRiskAssessment.emergencyProcedures?.length || 0,
-          linkedStepAccuracy: linkedStepCount > 0 ? `${linkedStepCount}/${finalHazardCount}` : 'N/A',
-          generationTime: Math.round((Date.now() - aiCallStart) / 1000),
-          adjustedTokens: adjustedMaxTokens
-        }
-      },
-      suggestedNextAgents: suggestNextAgents(
-        'health-safety',
-        query,
-        safetyResult.response,
-        (previousAgentOutputs || []).map((o: any) => o.agent)
-      ).map((s: any) => ({
-        ...s,
-        contextHint: generateContextHint(s.agent, 'health-safety', { riskAssessment, methodStatement, compliance })
-      }))
+        generationTimeMs,
+        hazardCount,
+        ppeCount,
+        ragSourceCount: hsKnowledge?.healthSafetyDocs?.length || 0,
+        aiModel: 'gpt-5-mini-2025-08-07',
+        tokensUsed: safetyResult.tokensUsed
+      }
     };
-    
-    // CRITICAL: Ensure hazards accessible at ALL expected frontend paths
-    if (!responsePayload.riskAssessment) {
-      logger.info('🔧 Adding top-level riskAssessment for frontend compatibility');
-      responsePayload.riskAssessment = responsePayload.structuredData.riskAssessment;
-    }
 
-    // Double-check hazards are accessible at the path frontend expects
-    const frontendPath = responsePayload?.structuredData?.riskAssessment?.hazards;
-    if (!frontendPath || frontendPath.length === 0) {
-      logger.error('🚨 CRITICAL: Hazards not at expected frontend path', {
-        structuredDataExists: !!responsePayload.structuredData,
-        riskAssessmentExists: !!responsePayload.structuredData?.riskAssessment,
-        hazardsExists: !!responsePayload.structuredData?.riskAssessment?.hazards,
-        hazardCount: responsePayload.structuredData?.riskAssessment?.hazards?.length || 0
-      });
-      throw new Error('Response structure invalid - hazards not accessible at expected path');
-    }
+    logger.info('✅ Standardized response built', {
+      hazards: hazardCount,
+      ppe: ppeCount,
+      timeMs: generationTimeMs
+    });
 
-    logger.info(`✅ Response structure validated: ${frontendPath.length} hazards accessible at frontend path`);
-
-    // Return enriched response
     return new Response(
-      JSON.stringify(responsePayload),
+      JSON.stringify(standardizedResponse),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 200 
