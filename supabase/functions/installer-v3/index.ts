@@ -460,7 +460,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       systemPrompt,
       userPrompt,
       maxTokens: 18000,   // Increased: reasoning + 10-15 detailed installation steps with measurements
-      timeoutMs: 280000,  // 280 seconds = 4 min 40 sec (max safe timeout)
+      timeoutMs: 180000,  // 3 minutes - optimized for sequential execution after H&S completes
       tools: [{
         type: 'function',
         function: {
