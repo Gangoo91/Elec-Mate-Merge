@@ -936,14 +936,13 @@ export function useAIRAMS(): UseAIRAMSReturn {
         }
       }
 
-      // STEP 2 & 5: Only trigger fallback when truly no data available
+      // STEP 2 & 5: Fail if no valid data available (no fallback)
       if (shouldUseFallback) {
-        console.error('🚨 CRITICAL: USING FALLBACK DATA - AI GENERATION FAILED', { 
+        console.error('🚨 CRITICAL: AI GENERATION FAILED - NO FALLBACK', { 
           hsError: hsError?.message,
           hasData: !!hsData,
           success: hsData?.success,
           hazardCount: extractedHazards.length,
-          willUseFallback: true,
           paths: {
             'structuredData.riskAssessment.hazards': hsData?.structuredData?.riskAssessment?.hazards?.length || 0,
             'response.structuredData.riskAssessment.hazards': hsData?.response?.structuredData?.riskAssessment?.hazards?.length || 0,
@@ -953,109 +952,14 @@ export function useAIRAMS(): UseAIRAMSReturn {
           dataKeys: hsData ? Object.keys(hsData) : []
         });
 
-        // STEP 5: Prominent warning that fallback data is being used
         toast({
-          title: "AI Generation Timed Out",
-          description: "GPT-5 Mini took longer than 2 minutes to generate your specific hazards. Showing 8 generic electrical hazards as a starting point.\n\nWhat you can do:\n• Click 'Regenerate' button to try again\n• Manually add your job-specific hazards using the form\n• Edit the generic hazards to match your specific work\n\nThis is NOT a comprehensive assessment for your job!",
+          title: "AI Generation Failed",
+          description: "Unable to generate risk assessment. Please try again or check your connection.",
           variant: "destructive",
-          duration: 20000
+          duration: 10000
         });
-        
-        // STEP 5: Enhanced fallback with 8 comprehensive hazards
-        hsDataToUse = {
-          success: true,
-          structuredData: {
-            riskAssessment: {
-              hazards: [
-                {
-                  hazard: "Electrical shock from live conductors",
-                  risk: "Electric shock, burns, or fatality",
-                  likelihood: 4,
-                  severity: 5,
-                  controls: ["Isolate power supply", "Use voltage tester", "Wear insulated gloves", "Competent supervision"]
-                },
-                {
-                  hazard: "Arc flash during switching operations",
-                  risk: "Burns and blast injuries",
-                  likelihood: 3,
-                  severity: 5,
-                  controls: ["Maintain safe distance", "Wear arc-rated PPE", "Remote operation where possible"]
-                },
-                {
-                  hazard: "Manual handling of equipment",
-                  risk: "Musculoskeletal injury",
-                  likelihood: 4,
-                  severity: 3,
-                  controls: ["Use mechanical aids", "Team lift >25kg", "Proper lifting technique"]
-                },
-                {
-                  hazard: "Work at height from ladders/scaffolds",
-                  risk: "Falls causing serious injury",
-                  likelihood: 3,
-                  severity: 4,
-                  controls: ["Edge protection", "Harness if required", "3-point contact", "Inspect equipment before use"]
-                },
-                {
-                  hazard: "Asbestos in building materials",
-                  risk: "Respiratory disease from fibre exposure",
-                  likelihood: 2,
-                  severity: 5,
-                  controls: ["Pre-demolition survey", "Licensed asbestos removal", "RPE if disturbed", "Wet methods"]
-                },
-                {
-                  hazard: "Confined spaces (ducting/voids)",
-                  risk: "Asphyxiation or entrapment",
-                  likelihood: 2,
-                  severity: 5,
-                  controls: ["Atmosphere testing", "Forced ventilation", "Emergency rescue plan", "Permit to work"]
-                },
-                {
-                  hazard: "Vehicle movements on site",
-                  risk: "Struck by moving vehicles",
-                  likelihood: 3,
-                  severity: 4,
-                  controls: ["Segregated walkways", "Hi-vis clothing", "Banksman for reversing", "Site speed limits"]
-                },
-                {
-                  hazard: "Fire risk from hot works/electrical faults",
-                  risk: "Burns and smoke inhalation",
-                  likelihood: 2,
-                  severity: 4,
-                  controls: ["Fire extinguishers available", "Hot work permit", "Fire watch", "Clear combustibles"]
-                }
-              ],
-              ppe: ["Safety helmet to BS EN 397", "Safety boots to BS EN 20345", "Hi-vis vest to BS EN ISO 20471", "Insulated gloves to BS EN 60903", "Safety glasses to BS EN 166", "Hearing protection to BS EN 352", "Respiratory protection to BS EN 149", "Arc-rated PPE to IEC 61482"],
-              emergencyProcedures: ["Isolate power in emergency", "Call 999 for electric shock", "First aid kit location known", "Assembly point identified", "Nearest hospital: [To be confirmed]"]
-            }
-          }
-        };
-        
-        // STEP 5: Show prominent warning toast
-        toast({
-          title: "⚠️ Using basic risk assessment",
-          description: "AI generation timed out - 8 common electrical hazards provided. Consider regenerating for job-specific assessment.",
-          variant: "destructive",
-        });
-        
-        // STEP 5: Log fallback usage to edge function
-        try {
-          await supabase.functions.invoke('health-safety-v3', {
-            body: {
-              logFallbackUsage: true,
-              query: jobDescription,
-              reason: hsError?.message || 'No valid response',
-              timestamp: new Date().toISOString()
-            }
-          });
-        } catch (logError) {
-          console.error('Failed to log fallback usage:', logError);
-        }
-        
-        setReasoningSteps(prev => prev.map(step => 
-          step.agent === 'health-safety' 
-            ? { ...step, status: 'complete', reasoning: 'Using enhanced fallback electrical hazards (8 hazards)', subStep: null, timeElapsed: Math.round((Date.now() - hsStartTime) / 1000) }
-            : step
-        ));
+
+        throw new Error(hsError?.message || 'AI generation failed - no valid hazards generated');
       }
 
       // Store raw H&S response
