@@ -256,22 +256,26 @@ export const AIRAMSGenerator: React.FC = () => {
               )}
 
               <AgentProcessingView
-                steps={[
+                overallProgress={progress}
+                currentStep={currentStep}
+                elapsedTime={generationStartTime > 0 ? Math.floor((Date.now() - generationStartTime) / 1000) : 0}
+                estimatedTimeRemaining={Math.max(0, Math.floor((180 * (100 - progress)) / 100))}
+                agentSteps={[
                   {
-                    agent: 'health-safety',
-                    status: progress >= 40 ? 'complete' : (status === 'failed' ? 'error' : 'processing'),
+                    name: 'health-safety',
+                    status: progress >= 40 ? 'complete' : 'processing',
+                    progress: Math.min(100, (progress / 40) * 100),
+                    currentStep: progress < 40 ? currentStep : undefined,
                     reasoning: progress < 40 ? currentStep : '✅ Risk assessment complete'
                   },
                   {
-                    agent: 'installer',
-                    status: status === 'complete' ? 'complete' : progress >= 40 ? (status === 'failed' ? 'error' : 'processing') : 'pending',
+                    name: 'installer',
+                    status: status === 'complete' ? 'complete' : progress >= 40 ? 'processing' : 'pending',
+                    progress: progress >= 40 ? Math.min(100, ((progress - 40) / 60) * 100) : 0,
+                    currentStep: progress >= 40 && progress < 100 ? currentStep : undefined,
                     reasoning: progress >= 40 && progress < 100 ? currentStep : progress === 100 ? '✅ Method statement complete' : 'Waiting for health & safety analysis...'
                   }
                 ]}
-                isVisible={true}
-                overallProgress={progress}
-                estimatedTimeRemaining={0}
-                onCancel={undefined}
               />
 
               {error && (

@@ -810,7 +810,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                       residualRiskLevel: { type: 'string', enum: ['low', 'medium', 'high', 'very-high'] },
                       regulation: { type: 'string', description: 'Applicable UK regulation (e.g. EWR 1989 Reg 4(3))' }
                     },
-                    required: ['hazard', 'linkedToStep', 'likelihood', 'severity', 'riskScore', 'riskLevel', 'controlMeasure', 'residualRisk', 'residualRiskLevel'],
+                    required: ['hazard', 'linkedToStep', 'likelihood', 'severity', 'riskScore', 'riskLevel', 'controlMeasure', 'residualLikelihood', 'residualSeverity', 'residualRisk', 'residualRiskLevel'],
                     additionalProperties: false
                   }
                 },

@@ -1,320 +1,248 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { ShieldCheck, Wrench, CheckCircle2, Loader2, AlertCircle, Clock, Sparkles } from 'lucide-react';
-import { SubStepProgress, SubStep } from './SubStepProgress';
-import { GenerationTimer } from './GenerationTimer';
+import React from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Shield, Wrench, CheckCircle, Clock, Zap } from 'lucide-react';
 import { TimelineExpectation } from './TimelineExpectation';
+import { animateValue } from '@/utils/animation-helpers';
 
-export interface ReasoningStep {
-  agent: 'health-safety' | 'installer';
-  status: 'pending' | 'processing' | 'complete' | 'error';
+interface AgentStep {
+  name: string;
+  status: 'pending' | 'processing' | 'complete';
+  progress: number;
+  currentStep?: string;
   reasoning?: string;
-  subStep?: SubStep | null;
-  timeElapsed?: number;
 }
 
-export interface AgentProcessingViewProps {
-  steps: ReasoningStep[];
-  isVisible: boolean;
-  overallProgress?: number;
-  estimatedTimeRemaining?: number;
-  onCancel?: () => void;
+interface AgentProcessingViewProps {
+  overallProgress: number;
+  currentStep: string;
+  elapsedTime: number;
+  estimatedTimeRemaining: number;
+  agentSteps: AgentStep[];
 }
-
-const agentIcons = {
-  'health-safety': ShieldCheck,
-  'installer': Wrench
-};
-
-const agentNames = {
-  'health-safety': 'Health & Safety Analyser',
-  'installer': 'Installation Planner'
-};
-
-const agentDescriptions = {
-  'health-safety': 'Analysing risks and safety requirements',
-  'installer': 'Creating detailed method statements'
-};
 
 export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
-  steps,
-  isVisible,
-  overallProgress = 0,
+  overallProgress,
+  currentStep,
+  elapsedTime,
   estimatedTimeRemaining,
-  onCancel
+  agentSteps,
 }) => {
-  const [currentSeconds, setCurrentSeconds] = useState(0);
+  const [displayProgress, setDisplayProgress] = React.useState(0);
 
-  // Calculate status flags first (needed in useEffect)
-  const allComplete = steps.every(step => step.status === 'complete');
-  const hasError = steps.some(step => step.status === 'error');
-  const isProcessing = steps.some(step => step.status === 'processing');
+  React.useEffect(() => {
+    const cleanup = animateValue(
+      displayProgress,
+      overallProgress,
+      300,
+      (value) => setDisplayProgress(value)
+    );
+    return cleanup;
+  }, [overallProgress]);
 
-  useEffect(() => {
-    if (!isVisible) {
-      setCurrentSeconds(0);
-      return;
-    }
-    const interval = setInterval(() => setCurrentSeconds(prev => prev + 1), 1000);
-    return () => clearInterval(interval);
-  }, [isVisible]);
-
-  // Reset timer on error
-  useEffect(() => {
-    if (hasError) {
-      setCurrentSeconds(0);
-    }
-  }, [hasError]);
-
-  // Reset timer when processing starts
-  useEffect(() => {
-    if (isProcessing && steps.length > 0) {
-      setCurrentSeconds(0);
-    }
-  }, [isProcessing, steps.length]);
-
-  if (!isVisible || steps.length === 0) return null;
-
-  const totalTimeElapsed = useMemo(() => {
-    return steps.reduce((sum, step) => sum + (step.timeElapsed || 0), 0);
-  }, [steps]);
-
-  const getStatusIcon = (status: ReasoningStep['status']) => {
-    switch (status) {
-      case 'complete':
-        return <CheckCircle2 className="h-5 w-5 text-green-500" />;
-      case 'processing':
-        return <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />;
-      case 'error':
-        return <AlertCircle className="h-5 w-5 text-red-500" />;
-      default:
-        return <Clock className="h-5 w-5 text-muted-foreground" />;
-    }
-  };
-
-  const getStatusBadge = (status: ReasoningStep['status']) => {
-    switch (status) {
-      case 'complete':
-        return <Badge className="bg-green-500/10 text-green-600 border-green-500/30 text-xs">Complete</Badge>;
-      case 'processing':
-        return <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs animate-pulse">Processing</Badge>;
-      case 'error':
-        return <Badge className="bg-red-500/10 text-red-600 border-red-500/30 text-xs">Error</Badge>;
-      default:
-        return <Badge variant="outline" className="text-xs">Pending</Badge>;
-    }
-  };
-
-  const formatTimeRemaining = (seconds: number): string => {
+  const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    if (mins > 0) {
-      return `${mins}m ${secs}s remaining`;
-    }
-    return `${secs}s remaining`;
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
+
+  const getAgentIcon = (name: string) => {
+    switch (name) {
+      case 'health-safety':
+        return Shield;
+      case 'installer':
+        return Wrench;
+      default:
+        return Zap;
+    }
+  };
+
+  const getAgentTitle = (name: string) => {
+    switch (name) {
+      case 'health-safety':
+        return 'Health & Safety Analyser';
+      case 'installer':
+        return 'Installation Planner';
+      default:
+        return name;
+    }
+  };
+
+  const getAgentDescription = (name: string) => {
+    switch (name) {
+      case 'health-safety':
+        return 'Analysing risks and safety requirements';
+      case 'installer':
+        return 'Creating detailed method statements';
+      default:
+        return 'Processing...';
+    }
+  };
+
+  const currentAgentIndex = agentSteps.findIndex(a => a.status === 'processing');
 
   return (
-    <div className="space-y-4 animate-fade-in">
-      {/* Sticky Progress Header - Mobile First */}
-      <div className="sticky top-0 z-50 bg-elec-grey/95 backdrop-blur-sm border-b border-elec-yellow/20 rounded-lg shadow-lg mb-4">
-        <div className="p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-lg font-bold">Generating RAMS...</span>
-            <span className="text-2xl font-bold text-elec-yellow">{Math.round(overallProgress)}%</span>
-          </div>
-          <Progress value={overallProgress} className="h-2 mb-2" />
-          <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span>Time: {Math.floor(currentSeconds / 60)}:{(currentSeconds % 60).toString().padStart(2, '0')}</span>
-            {!allComplete && estimatedTimeRemaining && estimatedTimeRemaining > 0 && (
-              <span>~{formatTimeRemaining(estimatedTimeRemaining)}</span>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {!allComplete && currentSeconds < 60 && (
-        <TimelineExpectation currentSeconds={currentSeconds} />
-      )}
-      
-    <Card className="border-elec-yellow/30 shadow-lg bg-gradient-to-br from-elec-grey to-elec-grey/80">
-      <CardHeader className="pb-5 space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <CardTitle className="text-2xl sm:text-3xl font-bold tracking-tight leading-tight flex items-center gap-3">
-            {allComplete ? (
-              <CheckCircle2 className="h-7 w-7 sm:h-8 sm:w-8 text-green-500 animate-in fade-in zoom-in duration-300" />
-            ) : hasError ? (
-              <AlertCircle className="h-7 w-7 sm:h-8 sm:w-8 text-red-500" />
-            ) : (
-              <Sparkles className="h-7 w-7 sm:h-8 sm:w-8 text-elec-yellow" />
-            )}
-            <span className="bg-gradient-to-r from-elec-yellow to-elec-yellow/70 bg-clip-text text-transparent">
-              AI Processing
-            </span>
-          </CardTitle>
-          <GenerationTimer isRunning={isProcessing && !allComplete} />
-        </div>
-
-        {/* Overall Progress Bar */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-elec-light/80 font-semibold">Overall Progress</span>
-            <div className="flex items-center gap-3">
-              {estimatedTimeRemaining !== undefined && estimatedTimeRemaining > 0 && !allComplete && (
-                <span className="text-elec-light/60 font-medium tabular-nums">{formatTimeRemaining(estimatedTimeRemaining)}</span>
-              )}
-              <span className="text-elec-yellow font-bold text-lg tabular-nums">{Math.round(overallProgress)}%</span>
+    <div className="space-y-6 pb-8 px-1">
+      {/* Overall Progress Card - NO STICKY */}
+      <Card className="border-elec-yellow/20 shadow-lg">
+        <CardContent className="pt-6 pb-5 space-y-4">
+          {/* Title */}
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-full bg-elec-yellow/10 flex items-center justify-center">
+              <Zap className="w-6 h-6 text-elec-yellow animate-pulse" />
+            </div>
+            <div className="flex-1">
+              <h2 className="text-xl font-semibold text-white">Generating RAMS Document</h2>
+              <p className="text-sm text-gray-400 mt-0.5">{currentStep}</p>
             </div>
           </div>
-          <div className="relative">
-            <Progress value={overallProgress} className="h-3" />
-            {isProcessing && overallProgress < 95 && (
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="flex gap-1">
-                  <div className="w-1 h-1 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <div className="w-1 h-1 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <div className="w-1 h-1 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
 
-        {/* Cancel button */}
-        {isProcessing && !allComplete && onCancel && (
-          <button
-            onClick={onCancel}
-            className="w-full mt-2 px-4 py-2.5 text-sm font-semibold text-red-400 hover:text-red-300 border border-red-500/30 hover:border-red-500/50 rounded-lg transition-all hover:bg-red-500/10 hover:shadow-[0_0_20px_rgba(239,68,68,0.2)]"
-          >
-            Cancel Generation
-          </button>
-        )}
-      </CardHeader>
-      <CardContent className="space-y-3 sm:space-y-5 px-4 sm:px-6 pb-6">
-        {/* Vertical Timeline - Mobile Optimized */}
-        <div className="space-y-3 sm:space-y-5">
-          {steps.map((step, idx) => {
-            const Icon = agentIcons[step.agent];
-            const isActive = step.status === 'processing' || step.status === 'complete';
-            const agentColor = step.agent === 'health-safety' ? 'green' : 'blue';
+          {/* Progress Bar */}
+          <div className="space-y-2.5">
+            <div className="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden shadow-inner">
+              <div
+                className="h-full bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow transition-all duration-500 ease-out shadow-lg shadow-elec-yellow/30"
+                style={{ width: `${displayProgress}%` }}
+              />
+            </div>
             
-            return (
-              <div key={step.agent} className="relative">
-                {/* Connector line with gradient animation */}
-                {idx < steps.length - 1 && (
-                  <div className={`absolute left-6 sm:left-7 top-[60px] sm:top-[64px] w-0.5 h-[calc(100%+16px)] sm:h-[calc(100%+24px)] -mb-4 sm:-mb-6 transition-all duration-700 ${
-                    step.status === 'complete' 
-                      ? 'bg-gradient-to-b from-elec-yellow via-elec-yellow to-elec-yellow/30 shadow-[0_0_8px_rgba(255,193,7,0.5)]' 
-                      : 'bg-elec-yellow/20'
-                  }`} />
-                )}
-                
-                <div className={`relative flex gap-3 sm:gap-5 p-4 sm:p-5 rounded-xl transition-all duration-300 min-h-[80px] ${
-                  step.status === 'processing'
-                    ? 'bg-gradient-to-br from-elec-yellow/10 via-elec-grey/90 to-elec-grey/90 border border-elec-yellow/40 shadow-[0_0_20px_rgba(255,193,7,0.15)] backdrop-blur-sm'
-                    : isActive 
-                    ? 'bg-elec-grey/80 border border-elec-yellow/30' 
-                    : 'bg-elec-grey/50 border border-elec-yellow/10'
-                } ${step.status === 'complete' ? 'animate-in fade-in slide-in-from-left-4 duration-500' : ''}`}>
-                  {/* Icon with glow effect - MOBILE OPTIMIZED */}
-                  <div className={`shrink-0 h-14 w-14 sm:h-16 sm:w-16 rounded-xl flex items-center justify-center transition-all duration-300 relative ${
-                    step.status === 'complete' 
-                      ? 'bg-gradient-to-br from-green-500/30 to-green-500/10 border-2 border-green-500/50 shadow-[0_0_20px_rgba(34,197,94,0.3)]' 
-                      : step.status === 'processing'
-                      ? 'bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/10 border-2 border-elec-yellow/60 shadow-[0_0_20px_rgba(255,193,7,0.4)]'
-                      : 'bg-muted border-2 border-border'
-                  }`}>
-                    <Icon className={`relative h-7 w-7 sm:h-8 sm:w-8 ${
-                      step.status === 'complete' 
-                        ? 'text-green-400' 
-                        : step.status === 'processing'
-                        ? 'text-elec-yellow'
-                        : 'text-muted-foreground'
-                    }`} />
-                    {step.status === 'complete' && (
-                      <Sparkles className="absolute -top-1 -right-1 h-4 w-4 sm:h-5 sm:w-5 text-green-300 animate-in zoom-in duration-300" />
-                    )}
-                    {step.status === 'processing' && (
-                      <div className="absolute inset-0 rounded-xl animate-ping bg-elec-yellow/20" />
+            {/* Stats Row */}
+            <div className="flex items-center justify-between text-sm">
+              <span className="font-semibold text-elec-yellow text-base">{Math.round(displayProgress)}%</span>
+              <div className="flex items-center gap-3 text-gray-400">
+                <span className="flex items-center gap-1.5">
+                  <Clock className="w-4 h-4" />
+                  {formatTime(elapsedTime)}
+                </span>
+                <span className="text-gray-600">•</span>
+                <span>~{formatTime(estimatedTimeRemaining)} remaining</span>
+              </div>
+            </div>
+
+            {/* Step Indicator */}
+            <div className="text-center text-sm text-gray-400 pt-1">
+              Step {currentAgentIndex >= 0 ? currentAgentIndex + 1 : agentSteps.length} of {agentSteps.length}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Agent Cards - Mobile Optimized Vertical Layout */}
+      <div className="space-y-6">
+        {agentSteps.map((agent) => {
+          const Icon = getAgentIcon(agent.name);
+          const isActive = agent.status === 'processing';
+          const isComplete = agent.status === 'complete';
+          const isPending = agent.status === 'pending';
+
+          return (
+            <Card
+              key={agent.name}
+              className={`
+                transition-all duration-300 min-h-[300px]
+                ${isActive ? 'border-2 border-elec-yellow/40 shadow-xl shadow-elec-yellow/10 scale-[1.02]' : ''}
+                ${isComplete ? 'border-2 border-green-500/40 shadow-lg' : ''}
+                ${isPending ? 'border border-gray-700/50 opacity-70' : ''}
+              `}
+            >
+              <CardContent className="pt-8 pb-6 px-6">
+                <div className="flex flex-col items-center text-center space-y-4">
+                  {/* Icon - Centered at Top - LARGER */}
+                  <div className={`
+                    w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300
+                    ${isActive ? 'bg-elec-yellow/20 ring-4 ring-elec-yellow/30 shadow-xl shadow-elec-yellow/20 animate-pulse' : ''}
+                    ${isComplete ? 'bg-green-500/20 ring-4 ring-green-500/30 shadow-lg' : ''}
+                    ${isPending ? 'bg-gray-800/50' : ''}
+                  `}>
+                    {isComplete ? (
+                      <CheckCircle className="w-10 h-10 text-green-400" />
+                    ) : (
+                      <Icon className={`
+                        w-10 h-10
+                        ${isActive ? 'text-elec-yellow' : ''}
+                        ${isPending ? 'text-gray-500' : ''}
+                      `} />
                     )}
                   </div>
 
-                  {/* Content - MOBILE OPTIMIZED */}
-                  <div className="flex-1 min-w-0 space-y-2 sm:space-y-3">
-                    {/* Title and Status Row */}
-                    <div className="flex flex-col gap-2">
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-bold text-lg sm:text-xl leading-tight tracking-tight">
-                            {agentNames[step.agent]}
-                          </h4>
-                        </div>
-                        <div className="shrink-0 flex items-center gap-2">
-                          {getStatusIcon(step.status)}
-                          {getStatusBadge(step.status)}
-                        </div>
-                      </div>
-                      <p className="text-base sm:text-lg text-elec-light/70 font-medium leading-relaxed">
-                        {agentDescriptions[step.agent]}
-                      </p>
+                  {/* Title - LARGER */}
+                  <div className="space-y-2">
+                    <h3 className={`
+                      text-xl font-semibold
+                      ${isActive ? 'text-elec-yellow' : ''}
+                      ${isComplete ? 'text-green-400' : ''}
+                      ${isPending ? 'text-gray-400' : ''}
+                    `}>
+                      {getAgentTitle(agent.name)}
+                    </h3>
+
+                    {/* Status Badge - LARGER */}
+                    <div className={`
+                      inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium
+                      ${isActive ? 'bg-elec-yellow/20 text-elec-yellow' : ''}
+                      ${isComplete ? 'bg-green-500/20 text-green-400' : ''}
+                      ${isPending ? 'bg-gray-800/50 text-gray-500' : ''}
+                    `}>
+                      {isActive && (
+                        <>
+                          <span className="w-2 h-2 rounded-full bg-elec-yellow animate-pulse" />
+                          Processing
+                        </>
+                      )}
+                      {isComplete && (
+                        <>
+                          <CheckCircle className="w-4 h-4" />
+                          Complete
+                        </>
+                      )}
+                      {isPending && (
+                        <>
+                          <Clock className="w-4 h-4" />
+                          Pending
+                        </>
+                      )}
                     </div>
+                  </div>
 
-                    {/* Reasoning/Status - MOBILE OPTIMIZED */}
-                    {step.reasoning && (
-                      <div className={`text-sm sm:text-base p-3 rounded-lg ${
-                        step.status === 'processing' 
-                          ? 'bg-elec-yellow/5 border border-elec-yellow/20 text-elec-light animate-pulse' 
-                          : 'bg-green-500/5 border border-green-500/20 text-elec-light/90'
-                      }`}>
-                        <span className="font-medium leading-relaxed">
-                          {step.reasoning}
-                        </span>
+                  {/* Progress Bar for Active Agent */}
+                  {isActive && (
+                    <div className="w-full space-y-2 pt-2">
+                      <div className="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-elec-yellow to-amber-400 transition-all duration-500"
+                          style={{ width: `${agent.progress}%` }}
+                        />
                       </div>
-                    )}
-
-                    {/* Time elapsed for completed steps */}
-                    {step.status === 'complete' && step.timeElapsed && (
-                      <div className="flex items-center gap-2 text-xs sm:text-sm text-elec-light/60">
-                        <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                        <span className="font-medium tabular-nums">Completed in {step.timeElapsed}s</span>
+                      <div className="text-sm text-gray-400 font-medium">
+                        {agent.progress}% complete
                       </div>
-                    )}
+                    </div>
+                  )}
 
-                    {/* Reasoning - only show when complete */}
-                    {step.status === 'complete' && step.reasoning && (
-                      <div className="pt-3 border-t border-elec-yellow/20 animate-in fade-in slide-in-from-top-2 duration-300">
-                        <p className="text-sm sm:text-base text-elec-light/90 font-medium leading-relaxed">
-                          {step.reasoning}
+                  {/* Description - LARGER */}
+                  <p className="text-base text-gray-400 max-w-xs leading-relaxed">
+                    {getAgentDescription(agent.name)}
+                  </p>
+
+                  {/* Reasoning Box - LARGER */}
+                  {(isActive || isComplete) && (agent.currentStep || agent.reasoning) && (
+                    <div className="w-full mt-4 p-4 bg-elec-grey/40 rounded-lg border border-elec-yellow/20">
+                      <div className="flex items-start gap-2.5">
+                        <Zap className="w-4 h-4 text-elec-yellow shrink-0 mt-1 animate-pulse" />
+                        <p className="text-sm text-gray-300 leading-relaxed text-left">
+                          {agent.reasoning || agent.currentStep}
                         </p>
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
 
-        {/* Completion message */}
-        {allComplete && (
-          <div className="mt-4 sm:mt-6 p-4 sm:p-5 rounded-xl bg-gradient-to-br from-green-500/20 to-green-500/10 border-2 border-green-500/40 animate-fade-in shadow-[0_0_30px_rgba(34,197,94,0.2)]">
-            <div className="flex items-center gap-4">
-              <CheckCircle2 className="h-8 w-8 sm:h-9 sm:w-9 text-green-400 shrink-0" />
-              <div className="flex-1">
-                <p className="text-lg sm:text-xl font-bold text-green-400 tracking-tight leading-tight">
-                  Documentation Generated Successfully
-                </p>
-                <p className="text-sm sm:text-base text-green-400/80 mt-1.5 font-medium leading-relaxed">
-                  Review and edit your RAMS below
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+      {/* Timeline */}
+      <TimelineExpectation />
     </div>
   );
 };
