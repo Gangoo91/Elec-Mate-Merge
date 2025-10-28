@@ -683,7 +683,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         model: 'gpt-5-mini-2025-08-07',  // GPT-5 Mini: Fast, cost-efficient, perfect for structured outputs
         systemPrompt,
         userPrompt,
-        maxTokens: 8000,     // Optimized for comprehensive RAMS without timeout
+        maxTokens: 16000,    // GPT-5 Mini needs more tokens than Gemini for comprehensive hazards
         timeoutMs: 90000,    // 1.5 minutes - leaves buffer for RAG/validation
       tools: [{
         type: 'function',
