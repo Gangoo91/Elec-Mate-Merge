@@ -94,17 +94,6 @@ export function useAIRAMS(): UseAIRAMSReturn {
     animationCleanupRef.current = cleanup;
   }, [overallProgress]);
 
-  // Autosave every 30 seconds when data exists
-  useEffect(() => {
-    if (!ramsData || !methodData || isProcessing) return;
-
-    const autosaveInterval = setInterval(() => {
-      saveToDatabase(true); // Silent autosave
-    }, 30000);
-
-    return () => clearInterval(autosaveInterval);
-  }, [ramsData, methodData, isProcessing]); // Will add saveToDatabase after declaration
-
   const saveToDatabase = useCallback(async (isAutosave = false) => {
     if (!ramsData || !methodData) {
       if (!isAutosave) {
@@ -355,14 +344,26 @@ export function useAIRAMS(): UseAIRAMSReturn {
     }
   }, [ramsData, methodData, documentId, toast]);
 
+  // Issue 5: Autosave every 30 seconds when data exists
+  useEffect(() => {
+    if (!ramsData || !methodData || isProcessing) return;
+
+    const autosaveInterval = setInterval(() => {
+      saveToDatabase(true); // Silent autosave
+    }, 30000);
+
+    return () => clearInterval(autosaveInterval);
+  }, [ramsData, methodData, isProcessing, saveToDatabase]);
+
+  // Issue 6: Optimized progress simulation (2s intervals, 45s duration)
   const simulateSubStepProgress = useCallback((
     agent: 'health-safety' | 'installer',
     subSteps: SubStep[]
   ) => {
     let currentSubStepIndex = 0;
     let currentProgress = 0;
-    const totalDuration = 120000; // 2 minutes per agent
-    const updateInterval = 150; // Update every 150ms
+    const totalDuration = 45000; // 45s per agent (reduced from 120s)
+    const updateInterval = 2000; // Update every 2s (was 150ms)
     const progressPerUpdate = (100 / (totalDuration / updateInterval)) / subSteps.length;
 
     const interval = setInterval(() => {

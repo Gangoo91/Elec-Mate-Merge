@@ -74,8 +74,41 @@ Return ONLY a JSON array: [score1, score2, ...]`;
         })
       });
       
+      if (!response.ok) {
+        logger.warn(`Cross-encoder API error: ${response.status}`, { batch: batch.length });
+        throw new Error(`API returned ${response.status}`);
+      }
+      
       const data = await response.json();
-      const scores = JSON.parse(data.choices[0].message.content);
+      
+      // Issue 10: Fix JSON parsing with proper error handling
+      let scores;
+      try {
+        const responseText = data.choices[0]?.message?.content;
+        
+        if (!responseText || responseText.trim() === '') {
+          logger.warn('Cross-encoder returned empty response, using fallback scores');
+          scores = batch.map(() => 50); // Neutral scores
+        } else {
+          scores = JSON.parse(responseText);
+          
+          // Validate scores array
+          if (!Array.isArray(scores) || scores.length !== batch.length) {
+            logger.warn('Invalid scores array, using fallback', { 
+              expected: batch.length, 
+              received: scores?.length 
+            });
+            scores = batch.map(() => 50);
+          }
+        }
+      } catch (parseError) {
+        logger.error('Cross-encoder JSON parse error', { 
+          error: parseError instanceof Error ? parseError.message : String(parseError),
+          responsePreview: data.choices[0]?.message?.content?.substring(0, 200)
+        });
+        // Fallback to neutral scores
+        scores = batch.map(() => 50);
+      }
       
       batch.forEach((reg, idx) => {
         scoredRegulations.push({

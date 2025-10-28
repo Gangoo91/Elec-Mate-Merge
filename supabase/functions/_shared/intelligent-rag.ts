@@ -282,13 +282,14 @@ async function vectorSearchWithEmbedding(
     searchTypes.push('bs7671');
   }
 
+  // Issue 8: Reduced RAG result limits for faster processing
   // Design knowledge search
   if (!priority || priority.design > 50) {
     searches.push(
       supabase.rpc('search_design_knowledge', {
         query_embedding: embedding,
         match_threshold: 0.50,
-        match_count: 12,
+        match_count: 6, // Reduced from 12
       })
     );
     searchTypes.push('design');
@@ -302,7 +303,7 @@ async function vectorSearchWithEmbedding(
         scale_filter: null,
         source_filter: null,
         match_threshold: 0.50,
-        match_count: 12,
+        match_count: 10, // Kept at 10 (critical for safety)
       })
     );
     searchTypes.push('health_safety');
@@ -315,7 +316,7 @@ async function vectorSearchWithEmbedding(
         query_embedding: embedding,
         method_filter: params.context?.entities?.installMethod || null,
         match_threshold: 0.50,
-        match_count: 8,
+        match_count: 7, // Reduced from 8
       })
     );
     searchTypes.push('installation');
@@ -323,20 +324,9 @@ async function vectorSearchWithEmbedding(
     console.log('⏭️ Skipping installation search (low priority)');
   }
 
-  // PHASE 4: Maintenance knowledge search - prioritize for industrial/motor circuits
-  if (!priority || priority.maintenance >= 50 || params.circuitType?.includes('industrial') || params.circuitType?.includes('motor')) {
-    searches.push(
-      supabase.rpc('search_maintenance_hybrid', {
-        query_text: params.expandedQuery,
-        query_embedding: embedding,
-        equipment_filter: params.context?.entities?.equipmentType || null,
-        match_count: 8,
-      })
-    );
-    searchTypes.push('maintenance');
-  } else {
-    console.log('⏭️ Skipping maintenance search (low priority)');
-  }
+  // PHASE 4: Maintenance knowledge search - skip entirely (not needed for RAMS)
+  console.log('⏭️ Skipping maintenance search (not needed for H&S RAMS)');
+  // Removed maintenance search to reduce token usage
 
   // IMPROVEMENT: Proactive Error Recovery - Execute with retry logic
   const { withRetry, RetryPresets } = await import('./retry.ts');

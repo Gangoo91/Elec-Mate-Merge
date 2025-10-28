@@ -415,7 +415,12 @@ Testing & Commissioning:
 
     logger.info('💭 THINKING: Identifying electrical hazards and risks');
     
-    const systemPrompt = `You are an expert Health & Safety adviser specialising in UK electrical installations.
+    // Issue 7: Optimized system prompt from separate module
+    const { buildOptimizedSystemPrompt } = await import('./system-prompt-optimized.ts');
+    const systemPrompt = buildOptimizedSystemPrompt(hsContext, structuredHazards, installKnowledge);
+    
+    // DEPRECATED: Old verbose prompt (5000+ chars) replaced with optimized version
+    const _oldSystemPrompt = `You are a UK electrical safety expert specialising in BS 7671:2018+A3:2024.
 
 **REGULATION-GROUNDED RISK ASSESSMENT:**
 Always ground your risk assessment in BS 7671:2018+A2:2022 requirements:
