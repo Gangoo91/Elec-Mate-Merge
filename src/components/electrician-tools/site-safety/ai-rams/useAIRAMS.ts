@@ -848,6 +848,28 @@ export function useAIRAMS(): UseAIRAMSReturn {
         willUseAIData: hasValidHazards,
       });
 
+      // Display timing breakdown from H&S
+      if (hsData?.metadata?.timingBreakdown) {
+        const timing = hsData.metadata.timingBreakdown;
+        const ragPercent = timing.totalTime > 0 ? Math.round((timing.ragRetrieval / timing.totalTime) * 100) : 0;
+        const aiPercent = timing.totalTime > 0 ? Math.round((timing.aiGeneration / timing.totalTime) * 100) : 0;
+        
+        console.log('⏱️ H&S TIMING BREAKDOWN:', {
+          queryEnhancement: `${timing.queryEnhancement}ms`,
+          ragRetrieval: `${timing.ragRetrieval}ms (${ragPercent}%)`,
+          aiGeneration: `${timing.aiGeneration}ms (${aiPercent}%)`,
+          totalTime: `${timing.totalTime}ms`
+        });
+
+        // Warn if components are slow
+        if (timing.ragRetrieval > 5000) {
+          console.warn(`🐌 H&S RAG BOTTLENECK: ${timing.ragRetrieval}ms (expected <3000ms)`);
+        }
+        if (timing.aiGeneration > 45000) {
+          console.warn(`🐌 H&S AI BOTTLENECK: ${timing.aiGeneration}ms (expected <40000ms)`);
+        }
+      }
+
       // Use unwrapped data for the rest of processing
       let hsDataToUse = unwrappedData;
       let shouldUseFallback = false;
@@ -1064,6 +1086,29 @@ export function useAIRAMS(): UseAIRAMSReturn {
         console.warn('⚠️ Installer agent failed, proceeding with H&S data only');
       }
 
+      // Display timing breakdown from Installer
+      if (installerData?.metadata?.timingBreakdown) {
+        const timing = installerData.metadata.timingBreakdown;
+        const ragPercent = timing.totalTime > 0 ? Math.round((timing.ragRetrieval / timing.totalTime) * 100) : 0;
+        const aiPercent = timing.totalTime > 0 ? Math.round((timing.aiGeneration / timing.totalTime) * 100) : 0;
+        const cachePercent = timing.totalTime > 0 ? Math.round((timing.cacheCheck / timing.totalTime) * 100) : 0;
+        
+        console.log('⏱️ INSTALLER TIMING BREAKDOWN:', {
+          cacheCheck: `${timing.cacheCheck}ms (${cachePercent}%)`,
+          ragRetrieval: `${timing.ragRetrieval}ms (${ragPercent}%)`,
+          aiGeneration: `${timing.aiGeneration}ms (${aiPercent}%)`,
+          totalTime: `${timing.totalTime}ms`
+        });
+
+        // Warn if components are slow
+        if (timing.ragRetrieval > 5000) {
+          console.warn(`🐌 INSTALLER RAG BOTTLENECK: ${timing.ragRetrieval}ms (expected <3000ms)`);
+        }
+        if (timing.aiGeneration > 45000) {
+          console.warn(`🐌 INSTALLER AI BOTTLENECK: ${timing.aiGeneration}ms (expected <40000ms)`);
+        }
+      }
+
       const installerExtracted = installerData?.success 
         ? extractInstallerData(installerData)
         : { steps: [], toolsRequired: [], materialsRequired: [], practicalTips: [] };
@@ -1109,11 +1154,15 @@ export function useAIRAMS(): UseAIRAMSReturn {
         hsDataToUse = hsData; // Restore original AI data
       }
 
-      console.log('🔄 Pre-transformation validation:', {
-        hazardsBeingPassed: finalHazardCheck.length,
-        willUseAIData: finalHazardCheck.length >= 8,
-        originalHazardCount: extractedHazards.length
-      });
+      // Enhanced pre-transformation validation with all data types
+      const preTransformCounts = {
+        hazards: extractedHazards.length,
+        ppe: hsExtracted.ppe?.length || 0,
+        emergencyProcs: hsExtracted.emergencyProcedures?.length || 0,
+        steps: installerData.data?.steps?.length || 0
+      };
+
+      console.log('🎯 PRE-TRANSFORMATION CHECKPOINT:', preTransformCounts);
       
       // Phase 4: Use standardized data directly - wrap for transformer compatibility
       const combinedData = combineAgentOutputsToRAMS(
@@ -1133,42 +1182,79 @@ export function useAIRAMS(): UseAIRAMSReturn {
         }
       );
 
-      // STEP 5: Enhanced quality gate - detect hazard loss
-      console.log('✅ RAMS transformation complete:', {
-        ramsRisks: combinedData.ramsData?.risks?.length || 0,
-        methodSteps: combinedData.methodData?.steps?.length || 0,
-        extractedHazards: extractedHazards.length
-      });
+      // STEP 5: Enhanced post-transformation validation
+      const postTransformCounts = {
+        risks: combinedData.ramsData?.risks?.length || 0,
+        ppeDetails: combinedData.ramsData?.ppeDetails?.length || 0,
+        emergencyProcs: combinedData.ramsData?.emergencyProcedures?.length || 0,
+        steps: combinedData.methodData?.steps?.length || 0
+      };
 
-      // 🎯 CRITICAL CHECKPOINT - Verify risks before state update
+      // Calculate loss rates
+      const hazardLossRate = preTransformCounts.hazards > 0
+        ? ((preTransformCounts.hazards - postTransformCounts.risks) / preTransformCounts.hazards) * 100
+        : 0;
+      const ppeLossRate = preTransformCounts.ppe > 0
+        ? ((preTransformCounts.ppe - postTransformCounts.ppeDetails) / preTransformCounts.ppe) * 100
+        : 0;
+      const emergencyLossRate = preTransformCounts.emergencyProcs > 0
+        ? ((preTransformCounts.emergencyProcs - postTransformCounts.emergencyProcs) / preTransformCounts.emergencyProcs) * 100
+        : 0;
+      const stepLossRate = preTransformCounts.steps > 0
+        ? ((preTransformCounts.steps - postTransformCounts.steps) / preTransformCounts.steps) * 100
+        : 0;
+
       console.log('🎯 POST-TRANSFORMATION CHECKPOINT:', {
-        risksInCombinedData: combinedData.ramsData?.risks?.length,
-        expectedMinimum: 20,
-        hazardsExtracted: extractedHazards.length,
-        matchesExpectation: (combinedData.ramsData?.risks?.length || 0) >= 20,
-        first3Risks: combinedData.ramsData?.risks?.slice(0, 3).map(r => r.hazard),
-        last3Risks: combinedData.ramsData?.risks?.slice(-3).map(r => r.hazard)
+        before: preTransformCounts,
+        after: postTransformCounts,
+        lost: {
+          hazards: preTransformCounts.hazards - postTransformCounts.risks,
+          ppe: preTransformCounts.ppe - postTransformCounts.ppeDetails,
+          emergencyProcs: preTransformCounts.emergencyProcs - postTransformCounts.emergencyProcs,
+          steps: preTransformCounts.steps - postTransformCounts.steps
+        },
+        lossRates: {
+          hazards: `${hazardLossRate.toFixed(1)}%`,
+          ppe: `${ppeLossRate.toFixed(1)}%`,
+          emergencyProcs: `${emergencyLossRate.toFixed(1)}%`,
+          steps: `${stepLossRate.toFixed(1)}%`
+        }
       });
 
-      // Verify we didn't lose more than 20% of hazards in transformation
-      const hazardRetentionRate = extractedHazards.length > 0 
-        ? (combinedData.ramsData?.risks?.length || 0) / extractedHazards.length 
-        : 1;
-      
-      if (hazardRetentionRate < 0.8 && extractedHazards.length >= 5) {
-        console.error('❌ CRITICAL: Significant hazard loss during transformation!', {
-          extractedFromAI: extractedHazards.length,
-          afterTransformation: combinedData.ramsData?.risks?.length || 0,
-          lostHazards: extractedHazards.length - (combinedData.ramsData?.risks?.length || 0),
-          retentionRate: `${(hazardRetentionRate * 100).toFixed(1)}%`,
-          threshold: '80%'
+      // CRITICAL: Alert on significant data loss
+      if (hazardLossRate > 20 && preTransformCounts.hazards >= 5) {
+        console.error('🚨 CRITICAL: >20% hazard loss during transformation!', {
+          original: preTransformCounts.hazards,
+          transformed: postTransformCounts.risks,
+          lost: preTransformCounts.hazards - postTransformCounts.risks,
+          lossRate: `${hazardLossRate.toFixed(1)}%`
         });
-        
+
         toast({
-          title: "Data loss detected",
-          description: `Only ${combinedData.ramsData?.risks?.length} of ${extractedHazards.length} hazards preserved (${(hazardRetentionRate * 100).toFixed(0)}%). Please report this issue.`,
+          title: "Data transformation issue",
+          description: `Lost ${hazardLossRate.toFixed(0)}% of hazards (${preTransformCounts.hazards - postTransformCounts.risks} items). Please report this bug.`,
           variant: "destructive"
         });
+      }
+
+      if (ppeLossRate > 30 && preTransformCounts.ppe >= 5) {
+        console.warn('⚠️ WARNING: >30% PPE loss during transformation', {
+          original: preTransformCounts.ppe,
+          transformed: postTransformCounts.ppeDetails,
+          lost: preTransformCounts.ppe - postTransformCounts.ppeDetails,
+          lossRate: `${ppeLossRate.toFixed(1)}%`
+        });
+
+        toast({
+          title: "PPE data loss",
+          description: `Lost ${ppeLossRate.toFixed(0)}% of PPE items during transformation.`,
+          variant: "destructive"
+        });
+      }
+
+      // Success message if no significant loss
+      if (hazardLossRate === 0 && ppeLossRate === 0) {
+        console.log('✅ Perfect transformation: 0% data loss');
       }
 
       setRamsData(combinedData.ramsData);

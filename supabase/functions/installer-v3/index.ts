@@ -715,7 +715,13 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         generationTimeMs: timings.total,
         stepCount: installResult.installationSteps?.length || 0,
         totalEstimatedTime: installResult.totalEstimatedTime || 'Unknown',
-        difficultyLevel: installResult.difficultyLevel || 'Medium'
+        difficultyLevel: installResult.difficultyLevel || 'Medium',
+        timingBreakdown: {
+          cacheCheck: timings.cacheCheck,
+          ragRetrieval: timings.ragRetrieval,
+          aiGeneration: timings.aiGeneration,
+          totalTime: timings.total
+        }
       }
     };
 

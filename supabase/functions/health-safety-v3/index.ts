@@ -117,6 +117,15 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'health-safety-v3' });
   const requestStart = Date.now();
 
+  // Performance tracking
+  const performanceMetrics = {
+    startTime: Date.now(),
+    queryEnhancement: 0,
+    ragRetrieval: 0,
+    aiGeneration: 0,
+    totalTime: 0
+  };
+
   // Timeout promise
   const timeoutPromise = new Promise<Response>((_, reject) => {
     setTimeout(() => {
@@ -136,6 +145,7 @@ serve(async (req) => {
     logEnhancement(enhancement, logger);
     
     const effectiveQuery = enhancement.enhanced;
+    performanceMetrics.queryEnhancement = Date.now() - performanceMetrics.startTime;
 
     // Enhanced input validation
     if (!query || typeof query !== 'string' || query.trim().length === 0) {
@@ -184,7 +194,7 @@ serve(async (req) => {
 
     // Step 1: Use intelligent RAG with cross-encoder reranking
     logger.debug('Starting intelligent RAG for H&S');
-    const ragStart = Date.now();
+    const ragStartTime = Date.now();
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -244,11 +254,18 @@ serve(async (req) => {
       }
     }
     
-    logger.debug('H&S knowledge retrieved', { 
-      duration: Date.now() - ragStart,
+    performanceMetrics.ragRetrieval = Date.now() - ragStartTime;
+    
+    logger.info('H&S knowledge retrieved', { 
+      duration: performanceMetrics.ragRetrieval,
       resultsCount: hsKnowledge.regulations?.length || 0,
       avgScore: hsKnowledge.healthSafetyDocs?.length > 0 ? (hsKnowledge.healthSafetyDocs.reduce((s: number, k: any) => s + (k.hybrid_score || 0), 0) / hsKnowledge.healthSafetyDocs.length).toFixed(3) : 'N/A'
     });
+
+    // Check if RAG is slow
+    if (performanceMetrics.ragRetrieval > 5000) {
+      logger.warn(`⚠️ SLOW RAG: ${performanceMetrics.ragRetrieval}ms (expected <3000ms)`);
+    }
 
     // PHASE 2A: Build H&S context with STRUCTURED hazard extraction
     let hsContext: string;
@@ -736,14 +753,14 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     logger.info('Starting AI call with timeout protection');
     
     // Add progress monitoring
-    const aiCallStart = Date.now();
+    const aiGenerationStartTime = Date.now();
     let progressInterval: number | undefined;
     
     let aiResult;
     try {
       // Log progress every 30 seconds
       progressInterval = setInterval(() => {
-        const elapsed = Math.round((Date.now() - aiCallStart) / 1000);
+        const elapsed = Math.round((Date.now() - aiGenerationStartTime) / 1000);
       logger.info(`⏱️ AI call in progress: ${elapsed}s elapsed (timeout: 240s)`);
       }, 30000);
       const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
@@ -824,11 +841,18 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       }, OPENAI_API_KEY);
       
       if (progressInterval) clearInterval(progressInterval);
-      logger.info(`✅ AI call completed in ${Math.round((Date.now() - aiCallStart) / 1000)}s`);
+      performanceMetrics.aiGeneration = Date.now() - aiGenerationStartTime;
+      logger.info(`✅ AI call completed in ${Math.round(performanceMetrics.aiGeneration / 1000)}s`);
+      
+      // Check if AI is slow
+      if (performanceMetrics.aiGeneration > 45000) {
+        logger.warn(`⚠️ SLOW AI: ${performanceMetrics.aiGeneration}ms (expected <40000ms)`);
+      }
       
     } catch (aiError) {
       if (progressInterval) clearInterval(progressInterval);
-      logger.error(`❌ OpenAI call failed after ${Math.round((Date.now() - aiCallStart) / 1000)}s`);
+      performanceMetrics.aiGeneration = Date.now() - aiGenerationStartTime;
+      logger.error(`❌ OpenAI call failed after ${Math.round(performanceMetrics.aiGeneration / 1000)}s`);
       logger.error('OpenAI call failed - NO FALLBACK', {
         error: aiError instanceof Error ? aiError.message : String(aiError),
         stack: aiError instanceof Error ? aiError.stack : undefined,
@@ -1024,6 +1048,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     });
 
     // ✅ PHASE 1A: Build standardized response structure
+    performanceMetrics.totalTime = Date.now() - performanceMetrics.startTime;
     const generationTimeMs = Date.now() - requestStart;
     const hazardCount = validatedRiskAssessment.hazards?.length || 0;
     const ppeCount = validatedRiskAssessment.ppeDetails?.length || 0;
@@ -1061,7 +1086,13 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         ppeCount,
         ragSourceCount: hsKnowledge?.healthSafetyDocs?.length || 0,
         aiModel: 'gpt-5-mini-2025-08-07',
-        tokensUsed: safetyResult.tokensUsed
+        tokensUsed: safetyResult.tokensUsed,
+        timingBreakdown: {
+          queryEnhancement: performanceMetrics.queryEnhancement,
+          ragRetrieval: performanceMetrics.ragRetrieval,
+          aiGeneration: performanceMetrics.aiGeneration,
+          totalTime: performanceMetrics.totalTime
+        }
       }
     };
 
