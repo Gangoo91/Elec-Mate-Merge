@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,6 +22,9 @@ import {
   equipmentCategories, 
   commonEquipment
 } from "@/data/electrician/presetData";
+import { supabase } from "@/integrations/supabase/client";
+import { useDebounce } from "@/hooks/useDebounce";
+import { toast } from "@/hooks/use-toast";
 
 interface EnhancedQuoteItemsStepProps {
   items: QuoteItem[];
@@ -50,6 +53,9 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
   });
 
   const [materialSearch, setMaterialSearch] = useState("");
+  const [ragResults, setRagResults] = useState<any[]>([]);
+  const [isSearchingRAG, setIsSearchingRAG] = useState(false);
+  const debouncedSearch = useDebounce(materialSearch, 500);
 
 
   const handleTemplateSelect = (template: JobTemplate) => {
@@ -189,12 +195,12 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
     return [];
   };
 
-  // Filter materials based on search and category
+  // Filter materials based on search and category (instant client-side search)
   const filteredMaterials = useMemo(() => {
     let filtered = commonMaterials;
 
     // Filter by category if selected
-    if (newItem.subcategory) {
+    if (newItem.subcategory && newItem.subcategory !== 'all-categories') {
       filtered = filtered.filter(m => m.category === newItem.subcategory);
     }
 
@@ -211,6 +217,45 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
 
     return filtered;
   }, [materialSearch, newItem.subcategory]);
+
+  // RAG search effect (searches 43k materials)
+  useEffect(() => {
+    const performRAGSearch = async () => {
+      if (debouncedSearch.trim().length >= 3) {
+        setIsSearchingRAG(true);
+        try {
+          const { data, error } = await supabase.functions.invoke('search-pricing-rag', {
+            body: {
+              query: debouncedSearch,
+              categoryFilter: newItem.subcategory && newItem.subcategory !== 'all-categories' ? newItem.subcategory : null,
+              supplierFilter: 'all',
+              matchThreshold: 0.6,
+              matchCount: 30
+            }
+          });
+
+          if (error) throw error;
+
+          if (data?.materials) {
+            setRagResults(data.materials);
+          }
+        } catch (err) {
+          console.error('RAG search failed:', err);
+          toast({
+            title: "Search Error",
+            description: "Failed to search full materials database. Showing instant results only.",
+            variant: "destructive"
+          });
+        } finally {
+          setIsSearchingRAG(false);
+        }
+      } else {
+        setRagResults([]);
+      }
+    };
+
+    performRAGSearch();
+  }, [debouncedSearch, newItem.subcategory]);
 
   const total = items.reduce((sum, item) => sum + item.totalPrice, 0);
 
@@ -355,11 +400,11 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                         </div>
                       )}
                       
-                      {/* Search Materials */}
+                      {/* Search Materials - Hybrid Instant + RAG Search */}
                       <div className="space-y-2">
                         <Label htmlFor="materialSearch" className="text-sm font-medium flex items-center gap-2">
                           <Search className="h-4 w-4" />
-                          Search Materials
+                          Search 43k Materials
                         </Label>
                         <Input
                           id="materialSearch"
@@ -369,66 +414,145 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                           className="h-12"
                         />
                         {materialSearch.length >= 2 && (
-                          <p className="text-xs text-muted-foreground">
-                            Found {filteredMaterials.length} material{filteredMaterials.length !== 1 ? 's' : ''}
-                          </p>
+                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <span>Instant: {filteredMaterials.length} found</span>
+                            {isSearchingRAG && <span className="animate-pulse">• Searching 43k materials...</span>}
+                            {!isSearchingRAG && ragResults.length > 0 && <span>• RAG: {ragResults.length} found</span>}
+                          </div>
                         )}
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="materialCategory" className="text-sm font-medium">Material Category</Label>
-                          <Select value={newItem.subcategory} onValueChange={(value) => setNewItem(prev => ({ ...prev, subcategory: value, materialCode: "" }))}>
-                            <SelectTrigger className="h-12">
-                              <SelectValue placeholder="Select category" />
-                            </SelectTrigger>
-                            <SelectContent className="z-50 bg-background border shadow-lg">
-                              <SelectItem value="all-categories">All Categories</SelectItem>
-                              {materialCategories.map(cat => (
-                                <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-
+                      {/* Material Category Filter */}
                       <div className="space-y-2">
-                        <Label htmlFor="material" className="text-sm font-medium">Material</Label>
-                        <Select value={newItem.materialCode} onValueChange={handleMaterialSelect}>
-                          <SelectTrigger className="h-12 w-full">
-                            <SelectValue 
-                              placeholder={filteredMaterials.length > 0 ? "Select material" : "No materials found"}
-                              className="truncate"
-                            />
+                        <Label htmlFor="materialCategory" className="text-sm font-medium">Material Category</Label>
+                        <Select value={newItem.subcategory} onValueChange={(value) => setNewItem(prev => ({ ...prev, subcategory: value, materialCode: "" }))}>
+                          <SelectTrigger className="h-12">
+                            <SelectValue placeholder="All Categories" />
                           </SelectTrigger>
-                           <SelectContent className="z-50 bg-background border shadow-lg max-h-[400px] overflow-y-auto">
-                             {filteredMaterials.length > 0 ? (
-                               filteredMaterials.map(material => {
-                                 const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(material.defaultPrice) : material.defaultPrice;
-                                 return (
-                                   <SelectItem key={material.id} value={material.id} className="cursor-pointer w-full">
-                                     <div className="flex flex-col py-1 w-full">
-                                       <span className="font-medium text-sm truncate">{material.name}</span>
-                                       <span className="text-xs text-muted-foreground truncate">
-                                         {material.code && `${material.code} | `}
-                                         {priceAdjustment > 0 ? (
-                                           <>Base: £{material.defaultPrice.toFixed(2)} | Adjusted: £{adjustedPrice.toFixed(2)} (+{priceAdjustment}%)</>
-                                         ) : (
-                                           <>£{material.defaultPrice.toFixed(2)}/{material.unit}</>
-                                         )}
-                                       </span>
-                                     </div>
-                                   </SelectItem>
-                                 );
-                               })
-                              ) : (
-                                <SelectItem value="no-materials" disabled>
-                                  No materials found
-                                </SelectItem>
-                              )}
-                           </SelectContent>
+                          <SelectContent className="z-50 bg-background border shadow-lg">
+                            <SelectItem value="all-categories">All Categories</SelectItem>
+                            {materialCategories.map(cat => (
+                              <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
+                            ))}
+                          </SelectContent>
                         </Select>
                       </div>
-                      </div>
+
+                      {/* Material Search Results */}
+                      {materialSearch.trim().length >= 2 && (
+                        <div className="space-y-3 max-h-[400px] overflow-y-auto border rounded-lg p-3 bg-card/50">
+                          {/* Instant Results (from ~50 materials) */}
+                          {filteredMaterials.length > 0 && (
+                            <div className="space-y-2">
+                              <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Quick Results</h4>
+                              {filteredMaterials.slice(0, 5).map(material => {
+                                const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(material.defaultPrice) : material.defaultPrice;
+                                return (
+                                  <Card 
+                                    key={material.id} 
+                                    className="p-3 hover:bg-accent/50 transition-colors cursor-pointer border-l-4 border-l-primary/50"
+                                    onClick={() => handleMaterialSelect(material.id)}
+                                  >
+                                    <div className="flex justify-between items-start gap-2">
+                                      <div className="flex-1 min-w-0">
+                                        <p className="font-medium text-sm truncate">{material.name}</p>
+                                        <p className="text-xs text-muted-foreground">
+                                          {material.code && `${material.code} • `}{material.category}
+                                        </p>
+                                      </div>
+                                      <div className="text-right">
+                                        <p className="font-semibold text-sm">
+                                          {priceAdjustment > 0 ? (
+                                            <span className="text-primary">£{adjustedPrice.toFixed(2)}</span>
+                                          ) : (
+                                            `£${material.defaultPrice.toFixed(2)}`
+                                          )}
+                                        </p>
+                                        <p className="text-xs text-muted-foreground">/{material.unit}</p>
+                                      </div>
+                                    </div>
+                                  </Card>
+                                );
+                              })}
+                            </div>
+                          )}
+
+                          {/* RAG Results (from 43k materials) */}
+                          {ragResults.length > 0 && (
+                            <div className="space-y-2">
+                              <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-2">
+                                <Zap className="h-3 w-3" />
+                                All Materials ({ragResults.length} found)
+                              </h4>
+                              {ragResults.map((material, idx) => {
+                                const priceMatch = material.price?.match(/£?(\d+\.?\d*)/);
+                                const basePrice = priceMatch ? parseFloat(priceMatch[1]) : 0;
+                                const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(basePrice) : basePrice;
+                                
+                                return (
+                                  <Card 
+                                    key={`rag-${material.id}-${idx}`} 
+                                    className="p-3 hover:bg-accent/50 transition-colors cursor-pointer"
+                                    onClick={() => {
+                                      setNewItem(prev => ({
+                                        ...prev,
+                                        description: material.name,
+                                        unitPrice: adjustedPrice,
+                                        unit: "each",
+                                        materialCode: `rag-${material.id}`,
+                                        notes: `Supplier: ${material.supplier} | Stock: ${material.stockStatus}${material.productUrl ? ` | URL: ${material.productUrl}` : ''}`
+                                      }));
+                                      toast({
+                                        title: "Material Selected",
+                                        description: `${material.name} - £${adjustedPrice.toFixed(2)}`,
+                                      });
+                                    }}
+                                  >
+                                    <div className="flex justify-between items-start gap-2">
+                                      <div className="flex-1 min-w-0">
+                                        <p className="font-medium text-sm truncate">{material.name}</p>
+                                        <p className="text-xs text-muted-foreground">
+                                          {material.supplier} • {material.stockStatus}
+                                          {material.similarity && ` • ${Math.round(material.similarity * 100)}% match`}
+                                        </p>
+                                      </div>
+                                      <div className="text-right">
+                                        <p className="font-semibold text-sm">
+                                          {priceAdjustment > 0 ? (
+                                            <span className="text-primary">£{adjustedPrice.toFixed(2)}</span>
+                                          ) : (
+                                            material.price
+                                          )}
+                                        </p>
+                                        {priceAdjustment > 0 && (
+                                          <p className="text-xs text-muted-foreground line-through">{material.price}</p>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </Card>
+                                );
+                              })}
+                            </div>
+                          )}
+
+                          {/* Loading State */}
+                          {isSearchingRAG && ragResults.length === 0 && filteredMaterials.length === 0 && (
+                            <div className="text-center py-8 text-muted-foreground">
+                              <Search className="h-8 w-8 mx-auto mb-2 animate-pulse" />
+                              <p className="text-sm">Searching 43,371 materials...</p>
+                            </div>
+                          )}
+
+                          {/* No Results */}
+                          {!isSearchingRAG && ragResults.length === 0 && filteredMaterials.length === 0 && (
+                            <div className="text-center py-8 text-muted-foreground">
+                              <Package className="h-8 w-8 mx-auto mb-2" />
+                              <p className="text-sm">No materials found</p>
+                              <p className="text-xs">Try a different search term</p>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   )}
 
