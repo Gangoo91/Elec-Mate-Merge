@@ -684,7 +684,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         systemPrompt,
         userPrompt,
         maxTokens: 16000,    // GPT-5 Mini needs more tokens than Gemini for comprehensive hazards
-        timeoutMs: 90000,    // 1.5 minutes - leaves buffer for RAG/validation
+        timeoutMs: 120000,   // 2 minutes - allows full 16k token generation (~75-90s) + RAG/validation buffer
       tools: [{
         type: 'function',
         function: {
