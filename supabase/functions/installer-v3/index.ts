@@ -1,4 +1,6 @@
-// Deployed: 2025-10-28 - Phase 1A: Standardized Response Structure
+// Deployed: 2025-10-28 - v4.2.0 Edge Function Timeout Enforcement
+const EDGE_FUNCTION_TIMEOUT_MS = 40000; // 40s - leave 5s buffer for frontend timeout
+
 import { serve } from '../_shared/deps.ts';
 import {
   corsHeaders,
@@ -136,6 +138,15 @@ serve(async (req) => {
   // Declare timing variables in function scope
   let embeddingStart: number | null = null;
 
+  // Timeout promise
+  const timeoutPromise = new Promise<Response>((_, reject) => {
+    setTimeout(() => {
+      reject(new Error('Edge function timeout after 40s'));
+    }, EDGE_FUNCTION_TIMEOUT_MS);
+  });
+
+  // Main execution promise
+  const executionPromise = (async (): Promise<Response> => {
   try {
     const body = await req.json();
     const { query, cableType, installationMethod, location, messages, previousAgentOutputs, sharedRegulations } = body;
@@ -740,8 +751,12 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       performanceMs: timings.total
     });
     
+    const isTimeout = error instanceof Error && error.message.includes('timeout');
+    
     // User-friendly error messages based on error type
-    const userMessage = error instanceof Error && error.message.includes('embedding')
+    const userMessage = isTimeout
+      ? "Request took too long - please try again with a simpler query."
+      : error instanceof Error && error.message.includes('embedding')
       ? "I'm having trouble processing your query right now. Could you try rephrasing it?"
       : error instanceof Error && error.message.includes('cache')
       ? "Temporary storage issue - your request will still be processed, just might take a bit longer."
@@ -754,9 +769,44 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         success: false,
         error: userMessage,
         technicalError: error instanceof Error ? error.message : String(error),
-        requestId
+        requestId,
+        metadata: {
+          generationTimeMs: timings.total,
+          stepCount: 0,
+          totalEstimatedTime: 'Unknown',
+          difficultyLevel: 'Unknown',
+          timedOut: isTimeout
+        }
       }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
+      { 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }, 
+        status: isTimeout ? 408 : 500 
+      }
+    );
+  }
+  })();
+
+  // Race between execution and timeout
+  try {
+    return await Promise.race([executionPromise, timeoutPromise]);
+  } catch (error) {
+    logger.error('Edge function timeout', { error });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: 'Edge function timeout after 40s',
+        metadata: {
+          generationTimeMs: EDGE_FUNCTION_TIMEOUT_MS,
+          stepCount: 0,
+          totalEstimatedTime: 'Unknown',
+          difficultyLevel: 'Unknown',
+          timedOut: true
+        }
+      }),
+      {
+        status: 408,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      }
     );
   }
 });

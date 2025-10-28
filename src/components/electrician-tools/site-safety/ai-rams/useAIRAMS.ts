@@ -103,7 +103,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
     }, 30000);
 
     return () => clearInterval(autosaveInterval);
-  }, [ramsData, methodData, isProcessing]);
+  }, [ramsData, methodData, isProcessing]); // Will add saveToDatabase after declaration
 
   const saveToDatabase = useCallback(async (isAutosave = false) => {
     if (!ramsData || !methodData) {
@@ -1114,30 +1114,17 @@ export function useAIRAMS(): UseAIRAMSReturn {
         originalHazardCount: extractedHazards.length
       });
       
-      // ✅ SUPERCHARGED STEP 1: Normalize data before transformer
-      const normalizedHsData = {
-        structuredData: {
-          riskAssessment: {
-            hazards: extractedHazards,  // Already extracted successfully by frontend
-            ppe: hsDataToUse?.structuredData?.riskAssessment?.ppe || 
-                 hsDataToUse?.riskAssessment?.ppe || 
-                 hsDataToUse?.structuredData?.riskAssessment?.ppeDetails || [],
-            emergencyProcedures: hsDataToUse?.structuredData?.riskAssessment?.emergencyProcedures ||
-                                 hsDataToUse?.riskAssessment?.emergencyProcedures || []
+      // Phase 4: Use standardized data directly - wrap for transformer compatibility
+      const combinedData = combineAgentOutputsToRAMS(
+        {
+          structuredData: {
+            riskAssessment: {
+              hazards: hsExtracted.hazards,
+              ppe: hsExtracted.ppe,
+              emergencyProcedures: hsExtracted.emergencyProcedures
+            }
           }
         },
-        // Preserve original response text
-        response: hsDataToUse.response
-      };
-
-      console.log('📦 Normalized data for transformer:', {
-        hazardsCount: extractedHazards.length,
-        ppeCount: normalizedHsData.structuredData.riskAssessment.ppe.length,
-        emergencyProcsCount: normalizedHsData.structuredData.riskAssessment.emergencyProcedures.length
-      });
-      
-      const combinedData = combineAgentOutputsToRAMS(
-        normalizedHsData,  // ✅ Use normalized data instead of hsDataToUse
         installerData,
         {
           ...projectInfo,

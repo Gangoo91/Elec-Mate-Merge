@@ -1,6 +1,7 @@
-// DEPLOYMENT v4.1.0 - Phase 1A: Standardized Response Structure - 2025-10-28
-const VERSION = 'v4.1.0-standardized-response';
+// DEPLOYMENT v4.2.0 - Edge Function Timeout Enforcement - 2025-10-28
+const VERSION = 'v4.2.0-timeout-enforcement';
 const BOOT_TIME = new Date().toISOString();
+const EDGE_FUNCTION_TIMEOUT_MS = 40000; // 40s - leave 5s buffer for frontend timeout
 console.log(`🚀 health-safety-v3 ${VERSION} booting at ${BOOT_TIME}`);
 
 import { serve } from '../_shared/deps.ts';
@@ -116,6 +117,15 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'health-safety-v3' });
   const requestStart = Date.now();
 
+  // Timeout promise
+  const timeoutPromise = new Promise<Response>((_, reject) => {
+    setTimeout(() => {
+      reject(new Error('Edge function timeout after 40s'));
+    }, EDGE_FUNCTION_TIMEOUT_MS);
+  });
+
+  // Main execution promise
+  const executionPromise = (async (): Promise<Response> => {
   try {
     const body = await req.json();
     const { query, workType, location, hazards, messages, previousAgentOutputs, sharedRegulations } = body;
@@ -1089,6 +1099,52 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
 
   } catch (error) {
     logger.error('Health & Safety V3 error', { error: error instanceof Error ? error.message : String(error) });
-    return handleError(error);
+    
+    const isTimeout = error instanceof Error && error.message.includes('timeout');
+    
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+        metadata: {
+          generationTimeMs: Date.now() - requestStart,
+          hazardCount: 0,
+          ppeCount: 0,
+          ragSourceCount: 0,
+          aiModel: 'gpt-5-mini-2025-08-07',
+          timedOut: isTimeout
+        }
+      }),
+      {
+        status: isTimeout ? 408 : 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      }
+    );
+  }
+  })();
+
+  // Race between execution and timeout
+  try {
+    return await Promise.race([executionPromise, timeoutPromise]);
+  } catch (error) {
+    logger.error('Edge function timeout', { error });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: 'Edge function timeout after 40s',
+        metadata: {
+          generationTimeMs: EDGE_FUNCTION_TIMEOUT_MS,
+          hazardCount: 0,
+          ppeCount: 0,
+          ragSourceCount: 0,
+          aiModel: 'gpt-5-mini-2025-08-07',
+          timedOut: true
+        }
+      }),
+      {
+        status: 408,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      }
+    );
   }
 });
