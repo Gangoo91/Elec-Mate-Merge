@@ -17,7 +17,14 @@ Generate structured, actionable briefing content with:
 - Specific PPE requirements with BS/EN standards where applicable
 - Referenced regulations with section numbers
 
-Focus on: Electrical hazards, BS 7671 compliance, isolation procedures, safe working practices.`,
+Focus on: Electrical hazards, BS 7671 compliance, isolation procedures, safe working practices.
+
+**CRITICAL: Always include additionalInfo array with 2-4 relevant paragraphs covering:**
+- Permits required (PTW, hot work, confined space)
+- Post-work testing and verification procedures
+- Waste disposal requirements (WEEE, cable offcuts)
+- Emergency contact numbers and escalation procedures
+- References to method statements, RAMS, or other safety documents`,
 
     'business-update': `You are a professional business communications expert.
 
@@ -83,7 +90,15 @@ Generate structured briefing content with:
 - Additional information as focused paragraphs (detail=specific facts, note=reminders, context=background, reference=policy links)
 - Timeline or next steps
 
-Focus on: Clear objectives, key information, action items, structured additional details.`
+Focus on: Clear objectives, key information, action items, structured additional details.
+
+**CRITICAL: Always include additionalInfo array with 2-4 relevant paragraphs covering:**
+- Permits or documentation required
+- Post-work procedures or follow-up actions
+- Disposal requirements or material handling
+- Contact details for support/escalation
+- References to policies, procedures, or other documents
+- Next steps or ongoing considerations`
   };
 
   return prompts[briefingType] || prompts['general'];
@@ -209,9 +224,26 @@ function getToolDefinitionForType(briefingType: string) {
                 },
                 required: ["regulation", "topic"]
               }
+            },
+            additionalInfo: {
+              type: "array",
+              description: "MANDATORY: Additional critical information (permits, post-work procedures, disposal requirements, documentation, contact details) as structured paragraphs. MUST include at least 2-4 relevant items.",
+              items: {
+                type: "object",
+                properties: {
+                  paragraph: { type: "number" },
+                  content: { type: "string", description: "Paragraph text (1-3 sentences)" },
+                  type: { 
+                    type: "string", 
+                    enum: ["detail", "note", "context", "reference"],
+                    description: "detail=specific facts/procedures, note=reminders/observations, context=background info, reference=permits/documents/contacts"
+                  }
+                },
+                required: ["paragraph", "content", "type"]
+              }
             }
           },
-          required: ["briefingOverview", "hazardsAndControls", "safetyWarning", "equipmentRequired", "keyRegulations"]
+          required: ["briefingOverview", "hazardsAndControls", "safetyWarning", "equipmentRequired", "keyRegulations", "additionalInfo"]
         }
       }
     };
@@ -310,9 +342,26 @@ function getToolDefinitionForType(briefingType: string) {
                 },
                 required: ["resource", "type", "urgency"]
               }
+            },
+            additionalInfo: {
+              type: "array",
+              description: "MANDATORY: Additional relevant information (documentation requirements, contacts, references, next steps) as structured paragraphs. MUST include at least 2-4 relevant items.",
+              items: {
+                type: "object",
+                properties: {
+                  paragraph: { type: "number" },
+                  content: { type: "string", description: "Paragraph text (1-3 sentences)" },
+                  type: { 
+                    type: "string", 
+                    enum: ["detail", "note", "context", "reference"],
+                    description: "detail=factual info, note=observations, context=background, reference=links to docs/contacts"
+                  }
+                },
+                required: ["paragraph", "content", "type"]
+              }
             }
           },
-          required: ["briefingOverview", "keyChanges", "impactAssessment", "actionItems", "timeline"]
+          required: ["briefingOverview", "keyChanges", "impactAssessment", "actionItems", "timeline", "additionalInfo"]
         }
       }
     };
@@ -351,7 +400,7 @@ function getToolDefinitionForType(briefingType: string) {
           },
           additionalInfo: {
             type: "array",
-            description: "Additional relevant information as structured paragraphs",
+            description: "MANDATORY: Additional relevant information as structured paragraphs (contacts, references, next steps, documentation). MUST include at least 2-4 relevant items.",
             items: {
               type: "object",
               properties: {
@@ -360,14 +409,14 @@ function getToolDefinitionForType(briefingType: string) {
                 type: { 
                   type: "string", 
                   enum: ["detail", "note", "context", "reference"],
-                  description: "Information category: detail=factual info, note=observations, context=background, reference=links to docs"
+                  description: "Information category: detail=factual info, note=observations, context=background, reference=links to docs/contacts"
                 }
               },
               required: ["paragraph", "content", "type"]
             }
           }
         },
-        required: ["briefingOverview", "keyPoints", "actionItems"]
+        required: ["briefingOverview", "keyPoints", "actionItems", "additionalInfo"]
       }
     }
   };
@@ -530,6 +579,23 @@ ${briefingType !== 'site-work' ? 'This is NOT an electrical safety briefing - ad
 
     const briefingContent = JSON.parse(toolCall.function.arguments);
     console.log('[BRIEFING-AI] Content generated successfully via tool call');
+
+    // VALIDATION: Ensure additionalInfo exists (critical for PDF generation)
+    if (!briefingContent.additionalInfo || briefingContent.additionalInfo.length === 0) {
+      console.warn('[BRIEFING-AI] ⚠️ WARNING: AI did not generate additionalInfo - adding default fallback');
+      briefingContent.additionalInfo = [
+        {
+          paragraph: 1,
+          content: "Please consult with your supervisor or safety officer for additional site-specific requirements.",
+          type: "note"
+        },
+        {
+          paragraph: 2,
+          content: "Ensure all relevant documentation and permits are in place before commencing work.",
+          type: "reference"
+        }
+      ];
+    }
 
     return new Response(
       JSON.stringify({ 
