@@ -128,9 +128,7 @@ serve(async (req) => {
     }
 
     // Step 1: Use intelligent RAG with cross-encoder reranking
-    // 🚀 CACHE-BUSTING: Add timestamp to force fresh results after cache clear
-    const cacheBustingQuery = `${effectiveQuery} [gen:${Date.now()}]`;
-    logger.debug('Starting intelligent RAG for H&S', { cacheBusted: true });
+    logger.debug('Starting intelligent RAG for H&S');
     const ragStart = Date.now();
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -144,15 +142,15 @@ serve(async (req) => {
       intelligentRAGSearch({
         circuitType: workType,
         searchTerms: query.split(' ').filter(w => w.length > 3),
-        expandedQuery: query,
+        expandedQuery: effectiveQuery,
         context: {
           ragPriority: {
-            bs7671: 70,           // Medium - regulatory compliance for safety
-            design: 20,           // Very Low - below threshold, won't search
-            health_safety: 95,    // HIGHEST - risk assessment procedures, PPE, hazards
-            installation: 70,     // Medium - installation methods inform risk assessments
-            inspection: 0,        // Skip - not relevant for risk assessment
-            project_mgmt: 0       // Skip - not relevant for risk assessment
+            bs7671: 0,            // Skip - H&S doesn't cite regulations, focuses on procedures
+            design: 0,            // Skip - not designing circuits
+            health_safety: 95,    // PRIMARY - risk procedures, PPE, HSE guidance, COSHH
+            installation: 30,     // MINIMAL - just context of what's being installed
+            inspection: 0,        // Skip - not relevant
+            project_mgmt: 0       // Skip - not relevant
           },
           maxSearchTime: 8000,    // 8 seconds max total
           skipFailedSearches: true,

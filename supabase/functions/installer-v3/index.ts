@@ -226,12 +226,12 @@ serve(async (req) => {
         expandedQuery,
         context: {
           ragPriority: {
-            bs7671: 70,           // Medium - regulatory compliance
-            design: 70,           // Medium - design context
-            health_safety: 0,     // Skip - not relevant for installation
-            installation: 95,     // HIGHEST - installation procedures and methods
-            inspection: 0,        // Skip - not relevant for installation
-            project_mgmt: 0       // Skip - not relevant for installation
+            bs7671: 30,           // MINIMAL - optional compliance references
+            design: 0,            // Skip - not designing, just installing
+            health_safety: 0,     // Skip - not doing risk assessment
+            installation: 95,     // PRIMARY - step-by-step installation procedures
+            inspection: 0,        // Skip - not relevant
+            project_mgmt: 0       // Skip - not relevant
           }
         }
       });
@@ -460,7 +460,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       systemPrompt,
       userPrompt,
       maxTokens: 18000,   // Increased: reasoning + 10-15 detailed installation steps with measurements
-      timeoutMs: 180000,  // 3 minutes - optimized for sequential execution after H&S completes
+      timeoutMs: 270000,  // 4.5 minutes - adequate for 18k token generation + RAG + validation
       tools: [{
         type: 'function',
         function: {
