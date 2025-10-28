@@ -681,14 +681,41 @@ export function useAIRAMS(): UseAIRAMSReturn {
       }
 
       const extractHazards = (responseData: any): any[] => {
-        // ✅ SIMPLIFIED: Single expected path after edge function stabilization
-        const hazards = responseData?.structuredData?.riskAssessment?.hazards;
+        // Try ALL possible paths where hazards might be nested
+        const possiblePaths = [
+          responseData?.structuredData?.riskAssessment?.hazards,           // Standard path
+          responseData?.data?.structuredData?.riskAssessment?.hazards,     // Wrapped in .data
+          responseData?.response?.structuredData?.riskAssessment?.hazards, // Wrapped in .response
+          responseData?.riskAssessment?.hazards,                           // Direct riskAssessment
+          responseData?.hazards,                                           // Direct hazards array
+          responseData?.structuredData?.hazards,                           // structuredData.hazards
+        ];
         
-        if (!Array.isArray(hazards)) {
-          console.error('❌ Invalid response structure - hazards not found', {
-            hasStructuredData: !!responseData?.structuredData,
-            hasRiskAssessment: !!responseData?.structuredData?.riskAssessment,
-            responseKeys: Object.keys(responseData || {})
+        console.log('🔍 Checking all possible hazard paths:', {
+          paths: possiblePaths.map((p, i) => ({
+            index: i,
+            isArray: Array.isArray(p),
+            length: Array.isArray(p) ? p.length : 0,
+            sample: Array.isArray(p) && p.length > 0 ? p[0]?.hazard?.substring(0, 40) : null
+          })),
+          responseKeys: Object.keys(responseData || {})
+        });
+        
+        // Find first non-empty array
+        let hazards: any[] = [];
+        for (let i = 0; i < possiblePaths.length; i++) {
+          const path = possiblePaths[i];
+          if (Array.isArray(path) && path.length > 0) {
+            console.log(`✅ Found ${path.length} hazards at path index ${i}`);
+            hazards = path;
+            break;
+          }
+        }
+        
+        if (hazards.length === 0) {
+          console.error('❌ No hazards found in ANY path', {
+            checkedPaths: possiblePaths.length,
+            fullResponseSample: JSON.stringify(responseData)?.substring(0, 1000)
           });
           return [];
         }
