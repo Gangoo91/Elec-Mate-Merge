@@ -677,8 +677,6 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     // Step 4: Call AI with optimized timeout and error handling
     logger.info('💭 THINKING: Assessing likelihood and severity of identified hazards');
     logger.info('Starting AI call with timeout protection');
-    logger.debug('Calling AI with wrapper');
-    const { callAI } = await import('../_shared/ai-wrapper.ts');
     
     // Add progress monitoring
     const aiCallStart = Date.now();
@@ -809,76 +807,16 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       controlsApplied: safetyResult.riskAssessment?.controls?.length
     });
 
-    // Validate AI output quality
+    // Simple quality logging - no quotas or validation
     const hazardCount = safetyResult.riskAssessment?.hazards?.length || 0;
     const ppeCount = safetyResult.riskAssessment?.ppeDetails?.length || 0;
+    const jobComplexity = query?.length > 200 ? 'Complex' : 'Standard';
 
-    // Determine expected minimum hazards based on job complexity indicators
-    let expectedMinHazards = 10;
-    const jobDesc = query?.toLowerCase() || '';
-    const complexityIndicators = [
-      jobDesc.includes('3-phase') || jobDesc.includes('three-phase'),
-      jobDesc.includes('heritage') || /\b(19\d{2}|18\d{2})\b/.test(jobDesc), // Historical dates
-      jobDesc.includes('contamination') || jobDesc.includes('oil') || jobDesc.includes('asbestos'),
-      jobDesc.includes('public') || jobDesc.includes('occupied'),
-      /\b([5-9]|[1-9]\d+)\s*m(etre|eter)?s?\b/.test(jobDesc), // 5m+ height
-      jobDesc.includes('confined space') || jobDesc.includes('live work')
-    ];
-    const complexityScore = complexityIndicators.filter(Boolean).length;
-
-    if (complexityScore >= 3) {
-      expectedMinHazards = 18; // Very complex
-    } else if (complexityScore >= 2) {
-      expectedMinHazards = 15; // Complex
-    } else if (complexityScore >= 1) {
-      expectedMinHazards = 12; // Standard
-    }
-
-    // ✅ PHASE 5: Enhanced quality metrics with linkedToStep validation
-    const linkedStepCount = safetyResult.riskAssessment?.hazards?.filter((h: any) => typeof h.linkedToStep === 'number').length || 0;
-    const regulationCount = safetyResult.riskAssessment?.hazards?.filter((h: any) => h.regulation).length || 0;
-    const linkedStepAccuracy = hazardCount > 0 ? (linkedStepCount / hazardCount) * 100 : 0;
-
-    logger.info('📊 Response Quality Metrics', {
+    logger.info('📊 Response Generated', {
       hazardsGenerated: hazardCount,
-      hazardsExpected: expectedMinHazards,
       ppeItems: ppeCount,
-      linkedStepsAccuracy: `${linkedStepCount}/${hazardCount} (${linkedStepAccuracy.toFixed(0)}%)`,
-      regulationCoverage: `${regulationCount}/${hazardCount} (${((regulationCount/hazardCount)*100).toFixed(0)}%)`,
-      complexityScore,
-      qualityGrade: hazardCount >= expectedMinHazards && ppeCount >= 5 && linkedStepAccuracy >= 80 ? '✅ PASS' : '⚠️ NEEDS IMPROVEMENT'
+      jobComplexity
     });
-    
-    // ✅ Validate linkedToStep coverage
-    if (linkedStepAccuracy < 80 && hazardCount >= 10) {
-      logger.warn(`⚠️ LOW LINKED STEP COVERAGE: ${linkedStepAccuracy.toFixed(0)}% of hazards have linkedToStep`);
-    }
-
-    // Warn on quality issues
-    if (hazardCount < expectedMinHazards) {
-      logger.warn('⚠️ QUALITY CHECK: Insufficient hazards generated', { 
-        generated: hazardCount, 
-        expected: expectedMinHazards,
-        shortfall: expectedMinHazards - hazardCount,
-        jobComplexity: complexityScore >= 3 ? 'Very Complex' : 
-                       complexityScore >= 2 ? 'Complex' : 
-                       complexityScore >= 1 ? 'Standard' : 'Simple'
-      });
-    }
-
-    if (ppeCount < 5) {
-      logger.warn('⚠️ QUALITY CHECK: Insufficient PPE items', { 
-        generated: ppeCount, 
-        expected: '5-12 based on job complexity' 
-      });
-    }
-
-    if ((regulationCount / hazardCount) < 0.8) {
-      logger.warn('⚠️ QUALITY CHECK: Low regulation coverage', {
-        coverage: `${((regulationCount/hazardCount)*100).toFixed(0)}%`,
-        expected: '90%+'
-      });
-    }
 
     // Step 5: Build RAG preview from H&S knowledge
     const ragPreview = hsKnowledge?.healthSafetyDocs && hsKnowledge.healthSafetyDocs.length > 0
@@ -931,33 +869,13 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       enrichedResponse.riskAssessment = enrichedResponse.structuredData.riskAssessment;
     }
 
-    // Fail early if no hazards generated (triggers retry logic)
+    // Only fail if literally zero hazards (actual error)
     if (finalHazardCount === 0) {
-      logger.error('🚨 CRITICAL: AI generated zero hazards - triggering retry');
+      logger.error('🚨 CRITICAL: AI generated zero hazards');
       throw new Error('AI generated no hazards - empty response');
     }
 
-    // Enforce minimum quality threshold to prevent inadequate assessments
-    if (finalHazardCount < expectedMinHazards && finalHazardCount < 10) {
-      const shortfallRatio = (expectedMinHazards - finalHazardCount) / expectedMinHazards;
-      
-      logger.error(`🚨 QUALITY THRESHOLD NOT MET: Generated ${finalHazardCount} hazards, expected ${expectedMinHazards}`, {
-        jobComplexity: complexityScore,
-        generatedCount: finalHazardCount,
-        requiredCount: expectedMinHazards,
-        shortfall: expectedMinHazards - finalHazardCount,
-        shortfallPercentage: `${(shortfallRatio * 100).toFixed(0)}%`
-      });
-      
-      // Only enforce if significantly below threshold (>30% shortfall)
-      if (shortfallRatio > 0.3) {
-        throw new Error(`Insufficient hazards: ${finalHazardCount}/${expectedMinHazards} generated - quality threshold not met (${(shortfallRatio * 100).toFixed(0)}% shortfall)`);
-      } else {
-        logger.warn(`⚠️ Minor shortfall (${(shortfallRatio * 100).toFixed(0)}%) - accepting response but flagging for review`);
-      }
-    }
-
-    logger.info(`✅ Response validated: ${hazardCount} hazards will be available to frontend`);
+    logger.info(`✅ Response validated: ${finalHazardCount} hazards generated`);
 
     // Log RAG metrics for observability
     const totalTime = Date.now() - requestStart;
