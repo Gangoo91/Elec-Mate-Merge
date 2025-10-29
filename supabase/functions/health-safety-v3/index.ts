@@ -860,33 +860,33 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
               type: 'object',
               properties: {
                 response: { type: 'string', description: 'Summary of the risk assessment in UK English' },
-                // ✅ PHASE 1: FLATTENED STRUCTURE - hazards at top level, not nested in riskAssessment
+                // ✅ PHASE 2: FIXED TOOL SCHEMA - matches expected response structure
                 hazards: {
                   type: 'array',
-                  description: 'Array of identified hazards with risk scoring',
+                  description: 'Array of identified hazards with risk scoring. MUST include 8-25 hazards based on job complexity.',
                   items: {
                     type: 'object',
                     properties: {
+                      id: { type: 'string', description: 'Unique hazard ID (e.g. "hazard-1")' },
                       hazard: { type: 'string', description: 'Specific hazard description' },
                       linkedToStep: { type: 'number', description: '0=general, 1-N=specific step number' },
-                      likelihood: { type: 'number', description: 'Likelihood score 1-5' },
-                      severity: { type: 'number', description: 'Severity score 1-5' },
+                      likelihood: { type: 'number', description: 'Likelihood score 1-5', minimum: 1, maximum: 5 },
+                      severity: { type: 'number', description: 'Severity score 1-5', minimum: 1, maximum: 5 },
                       riskScore: { type: 'number', description: 'likelihood × severity' },
                       riskLevel: { type: 'string', enum: ['low', 'medium', 'high', 'very-high'] },
                       controlMeasure: { type: 'string', description: 'Control measures with regulations' },
-                      residualLikelihood: { type: 'number', description: 'Post-control likelihood 1-5' },
-                      residualSeverity: { type: 'number', description: 'Post-control severity 1-5' },
+                      residualLikelihood: { type: 'number', description: 'Post-control likelihood 1-5', minimum: 1, maximum: 5 },
+                      residualSeverity: { type: 'number', description: 'Post-control severity 1-5', minimum: 1, maximum: 5 },
                       residualRisk: { type: 'number', description: 'residual likelihood × severity' },
                       residualRiskLevel: { type: 'string', enum: ['low', 'medium', 'high', 'very-high'] },
                       regulation: { type: 'string', description: 'Applicable UK regulation (e.g. EWR 1989 Reg 4(3))' }
                     },
-                    required: ['hazard', 'linkedToStep', 'likelihood', 'severity', 'riskScore', 'riskLevel', 'controlMeasure', 'residualLikelihood', 'residualSeverity', 'residualRisk', 'residualRiskLevel', 'regulation']
-                    // ✅ FIX #1: Removed nested additionalProperties to reduce validation overhead
+                    required: ['id', 'hazard', 'linkedToStep', 'likelihood', 'severity', 'riskScore', 'riskLevel', 'controlMeasure', 'residualRisk', 'residualRiskLevel']
                   }
                 },
-                ppeDetails: {
+                ppe: {
                   type: 'array',
-                  description: 'Required PPE items with UK standards',
+                  description: 'Required PPE items with UK standards. MUST include 5-15 items based on actual hazards.',
                   items: {
                     type: 'object',
                     properties: {
@@ -897,7 +897,6 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                       purpose: { type: 'string', description: 'Protection purpose and when it applies' }
                     },
                     required: ['itemNumber', 'ppeType', 'standard', 'mandatory', 'purpose']
-                    // ✅ FIX #1: Removed nested additionalProperties to reduce validation overhead
                   }
                 },
                 emergencyProcedures: {
@@ -911,7 +910,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                   items: { type: 'string' }
                 }
               },
-              required: ['response', 'hazards', 'ppeDetails', 'emergencyProcedures', 'complianceRegulations'],
+              required: ['response', 'hazards', 'ppe', 'emergencyProcedures', 'complianceRegulations'],
               additionalProperties: false
             }
           }
@@ -962,7 +961,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       throw aiError;
     }
 
-    // ✅ PHASE 1: Parse standardized response structure
+    // ✅ PHASE 1 & 2: Parse standardized response structure
     console.log('📋 [DIAGNOSTIC] Parsing AI response...');
     console.log('🔍 [DIAGNOSTIC] AI result structure:', {
       hasToolCalls: !!aiResult.toolCalls,
@@ -978,16 +977,19 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     console.log('✅ [DIAGNOSTIC] Safety result parsed:', {
       hasHazards: !!safetyResult.hazards,
       hazardsLength: safetyResult.hazards?.length,
-      hasPPE: !!safetyResult.ppeDetails,
-      ppeLength: safetyResult.ppeDetails?.length,
+      hasPPE: !!safetyResult.ppe,
+      ppeLength: safetyResult.ppe?.length,
+      hasPPEDetails: !!safetyResult.ppeDetails,
+      ppeDetailsLength: safetyResult.ppeDetails?.length,
       hasEmergency: !!safetyResult.emergencyProcedures,
       emergencyLength: safetyResult.emergencyProcedures?.length,
       topLevelKeys: Object.keys(safetyResult)
     });
 
-    logger.info('🔍 PHASE 1: Validating AI response structure', {
+    logger.info('🔍 PHASE 1 & 2: Validating AI response structure', {
       hasHazards: !!safetyResult.hazards,
-      hasPPE: !!safetyResult.ppeDetails,
+      hasPPE: !!safetyResult.ppe,
+      hasPPEDetails: !!safetyResult.ppeDetails,
       hasEmergency: !!safetyResult.emergencyProcedures,
       topLevelKeys: Object.keys(safetyResult)
     });
@@ -1083,11 +1085,14 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     // ✅ PHASE 1: Build standardized response structure
     console.log('🏗️ [DIAGNOSTIC] Building standardized response structure...');
     
+    // PHASE 2: Handle both 'ppe' and 'ppeDetails' field names for backward compatibility
+    const ppeArray = safetyResult.ppe || safetyResult.ppeDetails || [];
+    
     const standardizedResponse: HealthSafetyV3Response = {
       success: true,
       data: {
         hazards: extractedHazards.map((h: any, idx: number) => ({
-          id: `hazard-${idx + 1}`,
+          id: h.id || `hazard-${idx + 1}`,
           hazard: h.hazard,
           likelihood: h.likelihood,
           severity: h.severity,
@@ -1099,14 +1104,14 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
           linkedToStep: h.linkedToStep,
           regulation: h.regulation || ''
         })),
-        ppe: safetyResult.ppeDetails || [],
+        ppe: ppeArray,
         emergencyProcedures: safetyResult.emergencyProcedures || [],
         complianceRegulations: safetyResult.complianceRegulations || []
       },
       metadata: {
         generationTimeMs: performanceMetrics.aiGeneration,
         hazardCount: extractedHazards.length,
-        ppeCount: (safetyResult.ppeDetails || []).length,
+        ppeCount: ppeArray.length,
         ragSourceCount: hsKnowledge?.healthSafetyDocs?.length || 0,
         aiModel: 'gpt-5-mini-2025-08-07',
         tokensUsed: aiResult.usage?.total_tokens

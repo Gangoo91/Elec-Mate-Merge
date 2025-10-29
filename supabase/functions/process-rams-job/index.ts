@@ -9,46 +9,84 @@ const corsHeaders = {
 /**
  * Transform health-safety-v3 response to match frontend RAMSData structure
  * Maps: hazards → risks, ppe → ppeDetails
+ * PHASE 3: Enhanced with fallback logic for various response structures
  */
 function transformHealthSafetyResponse(hsData: any): any {
-  if (!hsData || !hsData.data) {
-    console.warn('⚠️ Health-safety response missing data field');
+  console.log('🔄 [PHASE 1 DIAGNOSTIC] Starting transformation...', {
+    hasData: !!hsData,
+    hasDataField: !!hsData?.data,
+    dataKeys: hsData?.data ? Object.keys(hsData.data) : [],
+    rawType: typeof hsData
+  });
+
+  if (!hsData) {
+    console.error('❌ hsData is null/undefined');
+    return null;
+  }
+
+  // PHASE 3: Handle different response structures
+  let sourceData = hsData.data || hsData;
+  
+  // If data is wrapped in a 'result' field
+  if (sourceData.result) {
+    console.log('📦 Found result wrapper, unwrapping...');
+    sourceData = sourceData.result;
+  }
+  
+  // If hazards are nested in riskAssessment
+  if (sourceData.riskAssessment?.hazards) {
+    console.log('📦 Found riskAssessment wrapper, extracting hazards...');
+    sourceData.hazards = sourceData.riskAssessment.hazards;
+  }
+  
+  console.log('🔍 [PHASE 1 DIAGNOSTIC] Source data structure:', {
+    hasHazards: !!sourceData.hazards,
+    hazardsType: sourceData.hazards ? typeof sourceData.hazards : 'missing',
+    hazardsIsArray: Array.isArray(sourceData.hazards),
+    hazardsLength: Array.isArray(sourceData.hazards) ? sourceData.hazards.length : 0,
+    hasPPE: !!sourceData.ppe,
+    ppeType: sourceData.ppe ? typeof sourceData.ppe : 'missing',
+    ppeIsArray: Array.isArray(sourceData.ppe),
+    ppeLength: Array.isArray(sourceData.ppe) ? sourceData.ppe.length : 0,
+    allKeys: Object.keys(sourceData),
+    firstHazard: Array.isArray(sourceData.hazards) && sourceData.hazards[0] ? Object.keys(sourceData.hazards[0]) : 'none'
+  });
+  
+  if (!sourceData.hazards || !Array.isArray(sourceData.hazards)) {
+    console.error('❌ No hazards array found in response. Available keys:', Object.keys(sourceData));
+    console.error('Full source data sample:', JSON.stringify(sourceData).slice(0, 500));
     return null;
   }
 
   const transformed = {
-    // Map hazards → risks
-    risks: (hsData.data.hazards || []).map((h: any) => ({
-      id: h.id,
-      hazard: h.hazard,
-      risk: h.hazard,
-      likelihood: h.likelihood,
-      severity: h.severity,
-      riskRating: h.riskScore,
-      controls: h.controlMeasure,
-      residualRisk: h.residualRisk,
-      linkedToStep: h.linkedToStep,
+    risks: sourceData.hazards.map((h: any) => ({
+      id: h.id || `hazard-${Math.random().toString(36).substr(2, 9)}`,
+      hazard: h.hazard || h.description || 'Unknown hazard',
+      risk: h.hazard || h.description || 'Unknown risk',
+      likelihood: h.likelihood || 3,
+      severity: h.severity || 3,
+      riskRating: h.riskScore || (h.likelihood * h.severity) || 9,
+      controls: h.controlMeasure || h.controls || 'No controls specified',
+      residualRisk: h.residualRisk || Math.ceil((h.riskScore || 9) * 0.3) || 3,
+      linkedToStep: h.linkedToStep || 0,
       furtherAction: h.regulation || '',
       responsible: '',
       actionBy: '',
       done: false
     })),
     
-    // Map ppe → ppeDetails
-    ppeDetails: (hsData.data.ppe || []).map((p: any) => ({
-      id: `ppe-${p.itemNumber}`,
-      itemNumber: p.itemNumber,
-      ppeType: p.ppeType,
-      standard: p.standard,
-      mandatory: p.mandatory,
-      purpose: p.purpose
+    ppeDetails: (sourceData.ppe || []).map((p: any, idx: number) => ({
+      id: `ppe-${p.itemNumber || idx + 1}`,
+      itemNumber: p.itemNumber || idx + 1,
+      ppeType: p.ppeType || 'PPE Item',
+      standard: p.standard || 'N/A',
+      mandatory: p.mandatory !== false,
+      purpose: p.purpose || 'Protection'
     })),
     
-    // Pass through unchanged fields
-    emergencyProcedures: hsData.data.emergencyProcedures || [],
-    complianceRegulations: hsData.data.complianceRegulations || [],
+    emergencyProcedures: sourceData.emergencyProcedures || [],
+    complianceRegulations: sourceData.complianceRegulations || [],
     
-    // Add default fields expected by frontend
     projectName: '',
     location: '',
     date: new Date().toISOString().split('T')[0],
@@ -56,11 +94,15 @@ function transformHealthSafetyResponse(hsData: any): any {
     activities: []
   };
 
-  console.log('✅ Transformed health-safety response:', {
-    hazards: hsData.data.hazards?.length || 0,
-    risks: transformed.risks.length,
-    ppe: hsData.data.ppe?.length || 0,
-    ppeDetails: transformed.ppeDetails.length
+  console.log('✅ [PHASE 1 DIAGNOSTIC] Transformation complete:', {
+    inputHazards: sourceData.hazards?.length || 0,
+    outputRisks: transformed.risks.length,
+    inputPPE: sourceData.ppe?.length || 0,
+    outputPPEDetails: transformed.ppeDetails.length,
+    sampleRisk: transformed.risks[0] ? {
+      id: transformed.risks[0].id,
+      hazard: transformed.risks[0].hazard.slice(0, 50)
+    } : 'none'
   });
 
   return transformed;
@@ -207,6 +249,19 @@ Deno.serve(async (req) => {
       if (hsError || !hsData) {
         throw new Error(`Health-safety agent failed: ${hsError?.message ?? 'Unknown error'}`);
       }
+      
+      // PHASE 1: Detailed diagnostic logging
+      console.log('🔍 [PHASE 1 DIAGNOSTIC] Health-safety raw response structure:', {
+        hasData: !!hsData,
+        hasDataField: !!hsData?.data,
+        dataKeys: hsData?.data ? Object.keys(hsData.data) : [],
+        hazardsType: hsData?.data?.hazards ? typeof hsData.data.hazards : 'missing',
+        hazardsLength: Array.isArray(hsData?.data?.hazards) ? hsData.data.hazards.length : 0,
+        ppeType: hsData?.data?.ppe ? typeof hsData.data.ppe : 'missing',
+        ppeLength: Array.isArray(hsData?.data?.ppe) ? hsData.data.ppe.length : 0,
+        fullResponseSample: JSON.stringify(hsData).slice(0, 1000) // First 1000 chars
+      });
+      
       console.log(`✅ Health-safety completed for job: ${jobId}`);
 
       // Update progress
