@@ -1,7 +1,7 @@
-// DEPLOYMENT v4.3.0 - AI Call Timeout & Zero Hazard Detection - 2025-10-28
-const VERSION = 'v4.3.0-ai-timeout';
+// DEPLOYMENT v4.4.0 - DIAGNOSTIC MODE - 2025-10-29
+const VERSION = 'v4.4.0-diagnostic';
 const BOOT_TIME = new Date().toISOString();
-const EDGE_FUNCTION_TIMEOUT_MS = 120000; // 120s - matches frontend timeout
+const EDGE_FUNCTION_TIMEOUT_MS = 240000; // INCREASED: 240s (4 minutes)
 console.log(`🚀 health-safety-v3 ${VERSION} booting at ${BOOT_TIME}`);
 
 import { serve } from '../_shared/deps.ts';
@@ -131,23 +131,35 @@ serve(async (req) => {
   // Timeout promise
   const timeoutPromise = new Promise<Response>((_, reject) => {
     setTimeout(() => {
-      reject(new Error('Edge function timeout after 120s'));
+      reject(new Error('Edge function timeout after 240s'));
     }, EDGE_FUNCTION_TIMEOUT_MS);
   });
 
   // Main execution promise
   const executionPromise = (async (): Promise<Response> => {
   try {
+    console.log('📥 [DIAGNOSTIC] Parsing request body...');
     const body = await req.json();
+    console.log('✅ [DIAGNOSTIC] Request body parsed successfully');
     const { query, workType, location, hazards, messages, previousAgentOutputs, sharedRegulations } = body;
+    console.log('📋 [DIAGNOSTIC] Request params:', {
+      queryLength: query?.length,
+      workType,
+      location,
+      hasMessages: !!messages,
+      hasPreviousOutputs: !!previousAgentOutputs,
+      hasSharedRegs: !!sharedRegulations
+    });
 
     // PHASE 1: Query Enhancement
+    console.log('🔧 [DIAGNOSTIC] Starting query enhancement...');
     const { enhanceQuery, logEnhancement } = await import('../_shared/query-enhancer.ts');
     const enhancement = enhanceQuery(query, messages || []);
     logEnhancement(enhancement, logger);
     
     const effectiveQuery = enhancement.enhanced;
     performanceMetrics.queryEnhancement = Date.now() - performanceMetrics.startTime;
+    console.log('✅ [DIAGNOSTIC] Query enhanced:', { duration: performanceMetrics.queryEnhancement, effectiveLength: effectiveQuery.length });
 
     // Enhanced input validation
     if (!query || typeof query !== 'string' || query.trim().length === 0) {
@@ -195,6 +207,7 @@ serve(async (req) => {
     }
 
     // Step 1: Use intelligent RAG with cross-encoder reranking
+    console.log('🔍 [DIAGNOSTIC] Starting intelligent RAG for H&S...');
     logger.debug('Starting intelligent RAG for H&S');
     const ragStartTime = Date.now();
     
@@ -258,6 +271,13 @@ serve(async (req) => {
     
     performanceMetrics.ragRetrieval = Date.now() - ragStartTime;
     
+    console.log('✅ [DIAGNOSTIC] RAG retrieval complete:', {
+      duration: performanceMetrics.ragRetrieval,
+      regulationsCount: hsKnowledge.regulations?.length || 0,
+      healthSafetyDocsCount: hsKnowledge.healthSafetyDocs?.length || 0,
+      installationDocsCount: hsKnowledge.installationDocs?.length || 0
+    });
+    
     logger.info('H&S knowledge retrieved', { 
       duration: performanceMetrics.ragRetrieval,
       resultsCount: hsKnowledge.regulations?.length || 0,
@@ -270,6 +290,7 @@ serve(async (req) => {
     }
 
     // PHASE 2A: Build H&S context with STRUCTURED hazard extraction
+    console.log('📝 [DIAGNOSTIC] Building H&S context from RAG results...');
     let hsContext: string;
     let structuredHazards = '';
     
@@ -316,6 +337,12 @@ serve(async (req) => {
         hsContext = 'Apply general electrical safety best practices per HSE guidance and BS 7671.';
         structuredHazards = '';
       }
+      
+      console.log('✅ [DIAGNOSTIC] Context built successfully:', {
+        hsContextLength: hsContext.length,
+        structuredHazardsLength: structuredHazards.length,
+        hazardCategoriesFound: hsKnowledge?.healthSafetyDocs?.length || 0
+      });
       
       logger.info('Context built with structured hazards', {
         hsContextLength: hsContext.length,
@@ -751,6 +778,7 @@ ${hazards ? `Known Hazards: ${hazards.join(', ')}` : ''}
 Include all safety controls, PPE requirements, and emergency procedures.`;
 
     // Step 4: Call AI with optimized timeout and error handling
+    console.log('🤖 [DIAGNOSTIC] Preparing OpenAI call...');
     logger.info('💭 THINKING: Assessing likelihood and severity of identified hazards');
     logger.info('Starting AI call with timeout protection');
     
@@ -763,15 +791,27 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       // Log progress every 30 seconds
       progressInterval = setInterval(() => {
         const elapsed = Math.round((Date.now() - aiGenerationStartTime) / 1000);
-      logger.info(`⏱️ AI call in progress: ${elapsed}s elapsed (timeout: 240s)`);
+        console.log(`⏱️ [DIAGNOSTIC] AI call in progress: ${elapsed}s elapsed`);
+        logger.info(`⏱️ AI call in progress: ${elapsed}s elapsed (timeout: 240s)`);
       }, 30000);
+      
       const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
       if (!OPENAI_API_KEY) {
+        console.error('❌ [DIAGNOSTIC] OPENAI_API_KEY not configured');
         throw new Error('OPENAI_API_KEY not configured');
       }
       
+      console.log('✅ [DIAGNOSTIC] OPENAI_API_KEY found');
+      console.log('📤 [DIAGNOSTIC] Calling OpenAI GPT-5-mini with:', {
+        model: 'gpt-5-mini-2025-08-07',
+        max_tokens: 6000,
+        systemPromptLength: systemPrompt.length,
+        userPromptLength: userPrompt.length,
+        timeout: '110s'
+      });
+      
       // ✅ DIRECT OPENAI CALL: 30k tokens, no wrapper, no fallback
-      logger.info(`🚀 Calling OpenAI GPT-5-mini directly - 30k tokens, 240s timeout`);
+      logger.info(`🚀 Calling OpenAI GPT-5-mini directly - 6k tokens, 240s timeout`);
       
       aiResult = await callOpenAI({
         messages: [
@@ -779,7 +819,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
           { role: 'user', content: userPrompt }
         ],
         model: 'gpt-5-mini-2025-08-07',
-        max_tokens: 8000, // ✅ PHASE 1: Reduced from 30000 to 8000 (faster generation)
+        max_tokens: 6000, // ✅ DIAGNOSTIC: Further reduced to 6000 for faster generation
         tools: [{
           type: 'function',
           function: {
@@ -851,16 +891,30 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       
       if (progressInterval) clearInterval(progressInterval);
       performanceMetrics.aiGeneration = Date.now() - aiGenerationStartTime;
+      
+      console.log('✅ [DIAGNOSTIC] AI call completed:', {
+        duration: performanceMetrics.aiGeneration,
+        durationSeconds: Math.round(performanceMetrics.aiGeneration / 1000)
+      });
+      
       logger.info(`✅ AI call completed in ${Math.round(performanceMetrics.aiGeneration / 1000)}s`);
       
       // Check if AI is slow
       if (performanceMetrics.aiGeneration > 45000) {
+        console.warn(`⚠️ [DIAGNOSTIC] SLOW AI: ${performanceMetrics.aiGeneration}ms (expected <40000ms)`);
         logger.warn(`⚠️ SLOW AI: ${performanceMetrics.aiGeneration}ms (expected <40000ms)`);
       }
       
     } catch (aiError) {
       if (progressInterval) clearInterval(progressInterval);
       performanceMetrics.aiGeneration = Date.now() - aiGenerationStartTime;
+      
+      console.error('❌ [DIAGNOSTIC] OpenAI call FAILED:', {
+        duration: Math.round(performanceMetrics.aiGeneration / 1000),
+        errorMessage: aiError instanceof Error ? aiError.message : String(aiError),
+        errorType: aiError instanceof Error ? aiError.constructor.name : typeof aiError
+      });
+      
       logger.error(`❌ OpenAI call failed after ${Math.round(performanceMetrics.aiGeneration / 1000)}s`);
       logger.error('OpenAI call failed - NO FALLBACK', {
         error: aiError instanceof Error ? aiError.message : String(aiError),
@@ -873,9 +927,27 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     }
 
     // ✅ PHASE 1: Parse standardized response structure
+    console.log('📋 [DIAGNOSTIC] Parsing AI response...');
+    console.log('🔍 [DIAGNOSTIC] AI result structure:', {
+      hasToolCalls: !!aiResult.toolCalls,
+      toolCallsLength: aiResult.toolCalls?.length,
+      hasContent: !!aiResult.content,
+      contentLength: aiResult.content?.length
+    });
+    
     const safetyResult = aiResult.toolCalls && aiResult.toolCalls.length > 0
       ? JSON.parse(aiResult.toolCalls[0].function.arguments)
       : JSON.parse(aiResult.content);
+
+    console.log('✅ [DIAGNOSTIC] Safety result parsed:', {
+      hasHazards: !!safetyResult.hazards,
+      hazardsLength: safetyResult.hazards?.length,
+      hasPPE: !!safetyResult.ppeDetails,
+      ppeLength: safetyResult.ppeDetails?.length,
+      hasEmergency: !!safetyResult.emergencyProcedures,
+      emergencyLength: safetyResult.emergencyProcedures?.length,
+      topLevelKeys: Object.keys(safetyResult)
+    });
 
     logger.info('🔍 PHASE 1: Validating AI response structure', {
       hasHazards: !!safetyResult.hazards,
@@ -887,8 +959,20 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     // ✅ PHASE 1: Hazards are now at TOP LEVEL (not nested in riskAssessment)
     const extractedHazards = safetyResult.hazards || [];
     
+    console.log('🔢 [DIAGNOSTIC] Hazard extraction:', {
+      extractedCount: extractedHazards.length,
+      firstHazard: extractedHazards[0] ? {
+        hazard: extractedHazards[0].hazard?.substring(0, 50),
+        linkedToStep: extractedHazards[0].linkedToStep,
+        likelihood: extractedHazards[0].likelihood,
+        severity: extractedHazards[0].severity
+      } : null
+    });
+    
     // 🚨 PHASE 1 FIX: Zero Hazards Bug - Immediate detection with retry capability
     if (extractedHazards.length === 0) {
+      console.error('🚨 [DIAGNOSTIC] CRITICAL: AI generated ZERO hazards');
+      
       logger.error('🚨 PHASE 1 CRITICAL: AI generated ZERO hazards', {
         hadToolCall: !!aiResult.toolCalls,
         hadHazardsArray: !!safetyResult.hazards,
@@ -898,12 +982,14 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       
       // Check if this is a structure issue or genuine empty response
       if (safetyResult.response && safetyResult.response.length > 100) {
+        console.error('❌ [DIAGNOSTIC] AI generated text response but no structured hazards - schema validation failed');
         logger.error('AI generated text response but no structured hazards - schema validation failed');
       }
       
       throw new Error(`PHASE 1 ERROR: AI generated zero hazards. Schema validation: ${safetyResult.hazards ? 'array exists but empty' : 'hazards array missing'}`);
     }
 
+    console.log(`✅ [DIAGNOSTIC] Extracted ${extractedHazards.length} hazards successfully`);
     logger.info(`✅ PHASE 1: Extracted ${extractedHazards.length} hazards from standardized response`);
 
     // ✅ PHASE 1: Validate and fix linkedToStep for all hazards (data integrity)
@@ -959,6 +1045,8 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     );
 
     // ✅ PHASE 1: Build standardized response structure
+    console.log('🏗️ [DIAGNOSTIC] Building standardized response structure...');
+    
     const standardizedResponse: HealthSafetyV3Response = {
       success: true,
       data: {
@@ -988,6 +1076,14 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         tokensUsed: aiResult.usage?.total_tokens
       }
     };
+
+    console.log('✅ [DIAGNOSTIC] Response structure built:', {
+      success: standardizedResponse.success,
+      hazardCount: standardizedResponse.data.hazards.length,
+      ppeCount: standardizedResponse.data.ppe.length,
+      emergencyCount: standardizedResponse.data.emergencyProcedures.length,
+      totalTimeMs: Date.now() - performanceMetrics.startTime
+    });
 
     logger.info('✅ PHASE 1: Standardized response built', {
       hazardCount: standardizedResponse.data.hazards.length,
@@ -1156,6 +1252,15 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       timeMs: generationTimeMs
     });
 
+    console.log('🎉 [DIAGNOSTIC] SUCCESS - Returning response to client');
+    console.log('📊 [DIAGNOSTIC] Final metrics:', {
+      totalTimeMs: Date.now() - performanceMetrics.startTime,
+      ragTimeMs: performanceMetrics.ragRetrieval,
+      aiTimeMs: performanceMetrics.aiGeneration,
+      hazardsFinal: hazardCount,
+      ppeFinal: ppeCount
+    });
+    
     return new Response(
       JSON.stringify(standardizedResponse),
       { 
@@ -1188,6 +1293,13 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     }
 
   } catch (error) {
+    console.error('💥 [DIAGNOSTIC] EDGE FUNCTION ERROR:', {
+      errorMessage: error instanceof Error ? error.message : String(error),
+      errorType: error instanceof Error ? error.constructor.name : typeof error,
+      errorStack: error instanceof Error ? error.stack?.split('\n').slice(0, 3) : undefined,
+      timeElapsed: Date.now() - requestStart
+    });
+    
     logger.error('Health & Safety V3 error', { error: error instanceof Error ? error.message : String(error) });
     
     const isTimeout = error instanceof Error && error.message.includes('timeout');
@@ -1215,13 +1327,19 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
 
   // Race between execution and timeout
   try {
+    console.log('⏳ [DIAGNOSTIC] Racing execution vs timeout (240s limit)...');
     return await Promise.race([executionPromise, timeoutPromise]);
   } catch (error) {
+    console.error('⏱️ [DIAGNOSTIC] TIMEOUT REACHED:', {
+      timeoutMs: EDGE_FUNCTION_TIMEOUT_MS,
+      error: error instanceof Error ? error.message : String(error)
+    });
+    
     logger.error('Edge function timeout', { error });
     return new Response(
       JSON.stringify({
         success: false,
-        error: 'Edge function timeout after 40s',
+        error: 'Edge function timeout after 240s',
         metadata: {
           generationTimeMs: EDGE_FUNCTION_TIMEOUT_MS,
           hazardCount: 0,
