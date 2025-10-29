@@ -83,13 +83,13 @@ export default function EnrichmentMonitor() {
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Universal Enrichment Monitor</h1>
         <div className="flex gap-2">
-          <Button onClick={startTest} disabled={loading} variant="outline" size="lg">
-            <TestTube2 className="w-4 h-4 mr-2" />
-            Run 100-Doc Test
-          </Button>
           <Button onClick={() => startEnrichment(1)} disabled={loading} size="lg">
             <Play className="w-4 h-4 mr-2" />
             Start Phase 1
+          </Button>
+          <Button onClick={startTest} disabled={loading} variant="secondary" size="lg">
+            <TestTube2 className="w-4 h-4 mr-2" />
+            Run 100-Doc Test
           </Button>
           <Button onClick={fetchJobs} variant="outline" size="icon">
             <RefreshCw className="w-4 h-4" />
