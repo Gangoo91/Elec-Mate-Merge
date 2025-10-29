@@ -824,11 +824,24 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         max_tokens: 6000,
         systemPromptLength: systemPrompt.length,
         userPromptLength: userPrompt.length,
-        timeout: '110s'
+        timeout: '150s'
+      });
+      
+      // ✅ FIX #3: Pre-call diagnostics to measure API performance
+      const apiCallStart = Date.now();
+      logger.info('📞 [DIAGNOSTIC] Initiating OpenAI API call...', {
+        timestamp: new Date().toISOString(),
+        schemaComplexity: {
+          toolsCount: 1,
+          hazardProperties: 11,
+          ppeProperties: 5,
+          maxTokens: 12000,
+          timeout: 150000
+        }
       });
       
       // ✅ DIRECT OPENAI CALL: 30k tokens, no wrapper, no fallback
-      logger.info(`🚀 Calling OpenAI GPT-5-mini directly - 6k tokens, 240s timeout`);
+      logger.info(`🚀 Calling OpenAI GPT-5-mini directly - 12k tokens, 150s timeout`);
       
       aiResult = await callOpenAI({
         messages: [
@@ -867,8 +880,8 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                       residualRiskLevel: { type: 'string', enum: ['low', 'medium', 'high', 'very-high'] },
                       regulation: { type: 'string', description: 'Applicable UK regulation (e.g. EWR 1989 Reg 4(3))' }
                     },
-                    required: ['hazard', 'linkedToStep', 'likelihood', 'severity', 'riskScore', 'riskLevel', 'controlMeasure', 'residualLikelihood', 'residualSeverity', 'residualRisk', 'residualRiskLevel', 'regulation'],
-                    additionalProperties: false
+                    required: ['hazard', 'linkedToStep', 'likelihood', 'severity', 'riskScore', 'riskLevel', 'controlMeasure', 'residualLikelihood', 'residualSeverity', 'residualRisk', 'residualRiskLevel', 'regulation']
+                    // ✅ FIX #1: Removed nested additionalProperties to reduce validation overhead
                   }
                 },
                 ppeDetails: {
@@ -883,8 +896,8 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                       mandatory: { type: 'boolean', description: 'True if required by regulation for this job' },
                       purpose: { type: 'string', description: 'Protection purpose and when it applies' }
                     },
-                    required: ['itemNumber', 'ppeType', 'standard', 'mandatory', 'purpose'],
-                    additionalProperties: false
+                    required: ['itemNumber', 'ppeType', 'standard', 'mandatory', 'purpose']
+                    // ✅ FIX #1: Removed nested additionalProperties to reduce validation overhead
                   }
                 },
                 emergencyProcedures: {
@@ -904,14 +917,20 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
           }
         }],
         tool_choice: { type: 'function', function: { name: 'provide_safety_assessment' } }
-      }, OPENAI_API_KEY, 110000); // 110s timeout
+      }, OPENAI_API_KEY, 150000); // ✅ FIX #2: 150s timeout - increased buffer for complex jobs
       
       if (progressInterval) clearInterval(progressInterval);
       performanceMetrics.aiGeneration = Date.now() - aiGenerationStartTime;
       
-      console.log('✅ [DIAGNOSTIC] AI call completed:', {
-        duration: performanceMetrics.aiGeneration,
-        durationSeconds: Math.round(performanceMetrics.aiGeneration / 1000)
+      // ✅ FIX #4: Post-call diagnostics with detailed timing
+      const apiCallDuration = Date.now() - apiCallStart;
+      logger.info('✅ [DIAGNOSTIC] OpenAI API call completed:', {
+        apiCallMs: apiCallDuration,
+        apiCallSeconds: Math.round(apiCallDuration / 1000),
+        withinTimeout: apiCallDuration < 150000,
+        tokensUsed: aiResult.usage?.total_tokens || 'unknown',
+        totalDuration: performanceMetrics.aiGeneration,
+        totalDurationSeconds: Math.round(performanceMetrics.aiGeneration / 1000)
       });
       
       logger.info(`✅ AI call completed in ${Math.round(performanceMetrics.aiGeneration / 1000)}s`);
