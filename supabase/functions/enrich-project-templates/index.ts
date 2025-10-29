@@ -7,6 +7,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+const ENRICHMENT_VERSION = 'v1';
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -41,11 +43,33 @@ serve(async (req) => {
 
     console.log(`📄 Processing ${documents.length} project management documents`);
 
-    let processed = 0;
-    let failed = 0;
+    const { data: checkpoint } = await supabase
+      .from('batch_progress')
+      .select('last_checkpoint')
+      .eq('job_id', jobId)
+      .eq('batch_number', Math.floor(startFrom / batchSize))
+      .maybeSingle();
+    
+    const resumeFromId = checkpoint?.last_checkpoint?.last_processed_id;
+    let startIndex = resumeFromId ? documents.findIndex(d => d.id === resumeFromId) + 1 : 0;
 
-    for (const doc of documents) {
+    let processed = 0, failed = 0, qualityPassed = 0, qualityFailed = 0, skipped = 0, totalProcessingTime = 0;
+
+    for (let i = startIndex; i < documents.length; i++) {
+      const doc = documents[i];
+      const docStartTime = Date.now();
       try {
+        const contentHash = await hashContent(doc.content);
+        const { data: existing } = await supabase
+          .from('project_templates')
+          .select('enrichment_version, source_hash')
+          .eq('source_id', doc.id)
+          .maybeSingle();
+        
+        if (existing?.enrichment_version === ENRICHMENT_VERSION && existing?.source_hash === contentHash) {
+          skipped++;
+          continue;
+        }
         const extractionPrompt = `Extract structured project templates and methodologies from this electrical project management document.
 
 DOCUMENT:
@@ -117,10 +141,17 @@ Extract project frameworks and templates. Return JSON array:
           templates = [];
         }
 
+        if (!validateQuality(templates)) {
+          qualityFailed++;
+          failed++;
+          continue;
+        }
+        qualityPassed++;
+
         for (const template of templates) {
-          const { error: insertError } = await supabase
+          await supabase
             .from('project_templates')
-            .insert({
+            .upsert({
               source_id: doc.id,
               template_type: template.template_type || 'general',
               title: template.title || '',
@@ -131,22 +162,25 @@ Extract project frameworks and templates. Return JSON array:
               team_roles: template.team_roles || [],
               regulations_cited: template.regulations_cited || [],
               risk_factors: template.risk_factors || [],
-              confidence_score: 0.85
+              confidence_score: 0.85,
+              enrichment_version: ENRICHMENT_VERSION,
+              source_hash: contentHash
+            }, {
+              onConflict: 'source_id,title'
             });
-
-          if (insertError) {
-            console.error('❌ Insert error:', insertError.message);
-          }
         }
 
         processed++;
+        totalProcessingTime += Date.now() - docStartTime;
         
-        if (jobId) {
+        if ((i + 1) % 25 === 0 || i === documents.length - 1) {
           await supabase
             .from('batch_progress')
-            .update({ 
-              items_processed: startFrom + processed,
-              status: 'processing'
+            .update({
+              last_checkpoint: { last_processed_id: doc.id, processed_count: i + 1 },
+              items_processed: startFrom + i + 1,
+              status: 'processing',
+              data: { quality_passed: qualityPassed, quality_failed: qualityFailed, skipped, avg_processing_time_ms: totalProcessingTime / processed, api_cost_gbp: processed * 0.004 }
             })
             .eq('job_id', jobId)
             .eq('batch_number', Math.floor(startFrom / batchSize));
@@ -160,12 +194,15 @@ Extract project frameworks and templates. Return JSON array:
       }
     }
 
-    console.log(`✅ Processed ${processed}/${documents.length} documents (${failed} failed)`);
+    console.log(`✅ Processed ${processed}/${documents.length} (${failed} failed, ${skipped} skipped)`);
 
     return new Response(JSON.stringify({ 
       success: true,
       processed,
       failed,
+      skipped,
+      qualityPassed,
+      qualityFailed,
       nextStartFrom: startFrom + batchSize,
       hasMore: documents.length === batchSize
     }), {
@@ -182,3 +219,17 @@ Extract project frameworks and templates. Return JSON array:
     });
   }
 });
+
+async function hashContent(content: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(content);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function validateQuality(templates: any[]): boolean {
+  if (!templates || templates.length === 0) return false;
+  const first = templates[0];
+  return first.phases?.length >= 1 && first.typical_duration_days > 0;
+}

@@ -44,7 +44,6 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     if (action === 'start') {
-      // Filter tasks by phase if specified
       let tasksToRun = ENRICHMENT_TASKS;
       if (phase) {
         tasksToRun = ENRICHMENT_TASKS.filter(t => t.priority === phase);
@@ -55,16 +54,13 @@ serve(async (req) => {
 
       console.log(`🚀 Starting ${tasksToRun.length} enrichment tasks`);
 
-      // Create batch jobs for all tasks
       for (const task of tasksToRun) {
-        // Count source documents
         const { count } = await supabase
           .from(task.sourceTable)
           .select('*', { count: 'exact', head: true });
 
         const totalBatches = Math.ceil((count || 0) / task.batchSize);
 
-        // Create job
         const { data: job, error: jobError } = await supabase
           .from('batch_jobs')
           .insert({
@@ -90,7 +86,6 @@ serve(async (req) => {
 
         console.log(`✅ Created job ${job.id} for ${task.name} (${totalBatches} batches)`);
 
-        // Create batch progress records
         for (let i = 0; i < totalBatches; i++) {
           await supabase
             .from('batch_progress')
@@ -98,11 +93,11 @@ serve(async (req) => {
               job_id: job.id,
               batch_number: i,
               total_items: Math.min(task.batchSize, (count || 0) - (i * task.batchSize)),
-              status: 'pending'
+              status: 'pending',
+              data: {}
             });
         }
 
-        // Start first batch
         await processNextBatch(supabase, job.id, task);
       }
 
@@ -110,6 +105,49 @@ serve(async (req) => {
         success: true,
         message: `Started ${tasksToRun.length} enrichment tasks`,
         tasks: tasksToRun.map(t => t.name)
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    if (action === 'test') {
+      const testTasks = ENRICHMENT_TASKS.slice(0, 4).map((t, idx) => ({ 
+        ...t, 
+        batchSize: idx < 4 ? 20 : 10,
+        test_mode: true 
+      }));
+
+      console.log(`🧪 Starting test mode: 100 documents`);
+
+      for (const task of testTasks) {
+        const { data: job } = await supabase
+          .from('batch_jobs')
+          .insert({
+            job_type: `test_enrich_${task.sourceTable}`,
+            status: 'pending',
+            total_batches: 1,
+            metadata: { ...task, test_mode: true }
+          })
+          .select()
+          .single();
+
+        await supabase
+          .from('batch_progress')
+          .insert({
+            job_id: job.id,
+            batch_number: 0,
+            total_items: task.batchSize,
+            status: 'pending',
+            data: {}
+          });
+
+        await processNextBatch(supabase, job.id, task);
+      }
+
+      return new Response(JSON.stringify({ 
+        success: true,
+        message: 'Test mode: Processing 100 documents',
+        tasks: testTasks.map(t => t.name)
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });

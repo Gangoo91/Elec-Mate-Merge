@@ -7,6 +7,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+const ENRICHMENT_VERSION = 'v1';
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -22,8 +24,7 @@ serve(async (req) => {
     const openAIKey = Deno.env.get('OPENAI_API_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Fetch batch of health & safety knowledge
-    const { data: documents, error: fetchError } = await supabase
+    const { data: documents, error: fetchError} = await supabase
       .from('health_safety_knowledge')
       .select('*')
       .range(startFrom, startFrom + batchSize - 1)
@@ -31,7 +32,6 @@ serve(async (req) => {
 
     if (fetchError) throw fetchError;
     if (!documents || documents.length === 0) {
-      console.log('✅ No more documents to process');
       return new Response(JSON.stringify({ 
         success: true, 
         processed: 0, 
@@ -43,35 +43,55 @@ serve(async (req) => {
 
     console.log(`📄 Processing ${documents.length} health & safety documents`);
 
-    let processed = 0;
-    let failed = 0;
+    // Check for checkpoint
+    const { data: checkpoint } = await supabase
+      .from('batch_progress')
+      .select('last_checkpoint')
+      .eq('job_id', jobId)
+      .eq('batch_number', Math.floor(startFrom / batchSize))
+      .maybeSingle();
+    
+    const resumeFromId = checkpoint?.last_checkpoint?.last_processed_id;
+    let startIndex = resumeFromId ? documents.findIndex(d => d.id === resumeFromId) + 1 : 0;
+    
+    console.log(resumeFromId ? `▶️ Resuming from checkpoint at doc ${startIndex}` : '🆕 Starting fresh batch');
 
-    for (const doc of documents) {
+    let processed = 0, failed = 0, qualityPassed = 0, qualityFailed = 0, skipped = 0, totalProcessingTime = 0;
+
+    for (let i = startIndex; i < documents.length; i++) {
+      const doc = documents[i];
+      const docStartTime = Date.now();
+      
       try {
-        const extractionPrompt = `Extract all electrical safety hazards and health & safety procedures from this document.
+        // Check if already enriched
+        const contentHash = await hashContent(doc.content);
+        const { data: existing } = await supabase
+          .from('regulation_hazards_extracted')
+          .select('enrichment_version, source_hash')
+          .eq('source_id', doc.id)
+          .eq('source_document', 'health_safety_knowledge')
+          .maybeSingle();
+        
+        if (existing?.enrichment_version === ENRICHMENT_VERSION && existing?.source_hash === contentHash) {
+          console.log(`⏭️ Skipping ${doc.id} - already enriched`);
+          skipped++;
+          continue;
+        }
+
+        const extractionPrompt = `Extract all electrical safety hazards from this document.
 
 DOCUMENT:
 ${doc.content}
 
-Extract:
-1. **Electrical hazards** (shock, arc flash, burns, etc.)
-2. **Safety procedures** (isolation, PPE, permits)
-3. **Risk assessments**
-4. **Control measures**
-5. **Emergency procedures**
-
 Return JSON array:
 [{
-  "hazard_type": "electrical_shock | arc_flash | mechanical | chemical | working_at_height | etc",
-  "hazard_description": "Clear description of the hazard",
+  "hazard_type": "electrical_shock | arc_flash | mechanical | chemical",
+  "hazard_description": "Clear description",
   "severity": "low | medium | high | critical",
-  "likelihood": "rare | unlikely | possible | likely | almost_certain",
-  "affected_activities": ["activity1", "activity2"],
-  "control_measures": ["control1", "control2"],
-  "ppe_required": ["ppe1", "ppe2"],
-  "regulations_cited": ["BS 7671 Section X", "Health & Safety at Work Act"],
-  "emergency_response": "What to do if incident occurs",
-  "training_required": ["qualification1", "qualification2"]
+  "likelihood": "rare | unlikely | possible | likely",
+  "control_measures": ["control1"],
+  "ppe_required": ["ppe1"],
+  "regulations_cited": ["regulation1"]
 }]`;
 
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -84,7 +104,7 @@ Return JSON array:
             model: 'gpt-4o-mini',
             messages: [{
               role: 'system',
-              content: 'You are a health & safety expert. Extract structured hazard data from electrical safety documents. Return valid JSON only.'
+              content: 'You are a health & safety expert. Extract structured hazard data. Return valid JSON only.'
             }, {
               role: 'user',
               content: extractionPrompt
@@ -111,41 +131,62 @@ Return JSON array:
           hazards = [];
         }
 
-        // Insert each hazard
+        // Validate quality
+        if (!validateQuality(hazards)) {
+          console.warn(`⚠️ Quality check failed for ${doc.id}`);
+          qualityFailed++;
+          failed++;
+          continue;
+        }
+        qualityPassed++;
+
         for (const hazard of hazards) {
-          const { error: insertError } = await supabase
+          await supabase
             .from('regulation_hazards_extracted')
-            .insert({
+            .upsert({
               regulation_number: 'H&S-' + doc.id.substring(0, 8),
               section: doc.topic || 'Health & Safety',
               hazard_type: hazard.hazard_type || 'general',
               hazard_description: hazard.hazard_description || '',
               severity: hazard.severity || 'medium',
               likelihood: hazard.likelihood || 'possible',
-              affected_activities: hazard.affected_activities || [],
               control_measures: hazard.control_measures || [],
               ppe_required: hazard.ppe_required || [],
               regulations_cited: hazard.regulations_cited || [],
-              emergency_response: hazard.emergency_response,
-              training_required: hazard.training_required || [],
               confidence_score: 0.85,
               source_document: 'health_safety_knowledge',
-              source_id: doc.id
+              source_id: doc.id,
+              enrichment_version: ENRICHMENT_VERSION,
+              source_hash: contentHash
+            }, {
+              onConflict: 'regulation_number,hazard_description'
             });
-
-          if (insertError) {
-            console.error('❌ Insert error:', insertError.message);
-          }
         }
 
         processed++;
+        const docProcessingTime = Date.now() - docStartTime;
+        totalProcessingTime += docProcessingTime;
         
-        if (jobId) {
+        // Save checkpoint every 25 docs
+        if ((i + 1) % 25 === 0 || i === documents.length - 1) {
           await supabase
             .from('batch_progress')
-            .update({ 
-              items_processed: startFrom + processed,
-              status: 'processing'
+            .update({
+              last_checkpoint: {
+                last_processed_id: doc.id,
+                processed_count: i + 1,
+                timestamp: new Date().toISOString()
+              },
+              items_processed: startFrom + i + 1,
+              status: 'processing',
+              data: {
+                quality_passed: qualityPassed,
+                quality_failed: qualityFailed,
+                skipped,
+                avg_processing_time_ms: totalProcessingTime / processed,
+                api_cost_gbp: processed * 0.004,
+                last_updated: new Date().toISOString()
+              }
             })
             .eq('job_id', jobId)
             .eq('batch_number', Math.floor(startFrom / batchSize));
@@ -159,12 +200,15 @@ Return JSON array:
       }
     }
 
-    console.log(`✅ Processed ${processed}/${documents.length} documents (${failed} failed)`);
+    console.log(`✅ Processed ${processed}/${documents.length} (${failed} failed, ${skipped} skipped, ${qualityPassed} quality passed)`);
 
     return new Response(JSON.stringify({ 
       success: true,
       processed,
       failed,
+      skipped,
+      qualityPassed,
+      qualityFailed,
       nextStartFrom: startFrom + batchSize,
       hasMore: documents.length === batchSize
     }), {
@@ -181,3 +225,18 @@ Return JSON array:
     });
   }
 });
+
+async function hashContent(content: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(content);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function validateQuality(hazards: any[]): boolean {
+  if (!hazards || hazards.length === 0) return false;
+  const first = hazards[0];
+  return first.hazard_description?.length > 20 && 
+         first.control_measures?.length > 0;
+}

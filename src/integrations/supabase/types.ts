@@ -404,6 +404,7 @@ export type Database = {
           id: string
           items_processed: number
           job_id: string
+          last_checkpoint: Json | null
           started_at: string | null
           status: string
           total_items: number
@@ -417,6 +418,7 @@ export type Database = {
           id?: string
           items_processed?: number
           job_id: string
+          last_checkpoint?: Json | null
           started_at?: string | null
           status?: string
           total_items?: number
@@ -430,6 +432,7 @@ export type Database = {
           id?: string
           items_processed?: number
           job_id?: string
+          last_checkpoint?: Json | null
           started_at?: string | null
           status?: string
           total_items?: number
@@ -1526,11 +1529,13 @@ export type Database = {
           constraints: Json | null
           created_at: string | null
           description: string | null
+          enrichment_version: string | null
           example_values: Json | null
           id: string
           input_parameters: Json | null
           pattern_type: string
           regulations_cited: string[] | null
+          source_hash: string | null
           source_id: string | null
           title: string
           typical_applications: string[] | null
@@ -1543,11 +1548,13 @@ export type Database = {
           constraints?: Json | null
           created_at?: string | null
           description?: string | null
+          enrichment_version?: string | null
           example_values?: Json | null
           id?: string
           input_parameters?: Json | null
           pattern_type: string
           regulations_cited?: string[] | null
+          source_hash?: string | null
           source_id?: string | null
           title: string
           typical_applications?: string[] | null
@@ -1560,11 +1567,13 @@ export type Database = {
           constraints?: Json | null
           created_at?: string | null
           description?: string | null
+          enrichment_version?: string | null
           example_values?: Json | null
           id?: string
           input_parameters?: Json | null
           pattern_type?: string
           regulations_cited?: string[] | null
+          source_hash?: string | null
           source_id?: string | null
           title?: string
           typical_applications?: string[] | null
@@ -2392,10 +2401,12 @@ export type Database = {
           acceptance_criteria: Json | null
           confidence_score: number | null
           created_at: string | null
+          enrichment_version: string | null
           equipment_required: string[] | null
           frequency: string | null
           id: string
           regulations_cited: string[] | null
+          source_hash: string | null
           source_id: string | null
           test_name: string
           test_steps: Json
@@ -2407,10 +2418,12 @@ export type Database = {
           acceptance_criteria?: Json | null
           confidence_score?: number | null
           created_at?: string | null
+          enrichment_version?: string | null
           equipment_required?: string[] | null
           frequency?: string | null
           id?: string
           regulations_cited?: string[] | null
+          source_hash?: string | null
           source_id?: string | null
           test_name: string
           test_steps?: Json
@@ -2422,10 +2435,12 @@ export type Database = {
           acceptance_criteria?: Json | null
           confidence_score?: number | null
           created_at?: string | null
+          enrichment_version?: string | null
           equipment_required?: string[] | null
           frequency?: string | null
           id?: string
           regulations_cited?: string[] | null
+          source_hash?: string | null
           source_id?: string | null
           test_name?: string
           test_steps?: Json
@@ -2606,6 +2621,7 @@ export type Database = {
         Row: {
           confidence_score: number | null
           created_at: string | null
+          enrichment_version: string | null
           estimated_time_minutes: number | null
           id: string
           materials_required: string[] | null
@@ -2614,6 +2630,7 @@ export type Database = {
           regulations_cited: string[] | null
           safety_requirements: Json | null
           skill_level: string | null
+          source_hash: string | null
           source_id: string | null
           steps: Json
           tools_required: string[] | null
@@ -2622,6 +2639,7 @@ export type Database = {
         Insert: {
           confidence_score?: number | null
           created_at?: string | null
+          enrichment_version?: string | null
           estimated_time_minutes?: number | null
           id?: string
           materials_required?: string[] | null
@@ -2630,6 +2648,7 @@ export type Database = {
           regulations_cited?: string[] | null
           safety_requirements?: Json | null
           skill_level?: string | null
+          source_hash?: string | null
           source_id?: string | null
           steps?: Json
           tools_required?: string[] | null
@@ -2638,6 +2657,7 @@ export type Database = {
         Update: {
           confidence_score?: number | null
           created_at?: string | null
+          enrichment_version?: string | null
           estimated_time_minutes?: number | null
           id?: string
           materials_required?: string[] | null
@@ -2646,6 +2666,7 @@ export type Database = {
           regulations_cited?: string[] | null
           safety_requirements?: Json | null
           skill_level?: string | null
+          source_hash?: string | null
           source_id?: string | null
           steps?: Json
           tools_required?: string[] | null
@@ -3146,6 +3167,7 @@ export type Database = {
         Row: {
           confidence_score: number | null
           created_at: string | null
+          enrichment_version: string | null
           equipment_type: string
           estimated_duration_minutes: number | null
           frequency: string | null
@@ -3155,6 +3177,7 @@ export type Database = {
           regulations_cited: string[] | null
           required_qualifications: string[] | null
           safety_precautions: Json | null
+          source_hash: string | null
           source_id: string | null
           title: string
           updated_at: string | null
@@ -3162,6 +3185,7 @@ export type Database = {
         Insert: {
           confidence_score?: number | null
           created_at?: string | null
+          enrichment_version?: string | null
           equipment_type: string
           estimated_duration_minutes?: number | null
           frequency?: string | null
@@ -3171,6 +3195,7 @@ export type Database = {
           regulations_cited?: string[] | null
           required_qualifications?: string[] | null
           safety_precautions?: Json | null
+          source_hash?: string | null
           source_id?: string | null
           title: string
           updated_at?: string | null
@@ -3178,6 +3203,7 @@ export type Database = {
         Update: {
           confidence_score?: number | null
           created_at?: string | null
+          enrichment_version?: string | null
           equipment_type?: string
           estimated_duration_minutes?: number | null
           frequency?: string | null
@@ -3187,6 +3213,7 @@ export type Database = {
           regulations_cited?: string[] | null
           required_qualifications?: string[] | null
           safety_precautions?: Json | null
+          source_hash?: string | null
           source_id?: string | null
           title?: string
           updated_at?: string | null
@@ -4404,11 +4431,13 @@ export type Database = {
           confidence_score: number | null
           created_at: string | null
           deliverables: Json | null
+          enrichment_version: string | null
           id: string
           phases: Json
           regulations_cited: string[] | null
           required_documents: string[] | null
           risk_factors: Json | null
+          source_hash: string | null
           source_id: string | null
           team_roles: string[] | null
           template_type: string
@@ -4420,11 +4449,13 @@ export type Database = {
           confidence_score?: number | null
           created_at?: string | null
           deliverables?: Json | null
+          enrichment_version?: string | null
           id?: string
           phases?: Json
           regulations_cited?: string[] | null
           required_documents?: string[] | null
           risk_factors?: Json | null
+          source_hash?: string | null
           source_id?: string | null
           team_roles?: string[] | null
           template_type: string
@@ -4436,11 +4467,13 @@ export type Database = {
           confidence_score?: number | null
           created_at?: string | null
           deliverables?: Json | null
+          enrichment_version?: string | null
           id?: string
           phases?: Json
           regulations_cited?: string[] | null
           required_documents?: string[] | null
           risk_factors?: Json | null
+          source_hash?: string | null
           source_id?: string | null
           team_roles?: string[] | null
           template_type?: string
@@ -5236,6 +5269,7 @@ export type Database = {
           control_hierarchy: string | null
           control_measures: string[]
           created_at: string | null
+          enrichment_version: string | null
           hazard_category: string
           hazard_description: string
           hazard_embedding: string | null
@@ -5248,6 +5282,7 @@ export type Database = {
           required_ppe: Json | null
           risk_score: number | null
           severity: number | null
+          source_hash: string | null
           updated_at: string | null
           usage_count: number | null
         }
@@ -5260,6 +5295,7 @@ export type Database = {
           control_hierarchy?: string | null
           control_measures: string[]
           created_at?: string | null
+          enrichment_version?: string | null
           hazard_category: string
           hazard_description: string
           hazard_embedding?: string | null
@@ -5272,6 +5308,7 @@ export type Database = {
           required_ppe?: Json | null
           risk_score?: number | null
           severity?: number | null
+          source_hash?: string | null
           updated_at?: string | null
           usage_count?: number | null
         }
@@ -5284,6 +5321,7 @@ export type Database = {
           control_hierarchy?: string | null
           control_measures?: string[]
           created_at?: string | null
+          enrichment_version?: string | null
           hazard_category?: string
           hazard_description?: string
           hazard_embedding?: string | null
@@ -5296,6 +5334,7 @@ export type Database = {
           required_ppe?: Json | null
           risk_score?: number | null
           severity?: number | null
+          source_hash?: string | null
           updated_at?: string | null
           usage_count?: number | null
         }

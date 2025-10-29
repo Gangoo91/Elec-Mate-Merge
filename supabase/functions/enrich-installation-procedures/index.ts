@@ -7,6 +7,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+const ENRICHMENT_VERSION = 'v1';
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -41,11 +43,33 @@ serve(async (req) => {
 
     console.log(`📄 Processing ${documents.length} installation documents`);
 
-    let processed = 0;
-    let failed = 0;
+    const { data: checkpoint } = await supabase
+      .from('batch_progress')
+      .select('last_checkpoint')
+      .eq('job_id', jobId)
+      .eq('batch_number', Math.floor(startFrom / batchSize))
+      .maybeSingle();
+    
+    const resumeFromId = checkpoint?.last_checkpoint?.last_processed_id;
+    let startIndex = resumeFromId ? documents.findIndex(d => d.id === resumeFromId) + 1 : 0;
 
-    for (const doc of documents) {
+    let processed = 0, failed = 0, qualityPassed = 0, qualityFailed = 0, skipped = 0, totalProcessingTime = 0;
+
+    for (let i = startIndex; i < documents.length; i++) {
+      const doc = documents[i];
+      const docStartTime = Date.now();
       try {
+        const contentHash = await hashContent(doc.content);
+        const { data: existing } = await supabase
+          .from('installation_procedures')
+          .select('enrichment_version, source_hash')
+          .eq('source_id', doc.id)
+          .maybeSingle();
+        
+        if (existing?.enrichment_version === ENRICHMENT_VERSION && existing?.source_hash === contentHash) {
+          skipped++;
+          continue;
+        }
         const extractionPrompt = `Extract structured installation procedures from this electrical installation document.
 
 DOCUMENT:
@@ -110,10 +134,17 @@ Extract step-by-step procedures for electrical installations. Return JSON array:
           procedures = [];
         }
 
+        if (!validateQuality(procedures)) {
+          qualityFailed++;
+          failed++;
+          continue;
+        }
+        qualityPassed++;
+
         for (const proc of procedures) {
-          const { error: insertError } = await supabase
+          await supabase
             .from('installation_procedures')
-            .insert({
+            .upsert({
               source_id: doc.id,
               procedure_type: proc.procedure_type || 'general',
               procedure_title: proc.procedure_title || '',
@@ -124,22 +155,25 @@ Extract step-by-step procedures for electrical installations. Return JSON array:
               estimated_time_minutes: proc.estimated_time_minutes,
               skill_level: proc.skill_level,
               regulations_cited: proc.regulations_cited || [],
-              confidence_score: 0.85
+              confidence_score: 0.85,
+              enrichment_version: ENRICHMENT_VERSION,
+              source_hash: contentHash
+            }, {
+              onConflict: 'source_id,procedure_title'
             });
-
-          if (insertError) {
-            console.error('❌ Insert error:', insertError.message);
-          }
         }
 
         processed++;
+        totalProcessingTime += Date.now() - docStartTime;
         
-        if (jobId) {
+        if ((i + 1) % 25 === 0 || i === documents.length - 1) {
           await supabase
             .from('batch_progress')
-            .update({ 
-              items_processed: startFrom + processed,
-              status: 'processing'
+            .update({
+              last_checkpoint: { last_processed_id: doc.id, processed_count: i + 1 },
+              items_processed: startFrom + i + 1,
+              status: 'processing',
+              data: { quality_passed: qualityPassed, quality_failed: qualityFailed, skipped, avg_processing_time_ms: totalProcessingTime / processed, api_cost_gbp: processed * 0.004 }
             })
             .eq('job_id', jobId)
             .eq('batch_number', Math.floor(startFrom / batchSize));
@@ -153,12 +187,15 @@ Extract step-by-step procedures for electrical installations. Return JSON array:
       }
     }
 
-    console.log(`✅ Processed ${processed}/${documents.length} documents (${failed} failed)`);
+    console.log(`✅ Processed ${processed}/${documents.length} (${failed} failed, ${skipped} skipped)`);
 
     return new Response(JSON.stringify({ 
       success: true,
       processed,
       failed,
+      skipped,
+      qualityPassed,
+      qualityFailed,
       nextStartFrom: startFrom + batchSize,
       hasMore: documents.length === batchSize
     }), {
@@ -175,3 +212,17 @@ Extract step-by-step procedures for electrical installations. Return JSON array:
     });
   }
 });
+
+async function hashContent(content: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(content);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function validateQuality(procedures: any[]): boolean {
+  if (!procedures || procedures.length === 0) return false;
+  const first = procedures[0];
+  return first.steps?.length >= 3 && first.tools_required?.length > 0;
+}
