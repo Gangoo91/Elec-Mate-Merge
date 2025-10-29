@@ -539,7 +539,8 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
                     safetyNotes: { type: 'array', items: { type: 'string', description: 'STEP-SPECIFIC safety requirements for THIS STEP ONLY (not general project safety). In UK English (authorised, organise, metres). If no specific safety requirements for this step, return empty array. Example: Planning phase should have NO or minimal safety notes. Installation/isolation phases MUST have specific requirements like "Isolation and lock-off required".' } },
                     estimatedTime: { type: 'number' }
                   },
-                  required: ['step', 'title', 'description']
+                  required: ['step', 'title', 'description'],
+                  additionalProperties: false
                 }
               },
               practicalTips: {
@@ -565,7 +566,8 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
                     description: 'Key deliverables list (e.g., "Installation of 1 x consumer unit", "Complete power circuits")'
                   },
                   exclusions: { type: 'string', description: 'What is NOT included in this scope (e.g., "External groundworks, building services coordination")' }
-                }
+                },
+                additionalProperties: false
               },
               scheduleDetails: {
                 type: 'object',
@@ -575,13 +577,15 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
                   teamSize: { type: 'string', description: 'Team size range (e.g., "1-2 electricians")' },
                   weatherDependency: { type: 'string', description: 'Weather impact (e.g., "Minimal - Internal works only")' },
                   accessRequirements: { type: 'string', description: 'Special access needs (e.g., "Out of hours access for energisation")' }
-                }
+                },
+                additionalProperties: false
               },
               compliance: {
                 type: 'object',
                 properties: {
                   regulations: { type: 'array', items: { type: 'string' } }
-                }
+                },
+                additionalProperties: false
               }
             },
             required: ['response'],
