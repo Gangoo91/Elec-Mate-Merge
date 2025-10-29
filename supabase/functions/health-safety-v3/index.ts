@@ -1142,15 +1142,12 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     }
 
     // Validate response structure before returning
-    const riskAssessment = safetyResult.riskAssessment || {};
-    const methodStatement = safetyResult.methodStatement || {};
-    const compliance = safetyResult.compliance || {};
-    
+    // ✅ Use standardized response data (already built and validated above)
     const validatedRiskAssessment = {
-      hazards: (riskAssessment.hazards || []).sort((a, b) => (b.riskScore || 0) - (a.riskScore || 0)),
-      controls: riskAssessment.controls || [],
-      ppeDetails: riskAssessment.ppeDetails || [],
-      emergencyProcedures: riskAssessment.emergencyProcedures || []
+      hazards: standardizedResponse.data.hazards.sort((a, b) => (b.riskScore || 0) - (a.riskScore || 0)),
+      controls: [], // Not used in Phase 1
+      ppeDetails: standardizedResponse.data.ppe,
+      emergencyProcedures: standardizedResponse.data.emergencyProcedures
     };
 
     // 📊 QUALITY METRICS: Log comprehensive generation stats
