@@ -72,7 +72,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   const updateRisk = (riskId: string, updates: Partial<RAMSRisk>) => {
     setRamsData(prev => ({
       ...prev,
-      risks: prev.risks.map(risk =>
+      risks: (prev.risks || []).map(risk =>
         risk.id === riskId ? { ...risk, ...updates } : risk
       )
     }));
@@ -81,7 +81,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   const removeRisk = (riskId: string) => {
     setRamsData(prev => ({
       ...prev,
-      risks: prev.risks.filter(risk => risk.id !== riskId)
+      risks: (prev.risks || []).filter(risk => risk.id !== riskId)
     }));
   };
 
@@ -99,7 +99,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     
     setRamsData(prev => ({
       ...prev,
-      risks: [...prev.risks, newRisk]
+      risks: [...(prev.risks || []), newRisk]
     }));
   };
 
@@ -342,7 +342,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         body: { 
           ramsData: {
             ...ramsData,
-            risks: [...ramsData.risks].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0))
+            risks: [...(ramsData.risks || [])].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0))
           }, 
           methodData
         }
@@ -488,7 +488,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         safetyOfficerName: ramsData.safetyOfficerName || '',
         safetyOfficerPhone: ramsData.safetyOfficerPhone || '',
         assemblyPoint: ramsData.assemblyPoint || '',
-        risks: ramsData.risks.map(risk => ({
+        risks: (ramsData.risks || []).map(risk => ({
           ...risk,
           furtherAction: risk.furtherAction || '',
           responsible: risk.responsible || '',
@@ -502,7 +502,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         approvedBy: methodData.approvedBy || '',
         createdAt: methodData.createdAt || '',
         updatedAt: methodData.updatedAt || '',
-        steps: methodData.steps.map(step => ({
+        steps: (methodData.steps || []).map(step => ({
           ...step,
           dependencies: step.dependencies || [],
           isCompleted: step.isCompleted || false,
@@ -643,7 +643,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   </Badge>
                 </div>
                 
-                {[...ramsData.risks].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0)).map((risk, sortedIndex) => {
+                {[...(ramsData.risks || [])].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0)).map((risk, sortedIndex) => {
                   const riskNumber = sortedIndex + 1; // Risk #1 = highest rating
                   const riskRating = risk.riskRating || 0;
                   const riskLevel = riskRating <= 4 ? 'low' : riskRating <= 9 ? 'medium' : 'high';
