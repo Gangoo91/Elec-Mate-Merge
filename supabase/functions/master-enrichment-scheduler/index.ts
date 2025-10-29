@@ -239,11 +239,24 @@ serve(async (req) => {
       const jobTaskMap = new Map<string, EnrichmentTask>();
 
       for (const task of tasksToRun) {
-        const { count } = await supabase
+        // Pre-flight validation: Check if there's actual work to do
+        const { count: totalCount } = await supabase
           .from(task.sourceTable)
           .select('*', { count: 'exact', head: true });
+        
+        // Check for unenriched records (version check)
+        const { count: unenrichedCount } = await supabase
+          .from(task.sourceTable)
+          .select('*', { count: 'exact', head: true })
+          .or('enrichment_version.is.null,enrichment_version.neq.v1');
 
-        const totalBatches = Math.ceil((count || 0) / task.batchSize);
+        if (!unenrichedCount || unenrichedCount === 0) {
+          console.log(`⏭️ Skipping ${task.name}: All ${totalCount} records already enriched`);
+          continue;
+        }
+        
+        console.log(`📊 ${task.name}: ${unenrichedCount}/${totalCount} records need enrichment`);
+        const totalBatches = Math.ceil((unenrichedCount || 0) / task.batchSize);
 
         const { data: job, error: jobError } = await supabase
           .from('batch_jobs')
@@ -608,22 +621,32 @@ async function continuousProcessor(
       break;
     }
     
-    // Process one batch per job in parallel
-    const processingPromises = jobIds.map(async jobId => {
+    // Process jobs sequentially (one batch at a time across all jobs)
+    // This prevents overwhelming the system and ensures proper batch completion
+    for (const jobId of jobIds) {
       const task = jobTaskMap.get(jobId);
-      if (!task) return;
+      if (!task) continue;
       
-      try {
-        await processNextBatch(supabase, jobId, task);
-      } catch (error) {
-        console.error(`❌ Worker ${workerId} error processing job ${jobId}:`, error);
+      // Check if this job has pending work
+      const { data: pendingBatch } = await supabase
+        .from('batch_progress')
+        .select('id')
+        .eq('job_id', jobId)
+        .eq('status', 'pending')
+        .limit(1)
+        .single();
+      
+      if (pendingBatch) {
+        try {
+          await processNextBatch(supabase, jobId, task);
+        } catch (error) {
+          console.error(`❌ Worker ${workerId} error processing job ${jobId}:`, error);
+        }
       }
-    });
+    }
     
-    await Promise.allSettled(processingPromises);
-    
-    // Keepalive: Brief pause to prevent tight loop (2 seconds)
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // Brief pause between processing rounds
+    await new Promise(resolve => setTimeout(resolve, 3000));
     
     // Log heartbeat every 10 cycles (~20 seconds)
     if (cycles % 10 === 0) {
@@ -632,6 +655,59 @@ async function continuousProcessor(
   }
   
   console.log(`🛑 Worker ${workerId} terminated after ${cycles} cycles`);
+}
+
+/**
+ * Wait for a batch to complete processing
+ */
+async function waitForBatchCompletion(
+  supabase: any,
+  batchId: string,
+  batchNumber: number,
+  maxWaitMinutes: number = 10
+): Promise<'completed' | 'failed' | 'timeout'> {
+  const startTime = Date.now();
+  const maxWaitMs = maxWaitMinutes * 60 * 1000;
+  
+  // Initial wait for background function to start processing
+  console.log(`⏰ Waiting for batch ${batchNumber} to complete...`);
+  await new Promise(resolve => setTimeout(resolve, 10000)); // 10 seconds initial wait
+  
+  // Poll every 15 seconds until completion
+  while (Date.now() - startTime < maxWaitMs) {
+    const { data: batchStatus } = await supabase
+      .from('batch_progress')
+      .select('status, items_processed, data')
+      .eq('id', batchId)
+      .single();
+    
+    if (!batchStatus) {
+      console.error(`❌ Batch ${batchNumber} not found in database`);
+      return 'failed';
+    }
+    
+    const elapsed = Math.round((Date.now() - startTime) / 1000);
+    
+    if (batchStatus.status === 'completed') {
+      console.log(`✅ Batch ${batchNumber} completed after ${elapsed}s`);
+      return 'completed';
+    }
+    
+    if (batchStatus.status === 'failed') {
+      console.error(`❌ Batch ${batchNumber} failed after ${elapsed}s`);
+      return 'failed';
+    }
+    
+    // Still processing, log progress
+    const processed = batchStatus.items_processed || 0;
+    console.log(`⏳ Batch ${batchNumber} still processing... ${elapsed}s elapsed (${processed} items)`);
+    
+    // Wait 15 seconds before next check
+    await new Promise(resolve => setTimeout(resolve, 15000));
+  }
+  
+  console.warn(`⏱️ Batch ${batchNumber} timed out after ${maxWaitMinutes} minutes`);
+  return 'timeout';
 }
 
 /**
@@ -725,21 +801,19 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
 
     if (invokeError) throw invokeError;
     
-    // Wait 5 seconds for the batch to start processing in the background
-    console.log(`⏸️ Waiting 5 seconds for batch ${batch.batch_number} to start...`);
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    // Wait for batch to actually complete in background (with timeout)
+    const completionStatus = await waitForBatchCompletion(supabase, batch.id, batch.batch_number, 10);
     
-    // Check if batch completed (background function should have updated status)
-    const { data: batchStatus } = await supabase
-      .from('batch_progress')
-      .select('status')
-      .eq('id', batch.id)
-      .single();
-    
-    if (batchStatus?.status === 'completed') {
-      console.log(`✅ Batch ${batch.batch_number} completed in background`);
-    } else {
-      console.log(`⏰ Batch ${batch.batch_number} still processing (status: ${batchStatus?.status})`);
+    if (completionStatus === 'timeout') {
+      console.warn(`⏱️ Batch ${batch.batch_number} timed out, marking as failed`);
+      await supabase
+        .from('batch_progress')
+        .update({ 
+          status: 'failed',
+          error_message: 'Batch processing timed out after 10 minutes',
+          completed_at: new Date().toISOString()
+        })
+        .eq('id', batch.id);
     }
 
     const { data: allBatches } = await supabase
