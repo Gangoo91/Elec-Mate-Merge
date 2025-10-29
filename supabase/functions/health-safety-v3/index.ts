@@ -238,7 +238,7 @@ serve(async (req) => {
         }
       }),
       new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('RAG search timeout - using cached results')), 30000)  // Increased from 10s to 30s for complex queries
+        setTimeout(() => reject(new Error('RAG search timeout - using cached results')), 10000)  // 10s max (RAG has internal 8s limit)
       )
     ]).catch(error => {
       logger.warn('RAG search timeout, using minimal context', { error });
@@ -819,7 +819,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
           { role: 'user', content: userPrompt }
         ],
         model: 'gpt-5-mini-2025-08-07',
-        max_tokens: 6000, // ✅ DIAGNOSTIC: Further reduced to 6000 for faster generation
+        max_tokens: 12000, // ✅ CRITICAL FIX: Increased to prevent truncated JSON responses
         tools: [{
           type: 'function',
           function: {

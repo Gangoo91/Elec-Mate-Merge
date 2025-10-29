@@ -15,8 +15,11 @@ Deno.serve(async (req) => {
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
   );
 
+  let jobId: string | null = null;
+  
   try {
-    const { jobId } = await req.json();
+    const body = await req.json();
+    jobId = body.jobId;
     console.log(`📋 Processing RAMS job: ${jobId}`);
 
     // Get job details
@@ -67,15 +70,25 @@ Deno.serve(async (req) => {
       }
     }, 15000); // Every 15 seconds
 
+    let hsData, hsError;
+    
     try {
-      // Call health-safety-v3 via Supabase invoke (avoids bundler analysing deps)
-      const { data: hsData, error: hsError } = await supabase.functions.invoke('health-safety-v3', {
+      // Call health-safety-v3 with 180s timeout (function needs ~120s)
+      const hsPromise = supabase.functions.invoke('health-safety-v3', {
         body: {
           query: job.job_description,
           userContext: { jobScale: job.job_scale },
           projectContext: job.project_info
         }
       });
+      
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Health-safety agent timeout after 180s')), 180000)
+      );
+      
+      const result = await Promise.race([hsPromise, timeoutPromise]) as any;
+      hsData = result.data;
+      hsError = result.error;
 
       // Clear heartbeat once H&S completes
       clearInterval(heartbeatInterval);
@@ -110,14 +123,22 @@ Deno.serve(async (req) => {
 
     console.log(`🔧 Calling installer-v3 for job: ${jobId}`);
 
-    // Call installer-v3 via Supabase invoke
-    const { data: installerData, error: installerError } = await supabase.functions.invoke('installer-v3', {
+    // Call installer-v3 with 180s timeout
+    const installerPromise = supabase.functions.invoke('installer-v3', {
       body: {
         query: job.job_description,
         userContext: { jobScale: job.job_scale },
         projectContext: job.project_info
       }
     });
+    
+    const installerTimeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Installer agent timeout after 180s')), 180000)
+    );
+    
+    const installerResult = await Promise.race([installerPromise, installerTimeoutPromise]) as any;
+    const installerData = installerResult.data;
+    const installerError = installerResult.error;
 
     if (installerError || !installerData) {
       throw new Error(`Installer agent failed: ${installerError?.message ?? 'Unknown error'}`);
@@ -168,9 +189,8 @@ Deno.serve(async (req) => {
 
   } catch (error: any) {
     console.error('❌ Job processing failed:', error);
-
-    const { jobId } = await req.json().catch(() => ({ jobId: null }));
     
+    // jobId already extracted at top of try block
     if (jobId) {
       await supabase
         .from('rams_generation_jobs')
