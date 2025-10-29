@@ -2082,17 +2082,64 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "hazard_step_links_hazard_id_fkey"
-            columns: ["hazard_id"]
-            isOneToOne: false
-            referencedRelation: "regulation_hazards_extracted"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "hazard_step_links_procedure_id_fkey"
             columns: ["procedure_id"]
             isOneToOne: false
             referencedRelation: "installation_procedures"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      health_safety_intelligence: {
+        Row: {
+          confidence_score: number | null
+          control_measures: string[]
+          created_at: string | null
+          enrichment_version: string | null
+          hazard_description: string
+          id: string
+          required_ppe: Json | null
+          source_hash: string | null
+          source_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          confidence_score?: number | null
+          control_measures: string[]
+          created_at?: string | null
+          enrichment_version?: string | null
+          hazard_description: string
+          id?: string
+          required_ppe?: Json | null
+          source_hash?: string | null
+          source_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          confidence_score?: number | null
+          control_measures?: string[]
+          created_at?: string | null
+          enrichment_version?: string | null
+          hazard_description?: string
+          id?: string
+          required_ppe?: Json | null
+          source_hash?: string | null
+          source_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "health_safety_intelligence_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "health_safety_knowledge"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "health_safety_intelligence_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "hs_common_hazards"
             referencedColumns: ["id"]
           },
         ]
@@ -5341,95 +5388,6 @@ export type Database = {
           region?: string
         }
         Relationships: []
-      }
-      regulation_hazards_extracted: {
-        Row: {
-          applies_to_equipment: string[] | null
-          applies_to_installation_phases: string[] | null
-          applies_to_locations: string[] | null
-          applies_to_work_types: string[] | null
-          confidence_score: number | null
-          control_hierarchy: string | null
-          control_measures: string[]
-          created_at: string | null
-          enrichment_version: string | null
-          hazard_category: string
-          hazard_description: string
-          hazard_embedding: string | null
-          id: string
-          likelihood: number | null
-          regulation_excerpt: string | null
-          regulation_id: string | null
-          regulation_number: string
-          regulation_section: string
-          required_ppe: Json | null
-          risk_score: number | null
-          severity: number | null
-          source_hash: string | null
-          updated_at: string | null
-          usage_count: number | null
-        }
-        Insert: {
-          applies_to_equipment?: string[] | null
-          applies_to_installation_phases?: string[] | null
-          applies_to_locations?: string[] | null
-          applies_to_work_types?: string[] | null
-          confidence_score?: number | null
-          control_hierarchy?: string | null
-          control_measures: string[]
-          created_at?: string | null
-          enrichment_version?: string | null
-          hazard_category: string
-          hazard_description: string
-          hazard_embedding?: string | null
-          id?: string
-          likelihood?: number | null
-          regulation_excerpt?: string | null
-          regulation_id?: string | null
-          regulation_number: string
-          regulation_section: string
-          required_ppe?: Json | null
-          risk_score?: number | null
-          severity?: number | null
-          source_hash?: string | null
-          updated_at?: string | null
-          usage_count?: number | null
-        }
-        Update: {
-          applies_to_equipment?: string[] | null
-          applies_to_installation_phases?: string[] | null
-          applies_to_locations?: string[] | null
-          applies_to_work_types?: string[] | null
-          confidence_score?: number | null
-          control_hierarchy?: string | null
-          control_measures?: string[]
-          created_at?: string | null
-          enrichment_version?: string | null
-          hazard_category?: string
-          hazard_description?: string
-          hazard_embedding?: string | null
-          id?: string
-          likelihood?: number | null
-          regulation_excerpt?: string | null
-          regulation_id?: string | null
-          regulation_number?: string
-          regulation_section?: string
-          required_ppe?: Json | null
-          risk_score?: number | null
-          severity?: number | null
-          source_hash?: string | null
-          updated_at?: string | null
-          usage_count?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "regulation_hazards_extracted_regulation_id_fkey"
-            columns: ["regulation_id"]
-            isOneToOne: false
-            referencedRelation: "bs7671_embeddings"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       regulation_index: {
         Row: {

@@ -119,10 +119,9 @@ async function processInBackground(
         // Check if already enriched
         const contentHash = await hashContent(doc.content);
         const { data: existing } = await supabase
-          .from('regulation_hazards_extracted')
+          .from('health_safety_intelligence')
           .select('enrichment_version, source_hash')
           .eq('source_id', doc.id)
-          .eq('source_document', 'health_safety_knowledge')
           .maybeSingle();
         
         if (existing?.enrichment_version === ENRICHMENT_VERSION && existing?.source_hash === contentHash) {
@@ -131,20 +130,16 @@ async function processInBackground(
           continue;
         }
 
-        const extractionPrompt = `Extract all electrical safety hazards from this document.
+        const extractionPrompt = `Extract practical hazards from this health & safety document for electrical contractors.
 
 DOCUMENT:
 ${doc.content}
 
-Return JSON array:
+Return JSON array with:
 [{
-  "hazard_type": "electrical_shock | arc_flash | mechanical | chemical",
-  "hazard_description": "Clear description",
-  "severity": "low | medium | high | critical",
-  "likelihood": "rare | unlikely | possible | likely",
-  "control_measures": ["control1"],
-  "ppe_required": ["ppe1"],
-  "regulations_cited": ["regulation1"]
+  "hazard_description": "Clear 20-100 word description",
+  "control_measures": ["specific control 1", "specific control 2"],
+  "required_ppe": {"type": "specification"}
 }]`;
 
         const response = await callOpenAIWithRetry(openAIKey, extractionPrompt, 'You are a health & safety expert. Extract structured hazard data. Return valid JSON only.');
@@ -177,24 +172,18 @@ Return JSON array:
 
         for (const hazard of hazards) {
           await supabase
-            .from('regulation_hazards_extracted')
+            .from('health_safety_intelligence')
             .upsert({
-              regulation_number: 'H&S-' + doc.id.substring(0, 8),
-              section: doc.topic || 'Health & Safety',
-              hazard_type: hazard.hazard_type || 'general',
-              hazard_description: hazard.hazard_description || '',
-              severity: hazard.severity || 'medium',
-              likelihood: hazard.likelihood || 'possible',
-              control_measures: hazard.control_measures || [],
-              ppe_required: hazard.ppe_required || [],
-              regulations_cited: hazard.regulations_cited || [],
-              confidence_score: 0.85,
-              source_document: 'health_safety_knowledge',
               source_id: doc.id,
+              hazard_description: hazard.hazard_description || '',
+              control_measures: hazard.control_measures || [],
+              required_ppe: hazard.required_ppe || {},
+              confidence_score: 0.85,
               enrichment_version: ENRICHMENT_VERSION,
-              source_hash: contentHash
+              source_hash: contentHash,
+              updated_at: new Date().toISOString()
             }, {
-              onConflict: 'regulation_number,hazard_description'
+              onConflict: 'source_id,hazard_description'
             });
         }
 
@@ -284,8 +273,9 @@ async function hashContent(content: string): Promise<string> {
 function validateQuality(hazards: any[]): boolean {
   if (!hazards || hazards.length === 0) return false;
   const first = hazards[0];
-  return first.hazard_description?.length > 20 && 
-         first.control_measures?.length > 0;
+  return first.hazard_description?.length >= 10 && 
+         Array.isArray(first.control_measures) &&
+         first.control_measures.length >= 1;
 }
 
 async function callOpenAIWithRetry(apiKey: string, userPrompt: string, systemPrompt: string, maxRetries = 3) {
