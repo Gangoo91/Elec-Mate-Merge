@@ -151,6 +151,22 @@ serve(async (req) => {
   }
   
   if (action === 'start') {
+      // 🧹 STEP 1: Auto-cleanup old aborted/failed jobs before creating new ones
+      console.log('🧹 Cleaning up old aborted/failed jobs...');
+      const oneHourAgo = new Date(Date.now() - 3600000).toISOString();
+      
+      const { error: cleanupError } = await supabase
+        .from('batch_jobs')
+        .update({ status: 'completed' })
+        .in('status', ['aborted', 'failed'])
+        .lt('created_at', oneHourAgo);
+      
+      if (cleanupError) {
+        console.warn('⚠️ Cleanup warning:', cleanupError);
+      } else {
+        console.log('✅ Old jobs cleaned up');
+      }
+
       let tasksToRun = ENRICHMENT_TASKS;
       if (phase) {
         tasksToRun = ENRICHMENT_TASKS.filter(t => t.priority === phase);
@@ -211,25 +227,29 @@ serve(async (req) => {
         }
       }
 
-      // 🔥 PHASE 2: Start long-running worker with EdgeRuntime.waitUntil()
-      console.log(`🚀 Starting continuous worker for ${jobIds.length} jobs`);
-      
-      // @ts-ignore - EdgeRuntime is available in Deno edge functions
-      if (typeof EdgeRuntime !== 'undefined') {
-        // @ts-ignore
-        EdgeRuntime.waitUntil(
-          continuousProcessor(supabase, jobIds, jobTaskMap).catch(err => {
-            console.error('❌ Continuous processor failed:', err);
-          })
-        );
-        console.log('✅ Long-running worker initiated with EdgeRuntime.waitUntil()');
+      // 🔥 PHASE 2: Start long-running worker ONLY if jobs were created
+      if (jobIds.length > 0) {
+        console.log(`🚀 Starting continuous worker for ${jobIds.length} jobs`);
+        
+        // @ts-ignore - EdgeRuntime is available in Deno edge functions
+        if (typeof EdgeRuntime !== 'undefined') {
+          // @ts-ignore
+          EdgeRuntime.waitUntil(
+            continuousProcessor(supabase, jobIds, jobTaskMap).catch(err => {
+              console.error('❌ Continuous processor failed:', err);
+            })
+          );
+          console.log('✅ Long-running worker initiated with EdgeRuntime.waitUntil()');
+        } else {
+          console.warn('⚠️ EdgeRuntime not available, falling back to immediate processing');
+          // Fallback for local testing
+          jobIds.forEach(jobId => {
+            const task = jobTaskMap.get(jobId);
+            if (task) processNextBatch(supabase, jobId, task);
+          });
+        }
       } else {
-        console.warn('⚠️ EdgeRuntime not available, falling back to immediate processing');
-        // Fallback for local testing
-        jobIds.forEach(jobId => {
-          const task = jobTaskMap.get(jobId);
-          if (task) processNextBatch(supabase, jobId, task);
-        });
+        console.error('❌ No jobs created, worker not started. Check logs above for job creation errors.');
       }
 
       // Return immediately while worker continues in background

@@ -175,7 +175,7 @@ export default function EnrichmentMonitor() {
       const { error: progressError } = await supabase
         .from('batch_progress')
         .delete()
-        .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all
+        .gte('created_at', '1970-01-01'); // Proper delete all syntax
       
       if (progressError) throw progressError;
       
@@ -183,7 +183,7 @@ export default function EnrichmentMonitor() {
       const { error: jobsError } = await supabase
         .from('batch_jobs')
         .delete()
-        .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all
+        .gte('created_at', '1970-01-01'); // Proper delete all syntax
       
       if (jobsError) throw jobsError;
       
