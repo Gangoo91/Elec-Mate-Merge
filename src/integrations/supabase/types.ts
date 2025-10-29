@@ -4267,6 +4267,89 @@ export type Database = {
         }
         Relationships: []
       }
+      pricing_intelligence: {
+        Row: {
+          bs_standards_compliance: string[] | null
+          bulk_discount_available: boolean | null
+          bulk_discount_threshold: number | null
+          common_failure_modes: string[] | null
+          compatibility_notes: string | null
+          confidence_score: number | null
+          created_at: string | null
+          enrichment_version: string | null
+          id: string
+          installation_complexity: string | null
+          installation_time_estimate_mins: number | null
+          maintenance_requirements: string | null
+          pricing_id: string | null
+          product_category: string
+          product_subcategory: string | null
+          quality_rating: string | null
+          regional_availability: string[] | null
+          required_for_compliance: string[] | null
+          source_hash: string | null
+          typical_lead_time_days: number | null
+          typical_use_cases: string[] | null
+          updated_at: string | null
+        }
+        Insert: {
+          bs_standards_compliance?: string[] | null
+          bulk_discount_available?: boolean | null
+          bulk_discount_threshold?: number | null
+          common_failure_modes?: string[] | null
+          compatibility_notes?: string | null
+          confidence_score?: number | null
+          created_at?: string | null
+          enrichment_version?: string | null
+          id?: string
+          installation_complexity?: string | null
+          installation_time_estimate_mins?: number | null
+          maintenance_requirements?: string | null
+          pricing_id?: string | null
+          product_category: string
+          product_subcategory?: string | null
+          quality_rating?: string | null
+          regional_availability?: string[] | null
+          required_for_compliance?: string[] | null
+          source_hash?: string | null
+          typical_lead_time_days?: number | null
+          typical_use_cases?: string[] | null
+          updated_at?: string | null
+        }
+        Update: {
+          bs_standards_compliance?: string[] | null
+          bulk_discount_available?: boolean | null
+          bulk_discount_threshold?: number | null
+          common_failure_modes?: string[] | null
+          compatibility_notes?: string | null
+          confidence_score?: number | null
+          created_at?: string | null
+          enrichment_version?: string | null
+          id?: string
+          installation_complexity?: string | null
+          installation_time_estimate_mins?: number | null
+          maintenance_requirements?: string | null
+          pricing_id?: string | null
+          product_category?: string
+          product_subcategory?: string | null
+          quality_rating?: string | null
+          regional_availability?: string[] | null
+          required_for_compliance?: string[] | null
+          source_hash?: string | null
+          typical_lead_time_days?: number | null
+          typical_use_cases?: string[] | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pricing_intelligence_pricing_id_fkey"
+            columns: ["pricing_id"]
+            isOneToOne: true
+            referencedRelation: "pricing_embeddings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       professional_bodies: {
         Row: {
           annual_cpd_hours: number
