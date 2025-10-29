@@ -99,8 +99,81 @@ export async function retrieveRegulations(
     ? rerankRegulations(results, entities, query)
     : results;
   
-  console.log(`✅ Returning ${reranked.length} reranked regulations with FULL content`);
-  return reranked;
+  // ✅ QUICK WIN #2: Filter out low-relevance results
+  const filteredResults = reranked.filter(reg => {
+    // Keep high-similarity results (strong semantic match)
+    if (reg.similarity && reg.similarity > 0.80) return true;
+    
+    // Keep core safety regulations (always relevant)
+    if (isCoreRegulation(reg.regulation_number)) return true;
+    
+    // Keep if explicitly mentioned in query
+    if (query.toLowerCase().includes(reg.regulation_number.toLowerCase())) return true;
+    
+    // Keep if matches job context
+    if (entities && matchesJobContext(reg, entities)) return true;
+    
+    // Otherwise, drop it (not relevant enough)
+    return false;
+  });
+  
+  // Limit to top 8 most relevant (down from 12) for faster AI processing
+  const topResults = filteredResults.slice(0, 8);
+  
+  console.log(`✅ Returning ${topResults.length} highly relevant regulations (filtered from ${reranked.length})`);
+  return topResults;
+}
+
+/**
+ * QUICK WIN #2: Check if regulation is a core safety regulation
+ */
+function isCoreRegulation(regNumber: string): boolean {
+  const coreRegs = [
+    '411.3', '411.4', '411.5', // Protection against electric shock
+    '701', '702', '703', '704', '705', '706', // Special locations
+    '722', // EV charging
+    '537.2', // Isolation and switching
+    '514', // Earthing and bonding
+    '433', '434', // Overcurrent protection
+    '543', '544', // Earthing arrangements
+  ];
+  
+  return coreRegs.some(core => regNumber.startsWith(core));
+}
+
+/**
+ * QUICK WIN #2: Check if regulation matches job context
+ */
+function matchesJobContext(reg: RegulationResult, entities: any): boolean {
+  const regNumber = reg.regulation_number;
+  const content = reg.content.toLowerCase();
+  
+  // Bathroom/shower jobs → Section 701
+  if ((entities.loadType === 'shower' || entities.location === 'bathroom') && regNumber.startsWith('701')) {
+    return true;
+  }
+  
+  // EV charger jobs → Section 722
+  if (entities.loadType === 'ev_charger' && regNumber.startsWith('722')) {
+    return true;
+  }
+  
+  // Consumer unit/distribution → Sections 530-537
+  if (entities.equipment?.includes('consumer_unit') && regNumber.startsWith('53')) {
+    return true;
+  }
+  
+  // Cable sizing → Table 4 series
+  if (entities.power && regNumber.startsWith('Table 4')) {
+    return true;
+  }
+  
+  // Earthing jobs → Section 540s
+  if (content.includes('earth') && regNumber.startsWith('54')) {
+    return true;
+  }
+  
+  return false;
 }
 
 /**

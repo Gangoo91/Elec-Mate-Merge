@@ -4760,6 +4760,45 @@ export type Database = {
         }
         Relationships: []
       }
+      rams_semantic_cache: {
+        Row: {
+          created_at: string | null
+          expires_at: string | null
+          hit_count: number | null
+          id: string
+          job_description_embedding: string
+          job_scale: string
+          last_used_at: string | null
+          method_data: Json
+          rams_data: Json
+          work_type: string
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at?: string | null
+          hit_count?: number | null
+          id?: string
+          job_description_embedding: string
+          job_scale: string
+          last_used_at?: string | null
+          method_data: Json
+          rams_data: Json
+          work_type: string
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string | null
+          hit_count?: number | null
+          id?: string
+          job_description_embedding?: string
+          job_scale?: string
+          last_used_at?: string | null
+          method_data?: Json
+          rams_data?: Json
+          work_type?: string
+        }
+        Relationships: []
+      }
       regional_job_pricing: {
         Row: {
           average_price: number
@@ -6566,6 +6605,7 @@ export type Database = {
       }
       cleanup_expired_oauth_states: { Args: never; Returns: undefined }
       cleanup_expired_pricing_data: { Args: never; Returns: undefined }
+      cleanup_expired_rams_cache: { Args: never; Returns: undefined }
       cleanup_expired_temp_pdfs: { Args: never; Returns: undefined }
       cleanup_expired_tool_cache: { Args: never; Returns: undefined }
       cleanup_expired_tools_cache: { Args: never; Returns: undefined }
@@ -6607,6 +6647,22 @@ export type Database = {
         Returns: boolean
       }
       is_owner_of_quote: { Args: { q_id: string }; Returns: boolean }
+      match_rams_cache: {
+        Args: {
+          job_scale: string
+          match_count?: number
+          query_embedding: string
+          similarity_threshold?: number
+          work_type: string
+        }
+        Returns: {
+          hit_count: number
+          id: string
+          method_data: Json
+          rams_data: Json
+          similarity: number
+        }[]
+      }
       normalize_query_text: { Args: { query_text: string }; Returns: string }
       search_bs7671: {
         Args: {

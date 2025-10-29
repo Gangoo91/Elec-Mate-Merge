@@ -1,4 +1,5 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { checkRAMSCache, storeRAMSCache } from '../_shared/rams-cache.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -33,6 +34,56 @@ Deno.serve(async (req) => {
       throw new Error(`Job not found: ${jobId}`);
     }
 
+    // ✅ QUICK WIN #3: Check cache first (instant response for common jobs)
+    console.log('🔍 Checking semantic cache before generation...');
+    
+    const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+    if (!OPENAI_API_KEY) {
+      throw new Error('OPENAI_API_KEY not configured');
+    }
+    
+    const cacheResult = await checkRAMSCache({
+      supabase,
+      jobDescription: job.job_description,
+      workType: job.job_scale,
+      jobScale: job.job_scale,
+      openAiKey: OPENAI_API_KEY
+    });
+    
+    if (cacheResult.hit && cacheResult.data) {
+      // Return cached result immediately (<1s response!)
+      console.log('🎉 Cache HIT - serving instant result');
+      
+      await supabase
+        .from('rams_generation_jobs')
+        .update({
+          status: 'complete',
+          progress: 100,
+          current_step: 'Completed (served from cache)',
+          rams_data: cacheResult.data.rams_data,
+          method_data: cacheResult.data.method_data,
+          completed_at: new Date().toISOString(),
+          generation_metadata: { 
+            cache_hit: true,
+            similarity: cacheResult.data.similarity,
+            cache_hit_count: cacheResult.data.hit_count
+          }
+        })
+        .eq('id', jobId);
+      
+      return new Response(
+        JSON.stringify({ 
+          success: true, 
+          jobId,
+          cached: true,
+          similarity: cacheResult.data.similarity
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    
+    console.log('❌ Cache miss - proceeding with full generation');
+    
     // Mark as processing
     await supabase
       .from('rams_generation_jobs')
@@ -162,6 +213,18 @@ Deno.serve(async (req) => {
       })
       .eq('id', jobId);
 
+    // ✅ QUICK WIN #3: Store in cache for future reuse
+    console.log('💾 Storing result in semantic cache...');
+    await storeRAMSCache({
+      supabase,
+      jobDescription: job.job_description,
+      workType: job.job_scale,
+      jobScale: job.job_scale,
+      ramsData: hsData.data,
+      methodData: installerData.data,
+      openAiKey: OPENAI_API_KEY
+    });
+    
     // Mark complete
     await supabase
       .from('rams_generation_jobs')
@@ -175,7 +238,8 @@ Deno.serve(async (req) => {
         completed_at: new Date().toISOString(),
         generation_metadata: {
           hs_timing: hsData.timing,
-          installer_timing: installerData.timing
+          installer_timing: installerData.timing,
+          cache_hit: false
         }
       })
       .eq('id', jobId);

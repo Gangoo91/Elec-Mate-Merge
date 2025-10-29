@@ -289,13 +289,21 @@ serve(async (req) => {
       logger.warn(`⚠️ SLOW RAG: ${performanceMetrics.ragRetrieval}ms (expected <3000ms)`);
     }
 
-    // PHASE 2A: Build H&S context with STRUCTURED hazard extraction
-    console.log('📝 [DIAGNOSTIC] Building H&S context from RAG results...');
+    // ✅ QUICK WIN #1: Use optimized regulation context builder
+    console.log('📝 [DIAGNOSTIC] Building optimized H&S context...');
+    const { buildOptimizedRegulationContext } = await import('../_shared/regulation-helper.ts');
+    
     let hsContext: string;
     let structuredHazards = '';
     
     try {
-      logger.info('Building H&S context from RAG results with structured hazard extraction');
+      logger.info('Building H&S context with OPTIMIZED regulation pre-processing');
+      
+      // Build optimized context (hazards + controls already extracted)
+      const optimizedRegContext = buildOptimizedRegulationContext(
+        hsKnowledge.regulations || [],
+        query
+      );
       
       // Optimize RAG context delivery - extract key hazards only
       if (hsKnowledge?.healthSafetyDocs && hsKnowledge.healthSafetyDocs.length > 0) {
@@ -357,9 +365,17 @@ serve(async (req) => {
       throw new Error(`Context building failed: ${contextError instanceof Error ? contextError.message : String(contextError)}`);
     }
 
-    // Build HIGH-LEVEL INSTALL KNOWLEDGE from installer output
+    // ✅ QUICK WIN #1: Build optimized context section with pre-analyzed regulations
     let installKnowledge = '';
     let contextSection = '';
+    
+    // Add optimized regulation context (hazards + controls pre-extracted)
+    if (optimizedRegContext.length > 0) {
+      contextSection += '\n\n# RELEVANT REGULATIONS (Pre-analyzed for hazards)\n\n';
+      contextSection += optimizedRegContext;
+      contextSection += '\n\n⚠️ YOUR TASK: Select which hazards apply to this job and format into JSON.\n';
+      contextSection += 'DO NOT create new hazards - use the pre-analyzed list above.\n\n';
+    }
     
     // NEW: Parse installationSteps directly from body (preferred) or previousAgentOutputs
     const installationSteps = body.installationSteps || 
