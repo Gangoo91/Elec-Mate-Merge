@@ -515,6 +515,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         function: {
           name: 'provide_installation_guidance',
           description: 'Return comprehensive installation guidance. MUST extract specific measurements from the installation knowledge database.',
+          strict: true,
           parameters: {
             type: 'object',
             properties: {
