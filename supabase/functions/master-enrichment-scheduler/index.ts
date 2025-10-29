@@ -708,7 +708,11 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
         }
       });
       
-      if (!response.error) break;
+      // Just check if it started successfully (fire-and-forget)
+      if (!response.error && response.data?.success) {
+        console.log(`✅ Batch ${batch.batch_number} started successfully`);
+        break;
+      }
       
       invokeError = response.error;
       const delay = Math.min(1000 * Math.pow(2, attempt), 30000);
@@ -720,15 +724,23 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
     }
 
     if (invokeError) throw invokeError;
-
-    await supabase
+    
+    // Wait 5 seconds for the batch to start processing in the background
+    console.log(`⏸️ Waiting 5 seconds for batch ${batch.batch_number} to start...`);
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    
+    // Check if batch completed (background function should have updated status)
+    const { data: batchStatus } = await supabase
       .from('batch_progress')
-      .update({ 
-        status: 'completed',
-        completed_at: new Date().toISOString(),
-        items_processed: batch.total_items
-      })
-      .eq('id', batch.id);
+      .select('status')
+      .eq('id', batch.id)
+      .single();
+    
+    if (batchStatus?.status === 'completed') {
+      console.log(`✅ Batch ${batch.batch_number} completed in background`);
+    } else {
+      console.log(`⏰ Batch ${batch.batch_number} still processing (status: ${batchStatus?.status})`);
+    }
 
     const { data: allBatches } = await supabase
       .from('batch_progress')

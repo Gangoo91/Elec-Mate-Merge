@@ -1,3 +1,4 @@
+/// <reference lib="deno.unstable" />
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
@@ -16,13 +17,65 @@ serve(async (req) => {
 
   try {
     const { batchSize = 50, startFrom = 0, jobId } = await req.json();
+    const batchNumber = Math.floor(startFrom / batchSize);
     
-    console.log(`🏥 Starting health & safety enrichment batch from ${startFrom}, size ${batchSize}`);
+    console.log(`🚀 Starting background job: ${jobId}, batch ${batchNumber}`);
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const openAIKey = Deno.env.get('OPENAI_API_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
+    
+    // Create initial progress record
+    await supabase
+      .from('batch_progress')
+      .upsert({
+        job_id: jobId,
+        batch_number: batchNumber,
+        status: 'processing',
+        items_processed: startFrom,
+        data: { message: 'Job started in background' }
+      });
+    
+    // Start background processing (fire-and-forget)
+    EdgeRuntime.waitUntil(
+      processInBackground(supabase, openAIKey, jobId, batchSize, startFrom, batchNumber)
+    );
+    
+    // Return immediately
+    return new Response(JSON.stringify({ 
+      success: true,
+      message: 'Job started in background',
+      jobId,
+      batchNumber,
+      startFrom
+    }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
+    
+  } catch (error) {
+    console.error('❌ Failed to start job:', error);
+    return new Response(JSON.stringify({ 
+      error: error.message 
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
+  }
+});
+
+// Background worker function
+async function processInBackground(
+  supabase: any,
+  openAIKey: string,
+  jobId: string,
+  batchSize: number,
+  startFrom: number,
+  batchNumber: number
+) {
+  console.log(`🔄 Background processing started: batch ${batchNumber}`);
+  
+  try {
 
     const { data: documents, error: fetchError} = await supabase
       .from('health_safety_knowledge')
@@ -182,31 +235,43 @@ Return JSON array:
       }
     }
 
-    console.log(`✅ Processed ${processed}/${documents.length} (${failed} failed, ${skipped} skipped, ${qualityPassed} quality passed)`);
+    console.log(`✅ Batch ${batchNumber} complete: ${processed}/${documents.length} (${failed} failed, ${skipped} skipped, ${qualityPassed} quality passed)`);
 
-    return new Response(JSON.stringify({ 
-      success: true,
-      processed,
-      failed,
-      skipped,
-      qualityPassed,
-      qualityFailed,
-      nextStartFrom: startFrom + batchSize,
-      hasMore: documents.length === batchSize
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
-
+    // Mark as completed
+    await supabase
+      .from('batch_progress')
+      .update({ 
+        status: 'completed',
+        items_processed: startFrom + documents.length,
+        data: { 
+          processed, 
+          failed, 
+          skipped, 
+          qualityPassed, 
+          qualityFailed,
+          avg_processing_time_ms: totalProcessingTime / processed,
+          completed_at: new Date().toISOString()
+        }
+      })
+      .eq('job_id', jobId)
+      .eq('batch_number', batchNumber);
+    
+    console.log(`✅ Background processing completed: batch ${batchNumber}`);
+    
   } catch (error) {
-    console.error('❌ Fatal error:', error);
-    return new Response(JSON.stringify({ 
-      error: error.message 
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
+    console.error(`❌ Background processing failed: batch ${batchNumber}`, error);
+    
+    // Mark as failed
+    await supabase
+      .from('batch_progress')
+      .update({ 
+        status: 'failed',
+        data: { error: error.message, failed_at: new Date().toISOString() }
+      })
+      .eq('job_id', jobId)
+      .eq('batch_number', batchNumber);
   }
-});
+}
 
 async function hashContent(content: string): Promise<string> {
   const encoder = new TextEncoder();

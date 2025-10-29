@@ -18,13 +18,39 @@ export default function EnrichmentMonitor() {
   const { toast } = useToast();
 
   const fetchJobs = async () => {
-    const { data } = await supabase
-      .from('batch_jobs')
-      .select('*, batch_progress(*)')
-      .order('created_at', { ascending: false })
-      .limit(10);
-    
-    setJobs(data || []);
+    try {
+      const { data: jobs, error } = await supabase
+        .from('batch_jobs')
+        .select(`
+          *,
+          progress:batch_progress(*)
+        `)
+        .order('created_at', { ascending: false })
+        .limit(10);
+      
+      if (error) throw error;
+      
+      // Calculate aggregate stats for each job
+      const enrichedJobs = jobs?.map(job => {
+        const completedBatches = job.progress?.filter((p: any) => p.status === 'completed').length || 0;
+        const failedBatches = job.progress?.filter((p: any) => p.status === 'failed').length || 0;
+        const processingBatches = job.progress?.filter((p: any) => p.status === 'processing').length || 0;
+        const totalBatches = job.total_batches || job.progress?.length || 0;
+        
+        return {
+          ...job,
+          completedBatches,
+          failedBatches,
+          processingBatches,
+          totalBatches,
+          progressPercent: totalBatches > 0 ? Math.round((completedBatches / totalBatches) * 100) : 0
+        };
+      });
+      
+      setJobs(enrichedJobs || []);
+    } catch (error: any) {
+      console.error('Failed to fetch jobs:', error);
+    }
   };
 
   useEffect(() => {
@@ -416,7 +442,7 @@ export default function EnrichmentMonitor() {
       <div className="space-y-4">
         {jobs.map((job) => {
           const health = getJobHealth(job);
-          const batchSize = job.metadata?.batch_size || 25;
+          const batchSize = job.metadata?.batchSize || 25;
           
           return (
             <Card key={job.id} className={health.stuck > 0 ? 'border-destructive' : ''}>
@@ -424,9 +450,10 @@ export default function EnrichmentMonitor() {
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
                     <CardTitle className="flex items-center gap-2">
-                      {job.metadata?.task_name || job.job_type}
+                      {job.job_type?.replace('enrich_', '').replace(/_/g, ' ').toUpperCase()}
                       {job.status === 'processing' && (
                         <Badge variant="destructive" className="animate-pulse">
+                          <Activity className="w-3 h-3 mr-1" />
                           LIVE
                         </Badge>
                       )}
@@ -439,7 +466,9 @@ export default function EnrichmentMonitor() {
                       <Badge variant="outline">{job.status}</Badge>
                     </CardTitle>
                     <CardDescription className="mt-1">
-                      Batch size: {batchSize} items | Failure rate: {health.failureRate.toFixed(1)}%
+                      {job.completedBatches}/{job.totalBatches} batches completed
+                      {job.failedBatches > 0 && ` • ${job.failedBatches} failed`}
+                      {job.processingBatches > 0 && ` • ${job.processingBatches} processing`}
                     </CardDescription>
                     {health.estimatedTimeRemaining > 0 && (
                       <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
@@ -469,19 +498,36 @@ export default function EnrichmentMonitor() {
               <CardContent className="space-y-3">
                 <div>
                   <div className="flex justify-between text-sm mb-1">
-                    <span>Progress</span>
-                    <span className="font-medium">{job.progress_percentage}%</span>
+                    <span>Overall Progress</span>
+                    <span className="font-medium">{job.progressPercent}%</span>
                   </div>
-                  <Progress value={job.progress_percentage || 0} className="h-2" />
-                  <div className="text-xs text-muted-foreground mt-1">
-                    {job.completed_batches}/{job.total_batches} batches completed
-                    {job.failed_batches > 0 && ` • ${job.failed_batches} failed`}
+                  <Progress value={job.progressPercent || 0} className="h-2" />
+                  <div className="text-xs text-muted-foreground mt-1 flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1">
+                      <Zap className="w-3 h-3" />
+                      {job.completedBatches} done
+                    </span>
+                    {job.processingBatches > 0 && (
+                      <span className="inline-flex items-center gap-1 text-elec-yellow">
+                        <Activity className="w-3 h-3" />
+                        {job.processingBatches} active
+                      </span>
+                    )}
+                    {job.failedBatches > 0 && (
+                      <span className="inline-flex items-center gap-1 text-destructive">
+                        <AlertTriangle className="w-3 h-3" />
+                        {job.failedBatches} failed
+                      </span>
+                    )}
                   </div>
                 </div>
                 
                 {health.currentBatch && (
                   <div className="bg-muted p-3 rounded-md text-sm">
-                    <div className="font-medium mb-1">Current Batch #{health.currentBatch.batch_number}</div>
+                    <div className="font-medium mb-1 flex items-center gap-2">
+                      <Activity className="w-4 h-4 animate-pulse text-elec-yellow" />
+                      Processing Batch #{health.currentBatch.batch_number}
+                    </div>
                     <div className="text-xs text-muted-foreground">
                       {health.currentBatch.items_processed || 0}/{health.currentBatch.total_items} items
                       {health.currentBatch.data?.avg_processing_time_ms && 
