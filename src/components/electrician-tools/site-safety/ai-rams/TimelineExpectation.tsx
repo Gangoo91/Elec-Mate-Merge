@@ -23,28 +23,29 @@ const funFacts = [
 export const TimelineExpectation: React.FC = () => {
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
+  const [userHidden, setUserHidden] = useState(false);
 
-  // Hide after 90 seconds
+  // Hide after 5 minutes (300 seconds)
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
-    }, 90000); // Hide after 1.5 minutes
+    }, 300000);
 
     return () => clearTimeout(timer);
   }, []);
 
   // Auto-rotate facts every 10 seconds
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible || userHidden) return;
 
     const interval = setInterval(() => {
       setCurrentFactIndex((prev) => (prev + 1) % funFacts.length);
-    }, 10000); // Rotate every 10 seconds
+    }, 10000);
 
     return () => clearInterval(interval);
-  }, [isVisible]);
+  }, [isVisible, userHidden]);
 
-  if (!isVisible) return null;
+  if (!isVisible || userHidden) return null;
 
   return (
     <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-purple-500/10">
@@ -54,7 +55,15 @@ export const TimelineExpectation: React.FC = () => {
             <Lightbulb className="w-5 h-5 text-blue-400" />
           </div>
           <div className="flex-1 min-w-0 space-y-2">
-            <p className="text-sm font-semibold text-blue-400">💡 Did you know?</p>
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-semibold text-blue-400">💡 Did you know?</p>
+              <button
+                onClick={() => setUserHidden(true)}
+                className="text-xs text-blue-400/60 hover:text-blue-400 transition-colors underline"
+              >
+                Hide tips
+              </button>
+            </div>
             <p 
               key={currentFactIndex} 
               className="text-base text-gray-300 leading-relaxed animate-fade-in"

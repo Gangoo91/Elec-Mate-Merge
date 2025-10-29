@@ -259,7 +259,7 @@ export const AIRAMSGenerator: React.FC = () => {
                 overallProgress={progress}
                 currentStep={currentStep}
                 elapsedTime={generationStartTime > 0 ? Math.floor((Date.now() - generationStartTime) / 1000) : 0}
-                estimatedTimeRemaining={Math.max(0, Math.floor((180 * (100 - progress)) / 100))}
+                estimatedTimeRemaining={Math.max(0, Math.floor((300 * (100 - progress)) / 100))}
                 agentSteps={[
                   {
                     name: 'health-safety',

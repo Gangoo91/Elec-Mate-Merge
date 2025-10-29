@@ -33,7 +33,8 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
   const [job, setJob] = useState<RAMSJob | null>(null);
   const [isPolling, setIsPolling] = useState(false);
   const [lastProgress, setLastProgress] = useState(0);
-  const [lastProgressUpdate, setLastProgressUpdate] = useState(Date.now());
+  const [lastCurrentStep, setLastCurrentStep] = useState<string>('');
+  const [lastActivityUpdate, setLastActivityUpdate] = useState(Date.now());
 
   const pollJob = useCallback(async () => {
     if (!jobId) return;
@@ -52,26 +53,31 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
 
       setJob(data);
 
-      // Stuck job detection: if progress hasn't changed in 45 seconds, mark as failed
+      // Stuck job detection: 180s timeout (3 minutes) - reset on progress OR step change
       if (data.status === 'processing') {
-        if (data.progress === lastProgress) {
-          const stuckDuration = Date.now() - lastProgressUpdate;
-          if (stuckDuration > 45000) {
-            console.error('❌ STUCK JOB DETECTED: No progress in 45s at', data.progress + '%');
-            // Update the job in the database to failed status
+        const hasProgressChanged = data.progress !== lastProgress;
+        const hasStepChanged = data.current_step !== lastCurrentStep;
+        
+        if (hasProgressChanged || hasStepChanged) {
+          // Any activity detected - reset timer
+          setLastProgress(data.progress);
+          setLastCurrentStep(data.current_step || '');
+          setLastActivityUpdate(Date.now());
+        } else {
+          // No activity - check if stuck
+          const stuckDuration = Date.now() - lastActivityUpdate;
+          if (stuckDuration > 180000) {
+            console.error('❌ STUCK JOB DETECTED: No activity in 180s at', data.progress + '%');
             await supabase
               .from('rams_generation_jobs')
               .update({
                 status: 'failed',
-                error_message: 'Generation stalled - no progress detected for 45 seconds. Please try again.'
+                error_message: 'Generation timed out - no activity detected for 3 minutes. Please try again.'
               })
               .eq('id', jobId);
             setIsPolling(false);
             return;
           }
-        } else {
-          setLastProgress(data.progress);
-          setLastProgressUpdate(Date.now());
         }
       }
 
@@ -82,7 +88,7 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
     } catch (error) {
       console.error('Error polling job:', error);
     }
-  }, [jobId, lastProgress, lastProgressUpdate]);
+  }, [jobId, lastProgress, lastCurrentStep, lastActivityUpdate]);
 
   useEffect(() => {
     if (!jobId || !isPolling) return;

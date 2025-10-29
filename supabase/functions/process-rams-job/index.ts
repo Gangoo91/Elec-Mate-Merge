@@ -52,29 +52,52 @@ Deno.serve(async (req) => {
 
     console.log(`🔍 Calling health-safety-v3 for job: ${jobId}`);
 
-    // Call health-safety-v3 via Supabase invoke (avoids bundler analysing deps)
-    const { data: hsData, error: hsError } = await supabase.functions.invoke('health-safety-v3', {
-      body: {
-        query: job.job_description,
-        userContext: { jobScale: job.job_scale },
-        projectContext: job.project_info
+    // Start heartbeat to show progress while H&S runs (15%, 20%, 25%, 30%, 35%)
+    let heartbeatProgress = 15;
+    const heartbeatInterval = setInterval(async () => {
+      if (heartbeatProgress <= 35) {
+        await supabase
+          .from('rams_generation_jobs')
+          .update({ 
+            progress: heartbeatProgress,
+            current_step: 'Analysing risks and generating control measures...'
+          })
+          .eq('id', jobId);
+        heartbeatProgress += 5;
       }
-    });
+    }, 15000); // Every 15 seconds
 
-    if (hsError || !hsData) {
-      throw new Error(`Health-safety agent failed: ${hsError?.message ?? 'Unknown error'}`);
+    try {
+      // Call health-safety-v3 via Supabase invoke (avoids bundler analysing deps)
+      const { data: hsData, error: hsError } = await supabase.functions.invoke('health-safety-v3', {
+        body: {
+          query: job.job_description,
+          userContext: { jobScale: job.job_scale },
+          projectContext: job.project_info
+        }
+      });
+
+      // Clear heartbeat once H&S completes
+      clearInterval(heartbeatInterval);
+
+      if (hsError || !hsData) {
+        throw new Error(`Health-safety agent failed: ${hsError?.message ?? 'Unknown error'}`);
+      }
+      console.log(`✅ Health-safety completed for job: ${jobId}`);
+
+      // Update progress
+      await supabase
+        .from('rams_generation_jobs')
+        .update({ 
+          progress: 40,
+          current_step: 'Generating safety controls and PPE requirements...',
+          raw_hs_response: hsData
+        })
+        .eq('id', jobId);
+    } catch (error) {
+      clearInterval(heartbeatInterval);
+      throw error;
     }
-    console.log(`✅ Health-safety completed for job: ${jobId}`);
-
-    // Update progress
-    await supabase
-      .from('rams_generation_jobs')
-      .update({ 
-        progress: 40,
-        current_step: 'Generating safety controls and PPE requirements...',
-        raw_hs_response: hsData
-      })
-      .eq('id', jobId);
 
     // Update: Starting method statement
     await supabase
