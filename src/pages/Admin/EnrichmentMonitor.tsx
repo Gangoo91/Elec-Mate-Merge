@@ -4,13 +4,15 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
-import { RefreshCw, Play, TestTube2, AlertTriangle, Trash2, SkipForward, Pause, Clock } from 'lucide-react';
+import { RefreshCw, Play, TestTube2, AlertTriangle, Trash2, SkipForward, Pause, Clock, Activity, Zap } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 export default function EnrichmentMonitor() {
   const [jobs, setJobs] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [autoRefresh, setAutoRefresh] = useState(true);
+  const [workerActive, setWorkerActive] = useState(false);
+  const [lastHeartbeat, setLastHeartbeat] = useState<Date | null>(null);
   const { toast } = useToast();
 
   const fetchJobs = async () => {
@@ -34,13 +36,20 @@ export default function EnrichmentMonitor() {
   const startEnrichment = async (phase?: number) => {
     setLoading(true);
     try {
-      await supabase.functions.invoke('master-enrichment-scheduler', {
+      const { data, error } = await supabase.functions.invoke('master-enrichment-scheduler', {
         body: { action: 'start', phase }
       });
       
+      if (data?.worker_active) {
+        setWorkerActive(true);
+        setLastHeartbeat(new Date());
+      }
+      
       toast({ 
-        title: '✅ Enrichment started',
-        description: 'Jobs are now processing. Check progress below.'
+        title: '✅ Long-running worker started',
+        description: data?.worker_active 
+          ? 'Continuous processing active - will auto-complete all batches' 
+          : 'Jobs are now processing. Check progress below.'
       });
       setTimeout(() => fetchJobs(), 1000);
     } catch (error: any) {
@@ -177,6 +186,13 @@ export default function EnrichmentMonitor() {
 
   const activeJobs = jobs.filter(j => ['pending', 'processing'].includes(j.status));
   
+  // Update worker status based on active jobs
+  useEffect(() => {
+    if (activeJobs.length > 0) {
+      setLastHeartbeat(new Date());
+    }
+  }, [activeJobs.length]);
+  
   // Calculate health metrics
   const getJobHealth = (job: any) => {
     const batches = job.batch_progress || [];
@@ -262,6 +278,36 @@ export default function EnrichmentMonitor() {
           </Button>
         </div>
       </div>
+
+      {/* PHASE 5: Worker Status Card */}
+      {activeJobs.length > 0 && (
+        <Card className="border-primary/50 bg-primary/5">
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <Activity className="w-5 h-5 text-primary animate-pulse" />
+                  <div>
+                    <div className="font-semibold text-sm">Long-Running Worker Active</div>
+                    <div className="text-xs text-muted-foreground">
+                      {lastHeartbeat && `Last heartbeat: ${lastHeartbeat.toLocaleTimeString()}`}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className="border-primary text-primary">
+                  <Zap className="w-3 h-3 mr-1" />
+                  Autonomous Processing
+                </Badge>
+                <div className="text-xs text-muted-foreground">
+                  {activeJobs.length} active job{activeJobs.length !== 1 ? 's' : ''}
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Metrics Dashboard */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">

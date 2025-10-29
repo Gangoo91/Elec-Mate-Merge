@@ -33,6 +33,15 @@ const ENRICHMENT_TASKS: EnrichmentTask[] = [
   { name: 'Pricing Intelligence', functionName: 'enrich-pricing-intelligence', sourceTable: 'pricing_embeddings', targetTable: 'pricing_intelligence', batchSize: 10, priority: 3 },
 ];
 
+// Global worker state tracking
+const activeWorkers = new Map<string, boolean>();
+
+// Graceful shutdown handler
+addEventListener('beforeunload', (ev) => {
+  console.log('🛑 Scheduler shutting down:', ev.detail?.reason);
+  console.log(`Active workers at shutdown: ${activeWorkers.size}`);
+});
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -153,6 +162,7 @@ serve(async (req) => {
       console.log(`🚀 Starting ${tasksToRun.length} enrichment tasks`);
 
       const jobIds: string[] = [];
+      const jobTaskMap = new Map<string, EnrichmentTask>();
 
       for (const task of tasksToRun) {
         const { count } = await supabase
@@ -186,6 +196,7 @@ serve(async (req) => {
 
         console.log(`✅ Created job ${job.id} for ${task.name} (${totalBatches} batches)`);
         jobIds.push(job.id);
+        jobTaskMap.set(job.id, task);
 
         for (let i = 0; i < totalBatches; i++) {
           await supabase
@@ -198,17 +209,36 @@ serve(async (req) => {
               data: {}
             });
         }
-
-        // Start processing in background (don't await)
-        processNextBatch(supabase, job.id, task);
       }
 
-      // Return immediately
+      // 🔥 PHASE 2: Start long-running worker with EdgeRuntime.waitUntil()
+      console.log(`🚀 Starting continuous worker for ${jobIds.length} jobs`);
+      
+      // @ts-ignore - EdgeRuntime is available in Deno edge functions
+      if (typeof EdgeRuntime !== 'undefined') {
+        // @ts-ignore
+        EdgeRuntime.waitUntil(
+          continuousProcessor(supabase, jobIds, jobTaskMap).catch(err => {
+            console.error('❌ Continuous processor failed:', err);
+          })
+        );
+        console.log('✅ Long-running worker initiated with EdgeRuntime.waitUntil()');
+      } else {
+        console.warn('⚠️ EdgeRuntime not available, falling back to immediate processing');
+        // Fallback for local testing
+        jobIds.forEach(jobId => {
+          const task = jobTaskMap.get(jobId);
+          if (task) processNextBatch(supabase, jobId, task);
+        });
+      }
+
+      // Return immediately while worker continues in background
       return new Response(JSON.stringify({ 
         success: true,
-        message: `Started ${tasksToRun.length} enrichment tasks`,
+        message: `Started ${tasksToRun.length} enrichment tasks with continuous worker`,
         tasks: tasksToRun.map(t => t.name),
-        jobIds
+        jobIds,
+        worker_active: typeof EdgeRuntime !== 'undefined'
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
@@ -456,7 +486,96 @@ serve(async (req) => {
   }
 });
 
+/**
+ * PHASE 2: Continuous Processing Loop
+ * Keeps the edge function alive and processes batches until all work is complete
+ */
+async function continuousProcessor(
+  supabase: any, 
+  jobIds: string[], 
+  jobTaskMap: Map<string, EnrichmentTask>
+) {
+  const workerId = crypto.randomUUID().substring(0, 8);
+  activeWorkers.set(workerId, true);
+  
+  console.log(`🔄 Worker ${workerId} started for ${jobIds.length} jobs`);
+  
+  let cycles = 0;
+  let lastWatchdogCheck = Date.now();
+  
+  while (activeWorkers.has(workerId)) {
+    cycles++;
+    
+    // PHASE 3: Run watchdog every 5 minutes
+    if (Date.now() - lastWatchdogCheck > 5 * 60 * 1000) {
+      const recovered = await autoRecoverStuckBatches(supabase);
+      if (recovered > 0) {
+        console.log(`🔧 Watchdog recovered ${recovered} stuck batches`);
+      }
+      lastWatchdogCheck = Date.now();
+    }
+    
+    // Check for pending work across all jobs
+    const { data: pendingBatches } = await supabase
+      .from('batch_progress')
+      .select('job_id, status')
+      .in('job_id', jobIds)
+      .in('status', ['pending', 'processing']);
+    
+    const hasPendingWork = pendingBatches && pendingBatches.length > 0;
+    
+    if (!hasPendingWork) {
+      console.log(`✅ Worker ${workerId} complete: All ${jobIds.length} jobs finished (${cycles} cycles)`);
+      activeWorkers.delete(workerId);
+      break;
+    }
+    
+    // Process one batch per job in parallel
+    const processingPromises = jobIds.map(async jobId => {
+      const task = jobTaskMap.get(jobId);
+      if (!task) return;
+      
+      try {
+        await processNextBatch(supabase, jobId, task);
+      } catch (error) {
+        console.error(`❌ Worker ${workerId} error processing job ${jobId}:`, error);
+      }
+    });
+    
+    await Promise.allSettled(processingPromises);
+    
+    // Keepalive: Brief pause to prevent tight loop (2 seconds)
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Log heartbeat every 10 cycles (~20 seconds)
+    if (cycles % 10 === 0) {
+      console.log(`💓 Worker ${workerId} heartbeat: Cycle ${cycles}, ${pendingBatches?.length || 0} pending batches`);
+    }
+  }
+  
+  console.log(`🛑 Worker ${workerId} terminated after ${cycles} cycles`);
+}
+
+/**
+ * Process a single batch (PHASE 3: Enhanced error handling)
+ */
 async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTask) {
+  // PHASE 3: Ghost lock detection before processing
+  const { data: ghostLocks } = await supabase
+    .from('batch_progress')
+    .select('id, batch_number')
+    .eq('job_id', jobId)
+    .eq('status', 'processing')
+    .is('started_at', null);
+  
+  if (ghostLocks && ghostLocks.length > 0) {
+    console.warn(`⚠️ Detected ${ghostLocks.length} ghost locks for job ${jobId}, clearing...`);
+    await supabase
+      .from('batch_progress')
+      .update({ status: 'pending', started_at: null, error_message: 'Ghost lock cleared' })
+      .in('id', ghostLocks.map((b: any) => b.id));
+  }
+  
   const { data: batch } = await supabase
     .from('batch_progress')
     .select('*')
@@ -501,8 +620,8 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
     let response;
     let invokeError;
     
-    // Retry invoke up to 2 times
-    for (let attempt = 0; attempt < 3; attempt++) {
+    // PHASE 3: Extended retry with exponential backoff (5 retries, up to 30s delay)
+    for (let attempt = 0; attempt < 5; attempt++) {
       response = await supabase.functions.invoke(task.functionName, {
         body: {
           batchSize: task.batchSize,
@@ -514,10 +633,11 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
       if (!response.error) break;
       
       invokeError = response.error;
-      console.warn(`⚠️ Invoke attempt ${attempt + 1}/3 failed for ${task.functionName}:`, response.error);
+      const delay = Math.min(1000 * Math.pow(2, attempt), 30000);
+      console.warn(`⚠️ Invoke attempt ${attempt + 1}/5 failed for ${task.functionName} (retry in ${delay}ms):`, response.error);
       
-      if (attempt < 2) {
-        await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt)));
+      if (attempt < 4) {
+        await new Promise(resolve => setTimeout(resolve, delay));
       }
     }
 
@@ -551,7 +671,8 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
 
     console.log(`✅ Batch ${batch.batch_number} completed (${progress}% overall)`);
 
-    await processNextBatch(supabase, jobId, task);
+    // ⚠️ DO NOT recursively call processNextBatch here!
+    // The continuousProcessor loop handles calling processNextBatch for all jobs
 
   } catch (error: any) {
     console.error(`❌ Batch ${batch.batch_number} (job ${jobId}) failed:`, error);
@@ -579,8 +700,8 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
       })
       .eq('id', jobId);
     
-    // Continue to next batch despite failure
-    console.log(`↪️ Continuing to next batch despite failure...`);
-    await processNextBatch(supabase, jobId, task);
+    // ⚠️ DO NOT recursively call processNextBatch here!
+    // The continuousProcessor loop will pick up the next batch
+    console.log(`↪️ Batch failed, continuousProcessor will retry next batch...`);
   }
 }
