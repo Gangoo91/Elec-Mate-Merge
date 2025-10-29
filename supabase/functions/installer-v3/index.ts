@@ -12,18 +12,23 @@ import {
   generateEmbeddingWithRetry
 } from '../_shared/v3-core.ts';
 
-// Phase 1A: Standardized Response Interface
+// Phase 1A: Standardized Response Interface (matches MethodStep from frontend)
 interface InstallerV3Response {
   success: boolean;
   data: {
     steps: Array<{
+      id: string;
       stepNumber: number;
       title: string;
       description: string;
       safetyRequirements: string[];
-      linkedHazards: number[];
-      equipmentRequired: string[];
-      estimatedTime: string;
+      equipmentNeeded: string[];
+      qualifications: string[];
+      estimatedDuration: string;
+      riskLevel: 'low' | 'medium' | 'high';
+      dependencies?: string[];
+      isCompleted?: boolean;
+      linkedHazards?: string[];
     }>;
     toolsRequired: string[];
     materialsRequired: string[];
@@ -534,10 +539,10 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
                       type: 'string', 
                       description: 'COMPREHENSIVE step description in UK English (authorised, realise, organise, metres, whilst). MUST include: 1) Overview sentence, 2) Detailed sub-tasks as bullet points or numbered list, 3) Specific measurements/values from knowledge base where applicable (e.g., "400mm clip spacing", "1.8m height", "16mm² cable"), 4) Quality checks. Minimum 3-5 sentences or 80-150 words per step. Example format: "Install the consumer unit enclosure at 1.8m height from finished floor level:\n• Mark fixing positions using a spirit level to ensure level installation\n• Drill fixing holes using 5.5mm masonry bit for 50mm screws\n• Insert wall plugs and secure unit with corrosion-resistant fixings\n• Verify unit is plumb and secure before proceeding with cable entry"'
                     },
-                    tools: { type: 'array', items: { type: 'string' }, description: 'CONTEXT-SPECIFIC tools for THIS EXACT PHASE only. Examples: Planning phase = drawings, camera, notepad. Procurement phase = supplier details, order forms (or "No special tools required"). Installation phase = drills, cables, fixings. Testing phase = test equipment. DO NOT list installation tools for planning/procurement phases.' },
+                     tools: { type: 'array', items: { type: 'string' }, description: 'Equipment needed for this step. CONTEXT-SPECIFIC tools for THIS EXACT PHASE only. Examples: Planning phase = drawings, camera, notepad. Procurement phase = supplier details, order forms (or "No special tools required"). Installation phase = drills, cables, fixings. Testing phase = test equipment. DO NOT list installation tools for planning/procurement phases. This maps to equipmentNeeded in the frontend.' },
                     materials: { type: 'array', items: { type: 'string' } },
-                    safetyNotes: { type: 'array', items: { type: 'string', description: 'STEP-SPECIFIC safety requirements for THIS STEP ONLY (not general project safety). In UK English (authorised, organise, metres). If no specific safety requirements for this step, return empty array. Example: Planning phase should have NO or minimal safety notes. Installation/isolation phases MUST have specific requirements like "Isolation and lock-off required".' } },
-                    estimatedTime: { type: 'number' }
+                    safetyNotes: { type: 'array', items: { type: 'string', description: 'Safety requirements for this step. STEP-SPECIFIC safety requirements for THIS STEP ONLY (not general project safety). In UK English (authorised, organise, metres). If no specific safety requirements for this step, return empty array. Example: Planning phase should have NO or minimal safety notes. Installation/isolation phases MUST have specific requirements like "Isolation and lock-off required". This maps to safetyRequirements in the frontend.' } },
+                    estimatedTime: { type: 'number', description: 'Estimated time in minutes for this step. This maps to estimatedDuration in the frontend.' }
                   },
                   required: ['step', 'title', 'description']
                 }
@@ -553,35 +558,6 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
               toolsRequired: {
                 type: 'array',
                 items: { type: 'string' }
-              },
-              scopeOfWork: {
-                type: 'object',
-                description: 'Scope definition with deliverables and exclusions',
-                properties: {
-                  description: { type: 'string', description: 'Overall scope description (2-3 sentences in UK English)' },
-                  keyDeliverables: { 
-                    type: 'array',
-                    items: { type: 'string' },
-                    description: 'Key deliverables list (e.g., "Installation of 1 x consumer unit", "Complete power circuits")'
-                  },
-                  exclusions: { type: 'string', description: 'What is NOT included in this scope (e.g., "External groundworks, building services coordination")' }
-                }
-              },
-              scheduleDetails: {
-                type: 'object',
-                description: 'Project schedule information',
-                properties: {
-                  workingHours: { type: 'string', description: 'Working hours (e.g., "Monday-Friday, 08:00-17:00")' },
-                  teamSize: { type: 'string', description: 'Team size range (e.g., "1-2 electricians")' },
-                  weatherDependency: { type: 'string', description: 'Weather impact (e.g., "Minimal - Internal works only")' },
-                  accessRequirements: { type: 'string', description: 'Special access needs (e.g., "Out of hours access for energisation")' }
-                }
-              },
-              compliance: {
-                type: 'object',
-                properties: {
-                  regulations: { type: 'array', items: { type: 'string' } }
-                }
               }
             },
             required: ['response'],
@@ -597,14 +573,65 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       
     } catch (error) {
       clearInterval(progressInterval);
-      logger.error(`❌ OpenAI call failed after ${Math.round((Date.now() - aiCallStart) / 1000)}s`);
-      logger.error('OpenAI call failed - NO FALLBACK', {
-        error: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : undefined
-      });
+      const elapsed = Math.round((Date.now() - aiCallStart) / 1000);
+      logger.error(`❌ OpenAI call failed after ${elapsed}s`);
       
-      // No fallback - surface error immediately
-      throw error;
+      // Check if timeout error - provide graceful fallback
+      if (error instanceof Error && (error.message.includes('timeout') || error.message.includes('aborted'))) {
+        logger.warn('⚠️ Timeout detected - returning minimal fallback response');
+        
+        // Return minimal viable response instead of throwing
+        aiResult = {
+          content: '',
+          toolCalls: [{
+            function: {
+              name: 'provide_installation_guidance',
+              arguments: JSON.stringify({
+                response: `Installation guidance generation timed out after ${elapsed}s. This is a complex installation requiring detailed planning. Please try generating RAMS in phases:\n\n1. Generate RAMS for planning/procurement phase\n2. Generate RAMS for installation phase separately\n3. Generate RAMS for testing/commissioning separately`,
+                installationSteps: [
+                  {
+                    step: 1,
+                    title: 'Phase 1: Planning & Risk Assessment',
+                    description: 'Due to complexity, break this installation into manageable phases:\n• Review site conditions and access requirements\n• Identify all hazards and create detailed risk assessments\n• Procure materials and equipment\n• Arrange for any specialist subcontractors\n• Verify isolation procedures with client',
+                    tools: ['Site survey tools', 'Risk assessment templates'],
+                    materials: ['As per detailed design'],
+                    safetyNotes: ['Full site survey required before work commences'],
+                    estimatedTime: 120
+                  },
+                  {
+                    step: 2,
+                    title: 'Phase 2: Installation Execution',
+                    description: 'Execute installation in controlled phases:\n• Isolate supply and verify dead\n• Install equipment per manufacturer instructions\n• Maintain safe zones around work area\n• Document all work stages with photos\n• Test continuity at each stage',
+                    tools: ['Standard electrician tools', 'Test equipment'],
+                    materials: ['As specified'],
+                    safetyNotes: ['Isolation and lock-off mandatory', 'Permit to work may be required'],
+                    estimatedTime: 240
+                  }
+                ],
+                practicalTips: [
+                  'Complex installations benefit from phased RAMS generation',
+                  'Consider creating separate RAMS for each work phase',
+                  'Always verify isolation before starting work'
+                ],
+                commonMistakes: [
+                  'Attempting to document entire complex job in single RAMS',
+                  'Not breaking work into manageable phases'
+                ],
+                toolsRequired: ['Standard electrician toolset', 'Test equipment', 'PPE']
+              })
+            }
+          }]
+        };
+        
+        // Continue with parsing (don't throw)
+      } else {
+        // Non-timeout error - surface immediately
+        logger.error('OpenAI call failed - non-timeout error', {
+          error: error instanceof Error ? error.message : String(error),
+          stack: error instanceof Error ? error.stack : undefined
+        });
+        throw error;
+      }
     }
 
     // Parse OpenAI tool call response
@@ -712,13 +739,18 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       success: true,
       data: {
         steps: (installResult.installationSteps || []).map((step: any, index: number) => ({
-          stepNumber: step.stepNumber || index + 1,
-          title: step.title,
-          description: step.description,
-          safetyRequirements: step.safetyRequirements || [],
-          linkedHazards: step.linkedHazards || [],
-          equipmentRequired: step.equipmentNeeded || step.equipmentRequired || [],
-          estimatedTime: step.estimatedTime || '15-30 minutes'
+          id: step.id || `step-${index + 1}`,
+          stepNumber: step.step || step.stepNumber || index + 1,
+          title: step.title || `Step ${index + 1}`,
+          description: step.description || '',
+          safetyRequirements: step.safetyNotes || step.safetyRequirements || [],
+          equipmentNeeded: step.tools || step.equipmentNeeded || step.equipmentRequired || [],
+          qualifications: [],
+          estimatedDuration: step.estimatedTime ? `${step.estimatedTime} minutes` : '15-30 minutes',
+          riskLevel: 'medium' as const,
+          dependencies: [],
+          isCompleted: false,
+          linkedHazards: step.linkedHazards || []
         })),
         toolsRequired: installResult.toolsRequired || [],
         materialsRequired: installResult.materialsRequired || [],
