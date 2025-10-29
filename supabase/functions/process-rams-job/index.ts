@@ -6,6 +6,66 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+/**
+ * Transform health-safety-v3 response to match frontend RAMSData structure
+ * Maps: hazards → risks, ppe → ppeDetails
+ */
+function transformHealthSafetyResponse(hsData: any): any {
+  if (!hsData || !hsData.data) {
+    console.warn('⚠️ Health-safety response missing data field');
+    return null;
+  }
+
+  const transformed = {
+    // Map hazards → risks
+    risks: (hsData.data.hazards || []).map((h: any) => ({
+      id: h.id,
+      hazard: h.hazard,
+      risk: h.hazard,
+      likelihood: h.likelihood,
+      severity: h.severity,
+      riskRating: h.riskScore,
+      controls: h.controlMeasure,
+      residualRisk: h.residualRisk,
+      linkedToStep: h.linkedToStep,
+      furtherAction: h.regulation || '',
+      responsible: '',
+      actionBy: '',
+      done: false
+    })),
+    
+    // Map ppe → ppeDetails
+    ppeDetails: (hsData.data.ppe || []).map((p: any) => ({
+      id: `ppe-${p.itemNumber}`,
+      itemNumber: p.itemNumber,
+      ppeType: p.ppeType,
+      standard: p.standard,
+      mandatory: p.mandatory,
+      purpose: p.purpose
+    })),
+    
+    // Pass through unchanged fields
+    emergencyProcedures: hsData.data.emergencyProcedures || [],
+    complianceRegulations: hsData.data.complianceRegulations || [],
+    
+    // Add default fields expected by frontend
+    projectName: '',
+    location: '',
+    date: new Date().toISOString().split('T')[0],
+    assessor: '',
+    activities: []
+  };
+
+  console.log('✅ Transformed health-safety response:', {
+    hazards: hsData.data.hazards?.length || 0,
+    risks: transformed.risks.length,
+    ppe: hsData.data.ppe?.length || 0,
+    ppeDetails: transformed.ppeDetails.length
+  });
+
+  return transformed;
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -60,7 +120,7 @@ Deno.serve(async (req) => {
           status: 'complete',
           progress: 100,
           current_step: 'Completed (served from cache)',
-          rams_data: cacheResult.data.rams_data,
+          rams_data: cacheResult.data.rams_data || transformHealthSafetyResponse({ data: cacheResult.data }),
           method_data: cacheResult.data.method_data,
           completed_at: new Date().toISOString(),
           generation_metadata: { 
@@ -220,7 +280,7 @@ Deno.serve(async (req) => {
       jobDescription: job.job_description,
       workType: job.job_scale,
       jobScale: job.job_scale,
-      ramsData: hsData.data,
+      ramsData: transformHealthSafetyResponse(hsData),
       methodData: installerData.data,
       openAiKey: OPENAI_API_KEY
     });
@@ -232,7 +292,7 @@ Deno.serve(async (req) => {
         status: 'complete',
         progress: 100,
         current_step: '✨ Generation complete!',
-        rams_data: hsData.data,
+        rams_data: transformHealthSafetyResponse(hsData),
         method_data: installerData.data,
         raw_installer_response: installerData,
         completed_at: new Date().toISOString(),
