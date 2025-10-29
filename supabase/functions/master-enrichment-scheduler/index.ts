@@ -18,8 +18,8 @@ interface EnrichmentTask {
 
 const ENRICHMENT_TASKS: EnrichmentTask[] = [
   // Phase 1: Core Compliance & Safety (Priority 1)
-  { name: 'BS 7671 Regulations', functionName: 'enrich-regulations', sourceTable: 'bs7671_embeddings', targetTable: 'regulation_hazards_extracted', batchSize: 50, priority: 1 },
-  { name: 'Health & Safety Knowledge', functionName: 'enrich-health-safety', sourceTable: 'health_safety_knowledge', targetTable: 'regulation_hazards_extracted', batchSize: 50, priority: 1 },
+  { name: 'BS 7671 Regulations Intelligence', functionName: 'enrich-regulations', sourceTable: 'bs7671_embeddings', targetTable: 'regulations_intelligence', batchSize: 50, priority: 1 },
+  { name: 'Health & Safety Knowledge', functionName: 'enrich-health-safety', sourceTable: 'health_safety_knowledge', targetTable: 'health_safety_knowledge', batchSize: 50, priority: 1 },
   { name: 'Installation Procedures', functionName: 'enrich-installation-procedures', sourceTable: 'installation_knowledge', targetTable: 'installation_procedures', batchSize: 50, priority: 1 },
   { name: 'Design Patterns', functionName: 'enrich-design-patterns', sourceTable: 'design_knowledge', targetTable: 'design_patterns_structured', batchSize: 50, priority: 1 },
   

@@ -5476,6 +5476,68 @@ export type Database = {
         }
         Relationships: []
       }
+      regulations_intelligence: {
+        Row: {
+          applies_to: string[] | null
+          category: string
+          confidence_score: number | null
+          created_at: string | null
+          enrichment_version: string | null
+          id: string
+          keywords: string[]
+          primary_topic: string
+          regulation_id: string | null
+          regulation_number: string
+          related_regulations: string[] | null
+          source_hash: string | null
+          subcategory: string | null
+          technical_level: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          applies_to?: string[] | null
+          category: string
+          confidence_score?: number | null
+          created_at?: string | null
+          enrichment_version?: string | null
+          id?: string
+          keywords?: string[]
+          primary_topic: string
+          regulation_id?: string | null
+          regulation_number: string
+          related_regulations?: string[] | null
+          source_hash?: string | null
+          subcategory?: string | null
+          technical_level?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          applies_to?: string[] | null
+          category?: string
+          confidence_score?: number | null
+          created_at?: string | null
+          enrichment_version?: string | null
+          id?: string
+          keywords?: string[]
+          primary_topic?: string
+          regulation_id?: string | null
+          regulation_number?: string
+          related_regulations?: string[] | null
+          source_hash?: string | null
+          subcategory?: string | null
+          technical_level?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "regulations_intelligence_regulation_id_fkey"
+            columns: ["regulation_id"]
+            isOneToOne: false
+            referencedRelation: "bs7671_embeddings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       safety_alerts: {
         Row: {
           average_rating: number | null
