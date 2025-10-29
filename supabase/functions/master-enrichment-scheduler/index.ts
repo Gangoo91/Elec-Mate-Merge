@@ -1,0 +1,285 @@
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
+interface EnrichmentTask {
+  name: string;
+  functionName: string;
+  sourceTable: string;
+  targetTable: string;
+  batchSize: number;
+  priority: number;
+}
+
+const ENRICHMENT_TASKS: EnrichmentTask[] = [
+  // Phase 1: Core Compliance & Safety (Priority 1)
+  { name: 'BS 7671 Regulations', functionName: 'enrich-regulations', sourceTable: 'bs7671_embeddings', targetTable: 'regulation_hazards_extracted', batchSize: 50, priority: 1 },
+  { name: 'Health & Safety Knowledge', functionName: 'enrich-health-safety', sourceTable: 'health_safety_knowledge', targetTable: 'regulation_hazards_extracted', batchSize: 50, priority: 1 },
+  { name: 'Installation Procedures', functionName: 'enrich-installation-procedures', sourceTable: 'installation_knowledge', targetTable: 'installation_procedures', batchSize: 50, priority: 1 },
+  { name: 'Design Patterns', functionName: 'enrich-design-patterns', sourceTable: 'design_knowledge', targetTable: 'design_patterns_structured', batchSize: 50, priority: 1 },
+  
+  // Phase 2: Specialized Domains (Priority 2)
+  { name: 'Inspection Procedures', functionName: 'enrich-inspection-procedures', sourceTable: 'inspection_testing_knowledge', targetTable: 'inspection_procedures', batchSize: 50, priority: 2 },
+  { name: 'Maintenance Schedules', functionName: 'enrich-maintenance-schedules', sourceTable: 'maintenance_knowledge', targetTable: 'maintenance_schedules', batchSize: 50, priority: 2 },
+  { name: 'Project Templates', functionName: 'enrich-project-templates', sourceTable: 'project_mgmt_knowledge', targetTable: 'project_templates', batchSize: 50, priority: 2 },
+];
+
+serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const { action = 'start', phase, taskName } = await req.json();
+    
+    console.log(`🎯 Master Enrichment Scheduler: ${action}`);
+    
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    if (action === 'start') {
+      // Filter tasks by phase if specified
+      let tasksToRun = ENRICHMENT_TASKS;
+      if (phase) {
+        tasksToRun = ENRICHMENT_TASKS.filter(t => t.priority === phase);
+      }
+      if (taskName) {
+        tasksToRun = ENRICHMENT_TASKS.filter(t => t.name === taskName);
+      }
+
+      console.log(`🚀 Starting ${tasksToRun.length} enrichment tasks`);
+
+      // Create batch jobs for all tasks
+      for (const task of tasksToRun) {
+        // Count source documents
+        const { count } = await supabase
+          .from(task.sourceTable)
+          .select('*', { count: 'exact', head: true });
+
+        const totalBatches = Math.ceil((count || 0) / task.batchSize);
+
+        // Create job
+        const { data: job, error: jobError } = await supabase
+          .from('batch_jobs')
+          .insert({
+            job_type: `enrich_${task.sourceTable}`,
+            status: 'pending',
+            total_batches: totalBatches,
+            metadata: {
+              task_name: task.name,
+              function_name: task.functionName,
+              source_table: task.sourceTable,
+              target_table: task.targetTable,
+              batch_size: task.batchSize,
+              priority: task.priority
+            }
+          })
+          .select()
+          .single();
+
+        if (jobError) {
+          console.error(`❌ Failed to create job for ${task.name}:`, jobError);
+          continue;
+        }
+
+        console.log(`✅ Created job ${job.id} for ${task.name} (${totalBatches} batches)`);
+
+        // Create batch progress records
+        for (let i = 0; i < totalBatches; i++) {
+          await supabase
+            .from('batch_progress')
+            .insert({
+              job_id: job.id,
+              batch_number: i,
+              total_items: Math.min(task.batchSize, (count || 0) - (i * task.batchSize)),
+              status: 'pending'
+            });
+        }
+
+        // Start first batch
+        await processNextBatch(supabase, job.id, task);
+      }
+
+      return new Response(JSON.stringify({ 
+        success: true,
+        message: `Started ${tasksToRun.length} enrichment tasks`,
+        tasks: tasksToRun.map(t => t.name)
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    if (action === 'status') {
+      // Get status of all jobs
+      const { data: jobs } = await supabase
+        .from('batch_jobs')
+        .select('*, batch_progress(*)')
+        .in('job_type', ENRICHMENT_TASKS.map(t => `enrich_${t.sourceTable}`))
+        .order('created_at', { ascending: false })
+        .limit(20);
+
+      return new Response(JSON.stringify({ 
+        success: true,
+        jobs: jobs || []
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    if (action === 'continue') {
+      // Continue processing all incomplete jobs
+      const { data: pendingJobs } = await supabase
+        .from('batch_jobs')
+        .select('*')
+        .in('status', ['pending', 'processing'])
+        .in('job_type', ENRICHMENT_TASKS.map(t => `enrich_${t.sourceTable}`));
+
+      for (const job of pendingJobs || []) {
+        const task = ENRICHMENT_TASKS.find(t => `enrich_${t.sourceTable}` === job.job_type);
+        if (task) {
+          await processNextBatch(supabase, job.id, task);
+        }
+      }
+
+      return new Response(JSON.stringify({ 
+        success: true,
+        message: `Continuing ${pendingJobs?.length || 0} jobs`
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    return new Response(JSON.stringify({ 
+      error: 'Invalid action' 
+    }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
+
+  } catch (error) {
+    console.error('❌ Scheduler error:', error);
+    return new Response(JSON.stringify({ 
+      error: error.message 
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
+  }
+});
+
+async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTask) {
+  // Get next pending batch
+  const { data: batch } = await supabase
+    .from('batch_progress')
+    .select('*')
+    .eq('job_id', jobId)
+    .eq('status', 'pending')
+    .order('batch_number')
+    .limit(1)
+    .single();
+
+  if (!batch) {
+    // No more batches, mark job as complete
+    await supabase
+      .from('batch_jobs')
+      .update({ 
+        status: 'completed',
+        completed_at: new Date().toISOString(),
+        progress_percentage: 100
+      })
+      .eq('id', jobId);
+    
+    console.log(`✅ Job ${jobId} completed`);
+    return;
+  }
+
+  // Update batch status
+  await supabase
+    .from('batch_progress')
+    .update({ 
+      status: 'processing',
+      started_at: new Date().toISOString()
+    })
+    .eq('id', batch.id);
+
+  // Update job status
+  await supabase
+    .from('batch_jobs')
+    .update({ 
+      status: 'processing',
+      current_batch: batch.batch_number,
+      started_at: new Date().toISOString()
+    })
+    .eq('id', jobId);
+
+  try {
+    // Call enrichment function
+    const response = await supabase.functions.invoke(task.functionName, {
+      body: {
+        batchSize: task.batchSize,
+        startFrom: batch.batch_number * task.batchSize,
+        jobId: jobId
+      }
+    });
+
+    if (response.error) throw response.error;
+
+    // Update batch as completed
+    await supabase
+      .from('batch_progress')
+      .update({ 
+        status: 'completed',
+        completed_at: new Date().toISOString(),
+        items_processed: batch.total_items
+      })
+      .eq('id', batch.id);
+
+    // Update job progress
+    const { data: allBatches } = await supabase
+      .from('batch_progress')
+      .select('status')
+      .eq('job_id', jobId);
+
+    const completedCount = allBatches?.filter(b => b.status === 'completed').length || 0;
+    const totalCount = allBatches?.length || 1;
+    const progress = Math.round((completedCount / totalCount) * 100);
+
+    await supabase
+      .from('batch_jobs')
+      .update({ 
+        completed_batches: completedCount,
+        progress_percentage: progress
+      })
+      .eq('id', jobId);
+
+    console.log(`✅ Batch ${batch.batch_number} completed (${progress}% overall)`);
+
+    // Process next batch recursively
+    await processNextBatch(supabase, jobId, task);
+
+  } catch (error) {
+    console.error(`❌ Batch ${batch.batch_number} failed:`, error);
+    
+    await supabase
+      .from('batch_progress')
+      .update({ 
+        status: 'failed',
+        error_message: error.message
+      })
+      .eq('id', batch.id);
+
+    await supabase
+      .from('batch_jobs')
+      .update({ 
+        failed_batches: batch.batch_number,
+        error_message: error.message
+      })
+      .eq('id', jobId);
+  }
+}

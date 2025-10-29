@@ -1519,6 +1519,68 @@ export type Database = {
         }
         Relationships: []
       }
+      design_patterns_structured: {
+        Row: {
+          calculation_formula: string | null
+          confidence_score: number | null
+          constraints: Json | null
+          created_at: string | null
+          description: string | null
+          example_values: Json | null
+          id: string
+          input_parameters: Json | null
+          pattern_type: string
+          regulations_cited: string[] | null
+          source_id: string | null
+          title: string
+          typical_applications: string[] | null
+          updated_at: string | null
+          usage_count: number | null
+        }
+        Insert: {
+          calculation_formula?: string | null
+          confidence_score?: number | null
+          constraints?: Json | null
+          created_at?: string | null
+          description?: string | null
+          example_values?: Json | null
+          id?: string
+          input_parameters?: Json | null
+          pattern_type: string
+          regulations_cited?: string[] | null
+          source_id?: string | null
+          title: string
+          typical_applications?: string[] | null
+          updated_at?: string | null
+          usage_count?: number | null
+        }
+        Update: {
+          calculation_formula?: string | null
+          confidence_score?: number | null
+          constraints?: Json | null
+          created_at?: string | null
+          description?: string | null
+          example_values?: Json | null
+          id?: string
+          input_parameters?: Json | null
+          pattern_type?: string
+          regulations_cited?: string[] | null
+          source_id?: string | null
+          title?: string
+          typical_applications?: string[] | null
+          updated_at?: string | null
+          usage_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "design_patterns_structured_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "design_knowledge"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       document_field_schemas: {
         Row: {
           created_at: string | null
@@ -1984,6 +2046,48 @@ export type Database = {
         }
         Relationships: []
       }
+      hazard_step_links: {
+        Row: {
+          created_at: string | null
+          hazard_id: string | null
+          id: string
+          procedure_id: string | null
+          relevance_score: number | null
+          step_number: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          hazard_id?: string | null
+          id?: string
+          procedure_id?: string | null
+          relevance_score?: number | null
+          step_number?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          hazard_id?: string | null
+          id?: string
+          procedure_id?: string | null
+          relevance_score?: number | null
+          step_number?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hazard_step_links_hazard_id_fkey"
+            columns: ["hazard_id"]
+            isOneToOne: false
+            referencedRelation: "regulation_hazards_extracted"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hazard_step_links_procedure_id_fkey"
+            columns: ["procedure_id"]
+            isOneToOne: false
+            referencedRelation: "installation_procedures"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       health_safety_knowledge: {
         Row: {
           content: string
@@ -2283,6 +2387,62 @@ export type Database = {
         }
         Relationships: []
       }
+      inspection_procedures: {
+        Row: {
+          acceptance_criteria: Json | null
+          confidence_score: number | null
+          created_at: string | null
+          equipment_required: string[] | null
+          frequency: string | null
+          id: string
+          regulations_cited: string[] | null
+          source_id: string | null
+          test_name: string
+          test_steps: Json
+          test_type: string
+          typical_values: Json | null
+          updated_at: string | null
+        }
+        Insert: {
+          acceptance_criteria?: Json | null
+          confidence_score?: number | null
+          created_at?: string | null
+          equipment_required?: string[] | null
+          frequency?: string | null
+          id?: string
+          regulations_cited?: string[] | null
+          source_id?: string | null
+          test_name: string
+          test_steps?: Json
+          test_type: string
+          typical_values?: Json | null
+          updated_at?: string | null
+        }
+        Update: {
+          acceptance_criteria?: Json | null
+          confidence_score?: number | null
+          created_at?: string | null
+          equipment_required?: string[] | null
+          frequency?: string | null
+          id?: string
+          regulations_cited?: string[] | null
+          source_id?: string | null
+          test_name?: string
+          test_steps?: Json
+          test_type?: string
+          typical_values?: Json | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inspection_procedures_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "inspection_testing_knowledge"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       inspection_testing_knowledge: {
         Row: {
           content: string
@@ -2441,6 +2601,65 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: []
+      }
+      installation_procedures: {
+        Row: {
+          confidence_score: number | null
+          created_at: string | null
+          estimated_time_minutes: number | null
+          id: string
+          materials_required: string[] | null
+          procedure_title: string
+          procedure_type: string
+          regulations_cited: string[] | null
+          safety_requirements: Json | null
+          skill_level: string | null
+          source_id: string | null
+          steps: Json
+          tools_required: string[] | null
+          updated_at: string | null
+        }
+        Insert: {
+          confidence_score?: number | null
+          created_at?: string | null
+          estimated_time_minutes?: number | null
+          id?: string
+          materials_required?: string[] | null
+          procedure_title: string
+          procedure_type: string
+          regulations_cited?: string[] | null
+          safety_requirements?: Json | null
+          skill_level?: string | null
+          source_id?: string | null
+          steps?: Json
+          tools_required?: string[] | null
+          updated_at?: string | null
+        }
+        Update: {
+          confidence_score?: number | null
+          created_at?: string | null
+          estimated_time_minutes?: number | null
+          id?: string
+          materials_required?: string[] | null
+          procedure_title?: string
+          procedure_type?: string
+          regulations_cited?: string[] | null
+          safety_requirements?: Json | null
+          skill_level?: string | null
+          source_id?: string | null
+          steps?: Json
+          tools_required?: string[] | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "installation_procedures_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "installation_knowledge"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       invoice_payments: {
         Row: {
@@ -2922,6 +3141,65 @@ export type Database = {
           topic?: string | null
         }
         Relationships: []
+      }
+      maintenance_schedules: {
+        Row: {
+          confidence_score: number | null
+          created_at: string | null
+          equipment_type: string
+          estimated_duration_minutes: number | null
+          frequency: string | null
+          id: string
+          maintenance_type: string
+          procedure_steps: Json
+          regulations_cited: string[] | null
+          required_qualifications: string[] | null
+          safety_precautions: Json | null
+          source_id: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          confidence_score?: number | null
+          created_at?: string | null
+          equipment_type: string
+          estimated_duration_minutes?: number | null
+          frequency?: string | null
+          id?: string
+          maintenance_type: string
+          procedure_steps?: Json
+          regulations_cited?: string[] | null
+          required_qualifications?: string[] | null
+          safety_precautions?: Json | null
+          source_id?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          confidence_score?: number | null
+          created_at?: string | null
+          equipment_type?: string
+          estimated_duration_minutes?: number | null
+          frequency?: string | null
+          id?: string
+          maintenance_type?: string
+          procedure_steps?: Json
+          regulations_cited?: string[] | null
+          required_qualifications?: string[] | null
+          safety_precautions?: Json | null
+          source_id?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "maintenance_schedules_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "maintenance_knowledge"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       major_projects: {
         Row: {
@@ -4120,6 +4398,65 @@ export type Database = {
           topic?: string
         }
         Relationships: []
+      }
+      project_templates: {
+        Row: {
+          confidence_score: number | null
+          created_at: string | null
+          deliverables: Json | null
+          id: string
+          phases: Json
+          regulations_cited: string[] | null
+          required_documents: string[] | null
+          risk_factors: Json | null
+          source_id: string | null
+          team_roles: string[] | null
+          template_type: string
+          title: string
+          typical_duration_days: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          confidence_score?: number | null
+          created_at?: string | null
+          deliverables?: Json | null
+          id?: string
+          phases?: Json
+          regulations_cited?: string[] | null
+          required_documents?: string[] | null
+          risk_factors?: Json | null
+          source_id?: string | null
+          team_roles?: string[] | null
+          template_type: string
+          title: string
+          typical_duration_days?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          confidence_score?: number | null
+          created_at?: string | null
+          deliverables?: Json | null
+          id?: string
+          phases?: Json
+          regulations_cited?: string[] | null
+          required_documents?: string[] | null
+          risk_factors?: Json | null
+          source_id?: string | null
+          team_roles?: string[] | null
+          template_type?: string
+          title?: string
+          typical_duration_days?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_templates_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "project_mgmt_knowledge"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       qualification_categories: {
         Row: {
