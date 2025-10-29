@@ -6,6 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import { RefreshCw, Play, TestTube2, AlertTriangle, Trash2, SkipForward, Pause, Clock, Activity, Zap } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 
 export default function EnrichmentMonitor() {
   const [jobs, setJobs] = useState<any[]>([]);
@@ -13,6 +14,7 @@ export default function EnrichmentMonitor() {
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [workerActive, setWorkerActive] = useState(false);
   const [lastHeartbeat, setLastHeartbeat] = useState<Date | null>(null);
+  const [showClearDialog, setShowClearDialog] = useState(false);
   const { toast } = useToast();
 
   const fetchJobs = async () => {
@@ -166,6 +168,45 @@ export default function EnrichmentMonitor() {
     }
   };
 
+  const clearAllJobs = async () => {
+    setLoading(true);
+    try {
+      // Delete all batch_progress first (foreign key constraint)
+      const { error: progressError } = await supabase
+        .from('batch_progress')
+        .delete()
+        .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all
+      
+      if (progressError) throw progressError;
+      
+      // Delete all batch_jobs
+      const { error: jobsError } = await supabase
+        .from('batch_jobs')
+        .delete()
+        .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all
+      
+      if (jobsError) throw jobsError;
+      
+      // Reset UI state
+      setJobs([]);
+      setWorkerActive(false);
+      setLastHeartbeat(null);
+      
+      toast({ 
+        title: '✅ All jobs cleared',
+        description: 'Database reset complete. Ready to start fresh.'
+      });
+    } catch (error: any) {
+      toast({ 
+        title: '❌ Clear failed',
+        description: error.message || 'Check logs for details.'
+      });
+    } finally {
+      setLoading(false);
+      setShowClearDialog(false);
+    }
+  };
+
   // Calculate metrics
   const totalQualityPassed = jobs.reduce((sum, job) => {
     const batches = job.batch_progress || [];
@@ -245,7 +286,7 @@ export default function EnrichmentMonitor() {
         </div>
 
         {/* Action Buttons */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2">
           <Button onClick={() => startEnrichment(1)} disabled={loading} size="lg" className="w-full">
             <Play className="w-4 h-4 mr-2" />
             Start Phase 1
@@ -275,6 +316,16 @@ export default function EnrichmentMonitor() {
           >
             <Play className="w-4 h-4 mr-2" />
             All Phases
+          </Button>
+          <Button 
+            onClick={() => setShowClearDialog(true)} 
+            disabled={loading} 
+            variant="destructive" 
+            size="lg" 
+            className="w-full"
+          >
+            <Trash2 className="w-4 h-4 mr-2" />
+            Clear All Jobs
           </Button>
         </div>
       </div>
@@ -449,6 +500,19 @@ export default function EnrichmentMonitor() {
           </Card>
         )}
       </div>
+
+      {/* Clear All Jobs Confirmation Dialog */}
+      <ConfirmationDialog
+        open={showClearDialog}
+        onOpenChange={setShowClearDialog}
+        title="Clear All Jobs?"
+        description="This will permanently delete all batch jobs and their progress from the database. This action cannot be undone."
+        confirmText="Clear All Jobs"
+        cancelText="Cancel"
+        onConfirm={clearAllJobs}
+        variant="destructive"
+        loading={loading}
+      />
     </div>
   );
 }
