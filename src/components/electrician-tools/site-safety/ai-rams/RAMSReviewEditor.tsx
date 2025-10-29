@@ -639,7 +639,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     <span>Identified Risks</span>
                   </h4>
                   <Badge variant="outline" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-bold text-base px-3 py-1">
-                    {ramsData.risks.length}
+                    {ramsData.risks?.length || 0}
                   </Badge>
                 </div>
                 
