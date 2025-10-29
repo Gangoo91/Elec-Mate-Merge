@@ -120,7 +120,7 @@ Deno.serve(async (req) => {
           status: 'complete',
           progress: 100,
           current_step: 'Completed (served from cache)',
-          rams_data: cacheResult.data.rams_data || transformHealthSafetyResponse({ data: cacheResult.data }),
+          rams_data: cacheResult.data.rams_data,  // Cached data is already transformed
           method_data: cacheResult.data.method_data,
           completed_at: new Date().toISOString(),
           generation_metadata: { 
