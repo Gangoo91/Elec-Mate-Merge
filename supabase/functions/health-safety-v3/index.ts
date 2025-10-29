@@ -1130,7 +1130,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     const { error: metricsError } = await supabase.from('agent_metrics').insert({
       function_name: 'health-safety-v3',
       request_id: requestId,
-      rag_time: ragStart ? Date.now() - ragStart : null,
+      rag_time: ragStartTime ? Date.now() - ragStartTime : null,
       total_time: totalTime,
       regulation_count: hsKnowledge?.healthSafetyDocs?.length || 0,
       success: true,
