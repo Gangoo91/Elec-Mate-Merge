@@ -13,14 +13,14 @@ import { useSearchParams } from 'react-router-dom';
 // Task filter mapping
 const TASK_FILTERS = {
   all: { label: 'All Tasks', jobTypes: null as string[] | null },
-  bs7671: { label: 'BS 7671 Regulations', jobTypes: ['enrich_bs7671', 'enrich_regulations'] },
-  health_safety: { label: 'Health & Safety Knowledge', jobTypes: ['enrich_health_safety'] },
-  design: { label: 'Design Knowledge', jobTypes: ['enrich_design'] },
-  installation: { label: 'Installation Procedures', jobTypes: ['enrich_installation'] },
-  inspection: { label: 'Inspection & Testing', jobTypes: ['enrich_inspection_testing'] },
-  maintenance: { label: 'Maintenance Procedures', jobTypes: ['enrich_maintenance'] },
-  project_mgmt: { label: 'Project Management', jobTypes: ['enrich_project_management'] },
-  pricing: { label: 'Pricing Intelligence', jobTypes: ['enrich_pricing'] },
+  bs7671: { label: 'BS 7671 Regulations', jobTypes: ['enrich_bs7671_embeddings'] },
+  health_safety: { label: 'Health & Safety Knowledge', jobTypes: ['enrich_health_safety_knowledge'] },
+  design: { label: 'Design Knowledge', jobTypes: ['enrich_design_knowledge'] },
+  installation: { label: 'Installation Procedures', jobTypes: ['enrich_installation_knowledge'] },
+  inspection: { label: 'Inspection & Testing', jobTypes: ['enrich_inspection_testing_knowledge'] },
+  maintenance: { label: 'Maintenance Procedures', jobTypes: ['enrich_maintenance_knowledge'] },
+  project_mgmt: { label: 'Project Management', jobTypes: ['enrich_project_management_knowledge'] },
+  pricing: { label: 'Pricing Intelligence', jobTypes: ['enrich_pricing_intelligence'] },
 };
 
 export default function EnrichmentMonitor() {
