@@ -6,6 +6,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import KnowledgeUploadForm from "@/components/admin/KnowledgeUploadForm";
 import ProcessingProgress from "@/components/admin/ProcessingProgress";
 import PricingEmbeddingsProgress from "@/components/admin/PricingEmbeddingsProgress";
+import RegulationsIntelligenceProgress from "@/components/admin/RegulationsIntelligenceProgress";
 
 export default function KnowledgeUploader() {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -104,6 +105,8 @@ export default function KnowledgeUploader() {
               status={processingStats.status}
             />
           )}
+
+          <RegulationsIntelligenceProgress />
         </TabsContent>
 
         <TabsContent value="installation" className="space-y-6 mt-8">

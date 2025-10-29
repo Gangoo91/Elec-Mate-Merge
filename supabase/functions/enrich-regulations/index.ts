@@ -140,17 +140,17 @@ async function processInBackground(
         }
         
         // Extract intelligence using GPT-5 Mini
-        const intelligence = await extractRegulationIntelligence(reg, OPENAI_API_KEY);
+        const intelligence = await extractRegulationIntelligence(reg, openAIKey);
         
         if (!intelligence || !validateIntelligence(intelligence)) {
-          console.log(`⚠️ Failed quality check for ${reg.regulation_number}`);
+          console.log(`⚠️ Failed quality check for ${reg.regulation_number} - intelligence:`, JSON.stringify(intelligence).substring(0, 200));
           qualityFailed++;
           failed++;
           continue;
         }
         
         qualityPassed++;
-        console.log(`✅ Extracted intelligence for ${reg.regulation_number} (quality passed)`);
+        console.log(`✅ Quality passed for ${reg.regulation_number} - keywords: ${intelligence.keywords?.length}, category: ${intelligence.category}`);
         
         // Upsert intelligence
         const { error: insertError } = await supabase
@@ -284,8 +284,9 @@ Return ONLY valid JSON.`;
   });
   
   if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`GPT-5 Mini API error: ${response.status} - ${error}`);
+    const errorText = await response.text();
+    console.error(`❌ OpenAI API error (${response.status}):`, errorText.substring(0, 200));
+    throw new Error(`GPT-5 Mini API error: ${response.status} - ${errorText.substring(0, 200)}`);
   }
   
   const data = await response.json();
