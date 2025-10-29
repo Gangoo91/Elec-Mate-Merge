@@ -313,22 +313,32 @@ export async function handleBatchDesign(body: any, logger: any) {
 
 IF YOU CANNOT ACHIEVE COMPLIANCE: Increase cable size or split the circuit.
 
+🚨 CRITICAL: RING FINAL CIRCUITS MUST USE 2.5mm² CABLE ONLY (BS 7671 Reg 433.1.204):
+- Ring circuits (loadType containing "ring" or "socket" with 32A protection): cableSize = 2.5, cpcSize = 1.5
+- ANY other cable size (4, 6, 10) for ring finals will cause VALIDATION FAILURE
+- Split high loads into multiple 2.5mm² rings instead of increasing cable size
+
 CRITICAL DATA FORMAT REQUIREMENTS:
 - cableSize: NUMERIC mm² value only (e.g., 2.5 NOT "2.5mm²")
+  * Ring finals: MUST be 2.5 (NEVER 4, 6, or 10)
+  * Lighting: 1.5
+  * Dedicated loads (cooker/shower): 6, 10, or 16 based on load
 - cpcSize: NUMERIC mm² value only - MUST match Twin and Earth standards:
   * 1.0mm² live → 1.0mm² CPC
   * 1.5mm² live → 1.0mm² CPC
-  * 2.5mm² live → 1.5mm² CPC
+  * 2.5mm² live → 1.5mm² CPC (RING FINALS)
   * 4.0mm² live → 1.5mm² CPC
   * 6.0mm² live → 2.5mm² CPC
   * 10.0mm² live → 4.0mm² CPC
 - cableType: Full cable description with CORRECT sizing format (live/CPC):
   * Lighting: "1.5mm²/1.0mm² Twin and Earth (PVC), copper"
-  * Power ring: "2.5mm²/1.5mm² Twin and Earth (PVC), copper"
+  * Power ring: "2.5mm²/1.5mm² Twin and Earth (PVC), copper" (MANDATORY)
   * Cooker/shower: "6.0mm²/2.5mm² Twin and Earth (PVC), copper" or "10.0mm²/4.0mm²"
   * Always show as "live/CPC" format with insulation type and material
 - installationMethod: Clean format like "Clipped direct (reference method C)" - NO line breaks or hyphens
-- protectionDevice.rating: NUMERIC amps only (e.g., 32 NOT "32A")
+- protectionDevice.rating: NUMERIC amps only
+  * Ring finals: MUST be 32 (NEVER 40, 50, or 63)
+  * Other circuits: 6, 16, 32, 40, 50, 63 as appropriate
 - protectionDevice.curve: LETTER ONLY (e.g., "B" NOT "Type B")
 - protectionDevice.kaRating: NUMERIC kA only (e.g., 6 NOT "6kA")
 
@@ -851,16 +861,27 @@ ${ragResults.regulations.map((r: any) => `${r.regulation_number}: ${r.content.su
 
 YOUR ROLE: Design compliant electrical circuits with complete details for each circuit.
 
-SOCKET CIRCUIT DESIGN (BS 7671 Appendix 15) - PHASE 2:
-- Ring finals: **2.5mm²/1.5mm² T&E ONLY** + 32A MCB (never 4mm², 6mm², or 10mm²)
-- BS 7671 Appendix 15: Ring circuits use 2.5mm²/1.5mm² Twin and Earth per regulation 433.1.204
-- Max 7.36kW per ring (32A × 230V = 7360W with 100% diversity applied)
-- **NEVER use 4mm², 6mm², or 10mm² for ring finals** - this is non-compliant
-- If load >7.36kW: Create **multiple 2.5mm² ring circuits**, DO NOT increase cable size
-- Example: 14.72kW office sockets = 2× 2.5mm² rings (not 1× 6mm² ring)
-- Diversity (Appendix A): 100% first 10 outlets, 50% next 10, 25% remainder
-- Include socketCount estimation (~8-10 sockets per ring at 100W each)
-- Radials only for dedicated fixed loads (cooker, shower, immersion) - not for general sockets
+🚨 CRITICAL: RING FINAL CIRCUIT REQUIREMENTS (BS 7671 Appendix 15 / Reg 433.1.204):
+
+**MANDATORY CABLE SIZE FOR ALL RING FINALS:**
+- cableSize: 2.5 (numeric value, NOT 4, 6, or 10)
+- cpcSize: 1.5 (numeric value)
+- cableType: "2.5mm²/1.5mm² Twin and Earth (PVC), copper"
+- protectionDevice.rating: 32 (NEVER 40, 50, or 63)
+
+**IF YOU USE ANY OTHER CABLE SIZE FOR A RING FINAL, THE DESIGN WILL BE REJECTED**
+
+Ring Final Circuit Rules:
+✅ CORRECT: 2.5mm²/1.5mm² T&E + 32A Type B MCB/RCBO
+❌ WRONG: 4mm², 6mm², 10mm², or any other cable size
+❌ WRONG: 40A, 50A, 63A protection (only 32A permitted)
+
+If total load > 7.36kW (32A × 230V):
+- Split into MULTIPLE 2.5mm² ring circuits
+- Example: 14kW load = Circuit 1: 7kW ring (2.5mm²) + Circuit 2: 7kW ring (2.5mm²)
+- NEVER increase cable size to 4mm² or larger
+
+Socket diversity (Appendix 15): 100% first 10 outlets, 50% next 10, 25% remainder
 
 INSTRUCTIONS:
 1. For each circuit in the "circuits" array, include:
