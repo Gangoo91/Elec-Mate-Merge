@@ -45,8 +45,31 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   mode = 'embedded',
   onRegenerate
 }) => {
-  const [ramsData, setRamsData] = useState<RAMSData>(initialRamsData);
-  const [methodData, setMethodData] = useState<Partial<MethodStatementData>>(initialMethodData);
+  // Normalize data on load to handle old/incomplete structures
+  const normalizedRamsData: RAMSData = {
+    ...initialRamsData,
+    risks: (initialRamsData.risks || []).map(risk => ({
+      ...risk,
+      id: risk.id || `risk-${Math.random()}`,
+      controls: risk.controls || '',
+      riskRating: risk.riskRating || (risk.likelihood || 3) * (risk.severity || 3),
+    }))
+  };
+
+  const normalizedMethodData: Partial<MethodStatementData> = {
+    ...initialMethodData,
+    steps: (initialMethodData.steps || []).map((step, idx) => ({
+      ...step,
+      id: step.id || `step-${idx + 1}`,
+      equipmentNeeded: step.equipmentNeeded || [],
+      qualifications: step.qualifications || [],
+      estimatedDuration: step.estimatedDuration || '15 minutes',
+      safetyRequirements: step.safetyRequirements || []
+    }))
+  };
+
+  const [ramsData, setRamsData] = useState<RAMSData>(normalizedRamsData);
+  const [methodData, setMethodData] = useState<Partial<MethodStatementData>>(normalizedMethodData);
   const [isGenerating, setIsGenerating] = useState(false);
   const [currentPDFType, setCurrentPDFType] = useState<'combined' | 'rams' | 'method'>('combined');
   const [showPDFModal, setShowPDFModal] = useState(false);
@@ -653,7 +676,10 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     high: 'border-l-red-500'
                   };
                   return (
-                    <Card key={risk.id} className={`border-0 md:border md:border-elec-yellow/30 bg-elec-grey/30 md:bg-elec-grey/50 md:backdrop-blur-sm hover:border-elec-yellow/50 transition-all border-l-4 ${borderColors[riskLevel]} shadow-none md:shadow-lg rounded-lg`}>
+                    <Card 
+                      key={risk.id || `risk-${sortedIndex}`} 
+                      className={`border-0 md:border md:border-elec-yellow/30 bg-elec-grey/30 md:bg-elec-grey/50 md:backdrop-blur-sm hover:border-elec-yellow/50 transition-all border-l-4 ${borderColors[riskLevel]} shadow-none md:shadow-lg rounded-lg`}
+                    >
                       <CardContent className="pt-3 pb-3 px-2 sm:px-4 md:pt-5 md:pb-5 md:px-6">
                       {/* Risk card content */}
                       <div className="space-y-3">
@@ -776,8 +802,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                             </tr>
                           </thead>
                           <tbody>
-                            {ramsData.ppeDetails.map((ppe) => (
-                              <tr key={ppe.id} className="border-b border-border/20 hover:bg-elec-grey/20">
+                            {ramsData.ppeDetails.map((ppe, idx) => (
+                              <tr key={ppe.id || `ppe-${idx}`} className="border-b border-border/20 hover:bg-elec-grey/20">
                                 <td className="py-3 px-3 text-center font-semibold">{ppe.itemNumber}</td>
                                 <td className="py-3 px-3 font-medium">{ppe.ppeType}</td>
                                 <td className="py-3 px-3 text-primary text-xs">{ppe.standard}</td>
@@ -800,8 +826,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
                   {/* Mobile: Card Grid View */}
                   <div className="md:hidden space-y-3">
-                    {ramsData.ppeDetails.map((ppe) => (
-                      <Card key={ppe.id} className="border-0 bg-elec-grey/30 border-l-4 border-l-elec-yellow/60">
+                    {ramsData.ppeDetails.map((ppe, idx) => (
+                      <Card key={ppe.id || `ppe-mobile-${idx}`} className="border-0 bg-elec-grey/30 border-l-4 border-l-elec-yellow/60">
                         <CardContent className="pt-3 pb-3 px-4">
                           <div className="space-y-2">
                             <div className="flex items-start justify-between gap-2">
@@ -908,7 +934,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 <Accordion type="multiple" className="space-y-2">
                   {methodData.steps?.map((step, index) => (
                     <AccordionItem 
-                      key={step.id} 
+                      key={step.id || `step-${index}`} 
                       value={`step-${step.id}`}
                       className="border-0 md:border md:border-primary/20 bg-elec-grey/30 md:bg-card/40 rounded-lg overflow-hidden border-l-4 border-l-elec-yellow/40"
                     >
