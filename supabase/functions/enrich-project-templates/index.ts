@@ -111,7 +111,7 @@ Extract project frameworks and templates. Return JSON array:
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'gpt-4o-mini',
+            model: 'gpt-5-mini-2025-08-07',
             messages: [{
               role: 'system',
               content: 'You are a project management expert in electrical contracting. Extract structured project templates. Return valid JSON only.'

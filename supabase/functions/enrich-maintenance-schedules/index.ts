@@ -105,7 +105,7 @@ Extract maintenance procedures with schedules. Return JSON array:
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'gpt-4o-mini',
+            model: 'gpt-5-mini-2025-08-07',
             messages: [{
               role: 'system',
               content: 'You are an electrical maintenance expert. Extract structured maintenance schedules. Return valid JSON only.'

@@ -101,7 +101,7 @@ Return JSON array:
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'gpt-4o-mini',
+            model: 'gpt-5-mini-2025-08-07',
             messages: [{
               role: 'system',
               content: 'You are a health & safety expert. Extract structured hazard data. Return valid JSON only.'

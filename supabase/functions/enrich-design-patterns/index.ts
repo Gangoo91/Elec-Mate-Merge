@@ -106,7 +106,7 @@ Extract design patterns, formulas, and calculation methods. Return JSON array:
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'gpt-4o-mini',
+            model: 'gpt-5-mini-2025-08-07',
             messages: [{
               role: 'system',
               content: 'You are an electrical design expert. Extract structured design patterns and calculations. Return valid JSON only.'

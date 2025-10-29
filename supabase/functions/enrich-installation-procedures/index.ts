@@ -104,7 +104,7 @@ Extract step-by-step procedures for electrical installations. Return JSON array:
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'gpt-4o-mini',
+            model: 'gpt-5-mini-2025-08-07',
             messages: [{
               role: 'system',
               content: 'You are an electrical installation expert. Extract structured procedures. Return valid JSON only.'
