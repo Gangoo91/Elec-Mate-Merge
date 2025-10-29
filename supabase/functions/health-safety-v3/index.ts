@@ -289,75 +289,83 @@ serve(async (req) => {
       logger.warn(`⚠️ SLOW RAG: ${performanceMetrics.ragRetrieval}ms (expected <3000ms)`);
     }
 
-    // ✅ QUICK WIN #1: Use optimized regulation context builder
-    console.log('📝 [DIAGNOSTIC] Building optimized H&S context...');
-    const { buildOptimizedRegulationContext } = await import('../_shared/regulation-helper.ts');
+    // 🚀 WORLD-CLASS RAG V3: Retrieve PRE-STRUCTURED hazards
+    console.log('🎯 [V3] Retrieving pre-structured hazards from knowledge base...');
     
-  let hsContext: string;
-  let structuredHazards = '';
-  let optimizedRegContext = ''; // Function-scoped for use at line 373
+    const { retrieveStructuredHazards } = await import('../_shared/hazard-retriever.ts');
+    
+    const structuredHazards = await retrieveStructuredHazards({
+      jobDescription: effectiveQuery,
+      workType: workType as 'domestic' | 'commercial' | 'industrial' || 'domestic',
+      location: location,
+      equipment: undefined, // Auto-detected from query
+      installationPhases: ['isolation', 'installation', 'testing']
+    }, supabase);
+    
+    console.log(`✅ [V3] Retrieved ${structuredHazards.length} pre-structured hazards`);
+    logger.info('Pre-structured hazards retrieved', {
+      count: structuredHazards.length,
+      avgConfidence: structuredHazards.reduce((s, h) => s + h.confidence_score, 0) / structuredHazards.length,
+      retrievalTime: Date.now() - ragStartTime
+    });
+    
+    // Build context from pre-structured hazards
+    let hsContext: string;
+    let structuredHazardsText = '';
+    let optimizedRegContext = '';
     
     try {
-      logger.info('Building H&S context with OPTIMIZED regulation pre-processing');
-      
-      // Build optimized context (hazards + controls already extracted)
-      optimizedRegContext = buildOptimizedRegulationContext(
-        hsKnowledge.regulations || [],
-        query
-      );
-      
-      // Optimize RAG context delivery - extract key hazards only
-      if (hsKnowledge?.healthSafetyDocs && hsKnowledge.healthSafetyDocs.length > 0) {
-        const optimizedHazards = hsKnowledge.healthSafetyDocs
-          .map((doc: any) => {
-            // Extract hazard sentences using pattern matching
-            const hazardMatches = doc.content.match(/(?:hazard|risk|danger)[s]?[:\s]+([^.!?]{20,150}[.!?])/gi) || [];
-            const controlMatches = doc.content.match(/(?:control|mitigation|protection|requirement)[s]?[:\s]+([^.!?]{20,150}[.!?])/gi) || [];
-            
-            return {
-              category: doc.topic,
-              keyHazards: hazardMatches.slice(0, 2).map((m: string) => m.trim()), // Top 2 hazards per doc
-              keyControls: controlMatches.slice(0, 2).map((m: string) => m.trim()), // Top 2 controls per doc
-              source: doc.source,
-              relevance: doc.similarity || 0
-            };
-          })
-          .filter((doc: any) => doc.relevance > 0.72) // Only high-relevance docs (raised from implicit 0)
-          .slice(0, 12); // Top 12 docs instead of 18 (33% reduction)
-
-        // Build condensed structured hazards
-        structuredHazards = '\n\n📋 HAZARDS IDENTIFIED IN KNOWLEDGE BASE (You MUST include these):\n\n';
-        optimizedHazards.forEach((doc: any, idx: number) => {
-          structuredHazards += `${idx + 1}. **${doc.category}** (relevance: ${(doc.relevance * 100).toFixed(0)}%)\n`;
-          if (doc.keyHazards.length > 0) {
-            structuredHazards += `   Hazards: ${doc.keyHazards.join(' | ')}\n`;
+      if (structuredHazards.length > 0) {
+        // Build AI prompt with pre-structured hazards (90% of work already done!)
+        structuredHazardsText = '\n\n📋 PRE-IDENTIFIED HAZARDS FROM BS 7671 ANALYSIS:\n\n';
+        structuredHazardsText += `You have ${structuredHazards.length} pre-identified hazards with controls already determined.\n`;
+        structuredHazardsText += 'Your task is to FORMAT these into the JSON structure. DO NOT invent new hazards.\n\n';
+        
+        structuredHazards.forEach((h, i) => {
+          structuredHazardsText += `${i + 1}. HAZARD: ${h.hazard_description}\n`;
+          structuredHazardsText += `   Category: ${h.hazard_category}\n`;
+          structuredHazardsText += `   Risk: Likelihood ${h.likelihood} × Severity ${h.severity} = ${h.risk_score}\n`;
+          structuredHazardsText += `   Controls: ${h.control_measures.join('; ')}\n`;
+          if (h.required_ppe && Array.isArray(h.required_ppe) && h.required_ppe.length > 0) {
+            structuredHazardsText += `   PPE Required: ${h.required_ppe.map((p: any) => p.type).join(', ')}\n`;
           }
-          if (doc.keyControls.length > 0) {
-            structuredHazards += `   Controls: ${doc.keyControls.join(' | ')}\n`;
-          }
-          structuredHazards += `   Source: ${doc.source}\n\n`;
+          structuredHazardsText += `   Regulation: ${h.regulation_number} - ${h.regulation_section}\n`;
+          structuredHazardsText += `   Linked to step: ${h.linkedToStep || 0}\n`;
+          structuredHazardsText += `   Relevance: ${(h.relevance || 0).toFixed(1)}/100\n\n`;
         });
-
-        // Build condensed context for backward compatibility
-        hsContext = optimizedHazards.map((doc: any) => 
-          `${doc.category}: Hazards: ${doc.keyHazards.join(', ')} | Controls: ${doc.keyControls.join(', ')}`
-        ).join('\n\n');
+        
+        // Condensed context for backward compatibility
+        hsContext = structuredHazards
+          .slice(0, 10) // Top 10 for context
+          .map(h => `${h.hazard_category}: ${h.hazard_description} | Controls: ${h.control_measures.join(', ')}`)
+          .join('\n\n');
+          
+        // Also build optimized regulation context (fallback)
+        const { buildOptimizedRegulationContext } = await import('../_shared/regulation-helper.ts');
+        optimizedRegContext = buildOptimizedRegulationContext(
+          hsKnowledge.regulations || [],
+          query
+        );
       } else {
+        // Fallback to old method if no structured hazards found
+        console.log('⚠️ [V3] No structured hazards found, falling back to old method');
+        const { buildOptimizedRegulationContext } = await import('../_shared/regulation-helper.ts');
+        
+        optimizedRegContext = buildOptimizedRegulationContext(
+          hsKnowledge.regulations || [],
+          query
+        );
+        
         hsContext = 'Apply general electrical safety best practices per HSE guidance and BS 7671.';
-        structuredHazards = '';
+        structuredHazardsText = '';
       }
       
-      console.log('✅ [DIAGNOSTIC] Context built successfully:', {
-        hsContextLength: hsContext.length,
-        structuredHazardsLength: structuredHazards.length,
-        hazardCategoriesFound: hsKnowledge?.healthSafetyDocs?.length || 0
+      console.log('✅ [V3] Context built successfully:', {
+        structuredHazardsCount: structuredHazards.length,
+        structuredHazardsTextLength: structuredHazardsText.length,
+        hsContextLength: hsContext.length
       });
       
-      logger.info('Context built with structured hazards', {
-        hsContextLength: hsContext.length,
-        structuredHazardsLength: structuredHazards.length,
-        hazardCategoriesFound: hsKnowledge?.healthSafetyDocs?.length || 0
-      });
     } catch (contextError) {
       logger.error('Failed to build context - aborting', {
         error: contextError instanceof Error ? contextError.message : String(contextError),
@@ -480,7 +488,7 @@ Testing & Commissioning:
     
     // Issue 7: Optimized system prompt from separate module
     const { buildOptimizedSystemPrompt } = await import('./system-prompt-optimized.ts');
-    const systemPrompt = buildOptimizedSystemPrompt(hsContext, structuredHazards, installKnowledge);
+    const systemPrompt = buildOptimizedSystemPrompt(hsContext, structuredHazardsText, installKnowledge);
     
     // DEPRECATED: Old verbose prompt (5000+ chars) replaced with optimized version
     const _oldSystemPrompt = `You are a UK electrical safety expert specialising in BS 7671:2018+A3:2024.

@@ -187,3 +187,8 @@ timeout_sec = 30
 verify_jwt = false
 timeout_sec = 600
 
+# RAG V3: Offline Enrichment Pipeline
+[functions.enrich-regulations]
+verify_jwt = false
+timeout_sec = 600
+
