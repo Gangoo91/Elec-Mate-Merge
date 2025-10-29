@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Sparkles, Clock } from 'lucide-react';
+import { ArrowLeft, Sparkles, Clock, AlertCircle } from 'lucide-react';
 import { AIRAMSInput } from './AIRAMSInput';
 import { AgentProcessingView } from './AgentProcessingView';
 import { RAMSReviewEditor } from './RAMSReviewEditor';
@@ -293,6 +293,32 @@ export const AIRAMSGenerator: React.FC = () => {
 
               {ramsData && methodData && (
                 <div id="rams-results" className="px-2">
+                  {/* Show info banner if risks are empty */}
+                  {(!ramsData.risks || ramsData.risks.length === 0) && (
+                    <div className="mb-4 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+                      <div className="flex items-start gap-3">
+                        <AlertCircle className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-blue-400">
+                            AI could not identify specific hazards from your input
+                          </p>
+                          <p className="text-xs text-blue-400/70 mt-1">
+                            You can add hazards manually below or try again with more detail about the work being carried out.
+                          </p>
+                          <Button
+                            variant="outline"
+                            onClick={handleStartOver}
+                            className="mt-3 border-blue-500/40 hover:border-blue-500 hover:bg-blue-500/10 text-blue-400"
+                            size="sm"
+                          >
+                            <Sparkles className="h-4 w-4 mr-2" />
+                            Try Again
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
                   <RAMSReviewEditor
                     ramsData={ramsData}
                     methodData={methodData}

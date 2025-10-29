@@ -330,12 +330,27 @@ Deno.serve(async (req) => {
 
     // ✅ QUICK WIN #3: Store in cache for future reuse
     console.log('💾 Storing result in semantic cache...');
+    
+    // Safe transformation with fallback
+    const transformedRamsData = transformHealthSafetyResponse(hsData);
+    const ramsDataFinal = transformedRamsData || {
+      projectName: '',
+      location: '',
+      date: new Date().toISOString().split('T')[0],
+      assessor: '',
+      activities: [],
+      risks: [],
+      ppeDetails: [],
+      emergencyProcedures: ['⚠️ Emergency procedures could not be generated. Please add manually.'],
+      complianceRegulations: []
+    };
+    
     await storeRAMSCache({
       supabase,
       jobDescription: job.job_description,
       workType: job.job_scale,
       jobScale: job.job_scale,
-      ramsData: transformHealthSafetyResponse(hsData),
+      ramsData: ramsDataFinal,
       methodData: installerData.data,
       openAiKey: OPENAI_API_KEY
     });
@@ -347,14 +362,16 @@ Deno.serve(async (req) => {
         status: 'complete',
         progress: 100,
         current_step: '✨ Generation complete!',
-        rams_data: transformHealthSafetyResponse(hsData),
+        rams_data: ramsDataFinal,
         method_data: installerData.data,
         raw_installer_response: installerData,
         completed_at: new Date().toISOString(),
         generation_metadata: {
           hs_timing: hsData.timing,
           installer_timing: installerData.timing,
-          cache_hit: false
+          cache_hit: false,
+          hs_transform_fallback: !transformedRamsData,
+          hs_input_preview: JSON.stringify(hsData).slice(0, 300)
         }
       })
       .eq('id', jobId);

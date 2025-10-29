@@ -974,6 +974,15 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       ? JSON.parse(aiResult.toolCalls[0].function.arguments)
       : JSON.parse(aiResult.content);
 
+    // 🔍 DIAGNOSTIC: Log H&S standardized response structure
+    console.log('🔎 HS standardizedResponse sample:', {
+      hasData: !!safetyResult,
+      hazards: safetyResult?.hazards?.length || 0,
+      ppe: safetyResult?.ppe?.length || 0,
+      emergencyProcedures: safetyResult?.emergencyProcedures?.length || 0,
+      complianceRegulations: safetyResult?.complianceRegulations?.length || 0
+    });
+
     console.log('✅ [DIAGNOSTIC] Safety result parsed:', {
       hasHazards: !!safetyResult.hazards,
       hazardsLength: safetyResult.hazards?.length,

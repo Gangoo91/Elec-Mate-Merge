@@ -666,7 +666,34 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   </Badge>
                 </div>
                 
-                {[...(ramsData.risks || [])].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0)).map((risk, sortedIndex) => {
+                {/* Empty state when no risks */}
+                {(!ramsData.risks || ramsData.risks.length === 0) && (
+                  <Card className="border-dashed">
+                    <CardContent className="p-8 text-center">
+                      <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+                      <h3 className="text-lg font-semibold mb-2">No Hazards Generated Yet</h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Add hazards manually below or try regenerating with more details about the work.
+                      </p>
+                      <div className="flex gap-2 justify-center">
+                        <Button onClick={addRisk} size="sm">
+                          <Plus className="h-4 w-4 mr-2" />
+                          Add Hazard
+                        </Button>
+                        {onRegenerate && (
+                          <Button onClick={onRegenerate} variant="outline" size="sm">
+                            <Sparkles className="h-4 w-4 mr-2" />
+                            Try Again
+                          </Button>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+                
+                {ramsData.risks && ramsData.risks.length > 0 && (
+                  <>
+                    {[...(ramsData.risks || [])].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0)).map((risk, sortedIndex) => {
                   const riskNumber = sortedIndex + 1; // Risk #1 = highest rating
                   const riskRating = risk.riskRating || 0;
                   const riskLevel = riskRating <= 4 ? 'low' : riskRating <= 9 ? 'medium' : 'high';
@@ -777,6 +804,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   <Plus className="h-4 w-4 mr-2" />
                   Add New Risk
                 </Button>
+                  </>
+                )}
               </div>
 
               {/* Enhanced PPE Section */}
