@@ -4889,6 +4889,89 @@ export type Database = {
         }
         Relationships: []
       }
+      regulation_hazards_extracted: {
+        Row: {
+          applies_to_equipment: string[] | null
+          applies_to_installation_phases: string[] | null
+          applies_to_locations: string[] | null
+          applies_to_work_types: string[] | null
+          confidence_score: number | null
+          control_hierarchy: string | null
+          control_measures: string[]
+          created_at: string | null
+          hazard_category: string
+          hazard_description: string
+          hazard_embedding: string | null
+          id: string
+          likelihood: number | null
+          regulation_excerpt: string | null
+          regulation_id: string | null
+          regulation_number: string
+          regulation_section: string
+          required_ppe: Json | null
+          risk_score: number | null
+          severity: number | null
+          updated_at: string | null
+          usage_count: number | null
+        }
+        Insert: {
+          applies_to_equipment?: string[] | null
+          applies_to_installation_phases?: string[] | null
+          applies_to_locations?: string[] | null
+          applies_to_work_types?: string[] | null
+          confidence_score?: number | null
+          control_hierarchy?: string | null
+          control_measures: string[]
+          created_at?: string | null
+          hazard_category: string
+          hazard_description: string
+          hazard_embedding?: string | null
+          id?: string
+          likelihood?: number | null
+          regulation_excerpt?: string | null
+          regulation_id?: string | null
+          regulation_number: string
+          regulation_section: string
+          required_ppe?: Json | null
+          risk_score?: number | null
+          severity?: number | null
+          updated_at?: string | null
+          usage_count?: number | null
+        }
+        Update: {
+          applies_to_equipment?: string[] | null
+          applies_to_installation_phases?: string[] | null
+          applies_to_locations?: string[] | null
+          applies_to_work_types?: string[] | null
+          confidence_score?: number | null
+          control_hierarchy?: string | null
+          control_measures?: string[]
+          created_at?: string | null
+          hazard_category?: string
+          hazard_description?: string
+          hazard_embedding?: string | null
+          id?: string
+          likelihood?: number | null
+          regulation_excerpt?: string | null
+          regulation_id?: string | null
+          regulation_number?: string
+          regulation_section?: string
+          required_ppe?: Json | null
+          risk_score?: number | null
+          severity?: number | null
+          updated_at?: string | null
+          usage_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "regulation_hazards_extracted_regulation_id_fkey"
+            columns: ["regulation_id"]
+            isOneToOne: false
+            referencedRelation: "bs7671_embeddings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       regulation_index: {
         Row: {
           bs7671_section: string | null
@@ -6646,7 +6729,38 @@ export type Database = {
         }
         Returns: boolean
       }
+      increment_hazard_usage: {
+        Args: { hazard_id: string }
+        Returns: undefined
+      }
       is_owner_of_quote: { Args: { q_id: string }; Returns: boolean }
+      match_extracted_hazards: {
+        Args: {
+          match_count: number
+          match_threshold: number
+          query_embedding: string
+        }
+        Returns: {
+          applies_to_equipment: string[]
+          applies_to_installation_phases: string[]
+          applies_to_locations: string[]
+          applies_to_work_types: string[]
+          confidence_score: number
+          control_measures: string[]
+          hazard_category: string
+          hazard_description: string
+          id: string
+          likelihood: number
+          regulation_excerpt: string
+          regulation_number: string
+          regulation_section: string
+          required_ppe: Json
+          risk_score: number
+          severity: number
+          similarity: number
+          usage_count: number
+        }[]
+      }
       match_rams_cache: {
         Args: {
           job_scale: string
