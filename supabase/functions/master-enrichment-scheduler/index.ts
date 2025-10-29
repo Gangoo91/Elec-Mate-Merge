@@ -46,7 +46,101 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    if (action === 'start') {
+  // Action: Abort duplicate jobs
+  if (action === 'abort_duplicates') {
+    console.log('🧹 Aborting duplicate jobs...');
+    
+    const { data: allJobs } = await supabase
+      .from('batch_jobs')
+      .select('*')
+      .in('status', ['pending', 'processing'])
+      .order('created_at', { ascending: false });
+    
+    const jobsByType = new Map<string, any[]>();
+    allJobs?.forEach(job => {
+      if (!jobsByType.has(job.job_type)) jobsByType.set(job.job_type, []);
+      jobsByType.get(job.job_type)!.push(job);
+    });
+    
+    let aborted = 0;
+    for (const [jobType, jobs] of jobsByType.entries()) {
+      if (jobs.length > 1) {
+        const [keep, ...duplicates] = jobs;
+        for (const dup of duplicates) {
+          await supabase.from('batch_jobs').update({
+            status: 'aborted',
+            completed_at: new Date().toISOString(),
+            error_message: 'Aborted as duplicate'
+          }).eq('id', dup.id);
+          aborted++;
+        }
+        console.log(`✅ Kept ${keep.id}, aborted ${duplicates.length} duplicates for ${jobType}`);
+      }
+    }
+    
+    return new Response(JSON.stringify({ success: true, aborted }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
+  }
+  
+  // Action: Recover stuck batches
+  if (action === 'recover') {
+    console.log('🔧 Recovering stuck batches...');
+    
+    const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+    
+    const { data: stuckBatches } = await supabase
+      .from('batch_progress')
+      .select('*, batch_jobs!inner(job_type, status)')
+      .eq('status', 'processing')
+      .lt('started_at', tenMinutesAgo);
+    
+    let recovered = 0;
+    const affectedJobIds = new Set<string>();
+    
+    if (stuckBatches && stuckBatches.length > 0) {
+      for (const batch of stuckBatches) {
+        await supabase.from('batch_progress').update({
+          status: 'pending',
+          started_at: null,
+          error_message: null
+        }).eq('id', batch.id);
+        
+        affectedJobIds.add(batch.job_id);
+        recovered++;
+      }
+      
+      // Reset jobs to pending if needed
+      for (const jobId of affectedJobIds) {
+        await supabase.from('batch_jobs').update({
+          status: 'pending'
+        }).eq('id', jobId);
+        
+        // Kick off processing (non-blocking)
+        const { data: job } = await supabase.from('batch_jobs').select('*').eq('id', jobId).single();
+        if (job) {
+          const task = ENRICHMENT_TASKS.find(t => t.functionName === job.job_type.replace('enrich_', 'enrich-'));
+          if (task) {
+            processNextBatch(supabase, jobId, task).catch(err => 
+              console.error(`Failed to process after recovery for ${jobId}:`, err)
+            );
+          }
+        }
+      }
+    }
+    
+    console.log(`✅ Recovered ${recovered} stuck batches across ${affectedJobIds.size} jobs`);
+    
+    return new Response(JSON.stringify({ 
+      success: true, 
+      recovered_batches: recovered,
+      affected_jobs: affectedJobIds.size
+    }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
+  }
+  
+  if (action === 'start') {
       let tasksToRun = ENRICHMENT_TASKS;
       if (phase) {
         tasksToRun = ENRICHMENT_TASKS.filter(t => t.priority === phase);

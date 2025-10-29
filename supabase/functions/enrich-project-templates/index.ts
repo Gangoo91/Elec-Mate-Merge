@@ -104,41 +104,14 @@ Extract project frameworks and templates. Return JSON array:
   }]
 }]`;
 
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${openAIKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'gpt-5-mini-2025-08-07',
-            messages: [{
-              role: 'system',
-              content: 'You are a project management expert in electrical contracting. Extract structured project templates. Return valid JSON only.'
-            }, {
-              role: 'user',
-              content: extractionPrompt
-            }],
-            response_format: { type: "json_object" },
-            temperature: 0.1,
-          }),
-        });
-
-        if (!response.ok) {
-          console.error(`❌ OpenAI error for doc ${doc.id}`);
+        let templates;
+        try {
+          const parsed = await callOpenAIWithRetry(extractionPrompt, openAIKey, doc.id);
+          templates = Array.isArray(parsed) ? parsed : (parsed.templates || []);
+        } catch (aiError) {
+          console.error(`❌ AI call failed for ${doc.id} after retries:`, aiError);
           failed++;
           continue;
-        }
-
-        const aiData = await response.json();
-        const content = aiData.choices[0].message.content;
-        let templates;
-        
-        try {
-          const parsed = JSON.parse(content);
-          templates = Array.isArray(parsed) ? parsed : (parsed.templates || []);
-        } catch {
-          templates = [];
         }
 
         if (!validateQuality(templates)) {
@@ -219,6 +192,73 @@ Extract project frameworks and templates. Return JSON array:
     });
   }
 });
+
+/**
+ * Call OpenAI with timeout (60s) and retry (3 attempts)
+ */
+async function callOpenAIWithRetry(prompt: string, apiKey: string, docId: string, attempt = 1): Promise<any> {
+  const MAX_RETRIES = 3;
+  const TIMEOUT_MS = 60000; // 60s per item
+  
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
+  
+  try {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-5-mini-2025-08-07',
+        messages: [{
+          role: 'system',
+          content: 'You are a project management expert in electrical contracting. Extract structured project templates. Return valid JSON only.'
+        }, {
+          role: 'user',
+          content: prompt
+        }],
+        response_format: { type: "json_object" },
+        max_completion_tokens: 1500,
+      }),
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`OpenAI API error ${response.status}: ${errorText}`);
+    }
+
+    const aiData = await response.json();
+    const content = aiData.choices[0].message.content;
+    
+    try {
+      return JSON.parse(content);
+    } catch (parseError) {
+      if (attempt < MAX_RETRIES) {
+        console.warn(`⚠️ Parse error for ${docId}, retry ${attempt}/${MAX_RETRIES}`);
+        await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt - 1)));
+        return callOpenAIWithRetry(prompt, apiKey, docId, attempt + 1);
+      }
+      throw new Error(`JSON parse failed after ${MAX_RETRIES} attempts`);
+    }
+    
+  } catch (error) {
+    clearTimeout(timeoutId);
+    
+    if (attempt < MAX_RETRIES && (error.name === 'AbortError' || error.message.includes('rate limit') || error.message.includes('timeout'))) {
+      const delay = 1000 * Math.pow(2, attempt - 1);
+      console.warn(`⚠️ Retry ${attempt}/${MAX_RETRIES} for ${docId} after ${delay}ms (${error.message})`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+      return callOpenAIWithRetry(prompt, apiKey, docId, attempt + 1);
+    }
+    
+    throw error;
+  }
+}
 
 async function hashContent(content: string): Promise<string> {
   const encoder = new TextEncoder();

@@ -37,12 +37,13 @@ serve(async (req) => {
       throw new Error('OPENAI_API_KEY not configured');
     }
 
-    // Fetch pricing documents
+    // Fetch pricing documents (ordered by last_scraped with stable ID tie-breaker)
     const { data: pricingDocs, error: fetchError } = await supabase
       .from('pricing_embeddings')
       .select('*')
-      .range(startFrom, startFrom + batchSize - 1)
-      .order('created_at', { ascending: true });
+      .order('last_scraped', { ascending: true, nullsFirst: false })
+      .order('id', { ascending: true })
+      .range(startFrom, startFrom + batchSize - 1);
 
     if (fetchError) throw fetchError;
     
@@ -120,42 +121,12 @@ Extract:
 
 Return valid JSON only.`;
 
-        // Call GPT-5 Mini via direct OpenAI API
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${openaiApiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'gpt-5-mini-2025-08-07',
-            messages: [{
-              role: 'system',
-              content: 'You are an electrical product expert. Extract structured metadata from product descriptions. Return valid JSON only.'
-            }, {
-              role: 'user',
-              content: enrichmentPrompt
-            }],
-            response_format: { type: "json_object" },
-            max_completion_tokens: 1000,
-          }),
-        });
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error(`❌ OpenAI error for doc ${doc.id}: ${response.status} - ${errorText}`);
-          failed++;
-          continue;
-        }
-
-        const aiData = await response.json();
-        const content = aiData.choices[0].message.content;
+        // Call GPT-5 Mini with retry + timeout
         let enriched;
-        
         try {
-          enriched = JSON.parse(content);
-        } catch (parseError) {
-          console.error(`❌ JSON parse error for ${doc.id}:`, parseError);
+          enriched = await callOpenAIWithRetry(enrichmentPrompt, openaiApiKey, doc.id);
+        } catch (aiError) {
+          console.error(`❌ AI call failed for ${doc.id} after retries:`, aiError);
           failed++;
           continue;
         }
@@ -256,6 +227,73 @@ Return valid JSON only.`;
     });
   }
 });
+
+/**
+ * Call OpenAI with timeout (60s) and retry (3 attempts)
+ */
+async function callOpenAIWithRetry(prompt: string, apiKey: string, docId: string, attempt = 1): Promise<any> {
+  const MAX_RETRIES = 3;
+  const TIMEOUT_MS = 60000; // 60s per item
+  
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
+  
+  try {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-5-mini-2025-08-07',
+        messages: [{
+          role: 'system',
+          content: 'You are an electrical product expert. Extract structured metadata from product descriptions. Return valid JSON only.'
+        }, {
+          role: 'user',
+          content: prompt
+        }],
+        response_format: { type: "json_object" },
+        max_completion_tokens: 1000,
+      }),
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`OpenAI API error ${response.status}: ${errorText}`);
+    }
+
+    const aiData = await response.json();
+    const content = aiData.choices[0].message.content;
+    
+    try {
+      return JSON.parse(content);
+    } catch (parseError) {
+      if (attempt < MAX_RETRIES) {
+        console.warn(`⚠️ Parse error for ${docId}, retry ${attempt}/${MAX_RETRIES}`);
+        await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt - 1)));
+        return callOpenAIWithRetry(prompt, apiKey, docId, attempt + 1);
+      }
+      throw new Error(`JSON parse failed after ${MAX_RETRIES} attempts`);
+    }
+    
+  } catch (error) {
+    clearTimeout(timeoutId);
+    
+    if (attempt < MAX_RETRIES && (error.name === 'AbortError' || error.message.includes('rate limit') || error.message.includes('timeout'))) {
+      const delay = 1000 * Math.pow(2, attempt - 1);
+      console.warn(`⚠️ Retry ${attempt}/${MAX_RETRIES} for ${docId} after ${delay}ms (${error.message})`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+      return callOpenAIWithRetry(prompt, apiKey, docId, attempt + 1);
+    }
+    
+    throw error;
+  }
+}
 
 async function hashContent(content: string): Promise<string> {
   const encoder = new TextEncoder();
