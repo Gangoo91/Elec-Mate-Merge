@@ -38,14 +38,25 @@ export default function EnrichmentMonitor() {
 
   const fetchJobs = async () => {
     try {
-      const { data: jobs, error } = await supabase
+      // Server-side filtering when a specific task is selected
+      const taskJobTypes = TASK_FILTERS[selectedTask].jobTypes;
+      
+      let query = supabase
         .from('batch_jobs')
         .select(`
           *,
           progress:batch_progress(*)
         `)
-        .order('created_at', { ascending: false })
-        .limit(10);
+        .order('created_at', { ascending: false });
+      
+      // Apply filter if not 'all'
+      if (taskJobTypes) {
+        query = query.in('job_type', taskJobTypes);
+      }
+      
+      query = query.limit(50); // Increased for safety
+      
+      const { data: jobs, error } = await query;
       
       if (error) throw error;
       
@@ -80,11 +91,24 @@ export default function EnrichmentMonitor() {
     }
   }, [autoRefresh]);
 
-  const startEnrichment = async (phase?: number) => {
+  const startEnrichment = async (phase?: number, singleTask?: boolean) => {
     setLoading(true);
     try {
+      // If a specific task is selected and singleTask is true, start only that task
+      const taskJobTypes = TASK_FILTERS[selectedTask].jobTypes;
+      const isSingleTaskMode = singleTask && selectedTask !== 'all' && taskJobTypes && taskJobTypes.length > 0;
+      
+      const body = isSingleTaskMode 
+        ? { 
+            action: 'start', 
+            scope: 'single', 
+            jobType: taskJobTypes[0],
+            createIfMissing: true 
+          }
+        : { action: 'start', phase };
+      
       const { data, error } = await supabase.functions.invoke('master-enrichment-scheduler', {
-        body: { action: 'start', phase }
+        body
       });
       
       if (data?.worker_active) {
@@ -92,10 +116,12 @@ export default function EnrichmentMonitor() {
         setLastHeartbeat(new Date());
       }
       
+      const taskName = data?.tasks?.[0] || (isSingleTaskMode ? TASK_FILTERS[selectedTask].label : 'enrichment');
+      
       toast({ 
-        title: '✅ Long-running worker started',
+        title: isSingleTaskMode ? `✅ Started ${taskName}` : '✅ Long-running worker started',
         description: data?.worker_active 
-          ? 'Continuous processing active - will auto-complete all batches' 
+          ? (isSingleTaskMode ? `Processing ${taskName} only` : 'Continuous processing active - will auto-complete all batches')
           : 'Jobs are now processing. Check progress below.'
       });
       setTimeout(() => fetchJobs(), 1000);
@@ -255,29 +281,24 @@ export default function EnrichmentMonitor() {
     }
   };
 
-  // Filter jobs based on selected task
-  const filteredJobs = selectedTask === 'all' 
-    ? jobs 
-    : jobs.filter(job => {
-        const taskTypes = TASK_FILTERS[selectedTask].jobTypes;
-        return taskTypes?.includes(job.job_type);
-      });
+  // Jobs are already filtered server-side, no need for client filtering
+  const filteredJobs = jobs;
 
-  // Calculate metrics from filtered jobs
+  // Calculate metrics from filtered jobs using job.progress (joined data)
   const totalQualityPassed = filteredJobs.reduce((sum, job) => {
-    const batches = job.batch_progress || [];
+    const batches = job.progress || [];
     return sum + batches.reduce((s: number, b: any) => s + (b.data?.quality_passed || 0), 0);
   }, 0);
 
   const totalQualityFailed = filteredJobs.reduce((sum, job) => {
-    const batches = job.batch_progress || [];
+    const batches = job.progress || [];
     return sum + batches.reduce((s: number, b: any) => s + (b.data?.quality_failed || 0), 0);
   }, 0);
 
   const successRate = totalQualityPassed / (totalQualityPassed + totalQualityFailed) * 100 || 0;
 
   const totalCost = filteredJobs.reduce((sum, job) => {
-    const batches = job.batch_progress || [];
+    const batches = job.progress || [];
     return sum + batches.reduce((s: number, b: any) => s + (b.data?.api_cost_gbp || 0), 0);
   }, 0);
 
@@ -290,9 +311,9 @@ export default function EnrichmentMonitor() {
     }
   }, [activeJobs.length]);
   
-  // Calculate health metrics
+  // Calculate health metrics using job.progress (joined data)
   const getJobHealth = (job: any) => {
-    const batches = job.batch_progress || [];
+    const batches = job.progress || [];
     const processingBatches = batches.filter((b: any) => b.status === 'processing');
     const stuckBatches = processingBatches.filter((b: any) => {
       const startTime = new Date(b.started_at).getTime();
@@ -367,10 +388,17 @@ export default function EnrichmentMonitor() {
 
         {/* Action Buttons */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2">
-          <Button onClick={() => startEnrichment(1)} disabled={loading} size="lg" className="w-full">
-            <Play className="w-4 h-4 mr-2" />
-            Start Phase 1
-          </Button>
+          {selectedTask !== 'all' ? (
+            <Button onClick={() => startEnrichment(undefined, true)} disabled={loading} size="lg" className="w-full col-span-2 sm:col-span-1 bg-primary">
+              <Play className="w-4 h-4 mr-2" />
+              Start {TASK_FILTERS[selectedTask].label}
+            </Button>
+          ) : (
+            <Button onClick={() => startEnrichment(1)} disabled={loading} size="lg" className="w-full">
+              <Play className="w-4 h-4 mr-2" />
+              Start Phase 1
+            </Button>
+          )}
           <Button onClick={recoverStuck} disabled={loading} variant="secondary" size="lg" className="w-full">
             <RefreshCw className="w-4 h-4 mr-2" />
             Recover Stuck
@@ -500,9 +528,9 @@ export default function EnrichmentMonitor() {
               <CardHeader>
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
-                    <CardTitle className="flex items-center gap-2">
+                     <CardTitle className="flex items-center gap-2 flex-wrap">
                       {job.job_type?.replace('enrich_', '').replace(/_/g, ' ').toUpperCase()}
-                      {job.status === 'processing' && (
+                      {job.status === 'processing' && job.processingBatches > 0 && (
                         <Badge variant="destructive" className="animate-pulse">
                           <Activity className="w-3 h-3 mr-1" />
                           LIVE
@@ -515,6 +543,35 @@ export default function EnrichmentMonitor() {
                         </Badge>
                       )}
                       <Badge variant="outline">{job.status}</Badge>
+                      {/* Idle Resume CTA */}
+                      {job.status === 'pending' && job.processingBatches === 0 && job.completedBatches < job.totalBatches && (
+                        <Button
+                          size="sm"
+                          variant="default"
+                          className="ml-auto"
+                          onClick={async () => {
+                            setLoading(true);
+                            try {
+                              await supabase.functions.invoke('master-enrichment-scheduler', {
+                                body: { 
+                                  action: 'start', 
+                                  scope: 'single', 
+                                  jobType: job.job_type 
+                                }
+                              });
+                              toast({ title: '✅ Resuming job...', description: job.job_type });
+                              setTimeout(() => fetchJobs(), 1000);
+                            } catch (error: any) {
+                              toast({ title: '❌ Resume failed', description: error.message });
+                            } finally {
+                              setLoading(false);
+                            }
+                          }}
+                        >
+                          <Play className="w-3 h-3 mr-1" />
+                          Resume
+                        </Button>
+                      )}
                     </CardTitle>
                     <CardDescription className="mt-1">
                       {job.completedBatches}/{job.totalBatches} batches completed

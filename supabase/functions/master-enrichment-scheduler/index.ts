@@ -48,9 +48,9 @@ serve(async (req) => {
   }
 
   try {
-    const { action = 'start', phase, taskName } = await req.json();
+    const { action = 'start', phase, taskName, scope = 'all', jobType, createIfMissing = false } = await req.json();
     
-    console.log(`🎯 Master Enrichment Scheduler: ${action}`);
+    console.log(`🎯 Master Enrichment Scheduler: ${action}${scope === 'single' ? ` (SINGLE: ${jobType})` : ''}`);
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -225,20 +225,66 @@ serve(async (req) => {
         console.log('✅ Old jobs cleaned up');
       }
 
+      // SINGLE SCOPE MODE: Only start the specified job type
       let tasksToRun = ENRICHMENT_TASKS;
-      if (phase) {
-        tasksToRun = ENRICHMENT_TASKS.filter(t => t.priority === phase);
-      }
-      if (taskName) {
-        tasksToRun = ENRICHMENT_TASKS.filter(t => t.name === taskName);
+      let jobTypesToStart: string[] = [];
+      
+      if (scope === 'single' && jobType) {
+        // Find the specific task by jobType (e.g., 'enrich_bs7671_embeddings')
+        const task = ENRICHMENT_TASKS.find(t => `enrich_${t.sourceTable}` === jobType);
+        if (task) {
+          tasksToRun = [task];
+          jobTypesToStart = [jobType];
+          console.log(`🎯 SINGLE SCOPE: Starting only ${task.name} (${jobType})`);
+        } else {
+          console.error(`❌ Job type '${jobType}' not found in ENRICHMENT_TASKS`);
+          return new Response(JSON.stringify({ 
+            success: false, 
+            error: `Invalid job type: ${jobType}` 
+          }), {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        }
+      } else {
+        // ALL SCOPE MODE (original behaviour)
+        if (phase) {
+          tasksToRun = ENRICHMENT_TASKS.filter(t => t.priority === phase);
+        }
+        if (taskName) {
+          tasksToRun = ENRICHMENT_TASKS.filter(t => t.name === taskName);
+        }
+        jobTypesToStart = tasksToRun.map(t => `enrich_${t.sourceTable}`);
       }
 
-      console.log(`🚀 Starting ${tasksToRun.length} enrichment tasks`);
+      console.log(`🚀 Starting ${tasksToRun.length} enrichment task${tasksToRun.length !== 1 ? 's' : ''} (scope: ${scope})`);
+
+      // Check for existing pending/processing jobs for the specified types
+      const { data: existingJobs } = await supabase
+        .from('batch_jobs')
+        .select('*')
+        .in('status', ['pending', 'processing'])
+        .in('job_type', jobTypesToStart);
 
       const jobIds: string[] = [];
       const jobTaskMap = new Map<string, EnrichmentTask>();
 
-      for (const task of tasksToRun) {
+      // If single scope and job exists, resume it instead of creating new one
+      if (scope === 'single' && existingJobs && existingJobs.length > 0) {
+        console.log(`🔄 SINGLE SCOPE: Found existing job, resuming instead of creating new one`);
+        for (const job of existingJobs) {
+          const task = ENRICHMENT_TASKS.find(t => `enrich_${t.sourceTable}` === job.job_type);
+          if (task) {
+            jobIds.push(job.id);
+            jobTaskMap.set(job.id, task);
+          }
+        }
+      } else {
+        // Create new jobs for tasks that don't have existing jobs
+        const existingJobTypes = existingJobs?.map(j => j.job_type) || [];
+        const tasksToCreate = tasksToRun.filter(t => !existingJobTypes.includes(`enrich_${t.sourceTable}`));
+
+        for (const task of tasksToCreate) {
         // Pre-flight validation: compare source vs target enriched counts
         const { count: totalCount } = await supabase
           .from(task.sourceTable)
@@ -298,6 +344,7 @@ serve(async (req) => {
               data: {}
             });
         }
+        }
       }
 
       // 🔥 PHASE 2: Start long-running worker ONLY if jobs were created
@@ -328,9 +375,12 @@ serve(async (req) => {
       // Return immediately while worker continues in background
       return new Response(JSON.stringify({ 
         success: true,
-        message: `Started ${tasksToRun.length} enrichment tasks with continuous worker`,
+        message: scope === 'single' 
+          ? `Started single task: ${tasksToRun[0]?.name}` 
+          : `Started ${tasksToRun.length} enrichment tasks with continuous worker`,
         tasks: tasksToRun.map(t => t.name),
         jobIds,
+        scope,
         worker_active: typeof EdgeRuntime !== 'undefined'
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -407,11 +457,17 @@ serve(async (req) => {
       // WATCHDOG: Auto-recover stuck batches before continuing
       await autoRecoverStuckBatches(supabase);
       
+      // Support scope filtering for continue action
+      let jobTypesToContinue = ENRICHMENT_TASKS.map(t => `enrich_${t.sourceTable}`);
+      if (scope === 'single' && jobType) {
+        jobTypesToContinue = [jobType];
+      }
+      
       const { data: pendingJobs } = await supabase
         .from('batch_jobs')
         .select('*')
         .in('status', ['pending', 'processing'])
-        .in('job_type', ENRICHMENT_TASKS.map(t => `enrich_${t.sourceTable}`));
+        .in('job_type', jobTypesToContinue);
 
       for (const job of pendingJobs || []) {
         const task = ENRICHMENT_TASKS.find(t => `enrich_${t.sourceTable}` === job.job_type);
