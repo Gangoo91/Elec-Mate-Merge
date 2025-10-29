@@ -1,5 +1,5 @@
 // Deployed: 2025-10-28 - v4.3.0 AI Call Timeout & Zero Steps Detection
-const EDGE_FUNCTION_TIMEOUT_MS = 120000; // 120s - matches frontend timeout
+const EDGE_FUNCTION_TIMEOUT_MS = 240000; // 240s - increased for complex schema generation
 
 import { serve } from '../_shared/deps.ts';
 import {
@@ -590,7 +590,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         }
       }],
         tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } }
-      }, OPENAI_API_KEY, 110000); // 110s timeout
+      }, OPENAI_API_KEY, 230000); // 230s timeout - increased for complex installations
       
       clearInterval(progressInterval);
       logger.info(`✅ OpenAI call completed in ${Math.round((Date.now() - aiCallStart) / 1000)}s`);

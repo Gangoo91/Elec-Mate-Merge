@@ -184,7 +184,7 @@ Deno.serve(async (req) => {
     });
     
     const installerTimeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Installer agent timeout after 180s')), 180000)
+      setTimeout(() => reject(new Error('Installer agent timeout after 240s')), 240000)
     );
     
     const installerResult = await Promise.race([installerPromise, installerTimeoutPromise]) as any;
