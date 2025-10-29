@@ -154,7 +154,11 @@ export default function EnrichmentMonitor() {
               Recover Stuck
             </Button>
             <Button onClick={restartPhase1} disabled={loading} variant="outline" size="lg" className="w-full sm:w-auto">
+              <RefreshCw className="w-4 h-4 mr-2" />
               Restart Phase 1
+            </Button>
+            <Button onClick={() => supabase.functions.invoke('master-enrichment-scheduler', { body: { action: 'abort_duplicates' } }).then(() => { toast({ title: 'Duplicates aborted' }); fetchJobs(); })} disabled={loading} variant="destructive" size="lg" className="w-full sm:w-auto">
+              Abort Duplicates
             </Button>
             <Button onClick={startTest} disabled={loading} variant="secondary" size="lg" className="w-full sm:w-auto">
               <TestTube2 className="w-4 h-4 mr-2" />
@@ -220,6 +224,11 @@ export default function EnrichmentMonitor() {
                 <span className="text-sm font-normal capitalize">{job.status}</span>
               </div>
             </CardTitle>
+            {job.batch_progress?.some((b: any) => b.error_message) && (
+              <p className="text-xs text-destructive mt-1 truncate">
+                Last error: {job.batch_progress.find((b: any) => b.error_message)?.error_message}
+              </p>
+            )}
             </CardHeader>
             <CardContent className="space-y-2">
               <Progress value={job.progress_percentage || 0} />

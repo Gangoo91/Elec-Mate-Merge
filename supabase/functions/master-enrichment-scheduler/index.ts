@@ -29,7 +29,7 @@ const ENRICHMENT_TASKS: EnrichmentTask[] = [
   { name: 'Project Templates', functionName: 'enrich-project-templates', sourceTable: 'project_mgmt_knowledge', targetTable: 'project_templates', batchSize: 50, priority: 2 },
   
   // Phase 3: Pricing Intelligence (Priority 3)
-  { name: 'Pricing Intelligence', functionName: 'enrich-pricing-intelligence', sourceTable: 'pricing_embeddings', targetTable: 'pricing_intelligence', batchSize: 100, priority: 3 },
+  { name: 'Pricing Intelligence', functionName: 'enrich-pricing-intelligence', sourceTable: 'pricing_embeddings', targetTable: 'pricing_intelligence', batchSize: 25, priority: 3 },
 ];
 
 serve(async (req) => {

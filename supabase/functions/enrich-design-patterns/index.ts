@@ -212,9 +212,11 @@ function validateQuality(patterns: any[]): boolean {
 }
 
 async function callOpenAIWithRetry(apiKey: string, userPrompt: string, systemPrompt: string, maxRetries = 3) {
+  const TIMEOUT_MS = 60000; // 60s per item (increased from 30s)
+  
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 30000);
+    const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
     
     try {
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -235,11 +237,11 @@ async function callOpenAIWithRetry(apiKey: string, userPrompt: string, systemPro
         signal: controller.signal
       });
       
-      clearTimeout(timeout);
+      clearTimeout(timeoutId);
       return response;
       
     } catch (error) {
-      clearTimeout(timeout);
+      clearTimeout(timeoutId);
       console.warn(`⚠️ OpenAI call attempt ${attempt + 1}/${maxRetries} failed:`, error.message);
       
       if (attempt < maxRetries - 1) {
