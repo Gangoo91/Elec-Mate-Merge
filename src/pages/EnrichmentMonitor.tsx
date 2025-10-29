@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
-import { RefreshCw, Play, CheckCircle2, AlertCircle, Clock } from "lucide-react";
+import { RefreshCw, Play, CheckCircle2, AlertCircle, Clock, TestTube2 } from "lucide-react";
 
 interface BatchJob {
   id: string;
@@ -95,6 +95,32 @@ export default function EnrichmentMonitor() {
     }
   };
 
+  const startTest = async () => {
+    setStarting(true);
+    try {
+      const { error } = await supabase.functions.invoke('master-enrichment-scheduler', {
+        body: { action: 'test' }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "🧪 Test Mode Started",
+        description: "Processing 100 documents across all enrichment tasks",
+      });
+
+      fetchJobs();
+    } catch (error: any) {
+      toast({
+        title: "Error starting test",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setStarting(false);
+    }
+  };
+
   useEffect(() => {
     fetchJobs();
     const interval = setInterval(fetchJobs, 10000); // Refresh every 10s
@@ -147,6 +173,15 @@ export default function EnrichmentMonitor() {
             >
               <Play className="mr-2 h-4 w-4" />
               Start All Enrichment
+            </Button>
+            <Button
+              onClick={startTest}
+              disabled={starting}
+              variant="secondary"
+              size="lg"
+            >
+              <TestTube2 className="mr-2 h-4 w-4" />
+              🧪 Run 100-Doc Test
             </Button>
             <Button
               onClick={() => startEnrichment(1)}
