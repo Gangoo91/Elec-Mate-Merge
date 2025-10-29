@@ -897,7 +897,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
                   items: { type: 'string' }
                 }
               },
-              required: ['response', 'hazards', 'ppeDetails', 'emergencyProcedures'],
+              required: ['response', 'hazards', 'ppeDetails', 'emergencyProcedures', 'complianceRegulations'],
               additionalProperties: false
             }
           }
