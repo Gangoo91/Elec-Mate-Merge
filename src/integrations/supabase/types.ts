@@ -7190,6 +7190,14 @@ export type Database = {
       }
     }
     Functions: {
+      abort_duplicate_jobs: {
+        Args: never
+        Returns: {
+          aborted_job_id: string
+          created_at_result: string
+          job_type_result: string
+        }[]
+      }
       can_access_quote_via_token: {
         Args: { q_id: string; token: string }
         Returns: boolean
@@ -7299,6 +7307,15 @@ export type Database = {
         }[]
       }
       normalize_query_text: { Args: { query_text: string }; Returns: string }
+      reset_stuck_batches: {
+        Args: { timeout_minutes?: number }
+        Returns: {
+          batch_id: string
+          batch_number: number
+          job_id: string
+          stuck_duration_minutes: number
+        }[]
+      }
       search_bs7671: {
         Args: {
           match_count?: number
