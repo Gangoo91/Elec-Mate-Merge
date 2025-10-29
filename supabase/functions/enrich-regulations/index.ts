@@ -1,11 +1,7 @@
 /**
- * Offline Regulation Intelligence Enrichment - UNIVERSAL RAG
- * 
- * Extracts universal RAG metadata from BS 7671 regulations
- * Used by ALL agents (not just health-safety)
- * 
- * Target: regulations_intelligence table
- * Cost: ~£2 one-time (2,557 regs × £0.0008), ~£0.50/quarter for updates
+ * Universal Regulation Intelligence Enrichment
+ * Extracts RAG metadata from BS 7671 regulations for ALL agents
+ * Target table: regulations_intelligence (not hazards!)
  */
 
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
@@ -37,7 +33,7 @@ serve(async (req) => {
     
     const { batchSize = 50, startFrom = 0, jobId } = await req.json().catch(() => ({}));
     
-    console.log(`🚀 Starting enrichment: batch=${batchSize}, startFrom=${startFrom}, jobId=${jobId}`);
+    console.log(`🔧 Starting regulation intelligence enrichment: batch=${batchSize}, startFrom=${startFrom}`);
     
     // Fetch batch of regulations
     const { data: regulations, error: fetchError } = await supabase
@@ -58,7 +54,7 @@ serve(async (req) => {
       });
     }
 
-    // Check for checkpoint to resume from
+    // Check for checkpoint
     const { data: checkpoint } = await supabase
       .from('batch_progress')
       .select('last_checkpoint')
@@ -81,72 +77,56 @@ serve(async (req) => {
       console.log(`\n📖 [${i + 1}/${regulations.length}] Processing: ${reg.regulation_number}`);
       
       try {
-        // Check if already enriched with current version
+        // Check if already enriched
         const contentHash = await hashContent(reg.content);
         const { data: existing } = await supabase
           .from('regulations_intelligence')
           .select('enrichment_version, source_hash')
           .eq('regulation_id', reg.id)
-          .limit(1);
+          .maybeSingle();
         
-        if (existing && existing.length > 0) {
-          const first = existing[0];
-          if (first.enrichment_version === ENRICHMENT_VERSION && first.source_hash === contentHash) {
-            console.log(`⏭️ Skipping ${reg.regulation_number} - already enriched`);
-            skipped++;
-            continue;
-          }
+        if (existing?.enrichment_version === ENRICHMENT_VERSION && existing?.source_hash === contentHash) {
+          console.log(`⏭️ Skipping ${reg.regulation_number} - already enriched`);
+          skipped++;
+          continue;
         }
         
-        // Extract RAG intelligence using GPT-5 Mini
+        // Extract intelligence using GPT-5 Mini
         const intelligence = await extractRegulationIntelligence(reg, OPENAI_API_KEY);
         
-        if (!intelligence) {
-          console.log(`⚠️ No intelligence extracted from ${reg.regulation_number}`);
+        if (!intelligence || !validateIntelligence(intelligence)) {
+          console.log(`⚠️ Failed quality check for ${reg.regulation_number}`);
           qualityFailed++;
           failed++;
           continue;
         }
         
-        // Quality validation
-        if (!validateIntelligenceQuality(intelligence)) {
-          console.warn(`⚠️ Quality check failed for ${reg.regulation_number}`);
-          qualityFailed++;
-          failed++;
-          continue;
-        }
         qualityPassed++;
+        console.log(`✅ Extracted intelligence for ${reg.regulation_number} (quality passed)`);
         
-        console.log(`✅ Extracted intelligence: ${intelligence.primary_topic} (quality passed)`);
-        
-        // Delete old enrichment if updating
-        if (existing && existing.length > 0) {
-          await supabase
-            .from('regulations_intelligence')
-            .delete()
-            .eq('regulation_id', reg.id);
-        }
-        
-        // Insert intelligence
+        // Upsert intelligence
         const { error: insertError } = await supabase
           .from('regulations_intelligence')
-          .insert({
+          .upsert({
             regulation_id: reg.id,
             regulation_number: reg.regulation_number,
             keywords: intelligence.keywords || [],
             category: intelligence.category,
-            subcategory: intelligence.subcategory || null,
-            technical_level: intelligence.technical_level || 3,
+            subcategory: intelligence.subcategory,
+            technical_level: intelligence.technical_level,
             primary_topic: intelligence.primary_topic,
             related_regulations: intelligence.related_regulations || [],
-            applies_to: intelligence.applies_to || ['domestic', 'commercial', 'industrial'],
+            applies_to: intelligence.applies_to || [],
             confidence_score: 0.90,
             enrichment_version: ENRICHMENT_VERSION,
-            source_hash: contentHash
+            source_hash: contentHash,
+            updated_at: new Date().toISOString()
+          }, {
+            onConflict: 'regulation_id,enrichment_version'
           });
         
         if (insertError) {
-          console.error(`❌ Insert error for intelligence:`, insertError);
+          console.error(`❌ Insert error:`, insertError);
           failed++;
           continue;
         }
@@ -168,7 +148,7 @@ serve(async (req) => {
               quality_passed: qualityPassed,
               quality_failed: qualityFailed,
               avg_processing_time_ms: totalProcessingTime / (i - startIndex + 1),
-              api_cost_gbp: (i - startIndex + 1) * 0.0017,
+              api_cost_gbp: (i - startIndex + 1) * 0.0015,
               last_updated: new Date().toISOString()
             }
           }).eq('job_id', jobId).eq('batch_number', Math.floor(startFrom / batchSize));
@@ -208,20 +188,19 @@ serve(async (req) => {
 });
 
 /**
- * Extract universal RAG intelligence using GPT-5 Mini
- * Simplified 6-field extraction for higher success rate
+ * Extract universal RAG intelligence from regulation
  */
 async function extractRegulationIntelligence(regulation: any, apiKey: string) {
-  const prompt = `Extract metadata from this electrical regulation for RAG search.
+  const prompt = `Extract RAG metadata from this electrical regulation for intelligent search.
 
 REGULATION:
 ${regulation.regulation_number}: ${regulation.section}
 ${regulation.content}
 
-Return JSON with EXACTLY this structure:
+Return JSON:
 {
   "keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"],
-  "category": "Protection | Installation | Testing | Design | Equipment | Safety",
+  "category": "Protection | Installation | Testing | Design | Equipment | Safety | Earthing | Cables | Circuits",
   "subcategory": "Specific topic within category",
   "technical_level": 1-5,
   "primary_topic": "One sentence summary of what this regulation covers",
@@ -229,9 +208,7 @@ Return JSON with EXACTLY this structure:
   "applies_to": ["domestic", "commercial", "industrial"]
 }
 
-Technical levels: 1=Basic apprentice, 2=Qualified electrician, 3=Experienced electrician, 4=Designer/Engineer, 5=Expert
-
-Return ONLY valid JSON. No additional text.`;
+Return ONLY valid JSON.`;
 
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
@@ -241,16 +218,9 @@ Return ONLY valid JSON. No additional text.`;
     },
     body: JSON.stringify({
       model: 'gpt-5-mini-2025-08-07',
-      messages: [{
-        role: 'system',
-        content: 'You are an electrical regulation expert. Extract structured RAG metadata. Return valid JSON only.'
-      }, {
-        role: 'user',
-        content: prompt
-      }],
+      messages: [{ role: 'user', content: prompt }],
       max_completion_tokens: 1000,
-      response_format: { type: 'json_object' },
-      temperature: 0.1
+      response_format: { type: 'json_object' }
     })
   });
   
@@ -271,14 +241,15 @@ Return ONLY valid JSON. No additional text.`;
 }
 
 /**
- * Validate quality of extracted intelligence
+ * Validate intelligence quality
  */
-function validateIntelligenceQuality(intelligence: any): boolean {
+function validateIntelligence(intelligence: any): boolean {
   if (!intelligence) return false;
   return intelligence.keywords?.length >= 3 &&
          intelligence.category?.length > 0 &&
          intelligence.primary_topic?.length > 20 &&
-         Array.isArray(intelligence.applies_to) && intelligence.applies_to.length > 0;
+         intelligence.technical_level >= 1 &&
+         intelligence.technical_level <= 5;
 }
 
 /**

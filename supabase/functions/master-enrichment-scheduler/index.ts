@@ -17,8 +17,8 @@ interface EnrichmentTask {
 }
 
 const ENRICHMENT_TASKS: EnrichmentTask[] = [
-  // Phase 1: Core Compliance & Safety (Priority 1)
-  { name: 'BS 7671 Regulations Intelligence', functionName: 'enrich-regulations', sourceTable: 'bs7671_embeddings', targetTable: 'regulations_intelligence', batchSize: 50, priority: 1 },
+  // Phase 1: Core Knowledge Bases (Priority 1)
+  { name: 'BS 7671 Intelligence', functionName: 'enrich-regulations', sourceTable: 'bs7671_embeddings', targetTable: 'regulations_intelligence', batchSize: 50, priority: 1 },
   { name: 'Health & Safety Knowledge', functionName: 'enrich-health-safety', sourceTable: 'health_safety_knowledge', targetTable: 'health_safety_knowledge', batchSize: 50, priority: 1 },
   { name: 'Installation Procedures', functionName: 'enrich-installation-procedures', sourceTable: 'installation_knowledge', targetTable: 'installation_procedures', batchSize: 50, priority: 1 },
   { name: 'Design Patterns', functionName: 'enrich-design-patterns', sourceTable: 'design_knowledge', targetTable: 'design_patterns_structured', batchSize: 50, priority: 1 },
@@ -29,7 +29,7 @@ const ENRICHMENT_TASKS: EnrichmentTask[] = [
   { name: 'Project Templates', functionName: 'enrich-project-templates', sourceTable: 'project_mgmt_knowledge', targetTable: 'project_templates', batchSize: 50, priority: 2 },
   
   // Phase 3: Pricing Intelligence (Priority 3)
-  { name: 'Pricing Intelligence Enrichment', functionName: 'enrich-pricing-intelligence', sourceTable: 'pricing_embeddings', targetTable: 'pricing_intelligence', batchSize: 100, priority: 3 },
+  { name: 'Pricing Intelligence', functionName: 'enrich-pricing-intelligence', sourceTable: 'pricing_embeddings', targetTable: 'pricing_intelligence', batchSize: 100, priority: 3 },
 ];
 
 serve(async (req) => {
@@ -157,7 +157,6 @@ serve(async (req) => {
     }
 
     if (action === 'status') {
-      // Get status of all jobs
       const { data: jobs } = await supabase
         .from('batch_jobs')
         .select('*, batch_progress(*)')
@@ -174,7 +173,6 @@ serve(async (req) => {
     }
 
     if (action === 'continue') {
-      // Continue processing all incomplete jobs
       const { data: pendingJobs } = await supabase
         .from('batch_jobs')
         .select('*')
@@ -215,7 +213,6 @@ serve(async (req) => {
 });
 
 async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTask) {
-  // Get next pending batch
   const { data: batch } = await supabase
     .from('batch_progress')
     .select('*')
@@ -226,7 +223,6 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
     .single();
 
   if (!batch) {
-    // No more batches, mark job as complete
     await supabase
       .from('batch_jobs')
       .update({ 
@@ -240,7 +236,6 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
     return;
   }
 
-  // Update batch status
   await supabase
     .from('batch_progress')
     .update({ 
@@ -249,7 +244,6 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
     })
     .eq('id', batch.id);
 
-  // Update job status
   await supabase
     .from('batch_jobs')
     .update({ 
@@ -260,7 +254,6 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
     .eq('id', jobId);
 
   try {
-    // Call enrichment function
     const response = await supabase.functions.invoke(task.functionName, {
       body: {
         batchSize: task.batchSize,
@@ -271,7 +264,6 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
 
     if (response.error) throw response.error;
 
-    // Update batch as completed
     await supabase
       .from('batch_progress')
       .update({ 
@@ -281,7 +273,6 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
       })
       .eq('id', batch.id);
 
-    // Update job progress
     const { data: allBatches } = await supabase
       .from('batch_progress')
       .select('status')
@@ -301,7 +292,6 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
 
     console.log(`✅ Batch ${batch.batch_number} completed (${progress}% overall)`);
 
-    // Process next batch recursively
     await processNextBatch(supabase, jobId, task);
 
   } catch (error) {
