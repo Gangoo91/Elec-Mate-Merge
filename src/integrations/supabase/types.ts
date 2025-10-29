@@ -2095,6 +2095,7 @@ export type Database = {
           confidence_score: number | null
           control_measures: string[]
           created_at: string | null
+          embedding: string | null
           enrichment_version: string | null
           hazard_description: string
           id: string
@@ -2107,6 +2108,7 @@ export type Database = {
           confidence_score?: number | null
           control_measures: string[]
           created_at?: string | null
+          embedding?: string | null
           enrichment_version?: string | null
           hazard_description: string
           id?: string
@@ -2119,6 +2121,7 @@ export type Database = {
           confidence_score?: number | null
           control_measures?: string[]
           created_at?: string | null
+          embedding?: string | null
           enrichment_version?: string | null
           hazard_description?: string
           id?: string
