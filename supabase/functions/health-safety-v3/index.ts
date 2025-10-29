@@ -293,8 +293,9 @@ serve(async (req) => {
     console.log('📝 [DIAGNOSTIC] Building optimized H&S context...');
     const { buildOptimizedRegulationContext } = await import('../_shared/regulation-helper.ts');
     
-    let hsContext: string;
-    let structuredHazards = '';
+  let hsContext: string;
+  let structuredHazards = '';
+  let optimizedRegContext = ''; // Function-scoped for use at line 373
     
     try {
       logger.info('Building H&S context with OPTIMIZED regulation pre-processing');
