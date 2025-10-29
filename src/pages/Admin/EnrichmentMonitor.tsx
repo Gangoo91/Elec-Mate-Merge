@@ -171,21 +171,18 @@ export default function EnrichmentMonitor() {
   const clearAllJobs = async () => {
     setLoading(true);
     try {
-      // Delete all batch_progress first (foreign key constraint)
-      const { error: progressError } = await supabase
-        .from('batch_progress')
-        .delete()
-        .gte('created_at', '1970-01-01'); // Proper delete all syntax
+      // Call edge function with service role privileges to truly delete everything
+      const { data, error } = await supabase.functions.invoke('master-enrichment-scheduler', {
+        body: { action: 'clear_all' }
+      });
       
-      if (progressError) throw progressError;
+      if (error) throw error;
       
-      // Delete all batch_jobs
-      const { error: jobsError } = await supabase
-        .from('batch_jobs')
-        .delete()
-        .gte('created_at', '1970-01-01'); // Proper delete all syntax
+      if (!data?.success) {
+        throw new Error(data?.error || 'Failed to clear jobs');
+      }
       
-      if (jobsError) throw jobsError;
+      console.log('✅ Purge complete:', data);
       
       // Reset UI state
       setJobs([]);
@@ -194,12 +191,18 @@ export default function EnrichmentMonitor() {
       
       toast({ 
         title: '✅ All jobs cleared',
-        description: 'Database reset complete. Ready to start fresh.'
+        description: `Purged ${data.purged?.jobs || 0} jobs and ${data.purged?.progress || 0} batches. Ready to start fresh.`,
+        variant: 'success'
       });
+      
+      // Refresh after a delay to confirm empty state
+      setTimeout(() => fetchJobs(), 1000);
     } catch (error: any) {
+      console.error('❌ Clear failed:', error);
       toast({ 
         title: '❌ Clear failed',
-        description: error.message || 'Check logs for details.'
+        description: error.message || 'Check logs for details.',
+        variant: 'destructive'
       });
     } finally {
       setLoading(false);

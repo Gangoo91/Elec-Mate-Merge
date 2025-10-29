@@ -150,6 +150,64 @@ serve(async (req) => {
     });
   }
   
+  if (action === 'clear_all') {
+    console.log('🧹 ADMIN PURGE: Clearing all jobs and batches...');
+    
+    try {
+      // Step 1: Delete batch_progress (has foreign key to batch_jobs)
+      const { count: progressCount, error: progressError } = await supabase
+        .from('batch_progress')
+        .delete()
+        .gte('created_at', '1970-01-01')
+        .select('*', { count: 'exact', head: true });
+      
+      if (progressError) {
+        console.error('❌ Failed to delete batch_progress:', progressError);
+        throw progressError;
+      }
+      
+      console.log(`✅ Deleted ${progressCount || 0} batch_progress records`);
+      
+      // Step 2: Delete batch_jobs
+      const { count: jobsCount, error: jobsError } = await supabase
+        .from('batch_jobs')
+        .delete()
+        .gte('created_at', '1970-01-01')
+        .select('*', { count: 'exact', head: true });
+      
+      if (jobsError) {
+        console.error('❌ Failed to delete batch_jobs:', jobsError);
+        throw jobsError;
+      }
+      
+      console.log(`✅ Deleted ${jobsCount || 0} batch_jobs records`);
+      
+      // Step 3: Clear in-memory worker map
+      activeWorkers.clear();
+      console.log('✅ Cleared in-memory worker map');
+      
+      return new Response(JSON.stringify({
+        success: true,
+        purged: {
+          jobs: jobsCount || 0,
+          progress: progressCount || 0
+        },
+        worker_cleared: true
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    } catch (error) {
+      console.error('❌ Purge failed:', error);
+      return new Response(JSON.stringify({
+        success: false,
+        error: error.message || 'Failed to purge jobs'
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+  }
+  
   if (action === 'start') {
       // 🧹 STEP 1: Auto-cleanup old aborted/failed jobs before creating new ones
       console.log('🧹 Cleaning up old aborted/failed jobs...');
