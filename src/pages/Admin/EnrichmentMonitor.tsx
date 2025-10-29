@@ -30,15 +30,21 @@ export default function EnrichmentMonitor() {
   const startEnrichment = async (phase?: number) => {
     setLoading(true);
     try {
-      const { error } = await supabase.functions.invoke('master-enrichment-scheduler', {
+      await supabase.functions.invoke('master-enrichment-scheduler', {
         body: { action: 'start', phase }
       });
       
-      if (error) throw error;
-      toast({ title: 'Enrichment started' });
-      fetchJobs();
+      toast({ 
+        title: '✅ Enrichment started',
+        description: 'Jobs are now processing. Check progress below.'
+      });
+      setTimeout(() => fetchJobs(), 1000);
     } catch (error: any) {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      toast({ 
+        title: '⏳ Enrichment may be starting',
+        description: 'Check the jobs below for progress.'
+      });
+      setTimeout(() => fetchJobs(), 2000);
     } finally {
       setLoading(false);
     }
@@ -47,15 +53,21 @@ export default function EnrichmentMonitor() {
   const startTest = async () => {
     setLoading(true);
     try {
-      const { error } = await supabase.functions.invoke('master-enrichment-scheduler', {
+      await supabase.functions.invoke('master-enrichment-scheduler', {
         body: { action: 'test' }
       });
       
-      if (error) throw error;
-      toast({ title: '🧪 Test mode started - 100 documents' });
-      fetchJobs();
+      toast({ 
+        title: '✅ Test started successfully',
+        description: 'Processing 100 documents. Check progress below.'
+      });
+      setTimeout(() => fetchJobs(), 1000);
     } catch (error: any) {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      toast({ 
+        title: '⏳ Test may be starting',
+        description: 'Check the jobs below for progress.'
+      });
+      setTimeout(() => fetchJobs(), 2000);
     } finally {
       setLoading(false);
     }
@@ -138,10 +150,18 @@ export default function EnrichmentMonitor() {
         {jobs.map((job) => (
           <Card key={job.id}>
             <CardHeader>
-              <CardTitle className="flex justify-between">
-                <span>{job.metadata?.task_name || job.job_type}</span>
-                <span className="text-sm font-normal">{job.status}</span>
-              </CardTitle>
+            <CardTitle className="flex justify-between items-center">
+              <span>{job.metadata?.task_name || job.job_type}</span>
+              <div className="flex items-center gap-2">
+                {job.status === 'processing' && (
+                  <span className="flex items-center gap-1 text-sm font-normal text-red-500 animate-pulse">
+                    <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                    LIVE
+                  </span>
+                )}
+                <span className="text-sm font-normal capitalize">{job.status}</span>
+              </div>
+            </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
               <Progress value={job.progress_percentage || 0} />

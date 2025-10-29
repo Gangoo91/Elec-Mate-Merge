@@ -57,6 +57,8 @@ serve(async (req) => {
 
       console.log(`🚀 Starting ${tasksToRun.length} enrichment tasks`);
 
+      const jobIds: string[] = [];
+
       for (const task of tasksToRun) {
         const { count } = await supabase
           .from(task.sourceTable)
@@ -88,6 +90,7 @@ serve(async (req) => {
         }
 
         console.log(`✅ Created job ${job.id} for ${task.name} (${totalBatches} batches)`);
+        jobIds.push(job.id);
 
         for (let i = 0; i < totalBatches; i++) {
           await supabase
@@ -101,13 +104,16 @@ serve(async (req) => {
             });
         }
 
-        await processNextBatch(supabase, job.id, task);
+        // Start processing in background (don't await)
+        processNextBatch(supabase, job.id, task);
       }
 
+      // Return immediately
       return new Response(JSON.stringify({ 
         success: true,
         message: `Started ${tasksToRun.length} enrichment tasks`,
-        tasks: tasksToRun.map(t => t.name)
+        tasks: tasksToRun.map(t => t.name),
+        jobIds
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
@@ -122,6 +128,8 @@ serve(async (req) => {
 
       console.log(`🧪 Starting test mode: 100 documents`);
 
+      const jobIds: string[] = [];
+
       for (const task of testTasks) {
         const { data: job } = await supabase
           .from('batch_jobs')
@@ -134,6 +142,8 @@ serve(async (req) => {
           .select()
           .single();
 
+        jobIds.push(job.id);
+
         await supabase
           .from('batch_progress')
           .insert({
@@ -144,13 +154,16 @@ serve(async (req) => {
             data: {}
           });
 
-        await processNextBatch(supabase, job.id, task);
+        // Start processing in background (don't await)
+        processNextBatch(supabase, job.id, task);
       }
 
+      // Return immediately
       return new Response(JSON.stringify({ 
         success: true,
         message: 'Test mode: Processing 100 documents',
-        tasks: testTasks.map(t => t.name)
+        tasks: testTasks.map(t => t.name),
+        jobIds
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
