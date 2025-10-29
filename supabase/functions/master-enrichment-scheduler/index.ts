@@ -27,6 +27,9 @@ const ENRICHMENT_TASKS: EnrichmentTask[] = [
   { name: 'Inspection Procedures', functionName: 'enrich-inspection-procedures', sourceTable: 'inspection_testing_knowledge', targetTable: 'inspection_procedures', batchSize: 50, priority: 2 },
   { name: 'Maintenance Schedules', functionName: 'enrich-maintenance-schedules', sourceTable: 'maintenance_knowledge', targetTable: 'maintenance_schedules', batchSize: 50, priority: 2 },
   { name: 'Project Templates', functionName: 'enrich-project-templates', sourceTable: 'project_mgmt_knowledge', targetTable: 'project_templates', batchSize: 50, priority: 2 },
+  
+  // Phase 3: Pricing Intelligence (Priority 3)
+  { name: 'Pricing Intelligence Enrichment', functionName: 'enrich-pricing-intelligence', sourceTable: 'pricing_embeddings', targetTable: 'pricing_intelligence', batchSize: 100, priority: 3 },
 ];
 
 serve(async (req) => {

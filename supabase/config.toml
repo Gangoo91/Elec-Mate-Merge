@@ -192,3 +192,36 @@ timeout_sec = 600
 verify_jwt = false
 timeout_sec = 600
 
+# Universal Enrichment Pipeline (Phase 0: Pre-Flight Optimizations)
+[functions.master-enrichment-scheduler]
+verify_jwt = false
+timeout_sec = 600
+
+[functions.enrich-health-safety]
+verify_jwt = false
+timeout_sec = 600
+
+[functions.enrich-installation-procedures]
+verify_jwt = false
+timeout_sec = 600
+
+[functions.enrich-design-patterns]
+verify_jwt = false
+timeout_sec = 600
+
+[functions.enrich-inspection-procedures]
+verify_jwt = false
+timeout_sec = 600
+
+[functions.enrich-maintenance-schedules]
+verify_jwt = false
+timeout_sec = 600
+
+[functions.enrich-project-templates]
+verify_jwt = false
+timeout_sec = 600
+
+[functions.enrich-pricing-intelligence]
+verify_jwt = false
+timeout_sec = 600
+
