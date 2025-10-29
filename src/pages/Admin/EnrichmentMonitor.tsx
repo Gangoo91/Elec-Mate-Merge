@@ -4,9 +4,24 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
-import { RefreshCw, Play, TestTube2, AlertTriangle, Trash2, SkipForward, Pause, Clock, Activity, Zap } from 'lucide-react';
+import { RefreshCw, Play, TestTube2, AlertTriangle, Trash2, SkipForward, Pause, Clock, Activity, Zap, Filter } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useSearchParams } from 'react-router-dom';
+
+// Task filter mapping
+const TASK_FILTERS = {
+  all: { label: 'All Tasks', jobTypes: null as string[] | null },
+  bs7671: { label: 'BS 7671 Regulations', jobTypes: ['enrich_bs7671', 'enrich_regulations'] },
+  health_safety: { label: 'Health & Safety Knowledge', jobTypes: ['enrich_health_safety'] },
+  design: { label: 'Design Knowledge', jobTypes: ['enrich_design'] },
+  installation: { label: 'Installation Procedures', jobTypes: ['enrich_installation'] },
+  inspection: { label: 'Inspection & Testing', jobTypes: ['enrich_inspection_testing'] },
+  maintenance: { label: 'Maintenance Procedures', jobTypes: ['enrich_maintenance'] },
+  project_mgmt: { label: 'Project Management', jobTypes: ['enrich_project_management'] },
+  pricing: { label: 'Pricing Intelligence', jobTypes: ['enrich_pricing'] },
+};
 
 export default function EnrichmentMonitor() {
   const [jobs, setJobs] = useState<any[]>([]);
@@ -15,7 +30,11 @@ export default function EnrichmentMonitor() {
   const [workerActive, setWorkerActive] = useState(false);
   const [lastHeartbeat, setLastHeartbeat] = useState<Date | null>(null);
   const [showClearDialog, setShowClearDialog] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
+
+  // Get task filter from URL or default to 'all'
+  const selectedTask = (searchParams.get('task') || 'all') as keyof typeof TASK_FILTERS;
 
   const fetchJobs = async () => {
     try {
@@ -236,25 +255,33 @@ export default function EnrichmentMonitor() {
     }
   };
 
-  // Calculate metrics
-  const totalQualityPassed = jobs.reduce((sum, job) => {
+  // Filter jobs based on selected task
+  const filteredJobs = selectedTask === 'all' 
+    ? jobs 
+    : jobs.filter(job => {
+        const taskTypes = TASK_FILTERS[selectedTask].jobTypes;
+        return taskTypes?.includes(job.job_type);
+      });
+
+  // Calculate metrics from filtered jobs
+  const totalQualityPassed = filteredJobs.reduce((sum, job) => {
     const batches = job.batch_progress || [];
     return sum + batches.reduce((s: number, b: any) => s + (b.data?.quality_passed || 0), 0);
   }, 0);
 
-  const totalQualityFailed = jobs.reduce((sum, job) => {
+  const totalQualityFailed = filteredJobs.reduce((sum, job) => {
     const batches = job.batch_progress || [];
     return sum + batches.reduce((s: number, b: any) => s + (b.data?.quality_failed || 0), 0);
   }, 0);
 
   const successRate = totalQualityPassed / (totalQualityPassed + totalQualityFailed) * 100 || 0;
 
-  const totalCost = jobs.reduce((sum, job) => {
+  const totalCost = filteredJobs.reduce((sum, job) => {
     const batches = job.batch_progress || [];
     return sum + batches.reduce((s: number, b: any) => s + (b.data?.api_cost_gbp || 0), 0);
   }, 0);
 
-  const activeJobs = jobs.filter(j => ['pending', 'processing'].includes(j.status));
+  const activeJobs = filteredJobs.filter(j => ['pending', 'processing'].includes(j.status));
   
   // Update worker status based on active jobs
   useEffect(() => {
@@ -312,6 +339,30 @@ export default function EnrichmentMonitor() {
               <RefreshCw className="w-4 h-4" />
             </Button>
           </div>
+        </div>
+
+        {/* Task Filter */}
+        <div className="w-full">
+          <Select 
+            value={selectedTask} 
+            onValueChange={(value) => {
+              setSearchParams(value === 'all' ? {} : { task: value });
+            }}
+          >
+            <SelectTrigger className="w-full sm:w-64">
+              <div className="flex items-center gap-2">
+                <Filter className="w-4 h-4" />
+                <SelectValue placeholder="Filter by task" />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              {Object.entries(TASK_FILTERS).map(([key, { label }]) => (
+                <SelectItem key={key} value={key}>
+                  {label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         {/* Action Buttons */}
@@ -429,9 +480,9 @@ export default function EnrichmentMonitor() {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm">Failed Batches</CardTitle>
           </CardHeader>
-          <CardContent>
+            <CardContent>
             <div className="text-3xl font-bold">
-              {jobs.reduce((sum, j) => sum + (j.failed_batches || 0), 0)}
+              {filteredJobs.reduce((sum, j) => sum + (j.failed_batches || 0), 0)}
             </div>
             <div className="text-xs text-muted-foreground mt-1">Total failures</div>
           </CardContent>
@@ -440,7 +491,7 @@ export default function EnrichmentMonitor() {
 
       {/* Job Cards */}
       <div className="space-y-4">
-        {jobs.map((job) => {
+        {filteredJobs.map((job) => {
           const health = getJobHealth(job);
           const batchSize = job.metadata?.batchSize || 25;
           
@@ -541,10 +592,13 @@ export default function EnrichmentMonitor() {
           );
         })}
         
-        {jobs.length === 0 && (
+        {filteredJobs.length === 0 && (
           <Card>
             <CardContent className="py-12 text-center text-muted-foreground">
-              No enrichment jobs found. Click "Start Phase 1" to begin.
+              {jobs.length === 0 
+                ? "No enrichment jobs found. Click 'Start Phase 1' to begin."
+                : `No ${TASK_FILTERS[selectedTask].label} jobs found.`
+              }
             </CardContent>
           </Card>
         )}
