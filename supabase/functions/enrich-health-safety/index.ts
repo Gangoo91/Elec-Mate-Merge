@@ -2,6 +2,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { generateEmbeddingWithRetry } from '../_shared/v3-core.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -171,6 +172,24 @@ Return JSON array with:
         qualityPassed++;
 
         for (const hazard of hazards) {
+          // Generate embedding for hazard description + controls
+          const embeddingText = `${hazard.hazard_description} ${hazard.control_measures?.join(' ') || ''}`;
+          
+          let embedding;
+          try {
+            embedding = await generateEmbeddingWithRetry(embeddingText, openAIKey);
+            
+            if (!embedding || embedding.length !== 1536) {
+              console.error(`❌ Invalid embedding for hazard: ${hazard.hazard_description.substring(0, 50)}`);
+              failed++;
+              continue;
+            }
+          } catch (embError) {
+            console.error(`❌ Embedding generation failed for hazard: ${embError}`);
+            failed++;
+            continue;
+          }
+          
           await supabase
             .from('health_safety_intelligence')
             .upsert({
@@ -178,6 +197,7 @@ Return JSON array with:
               hazard_description: hazard.hazard_description || '',
               control_measures: hazard.control_measures || [],
               required_ppe: hazard.required_ppe || {},
+              embedding: embedding,
               confidence_score: 0.85,
               enrichment_version: ENRICHMENT_VERSION,
               source_hash: contentHash,
@@ -208,7 +228,7 @@ Return JSON array with:
                 quality_failed: qualityFailed,
                 skipped,
                 avg_processing_time_ms: totalProcessingTime / processed,
-                api_cost_gbp: processed * 0.004,
+                api_cost_gbp: processed * 0.005,
                 last_updated: new Date().toISOString()
               }
             })

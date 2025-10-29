@@ -7389,6 +7389,23 @@ export type Database = {
           topic: string
         }[]
       }
+      search_health_safety_intelligence_hybrid: {
+        Args: {
+          match_count?: number
+          min_confidence?: number
+          query_embedding: string
+          query_text: string
+        }
+        Returns: {
+          confidence_score: number
+          control_measures: string[]
+          hazard_description: string
+          hybrid_score: number
+          id: string
+          required_ppe: Json
+          source_topic: string
+        }[]
+      }
       search_inspection_testing_hybrid: {
         Args: {
           match_count?: number
