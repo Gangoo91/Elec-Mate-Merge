@@ -99,25 +99,7 @@ Extract design patterns, formulas, and calculation methods. Return JSON array:
   "typical_applications": ["Domestic circuits", "Industrial distribution"]
 }]`;
 
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${openAIKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'gpt-5-mini-2025-08-07',
-            messages: [{
-              role: 'system',
-              content: 'You are an electrical design expert. Extract structured design patterns and calculations. Return valid JSON only.'
-            }, {
-              role: 'user',
-              content: extractionPrompt
-            }],
-            response_format: { type: "json_object" },
-            temperature: 0.1,
-          }),
-        });
+        const response = await callOpenAIWithRetry(openAIKey, extractionPrompt, 'You are an electrical design expert. Extract structured design patterns and calculations. Return valid JSON only.');
 
         if (!response.ok) {
           console.error(`❌ OpenAI error for doc ${doc.id}`);
@@ -227,4 +209,44 @@ function validateQuality(patterns: any[]): boolean {
   if (!patterns || patterns.length === 0) return false;
   const first = patterns[0];
   return (first.calculation_formula || first.example_values) && Object.keys(first.input_parameters || {}).length > 0;
+}
+
+async function callOpenAIWithRetry(apiKey: string, userPrompt: string, systemPrompt: string, maxRetries = 3) {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
+    
+    try {
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt }
+          ],
+          max_completion_tokens: 1000,
+          response_format: { type: "json_object" }
+        }),
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeout);
+      return response;
+      
+    } catch (error) {
+      clearTimeout(timeout);
+      console.warn(`⚠️ OpenAI call attempt ${attempt + 1}/${maxRetries} failed:`, error.message);
+      
+      if (attempt < maxRetries - 1) {
+        await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt)));
+      } else {
+        throw error;
+      }
+    }
+  }
 }

@@ -17,11 +17,11 @@ interface EnrichmentTask {
 }
 
 const ENRICHMENT_TASKS: EnrichmentTask[] = [
-  // Phase 1: Core Knowledge Bases (Priority 1)
-  { name: 'BS 7671 Intelligence', functionName: 'enrich-regulations', sourceTable: 'bs7671_embeddings', targetTable: 'regulations_intelligence', batchSize: 50, priority: 1 },
-  { name: 'Health & Safety Knowledge', functionName: 'enrich-health-safety', sourceTable: 'health_safety_knowledge', targetTable: 'health_safety_knowledge', batchSize: 50, priority: 1 },
-  { name: 'Installation Procedures', functionName: 'enrich-installation-procedures', sourceTable: 'installation_knowledge', targetTable: 'installation_procedures', batchSize: 50, priority: 1 },
-  { name: 'Design Patterns', functionName: 'enrich-design-patterns', sourceTable: 'design_knowledge', targetTable: 'design_patterns_structured', batchSize: 50, priority: 1 },
+  // Phase 1: Core Knowledge Bases (Priority 1) - REDUCED TO 25 ITEMS PER BATCH
+  { name: 'BS 7671 Intelligence', functionName: 'enrich-regulations', sourceTable: 'bs7671_embeddings', targetTable: 'regulations_intelligence', batchSize: 25, priority: 1 },
+  { name: 'Health & Safety Knowledge', functionName: 'enrich-health-safety', sourceTable: 'health_safety_knowledge', targetTable: 'health_safety_knowledge', batchSize: 25, priority: 1 },
+  { name: 'Installation Procedures', functionName: 'enrich-installation-procedures', sourceTable: 'installation_knowledge', targetTable: 'installation_procedures', batchSize: 25, priority: 1 },
+  { name: 'Design Patterns', functionName: 'enrich-design-patterns', sourceTable: 'design_knowledge', targetTable: 'design_patterns_structured', batchSize: 25, priority: 1 },
   
   // Phase 2: Specialized Domains (Priority 2)
   { name: 'Inspection Procedures', functionName: 'enrich-inspection-procedures', sourceTable: 'inspection_testing_knowledge', targetTable: 'inspection_procedures', batchSize: 50, priority: 2 },
@@ -207,6 +207,139 @@ serve(async (req) => {
       });
     }
 
+    if (action === 'recover') {
+      console.log('🔄 Recovering stuck batches...');
+      
+      // Find batches stuck in processing for more than 10 minutes
+      const { data: stuckBatches } = await supabase
+        .from('batch_progress')
+        .select('*, batch_jobs!inner(job_type)')
+        .eq('status', 'processing')
+        .lt('started_at', new Date(Date.now() - 10 * 60 * 1000).toISOString());
+      
+      if (!stuckBatches || stuckBatches.length === 0) {
+        return new Response(JSON.stringify({ 
+          success: true,
+          message: 'No stuck batches found',
+          recovered: 0
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      // Reset stuck batches to pending
+      const batchIds = stuckBatches.map(b => b.id);
+      await supabase
+        .from('batch_progress')
+        .update({ 
+          status: 'pending',
+          started_at: null,
+          error_message: null
+        })
+        .in('id', batchIds);
+      
+      // Get unique job IDs and restart them
+      const jobIds = [...new Set(stuckBatches.map(b => b.job_id))];
+      for (const jobId of jobIds) {
+        await supabase
+          .from('batch_jobs')
+          .update({ status: 'pending' })
+          .eq('id', jobId);
+        
+        const task = ENRICHMENT_TASKS.find(t => 
+          stuckBatches.find(b => b.job_id === jobId)?.batch_jobs?.job_type === `enrich_${t.sourceTable}`
+        );
+        
+        if (task) {
+          processNextBatch(supabase, jobId, task);
+        }
+      }
+
+      console.log(`✅ Recovered ${stuckBatches.length} stuck batches across ${jobIds.length} jobs`);
+      
+      return new Response(JSON.stringify({ 
+        success: true,
+        message: `Recovered ${stuckBatches.length} stuck batches`,
+        recovered: stuckBatches.length,
+        jobsRestarted: jobIds.length
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    if (action === 'restart' && phase === 1) {
+      console.log('🔄 Restarting Phase 1...');
+      
+      // Abort existing Phase 1 jobs
+      const phase1Tasks = ENRICHMENT_TASKS.filter(t => t.priority === 1);
+      const jobTypes = phase1Tasks.map(t => `enrich_${t.sourceTable}`);
+      
+      await supabase
+        .from('batch_jobs')
+        .update({ 
+          status: 'aborted',
+          completed_at: new Date().toISOString()
+        })
+        .in('job_type', jobTypes)
+        .in('status', ['pending', 'processing']);
+      
+      // Start fresh Phase 1 jobs
+      const jobIds: string[] = [];
+      for (const task of phase1Tasks) {
+        const { count } = await supabase
+          .from(task.sourceTable)
+          .select('*', { count: 'exact', head: true });
+
+        const totalBatches = Math.ceil((count || 0) / task.batchSize);
+
+        const { data: job } = await supabase
+          .from('batch_jobs')
+          .insert({
+            job_type: `enrich_${task.sourceTable}`,
+            status: 'pending',
+            total_batches: totalBatches,
+            metadata: {
+              task_name: task.name,
+              function_name: task.functionName,
+              source_table: task.sourceTable,
+              target_table: task.targetTable,
+              batch_size: task.batchSize,
+              priority: task.priority
+            }
+          })
+          .select()
+          .single();
+
+        if (job) {
+          jobIds.push(job.id);
+          
+          for (let i = 0; i < totalBatches; i++) {
+            await supabase
+              .from('batch_progress')
+              .insert({
+                job_id: job.id,
+                batch_number: i,
+                total_items: Math.min(task.batchSize, (count || 0) - (i * task.batchSize)),
+                status: 'pending',
+                data: {}
+              });
+          }
+          
+          processNextBatch(supabase, job.id, task);
+        }
+      }
+
+      console.log(`✅ Restarted Phase 1 with ${jobIds.length} new jobs`);
+      
+      return new Response(JSON.stringify({ 
+        success: true,
+        message: 'Phase 1 restarted with fresh jobs',
+        jobIds
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
     return new Response(JSON.stringify({ 
       error: 'Invalid action' 
     }), {
@@ -267,15 +400,30 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
     .eq('id', jobId);
 
   try {
-    const response = await supabase.functions.invoke(task.functionName, {
-      body: {
-        batchSize: task.batchSize,
-        startFrom: batch.batch_number * task.batchSize,
-        jobId: jobId
+    let response;
+    let invokeError;
+    
+    // Retry invoke up to 2 times
+    for (let attempt = 0; attempt < 3; attempt++) {
+      response = await supabase.functions.invoke(task.functionName, {
+        body: {
+          batchSize: task.batchSize,
+          startFrom: batch.batch_number * task.batchSize,
+          jobId: jobId
+        }
+      });
+      
+      if (!response.error) break;
+      
+      invokeError = response.error;
+      console.warn(`⚠️ Invoke attempt ${attempt + 1}/3 failed for ${task.functionName}:`, response.error);
+      
+      if (attempt < 2) {
+        await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt)));
       }
-    });
+    }
 
-    if (response.error) throw response.error;
+    if (invokeError) throw invokeError;
 
     await supabase
       .from('batch_progress')
@@ -308,22 +456,33 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
     await processNextBatch(supabase, jobId, task);
 
   } catch (error) {
-    console.error(`❌ Batch ${batch.batch_number} failed:`, error);
+    console.error(`❌ Batch ${batch.batch_number} (job ${jobId}) failed:`, error);
     
     await supabase
       .from('batch_progress')
       .update({ 
         status: 'failed',
-        error_message: error.message
+        error_message: error.message,
+        completed_at: new Date().toISOString()
       })
       .eq('id', batch.id);
+
+    const { data: job } = await supabase
+      .from('batch_jobs')
+      .select('failed_batches')
+      .eq('id', jobId)
+      .single();
 
     await supabase
       .from('batch_jobs')
       .update({ 
-        failed_batches: batch.batch_number,
+        failed_batches: (job?.failed_batches || 0) + 1,
         error_message: error.message
       })
       .eq('id', jobId);
+    
+    // Continue to next batch despite failure
+    console.log(`↪️ Continuing to next batch despite failure...`);
+    await processNextBatch(supabase, jobId, task);
   }
 }

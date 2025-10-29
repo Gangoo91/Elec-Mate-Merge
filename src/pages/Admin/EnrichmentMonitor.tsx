@@ -73,6 +73,50 @@ export default function EnrichmentMonitor() {
     }
   };
 
+  const recoverStuck = async () => {
+    setLoading(true);
+    try {
+      const { data } = await supabase.functions.invoke('master-enrichment-scheduler', {
+        body: { action: 'recover', phase: 1 }
+      });
+      
+      toast({ 
+        title: '✅ Recovery complete',
+        description: `Recovered ${data?.recovered || 0} stuck batches across ${data?.jobsRestarted || 0} jobs.`
+      });
+      setTimeout(() => fetchJobs(), 1000);
+    } catch (error: any) {
+      toast({ 
+        title: '❌ Recovery failed',
+        description: error.message || 'Check logs for details.'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const restartPhase1 = async () => {
+    setLoading(true);
+    try {
+      const { data } = await supabase.functions.invoke('master-enrichment-scheduler', {
+        body: { action: 'restart', phase: 1 }
+      });
+      
+      toast({ 
+        title: '✅ Phase 1 restarted',
+        description: `Started ${data?.jobIds?.length || 0} fresh jobs with batch size 25.`
+      });
+      setTimeout(() => fetchJobs(), 1000);
+    } catch (error: any) {
+      toast({ 
+        title: '❌ Restart failed',
+        description: error.message || 'Check logs for details.'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const totalQualityPassed = jobs.reduce((sum, job) => {
     const batches = job.batch_progress || [];
     return sum + batches.reduce((s: number, b: any) => s + (b.data?.quality_passed || 0), 0);
@@ -90,22 +134,36 @@ export default function EnrichmentMonitor() {
     return sum + batches.reduce((s: number, b: any) => s + (b.data?.api_cost_gbp || 0), 0);
   }, 0);
 
+  const latestBatchSize = jobs[0]?.metadata?.batch_size || 25;
+
   return (
     <div className="container mx-auto p-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Universal Enrichment Monitor</h1>
-        <div className="flex gap-2">
-          <Button onClick={() => startEnrichment(1)} disabled={loading} size="lg">
-            <Play className="w-4 h-4 mr-2" />
-            Start Phase 1
-          </Button>
-          <Button onClick={startTest} disabled={loading} variant="secondary" size="lg">
-            <TestTube2 className="w-4 h-4 mr-2" />
-            Run 100-Doc Test
-          </Button>
-          <Button onClick={fetchJobs} variant="outline" size="icon">
-            <RefreshCw className="w-4 h-4" />
-          </Button>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h1 className="text-3xl font-bold">Universal Enrichment Monitor</h1>
+            <p className="text-sm text-muted-foreground mt-1">Batch size: {latestBatchSize} items</p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <Button onClick={() => startEnrichment(1)} disabled={loading} size="lg" className="w-full sm:w-auto">
+              <Play className="w-4 h-4 mr-2" />
+              Start Phase 1
+            </Button>
+            <Button onClick={recoverStuck} disabled={loading} variant="secondary" size="lg" className="w-full sm:w-auto">
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Recover Stuck
+            </Button>
+            <Button onClick={restartPhase1} disabled={loading} variant="outline" size="lg" className="w-full sm:w-auto">
+              Restart Phase 1
+            </Button>
+            <Button onClick={startTest} disabled={loading} variant="secondary" size="lg" className="w-full sm:w-auto">
+              <TestTube2 className="w-4 h-4 mr-2" />
+              Test (100)
+            </Button>
+            <Button onClick={fetchJobs} variant="outline" size="icon">
+              <RefreshCw className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
       </div>
 
