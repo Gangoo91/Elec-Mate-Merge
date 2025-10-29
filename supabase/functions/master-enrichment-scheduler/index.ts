@@ -20,7 +20,7 @@ interface EnrichmentTask {
 const ENRICHMENT_TASKS: EnrichmentTask[] = [
   // Phase 1: Core Knowledge Bases (Priority 1) - OPTIMIZED BATCH SIZES
   { name: 'BS 7671 Intelligence', functionName: 'enrich-regulations', sourceTable: 'bs7671_embeddings', targetTable: 'regulations_intelligence', batchSize: 15, priority: 1 },
-  { name: 'Health & Safety Knowledge', functionName: 'enrich-health-safety', sourceTable: 'health_safety_knowledge', targetTable: 'health_safety_knowledge', batchSize: 15, priority: 1 },
+  { name: 'Health & Safety Knowledge', functionName: 'enrich-health-safety', sourceTable: 'health_safety_knowledge', targetTable: 'regulation_hazards_extracted', batchSize: 15, priority: 1 },
   { name: 'Installation Procedures', functionName: 'enrich-installation-procedures', sourceTable: 'installation_knowledge', targetTable: 'installation_procedures', batchSize: 20, priority: 1 },
   { name: 'Design Patterns', functionName: 'enrich-design-patterns', sourceTable: 'design_knowledge', targetTable: 'design_patterns_structured', batchSize: 20, priority: 1 },
   
@@ -239,24 +239,26 @@ serve(async (req) => {
       const jobTaskMap = new Map<string, EnrichmentTask>();
 
       for (const task of tasksToRun) {
-        // Pre-flight validation: Check if there's actual work to do
+        // Pre-flight validation: compare source vs target enriched counts
         const { count: totalCount } = await supabase
           .from(task.sourceTable)
           .select('*', { count: 'exact', head: true });
         
-        // Check for unenriched records (version check)
-        const { count: unenrichedCount } = await supabase
-          .from(task.sourceTable)
+        // Count already-enriched records in TARGET table (by version)
+        const { count: enrichedCount } = await supabase
+          .from(task.targetTable)
           .select('*', { count: 'exact', head: true })
-          .or('enrichment_version.is.null,enrichment_version.neq.v1');
+          .eq('enrichment_version', 'v1');
 
-        if (!unenrichedCount || unenrichedCount === 0) {
-          console.log(`⏭️ Skipping ${task.name}: All ${totalCount} records already enriched`);
+        const unenrichedCount = Math.max(0, (totalCount || 0) - (enrichedCount || 0));
+
+        if (unenrichedCount <= 0) {
+          console.log(`⏭️ Skipping ${task.name}: All ${totalCount || 0} records already enriched (${enrichedCount || 0} in ${task.targetTable})`);
           continue;
         }
         
-        console.log(`📊 ${task.name}: ${unenrichedCount}/${totalCount} records need enrichment`);
-        const totalBatches = Math.ceil((unenrichedCount || 0) / task.batchSize);
+        console.log(`📊 ${task.name}: ${unenrichedCount}/${totalCount || 0} records need enrichment`);
+        const totalBatches = Math.ceil(unenrichedCount / task.batchSize);
 
         const { data: job, error: jobError } = await supabase
           .from('batch_jobs')
@@ -291,7 +293,7 @@ serve(async (req) => {
             .insert({
               job_id: job.id,
               batch_number: i,
-              total_items: Math.min(task.batchSize, (count || 0) - (i * task.batchSize)),
+              total_items: Math.min(task.batchSize, Math.max(0, (unenrichedCount || 0) - (i * task.batchSize))),
               status: 'pending',
               data: {}
             });
