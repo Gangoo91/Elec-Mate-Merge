@@ -88,7 +88,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
           {/* Title */}
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-              <Zap className="w-6 h-6 text-elec-yellow animate-pulse" />
+              <Zap className="w-6 h-6 text-elec-yellow" />
             </div>
             <div className="flex-1">
               <h2 className="text-xl font-semibold text-white">Generating RAMS Document</h2>
@@ -149,7 +149,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                   {/* Icon - Centered at Top - LARGER */}
                   <div className={`
                     w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300
-                    ${isActive ? 'bg-elec-yellow/20 ring-4 ring-elec-yellow/30 shadow-xl shadow-elec-yellow/20 animate-pulse' : ''}
+                    ${isActive ? 'bg-elec-yellow/20 ring-4 ring-elec-yellow/30 shadow-xl shadow-elec-yellow/20' : ''}
                     ${isComplete ? 'bg-green-500/20 ring-4 ring-green-500/30 shadow-lg' : ''}
                     ${isPending ? 'bg-gray-800/50' : ''}
                   `}>
@@ -227,7 +227,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                   {(isActive || isComplete) && (agent.currentStep || agent.reasoning) && (
                     <div className="w-full mt-4 p-4 bg-elec-grey/40 rounded-lg border border-elec-yellow/20">
                       <div className="flex items-start gap-2.5">
-                        <Zap className="w-4 h-4 text-elec-yellow shrink-0 mt-1 animate-pulse" />
+                        <Zap className="w-4 h-4 text-elec-yellow shrink-0 mt-1" />
                         <p className="text-sm text-gray-300 leading-relaxed text-left">
                           {agent.reasoning || agent.currentStep}
                         </p>

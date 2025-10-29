@@ -301,7 +301,7 @@ serve(async (req) => {
       logger.info('Building H&S context with OPTIMIZED regulation pre-processing');
       
       // Build optimized context (hazards + controls already extracted)
-      const optimizedRegContext = buildOptimizedRegulationContext(
+      optimizedRegContext = buildOptimizedRegulationContext(
         hsKnowledge.regulations || [],
         query
       );
@@ -842,7 +842,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
           function: {
             name: 'provide_safety_assessment',
             description: 'Provide comprehensive health & safety assessment for electrical installation work',
-            strict: true, // ✅ PHASE 1: Enforce strict schema validation
+            // strict: true, // Removed - causes timeout with complex schemas
             parameters: {
               type: 'object',
               properties: {
