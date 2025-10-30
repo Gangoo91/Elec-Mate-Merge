@@ -103,19 +103,19 @@ const ElectricalHub = () => {
           <Link to="/electrician/agent-selector" className="block focus:outline-none group touch-manipulation">
             <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-gray to-elec-gray/50 hover:from-elec-gray/90 hover:to-elec-gray/60 hover:border-elec-yellow/50 transition-all duration-300 active:scale-[0.98] overflow-hidden relative">
               <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <CardHeader className="flex flex-col items-center justify-center text-center py-8 md:py-10 px-6 relative">
-                <div className="p-4 rounded-2xl bg-elec-yellow/10 mb-4 group-hover:bg-elec-yellow/20 transition-colors duration-300">
-                  <Sparkles className="h-12 w-12 sm:h-14 sm:w-14 text-elec-yellow" />
+              <CardHeader className="flex flex-col items-center justify-center text-center py-6 px-4 relative">
+                <div className="p-3 rounded-2xl bg-elec-yellow/10 mb-3 group-hover:bg-elec-yellow/20 transition-colors duration-300">
+                  <Sparkles className="h-10 w-10 text-elec-yellow" />
                 </div>
-                <CardTitle className="text-xl sm:text-2xl font-bold mb-2">
+                <CardTitle className="text-lg sm:text-xl font-bold mb-2">
                   AI Design Consultation
                 </CardTitle>
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xl">
+                <p className="text-sm text-muted-foreground leading-relaxed max-w-lg">
                   Choose from 8 specialist agents for design, costing, installation, safety, testing, and project management
                 </p>
-                <div className="flex items-center gap-2 mt-5 text-elec-yellow text-base font-semibold group-hover:gap-3 transition-all duration-300">
+                <div className="flex items-center gap-2 mt-4 text-elec-yellow text-sm font-semibold group-hover:gap-3 transition-all duration-300">
                   <span>Choose Your Agent</span>
-                  <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
                 </div>
               </CardHeader>
             </Card>
