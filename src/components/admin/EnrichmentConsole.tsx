@@ -226,19 +226,21 @@ export default function EnrichmentConsole() {
     setIsLoading(true);
     try {
       // BS 7671 specific: Find regulations not yet enriched
-      const { data: allRegs } = await supabase
-        .from('bs7671_embeddings')
-        .select('id, regulation_number, section, content')
-        .neq('regulation_number', 'General');
-      
-      const { data: enriched } = await supabase
+      // Get all enriched regulation_numbers
+      const { data: enrichedRegs } = await supabase
         .from('regulations_intelligence')
-        .select('regulation_id');
-      
-      const enrichedIds = new Set((enriched || []).map(e => e.regulation_id));
-      const missing = (allRegs || []).filter(r => !enrichedIds.has(r.id));
-      
-      const missingRegNumbers = [...new Set(missing.map(r => r.regulation_number))];
+        .select('regulation_number');
+      const enrichedSet = new Set((enrichedRegs || []).map(r => r.regulation_number));
+
+      // Get all unique source regulation_numbers
+      const { data: sourceRegs } = await supabase
+        .from('bs7671_embeddings')
+        .select('regulation_number')
+        .neq('regulation_number', 'General');
+
+      // Find missing unique regulation_numbers
+      const allSourceRegs = new Set((sourceRegs || []).map(r => r.regulation_number));
+      const missingRegNumbers = Array.from(allSourceRegs).filter(reg => !enrichedSet.has(reg));
       
       setMissingRegulations(missingRegNumbers);
       
