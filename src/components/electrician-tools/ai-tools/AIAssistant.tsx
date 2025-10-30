@@ -327,21 +327,21 @@ const AIAssistant = () => {
 
                 {/* Technical Tab */}
                 <TabsContent value="technical" className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
-                  <div className="prose prose-invert max-w-none prose-sm sm:prose-base prose-headings:text-blue-400 prose-headings:font-bold prose-strong:text-blue-300 prose-p:text-white prose-p:leading-relaxed prose-li:text-white">
+                  <div className="prose prose-invert max-w-none prose-sm sm:prose-base prose-headings:text-blue-400 prose-headings:font-bold prose-headings:text-left prose-strong:text-blue-300 prose-p:text-white prose-p:leading-relaxed prose-p:text-left prose-p:mb-4 prose-ul:text-white prose-ul:text-left prose-ul:space-y-2 prose-ol:text-white prose-ol:text-left prose-ol:space-y-2 prose-li:text-white prose-li:text-left prose-li:mb-2">
                     <ReactMarkdown>{aiResponse.technical_answer}</ReactMarkdown>
                   </div>
                 </TabsContent>
 
                 {/* Regulations Tab */}
                 <TabsContent value="regulations" className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
-                  <div className="prose prose-invert max-w-none prose-sm sm:prose-base prose-headings:text-purple-400 prose-headings:font-bold prose-strong:text-purple-300 prose-p:text-white prose-p:leading-relaxed">
+                  <div className="prose prose-invert max-w-none prose-sm sm:prose-base prose-headings:text-purple-400 prose-headings:font-bold prose-headings:text-left prose-strong:text-purple-300 prose-p:text-white prose-p:leading-relaxed prose-p:text-left prose-p:mb-4 prose-ul:text-white prose-ul:text-left prose-ul:space-y-2 prose-ol:text-white prose-ol:text-left prose-ol:space-y-2 prose-li:text-white prose-li:text-left prose-li:mb-2">
                     <ReactMarkdown>{aiResponse.regulations}</ReactMarkdown>
                   </div>
                 </TabsContent>
 
                 {/* Practical Tab */}
                 <TabsContent value="practical" className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
-                  <div className="prose prose-invert max-w-none prose-sm sm:prose-base prose-headings:text-green-400 prose-headings:font-bold prose-strong:text-green-300 prose-p:text-white prose-p:leading-relaxed prose-ol:text-white prose-ul:text-white">
+                  <div className="prose prose-invert max-w-none prose-sm sm:prose-base prose-headings:text-green-400 prose-headings:font-bold prose-headings:text-left prose-strong:text-green-300 prose-p:text-white prose-p:leading-relaxed prose-p:text-left prose-p:mb-4 prose-ol:text-white prose-ol:text-left prose-ol:space-y-2 prose-ul:text-white prose-ul:text-left prose-ul:space-y-2 prose-li:text-white prose-li:text-left prose-li:mb-2">
                     <ReactMarkdown>{aiResponse.practical_guidance}</ReactMarkdown>
                   </div>
                 </TabsContent>
