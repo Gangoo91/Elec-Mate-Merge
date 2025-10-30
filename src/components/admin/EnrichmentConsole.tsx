@@ -144,9 +144,9 @@ export default function EnrichmentConsole() {
         .select('*', { count: 'exact', head: true });
 
       // Calculate target facets based on task
-      // BS 7671: 2,488 regs × 16 average facets = ~40,000
+      // BS 7671: 2,557 regs × 25 average facets = ~64,000
       // Others: 1:1 ratio (no facet expansion)
-      const avgFacetsPerReg = selectedTask === 'bs7671' ? 16 : 1;
+      const avgFacetsPerReg = selectedTask === 'bs7671' ? 25 : 1;
       const targetFacets = (sourceTotal || 0) * avgFacetsPerReg;
 
       const sourceEnriched = uniqueSourceIds.size;
@@ -355,10 +355,16 @@ export default function EnrichmentConsole() {
 
       {/* Controls */}
       <Card className="p-4">
-        <h4 className="font-medium mb-3 flex items-center gap-2">
-          <Activity className="w-4 h-4" />
-          Controls
-        </h4>
+        <div className="flex items-center justify-between mb-3">
+          <h4 className="font-medium flex items-center gap-2">
+            <Activity className="w-4 h-4" />
+            Controls
+          </h4>
+          <Badge variant="secondary" className="text-xs">
+            <CheckCircle2 className="w-3 h-3 mr-1" />
+            Smart Resume Enabled
+          </Badge>
+        </div>
         
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
           <MobileButton 
