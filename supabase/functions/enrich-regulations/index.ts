@@ -371,7 +371,9 @@ Return ONLY valid JSON object with "records" array.`;
         { role: 'system', content: 'You are a strict formatter. Output only valid JSON, no prose, no code fences.' },
         { role: 'user', content: prompt }
       ],
-      max_completion_tokens: 2000
+      max_completion_tokens: 3500,
+      max_reasoning_tokens: 0, // CRITICAL: Disable reasoning to get actual content output
+      temperature: 0.3 // Consistent output
     })
   });
   
