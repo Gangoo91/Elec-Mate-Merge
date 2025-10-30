@@ -1856,6 +1856,45 @@ export type Database = {
           },
         ]
       }
+      enrichment_reconciliation: {
+        Row: {
+          created_at: string | null
+          id: string
+          job_type: string
+          missing_ids: Json | null
+          missing_items: number
+          reconciled_at: string | null
+          source_table: string
+          target_table: string
+          total_enriched_items: number
+          total_source_items: number
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          job_type: string
+          missing_ids?: Json | null
+          missing_items: number
+          reconciled_at?: string | null
+          source_table: string
+          target_table: string
+          total_enriched_items: number
+          total_source_items: number
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          job_type?: string
+          missing_ids?: Json | null
+          missing_items?: number
+          reconciled_at?: string | null
+          source_table?: string
+          target_table?: string
+          total_enriched_items?: number
+          total_source_items?: number
+        }
+        Relationships: []
+      }
       evidence_uploads: {
         Row: {
           created_at: string

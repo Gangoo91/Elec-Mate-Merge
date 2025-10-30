@@ -145,19 +145,8 @@ async function processInBackground(
       console.log(`\n📖 [${i + 1}/${regulations.length}] Processing: ${reg.regulation_number}`);
       
       try {
-        // Check if this specific content has already been enriched (prevent re-processing same content)
+        // Compute content hash for deduplication (no DB check - unique constraint handles it)
         const contentHash = await hashContent(reg.content);
-        const { count } = await supabase
-          .from('regulations_intelligence')
-          .select('*', { count: 'exact', head: true })
-          .eq('source_hash', contentHash)
-          .eq('enrichment_version', ENRICHMENT_VERSION);
-        
-        if (count && count > 0) {
-          console.log(`⏭️ Skipping ${reg.regulation_number} - content already enriched (${count} records exist)`);
-          skipped++;
-          continue;
-        }
         
         // Extract multi-faceted intelligence using GPT-5 with retry logic
         const intelligenceArray = await extractWithRetry(reg, openAIKey, 3);
@@ -169,8 +158,10 @@ async function processInBackground(
           continue;
         }
         
-        // Validate and insert each intelligence record
+        // Validate and build batch insert (conflict-safe bulk upsert)
         let recordsCreated = 0;
+        const validRecords = [];
+        
         for (const intelligence of intelligenceArray) {
           if (!validateIntelligence(intelligence)) {
             console.log(`⚠️ Failed quality check for ${reg.regulation_number} facet - intelligence:`, JSON.stringify(intelligence).substring(0, 200));
@@ -178,33 +169,39 @@ async function processInBackground(
             continue;
           }
           
-          // Insert intelligence (allows multiple records per regulation)
+          validRecords.push({
+            regulation_id: reg.id,
+            regulation_number: reg.regulation_number,
+            keywords: intelligence.keywords || [],
+            category: intelligence.category,
+            subcategory: intelligence.subcategory,
+            technical_level: intelligence.technical_level,
+            primary_topic: intelligence.primary_topic,
+            related_regulations: intelligence.related_regulations || [],
+            applies_to: intelligence.applies_to || [],
+            confidence_score: 0.90,
+            enrichment_version: ENRICHMENT_VERSION,
+            source_hash: contentHash,
+            created_at: new Date().toISOString()
+          });
+        }
+        
+        // Bulk upsert with conflict handling (much faster than per-record inserts)
+        if (validRecords.length > 0) {
           const { error: insertError } = await supabase
             .from('regulations_intelligence')
-            .insert({
-              regulation_id: reg.id,
-              regulation_number: reg.regulation_number,
-              keywords: intelligence.keywords || [],
-              category: intelligence.category,
-              subcategory: intelligence.subcategory,
-              technical_level: intelligence.technical_level,
-              primary_topic: intelligence.primary_topic,
-              related_regulations: intelligence.related_regulations || [],
-              applies_to: intelligence.applies_to || [],
-              confidence_score: 0.90,
-              enrichment_version: ENRICHMENT_VERSION,
-              source_hash: contentHash,
-              created_at: new Date().toISOString()
+            .upsert(validRecords, {
+              onConflict: 'regulation_id,source_hash,enrichment_version',
+              ignoreDuplicates: false
             });
           
           if (insertError) {
-            console.error(`❌ Insert error for ${reg.regulation_number}:`, insertError);
-            qualityFailed++;
-            continue;
+            console.error(`❌ Bulk insert error for ${reg.regulation_number}:`, insertError);
+            qualityFailed += validRecords.length;
+          } else {
+            recordsCreated = validRecords.length;
+            qualityPassed += recordsCreated;
           }
-          
-          recordsCreated++;
-          qualityPassed++;
         }
         
         if (recordsCreated === 0) {
@@ -219,20 +216,22 @@ async function processInBackground(
         const regProcessingTime = Date.now() - regStartTime;
         totalProcessingTime += regProcessingTime;
         
-        // Update progress after each regulation
-        await supabase.from('batch_progress').update({
-          items_processed: startFrom + i + 1,
-          data: { 
-            processed, 
-            failed, 
-            skipped, 
-            quality_passed: qualityPassed,
-            quality_failed: qualityFailed,
-            last_regulation: reg.regulation_number,
-            avg_processing_time_ms: totalProcessingTime / (i - startIndex + 1),
-            last_updated: new Date().toISOString()
-          }
-        }).eq('job_id', jobId).eq('batch_number', batchNumber);
+        // Update progress every 5 items (reduce DB writes)
+        if ((i + 1) % 5 === 0 || i === regulations.length - 1) {
+          await supabase.from('batch_progress').update({
+            items_processed: startFrom + i + 1,
+            data: { 
+              processed, 
+              failed, 
+              skipped, 
+              quality_passed: qualityPassed,
+              quality_failed: qualityFailed,
+              last_regulation: reg.regulation_number,
+              avg_processing_time_ms: totalProcessingTime / (i - startIndex + 1),
+              last_updated: new Date().toISOString()
+            }
+          }).eq('job_id', jobId).eq('batch_number', batchNumber);
+        }
         
         // Save checkpoint every 25 docs
         if ((i + 1) % 25 === 0 || i === regulations.length - 1) {
@@ -331,7 +330,7 @@ async function extractWithRetry(regulation: any, apiKey: string, maxRetries = 3)
  * Returns ARRAY of intelligence records for different aspects/meanings
  */
 async function extractRegulationIntelligence(regulation: any, apiKey: string) {
-  const prompt = `Extract ALL distinct aspects of this electrical regulation for intelligent search. Return a JSON array where each item represents ONE specific meaning or application.
+  const prompt = `Extract ALL distinct aspects of this electrical regulation for intelligent search. Return a JSON array where each item represents ONE specific meaning or application. Use UK English exclusively.
 
 REGULATION:
 ${regulation.regulation_number}: ${regulation.section}
@@ -357,7 +356,7 @@ Return JSON object with "records" key (1-10+ items depending on regulation compl
   ]
 }
 
-Return ONLY valid JSON object with "records" array.`;
+Return ONLY valid JSON object with "records" array. Use UK English throughout.`;
 
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
@@ -370,11 +369,12 @@ Return ONLY valid JSON object with "records" array.`;
       messages: [
         { 
           role: 'system', 
-          content: 'You are a strict JSON formatter. Output ONLY a valid JSON array. No markdown, no code fences, no explanations. Your entire response must be parseable JSON starting with [ and ending with ].'
+          content: 'You are a strict JSON formatter specialising in UK English. Output ONLY a valid JSON array. No markdown, no code fences, no explanations. Your entire response must be parseable JSON starting with [ and ending with ]. Use UK English spelling and terminology exclusively.'
         },
         { role: 'user', content: prompt }
       ],
-      max_completion_tokens: 8000       // GPT-5 Mini: Use max_completion_tokens (NOT max_tokens)
+      max_completion_tokens: 8000,       // GPT-5 Mini: Use max_completion_tokens (NOT max_tokens)
+      signal: AbortSignal.timeout(45000) // 45s timeout for AI call
       // NOTE: temperature not supported by gpt-5-mini (defaults to 1.0)
       // NOTE: max_reasoning_tokens is NOT supported by gpt-5-mini
     })
