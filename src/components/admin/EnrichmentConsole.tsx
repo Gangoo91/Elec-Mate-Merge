@@ -114,28 +114,22 @@ export default function EnrichmentConsole() {
       }
 
       // Load stats (task-aware queries)
-      let sourceQuery = supabase
-        .from(config.sourceTable)
-        .select('*', { count: 'exact', head: true });
+      // For BS7671: Count UNIQUE regulation_numbers (not total rows with duplicates)
+      const { data: sourceRawData } = await supabase
+        .from(config.sourceTable as 'bs7671_embeddings')
+        .select('regulation_number')
+        .neq('regulation_number', 'General');
       
-      // Apply source filter if configured
-      if (config.sourceFilter) {
-        const { column, op, value } = config.sourceFilter;
-        sourceQuery = sourceQuery[op](column, value);
-      }
-      
-      const { count: sourceTotal } = await sourceQuery;
+      const sourceTotal = new Set((sourceRawData || []).map(r => r.regulation_number)).size;
 
-      // Count unique enriched source records (not facets)
-      const { data: enrichedData } = await supabase
-        .from(config.targetTable)
-        .select('regulation_id, source_id, knowledge_id, pricing_id');
+      // Count unique enriched regulation_numbers (not facets, not row IDs)
+      const { data: enrichedRawData } = await supabase
+        .from(config.targetTable as 'regulations_intelligence')
+        .select('regulation_number');
 
-      // Extract unique source IDs (handles different FK column names across tables)
-      const uniqueSourceIds = new Set(
-        (enrichedData || []).map((e: any) => 
-          e.regulation_id || e.source_id || e.knowledge_id || e.pricing_id
-        ).filter(Boolean)
+      // Extract unique regulation_numbers that have been enriched
+      const uniqueEnrichedRegulations = new Set(
+        (enrichedRawData || []).map(e => e.regulation_number).filter(Boolean)
       );
 
       // Count actual facets created (total rows in target table)
@@ -149,7 +143,7 @@ export default function EnrichmentConsole() {
       const avgFacetsPerReg = selectedTask === 'bs7671' ? 25 : 1;
       const targetFacets = (sourceTotal || 0) * avgFacetsPerReg;
 
-      const sourceEnriched = uniqueSourceIds.size;
+      const sourceEnriched = uniqueEnrichedRegulations.size;
       const remaining = Math.max(0, targetFacets - (facetsCreated || 0));
       const progress = targetFacets > 0 ? Math.round(((facetsCreated || 0) / targetFacets) * 100) : 0;
 
@@ -402,7 +396,7 @@ export default function EnrichmentConsole() {
             <h4 className="font-semibold text-warning">Incomplete Enrichment Detected</h4>
           </div>
           <p className="text-sm text-muted-foreground mb-3">
-            {stats.sourceTotal - stats.sourceEnriched} regulations are missing enrichment data.
+            {stats.sourceTotal - stats.sourceEnriched} unique regulations are missing enrichment data.
           </p>
           <div className="flex gap-2">
             <MobileButton
