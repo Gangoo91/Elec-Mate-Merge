@@ -158,10 +158,53 @@ RESPONSE FORMAT:
         }
 
         const aiData = await response.json();
-        const content = aiData.choices[0].message.content;
+        
+        // 📦 FULL RESPONSE DEBUGGING
+        console.log(`📦 Full OpenAI response structure for ${doc.id}:`, JSON.stringify(aiData).substring(0, 500));
+        console.log(`📊 Response keys:`, Object.keys(aiData));
+        
+        // Check response structure
+        if (!aiData.choices || aiData.choices.length === 0) {
+          console.error(`❌ No choices in OpenAI response for ${doc.id}:`, JSON.stringify(aiData));
+          failed++;
+          continue;
+        }
+        
+        console.log(`📊 Choice[0] keys:`, Object.keys(aiData.choices[0]));
+        
+        if (!aiData.choices[0].message) {
+          console.error(`❌ No message in OpenAI choice for ${doc.id}:`, JSON.stringify(aiData.choices[0]));
+          failed++;
+          continue;
+        }
+        
+        console.log(`📊 Message keys:`, Object.keys(aiData.choices[0].message));
+        
+        const message = aiData.choices[0].message;
+        
+        // Check for refusal (GPT-5 safety feature)
+        if (message.refusal) {
+          console.error(`❌ OpenAI refused to process doc ${doc.id}:`, message.refusal);
+          failed++;
+          continue;
+        }
+        
+        const content = message.content;
+        
+        // Validate content exists and is not empty
+        if (!content || content.trim() === '') {
+          console.error(`❌ Empty content from OpenAI for ${doc.id}`, {
+            finish_reason: aiData.choices[0].finish_reason,
+            has_content: !!content,
+            content_length: content?.length || 0,
+            full_message: JSON.stringify(message)
+          });
+          failed++;
+          continue;
+        }
         
         // Debug: Log raw OpenAI response
-        console.log(`📋 Raw OpenAI response for ${doc.id}:`, content.substring(0, 200));
+        console.log(`📋 Raw OpenAI content for ${doc.id} (${content.length} chars):`, content.substring(0, 200));
         
         let hazards;
         
