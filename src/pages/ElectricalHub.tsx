@@ -131,12 +131,12 @@ const ElectricalHub = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {mainResources.map((resource) => (
               <Link to={resource.link} key={resource.id} className="block focus:outline-none group touch-manipulation">
-                <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300 active:scale-[0.97] h-full min-h-[140px] sm:min-h-[160px]">
-                  <CardHeader className="flex flex-col items-center justify-center text-center py-8 sm:py-10 px-4">
-                    <div className="p-3 rounded-xl bg-elec-yellow/10 mb-4 group-hover:bg-elec-yellow/20 transition-colors duration-300">
-                      <resource.icon className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow" />
+                <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300 active:scale-[0.97] h-full min-h-[110px] sm:min-h-[120px]">
+                  <CardHeader className="flex flex-col items-center justify-center text-center py-5 sm:py-6 px-4">
+                    <div className="p-2.5 rounded-lg bg-elec-yellow/10 mb-3 group-hover:bg-elec-yellow/20 transition-colors duration-300">
+                      <resource.icon className="h-8 w-8 sm:h-9 sm:w-9 text-elec-yellow" />
                     </div>
-                    <CardTitle className="text-lg sm:text-xl font-semibold leading-tight">{resource.title}</CardTitle>
+                    <CardTitle className="text-base sm:text-lg font-semibold leading-tight">{resource.title}</CardTitle>
                   </CardHeader>
                 </Card>
               </Link>
@@ -153,12 +153,12 @@ const ElectricalHub = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5">
             {additionalResources.map((resource) => (
               <Link to={resource.link} key={resource.id} className="block focus:outline-none group touch-manipulation">
-                <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300 active:scale-[0.97] h-full min-h-[120px] sm:min-h-[140px]">
-                  <CardHeader className="flex flex-col items-center justify-center text-center py-6 sm:py-8 px-4">
-                    <div className="p-2.5 rounded-lg bg-elec-yellow/10 mb-3 group-hover:bg-elec-yellow/20 transition-colors duration-300">
-                      <resource.icon className="h-8 w-8 sm:h-9 sm:w-9 text-elec-yellow" />
+                <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300 active:scale-[0.97] h-full min-h-[100px] sm:min-h-[110px]">
+                  <CardHeader className="flex flex-col items-center justify-center text-center py-4 sm:py-5 px-3">
+                    <div className="p-2 rounded-md bg-elec-yellow/10 mb-2 group-hover:bg-elec-yellow/20 transition-colors duration-300">
+                      <resource.icon className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
                     </div>
-                    <CardTitle className="text-base sm:text-lg font-semibold leading-tight">
+                    <CardTitle className="text-sm sm:text-base font-semibold leading-tight">
                       {resource.title}
                     </CardTitle>
                   </CardHeader>
