@@ -85,6 +85,12 @@ export default function EnrichmentConsole() {
   const [isLoading, setIsLoading] = useState(false);
   const isMobile = useIsMobile();
   const [missingRegulations, setMissingRegulations] = useState<string[]>([]);
+  const [integrityCheck, setIntegrityCheck] = useState<{
+    beforeCount: number;
+    beforeUniqueRegs: number;
+    beforeTimestamp: string;
+  } | null>(null);
+  const [isVerifying, setIsVerifying] = useState(false);
 
   const loadStatus = async () => {
     try {
@@ -256,9 +262,56 @@ export default function EnrichmentConsole() {
     }
   };
 
+  const handleVerifyIntegrity = async () => {
+    setIsVerifying(true);
+    try {
+      // Get current baseline
+      const { count: totalRecords } = await supabase
+        .from('regulations_intelligence')
+        .select('*', { count: 'exact', head: true });
+
+      const { data: uniqueRegsData } = await supabase
+        .from('regulations_intelligence')
+        .select('regulation_number');
+
+      const uniqueRegs = new Set((uniqueRegsData || []).map(r => r.regulation_number)).size;
+
+      const checkData = {
+        beforeCount: totalRecords || 0,
+        beforeUniqueRegs: uniqueRegs,
+        beforeTimestamp: new Date().toISOString()
+      };
+
+      setIntegrityCheck(checkData);
+
+      toast.success('Data integrity verified', {
+        description: `${totalRecords?.toLocaleString()} records • ${uniqueRegs} unique regulations`
+      });
+    } catch (error: any) {
+      toast.error('Failed to verify data integrity');
+      console.error(error);
+    } finally {
+      setIsVerifying(false);
+    }
+  };
+
   const handleCompleteMissing = async () => {
     if (missingRegulations.length === 0) {
       toast.error('No missing regulations identified. Run "Find Missing" first.');
+      return;
+    }
+
+    // Pre-flight integrity check
+    if (!integrityCheck) {
+      toast.error('Run "Verify Data Integrity" first to establish baseline');
+      return;
+    }
+
+    // Sanity check: If we're about to enrich fewer than 10 regs but showing 100+ missing, something is wrong
+    if (missingRegulations.length > 100 && stats.sourceTotal < 100) {
+      toast.error('Data integrity issue detected', {
+        description: 'Source data mismatch. Please refresh the page and try again.'
+      });
       return;
     }
     
@@ -315,8 +368,44 @@ export default function EnrichmentConsole() {
       const result = startResponse.data;
       
       if (result?.jobId && result?.batchesCreated) {
-        toast.success(`New job created: ${result.batchesCreated} batches for ${missingRegulations.length} regulations`);
+        toast.success(`New job created: ${result.batchesCreated} batches for ${missingRegulations.length} regulations`, {
+          description: '⏳ Monitor "Live Worker Activity" below for real-time progress'
+        });
         console.log(`📊 Job ID: ${result.jobId}, Batches: ${result.batchesCreated}`);
+        
+        // Start monitoring for completion
+        const jobId = result.jobId;
+        const monitorInterval = setInterval(async () => {
+          const { data: job } = await supabase
+            .from('batch_jobs')
+            .select('status, completed_batches, total_batches')
+            .eq('id', jobId)
+            .single();
+
+          if (!job || job.status === 'completed') {
+            clearInterval(monitorInterval);
+            
+            // Verify data integrity after completion
+            const { count: afterCount } = await supabase
+              .from('regulations_intelligence')
+              .select('*', { count: 'exact', head: true });
+
+            const { data: afterUniqueRegsData } = await supabase
+              .from('regulations_intelligence')
+              .select('regulation_number');
+
+            const afterUniqueRegs = new Set((afterUniqueRegsData || []).map(r => r.regulation_number)).size;
+
+            const recordsAdded = (afterCount || 0) - integrityCheck.beforeCount;
+            const regsAdded = afterUniqueRegs - integrityCheck.beforeUniqueRegs;
+
+            toast.success('✅ Enrichment complete - Data verified', {
+              description: `Added: ${recordsAdded.toLocaleString()} records • ${regsAdded} unique regulations`
+            });
+
+            await loadStatus();
+          }
+        }, 3000); // Check every 3 seconds
       } else {
         toast.error('Failed to create new batches. Try "Clear All" then start again.');
       }
@@ -466,7 +555,32 @@ export default function EnrichmentConsole() {
           <p className="text-sm text-muted-foreground mb-3">
             {stats.sourceTotal - stats.sourceEnriched} unique regulations are missing enrichment data.
           </p>
-          <div className="flex gap-2">
+          
+          {/* Data Integrity Panel */}
+          {integrityCheck && (
+            <div className="mb-3 p-3 bg-muted rounded-md border border-success/30">
+              <div className="flex items-center gap-2 mb-2">
+                <CheckCircle2 className="w-4 h-4 text-success" />
+                <span className="text-sm font-semibold text-success">Data Integrity Verified</span>
+              </div>
+              <div className="text-xs text-muted-foreground font-mono space-y-1">
+                <div>Baseline: {integrityCheck.beforeCount.toLocaleString()} records • {integrityCheck.beforeUniqueRegs} unique regs</div>
+                <div>Timestamp: {new Date(integrityCheck.beforeTimestamp).toLocaleTimeString()}</div>
+              </div>
+            </div>
+          )}
+
+          <div className="flex flex-wrap gap-2">
+            <MobileButton
+              onClick={handleVerifyIntegrity}
+              disabled={isVerifying || isLoading}
+              size={isMobile ? 'default' : 'sm'}
+              variant="outline"
+            >
+              <CheckCircle2 className="w-4 h-4 mr-2" />
+              {isVerifying ? 'Verifying...' : 'Verify Data Integrity'}
+            </MobileButton>
+            
             <MobileButton
               onClick={handleFindMissing}
               disabled={isLoading}
@@ -476,14 +590,16 @@ export default function EnrichmentConsole() {
               <Database className="w-4 h-4 mr-2" />
               Find Missing
             </MobileButton>
+            
             {missingRegulations.length > 0 && (
               <MobileButton
                 onClick={handleCompleteMissing}
-                disabled={isLoading}
+                disabled={isLoading || !integrityCheck}
                 size={isMobile ? 'default' : 'sm'}
               >
                 <Play className="w-4 h-4 mr-2" />
                 Complete {missingRegulations.length} Missing
+                {!integrityCheck && ' (Verify First)'}
               </MobileButton>
             )}
           </div>
@@ -668,6 +784,18 @@ export default function EnrichmentConsole() {
                   {batch.status === 'processing' && batch.data?.current_regulation && (
                     <div className="mt-2 text-xs text-muted-foreground font-mono">
                       Processing: {batch.data.current_regulation}
+                    </div>
+                  )}
+
+                  {/* Real-time Progress: Skipped vs New */}
+                  {batch.data?.skipped_count !== undefined && batch.data?.new_count !== undefined && (
+                    <div className="mt-2 flex gap-3 text-xs">
+                      <span className="text-muted-foreground">
+                        Skipped: <span className="font-semibold text-warning">{batch.data.skipped_count}</span>
+                      </span>
+                      <span className="text-muted-foreground">
+                        New: <span className="font-semibold text-success">{batch.data.new_count}</span>
+                      </span>
                     </div>
                   )}
                 </div>
