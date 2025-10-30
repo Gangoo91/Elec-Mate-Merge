@@ -143,79 +143,88 @@ serve(async (req) => {
       }
     }
 
-    // Detect intent and expand query (fallback to vector search)
+    // Detect intent and expand query
     const { queryType, knowledgeBases } = detectIntent(query);
     const expandedQuery = expandElectricalTerms(query);
     
     logger.info('Intent detected', { queryType, knowledgeBases, expandedQuery });
 
-    // Get embedding from OpenAI with retry and timeout
-    const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-    if (!OPENAI_API_KEY) {
-      throw new Error('OPENAI_API_KEY not configured');
-    }
-
-    const embeddingResponse = await logger.time(
-      'OpenAI embedding generation',
-      () => withRetry(
-        () => withTimeout(
-          fetch('https://api.openai.com/v1/embeddings', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${OPENAI_API_KEY}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              input: expandedQuery,
-              model: 'text-embedding-3-small',
-            }),
-          }),
-          Timeouts.STANDARD,
-          'OpenAI embedding generation'
-        ),
-        RetryPresets.STANDARD
-      )
+    // Optimize: Only generate embedding if needed for non-BS7671 searches
+    const needsEmbedding = knowledgeBases.some(kb => 
+      kb !== 'bs7671' && ['installation', 'testing', 'design', 'safety'].includes(kb)
     );
 
-    if (!embeddingResponse.ok) {
-      const errorText = await embeddingResponse.text();
-      logger.error('Embedding API error', { status: embeddingResponse.status, error: errorText });
-      
-      if (embeddingResponse.status === 429) {
-        throw new ExternalAPIError('OpenAI', { reason: 'Rate limit exceeded' });
+    let queryVector: number[] | null = null;
+
+    if (needsEmbedding) {
+      // Get embedding from OpenAI with retry and timeout
+      const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+      if (!OPENAI_API_KEY) {
+        throw new Error('OPENAI_API_KEY not configured');
       }
-      if (embeddingResponse.status === 402) {
-        throw new ExternalAPIError('OpenAI', { reason: 'Payment required' });
+
+      const embeddingResponse = await logger.time(
+        'OpenAI embedding generation',
+        () => withRetry(
+          () => withTimeout(
+            fetch('https://api.openai.com/v1/embeddings', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${OPENAI_API_KEY}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                input: expandedQuery,
+                model: 'text-embedding-3-small',
+              }),
+            }),
+            Timeouts.STANDARD,
+            'OpenAI embedding generation'
+          ),
+          RetryPresets.STANDARD
+        )
+      );
+
+      if (!embeddingResponse.ok) {
+        const errorText = await embeddingResponse.text();
+        logger.error('Embedding API error', { status: embeddingResponse.status, error: errorText });
+        
+        if (embeddingResponse.status === 429) {
+          throw new ExternalAPIError('OpenAI', { reason: 'Rate limit exceeded' });
+        }
+        if (embeddingResponse.status === 402) {
+          throw new ExternalAPIError('OpenAI', { reason: 'Payment required' });
+        }
+        throw new ExternalAPIError('OpenAI', { status: embeddingResponse.status });
       }
-      throw new ExternalAPIError('OpenAI', { status: embeddingResponse.status });
+
+      const embeddingData = await embeddingResponse.json();
+      queryVector = embeddingData.data[0].embedding;
+      logger.info('Query embedding generated');
+    } else {
+      logger.info('⚡ Skipping embedding generation - using intelligence search only');
     }
-
-    const embeddingData = await embeddingResponse.json();
-    const queryVector = embeddingData.data[0].embedding;
-
-    logger.info('Query embedding generated');
 
     // Build parallel search tasks with timeout protection
     const searchTasks = [
       {
         name: 'bs7671',
         execute: () => logger.time(
-          'BS7671 search',
+          'BS7671 intelligence search',
           () => withTimeout(
-            supabase.rpc('search_bs7671', {
-              query_embedding: queryVector,
-              match_threshold: matchThreshold,
+            supabase.rpc('search_bs7671_intelligence_hybrid', {
+              query_text: expandedQuery,
               match_count: matchCount
             }),
             Timeouts.STANDARD,
-            'BS7671 search'
+            'BS7671 intelligence search'
           )
         )
       }
     ];
 
-    // Add knowledge base searches based on intent
-    if (knowledgeBases.includes('installation')) {
+    // Add knowledge base searches based on intent (only if embedding was generated)
+    if (queryVector && knowledgeBases.includes('installation')) {
       searchTasks.push({
         name: 'installation',
         execute: () => logger.time(
@@ -233,7 +242,7 @@ serve(async (req) => {
       });
     }
 
-    if (knowledgeBases.includes('testing')) {
+    if (queryVector && knowledgeBases.includes('testing')) {
       searchTasks.push({
         name: 'testing',
         execute: () => logger.time(
@@ -251,7 +260,7 @@ serve(async (req) => {
       });
     }
 
-    if (knowledgeBases.includes('design')) {
+    if (queryVector && knowledgeBases.includes('design')) {
       searchTasks.push({
         name: 'design',
         execute: () => logger.time(
@@ -269,7 +278,7 @@ serve(async (req) => {
       });
     }
 
-    if (knowledgeBases.includes('safety')) {
+    if (queryVector && knowledgeBases.includes('safety')) {
       searchTasks.push({
         name: 'safety',
         execute: () => logger.time(
@@ -303,7 +312,9 @@ serve(async (req) => {
     let testingContent: any[] = [];
     let designContent: any[] = [];
     let safetyContent: any[] = [];
-    let searchMethod = 'vector';
+    let searchMethod = 'intelligence';
+    let enrichedFacets = false;
+    let facetCategories: string[] = [];
 
     for (const success of successes) {
       const result = success.result;
@@ -317,6 +328,12 @@ serve(async (req) => {
       
       if (success.name === 'bs7671') {
         regulations = data;
+        
+        // Check for enriched facets
+        if (regulations.length > 0 && regulations[0].primary_topic) {
+          enrichedFacets = true;
+          facetCategories = [...new Set(regulations.map((r: any) => r.category).filter(Boolean))];
+        }
       } else if (success.name === 'installation') {
         installationContent = data;
       } else if (success.name === 'testing') {
@@ -363,6 +380,8 @@ serve(async (req) => {
         success: true,
         queryType,
         searchMethod,
+        enriched_facets: enrichedFacets,
+        facet_categories: facetCategories,
         regulations: regulations.slice(0, matchCount),
         has_installation_content: installationContent.length > 0,
         has_testing_content: testingContent.length > 0,
