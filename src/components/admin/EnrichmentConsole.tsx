@@ -262,6 +262,15 @@ export default function EnrichmentConsole() {
       return;
     }
     
+    // Abort any existing jobs before starting fresh
+    const activeJob = jobs.find(j => ['pending', 'processing'].includes(j.status));
+    if (activeJob) {
+      toast.info('Clearing old jobs before starting fresh...');
+      await handleClear();
+      // Wait a moment for cleanup to complete
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+    
     await callScheduler('start', { missingRegulations });
   };
 
