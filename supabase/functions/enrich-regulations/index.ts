@@ -83,10 +83,11 @@ async function processInBackground(
   
   try {
     
-    // Fetch batch of regulations
+    // Fetch batch of regulations (exclude "General" metadata rows)
     const { data: regulations, error: fetchError } = await supabase
       .from('bs7671_embeddings')
       .select('*')
+      .neq('regulation_number', 'General')
       .order('created_at', { ascending: true })
       .range(startFrom, startFrom + batchSize - 1);
     
@@ -120,8 +121,15 @@ async function processInBackground(
     
     for (let i = startIndex; i < regulations.length; i++) {
       const reg = regulations[i];
-      const regStartTime = Date.now();
       
+      // Skip any remaining non-regulation content
+      if (!reg.regulation_number || reg.regulation_number === 'General' || reg.regulation_number.trim().length === 0) {
+        console.log(`⏭️ Skipping non-regulation: ${reg.section}`);
+        skipped++;
+        continue;
+      }
+      
+      const regStartTime = Date.now();
       console.log(`\n📖 [${i + 1}/${regulations.length}] Processing: ${reg.regulation_number}`);
       
       try {
@@ -139,11 +147,11 @@ async function processInBackground(
           continue;
         }
         
-        // Extract multi-faceted intelligence using GPT-5 Mini (returns array)
-        const intelligenceArray = await extractRegulationIntelligence(reg, openAIKey);
+        // Extract multi-faceted intelligence using GPT-5 with retry logic
+        const intelligenceArray = await extractWithRetry(reg, openAIKey, 3);
         
         if (!intelligenceArray || !Array.isArray(intelligenceArray) || intelligenceArray.length === 0) {
-          console.log(`⚠️ Failed to extract intelligence for ${reg.regulation_number}`);
+          console.log(`⚠️ Failed to extract intelligence for ${reg.regulation_number} after retries`);
           qualityFailed++;
           failed++;
           continue;
@@ -263,6 +271,41 @@ async function processInBackground(
 }
 
 /**
+ * Retry wrapper for GPT-5 with exponential backoff
+ */
+async function extractWithRetry(regulation: any, apiKey: string, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const result = await extractRegulationIntelligence(regulation, apiKey);
+      
+      if (result && Array.isArray(result) && result.length > 0) {
+        return result;
+      }
+      
+      console.warn(`⚠️ Attempt ${attempt}/${maxRetries} returned empty for ${regulation.regulation_number}`);
+      
+      if (attempt < maxRetries) {
+        const delay = Math.pow(2, attempt) * 1000; // 2s, 4s, 8s
+        console.log(`⏳ Retrying in ${delay}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
+    } catch (error) {
+      console.error(`❌ Attempt ${attempt}/${maxRetries} failed for ${regulation.regulation_number}:`, error.message);
+      
+      if (attempt === maxRetries) {
+        console.error(`❌ All retries exhausted for ${regulation.regulation_number}`);
+        return null;
+      }
+      
+      const delay = Math.pow(2, attempt) * 1000;
+      console.log(`⏳ Retrying in ${delay}ms...`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+  return null;
+}
+
+/**
  * Extract multi-faceted RAG intelligence from regulation
  * Returns ARRAY of intelligence records for different aspects/meanings
  */
@@ -302,6 +345,8 @@ Return ONLY valid JSON array.`;
     body: JSON.stringify({
       model: 'gpt-5-2025-08-07',
       messages: [{ role: 'user', content: prompt }],
+      temperature: 0,
+      response_format: { type: 'json_object' },
       max_completion_tokens: 2000
     })
   });
@@ -309,14 +354,26 @@ Return ONLY valid JSON array.`;
   if (!response.ok) {
     const errorText = await response.text();
     console.error(`❌ OpenAI API error (${response.status}):`, errorText.substring(0, 200));
-    throw new Error(`GPT-5 Mini API error: ${response.status} - ${errorText.substring(0, 200)}`);
+    throw new Error(`GPT-5 API error: ${response.status} - ${errorText.substring(0, 200)}`);
   }
   
   const data = await response.json();
   const content = data.choices[0].message.content;
   
+  // Check for empty response
+  if (!content || content.trim().length === 0) {
+    console.error('❌ GPT-5 returned empty content');
+    throw new Error('Empty response from GPT-5');
+  }
+  
   try {
-    const parsed = JSON.parse(content);
+    // Strip markdown code fences if present
+    let cleanContent = content.trim();
+    if (cleanContent.startsWith('```')) {
+      cleanContent = cleanContent.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '').trim();
+    }
+    
+    const parsed = JSON.parse(cleanContent);
     
     // Handle both array and object responses
     if (Array.isArray(parsed)) {
@@ -333,9 +390,9 @@ Return ONLY valid JSON array.`;
       return [parsed];
     }
   } catch (error) {
-    console.error('❌ Failed to parse GPT-5 Mini response:', error);
+    console.error('❌ Failed to parse GPT-5 response:', error.message);
     console.error('Response content (first 500 chars):', content?.substring(0, 500));
-    return null;
+    throw new Error(`JSON parse failed: ${error.message}`);
   }
 }
 
