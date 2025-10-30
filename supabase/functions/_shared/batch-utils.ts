@@ -73,7 +73,7 @@ export async function callOpenAIWithRetry(
   attempt: number = 1
 ): Promise<any> {
   const MAX_RETRIES = 3;
-  const TIMEOUT_MS = 60000; // 60s per item
+  const TIMEOUT_MS = 120000; // 120s per item (increased for dense BS 7671 chapters)
   
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
