@@ -114,16 +114,16 @@ async function processInBackground(
     const claimedBatch = pendingBatches[0];
     
     // Claim the batch atomically
-    const { count: claimCount } = await supabase
+    const { data: claimRows, error: claimError } = await supabase
       .from('batch_progress')
       .update({ status: 'processing', started_at: new Date().toISOString() })
       .eq('id', claimedBatch.id)
       .eq('status', 'pending')
-      .select('*', { count: 'exact', head: true });
+      .select('id');
     
-    if (!claimCount || claimCount === 0) {
+    if (claimError) throw claimError;
+    if (!claimRows || claimRows.length === 0) {
       console.log('⚠️ Batch already claimed by another worker, looking for next...');
-      // Another worker claimed it, exit gracefully
       return new Response(JSON.stringify({ 
         success: true, 
         message: 'Batch claimed by another worker',
@@ -133,7 +133,7 @@ async function processInBackground(
       });
     }
     
-    console.log(`✅ Claimed batch ${claimedBatch.batch_number}`);
+    console.log(`✅ Claimed batch ${claimedBatch.batch_number} (${claimedBatch.id})`);
     
     // ✅ STEP 3: Determine fetch mode and load regulations
     let regulations;
@@ -187,9 +187,7 @@ async function processInBackground(
       regulations = data;
       
       console.log(`⚙️ GLOBAL MODE (no filter): fetched ${regulations?.length || 0} regs from range ${startFrom}-${startFrom + batchSize - 1}`);
-    }
-    
-    if (fetchError) throw fetchError;
+      }
     
     if (!regulations || regulations.length === 0) {
       return new Response(JSON.stringify({ 
