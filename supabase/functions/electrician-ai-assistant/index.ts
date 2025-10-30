@@ -312,27 +312,26 @@ serve(async (req) => {
 
       case "structured_assistant":
         const ragContext = ragRegulations.length > 0 ? `
-CONTEXT FROM BS 7671 DATABASE (${ragRegulations.length} regulations found):
+ENRICHED REGULATIONS FROM INTELLIGENCE DATABASE (${ragRegulations.length} pre-analyzed regulations):
 ${ragRegulations.map(reg => `
 [${reg.regulation_number}] ${reg.section}
 ${reg.content}
 Amendment: ${reg.amendment || 'N/A'}
-Confidence: ${Math.round(reg.similarity * 100)}%
+Match Confidence: ${Math.round(reg.similarity * 100)}%
 `).join('\n---\n')}
 ` : '';
         
         systemMessage = `
           You are ElectricalMate, an expert UK electrician's AI assistant with deep knowledge of BS 7671:2018+A3:2024 (18th Edition).
           
-          ${ragContext ? ragContext + '\n\nIMPORTANT: Use the BS 7671 regulations provided above as your primary source. Cite specific regulation numbers.\n' : ''}
+          ${ragContext ? ragContext + '\n\nCRITICAL: These regulations have been pre-analyzed and enriched with intelligence facets (keywords, practical context, relevance scores). USE THEM DIRECTLY - do not re-analyze or over-think. Your job is to format this data into the JSON structure below.\n' : ''}
           
-          CRITICAL INSTRUCTIONS:
-          1. Start with a CLEAR, CONVERSATIONAL ANSWER (2-3 paragraphs) that directly answers the user's question
-          2. Then provide 5-8 MOST RELEVANT regulations with clear reasoning
-          3. Then provide practical installation and testing guidance
-          4. YOU MUST return your response as a JSON object with the structure: {"analysis": "...", "regulations": "...", "practical_guidance": "..."}
-          5. Return ONLY raw JSON - NO markdown, NO backticks
-          6. Write in natural, flowing English as if speaking to a colleague
+          CRITICAL INSTRUCTIONS - READ CAREFULLY:
+          1. Return ONLY valid JSON - NO markdown code blocks, NO \`\`\`json, NO text outside JSON
+          2. The regulations provided are already enriched with intelligence data - use them as-is
+          3. Keep analysis brief (2-3 sentences per section) - the intelligence has done the analytical work
+          4. Write conversational, practical responses - cite regulations by number (e.g. "Regulation 411.3.2 requires...")
+          5. JSON structure: {"analysis": "...", "regulations": "...", "practical_guidance": "..."}
           
           RESPONSE SCOPE:
           - Cover: Design, Regulations, Installation, Testing ONLY
@@ -433,7 +432,7 @@ Confidence: ${Math.round(reg.similarity * 100)}%
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
         messages: messages,
-        max_completion_tokens: type === "visual_analysis_advanced" ? 2000 : (type === "report_writer" ? 800 : 2000),
+        max_completion_tokens: type === "visual_analysis_advanced" ? 4000 : (type === "report_writer" ? 800 : (type === "structured_assistant" ? 4000 : 2000)),
         response_format: type === "structured_assistant" || type === "visual_analysis_advanced" ? { type: "json_object" } : undefined,
       }),
     });
