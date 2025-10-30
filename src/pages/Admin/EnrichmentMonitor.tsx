@@ -230,6 +230,28 @@ export default function EnrichmentMonitor() {
     }
   };
 
+  const dedupeBatches = async () => {
+    setLoading(true);
+    try {
+      const { data } = await supabase.functions.invoke('master-enrichment-scheduler', {
+        body: { action: 'dedupe_batches' }
+      });
+      
+      toast({ 
+        title: '✅ Batches deduplicated',
+        description: `Removed ${data?.duplicates_removed || 0} duplicate rows across ${data?.jobs_affected || 0} jobs. Progress recalculated.`
+      });
+      setTimeout(() => fetchJobs(), 1000);
+    } catch (error: any) {
+      toast({ 
+        title: '❌ Dedupe failed',
+        description: error.message || 'Check logs for details.'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const abortDuplicates = async () => {
     setLoading(true);
     try {
@@ -544,9 +566,13 @@ export default function EnrichmentMonitor() {
             <RefreshCw className="w-4 h-4 mr-2" />
             Recover Stuck
           </Button>
+          <Button onClick={dedupeBatches} disabled={loading} variant="secondary" size="lg" className="w-full">
+            <Zap className="w-4 h-4 mr-2" />
+            Dedupe Batches
+          </Button>
           <Button onClick={abortDuplicates} disabled={loading} variant="destructive" size="lg" className="w-full">
             <Trash2 className="w-4 h-4 mr-2" />
-            Clear Duplicates
+            Abort Jobs
           </Button>
           <Button onClick={restartPhase1} disabled={loading} variant="outline" size="lg" className="w-full">
             <RefreshCw className="w-4 h-4 mr-2" />

@@ -56,6 +56,86 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
+  // Action: Dedupe duplicate batch_progress rows
+  if (action === 'dedupe_batches') {
+    console.log('🧹 Deduplicating batch_progress rows...');
+    
+    const { data: activeJobs } = await supabase
+      .from('batch_jobs')
+      .select('id, job_type, total_batches')
+      .in('status', ['pending', 'processing', 'completed']);
+    
+    let totalDuplicatesRemoved = 0;
+    let jobsAffected = 0;
+    
+    for (const job of activeJobs || []) {
+      // Find duplicate batch_progress rows for this job
+      const { data: allBatches } = await supabase
+        .from('batch_progress')
+        .select('*')
+        .eq('job_id', job.id)
+        .order('created_at', { ascending: true });
+      
+      if (!allBatches || allBatches.length === 0) continue;
+      
+      // Group by batch_number
+      const batchesByNumber = new Map<number, any[]>();
+      allBatches.forEach(batch => {
+        const num = batch.batch_number;
+        if (!batchesByNumber.has(num)) batchesByNumber.set(num, []);
+        batchesByNumber.get(num)!.push(batch);
+      });
+      
+      // Find and remove duplicates
+      let jobDuplicates = 0;
+      for (const [batchNum, batches] of batchesByNumber.entries()) {
+        if (batches.length > 1) {
+          // Keep the canonical row (earliest created or completed one)
+          const keep = batches.find(b => b.status === 'completed') || batches[0];
+          const duplicates = batches.filter(b => b.id !== keep.id);
+          
+          for (const dup of duplicates) {
+            await supabase.from('batch_progress').delete().eq('id', dup.id);
+            jobDuplicates++;
+            totalDuplicatesRemoved++;
+          }
+          
+          console.log(`✅ Job ${job.job_type}, batch ${batchNum}: Kept ${keep.id}, removed ${duplicates.length} duplicates`);
+        }
+      }
+      
+      if (jobDuplicates > 0) {
+        jobsAffected++;
+        
+        // Recalculate progress from job.total_batches
+        const { data: remainingBatches } = await supabase
+          .from('batch_progress')
+          .select('status')
+          .eq('job_id', job.id);
+        
+        const completedCount = remainingBatches?.filter(b => b.status === 'completed').length || 0;
+        const progress = Math.round((completedCount / job.total_batches) * 100);
+        
+        await supabase.from('batch_jobs').update({
+          completed_batches: completedCount,
+          progress_percentage: progress
+        }).eq('id', job.id);
+        
+        console.log(`📊 Job ${job.job_type}: Recalculated progress to ${progress}% (${completedCount}/${job.total_batches})`);
+      }
+    }
+    
+    console.log(`✅ Dedupe complete: Removed ${totalDuplicatesRemoved} duplicates across ${jobsAffected} jobs`);
+    
+    return new Response(JSON.stringify({ 
+      success: true, 
+      duplicates_removed: totalDuplicatesRemoved,
+      jobs_affected: jobsAffected
+    }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
+  }
+  
   // Action: Abort duplicate jobs
   if (action === 'abort_duplicates') {
     console.log('🧹 Aborting duplicate jobs...');
@@ -711,8 +791,8 @@ async function continuousProcessor(
       break;
     }
     
-    // Process batches in parallel with worker pool (10x speed boost)
-    const PARALLEL_WORKERS = 10;
+    // Process batches in parallel with worker pool (reduced to 4 for safety)
+    const PARALLEL_WORKERS = 4;
     
     for (const jobId of jobIds) {
       const task = jobTaskMap.get(jobId);
@@ -863,6 +943,7 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
       .in('id', ghostLocks.map((b: any) => b.id));
   }
   
+  // Atomic batch claiming: Select pending batch
   const { data: batch } = await supabase
     .from('batch_progress')
     .select('*')
@@ -886,13 +967,31 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
     return;
   }
 
-  await supabase
+  // ATOMIC CLAIM: Try to claim batch with status guard (prevents race conditions)
+  const workerId = crypto.randomUUID().substring(0, 8);
+  const { data: claimedBatch, error: claimError } = await supabase
     .from('batch_progress')
     .update({ 
       status: 'processing',
-      started_at: new Date().toISOString()
+      started_at: new Date().toISOString(),
+      data: { 
+        ...(batch.data || {}),
+        claimed_by: workerId,
+        claim_time: new Date().toISOString()
+      }
     })
-    .eq('id', batch.id);
+    .eq('id', batch.id)
+    .eq('status', 'pending') // Guard: only claim if still pending
+    .select()
+    .single();
+  
+  // If claim failed, another worker claimed it first
+  if (claimError || !claimedBatch) {
+    console.log(`🔄 Batch ${batch.batch_number} claimed by another worker, skipping`);
+    return;
+  }
+  
+  console.log(`🔒 Worker ${workerId} claimed batch ${batch.batch_number}`);
 
   await supabase
     .from('batch_jobs')
@@ -949,14 +1048,21 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
         .eq('id', batch.id);
     }
 
+    // Use job.total_batches as denominator (not count of batch_progress rows)
+    const { data: job } = await supabase
+      .from('batch_jobs')
+      .select('total_batches')
+      .eq('id', jobId)
+      .single();
+    
     const { data: allBatches } = await supabase
       .from('batch_progress')
       .select('status')
       .eq('job_id', jobId);
 
     const completedCount = allBatches?.filter(b => b.status === 'completed').length || 0;
-    const totalCount = allBatches?.length || 1;
-    const progress = Math.round((completedCount / totalCount) * 100);
+    const totalBatches = job?.total_batches || allBatches?.length || 1;
+    const progress = Math.round((completedCount / totalBatches) * 100);
 
     await supabase
       .from('batch_jobs')
