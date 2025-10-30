@@ -3,8 +3,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { Loader2, CheckCircle2, XCircle, PlayCircle } from "lucide-react";
+import { Loader2, CheckCircle2, XCircle, PlayCircle, Pause, Play, Zap } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useKeepalive } from "@/hooks/useKeepalive";
+import { formatDistanceToNow } from "date-fns";
 
 interface RegulationsIntelligenceProgressProps {
   jobType?: string;
@@ -21,7 +23,11 @@ export default function RegulationsIntelligenceProgress({
   const [isLoading, setIsLoading] = useState(true);
   const [isRecovering, setIsRecovering] = useState(false);
   const [rowCount, setRowCount] = useState<number>(0);
+  const [keepaliveEnabled, setKeepaliveEnabled] = useState(false);
   const { toast } = useToast();
+
+  const isProcessing = status?.status === 'processing' && 
+    status?.completedBatches < status?.totalBatches;
 
   const fetchStatus = async () => {
     try {
@@ -98,10 +104,18 @@ export default function RegulationsIntelligenceProgress({
 
       if (startError) throw startError;
 
-      toast({
-        title: "Continuous processing started",
-        description: `${title} worker is now running continuously`,
-      });
+      if (!keepaliveEnabled) {
+        setKeepaliveEnabled(true);
+        toast({
+          title: "Auto-refresh enabled",
+          description: `${title} will auto-refresh every 2 minutes`,
+        });
+      } else {
+        toast({
+          title: "Continuous processing started",
+          description: `${title} worker is now running continuously`,
+        });
+      }
 
       // Refresh status
       setTimeout(() => fetchStatus(), 2000);
@@ -117,6 +131,15 @@ export default function RegulationsIntelligenceProgress({
     }
   };
 
+  const keepalive = useKeepalive({
+    isActive: keepaliveEnabled && isProcessing,
+    callback: async () => {
+      console.log('🔄 Keepalive ping - resuming job');
+      await handleUnstickAndResume();
+    },
+    intervalMs: 120000, // 2 minutes
+  });
+
   useEffect(() => {
     fetchStatus();
     
@@ -129,6 +152,17 @@ export default function RegulationsIntelligenceProgress({
 
     return () => clearInterval(interval);
   }, [status?.status]);
+
+  // Auto-disable keepalive when job completes
+  useEffect(() => {
+    if (keepaliveEnabled && !isProcessing && status?.completedBatches === status?.totalBatches) {
+      setKeepaliveEnabled(false);
+      toast({
+        title: "Job completed!",
+        description: `${title} enrichment finished successfully`,
+      });
+    }
+  }, [isProcessing, status?.completedBatches, status?.totalBatches]);
 
   if (isLoading) {
     return (
@@ -178,6 +212,51 @@ export default function RegulationsIntelligenceProgress({
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
+        {/* Auto-refresh Status */}
+        {keepaliveEnabled && isProcessing && (
+          <div className="rounded-lg border border-primary/20 bg-primary/5 p-3 space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+                <span className="text-sm font-medium">Auto-refresh: Active</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={keepalive.isPaused ? keepalive.resume : keepalive.pause}
+                  className="h-7"
+                >
+                  {keepalive.isPaused ? (
+                    <><Play className="h-3 w-3 mr-1" /> Resume</>
+                  ) : (
+                    <><Pause className="h-3 w-3 mr-1" /> Pause</>
+                  )}
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={keepalive.pingNow}
+                  className="h-7"
+                >
+                  <Zap className="h-3 w-3 mr-1" /> Process Now
+                </Button>
+              </div>
+            </div>
+            {!keepalive.isPaused && (
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <span>Next refresh in: {keepalive.secondsUntilNext}s</span>
+                {keepalive.lastPingTime && (
+                  <span>Last ping: {formatDistanceToNow(keepalive.lastPingTime, { addSuffix: true })}</span>
+                )}
+              </div>
+            )}
+            {keepalive.isPaused && (
+              <p className="text-xs text-muted-foreground">Auto-refresh paused</p>
+            )}
+          </div>
+        )}
+
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Progress</span>
@@ -228,25 +307,45 @@ export default function RegulationsIntelligenceProgress({
         )}
 
         {(status.status === "processing" || status.processingBatches > 0) && (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleUnstickAndResume}
-            disabled={isRecovering}
-            className="w-full"
-          >
-            {isRecovering ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Recovering...
-              </>
+          <div className="flex gap-2">
+            {!keepaliveEnabled ? (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleUnstickAndResume}
+                disabled={isRecovering}
+                className="w-full"
+              >
+                {isRecovering ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Starting...
+                  </>
+                ) : (
+                  <>
+                    <PlayCircle className="mr-2 h-4 w-4" />
+                    Enable Auto-Processing
+                  </>
+                )}
+              </Button>
             ) : (
-              <>
-                <PlayCircle className="mr-2 h-4 w-4" />
-                Keep Processing
-              </>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setKeepaliveEnabled(false);
+                  toast({
+                    title: "Auto-refresh disabled",
+                    description: "Processing will stop after current cycle completes",
+                  });
+                }}
+                className="w-full"
+              >
+                <Pause className="mr-2 h-4 w-4" />
+                Disable Auto-Processing
+              </Button>
             )}
-          </Button>
+          </div>
         )}
       </CardContent>
     </Card>
