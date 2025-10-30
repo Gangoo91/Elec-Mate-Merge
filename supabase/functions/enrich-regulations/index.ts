@@ -175,6 +175,21 @@ async function processInBackground(
       console.log(`\n📖 [${i + 1}/${regulations.length}] Processing: ${reg.regulation_number}`);
       
       try {
+        // ✅ DEFENSIVE: Check if already enriched to prevent duplicate processing
+        const { data: existingRecords } = await supabase
+          .from('regulations_intelligence')
+          .select('id')
+          .eq('regulation_id', reg.id)
+          .eq('enrichment_version', ENRICHMENT_VERSION)
+          .limit(1);
+        
+        if (existingRecords && existingRecords.length > 0) {
+          console.log(`⏭️ Already enriched: ${reg.regulation_number} - skipping to avoid duplicate API call`);
+          skipped++;
+          processed++; // Count as processed so progress is accurate
+          continue;
+        }
+        
         // Compute content hash for deduplication (no DB check - unique constraint handles it)
         const contentHash = await hashContent(reg.content);
         
