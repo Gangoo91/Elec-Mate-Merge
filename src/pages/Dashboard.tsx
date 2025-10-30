@@ -35,21 +35,18 @@ const Dashboard = () => {
   const userName = profile?.full_name || profile?.username || userData.name;
 
   return (
-    <div className="space-y-3 sm:space-y-4 md:space-y-5 animate-fade-in">
-      <Card className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-3 sm:p-4 md:p-5">
-        <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start md:items-center">
+    <div className="space-y-2.5 sm:space-y-3.5 md:space-y-5 animate-fade-in">
+      <Card className="bg-elec-gray border border-elec-yellow/10 md:border-elec-yellow/20 rounded-lg p-2.5 sm:p-3.5 md:p-5">
+        <div className="flex flex-col md:flex-row gap-3 md:gap-5 items-start md:items-center">
           <div className="flex-1 w-full">
-            <h1 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight leading-tight text-center md:text-left">
-              {greeting},
+            <h1 className="text-base sm:text-lg md:text-xl font-bold tracking-tight leading-tight text-left">
+              {greeting}, {userName}
             </h1>
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight leading-tight text-center md:text-left">
-              {userName}
-            </h2>
-            <p className="text-muted-foreground mt-2 text-sm md:text-base text-center md:text-left">
+            <p className="text-muted-foreground mt-1.5 text-sm md:text-base text-left md:text-left">
               Welcome to ElecMate, your electrical career companion.
             </p>
             
-            <div className="hidden md:flex items-center gap-2 min-w-0 mt-3">
+            <div className="hidden md:flex items-center gap-2 min-w-0 mt-2.5">
               <Clock className="h-4 w-4 text-elec-yellow flex-shrink-0" />
               <span className="text-xs md:text-sm">Last active: Today</span>
             </div>

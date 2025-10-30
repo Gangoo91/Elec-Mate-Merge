@@ -25,18 +25,18 @@ const TrialBanner = () => {
   const daysRemaining = getDaysRemaining();
   
   return (
-    <Card className={`border-${isTrialActive ? 'elec-yellow' : 'red-500'}/20 bg-elec-gray`}>
-      <CardContent className="p-3 sm:p-4 md:p-5">
+    <Card className={`border-${isTrialActive ? 'elec-yellow' : 'red-500'}/10 md:border-${isTrialActive ? 'elec-yellow' : 'red-500'}/20 bg-elec-gray`}>
+      <CardContent className="p-2.5 sm:p-3.5 md:p-4">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
           <div>
-            <h3 className="font-semibold text-base sm:text-lg">{isTrialActive ? 'Free Trial Mode' : 'Trial Expired'}</h3>
+            <h3 className="font-semibold text-sm sm:text-base md:text-lg">{isTrialActive ? 'Free Trial Mode' : 'Trial Expired'}</h3>
             <p className="text-sm text-muted-foreground">
               {isTrialActive 
                 ? `You're currently accessing Elec-Mate in trial mode. ${daysRemaining} days remaining.`
                 : 'Your free trial has ended. Please subscribe to continue using Elec-Mate.'}
             </p>
           </div>
-          <Button asChild>
+          <Button asChild size="sm">
             <Link to="/subscriptions">
               {isTrialActive ? 'Upgrade Now' : 'Subscribe Now'}
             </Link>

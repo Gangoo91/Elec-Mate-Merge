@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 
 const DashboardQuickAccess = () => {
   return (
-    <div className="grid gap-4 md:gap-6 grid-cols-1 md:grid-cols-2">
+    <div className="grid gap-3 sm:gap-3.5 md:gap-4 grid-cols-1 md:grid-cols-2">
       <QuickAccessCard
         title="Apprentice Hub"
         description=""
