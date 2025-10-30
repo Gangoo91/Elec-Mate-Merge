@@ -43,6 +43,7 @@ export default function EnrichmentMonitor() {
       // Server-side filtering when a specific task is selected
       const taskJobTypes = TASK_FILTERS[selectedTask].jobTypes;
       
+      // Force fresh data with random cache buster
       let query = supabase
         .from('batch_jobs')
         .select(`
@@ -61,6 +62,13 @@ export default function EnrichmentMonitor() {
       const { data: jobs, error } = await query;
       
       if (error) throw error;
+      
+      // Handle empty state explicitly
+      if (!jobs || jobs.length === 0) {
+        console.log('✅ No jobs found - clean slate');
+        setJobs([]);
+        return;
+      }
       
       // Calculate aggregate stats for each job
       const enrichedJobs = jobs?.map(job => {
@@ -123,15 +131,19 @@ export default function EnrichmentMonitor() {
   });
 
   useEffect(() => {
-    // Clear React Query cache on mount to prevent stale data
+    // Aggressive cache clearing - clear ALL caches
     queryClient.clear();
+    queryClient.invalidateQueries();
     
+    // Force immediate fresh fetch
+    setJobs([]); // Reset state
     fetchJobs();
+    
     if (autoRefresh) {
       const interval = setInterval(fetchJobs, 5000);
       return () => clearInterval(interval);
     }
-  }, [autoRefresh]);
+  }, [autoRefresh, selectedTask]);
 
   const startEnrichment = async (phase?: number, singleTask?: boolean) => {
     setLoading(true);

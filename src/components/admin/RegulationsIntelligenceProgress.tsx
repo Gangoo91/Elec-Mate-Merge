@@ -34,7 +34,7 @@ export default function RegulationsIntelligenceProgress({
 
   const fetchStatus = async () => {
     try {
-      // Get job progress
+      // Force fresh data - no cache
       const { data: jobData } = await supabase
         .from('batch_jobs')
         .select('*, batch_progress(*)')
@@ -144,9 +144,13 @@ export default function RegulationsIntelligenceProgress({
   });
 
   useEffect(() => {
-    // Clear cache on mount to prevent stale data
+    // Aggressive cache clearing on mount
     queryClient.clear();
+    queryClient.invalidateQueries();
     
+    // Reset state and force fresh fetch
+    setStatus(null);
+    setIsLoading(true);
     fetchStatus();
     
     // Poll every 5 seconds if processing
