@@ -404,7 +404,8 @@ serve(async (req) => {
             total_batches: totalBatches,
             metadata: {
               source: 'missing_regs',
-              regulationNumbers: regulationNumbers,
+              missingRegulations: regulationNumbers, // ✅ Primary key for worker
+              regulationNumbers: regulationNumbers,  // ✅ Compatibility key
               batchSize: batchSize,
               workers: workers
             }

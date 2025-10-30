@@ -82,33 +82,112 @@ async function processInBackground(
   console.log(`🔄 Background processing started: batch ${batchNumber}`);
   
   try {
-    // Check for missing regulations filter in job metadata
+    // ✅ STEP 1: Fetch job metadata to check for scoped list
     const { data: job } = await supabase
       .from('batch_jobs')
       .select('metadata')
       .eq('id', jobId)
       .single();
     
-    const missingRegulations = job?.metadata?.missingRegulations || null;
+    const metaList = job?.metadata?.missingRegulations || job?.metadata?.regulationNumbers || null;
     
-    if (missingRegulations && Array.isArray(missingRegulations)) {
-      console.log(`🎯 COMPLETION MODE: Filtering to ${missingRegulations.length} missing regulations`);
+    // ✅ STEP 2: Atomically claim next pending batch (prevents race conditions)
+    const { data: pendingBatches } = await supabase
+      .from('batch_progress')
+      .select('id, batch_number, data')
+      .eq('job_id', jobId)
+      .eq('status', 'pending')
+      .order('batch_number', { ascending: true })
+      .limit(1);
+    
+    if (!pendingBatches || pendingBatches.length === 0) {
+      console.log('✅ No more pending batches for this job');
+      return new Response(JSON.stringify({ 
+        success: true, 
+        message: 'No pending batches',
+        processed: 0
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
     
-    // Fetch batch of regulations (exclude "General" metadata rows)
-    let query = supabase
-      .from('bs7671_embeddings')
-      .select('*')
-      .neq('regulation_number', 'General');
+    const claimedBatch = pendingBatches[0];
     
-    // Apply missing regulations filter if present
-    if (missingRegulations && Array.isArray(missingRegulations) && missingRegulations.length > 0) {
-      query = query.in('regulation_number', missingRegulations);
+    // Claim the batch atomically
+    const { count: claimCount } = await supabase
+      .from('batch_progress')
+      .update({ status: 'processing', started_at: new Date().toISOString() })
+      .eq('id', claimedBatch.id)
+      .eq('status', 'pending')
+      .select('*', { count: 'exact', head: true });
+    
+    if (!claimCount || claimCount === 0) {
+      console.log('⚠️ Batch already claimed by another worker, looking for next...');
+      // Another worker claimed it, exit gracefully
+      return new Response(JSON.stringify({ 
+        success: true, 
+        message: 'Batch claimed by another worker',
+        processed: 0
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
     
-    const { data: regulations, error: fetchError } = await query
-      .order('created_at', { ascending: true })
-      .range(startFrom, startFrom + batchSize - 1);
+    console.log(`✅ Claimed batch ${claimedBatch.batch_number}`);
+    
+    // ✅ STEP 3: Determine fetch mode and load regulations
+    let regulations;
+    let fetchMode;
+    
+    // Priority 1: Use batch-scoped list from data.regulations (set by scheduler)
+    if (claimedBatch.data?.regulations && Array.isArray(claimedBatch.data.regulations)) {
+      fetchMode = 'BATCH_LIST';
+      const batchList = claimedBatch.data.regulations;
+      
+      const { data, error: fetchError } = await supabase
+        .from('bs7671_embeddings')
+        .select('*')
+        .in('regulation_number', batchList)
+        .neq('regulation_number', 'General');
+      
+      if (fetchError) throw fetchError;
+      regulations = data;
+      
+      console.log(`🎯 COMPLETION MODE (batch list): ${batchList.length} regs → fetched ${regulations?.length || 0}`);
+      
+    // Priority 2: Use job metadata list
+    } else if (metaList && Array.isArray(metaList) && metaList.length > 0) {
+      fetchMode = 'METADATA_LIST';
+      
+      const { data, error: fetchError } = await supabase
+        .from('bs7671_embeddings')
+        .select('*')
+        .in('regulation_number', metaList)
+        .neq('regulation_number', 'General')
+        .order('created_at', { ascending: true })
+        .range(startFrom, startFrom + batchSize - 1);
+      
+      if (fetchError) throw fetchError;
+      regulations = data;
+      
+      console.log(`🎯 COMPLETION MODE (metadata list): ${metaList.length} regs → fetched ${regulations?.length || 0}`);
+      
+    // Priority 3: Fall back to global fetch (legacy)
+    } else {
+      fetchMode = 'GLOBAL';
+      
+      const { data, error: fetchError } = await supabase
+        .from('bs7671_embeddings')
+        .select('*')
+        .neq('regulation_number', 'General')
+        .order('created_at', { ascending: true })
+        .range(startFrom, startFrom + batchSize - 1);
+      
+      if (fetchError) throw fetchError;
+      regulations = data;
+      
+      console.log(`⚙️ GLOBAL MODE (no filter): fetched ${regulations?.length || 0} regs from range ${startFrom}-${startFrom + batchSize - 1}`);
+    }
     
     if (fetchError) throw fetchError;
     
@@ -122,26 +201,17 @@ async function processInBackground(
       });
     }
 
-    console.log(`📦 Batch ${batchNumber} fetched ${regulations.length} regulations`);
+    console.log(`📦 Batch ${claimedBatch.batch_number} (${fetchMode}): ${regulations?.length || 0} regulations`);
 
-    // Get current batch data before updating
-    const { data: currentProgress } = await supabase
-      .from('batch_progress')
-      .select('data')
-      .eq('job_id', jobId)
-      .eq('batch_number', batchNumber)
-      .single();
-
-    // Update batch progress to processing
+    // Update batch with mode info
     await supabase.from('batch_progress').update({
-      status: 'processing',
-      started_at: new Date().toISOString(),
       data: { 
-        ...(currentProgress?.data || {}),
-        total_items: regulations.length,
+        ...(claimedBatch.data || {}),
+        fetch_mode: fetchMode,
+        total_items: regulations?.length || 0,
         started_at: new Date().toISOString()
       }
-    }).eq('job_id', jobId).eq('batch_number', batchNumber);
+    }).eq('id', claimedBatch.id);
 
     // Check for checkpoint
     const { data: checkpoint } = await supabase
@@ -156,7 +226,7 @@ async function processInBackground(
     
     console.log(resumeFromId ? `▶️ Resuming from checkpoint at reg ${startIndex}` : '🆕 Starting fresh batch');
     
-    let processed = 0, failed = 0, qualityPassed = 0, qualityFailed = 0, skipped = 0;
+    let processed = 0, failed = 0, qualityPassed = 0, qualityFailed = 0, skipped = 0, newCount = 0;
     let totalProcessingTime = 0;
     
     // Progress heartbeat every 30 seconds
@@ -164,17 +234,20 @@ async function processInBackground(
       try {
         await supabase.from('batch_progress').update({
           data: { 
-            ...(currentProgress?.data || {}),  // Preserve scheduler metadata
+            ...(claimedBatch.data || {}),  // Preserve scheduler metadata
+            fetch_mode: fetchMode,
             processed, 
             failed, 
             skipped,
+            new_count: newCount,
+            skipped_count: skipped,
             quality_passed: qualityPassed,
             quality_failed: qualityFailed,
             last_heartbeat: new Date().toISOString()
           }
-        }).eq('job_id', jobId).eq('batch_number', batchNumber);
+        }).eq('id', claimedBatch.id);
         
-        console.log(`💓 Heartbeat: batch ${batchNumber} - processed ${processed}/${regulations.length}`);
+        console.log(`💓 Heartbeat: batch ${claimedBatch.batch_number} (${fetchMode}) - processed ${processed}/${regulations.length}, new: ${newCount}, skipped: ${skipped}`);
       } catch (e) {
         console.error('❌ Heartbeat failed:', e);
       }
@@ -203,11 +276,14 @@ async function processInBackground(
           .limit(1);
         
         if (existingRecords && existingRecords.length > 0) {
-          console.log(`⏭️ Already enriched: ${reg.regulation_number} - skipping to avoid duplicate API call`);
+          console.log(`⏭️ Already enriched: ${reg.regulation_number} - skipping`);
           skipped++;
-          processed++; // Count as processed so progress is accurate
+          processed++;
           continue;
         }
+        
+        // Track as new enrichment
+        newCount++;
         
         // Compute content hash for deduplication (no DB check - unique constraint handles it)
         const contentHash = await hashContent(reg.content);
@@ -296,16 +372,20 @@ async function processInBackground(
           await supabase.from('batch_progress').update({
             items_processed: processed,
             data: { 
+              ...(claimedBatch.data || {}),
+              fetch_mode: fetchMode,
               processed, 
               failed, 
-              skipped, 
+              skipped,
+              new_count: newCount,
+              skipped_count: skipped,
               quality_passed: qualityPassed,
               quality_failed: qualityFailed,
               last_regulation: reg.regulation_number,
               avg_processing_time_ms: totalProcessingTime / (i - startIndex + 1),
               last_updated: new Date().toISOString()
             }
-          }).eq('job_id', jobId).eq('batch_number', batchNumber);
+          }).eq('id', claimedBatch.id);
         }
         
         // Save checkpoint every 25 docs
@@ -330,44 +410,48 @@ async function processInBackground(
     // Clear heartbeat timer
     clearInterval(heartbeat);
     
-    console.log(`✅ Batch ${batchNumber} complete: ${processed} processed, ${failed} failed, ${skipped} skipped, ${qualityPassed} quality passed`);
+    console.log(`✅ Batch ${claimedBatch.batch_number} (${fetchMode}) complete: ${processed} processed, ${failed} failed, ${skipped} skipped, ${newCount} new, ${qualityPassed} quality passed`);
     
     // Mark as completed
     await supabase
       .from('batch_progress')
       .update({ 
         status: 'completed',
-        items_processed: startFrom + regulations.length,
+        items_processed: startFrom + (regulations?.length || 0),
         data: { 
+          ...(claimedBatch.data || {}),
+          fetch_mode: fetchMode,
           processed, 
           failed, 
-          skipped, 
+          skipped,
+          new_count: newCount,
+          skipped_count: skipped,
           qualityPassed, 
           qualityFailed,
-          avg_processing_time_ms: totalProcessingTime / processed,
+          avg_processing_time_ms: totalProcessingTime / (processed || 1),
           completed_at: new Date().toISOString()
         }
       })
-      .eq('job_id', jobId)
-      .eq('batch_number', batchNumber);
+      .eq('id', claimedBatch.id);
     
-    console.log(`✅ Background processing completed: batch ${batchNumber}`);
+    console.log(`✅ Background processing completed: batch ${claimedBatch.batch_number} (${fetchMode})`);
     
   } catch (error) {
     // Clear heartbeat on error
     if (typeof heartbeat !== 'undefined') clearInterval(heartbeat);
     
-    console.error(`❌ Background processing failed: batch ${batchNumber}`, error);
+    console.error(`❌ Background processing failed:`, error);
     
-    // Mark as failed
-    await supabase
-      .from('batch_progress')
-      .update({ 
-        status: 'failed',
-        data: { error: error.message, failed_at: new Date().toISOString() }
-      })
-      .eq('job_id', jobId)
-      .eq('batch_number', batchNumber);
+    // Mark as failed (use claimedBatch if available, fallback to jobId+batchNumber)
+    if (claimedBatch?.id) {
+      await supabase
+        .from('batch_progress')
+        .update({ 
+          status: 'failed',
+          data: { error: error.message, failed_at: new Date().toISOString() }
+        })
+        .eq('id', claimedBatch.id);
+    }
   }
 }
 
