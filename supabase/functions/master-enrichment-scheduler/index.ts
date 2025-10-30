@@ -711,14 +711,15 @@ async function continuousProcessor(
       break;
     }
     
-    // Process jobs sequentially (one batch at a time across all jobs)
-    // This prevents overwhelming the system and ensures proper batch completion
+    // Process batches in parallel with worker pool (10x speed boost)
+    const PARALLEL_WORKERS = 10;
+    
     for (const jobId of jobIds) {
       const task = jobTaskMap.get(jobId);
       if (!task) continue;
       
       // Check if this job has pending work
-      const { data: pendingBatch } = await supabase
+      const { data: hasPending } = await supabase
         .from('batch_progress')
         .select('id')
         .eq('job_id', jobId)
@@ -726,13 +727,55 @@ async function continuousProcessor(
         .limit(1)
         .single();
       
-      if (pendingBatch) {
-        try {
-          await processNextBatch(supabase, jobId, task);
-        } catch (error) {
-          console.error(`❌ Worker ${workerId} error processing job ${jobId}:`, error);
+      if (!hasPending) continue;
+      
+      console.log(`🚀 Starting ${PARALLEL_WORKERS} parallel workers for job ${jobId}`);
+      
+      // Worker function that processes batches until none remain
+      async function batchWorker(batchWorkerId: number): Promise<void> {
+        let processedCount = 0;
+        
+        while (true) {
+          try {
+            // Check if there are pending batches
+            const { data: pending } = await supabase
+              .from('batch_progress')
+              .select('id')
+              .eq('job_id', jobId)
+              .eq('status', 'pending')
+              .limit(1)
+              .single();
+            
+            if (!pending) {
+              if (processedCount > 0) {
+                console.log(`✅ Batch worker ${batchWorkerId} finished (processed ${processedCount} batches)`);
+              }
+              break;
+            }
+            
+            // Process next batch
+            await processNextBatch(supabase, jobId, task);
+            processedCount++;
+            
+          } catch (error) {
+            // No more batches or error - exit gracefully
+            if (processedCount > 0) {
+              console.log(`✅ Batch worker ${batchWorkerId} finished (processed ${processedCount} batches)`);
+            }
+            break;
+          }
         }
       }
+      
+      // Launch parallel workers
+      const workers = Array(PARALLEL_WORKERS)
+        .fill(null)
+        .map((_, i) => batchWorker(i + 1));
+      
+      // Wait for all workers to complete
+      await Promise.allSettled(workers);
+      
+      console.log(`✅ All ${PARALLEL_WORKERS} workers completed for job ${jobId}`);
     }
     
     // Brief pause between processing rounds

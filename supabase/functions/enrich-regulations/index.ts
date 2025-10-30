@@ -300,7 +300,7 @@ Return ONLY valid JSON array.`;
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      model: 'gpt-5-mini-2025-08-07',
+      model: 'gpt-5-2025-08-07',
       messages: [{ role: 'user', content: prompt }],
       max_completion_tokens: 2000
     })
