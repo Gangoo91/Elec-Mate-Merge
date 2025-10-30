@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Card } from '@/components/ui/card';
 import { MobileButton } from '@/components/ui/mobile-button';
@@ -9,6 +10,38 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
+// Task configuration for multi-source enrichment
+const TASK_CONFIG = {
+  bs7671: {
+    label: 'BS 7671 Regulations',
+    jobType: 'enrich_bs7671_embeddings',
+    sourceTable: 'bs7671_embeddings',
+    targetTable: 'regulations_intelligence',
+    sourceFilter: { column: 'regulation_number', op: 'neq', value: 'General' }
+  },
+  health_safety: {
+    label: 'Health & Safety',
+    jobType: 'enrich_health_safety_knowledge',
+    sourceTable: 'health_safety_knowledge',
+    targetTable: 'health_safety_intelligence',
+    sourceFilter: null
+  },
+  pricing: {
+    label: 'Pricing Data',
+    jobType: 'enrich_pricing_data',
+    sourceTable: 'pricing_embeddings',
+    targetTable: 'pricing_intelligence',
+    sourceFilter: null
+  }
+} as const;
 
 interface JobStatus {
   id: string;
@@ -35,6 +68,10 @@ interface BatchProgress {
 }
 
 export default function EnrichmentConsole() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedTask = (searchParams.get('task') || 'bs7671') as keyof typeof TASK_CONFIG;
+  const config = TASK_CONFIG[selectedTask];
+  
   const [jobs, setJobs] = useState<JobStatus[]>([]);
   const [batches, setBatches] = useState<BatchProgress[]>([]);
   const [stats, setStats] = useState({ total: 0, enriched: 0, remaining: 0, progress: 0 });
@@ -43,11 +80,11 @@ export default function EnrichmentConsole() {
 
   const loadStatus = async () => {
     try {
-      // Load jobs
+      // Load jobs for current task
       const { data: jobsData } = await supabase
         .from('batch_jobs')
         .select('*')
-        .eq('job_type', 'enrich_bs7671_embeddings')
+        .eq('job_type', config.jobType)
         .order('created_at', { ascending: false })
         .limit(5);
 
@@ -66,15 +103,22 @@ export default function EnrichmentConsole() {
         setBatches(batchesData || []);
       }
 
-      // Load stats
-      const { count: totalCount } = await supabase
-        .from('bs7671_embeddings')
-        .select('*', { count: 'exact', head: true })
-        .neq('regulation_number', 'General');
+      // Load stats (task-aware queries)
+      let sourceQuery = supabase
+        .from(config.sourceTable)
+        .select('*', { count: 'exact', head: true });
+      
+      // Apply source filter if configured
+      if (config.sourceFilter) {
+        const { column, op, value } = config.sourceFilter;
+        sourceQuery = sourceQuery[op](column, value);
+      }
+      
+      const { count: totalCount } = await sourceQuery;
 
       const { count: enrichedCount } = await supabase
-        .from('regulations_intelligence')
-        .select('regulation_id', { count: 'exact', head: true });
+        .from(config.targetTable)
+        .select('*', { count: 'exact', head: true });
 
       const total = totalCount || 0;
       const enriched = enrichedCount || 0;
@@ -91,7 +135,7 @@ export default function EnrichmentConsole() {
     loadStatus();
     const interval = setInterval(loadStatus, 5000); // Refresh every 5s
     return () => clearInterval(interval);
-  }, []);
+  }, [selectedTask]); // Reload when task changes
 
   const callScheduler = async (action: string, extraParams = {}) => {
     setIsLoading(true);
@@ -100,7 +144,7 @@ export default function EnrichmentConsole() {
         body: { 
           action, 
           scope: 'single', 
-          jobType: 'enrich_bs7671_embeddings',
+          jobType: config.jobType,
           createIfMissing: true,
           ...extraParams 
         }
@@ -123,13 +167,23 @@ export default function EnrichmentConsole() {
   const handleDedupe = () => callScheduler('dedupe_batches');
   const handleAbortDupes = () => callScheduler('abort_duplicates');
   const handleClear = async () => {
-    if (!confirm('Clear ALL jobs and batches? This cannot be undone.')) return;
+    if (!confirm('Clear ALL jobs and batches for this task? This cannot be undone.')) return;
     
     setIsLoading(true);
     try {
-      await supabase.from('batch_progress').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-      await supabase.from('batch_jobs').delete().eq('job_type', 'enrich_bs7671_embeddings');
-      toast.success('All jobs cleared');
+      // Delete batches for this job type's jobs
+      const { data: taskJobs } = await supabase
+        .from('batch_jobs')
+        .select('id')
+        .eq('job_type', config.jobType);
+      
+      if (taskJobs && taskJobs.length > 0) {
+        const jobIds = taskJobs.map(j => j.id);
+        await supabase.from('batch_progress').delete().in('job_id', jobIds);
+      }
+      
+      await supabase.from('batch_jobs').delete().eq('job_type', config.jobType);
+      toast.success('All jobs cleared for this task');
       await loadStatus();
     } catch (error: any) {
       toast.error(error.message);
@@ -141,35 +195,48 @@ export default function EnrichmentConsole() {
   const handleReconcile = async () => {
     setIsLoading(true);
     try {
-      // Find missing items
-      const { data: allRegs } = await supabase
-        .from('bs7671_embeddings')
-        .select('id, regulation_number')
-        .neq('regulation_number', 'General');
+      // Find missing items (task-aware with generic ID selection)
+      let sourceQuery = supabase
+        .from(config.sourceTable)
+        .select('id');
+      
+      if (config.sourceFilter) {
+        const { column, op, value } = config.sourceFilter;
+        sourceQuery = sourceQuery[op](column, value);
+      }
+      
+      const { data: allRegs } = await sourceQuery;
 
+      // Generic query - works across different target table schemas
       const { data: enriched } = await supabase
-        .from('regulations_intelligence')
-        .select('regulation_id');
+        .from(config.targetTable)
+        .select('*');
 
-      const enrichedIds = new Set((enriched || []).map(e => e.regulation_id));
+      // Extract source IDs from enriched records (handle different FK column names)
+      const enrichedIds = new Set(
+        (enriched || []).map((e: any) => 
+          e.regulation_id || e.source_id || e.knowledge_id || e.pricing_id
+        ).filter(Boolean)
+      );
+      
       const missing = (allRegs || []).filter(r => !enrichedIds.has(r.id));
 
       if (missing.length === 0) {
-        toast.success('✅ No missing regulations - all enriched!');
+        toast.success('✅ No missing items - all enriched!');
       } else {
-        toast.warning(`Found ${missing.length} missing regulations`, {
-          description: `IDs: ${missing.slice(0, 5).map(m => m.regulation_number).join(', ')}${missing.length > 5 ? '...' : ''}`
+        toast.warning(`Found ${missing.length} missing items`, {
+          description: `First 5 IDs: ${missing.slice(0, 5).map(m => m.id.substring(0, 8)).join(', ')}${missing.length > 5 ? '...' : ''}`
         });
         
         // Save reconciliation record
         await supabase.from('enrichment_reconciliation').insert({
-          job_type: 'enrich_bs7671_embeddings',
-          source_table: 'bs7671_embeddings',
-          target_table: 'regulations_intelligence',
+          job_type: config.jobType,
+          source_table: config.sourceTable,
+          target_table: config.targetTable,
           total_source_items: allRegs?.length || 0,
           total_enriched_items: enriched?.length || 0,
           missing_items: missing.length,
-          missing_ids: missing.map(m => ({ id: m.id, reg: m.regulation_number }))
+          missing_ids: missing.map(m => ({ id: m.id }))
         });
       }
 
@@ -197,12 +264,27 @@ export default function EnrichmentConsole() {
 
   return (
     <div className="space-y-4 p-4">
+      {/* Task Selector */}
+      <Card className="p-4">
+        <h4 className="font-medium mb-3">Select Enrichment Task</h4>
+        <Select value={selectedTask} onValueChange={(value) => setSearchParams({ task: value })}>
+          <SelectTrigger className="w-full">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {Object.entries(TASK_CONFIG).map(([key, cfg]) => (
+              <SelectItem key={key} value={key}>{cfg.label}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </Card>
+
       {/* Stats Header */}
       <Card className="p-4">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold flex items-center gap-2">
             <Database className="w-5 h-5 text-primary" />
-            BS 7671 Enrichment
+            {config.label}
           </h3>
           {stats.progress > 0 && (
             <Badge variant={stats.progress === 100 ? "default" : "secondary"}>

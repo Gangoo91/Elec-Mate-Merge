@@ -131,6 +131,24 @@ async function processInBackground(
     let processed = 0, failed = 0, qualityPassed = 0, qualityFailed = 0, skipped = 0;
     let totalProcessingTime = 0;
     
+    // Start heartbeat timer (30s progress updates)
+    const heartbeat = setInterval(async () => {
+      try {
+        await supabase.from('batch_progress').update({
+          data: { 
+            processed, 
+            failed, 
+            skipped,
+            quality_passed: qualityPassed,
+            quality_failed: qualityFailed,
+            last_heartbeat: new Date().toISOString()
+          }
+        }).eq('job_id', jobId).eq('batch_number', batchNumber);
+      } catch (e) {
+        console.error('Heartbeat failed:', e);
+      }
+    }, 30000);
+    
     for (let i = startIndex; i < regulations.length; i++) {
       const reg = regulations[i];
       
@@ -169,6 +187,8 @@ async function processInBackground(
             continue;
           }
           
+          const facetHash = computeFacetHash(intelligence);
+          
           validRecords.push({
             regulation_id: reg.id,
             regulation_number: reg.regulation_number,
@@ -182,16 +202,17 @@ async function processInBackground(
             confidence_score: 0.90,
             enrichment_version: ENRICHMENT_VERSION,
             source_hash: contentHash,
+            facet_hash: facetHash,
             created_at: new Date().toISOString()
           });
         }
         
-        // Bulk upsert with conflict handling (much faster than per-record inserts)
+        // Bulk upsert with facet-aware conflict handling (multi-facet support)
         if (validRecords.length > 0) {
           const { error: insertError } = await supabase
             .from('regulations_intelligence')
             .upsert(validRecords, {
-              onConflict: 'regulation_id,source_hash,enrichment_version',
+              onConflict: 'regulation_id,enrichment_version,facet_hash',
               ignoreDuplicates: false
             });
           
@@ -252,6 +273,9 @@ async function processInBackground(
       }
     }
     
+    // Clear heartbeat timer
+    clearInterval(heartbeat);
+    
     console.log(`✅ Batch ${batchNumber} complete: ${processed} processed, ${failed} failed, ${skipped} skipped, ${qualityPassed} quality passed`);
     
     // Mark as completed
@@ -276,6 +300,9 @@ async function processInBackground(
     console.log(`✅ Background processing completed: batch ${batchNumber}`);
     
   } catch (error) {
+    // Clear heartbeat on error
+    if (typeof heartbeat !== 'undefined') clearInterval(heartbeat);
+    
     console.error(`❌ Background processing failed: batch ${batchNumber}`, error);
     
     // Mark as failed
@@ -330,18 +357,30 @@ async function extractWithRetry(regulation: any, apiKey: string, maxRetries = 3)
  * Returns ARRAY of intelligence records for different aspects/meanings
  */
 async function extractRegulationIntelligence(regulation: any, apiKey: string) {
-  const prompt = `Extract ALL distinct aspects of this electrical regulation for intelligent search. Return a JSON array where each item represents ONE specific meaning or application. Use UK English exclusively.
+  const prompt = `Extract ALL distinct aspects of this UK electrical regulation. Return a JSON object with a "records" array where each item represents ONE specific facet/application/interpretation. Use UK English exclusively.
 
 REGULATION:
 ${regulation.regulation_number}: ${regulation.section}
 ${regulation.content}
 
-EXAMPLES:
-- 710.415.2.1 might have 10+ records: "Protection in Medical Locations", "RCD Requirements for Patient Care", "Earthing for Medical Equipment", etc.
-- 433.1.1 might have 3-5 records: "Cable Sizing Fundamentals", "Current-carrying Capacity", "Overcurrent Protection", etc.
-- 522.8.10 might have 5-8 records: "Buried Cable Depth", "Protection from Damage", "Outdoor Installation", etc.
+FACET QUANTITY GUIDANCE:
+- COMPLEX regulations (protection, installation methods, circuits, medical locations): Generate 15-35 distinct facets
+- MEDIUM regulations (equipment, earthing, testing): Generate 8-15 facets
+- SIMPLE regulations (definitions, basic requirements): Generate 5-10 facets
 
-Return JSON object with "records" key (1-10+ items depending on regulation complexity):
+CRITICAL: Each facet MUST be genuinely distinct:
+- Different trade application (domestic vs commercial vs industrial vs agricultural)
+- Different circuit type (lighting vs power vs heating vs motor vs data)
+- Different installation context (buried vs surface vs overhead vs concealed vs exposed)
+- Different protection scenario (fault, overload, earth loop, RCD, bonding)
+- Different building type (residential, office, factory, hospital, school)
+
+EXAMPLES:
+- 710.415.2.1 (Medical): 20+ facets covering patient areas, surgical, ICU, RCD types, earthing, IT systems, etc.
+- 433.1.1 (Cable sizing): 12+ facets covering load types, installation methods, grouping, derating, protection coordination
+- 522.8.10 (Buried cables): 10+ facets covering depth requirements, warning tape, mechanical protection, soil types, duct systems
+
+Return JSON object with "records" key:
 {
   "records": [
     {
@@ -349,41 +388,54 @@ Return JSON object with "records" key (1-10+ items depending on regulation compl
       "category": "Protection | Installation | Testing | Design | Equipment | Safety | Earthing | Cables | Circuits",
       "subcategory": "Specific narrow topic",
       "technical_level": 1-5,
-      "primary_topic": "ONE clear use case or meaning (30-50 words)",
+      "primary_topic": "ONE clear aspect with sufficient detail (20-50 words) - be specific about the scenario/application/context",
       "related_regulations": ["522.8", "433.1.1"],
       "applies_to": ["domestic", "commercial", "industrial"]
     }
   ]
 }
 
-Return ONLY valid JSON object with "records" array. Use UK English throughout.`;
+CRITICAL: Generate MULTIPLE facets per regulation to capture all distinct use cases. Return ONLY valid JSON with "records" array. Use UK English spelling throughout.`;
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      model: 'gpt-5-mini-2025-08-07',
-      messages: [
-        { 
-          role: 'system', 
-          content: 'You are a strict JSON formatter specialising in UK English. Output ONLY a valid JSON array. No markdown, no code fences, no explanations. Your entire response must be parseable JSON starting with [ and ending with ]. Use UK English spelling and terminology exclusively.'
-        },
-        { role: 'user', content: prompt }
-      ],
-      max_completion_tokens: 8000,       // GPT-5 Mini: Use max_completion_tokens (NOT max_tokens)
-      signal: AbortSignal.timeout(45000) // 45s timeout for AI call
-      // NOTE: temperature not supported by gpt-5-mini (defaults to 1.0)
-      // NOTE: max_reasoning_tokens is NOT supported by gpt-5-mini
-    })
-  });
+  // Fix timeout: Move AbortController to fetch options (not body)
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 45000);
   
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error(`❌ OpenAI API error (${response.status}):`, errorText.substring(0, 200));
-    throw new Error(`GPT-5 Mini API error: ${response.status} - ${errorText.substring(0, 200)}`);
+  try {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: 'gpt-5-mini-2025-08-07',
+        messages: [
+          { 
+            role: 'system', 
+            content: 'You are a strict JSON formatter specialising in UK English. Output ONLY a valid JSON object with "records" array. No markdown, no code fences, no explanations. Use UK English spelling and terminology exclusively.'
+          },
+          { role: 'user', content: prompt }
+        ],
+        max_completion_tokens: 8000 // GPT-5 Mini: Use max_completion_tokens (NOT max_tokens)
+        // NOTE: temperature not supported by gpt-5-mini (defaults to 1.0)
+      }),
+      signal: controller.signal // AbortController signal in fetch options
+    });
+    
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`❌ OpenAI API error (${response.status}):`, errorText.substring(0, 200));
+      throw new Error(`GPT-5 Mini API error: ${response.status} - ${errorText.substring(0, 200)}`);
+    }
+  } catch (error: any) {
+    clearTimeout(timeoutId);
+    if (error.name === 'AbortError') {
+      throw new Error('GPT-5 request timed out after 45s');
+    }
+    throw error;
   }
   
   const data = await response.json();
@@ -442,13 +494,39 @@ Return ONLY valid JSON object with "records" array. Use UK English throughout.`;
 }
 
 /**
- * Validate intelligence quality
+ * Compute facet hash for uniqueness
+ */
+function computeFacetHash(intelligence: any): string {
+  const canonical = [
+    intelligence.category?.toLowerCase() || '',
+    intelligence.subcategory?.toLowerCase() || '',
+    intelligence.primary_topic?.toLowerCase() || '',
+    (intelligence.keywords || []).sort().join(',').toLowerCase()
+  ].join('|');
+  return hashString(canonical);
+}
+
+/**
+ * Hash string for facet uniqueness
+ */
+function hashString(str: string): string {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return Math.abs(hash).toString(36);
+}
+
+/**
+ * Validate intelligence quality (RELAXED: accept concise topics)
  */
 function validateIntelligence(intelligence: any): boolean {
   if (!intelligence) return false;
   return intelligence.keywords?.length >= 3 &&
          intelligence.category?.length > 0 &&
-         intelligence.primary_topic?.length > 20 &&
+         intelligence.primary_topic?.length > 10 && // Changed from 20 to 10
          intelligence.technical_level >= 1 &&
          intelligence.technical_level <= 5;
 }

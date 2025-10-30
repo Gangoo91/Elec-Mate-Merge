@@ -5504,6 +5504,7 @@ export type Database = {
           confidence_score: number | null
           created_at: string | null
           enrichment_version: string | null
+          facet_hash: string | null
           id: string
           keywords: string[]
           primary_topic: string
@@ -5521,6 +5522,7 @@ export type Database = {
           confidence_score?: number | null
           created_at?: string | null
           enrichment_version?: string | null
+          facet_hash?: string | null
           id?: string
           keywords?: string[]
           primary_topic: string
@@ -5538,6 +5540,7 @@ export type Database = {
           confidence_score?: number | null
           created_at?: string | null
           enrichment_version?: string | null
+          facet_hash?: string | null
           id?: string
           keywords?: string[]
           primary_topic?: string

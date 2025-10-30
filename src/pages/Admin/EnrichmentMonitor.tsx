@@ -33,7 +33,10 @@ export default function EnrichmentMonitor() {
             GPT-5 Mini
           </Badge>
           <Badge variant="outline" className="font-mono text-xs">
-            Bulk Upsert
+            Multi-Facet
+          </Badge>
+          <Badge variant="outline" className="font-mono text-xs">
+            30s Heartbeat
           </Badge>
         </div>
       </div>
