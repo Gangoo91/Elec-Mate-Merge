@@ -97,14 +97,13 @@ export default function EnrichmentConsole() {
 
       setJobs(jobsData || []);
 
-      // Load batches for active jobs
+      // Load batches for active jobs (include ALL batches for full visibility)
       if (jobsData && jobsData.length > 0) {
         const jobIds = jobsData.map(j => j.id);
         const { data: batchesData } = await supabase
           .from('batch_progress')
           .select('*')
           .in('job_id', jobIds)
-          .in('status', ['pending', 'processing'])
           .order('batch_number', { ascending: true });
 
         setBatches(batchesData || []);
@@ -168,7 +167,7 @@ export default function EnrichmentConsole() {
 
   useEffect(() => {
     loadStatus();
-    const interval = setInterval(loadStatus, 5000); // Refresh every 5s
+    const interval = setInterval(loadStatus, 2000); // Refresh every 2s for real-time feel
     return () => clearInterval(interval);
   }, [selectedTask]); // Reload when task changes
 
@@ -460,6 +459,76 @@ export default function EnrichmentConsole() {
                 </div>
               </div>
             ))}
+          </div>
+        </Card>
+      )}
+
+      {/* Live Batch Activity */}
+      {batches.length > 0 && (
+        <Card className="p-4">
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="font-medium flex items-center gap-2">
+              <Activity className="w-4 h-4 animate-pulse text-success" />
+              Live Worker Activity
+            </h4>
+            <Badge variant="secondary" className="text-xs">
+              {batches.filter(b => b.status === 'processing').length} Active Workers
+            </Badge>
+          </div>
+          
+          <div className="space-y-2 max-h-96 overflow-y-auto">
+            {batches.map((batch, idx) => {
+              const progress = batch.total_items > 0 
+                ? Math.round((batch.items_processed / batch.total_items) * 100) 
+                : 0;
+              const elapsed = batch.started_at 
+                ? Math.round((Date.now() - new Date(batch.started_at).getTime()) / 1000)
+                : 0;
+              
+              return (
+                <div key={batch.id} className="p-3 bg-muted rounded-md border border-border">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <Badge variant={
+                        batch.status === 'completed' ? 'default' : 
+                        batch.status === 'processing' ? 'secondary' : 
+                        batch.status === 'failed' ? 'destructive' : 'outline'
+                      } className="text-xs">
+                        Batch {batch.batch_number}
+                      </Badge>
+                      {batch.status === 'processing' && (
+                        <div className="flex items-center gap-1">
+                          <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
+                          <span className="text-xs text-muted-foreground">{elapsed}s</span>
+                        </div>
+                      )}
+                    </div>
+                    <span className="text-xs font-mono text-muted-foreground">
+                      {batch.items_processed}/{batch.total_items} items
+                    </span>
+                  </div>
+                  
+                  {/* Progress Bar */}
+                  <div className="w-full bg-secondary rounded-full h-2 overflow-hidden">
+                    <div 
+                      className={`h-full transition-all duration-300 ${
+                        batch.status === 'completed' ? 'bg-success' :
+                        batch.status === 'processing' ? 'bg-primary animate-pulse' :
+                        batch.status === 'failed' ? 'bg-destructive' :
+                        'bg-muted-foreground'
+                      }`}
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                  
+                  {batch.status === 'processing' && batch.data?.current_regulation && (
+                    <div className="mt-2 text-xs text-muted-foreground font-mono">
+                      Processing: {batch.data.current_regulation}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </Card>
       )}
