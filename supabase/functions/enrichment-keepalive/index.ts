@@ -8,7 +8,7 @@
  * 
  * SELECT cron.schedule(
  *   'enrichment-keepalive',
- *   Every 2 minutes: */2 * * * *
+ *   Every 2 minutes: *\/2 * * * *
  *   $$
  *   SELECT
  *     net.http_post(
