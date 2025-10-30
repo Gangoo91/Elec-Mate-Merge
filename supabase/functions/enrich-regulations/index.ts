@@ -368,12 +368,15 @@ Return ONLY valid JSON object with "records" array.`;
     body: JSON.stringify({
       model: 'gpt-5-mini-2025-08-07',
       messages: [
-        { role: 'system', content: 'You are a strict formatter. Output only valid JSON, no prose, no code fences.' },
+        { 
+          role: 'system', 
+          content: 'You are a strict JSON formatter. You MUST output valid JSON immediately. Do NOT write reasoning, explanations, or prose. Start your response with the JSON array.'
+        },
         { role: 'user', content: prompt }
       ],
-      max_completion_tokens: 3500,
-      max_reasoning_tokens: 0, // CRITICAL: Disable reasoning to get actual content output
-      temperature: 0.3 // Consistent output
+      max_completion_tokens: 8000,      // Increased from 3500 to ensure enough budget
+      max_reasoning_tokens: 2000,       // Allow controlled reasoning (not 0)
+      temperature: 0.3                   // Consistent output
     })
   });
   
@@ -385,12 +388,27 @@ Return ONLY valid JSON object with "records" array.`;
   
   const data = await response.json();
   const content = data.choices[0].message.content;
+  const finishReason = data.choices[0].finish_reason;
   
-  // Check for empty response and log full response for debugging
+  // Enhanced validation with finish_reason checking
   if (!content || content.trim().length === 0) {
     console.error('❌ GPT-5 Mini returned empty content');
+    console.error('📋 Finish reason:', finishReason);
+    console.error('📋 Usage stats:', JSON.stringify(data.usage));
     console.error('📋 Full API response (first 800 chars):', JSON.stringify(data).substring(0, 800));
-    throw new Error('Empty response from GPT-5 Mini');
+    
+    // If hit token limit, this is a configuration issue
+    if (finishReason === 'length') {
+      throw new Error('Token budget exceeded - model used all tokens for reasoning. This should not happen with max_completion_tokens: 8000.');
+    }
+    
+    throw new Error(`Empty response from GPT-5 Mini (finish_reason: ${finishReason})`);
+  }
+  
+  // Log successful response details
+  console.log(`✅ GPT-5 response received: ${content.length} chars, finish_reason: ${finishReason}`);
+  if (data.usage) {
+    console.log(`📊 Token usage: prompt=${data.usage.prompt_tokens}, completion=${data.usage.completion_tokens}, total=${data.usage.total_tokens}`);
   }
   
   try {
