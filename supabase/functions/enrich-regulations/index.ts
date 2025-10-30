@@ -191,6 +191,7 @@ async function processInBackground(
         // Validate and build batch insert (conflict-safe bulk upsert)
         let recordsCreated = 0;
         const validRecords = [];
+        const seenFacets = new Set<string>();
         
         for (const intelligence of intelligenceArray) {
           if (!validateIntelligence(intelligence)) {
@@ -200,6 +201,13 @@ async function processInBackground(
           }
           
           const facetHash = computeFacetHash(intelligence);
+          
+          // De-duplicate by facet_hash within this regulation
+          if (seenFacets.has(facetHash)) {
+            console.log(`🔄 Skipping duplicate facet_hash ${facetHash} for ${reg.regulation_number}`);
+            continue;
+          }
+          seenFacets.add(facetHash);
           
           validRecords.push({
             regulation_id: reg.id,
@@ -213,7 +221,7 @@ async function processInBackground(
             applies_to: intelligence.applies_to || [],
             confidence_score: 0.90,
             enrichment_version: ENRICHMENT_VERSION,
-            source_hash: contentHash,
+            source_hash: facetHash, // ✅ HOTFIX: use facetHash to satisfy unique constraint (regulation_id, source_hash, enrichment_version)
             facet_hash: facetHash,
             created_at: new Date().toISOString()
           });
