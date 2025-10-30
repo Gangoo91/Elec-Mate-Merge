@@ -83,20 +83,20 @@ export default function RegulationsIntelligenceProgress({
 
       if (recoverError) throw recoverError;
 
-      // Step 2: Continue the specific job
-      const { error: continueError } = await supabase.functions.invoke('master-enrichment-scheduler', {
+      // Step 2: Start continuous processing for the specific job
+      const { error: startError } = await supabase.functions.invoke('master-enrichment-scheduler', {
         body: { 
-          action: 'continue',
+          action: 'start',
           scope: 'single',
           jobType: jobType
         }
       });
 
-      if (continueError) throw continueError;
+      if (startError) throw startError;
 
       toast({
-        title: "Job resumed",
-        description: "BS 7671 enrichment has been unstuck and resumed",
+        title: "Continuous processing started",
+        description: "BS 7671 enrichment worker is now running continuously",
       });
 
       // Refresh status
@@ -104,7 +104,7 @@ export default function RegulationsIntelligenceProgress({
     } catch (error: any) {
       console.error('Recovery error:', error);
       toast({
-        title: "Recovery failed",
+        title: "Failed to start processing",
         description: error.message,
         variant: "destructive"
       });
@@ -239,7 +239,7 @@ export default function RegulationsIntelligenceProgress({
             ) : (
               <>
                 <PlayCircle className="mr-2 h-4 w-4" />
-                Unstick & Resume
+                Keep Processing
               </>
             )}
           </Button>
