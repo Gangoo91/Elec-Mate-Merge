@@ -431,9 +431,9 @@ CRITICAL: Generate MULTIPLE facets per regulation to capture all distinct use ca
           },
           { role: 'user', content: prompt }
         ],
-        max_completion_tokens: 2000, // ✅ Reduced from 8000 for faster responses
-        max_reasoning_tokens: 0 // ✅ Disable extended thinking
+        max_completion_tokens: 6000 // Increased for more comprehensive facets per regulation
         // NOTE: temperature not supported by gpt-5-mini (defaults to 1.0)
+        // NOTE: max_reasoning_tokens only exists for O-series models (o1/o3/o4), not GPT-5
       }),
       signal: controller.signal // AbortController signal in fetch options
     });
