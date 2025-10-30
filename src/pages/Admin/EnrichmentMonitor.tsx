@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useSearchParams } from 'react-router-dom';
+import { useKeepalive } from '@/hooks/useKeepalive';
 
 // Task filter mapping
 const TASK_FILTERS = {
@@ -27,8 +28,7 @@ export default function EnrichmentMonitor() {
   const [jobs, setJobs] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [autoRefresh, setAutoRefresh] = useState(true);
-  const [workerActive, setWorkerActive] = useState(false);
-  const [lastHeartbeat, setLastHeartbeat] = useState<Date | null>(null);
+  const [keepaliveEnabled, setKeepaliveEnabled] = useState(true);
   const [showClearDialog, setShowClearDialog] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
@@ -67,13 +67,21 @@ export default function EnrichmentMonitor() {
         const processingBatches = job.progress?.filter((p: any) => p.status === 'processing').length || 0;
         const totalBatches = job.total_batches || job.progress?.length || 0;
         
+        // Check for recent activity in batches
+        const recentActivity = job.progress?.some((p: any) => {
+          if (p.status !== 'processing') return false;
+          const startedAt = new Date(p.started_at || p.updated_at).getTime();
+          return Date.now() - startedAt < 3 * 60 * 1000; // Last 3 minutes
+        });
+        
         return {
           ...job,
           completedBatches,
           failedBatches,
           processingBatches,
           totalBatches,
-          progressPercent: totalBatches > 0 ? Math.round((completedBatches / totalBatches) * 100) : 0
+          progressPercent: totalBatches > 0 ? Math.round((completedBatches / totalBatches) * 100) : 0,
+          hasRecentActivity: recentActivity
         };
       });
       
@@ -82,6 +90,35 @@ export default function EnrichmentMonitor() {
       console.error('Failed to fetch jobs:', error);
     }
   };
+
+  // Derived state for keepalive
+  const hasIncomplete = jobs.some(j => j.completedBatches < j.totalBatches);
+  const hasRecentActivity = jobs.some(j => j.hasRecentActivity);
+
+  // Keepalive callback
+  const handleKeepalivePing = async () => {
+    const taskJobTypes = TASK_FILTERS[selectedTask].jobTypes;
+    const isSingleTaskMode = selectedTask !== 'all' && taskJobTypes && taskJobTypes.length > 0;
+    
+    const body = isSingleTaskMode 
+      ? { 
+          action: 'start', 
+          scope: 'single', 
+          jobType: taskJobTypes[0],
+          createIfMissing: true 
+        }
+      : { action: 'start' };
+    
+    await supabase.functions.invoke('master-enrichment-scheduler', { body });
+    await fetchJobs();
+  };
+
+  // Setup keepalive
+  const keepalive = useKeepalive({
+    isActive: keepaliveEnabled && hasIncomplete,
+    callback: handleKeepalivePing,
+    intervalMs: 120000 // 2 minutes
+  });
 
   useEffect(() => {
     fetchJobs();
@@ -110,11 +147,6 @@ export default function EnrichmentMonitor() {
       const { data, error } = await supabase.functions.invoke('master-enrichment-scheduler', {
         body
       });
-      
-      if (data?.worker_active) {
-        setWorkerActive(true);
-        setLastHeartbeat(new Date());
-      }
       
       const taskName = data?.tasks?.[0] || (isSingleTaskMode ? TASK_FILTERS[selectedTask].label : 'enrichment');
       
@@ -257,8 +289,6 @@ export default function EnrichmentMonitor() {
       
       // Reset UI state
       setJobs([]);
-      setWorkerActive(false);
-      setLastHeartbeat(null);
       
       toast({ 
         title: '✅ All jobs cleared',
@@ -303,13 +333,6 @@ export default function EnrichmentMonitor() {
   }, 0);
 
   const activeJobs = filteredJobs.filter(j => ['pending', 'processing'].includes(j.status));
-  
-  // Update worker status based on active jobs
-  useEffect(() => {
-    if (activeJobs.length > 0) {
-      setLastHeartbeat(new Date());
-    }
-  }, [activeJobs.length]);
   
   // Calculate health metrics using job.progress (joined data)
   const getJobHealth = (job: any) => {
@@ -361,6 +384,72 @@ export default function EnrichmentMonitor() {
             </Button>
           </div>
         </div>
+
+        {/* Auto-processing Status Bar */}
+        {hasIncomplete && (
+          <Card className="border-primary/30 bg-primary/5">
+            <CardContent className="py-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
+                    {keepaliveEnabled && !keepalive.isPaused ? (
+                      <Activity className="w-5 h-5 text-primary animate-pulse" />
+                    ) : (
+                      <Pause className="w-5 h-5 text-muted-foreground" />
+                    )}
+                    <div>
+                      <div className="font-semibold text-sm">
+                        Auto-processing: {keepaliveEnabled && !keepalive.isPaused ? 'Active' : 'Paused'}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {keepaliveEnabled && !keepalive.isPaused && `Next refresh in: ${keepalive.secondsUntilNext}s`}
+                        {keepalive.lastPingTime && ` • Last ping: ${keepalive.lastPingTime.toLocaleTimeString()}`}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 w-full sm:w-auto">
+                  <Button
+                    onClick={keepalive.pingNow}
+                    variant="secondary"
+                    size="sm"
+                    className="flex-1 sm:flex-none"
+                    disabled={loading}
+                  >
+                    <Zap className="w-4 h-4 mr-2" />
+                    Process Now
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      if (keepaliveEnabled && !keepalive.isPaused) {
+                        keepalive.pause();
+                      } else if (!keepaliveEnabled) {
+                        setKeepaliveEnabled(true);
+                      } else {
+                        keepalive.resume();
+                      }
+                    }}
+                    variant={keepaliveEnabled && !keepalive.isPaused ? "outline" : "default"}
+                    size="sm"
+                    className="flex-1 sm:flex-none"
+                  >
+                    {keepaliveEnabled && !keepalive.isPaused ? (
+                      <>
+                        <Pause className="w-4 h-4 mr-2" />
+                        Pause
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-4 h-4 mr-2" />
+                        Resume
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Task Filter */}
         <div className="w-full">
@@ -438,8 +527,8 @@ export default function EnrichmentMonitor() {
         </div>
       </div>
 
-      {/* PHASE 5: Worker Status Card */}
-      {activeJobs.length > 0 && (
+      {/* Worker Status Card - Only show when truly active */}
+      {hasRecentActivity && (
         <Card className="border-primary/50 bg-primary/5">
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
@@ -447,9 +536,9 @@ export default function EnrichmentMonitor() {
                 <div className="flex items-center gap-2">
                   <Activity className="w-5 h-5 text-primary animate-pulse" />
                   <div>
-                    <div className="font-semibold text-sm">Long-Running Worker Active</div>
+                    <div className="font-semibold text-sm">Autonomous Processing</div>
                     <div className="text-xs text-muted-foreground">
-                      {lastHeartbeat && `Last heartbeat: ${lastHeartbeat.toLocaleTimeString()}`}
+                      Workers actively processing batches
                     </div>
                   </div>
                 </div>
@@ -457,12 +546,24 @@ export default function EnrichmentMonitor() {
               <div className="flex items-center gap-2">
                 <Badge variant="outline" className="border-primary text-primary">
                   <Zap className="w-3 h-3 mr-1" />
-                  Autonomous Processing
+                  Live
                 </Badge>
                 <div className="text-xs text-muted-foreground">
                   {activeJobs.length} active job{activeJobs.length !== 1 ? 's' : ''}
                 </div>
               </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+      
+      {/* Idle state hint */}
+      {!hasRecentActivity && activeJobs.length > 0 && (
+        <Card className="border-muted bg-muted/20">
+          <CardContent className="py-4">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Clock className="w-4 h-4" />
+              <span>Jobs are idle. Press "Resume" on a job card or enable auto-processing above.</span>
             </div>
           </CardContent>
         </Card>
@@ -543,8 +644,8 @@ export default function EnrichmentMonitor() {
                         </Badge>
                       )}
                       <Badge variant="outline">{job.status}</Badge>
-                      {/* Idle Resume CTA */}
-                      {job.status === 'pending' && job.processingBatches === 0 && job.completedBatches < job.totalBatches && (
+                      {/* Resume button - show when incomplete and not actively processing */}
+                      {job.completedBatches < job.totalBatches && (job.processingBatches === 0 || !job.hasRecentActivity) && (
                         <Button
                           size="sm"
                           variant="default"
