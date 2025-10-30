@@ -173,17 +173,17 @@ serve(async (req) => {
     });
   }
   
-  // Action: Recover stuck batches
+      // Action: Recover stuck batches
   if (action === 'recover') {
     console.log('🔧 Recovering stuck batches...');
     
-    const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+    const threeMinutesAgo = new Date(Date.now() - 3 * 60 * 1000).toISOString();
     
     const { data: stuckBatches } = await supabase
       .from('batch_progress')
       .select('*, batch_jobs!inner(job_type, status)')
       .eq('status', 'processing')
-      .lt('started_at', tenMinutesAgo);
+      .lt('started_at', threeMinutesAgo);
     
     let recovered = 0;
     const affectedJobIds = new Set<string>();
@@ -397,25 +397,34 @@ serve(async (req) => {
         const tasksToCreate = tasksToRun.filter(t => !existingJobTypes.includes(`enrich_${t.sourceTable}`));
 
         for (const task of tasksToCreate) {
-        // Pre-flight validation: compare source vs target enriched counts
+        // Pre-flight validation: Count DISTINCT source records, not facet rows
         const { count: totalCount } = await supabase
           .from(task.sourceTable)
           .select('*', { count: 'exact', head: true });
         
-        // Count already-enriched records in TARGET table (by version)
-        const { count: enrichedCount } = await supabase
+        // For BS 7671: Count DISTINCT regulation_id already enriched (not total facet rows)
+        // For others: Use appropriate source FK (knowledge_id, pricing_id, etc.)
+        const sourceFk = task.sourceTable === 'bs7671_embeddings' ? 'regulation_id' : 'source_id';
+        
+        const { data: enrichedData } = await supabase
           .from(task.targetTable)
-          .select('*', { count: 'exact', head: true })
+          .select(sourceFk)
           .eq('enrichment_version', 'v1');
-
-        const unenrichedCount = Math.max(0, (totalCount || 0) - (enrichedCount || 0));
+        
+        // Count unique source records
+        const uniqueEnrichedSources = new Set(
+          (enrichedData || []).map((row: any) => row[sourceFk]).filter(Boolean)
+        );
+        
+        const distinctEnriched = uniqueEnrichedSources.size;
+        const unenrichedCount = Math.max(0, (totalCount || 0) - distinctEnriched);
 
         if (unenrichedCount <= 0) {
-          console.log(`⏭️ Skipping ${task.name}: All ${totalCount || 0} records already enriched (${enrichedCount || 0} in ${task.targetTable})`);
+          console.log(`⏭️ Skipping ${task.name}: All ${totalCount || 0} source records already enriched (${distinctEnriched} distinct sources in ${task.targetTable})`);
           continue;
         }
         
-        console.log(`📊 ${task.name}: ${unenrichedCount}/${totalCount || 0} records need enrichment`);
+        console.log(`📊 ${task.name}: ${unenrichedCount}/${totalCount || 0} source records need enrichment (${distinctEnriched} already enriched)`);
         const totalBatches = Math.ceil(unenrichedCount / task.batchSize);
 
         const { data: job, error: jobError } = await supabase
@@ -447,9 +456,11 @@ serve(async (req) => {
 
       for (let i = 0; i < totalBatches; i++) {
         const itemsInBatch = Math.min(task.batchSize, Math.max(0, (unenrichedCount || 0) - (i * task.batchSize)));
+        
+        // Use upsert to prevent duplicate batch_progress rows
         await supabase
           .from('batch_progress')
-          .insert({
+          .upsert({
             job_id: job.id,
             batch_number: i,
             total_items: itemsInBatch,
@@ -461,6 +472,9 @@ serve(async (req) => {
               task_name: task.name,
               source_table: task.sourceTable
             }
+          }, {
+            onConflict: 'job_id,batch_number',
+            ignoreDuplicates: false
           });
       }
         }
@@ -599,8 +613,22 @@ serve(async (req) => {
     }
 
     if (action === 'continue') {
-      // WATCHDOG: Auto-recover stuck batches before continuing
-      await autoRecoverStuckBatches(supabase);
+      // WATCHDOG: Auto-recover stuck batches before continuing (use 3-minute threshold)
+      const threeMinutesAgo = new Date(Date.now() - 3 * 60 * 1000).toISOString();
+      
+      const { data: stuckBatchesForRecovery } = await supabase
+        .from('batch_progress')
+        .select('id, job_id, batch_number')
+        .eq('status', 'processing')
+        .lt('started_at', threeMinutesAgo);
+      
+      if (stuckBatchesForRecovery && stuckBatchesForRecovery.length > 0) {
+        console.log(`🔧 Auto-recovering ${stuckBatchesForRecovery.length} stuck batches (>3 min)...`);
+        await supabase
+          .from('batch_progress')
+          .update({ status: 'pending', started_at: null, error_message: null })
+          .in('id', stuckBatchesForRecovery.map((b: any) => b.id));
+      }
       
       // Support scope filtering for continue action
       let jobTypesToContinue = ENRICHMENT_TASKS.map(t => `enrich_${t.sourceTable}`);
@@ -614,10 +642,55 @@ serve(async (req) => {
         .in('status', ['pending', 'processing'])
         .in('job_type', jobTypesToContinue);
 
+      // If no pending jobs but work remains, auto-start
       if (!pendingJobs || pendingJobs.length === 0) {
+        if (scope === 'single' && jobType && createIfMissing) {
+          console.log('🔄 Continue: No pending jobs found, checking for remaining work...');
+          
+          const task = ENRICHMENT_TASKS.find(t => `enrich_${t.sourceTable}` === jobType);
+          if (!task) {
+            return new Response(JSON.stringify({ 
+              success: false,
+              error: `Invalid job type: ${jobType}`
+            }), {
+              status: 400,
+              headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+            });
+          }
+          
+          // Check remaining work using distinct source count
+          const { count: totalCount } = await supabase
+            .from(task.sourceTable)
+            .select('*', { count: 'exact', head: true });
+          
+          const sourceFk = task.sourceTable === 'bs7671_embeddings' ? 'regulation_id' : 'source_id';
+          const { data: enrichedData } = await supabase
+            .from(task.targetTable)
+            .select(sourceFk)
+            .eq('enrichment_version', 'v1');
+          
+          const uniqueEnrichedSources = new Set(
+            (enrichedData || []).map((row: any) => row[sourceFk]).filter(Boolean)
+          );
+          
+          const remaining = Math.max(0, (totalCount || 0) - uniqueEnrichedSources.size);
+          
+          if (remaining > 0) {
+            console.log(`🚀 Auto-starting fresh batches for ${remaining} remaining source records`);
+            // Recursively call start action
+            const startReq = new Request(req.url, {
+              method: 'POST',
+              headers: req.headers,
+              body: JSON.stringify({ action: 'start', scope: 'single', jobType })
+            });
+            return serve(startReq as any);
+          }
+        }
+        
         return new Response(JSON.stringify({ 
           success: true,
-          message: 'No pending jobs to continue'
+          message: 'No pending jobs to continue',
+          auto_started: false
         }), {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         });
@@ -1021,16 +1094,29 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
     .single();
 
   if (!batch) {
-    await supabase
-      .from('batch_jobs')
-      .update({ 
-        status: 'completed',
-        completed_at: new Date().toISOString(),
-        progress_percentage: 100
-      })
-      .eq('id', jobId);
+    // Only mark as completed if there are no processing batches either
+    const { data: processingBatches } = await supabase
+      .from('batch_progress')
+      .select('id')
+      .eq('job_id', jobId)
+      .eq('status', 'processing')
+      .limit(1);
     
-    console.log(`✅ Job ${jobId} completed`);
+    if (!processingBatches || processingBatches.length === 0) {
+      await supabase
+        .from('batch_jobs')
+        .update({ 
+          status: 'completed',
+          completed_at: new Date().toISOString(),
+          progress_percentage: 100
+        })
+        .eq('id', jobId);
+      
+      console.log(`✅ Job ${jobId} completed (all batches done)`);
+    } else {
+      console.log(`⏸️ Job ${jobId}: No pending batches, but ${processingBatches.length} still processing`);
+    }
+    
     return;
   }
 

@@ -187,6 +187,13 @@ export default function EnrichmentConsole() {
 
       if (error) throw error;
       
+      // Special handling for Continue action when no pending jobs but work remains
+      if (action === 'continue' && data?.message === 'No pending jobs to continue' && stats.remaining > 0) {
+        toast.info('No pending jobs found — starting fresh batches for remaining work...');
+        await callScheduler('start');
+        return;
+      }
+      
       toast.success(data.message || `Action '${action}' completed`);
       await loadStatus();
     } catch (error: any) {
