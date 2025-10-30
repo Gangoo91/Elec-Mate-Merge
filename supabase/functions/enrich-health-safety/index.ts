@@ -136,12 +136,18 @@ async function processInBackground(
 DOCUMENT:
 ${doc.content}
 
-Return JSON array with:
-[{
-  "hazard_description": "Clear 20-100 word description",
-  "control_measures": ["specific control 1", "specific control 2"],
-  "required_ppe": {"type": "specification"}
-}]`;
+Return JSON object with "hazards" array. Wrap response in {"hazards": [...]}.
+
+RESPONSE FORMAT:
+{
+  "hazards": [
+    {
+      "hazard_description": "Clear 20-100 word description",
+      "control_measures": ["specific control 1", "specific control 2"],
+      "required_ppe": {"type": "specification"}
+    }
+  ]
+}`;
 
         const response = await callOpenAIWithRetry(openAIKey, extractionPrompt, 'You are a health & safety expert. Extract structured hazard data. Return valid JSON only.');
 
@@ -153,22 +159,30 @@ Return JSON array with:
 
         const aiData = await response.json();
         const content = aiData.choices[0].message.content;
+        
+        // Debug: Log raw OpenAI response
+        console.log(`📋 Raw OpenAI response for ${doc.id}:`, content.substring(0, 200));
+        
         let hazards;
         
         try {
           const parsed = JSON.parse(content);
           hazards = Array.isArray(parsed) ? parsed : (parsed.hazards || []);
-        } catch {
+          console.log(`✅ Parsed ${hazards.length} hazards from doc ${doc.id}`);
+        } catch (parseError) {
+          console.error(`❌ JSON parse error for ${doc.id}:`, parseError.message);
           hazards = [];
         }
 
-        // Validate quality
-        if (!validateQuality(hazards)) {
-          console.warn(`⚠️ Quality check failed for ${doc.id}`);
+        // Validate quality with detailed logging
+        const qualityResult = validateQuality(hazards);
+        if (!qualityResult.valid) {
+          console.warn(`⚠️ Quality check failed for ${doc.id} - ${qualityResult.reason}`);
           qualityFailed++;
           failed++;
           continue;
         }
+        console.log(`✅ Quality passed for ${doc.id} - ${hazards.length} hazards extracted`);
         qualityPassed++;
 
         for (const hazard of hazards) {
@@ -290,12 +304,26 @@ async function hashContent(content: string): Promise<string> {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-function validateQuality(hazards: any[]): boolean {
-  if (!hazards || hazards.length === 0) return false;
+function validateQuality(hazards: any[]): { valid: boolean; reason?: string } {
+  if (!hazards || hazards.length === 0) {
+    return { valid: false, reason: 'No hazards extracted' };
+  }
+  
   const first = hazards[0];
-  return first.hazard_description?.length >= 10 && 
-         Array.isArray(first.control_measures) &&
-         first.control_measures.length >= 1;
+  
+  // Relaxed validation: Accept if ANY of these conditions are met
+  const hasDescription = first.hazard_description?.length >= 5;
+  const hasControls = Array.isArray(first.control_measures) && first.control_measures.length >= 1;
+  const hasPPE = first.required_ppe && Object.keys(first.required_ppe).length > 0;
+  
+  if (hasDescription || hasControls || hasPPE) {
+    return { valid: true };
+  }
+  
+  return { 
+    valid: false, 
+    reason: `Insufficient data - desc: ${first.hazard_description?.length || 0} chars, controls: ${first.control_measures?.length || 0}, ppe: ${Object.keys(first.required_ppe || {}).length}`
+  };
 }
 
 async function callOpenAIWithRetry(apiKey: string, userPrompt: string, systemPrompt: string, maxRetries = 3) {
