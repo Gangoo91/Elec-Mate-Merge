@@ -474,14 +474,16 @@ Always use British English (earth not ground, consumer unit not panel).`;
       try {
         const parsedResponse = JSON.parse(content);
         
-        // Validate that all three fields exist
-        const analysis = parsedResponse.analysis || '';
+        // Validate that all FOUR fields exist (new format)
+        const quick_answer = parsedResponse.quick_answer || '';
+        const technical_answer = parsedResponse.technical_answer || '';
         const regulations = parsedResponse.regulations || '';
         const practical_guidance = parsedResponse.practical_guidance || '';
         
-        if (!analysis || !regulations || !practical_guidance) {
+        if (!quick_answer || !technical_answer || !regulations || !practical_guidance) {
           console.warn('Warning: Some fields are empty', { 
-            hasAnalysis: !!analysis, 
+            hasQuickAnswer: !!quick_answer,
+            hasTechnicalAnswer: !!technical_answer, 
             hasRegulations: !!regulations, 
             hasPracticalGuidance: !!practical_guidance 
           });
@@ -489,7 +491,8 @@ Always use British English (earth not ground, consumer unit not panel).`;
         
         return new Response(
           JSON.stringify({ 
-            analysis: analysis || 'No analysis provided.',
+            quick_answer: quick_answer || 'No quick answer provided.',
+            technical_answer: technical_answer || 'No technical analysis provided.',
             regulations: regulations || 'No regulations specified.',
             practical_guidance: practical_guidance || 'No practical guidance available.'
             // RAG metadata hidden - trade secret
