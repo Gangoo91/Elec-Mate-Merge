@@ -101,6 +101,9 @@ export default function EnrichmentConsole() {
           .order('batch_number', { ascending: true });
 
         setBatches(batchesData || []);
+      } else {
+        // No jobs = no batches, clear stale state
+        setBatches([]);
       }
 
       // Load stats (task-aware queries)
