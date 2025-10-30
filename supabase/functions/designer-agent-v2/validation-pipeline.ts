@@ -59,7 +59,13 @@ export function validateCalculations(circuits: any[]): ValidationResult {
         });
       }
 
-      if (In > Iz) {
+      // BS 7671 Reg 433.1.204 Exception: Ring Final Circuits
+      // Allows 32A protection with 2.5mm² cable (Iz=27A) for domestic ring finals
+      const isRingFinal = circuit.loadType?.toLowerCase().includes('ring') || 
+                          circuit.loadType?.toLowerCase().includes('socket');
+      const isRingException = isRingFinal && In === 32 && cableSize === 2.5 && Iz >= 20;
+
+      if (In > Iz && !isRingException) {
         errors.push({
           circuitIndex: index,
           circuitName: circuit.name,
