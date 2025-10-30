@@ -74,7 +74,14 @@ export default function EnrichmentConsole() {
   
   const [jobs, setJobs] = useState<JobStatus[]>([]);
   const [batches, setBatches] = useState<BatchProgress[]>([]);
-  const [stats, setStats] = useState({ total: 0, enriched: 0, remaining: 0, progress: 0 });
+  const [stats, setStats] = useState({ 
+    sourceTotal: 0, 
+    sourceEnriched: 0, 
+    facetsCreated: 0, 
+    targetFacets: 0, 
+    remaining: 0, 
+    progress: 0 
+  });
   const [isLoading, setIsLoading] = useState(false);
   const isMobile = useIsMobile();
 
@@ -117,7 +124,7 @@ export default function EnrichmentConsole() {
         sourceQuery = sourceQuery[op](column, value);
       }
       
-      const { count: totalCount } = await sourceQuery;
+      const { count: sourceTotal } = await sourceQuery;
 
       // Count unique enriched source records (not facets)
       const { data: enrichedData } = await supabase
@@ -131,12 +138,29 @@ export default function EnrichmentConsole() {
         ).filter(Boolean)
       );
 
-      const total = totalCount || 0;
-      const enriched = uniqueSourceIds.size; // Count unique regulations, not facets
-      const remaining = Math.max(0, total - enriched);
-      const progress = total > 0 ? Math.round((enriched / total) * 100) : 0;
+      // Count actual facets created (total rows in target table)
+      const { count: facetsCreated } = await supabase
+        .from(config.targetTable)
+        .select('*', { count: 'exact', head: true });
 
-      setStats({ total, enriched, remaining, progress });
+      // Calculate target facets based on task
+      // BS 7671: 2,488 regs × 16 average facets = ~40,000
+      // Others: 1:1 ratio (no facet expansion)
+      const avgFacetsPerReg = selectedTask === 'bs7671' ? 16 : 1;
+      const targetFacets = (sourceTotal || 0) * avgFacetsPerReg;
+
+      const sourceEnriched = uniqueSourceIds.size;
+      const remaining = Math.max(0, targetFacets - (facetsCreated || 0));
+      const progress = targetFacets > 0 ? Math.round(((facetsCreated || 0) / targetFacets) * 100) : 0;
+
+      setStats({ 
+        sourceTotal: sourceTotal || 0, 
+        sourceEnriched, 
+        facetsCreated: facetsCreated || 0, 
+        targetFacets, 
+        remaining, 
+        progress 
+      });
     } catch (error) {
       console.error('Failed to load status:', error);
     }
@@ -298,21 +322,25 @@ export default function EnrichmentConsole() {
           )}
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           <div className="text-center p-3 bg-muted rounded-md">
-            <div className="text-2xl font-bold text-primary">{stats.total}</div>
-            <div className="text-xs text-muted-foreground">Total</div>
+            <div className="text-2xl font-bold text-primary">{stats.targetFacets.toLocaleString()}</div>
+            <div className="text-xs text-muted-foreground">Target Facets</div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
-            <div className="text-2xl font-bold text-success">{stats.enriched}</div>
-            <div className="text-xs text-muted-foreground">Enriched</div>
+            <div className="text-2xl font-bold text-success">{stats.facetsCreated.toLocaleString()}</div>
+            <div className="text-xs text-muted-foreground">Facets Created</div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
-            <div className="text-2xl font-bold text-warning">{stats.remaining}</div>
+            <div className="text-2xl font-bold text-warning">{stats.remaining.toLocaleString()}</div>
             <div className="text-xs text-muted-foreground">Remaining</div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
-            <div className="text-2xl font-bold text-chart-2">{batches.length}</div>
+            <div className="text-2xl font-bold text-chart-2">{stats.sourceEnriched}/{stats.sourceTotal}</div>
+            <div className="text-xs text-muted-foreground">Source Regs</div>
+          </div>
+          <div className="text-center p-3 bg-muted rounded-md">
+            <div className="text-2xl font-bold text-chart-3">{batches.length}</div>
             <div className="text-xs text-muted-foreground">Active Batches</div>
           </div>
         </div>
