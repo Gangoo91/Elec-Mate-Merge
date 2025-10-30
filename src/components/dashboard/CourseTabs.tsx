@@ -25,7 +25,7 @@ const CourseTabs = ({ recentCourses, popularCourses }: CourseTabsProps) => {
       </TabsList>
       
       <TabsContent value="recent" className="space-y-3 md:space-y-4">
-        <div className="grid gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-2 sm:gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {recentCourses.map((course) => (
             <CourseCard
               key={course.id}
@@ -40,7 +40,7 @@ const CourseTabs = ({ recentCourses, popularCourses }: CourseTabsProps) => {
       </TabsContent>
       
       <TabsContent value="popular" className="space-y-3 md:space-y-4">
-        <div className="grid gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-2 sm:gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {popularCourses.map((course) => (
             <CourseCard
               key={course.id}

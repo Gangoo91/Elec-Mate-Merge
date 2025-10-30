@@ -35,21 +35,21 @@ const Dashboard = () => {
   const userName = profile?.full_name || profile?.username || userData.name;
 
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <Card className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-4 md:p-6">
+    <div className="space-y-3 sm:space-y-4 md:space-y-5 animate-fade-in">
+      <Card className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-3 sm:p-4 md:p-5">
         <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start md:items-center">
           <div className="flex-1 w-full">
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight leading-tight text-center md:text-left">
+            <h1 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight leading-tight text-center md:text-left">
               {greeting},
             </h1>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight leading-tight text-center md:text-left">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight leading-tight text-center md:text-left">
               {userName}
             </h2>
-            <p className="text-muted-foreground mt-3 text-sm md:text-base text-center md:text-left">
+            <p className="text-muted-foreground mt-2 text-sm md:text-base text-center md:text-left">
               Welcome to ElecMate, your electrical career companion.
             </p>
             
-            <div className="flex items-center justify-center md:justify-start gap-2 min-w-0 mt-4">
+            <div className="hidden md:flex items-center gap-2 min-w-0 mt-3">
               <Clock className="h-4 w-4 text-elec-yellow flex-shrink-0" />
               <span className="text-xs md:text-sm">Last active: Today</span>
             </div>

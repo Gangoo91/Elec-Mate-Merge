@@ -277,27 +277,27 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
         <CollapsibleContent>
           <CardContent className="space-y-4">
             {/* Stats Summary */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="text-center p-3 border rounded-lg">
-                <div className="text-2xl font-bold">{stats.total}</div>
-                <div className="text-sm text-muted-foreground">Total</div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+              <div className="text-center p-2 sm:p-2.5 md:p-3 border rounded-lg">
+                <div className="text-xl sm:text-2xl font-bold">{stats.total}</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Total</div>
               </div>
-              <div className="text-center p-3 border rounded-lg">
-                <div className="text-2xl font-bold text-green-600">{stats.accepted}</div>
-                <div className="text-sm text-muted-foreground">Accepted</div>
+              <div className="text-center p-2 sm:p-2.5 md:p-3 border rounded-lg">
+                <div className="text-xl sm:text-2xl font-bold text-green-600">{stats.accepted}</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Accepted</div>
               </div>
-              <div className="text-center p-3 border rounded-lg">
-                <div className="text-2xl font-bold text-red-600">{stats.rejected}</div>
-                <div className="text-sm text-muted-foreground">Rejected</div>
+              <div className="text-center p-2 sm:p-2.5 md:p-3 border rounded-lg">
+                <div className="text-xl sm:text-2xl font-bold text-red-600">{stats.rejected}</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Rejected</div>
               </div>
-              <div className="text-center p-3 border rounded-lg">
-                <div className="text-2xl font-bold text-yellow-600">{stats.pending}</div>
-                <div className="text-sm text-muted-foreground">Pending</div>
+              <div className="text-center p-2 sm:p-2.5 md:p-3 border rounded-lg">
+                <div className="text-xl sm:text-2xl font-bold text-yellow-600">{stats.pending}</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Pending</div>
               </div>
             </div>
 
             {/* Filters */}
-            <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex flex-col md:flex-row gap-3">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -321,7 +321,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
             </div>
 
             {/* Quotes List */}
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               {filteredQuotes.length === 0 ? (
                 <div className="text-center py-8 text-muted-foreground">
                   {quotes.length === 0 ? "No quotes found" : "No quotes match your search criteria"}
@@ -333,20 +333,20 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
                     className="border border-elec-yellow/20 rounded-lg overflow-hidden bg-elec-card"
                   >
                     {/* Hero Section - Price & Status */}
-                    <div className="bg-gradient-to-br from-elec-gray to-elec-gray/80 p-4 sm:p-5 border-b border-elec-yellow/10">
-                      <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="bg-gradient-to-br from-elec-gray to-elec-gray/80 p-3 sm:p-4 border-b border-elec-yellow/10">
+                      <div className="flex items-start justify-between gap-3 mb-2">
                         <Badge variant="outline" className="border-elec-yellow/40 bg-elec-dark/50">
                           #{quote.quoteNumber}
                         </Badge>
                         {getUnifiedStatusBadge(quote)}
                       </div>
-                      <div className="text-3xl sm:text-4xl font-bold text-elec-light">
+                      <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-elec-light">
                         {formatCurrency(quote.total)}
                       </div>
                     </div>
 
                     {/* Client & Date Info */}
-                    <div className="p-4 sm:p-5 space-y-3 border-b border-elec-yellow/10">
+                    <div className="p-3 sm:p-4 space-y-2 sm:space-y-3 border-b border-elec-yellow/10">
                       <div className="flex items-center gap-2">
                         <User className="h-4 w-4 text-elec-yellow shrink-0" />
                         <span className="font-medium truncate">{quote.client.name}</span>
@@ -378,7 +378,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
                     </div>
 
                     {/* Actions */}
-                    <div className="p-4 sm:p-5 space-y-2">
+                    <div className="p-3 sm:p-4 space-y-2">
                       {/* Primary action based on quote state */}
                       {quote.acceptance_status === 'accepted' && isWorkComplete(quote) && !hasInvoiceRaised(quote) ? (
                         <MobileButton
