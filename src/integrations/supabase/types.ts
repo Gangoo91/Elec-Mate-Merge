@@ -2093,39 +2093,60 @@ export type Database = {
       health_safety_intelligence: {
         Row: {
           confidence_score: number | null
-          control_measures: string[]
+          content_summary: string | null
+          control_measures: string[] | null
           created_at: string | null
+          document_type: string | null
           embedding: string | null
           enrichment_version: string | null
-          hazard_description: string
+          hazard_description: string | null
+          hazards_mentioned: string[] | null
           id: string
+          keywords: string[] | null
+          primary_topic: string | null
+          relevance_score: number | null
           required_ppe: Json | null
+          search_tags: string[] | null
           source_hash: string | null
           source_id: string | null
           updated_at: string | null
         }
         Insert: {
           confidence_score?: number | null
-          control_measures: string[]
+          content_summary?: string | null
+          control_measures?: string[] | null
           created_at?: string | null
+          document_type?: string | null
           embedding?: string | null
           enrichment_version?: string | null
-          hazard_description: string
+          hazard_description?: string | null
+          hazards_mentioned?: string[] | null
           id?: string
+          keywords?: string[] | null
+          primary_topic?: string | null
+          relevance_score?: number | null
           required_ppe?: Json | null
+          search_tags?: string[] | null
           source_hash?: string | null
           source_id?: string | null
           updated_at?: string | null
         }
         Update: {
           confidence_score?: number | null
-          control_measures?: string[]
+          content_summary?: string | null
+          control_measures?: string[] | null
           created_at?: string | null
+          document_type?: string | null
           embedding?: string | null
           enrichment_version?: string | null
-          hazard_description?: string
+          hazard_description?: string | null
+          hazards_mentioned?: string[] | null
           id?: string
+          keywords?: string[] | null
+          primary_topic?: string | null
+          relevance_score?: number | null
           required_ppe?: Json | null
+          search_tags?: string[] | null
           source_hash?: string | null
           source_id?: string | null
           updated_at?: string | null

@@ -131,25 +131,31 @@ async function processInBackground(
           continue;
         }
 
-        const extractionPrompt = `Extract practical hazards from this health & safety document for electrical contractors.
+        const extractionPrompt = `Analyze this health & safety document and extract searchable metadata.
 
-DOCUMENT:
+DOCUMENT CONTENT:
 ${doc.content}
 
-Return JSON object with "hazards" array. Wrap response in {"hazards": [...]}.
+SOURCE INFO:
+- Topic: ${doc.topic || 'General H&S'}
+- Source: ${doc.source || 'Training material'}
 
-RESPONSE FORMAT:
+Extract comprehensive metadata to make this content searchable and useful. Return ONLY valid JSON with this exact structure:
+
 {
-  "hazards": [
-    {
-      "hazard_description": "Clear 20-100 word description",
-      "control_measures": ["specific control 1", "specific control 2"],
-      "required_ppe": {"type": "specification"}
-    }
-  ]
-}`;
+  "document_type": "workbook|guide|procedure|checklist|regulation|training",
+  "primary_topic": "brief topic (e.g., 'PPE Requirements', 'Electrical Safety', 'Risk Assessment')",
+  "keywords": ["keyword1", "keyword2", "keyword3"],
+  "content_summary": "2-3 sentence summary of main content",
+  "hazards_mentioned": ["hazard1", "hazard2"] or null if none,
+  "control_measures": ["control1", "control2"] or [],
+  "required_ppe": {"type": "spec"} or null,
+  "search_tags": ["tag1", "tag2", "tag3"]
+}
 
-        const response = await callOpenAIWithRetry(openAIKey, extractionPrompt, 'You are a health & safety expert. Extract structured hazard data. Return valid JSON only.');
+Focus on making this content findable via search. Extract 5-10 keywords and 3-5 search tags.`;
+
+        const response = await callOpenAIWithRetry(openAIKey, extractionPrompt);
 
         if (!response.ok) {
           console.error(`❌ OpenAI error for doc ${doc.id}`);
@@ -206,63 +212,81 @@ RESPONSE FORMAT:
         // Debug: Log raw OpenAI response
         console.log(`📋 Raw OpenAI content for ${doc.id} (${content.length} chars):`, content.substring(0, 200));
         
-        let hazards;
+        let intelligence;
         
         try {
-          const parsed = JSON.parse(content);
-          hazards = Array.isArray(parsed) ? parsed : (parsed.hazards || []);
-          console.log(`✅ Parsed ${hazards.length} hazards from doc ${doc.id}`);
+          intelligence = JSON.parse(content);
+          
+          // Validate we got the expected structure
+          if (!intelligence.document_type || !intelligence.primary_topic) {
+            console.error(`❌ Missing required fields for ${doc.id}:`, {
+              has_type: !!intelligence.document_type,
+              has_topic: !!intelligence.primary_topic,
+              keys: Object.keys(intelligence)
+            });
+            failed++;
+            continue;
+          }
+          
+          console.log(`✅ Extracted intelligence for ${doc.id}: ${intelligence.document_type} - ${intelligence.primary_topic}`);
         } catch (parseError) {
-          console.error(`❌ JSON parse error for ${doc.id}:`, parseError.message);
-          hazards = [];
+          console.error(`❌ JSON parse error for ${doc.id}:`, parseError.message, content.substring(0, 200));
+          failed++;
+          continue;
         }
 
-        // Validate quality with detailed logging
-        const qualityResult = validateQuality(hazards);
+        // Validate quality
+        const qualityResult = validateQuality(intelligence);
         if (!qualityResult.valid) {
           console.warn(`⚠️ Quality check failed for ${doc.id} - ${qualityResult.reason}`);
           qualityFailed++;
           failed++;
           continue;
         }
-        console.log(`✅ Quality passed for ${doc.id} - ${hazards.length} hazards extracted`);
+        console.log(`✅ Quality passed for ${doc.id}`);
         qualityPassed++;
 
-        for (const hazard of hazards) {
-          // Generate embedding for hazard description + controls
-          const embeddingText = `${hazard.hazard_description} ${hazard.control_measures?.join(' ') || ''}`;
+        // Generate embedding from combined metadata
+        const embeddingText = `${intelligence.document_type} ${intelligence.primary_topic} ${intelligence.keywords?.join(' ') || ''} ${intelligence.content_summary || ''}`;
+        
+        let embedding;
+        try {
+          embedding = await generateEmbeddingWithRetry(embeddingText, openAIKey);
           
-          let embedding;
-          try {
-            embedding = await generateEmbeddingWithRetry(embeddingText, openAIKey);
-            
-            if (!embedding || embedding.length !== 1536) {
-              console.error(`❌ Invalid embedding for hazard: ${hazard.hazard_description.substring(0, 50)}`);
-              failed++;
-              continue;
-            }
-          } catch (embError) {
-            console.error(`❌ Embedding generation failed for hazard: ${embError}`);
+          if (!embedding || embedding.length !== 1536) {
+            console.error(`❌ Invalid embedding for ${doc.id}`);
             failed++;
             continue;
           }
-          
-          await supabase
-            .from('health_safety_intelligence')
-            .upsert({
-              source_id: doc.id,
-              hazard_description: hazard.hazard_description || '',
-              control_measures: hazard.control_measures || [],
-              required_ppe: hazard.required_ppe || {},
-              embedding: embedding,
-              confidence_score: 0.85,
-              enrichment_version: ENRICHMENT_VERSION,
-              source_hash: contentHash,
-              updated_at: new Date().toISOString()
-            }, {
-              onConflict: 'source_id,hazard_description'
-            });
+        } catch (embError) {
+          console.error(`❌ Embedding generation failed for ${doc.id}: ${embError}`);
+          failed++;
+          continue;
         }
+
+        // Insert single intelligence record per document
+        await supabase
+          .from('health_safety_intelligence')
+          .upsert({
+            source_id: doc.id,
+            document_type: intelligence.document_type,
+            primary_topic: intelligence.primary_topic,
+            keywords: intelligence.keywords || [],
+            content_summary: intelligence.content_summary,
+            hazards_mentioned: intelligence.hazards_mentioned || [],
+            hazard_description: intelligence.hazards_mentioned?.[0] || null,
+            control_measures: intelligence.control_measures || [],
+            required_ppe: intelligence.required_ppe || null,
+            search_tags: intelligence.search_tags || [],
+            relevance_score: 0.85,
+            embedding: embedding,
+            confidence_score: 0.85,
+            enrichment_version: ENRICHMENT_VERSION,
+            source_hash: contentHash,
+            updated_at: new Date().toISOString()
+          }, {
+            onConflict: 'source_id'
+          });
 
         processed++;
         const docProcessingTime = Date.now() - docStartTime;
@@ -347,30 +371,32 @@ async function hashContent(content: string): Promise<string> {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-function validateQuality(hazards: any[]): { valid: boolean; reason?: string } {
-  if (!hazards || hazards.length === 0) {
-    return { valid: false, reason: 'No hazards extracted' };
+function validateQuality(intelligence: any): { valid: boolean; reason?: string } {
+  if (!intelligence) {
+    return { valid: false, reason: 'No data extracted' };
   }
   
-  const first = hazards[0];
+  // Check for minimum required metadata
+  const hasType = !!intelligence.document_type;
+  const hasTopic = !!intelligence.primary_topic;
+  const hasKeywords = Array.isArray(intelligence.keywords) && intelligence.keywords.length >= 3;
+  const hasSummary = intelligence.content_summary?.length >= 20;
   
-  // Relaxed validation: Accept if ANY of these conditions are met
-  const hasDescription = first.hazard_description?.length >= 5;
-  const hasControls = Array.isArray(first.control_measures) && first.control_measures.length >= 1;
-  const hasPPE = first.required_ppe && Object.keys(first.required_ppe).length > 0;
+  // Must have at least 3 of these 4 core fields
+  const score = [hasType, hasTopic, hasKeywords, hasSummary].filter(Boolean).length;
   
-  if (hasDescription || hasControls || hasPPE) {
+  if (score >= 3) {
     return { valid: true };
   }
   
   return { 
     valid: false, 
-    reason: `Insufficient data - desc: ${first.hazard_description?.length || 0} chars, controls: ${first.control_measures?.length || 0}, ppe: ${Object.keys(first.required_ppe || {}).length}`
+    reason: `Insufficient metadata - type: ${hasType}, topic: ${hasTopic}, keywords: ${intelligence.keywords?.length || 0}, summary: ${intelligence.content_summary?.length || 0} chars`
   };
 }
 
-async function callOpenAIWithRetry(apiKey: string, userPrompt: string, systemPrompt: string, maxRetries = 3) {
-  const TIMEOUT_MS = 60000; // 60s per item (increased from 30s)
+async function callOpenAIWithRetry(apiKey: string, userPrompt: string, maxRetries = 3) {
+  const TIMEOUT_MS = 60000; // 60s per item
   
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     const controller = new AbortController();
@@ -386,10 +412,9 @@ async function callOpenAIWithRetry(apiKey: string, userPrompt: string, systemPro
         body: JSON.stringify({
           model: 'gpt-5-mini-2025-08-07',
           messages: [
-            { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt }
           ],
-          max_completion_tokens: 1000,
+          max_completion_tokens: 800,
           response_format: { type: "json_object" }
         }),
         signal: controller.signal
