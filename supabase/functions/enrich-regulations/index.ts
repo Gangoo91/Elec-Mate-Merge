@@ -103,6 +103,18 @@ async function processInBackground(
       });
     }
 
+    console.log(`📦 Batch ${batchNumber} fetched ${regulations.length} regulations`);
+
+    // Set total_items immediately for progress tracking
+    await supabase
+      .from('batch_progress')
+      .update({
+        total_items: regulations.length,
+        started_at: new Date().toISOString()
+      })
+      .eq('job_id', jobId)
+      .eq('batch_number', batchNumber);
+
     // Check for checkpoint
     const { data: checkpoint } = await supabase
       .from('batch_progress')
@@ -207,6 +219,21 @@ async function processInBackground(
         const regProcessingTime = Date.now() - regStartTime;
         totalProcessingTime += regProcessingTime;
         
+        // Update progress after each regulation
+        await supabase.from('batch_progress').update({
+          items_processed: startFrom + i + 1,
+          data: { 
+            processed, 
+            failed, 
+            skipped, 
+            quality_passed: qualityPassed,
+            quality_failed: qualityFailed,
+            last_regulation: reg.regulation_number,
+            avg_processing_time_ms: totalProcessingTime / (i - startIndex + 1),
+            last_updated: new Date().toISOString()
+          }
+        }).eq('job_id', jobId).eq('batch_number', batchNumber);
+        
         // Save checkpoint every 25 docs
         if ((i + 1) % 25 === 0 || i === regulations.length - 1) {
           await supabase.from('batch_progress').update({
@@ -214,16 +241,10 @@ async function processInBackground(
               last_processed_id: reg.id,
               processed_count: i + 1,
               timestamp: new Date().toISOString()
-            },
-            items_processed: startFrom + i + 1,
-            data: {
-              quality_passed: qualityPassed,
-              quality_failed: qualityFailed,
-              avg_processing_time_ms: totalProcessingTime / (i - startIndex + 1),
-              api_cost_gbp: (i - startIndex + 1) * 0.0015,
-              last_updated: new Date().toISOString()
             }
-          }).eq('job_id', jobId).eq('batch_number', Math.floor(startFrom / batchSize));
+          }).eq('job_id', jobId).eq('batch_number', batchNumber);
+          
+          console.log(`💾 Checkpoint: ${processed} processed, ${failed} failed, ${skipped} skipped`);
         }
         
       } catch (error) {
@@ -345,7 +366,6 @@ Return ONLY valid JSON array.`;
     body: JSON.stringify({
       model: 'gpt-5-2025-08-07',
       messages: [{ role: 'user', content: prompt }],
-      temperature: 0,
       response_format: { type: 'json_object' },
       max_completion_tokens: 2000
     })
