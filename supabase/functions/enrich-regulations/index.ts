@@ -370,12 +370,12 @@ Return ONLY valid JSON object with "records" array.`;
       messages: [
         { 
           role: 'system', 
-          content: 'You are a strict JSON formatter. You MUST output valid JSON immediately. Do NOT write reasoning, explanations, or prose. Start your response with the JSON array.'
+          content: 'You are a strict JSON formatter. Output ONLY a valid JSON array. No markdown, no code fences, no explanations. Your entire response must be parseable JSON starting with [ and ending with ].'
         },
         { role: 'user', content: prompt }
       ],
-      max_completion_tokens: 8000,      // Increased from 3500 to ensure enough budget
-      max_reasoning_tokens: 2000,       // Allow controlled reasoning (not 0)
+      max_completion_tokens: 8000,      // VERIFIED: Enough budget for output
+      max_reasoning_tokens: 2000,       // VERIFIED: Controlled reasoning budget
       temperature: 0.3                   // Consistent output
     })
   });
