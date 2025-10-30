@@ -302,8 +302,7 @@ Return ONLY valid JSON array.`;
     body: JSON.stringify({
       model: 'gpt-5-mini-2025-08-07',
       messages: [{ role: 'user', content: prompt }],
-      max_completion_tokens: 2000,
-      response_format: { type: 'json_object' }
+      max_completion_tokens: 2000
     })
   });
   
@@ -318,18 +317,24 @@ Return ONLY valid JSON array.`;
   
   try {
     const parsed = JSON.parse(content);
-    // Handle both array and object responses (GPT may return wrapped object)
+    
+    // Handle both array and object responses
     if (Array.isArray(parsed)) {
+      console.log(`✅ Parsed ${parsed.length} intelligence records`);
       return parsed;
     } else if (parsed.intelligence || parsed.records || parsed.aspects) {
       // Handle wrapped array responses
-      return parsed.intelligence || parsed.records || parsed.aspects;
+      const records = parsed.intelligence || parsed.records || parsed.aspects;
+      console.log(`✅ Parsed ${records.length} intelligence records (from wrapped object)`);
+      return records;
     } else {
       // Single object response - wrap in array
+      console.log(`⚠️ Single object returned, wrapping in array`);
       return [parsed];
     }
   } catch (error) {
-    console.error('Failed to parse GPT-5 Mini response:', content);
+    console.error('❌ Failed to parse GPT-5 Mini response:', error);
+    console.error('Response content (first 500 chars):', content?.substring(0, 500));
     return null;
   }
 }
