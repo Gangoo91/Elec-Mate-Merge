@@ -119,12 +119,20 @@ export default function EnrichmentConsole() {
       
       const { count: totalCount } = await sourceQuery;
 
-      const { count: enrichedCount } = await supabase
+      // Count unique enriched source records (not facets)
+      const { data: enrichedData } = await supabase
         .from(config.targetTable)
-        .select('*', { count: 'exact', head: true });
+        .select('regulation_id, source_id, knowledge_id, pricing_id');
+
+      // Extract unique source IDs (handles different FK column names across tables)
+      const uniqueSourceIds = new Set(
+        (enrichedData || []).map((e: any) => 
+          e.regulation_id || e.source_id || e.knowledge_id || e.pricing_id
+        ).filter(Boolean)
+      );
 
       const total = totalCount || 0;
-      const enriched = enrichedCount || 0;
+      const enriched = uniqueSourceIds.size; // Count unique regulations, not facets
       const remaining = Math.max(0, total - enriched);
       const progress = total > 0 ? Math.round((enriched / total) * 100) : 0;
 
