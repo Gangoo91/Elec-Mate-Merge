@@ -82,12 +82,31 @@ async function processInBackground(
   console.log(`🔄 Background processing started: batch ${batchNumber}`);
   
   try {
+    // Check for missing regulations filter in job metadata
+    const { data: job } = await supabase
+      .from('batch_jobs')
+      .select('metadata')
+      .eq('id', jobId)
+      .single();
+    
+    const missingRegulations = job?.metadata?.missingRegulations || null;
+    
+    if (missingRegulations && Array.isArray(missingRegulations)) {
+      console.log(`🎯 COMPLETION MODE: Filtering to ${missingRegulations.length} missing regulations`);
+    }
     
     // Fetch batch of regulations (exclude "General" metadata rows)
-    const { data: regulations, error: fetchError } = await supabase
+    let query = supabase
       .from('bs7671_embeddings')
       .select('*')
-      .neq('regulation_number', 'General')
+      .neq('regulation_number', 'General');
+    
+    // Apply missing regulations filter if present
+    if (missingRegulations && Array.isArray(missingRegulations) && missingRegulations.length > 0) {
+      query = query.in('regulation_number', missingRegulations);
+    }
+    
+    const { data: regulations, error: fetchError } = await query
       .order('created_at', { ascending: true })
       .range(startFrom, startFrom + batchSize - 1);
     

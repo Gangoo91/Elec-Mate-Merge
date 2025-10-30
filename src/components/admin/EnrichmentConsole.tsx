@@ -84,6 +84,7 @@ export default function EnrichmentConsole() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const isMobile = useIsMobile();
+  const [missingRegulations, setMissingRegulations] = useState<string[]>([]);
 
   const loadStatus = async () => {
     try {
@@ -227,6 +228,47 @@ export default function EnrichmentConsole() {
     }
   };
 
+  const handleFindMissing = async () => {
+    setIsLoading(true);
+    try {
+      // BS 7671 specific: Find regulations not yet enriched
+      const { data: allRegs } = await supabase
+        .from('bs7671_embeddings')
+        .select('id, regulation_number, section, content')
+        .neq('regulation_number', 'General');
+      
+      const { data: enriched } = await supabase
+        .from('regulations_intelligence')
+        .select('regulation_id');
+      
+      const enrichedIds = new Set((enriched || []).map(e => e.regulation_id));
+      const missing = (allRegs || []).filter(r => !enrichedIds.has(r.id));
+      
+      const missingRegNumbers = [...new Set(missing.map(r => r.regulation_number))];
+      
+      setMissingRegulations(missingRegNumbers);
+      
+      toast.success(`Found ${missingRegNumbers.length} regulations needing enrichment`, {
+        description: `Ready to process: ${missingRegNumbers.slice(0, 5).join(', ')}${missingRegNumbers.length > 5 ? '...' : ''}`
+      });
+      
+    } catch (error: any) {
+      toast.error('Failed to find missing regulations');
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCompleteMissing = async () => {
+    if (missingRegulations.length === 0) {
+      toast.error('No missing regulations identified. Run "Find Missing" first.');
+      return;
+    }
+    
+    await callScheduler('start', { missingRegulations });
+  };
+
   const handleReconcile = async () => {
     setIsLoading(true);
     try {
@@ -351,6 +393,46 @@ export default function EnrichmentConsole() {
           </div>
         </div>
       </Card>
+
+      {/* Missing Regulations Alert (BS 7671 only) */}
+      {selectedTask === 'bs7671' && stats.sourceTotal > stats.sourceEnriched && (
+        <Card className="p-4 border-warning bg-warning/5">
+          <div className="flex items-center gap-2 mb-3">
+            <AlertCircle className="w-5 h-5 text-warning" />
+            <h4 className="font-semibold text-warning">Incomplete Enrichment Detected</h4>
+          </div>
+          <p className="text-sm text-muted-foreground mb-3">
+            {stats.sourceTotal - stats.sourceEnriched} regulations are missing enrichment data.
+          </p>
+          <div className="flex gap-2">
+            <MobileButton
+              onClick={handleFindMissing}
+              disabled={isLoading}
+              size={isMobile ? 'default' : 'sm'}
+              variant="outline"
+            >
+              <Database className="w-4 h-4 mr-2" />
+              Find Missing
+            </MobileButton>
+            {missingRegulations.length > 0 && (
+              <MobileButton
+                onClick={handleCompleteMissing}
+                disabled={isLoading}
+                size={isMobile ? 'default' : 'sm'}
+              >
+                <Play className="w-4 h-4 mr-2" />
+                Complete {missingRegulations.length} Missing
+              </MobileButton>
+            )}
+          </div>
+          {missingRegulations.length > 0 && (
+            <div className="mt-3 p-2 bg-muted rounded text-xs font-mono">
+              Ready: {missingRegulations.slice(0, 10).join(', ')}
+              {missingRegulations.length > 10 && ` + ${missingRegulations.length - 10} more`}
+            </div>
+          )}
+        </Card>
+      )}
 
       {/* Controls */}
       <Card className="p-4">

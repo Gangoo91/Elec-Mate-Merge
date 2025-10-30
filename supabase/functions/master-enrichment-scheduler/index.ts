@@ -48,9 +48,9 @@ serve(async (req) => {
   }
 
   try {
-    const { action = 'start', phase, taskName, scope = 'all', jobType, createIfMissing = false } = await req.json();
+    const { action = 'start', phase, taskName, scope = 'all', jobType, createIfMissing = false, missingRegulations = null } = await req.json();
     
-    console.log(`🎯 Master Enrichment Scheduler: ${action}${scope === 'single' ? ` (SINGLE: ${jobType})` : ''}`);
+    console.log(`🎯 Master Enrichment Scheduler: ${action}${scope === 'single' ? ` (SINGLE: ${jobType})` : ''}${missingRegulations ? ` [${missingRegulations.length} missing regs]` : ''}`);
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -439,7 +439,8 @@ serve(async (req) => {
               source_table: task.sourceTable,
               target_table: task.targetTable,
               batch_size: task.batchSize,
-              priority: task.priority
+              priority: task.priority,
+              missingRegulations: missingRegulations || null // Store filter list in job metadata
             }
           })
           .select()
