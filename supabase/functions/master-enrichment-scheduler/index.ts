@@ -225,6 +225,38 @@ serve(async (req) => {
         console.log('✅ Old jobs cleaned up');
       }
 
+      // 🔓 STEP 2: Auto-detect and reset ghost locks (jobs stuck in "processing" for >10 min)
+      console.log('🔓 Checking for ghost locks...');
+      const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+      
+      const { data: ghostLockedJobs } = await supabase
+        .from('batch_jobs')
+        .select('id, job_type, updated_at')
+        .eq('status', 'processing')
+        .lt('updated_at', tenMinutesAgo);
+      
+      if (ghostLockedJobs && ghostLockedJobs.length > 0) {
+        console.log(`🔧 Ghost lock detected on ${ghostLockedJobs.length} job(s), auto-resetting...`);
+        
+        for (const job of ghostLockedJobs) {
+          await supabase
+            .from('batch_jobs')
+            .update({ status: 'pending' })
+            .eq('id', job.id);
+          
+          // Also reset any stuck batches for this job
+          await supabase
+            .from('batch_progress')
+            .update({ status: 'pending', started_at: null, error_message: null })
+            .eq('job_id', job.id)
+            .eq('status', 'processing');
+          
+          console.log(`✅ Reset ghost lock for ${job.job_type} (last updated: ${job.updated_at})`);
+        }
+      } else {
+        console.log('✅ No ghost locks detected');
+      }
+
       // SINGLE SCOPE MODE: Only start the specified job type
       let tasksToRun = ENRICHMENT_TASKS;
       let jobTypesToStart: string[] = [];

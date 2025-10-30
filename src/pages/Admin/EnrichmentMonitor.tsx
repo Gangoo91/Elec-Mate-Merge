@@ -311,6 +311,41 @@ export default function EnrichmentMonitor() {
     }
   };
 
+  const forceResetJob = async (jobId: string, jobType: string) => {
+    setLoading(true);
+    try {
+      // Reset job status to pending
+      await supabase
+        .from('batch_jobs')
+        .update({ status: 'pending' })
+        .eq('id', jobId);
+      
+      // Reset any stuck batches for this job
+      await supabase
+        .from('batch_progress')
+        .update({ status: 'pending', started_at: null, error_message: null })
+        .eq('job_id', jobId)
+        .eq('status', 'processing');
+      
+      toast({ 
+        title: '✅ Job reset successfully',
+        description: `${jobType} cleared from ghost lock. Keepalive will resume processing.`,
+        variant: 'success'
+      });
+      
+      setTimeout(() => fetchJobs(), 1000);
+    } catch (error: any) {
+      console.error('❌ Reset failed:', error);
+      toast({ 
+        title: '❌ Reset failed',
+        description: error.message || 'Check logs for details.',
+        variant: 'destructive'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Jobs are already filtered server-side, no need for client filtering
   const filteredJobs = jobs;
 
@@ -629,7 +664,7 @@ export default function EnrichmentMonitor() {
               <CardHeader>
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
-                     <CardTitle className="flex items-center gap-2 flex-wrap">
+                      <CardTitle className="flex items-center gap-2 flex-wrap">
                       {job.job_type?.replace('enrich_', '').replace(/_/g, ' ').toUpperCase()}
                       {job.status === 'processing' && job.processingBatches > 0 && (
                         <Badge variant="destructive" className="animate-pulse">
@@ -644,8 +679,25 @@ export default function EnrichmentMonitor() {
                         </Badge>
                       )}
                       <Badge variant="outline">{job.status}</Badge>
+                      
+                      {/* Force Reset button - show when job is stuck (processing >5 min) */}
+                      {job.status === 'processing' && 
+                       Date.now() - new Date(job.updated_at).getTime() > 5 * 60 * 1000 && (
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="ml-auto"
+                          onClick={() => forceResetJob(job.id, job.job_type)}
+                          disabled={loading}
+                        >
+                          <AlertTriangle className="w-3 h-3 mr-1" />
+                          Force Reset
+                        </Button>
+                      )}
+                      
                       {/* Resume button - show when incomplete and not actively processing */}
-                      {job.completedBatches < job.totalBatches && (job.processingBatches === 0 || !job.hasRecentActivity) && (
+                      {job.completedBatches < job.totalBatches && (job.processingBatches === 0 || !job.hasRecentActivity) && 
+                       !(job.status === 'processing' && Date.now() - new Date(job.updated_at).getTime() > 5 * 60 * 1000) && (
                         <Button
                           size="sm"
                           variant="default"
