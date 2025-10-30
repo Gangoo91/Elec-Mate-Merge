@@ -228,6 +228,12 @@ export default function KnowledgeUploader() {
               />
             </CardContent>
           </Card>
+
+          <RegulationsIntelligenceProgress
+            jobType="enrich_health_safety_knowledge"
+            targetTable="health_safety_intelligence"
+            title="Health & Safety Intelligence"
+          />
         </TabsContent>
 
         <TabsContent value="inspection" className="space-y-6 mt-8">

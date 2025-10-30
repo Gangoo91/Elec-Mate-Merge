@@ -8,10 +8,14 @@ import { useToast } from "@/hooks/use-toast";
 
 interface RegulationsIntelligenceProgressProps {
   jobType?: string;
+  targetTable?: string;
+  title?: string;
 }
 
 export default function RegulationsIntelligenceProgress({ 
-  jobType = 'enrich_bs7671_embeddings'
+  jobType = 'enrich_bs7671_embeddings',
+  targetTable = 'regulations_intelligence',
+  title = 'BS 7671 Intelligence'
 }: RegulationsIntelligenceProgressProps) {
   const [status, setStatus] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,9 +34,9 @@ export default function RegulationsIntelligenceProgress({
         .limit(1)
         .maybeSingle();
 
-      // Get row count from regulations_intelligence
-      const { count } = await supabase
-        .from('regulations_intelligence')
+      // Get row count from target table
+      const { count } = await (supabase as any)
+        .from(targetTable)
         .select('*', { count: 'exact', head: true });
 
       setRowCount(count || 0);
@@ -96,7 +100,7 @@ export default function RegulationsIntelligenceProgress({
 
       toast({
         title: "Continuous processing started",
-        description: "BS 7671 enrichment worker is now running continuously",
+        description: `${title} worker is now running continuously`,
       });
 
       // Refresh status
@@ -143,7 +147,7 @@ export default function RegulationsIntelligenceProgress({
     return (
       <Card>
         <CardHeader>
-          <CardTitle>BS 7671 Intelligence</CardTitle>
+          <CardTitle>{title}</CardTitle>
           <CardDescription>No active enrichment job found</CardDescription>
         </CardHeader>
         <CardContent>
@@ -167,10 +171,10 @@ export default function RegulationsIntelligenceProgress({
           {status.status === "completed" && <CheckCircle2 className="h-5 w-5 text-green-500" />}
           {status.status === "failed" && <XCircle className="h-5 w-5 text-destructive" />}
           {status.status === "processing" && <Loader2 className="h-5 w-5 animate-spin" />}
-          BS 7671 Intelligence Enrichment
+          {title} Enrichment
         </CardTitle>
         <CardDescription>
-          {rowCount.toLocaleString()} regulations in database
+          {rowCount.toLocaleString()} entries in database
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
