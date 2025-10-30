@@ -19,7 +19,7 @@ interface EnrichmentTask {
 
 const ENRICHMENT_TASKS: EnrichmentTask[] = [
   // Phase 1: Core Knowledge Bases (Priority 1) - OPTIMIZED BATCH SIZES
-  { name: 'BS 7671 Intelligence', functionName: 'enrich-regulations', sourceTable: 'bs7671_embeddings', targetTable: 'regulations_intelligence', batchSize: 43, priority: 1 },
+  { name: 'BS 7671 Intelligence', functionName: 'enrich-regulations', sourceTable: 'bs7671_embeddings', targetTable: 'regulations_intelligence', batchSize: 20, priority: 1 },
   { name: 'Health & Safety Knowledge', functionName: 'enrich-health-safety', sourceTable: 'health_safety_knowledge', targetTable: 'health_safety_intelligence', batchSize: 15, priority: 1 },
   { name: 'Installation Procedures', functionName: 'enrich-installation-procedures', sourceTable: 'installation_knowledge', targetTable: 'installation_procedures', batchSize: 20, priority: 1 },
   { name: 'Design Patterns', functionName: 'enrich-design-patterns', sourceTable: 'design_knowledge', targetTable: 'design_patterns_structured', batchSize: 20, priority: 1 },
@@ -466,7 +466,7 @@ serve(async (req) => {
         }
       }
 
-      // 🔥 PHASE 2: Start long-running worker ONLY if jobs were created
+      // 🔥 PHASE 2: Start long-running worker if jobs were created OR if existing jobs need resuming
       if (jobIds.length > 0) {
         console.log(`🚀 Starting continuous worker for ${jobIds.length} jobs`);
         
@@ -487,8 +487,34 @@ serve(async (req) => {
             if (task) processNextBatch(supabase, jobId, task);
           });
         }
+      } else if (existingJobs && existingJobs.length > 0) {
+        // RESILIENCE FIX: Even if no new jobs created, resume existing pending/processing jobs
+        console.log(`🔄 No new jobs created, but resuming ${existingJobs.length} existing jobs with worker pool`);
+        const resumeJobIds = existingJobs.map(j => j.id);
+        const resumeJobTaskMap = new Map<string, EnrichmentTask>();
+        existingJobs.forEach(job => {
+          const task = ENRICHMENT_TASKS.find(t => `enrich_${t.sourceTable}` === job.job_type);
+          if (task) resumeJobTaskMap.set(job.id, task);
+        });
+        
+        // @ts-ignore - EdgeRuntime is available in Deno edge functions
+        if (typeof EdgeRuntime !== 'undefined') {
+          // @ts-ignore
+          EdgeRuntime.waitUntil(
+            continuousProcessor(supabase, resumeJobIds, resumeJobTaskMap).catch(err => {
+              console.error('❌ Continuous processor failed:', err);
+            })
+          );
+          console.log('✅ Long-running worker initiated for existing jobs with EdgeRuntime.waitUntil()');
+        } else {
+          console.warn('⚠️ EdgeRuntime not available, falling back to immediate processing');
+          resumeJobIds.forEach(jobId => {
+            const task = resumeJobTaskMap.get(jobId);
+            if (task) processNextBatch(supabase, jobId, task);
+          });
+        }
       } else {
-        console.error('❌ No jobs created, worker not started. Check logs above for job creation errors.');
+        console.error('❌ No jobs to process. Check logs above for job creation errors.');
       }
 
       // Return immediately while worker continues in background
@@ -588,16 +614,50 @@ serve(async (req) => {
         .in('status', ['pending', 'processing'])
         .in('job_type', jobTypesToContinue);
 
-      for (const job of pendingJobs || []) {
+      if (!pendingJobs || pendingJobs.length === 0) {
+        return new Response(JSON.stringify({ 
+          success: true,
+          message: 'No pending jobs to continue'
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      // RESILIENCE FIX: Launch continuous worker pool for all pending jobs
+      const jobIds = pendingJobs.map(j => j.id);
+      const jobTaskMap = new Map<string, EnrichmentTask>();
+      
+      for (const job of pendingJobs) {
         const task = ENRICHMENT_TASKS.find(t => `enrich_${t.sourceTable}` === job.job_type);
         if (task) {
-          await processNextBatch(supabase, job.id, task);
+          jobTaskMap.set(job.id, task);
+          // Also trigger immediate processing for faster startup
+          processNextBatch(supabase, job.id, task).catch(err => 
+            console.error(`Failed immediate processing for ${job.id}:`, err)
+          );
         }
+      }
+
+      // Launch continuous worker pool to keep processing after request ends
+      console.log(`🚀 Continue: Starting continuous worker for ${jobIds.length} jobs`);
+      // @ts-ignore - EdgeRuntime is available in Deno edge functions
+      if (typeof EdgeRuntime !== 'undefined') {
+        // @ts-ignore
+        EdgeRuntime.waitUntil(
+          continuousProcessor(supabase, jobIds, jobTaskMap).catch(err => {
+            console.error('❌ Continuous processor failed:', err);
+          })
+        );
+        console.log('✅ Long-running worker initiated with EdgeRuntime.waitUntil()');
+      } else {
+        console.warn('⚠️ EdgeRuntime not available');
       }
 
       return new Response(JSON.stringify({ 
         success: true,
-        message: `Continuing ${pendingJobs?.length || 0} jobs`
+        message: `Continuing ${pendingJobs.length} jobs with continuous worker`,
+        jobIds,
+        worker_active: typeof EdgeRuntime !== 'undefined'
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
@@ -884,7 +944,7 @@ async function waitForBatchCompletion(
   supabase: any,
   batchId: string,
   batchNumber: number,
-  maxWaitMinutes: number = 10
+  maxWaitMinutes: number = 20
 ): Promise<'completed' | 'failed' | 'timeout'> {
   const startTime = Date.now();
   const maxWaitMs = maxWaitMinutes * 60 * 1000;
@@ -1040,8 +1100,8 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
 
     if (invokeError) throw invokeError;
     
-    // Wait for batch to actually complete in background (with timeout)
-    const completionStatus = await waitForBatchCompletion(supabase, batch.id, batch.batch_number, 10);
+    // Wait for batch to actually complete in background (with timeout - increased to 20 min)
+    const completionStatus = await waitForBatchCompletion(supabase, batch.id, batch.batch_number, 20);
     
     if (completionStatus === 'timeout') {
       console.warn(`⏱️ Batch ${batch.batch_number} timed out, marking as failed`);
@@ -1049,7 +1109,7 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
         .from('batch_progress')
         .update({ 
           status: 'failed',
-          error_message: 'Batch processing timed out after 10 minutes',
+          error_message: 'Batch processing timed out after 20 minutes',
           completed_at: new Date().toISOString()
         })
         .eq('id', batch.id);

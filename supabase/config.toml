@@ -197,6 +197,10 @@ timeout_sec = 600
 verify_jwt = false
 timeout_sec = 600
 
+[functions.enrichment-keepalive]
+verify_jwt = false
+timeout_sec = 60
+
 [functions.enrich-health-safety]
 verify_jwt = false
 timeout_sec = 600
