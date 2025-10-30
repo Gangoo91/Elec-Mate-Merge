@@ -3,10 +3,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { Loader2, CheckCircle2, XCircle, PlayCircle, Pause, Play, Zap } from "lucide-react";
+import { Loader2, CheckCircle2, XCircle, PlayCircle, Pause, Play, Zap, Rocket } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useKeepalive } from "@/hooks/useKeepalive";
 import { formatDistanceToNow } from "date-fns";
+import { Badge } from "@/components/ui/badge";
+import { useQueryClient } from '@tanstack/react-query';
 
 interface RegulationsIntelligenceProgressProps {
   jobType?: string;
@@ -25,6 +27,7 @@ export default function RegulationsIntelligenceProgress({
   const [rowCount, setRowCount] = useState<number>(0);
   const [keepaliveEnabled, setKeepaliveEnabled] = useState(false);
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   const isProcessing = status?.status === 'processing' && 
     status?.completedBatches < status?.totalBatches;
@@ -141,6 +144,9 @@ export default function RegulationsIntelligenceProgress({
   });
 
   useEffect(() => {
+    // Clear cache on mount to prevent stale data
+    queryClient.clear();
+    
     fetchStatus();
     
     // Poll every 5 seconds if processing
@@ -179,15 +185,43 @@ export default function RegulationsIntelligenceProgress({
 
   if (!status) {
     return (
-      <Card>
+      <Card className="border-elec-yellow/20 bg-elec-gray/50">
         <CardHeader>
-          <CardTitle>{title}</CardTitle>
-          <CardDescription>No active enrichment job found</CardDescription>
+          <CardTitle className="flex items-center gap-2">
+            {title}
+            <Badge variant="outline" className="gap-1 border-elec-yellow/30 text-elec-yellow text-xs">
+              <Rocket className="w-3 h-3" />
+              10 Workers Ready
+            </Badge>
+          </CardTitle>
+          <CardDescription>
+            {rowCount > 0 
+              ? `${rowCount.toLocaleString()} regulations enriched - Ready to start fresh` 
+              : 'Ready to enrich 2,557 regulations'
+            }
+          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground">
-            {rowCount > 0 ? `${rowCount.toLocaleString()} regulations enriched` : 'No regulations enriched yet'}
-          </p>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Progress</span>
+              <span className="font-medium">0%</span>
+            </div>
+            <Progress value={0} className="h-2" />
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>0 / 170 batches</span>
+              <span>~25-30 min with parallel processing</span>
+            </div>
+          </div>
+          
+          <div className="flex flex-col gap-2">
+            <Badge variant="outline" className="text-xs justify-center">
+              GPT-5 Model Enabled
+            </Badge>
+            <p className="text-xs text-muted-foreground text-center">
+              Click "Start Enrichment" above to begin processing
+            </p>
+          </div>
         </CardContent>
       </Card>
     );
@@ -201,11 +235,17 @@ export default function RegulationsIntelligenceProgress({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+        <CardTitle className="flex items-center gap-2 flex-wrap">
           {status.status === "completed" && <CheckCircle2 className="h-5 w-5 text-green-500" />}
           {status.status === "failed" && <XCircle className="h-5 w-5 text-destructive" />}
           {status.status === "processing" && <Loader2 className="h-5 w-5 animate-spin" />}
           {title} Enrichment
+          {status.processingBatches > 0 && (
+            <Badge variant="outline" className="gap-1 border-elec-yellow/30 text-elec-yellow">
+              <Rocket className="w-3 h-3" />
+              10 Workers Active
+            </Badge>
+          )}
         </CardTitle>
         <CardDescription>
           {rowCount.toLocaleString()} entries in database

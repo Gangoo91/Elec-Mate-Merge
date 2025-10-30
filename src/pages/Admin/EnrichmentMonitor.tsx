@@ -4,12 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
-import { RefreshCw, Play, TestTube2, AlertTriangle, Trash2, SkipForward, Pause, Clock, Activity, Zap, Filter } from 'lucide-react';
+import { RefreshCw, Play, TestTube2, AlertTriangle, Trash2, SkipForward, Pause, Clock, Activity, Zap, Filter, Rocket } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useSearchParams } from 'react-router-dom';
 import { useKeepalive } from '@/hooks/useKeepalive';
+import { useQueryClient } from '@tanstack/react-query';
 
 // Task filter mapping
 const TASK_FILTERS = {
@@ -32,6 +33,7 @@ export default function EnrichmentMonitor() {
   const [showClearDialog, setShowClearDialog] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   // Get task filter from URL or default to 'all'
   const selectedTask = (searchParams.get('task') || 'all') as keyof typeof TASK_FILTERS;
@@ -121,6 +123,9 @@ export default function EnrichmentMonitor() {
   });
 
   useEffect(() => {
+    // Clear React Query cache on mount to prevent stale data
+    queryClient.clear();
+    
     fetchJobs();
     if (autoRefresh) {
       const interval = setInterval(fetchJobs, 5000);
@@ -726,10 +731,18 @@ export default function EnrichmentMonitor() {
                         </Button>
                       )}
                     </CardTitle>
-                    <CardDescription className="mt-1">
-                      {job.completedBatches}/{job.totalBatches} batches completed
-                      {job.failedBatches > 0 && ` • ${job.failedBatches} failed`}
-                      {job.processingBatches > 0 && ` • ${job.processingBatches} processing`}
+                    <CardDescription className="mt-1 flex items-center gap-2 flex-wrap">
+                      <span>{job.completedBatches}/{job.totalBatches} batches completed</span>
+                      {job.failedBatches > 0 && <span>• {job.failedBatches} failed</span>}
+                      {job.processingBatches > 0 && (
+                        <>
+                          <span>• {job.processingBatches} processing</span>
+                          <Badge variant="outline" className="gap-1 border-elec-yellow/30 text-elec-yellow">
+                            <Rocket className="w-3 h-3" />
+                            10 Workers Active
+                          </Badge>
+                        </>
+                      )}
                     </CardDescription>
                     {health.estimatedTimeRemaining > 0 && (
                       <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
@@ -803,12 +816,35 @@ export default function EnrichmentMonitor() {
         })}
         
         {filteredJobs.length === 0 && (
-          <Card>
-            <CardContent className="py-12 text-center text-muted-foreground">
-              {jobs.length === 0 
-                ? "No enrichment jobs found. Click 'Start Phase 1' to begin."
-                : `No ${TASK_FILTERS[selectedTask].label} jobs found.`
-              }
+          <Card className="border-elec-yellow/20 bg-elec-gray/50">
+            <CardContent className="py-12 text-center space-y-4">
+              <div>
+                <h3 className="text-lg font-medium mb-2">
+                  {jobs.length === 0 
+                    ? "Ready to Start Fresh" 
+                    : `No ${TASK_FILTERS[selectedTask].label} jobs found`
+                  }
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {jobs.length === 0 && selectedTask === 'bs7671' 
+                    ? "Ready to enrich 2,557 BS 7671 regulations with 10 parallel workers (~25-30 min)"
+                    : jobs.length === 0
+                    ? "Click 'Start Enrichment' above to begin processing"
+                    : `Filter shows no jobs. Try selecting a different task or click 'All Tasks'.`
+                  }
+                </p>
+              </div>
+              {jobs.length === 0 && (
+                <div className="flex flex-col items-center gap-2">
+                  <Badge variant="outline" className="gap-1 border-elec-yellow/30 text-elec-yellow">
+                    <Rocket className="w-4 h-4" />
+                    10 Parallel Workers Ready
+                  </Badge>
+                  <Badge variant="outline" className="text-xs">
+                    GPT-5 Model Enabled
+                  </Badge>
+                </div>
+              )}
             </CardContent>
           </Card>
         )}
