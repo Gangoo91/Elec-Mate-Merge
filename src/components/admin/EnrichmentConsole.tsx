@@ -167,26 +167,20 @@ export default function EnrichmentConsole() {
   const handleDedupe = () => callScheduler('dedupe_batches');
   const handleAbortDupes = () => callScheduler('abort_duplicates');
   const handleClear = async () => {
-    if (!confirm('Clear ALL jobs and batches for this task? This cannot be undone.')) return;
+    if (!confirm('Clear ALL jobs and batches? This cannot be undone.')) return;
     
     setIsLoading(true);
     try {
-      // Delete batches for this job type's jobs
-      const { data: taskJobs } = await supabase
-        .from('batch_jobs')
-        .select('id')
-        .eq('job_type', config.jobType);
+      const response = await supabase.functions.invoke('master-enrichment-scheduler', {
+        body: { action: 'clear_all' }
+      });
       
-      if (taskJobs && taskJobs.length > 0) {
-        const jobIds = taskJobs.map(j => j.id);
-        await supabase.from('batch_progress').delete().in('job_id', jobIds);
-      }
+      if (response.error) throw response.error;
       
-      await supabase.from('batch_jobs').delete().eq('job_type', config.jobType);
-      toast.success('All jobs cleared for this task');
+      toast.success('All jobs and batches cleared');
       await loadStatus();
     } catch (error: any) {
-      toast.error(error.message);
+      toast.error(error.message || 'Clear failed');
     } finally {
       setIsLoading(false);
     }

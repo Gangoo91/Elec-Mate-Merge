@@ -105,15 +105,24 @@ async function processInBackground(
 
     console.log(`📦 Batch ${batchNumber} fetched ${regulations.length} regulations`);
 
-    // Set total_items immediately for progress tracking
-    await supabase
+    // Get current batch data before updating
+    const { data: currentProgress } = await supabase
       .from('batch_progress')
-      .update({
+      .select('data')
+      .eq('job_id', jobId)
+      .eq('batch_number', batchNumber)
+      .single();
+
+    // Update batch progress to processing
+    await supabase.from('batch_progress').update({
+      status: 'processing',
+      started_at: new Date().toISOString(),
+      data: { 
+        ...(currentProgress?.data || {}),
         total_items: regulations.length,
         started_at: new Date().toISOString()
-      })
-      .eq('job_id', jobId)
-      .eq('batch_number', batchNumber);
+      }
+    }).eq('job_id', jobId).eq('batch_number', batchNumber);
 
     // Check for checkpoint
     const { data: checkpoint } = await supabase
@@ -131,11 +140,12 @@ async function processInBackground(
     let processed = 0, failed = 0, qualityPassed = 0, qualityFailed = 0, skipped = 0;
     let totalProcessingTime = 0;
     
-    // Start heartbeat timer (30s progress updates)
+    // Progress heartbeat every 30 seconds
     const heartbeat = setInterval(async () => {
       try {
         await supabase.from('batch_progress').update({
           data: { 
+            ...(currentProgress?.data || {}),  // Preserve scheduler metadata
             processed, 
             failed, 
             skipped,
@@ -144,8 +154,10 @@ async function processInBackground(
             last_heartbeat: new Date().toISOString()
           }
         }).eq('job_id', jobId).eq('batch_number', batchNumber);
+        
+        console.log(`💓 Heartbeat: batch ${batchNumber} - processed ${processed}/${regulations.length}`);
       } catch (e) {
-        console.error('Heartbeat failed:', e);
+        console.error('❌ Heartbeat failed:', e);
       }
     }, 30000);
     
