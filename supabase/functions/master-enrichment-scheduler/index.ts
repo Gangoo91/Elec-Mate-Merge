@@ -48,7 +48,19 @@ serve(async (req) => {
   }
 
   try {
-    const { action = 'start', phase, taskName, scope = 'all', jobType, createIfMissing = false, missingRegulations = null } = await req.json();
+    const { 
+      action = 'start', 
+      phase, 
+      taskName, 
+      scope = 'all', 
+      jobType, 
+      createIfMissing = false, 
+      missingRegulations = null,
+      forceNewJob = false,
+      regulationNumbers = null,
+      chunkSize = 10,
+      workers = 6
+    } = await req.json();
     
     console.log(`🎯 Master Enrichment Scheduler: ${action}${scope === 'single' ? ` (SINGLE: ${jobType})` : ''}${missingRegulations ? ` [${missingRegulations.length} missing regs]` : ''}`);
     
@@ -230,6 +242,69 @@ serve(async (req) => {
     });
   }
   
+  // Action: Abort all active jobs
+  if (action === 'abort_all') {
+    console.log('🛑 Aborting all active jobs...');
+    
+    try {
+      // Mark all active jobs as aborted
+      const { data: activeJobs, error: queryError } = await supabase
+        .from('batch_jobs')
+        .select('id, job_type')
+        .in('status', ['pending', 'processing']);
+      
+      if (queryError) throw queryError;
+      
+      let jobsAborted = 0;
+      let batchesCancelled = 0;
+      
+      for (const job of activeJobs || []) {
+        // Mark job as aborted
+        await supabase
+          .from('batch_jobs')
+          .update({
+            status: 'aborted',
+            completed_at: new Date().toISOString(),
+            error_message: 'Aborted by user via abort_all'
+          })
+          .eq('id', job.id);
+        
+        // Cancel pending batches
+        const { count } = await supabase
+          .from('batch_progress')
+          .delete()
+          .eq('job_id', job.id)
+          .in('status', ['pending', 'processing'])
+          .select('*', { count: 'exact', head: true });
+        
+        jobsAborted++;
+        batchesCancelled += count || 0;
+        
+        console.log(`✅ Aborted job ${job.job_type}, cancelled ${count || 0} batches`);
+      }
+      
+      // Clear in-memory worker map
+      activeWorkers.clear();
+      
+      return new Response(JSON.stringify({
+        success: true,
+        jobs_aborted: jobsAborted,
+        batches_cancelled: batchesCancelled
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    } catch (error) {
+      console.error('❌ Abort failed:', error);
+      return new Response(JSON.stringify({
+        success: false,
+        error: error.message || 'Failed to abort jobs'
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+  }
+  
   if (action === 'clear_all') {
     console.log('🧹 ADMIN PURGE: Clearing all jobs and batches...');
     
@@ -289,6 +364,120 @@ serve(async (req) => {
   }
   
   if (action === 'start') {
+      // NEW: Force new job mode - abort existing and create fresh batches
+      if (forceNewJob && regulationNumbers && Array.isArray(regulationNumbers)) {
+        console.log(`🆕 FORCE NEW JOB: Creating fresh run for ${regulationNumbers.length} regulations`);
+        
+        // Abort any active jobs for BS 7671
+        const { data: existingJobs } = await supabase
+          .from('batch_jobs')
+          .select('id')
+          .eq('job_type', 'enrich_bs7671_embeddings')
+          .in('status', ['pending', 'processing']);
+        
+        for (const job of existingJobs || []) {
+          await supabase
+            .from('batch_jobs')
+            .update({
+              status: 'aborted',
+              completed_at: new Date().toISOString(),
+              error_message: 'Aborted to start fresh job'
+            })
+            .eq('id', job.id);
+          
+          // Delete pending batches for this job
+          await supabase
+            .from('batch_progress')
+            .delete()
+            .eq('job_id', job.id);
+        }
+        
+        // Create new job with batches scoped to regulation list
+        const batchSize = chunkSize;
+        const totalBatches = Math.ceil(regulationNumbers.length / batchSize);
+        
+        const { data: newJob, error: jobError } = await supabase
+          .from('batch_jobs')
+          .insert({
+            job_type: 'enrich_bs7671_embeddings',
+            status: 'processing',
+            total_batches: totalBatches,
+            metadata: {
+              source: 'missing_regs',
+              regulationNumbers: regulationNumbers,
+              batchSize: batchSize,
+              workers: workers
+            }
+          })
+          .select()
+          .single();
+        
+        if (jobError || !newJob) {
+          console.error('❌ Failed to create new job:', jobError);
+          return new Response(JSON.stringify({
+            success: false,
+            error: 'Failed to create new job'
+          }), {
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        }
+        
+        // Create batches for this job
+        const batches = [];
+        for (let i = 0; i < regulationNumbers.length; i += batchSize) {
+          const chunk = regulationNumbers.slice(i, i + batchSize);
+          batches.push({
+            job_id: newJob.id,
+            batch_number: Math.floor(i / batchSize),
+            status: 'pending',
+            data: {
+              regulations: chunk,
+              startIndex: i
+            }
+          });
+        }
+        
+        const { error: batchError } = await supabase
+          .from('batch_progress')
+          .insert(batches);
+        
+        if (batchError) {
+          console.error('❌ Failed to create batches:', batchError);
+          return new Response(JSON.stringify({
+            success: false,
+            error: 'Failed to create batches'
+          }), {
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        }
+        
+        console.log(`✅ Created job ${newJob.id} with ${batches.length} batches`);
+        
+        // Launch workers
+        const workersStarted = Math.min(workers, batches.length);
+        for (let i = 0; i < workersStarted; i++) {
+          supabase.functions.invoke('enrich-regulations', {
+            body: {
+              jobId: newJob.id,
+              batchSize: batchSize,
+              startFrom: 0
+            }
+          }).catch(err => console.error(`Worker ${i} failed:`, err));
+        }
+        
+        return new Response(JSON.stringify({
+          success: true,
+          jobId: newJob.id,
+          batchesCreated: batches.length,
+          workersStarted: workersStarted,
+          regulations: regulationNumbers.length
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+      
       // 🧹 STEP 1: Auto-cleanup old aborted/failed jobs before creating new ones
       console.log('🧹 Cleaning up old aborted/failed jobs...');
       const oneHourAgo = new Date(Date.now() - 3600000).toISOString();

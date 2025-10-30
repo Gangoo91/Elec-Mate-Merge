@@ -262,16 +262,73 @@ export default function EnrichmentConsole() {
       return;
     }
     
-    // Abort any existing jobs before starting fresh
-    const activeJob = jobs.find(j => ['pending', 'processing'].includes(j.status));
-    if (activeJob) {
-      toast.info('Clearing old jobs before starting fresh...');
-      await handleClear();
-      // Wait a moment for cleanup to complete
-      await new Promise(resolve => setTimeout(resolve, 500));
-    }
+    setIsLoading(true);
     
-    await callScheduler('start', { missingRegulations });
+    try {
+      // Step 1: Abort all existing jobs
+      toast.info('Clearing old jobs before starting fresh...');
+      const abortResponse = await supabase.functions.invoke('master-enrichment-scheduler', {
+        body: { action: 'abort_all' }
+      });
+      
+      if (abortResponse.error) throw abortResponse.error;
+      
+      // Step 2: Poll until no active jobs remain (max 10s)
+      const maxWaitTime = 10000;
+      const pollInterval = 500;
+      const startTime = Date.now();
+      
+      while (Date.now() - startTime < maxWaitTime) {
+        const { data: jobsData } = await supabase
+          .from('batch_jobs')
+          .select('id, status')
+          .eq('job_type', config.jobType)
+          .in('status', ['pending', 'processing']);
+        
+        const activeJobs = jobsData || [];
+        
+        if (activeJobs.length === 0) {
+          console.log('✅ All jobs cleared, ready to start fresh');
+          break;
+        }
+        
+        console.log(`⏳ Waiting for ${activeJobs.length} active jobs to clear...`);
+        await new Promise(resolve => setTimeout(resolve, pollInterval));
+      }
+      
+      // Step 3: Start new job with forceNewJob flag
+      toast.info(`Starting fresh job for ${missingRegulations.length} missing regulations...`);
+      const startResponse = await supabase.functions.invoke('master-enrichment-scheduler', {
+        body: { 
+          action: 'start',
+          forceNewJob: true,
+          regulationNumbers: missingRegulations,
+          scope: 'single',
+          jobType: config.jobType,
+          chunkSize: 10,
+          workers: 6
+        }
+      });
+      
+      if (startResponse.error) throw startResponse.error;
+      
+      const result = startResponse.data;
+      
+      if (result?.jobId && result?.batchesCreated) {
+        toast.success(`New job created: ${result.batchesCreated} batches for ${missingRegulations.length} regulations`);
+        console.log(`📊 Job ID: ${result.jobId}, Batches: ${result.batchesCreated}`);
+      } else {
+        toast.error('Failed to create new batches. Try "Clear All" then start again.');
+      }
+      
+      // Refresh status
+      await loadStatus();
+    } catch (error: any) {
+      console.error('Failed to start fresh job:', error);
+      toast.error(error.message || 'Failed to start enrichment job');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleReconcile = async () => {
