@@ -270,12 +270,11 @@ async function vectorSearchWithEmbedding(
     }
   }
 
-  // BS 7671 search - PHASE 2: Use cached version for 120x speedup
+  // BS 7671 search - UPGRADED: Use enriched regulations intelligence
   if (!priority || priority.bs7671 > 50) {
     searches.push(
-      supabase.rpc('search_bs7671_hybrid_cached', {
+      supabase.rpc('search_bs7671_intelligence_hybrid', {
         query_text: params.expandedQuery,
-        query_embedding: embedding,
         match_count: matchCount, // PHASE 5: Dynamic match count
       })
     );

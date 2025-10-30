@@ -7388,6 +7388,21 @@ export type Database = {
           section: string
         }[]
       }
+      search_bs7671_intelligence_hybrid: {
+        Args: { match_count?: number; query_text: string }
+        Returns: {
+          category: string
+          content: string
+          hybrid_score: number
+          id: string
+          keyword_match_score: number
+          keywords: string[]
+          practical_application: string
+          primary_topic: string
+          regulation_id: string
+          regulation_number: string
+        }[]
+      }
       search_design_hybrid: {
         Args: {
           match_count?: number
