@@ -374,9 +374,9 @@ Return ONLY valid JSON object with "records" array.`;
         },
         { role: 'user', content: prompt }
       ],
-      max_completion_tokens: 8000,      // VERIFIED: Enough budget for output
-      max_reasoning_tokens: 2000,       // VERIFIED: Controlled reasoning budget
+      max_completion_tokens: 8000,      // GPT-5 Mini: Use max_completion_tokens (NOT max_tokens)
       temperature: 0.3                   // Consistent output
+      // NOTE: max_reasoning_tokens is NOT supported by gpt-5-mini
     })
   });
   
