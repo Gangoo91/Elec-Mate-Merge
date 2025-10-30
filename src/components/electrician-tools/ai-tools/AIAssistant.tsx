@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sparkles, Loader, Copy, Lightbulb, ChevronDown, FileText, BookOpen, Wrench } from "lucide-react";
+import { Sparkles, Loader, Copy, Lightbulb, ChevronDown, FileText, BookOpen, Wrench, Check } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -20,6 +20,7 @@ const AIAssistant = () => {
   const [prompt, setPrompt] = useState("");
   const [aiResponse, setAiResponse] = useState<AIResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [progressStage, setProgressStage] = useState<'parsing' | 'searching' | 'analyzing' | 'formatting' | null>(null);
 
   const handleCopyResponse = () => {
     if (!aiResponse) return;
@@ -46,6 +47,21 @@ const AIAssistant = () => {
     
     setIsLoading(true);
     setAiResponse(null);
+    
+    // Stage 1: Parsing (0-2s)
+    setProgressStage('parsing');
+    
+    setTimeout(() => {
+      setProgressStage('searching');
+    }, 2000);
+    
+    setTimeout(() => {
+      setProgressStage('analyzing');
+    }, 5000);
+    
+    setTimeout(() => {
+      setProgressStage('formatting');
+    }, 10000);
     
     try {
       const assistantResponse = await supabase.functions.invoke('electrician-ai-assistant', {
@@ -146,6 +162,7 @@ const AIAssistant = () => {
       });
     } finally {
       setIsLoading(false);
+      setProgressStage(null);
     }
   };
 
@@ -333,18 +350,141 @@ const AIAssistant = () => {
           </Card>
         )}
 
-        {/* Loading State */}
+        {/* Loading State with Progress Timeline */}
         {isLoading && (
           <Card className="bg-gradient-to-br from-neutral-800/90 to-neutral-900/90 border-2 border-elec-yellow/30 backdrop-blur-sm shadow-2xl max-w-6xl mx-auto">
-            <CardContent className="p-8 sm:p-12 flex flex-col items-center justify-center space-y-6">
-              <div className="relative">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 border-4 border-elec-yellow/20 rounded-full"></div>
-                <div className="absolute top-0 left-0 w-16 h-16 sm:w-20 sm:h-20 border-4 border-elec-yellow border-t-transparent rounded-full animate-spin"></div>
-                <Sparkles className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow animate-pulse" />
+            <CardContent className="p-6 sm:p-12 space-y-6 sm:space-y-8">
+              {/* Animated Progress Indicator */}
+              <div className="flex flex-col items-center space-y-4 sm:space-y-6">
+                <div className="relative">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 border-4 border-elec-yellow/20 rounded-full"></div>
+                  <div className="absolute top-0 left-0 w-16 h-16 sm:w-20 sm:h-20 border-4 border-elec-yellow border-t-transparent rounded-full animate-spin"></div>
+                  <Sparkles className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow animate-pulse" />
+                </div>
+                
+                <div className="text-center space-y-2">
+                  <p className="text-white font-semibold text-sm sm:text-lg">
+                    {progressStage === 'parsing' && 'Understanding Your Query...'}
+                    {progressStage === 'searching' && 'Searching BS 7671 Regulations...'}
+                    {progressStage === 'analyzing' && 'Analyzing Requirements...'}
+                    {progressStage === 'formatting' && 'Preparing Response...'}
+                  </p>
+                  <p className="text-gray-400 text-xs sm:text-sm">
+                    {progressStage === 'parsing' && 'Breaking down your question into searchable terms'}
+                    {progressStage === 'searching' && 'Finding relevant regulations and guidance'}
+                    {progressStage === 'analyzing' && 'Processing technical requirements with AI'}
+                    {progressStage === 'formatting' && 'Structuring your comprehensive answer'}
+                  </p>
+                </div>
               </div>
-              <div className="text-center space-y-2">
-                <p className="text-white font-semibold text-base sm:text-lg">Analysing Your Query...</p>
-                <p className="text-gray-400 text-xs sm:text-sm">Searching BS 7671 regulations and preparing response</p>
+
+              {/* Progress Timeline */}
+              <div className="max-w-2xl mx-auto">
+                <div className="space-y-2 sm:space-y-3">
+                  {/* Stage 1: Parsing */}
+                  <div className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg transition-all ${
+                    progressStage === 'parsing' ? 'bg-blue-500/20 border border-blue-500/40' : 
+                    ['searching', 'analyzing', 'formatting'].includes(progressStage || '') ? 'bg-green-500/10 border border-green-500/30' : 
+                    'bg-neutral-800/50 border border-neutral-700'
+                  }`}>
+                    <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
+                      progressStage === 'parsing' ? 'bg-blue-500 animate-pulse' :
+                      ['searching', 'analyzing', 'formatting'].includes(progressStage || '') ? 'bg-green-500' :
+                      'bg-neutral-600'
+                    }`}>
+                      {['searching', 'analyzing', 'formatting'].includes(progressStage || '') ? (
+                        <Check className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+                      ) : (
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      )}
+                    </div>
+                    <span className={`text-xs sm:text-sm ${
+                      progressStage === 'parsing' ? 'text-blue-400 font-semibold' :
+                      ['searching', 'analyzing', 'formatting'].includes(progressStage || '') ? 'text-green-400' :
+                      'text-gray-500'
+                    }`}>
+                      Understanding Query
+                    </span>
+                  </div>
+
+                  {/* Stage 2: Searching */}
+                  <div className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg transition-all ${
+                    progressStage === 'searching' ? 'bg-blue-500/20 border border-blue-500/40' : 
+                    ['analyzing', 'formatting'].includes(progressStage || '') ? 'bg-green-500/10 border border-green-500/30' : 
+                    'bg-neutral-800/50 border border-neutral-700'
+                  }`}>
+                    <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
+                      progressStage === 'searching' ? 'bg-blue-500 animate-pulse' :
+                      ['analyzing', 'formatting'].includes(progressStage || '') ? 'bg-green-500' :
+                      'bg-neutral-600'
+                    }`}>
+                      {['analyzing', 'formatting'].includes(progressStage || '') ? (
+                        <Check className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+                      ) : (
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      )}
+                    </div>
+                    <span className={`text-xs sm:text-sm ${
+                      progressStage === 'searching' ? 'text-blue-400 font-semibold' :
+                      ['analyzing', 'formatting'].includes(progressStage || '') ? 'text-green-400' :
+                      'text-gray-500'
+                    }`}>
+                      Searching Regulations
+                    </span>
+                  </div>
+
+                  {/* Stage 3: Analyzing */}
+                  <div className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg transition-all ${
+                    progressStage === 'analyzing' ? 'bg-blue-500/20 border border-blue-500/40' : 
+                    progressStage === 'formatting' ? 'bg-green-500/10 border border-green-500/30' : 
+                    'bg-neutral-800/50 border border-neutral-700'
+                  }`}>
+                    <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
+                      progressStage === 'analyzing' ? 'bg-blue-500 animate-pulse' :
+                      progressStage === 'formatting' ? 'bg-green-500' :
+                      'bg-neutral-600'
+                    }`}>
+                      {progressStage === 'formatting' ? (
+                        <Check className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+                      ) : (
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      )}
+                    </div>
+                    <span className={`text-xs sm:text-sm ${
+                      progressStage === 'analyzing' ? 'text-blue-400 font-semibold' :
+                      progressStage === 'formatting' ? 'text-green-400' :
+                      'text-gray-500'
+                    }`}>
+                      AI Analysis
+                    </span>
+                  </div>
+
+                  {/* Stage 4: Formatting */}
+                  <div className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg transition-all ${
+                    progressStage === 'formatting' ? 'bg-blue-500/20 border border-blue-500/40' : 
+                    'bg-neutral-800/50 border border-neutral-700'
+                  }`}>
+                    <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
+                      progressStage === 'formatting' ? 'bg-blue-500 animate-pulse' :
+                      'bg-neutral-600'
+                    }`}>
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                    </div>
+                    <span className={`text-xs sm:text-sm ${
+                      progressStage === 'formatting' ? 'text-blue-400 font-semibold' :
+                      'text-gray-500'
+                    }`}>
+                      Formatting Response
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Time Estimate */}
+              <div className="text-center">
+                <p className="text-xs text-gray-500">
+                  Typical response time: 10-15 seconds
+                </p>
               </div>
             </CardContent>
           </Card>

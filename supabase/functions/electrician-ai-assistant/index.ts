@@ -411,7 +411,7 @@ Always use British English (earth not ground, consumer unit not panel).`;
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
         messages: messages,
-        max_completion_tokens: type === "visual_analysis_advanced" ? 4000 : (type === "report_writer" ? 800 : (type === "structured_assistant" ? 2500 : 2000)),
+        max_completion_tokens: type === "visual_analysis_advanced" ? 4000 : (type === "report_writer" ? 800 : (type === "structured_assistant" ? 6000 : 2000)),
         response_format: type === "structured_assistant" || type === "visual_analysis_advanced" ? { type: "json_object" } : undefined,
       }),
     });
