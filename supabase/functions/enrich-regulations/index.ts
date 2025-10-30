@@ -260,7 +260,7 @@ async function processInBackground(
         // Update progress every 5 items (reduce DB writes)
         if ((i + 1) % 5 === 0 || i === regulations.length - 1) {
           await supabase.from('batch_progress').update({
-            items_processed: startFrom + i + 1,
+            items_processed: processed,
             data: { 
               processed, 
               failed, 
