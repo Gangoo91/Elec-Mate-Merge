@@ -411,10 +411,12 @@ CRITICAL: Generate MULTIPLE facets per regulation to capture all distinct use ca
 
   // Fix timeout: Move AbortController to fetch options (not body)
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 45000);
+  const timeoutId = setTimeout(() => controller.abort(), 90000); // ✅ Increased to 90s
+  
+  let response: Response | null = null; // ✅ Declare outside try block to fix scoping bug
   
   try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
@@ -429,7 +431,8 @@ CRITICAL: Generate MULTIPLE facets per regulation to capture all distinct use ca
           },
           { role: 'user', content: prompt }
         ],
-        max_completion_tokens: 8000 // GPT-5 Mini: Use max_completion_tokens (NOT max_tokens)
+        max_completion_tokens: 2000, // ✅ Reduced from 8000 for faster responses
+        max_reasoning_tokens: 0 // ✅ Disable extended thinking
         // NOTE: temperature not supported by gpt-5-mini (defaults to 1.0)
       }),
       signal: controller.signal // AbortController signal in fetch options
@@ -445,9 +448,14 @@ CRITICAL: Generate MULTIPLE facets per regulation to capture all distinct use ca
   } catch (error: any) {
     clearTimeout(timeoutId);
     if (error.name === 'AbortError') {
-      throw new Error('GPT-5 request timed out after 45s');
+      throw new Error('GPT-5 request timed out after 90s');
     }
     throw error;
+  }
+  
+  // ✅ Verify response exists before using
+  if (!response) {
+    throw new Error('No response received from GPT-5');
   }
   
   const data = await response.json();
@@ -463,7 +471,7 @@ CRITICAL: Generate MULTIPLE facets per regulation to capture all distinct use ca
     
     // If hit token limit, this is a configuration issue
     if (finishReason === 'length') {
-      throw new Error('Token budget exceeded - model used all tokens for reasoning. This should not happen with max_completion_tokens: 8000.');
+      throw new Error('Token budget exceeded - response truncated. Consider reducing max_completion_tokens further.');
     }
     
     throw new Error(`Empty response from GPT-5 Mini (finish_reason: ${finishReason})`);
