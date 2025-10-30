@@ -366,9 +366,11 @@ Return ONLY valid JSON object with "records" array.`;
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      model: 'gpt-5-2025-08-07',
-      messages: [{ role: 'user', content: prompt }],
-      response_format: { type: 'json_object' },
+      model: 'gpt-5-mini-2025-08-07',
+      messages: [
+        { role: 'system', content: 'You are a strict formatter. Output only valid JSON, no prose, no code fences.' },
+        { role: 'user', content: prompt }
+      ],
       max_completion_tokens: 2000
     })
   });
@@ -376,16 +378,17 @@ Return ONLY valid JSON object with "records" array.`;
   if (!response.ok) {
     const errorText = await response.text();
     console.error(`❌ OpenAI API error (${response.status}):`, errorText.substring(0, 200));
-    throw new Error(`GPT-5 API error: ${response.status} - ${errorText.substring(0, 200)}`);
+    throw new Error(`GPT-5 Mini API error: ${response.status} - ${errorText.substring(0, 200)}`);
   }
   
   const data = await response.json();
   const content = data.choices[0].message.content;
   
-  // Check for empty response
+  // Check for empty response and log full response for debugging
   if (!content || content.trim().length === 0) {
-    console.error('❌ GPT-5 returned empty content');
-    throw new Error('Empty response from GPT-5');
+    console.error('❌ GPT-5 Mini returned empty content');
+    console.error('📋 Full API response (first 800 chars):', JSON.stringify(data).substring(0, 800));
+    throw new Error('Empty response from GPT-5 Mini');
   }
   
   try {
