@@ -342,20 +342,22 @@ EXAMPLES:
 - 433.1.1 might have 3-5 records: "Cable Sizing Fundamentals", "Current-carrying Capacity", "Overcurrent Protection", etc.
 - 522.8.10 might have 5-8 records: "Buried Cable Depth", "Protection from Damage", "Outdoor Installation", etc.
 
-Return JSON array (1-10+ items depending on regulation complexity):
-[
-  {
-    "keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"],
-    "category": "Protection | Installation | Testing | Design | Equipment | Safety | Earthing | Cables | Circuits",
-    "subcategory": "Specific narrow topic",
-    "technical_level": 1-5,
-    "primary_topic": "ONE clear use case or meaning (30-50 words)",
-    "related_regulations": ["522.8", "433.1.1"],
-    "applies_to": ["domestic", "commercial", "industrial"]
-  }
-]
+Return JSON object with "records" key (1-10+ items depending on regulation complexity):
+{
+  "records": [
+    {
+      "keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"],
+      "category": "Protection | Installation | Testing | Design | Equipment | Safety | Earthing | Cables | Circuits",
+      "subcategory": "Specific narrow topic",
+      "technical_level": 1-5,
+      "primary_topic": "ONE clear use case or meaning (30-50 words)",
+      "related_regulations": ["522.8", "433.1.1"],
+      "applies_to": ["domestic", "commercial", "industrial"]
+    }
+  ]
+}
 
-Return ONLY valid JSON array.`;
+Return ONLY valid JSON object with "records" array.`;
 
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
