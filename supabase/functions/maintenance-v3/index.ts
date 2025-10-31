@@ -419,35 +419,41 @@ Deno.serve(async (req) => {
       useFullRAG ? (async () => {
         console.log('🔍 Intelligence search query:', intelligenceQuery);
         
-        const result = await Promise.race([
-          supabase.rpc('search_bs7671_intelligence_hybrid', {
-            query_text: intelligenceQuery,
-            match_count: 6
-          }),
-          new Promise((resolve) => 
-            setTimeout(() => resolve({ data: null, error: { message: 'Intelligence search timeout (8s)' } }), 8000)
-          )
-        ]).catch((err) => {
+        try {
+          const result = await Promise.race([
+            supabase.rpc('search_bs7671_intelligence_hybrid', {
+              query_text: intelligenceQuery,
+              match_count: 6
+            }),
+            new Promise((resolve) => 
+              setTimeout(() => resolve({ data: null, error: { message: 'Intelligence search timeout (8s)' } }), 8000)
+            )
+          ]);
+          
+          // ✅ Fallback: If no results, try simplified query with just equipment type
+          if (!result.data || result.data.length === 0) {
+            console.log('🔄 Retrying intelligence search with simplified query...');
+            const fallbackQuery = equipmentType || 'electrical installation';
+            console.log('🔍 Fallback query:', fallbackQuery);
+            
+            const fallbackResult = await supabase.rpc('search_bs7671_intelligence_hybrid', {
+              query_text: fallbackQuery,
+              match_count: 6
+            });
+            
+            if (fallbackResult.error) {
+              console.error('⚠️ Fallback intelligence search failed:', fallbackResult.error);
+              return { data: null, error: fallbackResult.error };
+            }
+            
+            return fallbackResult;
+          }
+          
+          return result;
+        } catch (err) {
           console.error('⚠️ Intelligence search failed:', err);
           return { data: null, error: err };
-        });
-        
-        // ✅ Fallback: If no results, try simplified query with just equipment type
-        if (!result.data || result.data.length === 0) {
-          console.log('🔄 Retrying intelligence search with simplified query...');
-          const fallbackQuery = equipmentType || 'electrical installation';
-          console.log('🔍 Fallback query:', fallbackQuery);
-          
-          return await supabase.rpc('search_bs7671_intelligence_hybrid', {
-            query_text: fallbackQuery,
-            match_count: 6
-          }).catch((err) => {
-            console.error('⚠️ Fallback intelligence search failed:', err);
-            return { data: null, error: err };
-          });
         }
-        
-        return result;
       })() : Promise.resolve({ data: null, error: null })
     ]);
 
