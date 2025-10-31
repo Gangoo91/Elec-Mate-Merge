@@ -221,19 +221,67 @@ const MAINTENANCE_TOOL_SCHEMA = {
           required: ["symptom", "likelyCauses", "diagnosisSteps", "remedialAction"]
         }
       },
-      equipmentSchedule: {
+      maintenanceSchedule: {
         type: "array",
-        description: "Equipment list with certification and inspection requirements",
+        description: "Maintenance tasks with intervals, priorities, and procedures",
         items: {
           type: "object",
           properties: {
-            name: { type: "string", description: "Equipment name" },
-            quantity: { type: "string", description: "Quantity required" },
-            certification: { type: "string", description: "Required certification (e.g., LOLER, PAT)" },
-            inspection: { type: "string", description: "Inspection frequency and type" },
-            responsible: { type: "string", description: "Who is responsible for checks" }
+            interval: { 
+              type: "string", 
+              description: "Maintenance interval (e.g., 'Every 6 months', 'Annual', 'Every 3 years')" 
+            },
+            task: { 
+              type: "string", 
+              description: "Clear description of the maintenance task" 
+            },
+            priority: { 
+              type: "string", 
+              enum: ["high", "medium", "low"],
+              description: "Task priority based on safety and compliance" 
+            },
+            regulation: { 
+              type: "string", 
+              description: "BS 7671 regulation reference (e.g., 'BS 7671:2018 Reg 622.1')" 
+            },
+            estimatedDurationMinutes: { 
+              type: "number", 
+              description: "Estimated time to complete task in minutes" 
+            },
+            estimatedCost: {
+              type: "object",
+              properties: {
+                min: { type: "number", description: "Minimum cost in GBP" },
+                max: { type: "number", description: "Maximum cost in GBP" }
+              }
+            },
+            requiredQualifications: {
+              type: "array",
+              items: { type: "string" },
+              description: "Required qualifications (e.g., '18th Edition', 'ECS Gold Card')"
+            },
+            toolsRequired: {
+              type: "array",
+              items: { type: "string" },
+              description: "Tools needed (e.g., 'Multifunction tester', 'Torque screwdriver')"
+            },
+            procedure: {
+              type: "array",
+              items: { type: "string" },
+              description: "Step-by-step procedure for the task"
+            },
+            safetyPrecautions: {
+              type: "array",
+              items: { type: "string" },
+              description: "Safety precautions and PPE requirements"
+            },
+            taskCategory: {
+              type: "string",
+              enum: ["inspection", "testing", "maintenance", "replacement"],
+              description: "Category of maintenance task"
+            }
           },
-          required: ["name", "quantity", "inspection", "responsible"]
+          required: ["interval", "task", "priority"]
         }
       },
       qualityRequirements: {
@@ -271,7 +319,7 @@ const MAINTENANCE_TOOL_SCHEMA = {
       "preWorkRequirements",
       "visualInspection",
       "testingProcedures",
-      "equipmentSchedule",
+      "maintenanceSchedule",
       "qualityRequirements",
       "documentation",
       "bs7671References"
@@ -466,8 +514,8 @@ Provide comprehensive maintenance instructions following the tool schema structu
     if (!maintenanceGuidance.testingProcedures) {
       maintenanceGuidance.testingProcedures = [];
     }
-    if (!maintenanceGuidance.equipmentSchedule) {
-      maintenanceGuidance.equipmentSchedule = [];
+    if (!maintenanceGuidance.maintenanceSchedule) {
+      maintenanceGuidance.maintenanceSchedule = [];
     }
     if (!maintenanceGuidance.qualityRequirements) {
       maintenanceGuidance.qualityRequirements = [];
@@ -498,7 +546,7 @@ Provide comprehensive maintenance instructions following the tool schema structu
           location: maintenanceGuidance.equipmentSummary?.location || location,
           ageYears: ageYears,
           buildingType: buildingType,
-          schedule: maintenanceGuidance.equipmentSchedule || [],
+          schedule: maintenanceGuidance.maintenanceSchedule || [],
           recommendations: maintenanceGuidance.recommendations || [],
           regulations: maintenanceGuidance.bs7671References || [],
           riskScore: maintenanceGuidance.equipmentSummary?.overallRiskLevel === 'critical' ? 90 : 
