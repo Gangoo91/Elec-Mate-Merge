@@ -1,120 +1,139 @@
 /**
  * Practical Work Unification Pipeline
- * Deduplicates and clusters installation/maintenance/inspection knowledge
+ * Deduplicates and clusters knowledge from Installation, Maintenance, and Inspection sources
  * 
- * Phases:
- * 1. Normalize & Hash - Create content_hash for exact duplicates
- * 2. Exact Clustering - Group by hash, pick canonical
- * 3. Semantic Clustering - Use vectors for near-duplicates
- * 4. Metadata Aggregation - Merge sources and activity suggestions
+ * Process:
+ * 1. Normalize and hash all content
+ * 2. Cluster exact duplicates (same hash)
+ * 3. Cluster semantic near-duplicates (vector similarity)
+ * 4. Assign canonical records
+ * 5. Build provenance and overlap metadata
  */
 
 import { corsHeaders, serve, createClient } from '../_shared/deps.ts';
-import type { Database } from '../_shared/types.ts';
+import { normalizeText, hashText, jaccardSimilarity, cosineSimilarity, isNearDuplicate } from '../_shared/text-utils.ts';
 
-const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
-const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-
-// Similarity thresholds
-const EXACT_THRESHOLD = 1.0;
-const SEMANTIC_THRESHOLD = 0.93;
-const COMBINED_COSINE_THRESHOLD = 0.90;
-const COMBINED_JACCARD_THRESHOLD = 0.80;
+const BATCH_SIZE = 100;
 const MAX_CLUSTER_SIZE = 20;
+const VECTOR_SEARCH_LIMIT = 50;
+
+interface PracticalWorkRecord {
+  id: string;
+  content: string;
+  source_table: string;
+  created_at: string;
+  embedding?: number[];
+}
+
+interface Cluster {
+  id: string;
+  canonical_id: string;
+  members: ClusterMember[];
+  sources: Record<string, string[]>;
+  activity_suggested: string[];
+  overlap_flags: Record<string, boolean>;
+}
+
+interface ClusterMember {
+  id: string;
+  match_method: 'exact' | 'semantic';
+  similarity: number;
+  source_table: string;
+  activity_tags: string[];
+}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
-  const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-  const startTime = Date.now();
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+  const supabase = createClient(supabaseUrl, supabaseKey);
 
   try {
-    const { mode = 'full', batchSize = 500 } = await req.json().catch(() => ({}));
+    const { mode, skipNormalization, skipClustering } = await req.json();
 
-    console.log(`🔄 Starting unification pipeline - Mode: ${mode}`);
+    console.log('🚀 Starting practical work unification', { mode, skipNormalization, skipClustering });
 
-    // Phase 1: Normalize and Hash
-    console.log('📝 Phase 1: Normalizing content and generating hashes...');
-    await normalizeAndHash(supabase, batchSize);
-
-    // Phase 2: Exact Duplicate Clustering
-    console.log('🔗 Phase 2: Creating exact duplicate clusters...');
-    const exactStats = await createExactClusters(supabase);
-    console.log(`✅ Exact clustering: ${exactStats.clusters} clusters, ${exactStats.members} members`);
-
-    // Phase 3: Semantic Clustering (optional, can be slow)
-    let semanticStats = { clusters: 0, members: 0 };
-    if (mode === 'full') {
-      console.log('🧠 Phase 3: Creating semantic clusters...');
-      semanticStats = await createSemanticClusters(supabase);
-      console.log(`✅ Semantic clustering: ${semanticStats.clusters} additional clusters, ${semanticStats.members} members`);
+    // Step 1: Normalize and hash content
+    let normalizedCount = 0;
+    if (!skipNormalization) {
+      normalizedCount = await normalizeAndHashContent(supabase);
+      console.log(`✅ Normalized ${normalizedCount} records`);
     }
 
-    // Phase 4: Update Statistics
-    console.log('📊 Phase 4: Updating cluster statistics...');
-    await updateClusterStats(supabase);
+    // Step 2: Cluster exact duplicates
+    let exactClusters = 0;
+    if (!skipClustering) {
+      exactClusters = await clusterExactDuplicates(supabase);
+      console.log(`✅ Created ${exactClusters} exact-duplicate clusters`);
+    }
 
-    const totalTime = Date.now() - startTime;
+    // Step 3: Cluster semantic near-duplicates
+    let semanticClusters = 0;
+    if (!skipClustering) {
+      semanticClusters = await clusterSemanticDuplicates(supabase);
+      console.log(`✅ Expanded ${semanticClusters} clusters with semantic matches`);
+    }
+
+    // Step 4: Get statistics
+    const stats = await getUnificationStats(supabase);
 
     return new Response(
       JSON.stringify({
         success: true,
-        mode,
         stats: {
-          exact: exactStats,
-          semantic: semanticStats,
-          totalTime: `${totalTime}ms`
-        },
-        timestamp: new Date().toISOString()
+          normalized: normalizedCount,
+          exact_clusters: exactClusters,
+          semantic_clusters: semanticClusters,
+          ...stats
+        }
       }),
-      {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200
-      }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
 
   } catch (error) {
     console.error('❌ Unification error:', error);
     return new Response(
-      JSON.stringify({
-        success: false,
-        error: error instanceof Error ? error.message : 'Unknown error'
-      }),
-      {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 500
-      }
+      JSON.stringify({ error: error.message }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 });
 
 /**
- * Normalize text and generate content hash
+ * Step 1: Normalize and hash all content
  */
-async function normalizeAndHash(supabase: any, batchSize: number) {
-  let offset = 0;
+async function normalizeAndHashContent(supabase: any): Promise<number> {
+  console.log('📝 Normalizing content...');
+  
+  const { data: records, error } = await supabase
+    .from('practical_work')
+    .select('id, content')
+    .is('content_hash', null);
+
+  if (error) throw error;
+  if (!records || records.length === 0) {
+    console.log('ℹ️ No records to normalize');
+    return 0;
+  }
+
+  console.log(`Processing ${records.length} records in batches of ${BATCH_SIZE}`);
+
   let processed = 0;
+  for (let i = 0; i < records.length; i += BATCH_SIZE) {
+    const batch = records.slice(i, i + BATCH_SIZE);
+    
+    const updates = await Promise.all(
+      batch.map(async (record) => {
+        const normalized = normalizeText(record.content);
+        const hash = await hashText(normalized);
+        return { id: record.id, content_normalized: normalized, content_hash: hash };
+      })
+    );
 
-  while (true) {
-    const { data: rows, error } = await supabase
-      .from('practical_work')
-      .select('id, content')
-      .is('content_hash', null)
-      .range(offset, offset + batchSize - 1);
-
-    if (error) throw error;
-    if (!rows || rows.length === 0) break;
-
-    // Normalize and hash in batch
-    const updates = rows.map((row: any) => {
-      const normalized = normalizeText(row.content);
-      const hash = hashText(normalized);
-      return { id: row.id, content_normalized: normalized, content_hash: hash };
-    });
-
-    // Update in batch
+    // Batch update
     for (const update of updates) {
       await supabase
         .from('practical_work')
@@ -125,308 +144,230 @@ async function normalizeAndHash(supabase: any, batchSize: number) {
         .eq('id', update.id);
     }
 
-    processed += rows.length;
-    console.log(`  Processed ${processed} rows...`);
-    offset += batchSize;
+    processed += batch.length;
+    console.log(`  Normalized ${processed}/${records.length}`);
   }
 
-  console.log(`✅ Normalized ${processed} total rows`);
+  return processed;
 }
 
 /**
- * Create clusters for exact duplicates (same hash)
+ * Step 2: Cluster exact duplicates (same content_hash)
  */
-async function createExactClusters(supabase: any) {
+async function clusterExactDuplicates(supabase: any): Promise<number> {
+  console.log('🔗 Clustering exact duplicates...');
+
+  // Get all records grouped by hash
+  const { data: records } = await supabase
+    .from('practical_work')
+    .select('content_hash, id, content, source_table, created_at')
+    .not('content_hash', 'is', null)
+    .order('content_hash');
+  
+  // Group by hash
+  const groups: Record<string, PracticalWorkRecord[]> = {};
+  records?.forEach((record: any) => {
+    if (!groups[record.content_hash]) groups[record.content_hash] = [];
+    groups[record.content_hash].push(record);
+  });
+  
+  const hashGroups = Object.values(groups).filter(g => g.length > 1);
+
+  if (!hashGroups || hashGroups.length === 0) {
+    console.log('ℹ️ No exact duplicates found');
+    return 0;
+  }
+
+  console.log(`Found ${hashGroups.length} duplicate hash groups`);
+
   let clustersCreated = 0;
-  let membersAdded = 0;
+  
+  for (const group of hashGroups) {
+    // Pick canonical: longest content, earliest created_at
+    const canonical = group.sort((a: any, b: any) => {
+      if (b.content.length !== a.content.length) {
+        return b.content.length - a.content.length;
+      }
+      return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+    })[0];
 
-  // Find all duplicate hashes
-  const { data: hashes, error: hashError } = await supabase.rpc(
-    'get_duplicate_hashes',
-    {},
-    { count: 'exact' }
-  );
+    // Create cluster
+    const { data: cluster, error: clusterError } = await supabase
+      .from('practical_work_clusters')
+      .insert({
+        canonical_id: canonical.id,
+        member_count: group.length,
+        metrics: { method: 'exact', avg_similarity: 1.0 },
+        overlap_flags: buildOverlapFlags(group)
+      })
+      .select()
+      .single();
 
-  if (hashError) {
-    // Fallback: manual grouping
-    const { data: allRows } = await supabase
+    if (clusterError) {
+      console.error(`  Failed to create cluster for canonical ${canonical.id}:`, clusterError);
+      continue;
+    }
+
+    // Mark canonical
+    await supabase
       .from('practical_work')
-      .select('id, content_hash, content, source_table, created_at')
-      .not('content_hash', 'is', null)
-      .order('content_hash');
+      .update({
+        is_canonical: true,
+        cluster_id: cluster.id,
+        sources: buildSources(group),
+        activity_suggested: suggestActivities(group)
+      })
+      .eq('id', canonical.id);
 
-    if (!allRows) return { clusters: 0, members: 0 };
+    // Add all members
+    const members = group.map((record: any) => ({
+      cluster_id: cluster.id,
+      member_id: record.id,
+      match_method: 'exact',
+      similarity: 1.0,
+      source_table: record.source_table,
+      activity_tags: getActivityTagsForSource(record.source_table)
+    }));
 
-    const grouped = new Map<string, any[]>();
-    for (const row of allRows) {
-      if (!grouped.has(row.content_hash)) {
-        grouped.set(row.content_hash, []);
+    await supabase.from('practical_work_cluster_members').insert(members);
+
+    // Update non-canonical members
+    for (const member of group) {
+      if (member.id !== canonical.id) {
+        await supabase
+          .from('practical_work')
+          .update({ cluster_id: cluster.id, is_canonical: false })
+          .eq('id', member.id);
       }
-      grouped.get(row.content_hash)!.push(row);
     }
 
-    // Process each group
-    for (const [hash, members] of grouped.entries()) {
-      if (members.length < 2) continue; // Skip non-duplicates
-
-      // Pick canonical: longest content, earliest created_at
-      const canonical = members.sort((a, b) => {
-        if (b.content.length !== a.content.length) {
-          return b.content.length - a.content.length;
-        }
-        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
-      })[0];
-
-      // Create cluster
-      const { data: cluster, error: clusterError } = await supabase
-        .from('practical_work_clusters')
-        .insert({
-          canonical_id: canonical.id,
-          member_count: members.length,
-          overlap_flags: buildOverlapFlags(members),
-          metrics: { method: 'exact', hash }
-        })
-        .select()
-        .single();
-
-      if (clusterError) {
-        console.error('Cluster creation error:', clusterError);
-        continue;
-      }
-
-      // Update canonical record
-      await supabase
-        .from('practical_work')
-        .update({
-          cluster_id: cluster.id,
-          is_canonical: true,
-          sources: buildSourcesMap(members),
-          activity_suggested: deriveActivityTypes(members)
-        })
-        .eq('id', canonical.id);
-
-      // Add all members (including canonical)
-      for (const member of members) {
-        await supabase
-          .from('practical_work_cluster_members')
-          .insert({
-            cluster_id: cluster.id,
-            member_id: member.id,
-            match_method: 'exact',
-            similarity: 1.0,
-            source_table: member.source_table,
-            activity_tags: getActivityTagsForSource(member.source_table)
-          });
-
-        // Update non-canonical members
-        if (member.id !== canonical.id) {
-          await supabase
-            .from('practical_work')
-            .update({ cluster_id: cluster.id, is_canonical: false })
-            .eq('id', member.id);
-        }
-      }
-
-      clustersCreated++;
-      membersAdded += members.length;
+    clustersCreated++;
+    if (clustersCreated % 10 === 0) {
+      console.log(`  Created ${clustersCreated} clusters`);
     }
   }
 
-  return { clusters: clustersCreated, members: membersAdded };
+  return clustersCreated;
 }
 
 /**
- * Create semantic clusters using vector similarity
+ * Step 3: Cluster semantic near-duplicates
  */
-async function createSemanticClusters(supabase: any) {
-  let clustersCreated = 0;
-  let membersAdded = 0;
+async function clusterSemanticDuplicates(supabase: any): Promise<number> {
+  console.log('🧠 Clustering semantic duplicates...');
 
   // Get all canonical records with embeddings
-  const { data: canonicals } = await supabase
+  const { data: canonicals, error } = await supabase
     .from('practical_work')
-    .select('id, embedding, content_normalized, cluster_id')
+    .select('id, content, content_normalized, embedding, cluster_id')
     .eq('is_canonical', true)
     .not('embedding', 'is', null);
 
-  if (!canonicals) return { clusters: 0, members: 0 };
-
-  // Get unclustered records with embeddings
-  const { data: unclustered } = await supabase
-    .from('practical_work')
-    .select('id, embedding, content_normalized, source_table')
-    .is('cluster_id', null)
-    .not('embedding', 'is', null);
-
-  if (!unclustered || unclustered.length === 0) {
-    console.log('No unclustered records to process');
-    return { clusters: 0, members: 0 };
+  if (error) throw error;
+  if (!canonicals || canonicals.length === 0) {
+    console.log('ℹ️ No canonical records with embeddings');
+    return 0;
   }
 
-  // For each unclustered record, find best matching canonical
-  for (const record of unclustered) {
-    let bestMatch: any = null;
-    let bestSimilarity = 0;
+  console.log(`Processing ${canonicals.length} canonical records`);
 
-    for (const canonical of canonicals) {
-      const cosine = cosineSimilarity(record.embedding, canonical.embedding);
+  let clustersExpanded = 0;
+
+  for (const canonical of canonicals) {
+    // Find potential semantic matches (not already in a cluster)
+    const { data: candidates, error: searchError } = await supabase
+      .from('practical_work')
+      .select('id, content, content_normalized, embedding, source_table, created_at')
+      .is('cluster_id', null)
+      .not('embedding', 'is', null)
+      .limit(VECTOR_SEARCH_LIMIT);
+
+    if (searchError || !candidates || candidates.length === 0) continue;
+
+    const matches: ClusterMember[] = [];
+
+    for (const candidate of candidates) {
+      // Calculate similarities
+      const cosine = cosineSimilarity(canonical.embedding, candidate.embedding);
       const jaccard = jaccardSimilarity(
-        record.content_normalized || '',
-        canonical.content_normalized || ''
+        canonical.content_normalized || canonical.content,
+        candidate.content_normalized || candidate.content
       );
 
-      // Check thresholds
-      const meetsThreshold =
-        cosine >= SEMANTIC_THRESHOLD ||
-        (cosine >= COMBINED_COSINE_THRESHOLD && jaccard >= COMBINED_JACCARD_THRESHOLD);
-
-      if (meetsThreshold && cosine > bestSimilarity) {
-        bestSimilarity = cosine;
-        bestMatch = canonical;
-      }
-    }
-
-    // Add to cluster if match found
-    if (bestMatch) {
-      // Check cluster size limit
-      const { data: clusterData } = await supabase
-        .from('practical_work_clusters')
-        .select('member_count')
-        .eq('id', bestMatch.cluster_id)
-        .single();
-
-      if (clusterData && clusterData.member_count < MAX_CLUSTER_SIZE) {
-        // Add to existing cluster
-        await supabase
-          .from('practical_work_cluster_members')
-          .insert({
-            cluster_id: bestMatch.cluster_id,
-            member_id: record.id,
-            match_method: 'semantic',
-            similarity: bestSimilarity,
-            source_table: record.source_table,
-            activity_tags: getActivityTagsForSource(record.source_table)
-          });
-
-        await supabase
-          .from('practical_work')
-          .update({ cluster_id: bestMatch.cluster_id, is_canonical: false })
-          .eq('id', record.id);
-
-        // Update cluster count
-        await supabase.rpc('increment_cluster_member_count', {
-          cluster_id: bestMatch.cluster_id
+      // Check if near-duplicate
+      if (isNearDuplicate(cosine, jaccard)) {
+        matches.push({
+          id: candidate.id,
+          match_method: 'semantic',
+          similarity: cosine,
+          source_table: candidate.source_table,
+          activity_tags: getActivityTagsForSource(candidate.source_table)
         });
-
-        membersAdded++;
       }
     }
-  }
 
-  return { clusters: clustersCreated, members: membersAdded };
-}
+    if (matches.length === 0) continue;
 
-/**
- * Update cluster statistics and overlap flags
- */
-async function updateClusterStats(supabase: any) {
-  const { data: clusters } = await supabase
-    .from('practical_work_clusters')
-    .select('id');
+    // Cap cluster size
+    const addMatches = matches.slice(0, MAX_CLUSTER_SIZE);
 
-  if (!clusters) return;
+    // Get cluster
+    const { data: cluster } = await supabase
+      .from('practical_work_clusters')
+      .select('*')
+      .eq('canonical_id', canonical.id)
+      .single();
 
-  for (const cluster of clusters) {
-    // Get all members
-    const { data: members } = await supabase
+    if (!cluster) continue;
+
+    // Add members to cluster
+    const memberInserts = addMatches.map(m => ({
+      cluster_id: cluster.id,
+      member_id: m.id,
+      match_method: m.match_method,
+      similarity: m.similarity,
+      source_table: m.source_table,
+      activity_tags: m.activity_tags
+    }));
+
+    await supabase.from('practical_work_cluster_members').insert(memberInserts);
+
+    // Update member records
+    for (const match of addMatches) {
+      await supabase
+        .from('practical_work')
+        .update({ cluster_id: cluster.id, is_canonical: false })
+        .eq('id', match.id);
+    }
+
+    // Update cluster member_count and overlap_flags
+    const { data: allMembers } = await supabase
       .from('practical_work_cluster_members')
-      .select('source_table, similarity')
+      .select('source_table')
       .eq('cluster_id', cluster.id);
-
-    if (!members) continue;
-
-    const sources = members.map((m: any) => m.source_table);
-    const overlapFlags = {
-      has_installation: sources.includes('installation_knowledge'),
-      has_maintenance: sources.includes('maintenance_knowledge'),
-      has_inspection: sources.includes('inspection_testing_knowledge')
-    };
-
-    const avgSimilarity =
-      members.reduce((sum: number, m: any) => sum + parseFloat(m.similarity), 0) /
-      members.length;
 
     await supabase
       .from('practical_work_clusters')
       .update({
-        overlap_flags: overlapFlags,
-        metrics: { avg_similarity: avgSimilarity, member_count: members.length }
+        member_count: allMembers.length,
+        overlap_flags: buildOverlapFlags(allMembers),
+        metrics: {
+          ...cluster.metrics,
+          semantic_matches: addMatches.length,
+          avg_semantic_similarity: addMatches.reduce((sum, m) => sum + m.similarity, 0) / addMatches.length
+        }
       })
       .eq('id', cluster.id);
-  }
-}
 
-// ===== Helper Functions =====
-
-function normalizeText(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, ' ')
-    .replace(/[^\w\s]/g, '');
-}
-
-function hashText(text: string): string {
-  // Simple hash for demo - in production use crypto.subtle.digest
-  let hash = 0;
-  for (let i = 0; i < text.length; i++) {
-    const char = text.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash = hash & hash;
-  }
-  return hash.toString(36);
-}
-
-function cosineSimilarity(a: number[], b: number[]): number {
-  if (!a || !b || a.length !== b.length) return 0;
-  let dotProduct = 0;
-  let normA = 0;
-  let normB = 0;
-  for (let i = 0; i < a.length; i++) {
-    dotProduct += a[i] * b[i];
-    normA += a[i] * a[i];
-    normB += b[i] * b[i];
-  }
-  if (normA === 0 || normB === 0) return 0;
-  return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
-}
-
-function jaccardSimilarity(a: string, b: string): number {
-  const setA = new Set(a.split(/\s+/));
-  const setB = new Set(b.split(/\s+/));
-  const intersection = new Set([...setA].filter((x) => setB.has(x)));
-  const union = new Set([...setA, ...setB]);
-  return intersection.size / union.size;
-}
-
-function buildSourcesMap(members: any[]): any {
-  const sources: any = {
-    installation_knowledge: [],
-    maintenance_knowledge: [],
-    inspection_testing_knowledge: []
-  };
-
-  for (const member of members) {
-    if (sources[member.source_table]) {
-      sources[member.source_table].push(member.id);
-    }
+    clustersExpanded++;
+    console.log(`  Expanded cluster ${canonical.id} with ${addMatches.length} semantic matches`);
   }
 
-  return sources;
+  return clustersExpanded;
 }
 
-function buildOverlapFlags(members: any[]): any {
-  const sources = new Set(members.map((m) => m.source_table));
+function buildOverlapFlags(members: any[]): Record<string, boolean> {
+  const sources = new Set(members.map(m => m.source_table));
   return {
     has_installation: sources.has('installation_knowledge'),
     has_maintenance: sources.has('maintenance_knowledge'),
@@ -434,20 +375,70 @@ function buildOverlapFlags(members: any[]): any {
   };
 }
 
-function deriveActivityTypes(members: any[]): string[] {
-  const types = new Set<string>();
-  for (const member of members) {
-    const tags = getActivityTagsForSource(member.source_table);
-    tags.forEach((t) => types.add(t));
-  }
-  return Array.from(types);
+function buildSources(members: any[]): Record<string, string[]> {
+  const sources: Record<string, string[]> = {
+    installation_knowledge: [],
+    maintenance_knowledge: [],
+    inspection_testing_knowledge: []
+  };
+  
+  members.forEach(m => {
+    if (sources[m.source_table]) {
+      sources[m.source_table].push(m.id);
+    }
+  });
+  
+  return sources;
+}
+
+function suggestActivities(members: any[]): string[] {
+  const activities = new Set<string>();
+  
+  members.forEach(m => {
+    const tags = getActivityTagsForSource(m.source_table);
+    tags.forEach(tag => activities.add(tag));
+  });
+  
+  return Array.from(activities);
 }
 
 function getActivityTagsForSource(sourceTable: string): string[] {
-  const mapping: Record<string, string[]> = {
-    installation_knowledge: ['installation'],
-    maintenance_knowledge: ['maintenance', 'fault_diagnosis'],
-    inspection_testing_knowledge: ['testing', 'inspection']
+  switch (sourceTable) {
+    case 'installation_knowledge':
+      return ['installation', 'wiring'];
+    case 'maintenance_knowledge':
+      return ['maintenance', 'fault_diagnosis', 'repair'];
+    case 'inspection_testing_knowledge':
+      return ['testing', 'inspection', 'certification'];
+    default:
+      return [];
+  }
+}
+
+async function getUnificationStats(supabase: any) {
+  const { count: totalRecords } = await supabase
+    .from('practical_work')
+    .select('*', { count: 'exact', head: true });
+
+  const { count: canonicalRecords } = await supabase
+    .from('practical_work')
+    .select('*', { count: 'exact', head: true })
+    .eq('is_canonical', true);
+
+  const { count: clusteredRecords } = await supabase
+    .from('practical_work')
+    .select('*', { count: 'exact', head: true })
+    .not('cluster_id', 'is', null);
+
+  const { count: totalClusters } = await supabase
+    .from('practical_work_clusters')
+    .select('*', { count: 'exact', head: true });
+
+  return {
+    total_records: totalRecords || 0,
+    canonical_records: canonicalRecords || 0,
+    clustered_records: clusteredRecords || 0,
+    total_clusters: totalClusters || 0,
+    deduplication_rate: totalRecords ? ((totalRecords - canonicalRecords) / totalRecords * 100).toFixed(1) : 0
   };
-  return mapping[sourceTable] || [];
 }
