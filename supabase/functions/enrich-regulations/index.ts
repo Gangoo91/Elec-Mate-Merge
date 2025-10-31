@@ -266,108 +266,26 @@ async function processInBackground(
       console.log(`\n📖 [${i + 1}/${regulations.length}] Processing: ${reg.regulation_number}`);
       
       try {
-        // Wrap entire regulation processing in 60s timeout to catch any hangs
-        await withTimeout(
-          (async () => {
-        // ✅ DEFENSIVE: Check if already enriched to prevent duplicate processing
-        const { data: existingRecords } = await supabase
-          .from('regulations_intelligence')
-          .select('id')
-          .eq('regulation_id', reg.id)
-          .eq('enrichment_version', ENRICHMENT_VERSION)
-          .limit(1);
+        // Process regulation with timeout protection
+        const result = await withTimeout(
+          processRegulation(reg, supabase, openAIKey, fetchMode, i, regulations.length, claimedBatch, jobId, batchNumber, regStartTime),
+          60000, // 60 seconds max per regulation
+          `Processing ${reg.regulation_number}`
+        );
         
-        if (existingRecords && existingRecords.length > 0) {
-          console.log(`⏭️ Already enriched: ${reg.regulation_number} - skipping`);
+        // Update counters based on result
+        if (result.status === 'success') {
+          processed++;
+          newCount += result.newCount || 0;
+          qualityPassed += result.recordsCreated || 0;
+          totalProcessingTime += result.processingTime || 0;
+        } else if (result.status === 'skipped') {
           skipped++;
           processed++;
-          continue;
-        }
-        
-        // Track as new enrichment
-        newCount++;
-        
-        // Compute content hash for deduplication (no DB check - unique constraint handles it)
-        const contentHash = await hashContent(reg.content);
-        
-        // Extract multi-faceted intelligence using GPT-5 with retry logic
-        const intelligenceArray = await extractWithRetry(reg, openAIKey, 3);
-        
-        if (!intelligenceArray || !Array.isArray(intelligenceArray) || intelligenceArray.length === 0) {
-          console.log(`⚠️ Failed to extract intelligence for ${reg.regulation_number} after retries`);
-          qualityFailed++;
+        } else if (result.status === 'failed') {
           failed++;
-          continue;
+          qualityFailed += result.qualityFailed || 0;
         }
-        
-        // Validate and build batch insert (conflict-safe bulk upsert)
-        let recordsCreated = 0;
-        const validRecords = [];
-        const seenFacets = new Set<string>();
-        
-        for (const intelligence of intelligenceArray) {
-          if (!validateIntelligence(intelligence)) {
-            console.log(`⚠️ Failed quality check for ${reg.regulation_number} facet - intelligence:`, JSON.stringify(intelligence).substring(0, 200));
-            qualityFailed++;
-            continue;
-          }
-          
-          const facetHash = computeFacetHash(intelligence);
-          
-          // De-duplicate by facet_hash within this regulation
-          if (seenFacets.has(facetHash)) {
-            console.log(`🔄 Skipping duplicate facet_hash ${facetHash} for ${reg.regulation_number}`);
-            continue;
-          }
-          seenFacets.add(facetHash);
-          
-          validRecords.push({
-            regulation_id: reg.id,
-            regulation_number: reg.regulation_number,
-            keywords: intelligence.keywords || [],
-            category: intelligence.category,
-            subcategory: intelligence.subcategory,
-            technical_level: intelligence.technical_level,
-            primary_topic: intelligence.primary_topic,
-            related_regulations: intelligence.related_regulations || [],
-            applies_to: intelligence.applies_to || [],
-            confidence_score: 0.90,
-            enrichment_version: ENRICHMENT_VERSION,
-            source_hash: facetHash, // ✅ HOTFIX: use facetHash to satisfy unique constraint (regulation_id, source_hash, enrichment_version)
-            facet_hash: facetHash,
-            created_at: new Date().toISOString()
-          });
-        }
-        
-        // Bulk upsert with facet-aware conflict handling (multi-facet support)
-        if (validRecords.length > 0) {
-          const { error: insertError } = await supabase
-            .from('regulations_intelligence')
-            .upsert(validRecords, {
-              onConflict: 'regulation_id,enrichment_version,facet_hash',
-              ignoreDuplicates: false
-            });
-          
-          if (insertError) {
-            console.error(`❌ Bulk insert error for ${reg.regulation_number}:`, insertError);
-            qualityFailed += validRecords.length;
-          } else {
-            recordsCreated = validRecords.length;
-            qualityPassed += recordsCreated;
-          }
-        }
-        
-        if (recordsCreated === 0) {
-          console.log(`❌ No valid intelligence records created for ${reg.regulation_number}`);
-          failed++;
-          continue;
-        }
-        
-        console.log(`✅ Created ${recordsCreated} intelligence records for ${reg.regulation_number}`);
-        
-        processed++;
-        const regProcessingTime = Date.now() - regStartTime;
-        totalProcessingTime += regProcessingTime;
         
         // Update progress every 5 items (reduce DB writes)
         if ((i + 1) % 5 === 0 || i === regulations.length - 1) {
@@ -389,23 +307,6 @@ async function processInBackground(
             }
           }).eq('id', claimedBatch.id);
         }
-        
-        // Save checkpoint every 25 docs
-        if ((i + 1) % 25 === 0 || i === regulations.length - 1) {
-          await supabase.from('batch_progress').update({
-            last_checkpoint: {
-              last_processed_id: reg.id,
-              processed_count: i + 1,
-              timestamp: new Date().toISOString()
-            }
-          }).eq('job_id', jobId).eq('batch_number', batchNumber);
-          
-          console.log(`💾 Checkpoint: ${processed} processed, ${failed} failed, ${skipped} skipped`);
-        }
-          })(),
-          60000, // 60 seconds max per regulation
-          `Processing ${reg.regulation_number}`
-        );
         
       } catch (error) {
         if (error instanceof TimeoutError) {
@@ -482,6 +383,136 @@ async function processInBackground(
     // Re-throw to ensure Deno logs it
     throw error;
   }
+}
+
+/**
+ * Process a single regulation - returns status instead of using continue
+ */
+async function processRegulation(
+  reg: any,
+  supabase: any,
+  openAIKey: string,
+  fetchMode: string,
+  index: number,
+  totalRegs: number,
+  claimedBatch: any,
+  jobId: string,
+  batchNumber: number,
+  regStartTime: number
+): Promise<{
+  status: 'success' | 'skipped' | 'failed';
+  newCount?: number;
+  recordsCreated?: number;
+  qualityFailed?: number;
+  processingTime?: number;
+}> {
+  
+  // Check if already enriched
+  const { data: existingRecords } = await supabase
+    .from('regulations_intelligence')
+    .select('id')
+    .eq('regulation_id', reg.id)
+    .eq('enrichment_version', ENRICHMENT_VERSION)
+    .limit(1);
+  
+  if (existingRecords && existingRecords.length > 0) {
+    console.log(`⏭️ Already enriched: ${reg.regulation_number} - skipping`);
+    return { status: 'skipped' };
+  }
+  
+  // Extract intelligence with retry logic
+  const intelligenceArray = await extractWithRetry(reg, openAIKey, 3);
+  
+  if (!intelligenceArray || !Array.isArray(intelligenceArray) || intelligenceArray.length === 0) {
+    console.log(`⚠️ Failed to extract intelligence for ${reg.regulation_number} after retries`);
+    return { status: 'failed', qualityFailed: 1 };
+  }
+  
+  // Validate and build batch insert
+  let recordsCreated = 0;
+  let qualityFailedCount = 0;
+  const validRecords = [];
+  const seenFacets = new Set<string>();
+  
+  for (const intelligence of intelligenceArray) {
+    if (!validateIntelligence(intelligence)) {
+      console.log(`⚠️ Failed quality check for ${reg.regulation_number} facet - intelligence:`, JSON.stringify(intelligence).substring(0, 200));
+      qualityFailedCount++;
+      continue; // This continue is fine - it's within the for loop
+    }
+    
+    const facetHash = computeFacetHash(intelligence);
+    
+    // De-duplicate by facet_hash within this regulation
+    if (seenFacets.has(facetHash)) {
+      console.log(`🔄 Skipping duplicate facet_hash ${facetHash} for ${reg.regulation_number}`);
+      continue; // This continue is fine - it's within the for loop
+    }
+    seenFacets.add(facetHash);
+    
+    validRecords.push({
+      regulation_id: reg.id,
+      regulation_number: reg.regulation_number,
+      keywords: intelligence.keywords || [],
+      category: intelligence.category,
+      subcategory: intelligence.subcategory,
+      technical_level: intelligence.technical_level,
+      primary_topic: intelligence.primary_topic,
+      related_regulations: intelligence.related_regulations || [],
+      applies_to: intelligence.applies_to || [],
+      confidence_score: 0.90,
+      enrichment_version: ENRICHMENT_VERSION,
+      source_hash: facetHash,
+      facet_hash: facetHash,
+      created_at: new Date().toISOString()
+    });
+  }
+  
+  // Bulk upsert with facet-aware conflict handling
+  if (validRecords.length > 0) {
+    const { error: insertError } = await supabase
+      .from('regulations_intelligence')
+      .upsert(validRecords, {
+        onConflict: 'regulation_id,enrichment_version,facet_hash',
+        ignoreDuplicates: false
+      });
+    
+    if (insertError) {
+      console.error(`❌ Bulk insert error for ${reg.regulation_number}:`, insertError);
+      return { status: 'failed', qualityFailed: validRecords.length };
+    } else {
+      recordsCreated = validRecords.length;
+    }
+  }
+  
+  if (recordsCreated === 0) {
+    console.log(`❌ No valid intelligence records created for ${reg.regulation_number}`);
+    return { status: 'failed', qualityFailed: qualityFailedCount };
+  }
+  
+  console.log(`✅ Created ${recordsCreated} intelligence records for ${reg.regulation_number}`);
+  
+  const regProcessingTime = Date.now() - regStartTime;
+  
+  // Checkpoints are saved every 25 docs in main loop
+  if ((index + 1) % 25 === 0 || index === totalRegs - 1) {
+    await supabase.from('batch_progress').update({
+      last_checkpoint: {
+        last_processed_id: reg.id,
+        processed_count: index + 1,
+        timestamp: new Date().toISOString()
+      }
+    }).eq('job_id', jobId).eq('batch_number', batchNumber);
+    
+    console.log(`💾 Checkpoint saved at regulation ${index + 1}`);
+  }
+  
+  return {
+    status: 'success',
+    newCount: 1,
+    recordsCreated,
+    processingTime: regProcessingTime
+  };
 }
 
 /**
