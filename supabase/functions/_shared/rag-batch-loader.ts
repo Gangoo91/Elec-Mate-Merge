@@ -48,11 +48,11 @@ export async function searchPracticalWorkBatch(
   try {
     // Fetch 3x to get multiple facets per procedure
     const { data, error } = await supabase.rpc(
-      'search_practical_work_intelligence_hybrid',
+      'search_practical_work_intelligence',
       {
-        keywords: keywords.join(' '),
+        query_embedding: null, // Text-only search for now
         match_count: limit * 3, // Get multiple facets per procedure
-        activity_types_filter: activity_filter || null
+        filter_activity_types: activity_filter || null
       }
     );
     
@@ -108,9 +108,9 @@ export async function searchBS7671Batch(
   
   try {
     const { data, error } = await supabase.rpc(
-      'search_bs7671_intelligence_hybrid',
+      'search_bs7671_intelligence',
       {
-        keywords: keywords.join(' '),
+        query_embedding: null, // Text-only search for now
         match_count: limit
       }
     );

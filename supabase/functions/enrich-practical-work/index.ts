@@ -143,7 +143,7 @@ function transformFacetForDB(facet: any, baseItem: any): any {
       : null,
     
     common_defects: facet.common_defects, // text[] - OK
-    degradation_signs: facet.degradation_signs, // text[] - OK
+    wear_indicators: facet.wear_indicators, // text[] - matches DB schema
     
     // Testing fields
     // ✅ FIX: test_procedures expects array of JSONB objects
@@ -168,13 +168,7 @@ function transformFacetForDB(facet: any, baseItem: any): any {
       : null,
     
     labour_category: facet.labour_category,
-    difficulty_multiplier: facet.difficulty_multiplier,
-    
-    // Store raw for debugging
-    enrichment_metadata: { 
-      raw: facet.raw_content || 'transformed',
-      transformed: true 
-    }
+    difficulty_multiplier: facet.difficulty_multiplier
   };
 }
 
@@ -333,8 +327,7 @@ async function insertMinimalFacet(supabase: any, item: any, errorMsg: string) {
     canonical_id: item.id,
     source_tables: item.source_tables,
     activity_types: item.activity_types || [],
-    equipment_category: item.equipment_category,
-    enrichment_metadata: { error: errorMsg, minimal: true }
+    equipment_category: item.equipment_category
   }, { onConflict: 'practical_work_id,facet_type' });
 
   if (error) {
