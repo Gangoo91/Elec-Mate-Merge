@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
@@ -148,6 +149,21 @@ Communication Preferences:
 - Emphasize Safety: ${formData.emphasizeSafety ? 'Yes - highlight safety importance' : 'No - balanced approach'}
 - Include BS7671 References: ${formData.includeBS7671 ? 'Yes - include UK regulation references' : 'No - avoid technical references'}
 
+${formData.includeBS7671 ? `
+REGULATION CONTEXT USAGE:
+You have access to specific BS 7671 regulation intelligence below. Use this to:
+- Reference accurate regulation numbers (e.g., "Regulation 411.3.3 requires...")
+- Explain why specific regulations apply to this situation
+- Provide context on safety classifications (C1/C2/C3) with proper explanations
+- Cross-reference related regulations when relevant
+
+When explaining regulations to ${formData.clientType}:
+- Cite the regulation number clearly and naturally
+- Explain what the regulation means in practical terms
+- Connect it directly to their specific situation
+- Use the provided regulation keywords and topics for accuracy
+` : ''}
+
 CRITICAL FORMATTING REQUIREMENTS:
 - Write in clear, flowing paragraphs - NOT bullet points
 - Use a conversational, narrative style that reads naturally
@@ -252,8 +268,45 @@ serve(async (req) => {
     const { template, formData, additionalNotes }: ReportData = await req.json();
     console.log('Received data:', { template, formData: Object.keys(formData), additionalNotes });
 
-    const prompt = createPrompt(template, formData, additionalNotes);
-    console.log('Generated prompt for template:', template);
+    // ✅ RAG Integration: Fetch relevant BS 7671 regulations for Client Explainer
+    let regulationContext = '';
+    
+    if (template === 'client-explainer' && formData.includeBS7671 && formData.technicalNotes) {
+      console.log('🔍 Fetching BS 7671 regulation intelligence for Client Explainer...');
+      
+      const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+      const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+      const supabase = createClient(supabaseUrl, supabaseKey);
+      
+      try {
+        const { data: regulationData, error: regError } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
+          query_text: formData.technicalNotes,
+          match_count: 5
+        });
+        
+        if (regError) {
+          console.error('⚠️ Regulation intelligence search error:', regError);
+        } else if (regulationData && regulationData.length > 0) {
+          console.log(`✅ Retrieved ${regulationData.length} relevant regulations`);
+          
+          regulationContext = '\n\n## RELEVANT BS 7671 REGULATIONS:\n\n' + 
+            regulationData.map((reg: any, idx: number) => 
+              `${idx + 1}. **Regulation ${reg.regulation_number}** (${reg.category || 'General'})\n` +
+              `   - Topic: ${reg.primary_topic || 'N/A'}\n` +
+              `   - Keywords: ${reg.keywords?.join(', ') || 'N/A'}\n` +
+              `   - Applies to: ${reg.applies_to?.join(', ') || 'All installations'}\n` +
+              `   - Practical application: ${reg.practical_application || 'See regulation details'}`
+            ).join('\n\n');
+        } else {
+          console.log('ℹ️ No specific regulations found, AI will use general BS 7671 knowledge');
+        }
+      } catch (err) {
+        console.error('⚠️ Failed to fetch regulation intelligence:', err);
+      }
+    }
+
+    const prompt = createPrompt(template, formData, additionalNotes) + regulationContext;
+    console.log('Generated prompt for template:', template, regulationContext ? '(with regulation context)' : '');
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
