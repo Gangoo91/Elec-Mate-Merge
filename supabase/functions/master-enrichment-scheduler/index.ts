@@ -490,7 +490,6 @@ serve(async (req) => {
         message: `Started missing-regs job for ${missingRegulations.length} regulations`,
         jobId: newJob.id,
         batchesCreated: batches.length,
-        workersStarted: workersStarted,
         missing_count: missingRegulations.length
       }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
