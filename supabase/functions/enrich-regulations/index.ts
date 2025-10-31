@@ -8,6 +8,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { withTimeout, Timeouts, TimeoutError } from '../_shared/timeout.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -222,10 +223,14 @@ async function processInBackground(
     
     let processed = 0, failed = 0, qualityPassed = 0, qualityFailed = 0, skipped = 0, newCount = 0;
     let totalProcessingTime = 0;
+    let currentRegIndex = startIndex; // Track current regulation for heartbeat
     
-    // Progress heartbeat every 30 seconds
+    // Enhanced heartbeat with console logging every 15s
     const heartbeat = setInterval(async () => {
       try {
+        const currentReg = currentRegIndex < regulations.length ? regulations[currentRegIndex].regulation_number : 'complete';
+        console.log(`💓 HEARTBEAT: batch ${claimedBatch.batch_number} - processing ${currentReg} (${processed}/${regulations.length})`);
+        
         await supabase.from('batch_progress').update({
           data: { 
             ...(claimedBatch.data || {}),  // Preserve scheduler metadata
@@ -237,18 +242,18 @@ async function processInBackground(
             skipped_count: skipped,
             quality_passed: qualityPassed,
             quality_failed: qualityFailed,
+            current_regulation: currentReg,
             last_heartbeat: new Date().toISOString()
           }
         }).eq('id', claimedBatch.id);
-        
-        console.log(`💓 Heartbeat: batch ${claimedBatch.batch_number} (${fetchMode}) - processed ${processed}/${regulations.length}, new: ${newCount}, skipped: ${skipped}`);
       } catch (e) {
         console.error('❌ Heartbeat failed:', e);
       }
-    }, 30000);
+    }, 15000); // Every 15 seconds for faster visibility
     
     for (let i = startIndex; i < regulations.length; i++) {
       const reg = regulations[i];
+      currentRegIndex = i; // Update for heartbeat logging
       
       // Skip any remaining non-regulation content
       if (!reg.regulation_number || reg.regulation_number === 'General' || reg.regulation_number.trim().length === 0) {
@@ -261,6 +266,9 @@ async function processInBackground(
       console.log(`\n📖 [${i + 1}/${regulations.length}] Processing: ${reg.regulation_number}`);
       
       try {
+        // Wrap entire regulation processing in 60s timeout to catch any hangs
+        await withTimeout(
+          (async () => {
         // ✅ DEFENSIVE: Check if already enriched to prevent duplicate processing
         const { data: existingRecords } = await supabase
           .from('regulations_intelligence')
@@ -394,8 +402,17 @@ async function processInBackground(
           
           console.log(`💾 Checkpoint: ${processed} processed, ${failed} failed, ${skipped} skipped`);
         }
+          })(),
+          60000, // 60 seconds max per regulation
+          `Processing ${reg.regulation_number}`
+        );
         
       } catch (error) {
+        if (error instanceof TimeoutError) {
+          console.error(`⏱️ TIMEOUT: ${reg.regulation_number} exceeded 60s - marking as failed`);
+          failed++;
+          continue;
+        }
         console.error(`❌ Error processing ${reg.regulation_number}:`, error);
         failed++;
       }
@@ -547,20 +564,18 @@ Return JSON object with "records" key:
 
 CRITICAL: Generate MULTIPLE facets per regulation to capture all distinct use cases. Return ONLY valid JSON with "records" array. Use UK English spelling throughout.`;
 
-  // Fix timeout: Move AbortController to fetch options (not body)
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 360000); // ✅ NUCLEAR: Increased to 6 minutes (360s)
-  
-  let response: Response | null = null; // ✅ Declare outside try block to fix scoping bug
+  let response: Response | null = null;
   
   try {
-    response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+    // Wrap GPT call with explicit 30s timeout protection
+    response = await withTimeout(
+      fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
         messages: [
           { 
@@ -572,11 +587,11 @@ CRITICAL: Generate MULTIPLE facets per regulation to capture all distinct use ca
         max_completion_tokens: 6000 // Increased for more comprehensive facets per regulation
         // NOTE: temperature not supported by gpt-5-mini (defaults to 1.0)
         // NOTE: max_reasoning_tokens only exists for O-series models (o1/o3/o4), not GPT-5
-      }),
-      signal: controller.signal // AbortController signal in fetch options
-    });
-    
-    clearTimeout(timeoutId);
+      })
+    }),
+    Timeouts.AI_CALL, // 30 seconds
+    `GPT-5 enrichment for ${regulation.regulation_number}`
+    );
     
     if (!response.ok) {
       const errorText = await response.text();
@@ -584,9 +599,9 @@ CRITICAL: Generate MULTIPLE facets per regulation to capture all distinct use ca
       throw new Error(`GPT-5 Mini API error: ${response.status} - ${errorText.substring(0, 200)}`);
     }
   } catch (error: any) {
-    clearTimeout(timeoutId);
-    if (error.name === 'AbortError') {
-      throw new Error('GPT-5 Mini request timed out after 6 minutes (360s)');
+    if (error instanceof TimeoutError) {
+      console.error(`⏱️ TIMEOUT: GPT call exceeded 30s for ${regulation.regulation_number}`);
+      throw new Error('GPT-5 Mini request timed out after 30 seconds');
     }
     throw error;
   }
