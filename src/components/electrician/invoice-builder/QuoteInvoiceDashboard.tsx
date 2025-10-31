@@ -265,7 +265,7 @@ export const QuoteInvoiceDashboard = () => {
       </div>
 
       {/* Main Dashboard - Stacked Vertically for Better Mobile */}
-      <div className="space-y-6 md:space-y-8">
+      <div className="space-y-4 sm:space-y-6 md:space-y-8">
         <QuotesReadyPanel quotes={quotesReady} onRaiseInvoice={handleRaiseInvoice} />
         <InvoiceStatusPanel invoices={invoices} onRefresh={fetchInvoices} />
       </div>

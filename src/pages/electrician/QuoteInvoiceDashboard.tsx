@@ -34,14 +34,14 @@ const QuoteInvoiceDashboard = () => {
           {/* Title and Back Button */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="space-y-2">
-              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+              <h1 className="text-2xl sm:text-4xl font-bold tracking-tight">
                 Quote & Invoice Dashboard
               </h1>
-              <p className="text-muted-foreground text-lg">
+              <p className="text-muted-foreground text-sm sm:text-base md:text-lg">
                 Manage quotes ready for invoicing and track your invoices
               </p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
               <Link to="/electrician/invoices">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto">
                   <List className="mr-2 h-4 w-4" /> All Invoices
@@ -58,7 +58,7 @@ const QuoteInvoiceDashboard = () => {
       </header>
 
       {/* Dashboard Content */}
-      <div className="px-4 md:px-6 py-6 md:py-8">
+      <div className="px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8">
         <Dashboard />
       </div>
     </div>

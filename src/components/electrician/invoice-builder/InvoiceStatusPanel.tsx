@@ -89,15 +89,15 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
     return (
       <div
         key={invoice.id}
-        className={`border rounded-xl p-5 md:p-6 space-y-4 hover:shadow-lg transition-all ${
+        className={`border rounded-xl p-3 sm:p-4 md:p-6 space-y-4 hover:shadow-lg transition-all ${
           showActions === 'paid' ? 'bg-success/5 border-success/20' : 'bg-card border-primary/20'
         } ${daysOverdue > 0 && showActions !== 'paid' ? 'border-destructive/50 bg-destructive/5' : ''}`}
       >
         {/* Header: Invoice number + Status */}
-        <div className="flex items-start justify-between gap-3 pb-3 border-b border-primary/10">
+        <div className="flex items-start justify-between gap-3 pb-2 sm:pb-3 border-b border-primary/10">
           <div className="space-y-2 flex-1 min-w-0">
-            <h4 className="font-semibold text-base truncate">{invoice.invoice_number}</h4>
-            <p className="text-sm text-muted-foreground truncate">{invoice.client?.name}</p>
+            <h4 className="font-semibold text-sm sm:text-base truncate">{invoice.invoice_number}</h4>
+            <p className="text-xs sm:text-sm text-muted-foreground truncate">{invoice.client?.name}</p>
           </div>
           <div className="flex flex-col gap-1 items-end shrink-0">
             {daysOverdue > 0 && showActions !== 'paid' && (
@@ -114,23 +114,23 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
         </div>
 
         {/* Amount - Centered and Prominent */}
-        <div className="text-center py-4 bg-background/50 rounded-lg border border-primary/10">
-          <div className="text-xs text-muted-foreground mb-1">Total Amount</div>
-          <div className="text-2xl md:text-3xl font-bold text-elec-yellow">
+        <div className="text-center py-2 sm:py-4 bg-background/50 rounded-lg border border-primary/10">
+          <div className="text-xs text-muted-foreground mb-0.5 sm:mb-1">Total Amount</div>
+          <div className="text-xl sm:text-2xl md:text-3xl font-bold text-elec-yellow">
             {formatCurrency(invoice.total)}
           </div>
         </div>
 
         {/* Dates Grid - 2 columns */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 text-xs">
           {invoice.invoice_date && (
-            <div className="space-y-0.5">
+            <div className="space-y-0">
               <div className="text-muted-foreground font-medium">Invoice Date</div>
               <div className="text-foreground">{new Date(invoice.invoice_date).toLocaleDateString('en-GB')}</div>
             </div>
           )}
           {invoice.invoice_due_date && (
-            <div className="space-y-0.5">
+            <div className="space-y-0">
               <div className="text-muted-foreground font-medium">Due Date</div>
               <div className={daysOverdue > 0 && showActions !== 'paid' ? 'text-destructive font-semibold' : 'text-foreground'}>
                 {new Date(invoice.invoice_due_date).toLocaleDateString('en-GB')}
@@ -138,7 +138,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
             </div>
           )}
           {invoice.invoice_sent_at && (
-            <div className="space-y-0.5">
+            <div className="space-y-0">
               <div className="text-muted-foreground font-medium">Sent</div>
               <div className="text-foreground">
                 {formatDistanceToNow(new Date(invoice.invoice_sent_at), { addSuffix: true })}
@@ -146,7 +146,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
             </div>
           )}
           {invoice.invoice_paid_at && (
-            <div className="space-y-0.5">
+            <div className="space-y-0">
               <div className="text-muted-foreground font-medium">Paid</div>
               <div className="text-foreground">{new Date(invoice.invoice_paid_at).toLocaleDateString('en-GB')}</div>
             </div>
@@ -155,7 +155,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
 
         {/* Reminder History */}
         {reminderHistory.has(invoice.id) && reminderHistory.get(invoice.id)!.length > 0 && (
-          <Badge variant="outline" className="text-xs w-full justify-center">
+          <Badge variant="outline" className="text-[10px] sm:text-xs w-full justify-center py-1">
             <Mail className="h-3 w-3 mr-1" />
             Last reminder: {formatDistanceToNow(new Date(reminderHistory.get(invoice.id)![0].sent_at), { addSuffix: true })}
             {' '}({reminderHistory.get(invoice.id)![0].reminder_type})
@@ -163,7 +163,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
         )}
 
         {/* Action Buttons - Stack on mobile, row on desktop */}
-        <div className="flex flex-col sm:flex-row gap-2 pt-2">
+        <div className="flex flex-col sm:flex-row gap-2 pt-1 sm:pt-2">
           <Button
             variant="outline"
             size="sm"
