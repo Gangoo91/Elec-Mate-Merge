@@ -286,9 +286,15 @@ const AIAssistant = () => {
                       </h3>
                       <CollapsibleContent>
               <div 
-                className="text-white text-sm sm:text-base leading-relaxed"
+                className="text-white text-sm sm:text-base leading-relaxed text-left"
                 dangerouslySetInnerHTML={{ 
-                  __html: processElectricalText(aiResponse.quick_answer) 
+                  __html: aiResponse.quick_answer
+                    // Only highlight regulation numbers
+                    .replace(/(\d{3}\.\d+\.\d+)/g, '<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono text-xs">$1</span>')
+                    // Only highlight BS 7671
+                    .replace(/BS 7671:?(\d{4})?(\+A\d:?\d{4})?/gi, '<span class="inline-flex items-center px-2 py-1 rounded-md bg-elec-yellow/20 text-elec-yellow font-medium text-sm">BS 7671$1$2</span>')
+                    // Simple line breaks
+                    .replace(/\n/g, '<br/>')
                 }}
               />
                       </CollapsibleContent>

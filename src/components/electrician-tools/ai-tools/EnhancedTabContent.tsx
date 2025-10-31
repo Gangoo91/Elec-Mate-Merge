@@ -45,7 +45,15 @@ export const EnhancedTabContent = ({ content, type }: EnhancedTabContentProps) =
           <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${colors.icon}`} />
         </div>
         <div 
-          className="flex-1 prose prose-invert prose-sm sm:prose-base max-w-none [&>h1]:text-xl [&>h1]:sm:text-2xl [&>h1]:font-bold [&>h1]:mb-3 [&>h1]:sm:mb-4 [&>h2]:text-lg [&>h2]:sm:text-xl [&>h2]:font-semibold [&>h2]:mb-2 [&>h2]:sm:mb-3 [&>h3]:text-base [&>h3]:sm:text-lg [&>h3]:font-semibold [&>h3]:mb-2 [&>p]:mb-3 [&>p]:sm:mb-4 [&>p]:leading-relaxed [&>li]:mb-2 [&>ul]:space-y-2 [&>ol]:space-y-2"
+          className="flex-1 text-left space-y-4 max-w-none
+            [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-white [&_h1]:mb-4 [&_h1]:mt-0
+            [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-white [&_h2]:mb-3 [&_h2]:mt-6
+            [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-gray-100 [&_h3]:mb-2 [&_h3]:mt-4
+            [&_p]:text-gray-200 [&_p]:leading-relaxed [&_p]:mb-4 [&_p]:text-left
+            [&_ul]:list-disc [&_ul]:list-outside [&_ul]:ml-6 [&_ul]:space-y-2 [&_ul]:mb-4 [&_ul]:text-left
+            [&_li]:text-gray-200 [&_li]:leading-relaxed [&_li]:pl-2 [&_li]:text-left
+            [&_strong]:font-semibold [&_strong]:text-white
+            [&_em]:italic [&_em]:text-gray-300"
           dangerouslySetInnerHTML={{ __html: processedHTML }}
         />
       </div>

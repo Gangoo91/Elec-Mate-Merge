@@ -1,7 +1,44 @@
 // Utility functions for processing electrical text content for better display
 
+/**
+ * Wraps consecutive list items in proper <ul> tags
+ */
+const wrapListItems = (text: string): string => {
+  const lines = text.split('\n');
+  const result: string[] = [];
+  let inList = false;
+  
+  for (const line of lines) {
+    const isBulletPoint = /^[\s]*[\-\*\+]\s/.test(line);
+    
+    if (isBulletPoint) {
+      if (!inList) {
+        result.push('<ul class="list-disc list-outside ml-6 space-y-2 mb-4 text-left">');
+        inList = true;
+      }
+      const content = line.replace(/^[\s]*[\-\*\+]\s/, '');
+      result.push(`  <li class="leading-relaxed text-gray-200 pl-2">${content}</li>`);
+    } else {
+      if (inList) {
+        result.push('</ul>');
+        inList = false;
+      }
+      result.push(line);
+    }
+  }
+  
+  if (inList) {
+    result.push('</ul>');
+  }
+  
+  return result.join('\n');
+};
+
 export const processElectricalText = (text: string): string => {
   if (!text) return text;
+  
+  // First, wrap list items properly
+  text = wrapListItems(text);
   
   return text
     // Format BS 7671 references
@@ -13,16 +50,12 @@ export const processElectricalText = (text: string): string => {
     // Format classification codes (C1, C2, C3, FI)
     .replace(/\b(C[123]|FI)\b/g, '<span class="inline-flex items-center px-1.5 py-0.5 rounded-md bg-red-500/20 text-red-400 font-semibold text-xs">$1</span>')
     
-    // Format electrical terms
-    .replace(/\b(RCD|RCBO|MCB|AFDD|SPD)\b/g, '<span class="font-medium text-elec-yellow">$1</span>')
     
     // Format safety classifications with proper colours
     .replace(/\b(SATISFACTORY|PASS)\b/gi, '<span class="inline-flex items-center px-2 py-1 rounded-md bg-green-500/20 text-green-400 font-medium text-sm">$1</span>')
     .replace(/\b(UNSATISFACTORY|FAIL|DANGEROUS)\b/gi, '<span class="inline-flex items-center px-2 py-1 rounded-md bg-red-500/20 text-red-400 font-medium text-sm">$1</span>')
     .replace(/\b(INVESTIGATION REQUIRED|IMPROVEMENT RECOMMENDED)\b/gi, '<span class="inline-flex items-center px-2 py-1 rounded-md bg-orange-500/20 text-orange-400 font-medium text-sm">$1</span>')
     
-    // Format measurements and readings
-    .replace(/(\d+\.?\d*)\s?(Ω|ohms?|A|V|kV|mA|ms|MΩ)/gi, '<span class="font-mono text-sm bg-muted/50 px-1 py-0.5 rounded">$1$2</span>')
     
     // Bold text formatting
     .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
@@ -31,24 +64,23 @@ export const processElectricalText = (text: string): string => {
     .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
     
     // Format headings (starts with #)
-    .replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold text-foreground mt-4 mb-2">$1</h3>')
-    .replace(/^## (.*$)/gim, '<h2 class="text-xl font-semibold text-foreground mt-6 mb-3">$1</h2>')
-    .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold text-foreground mt-8 mb-4">$1</h1>')
+    .replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold text-white mt-4 mb-2">$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2 class="text-xl font-semibold text-white mt-6 mb-3">$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold text-white mt-8 mb-4">$1</h1>')
     
-    // Format lists
-    .replace(/^[\s]*[\-\*\+]\s(.*)$/gm, '<li class="ml-4 mb-1 text-foreground">• $1</li>')
+    // Wrap paragraphs properly
+    .split('\n\n')
+    .map(para => {
+      const trimmed = para.trim();
+      if (trimmed && !trimmed.includes('<ul') && !trimmed.includes('<h')) {
+        return `<p class="mb-4 text-gray-200 leading-relaxed text-left">${trimmed}</p>`;
+      }
+      return para;
+    })
+    .join('\n')
     
-    // Convert paragraph breaks
-    .replace(/\n\n/g, '</p><p class="mb-4 text-foreground leading-relaxed">')
-    
-    // Convert line breaks
-    .replace(/\n/g, '<br/>')
-    
-    // Format UK electrical terms with proper emphasis
-    .replace(/\b(earthing|earth|neutral|live|CPC|equipotential bonding)\b/gi, '<span class="font-medium text-blue-400">$1</span>')
-    
-    // Format safety warnings
-    .replace(/\b(DANGER|WARNING|CAUTION|IMMEDIATELY|URGENT)\b/gi, '<span class="inline-flex items-center px-2 py-1 rounded-md bg-red-500/30 text-red-300 font-bold text-sm animate-pulse">⚠️ $1</span>');
+    // Single line breaks become <br/> only within paragraphs
+    .replace(/(?<!>)\n(?!<)/g, '<br/>');
 };
 
 export const extractKeyPoints = (text: string): string[] => {
