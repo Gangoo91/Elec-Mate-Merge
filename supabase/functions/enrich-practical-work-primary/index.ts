@@ -142,12 +142,15 @@ Return ONLY valid JSON with these exact fields.`;
 
   const enrichmentData = JSON.parse(chatCompletion.choices[0].message.content);
 
-  // Insert into practical_work_intelligence
+  // Insert PRIMARY facet only (cross-cutting fields)
   const { error } = await supabase.from('practical_work_intelligence').upsert({
     practical_work_id: id,
+    facet_type: 'primary', // NEW: Explicitly set facet type
     cluster_id,
-    canonical_id: id, // Primary pass always on canonical records
+    canonical_id: id,
     source_tables,
+    
+    // Primary facet fields (cross-cutting)
     activity_types: enrichmentData.activity_types || [],
     equipment_category: enrichmentData.equipment_category,
     equipment_subcategory: enrichmentData.equipment_subcategory,
@@ -156,13 +159,14 @@ Return ONLY valid JSON with these exact fields.`;
     risk_level: enrichmentData.risk_level || 'medium',
     common_tools: enrichmentData.common_tools || [],
     ppe_required: enrichmentData.ppe_required || [],
+    
     enrichment_metadata: {
       stage: 'primary',
       rag_citations: bs7671Context.length,
       confidence: 0.85
     }
   }, {
-    onConflict: 'practical_work_id'
+    onConflict: 'practical_work_id,facet_type' // NEW: Composite key
   });
 
   if (error) throw error;

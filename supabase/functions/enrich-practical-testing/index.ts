@@ -72,7 +72,13 @@ serve(async (req) => {
 });
 
 async function enrichTesting(supabase: any, item: any, logger: any) {
-  const { id, content, description } = item;
+  const { practical_work_id, activity_types, content, description, cluster_id, source_tables, equipment_category } = item;
+  
+  // Only enrich if testing/inspection is in activity_types
+  if (!activity_types?.some((t: string) => ['testing', 'inspection'].includes(t))) {
+    logger.info(`⏭️ Skipping ${practical_work_id}: no testing activity`);
+    return { id: practical_work_id, skipped: true };
+  }
   
   const testingContext = await searchPracticalWorkBatch(supabase, {
     keywords: ['test', 'inspection', 'continuity', 'insulation'],
@@ -125,21 +131,43 @@ Return ONLY valid JSON.`;
 
   const data = JSON.parse(chatCompletion.choices[0].message.content);
 
-  await supabase.from('practical_work_intelligence').update({
+  // NEW: INSERT a new facet row
+  const { error } = await supabase.from('practical_work_intelligence').insert({
+    practical_work_id,
+    facet_type: 'testing', // NEW
+    cluster_id,
+    canonical_id: practical_work_id,
+    source_tables,
+    
+    // Testing-specific fields
     test_procedures: data.test_procedures,
     test_equipment_required: data.test_equipment_required,
     acceptance_criteria: data.acceptance_criteria,
     inspection_checklist: data.inspection_checklist,
     eicr_observation_codes: data.eicr_observation_codes,
-    enrichment_metadata: supabase.raw(`
-      jsonb_set(
-        COALESCE(enrichment_metadata, '{}'::jsonb),
-        '{stages}',
-        COALESCE(enrichment_metadata->'stages', '[]'::jsonb) || '["testing"]'::jsonb
-      )
-    `)
-  }).eq('practical_work_id', id);
+    
+    // Cross-cutting fields
+    activity_types,
+    equipment_category
+  });
 
-  logger.info(`✅ Testing enriched: ${id}`);
-  return { id, success: true };
+  if (error) {
+    if (error.code === '23505') {
+      await supabase.from('practical_work_intelligence')
+        .update({
+          test_procedures: data.test_procedures,
+          test_equipment_required: data.test_equipment_required,
+          acceptance_criteria: data.acceptance_criteria,
+          inspection_checklist: data.inspection_checklist,
+          eicr_observation_codes: data.eicr_observation_codes
+        })
+        .eq('practical_work_id', practical_work_id)
+        .eq('facet_type', 'testing');
+    } else {
+      throw error;
+    }
+  }
+
+  logger.info(`✅ Testing facet created: ${practical_work_id}`);
+  return { id: practical_work_id, success: true };
 }

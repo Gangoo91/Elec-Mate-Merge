@@ -1,8 +1,7 @@
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import EnrichmentConsole from '@/components/admin/EnrichmentConsole';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Database, Zap, GitMerge } from 'lucide-react';
+import { Database, Zap } from 'lucide-react';
 
 export default function EnrichmentMonitor() {
   const [searchParams] = useSearchParams();
@@ -42,13 +41,6 @@ export default function EnrichmentMonitor() {
           <Badge variant="outline" className="font-mono text-xs">
             30s Heartbeat
           </Badge>
-          
-          <Link to="/admin/practical-work-enrichment" className="ml-auto">
-            <Button variant="outline" size="sm">
-              <GitMerge className="mr-2 h-4 w-4" />
-              Practical Work Pipeline
-            </Button>
-          </Link>
         </div>
       </div>
 

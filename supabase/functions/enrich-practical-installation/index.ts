@@ -72,7 +72,13 @@ serve(async (req) => {
 });
 
 async function enrichInstallation(supabase: any, item: any, logger: any) {
-  const { id, content, description } = item;
+  const { practical_work_id, activity_types, content, description, cluster_id, source_tables, equipment_category } = item;
+  
+  // Only enrich if 'installation' is in activity_types
+  if (!activity_types?.includes('installation')) {
+    logger.info(`⏭️ Skipping ${practical_work_id}: no installation activity`);
+    return { id: practical_work_id, skipped: true };
+  }
   
   // RAG searches
   const installationContext = await searchPracticalWorkBatch(supabase, {
@@ -125,21 +131,42 @@ Return ONLY valid JSON.`;
 
   const data = JSON.parse(chatCompletion.choices[0].message.content);
 
-  // Update existing intelligence record
-  await supabase.from('practical_work_intelligence').update({
+  // NEW: INSERT a new facet row (not UPDATE)
+  const { error } = await supabase.from('practical_work_intelligence').insert({
+    practical_work_id: practical_work_id,
+    facet_type: 'installation', // NEW
+    cluster_id,
+    canonical_id: practical_work_id,
+    source_tables,
+    
+    // Installation-specific fields only
     installation_method: data.installation_method,
     fixing_intervals: data.fixing_intervals,
     cable_routes: data.cable_routes,
     termination_methods: data.termination_methods,
-    enrichment_metadata: supabase.raw(`
-      jsonb_set(
-        COALESCE(enrichment_metadata, '{}'::jsonb),
-        '{stages}',
-        COALESCE(enrichment_metadata->'stages', '[]'::jsonb) || '["installation"]'::jsonb
-      )
-    `)
-  }).eq('practical_work_id', id);
+    
+    // Cross-cutting fields (copy from primary facet for context)
+    activity_types,
+    equipment_category
+  });
 
-  logger.info(`✅ Installation enriched: ${id}`);
-  return { id, success: true };
+  if (error) {
+    // If facet already exists, update it instead
+    if (error.code === '23505') { // Unique constraint violation
+      await supabase.from('practical_work_intelligence')
+        .update({
+          installation_method: data.installation_method,
+          fixing_intervals: data.fixing_intervals,
+          cable_routes: data.cable_routes,
+          termination_methods: data.termination_methods
+        })
+        .eq('practical_work_id', practical_work_id)
+        .eq('facet_type', 'installation');
+    } else {
+      throw error;
+    }
+  }
+
+  logger.info(`✅ Installation facet created: ${practical_work_id}`);
+  return { id: practical_work_id, success: true };
 }

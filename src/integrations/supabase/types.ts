@@ -4335,6 +4335,7 @@ export type Database = {
           eicr_observation_codes: string[] | null
           equipment_category: string | null
           equipment_subcategory: string | null
+          facet_type: string
           fixing_intervals: Json | null
           id: string
           inspection_checklist: Json[] | null
@@ -4379,6 +4380,7 @@ export type Database = {
           eicr_observation_codes?: string[] | null
           equipment_category?: string | null
           equipment_subcategory?: string | null
+          facet_type?: string
           fixing_intervals?: Json | null
           id?: string
           inspection_checklist?: Json[] | null
@@ -4423,6 +4425,7 @@ export type Database = {
           eicr_observation_codes?: string[] | null
           equipment_category?: string | null
           equipment_subcategory?: string | null
+          facet_type?: string
           fixing_intervals?: Json | null
           id?: string
           inspection_checklist?: Json[] | null

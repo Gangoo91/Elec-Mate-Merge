@@ -38,7 +38,6 @@ export async function searchPracticalWorkBatch(
 ): Promise<RAGResult[]> {
   const cacheKey = getCacheKey(params);
   
-  // Return cached results if available
   if (ragCache.has(cacheKey)) {
     console.log(`📦 Cache hit: ${cacheKey}`);
     return ragCache.get(cacheKey)!;
@@ -47,31 +46,46 @@ export async function searchPracticalWorkBatch(
   const { keywords, limit = 10, activity_filter } = params;
   
   try {
-    // Use hybrid search function
+    // Fetch 3x to get multiple facets per procedure
     const { data, error } = await supabase.rpc(
       'search_practical_work_intelligence_hybrid',
       {
         keywords: keywords.join(' '),
-        match_count: limit,
+        match_count: limit * 3, // Get multiple facets per procedure
         activity_types_filter: activity_filter || null
       }
     );
     
     if (error) throw error;
     
-    const results = (data || []).map((row: any) => ({
-      content: row.content || row.description || '',
-      source_table: row.source_table,
-      similarity: row.similarity
-    }));
+    // Group results by practical_work_id, keeping all facets
+    const groupedResults = new Map<string, RAGResult[]>();
     
-    // Cache results
+    (data || []).forEach((row: any) => {
+      const key = row.practical_work_id || row.id;
+      if (!groupedResults.has(key)) {
+        groupedResults.set(key, []);
+      }
+      groupedResults.get(key)!.push({
+        content: `[${row.facet_type || 'primary'}] ${row.content || row.description || ''}`,
+        facet_type: row.facet_type,
+        practical_work_id: row.practical_work_id,
+        source_table: row.source_table,
+        similarity: row.similarity
+      });
+    });
+    
+    // Flatten back to array, with all facets for top procedures
+    const results = Array.from(groupedResults.values())
+      .slice(0, limit) // Take top N procedures
+      .flat(); // Include all facets for those procedures
+    
     ragCache.set(cacheKey, results);
-    console.log(`✅ RAG search: ${keywords.join(', ')} → ${results.length} results (cached)`);
+    console.log(`✅ Practical Work search: ${results.length} facets from ${groupedResults.size} procedures`);
     
     return results;
   } catch (error) {
-    console.error('RAG search failed:', error);
+    console.error('Practical Work search failed:', error);
     return [];
   }
 }

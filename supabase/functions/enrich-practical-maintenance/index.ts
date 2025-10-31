@@ -72,7 +72,13 @@ serve(async (req) => {
 });
 
 async function enrichMaintenance(supabase: any, item: any, logger: any) {
-  const { id, content, description } = item;
+  const { practical_work_id, activity_types, content, description, cluster_id, source_tables, equipment_category } = item;
+  
+  // Only enrich if maintenance/fault_diagnosis is in activity_types
+  if (!activity_types?.some((t: string) => ['maintenance', 'fault_diagnosis'].includes(t))) {
+    logger.info(`⏭️ Skipping ${practical_work_id}: no maintenance activity`);
+    return { id: practical_work_id, skipped: true };
+  }
   
   const maintenanceContext = await searchPracticalWorkBatch(supabase, {
     keywords: ['maintenance', 'fault', 'repair', 'degradation'],
@@ -116,20 +122,41 @@ Return ONLY valid JSON.`;
 
   const data = JSON.parse(chatCompletion.choices[0].message.content);
 
-  await supabase.from('practical_work_intelligence').update({
+  // NEW: INSERT a new facet row
+  const { error } = await supabase.from('practical_work_intelligence').insert({
+    practical_work_id,
+    facet_type: 'maintenance', // NEW
+    cluster_id,
+    canonical_id: practical_work_id,
+    source_tables,
+    
+    // Maintenance-specific fields
     maintenance_intervals: data.maintenance_intervals,
     maintenance_tasks: data.maintenance_tasks,
     common_defects: data.common_defects,
     degradation_signs: data.degradation_signs,
-    enrichment_metadata: supabase.raw(`
-      jsonb_set(
-        COALESCE(enrichment_metadata, '{}'::jsonb),
-        '{stages}',
-        COALESCE(enrichment_metadata->'stages', '[]'::jsonb) || '["maintenance"]'::jsonb
-      )
-    `)
-  }).eq('practical_work_id', id);
+    
+    // Cross-cutting fields
+    activity_types,
+    equipment_category
+  });
 
-  logger.info(`✅ Maintenance enriched: ${id}`);
-  return { id, success: true };
+  if (error) {
+    if (error.code === '23505') {
+      await supabase.from('practical_work_intelligence')
+        .update({
+          maintenance_intervals: data.maintenance_intervals,
+          maintenance_tasks: data.maintenance_tasks,
+          common_defects: data.common_defects,
+          degradation_signs: data.degradation_signs
+        })
+        .eq('practical_work_id', practical_work_id)
+        .eq('facet_type', 'maintenance');
+    } else {
+      throw error;
+    }
+  }
+
+  logger.info(`✅ Maintenance facet created: ${practical_work_id}`);
+  return { id: practical_work_id, success: true };
 }

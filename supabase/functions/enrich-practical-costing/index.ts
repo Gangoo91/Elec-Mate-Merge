@@ -71,7 +71,7 @@ serve(async (req) => {
 });
 
 async function enrichCosting(supabase: any, item: any, logger: any) {
-  const { id, content, description, technical_complexity, equipment_category } = item;
+  const { practical_work_id, content, description, technical_complexity, equipment_category, cluster_id, source_tables, activity_types } = item;
   
   // Search pricing intelligence
   const { data: pricingData } = await supabase
@@ -119,20 +119,41 @@ Return ONLY valid JSON.`;
 
   const data = JSON.parse(chatCompletion.choices[0].message.content);
 
-  await supabase.from('practical_work_intelligence').update({
+  // NEW: INSERT a new facet row (costing applies to ALL procedures)
+  const { error } = await supabase.from('practical_work_intelligence').insert({
+    practical_work_id,
+    facet_type: 'costing', // NEW
+    cluster_id,
+    canonical_id: practical_work_id,
+    source_tables,
+    
+    // Costing-specific fields
     estimated_duration: data.estimated_duration,
     material_requirements: data.material_requirements,
     labour_category: data.labour_category,
     difficulty_multiplier: data.difficulty_multiplier,
-    enrichment_metadata: supabase.raw(`
-      jsonb_set(
-        COALESCE(enrichment_metadata, '{}'::jsonb),
-        '{stages}',
-        COALESCE(enrichment_metadata->'stages', '[]'::jsonb) || '["costing"]'::jsonb
-      )
-    `)
-  }).eq('practical_work_id', id);
+    
+    // Cross-cutting fields
+    activity_types,
+    equipment_category
+  });
 
-  logger.info(`✅ Costing enriched: ${id}`);
-  return { id, success: true };
+  if (error) {
+    if (error.code === '23505') {
+      await supabase.from('practical_work_intelligence')
+        .update({
+          estimated_duration: data.estimated_duration,
+          material_requirements: data.material_requirements,
+          labour_category: data.labour_category,
+          difficulty_multiplier: data.difficulty_multiplier
+        })
+        .eq('practical_work_id', practical_work_id)
+        .eq('facet_type', 'costing');
+    } else {
+      throw error;
+    }
+  }
+
+  logger.info(`✅ Costing facet created: ${practical_work_id}`);
+  return { id: practical_work_id, success: true };
 }
