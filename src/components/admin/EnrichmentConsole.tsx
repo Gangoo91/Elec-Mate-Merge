@@ -101,6 +101,8 @@ export default function EnrichmentConsole() {
   const [stats, setStats] = useState({ 
     sourceTotal: 0, 
     sourceEnriched: 0, 
+    isEstimated: false,
+    actualCanonical: 0,
     facetsCreated: 0, 
     targetFacets: 0, 
     remaining: 0, 
@@ -149,10 +151,22 @@ export default function EnrichmentConsole() {
       // Load stats based on task type
       if (selectedTask === 'practical_work') {
         // PRACTICAL WORK: Faceted model with multi-stage tracking
+        
+        // Query total source records (all, before deduplication)
+        const { count: totalSourceRecords } = await supabase
+          .from('practical_work')
+          .select('*', { count: 'exact', head: true });
+
+        // Query canonical count (deduplicated records)
         const { count: canonicalCount } = await supabase
           .from('practical_work')
           .select('*', { count: 'exact', head: true })
           .eq('is_canonical', true);
+
+        // If unification hasn't run yet, estimate canonical count (~83.7% deduplication rate)
+        const estimatedCanonicalCount = canonicalCount === 0 
+          ? Math.round((totalSourceRecords || 12247) * 0.837) 
+          : canonicalCount;
 
         const { count: totalFacets } = await supabase
           .from('practical_work_intelligence')
@@ -184,12 +198,15 @@ export default function EnrichmentConsole() {
           .select('*', { count: 'exact', head: true })
           .eq('facet_type', 'costing');
 
-        const expectedFacets = Math.round((canonicalCount || 0) * 4.1);
+        // Calculate target using estimated or actual canonical count
+        const expectedFacets = Math.round(estimatedCanonicalCount * 4.1);
         const progress = expectedFacets > 0 ? Math.round(((totalFacets || 0) / expectedFacets) * 100) : 0;
 
         setStats({
-          sourceTotal: 12247,
-          sourceEnriched: canonicalCount || 0,
+          sourceTotal: totalSourceRecords || 12247,
+          sourceEnriched: estimatedCanonicalCount,
+          isEstimated: canonicalCount === 0,
+          actualCanonical: canonicalCount || 0,
           facetsCreated: totalFacets || 0,
           targetFacets: expectedFacets,
           remaining: Math.max(0, expectedFacets - (totalFacets || 0)),
@@ -237,6 +254,8 @@ export default function EnrichmentConsole() {
         setStats({ 
           sourceTotal: sourceTotal || 0, 
           sourceEnriched, 
+          isEstimated: false,
+          actualCanonical: 0,
           facetsCreated: facetsCreated || 0, 
           targetFacets, 
           remaining, 
@@ -259,6 +278,8 @@ export default function EnrichmentConsole() {
         setStats({
           sourceTotal: sourceTotal || 0,
           sourceEnriched: facetsCreated || 0,
+          isEstimated: false,
+          actualCanonical: 0,
           facetsCreated: facetsCreated || 0,
           targetFacets: sourceTotal || 0,
           remaining: Math.max(0, (sourceTotal || 0) - (facetsCreated || 0)),
@@ -622,10 +643,17 @@ export default function EnrichmentConsole() {
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-primary">
-              {selectedTask === 'practical_work' ? stats.sourceEnriched : `${stats.sourceEnriched}/${stats.sourceTotal}`}
+              {selectedTask === 'practical_work' ? stats.sourceEnriched?.toLocaleString() : `${stats.sourceEnriched}/${stats.sourceTotal}`}
             </div>
             <div className="text-xs text-muted-foreground">
-              {selectedTask === 'practical_work' ? 'Canonical' : 'Unique Regulations'}
+              {selectedTask === 'practical_work' ? (
+                <>
+                  Canonical
+                  {stats.isEstimated && (
+                    <span className="ml-1 text-amber-400">(est.)</span>
+                  )}
+                </>
+              ) : 'Unique Regulations'}
             </div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
