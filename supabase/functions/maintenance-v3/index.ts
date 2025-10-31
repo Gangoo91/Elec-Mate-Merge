@@ -542,6 +542,90 @@ Provide comprehensive maintenance instructions following the tool schema structu
       console.warn(`⚠️ Partial response detected, missing: ${missingSections.join(', ')}`);
     }
 
+    // ============= SUMMARY CALCULATION HELPERS =============
+    
+    // Convert interval string to annual frequency multiplier
+    const parseFrequency = (interval: string): number => {
+      if (/month/i.test(interval)) {
+        const months = parseInt(interval.match(/\d+/)?.[0] || '12');
+        return 12 / months;
+      }
+      if (/year/i.test(interval)) {
+        const years = parseInt(interval.match(/\d+/)?.[0] || '1');
+        return 1 / years;
+      }
+      if (/week/i.test(interval)) {
+        const weeks = parseInt(interval.match(/\d+/)?.[0] || '1');
+        return 52 / weeks;
+      }
+      return 1; // Default: annual
+    };
+
+    // Calculate compliance status based on risk and age
+    const calculateComplianceStatus = (riskLevel: string, ageYears: number): string => {
+      if (riskLevel === 'critical' || ageYears > 15) return 'non-compliant';
+      if (riskLevel === 'high' || ageYears > 10) return 'attention-needed';
+      return 'compliant';
+    };
+
+    // Calculate annual cost from maintenance schedule
+    const calculateAnnualCost = (schedule: any[]): { min: number; max: number } => {
+      let minTotal = 0, maxTotal = 0;
+      
+      for (const task of schedule) {
+        if (task.estimatedCost) {
+          const frequency = parseFrequency(task.interval || 'annual');
+          minTotal += (task.estimatedCost.min || 0) * frequency;
+          maxTotal += (task.estimatedCost.max || 0) * frequency;
+        }
+      }
+      
+      return { min: Math.round(minTotal), max: Math.round(maxTotal) };
+    };
+
+    // Calculate total annual hours
+    const calculateAnnualHours = (schedule: any[]): number => {
+      let totalMinutes = 0;
+      
+      for (const task of schedule) {
+        if (task.estimatedDurationMinutes) {
+          const frequency = parseFrequency(task.interval || 'annual');
+          totalMinutes += task.estimatedDurationMinutes * frequency;
+        }
+      }
+      
+      return Math.round(totalMinutes / 60 * 10) / 10; // Round to 1 decimal
+    };
+
+    // Calculate next EICR due date
+    const calculateNextEICR = (buildingType: string, ageYears: number): string => {
+      const now = new Date();
+      let yearsUntilEICR = 10; // Default
+      
+      if (buildingType === 'domestic') {
+        yearsUntilEICR = 10;
+      } else if (buildingType === 'commercial') {
+        yearsUntilEICR = 5;
+      } else if (buildingType === 'industrial') {
+        yearsUntilEICR = 3;
+      }
+      
+      // If equipment is old, suggest sooner EICR
+      if (ageYears > 10) yearsUntilEICR = Math.min(yearsUntilEICR, 3);
+      
+      const dueDate = new Date(now);
+      dueDate.setFullYear(now.getFullYear() + yearsUntilEICR);
+      
+      return dueDate.toLocaleDateString('en-GB');
+    };
+
+    // Calculate all summary metrics
+    const calculatedSchedule = maintenanceGuidance.maintenanceSchedule || [];
+    const riskLevel = maintenanceGuidance.equipmentSummary?.overallRiskLevel || 'medium';
+    const riskScoreValue = riskLevel === 'critical' ? 90 : 
+                           riskLevel === 'high' ? 70 :
+                           riskLevel === 'medium' ? 40 : 20;
+
     return new Response(
       JSON.stringify({
         success: true,
@@ -552,12 +636,18 @@ Provide comprehensive maintenance instructions following the tool schema structu
           location: maintenanceGuidance.equipmentSummary?.location || location,
           ageYears: ageYears,
           buildingType: buildingType,
-          schedule: maintenanceGuidance.maintenanceSchedule || [],
+          schedule: calculatedSchedule,
           recommendations: maintenanceGuidance.recommendations || [],
           regulations: maintenanceGuidance.bs7671References || [],
-          riskScore: maintenanceGuidance.equipmentSummary?.overallRiskLevel === 'critical' ? 90 : 
-                     maintenanceGuidance.equipmentSummary?.overallRiskLevel === 'high' ? 70 :
-                     maintenanceGuidance.equipmentSummary?.overallRiskLevel === 'medium' ? 40 : 20,
+          
+          // Summary metrics
+          riskScore: riskScoreValue,
+          riskLevel: riskLevel,
+          complianceStatus: calculateComplianceStatus(riskLevel, ageYears || 0),
+          annualCostEstimate: calculateAnnualCost(calculatedSchedule),
+          totalEstimatedHours: calculateAnnualHours(calculatedSchedule),
+          nextEICRDue: calculateNextEICR(buildingType || 'domestic', ageYears || 0),
+          
           partial: maintenanceGuidance.partial || false,
           missingSections: maintenanceGuidance.missingSections || []
         },
