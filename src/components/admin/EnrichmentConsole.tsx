@@ -25,6 +25,8 @@ const TASK_CONFIG = {
     jobType: 'enrich_bs7671_embeddings',
     sourceTable: 'bs7671_embeddings',
     targetTable: 'regulations_intelligence',
+    enrichmentModel: 'faceted',
+    targetMultiplier: 30,
     sourceFilter: { column: 'regulation_number', op: 'neq', value: 'General' }
   },
   health_safety: {
@@ -32,6 +34,8 @@ const TASK_CONFIG = {
     jobType: 'enrich_health_safety_knowledge',
     sourceTable: 'health_safety_knowledge',
     targetTable: 'health_safety_intelligence',
+    enrichmentModel: 'simple',
+    targetMultiplier: 1,
     sourceFilter: null
   },
   pricing: {
@@ -39,7 +43,27 @@ const TASK_CONFIG = {
     jobType: 'enrich_pricing_data',
     sourceTable: 'pricing_embeddings',
     targetTable: 'pricing_intelligence',
+    enrichmentModel: 'simple',
+    targetMultiplier: 1,
     sourceFilter: null
+  },
+  practical_work: {
+    label: 'Practical Work',
+    jobType: 'practical_work_multi_stage',
+    sourceTable: 'practical_work',
+    targetTable: 'practical_work_intelligence',
+    enrichmentModel: 'faceted',
+    targetMultiplier: 4.1,
+    isMultiStage: true,
+    sourceFilter: { column: 'is_canonical', op: 'eq', value: true },
+    stages: [
+      { key: 'unify', label: '1. Unification', jobType: null, isPrerequisite: true },
+      { key: 'primary', label: '2. Primary', jobType: 'enrich_practical_work_primary', expectedRatio: 1.0, fields: ['activity_types', 'equipment_category'] },
+      { key: 'installation', label: '3. Installation', jobType: 'enrich_practical_installation', expectedRatio: 0.6, fields: ['installation_method', 'fixing_intervals'] },
+      { key: 'maintenance', label: '4. Maintenance', jobType: 'enrich_practical_maintenance', expectedRatio: 0.8, fields: ['maintenance_intervals', 'maintenance_tasks'] },
+      { key: 'testing', label: '5. Testing', jobType: 'enrich_practical_testing', expectedRatio: 0.7, fields: ['test_procedures', 'test_equipment_required'] },
+      { key: 'costing', label: '6. Costing', jobType: 'enrich_practical_costing', expectedRatio: 1.0, fields: ['estimated_duration', 'material_requirements'] }
+    ]
   }
 } as const;
 
@@ -80,7 +104,8 @@ export default function EnrichmentConsole() {
     facetsCreated: 0, 
     targetFacets: 0, 
     remaining: 0, 
-    progress: 0 
+    progress: 0,
+    stageProgress: {} as Record<string, number>
   });
   const [isLoading, setIsLoading] = useState(false);
   const isMobile = useIsMobile();
@@ -121,49 +146,126 @@ export default function EnrichmentConsole() {
         setBatches([]);
       }
 
-      // Load stats (task-aware queries)
-      // For BS7671: Count UNIQUE regulation_numbers (not total rows with duplicates)
-      const { data: sourceRawData } = await supabase
-        .from(config.sourceTable as 'bs7671_embeddings')
-        .select('regulation_number')
-        .neq('regulation_number', 'General')
-        .limit(3000); // Ensure we get all rows (current: 2,557)
-      
-      const sourceTotal = new Set((sourceRawData || []).map(r => r.regulation_number)).size;
+      // Load stats based on task type
+      if (selectedTask === 'practical_work') {
+        // PRACTICAL WORK: Faceted model with multi-stage tracking
+        const { count: canonicalCount } = await supabase
+          .from('practical_work')
+          .select('*', { count: 'exact', head: true })
+          .eq('is_canonical', true);
 
-      // Count unique enriched regulation_numbers (not facets, not row IDs)
-      const { data: enrichedRawData } = await supabase
-        .from(config.targetTable as 'regulations_intelligence')
-        .select('regulation_number')
-        .limit(2000); // Ensure we get all enriched rows (current: 1,520)
+        const { count: totalFacets } = await supabase
+          .from('practical_work_intelligence')
+          .select('*', { count: 'exact', head: true });
 
-      // Extract unique regulation_numbers that have been enriched
-      const uniqueEnrichedRegulations = new Set(
-        (enrichedRawData || []).map(e => e.regulation_number).filter(Boolean)
-      );
+        // Count facets by type
+        const { count: primaryFacets } = await supabase
+          .from('practical_work_intelligence')
+          .select('*', { count: 'exact', head: true })
+          .eq('facet_type', 'primary');
 
-      // Count actual facets created (total rows in target table)
-      const { count: facetsCreated } = await supabase
-        .from(config.targetTable)
-        .select('*', { count: 'exact', head: true });
+        const { count: installationFacets } = await supabase
+          .from('practical_work_intelligence')
+          .select('*', { count: 'exact', head: true })
+          .eq('facet_type', 'installation');
 
-      // Calculate target facets based on task - use max to prevent >100% display
-      const avgFacetsPerReg = selectedTask === 'bs7671' ? 25 : 1;
-      const projectedTargetFacets = (sourceTotal || 0) * avgFacetsPerReg;
-      const targetFacets = Math.max(facetsCreated || 0, projectedTargetFacets);
+        const { count: maintenanceFacets } = await supabase
+          .from('practical_work_intelligence')
+          .select('*', { count: 'exact', head: true })
+          .eq('facet_type', 'maintenance');
 
-      const sourceEnriched = uniqueEnrichedRegulations.size;
-      const remaining = Math.max(0, sourceTotal - sourceEnriched); // Remaining unique regs, not facets
-      const progress = sourceTotal > 0 ? Math.round((sourceEnriched / sourceTotal) * 100) : 0; // Based on unique regs
+        const { count: testingFacets } = await supabase
+          .from('practical_work_intelligence')
+          .select('*', { count: 'exact', head: true })
+          .eq('facet_type', 'testing');
 
-      setStats({ 
-        sourceTotal: sourceTotal || 0, 
-        sourceEnriched, 
-        facetsCreated: facetsCreated || 0, 
-        targetFacets, 
-        remaining, 
-        progress 
-      });
+        const { count: costingFacets } = await supabase
+          .from('practical_work_intelligence')
+          .select('*', { count: 'exact', head: true })
+          .eq('facet_type', 'costing');
+
+        const expectedFacets = Math.round((canonicalCount || 0) * 4.1);
+        const progress = expectedFacets > 0 ? Math.round(((totalFacets || 0) / expectedFacets) * 100) : 0;
+
+        setStats({
+          sourceTotal: 12247,
+          sourceEnriched: canonicalCount || 0,
+          facetsCreated: totalFacets || 0,
+          targetFacets: expectedFacets,
+          remaining: Math.max(0, expectedFacets - (totalFacets || 0)),
+          progress,
+          stageProgress: {
+            primary: primaryFacets || 0,
+            installation: installationFacets || 0,
+            maintenance: maintenanceFacets || 0,
+            testing: testingFacets || 0,
+            costing: costingFacets || 0
+          }
+        });
+
+      } else if (selectedTask === 'bs7671') {
+        // BS 7671: Faceted model
+        const { data: sourceRawData } = await supabase
+          .from(config.sourceTable as 'bs7671_embeddings')
+          .select('regulation_number')
+          .neq('regulation_number', 'General')
+          .limit(3000);
+        
+        const sourceTotal = new Set((sourceRawData || []).map(r => r.regulation_number)).size;
+
+        const { data: enrichedRawData } = await supabase
+          .from(config.targetTable as 'regulations_intelligence')
+          .select('regulation_number')
+          .limit(2000);
+
+        const uniqueEnrichedRegulations = new Set(
+          (enrichedRawData || []).map(e => e.regulation_number).filter(Boolean)
+        );
+
+        const { count: facetsCreated } = await supabase
+          .from(config.targetTable)
+          .select('*', { count: 'exact', head: true });
+
+        const avgFacetsPerReg = 30;
+        const projectedTargetFacets = (sourceTotal || 0) * avgFacetsPerReg;
+        const targetFacets = Math.max(facetsCreated || 0, projectedTargetFacets);
+
+        const sourceEnriched = uniqueEnrichedRegulations.size;
+        const remaining = Math.max(0, sourceTotal - sourceEnriched);
+        const progress = sourceTotal > 0 ? Math.round((sourceEnriched / sourceTotal) * 100) : 0;
+
+        setStats({ 
+          sourceTotal: sourceTotal || 0, 
+          sourceEnriched, 
+          facetsCreated: facetsCreated || 0, 
+          targetFacets, 
+          remaining, 
+          progress,
+          stageProgress: {}
+        });
+
+      } else {
+        // Health & Safety / Pricing: Simple 1:1 model
+        const { count: sourceTotal } = await supabase
+          .from(config.sourceTable)
+          .select('*', { count: 'exact', head: true });
+
+        const { count: facetsCreated } = await supabase
+          .from(config.targetTable)
+          .select('*', { count: 'exact', head: true });
+
+        const progress = sourceTotal > 0 ? Math.round(((facetsCreated || 0) / sourceTotal) * 100) : 0;
+
+        setStats({
+          sourceTotal: sourceTotal || 0,
+          sourceEnriched: facetsCreated || 0,
+          facetsCreated: facetsCreated || 0,
+          targetFacets: sourceTotal || 0,
+          remaining: Math.max(0, (sourceTotal || 0) - (facetsCreated || 0)),
+          progress,
+          stageProgress: {}
+        });
+      }
     } catch (error) {
       console.error('Failed to load status:', error);
     }
@@ -519,23 +621,31 @@ export default function EnrichmentConsole() {
 
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           <div className="text-center p-3 bg-muted rounded-md">
-            <div className="text-2xl font-bold text-primary">{stats.sourceEnriched}/{stats.sourceTotal}</div>
-            <div className="text-xs text-muted-foreground">Unique Regulations</div>
+            <div className="text-2xl font-bold text-primary">
+              {selectedTask === 'practical_work' ? stats.sourceEnriched : `${stats.sourceEnriched}/${stats.sourceTotal}`}
+            </div>
+            <div className="text-xs text-muted-foreground">
+              {selectedTask === 'practical_work' ? 'Canonical' : 'Unique Regulations'}
+            </div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-success">{stats.facetsCreated.toLocaleString()}</div>
-            <div className="text-xs text-muted-foreground">Facets Created</div>
+            <div className="text-xs text-muted-foreground">
+              {selectedTask === 'practical_work' ? `Facets (Target: ${stats.targetFacets.toLocaleString()})` : 'Facets Created'}
+            </div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-warning">{stats.remaining.toLocaleString()}</div>
-            <div className="text-xs text-muted-foreground">Remaining Regs</div>
+            <div className="text-xs text-muted-foreground">
+              {selectedTask === 'practical_work' ? 'Remaining Facets' : 'Remaining Regs'}
+            </div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-chart-2">{stats.progress}%</div>
             <div className="text-xs text-muted-foreground">Progress</div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
-            <div className="text-2xl font-bold text-chart-3">{batches.length}</div>
+            <div className="text-2xl font-bold text-chart-3">{batches.filter(b => b.status === 'processing').length}</div>
             <div className="text-xs text-muted-foreground">Active Batches</div>
           </div>
         </div>
@@ -668,6 +778,73 @@ export default function EnrichmentConsole() {
           </MobileButton>
         </div>
       </Card>
+
+      {/* Multi-Stage Pipeline (Practical Work only) */}
+      {selectedTask === 'practical_work' && 'stages' in config && config.stages && (
+        <Card className="p-4">
+          <h4 className="font-medium mb-4 flex items-center gap-2">
+            <TrendingUp className="w-4 h-4" />
+            Multi-Stage Pipeline Progress
+          </h4>
+          
+          <div className="space-y-3">
+            {config.stages.map((stage, idx) => {
+              const facetCount = stats.stageProgress?.[stage.key] || 0;
+              const expectedForStage = stage.key === 'unify' ? 0 :
+                Math.round(stats.sourceEnriched * (stage.expectedRatio || 1));
+              const progress = expectedForStage > 0 
+                ? Math.round((facetCount / expectedForStage) * 100) 
+                : 0;
+              const isComplete = facetCount >= expectedForStage && expectedForStage > 0;
+
+              return (
+                <div key={stage.key} className="p-4 border rounded-lg">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h5 className="font-medium">{stage.label}</h5>
+                        {isComplete && <CheckCircle2 className="w-4 h-4 text-success" />}
+                      </div>
+                      {stage.key !== 'unify' && (
+                        <p className="text-sm text-muted-foreground">
+                          {facetCount.toLocaleString()} / {expectedForStage.toLocaleString()} facets ({progress}%)
+                        </p>
+                      )}
+                      {stage.key === 'unify' && (
+                        <p className="text-sm text-muted-foreground">
+                          {stats.sourceEnriched > 0 ? `✓ ${stats.sourceEnriched.toLocaleString()} canonical records` : 'Not started'}
+                        </p>
+                      )}
+                    </div>
+                    {stage.jobType && (
+                      <MobileButton
+                        size="sm"
+                        onClick={() => callScheduler('start', { jobType: stage.jobType })}
+                        disabled={isLoading || (stage.key === 'unify' ? false : stats.sourceEnriched === 0)}
+                      >
+                        {isComplete ? '✓ Done' : 'Start'}
+                      </MobileButton>
+                    )}
+                  </div>
+                  {stage.key !== 'unify' && expectedForStage > 0 && (
+                    <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-primary transition-all duration-300"
+                        style={{ width: `${Math.min(progress, 100)}%` }}
+                      />
+                    </div>
+                  )}
+                  {'fields' in stage && stage.fields && (
+                    <div className="mt-2 text-xs text-muted-foreground">
+                      Fields: {stage.fields.join(', ')}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </Card>
+      )}
 
       {/* Active Jobs */}
       {jobs.length > 0 && (

@@ -24,7 +24,7 @@ export default function EnrichmentMonitor() {
         <div className="flex flex-wrap items-center gap-2 mt-3">
           <Badge variant="outline" className="font-mono text-xs">
             <Zap className="w-3 h-3 mr-1" />
-            6 Workers
+            {selectedTask === 'practical_work' ? '10 Workers' : '6 Workers'}
           </Badge>
           <Badge variant="outline" className="font-mono text-xs">
             UK English
@@ -33,13 +33,13 @@ export default function EnrichmentMonitor() {
             GPT-5 Mini
           </Badge>
           <Badge variant="outline" className="font-mono text-xs">
-            Multi-Facet
+            {selectedTask === 'practical_work' ? 'Multi-Stage' : 'Multi-Facet'}
           </Badge>
           <Badge variant="outline" className="font-mono text-xs">
-            4m Timeout
+            4min Timeout
           </Badge>
           <Badge variant="outline" className="font-mono text-xs">
-            30s Heartbeat
+            15s Heartbeat
           </Badge>
         </div>
       </div>
