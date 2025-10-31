@@ -120,7 +120,19 @@ interface BatchProgress {
 
 export default function EnrichmentConsole() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const selectedTask = (searchParams.get('task') || 'bs7671') as keyof typeof TASK_CONFIG;
+  const rawTask = searchParams.get('task') || 'bs7671';
+
+  // Handle legacy 'practical_work' URL - redirect to primary stage
+  useEffect(() => {
+    if (rawTask === 'practical_work') {
+      setSearchParams({ task: 'practical_work_primary' }, { replace: true });
+    } else if (!TASK_CONFIG[rawTask as keyof typeof TASK_CONFIG]) {
+      // Invalid task - default to bs7671
+      setSearchParams({ task: 'bs7671' }, { replace: true });
+    }
+  }, [rawTask, setSearchParams]);
+
+  const selectedTask = (rawTask in TASK_CONFIG ? rawTask : 'bs7671') as keyof typeof TASK_CONFIG;
   const config = TASK_CONFIG[selectedTask];
   
   const [jobs, setJobs] = useState<JobStatus[]>([]);
