@@ -153,7 +153,7 @@ const QuoteBuilder = () => {
       <div className="p-0 md:px-6 md:py-8 space-y-4 md:space-y-8 animate-fade-in">
         <div className="max-w-[1400px] mx-auto px-3 md:px-4">
           {/* Prominent Create Quote Section */}
-          <section className="text-center space-y-2 md:space-y-4">
+          <section className="text-center space-y-4 md:space-y-6 mb-8 md:mb-12">
           <Button 
             onClick={() => navigate('/electrician/quote-builder/create')}
             size="lg"
@@ -167,9 +167,9 @@ const QuoteBuilder = () => {
           </p>
         </section>
 
-        <main className="space-y-4 md:space-y-8">
+        <main className="space-y-6 md:space-y-10">
           {/* Enhanced Stats Dashboard */}
-          <section aria-labelledby="stats-overview" className="space-y-3 md:space-y-6">
+          <section aria-labelledby="stats-overview" className="space-y-4 md:space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 md:gap-3">
               <h2 id="stats-overview" className="text-lg md:text-2xl font-bold">Dashboard Overview</h2>
               <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
