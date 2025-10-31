@@ -236,16 +236,37 @@ export const useMaintenanceAdvisor = () => {
         return;
       }
 
+      // ✅ PHASE 3: Validate response structure before accessing nested properties
+      if (!data || typeof data !== 'object') {
+        console.error('Invalid response structure:', data);
+        toast.error('Invalid response from server', {
+          description: 'Please try again or contact support.'
+        });
+        setState('input');
+        return;
+      }
+
+      // ✅ PHASE 3: Validate schedule structure
+      if (!data.schedule || typeof data.schedule !== 'object') {
+        console.error('Missing schedule in response:', data);
+        toast.error('Incomplete response received', {
+          description: 'The server returned an incomplete maintenance plan.'
+        });
+        setState('input');
+        return;
+      }
+
       setResults(data.schedule);
       setState('results');
       
-      if (data.schedule.partial) {
+      // ✅ PHASE 3: Safe property access with optional chaining
+      if (data.schedule?.partial) {
         toast.warning('Partial plan generated', {
-          description: `${data.schedule.schedule.length} tasks • Missing: ${data.schedule.missingSections?.join(', ')}`
+          description: `Missing: ${data.schedule.missingSections?.join(', ') || 'unknown sections'}`
         });
       } else {
         toast.success('Maintenance schedule generated', {
-          description: `${data.schedule.schedule.length} tasks identified`
+          description: 'Plan created successfully'
         });
       }
 

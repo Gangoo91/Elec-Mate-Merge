@@ -353,9 +353,18 @@ Deno.serve(async (req) => {
         equipment_filter: equipmentType || null,
         match_count: 12
       }),
-      supabase.rpc('search_bs7671_intelligence_hybrid', {
-        query_text: `${expandedQuery} testing inspection certification`,
-        match_count: 12
+      // ✅ PHASE 1: Add timeout protection for intelligence search
+      Promise.race([
+        supabase.rpc('search_bs7671_intelligence_hybrid', {
+          query_text: `${expandedQuery} testing inspection certification`,
+          match_count: 12
+        }),
+        new Promise((resolve) => 
+          setTimeout(() => resolve({ data: null, error: { message: 'Intelligence search timeout (8s)' } }), 8000)
+        )
+      ]).catch((err) => {
+        console.error('⚠️ Intelligence search failed, falling back to maintenance KB only:', err);
+        return { data: null, error: err };
       })
     ]);
 
@@ -365,7 +374,8 @@ Deno.serve(async (req) => {
     if (ragError) console.error('❌ Maintenance RAG error:', ragError);
     if (bs7671Error) console.error('❌ BS 7671 Intelligence error:', bs7671Error);
 
-    console.log(`📚 Retrieved ${maintenanceData?.length || 0} maintenance docs, ${bs7671Data?.length || 0} BS 7671 regs (intelligence)`);
+    // ✅ PHASE 1: Enhanced logging with intelligence status
+    console.log(`📚 Retrieved ${maintenanceData?.length || 0} maintenance docs, ${bs7671Data?.length || 0} BS 7671 regs (intelligence ${bs7671Data ? 'OK' : 'FAILED'})`);
 
     // Build enriched context from both sources
     const maintenanceContext = maintenanceData?.map((doc: any, idx: number) => 
@@ -373,11 +383,12 @@ Deno.serve(async (req) => {
     ).join('\n\n') || '';
 
     const bs7671Context = bs7671Data?.map((reg: any, idx: number) => 
-      `[BS 7671 REG ${idx + 1}] ${reg.regulation_number}\nTopic: ${reg.primary_topic}\nCategory: ${reg.category}\nKeywords: ${reg.keywords?.join(', ')}\nApplication: ${reg.practical_application}\nContent: ${reg.content}\n`
+      `[BS 7671 REG ${idx + 1}] ${reg.regulation_number}\nTopic: ${reg.primary_topic || 'N/A'}\nCategory: ${reg.category || 'N/A'}\nKeywords: ${reg.keywords?.join(', ') || 'N/A'}\nApplication: ${reg.practical_application || 'N/A'}\nContent: ${reg.content}\n`
     ).join('\n\n') || '';
 
+    // ✅ PHASE 1: Enhanced fallback message when intelligence search fails
     const ragContext = maintenanceContext || bs7671Context
-      ? `=== MAINTENANCE KNOWLEDGE ===\n${maintenanceContext}\n\n=== BS 7671 REGULATIONS (INTELLIGENCE) ===\n${bs7671Context}`
+      ? `=== MAINTENANCE KNOWLEDGE ===\n${maintenanceContext}\n\n=== BS 7671 REGULATIONS ${bs7671Data ? '(INTELLIGENCE)' : '(FALLBACK: Use Chapter 64 principles)'} ===\n${bs7671Context || 'Intelligence search unavailable. Apply BS 7671 Chapter 64 inspection and testing requirements.'}`
       : 'No specific knowledge found. Use general BS 7671 Chapter 64 principles.';
 
     // Construct user message with context
@@ -432,15 +443,63 @@ Provide comprehensive maintenance instructions following the tool schema structu
 
     const maintenanceGuidance = JSON.parse(toolCall.function.arguments);
 
+    // ✅ PHASE 1: Validate response structure before returning
+    if (!maintenanceGuidance || typeof maintenanceGuidance !== 'object') {
+      console.error('❌ Invalid AI response structure:', maintenanceGuidance);
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'AI returned invalid response structure',
+          code: 'INVALID_AI_RESPONSE'
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
+      );
+    }
+
+    // ✅ PHASE 1: Ensure required properties exist
+    if (!maintenanceGuidance.preWorkRequirements) {
+      maintenanceGuidance.preWorkRequirements = [];
+    }
+    if (!maintenanceGuidance.visualInspection) {
+      maintenanceGuidance.visualInspection = [];
+    }
+    if (!maintenanceGuidance.testingProcedures) {
+      maintenanceGuidance.testingProcedures = [];
+    }
+    if (!maintenanceGuidance.equipmentSchedule) {
+      maintenanceGuidance.equipmentSchedule = [];
+    }
+    if (!maintenanceGuidance.qualityRequirements) {
+      maintenanceGuidance.qualityRequirements = [];
+    }
+    if (!maintenanceGuidance.bs7671References) {
+      maintenanceGuidance.bs7671References = [];
+    }
+
+    // Check if response is partial
+    const missingSections = [];
+    if (maintenanceGuidance.preWorkRequirements.length === 0) missingSections.push('preWorkRequirements');
+    if (maintenanceGuidance.visualInspection.length === 0) missingSections.push('visualInspection');
+    if (maintenanceGuidance.testingProcedures.length === 0) missingSections.push('testingProcedures');
+    
+    if (missingSections.length > 0) {
+      maintenanceGuidance.partial = true;
+      maintenanceGuidance.missingSections = missingSections;
+      console.warn(`⚠️ Partial response detected, missing: ${missingSections.join(', ')}`);
+    }
+
     return new Response(
       JSON.stringify({
         success: true,
         result: maintenanceGuidance,
         response: maintenanceGuidance.response,
+        schedule: maintenanceGuidance,
         metadata: {
           requestId: crypto.randomUUID(),
           timestamp: new Date().toISOString(),
-          ragResultsCount: ragResults?.length || 0,
+          ragResultsCount: maintenanceData?.length || 0,
+          bs7671Count: bs7671Data?.length || 0,
+          intelligenceStatus: bs7671Data ? 'OK' : 'FAILED',
           equipmentType,
           maintenanceType
         }
