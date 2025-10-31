@@ -64,6 +64,34 @@ Visual Inspection Point: "Check MCB clips for tightness. Acceptance: Firm engage
 Testing Step: "Measure Zs at shower outlet. Instrument: MFT on 'Loop' setting. Expected: <0.87Ω (40A Type B)."
 Common Fault: "Symptom: RCD trips on load. Diagnosis: Measure insulation resistance L-E. If <1MΩ → locate faulty circuit via sequential disconnection."
 
+CRITICAL TOOL CALL FORMAT:
+When providing maintenance tasks in maintenanceSchedule array, ensure:
+1. procedure: Array of steps ONLY - no field names, no partial JSON
+2. safetyPrecautions: Array of safety items ONLY - keep separate from procedure
+3. toolsRequired: Array of tools ONLY
+4. DO NOT mix fields together
+5. DO NOT include field names like "safetyPrecautions:[" in arrays
+6. Each array item must be a complete, standalone string
+
+EXAMPLE CORRECT FORMAT:
+{
+  "procedure": [
+    "Step 1: Isolate and lock off main switch",
+    "Step 2: Test for dead with approved voltage indicator",
+    "Step 3: Perform continuity tests on protective conductors"
+  ],
+  "safetyPrecautions": [
+    "Wear insulated gloves rated to 1000V",
+    "Use non-contact voltage tester before touching",
+    "Ensure rescue equipment available"
+  ]
+}
+
+NEVER DO THIS:
+{
+  "procedure": ["Step 1...", "safetyPrecautions:[", ""]
+}
+
 Remember: This becomes a working document for on-site use. Be precise, practical, and comprehensive. When acting as final reviewer, enhance and validate all outputs.`;
 
 // Tool schema for structured maintenance guidance
@@ -507,7 +535,7 @@ Provide comprehensive maintenance instructions following the tool schema structu
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'gpt-5-nano',
+        model: 'gpt-5-mini',  // Upgraded for better structured output
         messages: [
           { role: 'system', content: MAINTENANCE_SYSTEM_PROMPT },
           { role: 'user', content: userMessage }
@@ -713,6 +741,52 @@ Provide comprehensive maintenance instructions following the tool schema structu
     console.log(`✅ Total execution time: ${totalExecutionTime}ms (${(totalExecutionTime / 1000).toFixed(2)}s)`);
     console.log(`📋 Final schedule: ${calculatedSchedule.length} tasks`);
     console.log(`📋 Raw AI schedule:`, JSON.stringify(calculatedSchedule.slice(0, 2), null, 2));
+
+    // Sanitize maintenance schedule data
+    const sanitizeSchedule = (tasks: any[]) => {
+      return tasks.map(task => {
+        // Clean procedure array - remove malformed entries
+        let cleanProcedure = task.procedure || [];
+        if (Array.isArray(cleanProcedure)) {
+          cleanProcedure = cleanProcedure.filter((step: string) => {
+            // Remove entries that look like field names or are empty
+            const isFieldName = /^(safetyPrecautions|toolsRequired|procedure)[\s\[\{:]/.test(step);
+            const isEmpty = !step || step.trim().length === 0;
+            return !isFieldName && !isEmpty;
+          });
+        }
+        
+        // Clean safety precautions array
+        let cleanSafety = task.safetyPrecautions || task.safetyRequirements || [];
+        if (Array.isArray(cleanSafety)) {
+          cleanSafety = cleanSafety.filter((item: string) => {
+            const isFieldName = /^(safetyPrecautions|toolsRequired|procedure)[\s\[\{:]/.test(item);
+            const isEmpty = !item || item.trim().length === 0;
+            return !isFieldName && !isEmpty;
+          });
+        }
+        
+        // If safety precautions are empty, add default
+        if (cleanSafety.length === 0) {
+          cleanSafety = ['Ensure safe isolation before starting work', 'Wear appropriate PPE', 'Follow permit to work procedures'];
+        }
+        
+        // If procedure is empty, add placeholder
+        if (cleanProcedure.length === 0) {
+          cleanProcedure = ['Follow BS 7671 Chapter 64 inspection and testing procedures'];
+        }
+        
+        return {
+          ...task,
+          procedure: cleanProcedure,
+          safetyPrecautions: cleanSafety
+        };
+      });
+    };
+
+    // Sanitize the schedule
+    calculatedSchedule = sanitizeSchedule(calculatedSchedule);
+    console.log(`📋 Cleaned schedule:`, JSON.stringify(calculatedSchedule.slice(0, 2), null, 2));
 
     // Transform schedule to match frontend interface
     const transformedSchedule = calculatedSchedule.map(task => ({

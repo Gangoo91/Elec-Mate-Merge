@@ -340,8 +340,8 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                       {task.priority}
                     </Badge>
                     <div className="flex-1">
-                      <p className="font-medium text-elec-light">{task.task}</p>
-                      <p className="text-xs text-elec-light/50 mt-1">
+                      <p className="font-medium text-white">{task.task}</p>
+                      <p className="text-xs text-white/80 mt-1">
                         {task.interval} • {task.regulation || 'Industry standard'}
                       </p>
                     </div>
@@ -352,7 +352,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                     {task.estimatedDurationMinutes && (
                       <div className="flex items-start gap-2 text-sm">
                         <Clock className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
-                        <span className="text-elec-light/70">
+                        <span className="text-white">
                           Duration: {task.estimatedDurationMinutes} minutes
                         </span>
                       </div>
@@ -360,7 +360,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                     {task.estimatedCost && (
                       <div className="flex items-start gap-2 text-sm">
                         <PoundSterling className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
-                        <span className="text-elec-light/70">
+                        <span className="text-white">
                           Cost: £{task.estimatedCost.min} - £{task.estimatedCost.max}
                         </span>
                       </div>
@@ -369,8 +369,8 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                       <div className="flex items-start gap-2 text-sm">
                         <FileText className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
                         <div className="flex-1">
-                          <p className="text-elec-light/70 font-medium">Required Qualifications:</p>
-                          <p className="text-elec-light/60 text-xs mt-1">
+                          <p className="text-white font-medium">Required Qualifications:</p>
+                          <p className="text-white/90 text-xs mt-1">
                             {task.requiredQualifications.join(', ')}
                           </p>
                         </div>
@@ -380,35 +380,41 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                       <div className="flex items-start gap-2 text-sm">
                         <Wrench className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
                         <div className="flex-1">
-                          <p className="text-elec-light/70 font-medium">Tools Required:</p>
-                          <p className="text-elec-light/60 text-xs mt-1">
+                          <p className="text-white font-medium">Tools Required:</p>
+                          <p className="text-white/90 text-xs mt-1">
                             {task.toolsRequired.join(', ')}
                           </p>
                         </div>
                       </div>
                     )}
-                    {task.procedure && task.procedure.length > 0 && (
+                    {task.procedure && Array.isArray(task.procedure) && task.procedure.length > 0 && (
                       <div className="flex items-start gap-2 text-sm">
                         <FileText className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
                         <div className="flex-1">
-                          <p className="text-elec-light/70 font-medium">Procedure:</p>
-                          <ol className="text-elec-light/60 text-xs mt-1 space-y-1 list-decimal list-inside">
-                            {task.procedure.map((step, i) => (
-                              <li key={i}>{step}</li>
-                            ))}
+                          <p className="text-white font-medium">Procedure:</p>
+                          <ol className="text-white/90 text-xs mt-1 space-y-1 list-decimal list-inside text-left">
+                            {task.procedure
+                              .filter(step => step && step.trim().length > 0)
+                              .map((step, i) => (
+                                <li key={i} className="leading-relaxed">{step}</li>
+                              ))
+                            }
                           </ol>
                         </div>
                       </div>
                     )}
-                    {task.safetyPrecautions && task.safetyPrecautions.length > 0 && (
+                    {task.safetyPrecautions && Array.isArray(task.safetyPrecautions) && task.safetyPrecautions.length > 0 && (
                       <div className="flex items-start gap-2 text-sm p-2 bg-orange-400/5 border border-orange-400/20 rounded">
                         <AlertTriangle className="h-4 w-4 text-orange-400 shrink-0 mt-0.5" />
                         <div className="flex-1">
-                          <p className="text-orange-400 font-medium">Safety Precautions:</p>
-                          <ul className="text-elec-light/70 text-xs mt-1 space-y-0.5">
-                            {task.safetyPrecautions.map((precaution, i) => (
-                              <li key={i}>• {precaution}</li>
-                            ))}
+                          <p className="text-white font-medium">Safety Precautions:</p>
+                          <ul className="text-white/90 text-xs mt-1 space-y-1 list-disc list-inside text-left">
+                            {task.safetyPrecautions
+                              .filter(precaution => precaution && precaution.trim().length > 0)
+                              .map((precaution, i) => (
+                                <li key={i} className="leading-relaxed">{precaution}</li>
+                              ))
+                            }
                           </ul>
                         </div>
                       </div>
