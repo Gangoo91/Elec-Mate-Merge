@@ -36,6 +36,15 @@ serve(async (req) => {
       return [...new Set(matches)]; // Deduplicate
     };
     
+    // Helper function to extract keywords for intelligent lookup
+    const extractQueryKeywords = (query: string) => {
+      return {
+        amperage: query.match(/\b(\d+)A\b/)?.[1],
+        circuitType: query.match(/\b(ring|radial)\s+circuit\b/i)?.[0],
+        hasKeywords: /cable\s+sizing|RCD|protection|installation|voltage\s+drop|earth|bonding/i.test(query)
+      };
+    };
+    
     // Helper function to detect pure regulation lookup queries
     const isPureRegulationLookup = (query: string): boolean => {
       const cleaned = query.replace(/[,\s\n]+/g, ' ').trim();
@@ -45,21 +54,52 @@ serve(async (req) => {
     };
     
     // Helper function to get regulations directly from database
-    const getRegulationsDirect = async (regNumbers: string[]): Promise<any> => {
+    const getRegulationsDirect = async (regNumbers: string[], keywords?: any): Promise<any> => {
       const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
       const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
       const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
       const supabase = createClient(supabaseUrl, supabaseKey);
       
-      // Query intelligence table for enriched metadata + full content
-      const { data: intelligence, error } = await supabase
-        .from('regulations_intelligence')
-        .select(`
-          *,
-          bs7671_embeddings!inner(content, section, amendment, metadata)
-        `)
-        .or(regNumbers.map(n => `regulation_number.ilike.%${n}%`).join(','))
-        .order('regulation_number');
+      let intelligence;
+      let error;
+      
+      // If we have keywords but no regulation numbers, try keyword-based lookup
+      if (keywords?.hasKeywords && regNumbers.length === 0) {
+        const filters = [];
+        if (keywords.amperage) filters.push(`keywords.cs.{${keywords.amperage}A}`);
+        if (keywords.circuitType) filters.push(`keywords.ilike.%${keywords.circuitType}%`);
+        
+        if (filters.length > 0) {
+          const result = await supabase
+            .from('regulations_intelligence')
+            .select(`
+              *,
+              bs7671_embeddings!inner(content, section, amendment, metadata)
+            `)
+            .or(filters.join(','))
+            .limit(5);
+          
+          intelligence = result.data;
+          error = result.error;
+          
+          console.log('🔍 Keyword-based lookup:', { keywords, found: intelligence?.length || 0 });
+        }
+      }
+      
+      // Fallback to regulation number lookup
+      if (!intelligence || intelligence.length === 0) {
+        const result = await supabase
+          .from('regulations_intelligence')
+          .select(`
+            *,
+            bs7671_embeddings!inner(content, section, amendment, metadata)
+          `)
+          .or(regNumbers.map(n => `regulation_number.ilike.%${n}%`).join(','))
+          .order('regulation_number');
+        
+        intelligence = result.data;
+        error = result.error;
+      }
       
       if (error) throw error;
       
@@ -102,57 +142,105 @@ serve(async (req) => {
     
     // Check for regulation numbers and try direct lookup first
     const regNumbers = extractRegulationNumbers(prompt || '');
-    if (prompt && !primary_image && regNumbers.length > 0) {
+    const keywords = extractQueryKeywords(prompt || '');
+    
+    console.log('🔍 Query analysis:', { 
+      regulation_numbers: regNumbers,
+      keywords,
+      query: prompt?.substring(0, 50) 
+    });
+    
+    if (prompt && !primary_image && (regNumbers.length > 0 || keywords.hasKeywords)) {
       try {
-        const result = await getRegulationsDirect(regNumbers);
+        const result = await getRegulationsDirect(regNumbers, keywords);
         
         // If we found results, return them immediately
         if (result.regulations && result.regulations.length > 0) {
+          console.log('✅ Direct lookup success:', { count: result.regulations.length });
           return new Response(
             JSON.stringify(result),
             { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
           );
         }
       } catch (lookupError) {
-        console.error('Direct lookup error:', lookupError);
+        console.error('❌ Direct lookup error:', lookupError);
         // Fall through to normal AI processing if direct lookup fails
       }
     }
     
-    // Fetch regulations from RAG if requested
+    // Fetch regulations from RAG if requested - Direct RPC call (no HTTP overhead)
     let ragRegulations: any[] = [];
     let ragMetadata: any = {};
     if (use_rag && prompt && !primary_image) {
       try {
+        const startTime = Date.now();
         const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
         const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+        const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+        const supabase = createClient(supabaseUrl, supabaseKey);
         
-        const ragResponse = await fetch(`${supabaseUrl}/functions/v1/multi-source-rag-search`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${supabaseKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            query: prompt,
-            matchThreshold: 0.4,
-            matchCount: 8
-          })
+        console.log('🔍 Starting intelligence search for:', prompt?.substring(0, 50));
+        
+        // Direct RPC call to regulations intelligence (simplified architecture)
+        const intelligencePromise = supabase.rpc('search_bs7671_intelligence_hybrid', {
+          query_text: prompt,
+          match_count: 8
         });
         
-        if (ragResponse.ok) {
-          const ragData = await ragResponse.json();
-          ragRegulations = ragData.regulations || [];
+        // Add 5-second timeout to prevent hanging
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Intelligence search timeout')), 5000)
+        );
+        
+        const { data: intelligenceResults, error: intelligenceError } = await Promise.race([
+          intelligencePromise,
+          timeoutPromise
+        ]) as any;
+        
+        if (intelligenceError) {
+          console.error('❌ Intelligence search failed:', intelligenceError);
+        } else if (intelligenceResults && intelligenceResults.length > 0) {
+          console.log('✅ Intelligence search found:', intelligenceResults.length, 'regulations');
+          
+          // Enrich with full regulation content (parallel lookups for speed)
+          const enrichmentPromises = intelligenceResults.map(async (intel: any) => {
+            const { data: fullReg } = await supabase
+              .from('bs7671_embeddings')
+              .select('content, section, amendment, metadata')
+              .eq('id', intel.regulation_id)
+              .single();
+            
+            return {
+              id: intel.regulation_id,
+              regulation_number: intel.regulation_number,
+              section: fullReg?.section || intel.section,
+              content: fullReg?.content || intel.content,
+              amendment: fullReg?.amendment,
+              metadata: fullReg?.metadata || {},
+              similarity: intel.hybrid_score || 0.8,
+              // Intelligence enrichments
+              primary_topic: intel.primary_topic,
+              keywords: intel.keywords,
+              category: intel.category,
+              practical_application: intel.practical_application
+            };
+          });
+          
+          ragRegulations = await Promise.all(enrichmentPromises);
           ragMetadata = {
-            has_installation: ragData.has_installation_content,
-            has_testing: ragData.has_testing_content,
-            has_design: ragData.has_design_content,
-            query_type: ragData.queryType,
-            search_method: ragData.searchMethod
+            search_method: 'intelligence_hybrid',
+            results_count: ragRegulations.length,
+            query_keywords: keywords,
+            search_time_ms: Date.now() - startTime
           };
+          
+          console.log('✅ Enrichment complete:', {
+            regulations_count: ragRegulations.length,
+            time_ms: Date.now() - startTime
+          });
         }
       } catch (ragError) {
-        console.error('RAG error:', ragError);
+        console.error('❌ RAG error:', ragError);
         // Continue without RAG if it fails
       }
     }
