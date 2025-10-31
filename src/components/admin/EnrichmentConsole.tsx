@@ -126,14 +126,16 @@ export default function EnrichmentConsole() {
       const { data: sourceRawData } = await supabase
         .from(config.sourceTable as 'bs7671_embeddings')
         .select('regulation_number')
-        .neq('regulation_number', 'General');
+        .neq('regulation_number', 'General')
+        .limit(3000); // Ensure we get all rows (current: 2,557)
       
       const sourceTotal = new Set((sourceRawData || []).map(r => r.regulation_number)).size;
 
       // Count unique enriched regulation_numbers (not facets, not row IDs)
       const { data: enrichedRawData } = await supabase
         .from(config.targetTable as 'regulations_intelligence')
-        .select('regulation_number');
+        .select('regulation_number')
+        .limit(2000); // Ensure we get all enriched rows (current: 1,520)
 
       // Extract unique regulation_numbers that have been enriched
       const uniqueEnrichedRegulations = new Set(
@@ -236,14 +238,16 @@ export default function EnrichmentConsole() {
       // Get all enriched regulation_numbers
       const { data: enrichedRegs } = await supabase
         .from('regulations_intelligence')
-        .select('regulation_number');
+        .select('regulation_number')
+        .limit(2000); // Ensure we get all enriched rows
       const enrichedSet = new Set((enrichedRegs || []).map(r => r.regulation_number));
 
       // Get all unique source regulation_numbers
       const { data: sourceRegs } = await supabase
         .from('bs7671_embeddings')
         .select('regulation_number')
-        .neq('regulation_number', 'General');
+        .neq('regulation_number', 'General')
+        .limit(3000); // Ensure we get all source rows
 
       // Find missing unique regulation_numbers
       const allSourceRegs = new Set((sourceRegs || []).map(r => r.regulation_number));
@@ -274,12 +278,14 @@ export default function EnrichmentConsole() {
       const { data: uniqueRegsData } = await supabase
         .from('regulations_intelligence')
         .select('regulation_number')
-        .eq('enrichment_version', 'v1');
+        .eq('enrichment_version', 'v1')
+        .limit(2000); // Ensure we get all enriched rows
 
       const { data: allSourceRegs } = await supabase
         .from('bs7671_embeddings')
         .select('regulation_number')
-        .neq('regulation_number', 'General');
+        .neq('regulation_number', 'General')
+        .limit(3000); // Ensure we get all source rows
 
       const uniqueEnriched = new Set((uniqueRegsData || []).map(r => r.regulation_number?.trim()).filter(Boolean)).size;
       const uniqueSource = new Set((allSourceRegs || []).map(r => r.regulation_number?.trim()).filter(Boolean)).size;
