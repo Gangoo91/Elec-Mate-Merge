@@ -468,6 +468,9 @@ serve(async (req) => {
       
       console.log(`🎯 Found ${missingRegulations.length} missing regulations`);
       
+      // ✅ NUCLEAR: Ultra-conservative settings for final 25 regulations
+      console.log('⚙️ NUCLEAR MODE: batchSize=2, workers=2, throttle=3s');
+      
       // Abort existing jobs
       const { data: existingJobs } = await supabase
         .from('batch_jobs')
@@ -491,8 +494,8 @@ serve(async (req) => {
           .eq('job_id', job.id);
       }
       
-      // Create new job with missing regulations list
-      const batchSize = chunkSize || 10;
+      // Create new job with missing regulations list (NUCLEAR MODE)
+      const batchSize = chunkSize || 2; // ✅ NUCLEAR: Reduced from 10 to 2
       const totalBatches = Math.ceil(missingRegulations.length / batchSize);
       
       const { data: newJob, error: jobError } = await supabase
@@ -505,7 +508,8 @@ serve(async (req) => {
             source: 'start_missing',
             missingRegulations: missingRegulations,
             batchSize: batchSize,
-            workers: workers || 6
+            workers: workers || 2, // ✅ NUCLEAR: Reduced from 6 to 2
+            throttle_ms: 3000 // ✅ NUCLEAR: 3-second delay between workers
           }
         })
         .select()
@@ -608,8 +612,8 @@ serve(async (req) => {
             .eq('job_id', job.id);
         }
         
-        // Create new job with batches scoped to regulation list
-        const batchSize = chunkSize;
+        // Create new job with batches scoped to regulation list (NUCLEAR MODE)
+        const batchSize = 2; // ✅ NUCLEAR: Hardcoded to 2 for stability
         const totalBatches = Math.ceil(regulationNumbers.length / batchSize);
         
         const { data: newJob, error: jobError } = await supabase
@@ -623,7 +627,8 @@ serve(async (req) => {
               missingRegulations: regulationNumbers, // ✅ Primary key for worker
               regulationNumbers: regulationNumbers,  // ✅ Compatibility key
               batchSize: batchSize,
-              workers: workers
+              workers: 2, // ✅ NUCLEAR: Reduced from variable to fixed 2
+              throttle_ms: 3000 // ✅ NUCLEAR: 3-second delay between workers
             }
           })
           .select()
@@ -1338,8 +1343,8 @@ async function continuousProcessor(
       break;
     }
     
-    // Process batches in parallel with worker pool (increased to 6 for speed)
-    const PARALLEL_WORKERS = 6;
+    // Process batches in parallel with worker pool (NUCLEAR: reduced to 2 for stability)
+    const PARALLEL_WORKERS = 2; // ✅ NUCLEAR: Reduced from 6 to 2
     
     // Clean up stale worker registrations (>5 min old)
     const now = Date.now();
@@ -1411,10 +1416,16 @@ async function continuousProcessor(
         }
       }
       
-      // Launch parallel workers
-      const workers = Array(PARALLEL_WORKERS)
-        .fill(null)
-        .map((_, i) => batchWorker(i + 1));
+      // Launch parallel workers with throttle (NUCLEAR: 3-second delay between workers)
+      const workers = [];
+      for (let i = 0; i < PARALLEL_WORKERS; i++) {
+        if (i > 0) {
+          // ✅ NUCLEAR: Add 3-second delay between worker starts
+          await new Promise(resolve => setTimeout(resolve, 3000));
+          console.log(`⏱️ Worker ${i + 1} starting after 3-second throttle`);
+        }
+        workers.push(batchWorker(i + 1));
+      }
       
       // Wait for all workers to complete
       await Promise.allSettled(workers);

@@ -70,9 +70,14 @@ async function processInBackground(
   startFrom: number,
   batchNumber: number
 ) {
-  console.log(`🔄 Background processing started: batch ${batchNumber}`);
+  // ✅ CRITICAL: Log immediately to prove function started
+  console.log(`🚀 processInBackground STARTED: jobId=${jobId}, batch=${batchNumber}, startFrom=${startFrom}`);
+  
+  let claimedBatch: any = null; // Declare outside try for error handler access
   
   try {
+    console.log(`🔄 Background processing started: batch ${batchNumber}`);
+  
     // ✅ STEP 1: Fetch job metadata to check for scoped list
     const { data: job } = await supabase
       .from('batch_jobs')
@@ -102,7 +107,7 @@ async function processInBackground(
       });
     }
     
-    const claimedBatch = pendingBatches[0];
+    claimedBatch = pendingBatches[0]; // Assign to outer scope variable
     
     // Claim the batch atomically
     const { data: claimRows, error: claimError } = await supabase
@@ -426,21 +431,39 @@ async function processInBackground(
     console.log(`✅ Background processing completed: batch ${claimedBatch.batch_number} (${fetchMode})`);
     
   } catch (error) {
+    // ✅ Enhanced error logging
+    console.error(`❌ CRITICAL ERROR in processInBackground:`, {
+      jobId,
+      batchNumber,
+      startFrom,
+      errorName: error.name,
+      errorMessage: error.message,
+      errorStack: error.stack?.substring(0, 500)
+    });
+    
     // Clear heartbeat on error
     if (typeof heartbeat !== 'undefined') clearInterval(heartbeat);
     
-    console.error(`❌ Background processing failed:`, error);
-    
-    // Mark as failed (use claimedBatch if available, fallback to jobId+batchNumber)
+    // Mark as failed with detailed error info
     if (claimedBatch?.id) {
       await supabase
         .from('batch_progress')
         .update({ 
           status: 'failed',
-          data: { error: error.message, failed_at: new Date().toISOString() }
+          data: { 
+            error: error.message,
+            error_type: error.name,
+            failed_at: new Date().toISOString(),
+            stack_trace: error.stack?.substring(0, 500)
+          }
         })
         .eq('id', claimedBatch.id);
+    } else {
+      console.error('❌ No claimedBatch available to mark as failed');
     }
+    
+    // Re-throw to ensure Deno logs it
+    throw error;
   }
 }
 
@@ -526,7 +549,7 @@ CRITICAL: Generate MULTIPLE facets per regulation to capture all distinct use ca
 
   // Fix timeout: Move AbortController to fetch options (not body)
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 240000); // ✅ Increased to 4 minutes (240s)
+  const timeoutId = setTimeout(() => controller.abort(), 360000); // ✅ NUCLEAR: Increased to 6 minutes (360s)
   
   let response: Response | null = null; // ✅ Declare outside try block to fix scoping bug
   
@@ -563,7 +586,7 @@ CRITICAL: Generate MULTIPLE facets per regulation to capture all distinct use ca
   } catch (error: any) {
     clearTimeout(timeoutId);
     if (error.name === 'AbortError') {
-      throw new Error('GPT-5 Mini request timed out after 4 minutes (240s)');
+      throw new Error('GPT-5 Mini request timed out after 6 minutes (360s)');
     }
     throw error;
   }
