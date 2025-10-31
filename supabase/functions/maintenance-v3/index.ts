@@ -404,6 +404,9 @@ Deno.serve(async (req) => {
     // Conditional RAG based on detail level for faster response
     const useFullRAG = detailLevel === 'full';
     
+    // ✅ FIX: Use cleaner query for BS 7671 intelligence search
+    const intelligenceQuery = `${equipmentType || ''} ${actualQuery}`.trim();
+    
     // Parallel RAG: Maintenance Knowledge + BS 7671 Intelligence (full mode only)
     const [ragResults, bs7671Intelligence] = await Promise.all([
       supabase.rpc('search_maintenance_hybrid', {
@@ -413,18 +416,39 @@ Deno.serve(async (req) => {
         match_count: 6
       }),
       // Skip BS 7671 intelligence for quick mode to reduce latency
-      useFullRAG ? Promise.race([
-        supabase.rpc('search_bs7671_intelligence_hybrid', {
-          query_text: `${expandedQuery} testing inspection certification`,
-          match_count: 6
-        }),
-        new Promise((resolve) => 
-          setTimeout(() => resolve({ data: null, error: { message: 'Intelligence search timeout (8s)' } }), 8000)
-        )
-      ]).catch((err) => {
-        console.error('⚠️ Intelligence search failed, falling back to maintenance KB only:', err);
-        return { data: null, error: err };
-      }) : Promise.resolve({ data: null, error: null })
+      useFullRAG ? (async () => {
+        console.log('🔍 Intelligence search query:', intelligenceQuery);
+        
+        const result = await Promise.race([
+          supabase.rpc('search_bs7671_intelligence_hybrid', {
+            query_text: intelligenceQuery,
+            match_count: 6
+          }),
+          new Promise((resolve) => 
+            setTimeout(() => resolve({ data: null, error: { message: 'Intelligence search timeout (8s)' } }), 8000)
+          )
+        ]).catch((err) => {
+          console.error('⚠️ Intelligence search failed:', err);
+          return { data: null, error: err };
+        });
+        
+        // ✅ Fallback: If no results, try simplified query with just equipment type
+        if (!result.data || result.data.length === 0) {
+          console.log('🔄 Retrying intelligence search with simplified query...');
+          const fallbackQuery = equipmentType || 'electrical installation';
+          console.log('🔍 Fallback query:', fallbackQuery);
+          
+          return await supabase.rpc('search_bs7671_intelligence_hybrid', {
+            query_text: fallbackQuery,
+            match_count: 6
+          }).catch((err) => {
+            console.error('⚠️ Fallback intelligence search failed:', err);
+            return { data: null, error: err };
+          });
+        }
+        
+        return result;
+      })() : Promise.resolve({ data: null, error: null })
     ]);
 
     const { data: maintenanceData, error: ragError } = ragResults;
