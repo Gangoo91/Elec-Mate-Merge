@@ -712,6 +712,29 @@ Provide comprehensive maintenance instructions following the tool schema structu
     const totalExecutionTime = Date.now() - startTime;
     console.log(`✅ Total execution time: ${totalExecutionTime}ms (${(totalExecutionTime / 1000).toFixed(2)}s)`);
     console.log(`📋 Final schedule: ${calculatedSchedule.length} tasks`);
+    console.log(`📋 Raw AI schedule:`, JSON.stringify(calculatedSchedule.slice(0, 2), null, 2));
+
+    // Transform schedule to match frontend interface
+    const transformedSchedule = calculatedSchedule.map(task => ({
+      interval: task.frequency || task.interval,
+      task: task.taskName || task.description || task.task,
+      regulation: task.bs7671Reference || task.regulation || 'Industry standard',
+      priority: task.priority,
+      estimatedDurationMinutes: task.estimatedDuration 
+        ? (typeof task.estimatedDuration === 'number' 
+            ? Math.round(task.estimatedDuration * 60) 
+            : parseInt(task.estimatedDuration) || 0)
+        : task.estimatedDurationMinutes,
+      estimatedCost: task.estimatedCost,
+      requiredQualifications: task.requiredQualifications,
+      toolsRequired: task.requiredTools || task.toolsRequired,
+      procedure: task.procedure,
+      safetyPrecautions: task.safetyRequirements || task.safetyPrecautions,
+      taskCategory: task.taskCategory,
+      nextDue: task.nextDue
+    }));
+
+    console.log(`📋 Transformed schedule:`, JSON.stringify(transformedSchedule.slice(0, 2), null, 2));
 
     return new Response(
       JSON.stringify({
@@ -723,7 +746,7 @@ Provide comprehensive maintenance instructions following the tool schema structu
           location: maintenanceGuidance.equipmentSummary?.location || location,
           ageYears: ageYears,
           buildingType: buildingType,
-          schedule: calculatedSchedule,
+          schedule: transformedSchedule,
           recommendations: maintenanceGuidance.recommendations || [],
           regulations: maintenanceGuidance.bs7671References || [],
           
