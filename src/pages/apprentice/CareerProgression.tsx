@@ -86,6 +86,7 @@ const CareerProgression = () => {
                 title={section.title}
                 icon={section.icon}
                 onClick={() => setActiveSection(section.id)}
+                showComingSoon={section.id === "cpd"}
               />
             ))}
           </div>

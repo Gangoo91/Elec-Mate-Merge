@@ -86,9 +86,16 @@ const CareerProgression = () => {
             {electricianCareerSections.map((section) => (
               <Card 
                 key={section.id}
-                className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/90 transition-all duration-300 cursor-pointer hover-scale group"
+                className="relative border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/90 transition-all duration-300 cursor-pointer hover-scale group overflow-hidden"
                 onClick={() => setActiveSection(section.id)}
               >
+                {section.id === "cpd" && (
+                  <div className="absolute top-0 right-0 overflow-hidden w-32 h-32 pointer-events-none z-10">
+                    <div className="absolute top-6 right-[-32px] w-40 bg-gradient-to-br from-amber-500 to-yellow-600 text-black text-xs font-bold py-1 text-center transform rotate-45 shadow-lg">
+                      Coming Soon
+                    </div>
+                  </div>
+                )}
                 <CardContent className="p-6 text-center h-full flex flex-col justify-between">
                   <div>
                     <div className="mb-4 flex justify-center">
