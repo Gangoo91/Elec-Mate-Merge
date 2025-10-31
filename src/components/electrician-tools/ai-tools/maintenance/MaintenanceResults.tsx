@@ -69,7 +69,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
         installationAddress: results.location,
         preparedBy: "Maintenance Advisor AI",
         preparedDate: new Date().toLocaleDateString('en-GB'),
-        tasks: results.schedule.map((task) => ({
+        tasks: (results.schedule || []).map((task) => ({
           equipment: results.equipmentType,
           task: task.task,
           frequency: task.interval,
@@ -103,8 +103,8 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
       `Equipment: ${results.equipmentType}\n` +
       `Location: ${results.location}\n` +
       `Age: ${results.ageYears} years\n\n` +
-      `TASKS:\n${results.schedule.map((t, i) => `${i + 1}. [${t.interval}] ${t.task} (${t.priority})`).join('\n')}\n\n` +
-      `RECOMMENDATIONS:\n${results.recommendations.join('\n')}`;
+      `TASKS:\n${(results.schedule || []).map((t, i) => `${i + 1}. [${t.interval}] ${t.task} (${t.priority})`).join('\n')}\n\n` +
+      `RECOMMENDATIONS:\n${(results.recommendations || []).join('\n')}`;
     navigator.clipboard.writeText(text);
     toast.success("Schedule copied to clipboard");
   };
@@ -160,7 +160,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
         <div>
           <h2 className="text-2xl md:text-3xl font-bold text-elec-light">Maintenance Plan</h2>
           <p className="text-sm text-elec-light/60 mt-1">
-            {results.schedule.length} tasks • Generated {new Date().toLocaleDateString('en-GB')}
+            {results.schedule?.length || 0} tasks • Generated {new Date().toLocaleDateString('en-GB')}
           </p>
         </div>
         <div className="flex gap-2">
@@ -300,25 +300,25 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                 Scheduled Tasks
               </CardTitle>
               <CardDescription className="text-elec-light/60">
-                {results.schedule.length} maintenance tasks identified
+                {results.schedule?.length || 0} maintenance tasks identified
               </CardDescription>
             </div>
             <div className="flex gap-2 text-xs">
               <Badge variant="outline" className="border-red-400/30 text-red-400">
-                {results.schedule.filter(t => t.priority === 'high').length} High
+                {results.schedule?.filter(t => t.priority === 'high').length || 0} High
               </Badge>
               <Badge variant="outline" className="border-yellow-400/30 text-yellow-400">
-                {results.schedule.filter(t => t.priority === 'medium').length} Med
+                {results.schedule?.filter(t => t.priority === 'medium').length || 0} Med
               </Badge>
               <Badge variant="outline" className="border-green-400/30 text-green-400">
-                {results.schedule.filter(t => t.priority === 'low').length} Low
+                {results.schedule?.filter(t => t.priority === 'low').length || 0} Low
               </Badge>
             </div>
           </div>
         </CardHeader>
         <CardContent>
           <Accordion type="single" collapsible className="space-y-2">
-            {results.schedule.map((task, idx) => (
+            {results.schedule?.map((task, idx) => (
               <AccordionItem 
                 key={idx} 
                 value={`task-${idx}`}
