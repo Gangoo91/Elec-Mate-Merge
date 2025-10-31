@@ -63,10 +63,10 @@ export default function PracticalWorkEnrichmentConsole() {
         .from('practical_work_intelligence')
         .select('*', { count: 'exact', head: true });
 
-      // Count enrichment stage completeness
+      // Count enrichment stage completeness by checking populated fields
       const { data: enrichmentData } = await supabase
         .from('practical_work_intelligence')
-        .select('enrichment_metadata');
+        .select('activity_types, installation_method, maintenance_intervals, test_procedures, typical_duration_minutes');
 
       const stageCounts = {
         primary: 0,
@@ -77,12 +77,11 @@ export default function PracticalWorkEnrichmentConsole() {
       };
 
       enrichmentData?.forEach(record => {
-        const stages = record.enrichment_metadata?.stages || [];
-        if (stages.includes('primary')) stageCounts.primary++;
-        if (stages.includes('installation')) stageCounts.installation++;
-        if (stages.includes('maintenance')) stageCounts.maintenance++;
-        if (stages.includes('testing')) stageCounts.testing++;
-        if (stages.includes('costing')) stageCounts.costing++;
+        if (record.activity_types && record.activity_types.length > 0) stageCounts.primary++;
+        if (record.installation_method) stageCounts.installation++;
+        if (record.maintenance_intervals) stageCounts.maintenance++;
+        if (record.test_procedures && record.test_procedures.length > 0) stageCounts.testing++;
+        if (record.typical_duration_minutes) stageCounts.costing++;
       });
 
       setStats({
