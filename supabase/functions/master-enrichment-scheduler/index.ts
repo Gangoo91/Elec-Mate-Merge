@@ -56,25 +56,28 @@ interface EnrichmentTask {
   targetTable: string;
   batchSize: number;
   priority: number;
+  workerCount?: number; // Optional worker count override (defaults to 6)
+  filter?: any;
+  facetType?: string;
 }
 
 const ENRICHMENT_TASKS: EnrichmentTask[] = [
   // Phase 1: Core Knowledge Bases (Priority 1) - OPTIMIZED BATCH SIZES
-  { name: 'BS 7671 Intelligence', functionName: 'enrich-regulations', sourceTable: 'bs7671_embeddings', targetTable: 'regulations_intelligence', batchSize: 20, priority: 1 },
-  { name: 'Health & Safety Knowledge', functionName: 'enrich-health-safety', sourceTable: 'health_safety_knowledge', targetTable: 'health_safety_intelligence', batchSize: 15, priority: 1 },
-  { name: 'Installation Procedures', functionName: 'enrich-installation-procedures', sourceTable: 'installation_knowledge', targetTable: 'installation_procedures', batchSize: 20, priority: 1 },
-  { name: 'Design Patterns', functionName: 'enrich-design-patterns', sourceTable: 'design_knowledge', targetTable: 'design_patterns_structured', batchSize: 20, priority: 1 },
+  { name: 'BS 7671 Intelligence', functionName: 'enrich-regulations', sourceTable: 'bs7671_embeddings', targetTable: 'regulations_intelligence', batchSize: 20, priority: 1, workerCount: 2 },
+  { name: 'Health & Safety Knowledge', functionName: 'enrich-health-safety', sourceTable: 'health_safety_knowledge', targetTable: 'health_safety_intelligence', batchSize: 15, priority: 1, workerCount: 6 },
+  { name: 'Installation Procedures', functionName: 'enrich-installation-procedures', sourceTable: 'installation_knowledge', targetTable: 'installation_procedures', batchSize: 20, priority: 1, workerCount: 6 },
+  { name: 'Design Patterns', functionName: 'enrich-design-patterns', sourceTable: 'design_knowledge', targetTable: 'design_patterns_structured', batchSize: 20, priority: 1, workerCount: 6 },
   
   // Phase 2: Specialized Domains (Priority 2)
-  { name: 'Inspection Procedures', functionName: 'enrich-inspection-procedures', sourceTable: 'inspection_testing_knowledge', targetTable: 'inspection_procedures', batchSize: 30, priority: 2 },
-  { name: 'Maintenance Schedules', functionName: 'enrich-maintenance-schedules', sourceTable: 'maintenance_knowledge', targetTable: 'maintenance_schedules', batchSize: 30, priority: 2 },
-  { name: 'Project Templates', functionName: 'enrich-project-templates', sourceTable: 'project_mgmt_knowledge', targetTable: 'project_templates', batchSize: 30, priority: 2 },
+  { name: 'Inspection Procedures', functionName: 'enrich-inspection-procedures', sourceTable: 'inspection_testing_knowledge', targetTable: 'inspection_procedures', batchSize: 30, priority: 2, workerCount: 6 },
+  { name: 'Maintenance Schedules', functionName: 'enrich-maintenance-schedules', sourceTable: 'maintenance_knowledge', targetTable: 'maintenance_schedules', batchSize: 30, priority: 2, workerCount: 6 },
+  { name: 'Project Templates', functionName: 'enrich-project-templates', sourceTable: 'project_mgmt_knowledge', targetTable: 'project_templates', batchSize: 30, priority: 2, workerCount: 6 },
   
   // Phase 3: Pricing Intelligence (Priority 3)
-  { name: 'Pricing Intelligence', functionName: 'enrich-pricing-intelligence', sourceTable: 'pricing_embeddings', targetTable: 'pricing_intelligence', batchSize: 10, priority: 3 },
+  { name: 'Pricing Intelligence', functionName: 'enrich-pricing-intelligence', sourceTable: 'pricing_embeddings', targetTable: 'pricing_intelligence', batchSize: 10, priority: 3, workerCount: 6 },
   
-  // Phase 4: Practical Work Unified Enrichment (Priority 4)
-  { name: 'Practical Work', functionName: 'enrich-practical-work', sourceTable: 'practical_work', targetTable: 'practical_work_intelligence', batchSize: 15, priority: 4, filter: { is_canonical: true } },
+  // Phase 4: Practical Work Unified Enrichment (Priority 4) - ✅ 20 WORKERS FOR SPEED
+  { name: 'Practical Work', functionName: 'enrich-practical-work', sourceTable: 'practical_work', targetTable: 'practical_work_intelligence', batchSize: 15, priority: 4, filter: { is_canonical: true }, workerCount: 20 },
 ];
 
 // Global worker state tracking
@@ -1355,8 +1358,8 @@ async function continuousProcessor(
       break;
     }
     
-    // Process batches in parallel with worker pool (NUCLEAR: reduced to 2 for stability)
-    const PARALLEL_WORKERS = 2; // ✅ NUCLEAR: Reduced from 6 to 2
+    // Process batches in parallel with configurable worker pool per task
+    const PARALLEL_WORKERS = task.workerCount || 6; // ✅ Use task-specific worker count (defaults to 6)
     
     // Clean up stale worker registrations (>5 min old)
     const now = Date.now();
