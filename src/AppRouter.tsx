@@ -31,6 +31,7 @@ import KnowledgeUploader from "@/pages/Admin/KnowledgeUploader";
 import LearningReview from "@/pages/admin/LearningReview";
 import CircuitDesigner from "@/pages/electrician-tools/CircuitDesigner";
 import EnrichmentMonitor from "@/pages/Admin/EnrichmentMonitor";
+import PracticalWorkEnrichment from "@/pages/Admin/PracticalWorkEnrichment";
 
 const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
   const location = useLocation();
@@ -72,6 +73,7 @@ const AppRouter = () => {
         <Route path="admin/knowledge-uploader" element={<KnowledgeUploader />} />
         <Route path="admin/learning-review" element={<LearningReview />} />
         <Route path="admin/enrichment" element={<EnrichmentMonitor />} />
+        <Route path="admin/practical-work-enrichment" element={<PracticalWorkEnrichment />} />
         
         {/* Top level routes for shared features */}
         <Route path="mental-health" element={<ApprenticeMentalHealth />} />

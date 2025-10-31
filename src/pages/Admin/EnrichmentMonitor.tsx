@@ -1,7 +1,8 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import EnrichmentConsole from '@/components/admin/EnrichmentConsole';
 import { Badge } from '@/components/ui/badge';
-import { Database, Zap } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Database, Zap, GitMerge } from 'lucide-react';
 
 export default function EnrichmentMonitor() {
   const [searchParams] = useSearchParams();
@@ -21,7 +22,7 @@ export default function EnrichmentMonitor() {
           </div>
         </div>
         
-        <div className="flex items-center gap-2 mt-3">
+        <div className="flex flex-wrap items-center gap-2 mt-3">
           <Badge variant="outline" className="font-mono text-xs">
             <Zap className="w-3 h-3 mr-1" />
             6 Workers
@@ -41,6 +42,13 @@ export default function EnrichmentMonitor() {
           <Badge variant="outline" className="font-mono text-xs">
             30s Heartbeat
           </Badge>
+          
+          <Link to="/admin/practical-work-enrichment" className="ml-auto">
+            <Button variant="outline" size="sm">
+              <GitMerge className="mr-2 h-4 w-4" />
+              Practical Work Pipeline
+            </Button>
+          </Link>
         </div>
       </div>
 
