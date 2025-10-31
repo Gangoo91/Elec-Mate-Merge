@@ -17,12 +17,33 @@ serve(async (req) => {
   const logger = createLogger(requestId);
 
   try {
-    const { batchId, items } = await req.json();
-    logger.info(`🔧 Unified practical work enrichment batch ${batchId}: ${items.length} items`);
+    const { batchId, batchSize, startFrom, jobId } = await req.json();
+    logger.info(`🔧 Unified practical work enrichment batch ${batchId}: fetching ${batchSize} items from ${startFrom}`);
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Query items from practical_work using batch parameters
+    const { data: items, error: queryError } = await supabase
+      .from('practical_work')
+      .select('*')
+      .eq('is_canonical', true)
+      .range(startFrom, startFrom + batchSize - 1);
+
+    if (queryError) {
+      logger.error('Failed to query practical work items', { queryError });
+      throw queryError;
+    }
+
+    if (!items || items.length === 0) {
+      logger.info(`No items found for batch ${batchId} (${startFrom} to ${startFrom + batchSize - 1})`);
+      return new Response(JSON.stringify({ success: true, total_facets: 0 }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    logger.info(`📦 Retrieved ${items.length} items for processing`);
 
     await supabase.from('batch_progress').update({
       status: 'processing',
