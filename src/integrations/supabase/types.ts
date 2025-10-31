@@ -4169,39 +4169,154 @@ export type Database = {
       }
       practical_work: {
         Row: {
+          activity_suggested: string[]
+          cluster_id: string | null
           content: string
+          content_hash: string | null
+          content_normalized: string | null
           created_at: string | null
           embedding: string | null
           id: string
+          is_canonical: boolean
           metadata: Json | null
           source: string
           source_id: string
           source_table: string
+          sources: Json
           topic: string | null
         }
         Insert: {
+          activity_suggested?: string[]
+          cluster_id?: string | null
           content: string
+          content_hash?: string | null
+          content_normalized?: string | null
           created_at?: string | null
           embedding?: string | null
           id?: string
+          is_canonical?: boolean
           metadata?: Json | null
           source: string
           source_id: string
           source_table: string
+          sources?: Json
           topic?: string | null
         }
         Update: {
+          activity_suggested?: string[]
+          cluster_id?: string | null
           content?: string
+          content_hash?: string | null
+          content_normalized?: string | null
           created_at?: string | null
           embedding?: string | null
           id?: string
+          is_canonical?: boolean
           metadata?: Json | null
           source?: string
           source_id?: string
           source_table?: string
+          sources?: Json
           topic?: string | null
         }
         Relationships: []
+      }
+      practical_work_cluster_members: {
+        Row: {
+          activity_tags: string[]
+          added_at: string
+          cluster_id: string
+          match_method: string
+          member_id: string
+          similarity: number
+          source_table: string
+        }
+        Insert: {
+          activity_tags?: string[]
+          added_at?: string
+          cluster_id: string
+          match_method: string
+          member_id: string
+          similarity: number
+          source_table: string
+        }
+        Update: {
+          activity_tags?: string[]
+          added_at?: string
+          cluster_id?: string
+          match_method?: string
+          member_id?: string
+          similarity?: number
+          source_table?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "practical_work_cluster_members_cluster_id_fkey"
+            columns: ["cluster_id"]
+            isOneToOne: false
+            referencedRelation: "practical_work_clusters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "practical_work_cluster_members_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "practical_work"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "practical_work_cluster_members_member_id_fkey"
+            columns: ["member_id"]
+            isOneToOne: false
+            referencedRelation: "v_practical_work_canonical"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      practical_work_clusters: {
+        Row: {
+          canonical_id: string
+          created_at: string
+          id: string
+          member_count: number
+          metrics: Json
+          overlap_flags: Json
+          updated_at: string
+        }
+        Insert: {
+          canonical_id: string
+          created_at?: string
+          id?: string
+          member_count?: number
+          metrics?: Json
+          overlap_flags?: Json
+          updated_at?: string
+        }
+        Update: {
+          canonical_id?: string
+          created_at?: string
+          id?: string
+          member_count?: number
+          metrics?: Json
+          overlap_flags?: Json
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "practical_work_clusters_canonical_id_fkey"
+            columns: ["canonical_id"]
+            isOneToOne: false
+            referencedRelation: "practical_work"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "practical_work_clusters_canonical_id_fkey"
+            columns: ["canonical_id"]
+            isOneToOne: false
+            referencedRelation: "v_practical_work_canonical"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       practical_work_intelligence: {
         Row: {
@@ -4210,6 +4325,8 @@ export type Database = {
           bs7671_regulations: string[] | null
           bs7671_zones: string[] | null
           cable_routes: string[] | null
+          canonical_id: string | null
+          cluster_id: string | null
           common_defects: string[] | null
           common_failures: Json[] | null
           confidence_score: number | null
@@ -4228,10 +4345,12 @@ export type Database = {
           materials_needed: Json[] | null
           other_standards: string[] | null
           practical_work_id: string
+          provenance: Json
           related_topics: string[] | null
           replacement_criteria: string[] | null
           safety_requirements: Json | null
           skill_level: string | null
+          source_tables: string[]
           team_size: number | null
           termination_methods: string[] | null
           test_equipment_required: string[] | null
@@ -4250,6 +4369,8 @@ export type Database = {
           bs7671_regulations?: string[] | null
           bs7671_zones?: string[] | null
           cable_routes?: string[] | null
+          canonical_id?: string | null
+          cluster_id?: string | null
           common_defects?: string[] | null
           common_failures?: Json[] | null
           confidence_score?: number | null
@@ -4268,10 +4389,12 @@ export type Database = {
           materials_needed?: Json[] | null
           other_standards?: string[] | null
           practical_work_id: string
+          provenance?: Json
           related_topics?: string[] | null
           replacement_criteria?: string[] | null
           safety_requirements?: Json | null
           skill_level?: string | null
+          source_tables?: string[]
           team_size?: number | null
           termination_methods?: string[] | null
           test_equipment_required?: string[] | null
@@ -4290,6 +4413,8 @@ export type Database = {
           bs7671_regulations?: string[] | null
           bs7671_zones?: string[] | null
           cable_routes?: string[] | null
+          canonical_id?: string | null
+          cluster_id?: string | null
           common_defects?: string[] | null
           common_failures?: Json[] | null
           confidence_score?: number | null
@@ -4308,10 +4433,12 @@ export type Database = {
           materials_needed?: Json[] | null
           other_standards?: string[] | null
           practical_work_id?: string
+          provenance?: Json
           related_topics?: string[] | null
           replacement_criteria?: string[] | null
           safety_requirements?: Json | null
           skill_level?: string | null
+          source_tables?: string[]
           team_size?: number | null
           termination_methods?: string[] | null
           test_equipment_required?: string[] | null
@@ -4326,10 +4453,38 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "practical_work_intelligence_canonical_id_fkey"
+            columns: ["canonical_id"]
+            isOneToOne: false
+            referencedRelation: "practical_work"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "practical_work_intelligence_canonical_id_fkey"
+            columns: ["canonical_id"]
+            isOneToOne: false
+            referencedRelation: "v_practical_work_canonical"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "practical_work_intelligence_cluster_id_fkey"
+            columns: ["cluster_id"]
+            isOneToOne: false
+            referencedRelation: "practical_work_clusters"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "practical_work_intelligence_practical_work_id_fkey"
             columns: ["practical_work_id"]
             isOneToOne: true
             referencedRelation: "practical_work"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "practical_work_intelligence_practical_work_id_fkey"
+            columns: ["practical_work_id"]
+            isOneToOne: true
+            referencedRelation: "v_practical_work_canonical"
             referencedColumns: ["id"]
           },
         ]
@@ -7379,6 +7534,29 @@ export type Database = {
         }
         Relationships: []
       }
+      v_practical_work_canonical: {
+        Row: {
+          activity_suggested: string[] | null
+          cluster_id: string | null
+          content: string | null
+          content_hash: string | null
+          content_normalized: string | null
+          created_at: string | null
+          embedding: string | null
+          id: string | null
+          is_canonical: boolean | null
+          member_count: number | null
+          metadata: Json | null
+          metrics: Json | null
+          overlap_flags: Json | null
+          source: string | null
+          source_id: string | null
+          source_table: string | null
+          sources: Json | null
+          topic: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       abort_duplicate_jobs: {
@@ -7715,34 +7893,57 @@ export type Database = {
           topic: string
         }[]
       }
-      search_practical_work_intelligence: {
-        Args: {
-          filter_activity_types?: string[]
-          filter_equipment?: string[]
-          filter_skill_level?: string[]
-          match_count?: number
-          query_embedding: string
-          query_text: string
-        }
-        Returns: {
-          activity_types: string[]
-          bs7671_regulations: string[]
-          common_failures: Json[]
-          content: string
-          equipment_category: string
-          final_score: number
-          id: string
-          inspection_checklist: Json[]
-          keyword_score: number
-          maintenance_intervals: Json
-          safety_requirements: Json
-          similarity_score: number
-          skill_level: string
-          test_procedures: Json[]
-          tools_required: string[]
-          typical_duration_minutes: number
-        }[]
-      }
+      search_practical_work_intelligence:
+        | {
+            Args: {
+              filter_activity_types?: string[]
+              filter_equipment?: string[]
+              filter_skill_level?: string[]
+              match_count?: number
+              query_embedding: string
+              query_text: string
+            }
+            Returns: {
+              activity_types: string[]
+              bs7671_regulations: string[]
+              common_failures: Json[]
+              content: string
+              equipment_category: string
+              final_score: number
+              id: string
+              inspection_checklist: Json[]
+              keyword_score: number
+              maintenance_intervals: Json
+              safety_requirements: Json
+              similarity_score: number
+              skill_level: string
+              test_procedures: Json[]
+              tools_required: string[]
+              typical_duration_minutes: number
+            }[]
+          }
+        | {
+            Args: {
+              filter_activity_types?: string[]
+              match_count?: number
+              match_threshold?: number
+              query_embedding: string
+            }
+            Returns: {
+              activity_types: string[]
+              best_practices: Json
+              canonical_id: string
+              cluster_id: string
+              common_mistakes: Json
+              id: string
+              practical_work_id: string
+              safety_critical: boolean
+              similarity: number
+              source_tables: string[]
+              title: string
+              tools_required: Json
+            }[]
+          }
       search_pricing: {
         Args: {
           category_filter?: string

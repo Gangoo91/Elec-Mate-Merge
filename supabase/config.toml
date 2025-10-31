@@ -3,6 +3,11 @@ project_id = "jtwygbeceundfgnkirof"
 # Only list functions in active use to avoid deploy failures
 # Removed functions with xhr@0.1.0 imports causing deployment failures
 
+# Practical Work Unification
+[functions.practical-work-unify]
+verify_jwt = false
+timeout_sec = 600
+
 # OAuth Email Integration
 [functions.oauth-email-init]
 verify_jwt = false
