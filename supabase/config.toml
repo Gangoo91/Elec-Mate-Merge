@@ -8,25 +8,9 @@ project_id = "jtwygbeceundfgnkirof"
 verify_jwt = false
 timeout_sec = 600
 
-[functions.enrich-practical-work-primary]
+[functions.enrich-practical-work]
 verify_jwt = false
-timeout_sec = 300
-
-[functions.enrich-practical-installation]
-verify_jwt = false
-timeout_sec = 300
-
-[functions.enrich-practical-maintenance]
-verify_jwt = false
-timeout_sec = 300
-
-[functions.enrich-practical-testing]
-verify_jwt = false
-timeout_sec = 300
-
-[functions.enrich-practical-costing]
-verify_jwt = false
-timeout_sec = 300
+timeout_sec = 600
 
 # OAuth Email Integration
 [functions.oauth-email-init]

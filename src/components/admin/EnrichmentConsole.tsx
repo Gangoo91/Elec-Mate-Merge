@@ -47,50 +47,14 @@ const TASK_CONFIG = {
     targetMultiplier: 1,
     sourceFilter: null
   },
-  practical_work_primary: {
-    label: 'Practical Work (Primary)',
-    jobType: 'enrich-practical-work-primary',
+  practical_work: {
+    label: 'Practical Work',
+    jobType: 'enrich_practical_work',
     sourceTable: 'practical_work',
     targetTable: 'practical_work_intelligence',
     enrichmentModel: 'faceted',
-    targetMultiplier: 1.0,
+    targetMultiplier: 3.5,
     sourceFilter: { column: 'is_canonical', op: 'eq', value: true }
-  },
-  practical_work_installation: {
-    label: 'Practical Work (Installation)',
-    jobType: 'enrich-practical-installation',
-    sourceTable: 'practical_work_intelligence',
-    targetTable: 'practical_work_intelligence',
-    enrichmentModel: 'faceted',
-    targetMultiplier: 0.6,
-    sourceFilter: null
-  },
-  practical_work_maintenance: {
-    label: 'Practical Work (Maintenance)',
-    jobType: 'enrich-practical-maintenance',
-    sourceTable: 'practical_work_intelligence',
-    targetTable: 'practical_work_intelligence',
-    enrichmentModel: 'faceted',
-    targetMultiplier: 0.8,
-    sourceFilter: null
-  },
-  practical_work_testing: {
-    label: 'Practical Work (Testing)',
-    jobType: 'enrich-practical-testing',
-    sourceTable: 'practical_work_intelligence',
-    targetTable: 'practical_work_intelligence',
-    enrichmentModel: 'faceted',
-    targetMultiplier: 0.7,
-    sourceFilter: null
-  },
-  practical_work_costing: {
-    label: 'Practical Work (Costing)',
-    jobType: 'enrich-practical-costing',
-    sourceTable: 'practical_work_intelligence',
-    targetTable: 'practical_work_intelligence',
-    enrichmentModel: 'faceted',
-    targetMultiplier: 1.0,
-    sourceFilter: null
   }
 } as const;
 
