@@ -8,6 +8,8 @@ import { toast } from "@/hooks/use-toast";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ReactMarkdown from 'react-markdown';
+import { processElectricalText } from "@/lib/text-processor";
+import { EnhancedTabContent } from "./EnhancedTabContent";
 
 interface AIResponse {
   quick_answer: string;
@@ -283,9 +285,12 @@ const AIAssistant = () => {
                         Quick Answer
                       </h3>
                       <CollapsibleContent>
-                        <p className="text-white text-sm sm:text-base leading-relaxed">
-                          {aiResponse.quick_answer}
-                        </p>
+              <div 
+                className="text-white text-sm sm:text-base leading-relaxed"
+                dangerouslySetInnerHTML={{ 
+                  __html: processElectricalText(aiResponse.quick_answer) 
+                }}
+              />
                       </CollapsibleContent>
                     </div>
                     <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow transition-transform group-data-[state=open]:rotate-180 flex-shrink-0" />
@@ -298,52 +303,43 @@ const AIAssistant = () => {
 
               {/* Tabbed Content */}
               <Tabs defaultValue="technical" className="w-full">
-                <TabsList className="grid w-full grid-cols-3 bg-neutral-800/50 border border-elec-yellow/20 rounded-lg p-1 h-auto gap-1">
+                <TabsList className="grid w-full grid-cols-3 bg-neutral-800/50 border border-elec-yellow/20 rounded-lg p-1.5 h-auto gap-2">
                   <TabsTrigger 
                     value="technical" 
-                    className="data-[state=active]:bg-blue-500/20 data-[state=active]:text-blue-400 text-xs sm:text-sm py-2 sm:py-2.5 px-2 sm:px-3 flex items-center justify-center gap-1 sm:gap-2"
+                    className="data-[state=active]:bg-blue-500/20 data-[state=active]:text-blue-400 data-[state=active]:border-blue-500/40 data-[state=active]:shadow-lg text-xs sm:text-sm py-3 sm:py-3.5 px-3 sm:px-4 flex items-center justify-center gap-2 rounded-md border border-transparent transition-all duration-200"
                   >
-                    <FileText className="h-3 w-3 sm:h-4 sm:w-4" />
-                    <span className="hidden xs:inline">Technical</span>
-                    <span className="xs:hidden">Tech</span>
+                    <FileText className="h-4 w-4" />
+                    <span>Technical</span>
                   </TabsTrigger>
                   <TabsTrigger 
                     value="regulations" 
-                    className="data-[state=active]:bg-purple-500/20 data-[state=active]:text-purple-400 text-xs sm:text-sm py-2 sm:py-2.5 px-2 sm:px-3 flex items-center justify-center gap-1 sm:gap-2"
+                    className="data-[state=active]:bg-purple-500/20 data-[state=active]:text-purple-400 data-[state=active]:border-purple-500/40 data-[state=active]:shadow-lg text-xs sm:text-sm py-3 sm:py-3.5 px-3 sm:px-4 flex items-center justify-center gap-2 rounded-md border border-transparent transition-all duration-200"
                   >
-                    <BookOpen className="h-3 w-3 sm:h-4 sm:w-4" />
-                    <span className="hidden xs:inline">Regulations</span>
-                    <span className="xs:hidden">Regs</span>
+                    <BookOpen className="h-4 w-4" />
+                    <span>Regulations</span>
                   </TabsTrigger>
                   <TabsTrigger 
                     value="practical" 
-                    className="data-[state=active]:bg-green-500/20 data-[state=active]:text-green-400 text-xs sm:text-sm py-2 sm:py-2.5 px-2 sm:px-3 flex items-center justify-center gap-1 sm:gap-2"
+                    className="data-[state=active]:bg-green-500/20 data-[state=active]:text-green-400 data-[state=active]:border-green-500/40 data-[state=active]:shadow-lg text-xs sm:text-sm py-3 sm:py-3.5 px-3 sm:px-4 flex items-center justify-center gap-2 rounded-md border border-transparent transition-all duration-200"
                   >
-                    <Wrench className="h-3 w-3 sm:h-4 sm:w-4" />
-                    <span className="hidden xs:inline">Practical</span>
-                    <span className="xs:hidden">Tips</span>
+                    <Wrench className="h-4 w-4" />
+                    <span>Practical</span>
                   </TabsTrigger>
                 </TabsList>
 
                 {/* Technical Tab */}
                 <TabsContent value="technical" className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
-                  <div className="prose prose-invert max-w-none prose-sm sm:prose-base prose-headings:text-blue-400 prose-headings:font-bold prose-headings:text-left prose-strong:text-blue-300 prose-p:text-white prose-p:leading-relaxed prose-p:text-left prose-p:mb-4 prose-ul:text-white prose-ul:text-left prose-ul:space-y-2 prose-ol:text-white prose-ol:text-left prose-ol:space-y-2 prose-li:text-white prose-li:text-left prose-li:mb-2">
-                    <ReactMarkdown>{aiResponse.technical_answer}</ReactMarkdown>
-                  </div>
+                  <EnhancedTabContent content={aiResponse.technical_answer} type="technical" />
                 </TabsContent>
 
                 {/* Regulations Tab */}
                 <TabsContent value="regulations" className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
-                  <div className="prose prose-invert max-w-none prose-sm sm:prose-base prose-headings:text-purple-400 prose-headings:font-bold prose-headings:text-left prose-strong:text-purple-300 prose-p:text-white prose-p:leading-relaxed prose-p:text-left prose-p:mb-4 prose-ul:text-white prose-ul:text-left prose-ul:space-y-2 prose-ol:text-white prose-ol:text-left prose-ol:space-y-2 prose-li:text-white prose-li:text-left prose-li:mb-2">
-                    <ReactMarkdown>{aiResponse.regulations}</ReactMarkdown>
-                  </div>
+                  <EnhancedTabContent content={aiResponse.regulations} type="regulations" />
                 </TabsContent>
 
                 {/* Practical Tab */}
                 <TabsContent value="practical" className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
-                  <div className="prose prose-invert max-w-none prose-sm sm:prose-base prose-headings:text-green-400 prose-headings:font-bold prose-headings:text-left prose-strong:text-green-300 prose-p:text-white prose-p:leading-relaxed prose-p:text-left prose-p:mb-4 prose-ol:text-white prose-ol:text-left prose-ol:space-y-2 prose-ul:text-white prose-ul:text-left prose-ul:space-y-2 prose-li:text-white prose-li:text-left prose-li:mb-2">
-                    <ReactMarkdown>{aiResponse.practical_guidance}</ReactMarkdown>
-                  </div>
+                  <EnhancedTabContent content={aiResponse.practical_guidance} type="practical" />
                 </TabsContent>
               </Tabs>
             </CardContent>
