@@ -22,7 +22,7 @@ const MaintenanceAdvisorPage = () => {
     <div className="min-h-screen bg-gradient-to-b from-elec-grey via-elec-dark to-elec-grey">
       {/* Header */}
       <div className="border-b border-elec-gray/20">
-        <div className="px-4 py-4 md:py-6">
+        <div className="ai-tool-page-padding">
           <div className="max-w-5xl mx-auto">
             <div className="flex items-center mb-4">
               <Link to="/electrician-tools/ai-tooling">
@@ -55,7 +55,7 @@ const MaintenanceAdvisorPage = () => {
       </div>
 
       {/* Main Content */}
-      <div className="px-4 py-6 md:py-8">
+      <div className="ai-tool-page-padding">
         <div className="max-w-5xl mx-auto">
           {state === 'input' && (
             <MaintenanceInput

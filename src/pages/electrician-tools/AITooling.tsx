@@ -72,7 +72,7 @@ const AITooling = () => {
                       </CardTitle>
 
                       {/* Description */}
-                      <p className="text-xs md:text-base text-elec-light/60 leading-snug md:leading-relaxed">
+                      <p className="text-xs md:text-base text-elec-light/60 leading-snug md:leading-relaxed line-clamp-3 md:line-clamp-none">
                         {tool.description}
                       </p>
                     </CardHeader>

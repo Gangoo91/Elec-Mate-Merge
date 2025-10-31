@@ -111,7 +111,7 @@ const ClientExplainerPage = () => {
 
   return (
     <div className="min-h-screen bg-elec-grey">
-      <div className="mobile-padding py-6">
+      <div className="ai-tool-page-padding">
         <div className="max-w-7xl mx-auto">
           {/* Navigation */}
           <div className="mb-8">

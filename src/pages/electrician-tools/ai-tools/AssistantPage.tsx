@@ -6,7 +6,7 @@ import AIAssistant from "@/components/electrician-tools/ai-tools/AIAssistant";
 const AssistantPage = () => {
   return (
     <div className="min-h-screen bg-elec-dark">
-      <div className="px-2 sm:px-4 py-4 sm:py-6">
+      <div className="ai-tool-page-padding">
         <div className="max-w-7xl mx-auto">
           {/* Navigation */}
           <div className="mb-8">

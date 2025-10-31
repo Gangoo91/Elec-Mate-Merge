@@ -1097,11 +1097,11 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                       }`}
                       onClick={() => setPrimaryImageIndex(index)}
                     >
-                      <div className="aspect-square w-full">
+                      <div className="aspect-square w-full overflow-hidden bg-elec-dark/50">
                         <img
                           src={URL.createObjectURL(image)}
                           alt={`Upload ${index + 1}`}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-contain max-w-full"
                         />
                       </div>
                       <Button
