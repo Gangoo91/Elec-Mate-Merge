@@ -234,29 +234,18 @@ export default function EnrichmentConsole() {
   const handleFindMissing = async () => {
     setIsLoading(true);
     try {
-      // BS 7671 specific: Find regulations not yet enriched
-      // Get all enriched regulation_numbers
-      const { data: enrichedRegs } = await supabase
-        .from('regulations_intelligence')
-        .select('regulation_number')
-        .limit(2000); // Ensure we get all enriched rows
-      const enrichedSet = new Set((enrichedRegs || []).map(r => r.regulation_number));
+      // Use server-computed missing regulations
+      const { data, error } = await supabase.functions.invoke('master-enrichment-scheduler', {
+        body: { action: 'compute_missing' }
+      });
 
-      // Get all unique source regulation_numbers
-      const { data: sourceRegs } = await supabase
-        .from('bs7671_embeddings')
-        .select('regulation_number')
-        .neq('regulation_number', 'General')
-        .limit(3000); // Ensure we get all source rows
+      if (error) throw error;
+      if (!data?.success) throw new Error(data?.error || 'Compute failed');
 
-      // Find missing unique regulation_numbers
-      const allSourceRegs = new Set((sourceRegs || []).map(r => r.regulation_number));
-      const missingRegNumbers = Array.from(allSourceRegs).filter(reg => !enrichedSet.has(reg));
+      const missingCount = data.missing_count || 0;
       
-      setMissingRegulations(missingRegNumbers);
-      
-      toast.success(`Found ${missingRegNumbers.length} regulations needing enrichment`, {
-        description: `Ready to process: ${missingRegNumbers.slice(0, 5).join(', ')}${missingRegNumbers.length > 5 ? '...' : ''}`
+      toast.success(`Found ${missingCount} regulations needing enrichment`, {
+        description: missingCount > 0 ? `Sample: ${data.sample?.join(', ')}...` : 'All enriched'
       });
       
     } catch (error: any) {
@@ -312,42 +301,53 @@ export default function EnrichmentConsole() {
   };
 
   const handleCompleteMissing = async () => {
-    // Pre-flight integrity check
-    if (!integrityCheck) {
-      toast.error('Run "Verify Data Integrity" first to establish baseline');
-      return;
-    }
-    
-    const expectedMissing = integrityCheck.total_unique_regs - integrityCheck.enriched_unique_regs;
-    
-    if (expectedMissing === 0) {
-      toast.info('No missing regulations - all enriched!');
-      return;
-    }
-    
-    // Show confirmation with expected counts
-    const confirmed = window.confirm(
-      `Complete Missing Regulations\n\n` +
-      `Total Regulations: ${integrityCheck.total_unique_regs}\n` +
-      `Already Enriched: ${integrityCheck.enriched_unique_regs}\n` +
-      `Missing: ${expectedMissing}\n\n` +
-      `This will create approximately ${Math.ceil(expectedMissing / 5)} batches.\n` +
-      `Estimated time: ${Math.ceil(expectedMissing * 1.5 / 60)} minutes.\n\n` +
-      `Continue?`
-    );
-    
-    if (!confirmed) return;
-    
     setIsLoading(true);
     
     try {
-      // Call start_missing action - server computes missing regs
-      toast.info('Starting server-side missing regulations detection...');
+      // Step 1: Get server-computed counts first
+      toast.info('Computing missing regulations...');
+      const { data: computeData, error: computeError } = await supabase.functions.invoke('master-enrichment-scheduler', {
+        body: { action: 'compute_missing' }
+      });
+      
+      if (computeError) throw computeError;
+      if (!computeData?.success) throw new Error(computeData?.error || 'Compute failed');
+      
+      const { total_unique, enriched_unique, missing_count, suggested_batch_size, suggested_workers } = computeData;
+      
+      setIsLoading(false);
+      
+      // Step 2: Short-circuit if nothing to do
+      if (missing_count === 0) {
+        toast.success('All regulations already enriched');
+        return;
+      }
+      
+      // Step 3: Show confirmation with server numbers
+      const estimatedBatches = Math.ceil(missing_count / suggested_batch_size);
+      const estimatedMinutes = Math.ceil(missing_count * 1.5 / 60);
+      
+      const confirmed = window.confirm(
+        `Complete Missing Regulations\n\n` +
+        `Total Regulations: ${total_unique.toLocaleString()}\n` +
+        `Already Enriched: ${enriched_unique.toLocaleString()}\n` +
+        `Missing: ${missing_count}\n\n` +
+        `This will create ${estimatedBatches} batches.\n` +
+        `Estimated time: ${estimatedMinutes} minutes.\n\n` +
+        `Continue?`
+      );
+      
+      if (!confirmed) return;
+      
+      setIsLoading(true);
+      
+      // Step 4: Start the job with server-suggested parameters
+      toast.info('Starting enrichment job...');
       const startResponse = await supabase.functions.invoke('master-enrichment-scheduler', {
         body: { 
           action: 'start_missing',
-          chunkSize: 5, // Smaller batches for missing regs
-          workers: 6
+          chunkSize: suggested_batch_size,
+          workers: suggested_workers
         }
       });
       
@@ -355,18 +355,12 @@ export default function EnrichmentConsole() {
       
       const result = startResponse.data;
       
-      if (result?.missing_count === 0) {
+      if (!result?.success) throw new Error(result?.error || 'Failed to start job');
+      
+      if (result.missing_count === 0) {
         toast.success('All regulations already enriched');
         await loadStatus();
         return;
-      }
-      
-      // Validate server count matches frontend expectation
-      if (result?.missing_count !== expectedMissing) {
-        toast.error(
-          `Server mismatch! Expected ${expectedMissing} missing, server computed ${result.missing_count}. Please check logs.`
-        );
-        console.error('Count mismatch:', { expected: expectedMissing, server: result.missing_count });
       }
       
       if (result?.jobId && result?.batchesCreated) {

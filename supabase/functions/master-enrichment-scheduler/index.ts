@@ -363,6 +363,59 @@ serve(async (req) => {
     }
   }
   
+  // NEW ACTION: compute_missing - Calculate missing regulations without creating job
+  if (action === 'compute_missing') {
+    console.log('📊 COMPUTE MISSING: Calculating missing regulations for BS 7671...');
+    
+    try {
+      // Compute missing regulations server-side with proper deduplication
+      const { data: allSourceRegs } = await supabase
+        .from('bs7671_embeddings')
+        .select('regulation_number')
+        .neq('regulation_number', 'General');
+      
+      const { data: enrichedRegs } = await supabase
+        .from('regulations_intelligence')
+        .select('regulation_number')
+        .eq('enrichment_version', 'v1');
+      
+      // Explicit deduplication with trim and filter
+      const uniqueSourceRegs = [...new Set((allSourceRegs || [])
+        .map(r => r.regulation_number?.trim())
+        .filter(Boolean))].sort();
+      
+      const uniqueEnrichedRegs = [...new Set((enrichedRegs || [])
+        .map(r => r.regulation_number?.trim())
+        .filter(Boolean))];
+      
+      const enrichedSet = new Set(uniqueEnrichedRegs);
+      const missingRegulations = uniqueSourceRegs.filter(reg => !enrichedSet.has(reg));
+      
+      console.log(`📊 SOURCE REGS: ${uniqueSourceRegs.length} unique | ENRICHED: ${uniqueEnrichedRegs.length} | MISSING: ${missingRegulations.length}`);
+      
+      return new Response(JSON.stringify({
+        success: true,
+        total_unique: uniqueSourceRegs.length,
+        enriched_unique: uniqueEnrichedRegs.length,
+        missing_count: missingRegulations.length,
+        sample: missingRegulations.slice(0, 10),
+        suggested_batch_size: 5,
+        suggested_workers: 6
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    } catch (error) {
+      console.error('❌ Compute missing failed:', error);
+      return new Response(JSON.stringify({
+        success: false,
+        error: error.message || 'Failed to compute missing regulations'
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+  }
+
   // NEW ACTION: start_missing - Server-side missing regulations detection and job creation
   if (action === 'start_missing') {
     console.log('🔍 SERVER-SIDE MISSING DETECTION: Computing missing regulations for BS 7671...');
