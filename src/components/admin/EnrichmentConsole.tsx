@@ -47,23 +47,50 @@ const TASK_CONFIG = {
     targetMultiplier: 1,
     sourceFilter: null
   },
-  practical_work: {
-    label: 'Practical Work',
-    jobType: 'enrich_practical_work', // Maps to primary stage (scheduler uses `enrich_${sourceTable}`)
+  practical_work_primary: {
+    label: 'Practical Work (Primary)',
+    jobType: 'enrich-practical-work-primary',
     sourceTable: 'practical_work',
     targetTable: 'practical_work_intelligence',
     enrichmentModel: 'faceted',
-    targetMultiplier: 4.1,
-    isMultiStage: true,
-    sourceFilter: { column: 'is_canonical', op: 'eq', value: true },
-    stages: [
-      { key: 'unify', label: '1. Unification', jobType: null, isPrerequisite: true },
-      { key: 'primary', label: '2. Primary', jobType: 'enrich_practical_work_primary', expectedRatio: 1.0, fields: ['activity_types', 'equipment_category'] },
-      { key: 'installation', label: '3. Installation', jobType: 'enrich_practical_installation', expectedRatio: 0.6, fields: ['installation_method', 'fixing_intervals'] },
-      { key: 'maintenance', label: '4. Maintenance', jobType: 'enrich_practical_maintenance', expectedRatio: 0.8, fields: ['maintenance_intervals', 'maintenance_tasks'] },
-      { key: 'testing', label: '5. Testing', jobType: 'enrich_practical_testing', expectedRatio: 0.7, fields: ['test_procedures', 'test_equipment_required'] },
-      { key: 'costing', label: '6. Costing', jobType: 'enrich_practical_costing', expectedRatio: 1.0, fields: ['estimated_duration', 'material_requirements'] }
-    ]
+    targetMultiplier: 1.0,
+    sourceFilter: { column: 'is_canonical', op: 'eq', value: true }
+  },
+  practical_work_installation: {
+    label: 'Practical Work (Installation)',
+    jobType: 'enrich-practical-installation',
+    sourceTable: 'practical_work_intelligence',
+    targetTable: 'practical_work_intelligence',
+    enrichmentModel: 'faceted',
+    targetMultiplier: 0.6,
+    sourceFilter: null
+  },
+  practical_work_maintenance: {
+    label: 'Practical Work (Maintenance)',
+    jobType: 'enrich-practical-maintenance',
+    sourceTable: 'practical_work_intelligence',
+    targetTable: 'practical_work_intelligence',
+    enrichmentModel: 'faceted',
+    targetMultiplier: 0.8,
+    sourceFilter: null
+  },
+  practical_work_testing: {
+    label: 'Practical Work (Testing)',
+    jobType: 'enrich-practical-testing',
+    sourceTable: 'practical_work_intelligence',
+    targetTable: 'practical_work_intelligence',
+    enrichmentModel: 'faceted',
+    targetMultiplier: 0.7,
+    sourceFilter: null
+  },
+  practical_work_costing: {
+    label: 'Practical Work (Costing)',
+    jobType: 'enrich-practical-costing',
+    sourceTable: 'practical_work_intelligence',
+    targetTable: 'practical_work_intelligence',
+    enrichmentModel: 'faceted',
+    targetMultiplier: 1.0,
+    sourceFilter: null
   }
 } as const;
 
@@ -149,75 +176,47 @@ export default function EnrichmentConsole() {
       }
 
       // Load stats based on task type
-      if (selectedTask === 'practical_work') {
-        // PRACTICAL WORK: Faceted model with multi-stage tracking
+      const isPracticalWork = selectedTask.startsWith('practical_work_');
+      
+      if (isPracticalWork) {
+        // PRACTICAL WORK: All stages use same stats calculation
+        const facetType = selectedTask.replace('practical_work_', '');
         
-        // Query total source records (all, before deduplication)
-        const { count: totalSourceRecords } = await supabase
-          .from('practical_work')
-          .select('*', { count: 'exact', head: true });
+        // For primary stage, count source records
+        let sourceTotal = 0;
+        if (facetType === 'primary') {
+          const { count } = await supabase
+            .from('practical_work' as const)
+            .select('*', { count: 'exact', head: true })
+            .eq('is_canonical', true);
+          sourceTotal = count || 0;
+        } else {
+          // For specialist stages, count primary facets as source
+          const { count } = await supabase
+            .from('practical_work_intelligence' as const)
+            .select('*', { count: 'exact', head: true })
+            .eq('facet_type', 'primary');
+          sourceTotal = count || 0;
+        }
 
-        // Query canonical count (deduplicated records)
-        const { count: canonicalCount } = await supabase
-          .from('practical_work')
+        const { count: facetsCreated } = await supabase
+          .from('practical_work_intelligence' as const)
           .select('*', { count: 'exact', head: true })
-          .eq('is_canonical', true);
+          .eq('facet_type', facetType);
 
-        // If unification hasn't run yet, estimate canonical count (~83.7% deduplication rate)
-        const estimatedCanonicalCount = canonicalCount === 0 
-          ? Math.round((totalSourceRecords || 12247) * 0.837) 
-          : canonicalCount;
-
-        const { count: totalFacets } = await supabase
-          .from('practical_work_intelligence')
-          .select('*', { count: 'exact', head: true });
-
-        // Count facets by type
-        const { count: primaryFacets } = await supabase
-          .from('practical_work_intelligence')
-          .select('*', { count: 'exact', head: true })
-          .eq('facet_type', 'primary');
-
-        const { count: installationFacets } = await supabase
-          .from('practical_work_intelligence')
-          .select('*', { count: 'exact', head: true })
-          .eq('facet_type', 'installation');
-
-        const { count: maintenanceFacets } = await supabase
-          .from('practical_work_intelligence')
-          .select('*', { count: 'exact', head: true })
-          .eq('facet_type', 'maintenance');
-
-        const { count: testingFacets } = await supabase
-          .from('practical_work_intelligence')
-          .select('*', { count: 'exact', head: true })
-          .eq('facet_type', 'testing');
-
-        const { count: costingFacets } = await supabase
-          .from('practical_work_intelligence')
-          .select('*', { count: 'exact', head: true })
-          .eq('facet_type', 'costing');
-
-        // Calculate target using estimated or actual canonical count
-        const expectedFacets = Math.round(estimatedCanonicalCount * 4.1);
-        const progress = expectedFacets > 0 ? Math.round(((totalFacets || 0) / expectedFacets) * 100) : 0;
+        const targetFacets = Math.round((sourceTotal || 0) * (config.targetMultiplier || 1));
+        const progress = targetFacets > 0 ? Math.round(((facetsCreated || 0) / targetFacets) * 100) : 0;
 
         setStats({
-          sourceTotal: totalSourceRecords || 12247,
-          sourceEnriched: estimatedCanonicalCount,
-          isEstimated: canonicalCount === 0,
-          actualCanonical: canonicalCount || 0,
-          facetsCreated: totalFacets || 0,
-          targetFacets: expectedFacets,
-          remaining: Math.max(0, expectedFacets - (totalFacets || 0)),
+          sourceTotal: sourceTotal || 0,
+          sourceEnriched: facetsCreated || 0,
+          isEstimated: false,
+          actualCanonical: 0,
+          facetsCreated: facetsCreated || 0,
+          targetFacets,
+          remaining: Math.max(0, targetFacets - (facetsCreated || 0)),
           progress,
-          stageProgress: {
-            primary: primaryFacets || 0,
-            installation: installationFacets || 0,
-            maintenance: maintenanceFacets || 0,
-            testing: testingFacets || 0,
-            costing: costingFacets || 0
-          }
+          stageProgress: {}
         });
 
       } else if (selectedTask === 'bs7671') {
@@ -298,29 +297,31 @@ export default function EnrichmentConsole() {
     return () => clearInterval(interval);
   }, [selectedTask]); // Reload when task changes
 
-  // Realtime subscription for live facet updates (Practical Work only)
+  // Realtime subscription for live facet updates (Practical Work stages only)
   useEffect(() => {
-    if (selectedTask !== 'practical_work') return;
+    const isPracticalWork = selectedTask.startsWith('practical_work_');
+    if (!isPracticalWork) return;
 
-    console.log('🔴 Setting up realtime subscription for practical_work_intelligence');
+    const facetType = selectedTask.replace('practical_work_', '');
+    console.log(`🔴 Setting up realtime subscription for ${facetType} facets`);
 
     const channel = supabase
-      .channel('practical-work-facets-live')
+      .channel(`practical-work-${facetType}-live`)
       .on(
         'postgres_changes',
         {
           event: 'INSERT',
           schema: 'public',
-          table: 'practical_work_intelligence'
+          table: 'practical_work_intelligence',
+          filter: `facet_type=eq.${facetType}`
         },
         (payload) => {
-          console.log('✨ New facet created:', payload.new);
+          console.log(`✨ New ${facetType} facet created:`, payload.new);
           
           // Immediately update stats without waiting for next poll
           setStats(prev => {
-            const facetType = (payload.new as any).facet_type;
             const newFacetsCreated = prev.facetsCreated + 1;
-            const newProgress = prev.targetFacets > 0 
+            const newProgress = prev.targetFacets > 0
               ? Math.round((newFacetsCreated / prev.targetFacets) * 100)
               : 0;
 
@@ -681,7 +682,7 @@ export default function EnrichmentConsole() {
               <Database className="w-5 h-5 text-primary" />
               {config.label}
             </h3>
-            {selectedTask === 'practical_work' && (
+            {selectedTask.startsWith('practical_work_') && (
               <Badge variant="outline" className="text-xs">
                 <Activity className="w-3 h-3 mr-1 animate-pulse" />
                 Live Updates
@@ -698,29 +699,22 @@ export default function EnrichmentConsole() {
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-primary">
-              {selectedTask === 'practical_work' ? stats.sourceEnriched?.toLocaleString() : `${stats.sourceEnriched}/${stats.sourceTotal}`}
+              {stats.sourceEnriched?.toLocaleString()}
             </div>
             <div className="text-xs text-muted-foreground">
-              {selectedTask === 'practical_work' ? (
-                <>
-                  Canonical
-                  {stats.isEstimated && (
-                    <span className="ml-1 text-amber-400">(est.)</span>
-                  )}
-                </>
-              ) : 'Unique Regulations'}
+              Source Records
             </div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-success">{stats.facetsCreated.toLocaleString()}</div>
             <div className="text-xs text-muted-foreground">
-              {selectedTask === 'practical_work' ? `Facets (Target: ${stats.targetFacets.toLocaleString()})` : 'Facets Created'}
+              Facets Created
             </div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-warning">{stats.remaining.toLocaleString()}</div>
             <div className="text-xs text-muted-foreground">
-              {selectedTask === 'practical_work' ? 'Remaining Facets' : 'Remaining Regs'}
+              Remaining
             </div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
@@ -862,72 +856,6 @@ export default function EnrichmentConsole() {
         </div>
       </Card>
 
-      {/* Multi-Stage Pipeline (Practical Work only) */}
-      {selectedTask === 'practical_work' && 'stages' in config && config.stages && (
-        <Card className="p-4">
-          <h4 className="font-medium mb-4 flex items-center gap-2">
-            <TrendingUp className="w-4 h-4" />
-            Multi-Stage Pipeline Progress
-          </h4>
-          
-          <div className="space-y-3">
-            {config.stages.map((stage, idx) => {
-              const facetCount = stats.stageProgress?.[stage.key] || 0;
-              const expectedForStage = stage.key === 'unify' ? 0 :
-                Math.round(stats.sourceEnriched * (stage.expectedRatio || 1));
-              const progress = expectedForStage > 0 
-                ? Math.round((facetCount / expectedForStage) * 100) 
-                : 0;
-              const isComplete = facetCount >= expectedForStage && expectedForStage > 0;
-
-              return (
-                <div key={stage.key} className="p-4 border rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h5 className="font-medium">{stage.label}</h5>
-                        {isComplete && <CheckCircle2 className="w-4 h-4 text-success" />}
-                      </div>
-                      {stage.key !== 'unify' && (
-                        <p className="text-sm text-muted-foreground">
-                          {facetCount.toLocaleString()} / {expectedForStage.toLocaleString()} facets ({progress}%)
-                        </p>
-                      )}
-                      {stage.key === 'unify' && (
-                        <p className="text-sm text-muted-foreground">
-                          {stats.sourceEnriched > 0 ? `✓ ${stats.sourceEnriched.toLocaleString()} canonical records` : 'Not started'}
-                        </p>
-                      )}
-                    </div>
-                    {stage.jobType && (
-                      <MobileButton
-                        size="sm"
-                        onClick={() => callScheduler('start', { jobType: stage.jobType })}
-                        disabled={isLoading || (stage.key === 'unify' ? false : stats.sourceEnriched === 0)}
-                      >
-                        {isComplete ? '✓ Done' : 'Start'}
-                      </MobileButton>
-                    )}
-                  </div>
-                  {stage.key !== 'unify' && expectedForStage > 0 && (
-                    <div className="h-1.5 bg-muted rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-primary transition-all duration-300"
-                        style={{ width: `${Math.min(progress, 100)}%` }}
-                      />
-                    </div>
-                  )}
-                  {'fields' in stage && stage.fields && (
-                    <div className="mt-2 text-xs text-muted-foreground">
-                      Fields: {stage.fields.join(', ')}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </Card>
-      )}
 
       {/* Active Jobs */}
       {jobs.length > 0 && (

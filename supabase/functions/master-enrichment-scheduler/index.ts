@@ -760,8 +760,17 @@ serve(async (req) => {
       let jobTypesToStart: string[] = [];
       
       if (scope === 'single' && jobType) {
-        // Find the specific task by jobType (e.g., 'enrich_bs7671_embeddings')
-        const task = ENRICHMENT_TASKS.find(t => `enrich_${t.sourceTable}` === jobType);
+        // Find the specific task by jobType
+        // Support both patterns:
+        // 1. Legacy: 'enrich_${sourceTable}' (e.g., 'enrich_bs7671_embeddings')
+        // 2. New: hyphenated function names (e.g., 'enrich-practical-installation')
+        let task = ENRICHMENT_TASKS.find(t => `enrich_${t.sourceTable}` === jobType);
+        
+        // If not found and jobType contains hyphens, try matching against functionName
+        if (!task && jobType.includes('-')) {
+          task = ENRICHMENT_TASKS.find(t => t.functionName === jobType);
+        }
+        
         if (task) {
           tasksToRun = [task];
           jobTypesToStart = [jobType];
