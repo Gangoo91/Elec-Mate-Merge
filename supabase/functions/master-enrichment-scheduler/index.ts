@@ -72,6 +72,13 @@ const ENRICHMENT_TASKS: EnrichmentTask[] = [
   
   // Phase 3: Pricing Intelligence (Priority 3)
   { name: 'Pricing Intelligence', functionName: 'enrich-pricing-intelligence', sourceTable: 'pricing_embeddings', targetTable: 'pricing_intelligence', batchSize: 10, priority: 3 },
+  
+  // Phase 4: Practical Work Multi-Pass Enrichment (Priority 4)
+  { name: 'Practical Work Primary', functionName: 'enrich-practical-work-primary', sourceTable: 'practical_work', targetTable: 'practical_work_intelligence', batchSize: 15, priority: 4, filter: { is_canonical: true } },
+  { name: 'Installation Specialist', functionName: 'enrich-practical-installation', sourceTable: 'practical_work_intelligence', targetTable: 'practical_work_intelligence', batchSize: 20, priority: 5, filter: { activity_types: ['installation'] } },
+  { name: 'Maintenance Specialist', functionName: 'enrich-practical-maintenance', sourceTable: 'practical_work_intelligence', targetTable: 'practical_work_intelligence', batchSize: 20, priority: 5, filter: { activity_types: ['maintenance', 'fault_diagnosis'] } },
+  { name: 'Testing Specialist', functionName: 'enrich-practical-testing', sourceTable: 'practical_work_intelligence', targetTable: 'practical_work_intelligence', batchSize: 20, priority: 5, filter: { activity_types: ['testing', 'inspection'] } },
+  { name: 'Costing Specialist', functionName: 'enrich-practical-costing', sourceTable: 'practical_work_intelligence', targetTable: 'practical_work_intelligence', batchSize: 20, priority: 5 },
 ];
 
 // Global worker state tracking

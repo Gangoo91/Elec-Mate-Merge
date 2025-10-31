@@ -61,6 +61,9 @@ export const Timeouts = {
   
   /** Super extended (4 min 40 sec) - complex multi-circuit designs with RAG */
   SUPER_EXTENDED: 280000,
+  
+  /** Practical work enrichment (4 min) - Tested stable timeout for practical work batch processing */
+  PRACTICAL_WORK: 240000,
 };
 
 /**

@@ -3,10 +3,30 @@ project_id = "jtwygbeceundfgnkirof"
 # Only list functions in active use to avoid deploy failures
 # Removed functions with xhr@0.1.0 imports causing deployment failures
 
-# Practical Work Unification
+# Practical Work Unification & Enrichment
 [functions.practical-work-unify]
 verify_jwt = false
 timeout_sec = 600
+
+[functions.enrich-practical-work-primary]
+verify_jwt = false
+timeout_sec = 300
+
+[functions.enrich-practical-installation]
+verify_jwt = false
+timeout_sec = 300
+
+[functions.enrich-practical-maintenance]
+verify_jwt = false
+timeout_sec = 300
+
+[functions.enrich-practical-testing]
+verify_jwt = false
+timeout_sec = 300
+
+[functions.enrich-practical-costing]
+verify_jwt = false
+timeout_sec = 300
 
 # OAuth Email Integration
 [functions.oauth-email-init]
