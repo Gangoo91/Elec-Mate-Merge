@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, User, Settings, FileText, Calculator, Building2, Briefcase } from "lucide-react";
@@ -12,6 +12,7 @@ import { CompanyBrandingStep } from "@/components/company/CompanyBrandingStep";
 import { QuoteProgressIndicator } from "./QuoteProgressIndicator";
 import { SmartContinueButton } from "./SmartContinueButton";
 import { EmailStatusBanner } from "./EmailStatusBanner";
+import { AutoSaveIndicator } from "../shared/AutoSaveIndicator";
 
 const steps = [
   { title: "Client & Company", icon: User, description: "Customer and company details" },
@@ -44,6 +45,8 @@ const {
     isGenerating,
   } = useQuoteBuilder(onQuoteGenerated, initialQuote);
 
+  const [lastSaved, setLastSaved] = React.useState<Date>();
+
   const canProceed = () => {
     switch (currentStep) {
       case 0: // Client & Company combined
@@ -60,6 +63,33 @@ const {
     }
   };
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Cmd/Ctrl + S to trigger auto-save indicator
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault();
+        setLastSaved(new Date());
+      }
+      // Enter to advance step (if valid and not in textarea)
+      if (e.key === 'Enter' && !(e.target as HTMLElement).matches('textarea') && canProceed()) {
+        const isInInput = (e.target as HTMLElement).matches('input, select, button');
+        if (!isInInput && currentStep < steps.length - 1) {
+          nextStep();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentStep, nextStep]);
+
+  // Track changes for auto-save indicator
+  useEffect(() => {
+    if (quote.client || quote.items?.length || quote.settings) {
+      setLastSaved(new Date());
+    }
+  }, [quote]);
 
   const renderStep = () => {
     switch (currentStep) {
@@ -111,12 +141,20 @@ const {
       {/* Email Status Banner */}
       <EmailStatusBanner />
       
-      {/* Simple Progress */}
-      <QuoteProgressIndicator
-        currentStep={currentStep}
-        totalSteps={steps.length}
-        stepLabels={steps.map(s => s.title)}
-      />
+      {/* Progress and Auto-Save Indicator */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <QuoteProgressIndicator
+          currentStep={currentStep}
+          totalSteps={steps.length}
+          stepLabels={steps.map(s => s.title)}
+        />
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <AutoSaveIndicator lastSaved={lastSaved} />
+          <div className="hidden md:block text-xs text-muted-foreground">
+            Press Enter to continue • ⌘S to save
+          </div>
+        </div>
+      </div>
 
       {/* Main Content */}
       <Card data-quote-step="content">

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { MobileButton } from '@/components/ui/mobile-button';
@@ -8,6 +8,7 @@ import { Quote } from '@/types/quote';
 import { Invoice } from '@/types/invoice';
 import { useInvoiceBuilder } from '@/hooks/useInvoiceBuilder';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
+import { AutoSaveIndicator } from '../shared/AutoSaveIndicator';
 
 import { InvoiceReviewStep } from './steps/InvoiceReviewStep';
 import { InvoiceClientDetailsStep } from './steps/InvoiceClientDetailsStep';
@@ -39,9 +40,29 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date>();
   
   const invoiceBuilder = useInvoiceBuilder(sourceQuote, existingInvoice);
   const { saveInvoice } = useInvoiceStorage();
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault();
+        setLastSaved(new Date());
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Track changes for auto-save
+  useEffect(() => {
+    if (invoiceBuilder.invoice) {
+      setLastSaved(new Date());
+    }
+  }, [invoiceBuilder.invoice]);
 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
@@ -152,7 +173,7 @@ export const InvoiceWizard = ({ sourceQuote, existingInvoice, onInvoiceGenerated
             Back
           </MobileButton>
           <h1 className="text-xl md:text-2xl font-bold w-full">Create Invoice</h1>
-          <div className="w-20" />
+          <AutoSaveIndicator lastSaved={lastSaved} className="hidden sm:flex" />
         </div>
 
       </div>
