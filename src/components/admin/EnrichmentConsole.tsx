@@ -379,6 +379,12 @@ export default function EnrichmentConsole() {
         await callScheduler('start');
         return;
       }
+
+      // Warn user if no source records found
+      if (data?.message?.includes('0 source records') || data?.message?.includes('No canonical')) {
+        toast.error('No canonical procedures found. Please verify data integrity.');
+        return;
+      }
       
       toast.success(data.message || `Action '${action}' completed`);
       await loadStatus();

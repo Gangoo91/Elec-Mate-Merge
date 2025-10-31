@@ -17,18 +17,38 @@ serve(async (req) => {
   const logger = createLogger(requestId);
 
   try {
-    const { batchId, items } = await req.json();
-    logger.info(`🎯 Primary enrichment batch ${batchId}: ${items.length} items`);
+    const { batchSize, startFrom, jobId } = await req.json();
+    logger.info(`🎯 Primary enrichment: Fetching batch from offset ${startFrom}, size ${batchSize}`);
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Mark batch as processing
-    await supabase.from('batch_progress').update({
-      status: 'processing',
-      started_at: new Date().toISOString()
-    }).eq('id', batchId);
+    // Fetch canonical practical work records
+    const { data: items, error: fetchError } = await supabase
+      .from('practical_work')
+      .select('*')
+      .eq('is_canonical', true)
+      .range(startFrom, startFrom + batchSize - 1);
+
+    if (fetchError) {
+      logger.error('Failed to fetch source records', { error: fetchError });
+      throw new Error(`Database fetch failed: ${fetchError.message}`);
+    }
+
+    if (!items || items.length === 0) {
+      logger.info(`No items found in range ${startFrom}-${startFrom + batchSize - 1}`);
+      return new Response(JSON.stringify({
+        success: true,
+        message: 'No items in range',
+        enriched: 0,
+        failed: 0
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    logger.info(`📦 Loaded ${items.length} canonical procedures to enrich`);
 
     const enrichedItems = [];
     let lastHeartbeat = Date.now();
@@ -38,10 +58,7 @@ serve(async (req) => {
       
       // Heartbeat every 20 seconds
       if (Date.now() - lastHeartbeat > 20000) {
-        await supabase.from('batch_progress').update({
-          items_processed: i,
-          updated_at: new Date().toISOString()
-        }).eq('id', batchId);
+        logger.debug(`💓 Heartbeat: ${i}/${items.length} processed`);
         lastHeartbeat = Date.now();
       }
 
@@ -54,30 +71,31 @@ serve(async (req) => {
       }
     }
 
-    // Mark batch complete
-    await supabase.from('batch_progress').update({
-      status: 'completed',
-      items_processed: items.length,
-      completed_at: new Date().toISOString(),
-      data: { enriched_count: enrichedItems.filter(i => !i.error).length }
-    }).eq('id', batchId);
+    const successCount = enrichedItems.filter(i => !i.error).length;
+    const failCount = enrichedItems.filter(i => i.error).length;
 
-    logger.info(`✅ Batch ${batchId} complete: ${enrichedItems.filter(i => !i.error).length}/${items.length} enriched`);
+    logger.info(`✅ Batch complete: ${successCount}/${items.length} enriched, ${failCount} failed`);
 
     return new Response(JSON.stringify({
       success: true,
-      enriched: enrichedItems.filter(i => !i.error).length,
-      failed: enrichedItems.filter(i => i.error).length
+      enriched: successCount,
+      failed: failCount
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     });
 
   } catch (error) {
-    logger.error('Primary enrichment failed', { error });
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    
+    logger.error('Primary enrichment failed', { 
+      error: errorMessage,
+      stack: errorStack
+    });
     
     return new Response(JSON.stringify({
       success: false,
-      error: error.message
+      error: errorMessage
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
