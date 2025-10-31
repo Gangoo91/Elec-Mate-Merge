@@ -82,142 +82,57 @@ serve(async (req) => {
       }
     }
 
-    // ⚡ CHECK CACHE FIRST for instant responses
-    const cache = new ResponseCache();
-    const cached = await cache.get(query);
+    // ⚡ REGULATIONS INTELLIGENCE: Direct keyword search (no embedding needed!)
+    logger.debug('Searching regulations intelligence with hybrid keyword matching');
     
-    if (cached && cached.confidence >= 0.7) {
-      logger.info('✅ Cache hit in RAG search', { 
-        hits: cached.hits,
-        confidence: cached.confidence 
-      });
-      
-      return new Response(
-        JSON.stringify({
-          success: true,
-          regulations: JSON.parse(cached.citations),
-          query,
-          resultsCount: JSON.parse(cached.citations).length,
-          searchMethod: 'cache',
-          cached: true,
-          requestId,
-        }),
-        { 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 200 
-        }
-      );
-    }
-
-    // Get embedding from OpenAI with retry and timeout
-    const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-    if (!OPENAI_API_KEY) {
-      throw new Error('OPENAI_API_KEY not configured');
-    }
-
-    logger.debug('Generating embedding via OpenAI');
-    
-    const embeddingResponse = await logger.time(
-      'OpenAI embedding generation',
-      () => withRetry(
-        () => withTimeout(
-          fetch('https://api.openai.com/v1/embeddings', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${OPENAI_API_KEY}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              input: query,
-              model: 'text-embedding-3-small',
-            }),
-          }),
-          Timeouts.STANDARD,
-          'OpenAI embedding generation'
-        ),
-        RetryPresets.STANDARD
-      )
-    );
-
-    if (!embeddingResponse.ok) {
-      const errorText = await embeddingResponse.text();
-      logger.error('Embedding API error', { status: embeddingResponse.status, error: errorText });
-      
-      if (embeddingResponse.status === 429) {
-        throw new ExternalAPIError('OpenAI', { reason: 'Rate limit exceeded. Please try again in a moment.' });
-      }
-      if (embeddingResponse.status === 402) {
-        throw new ExternalAPIError('OpenAI', { reason: 'Payment required. Please check your API credits.' });
-      }
-      throw new ExternalAPIError('OpenAI', { status: embeddingResponse.status, error: errorText });
-    }
-
-    const embeddingData = await embeddingResponse.json();
-    const queryVector = embeddingData.data[0].embedding;
-
-    // Validate embedding dimensions
-    if (queryVector.length !== 1536) {
-      logger.error('Invalid embedding dimensions', { dimensions: queryVector.length });
-      throw new Error(`Expected 1536 dimensions, got ${queryVector.length}`);
-    }
-
-    logger.info('Query embedding generated', { dimensions: queryVector.length });
-
-    // Search using RPC function with timeout
-    logger.debug('Executing vector similarity search');
-    const { data: results, error: searchError } = await logger.time(
-      'Vector search',
+    const { data: intelligenceResults, error: searchError } = await logger.time(
+      'Intelligence hybrid search',
       () => withTimeout(
-        supabase.rpc('search_bs7671', {
-          query_embedding: queryVector,
-          match_threshold: matchThreshold,
+        supabase.rpc('search_bs7671_intelligence_hybrid', {
+          query_text: query,
           match_count: matchCount
         }),
         Timeouts.STANDARD,
-        'Vector search'
+        'Regulations intelligence search'
       )
     );
 
     if (searchError) {
-      logger.error('Vector search error', { error: searchError });
+      logger.error('Intelligence search error', { error: searchError });
       throw searchError;
     }
 
-    logger.info('Vector search completed', { resultsCount: results?.length || 0 });
+    logger.info('Intelligence search completed', { resultsCount: intelligenceResults?.length || 0 });
 
-    let regulationsData = results || [];
-    let searchMethod = 'vector';
+    let searchMethod = 'intelligence_hybrid';
+    
+    // Enrich intelligence results with full regulation content
+    const enrichedResults = await Promise.all(
+      (intelligenceResults || []).map(async (intel: any) => {
+        const { data: fullReg } = await supabase
+          .from('bs7671_embeddings')
+          .select('content, section, amendment, metadata')
+          .eq('id', intel.regulation_id)
+          .single();
+        
+        return {
+          id: intel.regulation_id,
+          regulation_number: intel.regulation_number,
+          section: fullReg?.section || intel.section,
+          content: fullReg?.content || intel.content,
+          amendment: fullReg?.amendment,
+          metadata: fullReg?.metadata || {},
+          similarity: intel.hybrid_score || 0.8,
+          // Intelligence-specific enrichments
+          primary_topic: intel.primary_topic,
+          keywords: intel.keywords,
+          category: intel.category,
+          practical_application: intel.practical_application
+        };
+      })
+    );
 
-    // Fallback to keyword search if no results
-    if (regulationsData.length === 0) {
-      logger.warn('No vector results found, trying keyword fallback search');
-      
-      const { data: keywordResults, error: keywordError } = await supabase
-        .from('bs7671_embeddings')
-        .select('*')
-        .or(`regulation_number.ilike.%${query}%,section.ilike.%${query}%,content.ilike.%${query}%`)
-        .limit(matchCount);
-
-      if (!keywordError && keywordResults && keywordResults.length > 0) {
-        logger.info('Keyword search found results', { count: keywordResults.length });
-        regulationsData = keywordResults.map((item: any) => ({
-          ...item,
-          similarity: 0.5 // Mark as keyword match with lower confidence
-        }));
-        searchMethod = 'keyword';
-      }
-    }
-
-    // Transform results to match expected format
-    const regulations = regulationsData.map((item: any) => ({
-      id: item.id,
-      regulation_number: item.regulation_number,
-      section: item.section,
-      content: item.content,
-      amendment: item.amendment,
-      metadata: item.metadata || {},
-      similarity: item.similarity,
-    }));
+    const regulations = enrichedResults;
 
     logger.info('Returning results', { 
       count: regulations.length, 

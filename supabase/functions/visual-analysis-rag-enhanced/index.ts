@@ -25,32 +25,14 @@ serve(async (req) => {
     console.log(`🔍 RAG-Enhanced Analysis - Mode: ${mode}`);
     console.log(`📝 User Context: ${userContext.substring(0, 100)}...`);
 
-    // Step 1: Generate embedding for user context
-    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'text-embedding-3-small',
-        input: userContext,
-      }),
-    });
-
-    const embeddingData = await embeddingResponse.json();
-    const embedding = embeddingData.data[0].embedding;
-
-    // Step 2: Dual RAG Search
-    console.log('🔎 Performing dual RAG search (Maintenance + BS 7671)...');
+    // Step 1: Dual RAG Search (No embedding generation needed!)
+    console.log('🔎 Performing dual RAG search (Maintenance + Regulations Intelligence)...');
 
     // Search maintenance knowledge (GN3 inspection guidance)
     const { data: maintenanceResults, error: maintenanceError } = await supabase.rpc(
       'search_maintenance_hybrid',
       {
         query_text: userContext,
-        query_embedding: embedding,
-        equipment_filter: null,
         match_count: 6
       }
     );
@@ -59,18 +41,17 @@ serve(async (req) => {
       console.error('Maintenance RAG error:', maintenanceError);
     }
 
-    // Search BS 7671 regulations
+    // Search Regulations Intelligence (keyword-optimized)
     const { data: bs7671Results, error: bs7671Error } = await supabase.rpc(
-      'search_bs7671_hybrid_cached',
+      'search_bs7671_intelligence_hybrid',
       {
         query_text: userContext,
-        query_embedding: embedding,
         match_count: 6
       }
     );
 
     if (bs7671Error) {
-      console.error('BS 7671 RAG error:', bs7671Error);
+      console.error('Regulations Intelligence RAG error:', bs7671Error);
     }
 
     console.log(`✅ Retrieved ${maintenanceResults?.length || 0} maintenance results`);
@@ -90,10 +71,13 @@ serve(async (req) => {
     }
 
     if (bs7671Results && bs7671Results.length > 0) {
-      enrichedContext += `REGULATORY REQUIREMENTS (BS 7671:2018+A3:2024):\n`;
+      enrichedContext += `REGULATORY REQUIREMENTS (BS 7671:2018+A3:2024 - Intelligence Enhanced):\n`;
       bs7671Results.forEach((result: any, idx: number) => {
-        enrichedContext += `\n${idx + 1}. Regulation ${result.regulation_number} (${result.section})\n`;
-        enrichedContext += `${result.content.substring(0, 400)}...\n`;
+        enrichedContext += `\n${idx + 1}. Regulation ${result.regulation_number}\n`;
+        enrichedContext += `Topic: ${result.primary_topic}\n`;
+        enrichedContext += `Keywords: ${result.keywords?.join(', ')}\n`;
+        enrichedContext += `Application: ${result.practical_application}\n`;
+        enrichedContext += `Category: ${result.category}\n`;
       });
     }
 

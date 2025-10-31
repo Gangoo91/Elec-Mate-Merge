@@ -186,24 +186,19 @@ export async function retrieveDesignKnowledge(
 
   // Expand query for better recall
   const expandedQuery = expandDesignQuery(query);
-  
-  // Generate embedding
-  const embedding = await generateEmbeddingWithRetry(expandedQuery, openAiKey);
 
   try {
-    // Parallel searches: BS7671 + Design Knowledge
+    // Parallel searches: Regulations Intelligence + Design Knowledge (no embeddings!)
     const [bs7671Results, designResults] = await Promise.all([
-      // BS7671 hybrid search (regulations)
-      supabase.rpc('search_bs7671_hybrid', {
+      // Regulations Intelligence hybrid search
+      supabase.rpc('search_bs7671_intelligence_hybrid', {
         query_text: expandedQuery,
-        query_embedding: embedding,
         match_count: 15
       }),
       
       // Design knowledge hybrid search
       supabase.rpc('search_design_hybrid', {
         query_text: expandedQuery,
-        query_embedding: embedding,
         match_count: 12
       })
     ]);

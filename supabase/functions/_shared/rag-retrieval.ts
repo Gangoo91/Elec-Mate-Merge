@@ -50,51 +50,45 @@ export async function retrieveRegulations(
     }
   }
   
-  // 3. Generate embedding for vector search
-  if (!openAiKey) {
-    openAiKey = Deno.env.get('OPENAI_API_KEY');
-  }
-  if (!openAiKey) {
-    throw new Error('OpenAI API key required for vector search');
-  }
-
-  const embedding = await generateEmbeddingWithRetry(query, openAiKey);
-  
-  // 4. Vector search with cached hybrid function
-  const { data: vectorResults } = await supabase.rpc('search_bs7671_hybrid_cached', {
+  // 3. Intelligence hybrid search (no embedding needed!)
+  const { data: intelligenceResults } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
     query_text: query,
-    query_embedding: embedding,
     match_count: limit
   });
   
-  if (vectorResults && vectorResults.length >= 3) {
-    console.log(`✅ Vector search: ${vectorResults.length} results`);
-    return vectorResults;
-  }
-  
-  // 5. Keyword fallback for low/no vector results
-  const keywords = query
-    .split(/\s+/)
-    .filter(w => w.length > 3 && !['what', 'does', 'mean', 'this', 'that'].includes(w.toLowerCase()));
-  
-  if (keywords.length > 0) {
-    const { data: keywordResults } = await supabase
-      .from('bs7671_embeddings')
-      .select('*')
-      .or(keywords.map(k => `content.ilike.%${k}%`).join(','))
-      .limit(limit);
+  if (intelligenceResults && intelligenceResults.length >= 3) {
+    console.log(`✅ Intelligence search: ${intelligenceResults.length} results`);
     
-    if (keywordResults && keywordResults.length > 0) {
-      console.log(`✅ Keyword fallback: ${keywordResults.length} results`);
-      // Merge with vector results and deduplicate
-      const combined = [...(vectorResults || []), ...keywordResults];
-      const unique = Array.from(new Map(combined.map(r => [r.id, r])).values());
-      return unique.slice(0, limit).map(r => ({ ...r, similarity: r.similarity || 0.5 }));
-    }
+    // Enrich with full regulation content
+    const enriched = await Promise.all(
+      intelligenceResults.map(async (intel: any) => {
+        const { data: fullReg } = await supabase
+          .from('bs7671_embeddings')
+          .select('content, section, amendment, metadata')
+          .eq('id', intel.regulation_id)
+          .single();
+        
+        return {
+          id: intel.regulation_id,
+          regulation_number: intel.regulation_number,
+          section: fullReg?.section || intel.section,
+          content: fullReg?.content || intel.content,
+          amendment: fullReg?.amendment,
+          metadata: fullReg?.metadata || {},
+          similarity: intel.hybrid_score || 0.8,
+          primary_topic: intel.primary_topic,
+          keywords: intel.keywords,
+          category: intel.category,
+          practical_application: intel.practical_application
+        };
+      })
+    );
+    
+    return enriched;
   }
   
-  // 6. Rerank results for better relevance
-  const results = vectorResults || [];
+  // 4. Rerank results for better relevance
+  const results = intelligenceResults || [];
   const reranked = entities 
     ? rerankRegulations(results, entities, query)
     : results;

@@ -37,28 +37,22 @@ export async function multiVectorSearch(
   // Primary search (always present)
   const primaryQuery = buildPrimaryQuery(components);
   
-  // PHASE 2: Use cached version for faster searches
+  // INTELLIGENCE: Direct keyword search (no embedding generation!)
   searches.push(
-    generateEmbeddingWithRetry(primaryQuery, openAiKey).then(emb => 
-      supabase.rpc('search_bs7671_hybrid_cached', {
-        query_text: primaryQuery,
-        query_embedding: emb,
-        match_count: 10
-      })
-    )
+    supabase.rpc('search_bs7671_intelligence_hybrid', {
+      query_text: primaryQuery,
+      match_count: 10
+    })
   );
   
-  // Secondary searches (location, safety, etc.) - PHASE 2: Use cached version
+  // Secondary searches (location, safety, etc.)
   for (const concern of components.secondary.slice(0, 2)) { // Top 2 concerns
     const concernQuery = concern.keywords.join(' ');
     searches.push(
-      generateEmbeddingWithRetry(concernQuery, openAiKey).then(emb =>
-        supabase.rpc('search_bs7671_hybrid_cached', {
-          query_text: concernQuery,
-          query_embedding: emb,
-          match_count: 5
-        })
-      )
+      supabase.rpc('search_bs7671_intelligence_hybrid', {
+        query_text: concernQuery,
+        match_count: 5
+      })
     );
   }
   
@@ -73,7 +67,7 @@ export async function multiVectorSearch(
     }))
   );
   
-  logger.info('Multi-vector search complete', {
+  logger.info('Multi-intelligence search complete', {
     searchCount: searches.length,
     totalResults: fusedResults.length,
     avgScore: fusedResults.length > 0 

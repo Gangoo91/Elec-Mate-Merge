@@ -51,19 +51,32 @@ serve(async (req) => {
       const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
       const supabase = createClient(supabaseUrl, supabaseKey);
       
-      const { data, error } = await supabase
-        .from('bs7671_embeddings')
-        .select('regulation_number, section, content, amendment, metadata')
+      // Query intelligence table for enriched metadata + full content
+      const { data: intelligence, error } = await supabase
+        .from('regulations_intelligence')
+        .select(`
+          *,
+          bs7671_embeddings!inner(content, section, amendment, metadata)
+        `)
         .or(regNumbers.map(n => `regulation_number.ilike.%${n}%`).join(','))
         .order('regulation_number');
       
       if (error) throw error;
       
-      // Format for RAG panel compatibility
-      const regulations = (data || []).map((reg: any) => ({
-        ...reg,
-        id: reg.id || crypto.randomUUID(),
-        similarity: 0.95 // Direct match confidence
+      // Format with enriched intelligence data
+      const regulations = (intelligence || []).map((intel: any) => ({
+        id: intel.regulation_id,
+        regulation_number: intel.regulation_number,
+        section: intel.bs7671_embeddings.section,
+        content: intel.bs7671_embeddings.content,
+        amendment: intel.bs7671_embeddings.amendment,
+        metadata: intel.bs7671_embeddings.metadata,
+        similarity: 0.95,
+        // Intelligence enrichments
+        primary_topic: intel.primary_topic,
+        keywords: intel.keywords,
+        category: intel.category,
+        practical_application: intel.practical_application
       }));
       
       return {
