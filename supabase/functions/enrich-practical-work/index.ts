@@ -71,7 +71,11 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    logger.error('Unified enrichment failed', { error });
+    logger.error('Unified enrichment failed', { 
+      error: error.message, 
+      stack: error.stack,
+      details: error.details || error.hint || 'No additional details'
+    });
     
     return new Response(JSON.stringify({ success: false, error: error.message }), {
       status: 500,
@@ -79,6 +83,79 @@ serve(async (req) => {
     });
   }
 });
+
+// Transform GPT output to match PostgreSQL schema types
+function transformFacetForDB(facet: any, baseItem: any): any {
+  return {
+    practical_work_id: baseItem.id,
+    facet_type: facet.facet_type,
+    cluster_id: baseItem.cluster_id,
+    canonical_id: baseItem.id,
+    source_tables: baseItem.source_tables,
+    
+    // Primary fields
+    activity_types: facet.activity_types || baseItem.activity_types || [],
+    equipment_category: facet.equipment_category || baseItem.equipment_category,
+    
+    // ✅ FIX: safety_requirements expects JSONB object with items array
+    safety_requirements: facet.safety_requirements 
+      ? { items: Array.isArray(facet.safety_requirements) ? facet.safety_requirements : [facet.safety_requirements] }
+      : null,
+    
+    typical_location: facet.typical_location,
+    skill_level: facet.skill_level,
+    
+    // Installation fields (text arrays - OK as-is)
+    installation_method: facet.installation_method,
+    fixing_intervals: facet.fixing_intervals, // JSONB object - OK
+    cable_routes: facet.cable_routes, // text[] - OK
+    termination_methods: facet.termination_methods, // text[] - OK
+    
+    // Maintenance fields
+    maintenance_intervals: facet.maintenance_intervals, // JSONB object - OK
+    
+    // ✅ FIX: maintenance_tasks expects array of JSONB objects
+    maintenance_tasks: facet.maintenance_tasks
+      ? facet.maintenance_tasks.map((task: any) => 
+          typeof task === 'string' ? { task, frequency: null } : task
+        )
+      : null,
+    
+    common_defects: facet.common_defects, // text[] - OK
+    degradation_signs: facet.degradation_signs, // text[] - OK
+    
+    // Testing fields
+    // ✅ FIX: test_procedures expects array of JSONB objects
+    test_procedures: facet.test_procedures
+      ? facet.test_procedures.map((proc: any) =>
+          typeof proc === 'string' ? { procedure: proc, standard: null } : proc
+        )
+      : null,
+    
+    required_instruments: facet.required_instruments, // text[] - OK
+    acceptance_criteria: facet.acceptance_criteria, // JSONB object - OK
+    test_sequence: facet.test_sequence, // text[] - OK
+    
+    // Costing fields
+    estimated_duration: facet.estimated_duration, // JSONB object - OK
+    
+    // ✅ FIX: material_requirements expects array of JSONB objects
+    material_requirements: facet.material_requirements
+      ? facet.material_requirements.map((mat: any) =>
+          typeof mat === 'string' ? { item: mat, quantity: 1, unit: 'each' } : mat
+        )
+      : null,
+    
+    labour_category: facet.labour_category,
+    difficulty_multiplier: facet.difficulty_multiplier,
+    
+    // Store raw for debugging
+    enrichment_metadata: { 
+      raw: facet.raw_content || 'transformed',
+      transformed: true 
+    }
+  };
+}
 
 async function enrichProcedure(supabase: any, item: any, logger: any): Promise<any[]> {
   const { id, content, description, equipment_category, activity_types, cluster_id, source_tables } = item;
@@ -148,12 +225,18 @@ IF materials/labour/time is relevant, add COSTING facet:
 {
   "facet_type": "costing",
   "estimated_duration": {"min_minutes": number, "typical_minutes": number, "max_minutes": number},
-  "material_requirements": array of {"item": string, "quantity": number, "unit": string},
-  "labour_category": string,
-  "difficulty_multiplier": number (1.0-3.0)
+  "material_requirements": [{"item": "Cable clips", "quantity": 20, "unit": "each"}],
+  "labour_category": "Electrician",
+  "difficulty_multiplier": 1.2
 }
 
-Return ONLY a valid JSON array of facet objects.`;
+IMPORTANT: For arrays of complex data, return objects with proper structure:
+- maintenance_tasks: array of objects with {task, frequency}
+- test_procedures: array of objects with {procedure, standard}
+- material_requirements: array of objects with {item, quantity, unit}
+- safety_requirements: will be wrapped automatically
+
+Return ONLY a valid JSON array of facet objects with proper structure.`;
 
   const chatCompletion = await withTimeout(
     fetch('https://api.openai.com/v1/chat/completions', {
@@ -197,48 +280,10 @@ Return ONLY a valid JSON array of facet objects.`;
     }
   }
 
-  // Upsert all facets
-  const facetsToInsert = facetsData.map((facet: any) => ({
-    practical_work_id: id,
-    facet_type: facet.facet_type,
-    cluster_id,
-    canonical_id: id,
-    source_tables,
-    
-    // Primary fields
-    activity_types: facet.activity_types || activity_types,
-    equipment_category: facet.equipment_category || equipment_category,
-    safety_requirements: facet.safety_requirements,
-    typical_location: facet.typical_location,
-    skill_level: facet.skill_level,
-    
-    // Installation fields
-    installation_method: facet.installation_method,
-    fixing_intervals: facet.fixing_intervals,
-    cable_routes: facet.cable_routes,
-    termination_methods: facet.termination_methods,
-    
-    // Maintenance fields
-    maintenance_intervals: facet.maintenance_intervals,
-    maintenance_tasks: facet.maintenance_tasks,
-    common_defects: facet.common_defects,
-    degradation_signs: facet.degradation_signs,
-    
-    // Testing fields
-    test_procedures: facet.test_procedures,
-    required_instruments: facet.required_instruments,
-    acceptance_criteria: facet.acceptance_criteria,
-    test_sequence: facet.test_sequence,
-    
-    // Costing fields
-    estimated_duration: facet.estimated_duration,
-    material_requirements: facet.material_requirements,
-    labour_category: facet.labour_category,
-    difficulty_multiplier: facet.difficulty_multiplier,
-    
-    // Store raw for debugging
-    enrichment_metadata: { raw: rawContent }
-  }));
+  // Transform and upsert all facets
+  const facetsToInsert = facetsData.map((facet: any) => 
+    transformFacetForDB(facet, item)
+  );
 
   const { error } = await supabase.from('practical_work_intelligence').upsert(
     facetsToInsert,
@@ -246,7 +291,12 @@ Return ONLY a valid JSON array of facet objects.`;
   );
 
   if (error) {
-    logger.error(`Failed to insert facets for ${id}`, { error });
+    logger.error(`Failed to insert facets for ${id}`, { 
+      error: error.message,
+      code: error.code,
+      details: error.details,
+      hint: error.hint
+    });
     throw error;
   }
 
