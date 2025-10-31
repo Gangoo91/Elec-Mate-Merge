@@ -113,7 +113,7 @@ function transformFacetForDB(facet: any, baseItem: any): any {
     
     // Core metadata (required)
     activity_types: facet.activity_types || baseItem.activity_types || [],
-    equipment_category: facet.equipment_category || baseItem.equipment_category,
+    equipment_category: facet.equipment_category || baseItem.metadata?.equipment_category || baseItem.metadata?.equipment_type || baseItem.topic?.split(' ')[0] || 'electrical equipment',
     equipment_subcategory: facet.equipment_subcategory,
     
     // Installation fields
@@ -177,16 +177,32 @@ function transformFacetForDB(facet: any, baseItem: any): any {
 }
 
 async function enrichProcedure(supabase: any, item: any, logger: any): Promise<any[]> {
-  const { id, content, description, equipment_category, activity_types, cluster_id, source_tables } = item;
+  const { id, content, description, activity_types, cluster_id, source_tables, metadata, topic } = item;
   
-  // RAG context for comprehensive enrichment
+  // Extract equipment category from metadata, topic, or derive intelligently
+  const equipment_category = 
+    metadata?.equipment_category || 
+    metadata?.equipment_type ||
+    topic?.split(' ')[0] || // e.g., "Socket installation" → "Socket"
+    'electrical equipment';
+  
+  // RAG context for comprehensive enrichment - use extracted category
   const practicalContext = await searchPracticalWorkBatch(supabase, {
-    keywords: [equipment_category || 'electrical', 'installation', 'maintenance'],
-    limit: 5
+    keywords: [
+      equipment_category,
+      ...(activity_types || ['installation', 'maintenance']),
+      'procedure'
+    ],
+    limit: 5,
+    activity_filter: activity_types
   });
 
   const bs7671Context = await searchBS7671Batch(supabase, {
-    keywords: [equipment_category || 'installation', 'testing', 'inspection'],
+    keywords: [
+      equipment_category,
+      ...(activity_types || ['installation']),
+      'regulation'
+    ],
     limit: 3
   });
 
@@ -194,6 +210,7 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<a
 
 PROCEDURE: ${content || description}
 EQUIPMENT: ${equipment_category}
+ACTIVITY TYPES: ${activity_types?.join(', ') || 'general electrical work'}
 
 PRACTICAL KNOWLEDGE:
 ${practicalContext.map(c => c.content).join('\n\n')}
@@ -260,6 +277,7 @@ CRITICAL: All arrays are TEXT[] (simple strings), NOT objects. Return ONLY valid
         model: 'gpt-5-mini-2025-08-07',
         messages: [{ role: 'user', content: prompt }],
         max_completion_tokens: 6000,
+        temperature: 0.2,
         response_format: { type: 'json_object' }
       }),
     }).then(res => res.json()),
@@ -315,6 +333,13 @@ CRITICAL: All arrays are TEXT[] (simple strings), NOT objects. Return ONLY valid
 }
 
 async function insertMinimalFacet(supabase: any, item: any, errorMsg: string) {
+  // Extract equipment category same way as main enrichment
+  const equipment_category = 
+    item.metadata?.equipment_category || 
+    item.metadata?.equipment_type ||
+    item.topic?.split(' ')[0] || 
+    'electrical equipment';
+  
   // Always insert at least a primary facet so we don't lose the procedure
   const { error } = await supabase.from('practical_work_intelligence').upsert({
     practical_work_id: item.id,
@@ -323,7 +348,14 @@ async function insertMinimalFacet(supabase: any, item: any, errorMsg: string) {
     canonical_id: item.id,
     source_tables: item.source_tables,
     activity_types: item.activity_types || [],
-    equipment_category: item.equipment_category
+    equipment_category: equipment_category,
+    keywords: [equipment_category, ...(item.activity_types || [])],
+    safety_requirements: {},
+    bs7671_regulations: [],
+    tools_required: [],
+    materials_needed: [],
+    test_procedures: [],
+    maintenance_tasks: []
   }, { onConflict: 'practical_work_id,facet_type' });
 
   if (error) {
