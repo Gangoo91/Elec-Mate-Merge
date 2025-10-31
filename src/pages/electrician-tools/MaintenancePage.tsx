@@ -1,9 +1,23 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import MaintenanceInterface from "@/components/electrician-tools/ai-agents/MaintenanceInterface";
+import { useMaintenanceAdvisor } from "@/components/electrician-tools/ai-tools/maintenance/useMaintenanceAdvisor";
+import { MaintenanceInput } from "@/components/electrician-tools/ai-tools/maintenance/MaintenanceInput";
+import { MaintenanceProcessingView } from "@/components/electrician-tools/ai-tools/maintenance/MaintenanceProcessingView";
+import { MaintenanceResults } from "@/components/electrician-tools/ai-tools/maintenance/MaintenanceResults";
 
 const MaintenancePage = () => {
+  const {
+    state,
+    input,
+    results,
+    progress,
+    isProcessing,
+    updateInput,
+    generateSchedule,
+    resetForm,
+  } = useMaintenanceAdvisor();
+
   return (
     <div className="min-h-screen bg-elec-dark">
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 py-4 sm:py-6">
@@ -26,7 +40,22 @@ const MaintenancePage = () => {
           </div>
 
           {/* Main Interface */}
-          <MaintenanceInterface />
+          {state === 'input' && (
+            <MaintenanceInput
+              input={input}
+              onInputChange={updateInput}
+              onGenerate={generateSchedule}
+              isProcessing={isProcessing}
+            />
+          )}
+          
+          {state === 'processing' && (
+            <MaintenanceProcessingView progress={progress} detailLevel={input.detailLevel} />
+          )}
+          
+          {state === 'results' && results && (
+            <MaintenanceResults results={results} onReset={resetForm} />
+          )}
         </div>
       </div>
     </div>
