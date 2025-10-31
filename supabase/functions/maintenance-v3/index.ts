@@ -493,7 +493,20 @@ Provide comprehensive maintenance instructions following the tool schema structu
         success: true,
         result: maintenanceGuidance,
         response: maintenanceGuidance.response,
-        schedule: maintenanceGuidance,
+        schedule: {
+          equipmentType: maintenanceGuidance.equipmentSummary?.equipmentType || equipmentType,
+          location: maintenanceGuidance.equipmentSummary?.location || location,
+          ageYears: ageYears,
+          buildingType: buildingType,
+          schedule: maintenanceGuidance.equipmentSchedule || [],
+          recommendations: maintenanceGuidance.recommendations || [],
+          regulations: maintenanceGuidance.bs7671References || [],
+          riskScore: maintenanceGuidance.equipmentSummary?.overallRiskLevel === 'critical' ? 90 : 
+                     maintenanceGuidance.equipmentSummary?.overallRiskLevel === 'high' ? 70 :
+                     maintenanceGuidance.equipmentSummary?.overallRiskLevel === 'medium' ? 40 : 20,
+          partial: maintenanceGuidance.partial || false,
+          missingSections: maintenanceGuidance.missingSections || []
+        },
         metadata: {
           requestId: crypto.randomUUID(),
           timestamp: new Date().toISOString(),
