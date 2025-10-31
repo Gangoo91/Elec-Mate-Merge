@@ -88,23 +88,118 @@ function extractBasicKeywords(content: string): string[] {
 
 // EXTRACT basic safety info for minimal facet
 function extractBasicSafety(content: string): any {
-  const safety: any = {};
   const text = content.toLowerCase();
+  const ppe: string[] = [];
+  const precautions: string[] = [];
+  const hazards: string[] = [];
   
-  if (text.includes('isolate') || text.includes('isolation')) {
-    safety.isolation = 'Required - isolate supply before work';
-  }
-  if (text.includes('earth') || text.includes('bonding')) {
-    safety.earthing = 'Verify earthing and bonding';
-  }
-  if (text.includes('rcd') || text.includes('rcbo')) {
-    safety.electrical_safety = 'RCD protection required';
-  }
-  if (text.includes('ppe') || text.includes('gloves') || text.includes('protective')) {
-    safety.ppe = 'Use appropriate PPE';
-  }
+  // Extract PPE
+  if (text.includes('gloves') || text.includes('insulated')) ppe.push('Insulated gloves');
+  if (text.includes('safety glasses') || text.includes('goggles')) ppe.push('Safety glasses');
+  if (text.includes('boots')) ppe.push('Safety boots');
+  if (text.includes('helmet') || text.includes('hard hat')) ppe.push('Hard hat');
   
-  return Object.keys(safety).length > 0 ? safety : { electrical_safety: 'Follow BS 7671 requirements' };
+  // Extract precautions
+  if (text.includes('isolate') || text.includes('isolation')) precautions.push('Isolate supply before work');
+  if (text.includes('prove dead') || text.includes('test before touch')) precautions.push('Prove circuit dead');
+  if (text.includes('earth') || text.includes('bonding')) precautions.push('Verify earthing and bonding');
+  if (text.includes('rcd') || text.includes('rcbo')) precautions.push('Ensure RCD protection');
+  if (text.includes('permit') || text.includes('lock off')) precautions.push('Use permit to work system');
+  
+  // Extract hazards
+  if (text.includes('shock') || text.includes('electric')) hazards.push('Electric shock');
+  if (text.includes('arc') || text.includes('flash')) hazards.push('Arc flash');
+  if (text.includes('fire')) hazards.push('Fire risk');
+  if (text.includes('burn')) hazards.push('Burns');
+  if (text.includes('fall') || text.includes('height')) hazards.push('Falls from height');
+  
+  // Defaults if nothing found
+  if (ppe.length === 0) ppe.push('Insulated gloves', 'Safety glasses');
+  if (precautions.length === 0) precautions.push('Isolate supply', 'Prove dead', 'Follow BS 7671');
+  if (hazards.length === 0) hazards.push('Electric shock', 'Arc flash');
+  
+  return { ppe, precautions, hazards };
+}
+
+// PREPROCESS CONTENT: Clean and extract key info before sending to GPT
+function preprocessContent(content: string): { cleaned: string; specs: string[]; procedures: string[]; safety: string[] } {
+  const text = content.toLowerCase();
+  const specs: string[] = [];
+  const procedures: string[] = [];
+  const safety: string[] = [];
+  
+  // Extract technical specifications
+  const specPatterns = [
+    /\b(\d+\s*(?:mm²|amp|a|volt|v|kw|kva|hz))\b/gi,
+    /\b(ip\d{2}|iec\s*\d+|bs\s*\d+|en\s*\d+)\b/gi,
+    /\b(three-?phase|single-?phase|dc|ac|230v|400v)\b/gi,
+  ];
+  
+  specPatterns.forEach(pattern => {
+    const matches = content.match(pattern);
+    if (matches) specs.push(...matches.slice(0, 5));
+  });
+  
+  // Extract procedural steps (lines starting with numbers, bullets, or action words)
+  const lines = content.split('\n');
+  lines.forEach(line => {
+    const trimmed = line.trim();
+    if (/^[\d\.\)\-\*]\s+/.test(trimmed) || /^(install|connect|test|check|ensure|verify|measure)/i.test(trimmed)) {
+      if (trimmed.length > 10 && trimmed.length < 150) {
+        procedures.push(trimmed.replace(/^[\d\.\)\-\*]\s+/, ''));
+      }
+    }
+  });
+  
+  // Extract safety warnings
+  const safetyKeywords = ['danger', 'warning', 'caution', 'hazard', 'risk', 'isolate', 'de-energize', 'ppe', 'protective'];
+  lines.forEach(line => {
+    if (safetyKeywords.some(kw => line.toLowerCase().includes(kw))) {
+      if (line.length > 15 && line.length < 150) {
+        safety.push(line.trim());
+      }
+    }
+  });
+  
+  // Clean the content
+  const cleaned = content
+    .replace(/\s+/g, ' ')  // Normalize whitespace
+    .replace(/\n{3,}/g, '\n\n')  // Max 2 newlines
+    .trim();
+  
+  return { cleaned, specs: [...new Set(specs)], procedures: procedures.slice(0, 10), safety: safety.slice(0, 5) };
+}
+
+// VALIDATE EXTRACTED DATA QUALITY
+function validateExtractedFacets(facets: any[]): boolean {
+  if (!facets || facets.length === 0) return false;
+  
+  const primaryFacet = facets.find(f => f.facet_type === 'primary');
+  if (!primaryFacet) return false;
+  
+  // Check for meaningful electrical terms in arrays
+  const electricalTerms = [
+    'cable', 'wire', 'mcb', 'rcd', 'rcbo', 'circuit', 'earth', 'test', 'meter', 'tool', 
+    'install', 'screw', 'strip', 'crimp', 'socket', 'switch', 'voltage', 'insulation',
+    'volt', 'amp', 'watt', 'phase', 'neutral', 'protective'
+  ];
+  
+  const hasElectricalContent = (arr: any[]): boolean => {
+    if (!Array.isArray(arr) || arr.length === 0) return false;
+    const joined = arr.join(' ').toLowerCase();
+    return electricalTerms.some(term => joined.includes(term));
+  };
+  
+  // Validate primary facet has meaningful data
+  const hasTools = hasElectricalContent(primaryFacet.tools_required || []);
+  const hasMaterials = hasElectricalContent(primaryFacet.materials_needed || []);
+  const hasKeywords = hasElectricalContent(primaryFacet.keywords || []);
+  const hasSafety = primaryFacet.safety_requirements?.ppe?.length > 0;
+  
+  // Need at least 2 of these to be meaningful
+  const meaningfulFields = [hasTools, hasMaterials, hasKeywords, hasSafety].filter(Boolean).length;
+  
+  return meaningfulFields >= 2;
 }
 
 serve(async (req) => {
@@ -172,8 +267,10 @@ serve(async (req) => {
         logger.info(`✅ Enriched ${item.id} → ${facets.length} facets`);
       } catch (error) {
         logger.error(`❌ Failed to enrich item ${item.id}`, { error });
-        // Insert minimal primary facet so we don't lose the item
-        await insertMinimalFacet(supabase, item, error.message);
+        // Insert minimal primary facet so we don't lose the item - with preprocessing
+        const rawContent = item.content || item.description || '';
+        const { specs, procedures } = preprocessContent(rawContent);
+        await insertMinimalFacet(supabase, item, error.message, specs, procedures);
       }
     }
 
@@ -278,9 +375,15 @@ function transformFacetForDB(facet: any, baseItem: any): any {
 async function enrichProcedure(supabase: any, item: any, logger: any): Promise<any[]> {
   const { id, content, description, activity_types, cluster_id, source_tables, metadata, topic } = item;
   
+  // PREPROCESS CONTENT to extract key information
+  const rawContent = content || description || '';
+  const { cleaned, specs, procedures, safety } = preprocessContent(rawContent);
+  
   // INTELLIGENT equipment category extraction
   const equipment_category = extractEquipmentCategory(item);
-  const technicalTerms = extractTechnicalTerms(content || description || '');
+  const technicalTerms = extractTechnicalTerms(rawContent);
+  
+  logger.info(`Processing ${id}: ${equipment_category}, extracted ${specs.length} specs, ${procedures.length} procedures, ${safety.length} safety notes`);
   
   // EQUIPMENT-SPECIFIC RAG queries with technical terms
   const practicalContext = await searchPracticalWorkBatch(supabase, {
@@ -303,65 +406,152 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<a
     limit: 5
   });
 
-  const prompt = `You are a comprehensive electrical procedures analyst. Analyze this procedure and extract ALL applicable facets in UK English.
+  // EQUIPMENT-SPECIFIC PROMPT GENERATION
+  const getEquipmentSpecificGuidance = (category: string): string => {
+    const guidance: Record<string, string> = {
+      'consumer_unit': `
+MUST EXTRACT for Consumer Units:
+- tools_required: ["insulated screwdrivers", "torque screwdriver", "cable strippers", "multimeter", "voltage tester"]
+- materials_needed: ["MCBs", "RCBOs", "busbar", "neutral bar", "earth bar", "cable glands"]
+- test_procedures: ["insulation resistance test", "earth fault loop impedance test", "RCD trip time test", "polarity test"]
+- bs7671_regulations: ["Chapter 42", "Section 421", "Regulation 421.1.201", "Section 530"]
+- safety_requirements: {"ppe": ["insulated gloves", "safety glasses"], "precautions": ["isolate supply", "prove dead"], "hazards": ["electric shock", "arc flash"]}`,
+      
+      'ev_charger': `
+MUST EXTRACT for EV Chargers:
+- tools_required: ["drill", "SDS drill", "cable detector", "insulated tools", "torque wrench", "earth loop tester"]
+- materials_needed: ["EV charge point", "6mm² or 10mm² cable", "32A Type B RCD", "isolation switch", "outdoor enclosure"]
+- test_procedures: ["earth continuity test", "insulation resistance test", "polarity test", "RCD test", "earth fault loop test"]
+- bs7671_regulations: ["Section 722", "Regulation 722.411.4.1", "Section 314.1"]
+- safety_requirements: {"ppe": ["insulated gloves", "safety boots"], "precautions": ["confirm EV socket de-energized", "label supply"], "hazards": ["electric shock", "outdoor hazards"]}`,
+      
+      'solar_panel': `
+MUST EXTRACT for Solar Panels:
+- tools_required: ["roof ladder", "harness", "MC4 crimpers", "insulated tools", "solar edge tester", "IR camera"]
+- materials_needed: ["PV panels", "mounting rails", "inverter", "DC isolator", "AC isolator", "generation meter"]
+- test_procedures: ["open circuit voltage test", "short circuit current test", "insulation resistance test", "earth continuity", "polarity check"]
+- bs7671_regulations: ["Section 712", "Regulation 712.411.3.2.1", "BS 7909"]
+- safety_requirements: {"ppe": ["harness", "hard hat", "gloves"], "precautions": ["roof safety", "DC isolation", "cover panels"], "hazards": ["falls from height", "DC shock", "arc flash"]}`,
+      
+      'socket_outlet': `
+MUST EXTRACT for Socket Outlets:
+- tools_required: ["insulated screwdrivers", "cable strippers", "socket tester", "multimeter", "fish tape"]
+- materials_needed: ["13A sockets", "back boxes", "2.5mm² cable", "grommets", "cable clips"]
+- test_procedures: ["polarity test", "earth continuity test", "insulation resistance", "socket outlet test"]
+- bs7671_regulations: ["Section 411.3.2", "Regulation 521.10.1", "Table 4E2A"]
+- safety_requirements: {"ppe": ["insulated gloves"], "precautions": ["isolate circuit", "prove dead"], "hazards": ["electric shock"]}`,
+      
+      'lighting': `
+MUST EXTRACT for Lighting:
+- tools_required: ["steps", "insulated screwdrivers", "cable strippers", "multimeter", "drill"]
+- materials_needed: ["luminaires", "1.5mm² cable", "ceiling roses", "lampholders", "connectors"]
+- test_procedures: ["polarity test", "earth continuity", "insulation resistance", "functional test"]
+- bs7671_regulations: ["Section 559", "Section 411.3.2"]
+- safety_requirements: {"ppe": ["gloves", "safety glasses"], "precautions": ["isolate circuit", "secure ladder"], "hazards": ["electric shock", "falls"]}`,
+    };
+    
+    return guidance[category] || `
+MUST EXTRACT minimum data:
+- tools_required: At least 3 specific tools used for this work
+- materials_needed: At least 3 specific materials or components
+- test_procedures: At least 2 relevant test procedures
+- bs7671_regulations: At least 1 BS 7671 regulation reference
+- safety_requirements: {"ppe": ["minimum 2 items"], "precautions": ["minimum 2"], "hazards": ["minimum 2"]}`;
+  };
 
-PROCEDURE: ${content || description}
-EQUIPMENT: ${equipment_category}
+  const equipmentGuidance = getEquipmentSpecificGuidance(equipment_category);
+
+  // ENHANCED CONTEXT with preprocessed information
+  const contextSummary = `
+EXTRACTED SPECIFICATIONS: ${specs.join(', ') || 'None found'}
+IDENTIFIED PROCEDURES: ${procedures.length > 0 ? procedures.slice(0, 5).join(' | ') : 'None found'}
+SAFETY NOTES: ${safety.length > 0 ? safety.slice(0, 3).join(' | ') : 'None found'}`;
+
+  const prompt = `You are an expert UK electrical procedures analyst. Extract comprehensive, structured data from this procedure in UK English.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PROCEDURE CONTENT:
+${cleaned}
+
+${contextSummary}
+
+EQUIPMENT TYPE: ${equipment_category}
 ACTIVITY TYPES: ${activity_types?.join(', ') || 'general electrical work'}
+TECHNICAL TERMS: ${technicalTerms.join(', ')}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-PRACTICAL KNOWLEDGE:
-${practicalContext.map(c => c.content).join('\n\n')}
+RELEVANT PRACTICAL KNOWLEDGE CONTEXT:
+${practicalContext.slice(0, 5).map((c, i) => `[${i+1}] ${c.content}`).join('\n\n')}
 
-BS 7671 CONTEXT:
-${bs7671Context.map(c => c.content).join('\n\n')}
+RELEVANT BS 7671 REGULATIONS:
+${bs7671Context.slice(0, 3).map((c, i) => `[${i+1}] ${c.content}`).join('\n\n')}
 
-Create facets matching this EXACT schema. Return a JSON array.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${equipmentGuidance}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-ALWAYS include a PRIMARY facet:
+EXTRACTION RULES (MANDATORY):
+1. **NEVER return NULL or empty arrays** - Always extract meaningful data
+2. **Extract from BOTH the procedure text AND the context provided**
+3. **Be specific** - "multimeter" not "testing equipment", "6mm² cable" not "cable"
+4. **Include quantities** where relevant - "2x 32A MCBs" not just "MCBs"
+5. **Use UK terminology** - "earthing" not "grounding", "consumer unit" not "breaker panel"
+
+RESPONSE FORMAT (JSON array with facets):
+
+MANDATORY PRIMARY FACET:
 {
   "facet_type": "primary",
-  "activity_types": ["installation", "testing"],
-  "equipment_category": string,
-  "skill_level": "Apprentice"|"Improver"|"Electrician"|"Specialist",
-  "typical_duration_minutes": number,
-  "safety_requirements": {"ppe": [], "precautions": [], "hazards": []},
-  "bs7671_regulations": ["reg numbers"],
-  "keywords": ["relevant", "terms"]
+  "activity_types": ["installation", "testing", "maintenance"], // From content
+  "equipment_category": "${equipment_category}",
+  "equipment_subcategory": "specific model/type if mentioned",
+  "skill_level": "Apprentice|Improver|Electrician|Specialist",
+  "typical_duration_minutes": <realistic time estimate>,
+  "tools_required": ["MUST have min 5 specific tools"],
+  "materials_needed": ["MUST have min 5 specific materials/components"],
+  "safety_requirements": {
+    "ppe": ["MUST list min 3 PPE items"],
+    "precautions": ["MUST list min 3 safety steps"],
+    "hazards": ["MUST list min 3 specific hazards"]
+  },
+  "bs7671_regulations": ["MUST include regulation numbers from context"],
+  "keywords": ["MUST include ${equipment_category} and technical terms"]
 }
 
-IF installation mentioned, add INSTALLATION facet:
+IF installation work mentioned, ADD INSTALLATION FACET:
 {
   "facet_type": "installation",
-  "installation_method": "Surface"|"Buried"|"Overhead"|"Concealed",
-  "fixing_intervals": {"horizontal_mm": 400, "vertical_mm": 400},
-  "cable_routes": ["routes"],
-  "termination_methods": ["methods"],
-  "bs7671_zones": ["zones"],
-  "tools_required": ["tools"],
-  "materials_needed": ["materials"]
+  "installation_method": "Surface|Buried|Overhead|Concealed",
+  "fixing_intervals": {"horizontal_mm": number, "vertical_mm": number},
+  "cable_routes": ["specific route descriptions"],
+  "termination_methods": ["specific termination types"],
+  "bs7671_zones": ["relevant zones"],
+  "tools_required": ["installation-specific tools"],
+  "materials_needed": ["installation materials"]
 }
 
-IF testing mentioned, add TESTING facet:
+IF testing/commissioning mentioned, ADD TESTING FACET:
 {
   "facet_type": "testing",
-  "test_procedures": ["text array only"],
-  "test_equipment_required": ["instruments"],
-  "test_frequency": "Annual",
-  "acceptance_criteria": {"limits": {}},
-  "visual_inspection_points": ["points"]
+  "test_procedures": ["MUST list specific test procedures with steps"],
+  "test_equipment_required": ["MUST list specific test instruments"],
+  "test_frequency": "Initial|Annual|3-yearly|5-yearly|As required",
+  "acceptance_criteria": {"test_name": "pass criteria"},
+  "visual_inspection_points": ["specific inspection checks"]
 }
 
-IF maintenance mentioned, add MAINTENANCE facet:
+IF maintenance mentioned, ADD MAINTENANCE FACET:
 {
   "facet_type": "maintenance",
-  "maintenance_intervals": {"routine": "6 months", "detailed": "1 year"},
-  "maintenance_tasks": ["text array only"],
-  "common_defects": ["defects"],
-  "wear_indicators": ["signs"],
-  "troubleshooting_steps": ["steps"]
+  "maintenance_intervals": {"routine": "X months", "detailed": "Y years"},
+  "maintenance_tasks": ["MUST list specific maintenance tasks"],
+  "common_defects": ["specific defects to look for"],
+  "wear_indicators": ["signs of wear/deterioration"],
+  "troubleshooting_steps": ["diagnostic steps for faults"]
 }
 
-CRITICAL: All arrays are TEXT[] (simple strings), NOT objects. Return ONLY valid JSON array.`;
+CRITICAL: Return ONLY valid JSON array. All arrays MUST contain meaningful electrical data, NOT generic placeholders.`;
+
 
   const chatCompletion = await withTimeout(
     fetch('https://api.openai.com/v1/chat/completions', {
@@ -384,16 +574,16 @@ CRITICAL: All arrays are TEXT[] (simple strings), NOT objects. Return ONLY valid
 
   // Parse with resilience
   let facetsData;
-  const rawContent = chatCompletion.choices[0].message.content;
+  const rawGPTContent = chatCompletion.choices[0].message.content;
   
   try {
-    const parsed = JSON.parse(rawContent);
+    const parsed = JSON.parse(rawGPTContent);
     // Handle both array and object with facets key
     facetsData = Array.isArray(parsed) ? parsed : (parsed.facets || [parsed]);
   } catch (parseError) {
-    logger.error(`JSON parse failed for ${id}, attempting repair`, { rawContent });
+    logger.error(`JSON parse failed for ${id}, attempting repair`, { rawGPTContent });
     // Attempt to extract JSON array/object
-    const jsonMatch = rawContent.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
+    const jsonMatch = rawGPTContent.match(/\[[\s\S]*\]|\{[\s\S]*\}/);
     if (jsonMatch) {
       try {
         const repaired = JSON.parse(jsonMatch[0]);
@@ -406,10 +596,22 @@ CRITICAL: All arrays are TEXT[] (simple strings), NOT objects. Return ONLY valid
     }
   }
 
+  // VALIDATE QUALITY of extracted facets
+  const isValid = validateExtractedFacets(facetsData);
+  
+  if (!isValid) {
+    logger.warn(`Low quality extraction for ${id}, using enhanced fallback`);
+    // Fallback to minimal but meaningful facet
+    await insertMinimalFacet(supabase, item, 'Low quality GPT extraction - using enriched fallback', specs, procedures);
+    return [];
+  }
+
   // Transform and upsert all facets
   const facetsToInsert = facetsData.map((facet: any) => 
     transformFacetForDB(facet, item)
   );
+  
+  logger.info(`Validated ${facetsToInsert.length} facets for ${id}: ${facetsToInsert.map(f => f.facet_type).join(', ')}`);
 
   const { error } = await supabase.from('practical_work_intelligence').upsert(
     facetsToInsert,
@@ -429,11 +631,41 @@ CRITICAL: All arrays are TEXT[] (simple strings), NOT objects. Return ONLY valid
   return facetsToInsert;
 }
 
-async function insertMinimalFacet(supabase: any, item: any, errorMsg: string) {
+async function insertMinimalFacet(supabase: any, item: any, errorMsg: string, specs: string[] = [], procedures: string[] = []) {
   // Extract equipment category using same intelligent extraction
   const equipment_category = extractEquipmentCategory(item);
-  const basicKeywords = extractBasicKeywords(item.content || item.description || '');
-  const basicSafety = extractBasicSafety(item.content || item.description || '');
+  const rawContent = item.content || item.description || '';
+  const basicKeywords = extractBasicKeywords(rawContent);
+  const basicSafety = extractBasicSafety(rawContent);
+  
+  // Extract tools and materials from content
+  const text = rawContent.toLowerCase();
+  const tools_required = [];
+  const materials_needed = [];
+  
+  // Common electrical tools
+  const toolPatterns = ['screwdriver', 'multimeter', 'tester', 'pliers', 'stripper', 'drill', 'saw', 'crimper'];
+  toolPatterns.forEach(tool => {
+    if (text.includes(tool)) tools_required.push(tool);
+  });
+  if (tools_required.length === 0) tools_required.push('insulated screwdrivers', 'multimeter', 'voltage tester');
+  
+  // Extract materials from specs or use defaults
+  if (specs.length > 0) {
+    materials_needed.push(...specs.slice(0, 5));
+  }
+  if (materials_needed.length === 0) {
+    const materialPatterns = ['cable', 'mcb', 'rcd', 'socket', 'switch', 'connector'];
+    materialPatterns.forEach(mat => {
+      if (text.includes(mat)) materials_needed.push(mat);
+    });
+  }
+  if (materials_needed.length === 0) materials_needed.push('cables', 'terminals', 'fixings');
+  
+  // Use procedures if available
+  const test_procedures = procedures.length > 0 
+    ? procedures.slice(0, 8) 
+    : ['Visual inspection', 'Polarity test', 'Insulation resistance test'];
   
   // Always insert at least a primary facet with enriched data
   const { error } = await supabase.from('practical_work_intelligence').upsert({
@@ -444,13 +676,19 @@ async function insertMinimalFacet(supabase: any, item: any, errorMsg: string) {
     source_tables: item.source_tables,
     activity_types: item.activity_types || [],
     equipment_category: equipment_category,
-    keywords: [equipment_category, ...basicKeywords, ...(item.activity_types || [])],
+    keywords: [equipment_category, ...basicKeywords, ...specs.slice(0, 3), ...(item.activity_types || [])],
     safety_requirements: basicSafety,
     bs7671_regulations: [],
-    tools_required: [],
-    materials_needed: [],
-    test_procedures: [],
-    maintenance_tasks: []
+    tools_required: [...new Set(tools_required)].slice(0, 10),
+    materials_needed: [...new Set(materials_needed)].slice(0, 10),
+    test_procedures: test_procedures,
+    maintenance_tasks: [],
+    confidence_score: 0.4, // Lower score for fallback data
+    provenance: {
+      enrichment_version: 'v3-fallback',
+      enriched_at: new Date().toISOString(),
+      fallback_reason: errorMsg
+    }
   }, { onConflict: 'practical_work_id,facet_type' });
 
   if (error) {

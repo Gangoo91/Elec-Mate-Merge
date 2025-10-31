@@ -192,17 +192,73 @@ serve(async (req) => {
       
       const metadata: any = {};
       
-      // Equipment type detection
-      if (lowerChunk.includes('consumer unit') || lowerChunk.includes('distribution board')) {
-        metadata.equipment_type = 'consumer_unit';
-      } else if (lowerChunk.includes('shower')) {
-        metadata.equipment_type = 'shower';
-      } else if (lowerChunk.includes('ev charger') || lowerChunk.includes('electric vehicle')) {
-        metadata.equipment_type = 'ev_charger';
-      } else if (lowerChunk.includes('socket') || lowerChunk.includes('outlet')) {
-        metadata.equipment_type = 'socket_outlet';
+      // COMPREHENSIVE Equipment type detection with priority matching
+      const equipmentPatterns = [
+        // Protection devices
+        { patterns: ['consumer unit', 'distribution board', 'db board', 'ccu'], type: 'consumer_unit' },
+        { patterns: ['rcbo'], type: 'rcbo' },
+        { patterns: ['rcd', 'residual current'], type: 'rcd' },
+        { patterns: ['mcb', 'miniature circuit breaker'], type: 'mcb' },
+        { patterns: ['surge protection', 'spd'], type: 'surge_protector' },
+        { patterns: ['isolator', 'isolation switch'], type: 'isolator' },
+        
+        // Power systems
+        { patterns: ['ups', 'uninterruptible power'], type: 'ups' },
+        { patterns: ['generator', 'standby power'], type: 'generator' },
+        { patterns: ['inverter'], type: 'inverter' },
+        { patterns: ['battery', 'energy storage'], type: 'battery_system' },
+        { patterns: ['transformer'], type: 'transformer' },
+        { patterns: ['switchgear', 'switch gear'], type: 'switchgear' },
+        
+        // Renewable energy
+        { patterns: ['solar panel', 'photovoltaic', 'pv system', 'pv array'], type: 'solar_panel' },
+        { patterns: ['ev charger', 'ev charging', 'electric vehicle charger', 'charging point'], type: 'ev_charger' },
+        { patterns: ['wind turbine'], type: 'wind_turbine' },
+        
+        // Loads & appliances
+        { patterns: ['shower', 'electric shower'], type: 'shower' },
+        { patterns: ['cooker', 'electric cooker', 'oven'], type: 'cooker' },
+        { patterns: ['immersion heater', 'water heater'], type: 'water_heater' },
+        { patterns: ['motor', 'electric motor', 'motor drive'], type: 'motor' },
+        { patterns: ['pump'], type: 'pump' },
+        { patterns: ['air conditioning', 'hvac'], type: 'hvac' },
+        
+        // Wiring & distribution
+        { patterns: ['socket', 'outlet', 'receptacle', 'power point'], type: 'socket_outlet' },
+        { patterns: ['cable', 'wiring', 'conductor'], type: 'cable' },
+        { patterns: ['busbar', 'bus bar'], type: 'busbar' },
+        { patterns: ['junction box', 'enclosure'], type: 'junction_box' },
+        
+        // Lighting
+        { patterns: ['lighting', 'luminaire', 'light fitting'], type: 'lighting' },
+        { patterns: ['emergency lighting', 'emergency light'], type: 'emergency_lighting' },
+        { patterns: ['led', 'led lighting'], type: 'led_lighting' },
+        
+        // Safety & detection
+        { patterns: ['fire alarm', 'smoke detector', 'heat detector'], type: 'fire_alarm' },
+        { patterns: ['earthing', 'earth electrode', 'grounding'], type: 'earthing_system' },
+        { patterns: ['bonding'], type: 'bonding' },
+        
+        // Metering & monitoring
+        { patterns: ['meter', 'metering', 'electricity meter'], type: 'meter' },
+        { patterns: ['monitoring system', 'energy monitor'], type: 'monitoring' },
+      ];
+      
+      // Match against patterns in priority order
+      let foundType = 'electrical_equipment'; // Default
+      for (const { patterns, type } of equipmentPatterns) {
+        if (patterns.some(pattern => lowerChunk.includes(pattern))) {
+          foundType = type;
+          break; // Use first match (highest priority)
+        }
+      }
+      
+      // Validation: Only accept meaningful equipment types
+      const invalidTypes = ['introduction', 'ombibed', 'contents', 'index', 'chapter', 'section', 'appendix', 'glossary'];
+      if (!invalidTypes.some(invalid => foundType.toLowerCase().includes(invalid))) {
+        metadata.equipment_type = foundType;
       } else {
-        metadata.equipment_type = 'general';
+        metadata.equipment_type = 'electrical_equipment'; // Safe default for invalid extractions
       }
 
       // Maintenance type detection
