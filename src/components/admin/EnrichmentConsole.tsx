@@ -294,9 +294,56 @@ export default function EnrichmentConsole() {
 
   useEffect(() => {
     loadStatus();
-    const interval = setInterval(loadStatus, 2000); // Refresh every 2s for real-time feel
+    const interval = setInterval(loadStatus, 10000); // Reduced frequency - realtime handles instant updates
     return () => clearInterval(interval);
   }, [selectedTask]); // Reload when task changes
+
+  // Realtime subscription for live facet updates (Practical Work only)
+  useEffect(() => {
+    if (selectedTask !== 'practical_work') return;
+
+    console.log('🔴 Setting up realtime subscription for practical_work_intelligence');
+
+    const channel = supabase
+      .channel('practical-work-facets-live')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'practical_work_intelligence'
+        },
+        (payload) => {
+          console.log('✨ New facet created:', payload.new);
+          
+          // Immediately update stats without waiting for next poll
+          setStats(prev => {
+            const facetType = (payload.new as any).facet_type;
+            const newFacetsCreated = prev.facetsCreated + 1;
+            const newProgress = prev.targetFacets > 0 
+              ? Math.round((newFacetsCreated / prev.targetFacets) * 100)
+              : 0;
+
+            return {
+              ...prev,
+              facetsCreated: newFacetsCreated,
+              remaining: Math.max(0, prev.targetFacets - newFacetsCreated),
+              progress: newProgress,
+              stageProgress: {
+                ...prev.stageProgress,
+                [facetType]: (prev.stageProgress[facetType] || 0) + 1
+              }
+            };
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      console.log('🔴 Cleaning up realtime subscription');
+      supabase.removeChannel(channel);
+    };
+  }, [selectedTask]);
 
   const callScheduler = async (action: string, extraParams = {}) => {
     setIsLoading(true);
@@ -629,10 +676,18 @@ export default function EnrichmentConsole() {
       {/* Stats Header */}
       <Card className="p-4">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold flex items-center gap-2">
-            <Database className="w-5 h-5 text-primary" />
-            {config.label}
-          </h3>
+          <div className="flex items-center gap-2">
+            <h3 className="text-lg font-semibold flex items-center gap-2">
+              <Database className="w-5 h-5 text-primary" />
+              {config.label}
+            </h3>
+            {selectedTask === 'practical_work' && (
+              <Badge variant="outline" className="text-xs">
+                <Activity className="w-3 h-3 mr-1 animate-pulse" />
+                Live Updates
+              </Badge>
+            )}
+          </div>
           {stats.progress > 0 && (
             <Badge variant={stats.progress === 100 ? "default" : "secondary"}>
               {stats.progress}% Complete
