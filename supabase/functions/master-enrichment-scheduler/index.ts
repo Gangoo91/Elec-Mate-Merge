@@ -34,7 +34,7 @@ const ENRICHMENT_TASKS: EnrichmentTask[] = [
 ];
 
 // Global worker state tracking
-const activeWorkers = new Map<string, boolean>();
+const activeWorkers = new Map<string, { workerId: string; timestamp: Date }>();
 
 // Graceful shutdown handler
 addEventListener('beforeunload', (ev) => {
@@ -1125,9 +1125,24 @@ async function continuousProcessor(
     // Process batches in parallel with worker pool (increased to 6 for speed)
     const PARALLEL_WORKERS = 6;
     
+    // Clean up stale worker registrations (>5 min old)
+    const now = Date.now();
+    for (const [jId, info] of activeWorkers.entries()) {
+      if (now - info.timestamp.getTime() > 5 * 60 * 1000) {
+        activeWorkers.delete(jId);
+        console.log(`🧹 Cleared stale worker registration for ${jId}`);
+      }
+    }
+    
     for (const jobId of jobIds) {
       const task = jobTaskMap.get(jobId);
       if (!task) continue;
+      
+      // Check if workers are already active for this job
+      if (activeWorkers.has(jobId)) {
+        console.log(`⏭️ Workers already active for job ${jobId}, skipping spawn`);
+        continue;
+      }
       
       // Check if this job has pending work
       const { data: hasPending } = await supabase
@@ -1140,6 +1155,8 @@ async function continuousProcessor(
       
       if (!hasPending) continue;
       
+      // Register this job's workers
+      activeWorkers.set(jobId, { workerId: `job-${jobId}`, timestamp: new Date() });
       console.log(`🚀 Starting ${PARALLEL_WORKERS} parallel workers for job ${jobId}`);
       
       // Worker function that processes batches until none remain
@@ -1186,7 +1203,9 @@ async function continuousProcessor(
       // Wait for all workers to complete
       await Promise.allSettled(workers);
       
-      console.log(`✅ All ${PARALLEL_WORKERS} workers completed for job ${jobId}`);
+      // Clean up worker registration
+      activeWorkers.delete(jobId);
+      console.log(`✅ All ${PARALLEL_WORKERS} workers completed for job ${jobId}, registry cleared`);
     }
     
     // Brief pause between processing rounds
