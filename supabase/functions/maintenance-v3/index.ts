@@ -257,7 +257,9 @@ const MAINTENANCE_TOOL_SCHEMA = {
           properties: {
             regulation: { type: "string", description: "Regulation number" },
             title: { type: "string", description: "Regulation title/topic" },
-            relevance: { type: "string", description: "Why it's relevant to this maintenance task" }
+            relevance: { type: "string", description: "Why it's relevant to this maintenance task" },
+            category: { type: "string", description: "Regulation category (from intelligence data)" },
+            practicalApplication: { type: "string", description: "Practical application guidance" }
           },
           required: ["regulation", "title", "relevance"]
         }
@@ -343,26 +345,40 @@ Deno.serve(async (req) => {
     const embeddingData = await embeddingResponse.json();
     const queryEmbedding = embeddingData.data[0].embedding;
 
-    // Perform hybrid search on maintenance knowledge
-    const { data: ragResults, error: ragError } = await supabase.rpc('search_maintenance_hybrid', {
-      query_text: expandedQuery,
-      query_embedding: queryEmbedding,
-      equipment_filter: equipmentType || null,
-      match_count: 12
-    });
+    // Parallel RAG: Maintenance Knowledge + BS 7671 Intelligence
+    const [ragResults, bs7671Intelligence] = await Promise.all([
+      supabase.rpc('search_maintenance_hybrid', {
+        query_text: expandedQuery,
+        query_embedding: queryEmbedding,
+        equipment_filter: equipmentType || null,
+        match_count: 12
+      }),
+      supabase.rpc('search_bs7671_intelligence_hybrid', {
+        query_text: `${expandedQuery} testing inspection certification`,
+        match_count: 12
+      })
+    ]);
 
-    if (ragError) {
-      console.error('❌ RAG search error:', ragError);
-    }
+    const { data: maintenanceData, error: ragError } = ragResults;
+    const { data: bs7671Data, error: bs7671Error } = bs7671Intelligence;
 
-    console.log(`📚 Retrieved ${ragResults?.length || 0} maintenance knowledge documents`);
+    if (ragError) console.error('❌ Maintenance RAG error:', ragError);
+    if (bs7671Error) console.error('❌ BS 7671 Intelligence error:', bs7671Error);
 
-    // Build context from RAG results
-    const ragContext = ragResults && ragResults.length > 0
-      ? ragResults.map((doc: any, idx: number) => 
-          `[MAINTENANCE DOC ${idx + 1}]\nTopic: ${doc.topic}\nSource: ${doc.source}\nContent: ${doc.content}\n`
-        ).join('\n\n')
-      : 'No specific maintenance knowledge found. Use general BS 7671 Chapter 64 inspection and testing principles.';
+    console.log(`📚 Retrieved ${maintenanceData?.length || 0} maintenance docs, ${bs7671Data?.length || 0} BS 7671 regs (intelligence)`);
+
+    // Build enriched context from both sources
+    const maintenanceContext = maintenanceData?.map((doc: any, idx: number) => 
+      `[MAINTENANCE DOC ${idx + 1}]\nTopic: ${doc.topic}\nSource: ${doc.source}\nContent: ${doc.content}\n`
+    ).join('\n\n') || '';
+
+    const bs7671Context = bs7671Data?.map((reg: any, idx: number) => 
+      `[BS 7671 REG ${idx + 1}] ${reg.regulation_number}\nTopic: ${reg.primary_topic}\nCategory: ${reg.category}\nKeywords: ${reg.keywords?.join(', ')}\nApplication: ${reg.practical_application}\nContent: ${reg.content}\n`
+    ).join('\n\n') || '';
+
+    const ragContext = maintenanceContext || bs7671Context
+      ? `=== MAINTENANCE KNOWLEDGE ===\n${maintenanceContext}\n\n=== BS 7671 REGULATIONS (INTELLIGENCE) ===\n${bs7671Context}`
+      : 'No specific knowledge found. Use general BS 7671 Chapter 64 principles.';
 
     // Construct user message with context
     const userMessage = `Equipment: ${equipmentType || 'Not specified'}

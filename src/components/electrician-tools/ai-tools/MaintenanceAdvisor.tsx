@@ -17,6 +17,8 @@ interface MaintenanceTask {
   task: string;
   regulation?: string;
   priority: 'high' | 'medium' | 'low';
+  category?: string;
+  practicalApplication?: string;
 }
 
 interface MaintenanceSchedule {
@@ -465,10 +467,24 @@ export const MaintenanceAdvisor = () => {
                         </div>
                         <p className="text-sm text-elec-light/80 leading-relaxed">{task.task}</p>
                         {task.regulation && (
-                          <p className="text-xs text-elec-light/50 italic mt-2 flex items-center gap-1">
-                            <FileText className="h-3 w-3" />
-                            {task.regulation}
-                          </p>
+                          <div className="mt-2 space-y-1">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <p className="text-xs text-elec-light/50 italic flex items-center gap-1">
+                                <FileText className="h-3 w-3" />
+                                {task.regulation}
+                              </p>
+                              {task.category && (
+                                <span className="text-xs px-2 py-0.5 rounded bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20">
+                                  {task.category}
+                                </span>
+                              )}
+                            </div>
+                            {task.practicalApplication && (
+                              <p className="text-xs text-elec-light/60 pl-4 border-l-2 border-elec-yellow/30">
+                                💡 {task.practicalApplication}
+                              </p>
+                            )}
+                          </div>
                         )}
                       </div>
                     </div>

@@ -194,7 +194,7 @@ serve(async (req) => {
 
     console.log(`⚠️ Risk: ${riskAssessment.level} (${riskAssessment.score}/100)`);
 
-    // Generate embedding for RAG
+    // Generate embedding for maintenance + failures RAG ONLY (BS 7671 intelligence doesn't need it!)
     const embeddingResponse = await withTimeout(
       fetch('https://api.openai.com/v1/embeddings', {
         method: 'POST',
@@ -208,14 +208,14 @@ serve(async (req) => {
         }),
       }),
       Timeouts.QUICK,
-      'Embedding generation'
+      'Embedding generation (maintenance + failures only)'
     );
 
     if (!embeddingResponse.ok) throw new Error('Failed to generate embedding');
     const embeddingData = await embeddingResponse.json();
     const queryEmbedding = embeddingData.data[0].embedding;
 
-    // Parallel RAG retrieval
+    // Parallel RAG retrieval with regulations_intelligence
     const [maintenanceKnowledge, bs7671Regs, failureModes] = await Promise.all([
       supabase.rpc('search_maintenance_hybrid', {
         query_text: `${equipmentType} maintenance schedule procedures testing`,
@@ -223,10 +223,9 @@ serve(async (req) => {
         equipment_filter: equipmentType,
         match_count: detailLevel === 'quick' ? 6 : 12
       }),
-      supabase.rpc('search_bs7671_hybrid_cached', {
-        query_text: `${equipmentType} periodic inspection testing maintenance`,
-        query_embedding: queryEmbedding,
-        match_count: detailLevel === 'quick' ? 4 : 10
+      supabase.rpc('search_bs7671_intelligence_hybrid', {
+        query_text: `${equipmentType} periodic inspection testing maintenance requirements`,
+        match_count: detailLevel === 'quick' ? 6 : 12
       }),
       supabase.rpc('search_maintenance_hybrid', {
         query_text: `${equipmentType} failures defects problems ${environment}`,
@@ -236,17 +235,23 @@ serve(async (req) => {
       })
     ]);
 
-    console.log(`📚 RAG: ${maintenanceKnowledge.data?.length || 0} maintenance, ${bs7671Regs.data?.length || 0} regs, ${failureModes.data?.length || 0} failures`);
+    console.log(`📚 RAG: ${maintenanceKnowledge.data?.length || 0} maintenance, ${bs7671Regs.data?.length || 0} regs (intelligence), ${failureModes.data?.length || 0} failures`);
 
-    // Build expert knowledge context
+    // Build expert knowledge context with enriched intelligence data
     const expertKnowledge = `
 === EXPERT KNOWLEDGE (UK ENGLISH ONLY) ===
 
 MAINTENANCE PROCEDURES:
 ${maintenanceKnowledge.data?.map((item: any) => `• ${item.topic}: ${item.content.substring(0, 200)}`).join('\n') || 'Standard practices'}
 
-BS 7671:2018+A3:2024 REGULATIONS:
-${bs7671Regs.data?.map((reg: any) => `• Reg ${reg.regulation_number}: ${reg.content.substring(0, detailLevel === 'quick' ? 150 : 300)}`).join('\n') || 'General requirements'}
+BS 7671:2018+A3:2024 REGULATIONS (Enriched Intelligence):
+${bs7671Regs.data?.map((reg: any) => {
+  const topic = reg.primary_topic || reg.regulation_number;
+  const category = reg.category ? ` [${reg.category}]` : '';
+  const keywords = reg.keywords?.length ? ` (Keywords: ${reg.keywords.slice(0, 3).join(', ')})` : '';
+  const content = reg.content.substring(0, detailLevel === 'quick' ? 150 : 300);
+  return `• Reg ${reg.regulation_number}${category}: ${topic}${keywords}\n  ${content}`;
+}).join('\n') || 'General requirements'}
 
 COMMON FAILURES:
 ${failureModes.data?.map((item: any) => `• ${item.topic}: ${item.content.substring(0, 150)}`).join('\n') || 'Age-related wear'}
