@@ -1242,7 +1242,7 @@ async function continuousProcessor(
   jobTaskMap: Map<string, EnrichmentTask>
 ) {
   const workerId = crypto.randomUUID().substring(0, 8);
-  activeWorkers.set(workerId, true);
+  activeWorkers.set(workerId, { workerId, timestamp: new Date() });
   
   console.log(`🔄 Worker ${workerId} started for ${jobIds.length} jobs`);
   
