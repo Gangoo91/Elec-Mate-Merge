@@ -104,13 +104,7 @@ const QuoteBuilder = () => {
         variant="ghost"
         size="icon"
         className="fixed top-4 left-4 z-50 md:hidden bg-elec-card/90 backdrop-blur-sm border border-elec-yellow/20 shadow-lg h-10 w-10"
-        onClick={() => {
-          if (window.history.length > 1) {
-            navigate(-1);
-          } else {
-            navigate('/electrician/business');
-          }
-        }}
+        onClick={() => navigate('/electrician')}
       >
         <ArrowLeft className="h-5 w-5" />
       </Button>
