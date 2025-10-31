@@ -569,14 +569,14 @@ Thank you for your business!`;
             className={`cursor-pointer transition-all hover:border-elec-yellow/40 ${statusFilter === 'all' ? 'ring-2 ring-elec-yellow border-elec-yellow/30' : ''}`}
             onClick={() => setStatusFilter('all')}
           >
-            <CardHeader className="pb-3">
+            <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
-                <FileText className="h-5 w-5 text-elec-yellow" />
+                <FileText className="h-4 w-4 md:h-5 md:w-5 text-elec-yellow" />
                 <CardTitle className="text-xs font-medium text-muted-foreground uppercase">Total</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-1">
-              <div className="text-3xl font-bold">{stats.total}</div>
+            <CardContent className="space-y-0.5">
+              <div className="text-2xl md:text-3xl font-bold">{stats.total}</div>
               <div className="flex items-center gap-1 text-sm text-muted-foreground">
                 <PoundSterling className="h-3.5 w-3.5" />
                 <span>{stats.totalValue.toFixed(2)}</span>
@@ -588,14 +588,14 @@ Thank you for your business!`;
             className={`cursor-pointer transition-all hover:border-slate-400/40 ${statusFilter === 'draft' ? 'ring-2 ring-slate-400 border-slate-400/30' : ''}`}
             onClick={() => setStatusFilter('draft')}
           >
-            <CardHeader className="pb-3">
+            <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
-                <Edit className="h-5 w-5 text-slate-400" />
+                <Edit className="h-4 w-4 md:h-5 md:w-5 text-slate-400" />
                 <CardTitle className="text-xs font-medium text-muted-foreground uppercase">Draft</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-1">
-              <div className="text-3xl font-bold text-slate-400">{stats.draft}</div>
+            <CardContent className="space-y-0.5">
+              <div className="text-2xl md:text-3xl font-bold text-slate-400">{stats.draft}</div>
               <div className="flex items-center gap-1 text-sm text-muted-foreground">
                 <PoundSterling className="h-3.5 w-3.5" />
                 <span>{stats.draftValue.toFixed(2)}</span>
@@ -607,14 +607,14 @@ Thank you for your business!`;
             className={`cursor-pointer transition-all hover:border-blue-400/40 ${statusFilter === 'sent' ? 'ring-2 ring-blue-400 border-blue-400/30' : ''}`}
             onClick={() => setStatusFilter('sent')}
           >
-            <CardHeader className="pb-3">
+            <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
-                <Send className="h-5 w-5 text-blue-400" />
+                <Send className="h-4 w-4 md:h-5 md:w-5 text-blue-400" />
                 <CardTitle className="text-xs font-medium text-muted-foreground uppercase">Sent</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-1">
-              <div className="text-3xl font-bold text-blue-400">{stats.sent}</div>
+            <CardContent className="space-y-0.5">
+              <div className="text-2xl md:text-3xl font-bold text-blue-400">{stats.sent}</div>
               <div className="flex items-center gap-1 text-sm text-muted-foreground">
                 <PoundSterling className="h-3.5 w-3.5" />
                 <span>{stats.sentValue.toFixed(2)}</span>
@@ -626,14 +626,14 @@ Thank you for your business!`;
             className={`cursor-pointer transition-all hover:border-red-400/40 ${statusFilter === 'overdue' ? 'ring-2 ring-red-400 border-red-400/30' : ''}`}
             onClick={() => setStatusFilter('overdue')}
           >
-            <CardHeader className="pb-3">
+            <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
-                <AlertCircle className="h-5 w-5 text-red-600" />
+                <AlertCircle className="h-4 w-4 md:h-5 md:w-5 text-red-600" />
                 <CardTitle className="text-xs font-medium text-muted-foreground uppercase">Overdue</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-1">
-              <div className="text-3xl font-bold text-red-600">{stats.overdue}</div>
+            <CardContent className="space-y-0.5">
+              <div className="text-2xl md:text-3xl font-bold text-red-600">{stats.overdue}</div>
               <div className="flex items-center gap-1 text-sm text-muted-foreground">
                 <PoundSterling className="h-3.5 w-3.5" />
                 <span>{stats.overdueValue.toFixed(2)}</span>
@@ -645,14 +645,14 @@ Thank you for your business!`;
             className={`cursor-pointer transition-all hover:border-green-400/40 ${statusFilter === 'paid' ? 'ring-2 ring-green-400 border-green-400/30' : ''}`}
             onClick={() => setStatusFilter('paid')}
           >
-            <CardHeader className="pb-3">
+            <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
-                <CheckCircle className="h-5 w-5 text-green-400" />
+                <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-green-400" />
                 <CardTitle className="text-xs font-medium text-muted-foreground uppercase">Paid</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-1">
-              <div className="text-3xl font-bold text-green-400">{stats.paid}</div>
+            <CardContent className="space-y-0.5">
+              <div className="text-2xl md:text-3xl font-bold text-green-400">{stats.paid}</div>
               <div className="flex items-center gap-1 text-sm text-muted-foreground">
                 <PoundSterling className="h-3.5 w-3.5" />
                 <span>{stats.paidValue.toFixed(2)}</span>
