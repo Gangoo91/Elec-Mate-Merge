@@ -53,7 +53,7 @@ const TASK_CONFIG = {
     sourceTable: 'practical_work',
     targetTable: 'practical_work_intelligence',
     enrichmentModel: 'faceted',
-    targetMultiplier: 3.5,
+    targetMultiplier: 3.674,
     sourceFilter: { column: 'is_canonical', op: 'eq', value: true }
   }
 } as const;
@@ -86,12 +86,9 @@ export default function EnrichmentConsole() {
   const [searchParams, setSearchParams] = useSearchParams();
   const rawTask = searchParams.get('task') || 'bs7671';
 
-  // Handle legacy 'practical_work' URL - redirect to primary stage
+  // Validate task exists in config
   useEffect(() => {
-    if (rawTask === 'practical_work') {
-      setSearchParams({ task: 'practical_work_primary' }, { replace: true });
-    } else if (!TASK_CONFIG[rawTask as keyof typeof TASK_CONFIG]) {
-      // Invalid task - default to bs7671
+    if (!TASK_CONFIG[rawTask as keyof typeof TASK_CONFIG]) {
       setSearchParams({ task: 'bs7671' }, { replace: true });
     }
   }, [rawTask, setSearchParams]);
@@ -412,25 +409,44 @@ export default function EnrichmentConsole() {
   const handleVerifyIntegrity = async () => {
     setIsVerifying(true);
     try {
-      // Get current baseline
+      // Get current baseline from target table
       const { count: totalRecords } = await supabase
-        .from('regulations_intelligence')
+        .from(config.targetTable)
         .select('*', { count: 'exact', head: true });
 
-      const { data: uniqueRegsData } = await supabase
-        .from('regulations_intelligence')
-        .select('regulation_number')
-        .eq('enrichment_version', 'v1')
-        .limit(2000); // Ensure we get all enriched rows
+      // Query source table with filter if applicable
+      let sourceQuery = supabase
+        .from(config.sourceTable)
+        .select('*')
+        .limit(5000);
+      
+      if (config.sourceFilter) {
+        const { column, op, value } = config.sourceFilter;
+        sourceQuery = sourceQuery[op](column, value);
+      }
+      
+      const { data: sourceData } = await sourceQuery;
 
-      const { data: allSourceRegs } = await supabase
-        .from('bs7671_embeddings')
-        .select('regulation_number')
-        .neq('regulation_number', 'General')
-        .limit(3000); // Ensure we get all source rows
+      // Query target table
+      const { data: targetData } = await supabase
+        .from(config.targetTable)
+        .select('*')
+        .limit(5000);
 
-      const uniqueEnriched = new Set((uniqueRegsData || []).map(r => r.regulation_number?.trim()).filter(Boolean)).size;
-      const uniqueSource = new Set((allSourceRegs || []).map(r => r.regulation_number?.trim()).filter(Boolean)).size;
+      // Extract unique IDs based on task type
+      let uniqueSource = 0;
+      let uniqueEnriched = 0;
+      
+      if (selectedTask === 'bs7671') {
+        uniqueSource = new Set((sourceData || []).map((r: any) => r.regulation_number?.trim()).filter(Boolean)).size;
+        uniqueEnriched = new Set((targetData || []).map((r: any) => r.regulation_number?.trim()).filter(Boolean)).size;
+      } else if (selectedTask === 'practical_work') {
+        uniqueSource = new Set((sourceData || []).map((r: any) => r.id).filter(Boolean)).size;
+        uniqueEnriched = new Set((targetData || []).map((r: any) => r.practical_work_id).filter(Boolean)).size;
+      } else {
+        uniqueSource = sourceData?.length || 0;
+        uniqueEnriched = targetData?.length || 0;
+      }
 
       const checkData = {
         beforeCount: totalRecords || 0,
@@ -442,8 +458,11 @@ export default function EnrichmentConsole() {
 
       setIntegrityCheck(checkData);
 
+      const itemLabel = selectedTask === 'bs7671' ? 'regulations' : 
+                       selectedTask === 'practical_work' ? 'procedures' : 'items';
+      
       toast.success('Data integrity verified', {
-        description: `${uniqueEnriched}/${uniqueSource} unique regulations enriched • ${uniqueSource - uniqueEnriched} missing`
+        description: `${uniqueEnriched}/${uniqueSource} unique ${itemLabel} enriched • ${uniqueSource - uniqueEnriched} missing`
       });
     } catch (error: any) {
       toast.error('Failed to verify data integrity');
@@ -710,15 +729,18 @@ export default function EnrichmentConsole() {
         </div>
       </Card>
 
-      {/* Missing Regulations Alert (BS 7671 only) */}
-      {selectedTask === 'bs7671' && stats.sourceTotal > stats.sourceEnriched && (
+      {/* Missing Items Alert (All Tasks) */}
+      {stats.sourceTotal > stats.sourceEnriched && (
         <Card className="p-4 border-warning bg-warning/5">
           <div className="flex items-center gap-2 mb-3">
             <AlertCircle className="w-5 h-5 text-warning" />
             <h4 className="font-semibold text-warning">Incomplete Enrichment Detected</h4>
           </div>
           <p className="text-sm text-muted-foreground mb-3">
-            {stats.sourceTotal - stats.sourceEnriched} unique regulations are missing enrichment data.
+            {stats.sourceTotal - stats.sourceEnriched} unique {
+              selectedTask === 'bs7671' ? 'regulations' :
+              selectedTask === 'practical_work' ? 'procedures' : 'items'
+            } are missing enrichment data.
           </p>
           
           {/* Data Integrity Panel */}

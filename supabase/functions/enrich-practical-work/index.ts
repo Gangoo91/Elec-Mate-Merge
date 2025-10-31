@@ -163,10 +163,9 @@ Return ONLY a valid JSON array of facet objects.`;
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-5-mini-2025-08-07',
         messages: [{ role: 'user', content: prompt }],
-        max_tokens: 2000,
-        temperature: 0.2,
+        max_completion_tokens: 6000,
         response_format: { type: 'json_object' }
       }),
     }).then(res => res.json()),
