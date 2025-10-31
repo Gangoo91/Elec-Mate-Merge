@@ -105,70 +105,74 @@ serve(async (req) => {
   }
 });
 
-// Transform GPT output to match PostgreSQL schema types
+// Transform GPT output to match actual DB schema - ONLY fields that exist
 function transformFacetForDB(facet: any, baseItem: any): any {
   return {
     practical_work_id: baseItem.id,
-    facet_type: facet.facet_type,
-    cluster_id: baseItem.cluster_id,
-    canonical_id: baseItem.id,
-    source_tables: baseItem.source_tables,
+    facet_type: facet.facet_type || 'primary',
     
-    // Primary fields
+    // Core metadata (required)
     activity_types: facet.activity_types || baseItem.activity_types || [],
     equipment_category: facet.equipment_category || baseItem.equipment_category,
+    equipment_subcategory: facet.equipment_subcategory,
     
-    // ✅ FIX: safety_requirements expects JSONB object with items array
-    safety_requirements: facet.safety_requirements 
-      ? { items: Array.isArray(facet.safety_requirements) ? facet.safety_requirements : [facet.safety_requirements] }
-      : null,
-    
-    typical_location: facet.typical_location,
-    skill_level: facet.skill_level,
-    
-    // Installation fields (text arrays - OK as-is)
+    // Installation fields
+    bs7671_zones: facet.bs7671_zones || [],
     installation_method: facet.installation_method,
-    fixing_intervals: facet.fixing_intervals, // JSONB object - OK
-    cable_routes: facet.cable_routes, // text[] - OK
-    termination_methods: facet.termination_methods, // text[] - OK
-    
-    // Maintenance fields
-    maintenance_intervals: facet.maintenance_intervals, // JSONB object - OK
-    
-    // ✅ FIX: maintenance_tasks expects array of JSONB objects
-    maintenance_tasks: facet.maintenance_tasks
-      ? facet.maintenance_tasks.map((task: any) => 
-          typeof task === 'string' ? { task, frequency: null } : task
-        )
-      : null,
-    
-    common_defects: facet.common_defects, // text[] - OK
-    wear_indicators: facet.wear_indicators, // text[] - matches DB schema
+    fixing_intervals: facet.fixing_intervals,
+    cable_routes: facet.cable_routes || [],
+    termination_methods: facet.termination_methods || [],
     
     // Testing fields
-    // ✅ FIX: test_procedures expects array of JSONB objects
-    test_procedures: facet.test_procedures
-      ? facet.test_procedures.map((proc: any) =>
-          typeof proc === 'string' ? { procedure: proc, standard: null } : proc
-        )
-      : null,
+    test_procedures: facet.test_procedures || [],
+    test_equipment_required: facet.test_equipment_required || [],
+    test_frequency: facet.test_frequency,
+    acceptance_criteria: facet.acceptance_criteria,
     
-    required_instruments: facet.required_instruments, // text[] - OK
-    acceptance_criteria: facet.acceptance_criteria, // JSONB object - OK
-    test_sequence: facet.test_sequence, // text[] - OK
+    // Inspection fields
+    inspection_checklist: facet.inspection_checklist || [],
+    visual_inspection_points: facet.visual_inspection_points || [],
+    eicr_observation_codes: facet.eicr_observation_codes || [],
     
-    // Costing fields
-    estimated_duration: facet.estimated_duration, // JSONB object - OK
+    // Defects & diagnostics
+    common_defects: facet.common_defects || [],
+    wear_indicators: facet.wear_indicators || [],
+    replacement_criteria: facet.replacement_criteria || [],
+    common_failures: facet.common_failures || [],
+    troubleshooting_steps: facet.troubleshooting_steps || [],
+    diagnostic_tests: facet.diagnostic_tests || [],
     
-    // ✅ FIX: material_requirements expects array of JSONB objects
-    material_requirements: facet.material_requirements
-      ? facet.material_requirements.map((mat: any) =>
-          typeof mat === 'string' ? { item: mat, quantity: 1, unit: 'each' } : mat
-        )
-      : null,
+    // Maintenance fields
+    maintenance_intervals: facet.maintenance_intervals,
+    maintenance_tasks: facet.maintenance_tasks || [],
     
-    labour_category: facet.labour_category,
-    difficulty_multiplier: facet.difficulty_multiplier
+    // Resources & timing
+    typical_duration_minutes: facet.typical_duration_minutes,
+    skill_level: facet.skill_level,
+    team_size: facet.team_size,
+    tools_required: facet.tools_required || [],
+    materials_needed: facet.materials_needed || [],
+    
+    // Safety (JSONB)
+    safety_requirements: facet.safety_requirements,
+    
+    // Standards
+    bs7671_regulations: facet.bs7671_regulations || [],
+    other_standards: facet.other_standards || [],
+    
+    // Search & metadata
+    keywords: facet.keywords || [],
+    related_topics: facet.related_topics || [],
+    confidence_score: facet.confidence_score || 0.85,
+    
+    // Provenance (required)
+    cluster_id: baseItem.cluster_id,
+    canonical_id: baseItem.id,
+    source_tables: baseItem.source_tables || [],
+    provenance: facet.provenance || { 
+      enrichment_version: 'v3',
+      enriched_at: new Date().toISOString()
+    }
   };
 }
 
@@ -197,61 +201,53 @@ ${practicalContext.map(c => c.content).join('\n\n')}
 BS 7671 CONTEXT:
 ${bs7671Context.map(c => c.content).join('\n\n')}
 
-Create a facet for EACH activity type present in this procedure. Return a JSON array of facets.
+Create facets matching this EXACT schema. Return a JSON array.
 
 ALWAYS include a PRIMARY facet:
 {
   "facet_type": "primary",
-  "activity_types": ["installation", "testing", etc.],
+  "activity_types": ["installation", "testing"],
   "equipment_category": string,
-  "safety_requirements": array,
-  "typical_location": string,
-  "skill_level": "Apprentice" | "Improver" | "Electrician" | "Specialist"
+  "skill_level": "Apprentice"|"Improver"|"Electrician"|"Specialist",
+  "typical_duration_minutes": number,
+  "safety_requirements": {"ppe": [], "precautions": [], "hazards": []},
+  "bs7671_regulations": ["reg numbers"],
+  "keywords": ["relevant", "terms"]
 }
 
-IF installation/fixing/termination is mentioned, add INSTALLATION facet:
+IF installation mentioned, add INSTALLATION facet:
 {
   "facet_type": "installation",
-  "installation_method": "Surface" | "Buried" | "Overhead" | "Concealed",
-  "fixing_intervals": {"horizontal_mm": number, "vertical_mm": number, "bends_mm": number},
-  "cable_routes": array,
-  "termination_methods": array
+  "installation_method": "Surface"|"Buried"|"Overhead"|"Concealed",
+  "fixing_intervals": {"horizontal_mm": 400, "vertical_mm": 400},
+  "cable_routes": ["routes"],
+  "termination_methods": ["methods"],
+  "bs7671_zones": ["zones"],
+  "tools_required": ["tools"],
+  "materials_needed": ["materials"]
 }
 
-IF maintenance/inspection/service is mentioned, add MAINTENANCE facet:
-{
-  "facet_type": "maintenance",
-  "maintenance_intervals": {"routine": string, "detailed": string},
-  "maintenance_tasks": array,
-  "common_defects": array,
-  "degradation_signs": array
-}
-
-IF testing/commissioning/verification is mentioned, add TESTING facet:
+IF testing mentioned, add TESTING facet:
 {
   "facet_type": "testing",
-  "test_procedures": array,
-  "required_instruments": array,
-  "acceptance_criteria": object,
-  "test_sequence": array
+  "test_procedures": ["text array only"],
+  "test_equipment_required": ["instruments"],
+  "test_frequency": "Annual",
+  "acceptance_criteria": {"limits": {}},
+  "visual_inspection_points": ["points"]
 }
 
-IF materials/labour/time is relevant, add COSTING facet:
+IF maintenance mentioned, add MAINTENANCE facet:
 {
-  "facet_type": "costing",
-  "estimated_duration": {"min_minutes": number, "typical_minutes": number, "max_minutes": number},
-  "material_requirements": [{"item": "Cable clips", "quantity": 20, "unit": "each"}],
-  "labour_category": "Electrician",
-  "difficulty_multiplier": 1.2
+  "facet_type": "maintenance",
+  "maintenance_intervals": {"routine": "6 months", "detailed": "1 year"},
+  "maintenance_tasks": ["text array only"],
+  "common_defects": ["defects"],
+  "wear_indicators": ["signs"],
+  "troubleshooting_steps": ["steps"]
 }
 
-IMPORTANT: For arrays of complex data, return objects with proper structure:
-- maintenance_tasks: array of objects with {task, frequency}
-- test_procedures: array of objects with {procedure, standard}
-- material_requirements: array of objects with {item, quantity, unit}
-- safety_requirements: will be wrapped automatically
-
-Return ONLY a valid JSON array of facet objects with proper structure.`;
+CRITICAL: All arrays are TEXT[] (simple strings), NOT objects. Return ONLY valid JSON array.`;
 
   const chatCompletion = await withTimeout(
     fetch('https://api.openai.com/v1/chat/completions', {

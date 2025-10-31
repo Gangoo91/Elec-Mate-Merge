@@ -46,13 +46,14 @@ export async function searchPracticalWorkBatch(
   const { keywords, limit = 10, activity_filter } = params;
   
   try {
-    // Fetch 3x to get multiple facets per procedure
+    // Use text-only search via match_documents RPC
+    const queryText = keywords.join(' ');
     const { data, error } = await supabase.rpc(
-      'search_practical_work_intelligence',
+      'match_documents',
       {
-        query_embedding: null, // Text-only search for now
-        match_count: limit * 3, // Get multiple facets per procedure
-        filter_activity_types: activity_filter || null
+        query_text: queryText,
+        match_count: limit * 3,
+        filter_metadata: activity_filter ? { activity_types: activity_filter } : null
       }
     );
     
@@ -107,11 +108,14 @@ export async function searchBS7671Batch(
   const { keywords, limit = 10 } = params;
   
   try {
+    // Use text search on BS7671 embeddings table
+    const queryText = keywords.join(' ');
     const { data, error } = await supabase.rpc(
-      'search_bs7671_intelligence',
+      'match_documents',
       {
-        query_embedding: null, // Text-only search for now
-        match_count: limit
+        query_text: queryText,
+        match_count: limit,
+        filter_metadata: { source: 'BS 7671' }
       }
     );
     
