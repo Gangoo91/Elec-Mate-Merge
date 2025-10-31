@@ -89,6 +89,8 @@ export default function EnrichmentConsole() {
     beforeCount: number;
     beforeUniqueRegs: number;
     beforeTimestamp: string;
+    total_unique_regs?: number;
+    enriched_unique_regs?: number;
   } | null>(null);
   const [isVerifying, setIsVerifying] = useState(false);
 
@@ -271,20 +273,29 @@ export default function EnrichmentConsole() {
 
       const { data: uniqueRegsData } = await supabase
         .from('regulations_intelligence')
-        .select('regulation_number');
+        .select('regulation_number')
+        .eq('enrichment_version', 'v1');
 
-      const uniqueRegs = new Set((uniqueRegsData || []).map(r => r.regulation_number)).size;
+      const { data: allSourceRegs } = await supabase
+        .from('bs7671_embeddings')
+        .select('regulation_number')
+        .neq('regulation_number', 'General');
+
+      const uniqueEnriched = new Set((uniqueRegsData || []).map(r => r.regulation_number?.trim()).filter(Boolean)).size;
+      const uniqueSource = new Set((allSourceRegs || []).map(r => r.regulation_number?.trim()).filter(Boolean)).size;
 
       const checkData = {
         beforeCount: totalRecords || 0,
-        beforeUniqueRegs: uniqueRegs,
-        beforeTimestamp: new Date().toISOString()
+        beforeUniqueRegs: uniqueEnriched,
+        beforeTimestamp: new Date().toISOString(),
+        total_unique_regs: uniqueSource,
+        enriched_unique_regs: uniqueEnriched
       };
 
       setIntegrityCheck(checkData);
 
       toast.success('Data integrity verified', {
-        description: `${totalRecords?.toLocaleString()} records • ${uniqueRegs} unique regulations`
+        description: `${uniqueEnriched}/${uniqueSource} unique regulations enriched • ${uniqueSource - uniqueEnriched} missing`
       });
     } catch (error: any) {
       toast.error('Failed to verify data integrity');
@@ -301,6 +312,26 @@ export default function EnrichmentConsole() {
       return;
     }
     
+    const expectedMissing = integrityCheck.total_unique_regs - integrityCheck.enriched_unique_regs;
+    
+    if (expectedMissing === 0) {
+      toast.info('No missing regulations - all enriched!');
+      return;
+    }
+    
+    // Show confirmation with expected counts
+    const confirmed = window.confirm(
+      `Complete Missing Regulations\n\n` +
+      `Total Regulations: ${integrityCheck.total_unique_regs}\n` +
+      `Already Enriched: ${integrityCheck.enriched_unique_regs}\n` +
+      `Missing: ${expectedMissing}\n\n` +
+      `This will create approximately ${Math.ceil(expectedMissing / 5)} batches.\n` +
+      `Estimated time: ${Math.ceil(expectedMissing * 1.5 / 60)} minutes.\n\n` +
+      `Continue?`
+    );
+    
+    if (!confirmed) return;
+    
     setIsLoading(true);
     
     try {
@@ -309,7 +340,7 @@ export default function EnrichmentConsole() {
       const startResponse = await supabase.functions.invoke('master-enrichment-scheduler', {
         body: { 
           action: 'start_missing',
-          chunkSize: 10,
+          chunkSize: 5, // Smaller batches for missing regs
           workers: 6
         }
       });
@@ -324,8 +355,16 @@ export default function EnrichmentConsole() {
         return;
       }
       
+      // Validate server count matches frontend expectation
+      if (result?.missing_count !== expectedMissing) {
+        toast.error(
+          `Server mismatch! Expected ${expectedMissing} missing, server computed ${result.missing_count}. Please check logs.`
+        );
+        console.error('Count mismatch:', { expected: expectedMissing, server: result.missing_count });
+      }
+      
       if (result?.jobId && result?.batchesCreated) {
-        toast.success(`New job created: ${result.batchesCreated} batches for ${result.missing_count} missing regulations`, {
+        toast.success(`Started job for ${result.missing_count} missing regulations (${result.batchesCreated} batches)`, {
           description: '⏳ Monitor "Live Worker Activity" below for real-time progress'
         });
         console.log(`📊 Job ID: ${result.jobId}, Batches: ${result.batchesCreated}, Missing: ${result.missing_count}`);

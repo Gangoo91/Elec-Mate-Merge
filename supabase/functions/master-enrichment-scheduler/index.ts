@@ -368,7 +368,7 @@ serve(async (req) => {
     console.log('🔍 SERVER-SIDE MISSING DETECTION: Computing missing regulations for BS 7671...');
     
     try {
-      // Compute missing regulations server-side
+      // Compute missing regulations server-side with proper deduplication
       const { data: allSourceRegs } = await supabase
         .from('bs7671_embeddings')
         .select('regulation_number')
@@ -379,9 +379,19 @@ serve(async (req) => {
         .select('regulation_number')
         .eq('enrichment_version', 'v1');
       
-      const sourceSet = new Set((allSourceRegs || []).map(r => r.regulation_number));
-      const enrichedSet = new Set((enrichedRegs || []).map(r => r.regulation_number));
-      const missingRegulations = Array.from(sourceSet).filter(reg => !enrichedSet.has(reg));
+      // Explicit deduplication with trim and filter
+      const uniqueSourceRegs = [...new Set((allSourceRegs || [])
+        .map(r => r.regulation_number?.trim())
+        .filter(Boolean))].sort();
+      
+      const uniqueEnrichedRegs = [...new Set((enrichedRegs || [])
+        .map(r => r.regulation_number?.trim())
+        .filter(Boolean))];
+      
+      const enrichedSet = new Set(uniqueEnrichedRegs);
+      const missingRegulations = uniqueSourceRegs.filter(reg => !enrichedSet.has(reg));
+      
+      console.log(`📊 SOURCE REGS: ${uniqueSourceRegs.length} unique | ENRICHED: ${uniqueEnrichedRegs.length} | MISSING: ${missingRegulations.length}`);
       
       if (missingRegulations.length === 0) {
         console.log('✅ No missing regulations found - all enriched');
