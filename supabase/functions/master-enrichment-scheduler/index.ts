@@ -8,6 +8,47 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Helper: Fetch all regulation_number with pagination (avoids 1000-row truncation)
+async function fetchAllRegNumbers(
+  supabase: ReturnType<typeof createClient>,
+  table: string,
+  opts?: { neqGeneral?: boolean; enrichmentV1?: boolean }
+): Promise<string[]> {
+  const pageSize = 1000;
+  let offset = 0;
+  const regs = new Set<string>();
+  let pages = 0;
+
+  while (true) {
+    let query = supabase.from(table).select('regulation_number').range(offset, offset + pageSize - 1);
+
+    if (opts?.neqGeneral) {
+      query = query.neq('regulation_number', 'General');
+    }
+    if (opts?.enrichmentV1) {
+      query = query.eq('enrichment_version', 'v1');
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+
+    if (!data || data.length === 0) break;
+
+    pages++;
+    for (const row of data) {
+      const rn = row.regulation_number?.trim();
+      if (rn) regs.add(rn);
+    }
+
+    if (data.length < pageSize) break; // last page reached
+    offset += pageSize;
+  }
+
+  const result = Array.from(regs).sort();
+  console.log(`📄 Fetched ${table} in ${pages} page(s) → ${result.length} unique regulations`);
+  return result;
+}
+
 interface EnrichmentTask {
   name: string;
   functionName: string;
@@ -368,25 +409,9 @@ serve(async (req) => {
     console.log('📊 COMPUTE MISSING: Calculating missing regulations for BS 7671...');
     
     try {
-      // Compute missing regulations server-side with proper deduplication
-      const { data: allSourceRegs } = await supabase
-        .from('bs7671_embeddings')
-        .select('regulation_number')
-        .neq('regulation_number', 'General');
-      
-      const { data: enrichedRegs } = await supabase
-        .from('regulations_intelligence')
-        .select('regulation_number')
-        .eq('enrichment_version', 'v1');
-      
-      // Explicit deduplication with trim and filter
-      const uniqueSourceRegs = [...new Set((allSourceRegs || [])
-        .map(r => r.regulation_number?.trim())
-        .filter(Boolean))].sort();
-      
-      const uniqueEnrichedRegs = [...new Set((enrichedRegs || [])
-        .map(r => r.regulation_number?.trim())
-        .filter(Boolean))];
+      // Use paginated fetch to get ALL regulations (not truncated at 1000)
+      const uniqueSourceRegs = await fetchAllRegNumbers(supabase, 'bs7671_embeddings', { neqGeneral: true });
+      const uniqueEnrichedRegs = await fetchAllRegNumbers(supabase, 'regulations_intelligence', { enrichmentV1: true });
       
       const enrichedSet = new Set(uniqueEnrichedRegs);
       const missingRegulations = uniqueSourceRegs.filter(reg => !enrichedSet.has(reg));
@@ -421,25 +446,9 @@ serve(async (req) => {
     console.log('🔍 SERVER-SIDE MISSING DETECTION: Computing missing regulations for BS 7671...');
     
     try {
-      // Compute missing regulations server-side with proper deduplication
-      const { data: allSourceRegs } = await supabase
-        .from('bs7671_embeddings')
-        .select('regulation_number')
-        .neq('regulation_number', 'General');
-      
-      const { data: enrichedRegs } = await supabase
-        .from('regulations_intelligence')
-        .select('regulation_number')
-        .eq('enrichment_version', 'v1');
-      
-      // Explicit deduplication with trim and filter
-      const uniqueSourceRegs = [...new Set((allSourceRegs || [])
-        .map(r => r.regulation_number?.trim())
-        .filter(Boolean))].sort();
-      
-      const uniqueEnrichedRegs = [...new Set((enrichedRegs || [])
-        .map(r => r.regulation_number?.trim())
-        .filter(Boolean))];
+      // Use paginated fetch to get ALL regulations (not truncated at 1000)
+      const uniqueSourceRegs = await fetchAllRegNumbers(supabase, 'bs7671_embeddings', { neqGeneral: true });
+      const uniqueEnrichedRegs = await fetchAllRegNumbers(supabase, 'regulations_intelligence', { enrichmentV1: true });
       
       const enrichedSet = new Set(uniqueEnrichedRegs);
       const missingRegulations = uniqueSourceRegs.filter(reg => !enrichedSet.has(reg));
