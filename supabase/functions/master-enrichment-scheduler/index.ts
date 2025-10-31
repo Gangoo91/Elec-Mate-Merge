@@ -1358,9 +1358,6 @@ async function continuousProcessor(
       break;
     }
     
-    // Process batches in parallel with configurable worker pool per task
-    const PARALLEL_WORKERS = task.workerCount || 6; // ✅ Use task-specific worker count (defaults to 6)
-    
     // Clean up stale worker registrations (>5 min old)
     const now = Date.now();
     for (const [jId, info] of activeWorkers.entries()) {
@@ -1393,6 +1390,10 @@ async function continuousProcessor(
       
       // Register this job's workers
       activeWorkers.set(jobId, { workerId: `job-${jobId}`, timestamp: new Date() });
+      
+      // Process batches in parallel with configurable worker pool per task
+      const PARALLEL_WORKERS = task.workerCount || 6; // ✅ Use task-specific worker count (defaults to 6)
+      
       console.log(`🚀 Starting ${PARALLEL_WORKERS} parallel workers for job ${jobId}`);
       
       // Worker function that processes batches until none remain
