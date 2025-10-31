@@ -339,6 +339,8 @@ Deno.serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const startTime = Date.now();
+
   try {
     const requestBody = await req.json();
     console.log('📥 Maintenance-v3 request:', JSON.stringify(requestBody, null, 2));
@@ -399,19 +401,22 @@ Deno.serve(async (req) => {
     const embeddingData = await embeddingResponse.json();
     const queryEmbedding = embeddingData.data[0].embedding;
 
-    // Parallel RAG: Maintenance Knowledge + BS 7671 Intelligence
+    // Conditional RAG based on detail level for faster response
+    const useFullRAG = detailLevel === 'full';
+    
+    // Parallel RAG: Maintenance Knowledge + BS 7671 Intelligence (full mode only)
     const [ragResults, bs7671Intelligence] = await Promise.all([
       supabase.rpc('search_maintenance_hybrid', {
         query_text: expandedQuery,
         query_embedding: queryEmbedding,
         equipment_filter: equipmentType || null,
-        match_count: 12
+        match_count: 6
       }),
-      // ✅ PHASE 1: Add timeout protection for intelligence search
-      Promise.race([
+      // Skip BS 7671 intelligence for quick mode to reduce latency
+      useFullRAG ? Promise.race([
         supabase.rpc('search_bs7671_intelligence_hybrid', {
           query_text: `${expandedQuery} testing inspection certification`,
-          match_count: 12
+          match_count: 6
         }),
         new Promise((resolve) => 
           setTimeout(() => resolve({ data: null, error: { message: 'Intelligence search timeout (8s)' } }), 8000)
@@ -419,7 +424,7 @@ Deno.serve(async (req) => {
       ]).catch((err) => {
         console.error('⚠️ Intelligence search failed, falling back to maintenance KB only:', err);
         return { data: null, error: err };
-      })
+      }) : Promise.resolve({ data: null, error: null })
     ]);
 
     const { data: maintenanceData, error: ragError } = ragResults;
@@ -428,8 +433,8 @@ Deno.serve(async (req) => {
     if (ragError) console.error('❌ Maintenance RAG error:', ragError);
     if (bs7671Error) console.error('❌ BS 7671 Intelligence error:', bs7671Error);
 
-    // ✅ PHASE 1: Enhanced logging with intelligence status
-    console.log(`📚 Retrieved ${maintenanceData?.length || 0} maintenance docs, ${bs7671Data?.length || 0} BS 7671 regs (intelligence ${bs7671Data ? 'OK' : 'FAILED'})`);
+    // Enhanced logging with intelligence status and mode
+    console.log(`📚 Retrieved ${maintenanceData?.length || 0} maintenance docs, ${bs7671Data?.length || 0} BS 7671 regs (mode: ${detailLevel}, intelligence ${bs7671Data ? 'OK' : useFullRAG ? 'FAILED' : 'SKIPPED'})`);
 
     // Build enriched context from both sources
     const maintenanceContext = maintenanceData?.map((doc: any, idx: number) => 
@@ -471,7 +476,7 @@ Provide comprehensive maintenance instructions following the tool schema structu
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'gpt-5-mini-2025-08-07',
+        model: 'gpt-5-nano',
         messages: [
           { role: 'system', content: MAINTENANCE_SYSTEM_PROMPT },
           { role: 'user', content: userMessage }
@@ -625,6 +630,9 @@ Provide comprehensive maintenance instructions following the tool schema structu
     const riskScoreValue = riskLevel === 'critical' ? 90 : 
                            riskLevel === 'high' ? 70 :
                            riskLevel === 'medium' ? 40 : 20;
+
+    const totalExecutionTime = Date.now() - startTime;
+    console.log(`✅ Total execution time: ${totalExecutionTime}ms (${(totalExecutionTime / 1000).toFixed(2)}s)`);
 
     return new Response(
       JSON.stringify({
