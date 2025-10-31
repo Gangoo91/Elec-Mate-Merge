@@ -4167,6 +4167,173 @@ export type Database = {
           },
         ]
       }
+      practical_work: {
+        Row: {
+          content: string
+          created_at: string | null
+          embedding: string | null
+          id: string
+          metadata: Json | null
+          source: string
+          source_id: string
+          source_table: string
+          topic: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+          source: string
+          source_id: string
+          source_table: string
+          topic?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          embedding?: string | null
+          id?: string
+          metadata?: Json | null
+          source?: string
+          source_id?: string
+          source_table?: string
+          topic?: string | null
+        }
+        Relationships: []
+      }
+      practical_work_intelligence: {
+        Row: {
+          acceptance_criteria: Json | null
+          activity_types: string[]
+          bs7671_regulations: string[] | null
+          bs7671_zones: string[] | null
+          cable_routes: string[] | null
+          common_defects: string[] | null
+          common_failures: Json[] | null
+          confidence_score: number | null
+          created_at: string | null
+          diagnostic_tests: string[] | null
+          eicr_observation_codes: string[] | null
+          equipment_category: string | null
+          equipment_subcategory: string | null
+          fixing_intervals: Json | null
+          id: string
+          inspection_checklist: Json[] | null
+          installation_method: string | null
+          keywords: string[] | null
+          maintenance_intervals: Json | null
+          maintenance_tasks: Json[] | null
+          materials_needed: Json[] | null
+          other_standards: string[] | null
+          practical_work_id: string
+          related_topics: string[] | null
+          replacement_criteria: string[] | null
+          safety_requirements: Json | null
+          skill_level: string | null
+          team_size: number | null
+          termination_methods: string[] | null
+          test_equipment_required: string[] | null
+          test_frequency: string | null
+          test_procedures: Json[] | null
+          tools_required: string[] | null
+          troubleshooting_steps: string[] | null
+          typical_duration_minutes: number | null
+          updated_at: string | null
+          visual_inspection_points: string[] | null
+          wear_indicators: string[] | null
+        }
+        Insert: {
+          acceptance_criteria?: Json | null
+          activity_types?: string[]
+          bs7671_regulations?: string[] | null
+          bs7671_zones?: string[] | null
+          cable_routes?: string[] | null
+          common_defects?: string[] | null
+          common_failures?: Json[] | null
+          confidence_score?: number | null
+          created_at?: string | null
+          diagnostic_tests?: string[] | null
+          eicr_observation_codes?: string[] | null
+          equipment_category?: string | null
+          equipment_subcategory?: string | null
+          fixing_intervals?: Json | null
+          id?: string
+          inspection_checklist?: Json[] | null
+          installation_method?: string | null
+          keywords?: string[] | null
+          maintenance_intervals?: Json | null
+          maintenance_tasks?: Json[] | null
+          materials_needed?: Json[] | null
+          other_standards?: string[] | null
+          practical_work_id: string
+          related_topics?: string[] | null
+          replacement_criteria?: string[] | null
+          safety_requirements?: Json | null
+          skill_level?: string | null
+          team_size?: number | null
+          termination_methods?: string[] | null
+          test_equipment_required?: string[] | null
+          test_frequency?: string | null
+          test_procedures?: Json[] | null
+          tools_required?: string[] | null
+          troubleshooting_steps?: string[] | null
+          typical_duration_minutes?: number | null
+          updated_at?: string | null
+          visual_inspection_points?: string[] | null
+          wear_indicators?: string[] | null
+        }
+        Update: {
+          acceptance_criteria?: Json | null
+          activity_types?: string[]
+          bs7671_regulations?: string[] | null
+          bs7671_zones?: string[] | null
+          cable_routes?: string[] | null
+          common_defects?: string[] | null
+          common_failures?: Json[] | null
+          confidence_score?: number | null
+          created_at?: string | null
+          diagnostic_tests?: string[] | null
+          eicr_observation_codes?: string[] | null
+          equipment_category?: string | null
+          equipment_subcategory?: string | null
+          fixing_intervals?: Json | null
+          id?: string
+          inspection_checklist?: Json[] | null
+          installation_method?: string | null
+          keywords?: string[] | null
+          maintenance_intervals?: Json | null
+          maintenance_tasks?: Json[] | null
+          materials_needed?: Json[] | null
+          other_standards?: string[] | null
+          practical_work_id?: string
+          related_topics?: string[] | null
+          replacement_criteria?: string[] | null
+          safety_requirements?: Json | null
+          skill_level?: string | null
+          team_size?: number | null
+          termination_methods?: string[] | null
+          test_equipment_required?: string[] | null
+          test_frequency?: string | null
+          test_procedures?: Json[] | null
+          tools_required?: string[] | null
+          troubleshooting_steps?: string[] | null
+          typical_duration_minutes?: number | null
+          updated_at?: string | null
+          visual_inspection_points?: string[] | null
+          wear_indicators?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "practical_work_intelligence_practical_work_id_fkey"
+            columns: ["practical_work_id"]
+            isOneToOne: true
+            referencedRelation: "practical_work"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       price_history: {
         Row: {
           id: string
@@ -7546,6 +7713,34 @@ export type Database = {
           metadata: Json
           source: string
           topic: string
+        }[]
+      }
+      search_practical_work_intelligence: {
+        Args: {
+          filter_activity_types?: string[]
+          filter_equipment?: string[]
+          filter_skill_level?: string[]
+          match_count?: number
+          query_embedding: string
+          query_text: string
+        }
+        Returns: {
+          activity_types: string[]
+          bs7671_regulations: string[]
+          common_failures: Json[]
+          content: string
+          equipment_category: string
+          final_score: number
+          id: string
+          inspection_checklist: Json[]
+          keyword_score: number
+          maintenance_intervals: Json
+          safety_requirements: Json
+          similarity_score: number
+          skill_level: string
+          test_procedures: Json[]
+          tools_required: string[]
+          typical_duration_minutes: number
         }[]
       }
       search_pricing: {
