@@ -219,39 +219,47 @@ export const QuoteInvoiceDashboard = () => {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors">
-          <CardContent className="p-5 md:p-6 text-center space-y-2">
-            <PoundSterling className="h-8 w-8 md:h-10 md:w-10 text-elec-yellow mx-auto" />
-            <div className="text-2xl md:text-3xl font-bold text-primary">{quotesReady.length}</div>
-            <div className="text-xs md:text-sm text-muted-foreground">Ready for Invoice</div>
+          <CardContent className="p-4 flex items-center gap-3 md:flex-col md:text-center md:space-y-2 md:p-6">
+            <PoundSterling className="h-5 w-5 md:h-10 md:w-10 text-elec-yellow md:mx-auto flex-shrink-0" />
+            <div className="flex-1">
+              <div className="text-xl md:text-3xl font-bold text-primary">{quotesReady.length}</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Ready for Invoice</div>
+            </div>
           </CardContent>
         </Card>
 
         <Card className="border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors">
-          <CardContent className="p-5 md:p-6 text-center space-y-2">
-            <FileCheck className="h-8 w-8 md:h-10 md:w-10 text-blue-400 mx-auto" />
-            <div className="text-2xl md:text-3xl font-bold text-primary">{stats.totalInvoicesThisMonth}</div>
-            <div className="text-xs md:text-sm text-muted-foreground">Invoices This Month</div>
+          <CardContent className="p-4 flex items-center gap-3 md:flex-col md:text-center md:space-y-2 md:p-6">
+            <FileCheck className="h-5 w-5 md:h-10 md:w-10 text-blue-400 md:mx-auto flex-shrink-0" />
+            <div className="flex-1">
+              <div className="text-xl md:text-3xl font-bold text-primary">{stats.totalInvoicesThisMonth}</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Invoices This Month</div>
+            </div>
           </CardContent>
         </Card>
 
         <Card className="border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors">
-          <CardContent className="p-5 md:p-6 text-center space-y-2">
-            <TrendingUp className="h-8 w-8 md:h-10 md:w-10 text-orange-400 mx-auto" />
-            <div className="text-2xl md:text-3xl font-bold text-primary">{formatCurrency(stats.outstandingValue)}</div>
-            <div className="text-xs md:text-sm text-muted-foreground">Outstanding</div>
-            {stats.overdueCount > 0 && (
-              <div className="text-xs text-destructive font-medium mt-1">
-                {stats.overdueCount} overdue • {formatCurrency(stats.overdueValue)}
-              </div>
-            )}
+          <CardContent className="p-4 flex items-center gap-3 md:flex-col md:text-center md:space-y-2 md:p-6">
+            <TrendingUp className="h-5 w-5 md:h-10 md:w-10 text-orange-400 md:mx-auto flex-shrink-0" />
+            <div className="flex-1">
+              <div className="text-xl md:text-3xl font-bold text-primary">{formatCurrency(stats.outstandingValue)}</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Outstanding</div>
+              {stats.overdueCount > 0 && (
+                <div className="text-xs text-destructive font-medium mt-1">
+                  {stats.overdueCount} overdue • {formatCurrency(stats.overdueValue)}
+                </div>
+              )}
+            </div>
           </CardContent>
         </Card>
 
         <Card className="border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors">
-          <CardContent className="p-5 md:p-6 text-center space-y-2">
-            <PoundSterling className="h-8 w-8 md:h-10 md:w-10 text-green-400 mx-auto" />
-            <div className="text-2xl md:text-3xl font-bold text-primary">{formatCurrency(stats.paidValue)}</div>
-            <div className="text-xs md:text-sm text-muted-foreground">Paid</div>
+          <CardContent className="p-4 flex items-center gap-3 md:flex-col md:text-center md:space-y-2 md:p-6">
+            <PoundSterling className="h-5 w-5 md:h-10 md:w-10 text-green-400 md:mx-auto flex-shrink-0" />
+            <div className="flex-1">
+              <div className="text-xl md:text-3xl font-bold text-primary">{formatCurrency(stats.paidValue)}</div>
+              <div className="text-xs md:text-sm text-muted-foreground">Paid</div>
+            </div>
           </CardContent>
         </Card>
       </div>
