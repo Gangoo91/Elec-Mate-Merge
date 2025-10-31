@@ -411,10 +411,10 @@ async function processInBackground(
         if (error instanceof TimeoutError) {
           console.error(`⏱️ TIMEOUT: ${reg.regulation_number} exceeded 60s - marking as failed`);
           failed++;
-          continue;
+        } else {
+          console.error(`❌ Error processing ${reg.regulation_number}:`, error);
+          failed++;
         }
-        console.error(`❌ Error processing ${reg.regulation_number}:`, error);
-        failed++;
       }
     }
     
