@@ -103,9 +103,8 @@ const QuoteBuilder = () => {
       <Button
         variant="ghost"
         size="icon"
-        className="fixed top-4 left-4 z-[100] md:hidden bg-elec-card backdrop-blur-sm border-2 border-elec-yellow/40 shadow-xl h-12 w-12 pointer-events-auto hover:bg-elec-yellow/20 active:scale-95 transition-all"
+        className="fixed top-4 left-4 z-50 md:hidden bg-elec-card/90 backdrop-blur-sm border border-elec-yellow/20 shadow-lg h-10 w-10"
         onClick={() => {
-          console.log('Back button clicked');
           if (window.history.length > 1) {
             navigate(-1);
           } else {
@@ -113,7 +112,7 @@ const QuoteBuilder = () => {
           }
         }}
       >
-        <ArrowLeft className="h-6 w-6 text-elec-yellow" />
+        <ArrowLeft className="h-5 w-5" />
       </Button>
 
       {/* Enhanced Header */}
