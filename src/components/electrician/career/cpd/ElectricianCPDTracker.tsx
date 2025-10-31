@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
-import { Clock, Target, TrendingUp, Award, ClipboardList, History, Settings } from "lucide-react";
+import { Clock, Target, TrendingUp, Award, ClipboardList, History, Settings, Construction } from "lucide-react";
 import ComplianceDashboard from "./enhanced/ComplianceDashboard";
 import ActivityTemplates from "./enhanced/ActivityTemplates";
 import AnalyticsDashboard from "./enhanced/AnalyticsDashboard";
@@ -19,6 +19,7 @@ const ElectricianCPDTracker = () => {
   const [activeTab, setActiveTab] = useState("compliance");
   const [isMobile, setIsMobile] = useState(false);
   const [showProfessionalBodyManager, setShowProfessionalBodyManager] = useState(false);
+  const [showComingSoonBanner, setShowComingSoonBanner] = useState(true);
   const { generatePortfolio, loading } = useUnifiedCPD();
   
   // Initialize auto-tracking for the CPD tracker
@@ -91,6 +92,30 @@ const ElectricianCPDTracker = () => {
             </button>
           </div>
         </div>
+
+        {/* Coming Soon Banner */}
+        {showComingSoonBanner && (
+          <div className="mx-4 mt-4 relative bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border-2 border-elec-yellow/40 rounded-lg p-4">
+            <button
+              onClick={() => setShowComingSoonBanner(false)}
+              className="absolute top-2 right-2 text-muted-foreground hover:text-white transition-colors"
+              aria-label="Dismiss banner"
+            >
+              ✕
+            </button>
+            <div className="flex items-start gap-3 pr-6">
+              <Construction className="h-6 w-6 text-elec-yellow flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="text-lg font-bold text-white mb-1">
+                  Coming Soon
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Advanced compliance tracking and professional body integration features are being enhanced. Current features remain fully operational.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Mobile Content */}
         <div className="p-4">
@@ -273,8 +298,32 @@ const ElectricianCPDTracker = () => {
         </div>
       </div>
 
+      {/* Coming Soon Banner */}
+      {showComingSoonBanner && (
+        <div className="relative bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border-2 border-elec-yellow/40 rounded-lg p-6">
+          <button
+            onClick={() => setShowComingSoonBanner(false)}
+            className="absolute top-2 right-2 text-muted-foreground hover:text-white transition-colors"
+            aria-label="Dismiss banner"
+          >
+            ✕
+          </button>
+          <div className="flex items-start gap-4 pr-6">
+            <Construction className="h-8 w-8 text-elec-yellow flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="text-xl font-bold text-white mb-1">
+                Coming Soon
+              </h3>
+              <p className="text-base text-muted-foreground">
+                Advanced compliance tracking and professional body integration features are being enhanced. Current features remain fully operational.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Main Content */}
-      <DropdownTabs 
+      <DropdownTabs
         tabs={cpdTabs}
         defaultValue={activeTab}
         placeholder="Select CPD section"
