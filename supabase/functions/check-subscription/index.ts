@@ -59,14 +59,22 @@ serve(async (req) => {
     if (customers.data.length === 0) {
       logger.info("No customer found, updating unsubscribed state");
       
-      await withTimeout(
-        supabaseClient.from("profiles").update({
-          subscribed: false,
-          updated_at: new Date().toISOString(),
-        }).eq('id', user.id),
-        Timeouts.QUICK,
-        'profile update (no customer)'
-      );
+      try {
+        const { error: updateError } = await withTimeout(
+          supabaseClient.from("profiles").update({
+            subscribed: false,
+            updated_at: new Date().toISOString(),
+          }).eq('id', user.id),
+          Timeouts.QUICK,
+          'profile update (no customer)'
+        );
+        
+        if (updateError) {
+          logger.error("Failed to update profile", { error: updateError.message });
+        }
+      } catch (timeoutError) {
+        logger.error("Profile update timed out, continuing anyway", { error: timeoutError });
+      }
       
       return new Response(JSON.stringify({ subscribed: false }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -120,26 +128,42 @@ serve(async (req) => {
       logger.info("Determined subscription tier", { priceId, amount, subscriptionTier });
       
       // Update profile in database
-      await withTimeout(
-        supabaseClient.from("profiles").update({
-          subscribed: true,
-          updated_at: new Date().toISOString(),
-        }).eq('id', user.id),
-        Timeouts.QUICK,
-        'profile update (subscribed)'
-      );
+      try {
+        const { error: updateError } = await withTimeout(
+          supabaseClient.from("profiles").update({
+            subscribed: true,
+            updated_at: new Date().toISOString(),
+          }).eq('id', user.id),
+          Timeouts.QUICK,
+          'profile update (subscribed)'
+        );
+        
+        if (updateError) {
+          logger.error("Failed to update profile", { error: updateError.message });
+        }
+      } catch (timeoutError) {
+        logger.error("Profile update timed out, continuing anyway", { error: timeoutError });
+      }
     } else {
       logger.info("No active subscription found");
       
       // Update profile in database to show not subscribed
-      await withTimeout(
-        supabaseClient.from("profiles").update({
-          subscribed: false,
-          updated_at: new Date().toISOString(),
-        }).eq('id', user.id),
-        Timeouts.QUICK,
-        'profile update (not subscribed)'
-      );
+      try {
+        const { error: updateError } = await withTimeout(
+          supabaseClient.from("profiles").update({
+            subscribed: false,
+            updated_at: new Date().toISOString(),
+          }).eq('id', user.id),
+          Timeouts.QUICK,
+          'profile update (not subscribed)'
+        );
+        
+        if (updateError) {
+          logger.error("Failed to update profile", { error: updateError.message });
+        }
+      } catch (timeoutError) {
+        logger.error("Profile update timed out, continuing anyway", { error: timeoutError });
+      }
     }
 
     logger.info("Updated database with subscription info", { subscribed: hasActiveSub, subscriptionTier });
