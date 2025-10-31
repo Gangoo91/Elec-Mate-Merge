@@ -15,6 +15,7 @@ CRITICAL OUTPUT REQUIREMENTS:
 3. **BS 7671 Compliance**: Reference specific regulations for each step where applicable
 4. **Practical Focus**: Include common faults, diagnosis sequences, and troubleshooting steps
 5. **Safety First**: Always specify isolation procedures, PPE, and safe working practices
+6. **MANDATORY**: You MUST call the provide_maintenance_guidance tool with ALL sections filled. The maintenanceSchedule array MUST contain at least 2-4 tasks
 
 YOUR ROLE AS FINAL REVIEWER:
 When installer and health-safety agent outputs are provided, you must:
@@ -527,10 +528,29 @@ Provide comprehensive maintenance instructions following the tool schema structu
     // Extract tool call result
     const toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
     if (!toolCall) {
+      console.error('❌ No tool call in AI response. Full response:', JSON.stringify(aiData, null, 2));
       throw new Error('No tool call in AI response');
     }
 
-    const maintenanceGuidance = JSON.parse(toolCall.function.arguments);
+    console.log('🔍 Tool call arguments preview:', toolCall.function.arguments.substring(0, 500));
+    
+    let maintenanceGuidance;
+    try {
+      maintenanceGuidance = JSON.parse(toolCall.function.arguments);
+      console.log('✅ Parsed tool arguments successfully');
+      console.log('📊 Guidance structure:', {
+        hasResponse: !!maintenanceGuidance.response,
+        hasEquipmentSummary: !!maintenanceGuidance.equipmentSummary,
+        preWorkCount: maintenanceGuidance.preWorkRequirements?.length || 0,
+        visualInspectionCount: maintenanceGuidance.visualInspection?.length || 0,
+        testingCount: maintenanceGuidance.testingProcedures?.length || 0,
+        scheduleCount: maintenanceGuidance.maintenanceSchedule?.length || 0,
+      });
+    } catch (parseError) {
+      console.error('❌ Failed to parse tool arguments:', parseError);
+      console.error('Raw arguments:', toolCall.function.arguments);
+      throw new Error('Failed to parse AI tool response');
+    }
 
     // ✅ PHASE 1: Validate response structure before returning
     if (!maintenanceGuidance || typeof maintenanceGuidance !== 'object') {
@@ -656,6 +676,34 @@ Provide comprehensive maintenance instructions following the tool schema structu
 
     // Calculate all summary metrics
     const calculatedSchedule = maintenanceGuidance.maintenanceSchedule || [];
+    
+    // ✅ Add fallback tasks if schedule is empty
+    if (calculatedSchedule.length === 0) {
+      console.warn('⚠️ AI returned empty schedule. Adding fallback tasks.');
+      calculatedSchedule.push({
+        taskName: 'Visual Inspection',
+        description: 'Perform thorough visual inspection of equipment condition, connections, and enclosure integrity',
+        frequency: 'quarterly',
+        estimatedDuration: 0.5,
+        priority: 'high',
+        requiredTools: ['Torch', 'Visual inspection checklist'],
+        safetyRequirements: 'Ensure equipment is de-energized and locked out',
+        acceptanceCriteria: 'No visible damage, corrosion, or loose connections',
+        bs7671Reference: 'BS 7671:2018+A3:2024 Reg 641.1'
+      });
+      calculatedSchedule.push({
+        taskName: 'Periodic Testing',
+        description: 'Conduct electrical safety testing including insulation resistance and earth continuity',
+        frequency: 'annually',
+        estimatedDuration: 1.0,
+        priority: 'high',
+        requiredTools: ['Insulation resistance tester', 'Earth continuity tester', 'Multimeter'],
+        safetyRequirements: 'Follow safe isolation procedures, use appropriate PPE',
+        acceptanceCriteria: 'Test results within acceptable limits per BS 7671',
+        bs7671Reference: 'BS 7671:2018+A3:2024 Chapter 64'
+      });
+    }
+    
     const riskLevel = maintenanceGuidance.equipmentSummary?.overallRiskLevel || 'medium';
     const riskScoreValue = riskLevel === 'critical' ? 90 : 
                            riskLevel === 'high' ? 70 :
@@ -663,6 +711,7 @@ Provide comprehensive maintenance instructions following the tool schema structu
 
     const totalExecutionTime = Date.now() - startTime;
     console.log(`✅ Total execution time: ${totalExecutionTime}ms (${(totalExecutionTime / 1000).toFixed(2)}s)`);
+    console.log(`📋 Final schedule: ${calculatedSchedule.length} tasks`);
 
     return new Response(
       JSON.stringify({

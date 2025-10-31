@@ -256,6 +256,16 @@ export const useMaintenanceAdvisor = () => {
         return;
       }
 
+      // ✅ Check if schedule has tasks
+      if (!data.schedule.schedule || data.schedule.schedule.length === 0) {
+        console.warn('Empty schedule received:', data.schedule);
+        toast.warning('No maintenance tasks generated', {
+          description: 'The AI could not identify specific maintenance tasks. Try providing more equipment details.'
+        });
+        setState('input');
+        return;
+      }
+
       setResults(data.schedule);
       setState('results');
       
@@ -265,7 +275,7 @@ export const useMaintenanceAdvisor = () => {
           description: `Missing: ${data.schedule.missingSections?.join(', ') || 'unknown sections'}`
         });
       } else {
-        toast.success('Maintenance schedule generated', {
+        toast.success(`Maintenance schedule generated (${data.schedule.schedule.length} tasks)`, {
           description: 'Plan created successfully'
         });
       }

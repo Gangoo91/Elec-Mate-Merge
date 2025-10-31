@@ -317,8 +317,18 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           </div>
         </CardHeader>
         <CardContent>
-          <Accordion type="single" collapsible className="space-y-2">
-            {results.schedule?.map((task, idx) => (
+          {!results.schedule || results.schedule.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <AlertCircle className="h-12 w-12 text-elec-yellow/50 mb-4" />
+              <h3 className="text-lg font-semibold text-elec-light mb-2">No Maintenance Tasks Identified</h3>
+              <p className="text-sm text-elec-light/60 max-w-md">
+                The system could not generate specific maintenance tasks for this equipment. 
+                Please try again with more detailed equipment information or contact support.
+              </p>
+            </div>
+          ) : (
+            <Accordion type="single" collapsible className="space-y-2">
+              {results.schedule.map((task, idx) => (
               <AccordionItem 
                 key={idx} 
                 value={`task-${idx}`}
@@ -406,8 +416,9 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                   </div>
                 </AccordionContent>
               </AccordionItem>
-            ))}
-          </Accordion>
+              ))}
+            </Accordion>
+          )}
         </CardContent>
       </Card>
 
