@@ -143,15 +143,14 @@ export default function EnrichmentConsole() {
         .from(config.targetTable)
         .select('*', { count: 'exact', head: true });
 
-      // Calculate target facets based on task
-      // BS 7671: 2,557 regs × 25 average facets = ~64,000
-      // Others: 1:1 ratio (no facet expansion)
+      // Calculate target facets based on task - use max to prevent >100% display
       const avgFacetsPerReg = selectedTask === 'bs7671' ? 25 : 1;
-      const targetFacets = (sourceTotal || 0) * avgFacetsPerReg;
+      const projectedTargetFacets = (sourceTotal || 0) * avgFacetsPerReg;
+      const targetFacets = Math.max(facetsCreated || 0, projectedTargetFacets);
 
       const sourceEnriched = uniqueEnrichedRegulations.size;
-      const remaining = Math.max(0, targetFacets - (facetsCreated || 0));
-      const progress = targetFacets > 0 ? Math.round(((facetsCreated || 0) / targetFacets) * 100) : 0;
+      const remaining = Math.max(0, sourceTotal - sourceEnriched); // Remaining unique regs, not facets
+      const progress = sourceTotal > 0 ? Math.round((sourceEnriched / sourceTotal) * 100) : 0; // Based on unique regs
 
       setStats({ 
         sourceTotal: sourceTotal || 0, 
@@ -296,68 +295,20 @@ export default function EnrichmentConsole() {
   };
 
   const handleCompleteMissing = async () => {
-    if (missingRegulations.length === 0) {
-      toast.error('No missing regulations identified. Run "Find Missing" first.');
-      return;
-    }
-
     // Pre-flight integrity check
     if (!integrityCheck) {
       toast.error('Run "Verify Data Integrity" first to establish baseline');
-      return;
-    }
-
-    // Sanity check: If we're about to enrich fewer than 10 regs but showing 100+ missing, something is wrong
-    if (missingRegulations.length > 100 && stats.sourceTotal < 100) {
-      toast.error('Data integrity issue detected', {
-        description: 'Source data mismatch. Please refresh the page and try again.'
-      });
       return;
     }
     
     setIsLoading(true);
     
     try {
-      // Step 1: Abort all existing jobs
-      toast.info('Clearing old jobs before starting fresh...');
-      const abortResponse = await supabase.functions.invoke('master-enrichment-scheduler', {
-        body: { action: 'abort_all' }
-      });
-      
-      if (abortResponse.error) throw abortResponse.error;
-      
-      // Step 2: Poll until no active jobs remain (max 10s)
-      const maxWaitTime = 10000;
-      const pollInterval = 500;
-      const startTime = Date.now();
-      
-      while (Date.now() - startTime < maxWaitTime) {
-        const { data: jobsData } = await supabase
-          .from('batch_jobs')
-          .select('id, status')
-          .eq('job_type', config.jobType)
-          .in('status', ['pending', 'processing']);
-        
-        const activeJobs = jobsData || [];
-        
-        if (activeJobs.length === 0) {
-          console.log('✅ All jobs cleared, ready to start fresh');
-          break;
-        }
-        
-        console.log(`⏳ Waiting for ${activeJobs.length} active jobs to clear...`);
-        await new Promise(resolve => setTimeout(resolve, pollInterval));
-      }
-      
-      // Step 3: Start new job with forceNewJob flag
-      toast.info(`Starting fresh job for ${missingRegulations.length} missing regulations...`);
+      // Call start_missing action - server computes missing regs
+      toast.info('Starting server-side missing regulations detection...');
       const startResponse = await supabase.functions.invoke('master-enrichment-scheduler', {
         body: { 
-          action: 'start',
-          forceNewJob: true,
-          regulationNumbers: missingRegulations,
-          scope: 'single',
-          jobType: config.jobType,
+          action: 'start_missing',
           chunkSize: 10,
           workers: 6
         }
@@ -367,11 +318,17 @@ export default function EnrichmentConsole() {
       
       const result = startResponse.data;
       
+      if (result?.missing_count === 0) {
+        toast.success('All regulations already enriched');
+        await loadStatus();
+        return;
+      }
+      
       if (result?.jobId && result?.batchesCreated) {
-        toast.success(`New job created: ${result.batchesCreated} batches for ${missingRegulations.length} regulations`, {
+        toast.success(`New job created: ${result.batchesCreated} batches for ${result.missing_count} missing regulations`, {
           description: '⏳ Monitor "Live Worker Activity" below for real-time progress'
         });
-        console.log(`📊 Job ID: ${result.jobId}, Batches: ${result.batchesCreated}`);
+        console.log(`📊 Job ID: ${result.jobId}, Batches: ${result.batchesCreated}, Missing: ${result.missing_count}`);
         
         // Start monitoring for completion
         const jobId = result.jobId;
@@ -478,12 +435,12 @@ export default function EnrichmentConsole() {
 
   const getStuckBatches = () => {
     const now = Date.now();
-    const threeMinutesAgo = now - (3 * 60 * 1000);
+    const fourPointFiveMinutesAgo = now - (4.5 * 60 * 1000); // ✅ Updated to 4.5 minutes
     
     return batches.filter(b => 
       b.status === 'processing' && 
       b.started_at && 
-      new Date(b.started_at).getTime() < threeMinutesAgo
+      new Date(b.started_at).getTime() < fourPointFiveMinutesAgo
     );
   };
 
@@ -523,8 +480,8 @@ export default function EnrichmentConsole() {
 
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           <div className="text-center p-3 bg-muted rounded-md">
-            <div className="text-2xl font-bold text-primary">{stats.targetFacets.toLocaleString()}</div>
-            <div className="text-xs text-muted-foreground">Target Facets</div>
+            <div className="text-2xl font-bold text-primary">{stats.sourceEnriched}/{stats.sourceTotal}</div>
+            <div className="text-xs text-muted-foreground">Unique Regulations</div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-success">{stats.facetsCreated.toLocaleString()}</div>
@@ -532,11 +489,11 @@ export default function EnrichmentConsole() {
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-warning">{stats.remaining.toLocaleString()}</div>
-            <div className="text-xs text-muted-foreground">Remaining</div>
+            <div className="text-xs text-muted-foreground">Remaining Regs</div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
-            <div className="text-2xl font-bold text-chart-2">{stats.sourceEnriched}/{stats.sourceTotal}</div>
-            <div className="text-xs text-muted-foreground">Source Regs</div>
+            <div className="text-2xl font-bold text-chart-2">{stats.progress}%</div>
+            <div className="text-xs text-muted-foreground">Progress</div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-chart-3">{batches.length}</div>
@@ -582,33 +539,15 @@ export default function EnrichmentConsole() {
             </MobileButton>
             
             <MobileButton
-              onClick={handleFindMissing}
-              disabled={isLoading}
+              onClick={handleCompleteMissing}
+              disabled={isLoading || !integrityCheck}
               size={isMobile ? 'default' : 'sm'}
-              variant="outline"
             >
-              <Database className="w-4 h-4 mr-2" />
-              Find Missing
+              <Play className="w-4 h-4 mr-2" />
+              Complete Missing
+              {!integrityCheck && ' (Verify First)'}
             </MobileButton>
-            
-            {missingRegulations.length > 0 && (
-              <MobileButton
-                onClick={handleCompleteMissing}
-                disabled={isLoading || !integrityCheck}
-                size={isMobile ? 'default' : 'sm'}
-              >
-                <Play className="w-4 h-4 mr-2" />
-                Complete {missingRegulations.length} Missing
-                {!integrityCheck && ' (Verify First)'}
-              </MobileButton>
-            )}
           </div>
-          {missingRegulations.length > 0 && (
-            <div className="mt-3 p-2 bg-muted rounded text-xs font-mono">
-              Ready: {missingRegulations.slice(0, 10).join(', ')}
-              {missingRegulations.length > 10 && ` + ${missingRegulations.length - 10} more`}
-            </div>
-          )}
         </Card>
       )}
 
@@ -815,7 +754,7 @@ export default function EnrichmentConsole() {
                 {stuckBatches.length} Stuck Batch{stuckBatches.length > 1 ? 'es' : ''} Detected
               </h4>
               <p className="text-sm text-muted-foreground mb-3">
-                These batches have been processing for over 3 minutes without progress
+                These batches have been processing for over 4.5 minutes without progress
               </p>
               <MobileButton 
                 variant="destructive" 

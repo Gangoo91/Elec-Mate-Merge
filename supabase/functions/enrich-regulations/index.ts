@@ -535,7 +535,7 @@ CRITICAL: Generate MULTIPLE facets per regulation to capture all distinct use ca
 
   // Fix timeout: Move AbortController to fetch options (not body)
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 90000); // ✅ Increased to 90s
+  const timeoutId = setTimeout(() => controller.abort(), 240000); // ✅ Increased to 4 minutes (240s)
   
   let response: Response | null = null; // ✅ Declare outside try block to fix scoping bug
   
@@ -572,7 +572,7 @@ CRITICAL: Generate MULTIPLE facets per regulation to capture all distinct use ca
   } catch (error: any) {
     clearTimeout(timeoutId);
     if (error.name === 'AbortError') {
-      throw new Error('GPT-5 request timed out after 90s');
+      throw new Error('GPT-5 Mini request timed out after 4 minutes (240s)');
     }
     throw error;
   }

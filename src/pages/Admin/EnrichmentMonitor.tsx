@@ -36,6 +36,9 @@ export default function EnrichmentMonitor() {
             Multi-Facet
           </Badge>
           <Badge variant="outline" className="font-mono text-xs">
+            4m Timeout
+          </Badge>
+          <Badge variant="outline" className="font-mono text-xs">
             30s Heartbeat
           </Badge>
         </div>

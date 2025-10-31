@@ -189,7 +189,7 @@ serve(async (req) => {
   if (action === 'recover') {
     console.log('🔧 Recovering stuck batches...');
     
-    const threeMinutesAgo = new Date(Date.now() - 3 * 60 * 1000).toISOString();
+    const threeMinutesAgo = new Date(Date.now() - 4.5 * 60 * 1000).toISOString(); // ✅ Increased to 4.5 minutes
     
     const { data: stuckBatches } = await supabase
       .from('batch_progress')
@@ -356,6 +356,146 @@ serve(async (req) => {
       return new Response(JSON.stringify({
         success: false,
         error: error.message || 'Failed to purge jobs'
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+  }
+  
+  // NEW ACTION: start_missing - Server-side missing regulations detection and job creation
+  if (action === 'start_missing') {
+    console.log('🔍 SERVER-SIDE MISSING DETECTION: Computing missing regulations for BS 7671...');
+    
+    try {
+      // Compute missing regulations server-side
+      const { data: allSourceRegs } = await supabase
+        .from('bs7671_embeddings')
+        .select('regulation_number')
+        .neq('regulation_number', 'General');
+      
+      const { data: enrichedRegs } = await supabase
+        .from('regulations_intelligence')
+        .select('regulation_number')
+        .eq('enrichment_version', 'v1');
+      
+      const sourceSet = new Set((allSourceRegs || []).map(r => r.regulation_number));
+      const enrichedSet = new Set((enrichedRegs || []).map(r => r.regulation_number));
+      const missingRegulations = Array.from(sourceSet).filter(reg => !enrichedSet.has(reg));
+      
+      if (missingRegulations.length === 0) {
+        console.log('✅ No missing regulations found - all enriched');
+        return new Response(JSON.stringify({
+          success: true,
+          message: 'All regulations already enriched',
+          missing_count: 0
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+      
+      console.log(`🎯 Found ${missingRegulations.length} missing regulations`);
+      
+      // Abort existing jobs
+      const { data: existingJobs } = await supabase
+        .from('batch_jobs')
+        .select('id')
+        .eq('job_type', 'enrich_bs7671_embeddings')
+        .in('status', ['pending', 'processing']);
+      
+      for (const job of existingJobs || []) {
+        await supabase
+          .from('batch_jobs')
+          .update({
+            status: 'aborted',
+            completed_at: new Date().toISOString(),
+            error_message: 'Aborted to start fresh missing-regs job'
+          })
+          .eq('id', job.id);
+        
+        await supabase
+          .from('batch_progress')
+          .delete()
+          .eq('job_id', job.id);
+      }
+      
+      // Create new job with missing regulations list
+      const batchSize = chunkSize || 10;
+      const totalBatches = Math.ceil(missingRegulations.length / batchSize);
+      
+      const { data: newJob, error: jobError } = await supabase
+        .from('batch_jobs')
+        .insert({
+          job_type: 'enrich_bs7671_embeddings',
+          status: 'processing',
+          total_batches: totalBatches,
+          metadata: {
+            source: 'start_missing',
+            missingRegulations: missingRegulations,
+            batchSize: batchSize,
+            workers: workers || 6
+          }
+        })
+        .select()
+        .single();
+      
+      if (jobError || !newJob) {
+        throw new Error('Failed to create missing-regs job');
+      }
+      
+      // Create batches with regulation_number scoping
+      const batches = [];
+      for (let i = 0; i < missingRegulations.length; i += batchSize) {
+        const chunk = missingRegulations.slice(i, i + batchSize);
+        batches.push({
+          job_id: newJob.id,
+          batch_number: Math.floor(i / batchSize),
+          status: 'pending',
+          data: {
+            regulations: chunk,
+            startIndex: i
+          }
+        });
+      }
+      
+      const { error: batchError } = await supabase
+        .from('batch_progress')
+        .insert(batches);
+      
+      if (batchError) {
+        throw new Error('Failed to create batches');
+      }
+      
+      console.log(`✅ Created job ${newJob.id} with ${batches.length} batches`);
+      
+      // Launch workers
+      const workersStarted = Math.min(workers || 6, batches.length);
+      for (let i = 0; i < workersStarted; i++) {
+        supabase.functions.invoke('enrich-regulations', {
+          body: {
+            jobId: newJob.id,
+            batchSize: batchSize,
+            startFrom: 0
+          }
+        }).catch(err => console.error(`Worker ${i} failed:`, err));
+      }
+      
+      return new Response(JSON.stringify({
+        success: true,
+        message: `Started missing-regs job for ${missingRegulations.length} regulations`,
+        jobId: newJob.id,
+        batchesCreated: batches.length,
+        workersStarted: workersStarted,
+        missing_count: missingRegulations.length
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+      
+    } catch (error: any) {
+      console.error('❌ start_missing failed:', error);
+      return new Response(JSON.stringify({
+        success: false,
+        error: error.message || 'Failed to start missing-regs job'
       }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
