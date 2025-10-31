@@ -468,17 +468,22 @@ serve(async (req) => {
       
       console.log(`✅ Created job ${newJob.id} with ${batches.length} batches`);
       
-      // Launch workers
-      const workersStarted = Math.min(workers || 6, batches.length);
-      for (let i = 0; i < workersStarted; i++) {
-        supabase.functions.invoke('enrich-regulations', {
-          body: {
-            jobId: newJob.id,
-            batchSize: batchSize,
-            startFrom: 0
-          }
-        }).catch(err => console.error(`Worker ${i} failed:`, err));
-      }
+      // ✅ FIX: Start continuous worker to ensure progress tracking
+      const taskMap = new Map<string, EnrichmentTask>();
+      taskMap.set(newJob.id, {
+        name: 'BS 7671 Intelligence',
+        functionName: 'enrich-regulations',
+        sourceTable: 'bs7671_embeddings',
+        targetTable: 'regulations_intelligence',
+        batchSize: batchSize,
+        priority: 1
+      });
+      
+      EdgeRuntime.waitUntil(
+        continuousProcessor(supabase, [newJob.id], taskMap)
+      );
+      
+      console.log(`🔄 Started continuous worker for job ${newJob.id}`);
       
       return new Response(JSON.stringify({
         success: true,

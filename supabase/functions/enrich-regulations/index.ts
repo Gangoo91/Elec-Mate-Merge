@@ -32,16 +32,7 @@ serve(async (req) => {
     const openAIKey = Deno.env.get('OPENAI_API_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
     
-    // Create initial progress record
-    await supabase
-      .from('batch_progress')
-      .upsert({
-        job_id: jobId,
-        batch_number: batchNumber,
-        status: 'processing',
-        items_processed: startFrom,
-        data: { message: 'Job started in background' }
-      });
+    // ✅ REMOVED: Ghost batch creation - let atomic claim in processInBackground handle it
     
     // Start background processing (fire-and-forget)
     EdgeRuntime.waitUntil(
