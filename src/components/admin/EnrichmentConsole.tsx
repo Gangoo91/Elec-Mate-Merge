@@ -49,7 +49,7 @@ const TASK_CONFIG = {
   },
   practical_work: {
     label: 'Practical Work',
-    jobType: 'practical_work_multi_stage',
+    jobType: 'enrich_practical_work_primary', // Fixed: maps to actual scheduler task (primary stage)
     sourceTable: 'practical_work',
     targetTable: 'practical_work_intelligence',
     enrichmentModel: 'faceted',
