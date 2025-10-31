@@ -299,17 +299,23 @@ const MAINTENANCE_TOOL_SCHEMA = {
       },
       bs7671References: {
         type: "array",
-        description: "BS 7671 regulations referenced in this document",
+        description: "BS 7671 regulations directly applicable to this maintenance task with excerpts and application context",
         items: {
           type: "object",
           properties: {
-            regulation: { type: "string", description: "Regulation number" },
-            title: { type: "string", description: "Regulation title/topic" },
-            relevance: { type: "string", description: "Why it's relevant to this maintenance task" },
-            category: { type: "string", description: "Regulation category (from intelligence data)" },
-            practicalApplication: { type: "string", description: "Practical application guidance" }
+            regulationNumber: { type: "string", description: "Full regulation number (e.g., 'BS 7671:2018+A2:2022 Reg 622.1')" },
+            section: { type: "string", description: "Section name (e.g., 'Part 6 - Inspection and Testing')" },
+            excerpt: { type: "string", description: "Direct quote or paraphrase of the regulation text (100-200 words)" },
+            whyApplies: { type: "string", description: "Clear explanation of why this regulation applies to THIS specific equipment/task" },
+            confidence: { type: "number", description: "Confidence score 0-1 for regulation applicability", minimum: 0, maximum: 1 },
+            consequence: { type: "string", description: "What happens if this regulation is not followed" },
+            relatedRegs: { 
+              type: "array", 
+              items: { type: "string" },
+              description: "Related regulation numbers that may also apply" 
+            }
           },
-          required: ["regulation", "title", "relevance"]
+          required: ["regulationNumber", "excerpt", "whyApplies"]
         }
       }
     },
