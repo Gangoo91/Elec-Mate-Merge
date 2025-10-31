@@ -54,7 +54,7 @@ export const QuotesReadyPanel = ({ quotes, onRaiseInvoice }: QuotesReadyPanelPro
             className="p-4 rounded-lg border border-elec-yellow/20 bg-card/50 hover:bg-card transition-colors space-y-3"
           >
             {/* Header */}
-            <div className="flex items-start justify-between gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-3">
               <div className="flex items-center gap-2 min-w-0 flex-1">
                 <Badge variant="outline" className="text-xs font-medium">
                   {quote.quoteNumber}
