@@ -4322,9 +4322,11 @@ export type Database = {
         Row: {
           acceptance_criteria: Json | null
           activity_types: string[]
+          applies_to: string[] | null
           bs7671_regulations: string[] | null
           bs7671_zones: string[] | null
           cable_routes: string[] | null
+          cable_sizes: string[] | null
           canonical_id: string | null
           cluster_id: string | null
           common_defects: string[] | null
@@ -4341,11 +4343,14 @@ export type Database = {
           inspection_checklist: Json[] | null
           installation_method: string | null
           keywords: string[] | null
+          location_types: string[] | null
           maintenance_intervals: Json | null
           maintenance_tasks: Json[] | null
           materials_needed: Json[] | null
           other_standards: string[] | null
+          power_ratings: string[] | null
           practical_work_id: string
+          primary_topic: string | null
           provenance: Json
           related_topics: string[] | null
           replacement_criteria: string[] | null
@@ -4367,9 +4372,11 @@ export type Database = {
         Insert: {
           acceptance_criteria?: Json | null
           activity_types?: string[]
+          applies_to?: string[] | null
           bs7671_regulations?: string[] | null
           bs7671_zones?: string[] | null
           cable_routes?: string[] | null
+          cable_sizes?: string[] | null
           canonical_id?: string | null
           cluster_id?: string | null
           common_defects?: string[] | null
@@ -4386,11 +4393,14 @@ export type Database = {
           inspection_checklist?: Json[] | null
           installation_method?: string | null
           keywords?: string[] | null
+          location_types?: string[] | null
           maintenance_intervals?: Json | null
           maintenance_tasks?: Json[] | null
           materials_needed?: Json[] | null
           other_standards?: string[] | null
+          power_ratings?: string[] | null
           practical_work_id: string
+          primary_topic?: string | null
           provenance?: Json
           related_topics?: string[] | null
           replacement_criteria?: string[] | null
@@ -4412,9 +4422,11 @@ export type Database = {
         Update: {
           acceptance_criteria?: Json | null
           activity_types?: string[]
+          applies_to?: string[] | null
           bs7671_regulations?: string[] | null
           bs7671_zones?: string[] | null
           cable_routes?: string[] | null
+          cable_sizes?: string[] | null
           canonical_id?: string | null
           cluster_id?: string | null
           common_defects?: string[] | null
@@ -4431,11 +4443,14 @@ export type Database = {
           inspection_checklist?: Json[] | null
           installation_method?: string | null
           keywords?: string[] | null
+          location_types?: string[] | null
           maintenance_intervals?: Json | null
           maintenance_tasks?: Json[] | null
           materials_needed?: Json[] | null
           other_standards?: string[] | null
+          power_ratings?: string[] | null
           practical_work_id?: string
+          primary_topic?: string | null
           provenance?: Json
           related_topics?: string[] | null
           replacement_criteria?: string[] | null
@@ -7947,6 +7962,28 @@ export type Database = {
               tools_required: Json
             }[]
           }
+      search_practical_work_intelligence_hybrid: {
+        Args: {
+          filter_trade?: string
+          match_count?: number
+          query_text: string
+        }
+        Returns: {
+          applies_to: string[]
+          bs7671_regulations: string[]
+          cable_sizes: string[]
+          confidence_score: number
+          content: string
+          equipment_category: string
+          hybrid_score: number
+          keywords: string[]
+          location_types: string[]
+          power_ratings: string[]
+          practical_work_id: string
+          primary_topic: string
+          tools_required: string[]
+        }[]
+      }
       search_pricing: {
         Args: {
           category_filter?: string
