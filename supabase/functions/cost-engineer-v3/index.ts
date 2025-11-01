@@ -945,7 +945,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
 
     // Log RAG metrics for observability
     const totalTime = Date.now() - functionStart;
-    await supabase.from('agent_metrics').insert({
+    const { error: metricsError } = await supabase.from('agent_metrics').insert({
       function_name: 'cost-engineer-v3',
       request_id: requestId,
       rag_time: ragStart ? Date.now() - ragStart : null,
@@ -953,7 +953,8 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       regulation_count: (installationResults?.length || 0) + (pmResults?.length || 0),
       success: true,
       query_type: parsedEntities.jobType || 'general'
-    }).catch(err => logger.warn('Failed to log metrics', { error: err.message }));
+    });
+    if (metricsError) logger.warn('Failed to log metrics', { error: metricsError.message });
 
     // Return response (Designer-v3 compatible structure, no regulations)
     return new Response(
