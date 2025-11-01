@@ -435,7 +435,6 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
         function: {
           name: 'provide_cost_estimate',
           description: 'Return detailed cost estimate with materials and labour breakdown',
-          strict: true,
           parameters: {
             type: 'object',
             properties: {
@@ -459,16 +458,14 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                         supplier: { type: 'string' },
                         inDatabase: { type: 'boolean' }
                       },
-                      required: ['description', 'quantity', 'unit', 'unitPrice', 'total', 'supplier', 'inDatabase'],
-                      additionalProperties: false
+                      required: ['description', 'quantity', 'unitPrice', 'total', 'supplier']
                     }
                   },
                   subtotal: { type: 'number' },
                   vat: { type: 'number' },
                   total: { type: 'number' }
                 },
-                required: ['items', 'subtotal', 'vat', 'total'],
-                additionalProperties: false
+                required: ['items', 'subtotal', 'vat', 'total']
               },
               labour: {
                 type: 'object',
@@ -486,16 +483,13 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                         rate: { type: 'number' },
                         total: { type: 'number' }
                       },
-                      required: ['description', 'hours', 'workers', 'electricianHours', 'apprenticeHours', 'rate', 'total'],
-                      additionalProperties: false
+                      required: ['description', 'hours', 'rate', 'total']
                     }
                   },
                   subtotal: { type: 'number' },
                   vat: { type: 'number' },
                   total: { type: 'number' }
-                },
-                required: ['tasks', 'subtotal', 'vat', 'total'],
-                additionalProperties: false
+                }
               },
               summary: {
                 type: 'object',
@@ -506,8 +500,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                   vat: { type: 'number' },
                   grandTotal: { type: 'number' }
                 },
-                required: ['materialsTotal', 'labourTotal', 'subtotal', 'vat', 'grandTotal'],
-                additionalProperties: false
+                required: ['grandTotal']
               },
               timescales: {
                 type: 'object',
@@ -521,8 +514,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                         days: { type: 'number' },
                         description: { type: 'string' }
                       },
-                      required: ['phase', 'days', 'description'],
-                      additionalProperties: false
+                      required: ['phase', 'days', 'description']
                     }
                   },
                   totalDays: { type: 'number' },
@@ -535,8 +527,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                     items: { type: 'string' }
                   }
                 },
-                required: ['phases', 'totalDays', 'totalWeeks', 'workingDaysPerWeek', 'startToFinish', 'criticalPath', 'assumptions'],
-                additionalProperties: false
+                required: ['phases', 'totalDays', 'startToFinish']
               },
               alternatives: {
                 type: 'object',
@@ -550,8 +541,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                       grandTotal: { type: 'number' },
                       tradeoffs: { type: 'array', items: { type: 'string' } }
                     },
-                    required: ['description', 'materialsTotal', 'labourTotal', 'grandTotal', 'tradeoffs'],
-                    additionalProperties: false
+                    required: ['description', 'grandTotal', 'tradeoffs']
                   },
                   standard: {
                     type: 'object',
@@ -562,8 +552,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                       grandTotal: { type: 'number' },
                       tradeoffs: { type: 'array', items: { type: 'string' } }
                     },
-                    required: ['description', 'materialsTotal', 'labourTotal', 'grandTotal', 'tradeoffs'],
-                    additionalProperties: false
+                    required: ['description', 'grandTotal', 'tradeoffs']
                   },
                   premium: {
                     type: 'object',
@@ -574,13 +563,11 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                       grandTotal: { type: 'number' },
                       tradeoffs: { type: 'array', items: { type: 'string' } }
                     },
-                    required: ['description', 'materialsTotal', 'labourTotal', 'grandTotal', 'tradeoffs'],
-                    additionalProperties: false
+                    required: ['description', 'grandTotal', 'tradeoffs']
                   },
                   recommended: { type: 'string', enum: ['budget', 'standard', 'premium'] }
                 },
-                required: ['budget', 'standard', 'premium', 'recommended'],
-                additionalProperties: false
+                required: ['budget', 'standard', 'premium', 'recommended']
               },
               orderList: {
                 type: 'object',
@@ -602,15 +589,13 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                               unitPrice: { type: 'number' },
                               total: { type: 'number' }
                             },
-                            required: ['code', 'description', 'quantity', 'unit', 'unitPrice', 'total'],
-                            additionalProperties: false
+                            required: ['description', 'quantity', 'unit', 'unitPrice', 'total']
                           }
                         },
                         subtotal: { type: 'number' },
                         accountNumber: { type: 'string' }
                       },
-                      required: ['items', 'subtotal', 'accountNumber'],
-                      additionalProperties: false
+                      required: ['items', 'subtotal']
                     }
                   },
                   totalItems: { type: 'number' },
@@ -620,8 +605,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                     items: { type: 'string' }
                   }
                 },
-                required: ['bySupplier', 'totalItems', 'estimatedDelivery', 'notes'],
-                additionalProperties: false
+                required: ['bySupplier', 'totalItems']
               },
               valueEngineering: {
                 type: 'array',
@@ -631,8 +615,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                     suggestion: { type: 'string' },
                     potentialSaving: { type: 'number' }
                   },
-                  required: ['suggestion', 'potentialSaving'],
-                  additionalProperties: false
+                  required: ['suggestion', 'potentialSaving']
                 }
               },
               notes: {
@@ -648,8 +631,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                     reason: { type: 'string' },
                     priority: { type: 'string', enum: ['high', 'medium', 'low'] }
                   },
-                  required: ['agent', 'reason', 'priority'],
-                  additionalProperties: false
+                  required: ['agent', 'reason', 'priority']
                 }
               }
             },

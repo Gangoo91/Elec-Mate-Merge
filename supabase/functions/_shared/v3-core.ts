@@ -197,22 +197,7 @@ export function parseJsonWithRepair(raw: string, logger: Logger, context: string
     .replace(/[\u2013\u2014]/g, '-')      // En/em dashes → -
     .replace(/\u00D7/g, 'x');             // Multiplication sign → x
   
-  // Step 4: Escape unescaped quotes within string values
-  // This regex finds quoted strings and escapes internal quotes
-  cleaned = cleaned.replace(/"([^"]*)"(\s*):/g, (match, key, space) => {
-    // This is a key, keep it as is
-    return `"${key}"${space}:`;
-  });
-  
-  // Now handle string values - find patterns like: "key": "value with "quotes" inside"
-  // We need to escape quotes that appear after : and before the next , or }
-  cleaned = cleaned.replace(/:\s*"([^"]*(?:"[^"]*)*)"(?=[,}\]])/g, (match, value) => {
-    // Escape all internal quotes in the value
-    const escapedValue = value.replace(/"/g, '\\"');
-    return `: "${escapedValue}"`;
-  });
-  
-  // Step 5: Apply existing repair strategies
+  // Step 4: Apply existing repair strategies
   cleaned = cleaned
     .replace(/,(\s*[}\]])/g, '$1')              // Remove trailing commas
     .replace(/([{,]\s*)(\w+):/g, '$1"$2":')    // Quote unquoted keys
