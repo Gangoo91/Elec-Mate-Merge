@@ -431,29 +431,119 @@ Return ONLY the JSON object with the "facets" array.`;
   }
 
   const data = await response.json();
-  const gptResponse = data.choices[0].message.content;
+  
+  const choice = data.choices?.[0];
+  if (!choice) {
+    logger.error('No choices in API response', { 
+      responsePreview: JSON.stringify(data).substring(0, 500),
+      requestId 
+    });
+    throw new Error('No choices returned from OpenAI API');
+  }
 
-  // Parse JSON response
-  const cleanJson = gptResponse.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+  logger.debug('GPT response received', {
+    finish_reason: choice.finish_reason,
+    has_content: !!choice.message?.content,
+    has_tool_calls: !!choice.message?.tool_calls,
+    model: OPENAI_MODEL,
+    requestId
+  });
 
-  try {
-    const parsed = JSON.parse(cleanJson);
+  // Priority 1: Check for tool_calls (GPT-5's structured response format)
+  let parsedResponse;
+  if (choice.message.tool_calls && choice.message.tool_calls.length > 0) {
+    const toolCall = choice.message.tool_calls.find(
+      (tc: any) => tc.function.name === 'extract_facets'
+    );
     
-    // Extract facets array
-    if (!parsed.facets || !Array.isArray(parsed.facets)) {
-      logger.warn('Invalid extraction - missing facets array');
+    if (toolCall) {
+      logger.info('Parsing from tool_calls', { id, requestId });
+      try {
+        parsedResponse = JSON.parse(toolCall.function.arguments);
+      } catch (parseErr) {
+        logger.error('Failed to parse tool_calls JSON', { 
+          parseError: parseErr instanceof Error ? parseErr.message : String(parseErr),
+          responsePreview: toolCall.function.arguments.substring(0, 500),
+          requestId
+        });
+        
+        // Retry once if parse error on first attempt
+        if (retryCount === 0) {
+          logger.info('Retrying due to parse error...', { requestId });
+          return callGPTForFacets(id, title, content, logger, 1);
+        }
+        
+        return null;
+      }
+    }
+  }
+
+  // Priority 2: Fallback to content (legacy format)
+  if (!parsedResponse) {
+    const gptResponse = choice.message.content;
+    
+    if (!gptResponse || gptResponse.trim() === '') {
+      logger.error('Empty response from GPT', { 
+        finish_reason: choice.finish_reason,
+        model: OPENAI_MODEL,
+        had_tool_calls: !!choice.message.tool_calls,
+        requestId
+      });
       
-      // Retry once with more explicit prompt
+      // Retry once if empty response on first attempt
       if (retryCount === 0) {
-        logger.info('Retrying with stricter prompt...');
-        return callGPTForFacets(content, logger, 1);
+        logger.info('Retrying due to empty response...', { requestId });
+        return callGPTForFacets(id, title, content, logger, 1);
       }
       
       return null;
     }
     
+    logger.info('Parsing from message.content', { id, requestId });
+    
+    // Remove markdown fences if present
+    const cleanJson = gptResponse.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    
+    try {
+      parsedResponse = JSON.parse(cleanJson);
+    } catch (parseErr) {
+      logger.error('Failed to parse content JSON', { 
+        parseError: parseErr instanceof Error ? parseErr.message : String(parseErr),
+        responsePreview: gptResponse.substring(0, 500),
+        requestId
+      });
+      
+      // Retry once if parse error on first attempt
+      if (retryCount === 0) {
+        logger.info('Retrying due to parse error...', { requestId });
+        return callGPTForFacets(id, title, content, logger, 1);
+      }
+      
+      return null;
+    }
+  }
+
+  // Validate response structure
+  if (!parsedResponse || !parsedResponse.facets || !Array.isArray(parsedResponse.facets)) {
+    logger.warn('Invalid response structure', { 
+      id,
+      hasResponse: !!parsedResponse,
+      hasFacets: !!(parsedResponse?.facets),
+      isArray: Array.isArray(parsedResponse?.facets),
+      requestId
+    });
+    
+    // Retry once if invalid structure on first attempt
+    if (retryCount === 0) {
+      logger.info('Retrying due to invalid structure...', { requestId });
+      return callGPTForFacets(id, title, content, logger, 1);
+    }
+    
+    return null;
+  }
+    
     // Validate and filter facets
-    const validFacets = parsed.facets.filter((facet: any) => {
+    const validFacets = parsedResponse.facets.filter((facet: any) => {
       // Normalise categories before validation
       if (facet.equipment_category) {
         facet.equipment_category = normaliseCategory(facet.equipment_category);
