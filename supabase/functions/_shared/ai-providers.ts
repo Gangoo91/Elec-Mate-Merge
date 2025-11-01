@@ -164,12 +164,26 @@ export async function callGemini(
 
   // Extract content
   const candidate = data.candidates?.[0];
-  if (!candidate?.content?.parts?.[0]) {
+  
+  // Handle MALFORMED_FUNCTION_CALL specifically - this is retryable with simpler prompts
+  if (candidate?.finishReason === 'MALFORMED_FUNCTION_CALL') {
     throw new AIProviderError(
-      `Empty response from Gemini (finish reason: ${candidate?.finishReason || 'unknown'})`,
+      'Gemini could not format response correctly - tool calling schema may be too complex. Will retry with simplified approach.',
       'gemini',
       undefined,
-      true
+      true // retryable
+    );
+  }
+  
+  if (!candidate?.content?.parts?.[0]) {
+    const finishReason = candidate?.finishReason || 'unknown';
+    const isRetryable = finishReason === 'MALFORMED_FUNCTION_CALL' || finishReason === 'OTHER' || finishReason === 'RECITATION';
+    
+    throw new AIProviderError(
+      `Empty response from Gemini (finish reason: ${finishReason})`,
+      'gemini',
+      undefined,
+      isRetryable
     );
   }
 

@@ -724,17 +724,47 @@ Return complete circuit objects using the provided tool schema.`;
   // Function to process a single batch with retry logic
   const processBatch = async (batch: any[], batchIndex: number, attempt = 0): Promise<any> => {
     const batchStartTime = Date.now();
-    logger.info(`📦 Batch ${batchIndex + 1}/${circuitBatches.length}: Processing ${batch.length} circuits${attempt > 0 ? ` (retry ${attempt})` : ''}`);
+    const maxAttempts = 3;
+    
+    // Detect high-power circuits that need special handling
+    const hasHighPowerCircuit = batch.some((c: any) => 
+      ['shower', 'ev charger', 'cooker', 'oven', 'hob'].some(type => 
+        (c.name || c.loadType || '').toLowerCase().includes(type)
+      ) || (c.loadPower || 0) > 7000
+    );
+    
+    logger.info(`📦 Batch ${batchIndex + 1}/${circuitBatches.length}: Processing ${batch.length} circuits${attempt > 0 ? ` (retry ${attempt})` : ''}`, {
+      hasHighPowerCircuit,
+      circuitTypes: batch.map((c: any) => c.loadType)
+    });
     
     // PHASE 3: Log batch circuit details
     logger.info(`📋 Batch ${batchIndex + 1} circuits:`, {
       circuits: batch.map((c: any) => c.name || c.loadType)
     });
     
-    // Create batch-specific query
-    const batchQuery = `${query}\n\nDesign the following circuits:\n${batch.map((c: any, i: number) => 
+    // Create batch-specific query with equipment-specific guidance for high-power circuits
+    let batchQuery = `${query}\n\nDesign the following circuits:\n${batch.map((c: any, i: number) => 
       `${i + 1}. ${c.name || c.loadType} (${c.loadType}, ${c.loadPower}W, ${c.cableLength}m)`
     ).join('\n')}`;
+    
+    // Add specific guidance for high-power circuits
+    if (hasHighPowerCircuit) {
+      batchQuery += `\n\n🔌 SPECIAL EQUIPMENT GUIDANCE:
+- SHOWERS: Specify kW rating (e.g., 9.5kW), use appropriate cable size (10mm² for 9.5kW), 40A MCB, consider RCD requirements
+- EV CHARGERS: Specify charger type (Mode 3), power rating (7kW/22kW single/three phase), Type B RCD MANDATORY per Section 722
+- COOKERS: Consider diversity per Appendix 15 (10A + 30% of remainder + 5A for socket outlet), use appropriate cable sizing
+- Always include complete calculations object with Ib, In, Iz, voltageDrop, zs, maxZs`;
+    }
+    
+    // Simplify prompt on retries - use simpler tool schema
+    const useSimplifiedSchema = attempt > 0;
+    const currentTools = useSimplifiedSchema ? [] : requestBody.tools;
+    const currentToolChoice = useSimplifiedSchema ? undefined : requestBody.tool_choice;
+    
+    if (useSimplifiedSchema) {
+      logger.info(`🔄 Retry ${attempt}: Using simplified JSON-only mode (no tool calling)`);
+    }
     
     try {
       const result = await providerRetry(async () => {
@@ -746,8 +776,9 @@ Return complete circuit objects using the provided tool schema.`;
           model: 'gemini-2.5-flash',
           temperature: 0.3,
           max_tokens: aiConfig?.maxTokens || 24000,
-          tools: requestBody.tools,
-          tool_choice: requestBody.tool_choice
+          tools: currentTools,
+          tool_choice: currentToolChoice,
+          response_format: useSimplifiedSchema ? { type: "json_object" } : undefined
         }, geminiKey);
       }, 3, 2000);
       
@@ -774,22 +805,103 @@ Return complete circuit objects using the provided tool schema.`;
       return { aiData, batchElapsedMs, success: true };
       
     } catch (error: any) {
-      const isNetworkError = error?.message?.includes('fetch') || error?.message?.includes('network') || error instanceof TypeError;
+      const errorMsg = error?.message || String(error);
+      const isMalformedFunctionCall = errorMsg.includes('MALFORMED_FUNCTION_CALL') || errorMsg.includes('format response correctly');
+      const isNetworkError = errorMsg.includes('fetch') || errorMsg.includes('network') || error instanceof TypeError;
       
-      if (isNetworkError && attempt === 0) {
-        const backoffMs = 2000;
-        logger.warn(`⏳ Network error, retrying batch ${batchIndex + 1} in ${backoffMs}ms`, {
-          error: error.message
+      // Retry with simplified approach for MALFORMED_FUNCTION_CALL
+      if (isMalformedFunctionCall && attempt < maxAttempts) {
+        const backoffMs = 2000 * (attempt + 1);
+        logger.warn(`🔄 MALFORMED_FUNCTION_CALL detected, retrying batch ${batchIndex + 1} with simplified approach in ${backoffMs}ms`, {
+          attempt: attempt + 1,
+          maxAttempts
         });
         await new Promise(resolve => setTimeout(resolve, backoffMs));
         return processBatch(batch, batchIndex, attempt + 1);
       }
       
-      logger.error(`🚨 Batch ${batchIndex + 1} failed`, { 
-        error: error.message,
-        attempt
+      // Retry network errors
+      if (isNetworkError && attempt < maxAttempts) {
+        const backoffMs = 2000 * (attempt + 1);
+        logger.warn(`⏳ Network error, retrying batch ${batchIndex + 1} in ${backoffMs}ms`, {
+          error: errorMsg,
+          attempt: attempt + 1
+        });
+        await new Promise(resolve => setTimeout(resolve, backoffMs));
+        return processBatch(batch, batchIndex, attempt + 1);
+      }
+      
+      // If batch still fails after retries, try splitting into individual circuits
+      if (attempt >= maxAttempts && batch.length > 1) {
+        logger.warn(`🔀 Batch ${batchIndex + 1} failed ${maxAttempts} times, splitting into individual circuits`);
+        
+        const individualResults = [];
+        for (const circuit of batch) {
+          try {
+            const individualResult = await processBatch([circuit], batchIndex, 0);
+            if (individualResult.success) {
+              individualResults.push(individualResult);
+            }
+          } catch (err) {
+            logger.error(`❌ Individual circuit ${circuit.name} failed`, { error: err });
+          }
+        }
+        
+        // If we got at least some circuits, merge them
+        if (individualResults.length > 0) {
+          logger.info(`✅ Split batch recovered ${individualResults.length}/${batch.length} circuits`);
+          
+          // Merge individual results
+          const mergedToolCalls = individualResults
+            .map(r => r.aiData?.choices?.[0]?.message?.tool_calls?.[0])
+            .filter(Boolean);
+          
+          if (mergedToolCalls.length > 0) {
+            // Combine circuits from all individual results
+            const allCircuits = [];
+            for (const toolCall of mergedToolCalls) {
+              try {
+                const parsed = JSON.parse(toolCall.function.arguments);
+                if (parsed.circuits && Array.isArray(parsed.circuits)) {
+                  allCircuits.push(...parsed.circuits);
+                }
+              } catch (e) {
+                logger.error('Failed to parse individual circuit result', { error: e });
+              }
+            }
+            
+            // Create merged response
+            const firstResult = JSON.parse(mergedToolCalls[0].function.arguments);
+            const mergedResponse = {
+              ...firstResult,
+              circuits: allCircuits
+            };
+            
+            return {
+              aiData: {
+                choices: [{
+                  message: {
+                    tool_calls: [{
+                      function: {
+                        arguments: JSON.stringify(mergedResponse)
+                      }
+                    }]
+                  }
+                }],
+                usage: { total_tokens: 0 }
+              },
+              batchElapsedMs: Date.now() - batchStartTime,
+              success: true
+            };
+          }
+        }
+      }
+      
+      logger.error(`🚨 Batch ${batchIndex + 1} failed after ${attempt + 1} attempts`, { 
+        error: errorMsg,
+        circuitNames: batch.map((c: any) => c.name || c.loadType)
       });
-      return { aiData: null, batchElapsedMs: Date.now() - batchStartTime, success: false, error: error.message };
+      return { aiData: null, batchElapsedMs: Date.now() - batchStartTime, success: false, error: errorMsg, circuits: batch };
     }
   };
   
@@ -1206,20 +1318,49 @@ Always cite regulation numbers and show working for calculations.`
       names: missingCircuits.map(c => c.name || c.loadType)
     });
     
-    // REJECT the design instead of adding placeholders
+    // REJECT the design instead of adding placeholders - provide actionable guidance
+    const failedCircuitGuidance = missingCircuits.map(c => {
+      const name = c.name || c.loadType;
+      const loadType = (c.loadType || '').toLowerCase();
+      
+      // Provide specific guidance based on circuit type
+      if (loadType.includes('shower') || name.toLowerCase().includes('shower')) {
+        return {
+          name,
+          loadType: c.loadType,
+          suggestion: 'Showers require specific kW rating (e.g., 9.5kW). Please specify power rating and ensure adequate cable sizing (typically 10mm² for 9.5kW).'
+        };
+      } else if (loadType.includes('ev') || name.toLowerCase().includes('ev charger')) {
+        return {
+          name,
+          loadType: c.loadType,
+          suggestion: 'EV Chargers need charger type (Mode 3) and power rating (7kW single-phase or 22kW three-phase). Type B RCD is mandatory per BS 7671 Section 722.'
+        };
+      } else if (loadType.includes('cooker') || name.toLowerCase().includes('cooker')) {
+        return {
+          name,
+          loadType: c.loadType,
+          suggestion: 'Cookers require diversity calculation per BS 7671 Appendix 15 (10A + 30% of remainder + 5A if socket outlet). Specify total rated power.'
+        };
+      } else {
+        return {
+          name,
+          loadType: c.loadType,
+          suggestion: 'This circuit may need more specific details. Try adding power rating, installation method, or special requirements.'
+        };
+      }
+    });
+    
     return new Response(JSON.stringify({
-      version: 'v3.3.3-no-placeholders',
+      version: 'v3.3.3-smart-retry',
       success: false,
       error: 'INCOMPLETE_DESIGN',
-      message: `AI could not design ${missingCircuits.length} circuit(s). Please try again or simplify the request.`,
-      missingCircuits: missingCircuits.map(c => ({
-        name: c.name || c.loadType,
-        loadType: c.loadType,
-        reason: 'AI batch processing failed - may be too complex or require additional detail'
-      })),
+      message: `Unable to design ${missingCircuits.length} out of ${allCircuits.length} circuit(s). See suggestions below for each failed circuit.`,
+      missingCircuits: failedCircuitGuidance,
       receivedCircuits: designData.circuits.length,
       requestedCircuits: allCircuits.length,
-      code: 'INCOMPLETE_DESIGN'
+      code: 'INCOMPLETE_DESIGN',
+      helpText: 'Try providing more specific details for the failed circuits, or design them separately with detailed specifications.'
     }), {
       status: 400,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
