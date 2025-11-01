@@ -79,42 +79,45 @@ function normaliseCategory(category: string): string {
 }
 
 /**
- * Phase 5: Validate facet quality - STRICT RULES FOR HIGH QUALITY
+ * Phase 5: Validate facet quality - RELAXED RULES FOR BETTER COVERAGE (Fix 3)
  */
 function validatePracticalWorkFacet(facet: any): boolean {
   if (!facet) return false;
   
-  // MUST have rich keywords (6+ for micro-facets)
-  if (!facet.keywords || facet.keywords.length < 6) return false;
+  // MUST have keywords (relaxed from 6 to 4)
+  if (!facet.keywords || facet.keywords.length < 4) return false;
   
-  // MUST have detailed primary_topic (30-250 chars, UK English style)
-  if (!facet.primary_topic || facet.primary_topic.length < 30 || facet.primary_topic.length > 250) return false;
+  // MUST have primary_topic (relaxed length: 20-300 chars)
+  if (!facet.primary_topic || facet.primary_topic.length < 20 || facet.primary_topic.length > 300) return false;
   
-  // MUST have equipment category (reject generic/misspelled)
+  // MUST have equipment category (allow "general" as fallback)
   const category = normaliseCategory(facet.equipment_category);
-  if (!category || category.length < 3 || category === 'general' || category === 'combined') return false;
+  if (!category || category.length < 3) return false;
   
-  // MUST have tools OR materials (practical work needs resources)
-  const hasTools = facet.tools_required && facet.tools_required.length >= 2;
-  const hasMaterials = facet.materials_needed && facet.materials_needed.length >= 2;
+  // MUST have tools OR materials (relaxed to 1+ instead of 2+)
+  const hasTools = facet.tools_required && facet.tools_required.length >= 1;
+  const hasMaterials = facet.materials_needed && facet.materials_needed.length >= 1;
   if (!hasTools && !hasMaterials) return false;
   
-  // MUST have BS7671 references (electrical work must reference standards)
-  if (!facet.bs7671_regulations || facet.bs7671_regulations.length < 1) return false;
+  // SHOULD have BS7671 references (warn but don't reject)
+  if (!facet.bs7671_regulations || facet.bs7671_regulations.length < 1) {
+    console.warn('⚠️ Facet missing BS7671 references - allowing with lower confidence');
+    facet.confidence_score = Math.max(0.65, (facet.confidence_score || 0.8) - 0.1);
+  }
   
-  // MUST have applies_to context (normalised)
-  if (!facet.applies_to || facet.applies_to.length < 1) return false;
-  const validAppliesTo = ['domestic', 'commercial', 'industrial', 'agricultural', 'medical', 'education', 'outdoor'];
-  const hasValidAppliesTo = facet.applies_to.some((a: string) => validAppliesTo.includes(a.toLowerCase()));
-  if (!hasValidAppliesTo) return false;
+  // MUST have applies_to context (auto-infer if missing)
+  if (!facet.applies_to || facet.applies_to.length < 1) {
+    facet.applies_to = ['domestic']; // Safe default
+  } else {
+    const validAppliesTo = ['domestic', 'commercial', 'industrial', 'agricultural', 'medical', 'education', 'outdoor'];
+    const hasValidAppliesTo = facet.applies_to.some((a: string) => validAppliesTo.includes(a.toLowerCase()));
+    if (!hasValidAppliesTo) {
+      facet.applies_to = ['domestic']; // Safe fallback
+    }
+  }
   
-  // SHOULD have cable_sizes OR power_ratings when specs present
-  const hasCableSizes = facet.cable_sizes && facet.cable_sizes.length >= 1;
-  const hasPowerRatings = facet.power_ratings && facet.power_ratings.length >= 1;
-  // Don't enforce for all, but boost confidence if present
-  
-  // MUST have minimum confidence 0.75
-  if (facet.confidence_score < 0.75) return false;
+  // MUST have minimum confidence 0.65 (reduced from 0.75)
+  if (facet.confidence_score < 0.65) return false;
   
   return true;
 }
@@ -155,7 +158,7 @@ async function callGPTForFacets(content: string, logger: any, retryCount = 0): P
 
 Generate 8-20 DISTINCT micro-facets for practical work procedures. Each facet = ONE specific scenario.
 
-STRICT JSON SCHEMA:
+STRICT JSON SCHEMA (Fix 2 - Enhanced with ALL table fields):
 {
   "facets": [
     {
@@ -168,26 +171,41 @@ STRICT JSON SCHEMA:
       "power_ratings": ["16A", "32A", "9.5kW"] (if power mentioned),
       "location_types": ["indoor", "outdoor", "bathroom"] (if location mentioned),
       "bs7671_regulations": ["411.3.3", "531.2"] (minimum 1 reference),
+      
+      // Installation-specific fields
+      "installation_method": "string (e.g., 'surface mounted', 'flush mounted', 'clipped direct')",
+      "cable_routes": ["ceiling void", "trunking", "buried in wall"] (if routing mentioned),
+      "termination_methods": ["screw terminal", "push-fit", "ring terminal"] (if terminations mentioned),
+      
+      // Testing & Commissioning fields
+      "test_procedures": ["Step 1: Isolate and prove dead", "Step 2: Check Zs"],
+      "test_equipment_required": ["insulation tester", "multimeter", "proving unit"],
+      "acceptance_criteria": {"insulation_resistance": "≥1MΩ", "zs": "<0.8Ω"} (if tests mentioned),
+      
+      // Inspection fields
+      "visual_inspection_points": ["check terminations", "verify RCD operation"],
+      "eicr_observation_codes": ["C2", "FI"] (if defects mentioned),
+      "common_defects": ["loose connections", "missing barriers"],
+      
+      // Maintenance fields
+      "maintenance_intervals": {"routine": "6 months", "eicr": "5 years"} (if maintenance mentioned),
+      "maintenance_tasks": ["visual inspection", "RCD test", "torque check"],
+      "wear_indicators": ["discolouration", "sparking", "overheating"],
+      
       "tools_required": ["tool1", "tool2"] (minimum 2),
       "materials_needed": ["material1", "material2"] (minimum 2 OR tools 2+),
-      "common_mistakes": ["loose terminations", "missing grommets"] (array of common errors),
+      "common_mistakes": ["loose terminations", "missing grommets"],
       "safety_requirements": "string or object with UK safety guidance (PPE, isolations, permits)",
-      "test_procedures": ["Step 1: Isolate and prove dead", "Step 2: Check Zs"] (array of testing steps),
-      "test_equipment_required": ["insulation tester", "multimeter", "proving unit"] (array of test equipment),
       "confidence_score": 0.75-0.95
     }
   ]
 }
 
 CRITICAL RULES:
-- NO "general", "introduction", "combined", "overview" categories
-- NO misspellings (e.g., "ombined")
-- EVERY facet must have 6+ keywords, 1+ BS7671 reference, 1+ applies_to
+- NO "general", "introduction", "combined", "overview" categories unless no other category fits
+- EVERY facet must have 4+ keywords, 1+ applies_to
 - primary_topic MUST be 30-80 words describing the SPECIFIC scenario
-- common_mistakes: array of common errors (2-5 items)
-- safety_requirements: UK safety guidance (string or object)
-- test_procedures: array of step-by-step testing procedures (if applicable)
-- test_equipment_required: array of testing equipment needed (if applicable)
+- If installation/testing/maintenance content present, MUST include relevant fields
 - Return ONLY the JSON object, NO markdown, NO commentary`;
 
   const userPrompt = `Extract micro-facets from this UK electrical procedure:
@@ -296,6 +314,22 @@ Return ONLY the JSON object with the "facets" array.`;
   }
 }
 
+/**
+ * Helper function to infer activity types from facet content (Fix 1)
+ */
+function inferActivityTypes(facet: any, sourceItem: any): string[] {
+  const content = ((facet.primary_topic || '') + ' ' + (sourceItem.content || '')).toLowerCase();
+  const types = [];
+  
+  if (/install|fitting|mount|fix/.test(content)) types.push('installation');
+  if (/test|commission|inspect|verify/.test(content)) types.push('testing');
+  if (/maintain|service|clean|replace/.test(content)) types.push('maintenance');
+  if (/design|calculate|size|select/.test(content)) types.push('design');
+  if (/fault|diagnose|troubleshoot|repair/.test(content)) types.push('fault_finding');
+  
+  return types.length > 0 ? types : ['installation']; // Default to installation
+}
+
 async function enrichProcedure(supabase: any, item: any, logger: any): Promise<number> {
   const content = item.content || item.description || '';
   
@@ -312,11 +346,23 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     return 0;
   }
 
-  // Store enriched intelligence - multiple facets per item (PRIMARY stage micro-facets)
-  // Map GPT output to existing table columns with type normalization
+  // Fix 1: Add missing required columns + Fix 2: Map all enhanced GPT fields
   const facetsToInsert = intelligence.facets.map((facet: any) => ({
     practical_work_id: item.id,
-    facet_type: 'primary', // PRIMARY stage = micro-facet explosion
+    facet_type: 'primary',
+    
+    // ✅ Fix 1: Add missing NOT NULL columns
+    activity_types: inferActivityTypes(facet, item),
+    source_tables: ['practical_work'],
+    provenance: {
+      enrichment_model: OPENAI_MODEL,
+      enrichment_function: 'enrich-practical-work',
+      enriched_at: new Date().toISOString(),
+      source_content_length: content.length,
+      gpt_tokens: intelligence.tokens || null
+    },
+    
+    // Existing basic fields
     primary_topic: facet.primary_topic,
     keywords: facet.keywords,
     equipment_category: normaliseCategory(facet.equipment_category),
@@ -328,33 +374,67 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     tools_required: facet.tools_required || [],
     materials_needed: facet.materials_needed || [],
     bs7671_regulations: facet.bs7671_regulations || [],
-    // Map new fields to existing columns with type normalization
-    common_mistakes: ensureArrayOfStrings(facet.common_mistakes),
-    safety_requirements: toJsonOrNull(facet.safety_requirements),
+    
+    // ✅ Fix 2: Add installation-specific fields
+    installation_method: facet.installation_method || null,
+    cable_routes: ensureArrayOfStrings(facet.cable_routes),
+    termination_methods: ensureArrayOfStrings(facet.termination_methods),
+    
+    // ✅ Fix 2: Add testing & commissioning fields
     test_procedures: ensureJsonArray(facet.test_procedures),
     test_equipment_required: ensureArrayOfStrings(facet.test_equipment_required),
+    acceptance_criteria: toJsonOrNull(facet.acceptance_criteria),
+    
+    // ✅ Fix 2: Add inspection fields
+    visual_inspection_points: ensureArrayOfStrings(facet.visual_inspection_points),
+    eicr_observation_codes: ensureArrayOfStrings(facet.eicr_observation_codes),
+    common_defects: ensureArrayOfStrings(facet.common_defects),
+    
+    // ✅ Fix 2: Add maintenance fields
+    maintenance_intervals: toJsonOrNull(facet.maintenance_intervals),
+    maintenance_tasks: ensureArrayOfStrings(facet.maintenance_tasks),
+    wear_indicators: ensureArrayOfStrings(facet.wear_indicators),
+    
+    // Existing error & safety fields
+    common_mistakes: ensureArrayOfStrings(facet.common_mistakes),
+    safety_requirements: toJsonOrNull(facet.safety_requirements),
+    
     confidence_score: facet.confidence_score || 0.85
   }));
 
-  const { error: insertError } = await supabase
+  // Fix 4: Add comprehensive error logging
+  const { data: insertedData, error: insertError } = await supabase
     .from('practical_work_intelligence')
-    .insert(facetsToInsert);
+    .insert(facetsToInsert)
+    .select(); // ✅ Select to verify insertion
 
   if (insertError) {
-    logger.error('Failed to insert facets', { 
+    logger.error('❌ Insert failed', { 
       error: insertError.message,
+      code: insertError.code,
+      details: insertError.details,
+      hint: insertError.hint,
+      id: item.id,
+      facetCount: facetsToInsert.length,
+      sampleFacet: JSON.stringify(facetsToInsert[0], null, 2) // Log first facet for debugging
+    });
+    return 0;
+  }
+
+  if (!insertedData || insertedData.length === 0) {
+    logger.warn('⚠️ Insert succeeded but no rows returned', {
       id: item.id,
       facetCount: facetsToInsert.length
     });
     return 0;
   }
 
-  logger.info(`✅ Enriched item with ${facetsToInsert.length} facets`, { 
+  logger.info(`✅ Inserted ${insertedData.length} facets`, { 
     id: item.id,
-    avgConfidence: (facetsToInsert.reduce((sum: number, f: any) => sum + f.confidence_score, 0) / facetsToInsert.length).toFixed(2)
+    avgConfidence: (insertedData.reduce((sum, f) => sum + f.confidence_score, 0) / insertedData.length).toFixed(2)
   });
 
-  return facetsToInsert.length;
+  return insertedData.length;
 }
 
 // ==================== MAIN HANDLER ====================
