@@ -186,7 +186,7 @@ function ensureJsonArray(value: any): any[] {
 
 // ==================== GPT ENRICHMENT ====================
 
-async function callGPTForFacets(content: string, logger: any, retryCount = 0): Promise<any> {
+async function callGPTForFacets(id: string, title: string, content: string, logger: any, retryCount = 0): Promise<any> {
   const systemPrompt = `You are a UK electrical work intelligence AI. Your job is to UNDERSTAND electrical procedures and generate COMPLETE technical intelligence, not just extract what's written.
 
 CRITICAL MINDSET SHIFT:
@@ -435,8 +435,7 @@ Return ONLY the JSON object with the "facets" array.`;
   const choice = data.choices?.[0];
   if (!choice) {
     logger.error('No choices in API response', { 
-      responsePreview: JSON.stringify(data).substring(0, 500),
-      requestId 
+      responsePreview: JSON.stringify(data).substring(0, 500)
     });
     throw new Error('No choices returned from OpenAI API');
   }
@@ -444,78 +443,69 @@ Return ONLY the JSON object with the "facets" array.`;
   logger.debug('GPT response received', {
     finish_reason: choice.finish_reason,
     has_content: !!choice.message?.content,
-    has_tool_calls: !!choice.message?.tool_calls,
-    model: OPENAI_MODEL,
-    requestId
+    model: OPENAI_MODEL
   });
 
-  // Priority 1: Check for tool_calls (GPT-5's structured response format)
-  let parsedResponse;
-  if (choice.message.tool_calls && choice.message.tool_calls.length > 0) {
-    const toolCall = choice.message.tool_calls.find(
-      (tc: any) => tc.function.name === 'extract_facets'
-    );
+  // Extract from message.content (no tool_calls defined in request)
+  const gptResponse = choice.message.content;
+  
+  if (!gptResponse || gptResponse.trim() === '') {
+    logger.error('Empty response from GPT', { 
+      finish_reason: choice.finish_reason,
+      model: OPENAI_MODEL
+    });
     
-    if (toolCall) {
-      logger.info('Parsing from tool_calls', { id, requestId });
+    // Retry once if empty response on first attempt
+    if (retryCount === 0) {
+      logger.info('Retrying due to empty response...');
+      return callGPTForFacets(id, title, content, logger, 1);
+    }
+    
+    return null;
+  }
+  
+  logger.info('Parsing JSON from message.content', { id });
+  
+  // Remove markdown fences if present
+  const cleanJson = gptResponse.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+  
+  let parsedResponse;
+  try {
+    parsedResponse = JSON.parse(cleanJson);
+  } catch (parseErr) {
+    logger.warn('Initial JSON parse failed, attempting brace-slice recovery', { 
+      parseError: parseErr instanceof Error ? parseErr.message : String(parseErr),
+      responsePreview: gptResponse.substring(0, 200)
+    });
+    
+    // Attempt brace-slice recovery
+    const start = cleanJson.indexOf('{');
+    const end = cleanJson.lastIndexOf('}');
+    
+    if (start !== -1 && end !== -1 && end > start) {
       try {
-        parsedResponse = JSON.parse(toolCall.function.arguments);
-      } catch (parseErr) {
-        logger.error('Failed to parse tool_calls JSON', { 
-          parseError: parseErr instanceof Error ? parseErr.message : String(parseErr),
-          responsePreview: toolCall.function.arguments.substring(0, 500),
-          requestId
+        const slicedJson = cleanJson.slice(start, end + 1);
+        parsedResponse = JSON.parse(slicedJson);
+        logger.info('Brace-slice recovery successful');
+      } catch (sliceErr) {
+        logger.error('Brace-slice recovery also failed', {
+          sliceError: sliceErr instanceof Error ? sliceErr.message : String(sliceErr)
         });
         
         // Retry once if parse error on first attempt
         if (retryCount === 0) {
-          logger.info('Retrying due to parse error...', { requestId });
+          logger.info('Retrying due to parse error...');
           return callGPTForFacets(id, title, content, logger, 1);
         }
         
         return null;
       }
-    }
-  }
-
-  // Priority 2: Fallback to content (legacy format)
-  if (!parsedResponse) {
-    const gptResponse = choice.message.content;
-    
-    if (!gptResponse || gptResponse.trim() === '') {
-      logger.error('Empty response from GPT', { 
-        finish_reason: choice.finish_reason,
-        model: OPENAI_MODEL,
-        had_tool_calls: !!choice.message.tool_calls,
-        requestId
-      });
-      
-      // Retry once if empty response on first attempt
-      if (retryCount === 0) {
-        logger.info('Retrying due to empty response...', { requestId });
-        return callGPTForFacets(id, title, content, logger, 1);
-      }
-      
-      return null;
-    }
-    
-    logger.info('Parsing from message.content', { id, requestId });
-    
-    // Remove markdown fences if present
-    const cleanJson = gptResponse.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-    
-    try {
-      parsedResponse = JSON.parse(cleanJson);
-    } catch (parseErr) {
-      logger.error('Failed to parse content JSON', { 
-        parseError: parseErr instanceof Error ? parseErr.message : String(parseErr),
-        responsePreview: gptResponse.substring(0, 500),
-        requestId
-      });
+    } else {
+      logger.error('No valid JSON braces found');
       
       // Retry once if parse error on first attempt
       if (retryCount === 0) {
-        logger.info('Retrying due to parse error...', { requestId });
+        logger.info('Retrying due to parse error...');
         return callGPTForFacets(id, title, content, logger, 1);
       }
       
@@ -529,13 +519,12 @@ Return ONLY the JSON object with the "facets" array.`;
       id,
       hasResponse: !!parsedResponse,
       hasFacets: !!(parsedResponse?.facets),
-      isArray: Array.isArray(parsedResponse?.facets),
-      requestId
+      isArray: Array.isArray(parsedResponse?.facets)
     });
     
     // Retry once if invalid structure on first attempt
     if (retryCount === 0) {
-      logger.info('Retrying due to invalid structure...', { requestId });
+      logger.info('Retrying due to invalid structure...');
       return callGPTForFacets(id, title, content, logger, 1);
     }
     
@@ -581,13 +570,13 @@ Return ONLY the JSON object with the "facets" array.`;
       // Retry once
       if (retryCount === 0) {
         logger.info('Retrying due to 0 valid facets...');
-        return callGPTForFacets(content, logger, 1);
+        return callGPTForFacets(id, title, content, logger, 1);
       }
       
       return null;
     }
     
-    logger.info(`✅ Extracted ${validFacets.length} valid facets from GPT (${OPENAI_MODEL})`, { requestId });
+    logger.info(`✅ Extracted ${validFacets.length} valid facets from GPT (${OPENAI_MODEL})`);
     return { facets: validFacets };
 }
 
@@ -642,7 +631,7 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
   }
 
   // Call GPT to extract multi-facets
-  const intelligence = await callGPTForFacets(content, logger);
+  const intelligence = await callGPTForFacets(item.id, item.title ?? '', content, logger);
   
   if (!intelligence || !intelligence.facets || intelligence.facets.length === 0) {
     logger.warn('No facets extracted', { id: item.id });
