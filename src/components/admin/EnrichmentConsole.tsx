@@ -172,10 +172,28 @@ export default function EnrichmentConsole() {
           sourceTotal = count || 0;
         }
 
-        const { count: facetsCreated } = await supabase
+        let facetsCreated = 0;
+        
+        // Try primary facet_type first (current standard)
+        const { count: primaryCount } = await supabase
           .from('practical_work_intelligence' as const)
           .select('*', { count: 'exact', head: true })
           .eq('facet_type', facetType);
+        
+        facetsCreated = primaryCount || 0;
+        
+        // Defensive fallback: if primary = 0 but scenario exists (legacy), show scenario count
+        if (facetsCreated === 0 && facetType === 'primary') {
+          const { count: scenarioCount } = await supabase
+            .from('practical_work_intelligence' as const)
+            .select('*', { count: 'exact', head: true })
+            .eq('facet_type', 'scenario');
+          
+          if (scenarioCount && scenarioCount > 0) {
+            console.warn('⚠️ Using legacy scenario count as fallback', { scenarioCount });
+            facetsCreated = scenarioCount;
+          }
+        }
 
         const targetFacets = Math.round((sourceTotal || 0) * (config.targetMultiplier || 1));
         const progress = targetFacets > 0 ? Math.round(((facetsCreated || 0) / targetFacets) * 100) : 0;
