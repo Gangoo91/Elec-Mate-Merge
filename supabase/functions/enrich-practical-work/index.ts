@@ -330,6 +330,32 @@ function inferActivityTypes(facet: any, sourceItem: any): string[] {
   return types.length > 0 ? types : ['installation']; // Default to installation
 }
 
+/**
+ * Helper function to infer facet type from content (Fix for duplicate key constraint)
+ * Allows multiple facets per source item by assigning different types
+ */
+function inferFacetType(facet: any, index: number): string {
+  const topic = (facet.primary_topic || '').toLowerCase();
+  
+  // Prioritize specific types based on content
+  if (facet.test_procedures?.length > 0 || /test|commission|verify/.test(topic)) {
+    return 'testing';
+  }
+  if (facet.maintenance_tasks?.length > 0 || /maintain|service|inspect/.test(topic)) {
+    return 'maintenance';
+  }
+  if (facet.installation_method || /install|mount|fix|fit/.test(topic)) {
+    return 'installation';
+  }
+  if (facet.materials_needed?.length > 0 && /cost|price|material/.test(topic)) {
+    return 'costing';
+  }
+  
+  // Default: alternate between primary types to avoid conflicts
+  const types = ['installation', 'testing', 'maintenance', 'primary'];
+  return types[index % types.length];
+}
+
 async function enrichProcedure(supabase: any, item: any, logger: any): Promise<number> {
   const content = item.content || item.description || '';
   
@@ -347,9 +373,9 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
   }
 
   // Fix 1: Add missing required columns + Fix 2: Map all enhanced GPT fields
-  const facetsToInsert = intelligence.facets.map((facet: any) => ({
+  const facetsToInsert = intelligence.facets.map((facet: any, i: number) => ({
     practical_work_id: item.id,
-    facet_type: 'primary',
+    facet_type: inferFacetType(facet, i),
     
     // ✅ Fix 1: Add missing NOT NULL columns
     activity_types: inferActivityTypes(facet, item),

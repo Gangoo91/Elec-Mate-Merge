@@ -4497,14 +4497,14 @@ export type Database = {
           {
             foreignKeyName: "practical_work_intelligence_practical_work_id_fkey"
             columns: ["practical_work_id"]
-            isOneToOne: true
+            isOneToOne: false
             referencedRelation: "practical_work"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "practical_work_intelligence_practical_work_id_fkey"
             columns: ["practical_work_id"]
-            isOneToOne: true
+            isOneToOne: false
             referencedRelation: "v_practical_work_canonical"
             referencedColumns: ["id"]
           },
