@@ -71,7 +71,7 @@ Extract ALL circuits with their specifications.`;
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ],
-        model: 'openai/gpt-5-mini',
+        model: 'gpt-5-mini-2025-08-07',
         temperature: 0.3,
         tools: [{
           type: 'function',

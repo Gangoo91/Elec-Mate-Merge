@@ -338,9 +338,12 @@ export async function handleBatchDesign(body: any, logger: any) {
     model: aiConfig?.model || 'openai/gpt-5'
   });
 
-  // Get OpenAI API key for GPT-5 Mini
+  // Get API keys
   const openAiKey = Deno.env.get('OPENAI_API_KEY');
   if (!openAiKey) throw new Error('OPENAI_API_KEY not configured');
+  
+  const geminiKey = Deno.env.get('GEMINI_API_KEY');
+  if (!geminiKey) throw new Error('GEMINI_API_KEY not configured');
   
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -752,7 +755,7 @@ Return complete circuit objects using the provided tool schema.`;
   
   // ✨ SIMPLIFIED SCHEMA - Matching AI RAMS Pattern (5 simple fields)
   const requestBody = {
-    model: aiConfig?.model || 'openai/gpt-5-mini', // GPT-5-mini for fast, efficient batch processing
+    model: aiConfig?.model || 'gpt-5-mini-2025-08-07', // GPT-5-mini for fast, efficient batch processing
     messages: [
       { role: 'system', content: systemPrompt },
       { role: 'user', content: query }
@@ -1165,9 +1168,9 @@ Return complete circuit objects using the provided tool schema.`;
             { role: 'system', content: systemPrompt },
             { role: 'user', content: batchQuery }
           ],
-          model: 'openai/gpt-5-mini',
+          model: 'gpt-5-mini-2025-08-07',
           temperature: 0.3,
-          max_tokens: aiConfig?.maxTokens || 24000,
+          max_completion_tokens: aiConfig?.maxTokens || 24000,
           tools: currentTools,
           tool_choice: currentToolChoice,
           response_format: useSimplifiedSchema ? { type: "json_object" } : undefined
@@ -1283,9 +1286,9 @@ Include all required fields: cableSize, cpcSize, protectionDevice, calculations,
                   { role: 'system', content: systemPrompt.substring(0, 5000) }, // Truncated prompt
                   { role: 'user', content: ultraSimpleQuery }
                 ],
-                model: 'openai/gpt-5-mini',
+                model: 'gpt-5-mini-2025-08-07',
                 temperature: 0.2,
-                max_tokens: 8000,
+                max_completion_tokens: 8000,
                 response_format: { type: "json_object" }
               }, openAiKey);
             }, 2, 1000);
@@ -2012,7 +2015,7 @@ Always cite regulation numbers and show working for calculations.`
     },
     metadata: {
       ragCalls: ragResults.regulations?.length || 0,
-      model: aiConfig?.model || 'openai/gpt-5-mini',
+      model: aiConfig?.model || 'gpt-5-mini-2025-08-07',
       tokensUsed: totalTokens,
       aiTimeMs: aiElapsedMs,
       ragTimeMs: ragElapsedMs,
