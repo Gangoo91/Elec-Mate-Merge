@@ -1170,7 +1170,7 @@ Return complete circuit objects using the provided tool schema.`;
       const result = await providerRetry(async () => {
         return await callOpenAI({
           messages: [
-            { role: 'system', content: systemPrompt },
+            { role: 'system', content: useSimplifiedSchema ? `${systemPrompt}\n\nIMPORTANT: Return your response as valid JSON.` : systemPrompt },
             { role: 'user', content: batchQuery }
           ],
           model: 'gpt-5-mini-2025-08-07',
