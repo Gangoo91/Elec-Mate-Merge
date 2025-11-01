@@ -6,6 +6,7 @@ import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { loadCoreRegulationsCache } from './core-regulations-cache.ts';
 import { validateDesign, calculateCircuitConfidence, calculateOverallConfidence } from './validation-pipeline.ts';
 import { extractCircuitsWithAI } from './ai-circuit-extractor.ts';
+import { callGemini, AIProviderError } from '../_shared/ai-providers.ts';
 
 const INSTALLATION_CONTEXT = {
   domestic: `Design compliant with Part P Building Regulations and BS 7671:2018+A3:2024.
