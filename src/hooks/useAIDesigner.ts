@@ -3,8 +3,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { DesignInputs, InstallationDesign } from '@/types/installation-design';
 
-// Client-side timeout for edge function calls (4 minutes safety limit)
-const CLIENT_TIMEOUT_MS = 240000; // 240s (4 minutes max - gives 40s buffer for backend processing)
+// Fix 3: Client-side timeout increased to 280s for more breathing room
+const CLIENT_TIMEOUT_MS = 280000; // 280s (4m 40s) - increased buffer for extraction
 
 /**
  * Timeout wrapper for promises
@@ -45,14 +45,14 @@ export const useAIDesigner = () => {
       return false;
     }
 
-    // Realistic progress stages aligned with actual backend processing times
+    // Fix 5: Improved progress stages with extraction feedback
     // Total: ~175s to match typical processing time for batch designs
     const stages = [
       { stage: 1, message: 'Understanding your requirements...', duration: 5000, targetPercent: 5 },
-      { stage: 2, message: 'Extracting circuits from description...', duration: 8000, targetPercent: 10 },
-      { stage: 3, message: 'Searching BS 7671 regulations...', duration: 10000, targetPercent: 15 },
-      { stage: 4, message: 'AI designing circuits (this may take 2-3 minutes)...', duration: 135000, targetPercent: 85 },
-      { stage: 5, message: 'Running compliance validation...', duration: 12000, targetPercent: 95 },
+      { stage: 2, message: 'Extracting circuits from description (may take 20-30s)...', duration: 20000, targetPercent: 15 },
+      { stage: 3, message: 'Searching BS 7671 regulations...', duration: 10000, targetPercent: 20 },
+      { stage: 4, message: 'AI designing circuits (this may take 2-3 minutes)...', duration: 125000, targetPercent: 85 },
+      { stage: 5, message: 'Running compliance validation...', duration: 10000, targetPercent: 95 },
       { stage: 6, message: 'Finalising documentation...', duration: 5000, targetPercent: 99 }
     ];
 

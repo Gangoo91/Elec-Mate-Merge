@@ -37,24 +37,39 @@ export async function extractCircuitsWithAI(
     installationType 
   });
 
-  try {
-    const systemPrompt = `You are an expert electrical installation designer. Extract ALL circuits mentioned in the user's installation description.
+  // Fix 6: Add debug logging
+  const extractionStartTime = Date.now();
+  logger.info('🔍 Starting AI circuit extraction', {
+    promptLength: additionalPrompt.length,
+    installationType,
+    timestamp: new Date().toISOString()
+  });
 
-IMPORTANT RULES:
-1. Extract EVERY circuit mentioned - don't miss any
-2. For plurals like "4 socket rings" or "6 lighting circuits", set quantity field
-3. Use typical power ratings if not specified:
-   - Socket ring: 7200W (32A)
-   - Lighting circuit: 500W (typical room), 300W (small room), 200W (external)
-   - Cooker: 11000W (typical)
-   - Shower: Use kW value × 1000
-   - EV charger: Use kW value × 1000
-4. Estimate cable lengths based on property type:
-   - Domestic: 20-30m typical, 10m for same floor
-   - Commercial: 30-50m typical
-   - Industrial: 40-80m typical
-5. Identify special locations: bathroom, outdoor, kitchen, or none
-6. Default to single phase unless explicitly three-phase`;
+  try {
+    // Fix 4: Optimized prompt (reduced from ~800 to ~480 tokens)
+    const systemPrompt = `Extract electrical circuits from installation description as JSON.
+
+OUTPUT FORMAT:
+{
+  "circuits": [{
+    "name": "Circuit name",
+    "loadType": "socket|lighting|shower|cooker|ev-charger|outdoor|other",
+    "loadPower": 1000,
+    "quantity": 1,
+    "cableLength": 20,
+    "phases": "single|three",
+    "specialLocation": "bathroom|outdoor|kitchen|none"
+  }],
+  "specialRequirements": ["BS 7671 specific requirements"],
+  "installationConstraints": ["Installation method constraints"]
+}
+
+RULES:
+- Extract ALL circuits mentioned
+- For "4 socket rings" set quantity: 4
+- Infer power ratings: socket=7200W, lighting=500W, cooker=11000W
+- Default cable length: 20m (domestic), 30m (commercial)
+- Always specify specialLocation for bathrooms/outdoors`;
 
     const userPrompt = `Installation type: ${installationType}
 Description: ${additionalPrompt}
@@ -64,15 +79,15 @@ Extract ALL circuits with their specifications.`;
     // Import OpenAI provider
     const { callOpenAI, withRetry } = await import('../_shared/ai-providers.ts');
 
-    // Use GPT-5 Mini with tool calling (35s timeout for faster failure - Fix 2)
-    const EXTRACTION_TIMEOUT = 35000; // 35s - fail fast to preserve 240s budget
-    const extractionStartTime = Date.now(); // Define before retry loop
+    // Fix 1: Reduced timeout from 35s to 20s
+    const EXTRACTION_TIMEOUT = 20000; // 20s - fail fast
     
-    const result = await withRetry(async () => {
-      // Early termination check (use outer scope timestamp)
+    // Fix 2: Parallel AI + Regex fallback race
+    const aiExtractionPromise = withRetry(async () => {
+      // Fix 1: Early termination at 15s instead of 30s
       const elapsed = Date.now() - extractionStartTime;
-      if (elapsed > 30000) {
-        logger.warn('⚠️ Circuit extraction exceeding 30s, forcing timeout', { elapsed });
+      if (elapsed > 15000) {
+        logger.warn('⚠️ Circuit extraction exceeding 15s, forcing timeout', { elapsed });
         throw new Error('Extraction timeout - using fallback');
       }
       
@@ -145,33 +160,72 @@ Extract ALL circuits with their specifications.`;
               },
               required: ['circuits']
             }
-          }
-        }],
-        tool_choice: { type: 'function', function: { name: 'extract_circuits' } }
-      }, openAiKey, EXTRACTION_TIMEOUT); // 35s timeout - fail fast
+        }
+      }],
+      tool_choice: { type: 'function', function: { name: 'extract_circuits' } }
+    }, openAiKey, EXTRACTION_TIMEOUT); // 20s timeout - fail fast
+    }, {
+      maxAttempts: 2, // Fix 1: Reduced from 3 to 2
+      backoff: [500, 1000] // Fix 1: Faster retries (500ms, 1000ms)
     });
 
-    if (!result.toolCalls || result.toolCalls.length === 0) {
-      logger.warn('⚠️ No tool call in GPT-5 Mini response, using fallback');
-      return { inferredCircuits: [], specialRequirements: [], installationConstraints: [] };
+    // Fix 2: Create regex fallback promise
+    const regexFallbackPromise = new Promise<CircuitExtractionResult>((resolve) => {
+      setTimeout(() => {
+        logger.info('🔄 Starting parallel regex fallback');
+        const fallbackCircuits = parseCircuitsWithRegex(additionalPrompt, logger);
+        resolve({
+          inferredCircuits: fallbackCircuits,
+          specialRequirements: [],
+          installationConstraints: []
+        });
+      }, 15000); // Start after 15s if AI hasn't completed
+    });
+
+    // Fix 2: Race AI extraction vs regex fallback
+    const winner = await Promise.race([
+      aiExtractionPromise.then(result => ({ type: 'ai' as const, result })),
+      regexFallbackPromise.then(result => ({ type: 'regex' as const, result }))
+    ]);
+
+    let finalResult: any;
+    
+    if (winner.type === 'ai') {
+      if (!winner.result.toolCalls || winner.result.toolCalls.length === 0) {
+        logger.warn('⚠️ No tool call in GPT-5 Mini response, using regex fallback');
+        const fallbackCircuits = parseCircuitsWithRegex(additionalPrompt, logger);
+        finalResult = {
+          inferredCircuits: fallbackCircuits,
+          specialRequirements: [],
+          installationConstraints: []
+        };
+      } else {
+        const extractedData = JSON.parse(winner.result.content);
+        const circuits: ExtractedCircuit[] = extractedData.circuits || [];
+        
+        const elapsed = Date.now() - extractionStartTime;
+        logger.info('✅ AI Extraction Complete', {
+          circuitsFound: circuits.length,
+          totalWithQuantities: circuits.reduce((sum, c) => sum + (c.quantity || 1), 0),
+          elapsed: `${elapsed}ms`,
+          tokensEstimate: additionalPrompt.length * 0.75
+        });
+
+        const expandedCircuits = expandCircuitsByQuantity(circuits, logger);
+        
+        finalResult = {
+          inferredCircuits: expandedCircuits,
+          specialRequirements: extractedData.specialRequirements || [],
+          installationConstraints: extractedData.installationConstraints || []
+        };
+      }
+    } else {
+      // Regex fallback won the race
+      logger.info('⚡ Regex fallback completed first (AI too slow)');
+      finalResult = winner.result;
     }
 
-    const extractedData = JSON.parse(result.content);
-    const circuits: ExtractedCircuit[] = extractedData.circuits || [];
-    
-    logger.info('✅ AI Extraction Complete', {
-      circuitsFound: circuits.length,
-      totalWithQuantities: circuits.reduce((sum, c) => sum + (c.quantity || 1), 0)
-    });
-
-    // Expand circuits by quantity
-    const expandedCircuits = expandCircuitsByQuantity(circuits, logger);
-    
-    return {
-      inferredCircuits: expandedCircuits,
-      specialRequirements: extractedData.specialRequirements || [],
-      installationConstraints: extractedData.installationConstraints || []
-    };
+    return finalResult;
 
   } catch (error) {
     const timeElapsed = Date.now() - extractionStartTime;
@@ -180,7 +234,7 @@ Extract ALL circuits with their specifications.`;
       timeElapsed: `${timeElapsed}ms`
     });
     
-    // Fix 2: Immediate fallback to regex parser on timeout
+    // Immediate fallback to regex parser on timeout
     const fallbackCircuits = parseCircuitsWithRegex(additionalPrompt, logger);
     
     return { 
