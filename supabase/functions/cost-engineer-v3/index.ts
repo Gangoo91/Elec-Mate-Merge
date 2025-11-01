@@ -459,7 +459,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                         supplier: { type: 'string' },
                         inDatabase: { type: 'boolean' }
                       },
-                      required: ['description', 'quantity', 'unitPrice', 'total', 'supplier'],
+                      required: ['description', 'quantity', 'unit', 'unitPrice', 'total', 'supplier', 'inDatabase'],
                       additionalProperties: false
                     }
                   },
