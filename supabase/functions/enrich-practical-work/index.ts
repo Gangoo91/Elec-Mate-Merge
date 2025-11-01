@@ -587,23 +587,8 @@ Return ONLY the JSON object with the "facets" array.`;
       return null;
     }
     
-    logger.info(`✅ Extracted ${validFacets.length} valid facets from GPT (${OPENAI_MODEL})`);
+    logger.info(`✅ Extracted ${validFacets.length} valid facets from GPT (${OPENAI_MODEL})`, { requestId });
     return { facets: validFacets };
-    
-  } catch (parseError) {
-    logger.error('Failed to parse GPT response', { 
-      parseError: parseError.message,
-      responsePreview: cleanJson.substring(0, 200)
-    });
-    
-    // Retry once
-    if (retryCount === 0) {
-      logger.info('Retrying due to parse error...');
-      return callGPTForFacets(content, logger, 1);
-    }
-    
-    return null;
-  }
 }
 
 /**
