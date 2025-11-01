@@ -35,6 +35,50 @@ const INSTALLATION_CONTEXT = {
 // ============= HELPER FUNCTIONS (Must be declared before use) =============
 
 /**
+ * Auto-correct undersized MCB ratings before validation
+ * Ensures Ib ≤ In by rounding up to next standard MCB size
+ */
+function autoCorrectMCBSizing(circuits: any[], logger: any): any[] {
+  const standardSizes = [6, 10, 16, 20, 32, 40, 50, 63, 80, 100];
+  
+  return circuits.map(circuit => {
+    const Ib = circuit.calculations?.Ib;
+    const In = circuit.protectionDevice?.rating;
+    
+    if (Ib && In && Ib > In) {
+      // Find next standard size up
+      const correctIn = standardSizes.find(size => size >= Math.ceil(Ib)) || 100;
+      
+      logger.warn(`⚠️ Auto-correcting MCB: ${circuit.name} - Ib=${Ib.toFixed(2)}A, In=${In}A → ${correctIn}A`, {
+        circuit: circuit.name,
+        originalIn: In,
+        correctedIn: correctIn,
+        Ib: Ib.toFixed(2)
+      });
+      
+      circuit.protectionDevice.rating = correctIn;
+      circuit.calculations.In = correctIn;
+      circuit.nominalCurrentIn = correctIn;
+      
+      // Recalculate safety margin
+      if (circuit.calculations.Iz) {
+        circuit.calculations.safetyMargin = ((circuit.calculations.Iz - correctIn) / correctIn) * 100;
+      }
+      
+      // Update justifications to reflect auto-correction
+      if (circuit.justifications?.protection) {
+        circuit.justifications.protection = circuit.justifications.protection.replace(
+          new RegExp(`${In}A`, 'g'),
+          `${correctIn}A`
+        );
+      }
+    }
+    
+    return circuit;
+  });
+}
+
+/**
  * Extract circuits from additional prompt text using NLP entity parsing
  */
 function extractCircuitsFromPrompt(additionalPrompt: string, existingCircuits: any[]): {
@@ -1971,6 +2015,10 @@ Always cite regulation numbers and show working for calculations.`
   // 📄 POST-PROCESSING: Ensure all PDF-required fields are populated
   logger.info('📄 Applying PDF field mapper to ensure complete data');
   designData.circuits = designData.circuits.map(ensurePDFFields);
+  
+  // 🔧 AUTO-CORRECT MCB SIZING (Ib ≤ In enforcement)
+  logger.info('🔧 Auto-correcting MCB sizing before validation');
+  designData.circuits = autoCorrectMCBSizing(designData.circuits, logger);
   
   // 🔍 MULTI-STAGE VALIDATION PIPELINE
   logger.info('🔍 Running multi-stage validation pipeline');
