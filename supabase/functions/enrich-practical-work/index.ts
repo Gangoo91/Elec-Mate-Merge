@@ -87,37 +87,25 @@ function validatePracticalWorkFacet(facet: any): boolean {
   // MUST have keywords (relaxed from 6 to 4)
   if (!facet.keywords || facet.keywords.length < 4) return false;
   
-  // MUST have primary_topic (relaxed length: 20-300 chars)
-  if (!facet.primary_topic || facet.primary_topic.length < 20 || facet.primary_topic.length > 300) return false;
+  // MUST have primary_topic
+  if (!facet.primary_topic || facet.primary_topic.length < 30) return false;
   
-  // MUST have equipment category (allow "general" as fallback)
+  // MUST have equipment category
   const category = normaliseCategory(facet.equipment_category);
   if (!category || category.length < 3) return false;
   
-  // MUST have tools OR materials (relaxed to 1+ instead of 2+)
+  // MUST have tools OR materials
   const hasTools = facet.tools_required && facet.tools_required.length >= 1;
   const hasMaterials = facet.materials_needed && facet.materials_needed.length >= 1;
   if (!hasTools && !hasMaterials) return false;
   
-  // SHOULD have BS7671 references (warn but don't reject)
-  if (!facet.bs7671_regulations || facet.bs7671_regulations.length < 1) {
-    console.warn('⚠️ Facet missing BS7671 references - allowing with lower confidence');
-    facet.confidence_score = Math.max(0.65, (facet.confidence_score || 0.8) - 0.1);
-  }
+  // MUST have core intelligence (NEW REQUIREMENT)
+  if (!facet.typical_duration_minutes || facet.typical_duration_minutes < 1) return false;
+  if (!facet.skill_level || !['apprentice', 'electrician', 'designer', 'specialist'].includes(facet.skill_level)) return false;
+  if (!facet.safety_requirements) return false;
   
-  // MUST have applies_to context (auto-infer if missing)
-  if (!facet.applies_to || facet.applies_to.length < 1) {
-    facet.applies_to = ['domestic']; // Safe default
-  } else {
-    const validAppliesTo = ['domestic', 'commercial', 'industrial', 'agricultural', 'medical', 'education', 'outdoor'];
-    const hasValidAppliesTo = facet.applies_to.some((a: string) => validAppliesTo.includes(a.toLowerCase()));
-    if (!hasValidAppliesTo) {
-      facet.applies_to = ['domestic']; // Safe fallback
-    }
-  }
-  
-  // MUST have minimum confidence 0.65 (reduced from 0.75)
-  if (facet.confidence_score < 0.65) return false;
+  // Accept lower confidence for inferred data (was 0.60, now 0.50)
+  if (facet.confidence_score && facet.confidence_score < 0.50) return false;
   
   return true;
 }
@@ -154,59 +142,119 @@ function ensureJsonArray(value: any): any[] {
 // ==================== GPT ENRICHMENT ====================
 
 async function callGPTForFacets(content: string, logger: any, retryCount = 0): Promise<any> {
-  const systemPrompt = `You are a UK electrical intelligence extractor. You MUST output ONLY valid JSON with NO markdown formatting, NO code blocks, NO explanations.
+  const systemPrompt = `You are a UK electrical work intelligence AI. Your job is to UNDERSTAND electrical procedures and generate COMPLETE technical intelligence, not just extract what's written.
 
-Generate 8-20 DISTINCT micro-facets for practical work procedures. Each facet = ONE specific scenario.
+CRITICAL MINDSET SHIFT:
+- DON'T just copy text → UNDERSTAND the electrical task and INFER complete details
+- If content mentions "install lighting circuit" → INFER: cable routing, termination methods, test procedures, typical duration, skill level
+- If content mentions "test RCD" → INFER: test equipment, acceptance criteria, test frequency, safety requirements
+- If content is sparse → USE YOUR ELECTRICAL KNOWLEDGE to fill gaps
 
-STRICT JSON SCHEMA (Fix 2 - Enhanced with ALL table fields):
+INFERENCE RULES BY TASK TYPE:
+
+**Installation Tasks (mounting, installing, connecting)**
+MUST infer:
+- installation_method: (surface/flush/clipped direct based on equipment type)
+- cable_routes: (typical routes for that equipment)
+- termination_methods: (screw/push-fit based on equipment)
+- typical_duration_minutes: (realistic time for competent electrician)
+- skill_level: (apprentice/electrician/designer based on complexity)
+
+**Testing Tasks (measuring, checking, commissioning)**
+MUST infer:
+- test_procedures: (step-by-step BS7671-compliant test sequence)
+- test_equipment_required: (appropriate test instruments)
+- acceptance_criteria: (BS7671 limits for that test)
+- test_frequency: (initial/periodic based on BS7671)
+
+**Maintenance Tasks (inspecting, servicing, replacing)**
+MUST infer:
+- maintenance_intervals: (frequency based on equipment type and BS7671)
+- maintenance_tasks: (typical maintenance activities)
+- wear_indicators: (signs of deterioration)
+- replacement_criteria: (when to replace vs repair)
+
+FIELD-SPECIFIC INFERENCE GUIDANCE:
+
+typical_duration_minutes:
+- Socket circuit install: 120-180 min
+- Consumer unit replacement: 240-360 min
+- RCD test: 5-10 min
+- Lighting circuit: 90-150 min
+- Emergency lighting test: 15-30 min
+ALWAYS provide realistic duration based on task complexity
+
+skill_level (choose ONE):
+- "apprentice": Basic tasks under supervision (testing, simple installations)
+- "electrician": Standard installations, most testing
+- "designer": Design calculations, complex systems
+- "specialist": EV chargers, solar, fire alarms
+ALWAYS assign appropriate skill level
+
+installation_method:
+If mounting equipment → INFER from equipment type:
+- Sockets/switches: "flush mounted" (domestic) or "surface mounted" (commercial)
+- Consumer units: "surface mounted on non-combustible board"
+- Cable runs: "clipped direct", "in conduit", "in trunking"
+ALWAYS provide if installation-related content
+
+test_procedures:
+If testing mentioned → GENERATE complete BS7671-compliant steps:
+- Insulation resistance: ["Isolate circuit", "Remove sensitive equipment", "Test L-E, N-E, L-N", "Record ≥1MΩ"]
+- Earth continuity: ["Isolate supply", "Test main bonding", "Test circuit protective conductors", "Verify <0.5Ω"]
+ALWAYS provide detailed steps for test tasks
+
+Generate 8-20 DISTINCT micro-facets. Each facet = ONE specific scenario with COMPLETE intelligence.
+
+JSON SCHEMA:
 {
   "facets": [
     {
-      "primary_topic": "string (30-80 words, UK English, specific scenario description)",
-      "keywords": ["array", "of", "6-10", "specific", "keywords"],
-      "equipment_category": "string (snake_case, specific: consumer_unit, socket_outlet, lighting_circuit, NOT generic)",
-      "equipment_subcategory": "string (optional, e.g., domestic_TT_system)",
-      "applies_to": ["array from: domestic, commercial, industrial, agricultural, medical, education, outdoor"],
-      "cable_sizes": ["1.5mm²", "2.5mm²"] (if cables mentioned),
-      "power_ratings": ["16A", "32A", "9.5kW"] (if power mentioned),
-      "location_types": ["indoor", "outdoor", "bathroom"] (if location mentioned),
-      "bs7671_regulations": ["411.3.3", "531.2"] (minimum 1 reference),
+      "primary_topic": "string (40-100 words, describe specific scenario with context)",
+      "keywords": ["6-10 specific keywords"],
+      "equipment_category": "specific category (consumer_unit, socket_circuit, lighting_circuit, etc.)",
+      "equipment_subcategory": "optional subcategory",
+      "applies_to": ["domestic", "commercial", etc.] (ALWAYS include),
+      "cable_sizes": ["1.5mm²", "2.5mm²"] (if applicable),
+      "power_ratings": ["16A", "32A"] (if applicable),
+      "location_types": ["indoor", "outdoor"] (if applicable),
+      "bs7671_regulations": ["411.3.3"] (minimum 1 relevant reg),
       
-      // Installation-specific fields
-      "installation_method": "string (e.g., 'surface mounted', 'flush mounted', 'clipped direct')",
-      "cable_routes": ["ceiling void", "trunking", "buried in wall"] (if routing mentioned),
-      "termination_methods": ["screw terminal", "push-fit", "ring terminal"] (if terminations mentioned),
+      "installation_method": "INFER if installation task, null if pure testing/maintenance",
+      "cable_routes": ["ceiling void", "trunking"] (if installation),
+      "termination_methods": ["screw terminal"] (if installation),
       
-      // Testing & Commissioning fields
-      "test_procedures": ["Step 1: Isolate and prove dead", "Step 2: Check Zs"],
-      "test_equipment_required": ["insulation tester", "multimeter", "proving unit"],
-      "acceptance_criteria": {"insulation_resistance": "≥1MΩ", "zs": "<0.8Ω"} (if tests mentioned),
+      "test_procedures": ["Step 1: ...", "Step 2: ..."] (GENERATE if testing task),
+      "test_equipment_required": ["multimeter", "proving unit"] (if testing),
+      "acceptance_criteria": {"param": "value"} (if testing),
       
-      // Inspection fields
-      "visual_inspection_points": ["check terminations", "verify RCD operation"],
-      "eicr_observation_codes": ["C2", "FI"] (if defects mentioned),
-      "common_defects": ["loose connections", "missing barriers"],
+      "visual_inspection_points": ["check terminations"] (if inspection/EICR),
+      "common_defects": ["loose connections"] (INFER common issues for equipment type),
       
-      // Maintenance fields
-      "maintenance_intervals": {"routine": "6 months", "eicr": "5 years"} (if maintenance mentioned),
-      "maintenance_tasks": ["visual inspection", "RCD test", "torque check"],
-      "wear_indicators": ["discolouration", "sparking", "overheating"],
+      "maintenance_intervals": {"routine": "6 months"} (INFER based on equipment),
+      "maintenance_tasks": ["visual check", "functional test"] (GENERATE typical maintenance),
+      "wear_indicators": ["discolouration"] (INFER for equipment type),
       
-      "tools_required": ["tool1", "tool2"] (minimum 2),
-      "materials_needed": ["material1", "material2"] (minimum 2 OR tools 2+),
-      "common_mistakes": ["loose terminations", "missing grommets"],
-      "safety_requirements": "string or object with UK safety guidance (PPE, isolations, permits)",
-      "confidence_score": 0.75-0.95
+      "typical_duration_minutes": NUMBER (ALWAYS infer realistic duration),
+      "skill_level": "apprentice|electrician|designer|specialist" (ALWAYS assign),
+      "team_size": 1 or 2 (INFER based on task complexity),
+      "tools_required": ["tool1", "tool2"] (minimum 2, INFER standard tools),
+      "materials_needed": ["material1"] (if installation, INFER consumables),
+      "common_mistakes": ["mistake1"] (INFER typical errors for task type),
+      "safety_requirements": {"ppe": [...], "isolations": [...]} (ALWAYS include UK safety reqs),
+      "confidence_score": 0.75-0.95 (0.75 for inferred, 0.90+ for explicit)
     }
   ]
 }
 
-CRITICAL RULES:
-- NO "general", "introduction", "combined", "overview" categories unless no other category fits
-- EVERY facet must have 4+ keywords, 1+ applies_to
-- primary_topic MUST be 30-80 words describing the SPECIFIC scenario
-- If installation/testing/maintenance content present, MUST include relevant fields
-- Return ONLY the JSON object, NO markdown, NO commentary`;
+QUALITY REQUIREMENTS:
+- EVERY facet MUST have: typical_duration_minutes, skill_level, safety_requirements
+- Installation facets MUST have: installation_method, tools (4+), materials (3+)
+- Testing facets MUST have: test_procedures (3+ steps), test_equipment_required, acceptance_criteria
+- Maintenance facets MUST have: maintenance_intervals, maintenance_tasks (3+)
+- NO null fields for core metadata (duration, skill, safety) - USE INFERENCE
+
+Return ONLY valid JSON, NO markdown, NO explanations.`;
 
   const userPrompt = `Extract micro-facets from this UK electrical procedure:
 
@@ -420,6 +468,11 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     maintenance_intervals: toJsonOrNull(facet.maintenance_intervals),
     maintenance_tasks: ensureArrayOfStrings(facet.maintenance_tasks),
     wear_indicators: ensureArrayOfStrings(facet.wear_indicators),
+    
+    // ✅ NEW: Add required core intelligence fields
+    typical_duration_minutes: facet.typical_duration_minutes || null,
+    skill_level: facet.skill_level || null,
+    team_size: facet.team_size || 1,
     
     // Existing error & safety fields
     common_mistakes: ensureArrayOfStrings(facet.common_mistakes),
