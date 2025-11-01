@@ -229,7 +229,6 @@ function parseCircuitsWithRegex(prompt: string, logger: any): any[] {
   logger.info('📝 Regex fallback extracted circuits', { count: circuits.length });
   return circuits;
 }
-}
 
 /**
  * Expand circuits with quantity > 1 into individual circuit objects
