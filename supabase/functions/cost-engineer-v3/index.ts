@@ -506,7 +506,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                   vat: { type: 'number' },
                   grandTotal: { type: 'number' }
                 },
-                required: ['grandTotal'],
+                required: ['materialsTotal', 'labourTotal', 'subtotal', 'vat', 'grandTotal'],
                 additionalProperties: false
               },
               timescales: {
