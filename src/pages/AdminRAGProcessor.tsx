@@ -1,5 +1,6 @@
 import { KnowledgeStatusPanel } from "@/components/admin/KnowledgeStatusPanel";
 import { DocumentProcessor } from "@/components/admin/DocumentProcessor";
+import { MaintenanceEnrichmentTester } from "@/components/admin/MaintenanceEnrichmentTester";
 import { BookOpen, GraduationCap, Lightbulb, FileText, Zap, CheckCircle2, XCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useQuery } from "@tanstack/react-query";
@@ -75,6 +76,8 @@ const AdminRAGProcessor = () => {
         </Alert>
 
         <KnowledgeStatusPanel />
+
+        <MaintenanceEnrichmentTester />
 
         <DocumentProcessor
           title="BS 7671 Wiring Regulations (18th Edition +A2:2022)"
