@@ -486,7 +486,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                         rate: { type: 'number' },
                         total: { type: 'number' }
                       },
-                      required: ['description', 'hours', 'rate', 'total'],
+                      required: ['description', 'hours', 'workers', 'electricianHours', 'apprenticeHours', 'rate', 'total'],
                       additionalProperties: false
                     }
                   },
