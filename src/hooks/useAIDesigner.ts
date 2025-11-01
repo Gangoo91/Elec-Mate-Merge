@@ -3,8 +3,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { DesignInputs, InstallationDesign } from '@/types/installation-design';
 
-// Fix 3: Client-side timeout increased to 280s for more breathing room
-const CLIENT_TIMEOUT_MS = 280000; // 280s (4m 40s) - increased buffer for extraction
+// Fix 3: Client-side timeout increased to 300s for large response transfer
+const CLIENT_TIMEOUT_MS = 300000; // 300s (5m) - extra buffer for large responses
 
 /**
  * Timeout wrapper for promises
@@ -46,14 +46,15 @@ export const useAIDesigner = () => {
     }
 
     // Fix 5: Improved progress stages with extraction feedback
-    // Total: ~175s to match typical processing time for batch designs
+    // Total: ~180s to match typical processing time for batch designs
     const stages = [
       { stage: 1, message: 'Understanding your requirements...', duration: 5000, targetPercent: 5 },
       { stage: 2, message: 'Extracting circuits from description (may take 20-30s)...', duration: 20000, targetPercent: 15 },
       { stage: 3, message: 'Searching BS 7671 regulations...', duration: 10000, targetPercent: 20 },
       { stage: 4, message: 'AI designing circuits (this may take 2-3 minutes)...', duration: 125000, targetPercent: 85 },
       { stage: 5, message: 'Running compliance validation...', duration: 10000, targetPercent: 95 },
-      { stage: 6, message: 'Finalising documentation...', duration: 5000, targetPercent: 99 }
+      { stage: 6, message: 'Finalising documentation...', duration: 3000, targetPercent: 97 },
+      { stage: 7, message: 'Downloading design data...', duration: 5000, targetPercent: 99 }
     ];
 
     let progressInterval: ReturnType<typeof setInterval> | null = null;
@@ -163,6 +164,18 @@ export const useAIDesigner = () => {
         const { data, error: invokeError } = await withTimeout(invokePromise, CLIENT_TIMEOUT_MS);
 
         clearTimeout(timeoutId);
+        
+        // NEW: Monitor response size
+        if (data) {
+          const responseSize = JSON.stringify(data).length;
+          const responseSizeKB = (responseSize / 1024).toFixed(1);
+          console.log(`📦 Response received: ${responseSizeKB}KB`);
+          
+          if (responseSize > 500000) { // >500KB
+            console.warn(`⚠️ Large response detected (${responseSizeKB}KB) - may take a few seconds to parse`);
+            setProgress({ stage: 7, message: 'Processing large design...', percent: 98 });
+          }
+        }
         
         if (invokeError) throw invokeError;
         setRetryMessage(''); // Clear retry message on success

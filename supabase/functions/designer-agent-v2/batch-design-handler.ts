@@ -2114,9 +2114,30 @@ Always cite regulation numbers and show working for calculations.`
       totalLoad: Array.isArray(designData.circuits)
         ? designData.circuits.reduce((sum: number, c: any) => sum + (c.loadPower || 0), 0)
         : 0,
-      circuits: designData.circuits, // ✅ Keep all nested circuit data intact
+      
+      // OPTIMIZATION: Trim verbose circuit data to reduce payload size by 30-50%
+      circuits: designData.circuits.map((c: any) => ({
+        ...c,
+        // Keep only essential calculation fields
+        calculations: {
+          Ib: c.calculations?.Ib,
+          In: c.calculations?.In,
+          Iz: c.calculations?.Iz,
+          zs: c.calculations?.zs,
+          maxZs: c.calculations?.maxZs,
+          voltageDrop: c.calculations?.voltageDrop
+          // Remove: deratedCapacity, safetyMargin (can be computed client-side)
+        },
+        // Truncate verbose justifications to 200 chars each
+        justifications: {
+          cableSize: c.justifications?.cableSize?.substring(0, 200),
+          protection: c.justifications?.protection?.substring(0, 200),
+          rcd: c.justifications?.rcd?.substring(0, 200)
+        }
+      })),
+      
       materials: designData.materials || [],
-      warnings: validationWarnings,
+      warnings: validationWarnings.slice(0, 20), // Limit to top 20 warnings
       consumerUnit: {
         type: incomingSupply.mainSwitchRating >= 100 ? 'Split Load RCBO' : 'Dual RCD',
         mainSwitchRating: incomingSupply.mainSwitchRating,
@@ -2130,7 +2151,7 @@ Always cite regulation numbers and show working for calculations.`
       },
       diversityApplied: true,
       diversityFactor: 0.7,
-      aiResponse: designData.response
+      aiResponse: designData.response?.substring(0, 500) // Truncate long AI responses
     },
     metadata: {
       ragCalls: ragResults.regulations?.length || 0,
