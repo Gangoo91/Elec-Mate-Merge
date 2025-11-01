@@ -5,7 +5,7 @@ import { corsHeaders } from '../_shared/cors.ts';
 import { createLogger } from '../_shared/logger.ts';
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-const OPENAI_MODEL = Deno.env.get('OPENAI_MINI_MODEL') || 'gpt-4o-mini'; // Use Mini 5.0 if configured
+const OPENAI_MODEL = Deno.env.get('OPENAI_MODEL') || 'gpt-5-2025-08-07'; // Use GPT-5 for complex reasoning
 
 // ==================== WORLD-CLASS FILTERS & VALIDATORS ====================
 
@@ -149,6 +149,7 @@ CRITICAL MINDSET SHIFT:
 - If content mentions "install lighting circuit" → INFER: cable routing, termination methods, test procedures, typical duration, skill level
 - If content mentions "test RCD" → INFER: test equipment, acceptance criteria, test frequency, safety requirements
 - If content is sparse → USE YOUR ELECTRICAL KNOWLEDGE to fill gaps
+- IGNORE conceptual/theoretical content → Focus ONLY on ACTIONABLE work tasks
 
 INFERENCE RULES BY TASK TYPE:
 
@@ -203,6 +204,58 @@ If testing mentioned → GENERATE complete BS7671-compliant steps:
 - Insulation resistance: ["Isolate circuit", "Remove sensitive equipment", "Test L-E, N-E, L-N", "Record ≥1MΩ"]
 - Earth continuity: ["Isolate supply", "Test main bonding", "Test circuit protective conductors", "Verify <0.5Ω"]
 ALWAYS provide detailed steps for test tasks
+
+CONCRETE EXAMPLES OF COMPLETE FACETS:
+
+Example A: Emergency Lighting Testing
+{
+  "primary_topic": "Monthly functional testing of emergency lighting system in commercial office building to verify 30-second duration mode operation and automatic failure detection",
+  "keywords": ["emergency lighting", "functional test", "monthly inspection", "30-second test", "self-test", "battery backup"],
+  "equipment_category": "emergency_lighting",
+  "applies_to": ["commercial", "industrial"],
+  "test_procedures": [
+    "Isolate normal lighting supply at distribution board",
+    "Verify emergency lights illuminate within 5 seconds",
+    "Time emergency light operation for minimum 30 seconds",
+    "Check all luminaire indicators show green (charged)",
+    "Restore normal supply and verify automatic recharge",
+    "Record any failures or dim luminaires on test log"
+  ],
+  "test_equipment_required": ["stopwatch", "test key/switch", "test log sheet"],
+  "acceptance_criteria": {
+    "illumination_time": "< 5 seconds",
+    "minimum_duration": "30 seconds",
+    "luminaire_brightness": "adequate illumination"
+  },
+  "typical_duration_minutes": 20,
+  "skill_level": "apprentice",
+  "team_size": 1,
+  "tools_required": ["stopwatch", "test key"],
+  "safety_requirements": {
+    "ppe": ["none required"],
+    "isolations": ["none required"]
+  }
+}
+
+Example B: Consumer Unit Installation
+{
+  "primary_topic": "Installation of 18-way dual RCD consumer unit in domestic property, replacing old fuse box with modern protection including RCBO circuits for kitchen and bathroom",
+  "keywords": ["consumer unit", "installation", "dual RCD", "RCBO", "domestic", "replacement"],
+  "equipment_category": "consumer_unit",
+  "applies_to": ["domestic"],
+  "installation_method": "surface mounted on non-combustible backboard with 50mm clearance",
+  "cable_routes": ["existing tails from meter", "circuits routed through ceiling void", "segregated in plastic trunking"],
+  "termination_methods": ["MCB screw terminals torqued to 3.5Nm", "main switch torqued to manufacturer spec", "neutral bar connections verified"],
+  "typical_duration_minutes": 240,
+  "skill_level": "electrician",
+  "team_size": 1,
+  "tools_required": ["screwdriver set", "torque screwdriver", "cable strippers", "drill", "spirit level"],
+  "materials_needed": ["consumer unit", "MCBs/RCBOs", "cable markers", "backboard", "fixing screws"],
+  "safety_requirements": {
+    "ppe": ["safety glasses", "insulated tools"],
+    "isolations": ["isolation at meter confirmed", "DNO notification if seal broken"]
+  }
+}
 
 Generate 8-20 DISTINCT micro-facets. Each facet = ONE specific scenario with COMPLETE intelligence.
 
@@ -274,8 +327,7 @@ Return ONLY the JSON object with the "facets" array.`;
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt }
       ],
-      temperature: 0.3,
-      max_tokens: 4000,
+      max_completion_tokens: 4000,
       response_format: { type: 'json_object' }
     }),
   });
