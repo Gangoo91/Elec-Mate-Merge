@@ -4331,6 +4331,7 @@ export type Database = {
           cluster_id: string | null
           common_defects: string[] | null
           common_failures: Json[] | null
+          common_mistakes: string[] | null
           confidence_score: number | null
           created_at: string | null
           diagnostic_tests: string[] | null
@@ -4381,6 +4382,7 @@ export type Database = {
           cluster_id?: string | null
           common_defects?: string[] | null
           common_failures?: Json[] | null
+          common_mistakes?: string[] | null
           confidence_score?: number | null
           created_at?: string | null
           diagnostic_tests?: string[] | null
@@ -4431,6 +4433,7 @@ export type Database = {
           cluster_id?: string | null
           common_defects?: string[] | null
           common_failures?: Json[] | null
+          common_mistakes?: string[] | null
           confidence_score?: number | null
           created_at?: string | null
           diagnostic_tests?: string[] | null
