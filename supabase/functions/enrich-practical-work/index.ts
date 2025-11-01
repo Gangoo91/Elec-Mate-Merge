@@ -5,7 +5,7 @@ import { corsHeaders } from '../_shared/cors.ts';
 import { createLogger } from '../_shared/logger.ts';
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-const OPENAI_MODEL = Deno.env.get('OPENAI_MODEL') || 'gpt-5-2025-08-07'; // Use GPT-5 for complex reasoning
+const OPENAI_MODEL = Deno.env.get('OPENAI_MODEL') || 'gpt-5-mini'; // Use GPT-5 Mini for complex reasoning
 
 // ==================== WORLD-CLASS FILTERS & VALIDATORS ====================
 
@@ -76,6 +76,51 @@ const CATEGORY_ALIASES: Record<string, string> = {
 function normaliseCategory(category: string): string {
   const lower = (category || '').toLowerCase().trim();
   return CATEGORY_ALIASES[lower] || lower;
+}
+
+/**
+ * Validate facet for dangerous maintenance advice
+ */
+function validateFacetSafety(facet: any): string | null {
+  const dangerousPatterns = [
+    /clean.*with.*water/i,
+    /damp.*cloth/i,
+    /wet.*wipe/i,
+    /spray.*contact/i,
+    /wd-?40/i,
+    /solvent.*clean/i,
+    /live.*work/i,
+    /work.*on.*live/i,
+    /test.*live.*circuit/i,
+    /energ(i|y)sed.*clean/i
+  ];
+  
+  // Check maintenance_tasks and primary_topic for dangerous patterns
+  const checkFields = [
+    JSON.stringify(facet.maintenance_tasks || []),
+    facet.primary_topic || ''
+  ].join(' ');
+  
+  for (const pattern of dangerousPatterns) {
+    if (pattern.test(checkFields)) {
+      return `Dangerous pattern detected: ${pattern.source}`;
+    }
+  }
+  
+  // Additional check: if maintenance on electrical equipment, must mention isolation
+  if (facet.equipment_category && 
+      Array.isArray(facet.maintenance_tasks) && 
+      facet.maintenance_tasks.length > 0) {
+    const tasksStr = JSON.stringify(facet.maintenance_tasks).toLowerCase();
+    const hasIsolation = /isolat|de-energ|switch.*off|disconnect.*supply/i.test(tasksStr);
+    const isElectricalClean = /clean|wipe|brush|vacuum/i.test(tasksStr);
+    
+    if (isElectricalClean && !hasIsolation) {
+      return 'Electrical equipment cleaning without isolation mentioned';
+    }
+  }
+  
+  return null; // Safe
 }
 
 /**
@@ -375,8 +420,7 @@ Return ONLY the JSON object with the "facets" array.`;
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt }
       ],
-      max_completion_tokens: 4000,
-      response_format: { type: 'json_object' }
+      max_completion_tokens: 4000
     }),
   });
 
