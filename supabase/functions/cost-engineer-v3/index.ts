@@ -550,7 +550,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                       grandTotal: { type: 'number' },
                       tradeoffs: { type: 'array', items: { type: 'string' } }
                     },
-                    required: ['description', 'grandTotal', 'tradeoffs'],
+                    required: ['description', 'materialsTotal', 'labourTotal', 'grandTotal', 'tradeoffs'],
                     additionalProperties: false
                   },
                   standard: {
@@ -562,7 +562,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                       grandTotal: { type: 'number' },
                       tradeoffs: { type: 'array', items: { type: 'string' } }
                     },
-                    required: ['description', 'grandTotal', 'tradeoffs'],
+                    required: ['description', 'materialsTotal', 'labourTotal', 'grandTotal', 'tradeoffs'],
                     additionalProperties: false
                   },
                   premium: {
@@ -574,7 +574,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                       grandTotal: { type: 'number' },
                       tradeoffs: { type: 'array', items: { type: 'string' } }
                     },
-                    required: ['description', 'grandTotal', 'tradeoffs'],
+                    required: ['description', 'materialsTotal', 'labourTotal', 'grandTotal', 'tradeoffs'],
                     additionalProperties: false
                   },
                   recommended: { type: 'string', enum: ['budget', 'standard', 'premium'] }
