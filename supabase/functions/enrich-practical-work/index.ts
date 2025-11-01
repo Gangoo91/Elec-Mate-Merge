@@ -293,7 +293,6 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     bs7671_regulations: facet.bs7671_regulations || [],
     safety_notes: facet.safety_notes || '',
     procedure_steps: facet.procedure_steps || [],
-    common_mistakes: facet.common_mistakes || [],
     testing_requirements: facet.testing_requirements || '',
     confidence_score: facet.confidence_score || 0.85
   }));
