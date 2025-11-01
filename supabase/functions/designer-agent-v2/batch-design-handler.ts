@@ -32,6 +32,271 @@ const INSTALLATION_CONTEXT = {
 - G59/G99 agreements may be required for generation`
 };
 
+// ============= HELPER FUNCTIONS (Must be declared before use) =============
+
+/**
+ * Extract circuits from additional prompt text using NLP entity parsing
+ */
+function extractCircuitsFromPrompt(additionalPrompt: string, existingCircuits: any[]): {
+  inferredCircuits: any[];
+  specialRequirements: string[];
+  installationConstraints: string[];
+} {
+  if (!additionalPrompt?.trim()) {
+    return { inferredCircuits: [], specialRequirements: [], installationConstraints: [] };
+  }
+
+  const entities = parseQueryEntities(additionalPrompt);
+  const inferredCircuits: any[] = [];
+  const specialRequirements: string[] = [];
+  const installationConstraints: string[] = [];
+  
+  // Extract special requirements from entities
+  if (entities.specialRequirements) {
+    specialRequirements.push(...entities.specialRequirements);
+  }
+  
+  // Extract installation constraints
+  if (entities.installationConstraints) {
+    installationConstraints.push(...entities.installationConstraints);
+  }
+  
+  // Add location-based requirements
+  if (entities.location === 'bathroom') {
+    specialRequirements.push('⚠️ Section 701: Bathroom installation - 30mA RCD mandatory, IP rating zones, bonding required');
+  }
+  if (entities.location === 'outdoor') {
+    specialRequirements.push('⚠️ Reg 411.3.3: Outdoor installation - 30mA RCD mandatory, IP65+ rating, SWA cable');
+  }
+  
+  // Add earthing system requirements
+  if (entities.earthingSystem === 'TT') {
+    specialRequirements.push('⚠️ TT System: 30mA RCD on all circuits, earth electrode resistance critical');
+  }
+  
+  // Add high temperature derating
+  if (entities.ambientTemperature && entities.ambientTemperature > 30) {
+    installationConstraints.push(`🔧 High ambient temperature (${entities.ambientTemperature}°C): Apply temperature derating factor`);
+  }
+  
+  // Infer circuits if power + load type mentioned
+  if (entities.power && entities.loadType) {
+    inferredCircuits.push({
+      name: `${entities.loadType} (from prompt)`,
+      loadType: entities.loadType,
+      loadPower: entities.power,
+      cableLength: entities.distance || 20,
+      phases: entities.phases || 'single',
+      specialLocation: entities.location || 'none'
+    });
+  }
+  
+  return { inferredCircuits, specialRequirements, installationConstraints };
+}
+
+/**
+ * Get circuit-type specific regulation hints
+ */
+function getCircuitTypeHints(loadType: string, location?: string): string {
+  const hints: Record<string, string> = {
+    'shower': 'Section 701 (bathrooms), 30mA RCD mandatory, bonding required, min 10mm² cable typical',
+    'ev_charger': 'Section 722, dedicated circuit, Type A RCD required, 6mm² minimum, Mode 3 compliance',
+    'ev-charger': 'Section 722, dedicated circuit, Type A RCD required, 6mm² minimum, Mode 3 compliance',
+    'cooker': 'Reg 433.1.204 diversity (10A + 30% remainder + 5A socket), 10mm² typical, 40-50A MCB',
+    'socket': 'Ring final: 2.5mm²/1.5mm² T&E + 32A MCB ONLY (BS 7671 Appendix 15). Never 4mm² or 6mm². For >7kW: create multiple rings',
+    'sockets': 'Ring final: 2.5mm²/1.5mm² T&E + 32A MCB ONLY (BS 7671 Appendix 15). Never 4mm² or 6mm². For >7kW: create multiple rings',
+    'office-sockets': 'Ring finals: 2.5mm²/1.5mm² T&E + 32A MCB per ring. **Split >7kW into multiple rings** (e.g., 16 sockets = 2× 8-socket rings). Never use 6mm².',
+    'lighting': '1.5mm² cable, 6A MCB Type B, 3% voltage drop limit (6.9V at 230V)',
+    'outdoor': '30mA RCD mandatory (411.3.3), SWA cable, IP65+ rating, burial depth 600mm',
+    'heat_pump': 'Dedicated circuit, 16mm² typical, 63A MCB, surge protection (534.4)',
+    'immersion': '16A MCB, 2.5mm² cable typical, timer control, off-peak tariff consideration',
+    'motor': 'Type D MCB for starting current (6-8x FLC), DOL or star-delta starting',
+    'garage': 'RCD protection recommended, mechanical protection for exposed cables'
+  };
+  
+  const locationHints: Record<string, string> = {
+    'bathroom': 'Section 701: IP rating zones (IPX4 min), 30mA RCD, supplementary bonding',
+    'outdoor': 'Reg 411.3.3: RCD mandatory, IP65+, burial depth 600mm, SWA cable',
+    'garage': 'RCD recommended, mechanical protection, consider EV charger future-proofing'
+  };
+  
+  let hint = hints[loadType] || 'Standard circuit design per BS 7671';
+  if (location && locationHints[location]) {
+    hint += ` | ${locationHints[location]}`;
+  }
+  
+  return hint;
+}
+
+/**
+ * Build design query from project info and circuits
+ */
+function buildDesignQuery(
+  projectInfo: any, 
+  supply: any, 
+  circuits: any[],
+  specialRequirements: string[] = [],
+  installationConstraints: string[] = []
+): string {
+  const circuitList = circuits.length > 0 
+    ? `Circuits required (${circuits.length} total):\n${circuits.map((c: any, i: number) => 
+        `${i+1}. ${c.name} - ${c.loadPower}W (${(c.loadPower/1000).toFixed(1)}kW), ${c.cableLength}m, ${c.phases} phase${c.specialLocation !== 'none' ? ` (${c.specialLocation})` : ''}`
+      ).join('\n')}`
+    : 'Please infer appropriate circuits from the project description and requirements.';
+    
+  let query = `Design circuits for ${projectInfo.name}.
+  
+Incoming supply: ${supply.voltage}V ${supply.phases}, Ze=${supply.Ze}Ω, ${supply.earthingSystem}.
+Prospective fault current: ${supply.pscc || 3500}A.
+
+${circuitList}`;
+
+  if (specialRequirements.length > 0) {
+    query += `\n\nSpecial Requirements:\n${specialRequirements.map(r => `- ${r}`).join('\n')}`;
+  }
+
+  if (installationConstraints.length > 0) {
+    query += `\n\nInstallation Constraints:\n${installationConstraints.map(c => `- ${c}`).join('\n')}`;
+  }
+
+  if (projectInfo.additionalPrompt) {
+    query += `\n\n${projectInfo.additionalPrompt}`;
+  }
+
+  return query;
+}
+
+/**
+ * Extract search terms from query and circuits
+ */
+function extractSearchTerms(query: string, circuits: any[]): string[] {
+  const terms = ['circuit design', 'cable sizing', 'voltage drop', 'protection devices', 'BS 7671'];
+  
+  // Add circuit-specific terms
+  circuits.forEach((c: any) => {
+    if (c.loadType) terms.push(c.loadType);
+    if (c.specialLocation && c.specialLocation !== 'none') terms.push(c.specialLocation);
+  });
+  
+  return terms;
+}
+
+/**
+ * Build structured design prompt with RAG results
+ */
+function buildStructuredDesignPrompt(
+  projectInfo: any, 
+  supply: any, 
+  circuits: any[], 
+  ragResults: any, 
+  type: string,
+  specialRequirements: string[] = [],
+  installationConstraints: string[] = []
+): string {
+  const regulations = ragResults.regulations?.slice(0, 25).map((r: any) => 
+    `${r.regulation_number}: ${r.content.substring(0, 300)}`
+  ).join('\n\n') || 'No specific regulations retrieved';
+  
+  // Generate circuit-specific hints
+  const circuitHints = circuits.length > 0
+    ? circuits.map((c: any, i: number) => {
+        const hint = getCircuitTypeHints(c.loadType, c.specialLocation);
+        return `${i+1}. ${c.name} (${c.loadType}): ${hint}`;
+      }).join('\n')
+    : '';
+  
+  return `You are a senior electrical design engineer specializing in BS 7671:2018+A3:2024 compliant installations.
+
+INSTALLATION TYPE: ${type}
+${INSTALLATION_CONTEXT[type] || ''}
+
+INCOMING SUPPLY DETAILS:
+- Voltage: ${supply.voltage}V ${supply.phases}
+- External Earth Fault Loop Impedance (Ze): ${supply.Ze}Ω
+- Earthing System: ${supply.earthingSystem}
+- Prospective Fault Current (PFC): ${supply.pscc || 3500}A
+- Main Switch Rating: ${supply.mainSwitchRating || 100}A
+
+${specialRequirements.length > 0 ? `SPECIAL REQUIREMENTS:
+${specialRequirements.map(r => `${r}`).join('\n')}
+
+` : ''}${installationConstraints.length > 0 ? `INSTALLATION CONSTRAINTS:
+${installationConstraints.map(c => `${c}`).join('\n')}
+
+` : ''}CIRCUITS TO DESIGN (${circuits.length} total):
+${circuits.length > 0 
+  ? circuits.map((c: any, i: number) => `${i+1}. ${c.name}
+   - Load Type: ${c.loadType}
+   - Power: ${c.loadPower}W (${(c.loadPower/1000).toFixed(1)}kW)
+   - Cable Run: ${c.cableLength}m
+   - Phases: ${c.phases}
+   - Location: ${c.specialLocation || 'general'}`).join('\n\n')
+  : 'No specific circuits provided. Infer appropriate circuits from the project requirements and additional prompt.'}
+
+${circuitHints ? `CIRCUIT-SPECIFIC REGULATION HINTS:
+${circuitHints}
+
+` : ''}BS 7671 KNOWLEDGE BASE (Top 25 regulations retrieved via multi-query RAG):
+${regulations}
+
+CRITICAL DESIGN REQUIREMENTS:
+
+1. **Cable Sizing (Reg 433.1)**:
+   - Calculate design current (Ib) for each circuit
+   - Select protective device rating (In) where In ≥ Ib
+   - Determine cable current-carrying capacity (Iz) where Iz ≥ In
+   - Apply derating factors for ambient temperature and grouping
+   - Select appropriate cable CSA (mm²) and CPC size
+
+2. **Voltage Drop Compliance (Reg 525)**:
+   - Calculate actual voltage drop in volts and percentage
+   - Lighting circuits: Max 3% (6.9V at 230V)
+   - Power circuits: Max 5% (11.5V at 230V)
+   - Use cable resistance values from BS 7671 Appendix 4
+
+3. **Earth Fault Protection (Reg 411.3.2)**:
+   - Calculate circuit Zs (Ze + R1+R2)
+   - Verify Zs < maximum permitted Zs for chosen protective device
+   - Ensure disconnection time ≤ 0.4s (final circuits) or ≤ 5s (distribution)
+
+4. **RCD Protection (Reg 411.3.3)**:
+   - ALL socket outlets ≤32A require 30mA RCD
+   - Bathrooms (Section 701): 30mA RCD mandatory
+   - Outdoor circuits: 30mA RCD mandatory
+   - Specify RCBO or separate RCD
+
+5. **Diversity Calculation (Appendix 15)**:
+   - Apply diversity factors per BS 7671 Appendix 15
+   - Provide clear reasoning for each circuit's diversity
+   - Calculate total diversified load for main switch sizing
+   - Include diversity breakdown with BS 7671 references
+
+6. **Materials List**:
+   - Specify cable types (T&E, SWA, FP200) based on location
+   - Include quantities with units (metres, number of)
+   - List all protective devices
+   - Include consumer unit specification
+
+7. **Justifications**:
+   - Cite specific BS 7671 regulation numbers
+   - Explain cable size selection with calculations
+   - Justify protective device type, rating, and curve
+   - Explain RCD requirements based on location/circuit type
+
+IMPORTANT NOTES:
+- ALL calculations must be numerically accurate
+- ALL regulation citations must be specific (e.g., "Reg 411.3.3")
+- Provide practical justifications, not just regulation text
+- Consider installation method impact on current capacity
+- Account for voltage drop over cable length
+- Ensure all circuits meet disconnection time requirements
+${circuits.length === 0 ? '- Since no circuits were provided, infer appropriate circuits from the project type and brief' : ''}
+
+You MUST call the design_circuits function to return your complete design. Do not output text or markdown - only call the tool.`;
+}
+
+// ============= MAIN LOGIC =============
+
 /**
  * Categorize circuits into high-power (individual processing) vs standard (batched)
  * High-power circuits often cause MALFORMED_FUNCTION_CALL due to complex calculations
@@ -1801,252 +2066,7 @@ function ensurePDFFields(circuit: any): any {
   };
 }
 
-// Helper functions
-function extractCircuitsFromPrompt(additionalPrompt: string, existingCircuits: any[]): {
-  inferredCircuits: any[];
-  specialRequirements: string[];
-  installationConstraints: string[];
-} {
-  if (!additionalPrompt?.trim()) {
-    return { inferredCircuits: [], specialRequirements: [], installationConstraints: [] };
-  }
-
-  const entities = parseQueryEntities(additionalPrompt);
-  const inferredCircuits: any[] = [];
-  const specialRequirements: string[] = [];
-  const installationConstraints: string[] = [];
-  
-  // Extract special requirements from entities
-  if (entities.specialRequirements) {
-    specialRequirements.push(...entities.specialRequirements);
-  }
-  
-  // Extract installation constraints
-  if (entities.installationConstraints) {
-    installationConstraints.push(...entities.installationConstraints);
-  }
-  
-  // Add location-based requirements
-  if (entities.location === 'bathroom') {
-    specialRequirements.push('⚠️ Section 701: Bathroom installation - 30mA RCD mandatory, IP rating zones, bonding required');
-  }
-  if (entities.location === 'outdoor') {
-    specialRequirements.push('⚠️ Reg 411.3.3: Outdoor installation - 30mA RCD mandatory, IP65+ rating, SWA cable');
-  }
-  
-  // Add earthing system requirements
-  if (entities.earthingSystem === 'TT') {
-    specialRequirements.push('⚠️ TT System: 30mA RCD on all circuits, earth electrode resistance critical');
-  }
-  
-  // Add high temperature derating
-  if (entities.ambientTemperature && entities.ambientTemperature > 30) {
-    installationConstraints.push(`🔧 High ambient temperature (${entities.ambientTemperature}°C): Apply temperature derating factor`);
-  }
-  
-  // Infer circuits if power + load type mentioned
-  if (entities.power && entities.loadType) {
-    inferredCircuits.push({
-      name: `${entities.loadType} (from prompt)`,
-      loadType: entities.loadType,
-      loadPower: entities.power,
-      cableLength: entities.distance || 20,
-      phases: entities.phases || 'single',
-      specialLocation: entities.location || 'none'
-    });
-  }
-  
-  return { inferredCircuits, specialRequirements, installationConstraints };
-}
-
-function getCircuitTypeHints(loadType: string, location?: string): string {
-  const hints: Record<string, string> = {
-    'shower': 'Section 701 (bathrooms), 30mA RCD mandatory, bonding required, min 10mm² cable typical',
-    'ev_charger': 'Section 722, dedicated circuit, Type A RCD required, 6mm² minimum, Mode 3 compliance',
-    'ev-charger': 'Section 722, dedicated circuit, Type A RCD required, 6mm² minimum, Mode 3 compliance',
-    'cooker': 'Reg 433.1.204 diversity (10A + 30% remainder + 5A socket), 10mm² typical, 40-50A MCB',
-    'socket': 'Ring final: 2.5mm²/1.5mm² T&E + 32A MCB ONLY (BS 7671 Appendix 15). Never 4mm² or 6mm². For >7kW: create multiple rings',
-    'sockets': 'Ring final: 2.5mm²/1.5mm² T&E + 32A MCB ONLY (BS 7671 Appendix 15). Never 4mm² or 6mm². For >7kW: create multiple rings',
-    'office-sockets': 'Ring finals: 2.5mm²/1.5mm² T&E + 32A MCB per ring. **Split >7kW into multiple rings** (e.g., 16 sockets = 2× 8-socket rings). Never use 6mm².',
-    'lighting': '1.5mm² cable, 6A MCB Type B, 3% voltage drop limit (6.9V at 230V)',
-    'outdoor': '30mA RCD mandatory (411.3.3), SWA cable, IP65+ rating, burial depth 600mm',
-    'heat_pump': 'Dedicated circuit, 16mm² typical, 63A MCB, surge protection (534.4)',
-    'immersion': '16A MCB, 2.5mm² cable typical, timer control, off-peak tariff consideration',
-    'motor': 'Type D MCB for starting current (6-8x FLC), DOL or star-delta starting',
-    'garage': 'RCD protection recommended, mechanical protection for exposed cables'
-  };
-  
-  const locationHints: Record<string, string> = {
-    'bathroom': 'Section 701: IP rating zones (IPX4 min), 30mA RCD, supplementary bonding',
-    'outdoor': 'Reg 411.3.3: RCD mandatory, IP65+, burial depth 600mm, SWA cable',
-    'garage': 'RCD recommended, mechanical protection, consider EV charger future-proofing'
-  };
-  
-  let hint = hints[loadType] || 'Standard circuit design per BS 7671';
-  if (location && locationHints[location]) {
-    hint += ` | ${locationHints[location]}`;
-  }
-  
-  return hint;
-}
-
-function buildDesignQuery(
-  projectInfo: any, 
-  supply: any, 
-  circuits: any[],
-  specialRequirements: string[] = [],
-  installationConstraints: string[] = []
-): string {
-  const circuitList = circuits.length > 0 
-    ? `Circuits required (${circuits.length} total):\n${circuits.map((c: any, i: number) => 
-        `${i+1}. ${c.name} - ${c.loadPower}W (${(c.loadPower/1000).toFixed(1)}kW), ${c.cableLength}m, ${c.phases} phase${c.specialLocation !== 'none' ? ` (${c.specialLocation})` : ''}`
-      ).join('\n')}`
-    : 'Please infer appropriate circuits from the project description and requirements.';
-    
-  let query = `Design circuits for ${projectInfo.name}.
-  
-Incoming supply: ${supply.voltage}V ${supply.phases}, Ze=${supply.Ze}Ω, ${supply.earthingSystem}.
-Prospective fault current: ${supply.pscc || 3500}A.
-
-${circuitList}`;
-
-  if (specialRequirements.length > 0) {
-    query += `\n\nSpecial Requirements:\n${specialRequirements.map(r => `- ${r}`).join('\n')}`;
-  }
-
-  if (installationConstraints.length > 0) {
-    query += `\n\nInstallation Constraints:\n${installationConstraints.map(c => `- ${c}`).join('\n')}`;
-  }
-
-  if (projectInfo.additionalPrompt) {
-    query += `\n\n${projectInfo.additionalPrompt}`;
-  }
-
-  return query;
-}
-
-function extractSearchTerms(query: string, circuits: any[]): string[] {
-  const terms = ['circuit design', 'cable sizing', 'voltage drop', 'protection devices', 'BS 7671'];
-  
-  // Add circuit-specific terms
-  circuits.forEach((c: any) => {
-    if (c.loadType) terms.push(c.loadType);
-    if (c.specialLocation && c.specialLocation !== 'none') terms.push(c.specialLocation);
-  });
-  
-  return terms;
-}
-
-function buildStructuredDesignPrompt(
-  projectInfo: any, 
-  supply: any, 
-  circuits: any[], 
-  ragResults: any, 
-  type: string,
-  specialRequirements: string[] = [],
-  installationConstraints: string[] = []
-): string {
-  const regulations = ragResults.regulations?.slice(0, 25).map((r: any) => 
-    `${r.regulation_number}: ${r.content.substring(0, 300)}`
-  ).join('\n\n') || 'No specific regulations retrieved';
-  
-  // Generate circuit-specific hints
-  const circuitHints = circuits.length > 0
-    ? circuits.map((c: any, i: number) => {
-        const hint = getCircuitTypeHints(c.loadType, c.specialLocation);
-        return `${i+1}. ${c.name} (${c.loadType}): ${hint}`;
-      }).join('\n')
-    : '';
-  
-  return `You are a senior electrical design engineer specializing in BS 7671:2018+A3:2024 compliant installations.
-
-INSTALLATION TYPE: ${type}
-${INSTALLATION_CONTEXT[type] || ''}
-
-INCOMING SUPPLY DETAILS:
-- Voltage: ${supply.voltage}V ${supply.phases}
-- External Earth Fault Loop Impedance (Ze): ${supply.Ze}Ω
-- Earthing System: ${supply.earthingSystem}
-- Prospective Fault Current (PFC): ${supply.pscc || 3500}A
-- Main Switch Rating: ${supply.mainSwitchRating || 100}A
-
-${specialRequirements.length > 0 ? `SPECIAL REQUIREMENTS:
-${specialRequirements.map(r => `${r}`).join('\n')}
-
-` : ''}${installationConstraints.length > 0 ? `INSTALLATION CONSTRAINTS:
-${installationConstraints.map(c => `${c}`).join('\n')}
-
-` : ''}CIRCUITS TO DESIGN (${circuits.length} total):
-${circuits.length > 0 
-  ? circuits.map((c: any, i: number) => `${i+1}. ${c.name}
-   - Load Type: ${c.loadType}
-   - Power: ${c.loadPower}W (${(c.loadPower/1000).toFixed(1)}kW)
-   - Cable Run: ${c.cableLength}m
-   - Phases: ${c.phases}
-   - Location: ${c.specialLocation || 'general'}`).join('\n\n')
-  : 'No specific circuits provided. Infer appropriate circuits from the project requirements and additional prompt.'}
-
-${circuitHints ? `CIRCUIT-SPECIFIC REGULATION HINTS:
-${circuitHints}
-
-` : ''}BS 7671 KNOWLEDGE BASE (Top 25 regulations retrieved via multi-query RAG):
-${regulations}
-
-CRITICAL DESIGN REQUIREMENTS:
-
-1. **Cable Sizing (Reg 433.1)**:
-   - Calculate design current (Ib) for each circuit
-   - Select protective device rating (In) where In ≥ Ib
-   - Determine cable current-carrying capacity (Iz) where Iz ≥ In
-   - Apply derating factors for ambient temperature and grouping
-   - Select appropriate cable CSA (mm²) and CPC size
-
-2. **Voltage Drop Compliance (Reg 525)**:
-   - Calculate actual voltage drop in volts and percentage
-   - Lighting circuits: Max 3% (6.9V at 230V)
-   - Power circuits: Max 5% (11.5V at 230V)
-   - Use cable resistance values from BS 7671 Appendix 4
-
-3. **Earth Fault Protection (Reg 411.3.2)**:
-   - Calculate circuit Zs (Ze + R1+R2)
-   - Verify Zs < maximum permitted Zs for chosen protective device
-   - Ensure disconnection time ≤ 0.4s (final circuits) or ≤ 5s (distribution)
-
-4. **RCD Protection (Reg 411.3.3)**:
-   - ALL socket outlets ≤32A require 30mA RCD
-   - Bathrooms (Section 701): 30mA RCD mandatory
-   - Outdoor circuits: 30mA RCD mandatory
-   - Specify RCBO or separate RCD
-
-5. **Diversity Calculation (Appendix 15)**:
-   - Apply diversity factors per BS 7671 Appendix 15
-   - Provide clear reasoning for each circuit's diversity
-   - Calculate total diversified load for main switch sizing
-   - Include diversity breakdown with BS 7671 references
-
-6. **Materials List**:
-   - Specify cable types (T&E, SWA, FP200) based on location
-   - Include quantities with units (metres, number of)
-   - List all protective devices
-   - Include consumer unit specification
-
-7. **Justifications**:
-   - Cite specific BS 7671 regulation numbers
-   - Explain cable size selection with calculations
-   - Justify protective device type, rating, and curve
-   - Explain RCD requirements based on location/circuit type
-
-IMPORTANT NOTES:
-- ALL calculations must be numerically accurate
-- ALL regulation citations must be specific (e.g., "Reg 411.3.3")
-- Provide practical justifications, not just regulation text
-- Consider installation method impact on current capacity
-- Account for voltage drop over cable length
-- Ensure all circuits meet disconnection time requirements
-${circuits.length === 0 ? '- Since no circuits were provided, infer appropriate circuits from the project type and brief' : ''}
-
-You MUST call the design_circuits function to return your complete design. Do not output text or markdown - only call the tool.`;
-}
+// ============= ALL HELPER FUNCTIONS MOVED TO TOP OF FILE (LINES 35-236) =============
 
 function extractPracticalGuidance(circuits: any[]): string[] {
   const guidance = [
