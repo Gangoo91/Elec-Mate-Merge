@@ -535,7 +535,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                     items: { type: 'string' }
                   }
                 },
-                required: ['phases', 'totalDays', 'startToFinish'],
+                required: ['phases', 'totalDays', 'totalWeeks', 'workingDaysPerWeek', 'startToFinish', 'criticalPath', 'assumptions'],
                 additionalProperties: false
               },
               alternatives: {
