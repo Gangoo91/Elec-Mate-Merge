@@ -338,12 +338,12 @@ export async function handleBatchDesign(body: any, logger: any) {
     model: aiConfig?.model || 'openai/gpt-5'
   });
 
-  // Get API keys
+  // Get OpenAI API key (primary model for circuit design)
   const openAiKey = Deno.env.get('OPENAI_API_KEY');
   if (!openAiKey) throw new Error('OPENAI_API_KEY not configured');
   
+  // Gemini key only required if using Gemini models (optional)
   const geminiKey = Deno.env.get('GEMINI_API_KEY');
-  if (!geminiKey) throw new Error('GEMINI_API_KEY not configured');
   
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
