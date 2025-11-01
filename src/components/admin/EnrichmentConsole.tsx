@@ -53,7 +53,7 @@ const TASK_CONFIG = {
     sourceTable: 'practical_work',
     targetTable: 'practical_work_intelligence',
     enrichmentModel: 'faceted',
-    targetMultiplier: 3.674,
+    targetMultiplier: 12.0,
     sourceFilter: { column: 'is_canonical', op: 'eq', value: true }
   }
 } as const;
