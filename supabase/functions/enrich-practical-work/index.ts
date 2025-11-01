@@ -119,6 +119,35 @@ function validatePracticalWorkFacet(facet: any): boolean {
   return true;
 }
 
+// ==================== TYPE NORMALIZATION HELPERS ====================
+
+function ensureArrayOfStrings(value: any): string[] {
+  if (!value) return [];
+  if (Array.isArray(value)) return value.map(v => String(v));
+  if (typeof value === 'string') return [value];
+  return [];
+}
+
+function toJsonOrNull(value: any): any {
+  if (!value) return null;
+  if (typeof value === 'object') return value;
+  if (typeof value === 'string') return { notes: value };
+  return null;
+}
+
+function ensureJsonArray(value: any): any[] {
+  if (!value) return [];
+  if (Array.isArray(value)) {
+    return value.map(v => {
+      if (typeof v === 'object') return v;
+      if (typeof v === 'string') return { step: v };
+      return { value: String(v) };
+    });
+  }
+  if (typeof value === 'string') return [{ step: value }];
+  return [];
+}
+
 // ==================== GPT ENRICHMENT ====================
 
 async function callGPTForFacets(content: string, logger: any, retryCount = 0): Promise<any> {
@@ -141,7 +170,10 @@ STRICT JSON SCHEMA:
       "bs7671_regulations": ["411.3.3", "531.2"] (minimum 1 reference),
       "tools_required": ["tool1", "tool2"] (minimum 2),
       "materials_needed": ["material1", "material2"] (minimum 2 OR tools 2+),
-      "safety_notes": "string (UK safety guidance)",
+      "common_mistakes": ["loose terminations", "missing grommets"] (array of common errors),
+      "safety_requirements": "string or object with UK safety guidance (PPE, isolations, permits)",
+      "test_procedures": ["Step 1: Isolate and prove dead", "Step 2: Check Zs"] (array of testing steps),
+      "test_equipment_required": ["insulation tester", "multimeter", "proving unit"] (array of test equipment),
       "confidence_score": 0.75-0.95
     }
   ]
@@ -152,6 +184,10 @@ CRITICAL RULES:
 - NO misspellings (e.g., "ombined")
 - EVERY facet must have 6+ keywords, 1+ BS7671 reference, 1+ applies_to
 - primary_topic MUST be 30-80 words describing the SPECIFIC scenario
+- common_mistakes: array of common errors (2-5 items)
+- safety_requirements: UK safety guidance (string or object)
+- test_procedures: array of step-by-step testing procedures (if applicable)
+- test_equipment_required: array of testing equipment needed (if applicable)
 - Return ONLY the JSON object, NO markdown, NO commentary`;
 
   const userPrompt = `Extract micro-facets from this UK electrical procedure:
@@ -277,6 +313,7 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
   }
 
   // Store enriched intelligence - multiple facets per item (PRIMARY stage micro-facets)
+  // Map GPT output to existing table columns with type normalization
   const facetsToInsert = intelligence.facets.map((facet: any) => ({
     practical_work_id: item.id,
     facet_type: 'primary', // PRIMARY stage = micro-facet explosion
@@ -291,7 +328,11 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     tools_required: facet.tools_required || [],
     materials_needed: facet.materials_needed || [],
     bs7671_regulations: facet.bs7671_regulations || [],
-    safety_notes: facet.safety_notes || '',
+    // Map new fields to existing columns with type normalization
+    common_mistakes: ensureArrayOfStrings(facet.common_mistakes),
+    safety_requirements: toJsonOrNull(facet.safety_requirements),
+    test_procedures: ensureJsonArray(facet.test_procedures),
+    test_equipment_required: ensureArrayOfStrings(facet.test_equipment_required),
     confidence_score: facet.confidence_score || 0.85
   }));
 
