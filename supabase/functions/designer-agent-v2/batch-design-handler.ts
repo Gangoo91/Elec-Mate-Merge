@@ -1183,9 +1183,9 @@ Always cite regulation numbers and show working for calculations.`
     totalWarnings: designData.warnings.length
   });
   
-  // PHASE 3: Verify all circuits were designed - add placeholders for missing ones
+  // PHASE 3: Verify all circuits were designed - REJECT if any are missing
   if (designData.circuits.length < allCircuits.length) {
-    logger.warn('⚠️ Circuit count mismatch detected', {
+    logger.error('❌ Circuit count mismatch - some circuits could not be designed', {
       requested: allCircuits.length,
       received: designData.circuits.length,
       missing: allCircuits.length - designData.circuits.length
@@ -1201,53 +1201,28 @@ Always cite regulation numbers and show working for calculations.`
       return !receivedNames.has(circuitName);
     });
     
-    logger.warn('⚠️ Missing circuits identified', {
+    logger.error('❌ Missing circuits - design incomplete', {
       count: missingCircuits.length,
       names: missingCircuits.map(c => c.name || c.loadType)
     });
     
-    // Add placeholder circuits so user knows they were requested
-    for (const missing of missingCircuits) {
-      logger.warn(`⚠️ Adding placeholder for missing circuit: ${missing.name || missing.loadType}`);
-      
-      designData.circuits.push({
-        circuitNumber: 0, // Will be renumbered below
-        name: missing.name || missing.loadType || 'Unknown Circuit',
-        loadType: missing.loadType || 'Unknown',
-        loadPower: missing.loadPower || 0,
-        cableRun: missing.cableRun || 0,
-        phase: missing.phase || 'L1',
-        
-        // Minimal placeholder data
-        protectionDevice: 'Not Designed',
-        protectionRating: 0,
-        cableSize: 0,
-        cableType: 'Not Designed',
-        
-        warnings: [
-          '⚠️ This circuit could not be designed automatically',
-          'Possible reasons: Complex requirements, insufficient data, or AI processing error',
-          'Manual design required - consult BS 7671 or qualified electrician'
-        ],
-        
-        justifications: {
-          cableSize: 'Manual design required',
-          protection: 'Manual design required',
-          rcd: 'Manual design required'
-        }
-      });
-    }
-    
-    // Add warning to main design
-    designData.warnings.push(
-      `⚠️ ${missingCircuits.length} circuit(s) could not be designed automatically and require manual design: ${
-        missingCircuits.map(c => c.name || c.loadType).join(', ')
-      }`
-    );
-    
-    logger.info('✅ Added placeholders for missing circuits', {
-      totalCircuitsNow: designData.circuits.length,
-      placeholdersAdded: missingCircuits.length
+    // REJECT the design instead of adding placeholders
+    return new Response(JSON.stringify({
+      version: 'v3.3.3-no-placeholders',
+      success: false,
+      error: 'INCOMPLETE_DESIGN',
+      message: `AI could not design ${missingCircuits.length} circuit(s). Please try again or simplify the request.`,
+      missingCircuits: missingCircuits.map(c => ({
+        name: c.name || c.loadType,
+        loadType: c.loadType,
+        reason: 'AI batch processing failed - may be too complex or require additional detail'
+      })),
+      receivedCircuits: designData.circuits.length,
+      requestedCircuits: allCircuits.length,
+      code: 'INCOMPLETE_DESIGN'
+    }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     });
   } else {
     logger.info('✅ All circuits designed successfully', {
