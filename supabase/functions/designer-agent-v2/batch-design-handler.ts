@@ -1267,23 +1267,32 @@ Return complete circuit objects using the provided tool schema.`;
             logger.warn(`⚠️ Strategy 1 failed for ${circuitName}`, { error: err });
           }
           
-          // Strategy 2: Ultra-simplified prompt with just essentials
+          // Strategy 2: Ultra-simplified prompt with just essentials - MUST include "JSON" for response_format
           try {
-            const ultraSimpleQuery = `Design ONE circuit with BS 7671 compliance:
-Name: ${circuit.name || circuit.loadType}
-Type: ${circuit.loadType}
-Power: ${circuit.loadPower}W
-Length: ${circuit.cableLength}m
-Phases: ${circuit.phases}
-${circuit.specialLocation ? `Special location: ${circuit.specialLocation}` : ''}
+            const ultraSimpleQuery = `Design ONE circuit with BS 7671 compliance and return the result as a JSON object:
 
-Return ONLY a JSON object with: circuits (array with 1 circuit), materials (array), warnings (array).
+Circuit Details:
+- Name: ${circuit.name || circuit.loadType}
+- Type: ${circuit.loadType}
+- Power: ${circuit.loadPower}W
+- Length: ${circuit.cableLength}m
+- Phases: ${circuit.phases}
+${circuit.specialLocation ? `- Special location: ${circuit.specialLocation}` : ''}
+
+Response Format:
+Return ONLY a valid JSON object with this structure:
+{
+  "circuits": [array with 1 circuit object],
+  "materials": [array of materials],
+  "warnings": [array of warnings]
+}
+
 Include all required fields: cableSize, cpcSize, protectionDevice, calculations, justifications.`;
 
             const ultraSimpleResult = await providerRetry(async () => {
               return await callOpenAI({
                 messages: [
-                  { role: 'system', content: systemPrompt.substring(0, 5000) }, // Truncated prompt
+                  { role: 'system', content: `${systemPrompt.substring(0, 4950)}... Return response as JSON.` }, // Truncated with JSON mention
                   { role: 'user', content: ultraSimpleQuery }
                 ],
                 model: 'gpt-5-mini-2025-08-07',
