@@ -602,14 +602,14 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                               unitPrice: { type: 'number' },
                               total: { type: 'number' }
                             },
-                            required: ['description', 'quantity', 'unit', 'unitPrice', 'total'],
+                            required: ['code', 'description', 'quantity', 'unit', 'unitPrice', 'total'],
                             additionalProperties: false
                           }
                         },
                         subtotal: { type: 'number' },
                         accountNumber: { type: 'string' }
                       },
-                      required: ['items', 'subtotal'],
+                      required: ['items', 'subtotal', 'accountNumber'],
                       additionalProperties: false
                     }
                   },
@@ -620,7 +620,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                     items: { type: 'string' }
                   }
                 },
-                required: ['bySupplier', 'totalItems'],
+                required: ['bySupplier', 'totalItems', 'estimatedDelivery', 'notes'],
                 additionalProperties: false
               },
               valueEngineering: {
