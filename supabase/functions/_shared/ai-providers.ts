@@ -167,11 +167,12 @@ export async function callGemini(
   
   // Handle MALFORMED_FUNCTION_CALL specifically - this is retryable with simpler prompts
   if (candidate?.finishReason === 'MALFORMED_FUNCTION_CALL') {
+    console.error('⚠️ Gemini MALFORMED_FUNCTION_CALL - schema too complex or prompt too long');
     throw new AIProviderError(
-      'Gemini could not format response correctly - tool calling schema may be too complex. Will retry with simplified approach.',
+      'Gemini function calling failed - circuit design may be too complex for tool schema. Retrying with simplified JSON mode.',
       'gemini',
       undefined,
-      true // retryable
+      true // retryable - will trigger simplified JSON mode
     );
   }
   

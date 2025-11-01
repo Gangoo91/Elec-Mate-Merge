@@ -704,11 +704,38 @@ Return complete circuit objects using the provided tool schema.`;
   };
   
   // ============================================
-  // ⚡ PARALLEL BATCH PROCESSING (50% SPEED BOOST)
-  // All batches are processed concurrently using Promise.all()
+  // ⚡ SMART BATCH PROCESSING WITH HIGH-POWER DETECTION
+  // Separate high-power circuits for individual processing
   // ============================================
-  const BATCH_SIZE = 2; // SPEED OPTIMIZED: Even smaller batches (2) to stay under 150s browser timeout
-  const circuitBatches = chunkArray(allCircuits, BATCH_SIZE);
+  
+  // Detect high-power circuits that often cause MALFORMED_FUNCTION_CALL
+  const HIGH_POWER_TYPES = ['shower', 'ev', 'charger', 'cooker', 'oven', 'hob', 'heat pump', 'immersion'];
+  const HIGH_POWER_THRESHOLD = 7000; // 7kW+
+  
+  const isHighPowerCircuit = (circuit: any): boolean => {
+    const name = (circuit.name || circuit.loadType || '').toLowerCase();
+    const hasHighPowerType = HIGH_POWER_TYPES.some(type => name.includes(type));
+    const hasHighPower = (circuit.loadPower || 0) > HIGH_POWER_THRESHOLD;
+    return hasHighPowerType || hasHighPower;
+  };
+  
+  // Split circuits into high-power (individual) and standard (batched)
+  const highPowerCircuits = allCircuits.filter(isHighPowerCircuit);
+  const standardCircuits = allCircuits.filter(c => !isHighPowerCircuit(c));
+  
+  logger.info('🔍 Circuit classification for smart batching', {
+    totalCircuits: allCircuits.length,
+    highPowerCircuits: highPowerCircuits.length,
+    standardCircuits: standardCircuits.length,
+    highPowerTypes: highPowerCircuits.map(c => c.name || c.loadType)
+  });
+  
+  // Create batches: high-power get individual processing, standard get batched
+  const BATCH_SIZE = 2;
+  const standardBatches = chunkArray(standardCircuits, BATCH_SIZE);
+  const individualBatches = highPowerCircuits.map(c => [c]); // Each high-power circuit in its own batch
+  
+  const circuitBatches = [...individualBatches, ...standardBatches];
 
   logger.info('⚡ Parallel batch processing enabled', {
     totalCircuits: allCircuits.length,
@@ -721,20 +748,75 @@ Return complete circuit objects using the provided tool schema.`;
   // Import Gemini provider
   const { callGemini, withRetry: providerRetry } = await import('../_shared/ai-providers.ts');
 
+  // Validate batch result to ensure all circuits are present
+  const validateBatchResult = (result: any, expectedCircuits: any[]): boolean => {
+    if (!result || !result.aiData || !result.success) {
+      return false;
+    }
+    
+    try {
+      const toolCall = result.aiData.choices?.[0]?.message?.tool_calls?.[0];
+      if (!toolCall) {
+        logger.warn('⚠️ No tool call in batch result');
+        return false;
+      }
+      
+      const parsed = JSON.parse(toolCall.function.arguments);
+      const receivedCircuits = parsed.circuits || [];
+      
+      // Check if all expected circuits are present
+      const expectedNames = expectedCircuits.map(c => 
+        (c.name || c.loadType || '').toLowerCase().trim()
+      );
+      const receivedNames = receivedCircuits.map((c: any) => 
+        (c.name || '').toLowerCase().trim()
+      );
+      
+      const allPresent = expectedNames.every(name => 
+        receivedNames.some(recName => recName.includes(name) || name.includes(recName))
+      );
+      
+      if (!allPresent) {
+        const missing = expectedNames.filter(name => 
+          !receivedNames.some(recName => recName.includes(name) || name.includes(recName))
+        );
+        logger.warn(`⚠️ Batch validation failed - missing circuits`, { 
+          expected: expectedNames.length, 
+          received: receivedNames.length,
+          missing
+        });
+        return false;
+      }
+      
+      // Check for required fields in each circuit
+      const hasValidFields = receivedCircuits.every((c: any) => 
+        c.cableSize && c.protectionDevice && c.calculations
+      );
+      
+      if (!hasValidFields) {
+        logger.warn('⚠️ Batch validation failed - circuits missing required fields');
+        return false;
+      }
+      
+      return true;
+    } catch (error) {
+      logger.error('❌ Batch validation error', { error });
+      return false;
+    }
+  };
+  
   // Function to process a single batch with retry logic
   const processBatch = async (batch: any[], batchIndex: number, attempt = 0): Promise<any> => {
     const batchStartTime = Date.now();
     const maxAttempts = 3;
     
     // Detect high-power circuits that need special handling
-    const hasHighPowerCircuit = batch.some((c: any) => 
-      ['shower', 'ev charger', 'cooker', 'oven', 'hob'].some(type => 
-        (c.name || c.loadType || '').toLowerCase().includes(type)
-      ) || (c.loadPower || 0) > 7000
-    );
+    const hasHighPowerCircuit = batch.some(isHighPowerCircuit);
+    const isIndividualCircuit = batch.length === 1;
     
-    logger.info(`📦 Batch ${batchIndex + 1}/${circuitBatches.length}: Processing ${batch.length} circuits${attempt > 0 ? ` (retry ${attempt})` : ''}`, {
+    logger.info(`📦 Batch ${batchIndex + 1}/${circuitBatches.length}: Processing ${batch.length} circuit${batch.length > 1 ? 's' : ''}${attempt > 0 ? ` (retry ${attempt})` : ''}`, {
       hasHighPowerCircuit,
+      isIndividual: isIndividualCircuit,
       circuitTypes: batch.map((c: any) => c.loadType)
     });
     
@@ -744,17 +826,45 @@ Return complete circuit objects using the provided tool schema.`;
     });
     
     // Create batch-specific query with equipment-specific guidance for high-power circuits
-    let batchQuery = `${query}\n\nDesign the following circuits:\n${batch.map((c: any, i: number) => 
-      `${i + 1}. ${c.name || c.loadType} (${c.loadType}, ${c.loadPower}W, ${c.cableLength}m)`
+    let batchQuery = `${query}\n\nDesign the following circuit${batch.length > 1 ? 's' : ''}:\n${batch.map((c: any, i: number) => 
+      `${i + 1}. ${c.name || c.loadType} (${c.loadType}, ${c.loadPower}W, ${c.cableLength}m, ${c.phases}-phase${c.specialLocation ? `, ${c.specialLocation}` : ''})`
     ).join('\n')}`;
     
-    // Add specific guidance for high-power circuits
-    if (hasHighPowerCircuit) {
-      batchQuery += `\n\n🔌 SPECIAL EQUIPMENT GUIDANCE:
-- SHOWERS: Specify kW rating (e.g., 9.5kW), use appropriate cable size (10mm² for 9.5kW), 40A MCB, consider RCD requirements
-- EV CHARGERS: Specify charger type (Mode 3), power rating (7kW/22kW single/three phase), Type B RCD MANDATORY per Section 722
-- COOKERS: Consider diversity per Appendix 15 (10A + 30% of remainder + 5A for socket outlet), use appropriate cable sizing
-- Always include complete calculations object with Ib, In, Iz, voltageDrop, zs, maxZs`;
+    // Add specific guidance for high-power or individual circuits
+    if (hasHighPowerCircuit || isIndividualCircuit) {
+      const circuit = batch[0];
+      const circuitName = (circuit.name || circuit.loadType || '').toLowerCase();
+      
+      if (circuitName.includes('shower')) {
+        batchQuery += `\n\n🚿 SHOWER CIRCUIT REQUIREMENTS:
+- MUST specify exact kW rating (typical: 8.5kW, 9.5kW, 10.5kW)
+- Cable sizing: 6mm² for 7-8kW, 10mm² for 9-10.5kW
+- Protection: 40A Type B MCB or 40A 30mA RCBO
+- RCD: 30mA RCD protection MANDATORY per Reg 701.411.3.3
+- Installation: Typically clipped direct or in conduit
+- Special location: Bathroom zone compliance per Section 701`;
+      } else if (circuitName.includes('ev') || circuitName.includes('charger')) {
+        batchQuery += `\n\n🔌 EV CHARGER REQUIREMENTS:
+- MUST specify charger type: Mode 3 (smart/tethered)
+- Power options: 7kW (single-phase, 32A) or 22kW (three-phase, 32A)
+- RCD: Type B RCD MANDATORY per BS 7671 Section 722 (DC fault protection)
+- Cable: 6mm² for 7kW, 10mm² for 22kW
+- Dedicated circuit required - no sharing
+- Consider PEN fault protection for TN-C-S supplies`;
+      } else if (circuitName.includes('cooker') || circuitName.includes('oven')) {
+        batchQuery += `\n\n🍳 COOKER CIRCUIT REQUIREMENTS:
+- Apply diversity per BS 7671 Appendix 15: 10A + 30% of remainder + 5A if socket outlet
+- Example: 13.5kW cooker = 10A + 30% × (58.7A - 10A) = 24.6A
+- Cable sizing based on diversified load, not full load
+- Typical: 6mm² cable, 32A Type B MCB
+- If hob + oven separate: consider individual circuits vs diversity`;
+      }
+      
+      batchQuery += `\n\n✅ MANDATORY for this circuit:
+- Complete calculations object with all fields
+- Proper justifications with BS 7671 regulation references
+- Voltage drop and Zs compliance checks
+- Equipment-appropriate protection device selection`;
     }
     
     // Simplify prompt on retries - use simpler tool schema
@@ -798,11 +908,26 @@ Return complete circuit objects using the provided tool schema.`;
         usage: { total_tokens: 0 } // Gemini doesn't return token count
       };
       
-      logger.info(`✅ Batch ${batchIndex + 1} completed successfully`, {
+      // Validate result before accepting
+      const batchResult = { aiData, batchElapsedMs, success: true };
+      const isValid = validateBatchResult(batchResult, batch);
+      
+      if (!isValid && attempt < maxAttempts) {
+        logger.warn(`⚠️ Batch ${batchIndex + 1} validation failed, retrying with simplified approach`);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        return processBatch(batch, batchIndex, attempt + 1);
+      }
+      
+      if (!isValid) {
+        logger.error(`❌ Batch ${batchIndex + 1} failed validation after ${attempt + 1} attempts`);
+        return { aiData: null, batchElapsedMs, success: false, error: 'Validation failed', circuits: batch };
+      }
+      
+      logger.info(`✅ Batch ${batchIndex + 1} completed and validated successfully`, {
         timeMs: batchElapsedMs
       });
       
-      return { aiData, batchElapsedMs, success: true };
+      return batchResult;
       
     } catch (error: any) {
       const errorMsg = error?.message || String(error);
@@ -836,15 +961,77 @@ Return complete circuit objects using the provided tool schema.`;
         logger.warn(`🔀 Batch ${batchIndex + 1} failed ${maxAttempts} times, splitting into individual circuits`);
         
         const individualResults = [];
-        for (const circuit of batch) {
+        for (let i = 0; i < batch.length; i++) {
+          const circuit = batch[i];
+          const circuitName = circuit.name || circuit.loadType;
+          
+          logger.info(`🔄 Trying individual circuit ${i + 1}/${batch.length}: ${circuitName}`);
+          
+          // Try multiple strategies for difficult circuits
+          let individualResult = null;
+          
+          // Strategy 1: Process with simplified JSON-only mode
           try {
-            const individualResult = await processBatch([circuit], batchIndex, 0);
-            if (individualResult.success) {
+            individualResult = await processBatch([circuit], batchIndex, maxAttempts); // Force simplified mode
+            if (individualResult.success && validateBatchResult(individualResult, [circuit])) {
+              logger.info(`✅ Individual circuit ${circuitName} succeeded (simplified mode)`);
               individualResults.push(individualResult);
+              continue;
             }
           } catch (err) {
-            logger.error(`❌ Individual circuit ${circuit.name} failed`, { error: err });
+            logger.warn(`⚠️ Strategy 1 failed for ${circuitName}`, { error: err });
           }
+          
+          // Strategy 2: Ultra-simplified prompt with just essentials
+          try {
+            const ultraSimpleQuery = `Design ONE circuit with BS 7671 compliance:
+Name: ${circuit.name || circuit.loadType}
+Type: ${circuit.loadType}
+Power: ${circuit.loadPower}W
+Length: ${circuit.cableLength}m
+Phases: ${circuit.phases}
+${circuit.specialLocation ? `Special location: ${circuit.specialLocation}` : ''}
+
+Return ONLY a JSON object with: circuits (array with 1 circuit), materials (array), warnings (array).
+Include all required fields: cableSize, cpcSize, protectionDevice, calculations, justifications.`;
+
+            const ultraSimpleResult = await providerRetry(async () => {
+              return await callGemini({
+                messages: [
+                  { role: 'system', content: systemPrompt.substring(0, 5000) }, // Truncated prompt
+                  { role: 'user', content: ultraSimpleQuery }
+                ],
+                model: 'gemini-2.5-flash',
+                temperature: 0.2,
+                max_tokens: 8000,
+                response_format: { type: "json_object" }
+              }, geminiKey);
+            }, 2, 1000);
+
+            if (ultraSimpleResult.content) {
+              const parsed = JSON.parse(ultraSimpleResult.content);
+              if (parsed.circuits && parsed.circuits.length > 0) {
+                logger.info(`✅ Individual circuit ${circuitName} succeeded (ultra-simple mode)`);
+                individualResults.push({
+                  aiData: {
+                    choices: [{
+                      message: {
+                        tool_calls: [{ function: { arguments: ultraSimpleResult.content } }]
+                      }
+                    }],
+                    usage: { total_tokens: 0 }
+                  },
+                  batchElapsedMs: 0,
+                  success: true
+                });
+                continue;
+              }
+            }
+          } catch (err) {
+            logger.warn(`⚠️ Strategy 2 failed for ${circuitName}`, { error: err });
+          }
+          
+          logger.error(`❌ All strategies failed for ${circuitName} - circuit will be missing`);
         }
         
         // If we got at least some circuits, merge them
