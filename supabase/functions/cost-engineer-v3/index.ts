@@ -435,6 +435,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
         function: {
           name: 'provide_cost_estimate',
           description: 'Return detailed cost estimate with materials and labour breakdown',
+          strict: true,
           parameters: {
             type: 'object',
             properties: {
