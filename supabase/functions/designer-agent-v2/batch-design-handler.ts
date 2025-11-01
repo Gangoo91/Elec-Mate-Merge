@@ -1325,7 +1325,56 @@ Include all required fields: cableSize, cpcSize, protectionDevice, calculations,
             logger.warn(`⚠️ Strategy 2 failed for ${circuitName}`, { error: err });
           }
           
-          logger.error(`❌ All strategies failed for ${circuitName} - circuit will be missing`);
+          // Strategy 3: No JSON mode enforcement - let model return JSON naturally
+          try {
+            logger.info(`🔄 Strategy 3: Trying without response_format enforcement for ${circuitName}`);
+            
+            const noJsonModeQuery = `${ultraSimpleQuery}\n\nIMPORTANT: You must return a valid JSON object. Do not include any markdown formatting or code blocks.`;
+            
+            const noJsonModeResult = await providerRetry(async () => {
+              return await callOpenAI({
+                messages: [
+                  { role: 'system', content: `${systemPrompt.substring(0, 4950)}... Return response as valid JSON only.` },
+                  { role: 'user', content: noJsonModeQuery }
+                ],
+                model: 'gpt-5-mini-2025-08-07',
+                temperature: 0.2,
+                max_completion_tokens: 8000
+                // NO response_format parameter - model decides format
+              }, openAiKey);
+            }, 2, 1000);
+
+            if (noJsonModeResult.content) {
+              // Extract JSON from response (might have markdown wrappers like ```json)
+              let jsonContent = noJsonModeResult.content.trim();
+              const jsonMatch = jsonContent.match(/\{[\s\S]*\}/);
+              if (jsonMatch) {
+                jsonContent = jsonMatch[0];
+              }
+              
+              const parsed = JSON.parse(jsonContent);
+              if (parsed.circuits && parsed.circuits.length > 0) {
+                logger.info(`✅ Individual circuit ${circuitName} succeeded (no-json-mode strategy)`);
+                individualResults.push({
+                  aiData: {
+                    choices: [{
+                      message: {
+                        tool_calls: [{ function: { arguments: jsonContent } }]
+                      }
+                    }],
+                    usage: { total_tokens: 0 }
+                  },
+                  batchElapsedMs: 0,
+                  success: true
+                });
+                continue;
+              }
+            }
+          } catch (err) {
+            logger.warn(`⚠️ Strategy 3 failed for ${circuitName}`, { error: err });
+          }
+          
+          logger.error(`❌ All 3 strategies failed for ${circuitName} - circuit will be missing`);
         }
         
         // If we got at least some circuits, merge them
