@@ -65,13 +65,14 @@ Extract ALL circuits with their specifications.`;
     const { callOpenAI, withRetry } = await import('../_shared/ai-providers.ts');
 
     // Use GPT-5 Mini with tool calling (35s timeout for faster failure - Fix 2)
-    const extractionStartTime = Date.now();
     const EXTRACTION_TIMEOUT = 35000; // 35s - fail fast to preserve 240s budget
+    const extractionStartTime = Date.now(); // Define before retry loop
     
     const result = await withRetry(async () => {
-      // Early termination check
-      if (Date.now() - extractionStartTime > 30000) {
-        logger.warn('⚠️ Circuit extraction exceeding 30s, forcing timeout');
+      // Early termination check (use outer scope timestamp)
+      const elapsed = Date.now() - extractionStartTime;
+      if (elapsed > 30000) {
+        logger.warn('⚠️ Circuit extraction exceeding 30s, forcing timeout', { elapsed });
         throw new Error('Extraction timeout - using fallback');
       }
       
