@@ -103,11 +103,11 @@ function getCircuitTypeHints(loadType: string, location?: string): string {
     'ev_charger': 'Section 722, dedicated circuit, Type A RCD required, 6mm² minimum, Mode 3 compliance',
     'ev-charger': 'Section 722, dedicated circuit, Type A RCD required, 6mm² minimum, Mode 3 compliance',
     'cooker': 'Reg 433.1.204 diversity (10A + 30% remainder + 5A socket), 10mm² typical, 40-50A MCB',
-    'socket': 'Ring final: 2.5mm²/1.5mm² T&E + 32A MCB ONLY (BS 7671 Appendix 15). Never 4mm² or 6mm². For >7kW: create multiple rings',
-    'sockets': 'Ring final: 2.5mm²/1.5mm² T&E + 32A MCB ONLY (BS 7671 Appendix 15). Never 4mm² or 6mm². For >7kW: create multiple rings',
+    'socket': 'Ring final: ALWAYS 2.5mm² conductors + 32A MCB (BS 7671 Appendix 15) - applies to T&E AND SWA cable. Never 4mm² or 6mm² for rings. For >7kW: create multiple 2.5mm² rings. Radial circuits: 4mm² + 32A or 2.5mm² + 20A',
+    'sockets': 'Ring final: ALWAYS 2.5mm² conductors + 32A MCB (BS 7671 Appendix 15) - applies to T&E AND SWA cable. Never 4mm² or 6mm² for rings. For >7kW: create multiple 2.5mm² rings. Radial circuits: 4mm² + 32A or 2.5mm² + 20A',
     'office-sockets': 'Ring finals: 2.5mm²/1.5mm² T&E + 32A MCB per ring. **Split >7kW into multiple rings** (e.g., 16 sockets = 2× 8-socket rings). Never use 6mm².',
     'lighting': '1.5mm² cable, 6A MCB Type B, 3% voltage drop limit (6.9V at 230V)',
-    'outdoor': '30mA RCD mandatory (411.3.3), SWA cable, IP65+ rating, burial depth 600mm',
+    'outdoor': '30mA RCD mandatory (411.3.3), SWA cable, IP65+ rating, burial depth 600mm. IMPORTANT: If ring final (32A MCB) = 2.5mm² SWA. If radial = 4mm²/6mm² SWA',
     'heat_pump': 'Dedicated circuit, 16mm² typical, 63A MCB, surge protection (534.4)',
     'immersion': '16A MCB, 2.5mm² cable typical, timer control, off-peak tariff consideration',
     'motor': 'Type D MCB for starting current (6-8x FLC), DOL or star-delta starting',
@@ -616,6 +616,11 @@ IF YOU CANNOT ACHIEVE COMPLIANCE: Increase cable size or split the circuit.
 - Ring circuits (loadType containing "ring" or "socket" with 32A protection): cableSize = 2.5, cpcSize = 1.5
 - ANY other cable size (4, 6, 10) for ring finals will cause VALIDATION FAILURE
 - Split high loads into multiple 2.5mm² rings instead of increasing cable size
+
+🚨 OUTDOOR SOCKET CIRCUITS - CRITICAL CABLE SIZE RULES:
+- Ring final outdoor: 2.5mm² 3-core SWA + 32A MCB (conductors are still 2.5mm²)
+- Radial outdoor: 4mm² 3-core SWA + 32A MCB OR 6mm² 3-core SWA + 40A MCB
+- Never use 4mm² or 6mm² conductors for ring finals, even in SWA armor
 
 CRITICAL DATA FORMAT REQUIREMENTS:
 - cableSize: NUMERIC mm² value only (e.g., 2.5 NOT "2.5mm²")

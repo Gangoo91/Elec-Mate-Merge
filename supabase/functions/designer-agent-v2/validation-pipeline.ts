@@ -272,7 +272,7 @@ export function validateCompliance(circuits: any[], incomingSupply: any): Valida
         circuitName: circuit.name,
         severity: 'critical',
         category: 'compliance',
-        message: `Ring final uses ${circuit.cableSize}mm² cable - must be 2.5mm² per BS 7671 Appendix 15`,
+        message: `Ring final uses ${circuit.cableSize}mm² cable - must be 2.5mm² per BS 7671 Appendix 15. For outdoor sockets: use 2.5mm² 3-core SWA (not 4mm²)`,
         regulation: 'BS 7671 Appendix 15 / Reg 433.1.204',
         suggestedFix: 'Use 2.5mm²/1.5mm² T&E and split into multiple ring circuits if load >7.36kW'
       });
