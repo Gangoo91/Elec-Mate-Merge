@@ -292,8 +292,6 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     materials_needed: facet.materials_needed || [],
     bs7671_regulations: facet.bs7671_regulations || [],
     safety_notes: facet.safety_notes || '',
-    procedure_steps: facet.procedure_steps || [],
-    testing_requirements: facet.testing_requirements || '',
     confidence_score: facet.confidence_score || 0.85
   }));
 
