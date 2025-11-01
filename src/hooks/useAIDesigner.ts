@@ -3,8 +3,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { DesignInputs, InstallationDesign } from '@/types/installation-design';
 
-// Client-side timeout for edge function calls (3 minutes safety limit)
-const CLIENT_TIMEOUT_MS = 180000; // 180s (3 minutes max - realistic limit for parallel batches)
+// Client-side timeout for edge function calls (4 minutes safety limit)
+const CLIENT_TIMEOUT_MS = 240000; // 240s (4 minutes max - gives 40s buffer for backend processing)
 
 /**
  * Timeout wrapper for promises
@@ -45,14 +45,14 @@ export const useAIDesigner = () => {
       return false;
     }
 
-    // SPEED BOOST: Optimized stages to match batch size 2 with GPT-5-mini (total ~60s)
-    // Cap at 95% until response arrives to prevent stuck-at-99% perception
+    // Realistic progress stages aligned with actual backend processing times
+    // Total: ~175s to match typical processing time for batch designs
     const stages = [
-      { stage: 1, message: 'Understanding your requirements...', duration: 3000, targetPercent: 10 },
-      { stage: 2, message: 'Searching BS 7671 for circuit types...', duration: 8000, targetPercent: 25 },
-      { stage: 3, message: 'AI is designing circuits...', duration: 42000, targetPercent: 80 },
-      { stage: 4, message: 'Validating compliance...', duration: 5000, targetPercent: 92 },
-      { stage: 5, message: 'Finalising design...', duration: 2000, targetPercent: 95 }
+      { stage: 1, message: 'Understanding your requirements...', duration: 5000, targetPercent: 5 },
+      { stage: 2, message: 'Searching BS 7671 regulations...', duration: 10000, targetPercent: 12 },
+      { stage: 3, message: 'AI designing circuits (this may take 2-3 minutes)...', duration: 140000, targetPercent: 85 },
+      { stage: 4, message: 'Running compliance validation...', duration: 15000, targetPercent: 95 },
+      { stage: 5, message: 'Finalising documentation...', duration: 5000, targetPercent: 99 }
     ];
 
     let progressInterval: ReturnType<typeof setInterval> | null = null;
@@ -97,7 +97,7 @@ export const useAIDesigner = () => {
             aiConfig: {
               model: 'openai/gpt-5-mini', // Proven reliable model from Lovable AI Gateway
               maxTokens: 20000, // Balanced token limit for quality + speed
-              timeoutMs: 180000, // 3 min timeout
+              timeoutMs: 200000, // 200s (3m 20s) backend timeout - client waits 240s
               noMemory: true,
               ragPriority: {
                 design: 95,
