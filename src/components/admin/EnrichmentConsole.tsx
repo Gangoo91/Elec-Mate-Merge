@@ -149,11 +149,11 @@ export default function EnrichmentConsole() {
       }
 
       // Load stats based on task type
-      const isPracticalWork = selectedTask.startsWith('practical_work_');
+      const isPracticalWork = selectedTask === 'practical_work' || selectedTask.startsWith('practical_work_');
       
       if (isPracticalWork) {
         // PRACTICAL WORK: All stages use same stats calculation
-        const facetType = selectedTask.replace('practical_work_', '');
+        const facetType = selectedTask === 'practical_work' ? 'primary' : selectedTask.replace('practical_work_', '');
         
         // For primary stage, count source records
         let sourceTotal = 0;
