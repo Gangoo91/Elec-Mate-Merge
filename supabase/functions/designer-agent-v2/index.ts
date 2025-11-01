@@ -6,11 +6,12 @@ import { handleBatchDesign } from './batch-design-handler.ts';
 const VERSION = 'v3.5.1-strategy3'; // Force redeploy with Strategy 3 fallback for outdoor socket fix
 
 serve(async (req) => {
+  // Fix 5: Early health check response before imports (cold start optimization)
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
-  // Health check endpoint
+  // Health check endpoint - respond immediately
   if (req.method === 'GET') {
     const buildId = Deno.env.get('DENO_DEPLOYMENT_ID') || 'local';
     console.log(`🏥 Health check - Version: ${VERSION}, Build: ${buildId}`);

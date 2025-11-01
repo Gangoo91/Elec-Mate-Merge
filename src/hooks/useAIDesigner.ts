@@ -49,10 +49,11 @@ export const useAIDesigner = () => {
     // Total: ~175s to match typical processing time for batch designs
     const stages = [
       { stage: 1, message: 'Understanding your requirements...', duration: 5000, targetPercent: 5 },
-      { stage: 2, message: 'Searching BS 7671 regulations...', duration: 10000, targetPercent: 12 },
-      { stage: 3, message: 'AI designing circuits (this may take 2-3 minutes)...', duration: 140000, targetPercent: 85 },
-      { stage: 4, message: 'Running compliance validation...', duration: 15000, targetPercent: 95 },
-      { stage: 5, message: 'Finalising documentation...', duration: 5000, targetPercent: 99 }
+      { stage: 2, message: 'Extracting circuits from description...', duration: 8000, targetPercent: 10 },
+      { stage: 3, message: 'Searching BS 7671 regulations...', duration: 10000, targetPercent: 15 },
+      { stage: 4, message: 'AI designing circuits (this may take 2-3 minutes)...', duration: 135000, targetPercent: 85 },
+      { stage: 5, message: 'Running compliance validation...', duration: 12000, targetPercent: 95 },
+      { stage: 6, message: 'Finalising documentation...', duration: 5000, targetPercent: 99 }
     ];
 
     let progressInterval: ReturnType<typeof setInterval> | null = null;
@@ -61,24 +62,42 @@ export const useAIDesigner = () => {
     // Initialize progress immediately
     setProgress({ stage: 1, message: 'Initialising...', percent: 0 });
 
-    // Pre-flight health check
-    try {
-      const { data: healthData, error: healthError } = await supabase.functions.invoke('designer-agent-v2', {
-        method: 'GET'
-      });
-      
-      if (healthError || !healthData?.status) {
-        setProgress({ stage: 0, message: 'Design service starting up...', percent: 0 });
-        console.warn('⚠️ Design service not healthy, will retry automatically');
-      } else {
-        console.log(`✅ Design service healthy - Version: ${healthData.version}`, healthData);
+    // Pre-flight health check with retry (Fix 1: Intelligent Pre-warm)
+    let healthCheckPassed = false;
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        const { data: healthData, error: healthError } = await supabase.functions.invoke('designer-agent-v2', {
+          method: 'GET'
+        });
+        
+        if (!healthError && healthData?.status) {
+          console.log(`✅ Design service healthy - Version: ${healthData.version}`, healthData);
+          healthCheckPassed = true;
+          break;
+        }
+        
+        if (attempt < 3) {
+          setProgress({ stage: 0, message: `Service starting up (${attempt}/3)...`, percent: 0 });
+          console.warn(`⚠️ Health check attempt ${attempt}/3 failed, retrying in 5s...`);
+          await new Promise(resolve => setTimeout(resolve, 5000));
+        }
+      } catch (e) {
+        if (attempt < 3) {
+          setProgress({ stage: 0, message: `Initialising service (${attempt}/3)...`, percent: 0 });
+          console.warn(`⚠️ Health check attempt ${attempt}/3 failed, retrying in 5s...`);
+          await new Promise(resolve => setTimeout(resolve, 5000));
+        }
       }
-    } catch (e) {
-      // Health check failed - service might be cold starting
-      setProgress({ stage: 0, message: 'Initialising design service...', percent: 0 });
+    }
+    
+    // Add 10s pre-warm delay if cold start detected
+    if (!healthCheckPassed) {
+      setProgress({ stage: 0, message: 'Warming up service, please wait...', percent: 0 });
+      console.log('🔥 Cold start detected, adding 10s pre-warm delay');
+      await new Promise(resolve => setTimeout(resolve, 10000));
     }
 
-    const invokeWithRetry = async (attempt = 1, maxAttempts = 2): Promise<any> => {
+    const invokeWithRetry = async (attempt = 1, maxAttempts = 3): Promise<any> => {
       try {
         // Update retry message state
         if (attempt > 1) {
@@ -93,6 +112,7 @@ export const useAIDesigner = () => {
 
         const invokePromise = supabase.functions.invoke('designer-agent-v2', {
           body: {
+            keepalive: true, // Fix 3: Add keepalive header hint
             mode: 'batch-design',
             aiConfig: {
               model: 'openai/gpt-5-mini', // Proven reliable model from Lovable AI Gateway
@@ -163,7 +183,17 @@ export const useAIDesigner = () => {
           error instanceof TypeError;
 
         if (isTransient && attempt < maxAttempts) {
-          const delay = attempt === 1 ? 1500 : 3000; // 1.5s then 3s
+          // Fix 4: Exponential backoff with cold start handling
+          let delay = 2000; // Base delay 2s
+          if (attempt === 2) delay = 5000; // 5s on second retry
+          if (attempt === 3) delay = 10000; // 10s on third retry
+          
+          // Extra delay for 503/504 (cold start indicators)
+          if (error?.message?.includes('503') || error?.message?.includes('504')) {
+            delay += 5000;
+            console.warn(`⚠️ Cold start detected (${error.message}), adding extra delay`);
+          }
+          
           console.warn(`⚠️ Attempt ${attempt}/${maxAttempts} failed, retrying in ${delay}ms...`, error.message);
           await new Promise(resolve => setTimeout(resolve, delay));
           return invokeWithRetry(attempt + 1, maxAttempts);

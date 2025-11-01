@@ -64,8 +64,17 @@ Extract ALL circuits with their specifications.`;
     // Import OpenAI provider
     const { callOpenAI, withRetry } = await import('../_shared/ai-providers.ts');
 
-    // Use GPT-5 Mini with tool calling (60s timeout, no temperature for GPT-5)
+    // Use GPT-5 Mini with tool calling (35s timeout for faster failure - Fix 2)
+    const extractionStartTime = Date.now();
+    const EXTRACTION_TIMEOUT = 35000; // 35s - fail fast to preserve 240s budget
+    
     const result = await withRetry(async () => {
+      // Early termination check
+      if (Date.now() - extractionStartTime > 30000) {
+        logger.warn('⚠️ Circuit extraction exceeding 30s, forcing timeout');
+        throw new Error('Extraction timeout - using fallback');
+      }
+      
       return await callOpenAI({
         messages: [
           { role: 'system', content: systemPrompt },
@@ -138,7 +147,7 @@ Extract ALL circuits with their specifications.`;
           }
         }],
         tool_choice: { type: 'function', function: { name: 'extract_circuits' } }
-      }, openAiKey, 60000); // 60s timeout for circuit extraction
+      }, openAiKey, EXTRACTION_TIMEOUT); // 35s timeout - fail fast
     });
 
     if (!result.toolCalls || result.toolCalls.length === 0) {
@@ -164,17 +173,62 @@ Extract ALL circuits with their specifications.`;
     };
 
   } catch (error) {
-    logger.error('❌ AI extraction error', { 
-      error: error instanceof Error ? error.message : 'Unknown error'
+    const timeElapsed = Date.now() - extractionStartTime;
+    logger.warn('⚠️ AI extraction failed, using regex fallback', { 
+      error: error instanceof Error ? error.message : 'Unknown error',
+      timeElapsed: `${timeElapsed}ms`
     });
     
-    // Return empty result - caller will use fallback
+    // Fix 2: Immediate fallback to regex parser on timeout
+    const fallbackCircuits = parseCircuitsWithRegex(additionalPrompt, logger);
+    
     return { 
-      inferredCircuits: [], 
+      inferredCircuits: fallbackCircuits, 
       specialRequirements: [], 
       installationConstraints: [] 
     };
   }
+}
+
+/**
+ * Fallback regex-based circuit parser (instant, no AI calls)
+ */
+function parseCircuitsWithRegex(prompt: string, logger: any): any[] {
+  const circuits: any[] = [];
+  const lowerPrompt = prompt.toLowerCase();
+  
+  // Simple pattern matching for common circuits
+  const patterns = [
+    { regex: /(\d+)\s*socket\s*ring/gi, loadType: 'socket', power: 7200 },
+    { regex: /(\d+)\s*lighting\s*circuit/gi, loadType: 'lighting', power: 500 },
+    { regex: /(\d+\.?\d*)\s*kw\s*shower/gi, loadType: 'shower', power: 0, multiplier: 1000 },
+    { regex: /(\d+\.?\d*)\s*kw\s*cooker/gi, loadType: 'cooker', power: 0, multiplier: 1000 },
+    { regex: /(\d+\.?\d*)\s*kw\s*ev\s*charger/gi, loadType: 'ev-charger', power: 0, multiplier: 1000 }
+  ];
+  
+  patterns.forEach((pattern, idx) => {
+    const matches = [...prompt.matchAll(pattern.regex)];
+    matches.forEach((match, matchIdx) => {
+      const qty = parseInt(match[1]) || 1;
+      const power = pattern.multiplier ? parseFloat(match[1]) * pattern.multiplier : pattern.power;
+      
+      for (let i = 1; i <= qty; i++) {
+        circuits.push({
+          id: `regex-${idx}-${matchIdx}-${i}`,
+          name: `${pattern.loadType} ${circuits.length + 1}`,
+          loadType: pattern.loadType,
+          loadPower: power,
+          cableLength: 25,
+          phases: 'single',
+          specialLocation: 'none'
+        });
+      }
+    });
+  });
+  
+  logger.info('📝 Regex fallback extracted circuits', { count: circuits.length });
+  return circuits;
+}
 }
 
 /**
