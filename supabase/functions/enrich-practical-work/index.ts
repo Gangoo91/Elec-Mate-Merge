@@ -257,6 +257,54 @@ Example B: Consumer Unit Installation
   }
 }
 
+Example C: Consumer Unit Maintenance (SAFE)
+{
+  "primary_topic": "Annual preventive maintenance inspection of 18-way consumer unit in commercial premises to check connections, clean terminals, and verify RCD operation",
+  "keywords": ["consumer unit", "maintenance", "annual inspection", "RCD test", "terminal check"],
+  "equipment_category": "consumer_unit",
+  "applies_to": ["commercial"],
+  "facet_type": "maintenance",
+  "maintenance_intervals": "annual inspection, RCD test every 6 months",
+  "maintenance_tasks": [
+    "Isolate main supply and prove dead",
+    "Remove front cover and vacuum dust from terminals (dry brush only)",
+    "Visually inspect busbars for discolouration/overheating",
+    "Check all MCB/RCBO terminal tightness (torque to 3.5Nm)",
+    "Test all RCDs using test button and RCD tester",
+    "Restore supply and verify operation"
+  ],
+  "wear_indicators": ["discoloured terminals", "loose connections", "RCD fails to trip", "burning smell"],
+  "tools_required": ["vacuum cleaner", "dry brush", "torque screwdriver", "RCD tester", "voltage indicator"],
+  "safety_requirements": {
+    "ppe": ["insulated gloves", "safety glasses"],
+    "isolations": ["main supply isolated", "DNO notified if required"]
+  },
+  "typical_duration_minutes": 45,
+  "skill_level": "electrician"
+}
+
+CRITICAL SAFETY RULES - NEVER VIOLATE:
+
+❌ FORBIDDEN maintenance_tasks:
+- "Use water to clean [electrical equipment]"
+- "Wipe down consumer unit with damp cloth"
+- "Clean with solvents/liquids while energised"
+- "Test live circuits without isolation"
+- "Work on live equipment"
+
+✅ SAFE maintenance_tasks for consumer units/switchgear:
+- "Isolate supply, then vacuum dust from terminals"
+- "Brush debris from busbars (isolated)"
+- "Inspect for signs of overheating (visual only)"
+- "Check tightness of terminations (isolated, torque to spec)"
+
+RULE: If generating cleaning tasks for electrical equipment:
+1. ALWAYS prefix with "Isolate supply, then..."
+2. NEVER suggest water/liquid cleaning
+3. Use: "vacuum", "brush", "compressed air", "dry wipe"
+
+If unsure → DO NOT generate maintenance_tasks field at all
+
 Generate 8-20 DISTINCT micro-facets. Each facet = ONE specific scenario with COMPLETE intelligence.
 
 JSON SCHEMA:
@@ -367,9 +415,19 @@ Return ONLY the JSON object with the "facets" array.`;
         facet.equipment_category = normaliseCategory(facet.equipment_category);
       }
       
+      // SAFETY CHECK: Reject dangerous maintenance advice
+      const safetyError = validateFacetSafety(facet);
+      if (safetyError) {
+        logger.warn(`🚨 SAFETY VIOLATION: Rejected unsafe facet - ${safetyError}`, { 
+          facet_topic: facet.primary_topic,
+          dangerous_tasks: facet.maintenance_tasks
+        });
+        return false; // REJECT this facet
+      }
+      
       const isValid = validatePracticalWorkFacet(facet);
       if (!isValid) {
-        logger.warn('Rejected low-quality facet', { 
+        logger.warn('Rejected low-quality facet', {
           primary_topic: facet.primary_topic?.substring(0, 50),
           keywordCount: facet.keywords?.length,
           category: facet.equipment_category,
