@@ -46,44 +46,33 @@ export async function searchPracticalWorkBatch(
   const { keywords, limit = 10, activity_filter } = params;
   
   try {
-    // Use practical work intelligence search RPC
+    // Use hybrid keyword search (faster and more precise than vector search)
     const queryText = keywords.join(' ');
     const { data, error } = await supabase.rpc(
-      'search_practical_work_intelligence',
+      'search_practical_work_intelligence_hybrid',
       {
         query_text: queryText,
-        query_embedding: null,
-        filter_activity_types: activity_filter || null,
-        match_count: limit * 3
+        match_count: limit * 2,
+        filter_trade: activity_filter && activity_filter.length > 0 ? activity_filter[0] : null
       }
     );
     
     if (error) throw error;
     
-    // Group results by practical_work_id, keeping all facets
-    const groupedResults = new Map<string, RAGResult[]>();
-    
-    (data || []).forEach((row: any) => {
-      const key = row.practical_work_id || row.id;
-      if (!groupedResults.has(key)) {
-        groupedResults.set(key, []);
-      }
-      groupedResults.get(key)!.push({
-        content: `[${row.facet_type || 'primary'}] ${row.content || row.description || ''}`,
-        facet_type: row.facet_type,
-        practical_work_id: row.practical_work_id,
-        source_table: row.source_table,
-        similarity: row.similarity
-      });
-    });
-    
-    // Flatten back to array, with all facets for top procedures
-    const results = Array.from(groupedResults.values())
-      .slice(0, limit) // Take top N procedures
-      .flat(); // Include all facets for those procedures
+    // Transform hybrid search results to RAGResult format
+    const results: RAGResult[] = (data || []).map((row: any) => ({
+      content: row.primary_topic || row.content || '',
+      keywords: row.keywords,
+      equipment_category: row.equipment_category,
+      tools_required: row.tools_required,
+      bs7671_regulations: row.bs7671_regulations,
+      practical_work_id: row.practical_work_id,
+      source_table: 'practical_work_intelligence',
+      similarity: row.hybrid_score / 10 // Normalize score to 0-1 range
+    }));
     
     ragCache.set(cacheKey, results);
-    console.log(`✅ Practical Work search: ${results.length} facets from ${groupedResults.size} procedures`);
+    console.log(`✅ Practical Work hybrid search: ${keywords.join(', ')} → ${results.length} facets (avg score: ${(results.reduce((sum, r) => sum + (r.similarity || 0), 0) / results.length).toFixed(2)})`);
     
     return results;
   } catch (error) {
