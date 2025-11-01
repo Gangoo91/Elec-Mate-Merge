@@ -333,33 +333,70 @@ export async function callOpenAI(
 }
 
 /**
- * Retry with exponential backoff
+ * Retry with exponential backoff and error classification
+ * FIX 3: Don't retry timeout errors or non-retryable errors
  */
 export async function withRetry<T>(
   fn: () => Promise<T>,
-  maxRetries: number = 3,
-  baseDelayMs: number = 1000
+  options: { maxAttempts?: number; backoff?: number[] } = {}
 ): Promise<T> {
+  const maxAttempts = options.maxAttempts || 3;
+  const backoff = options.backoff || [1000, 2000, 4000];
   let lastError: Error | null = null;
 
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
       return await fn();
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
       
-      // Don't retry non-retryable errors
+      // FIX 3: Don't retry non-retryable errors
       if (error instanceof AIProviderError && !error.retryable) {
+        console.warn('⚠️ Non-retryable error detected - not retrying', {
+          error: lastError.message,
+          statusCode: error.statusCode
+        });
         throw error;
       }
+      
+      // FIX 3: Don't retry timeout errors from withTimeout wrapper
+      if (lastError.message.includes('timed out after') || lastError.message.includes('Extraction timeout')) {
+        console.warn('⚠️ Timeout error detected - not retrying', {
+          error: lastError.message
+        });
+        throw lastError;
+      }
 
-      if (attempt < maxRetries) {
-        const delayMs = Math.min(baseDelayMs * Math.pow(2, attempt - 1), 10000);
-        console.warn(`⚠️ Attempt ${attempt} failed, retrying in ${delayMs}ms...`);
+      if (attempt < maxAttempts) {
+        const delayMs = backoff[Math.min(attempt - 1, backoff.length - 1)];
+        console.warn(`⚠️ Attempt ${attempt}/${maxAttempts} failed, retrying in ${delayMs}ms...`, {
+          error: lastError.message,
+          retryable: !(error instanceof AIProviderError) || error.retryable
+        });
         await new Promise(resolve => setTimeout(resolve, delayMs));
       }
     }
   }
 
   throw lastError!;
+}
+
+/**
+ * Wrap a promise with a timeout
+ */
+export async function withTimeout<T>(
+  promise: Promise<T>,
+  timeoutMs: number,
+  operation?: string
+): Promise<T> {
+  const timeoutPromise = new Promise<never>((_, reject) => {
+    setTimeout(() => {
+      const message = operation 
+        ? `${operation} timed out after ${timeoutMs}ms`
+        : `Operation timed out after ${timeoutMs}ms`;
+      reject(new Error(message));
+    }, timeoutMs);
+  });
+
+  return Promise.race([promise, timeoutPromise]);
 }

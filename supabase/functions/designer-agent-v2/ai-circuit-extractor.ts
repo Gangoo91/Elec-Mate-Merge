@@ -76,98 +76,96 @@ Description: ${additionalPrompt}
 
 Extract ALL circuits with their specifications.`;
 
-    // Import OpenAI provider
-    const { callOpenAI, withRetry } = await import('../_shared/ai-providers.ts');
+    // Import OpenAI provider and timeout utilities
+    const { callOpenAI, withRetry, withTimeout, AIProviderError } = await import('../_shared/ai-providers.ts');
 
-    // Fix 1: Reduced timeout from 35s to 20s
-    const EXTRACTION_TIMEOUT = 20000; // 20s - fail fast
+    // FIX 1: Reduced timeout from 35s to 25s (allows 2x retries with buffer)
+    const RETRY_TIMEOUT = 25000; // 25s total for all retries
+    const PER_ATTEMPT_TIMEOUT = 20000; // 20s per OpenAI attempt
     
-    // Fix 2: Parallel AI + Regex fallback race
-    const aiExtractionPromise = withRetry(async () => {
-      // Fix 1: Early termination at 15s instead of 30s
-      const elapsed = Date.now() - extractionStartTime;
-      if (elapsed > 15000) {
-        logger.warn('⚠️ Circuit extraction exceeding 15s, forcing timeout', { elapsed });
-        throw new Error('Extraction timeout - using fallback');
-      }
-      
-      return await callOpenAI({
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
-        ],
-        model: 'gpt-5-mini-2025-08-07',
-        // GPT-5 models don't support temperature parameter
-        tools: [{
-          type: 'function',
-          function: {
-            name: 'extract_circuits',
-            description: 'Extract all electrical circuits from installation description',
-            parameters: {
-              type: 'object',
-              properties: {
-                circuits: {
-                  type: 'array',
-                  description: 'All circuits found in the description',
-                  items: {
-                    type: 'object',
-                    properties: {
-                      name: {
-                        type: 'string',
-                        description: 'Descriptive circuit name (e.g., "Ground Floor Socket Ring", "Bathroom Lighting")'
+    // FIX 1: Wrap retry in timeout (NOT the OpenAI call itself)
+    const aiExtractionPromise = withTimeout(
+      withRetry(async () => {
+        return await callOpenAI({
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt }
+          ],
+          model: 'gpt-5-mini-2025-08-07',
+          // GPT-5 models don't support temperature parameter
+          tools: [{
+            type: 'function',
+            function: {
+              name: 'extract_circuits',
+              description: 'Extract all electrical circuits from installation description',
+              parameters: {
+                type: 'object',
+                properties: {
+                  circuits: {
+                    type: 'array',
+                    description: 'All circuits found in the description',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        name: {
+                          type: 'string',
+                          description: 'Descriptive circuit name (e.g., "Ground Floor Socket Ring", "Bathroom Lighting")'
+                        },
+                        loadType: {
+                          type: 'string',
+                          enum: ['socket', 'lighting', 'cooker', 'shower', 'ev-charger', 'immersion', 'heating', 'smoke-alarm', 'garage', 'outdoor', 'other'],
+                          description: 'Type of electrical load'
+                        },
+                        loadPower: {
+                          type: 'number',
+                          description: 'Power in Watts (not kW)'
+                        },
+                        quantity: {
+                          type: 'number',
+                          description: 'Number of identical circuits (e.g., "4 socket rings" = 4)'
+                        },
+                        cableLength: {
+                          type: 'number',
+                          description: 'Estimated cable run length in meters'
+                        },
+                        phases: {
+                          type: 'string',
+                          enum: ['single', 'three'],
+                          description: 'Single or three phase'
+                        },
+                        specialLocation: {
+                          type: 'string',
+                          enum: ['bathroom', 'outdoor', 'kitchen', 'none'],
+                          description: 'Special location requiring extra safety measures'
+                        }
                       },
-                      loadType: {
-                        type: 'string',
-                        enum: ['socket', 'lighting', 'cooker', 'shower', 'ev-charger', 'immersion', 'heating', 'smoke-alarm', 'garage', 'outdoor', 'other'],
-                        description: 'Type of electrical load'
-                      },
-                      loadPower: {
-                        type: 'number',
-                        description: 'Power in Watts (not kW)'
-                      },
-                      quantity: {
-                        type: 'number',
-                        description: 'Number of identical circuits (e.g., "4 socket rings" = 4)'
-                      },
-                      cableLength: {
-                        type: 'number',
-                        description: 'Estimated cable run length in meters'
-                      },
-                      phases: {
-                        type: 'string',
-                        enum: ['single', 'three'],
-                        description: 'Single or three phase'
-                      },
-                      specialLocation: {
-                        type: 'string',
-                        enum: ['bathroom', 'outdoor', 'kitchen', 'none'],
-                        description: 'Special location requiring extra safety measures'
-                      }
-                    },
-                    required: ['name', 'loadType', 'loadPower', 'phases']
+                      required: ['name', 'loadType', 'loadPower', 'phases']
+                    }
+                  },
+                  specialRequirements: {
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Special safety requirements (e.g., RCD protection, IP ratings, bonding)'
+                  },
+                  installationConstraints: {
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Installation constraints (e.g., cable routing, derating factors)'
                   }
                 },
-                specialRequirements: {
-                  type: 'array',
-                  items: { type: 'string' },
-                  description: 'Special safety requirements (e.g., RCD protection, IP ratings, bonding)'
-                },
-                installationConstraints: {
-                  type: 'array',
-                  items: { type: 'string' },
-                  description: 'Installation constraints (e.g., cable routing, derating factors)'
-                }
-              },
-              required: ['circuits']
-            }
-        }
-      }],
-      tool_choice: { type: 'function', function: { name: 'extract_circuits' } }
-    }, openAiKey, EXTRACTION_TIMEOUT); // 20s timeout - fail fast
-    }, {
-      maxAttempts: 2, // Fix 1: Reduced from 3 to 2
-      backoff: [500, 1000] // Fix 1: Faster retries (500ms, 1000ms)
-    });
+                required: ['circuits']
+              }
+          }
+        }],
+        tool_choice: { type: 'function', function: { name: 'extract_circuits' } }
+      }, openAiKey, PER_ATTEMPT_TIMEOUT); // 20s per attempt
+      }, {
+        maxAttempts: 2,
+        backoff: [500, 1000]
+      }),
+      RETRY_TIMEOUT, // 25s total timeout
+      'AI circuit extraction'
+    );
 
     // Fix 2: Create regex fallback promise
     const regexFallbackPromise = new Promise<CircuitExtractionResult>((resolve) => {
@@ -229,9 +227,20 @@ Extract ALL circuits with their specifications.`;
 
   } catch (error) {
     const timeElapsed = Date.now() - extractionStartTime;
+    
+    // FIX 4: Detailed error logging instead of "Unknown error"
+    const errorDetails = {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      name: error instanceof Error ? error.name : 'UnknownError',
+      stack: error instanceof Error ? error.stack?.split('\n').slice(0, 3).join('\n') : undefined,
+      isAIProviderError: error instanceof AIProviderError,
+      statusCode: (error as any)?.statusCode,
+      retryable: (error as any)?.retryable
+    };
+    
     logger.warn('⚠️ AI extraction failed, using regex fallback', { 
-      error: error instanceof Error ? error.message : 'Unknown error',
-      timeElapsed: `${timeElapsed}ms`
+      timeElapsed: `${timeElapsed}ms`,
+      ...errorDetails
     });
     
     // Immediate fallback to regex parser on timeout
@@ -246,13 +255,14 @@ Extract ALL circuits with their specifications.`;
 }
 
 /**
- * Fallback regex-based circuit parser (instant, no AI calls)
+ * FIX 2: Enhanced regex-based circuit parser with keyword inference
+ * Fallback for when AI fails - now understands natural language
  */
 function parseCircuitsWithRegex(prompt: string, logger: any): any[] {
   const circuits: any[] = [];
   const lowerPrompt = prompt.toLowerCase();
   
-  // Simple pattern matching for common circuits
+  // Existing pattern matching for specific phrases
   const patterns = [
     { regex: /(\d+)\s*socket\s*ring/gi, loadType: 'socket', power: 7200 },
     { regex: /(\d+)\s*lighting\s*circuit/gi, loadType: 'lighting', power: 500 },
@@ -280,6 +290,72 @@ function parseCircuitsWithRegex(prompt: string, logger: any): any[] {
       }
     });
   });
+  
+  // FIX 2: Keyword-based inference for natural language descriptions
+  if (circuits.length === 0) {
+    const keywordInference = [
+      { 
+        keywords: ['kitchen', 'extension', 'appliances'], 
+        circuits: [
+          { name: 'Kitchen Socket Ring', loadType: 'socket', power: 7200, cableLength: 25 },
+          { name: 'Kitchen Lighting', loadType: 'lighting', power: 500, cableLength: 15 }
+        ]
+      },
+      { 
+        keywords: ['ev', 'charger', 'electric vehicle', 'car charger'], 
+        circuits: [
+          { name: 'EV Charger', loadType: 'ev-charger', power: 7400, cableLength: 30 }
+        ]
+      },
+      { 
+        keywords: ['workshop', 'cnc', 'machine', 'welding'], 
+        circuits: [
+          { name: 'Workshop Sockets', loadType: 'socket', power: 7200, cableLength: 30 },
+          { name: 'Workshop Lighting', loadType: 'lighting', power: 1000, cableLength: 25 },
+          { name: 'Three Phase Supply', loadType: 'other', power: 15000, cableLength: 40, phases: 'three' }
+        ]
+      },
+      { 
+        keywords: ['bathroom', 'shower', 'ensuite'], 
+        circuits: [
+          { name: 'Bathroom Lighting', loadType: 'lighting', power: 500, cableLength: 20, specialLocation: 'bathroom' },
+          { name: 'Electric Shower', loadType: 'shower', power: 9500, cableLength: 15, specialLocation: 'bathroom' }
+        ]
+      },
+      { 
+        keywords: ['rewire', 'house', 'flat', 'dwelling', 'property'], 
+        circuits: [
+          { name: 'Downstairs Sockets', loadType: 'socket', power: 7200, cableLength: 30 },
+          { name: 'Upstairs Sockets', loadType: 'socket', power: 7200, cableLength: 35 },
+          { name: 'Downstairs Lights', loadType: 'lighting', power: 500, cableLength: 25 },
+          { name: 'Upstairs Lights', loadType: 'lighting', power: 500, cableLength: 30 }
+        ]
+      },
+      {
+        keywords: ['garage', 'outbuilding', 'shed'],
+        circuits: [
+          { name: 'Garage Sockets', loadType: 'socket', power: 7200, cableLength: 40 },
+          { name: 'Garage Lighting', loadType: 'lighting', power: 500, cableLength: 35 }
+        ]
+      }
+    ];
+    
+    // Find first matching category (50%+ keyword match)
+    for (const inference of keywordInference) {
+      const matchCount = inference.keywords.filter(kw => lowerPrompt.includes(kw)).length;
+      
+      if (matchCount / inference.keywords.length >= 0.5) {
+        logger.info(`📝 Regex inferred circuits from keywords: ${inference.keywords.join(', ')}`);
+        circuits.push(...inference.circuits.map((c, i) => ({
+          ...c,
+          id: `inferred-${i}`,
+          phases: c.phases || 'single',
+          specialLocation: c.specialLocation || 'none'
+        })));
+        break; // Only infer from first matching category
+      }
+    }
+  }
   
   logger.info('📝 Regex fallback extracted circuits', { count: circuits.length });
   return circuits;
