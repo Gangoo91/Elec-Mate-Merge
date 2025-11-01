@@ -606,6 +606,14 @@ export async function handleBatchDesign(body: any, logger: any) {
    - Design current (Ib) must not exceed device rating (In)
    - Device rating (In) must not exceed cable capacity (Iz)
    
+   🚨 CRITICAL MCB SIZING RULE:
+   - Standard MCB sizes: 6A, 10A, 16A, 20A, 32A, 40A, 50A, 63A, 80A, 100A
+   - If Ib = 31.3A → In MUST be 32A (next size up)
+   - If Ib = 32.17A → In MUST be 40A (cannot use 32A as 32.17 > 32)
+   - If Ib = 45.65A → In MUST be 50A (cannot use 40A as 45.65 > 40)
+   - ALWAYS round UP: If Ib is even 0.01A over a standard size, use the NEXT size up
+   - VALIDATION WILL REJECT ANY DESIGN WHERE Ib > In (even by 0.01A)
+   
 4. **Voltage Drop Compliance**:
    - Lighting: ≤ 3% (6.9V at 230V)
    - Power: ≤ 5% (11.5V at 230V)
