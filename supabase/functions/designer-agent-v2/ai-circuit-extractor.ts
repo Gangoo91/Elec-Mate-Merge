@@ -64,7 +64,7 @@ Extract ALL circuits with their specifications.`;
     // Import OpenAI provider
     const { callOpenAI, withRetry } = await import('../_shared/ai-providers.ts');
 
-    // Use GPT-5 Mini with tool calling
+    // Use GPT-5 Mini with tool calling (60s timeout, no temperature for GPT-5)
     const result = await withRetry(async () => {
       return await callOpenAI({
         messages: [
@@ -72,7 +72,7 @@ Extract ALL circuits with their specifications.`;
           { role: 'user', content: userPrompt }
         ],
         model: 'gpt-5-mini-2025-08-07',
-        temperature: 0.3,
+        // GPT-5 models don't support temperature parameter
         tools: [{
           type: 'function',
           function: {
@@ -138,7 +138,7 @@ Extract ALL circuits with their specifications.`;
           }
         }],
         tool_choice: { type: 'function', function: { name: 'extract_circuits' } }
-      }, openAiKey);
+      }, openAiKey, 60000); // 60s timeout for circuit extraction
     });
 
     if (!result.toolCalls || result.toolCalls.length === 0) {
