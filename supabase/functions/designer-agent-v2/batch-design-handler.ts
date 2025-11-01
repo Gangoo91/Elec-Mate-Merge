@@ -31,6 +31,36 @@ const INSTALLATION_CONTEXT = {
 - G59/G99 agreements may be required for generation`
 };
 
+/**
+ * Categorize circuits into high-power (individual processing) vs standard (batched)
+ * High-power circuits often cause MALFORMED_FUNCTION_CALL due to complex calculations
+ */
+function categorizeCircuits(circuits: any[], logger: any) {
+  const HIGH_POWER_TYPES = ['shower', 'ev', 'charger', 'cooker', 'oven', 'hob', 'heat pump', 'immersion', 'outdoor'];
+  const HIGH_POWER_THRESHOLD = 7000; // 7kW+
+  
+  const isHighPower = (circuit: any): boolean => {
+    const name = (circuit.name || circuit.loadType || '').toLowerCase();
+    const hasHighPowerType = HIGH_POWER_TYPES.some(type => name.includes(type));
+    const hasHighPower = (circuit.loadPower || 0) > HIGH_POWER_THRESHOLD;
+    const isSpecialLocation = circuit.specialLocation && circuit.specialLocation !== 'none';
+    return hasHighPowerType || hasHighPower || isSpecialLocation;
+  };
+  
+  const highPowerCircuits = circuits.filter(isHighPower);
+  const standardCircuits = circuits.filter(c => !isHighPower(c));
+  
+  logger.info('🔍 Circuit categorization for smart processing', {
+    total: circuits.length,
+    highPower: highPowerCircuits.length,
+    standard: standardCircuits.length,
+    highPowerTypes: highPowerCircuits.map(c => c.name || c.loadType),
+    strategy: 'High-power circuits get individual processing with equipment-specific prompts'
+  });
+  
+  return { highPowerCircuits, standardCircuits };
+}
+
 export async function handleBatchDesign(body: any, logger: any) {
   const { projectInfo, incomingSupply, circuits: inputCircuits, aiConfig } = body;
   const installationType = projectInfo.installationType || 'domestic';
@@ -83,6 +113,9 @@ export async function handleBatchDesign(body: any, logger: any) {
   }
 
   const allCircuits = [...inputCircuits, ...inferredCircuits];
+
+  // PHASE 1.5: Detect high-power/complex circuits for individual processing
+  const { highPowerCircuits, standardCircuits } = categorizeCircuits(allCircuits, logger);
 
   // PHASE 3: Circuit count tracking
   logger.info('🔢 Circuit Count Check (After Input)', {
@@ -708,28 +741,6 @@ Return complete circuit objects using the provided tool schema.`;
   // Separate high-power circuits for individual processing
   // ============================================
   
-  // Detect high-power circuits that often cause MALFORMED_FUNCTION_CALL
-  const HIGH_POWER_TYPES = ['shower', 'ev', 'charger', 'cooker', 'oven', 'hob', 'heat pump', 'immersion'];
-  const HIGH_POWER_THRESHOLD = 7000; // 7kW+
-  
-  const isHighPowerCircuit = (circuit: any): boolean => {
-    const name = (circuit.name || circuit.loadType || '').toLowerCase();
-    const hasHighPowerType = HIGH_POWER_TYPES.some(type => name.includes(type));
-    const hasHighPower = (circuit.loadPower || 0) > HIGH_POWER_THRESHOLD;
-    return hasHighPowerType || hasHighPower;
-  };
-  
-  // Split circuits into high-power (individual) and standard (batched)
-  const highPowerCircuits = allCircuits.filter(isHighPowerCircuit);
-  const standardCircuits = allCircuits.filter(c => !isHighPowerCircuit(c));
-  
-  logger.info('🔍 Circuit classification for smart batching', {
-    totalCircuits: allCircuits.length,
-    highPowerCircuits: highPowerCircuits.length,
-    standardCircuits: standardCircuits.length,
-    highPowerTypes: highPowerCircuits.map(c => c.name || c.loadType)
-  });
-  
   // Create batches: high-power get individual processing, standard get batched
   const BATCH_SIZE = 2;
   const standardBatches = chunkArray(standardCircuits, BATCH_SIZE);
@@ -803,6 +814,16 @@ Return complete circuit objects using the provided tool schema.`;
       logger.error('❌ Batch validation error', { error });
       return false;
     }
+  };
+  
+  // Helper to detect high-power circuits
+  const isHighPowerCircuit = (circuit: any): boolean => {
+    const name = (circuit.name || circuit.loadType || '').toLowerCase();
+    const HIGH_POWER_TYPES = ['shower', 'ev', 'charger', 'cooker', 'oven', 'hob', 'heat pump', 'immersion', 'outdoor'];
+    const hasHighPowerType = HIGH_POWER_TYPES.some(type => name.includes(type));
+    const hasHighPower = (circuit.loadPower || 0) > 7000;
+    const isSpecialLocation = circuit.specialLocation && circuit.specialLocation !== 'none';
+    return hasHighPowerType || hasHighPower || isSpecialLocation;
   };
   
   // Function to process a single batch with retry logic
@@ -1539,15 +1560,15 @@ Always cite regulation numbers and show working for calculations.`
     });
     
     return new Response(JSON.stringify({
-      version: 'v3.3.3-smart-retry',
+      version: 'v3.4.0-multi-strategy',
       success: false,
       error: 'INCOMPLETE_DESIGN',
-      message: `Unable to design ${missingCircuits.length} out of ${allCircuits.length} circuit(s). See suggestions below for each failed circuit.`,
+      message: `Unable to design ${missingCircuits.length} out of ${allCircuits.length} circuit(s). High-power circuits (shower, EV charger, cooker) require specific details.`,
       missingCircuits: failedCircuitGuidance,
       receivedCircuits: designData.circuits.length,
       requestedCircuits: allCircuits.length,
       code: 'INCOMPLETE_DESIGN',
-      helpText: 'Try providing more specific details for the failed circuits, or design them separately with detailed specifications.'
+      helpText: 'Provide specific kW ratings, equipment types, and cable specifications for complex circuits.'
     }), {
       status: 400,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }

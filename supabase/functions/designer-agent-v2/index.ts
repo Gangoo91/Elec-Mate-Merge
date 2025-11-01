@@ -3,7 +3,7 @@ import { corsHeaders, serve } from '../_shared/deps.ts';
 import { createLogger } from '../_shared/logger.ts';
 import { handleBatchDesign } from './batch-design-handler.ts';
 
-const VERSION = 'v3.3.1-api-key-fix'; // Fixed API key initialization order
+const VERSION = 'v3.4.0-multi-strategy'; // Multi-level retry cascade for MALFORMED_FUNCTION_CALL
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
