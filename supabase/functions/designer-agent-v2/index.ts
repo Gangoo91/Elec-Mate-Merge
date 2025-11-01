@@ -3,7 +3,7 @@ import { corsHeaders, serve } from '../_shared/deps.ts';
 import { createLogger } from '../_shared/logger.ts';
 import { handleBatchDesign } from './batch-design-handler.ts';
 
-const VERSION = 'v3.4.0-multi-strategy'; // Multi-level retry cascade for MALFORMED_FUNCTION_CALL
+const VERSION = 'v3.5.0-gpt5-mini'; // Switched to GPT-5 Mini, removed duplicate high-power detection
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {

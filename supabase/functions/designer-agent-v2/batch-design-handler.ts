@@ -72,17 +72,14 @@ export async function handleBatchDesign(body: any, logger: any) {
     model: aiConfig?.model || 'openai/gpt-5'
   });
 
-  // Get API keys BEFORE AI extraction
-  const geminiKey = Deno.env.get('GEMINI_API_KEY');
+  // Get OpenAI API key for GPT-5 Mini
   const openAiKey = Deno.env.get('OPENAI_API_KEY');
-  
-  if (!geminiKey) throw new Error('GEMINI_API_KEY not configured');
   if (!openAiKey) throw new Error('OPENAI_API_KEY not configured');
   
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
-  // STEP 0: AI-Powered Circuit Extraction (Gemini 2.5 Flash)
+  // STEP 0: AI-Powered Circuit Extraction (GPT-5 Mini)
   logger.info('🔍 STEP 0: AI Circuit Extraction from Prompt');
   
   let inferredCircuits: any[] = [];
@@ -94,7 +91,7 @@ export async function handleBatchDesign(body: any, logger: any) {
     const aiResult = await extractCircuitsWithAI(
       projectInfo.additionalPrompt,
       installationType,
-      geminiKey,
+      openAiKey,
       logger
     );
     
@@ -756,8 +753,8 @@ Return complete circuit objects using the provided tool schema.`;
     estimatedTimeSeconds: Math.ceil(50) // All batches run in parallel, ~50s total (not per batch)
   });
   
-  // Import Gemini provider
-  const { callGemini, withRetry: providerRetry } = await import('../_shared/ai-providers.ts');
+  // Import OpenAI provider for GPT-5 Mini
+  const { callOpenAI, withRetry: providerRetry } = await import('../_shared/ai-providers.ts');
 
   // Validate batch result to ensure all circuits are present
   const validateBatchResult = (result: any, expectedCircuits: any[]): boolean => {
@@ -816,23 +813,21 @@ Return complete circuit objects using the provided tool schema.`;
     }
   };
   
-  // Helper to detect high-power circuits
-  const isHighPowerCircuit = (circuit: any): boolean => {
-    const name = (circuit.name || circuit.loadType || '').toLowerCase();
-    const HIGH_POWER_TYPES = ['shower', 'ev', 'charger', 'cooker', 'oven', 'hob', 'heat pump', 'immersion', 'outdoor'];
-    const hasHighPowerType = HIGH_POWER_TYPES.some(type => name.includes(type));
-    const hasHighPower = (circuit.loadPower || 0) > 7000;
-    const isSpecialLocation = circuit.specialLocation && circuit.specialLocation !== 'none';
-    return hasHighPowerType || hasHighPower || isSpecialLocation;
-  };
-  
   // Function to process a single batch with retry logic
   const processBatch = async (batch: any[], batchIndex: number, attempt = 0): Promise<any> => {
     const batchStartTime = Date.now();
     const maxAttempts = 3;
     
-    // Detect high-power circuits that need special handling
-    const hasHighPowerCircuit = batch.some(isHighPowerCircuit);
+    // Detect high-power circuits that need special handling (using categorizeCircuits logic)
+    const isHighPower = (circuit: any): boolean => {
+      const name = (circuit.name || circuit.loadType || '').toLowerCase();
+      const HIGH_POWER_TYPES = ['shower', 'ev', 'charger', 'cooker', 'oven', 'hob', 'heat pump', 'immersion', 'outdoor'];
+      const hasHighPowerType = HIGH_POWER_TYPES.some(type => name.includes(type));
+      const hasHighPower = (circuit.loadPower || 0) > 7000;
+      const isSpecialLocation = circuit.specialLocation && circuit.specialLocation !== 'none';
+      return hasHighPowerType || hasHighPower || isSpecialLocation;
+    };
+    const hasHighPowerCircuit = batch.some(isHighPower);
     const isIndividualCircuit = batch.length === 1;
     
     logger.info(`📦 Batch ${batchIndex + 1}/${circuitBatches.length}: Processing ${batch.length} circuit${batch.length > 1 ? 's' : ''}${attempt > 0 ? ` (retry ${attempt})` : ''}`, {
@@ -899,22 +894,22 @@ Return complete circuit objects using the provided tool schema.`;
     
     try {
       const result = await providerRetry(async () => {
-        return await callGemini({
+        return await callOpenAI({
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: batchQuery }
           ],
-          model: 'gemini-2.5-flash',
+          model: 'openai/gpt-5-mini',
           temperature: 0.3,
           max_tokens: aiConfig?.maxTokens || 24000,
           tools: currentTools,
           tool_choice: currentToolChoice,
           response_format: useSimplifiedSchema ? { type: "json_object" } : undefined
-        }, geminiKey);
+        }, openAiKey);
       }, 3, 2000);
       
       const batchElapsedMs = Date.now() - batchStartTime;
-      logger.info(`✅ Gemini responded for batch ${batchIndex + 1}`, { 
+      logger.info(`✅ GPT-5 Mini responded for batch ${batchIndex + 1}`, { 
         timeMs: batchElapsedMs
       });
       
@@ -1017,16 +1012,16 @@ Return ONLY a JSON object with: circuits (array with 1 circuit), materials (arra
 Include all required fields: cableSize, cpcSize, protectionDevice, calculations, justifications.`;
 
             const ultraSimpleResult = await providerRetry(async () => {
-              return await callGemini({
+              return await callOpenAI({
                 messages: [
                   { role: 'system', content: systemPrompt.substring(0, 5000) }, // Truncated prompt
                   { role: 'user', content: ultraSimpleQuery }
                 ],
-                model: 'gemini-2.5-flash',
+                model: 'openai/gpt-5-mini',
                 temperature: 0.2,
                 max_tokens: 8000,
                 response_format: { type: "json_object" }
-              }, geminiKey);
+              }, openAiKey);
             }, 2, 1000);
 
             if (ultraSimpleResult.content) {

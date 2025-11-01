@@ -25,14 +25,14 @@ interface CircuitExtractionResult {
 export async function extractCircuitsWithAI(
   additionalPrompt: string,
   installationType: string,
-  geminiKey: string,
+  openAiKey: string,
   logger: any
 ): Promise<CircuitExtractionResult> {
   if (!additionalPrompt?.trim()) {
     return { inferredCircuits: [], specialRequirements: [], installationConstraints: [] };
   }
 
-  logger.info('🤖 AI Circuit Extraction Starting (Gemini 2.5 Flash)', { 
+  logger.info('🤖 AI Circuit Extraction Starting (GPT-5 Mini)', { 
     promptLength: additionalPrompt.length,
     installationType 
   });
@@ -61,17 +61,17 @@ Description: ${additionalPrompt}
 
 Extract ALL circuits with their specifications.`;
 
-    // Import Gemini provider
-    const { callGemini, withRetry } = await import('../_shared/ai-providers.ts');
+    // Import OpenAI provider
+    const { callOpenAI, withRetry } = await import('../_shared/ai-providers.ts');
 
-    // Use Gemini with tool calling
+    // Use GPT-5 Mini with tool calling
     const result = await withRetry(async () => {
-      return await callGemini({
+      return await callOpenAI({
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ],
-        model: 'gemini-2.5-flash',
+        model: 'openai/gpt-5-mini',
         temperature: 0.3,
         tools: [{
           type: 'function',
@@ -138,11 +138,11 @@ Extract ALL circuits with their specifications.`;
           }
         }],
         tool_choice: { type: 'function', function: { name: 'extract_circuits' } }
-      }, geminiKey);
+      }, openAiKey);
     });
 
     if (!result.toolCalls || result.toolCalls.length === 0) {
-      logger.warn('⚠️ No tool call in Gemini response, using fallback');
+      logger.warn('⚠️ No tool call in GPT-5 Mini response, using fallback');
       return { inferredCircuits: [], specialRequirements: [], installationConstraints: [] };
     }
 
