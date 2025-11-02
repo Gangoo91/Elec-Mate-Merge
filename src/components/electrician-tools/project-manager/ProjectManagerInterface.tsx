@@ -20,13 +20,15 @@ import {
   Copy,
   Download,
   Eye,
-  EyeOff
+  EyeOff,
+  AlertTriangle
 } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { toast } from "sonner";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
+import { useSimpleAgent } from "@/hooks/useSimpleAgent";
 
 interface ExampleScenario {
   title: string;
@@ -77,6 +79,8 @@ const ProjectManagerInterface = () => {
   const [duration, setDuration] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState<any>(null);
+  
+  const { callAgent, isLoading } = useSimpleAgent();
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
     if (contextData) {
@@ -112,10 +116,26 @@ const ProjectManagerInterface = () => {
     });
   };
 
-  const handleGenerate = () => {
-    toast.info("Functionality In Development", {
-      description: "Project Manager AI agent coming soon"
-    });
+  const handleGenerate = async () => {
+    setShowResults(false);
+    setResults(null);
+    
+    const request = {
+      query: prompt,
+      projectType: selectedType,
+      scope: prompt,
+      timeline: duration || undefined
+    };
+    
+    const response = await callAgent('project-manager', request);
+    
+    if (response?.success && response.data) {
+      setResults(response.data);
+      setShowResults(true);
+      toast.success("Project Plan Generated", {
+        description: "Your comprehensive project plan is ready"
+      });
+    }
   };
 
   const handleCopy = () => {
@@ -349,19 +369,19 @@ const ProjectManagerInterface = () => {
       <Button 
         type="submit"
         size="lg"
-        disabled={!prompt.trim()}
+        disabled={!prompt.trim() || isLoading}
         className="w-full bg-gradient-to-r from-pink-400 to-pink-400/80 hover:from-pink-500 hover:to-pink-500/80 text-white h-12 sm:h-14 touch-manipulation text-base sm:text-lg"
       >
         <Clipboard className="h-5 w-5 mr-2" />
-        Generate Project Plan
+        {isLoading ? 'Generating Plan...' : 'Generate Project Plan'}
       </Button>
 
       {/* 6. RESULTS DISPLAY (when showResults) */}
-      {showResults && (
+      {showResults && results && (
         <Card className="p-3 sm:p-6">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
             <h4 className="font-semibold text-lg">Project Plan Results</h4>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <Button 
                 type="button"
                 size="sm" 
@@ -382,24 +402,193 @@ const ProjectManagerInterface = () => {
                 <Download className="h-4 w-4 mr-2" />
                 Export PDF
               </Button>
-              <Button 
-                type="button"
-                size="sm" 
-                variant="ghost"
-                onClick={() => setShowResults(false)}
-                className="touch-manipulation"
-              >
-                {showResults ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-              </Button>
               <SendToAgentDropdown 
                 currentAgent="project-manager" 
                 currentOutput={{ prompt, selectedType, projectName, results }} 
               />
             </div>
           </div>
-          <div className="bg-muted/50 rounded-lg p-4 text-sm">
-            <p className="text-muted-foreground">Results will appear here...</p>
-          </div>
+
+          {/* Project Plan Summary */}
+          {results.response && (
+            <Card className="p-4 mb-4 bg-muted/50">
+              <h5 className="font-semibold mb-2 flex items-center gap-2">
+                <FileText className="h-4 w-4 text-pink-400" />
+                Project Overview
+              </h5>
+              <p className="text-sm whitespace-pre-wrap">{results.response}</p>
+            </Card>
+          )}
+
+          {/* Phases */}
+          {results.projectPlan?.phases && results.projectPlan.phases.length > 0 && (
+            <Card className="p-4 mb-4">
+              <h5 className="font-semibold mb-3 flex items-center gap-2">
+                <Calendar className="h-4 w-4 text-pink-400" />
+                Project Phases ({results.projectPlan.totalDuration} {results.projectPlan.totalDurationUnit})
+              </h5>
+              <div className="space-y-3">
+                {results.projectPlan.phases.map((phase: any, idx: number) => (
+                  <div key={idx} className={`p-3 border rounded-lg ${phase.criticalPath ? 'border-pink-400 bg-pink-400/5' : 'border-muted'}`}>
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex-1">
+                        <h6 className="font-medium flex items-center gap-2">
+                          {phase.phase}
+                          {phase.criticalPath && (
+                            <span className="text-xs bg-pink-400/20 text-pink-400 px-2 py-0.5 rounded">Critical Path</span>
+                          )}
+                        </h6>
+                        <p className="text-xs text-muted-foreground">
+                          Duration: {phase.duration} {phase.durationUnit}
+                        </p>
+                      </div>
+                    </div>
+                    {phase.tasks && phase.tasks.length > 0 && (
+                      <div className="mt-2">
+                        <p className="text-xs font-medium mb-1">Tasks:</p>
+                        <ul className="list-disc list-inside text-xs space-y-0.5 text-muted-foreground">
+                          {phase.tasks.map((task: string, tidx: number) => (
+                            <li key={tidx}>{task}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {phase.milestones && phase.milestones.length > 0 && (
+                      <div className="mt-2">
+                        <p className="text-xs font-medium mb-1">Milestones:</p>
+                        <ul className="list-disc list-inside text-xs space-y-0.5 text-muted-foreground">
+                          {phase.milestones.map((milestone: string, midx: number) => (
+                            <li key={midx}>{milestone}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
+
+          {/* Resources */}
+          {results.resources && (
+            <Card className="p-4 mb-4">
+              <h5 className="font-semibold mb-3 flex items-center gap-2">
+                <Users className="h-4 w-4 text-pink-400" />
+                Resources Required
+              </h5>
+              {results.resources.team && results.resources.team.length > 0 && (
+                <div className="mb-3">
+                  <p className="text-xs font-medium mb-2">Team:</p>
+                  <div className="space-y-2">
+                    {results.resources.team.map((member: any, idx: number) => (
+                      <div key={idx} className="text-sm flex items-center justify-between p-2 bg-muted/50 rounded">
+                        <span>{member.role}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {member.quantity}x for {member.duration} {member.durationUnit || 'days'}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {results.resources.equipment && results.resources.equipment.length > 0 && (
+                <div>
+                  <p className="text-xs font-medium mb-2">Equipment:</p>
+                  <ul className="list-disc list-inside text-xs space-y-1 text-muted-foreground">
+                    {results.resources.equipment.map((item: string, idx: number) => (
+                      <li key={idx}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </Card>
+          )}
+
+          {/* Compliance */}
+          {results.compliance && (
+            <Card className="p-4 mb-4">
+              <h5 className="font-semibold mb-3 flex items-center gap-2">
+                <FileCheck className="h-4 w-4 text-pink-400" />
+                Compliance Requirements
+              </h5>
+              {results.compliance.notifications && results.compliance.notifications.length > 0 && (
+                <div className="mb-3">
+                  <p className="text-xs font-medium mb-1">Notifications:</p>
+                  <ul className="list-disc list-inside text-xs space-y-0.5 text-muted-foreground">
+                    {results.compliance.notifications.map((notif: string, idx: number) => (
+                      <li key={idx}>{notif}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {results.compliance.certifications && results.compliance.certifications.length > 0 && (
+                <div className="mb-3">
+                  <p className="text-xs font-medium mb-1">Certifications:</p>
+                  <ul className="list-disc list-inside text-xs space-y-0.5 text-muted-foreground">
+                    {results.compliance.certifications.map((cert: string, idx: number) => (
+                      <li key={idx}>{cert}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {results.compliance.inspections && results.compliance.inspections.length > 0 && (
+                <div>
+                  <p className="text-xs font-medium mb-1">Inspections:</p>
+                  <ul className="list-disc list-inside text-xs space-y-0.5 text-muted-foreground">
+                    {results.compliance.inspections.map((insp: string, idx: number) => (
+                      <li key={idx}>{insp}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </Card>
+          )}
+
+          {/* Risks */}
+          {results.risks && results.risks.length > 0 && (
+            <Card className="p-4 mb-4">
+              <h5 className="font-semibold mb-3 flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4 text-pink-400" />
+                Risk Register
+              </h5>
+              <div className="space-y-2">
+                {results.risks.map((risk: any, idx: number) => (
+                  <div key={idx} className="p-3 border border-muted rounded-lg">
+                    <div className="flex items-start justify-between mb-1">
+                      <p className="text-sm font-medium flex-1">{risk.risk}</p>
+                      {risk.severity && (
+                        <span className={`text-xs px-2 py-0.5 rounded ${
+                          risk.severity === 'High' ? 'bg-red-500/20 text-red-400' :
+                          risk.severity === 'Medium' ? 'bg-yellow-500/20 text-yellow-400' :
+                          'bg-green-500/20 text-green-400'
+                        }`}>
+                          {risk.severity}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      <strong>Mitigation:</strong> {risk.mitigation}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
+
+          {/* Recommendations */}
+          {results.recommendations && results.recommendations.length > 0 && (
+            <Card className="p-4">
+              <h5 className="font-semibold mb-3 flex items-center gap-2">
+                <Lightbulb className="h-4 w-4 text-pink-400" />
+                Recommendations
+              </h5>
+              <ul className="list-disc list-inside text-sm space-y-1.5 text-muted-foreground">
+                {results.recommendations.map((rec: string, idx: number) => (
+                  <li key={idx}>{rec}</li>
+                ))}
+              </ul>
+            </Card>
+          )}
         </Card>
       )}
     </form>
