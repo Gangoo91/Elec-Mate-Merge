@@ -187,7 +187,10 @@ function ensureJsonArray(value: any): any[] {
 
 // ==================== GPT ENRICHMENT ====================
 
-async function callGPTForFacets(id: string, title: string, content: string, logger: any, retryCount = 0): Promise<any> {
+async function callGPTForFacets(id: string, title: string, content: string, logger: any, retryCount = 0, truncateOnRetry = false): Promise<any> {
+  // Truncate content on retry to avoid timeouts
+  const processedContent = (retryCount > 0 && truncateOnRetry) ? content.slice(0, 5000) : content;
+  
   const systemPrompt = `You are a precision parser extracting structured electrical training data from real textbook content.
 
 PRIMARY DIRECTIVE: EXTRACT > INFER > GENERATE
@@ -434,12 +437,12 @@ QUALITY REQUIREMENTS:
 
 Return ONLY valid JSON, NO markdown, NO explanations.`;
 
-  const userPrompt = `SOURCE CONTENT (${content.length} characters):
+  const userPrompt = `SOURCE CONTENT (${processedContent.length} characters):
 
 Topic: ${title}
 
 ---FULL SOURCE TEXT---
-${content}
+${processedContent}
 ---END SOURCE TEXT---
 
 TASK: Extract all practical facets from the above source content.
@@ -466,7 +469,7 @@ Return ONLY the JSON object with the "facets" array.`;
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ],
-        max_completion_tokens: 20000
+        max_completion_tokens: 10000
       }),
     }),
     Timeouts.PRACTICAL_WORK,
@@ -475,6 +478,16 @@ Return ONLY the JSON object with the "facets" array.`;
 
   if (!response.ok) {
     const errorText = await response.text();
+    
+    // Retry on 504 timeout with truncated content
+    if (response.status === 504 && retryCount < 2) {
+      logger.warn(`⏱️ Timeout on attempt ${retryCount + 1}, retrying with truncated content...`, { 
+        originalLength: content.length,
+        status: response.status 
+      });
+      return callGPTForFacets(id, title, content, logger, retryCount + 1, true);
+    }
+    
     logger.error(`GPT API failed: ${response.status} ${response.statusText}`, { errorText });
     throw new Error(`GPT API failed: ${response.statusText}`);
   }
@@ -754,15 +767,7 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     common_mistakes: ensureArrayOfStrings(facet.common_mistakes),
     safety_requirements: toJsonOrNull(facet.safety_requirements),
     
-    confidence_score: facet.confidence_score || 0.85,
-    
-    // ✅ Source fidelity tracking (NEW)
-    source_fidelity: {
-      content_length: content.length,
-      extraction_timestamp: new Date().toISOString(),
-      model_used: OPENAI_MODEL,
-      extraction_mode: 'extract_first'
-    }
+    confidence_score: facet.confidence_score || 0.85
   }));
 
   // Fix 4: Add comprehensive error logging
@@ -818,12 +823,13 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Query items from practical_work
+    // Query items from practical_work (enforce 6-item batch limit)
+    const effectiveBatchSize = Math.min(batchSize || 6, 6); // Cap at 6 items
     const { data: items, error: queryError } = await supabase
       .from('practical_work')
       .select('id, source_table, topic, content, metadata, is_canonical')
       .eq('is_canonical', true)
-      .range(startFrom, startFrom + batchSize - 1);
+      .range(startFrom, startFrom + effectiveBatchSize - 1);
 
     if (queryError) {
       logger.error('Failed to query practical work items', { queryError });
