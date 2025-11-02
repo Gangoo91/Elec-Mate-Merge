@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { ArrowLeft, Save, Download, Sparkles } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { ArrowLeft, Save, Download, Sparkles, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { DiagramCanvas } from "@/components/electrician-tools/diagram-builder/DiagramCanvas";
@@ -9,6 +9,22 @@ import { ExportControls } from "@/components/electrician-tools/diagram-builder/E
 import { PropertiesPanel } from "@/components/electrician-tools/diagram-builder/PropertiesPanel";
 import { AIRoomBuilderDialog } from "@/components/electrician-tools/diagram-builder/AIRoomBuilderDialog";
 import { toast } from "@/hooks/use-toast";
+
+const DEMO_ROOM = {
+  room: { name: "Example Kitchen", dimensions: { width: 4, height: 3, unit: "m" } },
+  walls: [
+    { id: "north", length: 4, features: [{ type: "window", position: "center", width: 1.5 }] },
+    { id: "east", length: 3, features: [{ type: "door", position: "right", width: 0.9 }] },
+    { id: "south", length: 4, features: [] },
+    { id: "west", length: 3, features: [] }
+  ],
+  symbols: [
+    { type: "socket-double-13a-bs7671", wall: "south", position: 1, heightFromFloor: 0.3 },
+    { type: "socket-double-13a-bs7671", wall: "south", position: 2.5, heightFromFloor: 0.3 },
+    { type: "switch-1way-bs7671", wall: "west", position: 0.3, heightFromFloor: 1.2 },
+    { type: "light-ceiling-bs7671", position: "center" }
+  ]
+};
 
 export type DrawingTool = "select" | "line" | "rectangle" | "text" | "symbol" | "eraser";
 
@@ -33,9 +49,26 @@ const DiagramBuilderPage = () => {
   const [snapEnabled, setSnapEnabled] = useState(true);
   const [selectedObject, setSelectedObject] = useState<CanvasObject | null>(null);
   const [aiDialogOpen, setAiDialogOpen] = useState(false);
+  const [isFirstVisit, setIsFirstVisit] = useState(false);
   const undoStackRef = useState<CanvasObject[][]>([]);
   const redoStackRef = useState<CanvasObject[][]>([]);
   const canvasRef = useRef<any>(null);
+
+  // Load demo room on first visit
+  useEffect(() => {
+    const hasVisited = localStorage.getItem('diagram-builder-first-visit');
+    if (!hasVisited) {
+      setIsFirstVisit(true);
+      localStorage.setItem('diagram-builder-first-visit', 'true');
+      
+      // Small delay to ensure canvas is ready
+      setTimeout(() => {
+        if (canvasRef.current?.renderAIRoom) {
+          canvasRef.current.renderAIRoom(DEMO_ROOM);
+        }
+      }, 500);
+    }
+  }, []);
 
   const handleSave = () => {
     const projectData = {
@@ -115,6 +148,26 @@ const DiagramBuilderPage = () => {
 
   return (
     <div className="min-h-screen bg-elec-dark flex flex-col">
+      {/* First Visit Banner */}
+      {isFirstVisit && (
+        <div className="bg-elec-yellow/20 border-b border-elec-yellow/40 px-4 py-2 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-elec-yellow" />
+            <p className="text-sm text-elec-light">
+              <strong>Example room loaded!</strong> Click <strong>AI Room Builder</strong> in the header to create your own.
+            </p>
+          </div>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={() => setIsFirstVisit(false)}
+            className="text-elec-yellow hover:bg-elec-yellow/10"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
+      )}
+      
       {/* Header - Compact on mobile */}
       <div className="border-b border-elec-yellow/20 bg-elec-card">
         <div className="px-3 py-2 md:px-4 md:py-3">
@@ -138,10 +191,10 @@ const DiagramBuilderPage = () => {
             <div className="flex items-center gap-1 md:gap-2">
               <Button
                 onClick={() => setAiDialogOpen(true)}
-                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold gap-1.5 h-8 md:h-9 px-2 md:px-3 text-xs md:text-sm"
+                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold gap-1.5 h-8 md:h-9 px-2 md:px-3 text-xs md:text-sm animate-pulse"
               >
                 <Sparkles className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                <span className="hidden sm:inline">AI Room</span>
+                <span className="hidden sm:inline">AI Room Builder</span>
               </Button>
               
               <Button
