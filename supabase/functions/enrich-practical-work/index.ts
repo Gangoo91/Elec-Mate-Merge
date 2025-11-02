@@ -196,7 +196,17 @@ function ensureJsonArray(value: any): any[] {
 
 async function callGPTForFacets(id: string, title: string, content: string, logger: any, retryCount = 0, compactMode = false): Promise<any> {
   // Compact mode: shorter content for retry (reduced token budget)
-  const processedContent = compactMode ? content.slice(0, 6000) : content.slice(0, 18000); // ~12K tokens at 1.5 chars/token
+  let processedContent = compactMode ? content.slice(0, 6000) : content.slice(0, 18000); // ~12K tokens at 1.5 chars/token
+  
+  // Remove TOC/header patterns to prevent wasting tokens on non-procedural content
+  processedContent = processedContent
+    .replace(/table of contents[\s\S]{0,500}/gi, '') // Remove TOC sections
+    .replace(/^chapter \d+[^\n]{0,100}/gim, '') // Remove chapter headers
+    .replace(/^section \d+[^\n]{0,100}/gim, '') // Remove section headers
+    .replace(/^figure \d+\.(?!\d)[^\n]{0,100}/gim, '') // Remove standalone figure captions
+    .replace(/^page \d+[^\n]{0,50}/gim, '') // Remove page numbers
+    .trim();
+  
   const targetFacets = compactMode ? '4-6' : '8'; // ✅ EXACTLY 8 facets total (enforced via dedup + top-8 selection)
   
   const systemPrompt = `You are a precision parser extracting structured electrical training data from real textbook content.

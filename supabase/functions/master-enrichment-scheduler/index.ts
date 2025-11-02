@@ -116,8 +116,8 @@ const ENRICHMENT_TASKS: EnrichmentTask[] = [
   // Phase 3: Pricing Intelligence (Priority 3)
   { name: 'Pricing Intelligence', functionName: 'enrich-pricing-intelligence', sourceTable: 'pricing_embeddings', targetTable: 'pricing_intelligence', batchSize: 10, priority: 3, workerCount: 6 },
   
-  // Phase 4: Practical Work Unified Enrichment (Priority 4) - ✅ 12-item batches, 50 concurrent workers (8 facets/source)
-  { name: 'Practical Work', functionName: 'enrich-practical-work', sourceTable: 'practical_work', targetTable: 'practical_work_intelligence', batchSize: 12, priority: 4, filter: { is_canonical: true }, workerCount: 50 },
+  // Phase 4: Practical Work Unified Enrichment (Priority 4) - ✅ 12-item batches, 150 concurrent workers (8 facets/source)
+  { name: 'Practical Work', functionName: 'enrich-practical-work', sourceTable: 'practical_work', targetTable: 'practical_work_intelligence', batchSize: 12, priority: 4, filter: { is_canonical: true }, workerCount: 150 },
 ];
 
 // Global worker state tracking
@@ -709,7 +709,7 @@ serve(async (req) => {
             missingIds,
             batchSize,
             workers: workerCount,
-            throttle_ms: 1500
+            throttle_ms: 500
           }
         })
         .select()
@@ -1607,13 +1607,12 @@ async function continuousProcessor(
         }
       }
       
-      // Launch parallel workers with throttle (NUCLEAR: 3-second delay between workers)
+      // Launch parallel workers with throttle
       const workers = [];
       for (let i = 0; i < PARALLEL_WORKERS; i++) {
         if (i > 0) {
-          // ✅ NUCLEAR: Add 3-second delay between worker starts
-          await new Promise(resolve => setTimeout(resolve, 3000));
-          console.log(`⏱️ Worker ${i + 1} starting after 3-second throttle`);
+          await new Promise(resolve => setTimeout(resolve, task.throttle_ms || 1500));
+          console.log(`⏱️ Worker ${i + 1} starting after ${task.throttle_ms || 1500}ms throttle`);
         }
         workers.push(batchWorker(i + 1));
       }
