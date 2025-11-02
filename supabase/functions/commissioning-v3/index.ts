@@ -436,7 +436,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
     
     // Log RAG metrics for observability
     const totalTime = Date.now() - requestId;
-    await supabase.from('agent_metrics').insert({
+    const { error: metricsError } = await supabase.from('agent_metrics').insert({
       function_name: 'commissioning-v3',
       request_id: requestId,
       rag_time: ragStart ? Date.now() - ragStart : null,
@@ -444,7 +444,10 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
       regulation_count: testKnowledge?.length || 0,
       success: true,
       query_type: circuitType || 'general'
-    }).catch(err => logger.warn('Failed to log metrics', { error: err.message }));
+    });
+    if (metricsError) {
+      logger.warn('Failed to log metrics', { error: metricsError.message });
+    }
 
     return new Response(
       JSON.stringify({
