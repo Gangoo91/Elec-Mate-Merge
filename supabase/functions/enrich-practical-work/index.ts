@@ -189,8 +189,8 @@ function ensureJsonArray(value: any): any[] {
 
 async function callGPTForFacets(id: string, title: string, content: string, logger: any, retryCount = 0, compactMode = false): Promise<any> {
   // Compact mode: shorter content + fewer facets for retry
-  const processedContent = compactMode ? content.slice(0, 4500) : content.slice(0, 12000);
-  const targetFacets = compactMode ? '4-8' : '8-20';
+  const processedContent = compactMode ? content.slice(0, 6000) : content.slice(0, 18000); // ~12K tokens at 1.5 chars/token
+  const targetFacets = compactMode ? '4-6' : '8'; // EXACTLY 8 facets, not 8-20
   
   const systemPrompt = `You are a precision parser extracting structured electrical training data from real textbook content.
 
@@ -381,7 +381,9 @@ RULE: If generating cleaning tasks for electrical equipment:
 
 If unsure → DO NOT generate maintenance_tasks field at all
 
-Generate ${targetFacets} DISTINCT micro-facets. Each facet = ONE specific scenario with COMPLETE intelligence.
+Generate EXACTLY ${targetFacets} DISTINCT micro-facets (not ${targetFacets} per task type - ${targetFacets} TOTAL). Each facet = ONE broad scenario covering multiple aspects. DO NOT break down into tiny sub-facets.
+
+CRITICAL: If source content describes "Consumer Unit Installation", create 1-2 comprehensive facets covering the entire process, NOT 20 separate facets for each tiny step.
 
 JSON SCHEMA:
 {

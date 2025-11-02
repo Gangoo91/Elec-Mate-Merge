@@ -76,8 +76,8 @@ const ENRICHMENT_TASKS: EnrichmentTask[] = [
   // Phase 3: Pricing Intelligence (Priority 3)
   { name: 'Pricing Intelligence', functionName: 'enrich-pricing-intelligence', sourceTable: 'pricing_embeddings', targetTable: 'pricing_intelligence', batchSize: 10, priority: 3, workerCount: 6 },
   
-  // Phase 4: Practical Work Unified Enrichment (Priority 4) - ✅ 6-item batches, 2 concurrent workers
-  { name: 'Practical Work', functionName: 'enrich-practical-work', sourceTable: 'practical_work', targetTable: 'practical_work_intelligence', batchSize: 6, priority: 4, filter: { is_canonical: true }, workerCount: 2 },
+  // Phase 4: Practical Work Unified Enrichment (Priority 4) - ✅ 12-item batches, 20 concurrent workers (8 facets/source)
+  { name: 'Practical Work', functionName: 'enrich-practical-work', sourceTable: 'practical_work', targetTable: 'practical_work_intelligence', batchSize: 12, priority: 4, filter: { is_canonical: true }, workerCount: 20 },
 ];
 
 // Global worker state tracking
