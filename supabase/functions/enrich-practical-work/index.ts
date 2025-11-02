@@ -198,13 +198,13 @@ async function callGPTForFacets(id: string, title: string, content: string, logg
   // Compact mode: shorter content for retry (reduced token budget)
   let processedContent = compactMode ? content.slice(0, 6000) : content.slice(0, 18000); // ~12K tokens at 1.5 chars/token
   
-  // Remove TOC/header patterns to prevent wasting tokens on non-procedural content
+  // Remove TOC/header patterns selectively to preserve technical content
   processedContent = processedContent
-    .replace(/table of contents[\s\S]{0,500}/gi, '') // Remove TOC sections
-    .replace(/^chapter \d+[^\n]{0,100}/gim, '') // Remove chapter headers
-    .replace(/^section \d+[^\n]{0,100}/gim, '') // Remove section headers
-    .replace(/^figure \d+\.(?!\d)[^\n]{0,100}/gim, '') // Remove standalone figure captions
-    .replace(/^page \d+[^\n]{0,50}/gim, '') // Remove page numbers
+    .replace(/^table of contents[\s\S]{0,500}/gim, '') // Remove TOC sections
+    .replace(/^chapter \d+\s*$/gim, '') // Only bare chapter headers
+    .replace(/^section \d+\s*$/gim, '') // Only bare section headers
+    .replace(/^figure \d+\.\s*$/gim, '') // Only standalone "Figure 7." without description
+    .replace(/^page \d+\s*$/gim, '') // Only page numbers alone
     .trim();
   
   const targetFacets = compactMode ? '4-6' : '8'; // ✅ EXACTLY 8 facets total (enforced via dedup + top-8 selection)
