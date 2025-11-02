@@ -983,6 +983,7 @@ serve(async (req) => {
       .from('practical_work')
       .select('id, source_table, topic, content, metadata, is_canonical')
       .eq('is_canonical', true)
+      .or('enrichment_status.is.null,enrichment_status.eq.pending')
       .range(startFrom, startFrom + effectiveBatchSize - 1);
 
     if (queryError) {
