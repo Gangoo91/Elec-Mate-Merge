@@ -400,9 +400,8 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
       toolChoice: { type: 'function', function: { name: 'provide_testing_guidance' } }
     });
 
-    const aiData = JSON.parse(aiResult.content);
-    const toolCall = aiData.choices[0].message.tool_calls[0];
-    const commResult = JSON.parse(toolCall.function.arguments);
+    // Handle AI wrapper response - it extracts tool call arguments directly
+    const commResult = JSON.parse(aiResult.content);
 
     // IMPROVEMENT: Response Quality Validation
     const { validateResponse } = await import('../_shared/response-validation.ts');
