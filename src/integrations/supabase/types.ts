@@ -4176,6 +4176,8 @@ export type Database = {
           content_normalized: string | null
           created_at: string | null
           embedding: string | null
+          enrichment_locked_at: string | null
+          enrichment_status: string | null
           id: string
           is_canonical: boolean
           metadata: Json | null
@@ -4193,6 +4195,8 @@ export type Database = {
           content_normalized?: string | null
           created_at?: string | null
           embedding?: string | null
+          enrichment_locked_at?: string | null
+          enrichment_status?: string | null
           id?: string
           is_canonical?: boolean
           metadata?: Json | null
@@ -4210,6 +4214,8 @@ export type Database = {
           content_normalized?: string | null
           created_at?: string | null
           embedding?: string | null
+          enrichment_locked_at?: string | null
+          enrichment_status?: string | null
           id?: string
           is_canonical?: boolean
           metadata?: Json | null
@@ -4506,6 +4512,63 @@ export type Database = {
           },
           {
             foreignKeyName: "practical_work_intelligence_practical_work_id_fkey"
+            columns: ["practical_work_id"]
+            isOneToOne: false
+            referencedRelation: "v_practical_work_canonical"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      practical_work_intelligence_archive: {
+        Row: {
+          activity_types: string[] | null
+          archived_at: string | null
+          confidence_score: number | null
+          equipment_category: string | null
+          equipment_subcategory: string | null
+          facet_hash: string
+          full_data: Json | null
+          id: string
+          original_created_at: string | null
+          practical_work_id: string | null
+          rank_at_archive: number | null
+        }
+        Insert: {
+          activity_types?: string[] | null
+          archived_at?: string | null
+          confidence_score?: number | null
+          equipment_category?: string | null
+          equipment_subcategory?: string | null
+          facet_hash: string
+          full_data?: Json | null
+          id: string
+          original_created_at?: string | null
+          practical_work_id?: string | null
+          rank_at_archive?: number | null
+        }
+        Update: {
+          activity_types?: string[] | null
+          archived_at?: string | null
+          confidence_score?: number | null
+          equipment_category?: string | null
+          equipment_subcategory?: string | null
+          facet_hash?: string
+          full_data?: Json | null
+          id?: string
+          original_created_at?: string | null
+          practical_work_id?: string | null
+          rank_at_archive?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "practical_work_intelligence_archive_practical_work_id_fkey"
+            columns: ["practical_work_id"]
+            isOneToOne: false
+            referencedRelation: "practical_work"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "practical_work_intelligence_archive_practical_work_id_fkey"
             columns: ["practical_work_id"]
             isOneToOne: false
             referencedRelation: "v_practical_work_canonical"
@@ -7515,17 +7578,104 @@ export type Database = {
       }
       practical_work_facet_compliance: {
         Row: {
-          avg_facets_per_source_10min: number | null
-          avg_facets_per_source_all_time: number | null
-          compliance_percentage_10min: number | null
-          exactly_8_count_10min: number | null
-          exactly_8_count_all_time: number | null
-          snapshot_time: string | null
-          sources_enriched_10min: number | null
-          total_facets_created: number | null
-          total_sources_enriched: number | null
+          avg_facets_per_source: number | null
+          compliance_percentage: number | null
+          sources_enriched: number | null
+          total_facets: number | null
+          total_gold_sources: number | null
         }
         Relationships: []
+      }
+      practical_work_intelligence_top8: {
+        Row: {
+          acceptance_criteria: Json | null
+          activity_types: string[] | null
+          applies_to: string[] | null
+          bs7671_regulations: string[] | null
+          bs7671_zones: string[] | null
+          cable_routes: string[] | null
+          cable_sizes: string[] | null
+          canonical_id: string | null
+          cluster_id: string | null
+          common_defects: string[] | null
+          common_failures: Json[] | null
+          common_mistakes: string[] | null
+          confidence_score: number | null
+          created_at: string | null
+          diagnostic_tests: string[] | null
+          eicr_observation_codes: string[] | null
+          equipment_category: string | null
+          equipment_subcategory: string | null
+          facet_hash: string | null
+          facet_type: string | null
+          fixing_intervals: Json | null
+          id: string | null
+          inspection_checklist: Json[] | null
+          installation_method: string | null
+          keywords: string[] | null
+          location_types: string[] | null
+          maintenance_intervals: Json | null
+          maintenance_tasks: Json[] | null
+          materials_needed: Json[] | null
+          other_standards: string[] | null
+          power_ratings: string[] | null
+          practical_work_id: string | null
+          primary_topic: string | null
+          provenance: Json | null
+          related_topics: string[] | null
+          replacement_criteria: string[] | null
+          safety_requirements: Json | null
+          skill_level: string | null
+          source_tables: string[] | null
+          team_size: number | null
+          termination_methods: string[] | null
+          test_equipment_required: string[] | null
+          test_frequency: string | null
+          test_procedures: Json[] | null
+          tools_required: string[] | null
+          troubleshooting_steps: string[] | null
+          typical_duration_minutes: number | null
+          updated_at: string | null
+          visual_inspection_points: string[] | null
+          wear_indicators: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "practical_work_intelligence_canonical_id_fkey"
+            columns: ["canonical_id"]
+            isOneToOne: false
+            referencedRelation: "practical_work"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "practical_work_intelligence_canonical_id_fkey"
+            columns: ["canonical_id"]
+            isOneToOne: false
+            referencedRelation: "v_practical_work_canonical"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "practical_work_intelligence_cluster_id_fkey"
+            columns: ["cluster_id"]
+            isOneToOne: false
+            referencedRelation: "practical_work_clusters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "practical_work_intelligence_practical_work_id_fkey"
+            columns: ["practical_work_id"]
+            isOneToOne: false
+            referencedRelation: "practical_work"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "practical_work_intelligence_practical_work_id_fkey"
+            columns: ["practical_work_id"]
+            isOneToOne: false
+            referencedRelation: "v_practical_work_canonical"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       public_price_reports: {
         Row: {
@@ -7721,6 +7871,15 @@ export type Database = {
           avg_facets_before: number
           facets_deleted: number
           sources_processed: number
+        }[]
+      }
+      prune_practical_work_to_8_archive: {
+        Args: never
+        Returns: {
+          facets_archived: number
+          sources_affected: number
+          total_facets_after: number
+          total_facets_before: number
         }[]
       }
       reset_stuck_batches: {

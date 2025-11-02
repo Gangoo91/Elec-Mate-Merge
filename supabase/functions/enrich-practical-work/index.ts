@@ -381,9 +381,14 @@ RULE: If generating cleaning tasks for electrical equipment:
 
 If unsure → DO NOT generate maintenance_tasks field at all
 
-Generate EXACTLY ${targetFacets} DISTINCT micro-facets (not ${targetFacets} per task type - ${targetFacets} TOTAL). Each facet = ONE broad scenario covering multiple aspects. DO NOT break down into tiny sub-facets.
+CRITICAL REQUIREMENT - COUNT YOUR OUTPUT BEFORE RESPONDING:
+⚠️ Generate EXACTLY 8 facets - NO MORE, NO LESS.
+⚠️ If you generate 9+ facets, the batch will be REJECTED and you will retry.
+⚠️ Before responding, verify: facets.length === 8
 
-CRITICAL: If source content describes "Consumer Unit Installation", create 1-2 comprehensive facets covering the entire process, NOT 20 separate facets for each tiny step.
+Each facet = ONE broad scenario covering multiple aspects. DO NOT break down into tiny sub-facets.
+
+Example: If source content describes "Consumer Unit Installation", create 1-2 comprehensive facets covering the entire process, NOT 20 separate facets for each tiny step.
 
 JSON SCHEMA:
 {
@@ -781,14 +786,38 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     return 0;
   }
 
-  // ✅ IDEMPOTENCY CHECK: Only enrich if <8 facets exist
+  // ✅ PHASE 1: ATOMIC SOURCE LOCKING - Prevent race conditions
+  const { data: claimedSource, error: claimError } = await supabase
+    .from('practical_work')
+    .update({ 
+      enrichment_status: 'processing',
+      enrichment_locked_at: new Date().toISOString()
+    })
+    .eq('id', item.id)
+    .or(`enrichment_status.is.null,enrichment_locked_at.lt.${new Date(Date.now() - 5 * 60 * 1000).toISOString()}`)
+    .select()
+    .single();
+  
+  if (claimError || !claimedSource) {
+    logger.info(`⏭️ Skipping (claimed by another worker)`, { id: item.id });
+    return 0;
+  }
+  
+  logger.info(`🔒 Source locked for enrichment`, { id: item.id, topic: title });
+
+  // Check if enrichment already complete
   const { count: existingCount } = await supabase
     .from('practical_work_intelligence')
     .select('*', { count: 'exact', head: true })
     .eq('practical_work_id', item.id);
   
   if (existingCount && existingCount >= 8) {
-    logger.info(`⏭️ Skipping (already has ${existingCount} facets)`, { id: item.id });
+    logger.info(`⏭️ Already enriched (${existingCount} facets)`, { id: item.id });
+    // Mark complete and unlock
+    await supabase
+      .from('practical_work')
+      .update({ enrichment_status: 'completed' })
+      .eq('id', item.id);
     return 0;
   }
   
@@ -801,6 +830,11 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
   if (!intelligence || !intelligence.facets || intelligence.facets.length === 0) {
     logger.warn('No facets extracted', { id: item.id });
     return 0;
+  }
+
+  // ✅ POST-GPT VALIDATION: Warn if GPT generated too many facets
+  if (intelligence.facets.length > 10) {
+    logger.warn(`⚠️ GPT generated ${intelligence.facets.length} facets (expected 8), applying quality filter`, { id: item.id });
   }
 
   // ✅ DEDUPLICATION: Compute hash for each facet
@@ -915,6 +949,12 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     id: item.id,
     avgConfidence: (insertedData.reduce((sum, f) => sum + f.confidence_score, 0) / insertedData.length).toFixed(2)
   });
+
+  // ✅ PHASE 1: Mark source as completed and unlock
+  await supabase
+    .from('practical_work')
+    .update({ enrichment_status: 'completed' })
+    .eq('id', item.id);
 
   return insertedData.length;
 }

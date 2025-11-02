@@ -224,12 +224,12 @@ export default function EnrichmentConsole() {
           progress,
           stageProgress: {},
           compliance: {
-            sourcesEnriched10min: complianceData?.sources_enriched_10min || 0,
-            exactly8Count10min: complianceData?.exactly_8_count_10min || 0,
-            avgFacets10min: complianceData?.avg_facets_per_source_10min || 0,
-            compliancePercentage10min: complianceData?.compliance_percentage_10min || 0,
-            exactly8CountAllTime: complianceData?.exactly_8_count_all_time || 0,
-            avgFacetsAllTime: complianceData?.avg_facets_per_source_all_time || 0
+            sourcesEnriched10min: complianceData?.sources_enriched || 0,
+            exactly8Count10min: 0,
+            avgFacets10min: complianceData?.avg_facets_per_source || 0,
+            compliancePercentage10min: complianceData?.compliance_percentage || 0,
+            exactly8CountAllTime: 0,
+            avgFacetsAllTime: complianceData?.avg_facets_per_source || 0
           }
         });
 
@@ -871,24 +871,24 @@ export default function EnrichmentConsole() {
               {!integrityCheck && ' (Verify First)'}
             </MobileButton>
 
-            {/* Prune to 8 Facets Button (Practical Work only) */}
+            {/* Archive Excess Facets Button (Practical Work only) */}
             {selectedTask === 'practical_work' && (
               <MobileButton
                 onClick={async () => {
-                  if (!confirm('Prune all sources to exactly 8 facets? This will delete excess facets based on quality score.')) return;
+                  if (!confirm('Archive excess facets (rank 9+) to archive table? This is reversible and preserves all data.')) return;
                   setIsLoading(true);
                   try {
-                    const { data, error } = await supabase.rpc('prune_practical_work_facets_to_8');
+                    const { data, error } = await supabase.rpc('prune_practical_work_to_8_archive');
                     if (error) throw error;
                     
                     const result = data[0];
-                    toast.success('✅ Pruned to 8 facets per source', {
-                      description: `Processed ${result.sources_processed} sources • Deleted ${result.facets_deleted} facets • Avg: ${result.avg_facets_before} → ${result.avg_facets_after}`
+                    toast.success('✅ Archived excess facets', {
+                      description: `Before: ${result.total_facets_before?.toLocaleString()} facets • After: ${result.total_facets_after?.toLocaleString()} • Archived: ${result.facets_archived?.toLocaleString()} • Sources: ${result.sources_affected}`
                     });
                     
                     await loadStatus();
                   } catch (error: any) {
-                    toast.error('Failed to prune facets', { description: error.message });
+                    toast.error('Failed to archive facets', { description: error.message });
                   } finally {
                     setIsLoading(false);
                   }
