@@ -703,7 +703,7 @@ Provide comprehensive maintenance instructions following the tool schema structu
     };
 
     // Calculate all summary metrics
-    const calculatedSchedule = maintenanceGuidance.maintenanceSchedule || [];
+    let calculatedSchedule = maintenanceGuidance.maintenanceSchedule || [];
     
     // ✅ Add fallback tasks if schedule is empty
     if (calculatedSchedule.length === 0) {
