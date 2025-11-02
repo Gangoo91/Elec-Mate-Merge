@@ -26,6 +26,9 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
 import { useSimpleAgent } from "@/hooks/useSimpleAgent";
+import TestingProcedureDisplay from "./TestingProcedureDisplay";
+import CertificationRequirements from "./CertificationRequirements";
+import type { CommissioningResponse } from "@/types/commissioning-response";
 
 interface ExampleScenario {
   title: string;
@@ -74,7 +77,7 @@ const CommissioningInterface = () => {
   const [clientName, setClientName] = useState("");
   const [installationDate, setInstallationDate] = useState("");
   const [showResults, setShowResults] = useState(false);
-  const [results, setResults] = useState<any>(null);
+  const [results, setResults] = useState<CommissioningResponse | null>(null);
   
   const { callAgent, isLoading, progress: agentProgress } = useSimpleAgent();
 
@@ -161,6 +164,48 @@ const CommissioningInterface = () => {
       console.error('PDF generation error:', error);
       toast.error("Export failed", { description: "Could not generate PDF" });
     }
+  };
+
+  const handleCopyChecklist = () => {
+    if (!results?.structuredData?.testingProcedure) {
+      toast.error("No testing procedure to copy");
+      return;
+    }
+
+    const { deadTests, liveTests, visualInspection } = results.structuredData.testingProcedure;
+
+    let markdown = "# Testing Checklist\n\n";
+
+    if (visualInspection?.checkpoints) {
+      markdown += "## Visual Inspection\n";
+      visualInspection.checkpoints.forEach((c) => {
+        markdown += `- [ ] ${c.item} - ${c.requirement}\n`;
+      });
+      markdown += "\n";
+    }
+
+    if (deadTests) {
+      markdown += "## Dead Tests (Isolation Required)\n";
+      deadTests.forEach((t, i) => {
+        markdown += `### ${i + 1}. ${t.testName}\n`;
+        markdown += `**Expected**: ${t.acceptanceCriteria}\n`;
+        markdown += `**Result**: _________  **Pass/Fail**: ___\n\n`;
+      });
+    }
+
+    if (liveTests) {
+      markdown += "## Live Tests\n";
+      liveTests.forEach((t, i) => {
+        markdown += `### ${i + 1}. ${t.testName}\n`;
+        markdown += `**Expected**: ${t.acceptanceCriteria}\n`;
+        markdown += `**Result**: _________  **Pass/Fail**: ___\n\n`;
+      });
+    }
+
+    navigator.clipboard.writeText(markdown);
+    toast.success("Testing checklist copied!", {
+      description: "Paste into notes app for on-site use"
+    });
   };
 
   return (
@@ -375,6 +420,17 @@ const CommissioningInterface = () => {
                 type="button"
                 size="sm" 
                 variant="outline"
+                onClick={handleCopyChecklist}
+                disabled={!results?.structuredData}
+                className="touch-manipulation"
+              >
+                <Copy className="h-4 w-4 mr-2" />
+                Copy Checklist
+              </Button>
+              <Button 
+                type="button"
+                size="sm" 
+                variant="outline"
                 onClick={handleExportPDF}
                 className="touch-manipulation"
               >
@@ -396,17 +452,33 @@ const CommissioningInterface = () => {
               />
             </div>
           </div>
-          <div className="bg-muted/50 rounded-lg p-4 text-sm">
-            {results?.response ? (
+          <div className="bg-muted/50 rounded-lg p-4 text-sm space-y-6">
+            {/* Show structured data if available */}
+            {results?.structuredData?.testingProcedure && (
+              <TestingProcedureDisplay 
+                procedure={results.structuredData.testingProcedure} 
+              />
+            )}
+            
+            {results?.structuredData?.certification && (
+              <CertificationRequirements 
+                certification={results.structuredData.certification} 
+              />
+            )}
+            
+            {/* Fallback to plain text if structured data missing */}
+            {!results?.structuredData && results?.response && (
               <div className="prose prose-sm dark:prose-invert max-w-none">
                 <div dangerouslySetInnerHTML={{ 
                   __html: (typeof results.response === 'string' 
                     ? results.response 
-                    : results.response?.response || JSON.stringify(results.response)
+                    : JSON.stringify(results.response)
                   ).replace(/\n/g, '<br />') 
                 }} />
               </div>
-            ) : (
+            )}
+            
+            {!results?.response && !results?.structuredData && (
               <p className="text-muted-foreground">Results will appear here...</p>
             )}
           </div>
