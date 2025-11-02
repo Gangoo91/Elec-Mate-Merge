@@ -1,4 +1,4 @@
-import { MousePointer2, Minus, Square, Type, Eraser, Grid3x3, Magnet } from "lucide-react";
+import { MousePointer2, Minus, Square, Type, Eraser, Grid3x3, Magnet, Undo2, Redo2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { DrawingTool } from "@/pages/electrician-tools/ai-tools/DiagramBuilderPage";
 import { Separator } from "@/components/ui/separator";
@@ -10,6 +10,8 @@ interface DrawingToolbarProps {
   snapEnabled: boolean;
   onGridToggle: () => void;
   onSnapToggle: () => void;
+  onUndo?: () => void;
+  onRedo?: () => void;
 }
 
 export const DrawingToolbar = ({
@@ -19,6 +21,8 @@ export const DrawingToolbar = ({
   snapEnabled,
   onGridToggle,
   onSnapToggle,
+  onUndo,
+  onRedo,
 }: DrawingToolbarProps) => {
   const tools: { id: DrawingTool; icon: any; label: string }[] = [
     { id: "select", icon: MousePointer2, label: "Select" },
@@ -50,6 +54,30 @@ export const DrawingToolbar = ({
             </Button>
           );
         })}
+      </div>
+
+      <Separator orientation="vertical" className="h-8 bg-elec-yellow/20" />
+
+      {/* Undo/Redo */}
+      <div className="flex items-center gap-1">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onUndo}
+          className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+          title="Undo (Ctrl+Z)"
+        >
+          <Undo2 className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onRedo}
+          className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+          title="Redo (Ctrl+Y)"
+        >
+          <Redo2 className="h-4 w-4" />
+        </Button>
       </div>
 
       <Separator orientation="vertical" className="h-8 bg-elec-yellow/20" />

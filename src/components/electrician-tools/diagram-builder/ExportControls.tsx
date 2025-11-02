@@ -80,19 +80,46 @@ export const ExportControls = ({ canvasObjects }: ExportControlsProps) => {
       }
 
       const { jsPDF } = await import('jspdf');
+      
+      // A4 landscape dimensions in mm
       const pdf = new jsPDF({
         orientation: 'landscape',
-        unit: 'px',
-        format: [canvas.width, canvas.height]
+        unit: 'mm',
+        format: 'a4'
       });
 
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+
+      // Add title block
+      pdf.setFillColor(26, 31, 46); // elec-dark
+      pdf.rect(0, 0, pageWidth, 25, 'F');
+      
+      pdf.setTextColor(251, 191, 36); // elec-yellow
+      pdf.setFontSize(18);
+      pdf.text('Electrical Installation Diagram', 10, 12);
+      
+      pdf.setFontSize(10);
+      pdf.text(`Date: ${new Date().toLocaleDateString('en-GB')}`, 10, 20);
+      pdf.text(`Scale: 1:50`, pageWidth - 40, 20);
+
+      // Add canvas image
       const imgData = canvas.toDataURL('image/png');
-      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+      const imgWidth = pageWidth - 20;
+      const imgHeight = (canvas.height / canvas.width) * imgWidth;
+      
+      pdf.addImage(imgData, 'PNG', 10, 30, imgWidth, Math.min(imgHeight, pageHeight - 40));
+
+      // Add footer
+      pdf.setFontSize(8);
+      pdf.setTextColor(150, 150, 150);
+      pdf.text('Created with Electrician Tools - Floor Plan Builder', pageWidth / 2, pageHeight - 5, { align: 'center' });
+
       pdf.save(`floor-plan-${Date.now()}.pdf`);
       
       toast({ 
         title: "Exported successfully", 
-        description: "Your diagram has been saved as PDF",
+        description: "Your diagram has been saved as PDF with title block",
         variant: "success" 
       });
     } catch (error) {

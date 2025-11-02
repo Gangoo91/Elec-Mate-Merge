@@ -1,12 +1,12 @@
-import { useRef, useEffect, useState } from "react";
-import { CanvasObject } from "@/pages/electrician-tools/ai-tools/DiagramBuilderPage";
-import type { DrawingTool } from "@/pages/electrician-tools/ai-tools/DiagramBuilderPage";
+import { useEffect, useRef, useState } from "react";
+import { Canvas as FabricCanvas, Rect, Line, Path, FabricText, FabricObject } from "fabric";
+import type { CanvasObject } from "@/pages/electrician-tools/ai-tools/DiagramBuilderPage";
 import { electricalSymbols } from "./symbols/electricalSymbols";
 import { ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface DiagramCanvasProps {
-  activeTool: DrawingTool;
+  activeTool: string;
   selectedSymbolId: string | null;
   objects: CanvasObject[];
   onObjectsChange: (objects: CanvasObject[]) => void;
@@ -23,280 +23,498 @@ export const DiagramCanvas = ({
   snapEnabled,
 }: DiagramCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const fabricCanvasRef = useRef<FabricCanvas | null>(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [startPos, setStartPos] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
-  const [pan, setPan] = useState({ x: 0, y: 0 });
-  const [isPanning, setIsPanning] = useState(false);
+  const [startPoint, setStartPoint] = useState<{ x: number; y: number } | null>(null);
+  const undoStack = useRef<CanvasObject[][]>([]);
+  const redoStack = useRef<CanvasObject[][]>([]);
 
-  const GRID_SIZE = 20;
-
-  const snapToGrid = (value: number) => {
-    if (!snapEnabled) return value;
-    return Math.round(value / GRID_SIZE) * GRID_SIZE;
-  };
-
-  const getCanvasPoint = (clientX: number, clientY: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return { x: 0, y: 0 };
-    
-    const rect = canvas.getBoundingClientRect();
-    const x = (clientX - rect.left - pan.x) / zoom;
-    const y = (clientY - rect.top - pan.y) / zoom;
-    
-    return {
-      x: snapToGrid(x),
-      y: snapToGrid(y),
-    };
-  };
-
-  const drawGrid = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
-    if (!gridEnabled) return;
-    
-    ctx.save();
-    ctx.strokeStyle = "rgba(250, 204, 21, 0.1)";
-    ctx.lineWidth = 0.5;
-
-    const startX = Math.floor(-pan.x / zoom / GRID_SIZE) * GRID_SIZE;
-    const startY = Math.floor(-pan.y / zoom / GRID_SIZE) * GRID_SIZE;
-    const endX = width / zoom;
-    const endY = height / zoom;
-
-    for (let x = startX; x < endX; x += GRID_SIZE) {
-      ctx.beginPath();
-      ctx.moveTo(x, startY);
-      ctx.lineTo(x, endY);
-      ctx.stroke();
-    }
-
-    for (let y = startY; y < endY; y += GRID_SIZE) {
-      ctx.beginPath();
-      ctx.moveTo(startX, y);
-      ctx.lineTo(endX, y);
-      ctx.stroke();
-    }
-    
-    ctx.restore();
-  };
-
-  const drawObjects = (ctx: CanvasRenderingContext2D) => {
-    objects.forEach((obj) => {
-      ctx.save();
-      
-      if (obj.type === "symbol" && obj.symbolId) {
-        const symbol = electricalSymbols.find(s => s.id === obj.symbolId);
-        if (symbol) {
-          ctx.translate(obj.x, obj.y);
-          if (obj.rotation) ctx.rotate((obj.rotation * Math.PI) / 180);
-          
-          ctx.fillStyle = "hsl(var(--elec-yellow))";
-          ctx.strokeStyle = "hsl(var(--elec-yellow))";
-          ctx.lineWidth = 2;
-          
-          const path = new Path2D(symbol.svg);
-          ctx.fill(path);
-          ctx.stroke(path);
-        }
-      } else if (obj.type === "rectangle" && obj.width && obj.height) {
-        ctx.strokeStyle = "hsl(var(--elec-yellow))";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(obj.x, obj.y, obj.width, obj.height);
-      } else if (obj.type === "line" && obj.points && obj.points.length > 1) {
-        ctx.strokeStyle = "hsl(var(--elec-yellow))";
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(obj.points[0].x, obj.points[0].y);
-        obj.points.forEach(point => ctx.lineTo(point.x, point.y));
-        ctx.stroke();
-      } else if (obj.type === "text" && obj.text) {
-        ctx.fillStyle = "hsl(var(--elec-light))";
-        ctx.font = "16px sans-serif";
-        ctx.fillText(obj.text, obj.x, obj.y);
-      }
-      
-      ctx.restore();
-    });
-  };
-
-  const render = () => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx) return;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    ctx.save();
-    ctx.translate(pan.x, pan.y);
-    ctx.scale(zoom, zoom);
-    
-    drawGrid(ctx, canvas.width, canvas.height);
-    drawObjects(ctx);
-    
-    ctx.restore();
-  };
-
+  // Initialize Fabric.js canvas
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const container = containerRef.current;
-    if (!canvas || !container) return;
+    if (!canvasRef.current) return;
 
-    const resizeCanvas = () => {
-      canvas.width = container.clientWidth;
-      canvas.height = container.clientHeight;
-      render();
+    const canvas = new FabricCanvas(canvasRef.current, {
+      width: window.innerWidth > 768 ? 1200 : window.innerWidth - 32,
+      height: window.innerHeight - 200,
+      backgroundColor: "#1a1f2e",
+      selection: activeTool === "select",
+    });
+
+    fabricCanvasRef.current = canvas;
+
+    // Handle window resize
+    const handleResize = () => {
+      canvas.setDimensions({
+        width: window.innerWidth > 768 ? 1200 : window.innerWidth - 32,
+        height: window.innerHeight - 200,
+      });
+      canvas.renderAll();
     };
 
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-    return () => window.removeEventListener("resize", resizeCanvas);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      canvas.dispose();
+    };
   }, []);
 
+  // Draw grid
   useEffect(() => {
-    render();
-  }, [objects, zoom, pan, gridEnabled]);
+    const canvas = fabricCanvasRef.current;
+    if (!canvas) return;
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    const point = getCanvasPoint(e.clientX, e.clientY);
-    
-    if (e.button === 1 || (e.button === 0 && e.shiftKey)) {
-      setIsPanning(true);
-      setStartPos({ x: e.clientX - pan.x, y: e.clientY - pan.y });
-      return;
+    canvas.clear();
+    canvas.backgroundColor = "#1a1f2e";
+
+    if (gridEnabled) {
+      const gridSize = 20;
+      const width = canvas.width || 1200;
+      const height = canvas.height || 600;
+
+      // Vertical lines
+      for (let i = 0; i < width / gridSize; i++) {
+        const line = new Line([i * gridSize, 0, i * gridSize, height], {
+          stroke: "#fbbf24",
+          strokeWidth: i % 5 === 0 ? 0.5 : 0.2,
+          selectable: false,
+          evented: false,
+          opacity: 0.15,
+        });
+        canvas.add(line);
+      }
+
+      // Horizontal lines
+      for (let i = 0; i < height / gridSize; i++) {
+        const line = new Line([0, i * gridSize, width, i * gridSize], {
+          stroke: "#fbbf24",
+          strokeWidth: i % 5 === 0 ? 0.5 : 0.2,
+          selectable: false,
+          evented: false,
+          opacity: 0.15,
+        });
+        canvas.add(line);
+      }
     }
 
-    if (activeTool === "symbol" && selectedSymbolId) {
-      const newObject: CanvasObject = {
-        id: `obj-${Date.now()}`,
-        type: "symbol",
-        x: point.x,
-        y: point.y,
-        symbolId: selectedSymbolId,
-        rotation: 0,
-      };
-      onObjectsChange([...objects, newObject]);
-    } else if (activeTool === "rectangle" || activeTool === "line") {
-      setIsDrawing(true);
-      setStartPos(point);
-    }
+    // Restore objects from state
+    objects.forEach((obj) => {
+      addObjectToCanvas(obj);
+    });
+
+    canvas.renderAll();
+  }, [gridEnabled, objects]);
+
+  // Snap to grid helper
+  const snapToGrid = (value: number) => {
+    if (!snapEnabled) return value;
+    const gridSize = 20;
+    return Math.round(value / gridSize) * gridSize;
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isPanning) {
-      setPan({
-        x: e.clientX - startPos.x,
-        y: e.clientY - startPos.y,
+  // Add object to canvas
+  const addObjectToCanvas = (obj: CanvasObject) => {
+    const canvas = fabricCanvasRef.current;
+    if (!canvas) return;
+
+    let fabricObj: FabricObject | null = null;
+
+    if (obj.type === "symbol" && obj.symbolId) {
+      const symbol = electricalSymbols.find((s) => s.id === obj.symbolId);
+      if (symbol) {
+        fabricObj = new Path(symbol.svg, {
+          left: obj.x,
+          top: obj.y,
+          fill: "#fbbf24",
+          scaleX: (obj.width || 40) / 40,
+          scaleY: (obj.height || 40) / 40,
+          angle: obj.rotation || 0,
+          selectable: true,
+          hasControls: true,
+        });
+        (fabricObj as any).customData = { id: obj.id, type: "symbol", symbolId: obj.symbolId };
+      }
+    } else if (obj.type === "rectangle") {
+      fabricObj = new Rect({
+        left: obj.x,
+        top: obj.y,
+        width: obj.width || 100,
+        height: obj.height || 100,
+        fill: "transparent",
+        stroke: "#fbbf24",
+        strokeWidth: 2,
+        angle: obj.rotation || 0,
+        selectable: true,
+        hasControls: true,
       });
-      return;
-    }
-
-    if (!isDrawing) return;
-    
-    const point = getCanvasPoint(e.clientX, e.clientY);
-    
-    if (activeTool === "rectangle") {
-      const tempCanvas = canvasRef.current;
-      const ctx = tempCanvas?.getContext("2d");
-      if (!ctx) return;
-      
-      render();
-      ctx.save();
-      ctx.translate(pan.x, pan.y);
-      ctx.scale(zoom, zoom);
-      ctx.strokeStyle = "hsl(var(--elec-yellow) / 0.5)";
-      ctx.lineWidth = 2;
-      ctx.strokeRect(
-        startPos.x,
-        startPos.y,
-        point.x - startPos.x,
-        point.y - startPos.y
+      (fabricObj as any).customData = { id: obj.id, type: "rectangle" };
+    } else if (obj.type === "line" && obj.points && obj.points.length >= 2) {
+      const points = obj.points;
+      fabricObj = new Line(
+        [points[0].x, points[0].y, points[points.length - 1].x, points[points.length - 1].y],
+        {
+          stroke: "#fbbf24",
+          strokeWidth: 2,
+          selectable: true,
+          hasControls: true,
+        }
       );
-      ctx.restore();
+      (fabricObj as any).customData = { id: obj.id, type: "line" };
+    } else if (obj.type === "text") {
+      fabricObj = new FabricText(obj.text || "Text", {
+        left: obj.x,
+        top: obj.y,
+        fill: "#fbbf24",
+        fontSize: 16,
+        fontFamily: "Arial",
+        angle: obj.rotation || 0,
+        selectable: true,
+        hasControls: true,
+      });
+      (fabricObj as any).customData = { id: obj.id, type: "text" };
+    }
+
+    if (fabricObj) {
+      canvas.add(fabricObj);
     }
   };
 
-  const handleMouseUp = (e: React.MouseEvent) => {
-    if (isPanning) {
-      setIsPanning(false);
-      return;
+  // Save state for undo
+  const saveState = () => {
+    undoStack.current.push([...objects]);
+    if (undoStack.current.length > 50) {
+      undoStack.current.shift();
     }
-
-    if (!isDrawing) return;
-    
-    const point = getCanvasPoint(e.clientX, e.clientY);
-    
-    if (activeTool === "rectangle") {
-      const newObject: CanvasObject = {
-        id: `obj-${Date.now()}`,
-        type: "rectangle",
-        x: Math.min(startPos.x, point.x),
-        y: Math.min(startPos.y, point.y),
-        width: Math.abs(point.x - startPos.x),
-        height: Math.abs(point.y - startPos.y),
-      };
-      onObjectsChange([...objects, newObject]);
-    } else if (activeTool === "line") {
-      const newObject: CanvasObject = {
-        id: `obj-${Date.now()}`,
-        type: "line",
-        x: startPos.x,
-        y: startPos.y,
-        points: [startPos, point],
-      };
-      onObjectsChange([...objects, newObject]);
-    }
-    
-    setIsDrawing(false);
+    redoStack.current = [];
   };
 
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    const delta = e.deltaY > 0 ? 0.9 : 1.1;
-    setZoom(prev => Math.min(Math.max(prev * delta, 0.1), 5));
+  // Undo
+  const undo = () => {
+    if (undoStack.current.length === 0) return;
+    const prevState = undoStack.current.pop();
+    if (prevState) {
+      redoStack.current.push([...objects]);
+      onObjectsChange(prevState);
+    }
+  };
+
+  // Redo
+  const redo = () => {
+    if (redoStack.current.length === 0) return;
+    const nextState = redoStack.current.pop();
+    if (nextState) {
+      undoStack.current.push([...objects]);
+      onObjectsChange(nextState);
+    }
+  };
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const canvas = fabricCanvasRef.current;
+      if (!canvas) return;
+
+      // Undo: Ctrl+Z
+      if ((e.ctrlKey || e.metaKey) && e.key === "z" && !e.shiftKey) {
+        e.preventDefault();
+        undo();
+      }
+      // Redo: Ctrl+Y or Ctrl+Shift+Z
+      if ((e.ctrlKey || e.metaKey) && (e.key === "y" || (e.key === "z" && e.shiftKey))) {
+        e.preventDefault();
+        redo();
+      }
+      // Delete: Delete or Backspace
+      if (e.key === "Delete" || e.key === "Backspace") {
+        const activeObjects = canvas.getActiveObjects();
+        if (activeObjects.length > 0) {
+          saveState();
+          activeObjects.forEach((obj) => canvas.remove(obj));
+          const updatedObjects = objects.filter(
+            (o) => !activeObjects.some((ao) => (ao as any).customData?.id === o.id)
+          );
+          onObjectsChange(updatedObjects);
+          canvas.discardActiveObject();
+          canvas.renderAll();
+        }
+      }
+      // Copy: Ctrl+C
+      if ((e.ctrlKey || e.metaKey) && e.key === "c") {
+        const activeObject = canvas.getActiveObject();
+        if (activeObject) {
+          (window as any).clipboard = activeObject;
+        }
+      }
+      // Paste: Ctrl+V
+      if ((e.ctrlKey || e.metaKey) && e.key === "v") {
+        const clipboardObj = (window as any).clipboard;
+        if (clipboardObj) {
+          clipboardObj.clone((cloned: FabricObject) => {
+            cloned.set({
+              left: (cloned.left || 0) + 20,
+              top: (cloned.top || 0) + 20,
+            });
+            canvas.add(cloned);
+            canvas.setActiveObject(cloned);
+            canvas.renderAll();
+
+            // Add to objects state
+            saveState();
+            const newObj: CanvasObject = {
+              id: `obj-${Date.now()}`,
+              type: (cloned as any).customData?.type || "rectangle",
+              x: cloned.left || 0,
+              y: cloned.top || 0,
+              width: (cloned as any).width || 100,
+              height: (cloned as any).height || 100,
+              rotation: cloned.angle || 0,
+            };
+            onObjectsChange([...objects, newObj]);
+          });
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [objects]);
+
+  // Handle mouse events for drawing
+  useEffect(() => {
+    const canvas = fabricCanvasRef.current;
+    if (!canvas) return;
+
+    canvas.selection = activeTool === "select";
+
+    const handleMouseDown = (e: any) => {
+      if (activeTool === "select") return;
+
+      const pointer = canvas.getPointer(e.e);
+      const x = snapToGrid(pointer.x);
+      const y = snapToGrid(pointer.y);
+
+      setIsDrawing(true);
+      setStartPoint({ x, y });
+
+      if (activeTool === "symbol" && selectedSymbolId) {
+        saveState();
+        const symbol = electricalSymbols.find((s) => s.id === selectedSymbolId);
+        if (symbol) {
+          const newObj: CanvasObject = {
+            id: `obj-${Date.now()}`,
+            type: "symbol",
+            x,
+            y,
+            width: 40,
+            height: 40,
+            rotation: 0,
+            symbolId: selectedSymbolId,
+          };
+          onObjectsChange([...objects, newObj]);
+        }
+        setIsDrawing(false);
+      } else if (activeTool === "text") {
+        saveState();
+        const newObj: CanvasObject = {
+          id: `obj-${Date.now()}`,
+          type: "text",
+          x,
+          y,
+          text: "Label",
+        };
+        onObjectsChange([...objects, newObj]);
+        setIsDrawing(false);
+      }
+    };
+
+    const handleMouseMove = (e: any) => {
+      if (!isDrawing || !startPoint || activeTool === "symbol" || activeTool === "text") return;
+
+      const pointer = canvas.getPointer(e.e);
+      const x = snapToGrid(pointer.x);
+      const y = snapToGrid(pointer.y);
+
+      // Clear temporary objects
+      const tempObjects = canvas.getObjects().filter((obj) => (obj as any).isTemp);
+      tempObjects.forEach((obj) => canvas.remove(obj));
+
+      if (activeTool === "line") {
+        const line = new Line([startPoint.x, startPoint.y, x, y], {
+          stroke: "#fbbf24",
+          strokeWidth: 2,
+          selectable: false,
+        });
+        (line as any).isTemp = true;
+        canvas.add(line);
+      } else if (activeTool === "rectangle") {
+        const rect = new Rect({
+          left: Math.min(startPoint.x, x),
+          top: Math.min(startPoint.y, y),
+          width: Math.abs(x - startPoint.x),
+          height: Math.abs(y - startPoint.y),
+          fill: "transparent",
+          stroke: "#fbbf24",
+          strokeWidth: 2,
+          selectable: false,
+        });
+        (rect as any).isTemp = true;
+        canvas.add(rect);
+      }
+
+      canvas.renderAll();
+    };
+
+    const handleMouseUp = (e: any) => {
+      if (!isDrawing || !startPoint) return;
+      if (activeTool === "symbol" || activeTool === "text") return;
+
+      const pointer = canvas.getPointer(e.e);
+      const x = snapToGrid(pointer.x);
+      const y = snapToGrid(pointer.y);
+
+      saveState();
+
+      // Remove temporary objects
+      const tempObjects = canvas.getObjects().filter((obj) => (obj as any).isTemp);
+      tempObjects.forEach((obj) => canvas.remove(obj));
+
+      if (activeTool === "line") {
+        const newObj: CanvasObject = {
+          id: `obj-${Date.now()}`,
+          type: "line",
+          x: startPoint.x,
+          y: startPoint.y,
+          points: [
+            { x: startPoint.x, y: startPoint.y },
+            { x, y },
+          ],
+        };
+        onObjectsChange([...objects, newObj]);
+      } else if (activeTool === "rectangle") {
+        const newObj: CanvasObject = {
+          id: `obj-${Date.now()}`,
+          type: "rectangle",
+          x: Math.min(startPoint.x, x),
+          y: Math.min(startPoint.y, y),
+          width: Math.abs(x - startPoint.x),
+          height: Math.abs(y - startPoint.y),
+          rotation: 0,
+        };
+        onObjectsChange([...objects, newObj]);
+      }
+
+      setIsDrawing(false);
+      setStartPoint(null);
+    };
+
+    canvas.on("mouse:down", handleMouseDown);
+    canvas.on("mouse:move", handleMouseMove);
+    canvas.on("mouse:up", handleMouseUp);
+
+    return () => {
+      canvas.off("mouse:down", handleMouseDown);
+      canvas.off("mouse:move", handleMouseMove);
+      canvas.off("mouse:up", handleMouseUp);
+    };
+  }, [activeTool, selectedSymbolId, isDrawing, startPoint, objects, snapEnabled]);
+
+  // Handle object modifications
+  useEffect(() => {
+    const canvas = fabricCanvasRef.current;
+    if (!canvas) return;
+
+    const handleObjectModified = (e: any) => {
+      const modifiedObj = e.target;
+      const customData = (modifiedObj as any).customData;
+      if (!customData) return;
+
+      saveState();
+
+      const updatedObjects = objects.map((obj) => {
+        if (obj.id === customData.id) {
+          return {
+            ...obj,
+            x: modifiedObj.left || obj.x,
+            y: modifiedObj.top || obj.y,
+            width: (modifiedObj.width || obj.width || 100) * (modifiedObj.scaleX || 1),
+            height: (modifiedObj.height || obj.height || 100) * (modifiedObj.scaleY || 1),
+            rotation: modifiedObj.angle || obj.rotation || 0,
+          };
+        }
+        return obj;
+      });
+
+      onObjectsChange(updatedObjects);
+    };
+
+    canvas.on("object:modified", handleObjectModified);
+
+    return () => {
+      canvas.off("object:modified", handleObjectModified);
+    };
+  }, [objects]);
+
+  // Zoom controls
+  const handleZoomIn = () => {
+    const canvas = fabricCanvasRef.current;
+    if (!canvas) return;
+    const zoom = canvas.getZoom();
+    canvas.setZoom(Math.min(zoom * 1.2, 5));
+  };
+
+  const handleZoomOut = () => {
+    const canvas = fabricCanvasRef.current;
+    if (!canvas) return;
+    const zoom = canvas.getZoom();
+    canvas.setZoom(Math.max(zoom * 0.8, 0.1));
+  };
+
+  const handleResetView = () => {
+    const canvas = fabricCanvasRef.current;
+    if (!canvas) return;
+    canvas.setZoom(1);
+    canvas.viewportTransform = [1, 0, 0, 1, 0, 0];
+    canvas.renderAll();
   };
 
   return (
-    <div ref={containerRef} className="relative w-full h-full bg-elec-dark">
-      <canvas
-        ref={canvasRef}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onWheel={handleWheel}
-        className="cursor-crosshair touch-none"
-      />
+    <div className="flex-1 overflow-auto bg-elec-dark p-4 flex items-center justify-center relative">
+      <canvas ref={canvasRef} className="border border-elec-yellow/20 rounded shadow-lg" />
       
       {/* Zoom Controls */}
-      <div className="absolute bottom-4 right-4 flex flex-col gap-2">
+      <div className="absolute bottom-8 right-8 flex flex-col gap-2">
         <Button
           size="sm"
           variant="outline"
-          onClick={() => setZoom(prev => Math.min(prev * 1.2, 5))}
+          onClick={handleZoomIn}
           className="bg-elec-card border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+          title="Zoom In"
         >
           <ZoomIn className="h-4 w-4" />
         </Button>
         <Button
           size="sm"
           variant="outline"
-          onClick={() => setZoom(prev => Math.max(prev * 0.8, 0.1))}
+          onClick={handleZoomOut}
           className="bg-elec-card border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+          title="Zoom Out"
         >
           <ZoomOut className="h-4 w-4" />
         </Button>
         <Button
           size="sm"
           variant="outline"
-          onClick={() => { setZoom(1); setPan({ x: 0, y: 0 }); }}
+          onClick={handleResetView}
           className="bg-elec-card border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+          title="Reset View"
         >
           <Maximize2 className="h-4 w-4" />
         </Button>
       </div>
 
       {/* Zoom Indicator */}
-      <div className="absolute top-4 right-4 bg-elec-card border border-elec-yellow/20 rounded px-3 py-1 text-sm text-elec-light">
-        {Math.round(zoom * 100)}%
+      <div className="absolute top-8 right-8 bg-elec-card border border-elec-yellow/20 rounded px-3 py-1 text-sm text-elec-light">
+        {Math.round((fabricCanvasRef.current?.getZoom() || 1) * 100)}%
       </div>
     </div>
   );

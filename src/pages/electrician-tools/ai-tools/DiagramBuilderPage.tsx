@@ -6,6 +6,7 @@ import { DiagramCanvas } from "@/components/electrician-tools/diagram-builder/Di
 import { SymbolLibrary } from "@/components/electrician-tools/diagram-builder/SymbolLibrary";
 import { DrawingToolbar } from "@/components/electrician-tools/diagram-builder/DrawingToolbar";
 import { ExportControls } from "@/components/electrician-tools/diagram-builder/ExportControls";
+import { PropertiesPanel } from "@/components/electrician-tools/diagram-builder/PropertiesPanel";
 import { toast } from "@/hooks/use-toast";
 
 export type DrawingTool = "select" | "line" | "rectangle" | "text" | "symbol" | "eraser";
@@ -29,6 +30,9 @@ const DiagramBuilderPage = () => {
   const [canvasObjects, setCanvasObjects] = useState<CanvasObject[]>([]);
   const [gridEnabled, setGridEnabled] = useState(true);
   const [snapEnabled, setSnapEnabled] = useState(true);
+  const [selectedObject, setSelectedObject] = useState<CanvasObject | null>(null);
+  const undoStackRef = useState<CanvasObject[][]>([]);
+  const redoStackRef = useState<CanvasObject[][]>([]);
 
   const handleSave = () => {
     const projectData = {
@@ -63,6 +67,33 @@ const DiagramBuilderPage = () => {
         variant: "default" 
       });
     }
+  };
+
+  const handleUndo = () => {
+    if (undoStackRef[0].length === 0) return;
+    const prevState = undoStackRef[0].pop();
+    if (prevState) {
+      redoStackRef[0].push([...canvasObjects]);
+      setCanvasObjects(prevState);
+    }
+  };
+
+  const handleRedo = () => {
+    if (redoStackRef[0].length === 0) return;
+    const nextState = redoStackRef[0].pop();
+    if (nextState) {
+      undoStackRef[0].push([...canvasObjects]);
+      setCanvasObjects(nextState);
+    }
+  };
+
+  const handleObjectUpdate = (updates: Partial<CanvasObject>) => {
+    if (!selectedObject) return;
+    const updatedObjects = canvasObjects.map((obj) =>
+      obj.id === selectedObject.id ? { ...obj, ...updates } : obj
+    );
+    setCanvasObjects(updatedObjects);
+    setSelectedObject({ ...selectedObject, ...updates });
   };
 
   return (
@@ -135,6 +166,12 @@ const DiagramBuilderPage = () => {
             snapEnabled={snapEnabled}
           />
         </div>
+
+        {/* Properties Panel - Desktop Right Panel */}
+        <PropertiesPanel 
+          selectedObject={selectedObject}
+          onUpdate={handleObjectUpdate}
+        />
       </div>
 
       {/* Bottom Toolbar - Mobile */}
@@ -146,6 +183,8 @@ const DiagramBuilderPage = () => {
           snapEnabled={snapEnabled}
           onGridToggle={() => setGridEnabled(!gridEnabled)}
           onSnapToggle={() => setSnapEnabled(!snapEnabled)}
+          onUndo={handleUndo}
+          onRedo={handleRedo}
         />
         
         {/* Mobile Symbol Library Drawer Trigger */}
