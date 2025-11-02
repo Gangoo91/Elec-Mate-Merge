@@ -534,11 +534,22 @@ export default function EnrichmentConsole() {
     setIsLoading(true);
     
     try {
-      // Step 1: Get server-computed counts first
-      toast.info('Computing missing regulations...');
-      const { data: computeData, error: computeError } = await supabase.functions.invoke('master-enrichment-scheduler', {
-        body: { action: 'compute_missing' }
-      });
+      // Task-specific action names
+      const computeAction = selectedTask === 'practical_work' 
+        ? 'compute_missing_practical_work' 
+        : 'compute_missing';
+      const startAction = selectedTask === 'practical_work'
+        ? 'start_missing_practical_work'
+        : 'start_missing';
+      
+      // Step 1: Get server-computed counts
+      const itemLabel = selectedTask === 'practical_work' ? 'procedures' : 'regulations';
+      toast.info(`Computing missing ${itemLabel}...`);
+      
+      const { data: computeData, error: computeError } = await supabase.functions.invoke(
+        'master-enrichment-scheduler',
+        { body: { action: computeAction }}
+      );
       
       if (computeError) throw computeError;
       if (!computeData?.success) throw new Error(computeData?.error || 'Compute failed');
@@ -547,23 +558,28 @@ export default function EnrichmentConsole() {
       
       setIsLoading(false);
       
-      // Step 2: Short-circuit if nothing to do
       if (missing_count === 0) {
-        toast.success('All regulations already enriched');
+        toast.success(`All ${itemLabel} already enriched`);
         return;
       }
       
-      // Step 3: Show confirmation with server numbers
+      // Step 2: Show task-specific confirmation
+      const itemType = selectedTask === 'practical_work' ? 'Procedures' : 'Regulations';
       const estimatedBatches = Math.ceil(missing_count / suggested_batch_size);
-      const estimatedMinutes = Math.ceil(missing_count * 1.5 / 60);
+      
+      // Time estimation: 8 facets × 1.5s per facet = 12s per source (practical work)
+      // vs 30 facets × 1.5s per facet = 45s per source (regulations)
+      const timePerItem = selectedTask === 'practical_work' ? 12 : 45;
+      const estimatedMinutes = Math.ceil((missing_count * timePerItem) / (suggested_workers * 60));
       
       const confirmed = window.confirm(
-        `Complete Missing Regulations\n\n` +
-        `Total Regulations: ${total_unique.toLocaleString()}\n` +
+        `Complete Missing ${itemType}\n\n` +
+        `Total ${itemType}: ${total_unique.toLocaleString()}\n` +
         `Already Enriched: ${enriched_unique.toLocaleString()}\n` +
         `Missing: ${missing_count}\n\n` +
+        `Workers: ${suggested_workers}\n` +
         `This will create ${estimatedBatches} batches.\n` +
-        `Estimated time: ${estimatedMinutes} minutes.\n\n` +
+        `Estimated time: ${estimatedMinutes} minutes (~${Math.round(estimatedMinutes/60 * 10)/10} hours).\n\n` +
         `Continue?`
       );
       
@@ -571,11 +587,11 @@ export default function EnrichmentConsole() {
       
       setIsLoading(true);
       
-      // Step 4: Start the job with server-suggested parameters
+      // Step 3: Start the job
       toast.info('Starting enrichment job...');
       const startResponse = await supabase.functions.invoke('master-enrichment-scheduler', {
         body: { 
-          action: 'start_missing',
+          action: startAction,
           chunkSize: suggested_batch_size,
           workers: suggested_workers
         }
@@ -588,58 +604,24 @@ export default function EnrichmentConsole() {
       if (!result?.success) throw new Error(result?.error || 'Failed to start job');
       
       if (result.missing_count === 0) {
-        toast.success('All regulations already enriched');
+        toast.success(`All ${itemLabel} already enriched`);
         await loadStatus();
         return;
       }
       
       if (result?.jobId && result?.batchesCreated) {
-        toast.success(`Started job for ${result.missing_count} missing regulations (${result.batchesCreated} batches)`, {
-          description: '⏳ Monitor "Live Worker Activity" below for real-time progress'
-        });
-        console.log(`📊 Job ID: ${result.jobId}, Batches: ${result.batchesCreated}, Missing: ${result.missing_count}`);
+        toast.success(
+          `Started job for ${result.missing_count} missing ${itemLabel} (${result.batchesCreated} batches, ${result.workers} workers)`,
+          { description: '⏳ Monitor "Live Worker Activity" below for real-time progress' }
+        );
         
-        // Start monitoring for completion
-        const jobId = result.jobId;
-        const monitorInterval = setInterval(async () => {
-          const { data: job } = await supabase
-            .from('batch_jobs')
-            .select('status, completed_batches, total_batches')
-            .eq('id', jobId)
-            .single();
-
-          if (!job || job.status === 'completed') {
-            clearInterval(monitorInterval);
-            
-            // Verify data integrity after completion
-            const { count: afterCount } = await supabase
-              .from('regulations_intelligence')
-              .select('*', { count: 'exact', head: true });
-
-            const { data: afterUniqueRegsData } = await supabase
-              .from('regulations_intelligence')
-              .select('regulation_number');
-
-            const afterUniqueRegs = new Set((afterUniqueRegsData || []).map(r => r.regulation_number)).size;
-
-            const recordsAdded = (afterCount || 0) - integrityCheck.beforeCount;
-            const regsAdded = afterUniqueRegs - integrityCheck.beforeUniqueRegs;
-
-            toast.success('✅ Enrichment complete - Data verified', {
-              description: `Added: ${recordsAdded.toLocaleString()} records • ${regsAdded} unique regulations`
-            });
-
-            await loadStatus();
-          }
-        }, 3000); // Check every 3 seconds
+        await loadStatus();
       } else {
         toast.error('Failed to create new batches. Try "Clear All" then start again.');
       }
       
-      // Refresh status
-      await loadStatus();
     } catch (error: any) {
-      console.error('Failed to start fresh job:', error);
+      console.error('Failed to start enrichment job:', error);
       toast.error(error.message || 'Failed to start enrichment job');
     } finally {
       setIsLoading(false);

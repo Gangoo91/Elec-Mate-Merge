@@ -49,6 +49,46 @@ async function fetchAllRegNumbers(
   return result;
 }
 
+// Helper: Fetch all practical_work IDs with pagination
+async function fetchAllPracticalWorkIds(
+  supabase: ReturnType<typeof createClient>,
+  table: string,
+  opts?: { canonicalOnly?: boolean; enriched?: boolean }
+): Promise<string[]> {
+  const pageSize = 1000;
+  let offset = 0;
+  const ids = new Set<string>();
+  let pages = 0;
+
+  while (true) {
+    let query = supabase.from(table).select(
+      opts?.enriched ? 'practical_work_id' : 'id'
+    ).range(offset, offset + pageSize - 1);
+
+    if (opts?.canonicalOnly) {
+      query = query.eq('is_canonical', true);
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+
+    if (!data || data.length === 0) break;
+
+    pages++;
+    for (const row of data) {
+      const id = opts?.enriched ? row.practical_work_id?.trim() : row.id?.trim();
+      if (id) ids.add(id);
+    }
+
+    if (data.length < pageSize) break;
+    offset += pageSize;
+  }
+
+  const result = Array.from(ids).sort();
+  console.log(`📄 Fetched ${table} in ${pages} page(s) → ${result.length} unique IDs`);
+  return result;
+}
+
 interface EnrichmentTask {
   name: string;
   functionName: string;
@@ -76,8 +116,8 @@ const ENRICHMENT_TASKS: EnrichmentTask[] = [
   // Phase 3: Pricing Intelligence (Priority 3)
   { name: 'Pricing Intelligence', functionName: 'enrich-pricing-intelligence', sourceTable: 'pricing_embeddings', targetTable: 'pricing_intelligence', batchSize: 10, priority: 3, workerCount: 6 },
   
-  // Phase 4: Practical Work Unified Enrichment (Priority 4) - ✅ 12-item batches, 20 concurrent workers (8 facets/source)
-  { name: 'Practical Work', functionName: 'enrich-practical-work', sourceTable: 'practical_work', targetTable: 'practical_work_intelligence', batchSize: 12, priority: 4, filter: { is_canonical: true }, workerCount: 20 },
+  // Phase 4: Practical Work Unified Enrichment (Priority 4) - ✅ 12-item batches, 50 concurrent workers (8 facets/source)
+  { name: 'Practical Work', functionName: 'enrich-practical-work', sourceTable: 'practical_work', targetTable: 'practical_work_intelligence', batchSize: 12, priority: 4, filter: { is_canonical: true }, workerCount: 50 },
 ];
 
 // Global worker state tracking
@@ -447,6 +487,42 @@ serve(async (req) => {
     }
   }
 
+  // NEW ACTION: compute_missing_practical_work - Calculate missing practical work procedures
+  if (action === 'compute_missing_practical_work') {
+    console.log('📊 COMPUTE MISSING: Calculating missing procedures for Practical Work...');
+    
+    try {
+      const sourceIds = await fetchAllPracticalWorkIds(supabase, 'practical_work', { canonicalOnly: true });
+      const enrichedIds = await fetchAllPracticalWorkIds(supabase, 'practical_work_intelligence', { enriched: true });
+      
+      const enrichedSet = new Set(enrichedIds);
+      const missingIds = sourceIds.filter(id => !enrichedSet.has(id));
+      
+      console.log(`📊 SOURCE PROCEDURES: ${sourceIds.length} unique | ENRICHED: ${enrichedIds.length} | MISSING: ${missingIds.length}`);
+      
+      return new Response(JSON.stringify({
+        success: true,
+        total_unique: sourceIds.length,
+        enriched_unique: enrichedIds.length,
+        missing_count: missingIds.length,
+        sample: missingIds.slice(0, 10),
+        suggested_batch_size: 12,
+        suggested_workers: 50
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    } catch (error) {
+      console.error('❌ Compute missing practical work failed:', error);
+      return new Response(JSON.stringify({
+        success: false,
+        error: error.message || 'Failed to compute missing procedures'
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+  }
+
   // NEW ACTION: start_missing - Server-side missing regulations detection and job creation
   if (action === 'start_missing') {
     console.log('🔍 SERVER-SIDE MISSING DETECTION: Computing missing regulations for BS 7671...');
@@ -582,6 +658,102 @@ serve(async (req) => {
       return new Response(JSON.stringify({
         success: false,
         error: error.message || 'Failed to start missing-regs job'
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+  }
+
+  // NEW ACTION: start_missing_practical_work - Create job for missing practical work procedures
+  if (action === 'start_missing_practical_work') {
+    console.log('🔍 START MISSING: Creating job for missing Practical Work procedures...');
+    
+    try {
+      const sourceIds = await fetchAllPracticalWorkIds(supabase, 'practical_work', { canonicalOnly: true });
+      const enrichedIds = await fetchAllPracticalWorkIds(supabase, 'practical_work_intelligence', { enriched: true });
+      
+      const enrichedSet = new Set(enrichedIds);
+      const missingIds = sourceIds.filter(id => !enrichedSet.has(id));
+      
+      console.log(`📊 Missing: ${missingIds.length} procedures`);
+      
+      if (missingIds.length === 0) {
+        return new Response(JSON.stringify({
+          success: true,
+          missing_count: 0,
+          message: 'All procedures already enriched'
+        }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }});
+      }
+      
+      // Abort any existing practical work jobs
+      await supabase.from('batch_jobs')
+        .update({ status: 'aborted', completed_at: new Date().toISOString() })
+        .eq('job_type', 'enrich_practical_work')
+        .in('status', ['pending', 'processing']);
+      
+      // Create new job
+      const batchSize = chunkSize || 12;
+      const workerCount = workers || 50;
+      const totalBatches = Math.ceil(missingIds.length / batchSize);
+      
+      const { data: newJob, error: jobError } = await supabase
+        .from('batch_jobs')
+        .insert({
+          job_type: 'enrich_practical_work',
+          status: 'pending',
+          total_batches: totalBatches,
+          completed_batches: 0,
+          metadata: {
+            source: 'start_missing',
+            missingIds,
+            batchSize,
+            workers: workerCount,
+            throttle_ms: 1500
+          }
+        })
+        .select()
+        .single();
+      
+      if (jobError) throw jobError;
+      
+      // Create batch records
+      const batches = [];
+      for (let i = 0; i < totalBatches; i++) {
+        const batchIds = missingIds.slice(i * batchSize, (i + 1) * batchSize);
+        batches.push({
+          job_id: newJob.id,
+          batch_number: i + 1,
+          status: 'pending',
+          data: { practicalWorkIds: batchIds }
+        });
+      }
+      
+      await supabase.from('batch_progress').insert(batches);
+      
+      // Start continuous processor
+      const task = ENRICHMENT_TASKS.find(t => t.functionName === 'enrich-practical-work');
+      if (task) {
+        for (let w = 0; w < workerCount; w++) {
+          processNextBatch(supabase, newJob.id, task).catch(err =>
+            console.error(`Worker ${w} startup failed:`, err)
+          );
+        }
+      }
+      
+      return new Response(JSON.stringify({
+        success: true,
+        jobId: newJob.id,
+        missing_count: missingIds.length,
+        batchesCreated: totalBatches,
+        workers: workerCount
+      }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }});
+      
+    } catch (error: any) {
+      console.error('❌ start_missing_practical_work failed:', error);
+      return new Response(JSON.stringify({
+        success: false,
+        error: error.message || 'Failed to start missing practical work job'
       }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
