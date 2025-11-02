@@ -138,9 +138,9 @@ const HealthSafetyInterface = () => {
         assessor: 'AI Health & Safety Advisor',
         date: new Date().toISOString().split('T')[0],
         projectType: selectedType,
-        hazards: results.hazards || [],
-        requiredPPE: results.requiredPPE || [],
-        emergencyProcedures: results.emergencyProcedures || [],
+        hazards: results.data?.hazards || [],
+        requiredPPE: results.data?.ppe?.map((p: any) => p.ppeType) || [],
+        emergencyProcedures: results.data?.emergencyProcedures || [],
         notes: results.notes
       };
       
@@ -378,17 +378,22 @@ const HealthSafetyInterface = () => {
             </div>
           </div>
           <div className="bg-muted/50 rounded-lg p-4 text-sm space-y-4">
-            {results?.riskAssessment && (
+            {results?.data && (
               <>
                 <div>
                   <h5 className="font-semibold mb-2">Risk Assessment</h5>
-                  {results.riskAssessment.hazards?.map((hazard: any, idx: number) => (
+                  {results.data.hazards?.map((hazard: any, idx: number) => (
                     <div key={idx} className="mb-3 p-3 bg-background rounded border">
                       <div className="font-medium">{hazard.hazard}</div>
                       <div className="text-xs text-muted-foreground mt-1">
                         Likelihood: {hazard.likelihood}/5 | Severity: {hazard.severity}/5 | 
                         Risk: {hazard.riskLevel} ({hazard.riskScore})
                       </div>
+                      {hazard.controlMeasure && (
+                        <div className="text-xs text-muted-foreground mt-2">
+                          <span className="font-medium">Control: </span>{hazard.controlMeasure}
+                        </div>
+                      )}
                       {hazard.regulation && (
                         <div className="text-xs text-muted-foreground mt-1">
                           Ref: {hazard.regulation}
@@ -398,27 +403,42 @@ const HealthSafetyInterface = () => {
                   ))}
                 </div>
                 
-                {results.riskAssessment.controls?.length > 0 && (
-                  <div>
-                    <h5 className="font-semibold mb-2">Control Measures</h5>
-                    {results.riskAssessment.controls.map((control: any, idx: number) => (
-                      <div key={idx} className="mb-2 p-2 bg-background rounded text-xs">
-                        <div className="font-medium">{control.hazard}</div>
-                        <div className="text-muted-foreground">{control.controlMeasure}</div>
-                        <div className="text-muted-foreground mt-1">
-                          Residual Risk: {control.residualRiskLevel}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-                
-                {results.riskAssessment.ppe?.length > 0 && (
+                {results.data.ppe?.length > 0 && (
                   <div>
                     <h5 className="font-semibold mb-2">Required PPE</h5>
+                    <div className="space-y-2">
+                      {results.data.ppe.map((item: any, idx: number) => (
+                        <div key={idx} className="p-2 bg-background rounded border">
+                          <div className="font-medium text-sm">{item.ppeType}</div>
+                          <div className="text-xs text-muted-foreground mt-1">
+                            Standard: {item.standard} | {item.mandatory ? 'Mandatory' : 'Recommended'}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            Purpose: {item.purpose}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {results.data.emergencyProcedures?.length > 0 && (
+                  <div>
+                    <h5 className="font-semibold mb-2">Emergency Procedures</h5>
                     <ul className="list-disc list-inside text-xs space-y-1">
-                      {results.riskAssessment.ppe.map((item: string, idx: number) => (
-                        <li key={idx}>{item}</li>
+                      {results.data.emergencyProcedures.map((proc: string, idx: number) => (
+                        <li key={idx}>{proc}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {results.data.complianceRegulations?.length > 0 && (
+                  <div>
+                    <h5 className="font-semibold mb-2">Compliance Regulations</h5>
+                    <ul className="list-disc list-inside text-xs space-y-1">
+                      {results.data.complianceRegulations.map((reg: string, idx: number) => (
+                        <li key={idx}>{reg}</li>
                       ))}
                     </ul>
                   </div>
