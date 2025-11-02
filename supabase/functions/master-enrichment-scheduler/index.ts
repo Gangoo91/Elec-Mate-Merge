@@ -1792,7 +1792,8 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
         body: {
           batchSize: task.batchSize,
           startFrom: batch.batch_number * task.batchSize,
-          jobId: jobId
+          jobId: jobId,
+          batchId: batch.id // ✅ Pass batchId for monitoring
         }
       });
       

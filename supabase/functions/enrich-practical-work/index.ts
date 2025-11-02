@@ -804,6 +804,7 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
   }
 
   // ✅ PHASE 1: ATOMIC SOURCE LOCKING - Prevent race conditions
+  const staleThreshold = new Date(Date.now() - 10 * 60 * 1000).toISOString(); // 10 min stale lock
   const { data: claimedSource, error: claimError } = await supabase
     .from('practical_work')
     .update({ 
@@ -811,12 +812,25 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
       enrichment_locked_at: new Date().toISOString()
     })
     .eq('id', item.id)
-    .or(`enrichment_status.is.null,enrichment_locked_at.lt.${new Date(Date.now() - 5 * 60 * 1000).toISOString()}`)
+    .or(`enrichment_status.is.null,enrichment_locked_at.lt.${staleThreshold}`)
     .select()
     .single();
   
   if (claimError || !claimedSource) {
-    logger.info(`⏭️ Skipping (claimed by another worker)`, { id: item.id });
+    // Enhanced logging: distinguish why we're skipping
+    const { data: statusCheck } = await supabase
+      .from('practical_work')
+      .select('enrichment_status, enrichment_locked_at')
+      .eq('id', item.id)
+      .single();
+    
+    if (statusCheck?.enrichment_status === 'completed') {
+      logger.debug(`⏭️ Skipping (already completed)`, { id: item.id, topic: title });
+    } else if (statusCheck?.enrichment_locked_at && new Date(statusCheck.enrichment_locked_at) > new Date(staleThreshold)) {
+      logger.debug(`⏭️ Skipping (claimed by another worker)`, { id: item.id, lockedAt: statusCheck.enrichment_locked_at });
+    } else {
+      logger.warn(`⏭️ Skipping (unknown reason)`, { id: item.id, status: statusCheck?.enrichment_status, claimError });
+    }
     return 0;
   }
   
