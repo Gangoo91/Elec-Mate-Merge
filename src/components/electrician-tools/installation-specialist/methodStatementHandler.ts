@@ -67,17 +67,29 @@ CRITICAL: Search RAG first for relevant installation procedures, best practices,
       throw new Error(installerData?.error || 'Installer agent failed');
     }
     
-    // Try multiple possible response structures for resilience
-    const installerOutput = installerData?.result || 
-                            installerData?.data?.result || 
-                            installerData?.structuredData || 
-                            installerData;
+    // Extract steps from installer-v3 response structure
+    const installerStepsArray = installerData?.data?.steps || [];
     
-    if (!installerOutput) {
-      throw new Error('Installer agent returned empty response');
+    if (installerStepsArray.length === 0) {
+      throw new Error('Installer agent returned no installation steps');
     }
     
-    console.log('✅ Installer completed:', { steps: (installerOutput.installationSteps || installerOutput.methodStatementSteps || []).length });
+    // Transform installer-v3 steps to expected format
+    const installerOutput = {
+      installationSteps: installerStepsArray,
+      workType: installerData?.data?.workType || 'electrical installation',
+      equipmentType: installerData?.data?.equipmentType || 'electrical installation',
+      jobTitle: installerData?.data?.jobTitle || 'Installation Work',
+      description: installerData?.data?.description || '',
+      estimatedDuration: installerData?.data?.totalDuration || 'Not specified',
+      requiredQualifications: installerData?.data?.requiredQualifications || [],
+      toolsRequired: installerData?.data?.toolsRequired || [],
+      materialsRequired: installerData?.data?.materialsRequired || [],
+      detectedHazards: installerData?.data?.detectedHazards || [],
+      conditionalFlags: installerData?.data?.conditionalFlags || {}
+    };
+    
+    console.log('✅ Installer completed:', { steps: installerOutput.installationSteps.length });
     
     if (onProgress) onProgress('STAGE_2_START');
     
@@ -96,7 +108,7 @@ CRITICAL: Search RAG first for relevant hazards, control measures, and safety re
           workType: installerOutput.workType || 'electrical installation',
           location: projectDetails?.location || 'Site location',
           // CRITICAL: Pass installation steps in structured format for step-specific hazard linking
-          installationSteps: (installerOutput.installationSteps || installerOutput.methodStatementSteps || []).map((s: any, i: number) => ({
+          installationSteps: installerOutput.installationSteps.map((s: any, i: number) => ({
             stepNumber: i + 1,
             title: s.title || s.stepTitle || `Step ${i + 1}`,
             description: s.description || s.content || '',
@@ -128,7 +140,7 @@ CRITICAL TASKS AS FINAL REVIEWER (in order):
           location: projectDetails?.location || 'Site location',
           
           // INSTALLER OUTPUT FOR FINAL REVIEW & VALIDATION
-          installerSteps: (installerOutput.installationSteps || installerOutput.methodStatementSteps || []),
+          installerSteps: installerOutput.installationSteps,
           installerJobDetails: {
             jobTitle: installerOutput.jobTitle,
             description: installerOutput.description,
@@ -178,7 +190,7 @@ CRITICAL TASKS AS FINAL REVIEWER (in order):
 
 function mergeAgentOutputs(installer: any, maintenance: any | null, healthSafety: any | null): MergedMethodStatementOutput {
   // Get installation steps from installer
-  const installerSteps = installer.installationSteps || installer.methodStatementSteps || [];
+  const installerSteps = installer.installationSteps || [];
   
   // Extract H&S data if available
   const allHazards = healthSafety?.riskAssessment?.hazards || [];
