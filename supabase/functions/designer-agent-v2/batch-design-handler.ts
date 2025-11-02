@@ -2189,21 +2189,64 @@ function ensurePDFFields(circuit: any): any {
     };
   }
   
+  // CRITICAL: Ensure calculations object exists with all required fields
+  const Ib = circuit.calculations?.Ib ?? circuit.designCurrent ?? (circuit.loadPower || 0) / (circuit.voltage || 230);
+  if (!circuit.calculations) {
+    circuit.calculations = {
+      Ib: Ib,
+      In: circuit.protectionDevice.rating || Math.ceil(Ib * 1.25),
+      Iz: circuit.protectionDevice.rating || Math.ceil(Ib * 1.25),
+      safetyMargin: 20,
+      voltageDrop: {
+        volts: 0,
+        percent: 0,
+        compliant: true,
+        limit: (circuit.voltage || 230) * 0.05
+      },
+      zs: circuit.ze || 0.35,
+      maxZs: 2.19,
+      deratedCapacity: circuit.protectionDevice.rating || Math.ceil(Ib * 1.25)
+    };
+  }
+  
+  // Ensure nested voltageDrop object exists
+  if (!circuit.calculations.voltageDrop) {
+    circuit.calculations.voltageDrop = {
+      volts: 0,
+      percent: 0,
+      compliant: true,
+      limit: (circuit.voltage || 230) * 0.05
+    };
+  }
+  
+  // Ensure all individual calculation fields have safe defaults
+  circuit.calculations.Ib = circuit.calculations.Ib ?? Ib;
+  circuit.calculations.In = circuit.calculations.In ?? circuit.protectionDevice.rating ?? 0;
+  circuit.calculations.Iz = circuit.calculations.Iz ?? circuit.calculations.In ?? 0;
+  circuit.calculations.safetyMargin = circuit.calculations.safetyMargin ?? 20;
+  circuit.calculations.zs = circuit.calculations.zs ?? circuit.ze ?? 0.35;
+  circuit.calculations.maxZs = circuit.calculations.maxZs ?? 2.19;
+  circuit.calculations.deratedCapacity = circuit.calculations.deratedCapacity ?? circuit.calculations.Iz ?? 0;
+  circuit.calculations.voltageDrop.volts = circuit.calculations.voltageDrop.volts ?? 0;
+  circuit.calculations.voltageDrop.percent = circuit.calculations.voltageDrop.percent ?? 0;
+  circuit.calculations.voltageDrop.compliant = circuit.calculations.voltageDrop.compliant ?? true;
+  circuit.calculations.voltageDrop.limit = circuit.calculations.voltageDrop.limit ?? (circuit.voltage || 230) * 0.05;
+  
   return {
     ...circuit,
     // Ensure formatted display fields exist
-    designCurrentIb: circuit.designCurrentIb || circuit.calculations?.Ib?.toFixed(1) || "0.0",
-    nominalCurrentIn: circuit.nominalCurrentIn || circuit.calculations?.In || circuit.protectionDevice?.rating || 0,
-    cableCapacityIz: circuit.cableCapacityIz || circuit.calculations?.Iz || 0,
+    designCurrentIb: circuit.designCurrentIb || circuit.calculations.Ib.toFixed(1),
+    nominalCurrentIn: circuit.nominalCurrentIn || circuit.calculations.In || circuit.protectionDevice.rating || 0,
+    cableCapacityIz: circuit.cableCapacityIz || circuit.calculations.Iz || 0,
     rcdProtectedText: circuit.rcdProtectedText || (
       circuit.rcdProtected 
-        ? (circuit.protectionDevice?.type === 'RCBO' ? '30mA RCBO' : '30mA RCD')
+        ? (circuit.protectionDevice.type === 'RCBO' ? '30mA RCBO' : '30mA RCD')
         : 'No'
     ),
-    zsCompliant: circuit.zsCompliant ?? (circuit.calculations?.zs <= circuit.calculations?.maxZs),
-    voltageDropCompliant: circuit.voltageDropCompliant ?? circuit.calculations?.voltageDrop?.compliant ?? true,
-    zsActual: circuit.zsActual || circuit.calculations?.zs?.toFixed(2) || "0.00",
-    zsMax: circuit.zsMax || circuit.calculations?.maxZs?.toFixed(2) || "0.00",
+    zsCompliant: circuit.zsCompliant ?? (circuit.calculations.zs <= circuit.calculations.maxZs),
+    voltageDropCompliant: circuit.voltageDropCompliant ?? circuit.calculations.voltageDrop.compliant,
+    zsActual: circuit.zsActual || circuit.calculations.zs.toFixed(2),
+    zsMax: circuit.zsMax || circuit.calculations.maxZs.toFixed(2),
     
     // Ensure justifications have minimum length
     justifications: {

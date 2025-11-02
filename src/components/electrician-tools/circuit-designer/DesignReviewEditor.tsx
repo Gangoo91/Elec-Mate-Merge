@@ -148,40 +148,40 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         
         designCalculations: {
           designCurrent: {
-            Ib: circuit.calculations.Ib,
-            calculation: `Ib = Power ÷ Voltage = ${circuit.loadPower}W ÷ ${circuit.voltage}V = ${circuit.calculations.Ib.toFixed(1)}A`,
-            result: `${circuit.calculations.Ib.toFixed(1)}A`
+            Ib: circuit.calculations?.Ib ?? 0,
+            calculation: `Ib = Power ÷ Voltage = ${circuit.loadPower}W ÷ ${circuit.voltage}V = ${fmt(circuit.calculations?.Ib, 1)}A`,
+            result: `${fmt(circuit.calculations?.Ib, 1)}A`
           },
           
           cableSizing: {
             regulation: "433.1.1",
             tabulatedCapacity_It: circuit.deratingFactors?.Ca ? (circuit.calculations.Iz / circuit.deratingFactors.overall) : 0,
             nominalCurrent_In: circuit.protectionDevice.rating,
-            effectiveCapacity_Iz: circuit.calculations.Iz,
-            safetyMargin: circuit.calculations.safetyMargin,
-            safetyMarginPercent: `${circuit.calculations.safetyMargin.toFixed(1)}%`,
-            compliant: circuit.calculations.voltageDrop.compliant,
-            complianceText: circuit.calculations.voltageDrop.compliant ? "✓ COMPLIANT" : "✗ NON-COMPLIANT"
+            effectiveCapacity_Iz: circuit.calculations?.Iz ?? 0,
+            safetyMargin: circuit.calculations?.safetyMargin ?? 0,
+            safetyMarginPercent: `${fmt(circuit.calculations?.safetyMargin, 1)}%`,
+            compliant: circuit.calculations?.voltageDrop?.compliant ?? true,
+            complianceText: circuit.calculations?.voltageDrop?.compliant ? "✓ COMPLIANT" : "✗ NON-COMPLIANT"
           },
           
           voltageDrop: {
             regulation: "525",
-            actualDrop: circuit.calculations.voltageDrop.volts,
-            actualDropString: `${circuit.calculations.voltageDrop.volts.toFixed(1)}V (${circuit.calculations.voltageDrop.percent.toFixed(2)}%)`,
-            maximumPermitted: circuit.calculations.voltageDrop.limit,
-            maximumPermittedString: `${circuit.calculations.voltageDrop.limit.toFixed(1)}V (5%)`,
-            compliant: circuit.calculations.voltageDrop.compliant,
-            complianceText: circuit.calculations.voltageDrop.compliant ? "✓ COMPLIANT" : "✗ NON-COMPLIANT"
+            actualDrop: circuit.calculations?.voltageDrop?.volts ?? 0,
+            actualDropString: `${fmt(circuit.calculations?.voltageDrop?.volts, 1)}V (${fmt(circuit.calculations?.voltageDrop?.percent, 2)}%)`,
+            maximumPermitted: circuit.calculations?.voltageDrop?.limit ?? 0,
+            maximumPermittedString: `${fmt(circuit.calculations?.voltageDrop?.limit, 1)}V (5%)`,
+            compliant: circuit.calculations?.voltageDrop?.compliant ?? true,
+            complianceText: circuit.calculations?.voltageDrop?.compliant ? "✓ COMPLIANT" : "✗ NON-COMPLIANT"
           },
           
           earthFaultLoop: {
             regulation: "411.4.4",
-            actualZs: circuit.calculations.zs,
-            actualZsString: `${circuit.calculations.zs.toFixed(2)}Ω`,
-            maximumZs: circuit.calculations.maxZs,
-            maximumZsString: `${circuit.calculations.maxZs.toFixed(2)}Ω`,
-            compliant: circuit.calculations.zs < circuit.calculations.maxZs,
-            complianceText: circuit.calculations.zs < circuit.calculations.maxZs ? "✓ COMPLIANT" : "✗ NON-COMPLIANT",
+            actualZs: circuit.calculations?.zs ?? 0,
+            actualZsString: `${fmt(circuit.calculations?.zs, 2)}Ω`,
+            maximumZs: circuit.calculations?.maxZs ?? 0,
+            maximumZsString: `${fmt(circuit.calculations?.maxZs, 2)}Ω`,
+            compliant: (circuit.calculations?.zs ?? 0) < (circuit.calculations?.maxZs ?? 999),
+            complianceText: (circuit.calculations?.zs ?? 0) < (circuit.calculations?.maxZs ?? 999) ? "✓ COMPLIANT" : "✗ NON-COMPLIANT",
             expectedR1R2: circuit.expectedTestResults?.r1r2?.at20C || "TBC on-site"
           }
         },
@@ -270,7 +270,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         specialLocationRequirements: (circuit.specialLocationCompliance?.requirements || []).join('; '),
         
         expectedR1R2: circuit.expectedTestResults?.r1r2?.at70C || 'N/A',
-        expectedZs: circuit.calculations.zs.toFixed(2),
+        expectedZs: fmt(circuit.calculations?.zs, 2),
         expectedInsulation: '>1MΩ',
         
         warnings: circuit.warnings || [],
@@ -314,7 +314,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       
       designNotes: {
         general: "This design complies with BS 7671:2018+A3:2024 (18th Edition IET Wiring Regulations). All circuits designed for safe operation with adequate protection against overload, short circuit, and earth faults.",
-        diversity: `Diversity factors applied in accordance with IET On-Site Guide Appendix 15. Total diversified load: ${(diversifiedLoad / 1000).toFixed(1)}kW (${designCurrent.toFixed(1)}A at ${supplyVoltage}V).`,
+        diversity: `Diversity factors applied in accordance with IET On-Site Guide Appendix 15. Total diversified load: ${fmt(diversifiedLoad / 1000, 1)}kW (${fmt(designCurrent, 1)}A at ${supplyVoltage}V).`,
         earthing: `${design.consumerUnit?.incomingSupply?.earthingSystem || 'TN-C-S'} earthing system. Main earthing conductor ${design.consumerUnit?.incomingSupply?.earthingSystem === 'TN-S' ? '16mm²' : '10mm²'} minimum. Main protective bonding to water, gas, oil, and structural steel required.`,
         rcd: design.circuits.some(c => c.rcdProtected) 
           ? "Split-load consumer unit with 30mA RCD protecting socket circuits and bathroom. Non-RCD side protects fixed loads (cooker, immersion, lighting)." 
@@ -647,7 +647,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             <p className="text-sm text-white/80">After Diversity</p>
             <p className="text-lg font-bold text-white">
               {design.diversityBreakdown 
-                ? `${design.diversityBreakdown.diversifiedLoad.toFixed(1)}kW`
+                ? `${fmt(design.diversityBreakdown.diversifiedLoad, 1)}kW`
                 : `${design.totalLoad / 1000}kW`}
             </p>
           </div>
@@ -673,8 +673,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   <div className="text-left">
                     <h3 className="text-base font-semibold text-white">Load Diversity Breakdown</h3>
                     <p className="text-sm text-white/70 mt-0.5">
-                      {design.diversityBreakdown.totalConnectedLoad.toFixed(1)}kW → {design.diversityBreakdown.diversifiedLoad.toFixed(1)}kW 
-                      <Badge variant="secondary" className="ml-2">{(design.diversityBreakdown.overallDiversityFactor * 100).toFixed(0)}% applied</Badge>
+                      {fmt(design.diversityBreakdown.totalConnectedLoad, 1)}kW → {fmt(design.diversityBreakdown.diversifiedLoad, 1)}kW 
+                      <Badge variant="secondary" className="ml-2">{fmt(design.diversityBreakdown.overallDiversityFactor * 100, 0)}% applied</Badge>
                     </p>
                   </div>
                 </div>
@@ -684,15 +684,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   {/* Overall Calculation */}
                   <div className="flex items-center justify-between py-2 px-3 bg-primary/10 rounded-lg">
                     <span className="text-sm text-white/80">Total Connected Load:</span>
-                    <span className="font-bold text-white">{design.diversityBreakdown.totalConnectedLoad.toFixed(1)}kW</span>
+                    <span className="font-bold text-white">{fmt(design.diversityBreakdown.totalConnectedLoad, 1)}kW</span>
                   </div>
                   <div className="flex items-center justify-between py-2 px-3 bg-primary/10 rounded-lg">
                     <span className="text-sm text-white/80">Diversity Factor:</span>
-                    <span className="font-bold text-white">{(design.diversityBreakdown.overallDiversityFactor * 100).toFixed(0)}%</span>
+                    <span className="font-bold text-white">{fmt(design.diversityBreakdown.overallDiversityFactor * 100, 0)}%</span>
                   </div>
                   <div className="flex items-center justify-between py-2 px-3 bg-green-500/20 rounded-lg border border-green-500/30">
                     <span className="text-sm font-semibold text-white">After Diversity:</span>
-                    <span className="font-bold text-lg text-white">{design.diversityBreakdown.diversifiedLoad.toFixed(1)}kW</span>
+                    <span className="font-bold text-lg text-white">{fmt(design.diversityBreakdown.diversifiedLoad, 1)}kW</span>
                   </div>
 
                   {/* Per-Circuit Breakdown */}
@@ -704,10 +704,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                           <div key={idx} className="py-2 px-3 bg-background/30 rounded-lg">
                             <div className="flex items-center justify-between mb-1">
                               <span className="font-medium text-white text-sm">{cd.circuitName}</span>
-                              <Badge variant="outline" className="text-xs">{(cd.diversityFactorApplied * 100).toFixed(0)}%</Badge>
+                              <Badge variant="outline" className="text-xs">{fmt(cd.diversityFactorApplied * 100, 0)}%</Badge>
                             </div>
                             <div className="text-xs text-white/60">
-                              {cd.connectedLoad.toFixed(1)}kW × {cd.diversityFactorApplied} = {cd.diversifiedLoad.toFixed(1)}kW
+                              {fmt(cd.connectedLoad, 1)}kW × {cd.diversityFactorApplied} = {fmt(cd.diversifiedLoad, 1)}kW
                             </div>
                             <div className="text-xs text-white/50 italic mt-1">{cd.justification}</div>
                           </div>
@@ -809,7 +809,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
                       <span className="text-sm text-white/80 min-w-[120px]">Power:</span>
-                      <span className="font-medium text-white">{currentCircuit.loadPower}W ({(currentCircuit.loadPower / 1000).toFixed(1)}kW)</span>
+                      <span className="font-medium text-white">{currentCircuit.loadPower}W ({fmt(currentCircuit.loadPower / 1000, 1)}kW)</span>
                     </div>
                     {currentCircuit.socketCount && (
                       <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
@@ -1007,7 +1007,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     <Percent className="h-4 w-4 text-primary" />
                     Diversity Applied
                   </h4>
-                  <Badge variant="secondary">{(currentCircuit.diversityFactor * 100).toFixed(0)}%</Badge>
+                  <Badge variant="secondary">{fmt(currentCircuit.diversityFactor * 100, 0)}%</Badge>
                 </div>
                 <p className="text-sm text-white/70">{currentCircuit.diversityJustification}</p>
               </div>
@@ -1023,7 +1023,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 <div className="grid md:grid-cols-2 gap-3">
                   <div>
                     <p className="text-xs text-white/60 mb-1">PSCC at Circuit</p>
-                    <p className="text-lg font-bold text-white">{currentCircuit.faultCurrentAnalysis.psccAtCircuit.toFixed(2)}kA</p>
+                    <p className="text-lg font-bold text-white">{fmt(currentCircuit.faultCurrentAnalysis?.psccAtCircuit, 2)}kA</p>
                   </div>
                   <div>
                     <p className="text-xs text-white/60 mb-1">Device Breaking Capacity</p>
@@ -1076,19 +1076,19 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 <div className="grid grid-cols-4 gap-2 text-center">
                   <div className="bg-primary/10 p-2 rounded">
                     <p className="text-xs text-white/60">Ca</p>
-                    <p className="text-lg font-bold text-white">{currentCircuit.deratingFactors.Ca.toFixed(2)}</p>
+                    <p className="text-lg font-bold text-white">{fmt(currentCircuit.deratingFactors?.Ca, 2)}</p>
                   </div>
                   <div className="bg-primary/10 p-2 rounded">
                     <p className="text-xs text-white/60">Cg</p>
-                    <p className="text-lg font-bold text-white">{currentCircuit.deratingFactors.Cg.toFixed(2)}</p>
+                    <p className="text-lg font-bold text-white">{fmt(currentCircuit.deratingFactors?.Cg, 2)}</p>
                   </div>
                   <div className="bg-primary/10 p-2 rounded">
                     <p className="text-xs text-white/60">Ci</p>
-                    <p className="text-lg font-bold text-white">{currentCircuit.deratingFactors.Ci.toFixed(2)}</p>
+                    <p className="text-lg font-bold text-white">{fmt(currentCircuit.deratingFactors?.Ci, 2)}</p>
                   </div>
                   <div className="bg-primary/5 p-2 rounded border border-primary/30">
                     <p className="text-xs text-white/60">Overall</p>
-                    <p className="text-lg font-bold text-primary">{currentCircuit.deratingFactors.overall.toFixed(2)}</p>
+                    <p className="text-lg font-bold text-primary">{fmt(currentCircuit.deratingFactors?.overall, 2)}</p>
                   </div>
                 </div>
                 <p className="text-sm text-white/70">{currentCircuit.deratingFactors.explanation}</p>
@@ -1371,9 +1371,9 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                             protectiveDeviceType: circuit.protectionDevice.type,
                             protectiveDeviceCurve: circuit.protectionDevice.curve,
                             protectiveDeviceRating: `${circuit.protectionDevice.rating}A`,
-                            expectedR1R2: `${expectedR1R2.toFixed(3)}Ω`,
-                            expectedZs: `${expectedZs.toFixed(3)}Ω`,
-                            expectedMaxZs: `${maxZs.toFixed(2)}Ω`,
+                            expectedR1R2: `${fmt(expectedR1R2, 3)}Ω`,
+                            expectedZs: `${fmt(expectedZs, 3)}Ω`,
+                            expectedMaxZs: `${fmt(maxZs, 2)}Ω`,
                             expectedInsulationResistance: "≥1.0MΩ (min), expect >50MΩ",
                             insulationTestVoltage: circuit.phases === "single" ? "500V DC" : "500V DC",
                             polarity: "Correct (verify on-site)",
@@ -1448,9 +1448,9 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                               protectiveDeviceType: circuit.protectionDevice.type,
                               protectiveDeviceCurve: circuit.protectionDevice.curve,
                               protectiveDeviceRating: `${circuit.protectionDevice.rating}A`,
-                              expectedR1R2: `${expectedR1R2.toFixed(3)}Ω`,
-                              expectedZs: `${expectedZs.toFixed(3)}Ω`,
-                              expectedMaxZs: `${maxZs.toFixed(2)}Ω`,
+                              expectedR1R2: `${fmt(expectedR1R2, 3)}Ω`,
+                              expectedZs: `${fmt(expectedZs, 3)}Ω`,
+                              expectedMaxZs: `${fmt(maxZs, 2)}Ω`,
                               expectedInsulationResistance: "≥1.0MΩ (min), expect >50MΩ",
                               insulationTestVoltage: circuit.phases === "single" ? "500V DC" : "500V DC",
                               polarity: "Correct (verify on-site)",

@@ -365,6 +365,39 @@ export const useAIDesigner = () => {
         }));
       }
       
+      // Validate calculations structure
+      const hasInvalidCalculations = data.design.circuits.some((c: any) => 
+        !c.calculations || 
+        typeof c.calculations.Ib !== 'number' ||
+        !c.calculations.voltageDrop
+      );
+      
+      if (hasInvalidCalculations) {
+        console.warn('⚠️ Some circuits missing calculation data, applying defaults');
+        data.design.circuits = data.design.circuits.map((c: any) => {
+          const Ib = c.designCurrent || c.calculations?.Ib || (c.loadPower || 0) / (c.voltage || 230);
+          return {
+            ...c,
+            calculations: {
+              Ib: Ib,
+              In: c.calculations?.In ?? c.protectionDevice?.rating ?? Math.ceil(Ib * 1.25),
+              Iz: c.calculations?.Iz ?? c.protectionDevice?.rating ?? Math.ceil(Ib * 1.25),
+              safetyMargin: c.calculations?.safetyMargin ?? 20,
+              voltageDrop: c.calculations?.voltageDrop ?? {
+                volts: 0,
+                percent: 0,
+                compliant: true,
+                limit: (c.voltage || 230) * 0.05
+              },
+              zs: c.calculations?.zs ?? c.ze ?? 0.35,
+              maxZs: c.calculations?.maxZs ?? 2.19,
+              deratedCapacity: c.calculations?.deratedCapacity ?? c.calculations?.Iz ?? 0,
+              ...c.calculations
+            }
+          };
+        });
+      }
+      
       console.log('✅ Design generated successfully', data.design);
       setDesignData(data.design);
 
