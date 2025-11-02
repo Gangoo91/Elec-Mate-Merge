@@ -31,38 +31,63 @@ export const FacetDistributionStats = () => {
   const fetchDistribution = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from('facet_distribution_view')
-        .select('*')
-        .single();
+      // Query practical_work_intelligence and calculate distribution
+      const { data: facetData, error } = await supabase
+        .from('practical_work_intelligence')
+        .select('practical_work_id')
+        .eq('facet_type', 'primary');
       
       if (error) throw error;
 
-      if (data) {
-        const result = data;
-        
-        // Parse the ranges from the result
-        const ranges: FacetRange[] = [
-          { range: 'under_8', count: result.under_8 || 0, color: 'bg-red-500', label: 'Under 8' },
-          { range: 'exactly_8', count: result.exactly_8 || 0, color: 'bg-yellow-500', label: 'Exactly 8' },
-          { range: 'range_9_20', count: result.range_9_20 || 0, color: 'bg-green-500', label: '9-20' },
-          { range: 'range_21_50', count: result.range_21_50 || 0, color: 'bg-blue-500', label: '21-50' },
-          { range: 'range_51_100', count: result.range_51_100 || 0, color: 'bg-purple-500', label: '51-100' },
-          { range: 'range_101_200', count: result.range_101_200 || 0, color: 'bg-orange-500', label: '101-200' },
-          { range: 'over_200', count: result.over_200 || 0, color: 'bg-gray-500', label: '200+' },
-        ];
-
-        setStats({
-          totalFacets: result.total_facets || 0,
-          totalSources: result.total_sources || 0,
-          avgPerSource: result.avg_per_source || 0,
-          minFacets: result.min_facets || 0,
-          maxFacets: result.max_facets || 0,
-          qualityScore: result.quality_score || 0,
-          ranges
-        });
-        setLastUpdate(new Date());
+      if (!facetData || facetData.length === 0) {
+        setStats(null);
+        setLoading(false);
+        return;
       }
+
+      // Count facets per source (practical_work_id)
+      const facetCounts = facetData.reduce((acc, row) => {
+        acc[row.practical_work_id] = (acc[row.practical_work_id] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>);
+
+      const counts = Object.values(facetCounts);
+      const totalFacets = facetData.length;
+      const totalSources = counts.length;
+      const avgPerSource = counts.reduce((a, b) => a + b, 0) / totalSources;
+      const minFacets = Math.min(...counts);
+      const maxFacets = Math.max(...counts);
+      const qualityScore = (counts.filter(c => c >= 8).length / totalSources) * 100;
+
+      // Calculate ranges
+      const under8 = counts.filter(c => c < 8).length;
+      const exactly8 = counts.filter(c => c === 8).length;
+      const range9_20 = counts.filter(c => c >= 9 && c <= 20).length;
+      const range21_50 = counts.filter(c => c >= 21 && c <= 50).length;
+      const range51_100 = counts.filter(c => c >= 51 && c <= 100).length;
+      const range101_200 = counts.filter(c => c >= 101 && c <= 200).length;
+      const over200 = counts.filter(c => c > 200).length;
+
+      const ranges: FacetRange[] = [
+        { range: 'under_8', count: under8, color: 'bg-red-500', label: 'Under 8' },
+        { range: 'exactly_8', count: exactly8, color: 'bg-yellow-500', label: 'Exactly 8' },
+        { range: 'range_9_20', count: range9_20, color: 'bg-green-500', label: '9-20' },
+        { range: 'range_21_50', count: range21_50, color: 'bg-blue-500', label: '21-50' },
+        { range: 'range_51_100', count: range51_100, color: 'bg-purple-500', label: '51-100' },
+        { range: 'range_101_200', count: range101_200, color: 'bg-orange-500', label: '101-200' },
+        { range: 'over_200', count: over200, color: 'bg-gray-500', label: '200+' },
+      ];
+
+      setStats({
+        totalFacets,
+        totalSources,
+        avgPerSource,
+        minFacets,
+        maxFacets,
+        qualityScore,
+        ranges
+      });
+      setLastUpdate(new Date());
     } catch (error) {
       console.error('Error fetching distribution:', error);
       toast({

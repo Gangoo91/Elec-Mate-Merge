@@ -7550,6 +7550,24 @@ export type Database = {
         }
         Relationships: []
       }
+      facet_distribution_view: {
+        Row: {
+          avg_per_source: number | null
+          exactly_8: number | null
+          max_facets: number | null
+          min_facets: number | null
+          over_200: number | null
+          quality_score: number | null
+          range_101_200: number | null
+          range_21_50: number | null
+          range_51_100: number | null
+          range_9_20: number | null
+          total_facets: number | null
+          total_sources: number | null
+          under_8: number | null
+        }
+        Relationships: []
+      }
       hs_common_hazards: {
         Row: {
           content: string | null

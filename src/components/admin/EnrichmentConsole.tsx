@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { FacetDistributionStats } from './FacetDistributionStats';
 import { 
   Select,
   SelectContent,
@@ -904,6 +905,9 @@ export default function EnrichmentConsole() {
           </div>
         </Card>
       )}
+
+      {/* Facet Distribution Dashboard - Only for Practical Work */}
+      {selectedTask === 'practical_work' && <FacetDistributionStats />}
 
       {/* Controls */}
       <Card className="p-4">
