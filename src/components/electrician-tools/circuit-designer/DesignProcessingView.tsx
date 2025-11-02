@@ -5,9 +5,10 @@ import { CheckCircle2, Loader2 } from 'lucide-react';
 
 interface DesignProcessingViewProps {
   progress: DesignProgress | null;
+  retryMessage?: string | null;
 }
 
-export const DesignProcessingView = ({ progress }: DesignProcessingViewProps) => {
+export const DesignProcessingView = ({ progress, retryMessage }: DesignProcessingViewProps) => {
   const stages = [
     'Understanding your requirements...',
     'Extracting circuits from description...',
@@ -27,6 +28,15 @@ export const DesignProcessingView = ({ progress }: DesignProcessingViewProps) =>
             Our AI is analysing circuits and checking BS 7671 18th Edition compliance
           </p>
         </div>
+
+        {retryMessage && (
+          <div className="mb-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+            <p className="text-sm text-amber-600 dark:text-amber-400 flex items-center gap-2">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              {retryMessage}
+            </p>
+          </div>
+        )}
 
         <div className="space-y-6">
           <div>

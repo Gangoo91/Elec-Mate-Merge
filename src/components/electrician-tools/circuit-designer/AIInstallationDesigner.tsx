@@ -13,7 +13,7 @@ type ViewMode = 'input' | 'processing' | 'results' | 'validation-error';
 
 export const AIInstallationDesigner = () => {
   const [currentView, setCurrentView] = useState<ViewMode>('input');
-  const { generateDesign, resetDesign, isProcessing, designData, error, progress } = useAIDesigner();
+  const { generateDesign, resetDesign, isProcessing, designData, error, progress, retryMessage } = useAIDesigner();
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
     // Pre-fill form with context from another agent
@@ -53,7 +53,7 @@ export const AIInstallationDesigner = () => {
       )}
 
       {currentView === 'processing' && (
-        <DesignProcessingView progress={progress} />
+        <DesignProcessingView progress={progress} retryMessage={retryMessage} />
       )}
 
       {/* PHASE 6: Validation Error Display */}
@@ -62,8 +62,24 @@ export const AIInstallationDesigner = () => {
           <Alert variant="destructive" className="mb-6">
             <AlertCircle className="h-5 w-5" />
             <AlertTitle className="text-lg font-semibold">Design Non-Compliant with BS 7671</AlertTitle>
-            <AlertDescription className="mt-3 whitespace-pre-line text-sm">
-              {error}
+            <AlertDescription className="mt-3 space-y-2">
+              {error.split('\n').map((line, i) => {
+                // Extract regulation references (e.g., "Reg 411.3.3")
+                const regMatch = line.match(/\(Reg\s+([\d.]+)\)/i);
+                if (regMatch) {
+                  const [fullMatch, regNumber] = regMatch;
+                  const beforeReg = line.substring(0, line.indexOf(fullMatch));
+                  return (
+                    <div key={i} className="text-sm">
+                      {beforeReg}
+                      <span className="font-mono text-xs bg-primary/10 px-2 py-1 rounded ml-1">
+                        Reg {regNumber}
+                      </span>
+                    </div>
+                  );
+                }
+                return <div key={i} className="text-sm">{line}</div>;
+              })}
             </AlertDescription>
           </Alert>
 

@@ -28,7 +28,21 @@ export const useAIDesigner = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [designData, setDesignData] = useState<InstallationDesign | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [progress, setProgress] = useState<DesignProgress | null>(null);
+  const [progress, setProgress] = useState<DesignProgress | null>(() => {
+    // Restore progress from localStorage on mount
+    const savedProgress = localStorage.getItem('designer-progress');
+    return savedProgress ? JSON.parse(savedProgress) : null;
+  });
+
+  // Persist progress to localStorage
+  const setProgressWithPersistence = (newProgress: DesignProgress | null) => {
+    setProgress(newProgress);
+    if (newProgress) {
+      localStorage.setItem('designer-progress', JSON.stringify(newProgress));
+    } else {
+      localStorage.removeItem('designer-progress');
+    }
+  };
   const [retryMessage, setRetryMessage] = useState('');
 
   const generateDesign = async (inputs: DesignInputs): Promise<boolean> => {
@@ -61,7 +75,7 @@ export const useAIDesigner = () => {
     let currentPercent = 0;
 
     // Initialize progress immediately
-    setProgress({ stage: 1, message: 'Initialising...', percent: 0 });
+    setProgressWithPersistence({ stage: 1, message: 'Initialising...', percent: 0 });
 
     // Pre-flight health check with retry (Fix 1: Intelligent Pre-warm)
     let healthCheckPassed = false;
@@ -78,13 +92,13 @@ export const useAIDesigner = () => {
         }
         
         if (attempt < 3) {
-          setProgress({ stage: 0, message: `Service starting up (${attempt}/3)...`, percent: 0 });
+          setProgressWithPersistence({ stage: 0, message: `Service starting up (${attempt}/3)...`, percent: 0 });
           console.warn(`⚠️ Health check attempt ${attempt}/3 failed, retrying in 5s...`);
           await new Promise(resolve => setTimeout(resolve, 5000));
         }
       } catch (e) {
         if (attempt < 3) {
-          setProgress({ stage: 0, message: `Initialising service (${attempt}/3)...`, percent: 0 });
+          setProgressWithPersistence({ stage: 0, message: `Initialising service (${attempt}/3)...`, percent: 0 });
           console.warn(`⚠️ Health check attempt ${attempt}/3 failed, retrying in 5s...`);
           await new Promise(resolve => setTimeout(resolve, 5000));
         }
@@ -93,7 +107,7 @@ export const useAIDesigner = () => {
     
     // Add 10s pre-warm delay if cold start detected
     if (!healthCheckPassed) {
-      setProgress({ stage: 0, message: 'Warming up service, please wait...', percent: 0 });
+      setProgressWithPersistence({ stage: 0, message: 'Warming up service, please wait...', percent: 0 });
       console.log('🔥 Cold start detected, adding 10s pre-warm delay');
       await new Promise(resolve => setTimeout(resolve, 10000));
     }
@@ -115,10 +129,13 @@ export const useAIDesigner = () => {
         const invokeStartTime = Date.now();
         const keepaliveInterval = setInterval(() => {
           const elapsedSeconds = Math.floor((Date.now() - invokeStartTime) / 1000);
-          setProgress(prev => ({
-            ...prev,
-            message: `${prev.message.split(' (')[0]} (${elapsedSeconds}s elapsed)`
-          }));
+          setProgress(prev => {
+            if (!prev) return prev;
+            return {
+              ...prev,
+              message: `${prev.message.split(' (')[0]} (${elapsedSeconds}s elapsed)`
+            };
+          });
         }, 10000); // Update every 10 seconds
 
         let data, invokeError;
@@ -172,7 +189,7 @@ export const useAIDesigner = () => {
           
           if (responseSize > 500000) { // >500KB
             console.warn(`⚠️ Large response detected (${responseSizeKB}KB) - may take a few seconds to parse`);
-            setProgress({ stage: 7, message: 'Processing large design...', percent: 98 });
+            setProgressWithPersistence({ stage: 7, message: `Processing large design (${responseSizeKB}KB)...`, percent: 98 });
           }
         }
         
@@ -258,7 +275,7 @@ export const useAIDesigner = () => {
           // Ensure monotonic progress
           currentPercent = Math.max(currentPercent, computedPercent);
           
-          setProgress({
+          setProgressWithPersistence({
             stage: currentStage + 1,
             message: stages[currentStage].message,
             percent: currentPercent
@@ -309,7 +326,7 @@ export const useAIDesigner = () => {
       // PHASE 6: Handle structured errors including validation failures
       if (!data.success) {
         // Clear progress immediately for known errors
-        setProgress(null);
+        setProgressWithPersistence(null);
         
         const errorMsg = data.error || 'Design generation failed';
         const errorCode = data.code || 'UNKNOWN_ERROR';
@@ -347,7 +364,7 @@ export const useAIDesigner = () => {
       }
 
       // Complete progress to 100%
-      setProgress({ stage: 8, message: 'Design complete!', percent: 100 });
+      setProgressWithPersistence({ stage: 8, message: 'Design complete!', percent: 100 });
       
       // Validate design structure before accepting
       const hasInvalidCircuits = data.design.circuits.some((c: any) => !c.protectionDevice);
@@ -405,7 +422,7 @@ export const useAIDesigner = () => {
       });
 
       // Hold at 100% briefly before clearing
-      setTimeout(() => setProgress(null), 800);
+      setTimeout(() => setProgressWithPersistence(null), 800);
 
       return true;
 
@@ -448,6 +465,7 @@ export const useAIDesigner = () => {
     isProcessing,
     designData,
     error,
-    progress
+    progress,
+    retryMessage
   };
 };
