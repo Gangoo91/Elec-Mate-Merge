@@ -64,23 +64,46 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(({
           endY = currentY - length;
         }
         
-        // Draw wall
-        const wallLine = new Line([currentX, currentY, endX, endY], {
-          stroke: '#FFD700',
-          strokeWidth: 2,
-          selectable: false,
-        });
-        canvas.add(wallLine);
+        // Draw professional architectural wall (double line)
+        const wallThickness = 8;
+        const isVertical = Math.abs(endX - currentX) < Math.abs(endY - currentY);
         
-        // Add dimension label
+        if (isVertical) {
+          const wallRect = new Rect({
+            left: currentX - wallThickness / 2,
+            top: Math.min(currentY, endY),
+            width: wallThickness,
+            height: Math.abs(endY - currentY),
+            fill: '#000000',
+            stroke: '#000000',
+            strokeWidth: 1,
+            selectable: false,
+          });
+          canvas.add(wallRect);
+        } else {
+          const wallRect = new Rect({
+            left: Math.min(currentX, endX),
+            top: currentY - wallThickness / 2,
+            width: Math.abs(endX - currentX),
+            height: wallThickness,
+            fill: '#000000',
+            stroke: '#000000',
+            strokeWidth: 1,
+            selectable: false,
+          });
+          canvas.add(wallRect);
+        }
+        
+        // Add professional dimension label
         const midX = (currentX + endX) / 2;
         const midY = (currentY + endY) / 2;
         const label = new FabricText(`${wall.length}m`, {
           left: midX,
-          top: midY - 15,
-          fontSize: 14,
-          fill: '#FFD700',
+          top: midY - 20,
+          fontSize: 12,
+          fill: '#000000',
           fontFamily: 'Arial',
+          fontWeight: '500',
           selectable: false,
         });
         canvas.add(label);
@@ -125,11 +148,12 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(({
           }
         }
         
-        // Create symbol using SVG path
+        // Create symbol using SVG path - Professional black
         const symbolPath = new Path(electricalSymbol.svg, {
           left: symbolX,
           top: symbolY,
-          fill: '#FFD700',
+          fill: '#000000',
+          stroke: '#000000',
           scaleX: 1.5,
           scaleY: 1.5,
           selectable: true,
@@ -138,13 +162,13 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(({
         canvas.add(symbolPath);
       });
       
-      // Add room title
+      // Add room title - Professional black
       if (roomData.room?.name) {
         const title = new FabricText(roomData.room.name, {
           left: offsetX,
-          top: offsetY - 40,
-          fontSize: 20,
-          fill: '#FFD700',
+          top: offsetY - 50,
+          fontSize: 18,
+          fill: '#000000',
           fontFamily: 'Arial',
           fontWeight: 'bold',
           selectable: false,
@@ -168,7 +192,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(({
     const canvas = new FabricCanvas(canvasRef.current, {
       width: canvasWidth,
       height: canvasHeight,
-      backgroundColor: "#1a1f2e",
+      backgroundColor: "#FFFFFF",
       selection: activeTool === "select",
     });
 
@@ -202,33 +226,33 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(({
     if (!canvas) return;
 
     canvas.clear();
-    canvas.backgroundColor = "#1a1f2e";
+    canvas.backgroundColor = "#FFFFFF";
 
     if (gridEnabled) {
       const gridSize = 20;
       const width = canvas.width || 1200;
       const height = canvas.height || 600;
 
-      // Vertical lines
+      // Vertical lines - Professional gray grid
       for (let i = 0; i < width / gridSize; i++) {
         const line = new Line([i * gridSize, 0, i * gridSize, height], {
-          stroke: "#fbbf24",
-          strokeWidth: i % 5 === 0 ? 0.5 : 0.2,
+          stroke: "#E5E7EB",
+          strokeWidth: i % 5 === 0 ? 1 : 0.5,
           selectable: false,
           evented: false,
-          opacity: 0.15,
+          opacity: 0.3,
         });
         canvas.add(line);
       }
 
-      // Horizontal lines
+      // Horizontal lines - Professional gray grid
       for (let i = 0; i < height / gridSize; i++) {
         const line = new Line([0, i * gridSize, width, i * gridSize], {
-          stroke: "#fbbf24",
-          strokeWidth: i % 5 === 0 ? 0.5 : 0.2,
+          stroke: "#E5E7EB",
+          strokeWidth: i % 5 === 0 ? 1 : 0.5,
           selectable: false,
           evented: false,
-          opacity: 0.15,
+          opacity: 0.3,
         });
         canvas.add(line);
       }
@@ -262,7 +286,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(({
         fabricObj = new Path(symbol.svg, {
           left: obj.x,
           top: obj.y,
-          fill: "#fbbf24",
+          fill: "#000000",
+          stroke: "#000000",
           scaleX: (obj.width || 40) / 40,
           scaleY: (obj.height || 40) / 40,
           angle: obj.rotation || 0,
@@ -278,7 +303,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(({
         width: obj.width || 100,
         height: obj.height || 100,
         fill: "transparent",
-        stroke: "#fbbf24",
+        stroke: "#000000",
         strokeWidth: 2,
         angle: obj.rotation || 0,
         selectable: true,
@@ -290,7 +315,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(({
       fabricObj = new Line(
         [points[0].x, points[0].y, points[points.length - 1].x, points[points.length - 1].y],
         {
-          stroke: "#fbbf24",
+          stroke: "#000000",
           strokeWidth: 2,
           selectable: true,
           hasControls: true,
@@ -301,7 +326,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(({
       fabricObj = new FabricText(obj.text || "Text", {
         left: obj.x,
         top: obj.y,
-        fill: "#fbbf24",
+        fill: "#000000",
         fontSize: 16,
         fontFamily: "Arial",
         angle: obj.rotation || 0,
@@ -477,7 +502,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(({
 
       if (activeTool === "line") {
         const line = new Line([startPoint.x, startPoint.y, x, y], {
-          stroke: "#fbbf24",
+          stroke: "#000000",
           strokeWidth: 2,
           selectable: false,
         });
@@ -490,7 +515,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(({
           width: Math.abs(x - startPoint.x),
           height: Math.abs(y - startPoint.y),
           fill: "transparent",
-          stroke: "#fbbf24",
+          stroke: "#000000",
           strokeWidth: 2,
           selectable: false,
         });
@@ -615,8 +640,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(({
   };
 
   return (
-    <div className="flex-1 overflow-hidden bg-elec-dark p-2 md:p-4 flex items-center justify-center relative">
-      <canvas ref={canvasRef} className="border border-elec-yellow/20 rounded shadow-lg" />
+    <div className="flex-1 overflow-hidden bg-gray-100 p-2 md:p-4 flex items-center justify-center relative">
+      <canvas ref={canvasRef} className="border border-gray-300 rounded shadow-lg bg-white" />
       
       {/* Zoom Controls - Floating */}
       <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 flex flex-col gap-1.5">

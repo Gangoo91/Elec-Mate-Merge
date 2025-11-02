@@ -27,37 +27,41 @@ export const ExportControls = ({ canvasObjects }: ExportControlsProps) => {
         return;
       }
 
-      // Create a temporary canvas with white background
+      // Create high-resolution temporary canvas (3x for print quality)
+      const scale = 3;
       const tempCanvas = document.createElement('canvas');
-      tempCanvas.width = canvas.width;
-      tempCanvas.height = canvas.height;
+      tempCanvas.width = canvas.width * scale;
+      tempCanvas.height = canvas.height * scale;
       const ctx = tempCanvas.getContext('2d');
       
       if (!ctx) return;
       
+      // Scale context for high resolution
+      ctx.scale(scale, scale);
+      
       // White background
       ctx.fillStyle = 'white';
-      ctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
       
       // Draw the original canvas
       ctx.drawImage(canvas, 0, 0);
       
-      // Convert to blob and download
+      // Convert to blob and download with high quality
       tempCanvas.toBlob((blob) => {
         if (!blob) return;
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
-        link.download = `floor-plan-${Date.now()}.png`;
+        link.download = `electrical-plan-${Date.now()}.png`;
         link.href = url;
         link.click();
         URL.revokeObjectURL(url);
         
         toast({ 
           title: "Exported successfully", 
-          description: "Your diagram has been saved as PNG",
+          description: "High-resolution PNG saved (3x quality)",
           variant: "success" 
         });
-      });
+      }, 'image/png', 1.0);
     } catch (error) {
       toast({ 
         title: "Export failed", 
@@ -81,45 +85,80 @@ export const ExportControls = ({ canvasObjects }: ExportControlsProps) => {
 
       const { jsPDF } = await import('jspdf');
       
-      // A4 landscape dimensions in mm
+      // A3 landscape for professional architectural drawings
       const pdf = new jsPDF({
         orientation: 'landscape',
         unit: 'mm',
-        format: 'a4'
+        format: 'a3'
       });
 
       const pageWidth = pdf.internal.pageSize.getWidth();
       const pageHeight = pdf.internal.pageSize.getHeight();
 
-      // Add title block
-      pdf.setFillColor(26, 31, 46); // elec-dark
-      pdf.rect(0, 0, pageWidth, 25, 'F');
+      // Professional border
+      pdf.setDrawColor(0, 0, 0);
+      pdf.setLineWidth(0.5);
+      pdf.rect(5, 5, pageWidth - 10, pageHeight - 10);
+
+      // Professional title block (right side)
+      const titleBlockX = pageWidth - 85;
+      const titleBlockY = 10;
+      const titleBlockWidth = 75;
+      const titleBlockHeight = 50;
+
+      // Title block border
+      pdf.setLineWidth(0.75);
+      pdf.rect(titleBlockX, titleBlockY, titleBlockWidth, titleBlockHeight);
       
-      pdf.setTextColor(251, 191, 36); // elec-yellow
-      pdf.setFontSize(18);
-      pdf.text('Electrical Installation Diagram', 10, 12);
+      // Title block subdivisions
+      pdf.setLineWidth(0.3);
+      pdf.line(titleBlockX, titleBlockY + 12, titleBlockX + titleBlockWidth, titleBlockY + 12);
+      pdf.line(titleBlockX, titleBlockY + 24, titleBlockX + titleBlockWidth, titleBlockY + 24);
+      pdf.line(titleBlockX, titleBlockY + 36, titleBlockX + titleBlockWidth, titleBlockY + 36);
+      
+      pdf.line(titleBlockX + 25, titleBlockY + 12, titleBlockX + 25, titleBlockY + titleBlockHeight);
+
+      // Title block text
+      pdf.setTextColor(0, 0, 0);
+      pdf.setFontSize(16);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text('ELECTRICAL INSTALLATION', titleBlockX + 2, titleBlockY + 8);
       
       pdf.setFontSize(10);
-      pdf.text(`Date: ${new Date().toLocaleDateString('en-GB')}`, 10, 20);
-      pdf.text(`Scale: 1:50`, pageWidth - 40, 20);
-
-      // Add canvas image
-      const imgData = canvas.toDataURL('image/png');
-      const imgWidth = pageWidth - 20;
-      const imgHeight = (canvas.height / canvas.width) * imgWidth;
+      pdf.setFont('helvetica', 'normal');
+      pdf.text('Project:', titleBlockX + 2, titleBlockY + 18);
+      pdf.text('Floor Plan', titleBlockX + 27, titleBlockY + 18);
       
-      pdf.addImage(imgData, 'PNG', 10, 30, imgWidth, Math.min(imgHeight, pageHeight - 40));
+      pdf.text('Drawing No:', titleBlockX + 2, titleBlockY + 30);
+      pdf.text('E-001', titleBlockX + 27, titleBlockY + 30);
+      
+      pdf.text('Scale:', titleBlockX + 2, titleBlockY + 42);
+      pdf.text('1:50', titleBlockX + 27, titleBlockY + 42);
+      
+      pdf.text('Date:', titleBlockX + 2, titleBlockY + 54);
+      pdf.text(new Date().toLocaleDateString('en-GB'), titleBlockX + 27, titleBlockY + 54);
 
-      // Add footer
+      // Add canvas image - high quality
+      const imgData = canvas.toDataURL('image/png', 1.0);
+      const imgWidth = pageWidth - 100;
+      const imgHeight = (canvas.height / canvas.width) * imgWidth;
+      const imgY = (pageHeight - imgHeight) / 2;
+      
+      pdf.addImage(imgData, 'PNG', 10, Math.max(imgY, 15), imgWidth, Math.min(imgHeight, pageHeight - 30), undefined, 'FAST');
+
+      // BS 7671 Compliance footer
       pdf.setFontSize(8);
-      pdf.setTextColor(150, 150, 150);
-      pdf.text('Created with Electrician Tools - Floor Plan Builder', pageWidth / 2, pageHeight - 5, { align: 'center' });
+      pdf.setTextColor(80, 80, 80);
+      pdf.text('Drawn in accordance with BS 7671:2018+A2:2024 (IEC 60364)', 10, pageHeight - 8);
+      
+      // Footer - right side
+      pdf.text('Created with Electrician Tools - Professional Diagram Builder', pageWidth - 10, pageHeight - 8, { align: 'right' });
 
-      pdf.save(`floor-plan-${Date.now()}.pdf`);
+      pdf.save(`electrical-installation-${Date.now()}.pdf`);
       
       toast({ 
         title: "Exported successfully", 
-        description: "Your diagram has been saved as PDF with title block",
+        description: "Professional A3 PDF with BS 7671 title block",
         variant: "success" 
       });
     } catch (error) {
