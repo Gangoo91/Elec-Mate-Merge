@@ -12,8 +12,15 @@ const OPENAI_MODEL = Deno.env.get('OPENAI_MODEL') || 'gpt-5-mini'; // Use GPT-5 
 
 /**
  * Phase 1: Content Quality Filter - Skip low-value chunks
+ * For practical_work: Trust canonical curation, enrich everything
  */
-function shouldEnrichChunk(item: any): boolean {
+function shouldEnrichChunk(item: any, taskType: string = 'bs7671'): boolean {
+  // For practical_work, bypass filter - items are already curated as canonical
+  if (taskType === 'practical_work') {
+    return true;
+  }
+  
+  // Strict filter for BS7671/health-safety content
   const content = (item.content || item.description || '').toLowerCase();
   
   // Min length check
@@ -1000,8 +1007,8 @@ serve(async (req) => {
 
     logger.info(`📦 Retrieved ${items.length} items (batch size: ${effectiveBatchSize})`);
 
-    // Phase 1: Filter quality items
-    const qualityItems = items.filter(item => shouldEnrichChunk(item));
+    // Phase 1: Filter quality items (bypass for practical_work)
+    const qualityItems = items.filter(item => shouldEnrichChunk(item, 'practical_work'));
     logger.info(`📊 Filtered ${items.length} → ${qualityItems.length} quality items (${((qualityItems.length / items.length) * 100).toFixed(1)}% pass rate)`);
 
     // Phase 6: Sort by priority
