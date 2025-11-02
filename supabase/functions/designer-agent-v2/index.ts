@@ -3,9 +3,13 @@ import { corsHeaders, serve } from '../_shared/deps.ts';
 import { createLogger } from '../_shared/logger.ts';
 import { handleBatchDesign } from './batch-design-handler.ts';
 
-const VERSION = 'v3.5.1-strategy3'; // Force redeploy with Strategy 3 fallback for outdoor socket fix
+const VERSION = 'v3.6.0-timeout-fix'; // Extended timeout for complex multi-circuit designs
 
 serve(async (req) => {
+  // Monitor request lifecycle for timeout debugging
+  req.signal?.addEventListener('abort', () => {
+    console.warn('⚠️ Request aborted by client or timeout');
+  });
   // Fix 5: Early health check response before imports (cold start optimization)
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });

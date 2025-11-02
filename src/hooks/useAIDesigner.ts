@@ -111,57 +111,56 @@ export const useAIDesigner = () => {
         const abortController = new AbortController();
         const timeoutId = setTimeout(() => abortController.abort(), CLIENT_TIMEOUT_MS);
 
-        const invokePromise = supabase.functions.invoke('designer-agent-v2', {
-          body: {
-            keepalive: true, // Fix 3: Add keepalive header hint
-            mode: 'batch-design',
-            aiConfig: {
-              model: 'openai/gpt-5-mini', // Proven reliable model from Lovable AI Gateway
-              maxTokens: 20000, // Balanced token limit for quality + speed
-              timeoutMs: 200000, // 200s (3m 20s) backend timeout - client waits 240s
-              noMemory: true,
-              ragPriority: {
-                design: 95,
-                bs7671: 85,
-                installation: 75
-              }
-            },
-            projectInfo: {
-              name: inputs.projectName,
-              location: inputs.location,
-              clientName: inputs.clientName,
-              electricianName: inputs.electricianName,
-              installationType: inputs.propertyType,
-              propertyAge: inputs.propertyAge,
-              existingInstallation: inputs.existingInstallation,
-              budgetLevel: inputs.budgetLevel,
-              additionalPrompt: inputs.additionalPrompt
-            },
-            incomingSupply: {
-              voltage: inputs.voltage,
-              phases: inputs.phases,
-              Ze: inputs.ze,
-              earthingSystem: inputs.earthingSystem,
-              pscc: inputs.pscc || 3500,
-              mainSwitchRating: inputs.mainSwitchRating || 100,
-              ambientTemp: inputs.ambientTemp || 30,
-              installationMethod: inputs.installationMethod || 'clipped-direct',
-              groupingFactor: inputs.groupingFactor || 1
-            },
-            circuits: inputs.circuits.map(c => ({
-              name: c.name,
-              loadType: c.loadType,
-              loadPower: c.loadPower,
-              cableLength: c.cableLength,
-              phases: c.phases,
-              specialLocation: c.specialLocation,
-              notes: c.notes
-            }))
-          }
-        });
-        
-        // Wrap with client-side timeout (withTimeout handles the actual timeout)
-        const { data, error: invokeError } = await withTimeout(invokePromise, CLIENT_TIMEOUT_MS);
+        // Keep connection alive with progress updates
+        const invokeStartTime = Date.now();
+        const keepaliveInterval = setInterval(() => {
+          const elapsedSeconds = Math.floor((Date.now() - invokeStartTime) / 1000);
+          setProgress(prev => ({
+            ...prev,
+            message: `${prev.message.split(' (')[0]} (${elapsedSeconds}s elapsed)`
+          }));
+        }, 10000); // Update every 10 seconds
+
+        let data, invokeError;
+        try {
+          const invokePromise = supabase.functions.invoke('designer-agent-v2', {
+            body: {
+              mode: 'batch-design',
+              projectInfo: {
+                name: inputs.projectName,
+                installationType: inputs.propertyType,
+                additionalPrompt: inputs.additionalPrompt || ''
+              },
+              incomingSupply: {
+                voltage: inputs.voltage || 230,
+                phases: inputs.phases || 'single',
+                Ze: inputs.ze || 0.35,
+                earthingSystem: inputs.earthingSystem || 'TN-C-S',
+                pscc: inputs.pscc || 3500,
+                mainSwitchRating: inputs.mainSwitchRating || 100,
+                ambientTemp: inputs.ambientTemp || 30,
+                installationMethod: inputs.installationMethod || 'clipped-direct',
+                groupingFactor: inputs.groupingFactor || 1
+              },
+              circuits: inputs.circuits.map(c => ({
+                name: c.name,
+                loadType: c.loadType,
+                loadPower: c.loadPower,
+                cableLength: c.cableLength,
+                phases: c.phases,
+                specialLocation: c.specialLocation,
+                notes: c.notes
+              }))
+            }
+          });
+          
+          // Wrap with extended client-side timeout  
+          const result = await withTimeout(invokePromise, 300000); // 5 minutes
+          data = result.data;
+          invokeError = result.error;
+        } finally {
+          clearInterval(keepaliveInterval);
+        }
 
         clearTimeout(timeoutId);
         
