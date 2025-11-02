@@ -3,6 +3,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { corsHeaders } from '../_shared/cors.ts';
 import { createLogger } from '../_shared/logger.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
 const OPENAI_MODEL = Deno.env.get('OPENAI_MODEL') || 'gpt-5-mini'; // Use GPT-5 Mini for complex reasoning
@@ -408,21 +409,25 @@ ${content}
 
 Return ONLY the JSON object with the "facets" array.`;
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${OPENAI_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: OPENAI_MODEL,
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt }
-      ],
-      max_completion_tokens: 4000
+  const response = await withTimeout(
+    fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: OPENAI_MODEL,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        max_completion_tokens: 10000
+      }),
     }),
-  });
+    Timeouts.PRACTICAL_WORK,
+    'Practical Work Enrichment GPT Call'
+  );
 
   if (!response.ok) {
     const errorText = await response.text();
