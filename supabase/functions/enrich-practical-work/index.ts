@@ -177,11 +177,11 @@ function ensureJsonArray(value: any): any[] {
   if (Array.isArray(value)) {
     return value.map(v => {
       if (typeof v === 'object') return v;
-      if (typeof v === 'string') return { step: v };
+      if (typeof v === 'string') return { task: v };
       return { value: String(v) };
     });
   }
-  if (typeof value === 'string') return [{ step: value }];
+  if (typeof value === 'string') return [{ task: value }];
   return [];
 }
 
@@ -220,6 +220,13 @@ MUST infer:
 - maintenance_tasks: (typical maintenance activities)
 - wear_indicators: (signs of deterioration)
 - replacement_criteria: (when to replace vs repair)
+
+**Fault Diagnosis Tasks (troubleshooting, diagnosing, repairing)**
+MUST infer:
+- common_failures: [{fault: "...", cause: "...", symptoms: "..."}]
+- troubleshooting_steps: ["Step 1: Check...", "Step 2: Test...", "Step 3: Measure..."]
+- diagnostic_tests: ["continuity test", "insulation resistance test", "voltage measurement"]
+- replacement_criteria: ["replace if resistance >1Ω", "replace if terminals burnt"]
 
 FIELD-SPECIFIC INFERENCE GUIDANCE:
 
@@ -379,8 +386,13 @@ JSON SCHEMA:
       "common_defects": ["loose connections"] (INFER common issues for equipment type),
       
       "maintenance_intervals": {"routine": "6 months"} (INFER based on equipment),
-      "maintenance_tasks": ["visual check", "functional test"] (GENERATE typical maintenance),
+      "maintenance_tasks": [{"task": "visual check", "frequency": "monthly"}] (GENERATE as JSONB array),
       "wear_indicators": ["discolouration"] (INFER for equipment type),
+      
+      "common_failures": [{"fault": "MCB won't reset", "cause": "persistent fault", "symptoms": "trips immediately"}] (if fault diagnosis),
+      "troubleshooting_steps": ["Isolate circuit", "Test Zs", "Check for N-E fault"] (if troubleshooting),
+      "diagnostic_tests": ["insulation resistance test", "earth loop impedance test"] (if diagnosis),
+      "replacement_criteria": ["replace if Zs >1.4Ω", "replace if terminals burnt"] (if repair/replace decision),
       
       "typical_duration_minutes": NUMBER (ALWAYS infer realistic duration),
       "skill_level": "apprentice|electrician|designer|specialist" (ALWAYS assign),
@@ -422,7 +434,7 @@ Return ONLY the JSON object with the "facets" array.`;
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ],
-        max_completion_tokens: 10000
+        max_completion_tokens: 20000
       }),
     }),
     Timeouts.PRACTICAL_WORK,
@@ -689,8 +701,14 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     
     // ✅ Fix 2: Add maintenance fields
     maintenance_intervals: toJsonOrNull(facet.maintenance_intervals),
-    maintenance_tasks: ensureArrayOfStrings(facet.maintenance_tasks),
+    maintenance_tasks: ensureJsonArray(facet.maintenance_tasks),
     wear_indicators: ensureArrayOfStrings(facet.wear_indicators),
+    
+    // ✅ NEW: Add fault diagnosis fields
+    common_failures: ensureJsonArray(facet.common_failures),
+    troubleshooting_steps: ensureArrayOfStrings(facet.troubleshooting_steps),
+    diagnostic_tests: ensureArrayOfStrings(facet.diagnostic_tests),
+    replacement_criteria: ensureArrayOfStrings(facet.replacement_criteria),
     
     // ✅ NEW: Add required core intelligence fields
     typical_duration_minutes: facet.typical_duration_minutes || null,
