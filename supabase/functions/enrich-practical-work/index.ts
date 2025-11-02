@@ -188,16 +188,35 @@ function ensureJsonArray(value: any): any[] {
 // ==================== GPT ENRICHMENT ====================
 
 async function callGPTForFacets(id: string, title: string, content: string, logger: any, retryCount = 0): Promise<any> {
-  const systemPrompt = `You are a UK electrical work intelligence AI. Your job is to UNDERSTAND electrical procedures and generate COMPLETE technical intelligence, not just extract what's written.
+  const systemPrompt = `You are a precision parser extracting structured electrical training data from real textbook content.
 
-CRITICAL MINDSET SHIFT:
-- DON'T just copy text → UNDERSTAND the electrical task and INFER complete details
-- If content mentions "install lighting circuit" → INFER: cable routing, termination methods, test procedures, typical duration, skill level
-- If content mentions "test RCD" → INFER: test equipment, acceptance criteria, test frequency, safety requirements
-- If content is sparse → USE YOUR ELECTRICAL KNOWLEDGE to fill gaps
-- IGNORE conceptual/theoretical content → Focus ONLY on ACTIONABLE work tasks
+PRIMARY DIRECTIVE: EXTRACT > INFER > GENERATE
 
-INFERENCE RULES BY TASK TYPE:
+EXTRACTION PRIORITY (in order):
+1. **EXTRACT FIRST**: If the source content contains procedures, test values, tools, specifications, or regulations → USE THEM VERBATIM
+2. **INFER SECOND**: If critical fields are missing but can be logically deduced from equipment type → infer using UK electrical standards
+3. **GENERATE LAST**: Only generate if genuinely absent AND essential for completeness
+
+CRITICAL RULES:
+- If step-by-step procedure exists in source → EXTRACT it word-for-word (do NOT paraphrase)
+- If test values/limits exist in source → USE EXACT NUMBERS from source
+- If tools are mentioned → USE EXACT TOOL NAMES from source
+- If BS 7671 regulations cited → PRESERVE EXACT regulation numbers
+- If duration mentioned → USE SOURCE VALUE, don't infer
+- ONLY infer when field is genuinely absent from source content
+
+EXTRACTION EXAMPLES:
+✅ Source: "Test insulation resistance between live conductors and earth. Acceptable reading ≥1MΩ at 500V DC"
+   Extract: test_procedures: ["Test insulation resistance between live conductors and earth"], acceptance_criteria: {"insulation_resistance": "≥1MΩ at 500V DC"}
+
+✅ Source: "Tools required: insulated screwdriver set, torque driver, cable strippers"
+   Extract: tools_required: ["insulated screwdriver set", "torque driver", "cable strippers"]
+
+❌ Source: "Test insulation resistance"
+   Don't infer: test_procedures: ["Isolate circuit", "Remove sensitive equipment", "Test L-E, N-E, L-N"]
+   Instead: Extract what's there, infer ONLY the missing essentials
+
+TASK TYPE RULES (EXTRACT if present, INFER if absent):
 
 **Installation Tasks (mounting, installing, connecting)**
 MUST infer:
@@ -415,9 +434,22 @@ QUALITY REQUIREMENTS:
 
 Return ONLY valid JSON, NO markdown, NO explanations.`;
 
-  const userPrompt = `Extract micro-facets from this UK electrical procedure:
+  const userPrompt = `SOURCE CONTENT (${content.length} characters):
 
+Topic: ${title}
+
+---FULL SOURCE TEXT---
 ${content}
+---END SOURCE TEXT---
+
+TASK: Extract all practical facets from the above source content.
+
+CRITICAL INSTRUCTIONS:
+1. READ the source content carefully
+2. EXTRACT procedures, test values, tools, specifications VERBATIM from source
+3. Only INFER fields that are genuinely absent but essential
+4. Preserve exact terminology, regulation numbers, and values from source
+5. Generate 8-20 distinct micro-facets (one per specific scenario)
 
 Return ONLY the JSON object with the "facets" array.`;
 
@@ -641,14 +673,17 @@ function inferFacetType(facet: any, index: number): string {
 
 async function enrichProcedure(supabase: any, item: any, logger: any): Promise<number> {
   const content = item.content || item.description || '';
+  const title = item.topic || 'Untitled';
   
   if (!content || content.length < 150) {
     logger.warn('Content too short', { id: item.id, length: content.length });
     return 0;
   }
 
-  // Call GPT to extract multi-facets
-  const intelligence = await callGPTForFacets(item.id, item.title ?? '', content, logger);
+  logger.info(`🔍 Extracting from source (${content.length} chars)`, { id: item.id, topic: title });
+
+  // Call GPT to extract multi-facets (passing full content)
+  const intelligence = await callGPTForFacets(item.id, title, content, logger);
   
   if (!intelligence || !intelligence.facets || intelligence.facets.length === 0) {
     logger.warn('No facets extracted', { id: item.id });
@@ -719,7 +754,15 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     common_mistakes: ensureArrayOfStrings(facet.common_mistakes),
     safety_requirements: toJsonOrNull(facet.safety_requirements),
     
-    confidence_score: facet.confidence_score || 0.85
+    confidence_score: facet.confidence_score || 0.85,
+    
+    // ✅ Source fidelity tracking (NEW)
+    source_fidelity: {
+      content_length: content.length,
+      extraction_timestamp: new Date().toISOString(),
+      model_used: OPENAI_MODEL,
+      extraction_mode: 'extract_first'
+    }
   }));
 
   // Fix 4: Add comprehensive error logging
@@ -778,7 +821,7 @@ serve(async (req) => {
     // Query items from practical_work
     const { data: items, error: queryError } = await supabase
       .from('practical_work')
-      .select('*')
+      .select('id, source_table, topic, content, metadata, is_canonical')
       .eq('is_canonical', true)
       .range(startFrom, startFrom + batchSize - 1);
 
