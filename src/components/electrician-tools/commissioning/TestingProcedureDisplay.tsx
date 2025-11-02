@@ -161,7 +161,39 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                     </div>
                     <p className="text-xs text-muted-foreground">{test.acceptanceCriteria}</p>
                     {test.expectedResult && (
-                      <p className="text-xs text-green-300 mt-1">Expected: {test.expectedResult}</p>
+                      <div className="mt-2">
+                        {typeof test.expectedResult === 'object' ? (
+                          <div className="space-y-1">
+                            {test.expectedResult.calculated && (
+                              <p className="text-xs text-muted-foreground">
+                                <span className="font-medium">Calculated:</span> {test.expectedResult.calculated}
+                              </p>
+                            )}
+                            {test.expectedResult.measured && (
+                              <p className="text-xs text-green-300">
+                                <span className="font-medium">Measured:</span> {test.expectedResult.measured}
+                              </p>
+                            )}
+                            {test.expectedResult.maximumPermitted && (
+                              <p className="text-xs text-muted-foreground">
+                                <span className="font-medium">Maximum:</span> {test.expectedResult.maximumPermitted}
+                              </p>
+                            )}
+                            {test.expectedResult.result && (
+                              <p className="text-xs font-semibold text-green-400">
+                                <span className="font-medium">Result:</span> {test.expectedResult.result}
+                              </p>
+                            )}
+                            {test.expectedResult.passFail && (
+                              <p className={`text-xs font-bold ${test.expectedResult.passFail.toLowerCase().includes('pass') ? 'text-green-400' : 'text-red-400'}`}>
+                                {test.expectedResult.passFail}
+                              </p>
+                            )}
+                          </div>
+                        ) : (
+                          <p className="text-xs text-green-300">Expected: {test.expectedResult}</p>
+                        )}
+                      </div>
                     )}
                   </div>
 
@@ -244,7 +276,24 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                   {test.calculation && (
                     <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
                       <div className="text-sm font-medium text-purple-300 mb-1">Calculation</div>
-                      <p className="text-xs text-muted-foreground font-mono">{test.calculation}</p>
+                      {typeof test.calculation === 'object' ? (
+                        <div className="space-y-1">
+                          {test.calculation.formula && (
+                            <p className="text-xs text-purple-300 font-mono">{test.calculation.formula}</p>
+                          )}
+                          {test.calculation.Ze && (
+                            <p className="text-xs text-muted-foreground">Ze = {test.calculation.Ze}</p>
+                          )}
+                          {test.calculation.R1R2 && (
+                            <p className="text-xs text-muted-foreground">R1+R2 = {test.calculation.R1R2}</p>
+                          )}
+                          {test.calculation.expectedZs && (
+                            <p className="text-xs text-purple-300 font-semibold">Expected Zs = {test.calculation.expectedZs}</p>
+                          )}
+                        </div>
+                      ) : (
+                        <p className="text-xs text-muted-foreground font-mono">{test.calculation}</p>
+                      )}
                     </div>
                   )}
 
@@ -256,7 +305,39 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                     </div>
                     <p className="text-xs text-muted-foreground">{test.acceptanceCriteria}</p>
                     {test.expectedResult && (
-                      <p className="text-xs text-green-300 mt-1">Expected: {test.expectedResult}</p>
+                      <div className="mt-2">
+                        {typeof test.expectedResult === 'object' ? (
+                          <div className="space-y-1">
+                            {test.expectedResult.calculated && (
+                              <p className="text-xs text-muted-foreground">
+                                <span className="font-medium">Calculated:</span> {test.expectedResult.calculated}
+                              </p>
+                            )}
+                            {test.expectedResult.measured && (
+                              <p className="text-xs text-green-300">
+                                <span className="font-medium">Measured:</span> {test.expectedResult.measured}
+                              </p>
+                            )}
+                            {test.expectedResult.maximumPermitted && (
+                              <p className="text-xs text-muted-foreground">
+                                <span className="font-medium">Maximum:</span> {test.expectedResult.maximumPermitted}
+                              </p>
+                            )}
+                            {test.expectedResult.result && (
+                              <p className="text-xs font-semibold text-green-400">
+                                <span className="font-medium">Result:</span> {test.expectedResult.result}
+                              </p>
+                            )}
+                            {test.expectedResult.passFail && (
+                              <p className={`text-xs font-bold ${test.expectedResult.passFail.toLowerCase().includes('pass') ? 'text-green-400' : 'text-red-400'}`}>
+                                {test.expectedResult.passFail}
+                              </p>
+                            )}
+                          </div>
+                        ) : (
+                          <p className="text-xs text-green-300">Expected: {test.expectedResult}</p>
+                        )}
+                      </div>
                     )}
                   </div>
 

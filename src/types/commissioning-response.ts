@@ -4,14 +4,32 @@ export interface VisualInspectionCheckpoint {
   reference?: string;
 }
 
+export interface TestResult {
+  calculated?: string;
+  measured?: string;
+  maximumPermitted?: string;
+  result?: string;
+  passFail?: string;
+  marginOfSafety?: string;
+  tolerance?: string;
+  calculationMethod?: string;
+}
+
+export interface CalculationBreakdown {
+  formula?: string;
+  Ze?: string;
+  R1R2?: string;
+  expectedZs?: string;
+}
+
 export interface TestProcedure {
   testName: string;
   regulation: string;
   instrumentSetup: string;
   procedure: string[];
   acceptanceCriteria: string;
-  expectedResult?: string;
-  calculation?: string;
+  expectedResult?: TestResult | string;
+  calculation?: CalculationBreakdown | string;
   troubleshooting?: string[];
 }
 
