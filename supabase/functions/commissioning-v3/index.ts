@@ -460,7 +460,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
         suggestedNextAgents: suggestNextAgents(
           'commissioning',
           query,
-          responseStr,
+          enrichedResponse.response,
           (previousAgentOutputs || []).map((o: any) => o.agent)
         ).map((s: any) => ({
           ...s,
