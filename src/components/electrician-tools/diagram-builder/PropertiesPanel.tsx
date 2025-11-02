@@ -119,7 +119,28 @@ export const PropertiesPanel = ({ selectedObject, onUpdate }: PropertiesPanelPro
                 value={selectedObject.text || ""}
                 onChange={(e) => onUpdate({ text: e.target.value })}
                 className="bg-elec-dark border-elec-yellow/20 text-elec-light"
+                autoFocus
               />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-elec-light text-xs">Font Size</Label>
+              <div className="flex gap-2">
+                {[12, 16, 20, 24, 32].map((size) => (
+                  <Button
+                    key={size}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => onUpdate({ fontSize: size })}
+                    className={`flex-1 h-8 text-xs border-elec-yellow/30 ${
+                      selectedObject.fontSize === size 
+                        ? 'bg-elec-yellow/20 text-elec-yellow' 
+                        : 'text-elec-yellow hover:bg-elec-yellow/10'
+                    }`}
+                  >
+                    {size}
+                  </Button>
+                ))}
+              </div>
             </div>
           </>
         )}

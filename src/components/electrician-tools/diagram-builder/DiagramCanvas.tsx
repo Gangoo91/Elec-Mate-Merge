@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { Canvas as FabricCanvas, Rect, Line, Path, FabricText, FabricObject } from "fabric";
+import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from "react";
+import { Canvas as FabricCanvas, Rect, Line, Path, FabricText, FabricObject, Group } from "fabric";
 import type { CanvasObject } from "@/pages/electrician-tools/ai-tools/DiagramBuilderPage";
 import { electricalSymbols } from "./symbols/electricalSymbols";
 import { ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
@@ -14,20 +14,147 @@ interface DiagramCanvasProps {
   snapEnabled: boolean;
 }
 
-export const DiagramCanvas = ({
+export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(({
   activeTool,
   selectedSymbolId,
   objects,
   onObjectsChange,
   gridEnabled,
   snapEnabled,
-}: DiagramCanvasProps) => {
+}, ref) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fabricCanvasRef = useRef<FabricCanvas | null>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [startPoint, setStartPoint] = useState<{ x: number; y: number } | null>(null);
   const undoStack = useRef<CanvasObject[][]>([]);
   const redoStack = useRef<CanvasObject[][]>([]);
+
+  // Expose methods to parent via ref
+  useImperativeHandle(ref, () => ({
+    renderAIRoom: (roomData: any) => {
+      if (!fabricCanvasRef.current) return;
+      
+      console.log('🎨 Rendering AI room:', roomData);
+      const canvas = fabricCanvasRef.current;
+      const scale = 50; // 1m = 50px
+      const offsetX = 100;
+      const offsetY = 100;
+      
+      // Clear existing objects
+      canvas.clear();
+      
+      // Draw walls as lines
+      const walls = roomData.walls || [];
+      let currentX = offsetX;
+      let currentY = offsetY;
+      
+      walls.forEach((wall: any) => {
+        const length = wall.length * scale;
+        let endX = currentX;
+        let endY = currentY;
+        
+        // Calculate wall endpoints
+        if (wall.id === 'north') {
+          endX = currentX + length;
+        } else if (wall.id === 'east') {
+          endY = currentY + length;
+        } else if (wall.id === 'south') {
+          endX = currentX - length;
+        } else if (wall.id === 'west') {
+          endY = currentY - length;
+        }
+        
+        // Draw wall
+        const wallLine = new Line([currentX, currentY, endX, endY], {
+          stroke: '#FFD700',
+          strokeWidth: 2,
+          selectable: false,
+        });
+        canvas.add(wallLine);
+        
+        // Add dimension label
+        const midX = (currentX + endX) / 2;
+        const midY = (currentY + endY) / 2;
+        const label = new FabricText(`${wall.length}m`, {
+          left: midX,
+          top: midY - 15,
+          fontSize: 14,
+          fill: '#FFD700',
+          fontFamily: 'Arial',
+          selectable: false,
+        });
+        canvas.add(label);
+        
+        currentX = endX;
+        currentY = endY;
+      });
+      
+      // Place electrical symbols
+      const symbols = roomData.symbols || [];
+      symbols.forEach((symbol: any) => {
+        const electricalSymbol = electricalSymbols.find(s => s.id === symbol.type);
+        if (!electricalSymbol) {
+          console.warn(`Symbol not found: ${symbol.type}`);
+          return;
+        }
+        
+        let symbolX = offsetX + 20;
+        let symbolY = offsetY + 20;
+        
+        // Calculate symbol position
+        if (symbol.position === 'center') {
+          const roomWidth = walls[0]?.length * scale || 200;
+          const roomHeight = walls[1]?.length * scale || 200;
+          symbolX = offsetX + roomWidth / 2;
+          symbolY = offsetY + roomHeight / 2;
+        } else if (symbol.wall) {
+          const positionOnWall = (symbol.position || 0) * scale;
+          
+          if (symbol.wall === 'north') {
+            symbolX = offsetX + positionOnWall;
+            symbolY = offsetY - 20;
+          } else if (symbol.wall === 'south') {
+            symbolX = offsetX + positionOnWall;
+            symbolY = offsetY + (walls[1]?.length * scale || 0) + 20;
+          } else if (symbol.wall === 'east') {
+            symbolX = offsetX + (walls[0]?.length * scale || 0) + 20;
+            symbolY = offsetY + positionOnWall;
+          } else if (symbol.wall === 'west') {
+            symbolX = offsetX - 20;
+            symbolY = offsetY + positionOnWall;
+          }
+        }
+        
+        // Create symbol using SVG path
+        const symbolPath = new Path(electricalSymbol.svg, {
+          left: symbolX,
+          top: symbolY,
+          fill: '#FFD700',
+          scaleX: 1.5,
+          scaleY: 1.5,
+          selectable: true,
+        });
+        
+        canvas.add(symbolPath);
+      });
+      
+      // Add room title
+      if (roomData.room?.name) {
+        const title = new FabricText(roomData.room.name, {
+          left: offsetX,
+          top: offsetY - 40,
+          fontSize: 20,
+          fill: '#FFD700',
+          fontFamily: 'Arial',
+          fontWeight: 'bold',
+          selectable: false,
+        });
+        canvas.add(title);
+      }
+      
+      canvas.renderAll();
+    }
+  }));
 
   // Initialize Fabric.js canvas
   useEffect(() => {
@@ -528,4 +655,6 @@ export const DiagramCanvas = ({
       </div>
     </div>
   );
-};
+});
+
+DiagramCanvas.displayName = 'DiagramCanvas';

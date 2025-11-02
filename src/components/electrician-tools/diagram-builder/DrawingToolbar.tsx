@@ -35,6 +35,14 @@ export const DrawingToolbar = ({
   return (
     <div className="flex items-center justify-between gap-2 p-3 md:p-4">
       <div className="flex items-center gap-1 md:gap-2">
+        {/* Text tool hint when active */}
+        {activeTool === 'text' && (
+          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-elec-yellow/20 border border-elec-yellow/40 rounded-lg mr-2 animate-fade-in">
+            <Type className="h-3.5 w-3.5 text-elec-yellow" />
+            <span className="text-xs font-medium text-elec-yellow">Click canvas to add text</span>
+          </div>
+        )}
+        
         {tools.map((tool) => {
           const Icon = tool.icon;
           return (

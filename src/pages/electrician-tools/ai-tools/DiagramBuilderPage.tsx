@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ArrowLeft, Save, Download } from "lucide-react";
+import { useState, useRef } from "react";
+import { ArrowLeft, Save, Download, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { DiagramCanvas } from "@/components/electrician-tools/diagram-builder/DiagramCanvas";
@@ -7,6 +7,7 @@ import { SymbolLibrary } from "@/components/electrician-tools/diagram-builder/Sy
 import { DrawingToolbar } from "@/components/electrician-tools/diagram-builder/DrawingToolbar";
 import { ExportControls } from "@/components/electrician-tools/diagram-builder/ExportControls";
 import { PropertiesPanel } from "@/components/electrician-tools/diagram-builder/PropertiesPanel";
+import { AIRoomBuilderDialog } from "@/components/electrician-tools/diagram-builder/AIRoomBuilderDialog";
 import { toast } from "@/hooks/use-toast";
 
 export type DrawingTool = "select" | "line" | "rectangle" | "text" | "symbol" | "eraser";
@@ -31,8 +32,10 @@ const DiagramBuilderPage = () => {
   const [gridEnabled, setGridEnabled] = useState(true);
   const [snapEnabled, setSnapEnabled] = useState(true);
   const [selectedObject, setSelectedObject] = useState<CanvasObject | null>(null);
+  const [aiDialogOpen, setAiDialogOpen] = useState(false);
   const undoStackRef = useState<CanvasObject[][]>([]);
   const redoStackRef = useState<CanvasObject[][]>([]);
+  const canvasRef = useRef<any>(null);
 
   const handleSave = () => {
     const projectData = {
@@ -96,6 +99,20 @@ const DiagramBuilderPage = () => {
     setSelectedObject({ ...selectedObject, ...updates });
   };
 
+  const handleRoomGenerated = (roomData: any) => {
+    console.log('🏠 Room data received:', roomData);
+    
+    // Pass room data to canvas for rendering
+    if (canvasRef.current?.renderAIRoom) {
+      canvasRef.current.renderAIRoom(roomData);
+      toast({ 
+        title: "Room generated!", 
+        description: `${roomData.room.name} diagram created successfully`,
+        variant: "success" 
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-elec-dark flex flex-col">
       {/* Header - Compact on mobile */}
@@ -119,6 +136,14 @@ const DiagramBuilderPage = () => {
             </div>
 
             <div className="flex items-center gap-1 md:gap-2">
+              <Button
+                onClick={() => setAiDialogOpen(true)}
+                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold gap-1.5 h-8 md:h-9 px-2 md:px-3 text-xs md:text-sm"
+              >
+                <Sparkles className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                <span className="hidden sm:inline">AI Room</span>
+              </Button>
+              
               <Button
                 variant="outline"
                 size="icon"
@@ -150,6 +175,7 @@ const DiagramBuilderPage = () => {
         {/* Canvas Area */}
         <div className="flex-1 flex flex-col overflow-hidden">
           <DiagramCanvas
+            ref={canvasRef}
             activeTool={activeTool}
             selectedSymbolId={selectedSymbolId}
             objects={canvasObjects}
@@ -191,6 +217,13 @@ const DiagramBuilderPage = () => {
           />
         </div>
       </div>
+
+      {/* AI Room Builder Dialog */}
+      <AIRoomBuilderDialog
+        open={aiDialogOpen}
+        onOpenChange={setAiDialogOpen}
+        onRoomGenerated={handleRoomGenerated}
+      />
     </div>
   );
 };
