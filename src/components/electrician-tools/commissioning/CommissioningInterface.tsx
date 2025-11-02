@@ -399,7 +399,12 @@ const CommissioningInterface = () => {
           <div className="bg-muted/50 rounded-lg p-4 text-sm">
             {results?.response ? (
               <div className="prose prose-sm dark:prose-invert max-w-none">
-                <div dangerouslySetInnerHTML={{ __html: results.response.replace(/\n/g, '<br />') }} />
+                <div dangerouslySetInnerHTML={{ 
+                  __html: (typeof results.response === 'string' 
+                    ? results.response 
+                    : results.response?.response || JSON.stringify(results.response)
+                  ).replace(/\n/g, '<br />') 
+                }} />
               </div>
             ) : (
               <p className="text-muted-foreground">Results will appear here...</p>
