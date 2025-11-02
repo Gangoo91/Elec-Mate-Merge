@@ -34,7 +34,7 @@ serve(async (req) => {
     
     const { data: userData, error: userError } = await withTimeout(
       supabaseClient.auth.getUser(token),
-      Timeouts.QUICK,
+      Timeouts.STANDARD, // Increased from QUICK (5s) to STANDARD (30s) to handle slow auth responses
       'user authentication'
     );
     
