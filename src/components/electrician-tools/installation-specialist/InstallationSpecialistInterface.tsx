@@ -266,19 +266,17 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
 
         if (!response?.success) throw new Error(response?.error || 'Failed to generate installation method');
 
-        // FIX: Correct field mapping for installer-v3 response
-        const steps = response.structuredData?.installationSteps || 
-                      (response as any).installationSteps || 
-                      (response as any).methodStatementSteps || [];
+        // Match installer-v3 response structure: response.data.steps
+        const steps = response.data?.steps || [];
 
         const installationSteps = steps.map((step: any, index: number) => ({
-          stepNumber: step.step || step.stepNumber || index + 1,
-          title: step.title || step.stepTitle || `Step ${index + 1}`,
-          content: step.description || step.content || '',
-          safety: step.safetyNotes || step.safetyRequirements || [],
-          toolsRequired: step.tools || step.equipmentNeeded || [],
-          materialsNeeded: step.materials || [],
-          estimatedDuration: step.estimatedTime || step.estimatedDuration || step.duration || 'Not specified',
+          stepNumber: step.stepNumber || index + 1,
+          title: step.title || `Step ${index + 1}`,
+          content: step.description || '',
+          safety: step.safetyRequirements || [],
+          toolsRequired: step.equipmentNeeded || [],
+          materialsNeeded: [],
+          estimatedDuration: step.estimatedDuration || 'Not specified',
           riskLevel: (step.riskLevel || 'medium') as 'low' | 'medium' | 'high'
         }));
 

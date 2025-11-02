@@ -43,6 +43,7 @@ export interface AgentResponse {
   response?: string;
   result?: any;
   error?: string;
+  data?: any;
   structuredData?: any;
   enrichment?: {
     displayHints?: {
