@@ -7804,6 +7804,24 @@ export type Database = {
         }[]
       }
       get_current_user_role: { Args: never; Returns: string }
+      get_facet_distribution_stats: {
+        Args: never
+        Returns: {
+          avg_per_source: number
+          exactly_8: number
+          max_facets: number
+          min_facets: number
+          over_200: number
+          quality_score: number
+          range_101_200: number
+          range_21_50: number
+          range_51_100: number
+          range_9_20: number
+          total_facets: number
+          total_sources: number
+          under_8: number
+        }[]
+      }
       get_next_biweekly_refresh: { Args: never; Returns: string }
       get_next_sunday_education_refresh: { Args: never; Returns: string }
       get_next_sunday_market_refresh: { Args: never; Returns: string }

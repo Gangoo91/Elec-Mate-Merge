@@ -31,12 +31,15 @@ export const FacetDistributionStats = () => {
   const fetchDistribution = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.rpc('get_facet_distribution_stats');
+      const { data, error } = await supabase
+        .from('facet_distribution_view')
+        .select('*')
+        .single();
       
       if (error) throw error;
 
-      if (data && data.length > 0) {
-        const result = data[0];
+      if (data) {
+        const result = data;
         
         // Parse the ranges from the result
         const ranges: FacetRange[] = [
