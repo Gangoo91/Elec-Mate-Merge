@@ -348,7 +348,7 @@ export const useAIDesigner = () => {
       }
 
       // Complete progress to 100%
-      setProgress({ stage: 5, message: 'Design complete!', percent: 100 });
+      setProgress({ stage: 8, message: 'Design complete!', percent: 100 });
       
       // Validate design structure before accepting
       const hasInvalidCircuits = data.design.circuits.some((c: any) => !c.protectionDevice);

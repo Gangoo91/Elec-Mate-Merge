@@ -10,10 +10,12 @@ interface DesignProcessingViewProps {
 export const DesignProcessingView = ({ progress }: DesignProcessingViewProps) => {
   const stages = [
     'Understanding your requirements...',
+    'Extracting circuits from description...',
     'Searching BS 7671 for circuit types...',
     'AI is designing circuits...',
     'Validating compliance...',
-    'Finalising design...'
+    'Finalising documentation...',
+    'Downloading design data...'
   ];
 
   return (
