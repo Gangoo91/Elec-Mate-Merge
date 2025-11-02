@@ -1,4 +1,4 @@
-import { Brain, Search, Wrench, AlertTriangle, CheckCircle, Megaphone, Calendar } from "lucide-react";
+import { Brain, Search, Wrench, AlertTriangle, CheckCircle, Megaphone, Calendar, PenTool } from "lucide-react";
 
 export const toolOptions = [
   { 
@@ -42,5 +42,11 @@ export const toolOptions = [
     label: "Client Explainer", 
     icon: Megaphone,
     description: "Convert technical findings into client-friendly explanations"
+  },
+  { 
+    value: "diagram-builder", 
+    label: "Circuit Diagram Builder", 
+    icon: PenTool,
+    description: "Draw floor plans, circuit layouts & installation diagrams with drag-and-drop symbols"
   }
 ];
