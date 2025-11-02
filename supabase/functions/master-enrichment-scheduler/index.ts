@@ -76,8 +76,8 @@ const ENRICHMENT_TASKS: EnrichmentTask[] = [
   // Phase 3: Pricing Intelligence (Priority 3)
   { name: 'Pricing Intelligence', functionName: 'enrich-pricing-intelligence', sourceTable: 'pricing_embeddings', targetTable: 'pricing_intelligence', batchSize: 10, priority: 3, workerCount: 6 },
   
-  // Phase 4: Practical Work Unified Enrichment (Priority 4) - ✅ 20 WORKERS FOR SPEED
-  { name: 'Practical Work', functionName: 'enrich-practical-work', sourceTable: 'practical_work', targetTable: 'practical_work_intelligence', batchSize: 15, priority: 4, filter: { is_canonical: true }, workerCount: 20 },
+  // Phase 4: Practical Work Unified Enrichment (Priority 4) - ✅ 6-item batches, 2 concurrent workers
+  { name: 'Practical Work', functionName: 'enrich-practical-work', sourceTable: 'practical_work', targetTable: 'practical_work_intelligence', batchSize: 6, priority: 4, filter: { is_canonical: true }, workerCount: 2 },
 ];
 
 // Global worker state tracking
@@ -1422,6 +1422,9 @@ async function continuousProcessor(
             await processNextBatch(supabase, jobId, task);
             processedCount++;
             
+            // Add 500ms inter-batch delay to reduce gateway pressure
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
           } catch (error) {
             // No more batches or error - exit gracefully
             if (processedCount > 0) {
@@ -1612,8 +1615,8 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
     let response;
     let invokeError;
     
-    // PHASE 3: Extended retry with exponential backoff (5 retries, up to 30s delay)
-    for (let attempt = 0; attempt < 5; attempt++) {
+    // Reduced retry with exponential backoff + jitter (3 attempts, 2-8s delays)
+    for (let attempt = 0; attempt < 3; attempt++) {
       response = await supabase.functions.invoke(task.functionName, {
         body: {
           batchSize: task.batchSize,
@@ -1629,10 +1632,12 @@ async function processNextBatch(supabase: any, jobId: string, task: EnrichmentTa
       }
       
       invokeError = response.error;
-      const delay = Math.min(1000 * Math.pow(2, attempt), 30000);
-      console.warn(`⚠️ Invoke attempt ${attempt + 1}/5 failed for ${task.functionName} (retry in ${delay}ms):`, response.error);
+      const baseDelay = 2000 * Math.pow(2, attempt); // 2s, 4s, 8s
+      const jitter = Math.random() * 1000; // 0-1s jitter
+      const delay = Math.min(baseDelay + jitter, 10000);
+      console.warn(`⚠️ Invoke attempt ${attempt + 1}/3 failed for ${task.functionName} (retry in ${Math.round(delay)}ms):`, response.error);
       
-      if (attempt < 4) {
+      if (attempt < 2) {
         await new Promise(resolve => setTimeout(resolve, delay));
       }
     }

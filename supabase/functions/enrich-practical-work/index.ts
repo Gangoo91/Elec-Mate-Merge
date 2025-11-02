@@ -187,9 +187,10 @@ function ensureJsonArray(value: any): any[] {
 
 // ==================== GPT ENRICHMENT ====================
 
-async function callGPTForFacets(id: string, title: string, content: string, logger: any, retryCount = 0, truncateOnRetry = false): Promise<any> {
-  // Truncate content on retry to avoid timeouts
-  const processedContent = (retryCount > 0 && truncateOnRetry) ? content.slice(0, 5000) : content;
+async function callGPTForFacets(id: string, title: string, content: string, logger: any, retryCount = 0, compactMode = false): Promise<any> {
+  // Compact mode: shorter content + fewer facets for retry
+  const processedContent = compactMode ? content.slice(0, 4500) : content.slice(0, 12000);
+  const targetFacets = compactMode ? '4-8' : '8-20';
   
   const systemPrompt = `You are a precision parser extracting structured electrical training data from real textbook content.
 
@@ -380,7 +381,7 @@ RULE: If generating cleaning tasks for electrical equipment:
 
 If unsure → DO NOT generate maintenance_tasks field at all
 
-Generate 8-20 DISTINCT micro-facets. Each facet = ONE specific scenario with COMPLETE intelligence.
+Generate ${targetFacets} DISTINCT micro-facets. Each facet = ONE specific scenario with COMPLETE intelligence.
 
 JSON SCHEMA:
 {
@@ -479,12 +480,9 @@ Return ONLY the JSON object with the "facets" array.`;
   if (!response.ok) {
     const errorText = await response.text();
     
-    // Retry on 504 timeout with truncated content
-    if (response.status === 504 && retryCount < 2) {
-      logger.warn(`⏱️ Timeout on attempt ${retryCount + 1}, retrying with truncated content...`, { 
-        originalLength: content.length,
-        status: response.status 
-      });
+    // Retry on 504 timeout with compact mode
+    if (response.status === 504 && retryCount < 1) {
+      logger.warn(`⏱️ 504 timeout, retrying in compact mode...`, { id });
       return callGPTForFacets(id, title, content, logger, retryCount + 1, true);
     }
     
@@ -502,14 +500,30 @@ Return ONLY the JSON object with the "facets" array.`;
     throw new Error('No choices returned from OpenAI API');
   }
 
+  const finishReason = choice.finish_reason;
   logger.debug('GPT response received', {
-    finish_reason: choice.finish_reason,
+    finish_reason: finishReason,
     has_content: !!choice.message?.content,
     model: OPENAI_MODEL
   });
 
+  // Retry on "length" stop with compact mode
+  if (finishReason === 'length' && retryCount < 1) {
+    logger.warn(`🔁 Hit token limit, retrying in compact mode...`, { id });
+    return callGPTForFacets(id, title, content, logger, retryCount + 1, true);
+  }
+
   // Extract from message.content (no tool_calls defined in request)
   const gptResponse = choice.message.content;
+  
+  if (!gptResponse) {
+    if (!compactMode && retryCount < 1) {
+      logger.info('Retrying due to empty response...', { id });
+      return callGPTForFacets(id, title, content, logger, retryCount + 1, true);
+    }
+    logger.error('Empty response from GPT', { finish_reason: finishReason, model: OPENAI_MODEL, id });
+    throw new Error('Empty GPT response');
+  }
   
   if (!gptResponse || gptResponse.trim() === '') {
     logger.error('Empty response from GPT', { 
@@ -823,8 +837,8 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Query items from practical_work (enforce 6-item batch limit)
-    const effectiveBatchSize = Math.min(batchSize || 6, 6); // Cap at 6 items
+    // Enforce 6-item batch limit (HARD CAP)
+    const effectiveBatchSize = Math.min(batchSize || 6, 6);
     const { data: items, error: queryError } = await supabase
       .from('practical_work')
       .select('id, source_table, topic, content, metadata, is_canonical')
@@ -843,7 +857,7 @@ serve(async (req) => {
       });
     }
 
-    logger.info(`📦 Retrieved ${items.length} items`);
+    logger.info(`📦 Retrieved ${items.length} items (batch size: ${effectiveBatchSize})`);
 
     // Phase 1: Filter quality items
     const qualityItems = items.filter(item => shouldEnrichChunk(item));
@@ -861,8 +875,9 @@ serve(async (req) => {
     let totalFacets = 0;
     let lastHeartbeat = Date.now();
 
-    for (let i = 0; i < qualityItems.length; i++) {
-      const item = qualityItems[i];
+    // Process with concurrency limit (2 at a time)
+    for (let i = 0; i < qualityItems.length; i += 2) {
+      const batch = qualityItems.slice(i, Math.min(i + 2, qualityItems.length));
       
       // Heartbeat every 15 seconds
       if (Date.now() - lastHeartbeat > 15000) {
@@ -874,12 +889,16 @@ serve(async (req) => {
         lastHeartbeat = Date.now();
       }
 
-      try {
-        const facetCount = await enrichProcedure(supabase, item, logger);
-        totalFacets += facetCount;
-      } catch (error) {
-        logger.error(`Failed to enrich item ${item.id}`, { error: error.message });
-      }
+      const results = await Promise.allSettled(
+        batch.map(async (item) => {
+          try {
+            const facetCount = await enrichProcedure(supabase, item, logger);
+            totalFacets += facetCount;
+          } catch (error) {
+            logger.error(`Failed to enrich item ${item.id}`, { error: error.message });
+          }
+        })
+      );
     }
 
     await supabase.from('batch_progress').update({
