@@ -823,6 +823,11 @@ export default function EnrichmentConsole() {
         )}
       </Card>
 
+      {/* Facet Distribution Dashboard (Practical Work only) */}
+      {selectedTask === 'practical_work' && (
+        <FacetDistributionStats />
+      )}
+
       {/* Missing Items Alert (All Tasks) */}
       {stats.sourceTotal > stats.sourceEnriched && (
         <Card className="p-4 border-warning bg-warning/5">

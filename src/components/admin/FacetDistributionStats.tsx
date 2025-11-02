@@ -34,8 +34,7 @@ export const FacetDistributionStats = () => {
       // Query practical_work_intelligence and calculate distribution
       const { data: facetData, error } = await supabase
         .from('practical_work_intelligence')
-        .select('practical_work_id')
-        .eq('facet_type', 'primary');
+        .select('practical_work_id');
       
       if (error) throw error;
 
