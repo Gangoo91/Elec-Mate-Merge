@@ -403,9 +403,9 @@ const CommissioningInterface = () => {
       {/* 6. RESULTS DISPLAY (when showResults) */}
       {showResults && (
         <Card className="p-3 sm:p-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+          <div className="flex flex-col gap-3 mb-4">
             <h4 className="font-semibold text-lg">Testing Procedure Results</h4>
-            <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="flex items-center gap-2 flex-wrap overflow-x-auto pb-1">
               <Button 
                 type="button"
                 size="sm" 
