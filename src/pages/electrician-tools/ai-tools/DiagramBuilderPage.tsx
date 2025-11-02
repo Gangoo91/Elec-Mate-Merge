@@ -98,43 +98,35 @@ const DiagramBuilderPage = () => {
 
   return (
     <div className="min-h-screen bg-elec-dark flex flex-col">
-      {/* Header */}
+      {/* Header - Compact on mobile */}
       <div className="border-b border-elec-yellow/20 bg-elec-card">
-        <div className="px-4 py-3">
+        <div className="px-3 py-2 md:px-4 md:py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Link to="/electrician-tools/ai-tooling">
+            <div className="flex items-center gap-2 md:gap-3">
+              <Link to="/electrician/ai-tooling">
                 <Button 
                   variant="outline" 
-                  size="sm"
-                  className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  size="icon"
+                  className="h-8 w-8 md:h-9 md:w-9 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
                 >
                   <ArrowLeft className="h-4 w-4" />
                 </Button>
               </Link>
               <div>
-                <h1 className="text-lg md:text-xl font-bold text-elec-light">Circuit Diagram Builder</h1>
-                <p className="text-xs text-elec-light/60">Floor Plan Mode</p>
+                <h1 className="text-base md:text-xl font-bold text-elec-light">Diagram Builder</h1>
+                <p className="text-[10px] md:text-xs text-elec-light/60 hidden sm:block">BS 7671 Symbols</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 md:gap-2">
               <Button
                 variant="outline"
-                size="sm"
-                onClick={handleLoad}
-                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hidden md:flex"
-              >
-                Load
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
+                size="icon"
                 onClick={handleSave}
-                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                className="h-8 w-8 md:h-9 md:w-9 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                title="Save"
               >
-                <Save className="h-4 w-4 md:mr-2" />
-                <span className="hidden md:inline">Save</span>
+                <Save className="h-3 w-3 md:h-4 md:w-4" />
               </Button>
               <ExportControls canvasObjects={canvasObjects} />
             </div>
@@ -174,7 +166,7 @@ const DiagramBuilderPage = () => {
         />
       </div>
 
-      {/* Bottom Toolbar - Mobile */}
+      {/* Bottom Panel - Mobile & Desktop */}
       <div className="border-t border-elec-yellow/20 bg-elec-card">
         <DrawingToolbar
           activeTool={activeTool}
@@ -187,8 +179,8 @@ const DiagramBuilderPage = () => {
           onRedo={handleRedo}
         />
         
-        {/* Mobile Symbol Library Drawer Trigger */}
-        <div className="md:hidden px-4 pb-4">
+        {/* Mobile Symbol Quick Access */}
+        <div className="md:hidden">
           <SymbolLibrary 
             onSymbolSelect={(symbolId) => {
               setSelectedSymbolId(symbolId);

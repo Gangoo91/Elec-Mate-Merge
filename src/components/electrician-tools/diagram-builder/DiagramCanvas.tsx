@@ -33,9 +33,14 @@ export const DiagramCanvas = ({
   useEffect(() => {
     if (!canvasRef.current) return;
 
+    const canvasWidth = window.innerWidth > 768 ? 1200 : window.innerWidth - 24;
+    const canvasHeight = window.innerWidth > 768 
+      ? window.innerHeight - 200 
+      : window.innerHeight - 220; // Mobile: reduced for compact layout
+    
     const canvas = new FabricCanvas(canvasRef.current, {
-      width: window.innerWidth > 768 ? 1200 : window.innerWidth - 32,
-      height: window.innerHeight - 200,
+      width: canvasWidth,
+      height: canvasHeight,
       backgroundColor: "#1a1f2e",
       selection: activeTool === "select",
     });
@@ -44,9 +49,14 @@ export const DiagramCanvas = ({
 
     // Handle window resize
     const handleResize = () => {
+      const newWidth = window.innerWidth > 768 ? 1200 : window.innerWidth - 24;
+      const newHeight = window.innerWidth > 768 
+        ? window.innerHeight - 200 
+        : window.innerHeight - 220;
+      
       canvas.setDimensions({
-        width: window.innerWidth > 768 ? 1200 : window.innerWidth - 32,
-        height: window.innerHeight - 200,
+        width: newWidth,
+        height: newHeight,
       });
       canvas.renderAll();
     };
@@ -478,37 +488,37 @@ export const DiagramCanvas = ({
   };
 
   return (
-    <div className="flex-1 overflow-auto bg-elec-dark p-4 flex items-center justify-center relative">
+    <div className="flex-1 overflow-hidden bg-elec-dark p-2 md:p-4 flex items-center justify-center relative">
       <canvas ref={canvasRef} className="border border-elec-yellow/20 rounded shadow-lg" />
       
-      {/* Zoom Controls */}
-      <div className="absolute bottom-8 right-8 flex flex-col gap-2">
+      {/* Zoom Controls - Floating */}
+      <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 flex flex-col gap-1.5">
         <Button
-          size="sm"
+          size="icon"
           variant="outline"
           onClick={handleZoomIn}
-          className="bg-elec-card border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+          className="h-8 w-8 md:h-9 md:w-9 bg-elec-card/90 backdrop-blur border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
           title="Zoom In"
         >
-          <ZoomIn className="h-4 w-4" />
+          <ZoomIn className="h-3 w-3 md:h-4 md:w-4" />
         </Button>
         <Button
-          size="sm"
+          size="icon"
           variant="outline"
           onClick={handleZoomOut}
-          className="bg-elec-card border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+          className="h-8 w-8 md:h-9 md:w-9 bg-elec-card/90 backdrop-blur border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
           title="Zoom Out"
         >
-          <ZoomOut className="h-4 w-4" />
+          <ZoomOut className="h-3 w-3 md:h-4 md:w-4" />
         </Button>
         <Button
-          size="sm"
+          size="icon"
           variant="outline"
           onClick={handleResetView}
-          className="bg-elec-card border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+          className="h-8 w-8 md:h-9 md:w-9 bg-elec-card/90 backdrop-blur border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
           title="Reset View"
         >
-          <Maximize2 className="h-4 w-4" />
+          <Maximize2 className="h-3 w-3 md:h-4 md:w-4" />
         </Button>
       </div>
 

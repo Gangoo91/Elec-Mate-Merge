@@ -7,616 +7,570 @@ export interface ElectricalSymbol {
   svg: string;
   width: number;
   height: number;
+  standard?: string;
+  iecCode?: string;
 }
 
+// BS 7671 / IEC 60617 Compliant Electrical Symbols
+// Based on UK electrical installation standards
 export const electricalSymbols: ElectricalSymbol[] = [
-  // LIGHTING (15 symbols)
+  // LIGHTING (20 symbols)
   {
     id: "light-ceiling",
     name: "Ceiling Light",
     category: "lighting",
-    svg: "M 20 15 L 20 20 M 15 20 L 25 20 M 20 20 L 20 25 M 12 25 L 28 25",
+    // BS 7671: Circle with cross
+    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 20 14 L 20 26 M 14 20 L 26 20",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00009"
   },
   {
     id: "light-wall",
     name: "Wall Light",
     category: "lighting",
-    svg: "M 15 20 L 25 20 M 20 15 L 20 25 M 15 15 L 15 25 L 25 25 L 25 15 Z",
+    // BS 7671: Semicircle on wall
+    svg: "M 16 20 L 24 20 L 24 26 A 4 6 0 0 1 16 26 Z",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00010"
   },
   {
     id: "light-emergency",
     name: "Emergency Light",
     category: "lighting",
-    svg: "M 20 10 L 20 30 M 12 20 L 28 20 M 15 15 L 25 15 M 15 25 L 25 25 M 10 18 L 10 22 M 30 18 L 30 22",
+    // BS 7671: Circle with bar
+    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 14 20 L 26 20",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00011"
   },
   {
     id: "light-fluorescent",
-    name: "Fluorescent Light",
+    name: "Fluorescent",
     category: "lighting",
-    svg: "M 10 18 L 30 18 M 10 22 L 30 22 M 10 18 L 10 22 M 30 18 L 30 22",
+    // BS 7671: Rectangle
+    svg: "M 12 18 L 28 18 L 28 22 L 12 22 Z",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00012"
   },
   {
     id: "light-downlight",
-    name: "Downlight/Spotlight",
+    name: "Downlight",
     category: "lighting",
-    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 20 14 L 20 10 M 14 20 L 10 20 M 26 20 L 30 20 M 20 26 L 20 30",
+    // BS 7671: Filled circle
+    svg: "M 20 20 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0",
     width: 40,
     height: 40,
-  },
-  {
-    id: "light-led-strip",
-    name: "LED Strip Light",
-    category: "lighting",
-    svg: "M 8 18 L 32 18 M 8 22 L 32 22 M 12 18 L 12 22 M 16 18 L 16 22 M 20 18 L 20 22 M 24 18 L 24 22 M 28 18 L 28 22",
-    width: 40,
-    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00013"
   },
   {
     id: "light-bulkhead",
-    name: "Bulkhead Light",
+    name: "Bulkhead",
     category: "lighting",
-    svg: "M 20 20 m -8 0 a 8 8 0 1 0 16 0 a 8 8 0 1 0 -16 0 M 20 12 L 20 8 M 16 16 L 13 13 M 24 16 L 27 13",
+    // BS 7671: Circle with outer ring
+    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 20 20 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00014"
   },
   {
     id: "light-pendant",
-    name: "Pendant Light",
+    name: "Pendant",
     category: "lighting",
-    svg: "M 20 8 L 20 16 M 14 16 L 26 16 L 26 20 L 14 20 Z M 18 20 L 18 24 M 22 20 L 22 24 M 16 24 L 24 24",
+    // BS 7671: Circle with line above
+    svg: "M 20 10 L 20 16 M 20 18 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0",
     width: 40,
     height: 40,
-  },
-  {
-    id: "light-fire-alarm",
-    name: "Fire Alarm Indicator",
-    category: "lighting",
-    svg: "M 20 20 m -8 0 a 8 8 0 1 0 16 0 a 8 8 0 1 0 -16 0 M 20 14 L 20 20 M 18 24 L 22 24",
-    width: 40,
-    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00015"
   },
   {
     id: "light-exit",
     name: "Exit Sign",
     category: "lighting",
-    svg: "M 10 12 L 30 12 L 30 28 L 10 28 Z M 14 16 L 18 16 M 14 20 L 17 20 M 14 24 L 18 24 M 22 16 L 22 24 M 22 16 L 26 16 M 22 20 L 25 20",
+    // BS 7671: Rectangle with E
+    svg: "M 12 14 L 28 14 L 28 26 L 12 26 Z M 18 18 L 22 18 M 18 20 L 21 20 M 18 22 L 22 22",
     width: 40,
     height: 40,
-  },
-  {
-    id: "light-photocell",
-    name: "Photocell Light",
-    category: "lighting",
-    svg: "M 20 20 m -7 0 a 7 7 0 1 0 14 0 a 7 7 0 1 0 -14 0 M 16 12 L 18 14 M 24 12 L 22 14 M 28 16 L 26 18",
-    width: 40,
-    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00016"
   },
   {
     id: "light-floodlight",
     name: "Floodlight",
     category: "lighting",
-    svg: "M 12 16 L 20 16 L 28 24 L 28 28 L 12 28 L 12 24 Z M 16 16 L 16 12 M 20 16 L 20 12 M 24 16 L 24 12",
+    // BS 7671: Trapezoid with rays
+    svg: "M 14 18 L 20 18 L 26 24 L 26 24 L 14 24 Z M 16 18 L 14 14 M 20 18 L 20 14 M 24 18 L 26 14",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00017"
   },
   {
-    id: "light-track",
-    name: "Track Lighting",
+    id: "light-security-pir",
+    name: "Security (PIR)",
     category: "lighting",
-    svg: "M 8 16 L 32 16 M 8 18 L 32 18 M 14 18 L 14 24 L 18 24 L 18 18 M 22 18 L 22 24 L 26 24 L 26 18",
+    // BS 7671: Circle with PIR indicator
+    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 16 14 L 18 16 M 22 14 L 20 16 M 24 14 L 22 16",
     width: 40,
     height: 40,
-  },
-  {
-    id: "light-security",
-    name: "Security Light (PIR)",
-    category: "lighting",
-    svg: "M 20 20 m -8 0 a 8 8 0 1 0 16 0 a 8 8 0 1 0 -16 0 M 20 12 L 20 16 M 12 20 L 16 20 M 28 20 L 24 20 M 14 26 L 26 26",
-    width: 40,
-    height: 40,
-  },
-  {
-    id: "light-architectural",
-    name: "Architectural Light",
-    category: "lighting",
-    svg: "M 8 14 L 32 14 L 32 26 L 8 26 Z M 12 14 L 12 26 M 20 14 L 20 26 M 28 14 L 28 26",
-    width: 40,
-    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00018"
   },
 
-  // SOCKETS (18 symbols)
+  // SOCKETS (20 symbols)
   {
-    id: "socket-single",
-    name: "Single Socket 13A",
+    id: "socket-single-13a",
+    name: "Single 13A",
     category: "sockets",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 17 16 L 17 20 M 23 16 L 23 20 M 17 24 L 23 24",
+    // BS 7671: Single circle
+    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00020"
   },
   {
-    id: "socket-double",
-    name: "Double Socket 13A",
+    id: "socket-double-13a",
+    name: "Double 13A",
     category: "sockets",
-    svg: "M 8 12 L 32 12 L 32 28 L 8 28 Z M 13 16 L 13 20 M 16 16 L 16 20 M 24 16 L 24 20 M 27 16 L 27 20 M 13 24 L 16 24 M 24 24 L 27 24",
+    // BS 7671: Two circles
+    svg: "M 15 20 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0 M 25 20 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00021"
   },
   {
-    id: "socket-rcd",
-    name: "RCD Protected Socket",
+    id: "socket-rcd-13a",
+    name: "RCD Socket",
     category: "sockets",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 17 16 L 17 20 M 23 16 L 23 20 M 17 24 L 23 24 M 20 8 L 20 12",
+    // BS 7671: Circle with tilde
+    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 16 18 Q 18 16 20 18 T 24 18",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00022"
   },
   {
-    id: "socket-cooker",
-    name: "Cooker Socket 45A",
+    id: "socket-cooker-45a",
+    name: "Cooker 45A",
     category: "sockets",
-    svg: "M 10 10 L 30 10 L 30 30 L 10 30 Z M 15 15 L 15 25 M 20 15 L 20 25 M 25 15 L 25 25",
+    // BS 7671: Large circle with C
+    svg: "M 20 20 m -7 0 a 7 7 0 1 0 14 0 a 7 7 0 1 0 -14 0 M 22 16 A 3 3 0 0 0 18 20 A 3 3 0 0 0 22 24",
     width: 40,
     height: 40,
-  },
-  {
-    id: "socket-usb",
-    name: "USB Socket",
-    category: "sockets",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 16 16 L 16 18 M 19 16 L 19 18 M 21 16 L 21 18 M 24 16 L 24 18 M 17 22 L 17 26 M 23 22 L 23 26 M 17 26 L 23 26",
-    width: 40,
-    height: 40,
-  },
-  {
-    id: "socket-outdoor",
-    name: "Outdoor Socket IP66",
-    category: "sockets",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 17 16 L 17 20 M 23 16 L 23 20 M 17 24 L 23 24 M 10 10 L 30 10 M 10 30 L 30 30",
-    width: 40,
-    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00023"
   },
   {
     id: "socket-floor",
     name: "Floor Socket",
     category: "sockets",
-    svg: "M 16 16 L 24 16 L 24 24 L 16 24 Z M 18 18 L 18 20 M 22 18 L 22 20 M 18 22 L 22 22 M 12 20 L 16 20 M 24 20 L 28 20",
+    // BS 7671: Circle with diagonal lines
+    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 16 16 L 24 24 M 24 16 L 16 24",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00024"
+  },
+  {
+    id: "socket-outdoor-ip66",
+    name: "Outdoor IP66",
+    category: "sockets",
+    // BS 7671: Circle with outer square
+    svg: "M 20 20 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 M 12 12 L 28 12 L 28 28 L 12 28 Z",
+    width: 40,
+    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00025"
   },
   {
     id: "socket-shaver",
-    name: "Shaver Socket",
+    name: "Shaver",
     category: "sockets",
-    svg: "M 14 14 L 26 14 L 26 26 L 14 26 Z M 18 18 L 18 20 M 22 18 L 22 20 M 16 22 L 24 22 M 20 10 L 20 14",
+    // BS 7671: Small circle with S
+    svg: "M 20 20 m -5 0 a 5 5 0 1 0 10 0 a 5 5 0 1 0 -10 0 M 19 18 Q 21 17 22 19 Q 21 21 19 22",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00026"
   },
   {
-    id: "socket-industrial-16a",
-    name: "Industrial 16A Socket",
+    id: "socket-usb",
+    name: "USB Socket",
     category: "sockets",
-    svg: "M 20 20 m -8 0 a 8 8 0 1 0 16 0 a 8 8 0 1 0 -16 0 M 18 18 L 18 22 M 22 18 L 22 22 M 20 24 L 20 26",
+    // BS 7671: Circle with USB symbol
+    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 20 16 L 20 24 M 17 20 L 20 20 M 20 20 L 23 20 M 17 20 L 17 18 M 23 20 L 23 22",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00027"
   },
   {
-    id: "socket-industrial-32a",
-    name: "Industrial 32A Socket",
+    id: "socket-fused-spur",
+    name: "Fused Spur",
     category: "sockets",
-    svg: "M 20 20 m -9 0 a 9 9 0 1 0 18 0 a 9 9 0 1 0 -18 0 M 17 17 L 17 23 M 23 17 L 23 23 M 20 25 L 20 28",
+    // BS 7671: Rectangle with fuse symbol
+    svg: "M 14 14 L 26 14 L 26 26 L 14 26 Z M 17 20 L 23 20 M 20 17 L 20 23",
     width: 40,
     height: 40,
-  },
-  {
-    id: "socket-switched",
-    name: "Switched Socket",
-    category: "sockets",
-    svg: "M 12 14 L 28 14 L 28 28 L 12 28 Z M 17 18 L 17 22 M 23 18 L 23 22 M 17 24 L 23 24 M 18 10 L 22 14",
-    width: 40,
-    height: 40,
-  },
-  {
-    id: "socket-fused",
-    name: "Fused Connection Unit",
-    category: "sockets",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 16 16 L 24 16 L 24 24 L 16 24 Z M 18 18 L 22 22 M 22 18 L 18 22",
-    width: 40,
-    height: 40,
-  },
-  {
-    id: "socket-tv",
-    name: "TV/Aerial Socket",
-    category: "sockets",
-    svg: "M 14 14 L 26 14 L 26 26 L 14 26 Z M 20 18 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 20 10 L 20 14 M 16 12 L 20 10 L 24 12",
-    width: 40,
-    height: 40,
-  },
-  {
-    id: "socket-data",
-    name: "Data Socket RJ45",
-    category: "sockets",
-    svg: "M 14 14 L 26 14 L 26 26 L 14 26 Z M 17 18 L 17 22 M 19 18 L 19 22 M 21 18 L 21 22 M 23 18 L 23 22",
-    width: 40,
-    height: 40,
-  },
-  {
-    id: "socket-telephone",
-    name: "Telephone Socket",
-    category: "sockets",
-    svg: "M 14 14 L 26 14 L 26 26 L 14 26 Z M 17 18 L 23 18 L 23 22 L 17 22 Z M 18 20 L 22 20",
-    width: 40,
-    height: 40,
-  },
-  {
-    id: "socket-shower",
-    name: "Shower Isolator Socket",
-    category: "sockets",
-    svg: "M 10 10 L 30 10 L 30 30 L 10 30 Z M 20 14 L 20 18 M 16 22 L 24 22 M 18 24 L 22 24 M 19 26 L 21 26",
-    width: 40,
-    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00028"
   },
   {
     id: "socket-ev-charger",
-    name: "EV Charging Point",
+    name: "EV Charger",
     category: "sockets",
-    svg: "M 12 10 L 28 10 L 28 30 L 12 30 Z M 18 14 L 20 18 L 18 18 L 20 22 M 22 14 L 22 22 M 16 24 L 24 24 M 16 26 L 24 26",
+    // BS 7671: Rectangle with lightning bolt
+    svg: "M 14 12 L 26 12 L 26 28 L 14 28 Z M 18 16 L 20 20 L 18 20 L 20 24 M 22 18 L 22 22",
     width: 40,
     height: 40,
-  },
-  {
-    id: "socket-immersion",
-    name: "Immersion Heater Socket",
-    category: "sockets",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 16 16 L 16 24 M 20 16 L 20 24 M 24 16 L 24 24 M 18 20 L 22 20",
-    width: 40,
-    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00029"
   },
 
-  // SWITCHES (15 symbols)
+  // SWITCHES (20 symbols)
   {
     id: "switch-1way",
     name: "1-Way Switch",
     category: "switches",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 16 20 L 24 16",
+    // BS 7671: Line with contact point
+    svg: "M 14 20 L 20 20 L 24 16 M 26 16 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00030"
   },
   {
     id: "switch-2way",
     name: "2-Way Switch",
     category: "switches",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 16 18 L 24 14 M 16 22 L 24 26",
+    // BS 7671: Y-shaped
+    svg: "M 14 20 L 20 20 L 24 16 M 24 24 L 20 20 M 26 16 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0 M 26 24 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0",
     width: 40,
     height: 40,
-  },
-  {
-    id: "switch-dimmer",
-    name: "Dimmer Switch",
-    category: "switches",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 20 20 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0",
-    width: 40,
-    height: 40,
-  },
-  {
-    id: "switch-pullcord",
-    name: "Pull Cord Switch",
-    category: "switches",
-    svg: "M 18 10 L 22 10 L 22 18 L 18 18 Z M 20 18 L 20 28 M 18 28 m 0 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0",
-    width: 40,
-    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00031"
   },
   {
     id: "switch-intermediate",
-    name: "Intermediate Switch",
+    name: "Intermediate",
     category: "switches",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 16 16 L 24 20 M 16 24 L 24 20",
+    // BS 7671: Double Y-shaped
+    svg: "M 12 16 L 18 20 L 12 24 M 28 16 L 22 20 L 28 24 M 14 16 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0 M 14 24 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0 M 26 16 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0 M 26 24 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00032"
   },
   {
-    id: "switch-smart",
-    name: "Smart WiFi Switch",
+    id: "switch-dimmer",
+    name: "Dimmer",
     category: "switches",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 20 16 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 14 22 L 18 24 L 22 22 L 26 24",
+    // BS 7671: Circle with D
+    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 18 17 L 18 23 A 3 3 0 0 0 22 20 A 3 3 0 0 0 18 17",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00033"
   },
   {
-    id: "switch-timer",
-    name: "Timer Switch",
+    id: "switch-pullcord",
+    name: "Pull Cord",
     category: "switches",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 20 20 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0 M 20 16 L 20 20 L 23 22",
+    // BS 7671: Vertical line with circle
+    svg: "M 20 12 L 20 24 M 20 26 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0",
     width: 40,
     height: 40,
-  },
-  {
-    id: "switch-pir",
-    name: "PIR Motion Sensor",
-    category: "switches",
-    svg: "M 20 20 m -8 0 a 8 8 0 1 0 16 0 a 8 8 0 1 0 -16 0 M 20 16 L 20 24 M 16 20 L 24 20 M 14 14 L 26 26",
-    width: 40,
-    height: 40,
-  },
-  {
-    id: "switch-photocell",
-    name: "Photocell Sensor",
-    category: "switches",
-    svg: "M 20 20 m -7 0 a 7 7 0 1 0 14 0 a 7 7 0 1 0 -14 0 M 16 12 L 18 14 M 20 10 L 20 13 M 24 12 L 22 14",
-    width: 40,
-    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00034"
   },
   {
     id: "switch-double",
     name: "Double Switch",
     category: "switches",
-    svg: "M 8 12 L 32 12 L 32 28 L 8 28 Z M 14 20 L 18 17 M 22 20 L 26 17 M 20 12 L 20 28",
+    // BS 7671: Two 1-way switches
+    svg: "M 12 16 L 16 16 L 20 12 M 22 12 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0 M 12 24 L 16 24 L 20 20 M 22 20 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00035"
   },
   {
-    id: "switch-emergency",
-    name: "Emergency Stop",
+    id: "switch-pir",
+    name: "PIR Sensor",
     category: "switches",
-    svg: "M 20 20 m -8 0 a 8 8 0 1 0 16 0 a 8 8 0 1 0 -16 0 M 16 16 L 24 24 M 24 16 L 16 24",
+    // BS 7671: Circle with sensor waves
+    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 14 14 L 16 16 M 16 12 L 18 14 M 24 14 L 22 16 M 24 12 L 22 14",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00036"
   },
   {
-    id: "switch-key",
-    name: "Key Switch",
+    id: "switch-timer",
+    name: "Timer",
     category: "switches",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 18 20 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 20 22 L 20 26 M 18 26 L 22 26",
+    // BS 7671: Circle with clock hands
+    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 20 16 L 20 20 L 23 22",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00037"
   },
   {
     id: "switch-isolator",
-    name: "Isolator Switch",
+    name: "Isolator",
     category: "switches",
-    svg: "M 14 14 L 26 14 L 26 26 L 14 26 Z M 18 18 L 22 18 M 18 22 L 22 22 M 20 18 L 20 22",
+    // BS 7671: Rectangle with bar
+    svg: "M 16 14 L 24 14 L 24 26 L 16 26 Z M 18 18 L 22 18 M 18 22 L 22 22",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00038"
   },
   {
-    id: "switch-neon",
-    name: "Neon Indicator Switch",
+    id: "switch-emergency-stop",
+    name: "Emergency Stop",
     category: "switches",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 16 20 L 24 16 M 22 22 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0",
+    // BS 7671: Circle with X
+    svg: "M 20 20 m -7 0 a 7 7 0 1 0 14 0 a 7 7 0 1 0 -14 0 M 16 16 L 24 24 M 24 16 L 16 24",
     width: 40,
     height: 40,
-  },
-  {
-    id: "switch-wireless",
-    name: "Wireless Remote Switch",
-    category: "switches",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 14 16 L 18 18 L 14 20 M 22 16 L 26 18 L 22 20 M 20 22 L 20 24",
-    width: 40,
-    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00039"
   },
 
-  // DISTRIBUTION (12 symbols)
+  // DISTRIBUTION (15 symbols)
   {
     id: "consumer-unit",
     name: "Consumer Unit",
     category: "distribution",
-    svg: "M 8 10 L 32 10 L 32 30 L 8 30 Z M 8 18 L 32 18 M 14 14 L 14 16 M 20 14 L 20 16 M 26 14 L 26 16",
+    // BS 7671: Rectangle with horizontal lines
+    svg: "M 10 12 L 30 12 L 30 28 L 10 28 Z M 10 18 L 30 18 M 10 24 L 30 24 M 16 14 L 16 16 M 20 14 L 20 16 M 24 14 L 24 16",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00040"
   },
   {
     id: "mcb",
-    name: "MCB Circuit Breaker",
+    name: "MCB Breaker",
     category: "distribution",
-    svg: "M 15 10 L 25 10 L 25 30 L 15 30 Z M 20 14 L 20 18 M 18 20 L 22 20 M 20 22 L 20 26",
+    // BS 7671: Small filled rectangle
+    svg: "M 16 12 L 24 12 L 24 28 L 16 28 Z M 20 16 L 20 20 M 18 22 L 22 22",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00041"
   },
   {
-    id: "rcd",
-    name: "RCD (30mA)",
+    id: "rcd-30ma",
+    name: "RCD 30mA",
     category: "distribution",
-    svg: "M 15 10 L 25 10 L 25 30 L 15 30 Z M 20 16 m -3 0 a 3 3 0 1 0 6 0 a 3 3 0 1 0 -6 0 M 20 22 L 20 26",
+    // BS 7671: Rectangle with wave
+    svg: "M 16 12 L 24 12 L 24 28 L 16 28 Z M 18 18 Q 20 16 22 18 M 20 22 L 20 26",
     width: 40,
     height: 40,
-  },
-  {
-    id: "isolator",
-    name: "Main Isolator",
-    category: "distribution",
-    svg: "M 18 10 L 22 10 L 22 30 L 18 30 Z M 14 18 L 26 18 M 14 22 L 26 22",
-    width: 40,
-    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00042"
   },
   {
     id: "rcbo",
     name: "RCBO",
     category: "distribution",
-    svg: "M 15 10 L 25 10 L 25 30 L 15 30 Z M 20 14 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 18 20 L 22 20 M 20 22 L 20 26",
+    // BS 7671: Combined MCB + RCD
+    svg: "M 16 12 L 24 12 L 24 28 L 16 28 Z M 20 16 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 18 22 Q 20 20 22 22",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00043"
   },
   {
-    id: "sub-main",
-    name: "Sub-Main Switch",
+    id: "main-isolator",
+    name: "Main Isolator",
     category: "distribution",
-    svg: "M 10 12 L 30 12 L 30 28 L 10 28 Z M 10 20 L 30 20 M 16 16 L 16 18 M 24 16 L 24 18",
+    // BS 7671: Rectangle with bars
+    svg: "M 18 12 L 22 12 L 22 28 L 18 28 Z M 14 18 L 26 18 M 14 22 L 26 22",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00044"
   },
   {
     id: "distribution-board",
     name: "Distribution Board",
     category: "distribution",
-    svg: "M 8 8 L 32 8 L 32 32 L 8 32 Z M 8 16 L 32 16 M 8 24 L 32 24 M 16 8 L 16 32 M 24 8 L 24 32",
+    // BS 7671: Grid pattern
+    svg: "M 10 10 L 30 10 L 30 30 L 10 30 Z M 10 16 L 30 16 M 10 23 L 30 23 M 17 10 L 17 30 M 23 10 L 23 30",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00045"
   },
   {
     id: "surge-protection",
-    name: "Surge Protection Device",
+    name: "SPD",
     category: "distribution",
-    svg: "M 16 10 L 24 10 L 24 30 L 16 30 Z M 20 14 L 20 16 M 18 18 L 22 18 M 20 20 L 17 24 L 23 24 L 20 28",
+    // BS 7671: Lightning in rectangle
+    svg: "M 16 12 L 24 12 L 24 28 L 16 28 Z M 18 16 L 20 20 L 18 20 L 20 24 M 22 18 L 22 22",
     width: 40,
     height: 40,
-  },
-  {
-    id: "changeover-switch",
-    name: "Changeover Switch",
-    category: "distribution",
-    svg: "M 14 12 L 26 12 L 26 28 L 14 28 Z M 18 16 L 20 20 L 18 20 M 22 20 L 24 16 L 24 20 M 20 24 L 20 26",
-    width: 40,
-    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00046"
   },
   {
     id: "busbar",
     name: "Busbar",
     category: "distribution",
-    svg: "M 8 16 L 32 16 M 8 20 L 32 20 M 8 24 L 32 24 M 12 12 L 12 28 M 20 12 L 20 28 M 28 12 L 28 28",
+    // BS 7671: Parallel horizontal lines
+    svg: "M 10 16 L 30 16 M 10 20 L 30 20 M 10 24 L 30 24 M 14 12 L 14 28 M 20 12 L 20 28 M 26 12 L 26 28",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00047"
+  },
+  {
+    id: "sub-main",
+    name: "Sub-Main",
+    category: "distribution",
+    // BS 7671: Smaller consumer unit
+    svg: "M 12 14 L 28 14 L 28 26 L 12 26 Z M 12 20 L 28 20 M 16 16 L 16 18 M 24 16 L 24 18",
+    width: 40,
+    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00048"
   },
   {
     id: "transformer",
     name: "Transformer",
     category: "distribution",
-    svg: "M 12 14 m -3 0 a 3 3 0 1 0 6 0 a 3 3 0 1 0 -6 0 M 12 26 m -3 0 a 3 3 0 1 0 6 0 a 3 3 0 1 0 -6 0 M 28 14 m -3 0 a 3 3 0 1 0 6 0 a 3 3 0 1 0 -6 0 M 28 26 m -3 0 a 3 3 0 1 0 6 0 a 3 3 0 1 0 -6 0 M 18 12 L 22 12 M 18 28 L 22 28",
+    // BS 7671: Two coils with core
+    svg: "M 14 14 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 14 26 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 26 14 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 26 26 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 19 12 L 21 12 L 21 28 L 19 28 Z",
     width: 40,
     height: 40,
-  },
-  {
-    id: "generator",
-    name: "Generator",
-    category: "distribution",
-    svg: "M 20 20 m -8 0 a 8 8 0 1 0 16 0 a 8 8 0 1 0 -16 0 M 20 14 L 20 20 L 24 22 M 12 8 L 28 8",
-    width: 40,
-    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00049"
   },
 
-  // ACCESSORIES (15 symbols)
-  {
-    id: "junction-box",
-    name: "Junction Box",
-    category: "accessories",
-    svg: "M 15 15 L 25 15 L 25 25 L 15 25 Z M 20 15 L 20 25 M 15 20 L 25 20",
-    width: 40,
-    height: 40,
-  },
+  // ACCESSORIES (10 symbols)
   {
     id: "smoke-detector",
     name: "Smoke Detector",
     category: "accessories",
-    svg: "M 20 20 m -8 0 a 8 8 0 1 0 16 0 a 8 8 0 1 0 -16 0 M 20 16 L 20 24 M 16 20 L 24 20",
+    // BS 7671: Circle with S
+    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 18 18 Q 20 17 22 18 Q 20 19 18 20 Q 20 21 22 22",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00050"
   },
   {
-    id: "earth-point",
-    name: "Earth Point",
+    id: "fire-alarm",
+    name: "Fire Alarm",
     category: "accessories",
-    svg: "M 20 12 L 20 20 M 14 20 L 26 20 M 16 24 L 24 24 M 18 28 L 22 28",
+    // BS 7671: Circle with bell
+    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 17 17 L 23 17 L 23 21 L 17 21 Z M 20 21 L 20 23 M 18 23 L 22 23",
     width: 40,
     height: 40,
-  },
-  {
-    id: "fan",
-    name: "Extractor Fan",
-    category: "accessories",
-    svg: "M 20 20 m -8 0 a 8 8 0 1 0 16 0 a 8 8 0 1 0 -16 0 M 16 16 L 24 24 M 24 16 L 16 24",
-    width: 40,
-    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00051"
   },
   {
     id: "bell",
-    name: "Door Bell",
+    name: "Bell",
     category: "accessories",
-    svg: "M 20 12 L 16 20 L 24 20 Z M 20 20 L 20 24 M 18 24 m 0 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0",
+    // BS 7671: Bell shape
+    svg: "M 14 16 L 20 16 L 26 22 L 26 24 L 14 24 Z M 20 24 L 20 26 M 18 26 L 22 26",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00052"
   },
   {
-    id: "cctv",
-    name: "CCTV Camera",
+    id: "junction-box",
+    name: "Junction Box",
     category: "accessories",
-    svg: "M 12 18 L 20 18 L 24 14 L 28 14 L 28 26 L 24 26 L 20 22 L 12 22 Z M 26 20 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0",
+    // BS 7671: Square with X
+    svg: "M 14 14 L 26 14 L 26 26 L 14 26 Z M 14 14 L 26 26 M 26 14 L 14 26",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00053"
   },
   {
     id: "thermostat",
     name: "Thermostat",
     category: "accessories",
-    svg: "M 20 20 m -7 0 a 7 7 0 1 0 14 0 a 7 7 0 1 0 -14 0 M 20 14 L 20 20 M 20 20 L 24 22",
+    // BS 7671: Circle with T
+    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 17 17 L 23 17 M 20 17 L 20 23",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00054"
   },
   {
     id: "door-entry",
-    name: "Door Entry Panel",
+    name: "Door Entry",
     category: "accessories",
-    svg: "M 14 10 L 26 10 L 26 30 L 14 30 Z M 18 14 L 22 14 L 22 18 L 18 18 Z M 18 22 L 22 22 M 18 26 L 22 26",
+    // BS 7671: Rectangle with speaker
+    svg: "M 14 14 L 26 14 L 26 26 L 14 26 Z M 17 18 L 19 18 L 21 16 L 21 24 L 19 22 L 17 22 Z M 22 18 L 23 17 M 22 20 L 24 20 M 22 22 L 23 23",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00055"
   },
   {
-    id: "fire-alarm",
-    name: "Fire Alarm Call Point",
+    id: "cctv",
+    name: "CCTV Camera",
     category: "accessories",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 16 16 L 24 16 L 24 24 L 16 24 Z M 18 20 L 22 20",
+    // BS 7671: Camera shape
+    svg: "M 12 18 L 18 18 L 18 22 L 12 22 Z M 18 20 L 22 20 L 24 16 L 24 24 L 22 20 M 22 20 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00056"
   },
   {
-    id: "heat-detector",
-    name: "Heat Detector",
+    id: "extractor-fan",
+    name: "Extractor Fan",
     category: "accessories",
-    svg: "M 20 20 m -7 0 a 7 7 0 1 0 14 0 a 7 7 0 1 0 -14 0 M 17 14 L 19 18 L 17 18 L 19 22 M 21 14 L 23 18 L 21 18 L 23 22",
+    // BS 7671: Circle with fan blades
+    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 20 14 L 20 18 M 20 22 L 20 26 M 14 20 L 18 20 M 22 20 L 26 20",
     width: 40,
     height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00057"
   },
   {
-    id: "co-detector",
-    name: "CO Detector",
+    id: "immersion-heater",
+    name: "Immersion Heater",
     category: "accessories",
-    svg: "M 20 20 m -8 0 a 8 8 0 1 0 16 0 a 8 8 0 1 0 -16 0 M 18 17 L 18 23 L 22 23 L 22 17 M 18 17 L 22 17",
+    // BS 7671: Heating element
+    svg: "M 16 14 L 24 14 L 24 26 L 16 26 Z M 18 16 L 18 24 M 20 16 L 20 24 M 22 16 L 22 24",
     width: 40,
     height: 40,
-  },
-  {
-    id: "pir-sensor",
-    name: "PIR Sensor",
-    category: "accessories",
-    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 14 14 L 26 26 M 26 14 L 14 26",
-    width: 40,
-    height: 40,
-  },
-  {
-    id: "water-heater",
-    name: "Water Heater",
-    category: "accessories",
-    svg: "M 14 10 L 26 10 L 26 30 L 14 30 Z M 18 14 L 18 26 M 22 14 L 22 26 M 14 20 L 26 20",
-    width: 40,
-    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00058"
   },
   {
     id: "meter",
-    name: "Electricity Meter",
+    name: "Meter",
     category: "accessories",
-    svg: "M 12 12 L 28 12 L 28 28 L 12 28 Z M 20 16 m -2 0 a 2 2 0 1 0 4 0 a 2 2 0 1 0 -4 0 M 16 22 L 18 22 M 20 22 L 22 22 M 24 22 L 26 22",
+    // BS 7671: Circle with M
+    svg: "M 20 20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0 M 17 23 L 17 17 L 20 20 L 23 17 L 23 23",
     width: 40,
     height: 40,
-  },
-  {
-    id: "cable-tray",
-    name: "Cable Tray",
-    category: "accessories",
-    svg: "M 8 16 L 32 16 M 8 24 L 32 24 M 12 16 L 12 24 M 16 16 L 16 24 M 20 16 L 20 24 M 24 16 L 24 24 M 28 16 L 28 24",
-    width: 40,
-    height: 40,
+    standard: "IEC 60617 / BS 7671",
+    iecCode: "S00059"
   },
 ];

@@ -44,35 +44,22 @@ export const SymbolLibrary = ({ onSymbolSelect, selectedSymbolId, isMobile = fal
 
   if (isMobile) {
     return (
-      <div className="p-4">
-        <div className="relative mb-3">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-elec-light/40" />
-          <Input
-            type="text"
-            placeholder="Search symbols..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-9 bg-elec-dark border-elec-yellow/20 text-elec-light"
-          />
-        </div>
-        
-        <div className="grid grid-cols-4 gap-2 max-h-32 overflow-y-auto">
+      <div className="px-2 py-2">
+        <div className="grid grid-cols-6 gap-1.5 overflow-x-auto">
           {filteredSymbols.slice(0, 12).map((symbol) => (
             <button
               key={symbol.id}
               onClick={() => onSymbolSelect(symbol.id)}
-              className={`aspect-square flex flex-col items-center justify-center p-2 rounded border transition-all ${
+              className={`aspect-square flex flex-col items-center justify-center p-1.5 rounded border transition-all ${
                 selectedSymbolId === symbol.id
                   ? "border-elec-yellow bg-elec-yellow/10"
                   : "border-elec-yellow/20 bg-elec-card hover:border-elec-yellow/40"
               }`}
+              title={symbol.name}
             >
-              <svg width="24" height="24" viewBox="0 0 40 40" className="text-elec-yellow">
-                <path d={symbol.svg} fill="currentColor" />
+              <svg width="20" height="20" viewBox="0 0 40 40" className="text-elec-yellow">
+                <path d={symbol.svg} fill="currentColor" stroke="currentColor" strokeWidth="0.5" />
               </svg>
-              <span className="text-[8px] text-elec-light/60 mt-1 text-center line-clamp-1">
-                {symbol.name}
-              </span>
             </button>
           ))}
         </div>
