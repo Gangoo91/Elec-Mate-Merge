@@ -911,9 +911,6 @@ export default function EnrichmentConsole() {
         </Card>
       )}
 
-      {/* Facet Distribution Dashboard - Only for Practical Work */}
-      {selectedTask === 'practical_work' && <FacetDistributionStats />}
-
       {/* Controls */}
       <Card className="p-4">
         <div className="flex items-center justify-between mb-3">
