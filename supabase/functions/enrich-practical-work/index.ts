@@ -188,9 +188,9 @@ function ensureJsonArray(value: any): any[] {
 // ==================== GPT ENRICHMENT ====================
 
 async function callGPTForFacets(id: string, title: string, content: string, logger: any, retryCount = 0, compactMode = false): Promise<any> {
-  // Compact mode: shorter content + fewer facets for retry
+  // Compact mode: shorter content for retry (reduced token budget)
   const processedContent = compactMode ? content.slice(0, 6000) : content.slice(0, 18000); // ~12K tokens at 1.5 chars/token
-  const targetFacets = compactMode ? '4-6' : '8'; // EXACTLY 8 facets, not 8-20
+  const targetFacets = compactMode ? '4-6' : '8'; // ✅ EXACTLY 8 facets total (enforced via dedup + top-8 selection)
   
   const systemPrompt = `You are a precision parser extracting structured electrical training data from real textbook content.
 
@@ -700,6 +700,78 @@ function inferFacetType(facet: any, index: number): string {
   return types[index % types.length];
 }
 
+/**
+ * Compute facet hash for deduplication
+ */
+function computeFacetHash(facet: any): string {
+  const canonical = [
+    (facet.primary_topic || '').toLowerCase().trim(),
+    (facet.equipment_category || '').toLowerCase().trim(),
+    (facet.keywords || []).map((k: string) => k.toLowerCase().trim()).sort().join('|'),
+    (facet.bs7671_regulations || []).map((r: string) => r.toLowerCase().trim()).sort().join('|')
+  ].join('::');
+  
+  // Simple hash using Web Crypto API
+  const encoder = new TextEncoder();
+  const data = encoder.encode(canonical);
+  return Array.from(data).map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 32);
+}
+
+/**
+ * Score facet quality for top-8 selection
+ */
+function scoreFacetQuality(facet: any): number {
+  let score = 0;
+  
+  // Core fields (1 point each)
+  if (facet.typical_duration_minutes) score += 1;
+  if (facet.skill_level) score += 1;
+  if (facet.safety_requirements) score += 1;
+  
+  // Rich content (2 points for regulations)
+  if (facet.bs7671_regulations && facet.bs7671_regulations.length > 0) score += 2;
+  
+  // Testing procedures (2 points if ≥3)
+  if (facet.test_procedures && facet.test_procedures.length >= 3) score += 2;
+  
+  // Tools (1 point if ≥4)
+  if (facet.tools_required && facet.tools_required.length >= 4) score += 1;
+  
+  // Materials (1 point if ≥3)
+  if (facet.materials_needed && facet.materials_needed.length >= 3) score += 1;
+  
+  return score;
+}
+
+/**
+ * Select top 8 facets with diversity preservation
+ */
+function selectTop8WithDiversity(facets: any[]): any[] {
+  if (facets.length <= 8) return facets;
+  
+  // Score each facet
+  const scored = facets.map(f => ({
+    facet: f,
+    score: scoreFacetQuality(f),
+    category: f.equipment_category || 'unknown',
+    type: f.facet_type || 'unknown'
+  }));
+  
+  // Apply light diversity penalty for repeated categories
+  const categoryCounts: Record<string, number> = {};
+  scored.forEach(s => {
+    const key = `${s.category}:${s.type}`;
+    categoryCounts[key] = (categoryCounts[key] || 0) + 1;
+    if (categoryCounts[key] > 1) {
+      s.score -= 0.5; // Light penalty for duplicates
+    }
+  });
+  
+  // Sort by score (descending) and take top 8
+  scored.sort((a, b) => b.score - a.score);
+  return scored.slice(0, 8).map(s => s.facet);
+}
+
 async function enrichProcedure(supabase: any, item: any, logger: any): Promise<number> {
   const content = item.content || item.description || '';
   const title = item.topic || 'Untitled';
@@ -709,7 +781,19 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     return 0;
   }
 
-  logger.info(`🔍 Extracting from source (${content.length} chars)`, { id: item.id, topic: title });
+  // ✅ IDEMPOTENCY CHECK: Only enrich if <8 facets exist
+  const { count: existingCount } = await supabase
+    .from('practical_work_intelligence')
+    .select('*', { count: 'exact', head: true })
+    .eq('practical_work_id', item.id);
+  
+  if (existingCount && existingCount >= 8) {
+    logger.info(`⏭️ Skipping (already has ${existingCount} facets)`, { id: item.id });
+    return 0;
+  }
+  
+  const maxNewFacets = 8 - (existingCount || 0);
+  logger.info(`🔍 Extracting (need ${maxNewFacets} more facets, ${existingCount || 0} exist)`, { id: item.id, topic: title });
 
   // Call GPT to extract multi-facets (passing full content)
   const intelligence = await callGPTForFacets(item.id, title, content, logger);
@@ -719,8 +803,19 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     return 0;
   }
 
+  // ✅ DEDUPLICATION: Compute hash for each facet
+  const facetsWithHash = intelligence.facets.map((facet: any) => ({
+    ...facet,
+    facet_hash: computeFacetHash(facet)
+  }));
+  
+  // ✅ SCORING & TOP-8 SELECTION: Preserve diversity
+  const top8Facets = selectTop8WithDiversity(facetsWithHash).slice(0, maxNewFacets);
+  
+  logger.info(`✅ Selected ${top8Facets.length}/${intelligence.facets.length} facets (avg quality: ${(top8Facets.reduce((sum, f) => sum + scoreFacetQuality(f), 0) / top8Facets.length).toFixed(1)})`);
+
   // Fix 1: Add missing required columns + Fix 2: Map all enhanced GPT fields
-  const facetsToInsert = intelligence.facets.map((facet: any, i: number) => ({
+  const facetsToInsert = top8Facets.map((facet: any, i: number) => ({
     practical_work_id: item.id,
     facet_type: inferFacetType(facet, i),
     
@@ -783,7 +878,10 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     common_mistakes: ensureArrayOfStrings(facet.common_mistakes),
     safety_requirements: toJsonOrNull(facet.safety_requirements),
     
-    confidence_score: facet.confidence_score || 0.85
+    confidence_score: facet.confidence_score || 0.85,
+    
+    // ✅ ADD FACET HASH for deduplication
+    facet_hash: facet.facet_hash
   }));
 
   // Fix 4: Add comprehensive error logging
@@ -839,8 +937,8 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Enforce 6-item batch limit (HARD CAP)
-    const effectiveBatchSize = Math.min(batchSize || 6, 6);
+    // Enforce 12-item batch limit (with 8 facets/source target via dedup + capping)
+    const effectiveBatchSize = Math.min(batchSize || 12, 12);
     const { data: items, error: queryError } = await supabase
       .from('practical_work')
       .select('id, source_table, topic, content, metadata, is_canonical')

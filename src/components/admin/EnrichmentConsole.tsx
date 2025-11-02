@@ -53,7 +53,7 @@ const TASK_CONFIG = {
     sourceTable: 'practical_work',
     targetTable: 'practical_work_intelligence',
     enrichmentModel: 'faceted',
-    targetMultiplier: 12.0,
+    targetMultiplier: 8.0, // Updated to 8 facets per source
     sourceFilter: { column: 'is_canonical', op: 'eq', value: true }
   }
 } as const;
@@ -107,7 +107,16 @@ export default function EnrichmentConsole() {
     targetFacets: 0, 
     remaining: 0, 
     progress: 0,
-    stageProgress: {} as Record<string, number>
+    stageProgress: {} as Record<string, number>,
+    // 8-facet compliance metrics (last 10 min)
+    compliance: {
+      sourcesEnriched10min: 0,
+      exactly8Count10min: 0,
+      avgFacets10min: 0,
+      compliancePercentage10min: 0,
+      exactly8CountAllTime: 0,
+      avgFacetsAllTime: 0
+    }
   });
   const [isLoading, setIsLoading] = useState(false);
   const isMobile = useIsMobile();
@@ -198,6 +207,12 @@ export default function EnrichmentConsole() {
         const targetFacets = Math.round((sourceTotal || 0) * (config.targetMultiplier || 1));
         const progress = targetFacets > 0 ? Math.round(((facetsCreated || 0) / targetFacets) * 100) : 0;
 
+        // Fetch 8-facet compliance metrics
+        const { data: complianceData } = await supabase
+          .from('practical_work_facet_compliance')
+          .select('*')
+          .single();
+
         setStats({
           sourceTotal: sourceTotal || 0,
           sourceEnriched: facetsCreated || 0,
@@ -207,7 +222,15 @@ export default function EnrichmentConsole() {
           targetFacets,
           remaining: Math.max(0, targetFacets - (facetsCreated || 0)),
           progress,
-          stageProgress: {}
+          stageProgress: {},
+          compliance: {
+            sourcesEnriched10min: complianceData?.sources_enriched_10min || 0,
+            exactly8Count10min: complianceData?.exactly_8_count_10min || 0,
+            avgFacets10min: complianceData?.avg_facets_per_source_10min || 0,
+            compliancePercentage10min: complianceData?.compliance_percentage_10min || 0,
+            exactly8CountAllTime: complianceData?.exactly_8_count_all_time || 0,
+            avgFacetsAllTime: complianceData?.avg_facets_per_source_all_time || 0
+          }
         });
 
       } else if (selectedTask === 'bs7671') {
@@ -250,7 +273,15 @@ export default function EnrichmentConsole() {
           targetFacets, 
           remaining, 
           progress,
-          stageProgress: {}
+          stageProgress: {},
+          compliance: {
+            sourcesEnriched10min: 0,
+            exactly8Count10min: 0,
+            avgFacets10min: 0,
+            compliancePercentage10min: 0,
+            exactly8CountAllTime: 0,
+            avgFacetsAllTime: 0
+          }
         });
 
       } else {
@@ -274,7 +305,15 @@ export default function EnrichmentConsole() {
           targetFacets: sourceTotal || 0,
           remaining: Math.max(0, (sourceTotal || 0) - (facetsCreated || 0)),
           progress,
-          stageProgress: {}
+          stageProgress: {},
+          compliance: {
+            sourcesEnriched10min: 0,
+            exactly8Count10min: 0,
+            avgFacets10min: 0,
+            compliancePercentage10min: 0,
+            exactly8CountAllTime: 0,
+            avgFacetsAllTime: 0
+          }
         });
       }
     } catch (error) {
@@ -745,6 +784,42 @@ export default function EnrichmentConsole() {
             <div className="text-xs text-muted-foreground">Active Batches</div>
           </div>
         </div>
+
+        {/* 8-Facet Compliance Metrics (Practical Work only) */}
+        {selectedTask === 'practical_work' && stats.compliance.sourcesEnriched10min > 0 && (
+          <div className="mt-4 pt-4 border-t">
+            <h4 className="text-sm font-medium mb-3 flex items-center gap-2">
+              <TrendingUp className="w-4 h-4" />
+              8-Facet Compliance (Last 10 Minutes)
+            </h4>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="text-center p-3 bg-muted rounded-md">
+                <div className="text-xl font-bold text-primary">
+                  {stats.compliance.avgFacets10min}
+                </div>
+                <div className="text-xs text-muted-foreground">Avg Facets/Source</div>
+              </div>
+              <div className="text-center p-3 bg-muted rounded-md">
+                <div className="text-xl font-bold text-success">
+                  {stats.compliance.compliancePercentage10min}%
+                </div>
+                <div className="text-xs text-muted-foreground">Exactly 8</div>
+              </div>
+              <div className="text-center p-3 bg-muted rounded-md">
+                <div className="text-xl font-bold text-chart-2">
+                  {stats.compliance.sourcesEnriched10min}
+                </div>
+                <div className="text-xs text-muted-foreground">Sources Enriched</div>
+              </div>
+              <div className="text-center p-3 bg-muted rounded-md">
+                <div className="text-xl font-bold text-chart-3">
+                  {stats.compliance.avgFacetsAllTime}
+                </div>
+                <div className="text-xs text-muted-foreground">All-Time Avg</div>
+              </div>
+            </div>
+          </div>
+        )}
       </Card>
 
       {/* Missing Items Alert (All Tasks) */}
@@ -795,6 +870,37 @@ export default function EnrichmentConsole() {
               Complete Missing
               {!integrityCheck && ' (Verify First)'}
             </MobileButton>
+
+            {/* Prune to 8 Facets Button (Practical Work only) */}
+            {selectedTask === 'practical_work' && (
+              <MobileButton
+                onClick={async () => {
+                  if (!confirm('Prune all sources to exactly 8 facets? This will delete excess facets based on quality score.')) return;
+                  setIsLoading(true);
+                  try {
+                    const { data, error } = await supabase.rpc('prune_practical_work_facets_to_8');
+                    if (error) throw error;
+                    
+                    const result = data[0];
+                    toast.success('✅ Pruned to 8 facets per source', {
+                      description: `Processed ${result.sources_processed} sources • Deleted ${result.facets_deleted} facets • Avg: ${result.avg_facets_before} → ${result.avg_facets_after}`
+                    });
+                    
+                    await loadStatus();
+                  } catch (error: any) {
+                    toast.error('Failed to prune facets', { description: error.message });
+                  } finally {
+                    setIsLoading(false);
+                  }
+                }}
+                disabled={isLoading}
+                size={isMobile ? 'default' : 'sm'}
+                variant="outline"
+              >
+                <Trash2 className="w-4 h-4 mr-2" />
+                Prune to 8 Facets
+              </MobileButton>
+            )}
           </div>
         </Card>
       )}

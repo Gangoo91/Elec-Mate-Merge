@@ -4338,6 +4338,7 @@ export type Database = {
           eicr_observation_codes: string[] | null
           equipment_category: string | null
           equipment_subcategory: string | null
+          facet_hash: string | null
           facet_type: string
           fixing_intervals: Json | null
           id: string
@@ -4389,6 +4390,7 @@ export type Database = {
           eicr_observation_codes?: string[] | null
           equipment_category?: string | null
           equipment_subcategory?: string | null
+          facet_hash?: string | null
           facet_type?: string
           fixing_intervals?: Json | null
           id?: string
@@ -4440,6 +4442,7 @@ export type Database = {
           eicr_observation_codes?: string[] | null
           equipment_category?: string | null
           equipment_subcategory?: string | null
+          facet_hash?: string | null
           facet_type?: string
           fixing_intervals?: Json | null
           id?: string
@@ -7510,6 +7513,20 @@ export type Database = {
           },
         ]
       }
+      practical_work_facet_compliance: {
+        Row: {
+          avg_facets_per_source_10min: number | null
+          avg_facets_per_source_all_time: number | null
+          compliance_percentage_10min: number | null
+          exactly_8_count_10min: number | null
+          exactly_8_count_all_time: number | null
+          snapshot_time: string | null
+          sources_enriched_10min: number | null
+          total_facets_created: number | null
+          total_sources_enriched: number | null
+        }
+        Relationships: []
+      }
       public_price_reports: {
         Row: {
           approximate_lat: number | null
@@ -7697,6 +7714,15 @@ export type Database = {
         }[]
       }
       normalize_query_text: { Args: { query_text: string }; Returns: string }
+      prune_practical_work_facets_to_8: {
+        Args: never
+        Returns: {
+          avg_facets_after: number
+          avg_facets_before: number
+          facets_deleted: number
+          sources_processed: number
+        }[]
+      }
       reset_stuck_batches: {
         Args: { timeout_minutes?: number }
         Returns: {
