@@ -350,6 +350,21 @@ export const useAIDesigner = () => {
       // Complete progress to 100%
       setProgress({ stage: 5, message: 'Design complete!', percent: 100 });
       
+      // Validate design structure before accepting
+      const hasInvalidCircuits = data.design.circuits.some((c: any) => !c.protectionDevice);
+      if (hasInvalidCircuits) {
+        console.warn('⚠️ Some circuits missing protection device data, applying defaults');
+        data.design.circuits = data.design.circuits.map((c: any) => ({
+          ...c,
+          protectionDevice: c.protectionDevice || {
+            type: 'MCB',
+            rating: Math.ceil((c.designCurrent || c.calculations?.Ib || 0) * 1.25),
+            curve: 'B',
+            kaRating: 6
+          }
+        }));
+      }
+      
       console.log('✅ Design generated successfully', data.design);
       setDesignData(data.design);
 

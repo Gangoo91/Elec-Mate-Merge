@@ -2179,6 +2179,16 @@ Always cite regulation numbers and show working for calculations.`
  * This acts as a safety net if the AI doesn't provide all display fields
  */
 function ensurePDFFields(circuit: any): any {
+  // CRITICAL: Ensure protectionDevice exists with defaults if missing
+  if (!circuit.protectionDevice) {
+    circuit.protectionDevice = {
+      type: 'MCB',
+      rating: Math.ceil((circuit.calculations?.Ib || circuit.designCurrent || 0) * 1.25),
+      curve: 'B',
+      kaRating: 6
+    };
+  }
+  
   return {
     ...circuit,
     // Ensure formatted display fields exist

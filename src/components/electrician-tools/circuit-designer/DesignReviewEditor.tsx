@@ -131,12 +131,16 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         },
         
         protectionDevice: {
-          deviceType: circuit.protectionDevice.type,
-          rating_In: circuit.protectionDevice.rating,
-          ratingString: `${circuit.protectionDevice.rating}A Type ${circuit.protectionDevice.curve} ${circuit.protectionDevice.type}`,
-          curve: circuit.protectionDevice.curve,
-          breakingCapacity: circuit.protectionDevice.kaRating,
-          breakingCapacityString: `${circuit.protectionDevice.kaRating}kA`,
+          deviceType: circuit.protectionDevice?.type || 'MCB',
+          rating_In: circuit.protectionDevice?.rating || 0,
+          ratingString: circuit.protectionDevice?.rating 
+            ? `${circuit.protectionDevice.rating}A Type ${circuit.protectionDevice.curve || 'B'} ${circuit.protectionDevice.type || 'MCB'}`
+            : 'Not specified',
+          curve: circuit.protectionDevice?.curve || 'B',
+          breakingCapacity: circuit.protectionDevice?.kaRating || 6,
+          breakingCapacityString: circuit.protectionDevice?.kaRating 
+            ? `${circuit.protectionDevice.kaRating}kA`
+            : '6kA',
           rcdProtected: circuit.rcdProtected || false,
           rcdProtectionString: circuit.rcdProtected ? "Yes (30mA RCD)" : "No",
           afddRequired: circuit.afddRequired || false
