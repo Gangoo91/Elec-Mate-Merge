@@ -373,11 +373,33 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
               certification: {
                 type: 'object',
                 properties: {
-                  form: { type: 'string' },
-                  schedules: { type: 'array', items: { type: 'string' } },
-                  requiredData: { type: 'array', items: { type: 'string' } },
-                  nextInspection: { type: 'string' }
-                }
+                  certificateType: { type: 'string', description: 'Type of certificate (EIC, EICR, Minor Works, etc.)' },
+                  requiredSchedules: { 
+                    type: 'array', 
+                    items: { type: 'string' },
+                    description: 'Required BS 7671 schedules (e.g., "Schedule of Inspections", "Schedule of Test Results")'
+                  },
+                  requiredData: { 
+                    type: 'array', 
+                    items: {
+                      type: 'object',
+                      properties: {
+                        field: { type: 'string', description: 'Name of the required data field' },
+                        regulation: { type: 'string', description: 'BS 7671 regulation reference' },
+                        description: { type: 'string', description: 'What needs to be recorded and why' }
+                      },
+                      required: ['field', 'regulation', 'description']
+                    },
+                    description: 'Detailed list of data fields required for certification with regulation references'
+                  },
+                  nextInspection: { type: 'string', description: 'When the next inspection is due and regulation reference' },
+                  additionalNotes: {
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Important additional certification notes (e.g., client signature requirements)'
+                  }
+                },
+                required: ['certificateType', 'requiredSchedules', 'requiredData']
               },
               suggestedNextAgents: {
                 type: 'array',
