@@ -197,58 +197,91 @@ Deno.serve(async (req) => {
       })
       .eq('id', jobId);
 
-    // Update: Starting health & safety analysis
+    // Update: Starting parallel agent processing
     await supabase
       .from('rams_generation_jobs')
       .update({ 
-        current_step: `Evaluating risks for ${job.job_scale} installation work...`,
+        current_step: `Running Health & Safety and Method Planner in parallel for ${job.job_scale} installation...`,
         progress: 10
       })
       .eq('id', jobId);
 
-    console.log(`🔍 Calling health-safety-v3 for job: ${jobId}`);
+    console.log(`🚀 Starting parallel agent invocation for job: ${jobId}`);
 
-    // Start heartbeat to show progress while H&S runs (15%, 20%, 25%, 30%, 35%)
-    let heartbeatProgress = 15;
-    const heartbeatInterval = setInterval(async () => {
-      if (heartbeatProgress <= 35) {
+    // H&S heartbeat: 15% → 45% (updates every 15s while H&S is running)
+    let hsHeartbeatProgress = 15;
+    const hsHeartbeatInterval = setInterval(async () => {
+      if (hsHeartbeatProgress <= 45) {
         await supabase
           .from('rams_generation_jobs')
           .update({ 
-            progress: heartbeatProgress,
+            progress: hsHeartbeatProgress,
             current_step: 'Analysing risks and generating control measures...'
           })
           .eq('id', jobId);
-        heartbeatProgress += 5;
+        hsHeartbeatProgress += 5;
       }
     }, 15000); // Every 15 seconds
 
-    let hsData, hsError;
-    
-    try {
-      // Call health-safety-v3 with 180s timeout (function needs ~120s)
-      const hsPromise = supabase.functions.invoke('health-safety-v3', {
+    // Installer heartbeat: 45% → 80% (updates every 15s while Installer is running)
+    let installerHeartbeatProgress = 45;
+    const installerHeartbeatInterval = setInterval(async () => {
+      if (installerHeartbeatProgress <= 80) {
+        await supabase
+          .from('rams_generation_jobs')
+          .update({ 
+            progress: installerHeartbeatProgress,
+            current_step: 'Creating installation steps and technical specifications...'
+          })
+          .eq('id', jobId);
+        installerHeartbeatProgress += 5;
+      }
+    }, 15000); // Every 15 seconds
+
+    // Run both agents in parallel
+    const hsPromiseWithTimeout = Promise.race([
+      supabase.functions.invoke('health-safety-v3', {
         body: {
           query: job.job_description,
           userContext: { jobScale: job.job_scale },
           projectContext: job.project_info
         }
-      });
-      
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Health-safety agent timeout after 180s')), 180000)
-      );
-      
-      const result = await Promise.race([hsPromise, timeoutPromise]) as any;
+      }),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Health-safety agent timeout after 240s')), 240000)
+      )
+    ]);
+
+    const installerPromiseWithTimeout = Promise.race([
+      supabase.functions.invoke('installer-v3', {
+        body: {
+          query: job.job_description,
+          userContext: { jobScale: job.job_scale },
+          projectContext: job.project_info
+        }
+      }),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Installer agent timeout after 300s')), 300000)
+      )
+    ]);
+
+    // Wait for both to complete (or fail)
+    const [hsResult, installerResult] = await Promise.allSettled([
+      hsPromiseWithTimeout,
+      installerPromiseWithTimeout
+    ]);
+
+    // Clear both heartbeat intervals
+    clearInterval(hsHeartbeatInterval);
+    clearInterval(installerHeartbeatInterval);
+
+    // Extract H&S data
+    let hsData, hsError;
+    if (hsResult.status === 'fulfilled') {
+      const result = hsResult.value as any;
       hsData = result.data;
       hsError = result.error;
-
-      // Clear heartbeat once H&S completes
-      clearInterval(heartbeatInterval);
-
-      if (hsError || !hsData) {
-        throw new Error(`Health-safety agent failed: ${hsError?.message ?? 'Unknown error'}`);
-      }
+      console.log(`✅ Health-safety completed for job: ${jobId}`);
       
       // PHASE 1: Detailed diagnostic logging
       console.log('🔍 [PHASE 1 DIAGNOSTIC] Health-safety raw response structure:', {
@@ -259,57 +292,69 @@ Deno.serve(async (req) => {
         hazardsLength: Array.isArray(hsData?.data?.hazards) ? hsData.data.hazards.length : 0,
         ppeType: hsData?.data?.ppe ? typeof hsData.data.ppe : 'missing',
         ppeLength: Array.isArray(hsData?.data?.ppe) ? hsData.data.ppe.length : 0,
-        fullResponseSample: JSON.stringify(hsData).slice(0, 1000) // First 1000 chars
+        fullResponseSample: JSON.stringify(hsData).slice(0, 1000)
       });
-      
-      console.log(`✅ Health-safety completed for job: ${jobId}`);
 
-      // Update progress
+      // Update progress for H&S completion
       await supabase
         .from('rams_generation_jobs')
         .update({ 
-          progress: 40,
-          current_step: 'Generating safety controls and PPE requirements...',
+          progress: 45,
+          current_step: 'Health & Safety analysis complete. Finalizing installation steps...',
           raw_hs_response: hsData
         })
         .eq('id', jobId);
-    } catch (error) {
-      clearInterval(heartbeatInterval);
-      throw error;
+    } else {
+      hsError = hsResult.reason;
+      console.error(`❌ Health-safety failed for job: ${jobId}`, hsError);
     }
 
-    // Update: Starting method statement
-    await supabase
-      .from('rams_generation_jobs')
-      .update({ 
-        progress: 50,
-        current_step: 'Creating detailed step-by-step installation method...'
-      })
-      .eq('id', jobId);
+    // Extract Installer data
+    let installerData, installerError;
+    if (installerResult.status === 'fulfilled') {
+      const result = installerResult.value as any;
+      installerData = result.data;
+      installerError = result.error;
+      console.log(`✅ Installer completed for job: ${jobId}`);
 
-    console.log(`🔧 Calling installer-v3 for job: ${jobId}`);
+      // Update progress for Installer completion
+      await supabase
+        .from('rams_generation_jobs')
+        .update({ 
+          progress: 85,
+          current_step: 'Method statement complete. Finalizing documentation...',
+          raw_installer_response: installerData
+        })
+        .eq('id', jobId);
+    } else {
+      installerError = installerResult.reason;
+      console.error(`❌ Installer failed for job: ${jobId}`, installerError);
+    }
 
-    // Call installer-v3 with 180s timeout
-    const installerPromise = supabase.functions.invoke('installer-v3', {
-      body: {
-        query: job.job_description,
-        userContext: { jobScale: job.job_scale },
-        projectContext: job.project_info
-      }
-    });
+    // Handle partial or complete failure
+    if ((hsError || !hsData) && (installerError || !installerData)) {
+      throw new Error(`Both agents failed. H&S: ${hsError?.message ?? 'Unknown error'}. Installer: ${installerError?.message ?? 'Unknown error'}`);
+    }
     
-    const installerTimeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Installer agent timeout after 240s')), 240000)
-    );
-    
-    const installerResult = await Promise.race([installerPromise, installerTimeoutPromise]) as any;
-    const installerData = installerResult.data;
-    const installerError = installerResult.error;
+    if (hsError || !hsData) {
+      console.warn('⚠️ Health-safety failed but Installer succeeded - returning partial result');
+      await supabase
+        .from('rams_generation_jobs')
+        .update({ 
+          current_step: '⚠️ Partial result: Health & Safety analysis failed, but installation steps generated successfully.',
+        })
+        .eq('id', jobId);
+    }
 
     if (installerError || !installerData) {
-      throw new Error(`Installer agent failed: ${installerError?.message ?? 'Unknown error'}`);
+      console.warn('⚠️ Installer failed but Health-safety succeeded - returning partial result');
+      await supabase
+        .from('rams_generation_jobs')
+        .update({ 
+          current_step: '⚠️ Partial result: Installation method failed, but safety analysis completed successfully.',
+        })
+        .eq('id', jobId);
     }
-    console.log(`✅ Installer completed for job: ${jobId}`);
 
     // Update: Finalizing
     await supabase

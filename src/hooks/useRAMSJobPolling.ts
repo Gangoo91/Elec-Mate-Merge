@@ -64,15 +64,15 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
           setLastCurrentStep(data.current_step || '');
           setLastActivityUpdate(Date.now());
         } else {
-          // No activity - check if stuck (increased timeout to 5 minutes)
+          // No activity - check if stuck (increased timeout to 6 minutes)
           const stuckDuration = Date.now() - lastActivityUpdate;
-          if (stuckDuration > 300000) {
-            console.error('❌ STUCK JOB DETECTED: No activity in 300s at', data.progress + '%');
+          if (stuckDuration > 360000) {
+            console.error('❌ STUCK JOB DETECTED: No activity in 360s at', data.progress + '%');
             await supabase
               .from('rams_generation_jobs')
               .update({
                 status: 'failed',
-                error_message: 'Generation timed out - no activity detected for 5 minutes. Please try again.'
+                error_message: 'Generation timed out - no activity detected for 6 minutes. Please try again.'
               })
               .eq('id', jobId);
             setIsPolling(false);
@@ -97,7 +97,7 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
     pollJob();
 
     // Progressive polling backoff
-    let pollInterval = 2000; // Start at 2s
+    let pollInterval = 1000; // Start at 1s for faster initial feedback
     let pollCount = 0;
     let timeoutId: number;
 
@@ -106,14 +106,14 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
       pollCount++;
       
       // Progressive backoff:
-      // 0-10 polls (0-20s): 2s interval (fast initial feedback)
-      // 11-30 polls (20s-2min): 5s interval
-      // 31+ polls (2min+): 10s interval
-      if (pollCount === 10) {
+      // 0-20 polls (0-20s): 1s interval (super fast initial feedback)
+      // 21-40 polls (20s-1.5min): 5s interval
+      // 41+ polls (1.5min+): 10s interval
+      if (pollCount === 20) {
         pollInterval = 5000;
         console.log('📊 Polling: Switching to 5s interval');
       }
-      if (pollCount === 30) {
+      if (pollCount === 40) {
         pollInterval = 10000;
         console.log('📊 Polling: Switching to 10s interval');
       }
