@@ -5,7 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Download, FileText, Edit3, Plus, X, AlertTriangle, CheckCircle, Code, Shield, AlertCircle, Copy, ChevronDown, ChevronUp, Save, Sparkles } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Download, FileText, Edit3, AlertTriangle, CheckCircle, Shield, Save, Sparkles, Plus, X, AlertCircle } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { generateRAMSPDF } from '@/utils/rams-pdf-professional';
 import { generateMethodStatementPDF } from '@/utils/method-statement-pdf';
@@ -13,12 +14,17 @@ import type { RAMSData, RAMSRisk } from '@/types/rams';
 import type { MethodStatementData, MethodStep } from '@/types/method-statement';
 import { PDFGenerationModal } from './PDFGenerationModal';
 import { MobilePDFDownloadSheet } from './MobilePDFDownloadSheet';
-import { PDFPreviewModal } from './PDFPreviewModal';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { MobileBottomActionBar } from './MobileBottomActionBar';
-import { SwipeableRiskCard } from './SwipeableRiskCard';
 import { useMobileKeyboard } from '@/hooks/use-mobile-keyboard';
 import { cn } from '@/lib/utils';
+import { SummaryStatsCard } from './results/SummaryStatsCard';
+import { EnhancedRiskCard } from './results/EnhancedRiskCard';
+import { PPEGridView } from './results/PPEGridView';
+import { EmergencyProceduresCards } from './results/EmergencyProceduresCards';
+import { ProjectInfoHeader } from './results/ProjectInfoHeader';
+import { EnhancedStepCard } from './results/EnhancedStepCard';
+import { ProgressSummary } from './results/ProgressSummary';
+import { getRiskColorsByLevel } from '@/utils/risk-level-helpers';
 
 interface RAMSReviewEditorProps {
   ramsData: RAMSData;
@@ -162,20 +168,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     }));
   };
 
-  const getRiskLevelColor = (rating: number) => {
-    if (rating <= 4) return 'bg-green-500';
-    if (rating <= 9) return 'bg-yellow-500';
-    if (rating <= 16) return 'bg-orange-500';
-    return 'bg-red-500';
-  };
-
   const getRiskLevelBadge = (level: string) => {
-    const colors = {
-      low: 'bg-green-500/10 text-green-600 border-green-500/30',
-      medium: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/30',
-      high: 'bg-red-500/10 text-red-600 border-red-500/30'
-    };
-    return colors[level as keyof typeof colors] || colors.medium;
+    const colors = getRiskColorsByLevel(level as 'low' | 'medium' | 'high');
+    return colors.badge;
   };
 
   const handleGenerateRAMSPDF = async () => {
@@ -631,57 +626,38 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="rams" className="space-y-6 mt-0 p-0 sm:p-4 md:p-6 lg:p-8">
-              {/* Project Info */}
-              <div className="px-3 sm:px-0">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
-                <div>
-                  <label className="text-lg sm:text-base md:text-sm font-semibold text-elec-light tracking-wide">Project Name</label>
-                  <Input
-                    value={ramsData.projectName}
-                    onChange={(e) => setRamsData(prev => ({ ...prev, projectName: e.target.value }))}
-                    className="mt-2 h-14 sm:h-12 text-base sm:text-sm bg-elec-grey border-elec-yellow/20 text-foreground font-medium"
-                  />
-                </div>
-                <div>
-                  <label className="text-lg sm:text-base md:text-sm font-semibold text-elec-light tracking-wide">Location</label>
-                  <Input
-                    value={ramsData.location}
-                    onChange={(e) => setRamsData(prev => ({ ...prev, location: e.target.value }))}
-                    className="mt-2 h-14 sm:h-12 text-base sm:text-sm bg-elec-grey border-elec-yellow/20 text-foreground font-medium"
-                  />
-                </div>
-              </div>
-              </div>
-
+            <TabsContent value="rams" className="space-y-6 mt-0 p-4 md:p-6">
+              {/* Summary Stats Card */}
+              <SummaryStatsCard risks={ramsData.risks || []} />
+              
               {/* Enhanced Risks Section */}
-              <div className="space-y-5">
-                <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-elec-yellow/10 to-transparent border-l-4 border-elec-yellow">
-                  <h4 className="text-xl sm:text-lg font-bold text-foreground flex items-center gap-3 tracking-tight">
-                    <AlertTriangle className="h-6 w-6 sm:h-5 sm:w-5 text-elec-yellow" />
-                    <span>Identified Risks</span>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xl font-bold text-elec-light flex items-center gap-3">
+                    <AlertTriangle className="h-6 w-6 text-elec-yellow" />
+                    <span>Identified Hazards</span>
                   </h4>
-                  <Badge variant="outline" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-bold text-base px-3 py-1">
-                    {ramsData.risks?.length || 0}
+                  <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-bold">
+                    {ramsData.risks?.length || 0} Risks
                   </Badge>
                 </div>
                 
                 {/* Empty state when no risks */}
                 {(!ramsData.risks || ramsData.risks.length === 0) && (
-                  <Card className="border-dashed">
+                  <Card className="border-dashed border-elec-yellow/30">
                     <CardContent className="p-8 text-center">
-                      <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-                      <h3 className="text-lg font-semibold mb-2">No Hazards Generated Yet</h3>
-                      <p className="text-sm text-muted-foreground mb-4">
-                        Add hazards manually below or try regenerating with more details about the work.
+                      <AlertTriangle className="h-16 w-16 text-elec-yellow/40 mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold text-elec-light mb-2">No Hazards Identified Yet</h3>
+                      <p className="text-sm text-elec-light/60 mb-4">
+                        Add hazards manually or regenerate to identify potential risks for this installation.
                       </p>
                       <div className="flex gap-2 justify-center">
-                        <Button onClick={addRisk} size="sm">
+                        <Button onClick={addRisk} variant="outline" size="sm" className="border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10">
                           <Plus className="h-4 w-4 mr-2" />
                           Add Hazard
                         </Button>
                         {onRegenerate && (
-                          <Button onClick={onRegenerate} variant="outline" size="sm">
+                          <Button onClick={onRegenerate} variant="outline" size="sm" className="border-orange-500/40 text-orange-500 hover:bg-orange-500/10">
                             <Sparkles className="h-4 w-4 mr-2" />
                             Try Again
                           </Button>
@@ -691,125 +667,33 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   </Card>
                 )}
                 
+                {/* Risk Cards - Sorted by Risk Rating */}
                 {ramsData.risks && ramsData.risks.length > 0 && (
-                  <>
-                    {[...(ramsData.risks || [])].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0)).map((risk, sortedIndex) => {
-                  const riskNumber = sortedIndex + 1; // Risk #1 = highest rating
-                  const riskRating = risk.riskRating || 0;
-                  const riskLevel = riskRating <= 4 ? 'low' : riskRating <= 9 ? 'medium' : 'high';
-                  const borderColors = {
-                    low: 'border-l-green-500',
-                    medium: 'border-l-yellow-500',
-                    high: 'border-l-red-500'
-                  };
-                  return (
-                    <Card 
-                      key={risk.id || `risk-${sortedIndex}`} 
-                      className={`border-0 md:border md:border-elec-yellow/30 bg-elec-grey/30 md:bg-elec-grey/50 md:backdrop-blur-sm hover:border-elec-yellow/50 transition-all border-l-4 ${borderColors[riskLevel]} shadow-none md:shadow-lg rounded-lg`}
-                    >
-                      <CardContent className="pt-3 pb-3 px-2 sm:px-4 md:pt-5 md:pb-5 md:px-6">
-                      {/* Risk card content */}
-                      <div className="space-y-3">
-                        {/* Header row with risk number and delete */}
-                        <div className="flex items-center justify-between gap-2">
-                          <div className="flex items-center gap-2">
-                            <Badge variant="outline" className="text-elec-yellow border-elec-yellow/40 whitespace-nowrap font-semibold">
-                              Risk #{riskNumber}
-                            </Badge>
-                            <Badge className={`${getRiskLevelColor(risk.riskRating)} text-white whitespace-nowrap`}>
-                              Rating: {risk.riskRating}
-                            </Badge>
-                          </div>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => removeRisk(risk.id)}
-                            className="text-red-500 hover:text-red-600 -mr-2"
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
-                        </div>
-                        
-                        {/* Full width hazard input */}
-                        <div>
-                          <label className="text-xs text-muted-foreground mb-1.5 block">Hazard</label>
-                          <Textarea
-                            value={risk.hazard}
-                            onChange={(e) => updateRisk(risk.id, { hazard: e.target.value })}
-                            className="w-full bg-background/50 border-primary/30 font-medium text-sm min-h-[60px]"
-                            placeholder="Describe the hazard"
-                            rows={2}
-                          />
-                        </div>
-
-                        <div>
-                          <label className="text-xs text-muted-foreground mb-1.5 block">Control Measures</label>
-                          <Textarea
-                            value={risk.controls}
-                            onChange={(e) => updateRisk(risk.id, { controls: e.target.value })}
-                            className="w-full bg-background/50 border-primary/30 text-sm max-h-[300px] overflow-y-auto resize-y"
-                            placeholder="Describe control measures and compliance (e.g., PUWER 1998, BS 7671)"
-                            rows={4}
-                          />
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-2">
-                          <div>
-                            <label className="text-xs text-muted-foreground">Likelihood (1-5)</label>
-                            <Input
-                              type="number"
-                              min="1"
-                              max="5"
-                              value={risk.likelihood}
-                              onChange={(e) => {
-                                const likelihood = parseInt(e.target.value);
-                                updateRisk(risk.id, {
-                                  likelihood,
-                                  riskRating: likelihood * risk.severity
-                                });
-                              }}
-                              className="bg-background/50 border-primary/30"
-                            />
-                          </div>
-                          <div>
-                            <label className="text-xs text-muted-foreground">Severity (1-5)</label>
-                            <Input
-                              type="number"
-                              min="1"
-                              max="5"
-                              value={risk.severity}
-                              onChange={(e) => {
-                                const severity = parseInt(e.target.value);
-                                updateRisk(risk.id, {
-                                  severity,
-                                  riskRating: risk.likelihood * severity
-                                });
-                              }}
-                              className="bg-background/50 border-primary/30"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                  );
-                })}
-                
-                {/* Add New Risk Button */}
-                <Button
-                  onClick={addRisk}
-                  variant="outline"
-                  className="w-full border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow mt-4"
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add New Risk
-                </Button>
-                  </>
+                  <div className="space-y-3">
+                    {[...(ramsData.risks || [])].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0)).map((risk, sortedIndex) => (
+                      <EnhancedRiskCard 
+                        key={risk.id}
+                        risk={risk}
+                        index={sortedIndex}
+                      />
+                    ))}
+                  </div>
                 )}
               </div>
 
-              {/* Enhanced PPE Section */}
-              {ramsData.ppeDetails && ramsData.ppeDetails.length > 0 && (
+              {/* PPE Section */}
+              <PPEGridView 
+                ppeDetails={ramsData.ppeDetails}
+                requiredPPE={ramsData.requiredPPE}
+              />
+
+              {/* Emergency Procedures */}
+              <EmergencyProceduresCards procedures={ramsData.emergencyProcedures} />
+            </TabsContent>
+
+            <TabsContent value="method" className="space-y-6 mt-0 p-4 md:p-6">
+              {/* SKIP OLD PPE/EMERGENCY - Using new components above */}
+              {false && ramsData.ppeDetails && ramsData.ppeDetails.length > 0 && (
                 <div className="space-y-3">
                   <h4 className="text-xl sm:text-lg md:text-base font-bold text-foreground flex items-center gap-2.5">
                     <Shield className="h-5 w-5 md:h-4 md:w-4 text-elec-yellow" />
