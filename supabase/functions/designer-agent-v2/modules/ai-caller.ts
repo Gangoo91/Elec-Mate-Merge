@@ -3,8 +3,8 @@
  * Handles OpenAI API calls with retry logic
  */
 
-import { callOpenAI, AIProviderError } from '../../../_shared/ai-providers.ts';
-import { withRetry } from '../../../_shared/retry.ts';
+import { callOpenAI, AIProviderError } from '../../_shared/ai-providers.ts';
+import { withRetry } from '../../_shared/retry.ts';
 
 /**
  * Call OpenAI with retry and timeout handling

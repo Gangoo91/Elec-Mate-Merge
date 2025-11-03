@@ -3,7 +3,7 @@
  * Orchestrates intelligent RAG searches and merges results
  */
 
-import { intelligentRAGSearch } from '../../../_shared/intelligent-rag.ts';
+import { intelligentRAGSearch } from '../../_shared/intelligent-rag.ts';
 
 /**
  * Build RAG searches for circuit design
