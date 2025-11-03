@@ -80,6 +80,15 @@ export function transformInstallerOutputToMethodStatement(
     notes: step.criticalPoints.join('; '),
   }));
 
+  // Aggregate tools and materials at document level
+  const allToolsSet = new Set<string>();
+  const allMaterialsSet = new Set<string>();
+  
+  installerOutput.steps.forEach(step => {
+    step.toolsRequired?.forEach(tool => allToolsSet.add(tool));
+    step.materialsNeeded?.forEach(mat => allMaterialsSet.add(mat));
+  });
+
   return {
     jobTitle: projectDetails.jobTitle,
     location: projectDetails.location,
@@ -93,6 +102,11 @@ export function transformInstallerOutputToMethodStatement(
     reviewDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
     steps: methodSteps,
     createdAt: new Date().toISOString(),
+    
+    // Document-level aggregated fields
+    toolsRequired: Array.from(allToolsSet),
+    materialsRequired: Array.from(allMaterialsSet),
+    totalEstimatedTime: installerOutput.totalDuration,
     
     // Enhanced fields from installer agent
     scopeOfWork: enhancedOutput.scopeOfWork,

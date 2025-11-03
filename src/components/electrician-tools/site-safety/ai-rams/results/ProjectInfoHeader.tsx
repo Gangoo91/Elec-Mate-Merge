@@ -106,24 +106,6 @@ export const ProjectInfoHeader: React.FC<ProjectInfoHeaderProps> = ({
             </div>
           )}
         </div>
-
-        {/* Overall Risk Level Badge */}
-        {methodData.overallRiskLevel && (
-          <div className="mt-4 pt-4 border-t border-elec-yellow/20">
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-elec-light/60">Overall Risk Level:</span>
-              <Badge className={
-                methodData.overallRiskLevel === 'high' 
-                  ? 'bg-red-500/20 text-red-400 border-red-500/40'
-                  : methodData.overallRiskLevel === 'medium'
-                  ? 'bg-amber-500/20 text-amber-400 border-amber-500/40'
-                  : 'bg-green-500/20 text-green-400 border-green-500/40'
-              }>
-                {methodData.overallRiskLevel.toUpperCase()}
-              </Badge>
-            </div>
-          </div>
-        )}
       </CardContent>
     </Card>
   );

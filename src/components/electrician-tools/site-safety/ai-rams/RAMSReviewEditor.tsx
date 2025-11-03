@@ -25,6 +25,14 @@ import { ProjectInfoHeader } from './results/ProjectInfoHeader';
 import { EnhancedStepCard } from './results/EnhancedStepCard';
 import { ProgressSummary } from './results/ProgressSummary';
 import { getRiskColorsByLevel } from '@/utils/risk-level-helpers';
+import { EmergencyContactsCard } from './results/EmergencyContactsCard';
+import { ScopeOfWorkCard } from './results/ScopeOfWorkCard';
+import { PPEDetailsGrid } from './results/PPEDetailsGrid';
+import { ComplianceReferencesCard } from './results/ComplianceReferencesCard';
+import { MethodStatementSummary } from './results/MethodStatementSummary';
+import { SiteLogisticsCard } from './results/SiteLogisticsCard';
+import { CompetencyMatrixCard } from './results/CompetencyMatrixCard';
+import { RiskAssessmentSummary } from './results/RiskAssessmentSummary';
 
 interface RAMSReviewEditorProps {
   ramsData: RAMSData;
@@ -687,236 +695,77 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               <EmergencyProceduresCards procedures={ramsData.emergencyProcedures} />
             </TabsContent>
 
-            <TabsContent value="method" className="space-y-6 mt-0 p-4 md:p-6">
-              {/* SKIP OLD PPE/EMERGENCY - Using new components above */}
-              {false && ramsData.ppeDetails && ramsData.ppeDetails.length > 0 && (
-                <div className="space-y-3">
-                  <h4 className="text-xl sm:text-lg md:text-base font-bold text-foreground flex items-center gap-2.5">
-                    <Shield className="h-5 w-5 md:h-4 md:w-4 text-elec-yellow" />
-                    Required Personal Protective Equipment
-                  </h4>
-                  
-                  {/* Desktop: Table View */}
-                  <Card className="hidden md:block border md:border-primary/20 bg-elec-grey/30 md:bg-card/40">
-                    <CardContent className="pt-4 px-4">
-                      <div className="overflow-x-auto">
-                        <table className="w-full text-sm">
-                          <thead>
-                            <tr className="border-b-2 border-elec-yellow/30">
-                              <th className="text-left py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm whitespace-nowrap">ITEM</th>
-                              <th className="text-left py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm whitespace-nowrap">PPE TYPE</th>
-                              <th className="text-left py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm whitespace-nowrap">STANDARD</th>
-                              <th className="text-center py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm whitespace-nowrap">MANDATORY?</th>
-                              <th className="text-left py-3 px-3 font-bold text-elec-yellow text-xs md:text-sm whitespace-nowrap">PURPOSE</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {ramsData.ppeDetails.map((ppe, idx) => (
-                              <tr key={ppe.id || `ppe-${idx}`} className="border-b border-border/20 hover:bg-elec-grey/20">
-                                <td className="py-3 px-3 text-center font-semibold">{ppe.itemNumber}</td>
-                                <td className="py-3 px-3 font-medium">{ppe.ppeType}</td>
-                                <td className="py-3 px-3 text-primary text-xs">{ppe.standard}</td>
-                                <td className="py-3 px-3 text-center">
-                                  <Badge 
-                                    variant={ppe.mandatory ? "destructive" : "secondary"} 
-                                    className={cn("text-xs whitespace-nowrap", ppe.mandatory && "bg-red-500/90 text-white")}
-                                  >
-                                    {ppe.mandatory ? "MANDATORY" : "Recommended"}
-                                  </Badge>
-                                </td>
-                                <td className="py-3 px-3 text-muted-foreground text-xs leading-relaxed">{ppe.purpose}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </CardContent>
-                  </Card>
+            <TabsContent value="method" className="space-y-0 mt-0 pb-20">
+              <div className="p-4 md:p-6 space-y-4">
+                {/* Project Info Header */}
+                <ProjectInfoHeader 
+                  methodData={methodData} 
+                  projectName={ramsData.projectName}
+                  location={ramsData.location}
+                />
 
-                  {/* Mobile: Card Grid View */}
-                  <div className="md:hidden space-y-3">
-                    {ramsData.ppeDetails.map((ppe, idx) => (
-                      <Card key={ppe.id || `ppe-mobile-${idx}`} className="border-0 bg-elec-grey/30 border-l-4 border-l-elec-yellow/60">
-                        <CardContent className="pt-3 pb-3 px-4">
-                          <div className="space-y-2">
-                            <div className="flex items-start justify-between gap-2">
-                              <div className="flex items-center gap-2">
-                                <Badge variant="outline" className="text-elec-yellow border-elec-yellow/40 font-semibold">
-                                  #{ppe.itemNumber}
-                                </Badge>
-                                <Badge 
-                                  variant={ppe.mandatory ? "destructive" : "secondary"}
-                                  className={cn("text-xs", ppe.mandatory && "bg-red-500/90 text-white font-semibold")}
-                                >
-                                  {ppe.mandatory ? "MANDATORY" : "Recommended"}
-                                </Badge>
-                              </div>
-                            </div>
-                            
-                            <h5 className="font-bold text-foreground text-base leading-tight">{ppe.ppeType}</h5>
-                            
-                            <div className="flex items-center gap-2 text-xs">
-                              <span className="text-muted-foreground">Standard:</span>
-                              <span className="text-primary font-medium">{ppe.standard}</span>
-                            </div>
-                            
-                            <p className="text-sm text-muted-foreground leading-relaxed pt-1">{ppe.purpose}</p>
-                          </div>
-                        </CardContent>
-                      </Card>
+                {/* Emergency Contacts */}
+                <EmergencyContactsCard methodData={methodData as MethodStatementData} />
+
+                {/* Scope of Work */}
+                <ScopeOfWorkCard methodData={methodData as MethodStatementData} />
+
+                {/* Tools, Materials, Tips, Mistakes */}
+                <MethodStatementSummary methodData={methodData as MethodStatementData} />
+
+                {/* Site Logistics */}
+                <SiteLogisticsCard methodData={methodData as MethodStatementData} />
+
+                {/* Competency Matrix */}
+                <CompetencyMatrixCard methodData={methodData as MethodStatementData} />
+
+                {/* PPE Details */}
+                <PPEDetailsGrid methodData={methodData as MethodStatementData} />
+
+                {/* Progress Summary */}
+                {methodData.steps && methodData.steps.length > 0 && (
+                  <ProgressSummary steps={methodData.steps} />
+                )}
+
+                {/* Installation Steps */}
+                {methodData.steps && methodData.steps.length > 0 ? (
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="text-lg font-bold text-elec-light flex items-center gap-2">
+                        <FileText className="h-5 w-5 text-elec-yellow" />
+                        Installation Steps ({methodData.steps.length})
+                      </h4>
+                    </div>
+                    {methodData.steps.map((step, index) => (
+                      <EnhancedStepCard
+                        key={step.id}
+                        step={step}
+                        index={index}
+                      />
                     ))}
                   </div>
-                </div>
-              )}
-
-              {/* Fallback to legacy PPE if ppeDetails not available */}
-              {(!ramsData.ppeDetails || ramsData.ppeDetails.length === 0) && 
-               ramsData.requiredPPE && ramsData.requiredPPE.length > 0 && (
-                <div className="space-y-3">
-                  <h4 className="text-xl sm:text-lg md:text-base font-bold text-foreground flex items-center gap-2.5">
-                    <Shield className="h-5 w-5 md:h-4 md:w-4 text-elec-yellow" />
-                    Required Personal Protective Equipment
-                  </h4>
-                  <Card className="border-0 md:border md:border-primary/20 bg-elec-grey/30 md:bg-card/40">
-                    <CardContent className="pt-3 md:pt-4 px-4">
-                      <ul className="list-disc list-outside space-y-2 pl-5">
-                        {ramsData.requiredPPE.map((ppe, idx) => (
-                          <li key={idx} className="text-sm text-foreground">{ppe}</li>
-                        ))}
-                      </ul>
+                ) : (
+                  <Card className="border-dashed border-elec-yellow/30">
+                    <CardContent className="p-8 text-center">
+                      <FileText className="h-16 w-16 text-elec-yellow/40 mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold text-elec-light mb-2">No Installation Steps Yet</h3>
+                      <p className="text-sm text-elec-light/60 mb-4">
+                        Add installation steps or regenerate to create method statement.
+                      </p>
+                      <Button onClick={addStep} variant="outline" size="sm" className="border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10">
+                        <Plus className="h-4 w-4 mr-2" />
+                        Add Step
+                      </Button>
                     </CardContent>
                   </Card>
-                </div>
-              )}
+                )}
 
-              {/* Emergency Procedures Section */}
-              {ramsData.emergencyProcedures && ramsData.emergencyProcedures.length > 0 && (
-                <div className="space-y-3">
-                  <h4 className="text-xl sm:text-lg md:text-base font-bold text-foreground flex items-center gap-2.5 tracking-tight leading-tight">
-                    <AlertCircle className="h-5 w-5 md:h-4 md:w-4 text-red-500" />
-                    Emergency Procedures
-                  </h4>
-                  <Card className="border-0 md:border md:border-red-500/20 bg-elec-grey/30 md:bg-card/40 shadow-none rounded-lg">
-                    <CardContent className="pt-3 md:pt-4 px-4">
-                      <ul className="list-disc list-outside space-y-2 pl-5">
-                        {ramsData.emergencyProcedures.map((proc, idx) => (
-                          <li key={idx} className="text-sm text-foreground text-left">{proc}</li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                </div>
-              )}
+                {/* Risk Assessment Summary */}
+                <RiskAssessmentSummary methodData={methodData as MethodStatementData} />
 
-            </TabsContent>
-
-            <TabsContent value="method" className="space-y-4 mt-6">
-              {/* Method Info */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium text-foreground">Contractor</label>
-                  <Input
-                    value={methodData.contractor}
-                    onChange={(e) => setMethodData(prev => ({ ...prev, contractor: e.target.value }))}
-                    className="mt-1 bg-background/50 border-primary/30 text-foreground"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-foreground">Supervisor</label>
-                  <Input
-                    value={methodData.supervisor}
-                    onChange={(e) => setMethodData(prev => ({ ...prev, supervisor: e.target.value }))}
-                    className="mt-1 bg-background/50 border-primary/30 text-foreground"
-                  />
-                </div>
+                {/* Compliance References */}
+                <ComplianceReferencesCard methodData={methodData as MethodStatementData} />
               </div>
-
-              {/* Method Steps - Now using Accordion */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-semibold text-foreground flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-elec-yellow" />
-                    Installation Steps ({methodData.steps?.length || 0})
-                  </h4>
-                </div>
-                
-                <Accordion type="multiple" className="space-y-2">
-                  {methodData.steps?.map((step, index) => (
-                    <AccordionItem 
-                      key={step.id || `step-${index}`} 
-                      value={`step-${step.id}`}
-                      className="border-0 md:border md:border-primary/20 bg-elec-grey/30 md:bg-card/40 rounded-lg overflow-hidden border-l-4 border-l-elec-yellow/40"
-                    >
-                      <AccordionTrigger className="px-4 py-3 hover:bg-elec-grey/40 hover:no-underline">
-                        <div className="flex items-center gap-3 flex-1 text-left">
-                          <Badge variant="outline" className="bg-primary/10 shrink-0 font-semibold">
-                            Step {step.stepNumber}
-                          </Badge>
-                          <span className="font-medium text-foreground line-clamp-1">{step.title || 'Untitled Step'}</span>
-                        </div>
-                      </AccordionTrigger>
-                      
-                      <AccordionContent className="px-4 pb-4">
-                        <div className="space-y-3 pt-2">
-                          <div className="flex items-start justify-between gap-3">
-                            <Input
-                              value={step.title}
-                              onChange={(e) => updateStep(step.id, { title: e.target.value })}
-                              className="flex-1 bg-background/50 border-primary/30 font-medium text-base md:text-lg"
-                              placeholder="Step title"
-                            />
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => removeStep(step.id)}
-                              className="text-red-500 hover:text-red-600 shrink-0"
-                            >
-                              <X className="h-4 w-4" />
-                            </Button>
-                          </div>
-
-                          <div className="relative">
-                            <label className="text-xs text-muted-foreground mb-1.5 block">Description</label>
-                            <Textarea
-                              value={step.description}
-                              onChange={(e) => updateStep(step.id, { description: e.target.value })}
-                              className="bg-background/50 border-primary/30 max-h-[400px] min-h-[120px] overflow-y-auto resize-y"
-                              placeholder="Detailed step description with safety requirements..."
-                              rows={6}
-                            />
-                            <div className="absolute bottom-2 right-2 text-xs text-muted-foreground pointer-events-none">
-                              {step.description?.length || 0} chars
-                            </div>
-                          </div>
-
-                          {step.safetyRequirements && step.safetyRequirements.length > 0 && (
-                            <div className="bg-yellow-500/5 border border-yellow-500/20 rounded-lg p-3">
-                              <div className="flex items-start gap-2">
-                                <Shield className="h-4 w-4 text-yellow-500 mt-0.5 shrink-0" />
-                                <div className="flex-1">
-                                  <p className="text-xs font-semibold text-yellow-600 dark:text-yellow-400 mb-1">Safety Requirements:</p>
-                                  <p className="text-xs text-muted-foreground">{step.safetyRequirements.join(' • ')}</p>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-                
-                {/* Add New Step Button */}
-                <Button
-                  onClick={addStep}
-                  variant="outline"
-                  className="w-full border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10 hover:text-elec-yellow mt-4"
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add New Step
-                </Button>
-              </div>
-
             </TabsContent>
           </Tabs>
 
