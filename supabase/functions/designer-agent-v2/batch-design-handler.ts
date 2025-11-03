@@ -11,8 +11,6 @@ import { withRetry } from '../_shared/retry.ts';
 import { TypeGuards, applyDefaultCircuitValues } from './type-guards.ts';
 import { CircuitDesignError, ERROR_TEMPLATES } from './error-handler.ts';
 import { PerformanceMonitor } from './performance-monitor.ts';
-import { extractCircuitsFromPrompt } from './modules/circuit-parser.ts';
-import { autoCorrectRCDProtection, autoCorrectMCBSizing, ensurePDFFields } from './modules/validation.ts';
 import { buildStructuredDesignPrompt, buildDesignQuery, extractSearchTerms } from './modules/prompt-builder.ts';
 import { categorizeCircuits, generateWarnings } from './modules/post-processing.ts';
 import { callOpenAIWithRetry, parseToolCalls } from './modules/ai-caller.ts';
