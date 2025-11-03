@@ -140,8 +140,6 @@ serve(async (req) => {
     total: 0
   };
   
-  // Declare timing variables in function scope
-  let embeddingStart: number | null = null;
 
   // Timeout promise
   const timeoutPromise = new Promise<Response>((_, reject) => {
@@ -257,54 +255,61 @@ serve(async (req) => {
         expanded: expandedQuery.substring(0, 100)
       });
 
-      // Phase 4: Generate embedding with optimized text-embedding-3-small (already in v3-core.ts)
-      embeddingStart = Date.now();
-      const queryEmbedding = await generateEmbeddingWithRetry(expandedQuery, OPENAI_API_KEY);
-      logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
-
-      // Use intelligent RAG with Practical Work Intelligence as primary source
-      const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
-      const ragResults = await intelligentRAGSearch({
-        circuitType: installationMethod,
-        searchTerms: expandedQuery.split(' ').filter(w => w.length > 3),
-        expandedQuery,
-        context: {
-          agentType: 'installer',
-          ragPriority: {
-            practical_work: 95,   // PRIMARY - keyword hybrid, vector fallback if <5 results
-            bs7671: 85,           // SECONDARY - keyword-only hybrid search
-            health_safety: 0,
-            design: 0,
-            installation: 0,
-            inspection: 0,
-            project_mgmt: 0
-          },
-          minKeywordResults: 5,   // Trigger vector fallback if keyword < 5 results
-          useVectorFallback: true // Enable vector search fallback for practical_work
-        }
-      });
+      // Direct Hybrid RAG Search (keyword-only, no embedding generation)
+      const ragStart = Date.now();
       
-      // TIER 1: Practical Work Intelligence (if available)
-      const practicalWorkDocs = ragResults?.practicalWorkDocs || [];
-      
-      if (practicalWorkDocs.length >= 5) {
-        installKnowledge = practicalWorkDocs;
-        logger.info('✅ Using Practical Work Intelligence', { 
-          count: practicalWorkDocs.length,
-          avgScore: (practicalWorkDocs.reduce((s, d) => s + (d.similarity || 0), 0) / practicalWorkDocs.length).toFixed(2)
-        });
-      } else {
-        // TIER 2: Fallback to Installation Knowledge RAG
-        const installDocs = ragResults?.installationDocs || [];
-        installKnowledge = installDocs;
+      // Parallel RAG searches using direct RPC calls
+      const [practicalWorkResult, bs7671Result] = await Promise.all([
+        // TIER 1: Practical Work Intelligence (keyword hybrid)
+        supabase.rpc('search_practical_work_intelligence_hybrid', {
+          query_text: expandedQuery,
+          match_count: 10,
+          filter_trade: 'installer'
+        }),
         
-        logger.info('⚠️ Using Installation Knowledge RAG (fallback)', { 
-          count: installDocs.length,
-          reason: `Insufficient Practical Work Intelligence (${practicalWorkDocs.length} < 5)`
-        });
-      }
+        // TIER 2: BS 7671 Regulations Intelligence (keyword hybrid)
+        supabase.rpc('search_bs7671_intelligence_hybrid', {
+          query_text: expandedQuery,
+          match_count: 8
+        })
+      ]);
 
-      timings.ragRetrieval = Date.now() - timings.start - timings.cacheCheck;
+      // Process Practical Work results
+      const practicalWorkDocs = (practicalWorkResult.data || []).map((row: any) => ({
+        primary_topic: row.primary_topic,
+        content: row.content,
+        equipment_category: row.equipment_category,
+        tools_required: row.tools_required,
+        bs7671_regulations: row.bs7671_regulations,
+        hybrid_score: row.hybrid_score / 10, // Normalize to 0-1
+        confidence_score: row.confidence_score,
+        source: 'practical_work_intelligence'
+      }));
+
+      // Process BS 7671 results
+      const bs7671Docs = (bs7671Result.data || []).map((row: any) => ({
+        regulation_number: row.regulation_number,
+        content: row.content || row.regulation_text,
+        primary_topic: row.primary_topic,
+        keywords: row.keywords,
+        category: row.category,
+        hybrid_score: row.hybrid_score || 0,
+        source: 'bs7671_intelligence'
+      }));
+
+      // Merge and prioritize (Practical Work first)
+      installKnowledge = [...practicalWorkDocs, ...bs7671Docs];
+
+      logger.info('✅ Direct RAG hybrid search complete', {
+        practicalWork: practicalWorkDocs.length,
+        bs7671: bs7671Docs.length,
+        totalDuration: Date.now() - ragStart,
+        avgPracticalScore: practicalWorkDocs.length > 0
+          ? (practicalWorkDocs.reduce((s, d) => s + d.hybrid_score, 0) / practicalWorkDocs.length).toFixed(2)
+          : 'N/A'
+      });
+
+      timings.ragRetrieval = Date.now() - ragStart;
     }
 
     // Close the else block from PHASE 2
@@ -321,20 +326,19 @@ serve(async (req) => {
     let installContext = '';
     
     if (installKnowledge && installKnowledge.length > 0) {
-      // Check if it's Practical Work Intelligence (has primary_topic field)
-      if (installKnowledge[0]?.primary_topic) {
-        installContext = installKnowledge.map((pw: any) => 
-          `**${pw.primary_topic}** (${pw.equipment_category || 'General'})\n` +
-          `${pw.content}\n` +
-          `${pw.tools_required?.length > 0 ? `Tools: ${pw.tools_required.join(', ')}\n` : ''}` +
-          `${pw.bs7671_regulations?.length > 0 ? `Regulations: ${pw.bs7671_regulations.join(', ')}` : ''}`
-        ).join('\n\n---\n\n');
-      } else {
-        // Installation Knowledge RAG format
-        installContext = installKnowledge.map((inst: any) => 
-          `${inst.topic}:\n${inst.content}`
-        ).join('\n\n---\n\n');
-      }
+      installContext = installKnowledge.map((doc: any) => {
+        if (doc.source === 'practical_work_intelligence') {
+          return `**${doc.primary_topic}** (${doc.equipment_category || 'General'})\n` +
+            `${doc.content}\n` +
+            `${doc.tools_required?.length > 0 ? `Tools: ${doc.tools_required.join(', ')}\n` : ''}` +
+            `${doc.bs7671_regulations?.length > 0 ? `Regulations: ${doc.bs7671_regulations.join(', ')}` : ''}`;
+        } else if (doc.source === 'bs7671_intelligence') {
+          return `**BS 7671 ${doc.regulation_number}** - ${doc.primary_topic}\n${doc.content}`;
+        } else {
+          // Legacy format fallback
+          return `${doc.topic}:\n${doc.content}`;
+        }
+      }).join('\n\n---\n\n');
     } else {
       installContext = 'Apply general BS 7671 installation methods and best practices.';
     }
