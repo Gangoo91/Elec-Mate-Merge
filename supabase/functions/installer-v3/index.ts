@@ -314,20 +314,6 @@ serve(async (req) => {
 
     // Close the else block from PHASE 2
 
-      // ✨ Part 3C: RAG Effectiveness Logging
-      logger.info('📊 RAG Effectiveness Check', {
-        totalResults: installKnowledge.length,
-        highConfidence: installKnowledge.filter((k: any) => (k.hybrid_score || k.finalScore || 0) > 0.7).length,
-        avgScore: installKnowledge.length > 0
-          ? (installKnowledge.reduce((s: number, k: any) => s + (k.hybrid_score || k.finalScore || 0), 0) / installKnowledge.length).toFixed(3)
-          : 'N/A',
-        practicalWorkCount: installKnowledge.filter((k: any) => k.source === 'practical_work_intelligence').length,
-        bs7671Count: installKnowledge.filter((k: any) => k.source === 'bs7671_intelligence').length,
-        hasRichContext: installContext.length > 1000,
-        ragDuration: timings.ragRetrieval,
-        warningIfPoor: installKnowledge.length < 3 ? '⚠️ INSUFFICIENT RAG DATA - AI may hallucinate!' : null
-      });
-
     // PHASE 3: Build installation context - format based on source
     let installContext = '';
     
@@ -355,6 +341,20 @@ serve(async (req) => {
       avgDocLength: installKnowledge.length > 0 
         ? Math.round(installContext.length / installKnowledge.length)
         : 0
+    });
+
+    // ✨ Part 3C: RAG Effectiveness Logging (after installContext creation)
+    logger.info('📊 RAG Effectiveness Check', {
+      totalResults: installKnowledge.length,
+      highConfidence: installKnowledge.filter((k: any) => (k.hybrid_score || k.finalScore || 0) > 0.7).length,
+      avgScore: installKnowledge.length > 0
+        ? (installKnowledge.reduce((s: number, k: any) => s + (k.hybrid_score || k.finalScore || 0), 0) / installKnowledge.length).toFixed(3)
+        : 'N/A',
+      practicalWorkCount: installKnowledge.filter((k: any) => k.source === 'practical_work_intelligence').length,
+      bs7671Count: installKnowledge.filter((k: any) => k.source === 'bs7671_intelligence').length,
+      hasRichContext: installContext.length > 1000,
+      ragDuration: timings.ragRetrieval,
+      warningIfPoor: installKnowledge.length < 3 ? '⚠️ INSUFFICIENT RAG DATA - AI may hallucinate!' : null
     });
 
     // Build conversation context
