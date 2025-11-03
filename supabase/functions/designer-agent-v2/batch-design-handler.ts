@@ -6,7 +6,7 @@ import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { loadCoreRegulationsCache } from './core-regulations-cache.ts';
 import { validateDesign, calculateCircuitConfidence, calculateOverallConfidence } from './validation-pipeline.ts';
 import { extractCircuitsWithAI } from './ai-circuit-extractor.ts';
-import { callGemini, callOpenAI, AIProviderError } from '../_shared/ai-providers.ts';
+import { callGemini, callOpenAI, withRetry, AIProviderError } from '../_shared/ai-providers.ts';
 import { TypeGuards, applyDefaultCircuitValues } from './type-guards.ts';
 import { CircuitDesignError, ERROR_TEMPLATES } from './error-handler.ts';
 import { PerformanceMonitor } from './performance-monitor.ts';
@@ -1612,20 +1612,23 @@ Design the following circuit${batch.length > 1 ? 's' : ''}:\n${batch.map((c: any
     }
     
     try {
-      const result = await providerRetry(async () => {
+      const result = await withRetry(async () => {
         return await callOpenAI({
           messages: [
             { role: 'system', content: useSimplifiedSchema ? `${systemPrompt}\n\nIMPORTANT: Return your response as valid JSON.` : systemPrompt },
             { role: 'user', content: batchQuery }
           ],
           model: 'gpt-5-mini-2025-08-07',
-          temperature: 0.3,
+          // GPT-5 models have fixed temperature=1.0, parameter not supported
           max_completion_tokens: aiConfig?.maxTokens || 24000,
           tools: currentTools,
           tool_choice: currentToolChoice,
           response_format: useSimplifiedSchema ? { type: "json_object" } : undefined
-        }, openAiKey);
-      }, 3, 2000);
+        }, openAiKey, 60000); // 60s timeout per batch for complex circuits
+      }, {
+        maxAttempts: 2,
+        backoff: [2000, 5000]
+      });
       
       const batchElapsedMs = Date.now() - batchStartTime;
       logger.info(`✅ GPT-5 Mini responded for batch ${batchIndex + 1}`, { 
@@ -1666,8 +1669,17 @@ Design the following circuit${batch.length > 1 ? 's' : ''}:\n${batch.map((c: any
       
     } catch (error: any) {
       const errorMsg = error?.message || String(error);
+      const isTimeout = errorMsg.includes('timeout') || errorMsg.includes('ABORTING') || errorMsg.includes('exceeded');
       const isMalformedFunctionCall = errorMsg.includes('MALFORMED_FUNCTION_CALL') || errorMsg.includes('format response correctly');
       const isNetworkError = errorMsg.includes('fetch') || errorMsg.includes('network') || error instanceof TypeError;
+      
+      logger.error('❌ Batch processing error', {
+        batchIndex: batchIndex + 1,
+        attempt: attempt + 1,
+        errorType: isTimeout ? 'timeout' : isMalformedFunctionCall ? 'malformed' : isNetworkError ? 'network' : 'unknown',
+        error: errorMsg,
+        circuitsInBatch: batch.map(c => c.name)
+      });
       
       // Retry with simplified approach for MALFORMED_FUNCTION_CALL
       if (isMalformedFunctionCall && attempt < maxAttempts) {

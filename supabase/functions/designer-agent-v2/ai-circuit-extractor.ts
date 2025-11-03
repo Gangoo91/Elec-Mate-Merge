@@ -79,9 +79,9 @@ Extract ALL circuits with their specifications.`;
     // Import OpenAI provider and timeout utilities
     const { callOpenAI, withRetry, withTimeout, AIProviderError } = await import('../_shared/ai-providers.ts');
 
-    // FIX 1: Reduced timeout from 35s to 25s (allows 2x retries with buffer)
-    const RETRY_TIMEOUT = 25000; // 25s total for all retries
-    const PER_ATTEMPT_TIMEOUT = 20000; // 20s per OpenAI attempt
+    // Timeout configuration: allow more time for complex circuit extractions
+    const RETRY_TIMEOUT = 35000; // 35s total for all retries
+    const PER_ATTEMPT_TIMEOUT = 30000; // 30s per OpenAI attempt (increased from 20s)
     
     // FIX 1: Wrap retry in timeout (NOT the OpenAI call itself)
     const aiExtractionPromise = withTimeout(
