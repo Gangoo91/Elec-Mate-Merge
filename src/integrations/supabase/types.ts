@@ -8042,17 +8042,10 @@ export type Database = {
           query_text: string
         }
         Returns: {
-          applies_to: string[]
           bs7671_regulations: string[]
-          cable_sizes: string[]
-          confidence_score: number
           content: string
-          equipment_category: string
           hybrid_score: number
-          keywords: string[]
-          location_types: string[]
-          power_ratings: string[]
-          practical_work_id: string
+          id: string
           primary_topic: string
           tools_required: string[]
         }[]

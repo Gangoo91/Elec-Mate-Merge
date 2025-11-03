@@ -62,6 +62,19 @@ serve(async (req) => {
       ragMs: ragTime
     });
 
+    // Smart fallback if RAG fails
+    let ragContext = '';
+    if (practicalWork.length === 0 && regulations.length === 0) {
+      console.warn('⚠️ RAG returned no results - using general UK electrical guidance');
+      ragContext = `[FALLBACK MODE - General UK Electrical Installation Guidance]
+- Follow BS 7671:2018+A2:2022 (18th Edition) requirements throughout
+- Select cable sizes using Appendix 4 current-carrying capacity tables
+- Install appropriate protective devices (MCBs Type B/C, RCDs 30mA for sockets)
+- Ensure proper earthing and bonding per Sections 411 and 544
+- Test and certify per GN3 (Inspection & Testing)
+- Use safe isolation procedures (lock-off/tag-out)`;
+    }
+
     // Build compact RAG context - take top results, no filtering
     const pwContext = practicalWork
       .slice(0, 12)
@@ -94,7 +107,7 @@ serve(async (req) => {
               tools: { type: "array", items: { type: "string" } },
               materials: { type: "array", items: { type: "string" } }
             },
-            required: ["title", "detail"],
+            required: [],
             additionalProperties: false
           }
         },
@@ -190,29 +203,47 @@ Use the RAG context above to ensure accuracy. Return ONLY the JSON object.`;
     aiStartTime = Date.now();
     let lastHeartbeat = aiStartTime;
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-5-mini-2025-08-07',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
-        ],
-        response_format: {
-          type: "json_schema",
-          json_schema: {
-            name: "method_statement",
-            strict: true,
-            schema: jsonSchema
-          }
+    let response;
+    try {
+      response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+          'Content-Type': 'application/json',
         },
-        max_completion_tokens: 4000
-      }),
-    });
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt }
+          ],
+          response_format: {
+            type: "json_schema",
+            json_schema: {
+              name: "method_statement",
+              strict: true,
+              schema: jsonSchema
+            }
+          },
+          max_completion_tokens: 4000
+        }),
+      });
+    } catch (fetchError) {
+      console.error('❌ OpenAI fetch failed:', fetchError);
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Failed to connect to OpenAI API',
+        diagnostics: {
+          pwCount: practicalWork.length,
+          regsCount: regulations.length,
+          ragMs: ragTime,
+          fetchError: fetchError instanceof Error ? fetchError.message : String(fetchError)
+        }
+      }), {
+        status: 503,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
 
     const aiTime = Date.now() - aiStartTime;
     console.log('✅ OpenAI response received', { aiMs: aiTime });
