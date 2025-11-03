@@ -430,8 +430,8 @@ Deno.serve(async (req) => {
     // ✅ QUICK WIN #3: Store in cache for future reuse
     console.log('💾 Storing result in semantic cache...');
     
-    // Safe transformation with fallback
-    const transformedRamsData = transformHealthSafetyResponse(hsData);
+    // Safe transformation with fallback - guard against null hsData
+    const transformedRamsData = hsData ? transformHealthSafetyResponse(hsData) : null;
     const ramsDataFinal = transformedRamsData || {
       projectName: '',
       location: '',
@@ -450,28 +450,40 @@ Deno.serve(async (req) => {
       workType: job.job_scale,
       jobScale: job.job_scale,
       ramsData: ramsDataFinal,
-      methodData: installerData.data,
+      methodData: installerData?.data ?? null, // ✅ Guard against null installerData
       openAiKey: OPENAI_API_KEY
     });
     
-    // Mark complete
+    // Determine final status message
+    const currentStepMessage = 
+      (hsData && installerData) ? '✨ Generation complete!' :
+      (!hsData && installerData) ? '✨ Generation complete (partial - health-safety timeout)' :
+      (hsData && !installerData) ? '✨ Generation complete (partial - method statement timeout)' :
+      'Generation complete (partial results)';
+    
+    // Build safe metadata object with null guards
+    const generationMetadata: any = {
+      hs_timing: hsData?.timing ?? null,
+      installer_timing: installerData?.timing ?? null,
+      cache_hit: false,
+      hs_transform_fallback: !transformedRamsData,
+      partial_hs: !hsData || !!hsError,
+      partial_installer: !installerData || !!installerError,
+      ...(hsData ? { hs_input_preview: JSON.stringify(hsData).slice(0, 300) } : {})
+    };
+    
+    // Mark complete with safe property access
     await supabase
       .from('rams_generation_jobs')
       .update({
         status: 'complete',
         progress: 100,
-        current_step: '✨ Generation complete!',
+        current_step: currentStepMessage,
         rams_data: ramsDataFinal,
-        method_data: installerData.data,
-        raw_installer_response: installerData,
+        ...(installerData?.data ? { method_data: installerData.data } : {}),
+        ...(installerData ? { raw_installer_response: installerData } : {}),
         completed_at: new Date().toISOString(),
-        generation_metadata: {
-          hs_timing: hsData.timing,
-          installer_timing: installerData.timing,
-          cache_hit: false,
-          hs_transform_fallback: !transformedRamsData,
-          hs_input_preview: JSON.stringify(hsData).slice(0, 300)
-        }
+        generation_metadata: generationMetadata
       })
       .eq('id', jobId);
 

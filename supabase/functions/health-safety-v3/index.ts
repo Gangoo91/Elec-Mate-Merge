@@ -840,11 +840,12 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     // Add progress monitoring
     const aiGenerationStartTime = Date.now();
     let progressInterval: number | undefined;
+    let heartbeatInterval: number | undefined; // ✅ Hoist to outer scope to fix cleanup bug
     
     let aiResult;
     try {
       // Start heartbeat to prevent "stuck job" false positives
-      const heartbeatInterval = setInterval(async () => {
+      heartbeatInterval = setInterval(async () => {
         try {
           const jobId = body.jobId;
           if (jobId) {
@@ -974,7 +975,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
         tool_choice: { type: 'function', function: { name: 'provide_safety_assessment' } }
       }, OPENAI_API_KEY, 150000); // ✅ FIX #2: 150s timeout - increased buffer for complex jobs
       
-      clearInterval(heartbeatInterval);
+      if (heartbeatInterval) clearInterval(heartbeatInterval); // ✅ Add null check
       if (progressInterval) clearInterval(progressInterval);
       performanceMetrics.aiGeneration = Date.now() - aiGenerationStartTime;
       
@@ -998,7 +999,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       }
       
     } catch (aiError) {
-      clearInterval(heartbeatInterval);
+      if (heartbeatInterval) clearInterval(heartbeatInterval); // ✅ Add null check
       if (progressInterval) clearInterval(progressInterval);
       performanceMetrics.aiGeneration = Date.now() - aiGenerationStartTime;
       
