@@ -147,8 +147,46 @@ function getCircuitTypeHints(loadType: string, location?: string): string {
     'ev_charger': 'Section 722, dedicated circuit, Type A RCD required, 6mm² minimum, Mode 3 compliance',
     'ev-charger': 'Section 722, dedicated circuit, Type A RCD required, 6mm² minimum, Mode 3 compliance',
     'cooker': 'Reg 433.1.204 diversity (10A + 30% remainder + 5A socket), 10mm² typical, 40-50A MCB',
-    'socket': 'Ring final: ALWAYS 2.5mm² conductors + 32A MCB (BS 7671 Appendix 15) - applies to T&E AND SWA cable. Never 4mm² or 6mm² for rings. For >7kW: create multiple 2.5mm² rings. Radial circuits: 4mm² + 32A or 2.5mm² + 20A',
-    'sockets': 'Ring final: ALWAYS 2.5mm² conductors + 32A MCB (BS 7671 Appendix 15) - applies to T&E AND SWA cable. Never 4mm² or 6mm² for rings. For >7kW: create multiple 2.5mm² rings. Radial circuits: 4mm² + 32A or 2.5mm² + 20A',
+    'socket': `CRITICAL CABLE SIZING RULES:
+  
+  1. RING FINAL CIRCUITS (most common for sockets):
+     - Cable: ALWAYS 2.5mm²/1.5mm² T&E OR 2.5mm² 3-core SWA
+     - Protection: 32A Type B MCB
+     - Max load: 7.36kW (diversified)
+     - Regulation: BS 7671 Appendix 15 / Reg 433.1.204
+     - NEVER use 4mm², 6mm², or 10mm² cable for ring finals
+     - If load >7.36kW: SPLIT into multiple 2.5mm² ring circuits
+  
+  2. RADIAL CIRCUITS (use only when ring not practical):
+     - 4mm² cable + 32A MCB (max 75m)
+     - 2.5mm² cable + 20A MCB (max 50m)
+     - 6mm² cable + 40A MCB (industrial)
+  
+  3. DECISION TREE:
+     - ≤8 socket outlets + domestic = Ring Final (2.5mm²)
+     - >8 socket outlets = Multiple Ring Finals (2.5mm² each)
+     - Long cable run (>50m) outdoor = Radial (4mm² SWA)
+     - Industrial workshop = Radial (6mm² SWA)`,
+    'sockets': `CRITICAL CABLE SIZING RULES:
+  
+  1. RING FINAL CIRCUITS (most common for sockets):
+     - Cable: ALWAYS 2.5mm²/1.5mm² T&E OR 2.5mm² 3-core SWA
+     - Protection: 32A Type B MCB
+     - Max load: 7.36kW (diversified)
+     - Regulation: BS 7671 Appendix 15 / Reg 433.1.204
+     - NEVER use 4mm², 6mm², or 10mm² cable for ring finals
+     - If load >7.36kW: SPLIT into multiple 2.5mm² ring circuits
+  
+  2. RADIAL CIRCUITS (use only when ring not practical):
+     - 4mm² cable + 32A MCB (max 75m)
+     - 2.5mm² cable + 20A MCB (max 50m)
+     - 6mm² cable + 40A MCB (industrial)
+  
+  3. DECISION TREE:
+     - ≤8 socket outlets + domestic = Ring Final (2.5mm²)
+     - >8 socket outlets = Multiple Ring Finals (2.5mm² each)
+     - Long cable run (>50m) outdoor = Radial (4mm² SWA)
+     - Industrial workshop = Radial (6mm² SWA)`,
     'office-sockets': 'Ring finals: 2.5mm²/1.5mm² T&E + 32A MCB per ring. **Split >7kW into multiple rings** (e.g., 16 sockets = 2× 8-socket rings). Never use 6mm².',
     'lighting': '1.5mm² cable, 6A MCB Type B, 3% voltage drop limit (6.9V at 230V)',
     'outdoor': '30mA RCD mandatory (411.3.3), SWA cable, IP65+ rating, burial depth 600mm. IMPORTANT: If ring final (32A MCB) = 2.5mm² SWA. If radial = 4mm²/6mm² SWA',
@@ -371,6 +409,46 @@ function categorizeCircuits(circuits: any[], logger: any) {
   return { highPowerCircuits, standardCircuits };
 }
 
+/**
+ * Pre-design validation: Check for impossible circuit requirements
+ * Catches errors before expensive AI call
+ */
+function validateCircuitRequirements(circuits: any[], logger: any): {
+  valid: boolean;
+  errors: string[];
+  warnings: string[];
+} {
+  const errors: string[] = [];
+  const warnings: string[] = [];
+  
+  circuits.forEach((circuit, index) => {
+    const loadType = circuit.loadType?.toLowerCase() || '';
+    const power = circuit.loadPower || 0;
+    
+    // Check for high-power socket circuits (should be split into rings)
+    if (loadType.includes('socket') && power > 7360) {
+      const ringCount = Math.ceil(power / 7360);
+      errors.push(
+        `Circuit ${index + 1} (${circuit.name}): ${(power/1000).toFixed(1)}kW socket load requires ${ringCount} ring final circuits (max 7.36kW per ring). Split circuit.`
+      );
+    }
+    
+    // Check for outdoor ring finals (should be radial)
+    const isOutdoor = circuit.specialLocation?.toLowerCase().includes('outdoor');
+    if (loadType.includes('socket') && isOutdoor && power > 3000) {
+      warnings.push(
+        `Circuit ${index + 1} (${circuit.name}): Outdoor socket circuit >3kW should use RADIAL configuration (4mm² SWA), not ring final`
+      );
+    }
+  });
+  
+  return {
+    valid: errors.length === 0,
+    errors,
+    warnings
+  };
+}
+
 export async function handleBatchDesign(body: any, logger: any) {
   const { projectInfo, incomingSupply, circuits: inputCircuits, aiConfig } = body;
   const installationType = projectInfo.installationType || 'domestic';
@@ -482,11 +560,26 @@ export async function handleBatchDesign(body: any, logger: any) {
             }
           }
         }),
-        10000, // 10s timeout per search (SPEED BOOST)
+        20000, // PHASE 1.1: Increased from 10s to 20s for complex searches
         `RAG search for ${loadType}`
-      ).catch(error => {
-        logger.warn(`⚠️ RAG search timeout for ${loadType}`, { error: error.message });
-        return { regulations: [], designDocs: [], searchMethod: 'timeout' };
+      ).catch(async (error) => {
+        // PHASE 1.1: Retry once with simpler search if timeout occurs
+        logger.warn(`⚠️ RAG timeout for ${loadType}, retrying with simplified search`);
+        return withTimeout(
+          intelligentRAGSearch({
+            circuitType: loadType,
+            searchTerms: [loadType],
+            expandedQuery: loadType,
+            context: {
+              ragPriority: { bs7671: 90, design: 80, practical_work: 0 } // Skip slow searches
+            }
+          }),
+          10000, // 10s retry timeout
+          `RAG retry for ${loadType}`
+        ).catch(() => {
+          logger.error(`⚠️ RAG retry failed for ${loadType}`);
+          return { regulations: [], designDocs: [], searchMethod: 'failed' };
+        });
       })
     );
   });
@@ -509,11 +602,21 @@ export async function handleBatchDesign(body: any, logger: any) {
             }
           }
         }),
-        10000, // 10s timeout (SPEED BOOST)
+        20000, // PHASE 1.1: Increased from 10s to 20s
         'RAG search for diversity'
-      ).catch(error => {
-        logger.warn('⚠️ RAG diversity search timeout', { error: error.message });
-        return { regulations: [], designDocs: [], searchMethod: 'timeout' };
+      ).catch(async (error) => {
+        // PHASE 1.1: Retry with simpler search
+        logger.warn('⚠️ RAG diversity search timeout, retrying');
+        return withTimeout(
+          intelligentRAGSearch({
+            circuitType: 'general',
+            searchTerms: ['diversity'],
+            expandedQuery: 'diversity',
+            context: { ragPriority: { bs7671: 90, design: 80, practical_work: 0 } }
+          }),
+          10000,
+          'RAG retry for diversity'
+        ).catch(() => ({ regulations: [], designDocs: [], searchMethod: 'failed' }));
       })
     )
   );
@@ -532,11 +635,36 @@ export async function handleBatchDesign(body: any, logger: any) {
   // Clean up deduplicator after all requests complete
   deduplicator.clear();
   
+  // PHASE 4.1: Add RAG performance metrics and alerts
+  const timeouts = allRAGResults.filter((r: any) => r.searchMethod === 'timeout' || r.searchMethod === 'failed').length;
+  const successfulSearches = allRAGResults.filter((r: any) => r.regulations?.length > 0).length;
+  
   logger.info('✅ All RAG searches complete', {
     totalTimeMs: ragElapsedMs,
-    successfulSearches: allRAGResults.filter((r: any) => r.regulations?.length > 0).length,
-    timeouts: allRAGResults.filter((r: any) => r.searchMethod === 'timeout').length
+    successfulSearches,
+    timeouts,
+    failedSearches: allRAGResults.filter((r: any) => r.searchMethod === 'failed').length,
+    
+    // PHASE 4.1: NEW PERFORMANCE METRICS
+    performanceByType: uniqueLoadTypes.map((type, index) => ({
+      circuitType: type,
+      timeMs: allRAGResults[index]?.searchTimeMs || 0,
+      resultsCount: allRAGResults[index]?.regulations?.length || 0,
+      status: allRAGResults[index]?.searchMethod || 'unknown'
+    })),
+    cacheHitRate: deduplicator.getCacheHitRate(),
+    avgResponseTime: ragElapsedMs / ragSearchesWithTimeout.length,
+    slowestSearch: Math.max(...allRAGResults.map(r => r.searchTimeMs || 0))
   });
+  
+  // PHASE 4.1: Alert if performance degraded
+  if (ragElapsedMs > 30000) {
+    logger.warn('⚠️ RAG search performance degraded', {
+      totalTime: ragElapsedMs,
+      threshold: 30000,
+      action: 'Consider increasing database resources or optimizing queries'
+    });
+  }
 
   // PHASE 2: Merge and deduplicate regulations (by reg number AND content hash)
   let mergedRegulations: any[] = [];
@@ -623,9 +751,22 @@ export async function handleBatchDesign(body: any, logger: any) {
     designDocs: ragResults.designDocs.length
   });
   
+  // PHASE 2.2: Pre-design validation before AI call
+  const preValidation = validateCircuitRequirements(allCircuits, logger);
+  if (!preValidation.valid) {
+    logger.warn('⚠️ Pre-design validation found issues', {
+      errors: preValidation.errors,
+      warnings: preValidation.warnings
+    });
+    // Include critical errors in special requirements
+    specialRequirements.push(...preValidation.errors);
+  }
+  if (preValidation.warnings.length > 0) {
+    // Include warnings in installation constraints
+    installationConstraints.push(...preValidation.warnings);
+  }
+  
   // STEP 2: Build System Prompt with RAG Knowledge + Parsed Context
-  logger.info('📝 STEP 2: Building AI Prompt with RAG Context');
-// STEP 2: Build Enhanced System Prompt with RAG-First Instructions
   logger.info('📝 STEP 2: Building AI Prompt with RAG Context');
   
   const systemPrompt = `You are a BS 7671:2018+A3:2024 compliant circuit design expert with RAG knowledge.

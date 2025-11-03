@@ -267,14 +267,21 @@ export function validateCompliance(circuits: any[], incomingSupply: any): Valida
                           (loadType.includes('socket') && circuit.protectionDevice?.rating === 32);
     
     if (isRingCircuit && circuit.cableSize > 2.5) {
+      const loadPower = circuit.loadPower || 0;
+      const suggestedRings = Math.ceil(loadPower / 7360);
+      
       errors.push({
         circuitIndex: index,
         circuitName: circuit.name,
         severity: 'critical',
         category: 'compliance',
-        message: `Ring final uses ${circuit.cableSize}mm² cable - must be 2.5mm² per BS 7671 Appendix 15. For outdoor sockets: use 2.5mm² 3-core SWA (not 4mm²)`,
+        message: `Ring final uses ${circuit.cableSize}mm² cable - must be 2.5mm² per BS 7671 Appendix 15`,
         regulation: 'BS 7671 Appendix 15 / Reg 433.1.204',
-        suggestedFix: 'Use 2.5mm²/1.5mm² T&E and split into multiple ring circuits if load >7.36kW'
+        suggestedFix: `FIX OPTIONS:
+  1. If domestic/office sockets (≤8 outlets): Change to 2.5mm²/1.5mm² T&E with 32A MCB
+  2. If outdoor sockets: Change to 2.5mm² 3-core SWA with 32A MCB
+  3. If load >${(7.36).toFixed(2)}kW: Split into ${suggestedRings} separate 2.5mm² ring circuits
+  4. If long outdoor run (>50m): Change circuit type to RADIAL and use 4mm² 3-core SWA with 32A MCB`
       });
     }
 

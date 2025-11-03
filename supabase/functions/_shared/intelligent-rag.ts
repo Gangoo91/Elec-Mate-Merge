@@ -271,12 +271,43 @@ async function vectorSearchWithEmbedding(
     }
   }
 
-  // BS 7671 search - UPGRADED: Use enriched regulations intelligence
+  // BS 7671 search - PHASE 1.3: Hybrid search FIRST, vector search only if insufficient
   if (!priority || priority.bs7671 > 50) {
     searches.push(
       supabase.rpc('search_bs7671_intelligence_hybrid', {
         query_text: params.expandedQuery,
         match_count: matchCount, // PHASE 5: Dynamic match count
+      }).then(async (result: any) => {
+        // PHASE 1.3: Check if hybrid results are sufficient
+        const hybridResults = result?.data || [];
+        
+        if (hybridResults && hybridResults.length >= 10) {
+          console.log(`✅ Hybrid search sufficient: ${hybridResults.length} BS 7671 results`);
+          return result;
+        }
+        
+        // PHASE 1.3: Fallback to vector search only if hybrid insufficient
+        console.log(`⚠️ Hybrid search insufficient (${hybridResults.length} results), trying vector search`);
+        return supabase.rpc('search_bs7671_embeddings', {
+          query_embedding: embedding,
+          match_threshold: 0.50,
+          match_count: matchCount
+        }).then((vectorResult: any) => {
+          const vectorResults = vectorResult?.data || [];
+          console.log(`✅ Vector search returned ${vectorResults.length} additional results`);
+          
+          // Merge and deduplicate hybrid + vector results
+          const combined = [...hybridResults, ...vectorResults];
+          const seen = new Set<string>();
+          const unique = combined.filter(r => {
+            const key = r.regulation_number || r.content?.substring(0, 50);
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+          });
+          
+          return { data: unique, error: null };
+        });
       })
     );
     searchTypes.push('bs7671');
@@ -309,14 +340,17 @@ async function vectorSearchWithEmbedding(
     searchTypes.push('health_safety');
   }
 
-  // PRACTICAL WORK INTELLIGENCE - New primary source for hands-on guidance
+  // PRACTICAL WORK INTELLIGENCE - PHASE 1.2: Use cached batch search
   if (!priority || priority.practical_work > 50) {
+    // PHASE 1.2: Import batch loader with caching
+    const { searchPracticalWorkBatch } = await import('./rag-batch-loader.ts');
+    
     searches.push(
-      supabase.rpc('search_practical_work_intelligence_hybrid', {
-        query_text: params.expandedQuery,
-        match_count: 15,
-        filter_trade: params.context?.agentType || null // 'installer', 'commissioning', 'maintenance'
-      })
+      searchPracticalWorkBatch(supabase, {
+        keywords: params.searchTerms,
+        limit: 15,
+        activity_filter: params.context?.agentType ? [params.context.agentType] : undefined
+      }).then(results => ({ data: results, error: null }))
     );
     searchTypes.push('practical_work');
   }
