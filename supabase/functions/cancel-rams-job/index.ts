@@ -1,10 +1,4 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
+import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -31,6 +25,17 @@ serve(async (req) => {
 
     console.log('[CANCEL-RAMS] User authenticated:', user.id);
 
+    // Create authenticated client for RLS-protected queries
+    const authenticatedClient = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+      {
+        global: {
+          headers: { Authorization: authHeader }
+        }
+      }
+    );
+
     // Get the job ID from the request body
     const body = await req.json();
     const jobId = body.jobId;
@@ -38,8 +43,8 @@ serve(async (req) => {
 
     console.log('[CANCEL-RAMS] Cancelling job:', jobId);
 
-    // Verify user owns the job
-    const { data: job, error: jobError } = await supabaseClient
+    // Verify user owns the job (use authenticated client for RLS)
+    const { data: job, error: jobError } = await authenticatedClient
       .from('rams_generation_jobs')
       .select('id, user_id, status')
       .eq('id', jobId)
@@ -84,8 +89,8 @@ serve(async (req) => {
       });
     }
 
-    // Cancel the job
-    const { error: updateError } = await supabaseClient
+    // Cancel the job (use authenticated client)
+    const { error: updateError } = await authenticatedClient
       .from('rams_generation_jobs')
       .update({
         status: 'cancelled',
