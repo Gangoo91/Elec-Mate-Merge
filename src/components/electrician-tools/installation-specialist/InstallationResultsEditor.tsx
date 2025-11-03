@@ -177,14 +177,26 @@ export const InstallationResultsEditor = ({
         estimatedDuration: summary.estimatedDuration || 'Not specified',
         requiredQualifications: summary.requiredQualifications || ['18th Edition BS 7671:2018+A3:2024'],
         
-        // NEW: Comprehensive data from all 3 agents
-        testingProcedures: testingProcedures,
-        equipmentSchedule: equipmentSchedule,
-        qualityRequirements: qualityRequirements,
-        siteLogistics: siteLogistics,
-        conditionalFlags: conditionalFlags,
-        competencyRequirements: competencyRequirements,
-        workAtHeightEquipment: workAtHeightEquipment,
+        // NEW: Comprehensive data from all 3 agents (extracted from fullMethodStatement)
+        testingProcedures: fullMethodStatement?.testingProcedures || [],
+        equipmentSchedule: fullMethodStatement?.equipmentSchedule || [],
+        qualityRequirements: fullMethodStatement?.qualityRequirements || [],
+        siteLogistics: fullMethodStatement?.siteLogistics || {
+          vehicleAccess: 'Via main entrance',
+          parking: 'On-site parking available',
+          materialStorage: 'Secure compound',
+          wasteManagement: 'Segregated waste bins',
+          welfareFacilities: 'On-site facilities',
+          siteRestrictions: 'Working hours: 08:00-17:00'
+        },
+        conditionalFlags: fullMethodStatement?.conditionalFlags || {},
+        competencyRequirements: fullMethodStatement?.competencyRequirements || {
+          competencyRequirements: '18th Edition BS 7671:2018+A3:2024, ECS Gold Card',
+          trainingRequired: 'Site induction, Manual Handling, Working at Height',
+          supervisionLevel: 'Continuous supervision by qualified electrician',
+          additionalCertifications: 'N/A'
+        },
+        workAtHeightEquipment: fullMethodStatement?.workAtHeightEquipment || [],
         
         // User-provided metadata
         projectMetadata: projectMetadata ? {

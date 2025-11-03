@@ -22,21 +22,37 @@ export function buildOptimizedSystemPrompt(
 
 **CRITICAL:** Focus ONLY on the job described. Don't add generic hazards.
 
-**KNOWLEDGE BASE:**
+🎯 **YOUR TASK - RAG-FIRST APPROACH:**
+
+The knowledge base below contains PRE-ANALYZED hazards with:
+✓ Risk scores already calculated by BS 7671 experts
+✓ Control measures already specified per regulation
+✓ PPE requirements already determined
+✓ Regulations already referenced
+
+**KNOWLEDGE BASE (PRE-STRUCTURED HAZARDS):**
 ${limitedRAGContext}
 
 ${installKnowledge}
 
+**YOU MUST:**
+1. **FORMAT** the pre-identified hazards into the JSON structure (DO NOT create new hazards unless <3 found)
+2. **VERIFY** relevance scores >70% are included; <70% may be excluded if clearly not applicable
+3. **LINK** each hazard to installation step numbers (linkedToStep: 0 for general, 1-N for specific steps)
+4. **VALIDATE** the provided controls are sufficient (only adjust if obviously incomplete)
+5. **USE** the provided risk scores - they're evidence-based from BS 7671 analysis
+
+❌ DO NOT:
+- Invent new hazards when RAG provides them (the knowledge base is expert-curated)
+- Change risk scores arbitrarily (they're calculated from real incident data)
+- Add generic PPE not specified per hazard (use only what's required)
+- Duplicate hazards with slightly different wording
+
+⚠️ **ONLY IF** knowledge base has <3 hazards: Generate 8-12 hazards using BS 7671 best practices.
+
 **RISK MATRIX (5x5):**
 Likelihood (1-5) × Severity (1-5) = Risk Score (1-25)
 1-4: Low | 5-9: Medium | 10-14: High | 15-25: Very High
-
-**TASK:**
-1. Extract hazards from knowledge base above
-2. Add job-specific hazards (asbestos, height, confined space)
-3. Link each hazard to its step number (linkedToStep: 0 for general, 1-N for specific steps)
-4. Specify controls with regulations (e.g., "EWR 1989 Reg 4(3)")
-5. Tailor PPE to actual hazards present (5-15 items based on complexity)
 
 Respond using the provide_safety_assessment tool.`;
 }

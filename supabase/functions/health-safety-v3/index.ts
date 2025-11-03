@@ -392,10 +392,21 @@ serve(async (req) => {
     }, supabase);
     
     console.log(`✅ [V3] Retrieved ${structuredHazards.length} pre-structured hazards`);
-    logger.info('Pre-structured hazards retrieved', {
-      count: structuredHazards.length,
-      avgConfidence: structuredHazards.reduce((s, h) => s + h.confidence_score, 0) / structuredHazards.length,
-      retrievalTime: Date.now() - ragStartTime
+    
+    // ✨ Part 3C: RAG Effectiveness Logging for H&S
+    logger.info('📊 RAG Effectiveness Check - Health & Safety', {
+      totalStructuredHazards: structuredHazards.length,
+      highConfidence: structuredHazards.filter(h => h.confidence_score > 0.7).length,
+      avgConfidence: structuredHazards.length > 0 
+        ? (structuredHazards.reduce((s, h) => s + h.confidence_score, 0) / structuredHazards.length).toFixed(3)
+        : 'N/A',
+      avgRiskScore: structuredHazards.length > 0
+        ? (structuredHazards.reduce((s, h) => s + h.risk_score, 0) / structuredHazards.length).toFixed(1)
+        : 'N/A',
+      hazardCategories: [...new Set(structuredHazards.map(h => h.hazard_category))].join(', '),
+      hasRichContext: structuredHazards.length >= 8,
+      retrievalTime: Date.now() - ragStartTime,
+      warningIfPoor: structuredHazards.length < 3 ? '⚠️ INSUFFICIENT RAG DATA - AI will generate generic hazards!' : null
     });
     
     // Build context from pre-structured hazards

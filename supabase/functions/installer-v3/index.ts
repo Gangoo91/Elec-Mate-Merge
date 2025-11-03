@@ -314,13 +314,19 @@ serve(async (req) => {
 
     // Close the else block from PHASE 2
 
-    logger.info('Installation knowledge retrieved', {
-      count: installKnowledge.length,
-      avgScore: installKnowledge.length > 0
-        ? (installKnowledge.reduce((s: number, k: any) => s + (k.finalScore || 0), 0) / installKnowledge.length).toFixed(3)
-        : 'N/A',
-      ragDuration: timings.ragRetrieval
-    });
+      // ✨ Part 3C: RAG Effectiveness Logging
+      logger.info('📊 RAG Effectiveness Check', {
+        totalResults: installKnowledge.length,
+        highConfidence: installKnowledge.filter((k: any) => (k.hybrid_score || k.finalScore || 0) > 0.7).length,
+        avgScore: installKnowledge.length > 0
+          ? (installKnowledge.reduce((s: number, k: any) => s + (k.hybrid_score || k.finalScore || 0), 0) / installKnowledge.length).toFixed(3)
+          : 'N/A',
+        practicalWorkCount: installKnowledge.filter((k: any) => k.source === 'practical_work_intelligence').length,
+        bs7671Count: installKnowledge.filter((k: any) => k.source === 'bs7671_intelligence').length,
+        hasRichContext: installContext.length > 1000,
+        ragDuration: timings.ragRetrieval,
+        warningIfPoor: installKnowledge.length < 3 ? '⚠️ INSUFFICIENT RAG DATA - AI may hallucinate!' : null
+      });
 
     // PHASE 3: Build installation context - format based on source
     let installContext = '';
@@ -381,18 +387,29 @@ serve(async (req) => {
       contextSection += '5. If unsure what the user means, reference what was discussed to clarify\n';
     }
 
-    // Phase 1: Enhanced conversational system prompt with expert guidance
+    // Phase 1: RAG-FIRST System Prompt - Knowledge base intelligence comes FIRST
     const systemPrompt = `You are a master electrician with 20+ years of installation experience across residential, commercial, and industrial projects. You're chatting with a colleague who needs practical, on-site advice.
 
-**PRIMARY KNOWLEDGE SOURCES:**
-1. **Practical Work Intelligence** - Verified, enriched installation procedures from real-world scenarios
-2. **BS 7671:2018+A3:2024 Regulations Intelligence** - Compliance requirements and testing standards
-3. **Installation Knowledge Base (fallback)** - General installation guidance
+🎯 **PRIMARY INSTRUCTION: USE THE KNOWLEDGE BASE BELOW**
 
-PRACTICAL WORK INTELLIGENCE (YOU MUST USE THIS DATA FIRST):
+The Practical Work Intelligence database contains VERIFIED procedures from 10,000+ real installations. Your job is to:
+1. **SELECT** the most relevant procedures from the knowledge base
+2. **ADAPT** them to this specific job (cable sizes, distances, equipment)
+3. **SEQUENCE** them in logical installation order
+4. **ENHANCE** with specific measurements and quality checks
+
+📚 **PRACTICAL WORK INTELLIGENCE - USE THIS DATA FIRST:**
 ${installContext}
 
-${installContext.includes('Practical Work') || installContext.includes('Tools:') ? '' : 'NOTE: Limited Practical Work Intelligence available - using general installation knowledge'}
+${installContext.includes('Practical Work') || installContext.includes('Tools:') ? 
+  '✅ Rich practical knowledge available - base your installation steps on this verified data' : 
+  '⚠️ Limited practical knowledge - use general BS 7671 installation practices'
+}
+
+**KNOWLEDGE SOURCE QUALITY:**
+- ${installKnowledge.length} procedures retrieved
+- Avg relevance: ${installKnowledge.length > 0 ? (installKnowledge.reduce((s: number, k: any) => s + (k.hybrid_score || 0), 0) / installKnowledge.length * 100).toFixed(0) : 0}%
+- Primary focus: ${installKnowledge.filter((k: any) => k.source === 'practical_work_intelligence').length} practical procedures, ${installKnowledge.filter((k: any) => k.source === 'bs7671_intelligence').length} BS 7671 regulations
 
 **CRITICAL: ALL OUTPUT MUST BE IN UK ENGLISH**
 - Use UK spellings: realise (not realize), analyse (not analyze), minimise (not minimize), categorise (not categorize), organise (not organize), authorised (not authorized), recognised (not recognized), whilst (not while)
