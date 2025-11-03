@@ -6,7 +6,8 @@ import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { loadCoreRegulationsCache } from './core-regulations-cache.ts';
 import { validateDesign, calculateCircuitConfidence, calculateOverallConfidence } from './validation-pipeline.ts';
 import { extractCircuitsWithAI } from './ai-circuit-extractor.ts';
-import { callGemini, callOpenAI, withRetry, AIProviderError } from '../_shared/ai-providers.ts';
+import { callGemini, callOpenAI, AIProviderError } from '../_shared/ai-providers.ts';
+import { withRetry } from '../_shared/retry.ts';
 import { TypeGuards, applyDefaultCircuitValues } from './type-guards.ts';
 import { CircuitDesignError, ERROR_TEMPLATES } from './error-handler.ts';
 import { PerformanceMonitor } from './performance-monitor.ts';
@@ -1626,8 +1627,9 @@ Design the following circuit${batch.length > 1 ? 's' : ''}:\n${batch.map((c: any
           response_format: useSimplifiedSchema ? { type: "json_object" } : undefined
         }, openAiKey, 60000); // 60s timeout per batch for complex circuits
       }, {
-        maxAttempts: 2,
-        backoff: [2000, 5000]
+        maxRetries: 1, // 2 total attempts (initial + 1 retry)
+        baseDelayMs: 2000,
+        maxDelayMs: 5000
       });
       
       const batchElapsedMs = Date.now() - batchStartTime;
