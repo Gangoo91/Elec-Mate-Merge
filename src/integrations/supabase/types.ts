@@ -8237,6 +8237,25 @@ export type Database = {
           regulation_number: string
         }[]
       }
+      search_regulations_intelligence_hybrid: {
+        Args: {
+          filter_categories?: string[]
+          match_count?: number
+          query_text: string
+        }
+        Returns: {
+          applies_to: string[]
+          category: string
+          confidence_score: number
+          hybrid_score: number
+          keywords: string[]
+          primary_topic: string
+          regulation_id: string
+          regulation_number: string
+          related_regulations: string[]
+          subcategory: string
+        }[]
+      }
       search_tutor_hybrid: {
         Args: {
           level_filter?: string

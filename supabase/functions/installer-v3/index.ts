@@ -635,10 +635,12 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } }
       }, OPENAI_API_KEY, 230000); // 230s timeout - increased for complex installations
       
+      clearInterval(heartbeatInterval);
       clearInterval(progressInterval);
       logger.info(`✅ OpenAI call completed in ${Math.round((Date.now() - aiCallStart) / 1000)}s`);
       
     } catch (error) {
+      clearInterval(heartbeatInterval);
       clearInterval(progressInterval);
       const elapsed = Math.round((Date.now() - aiCallStart) / 1000);
       logger.error(`❌ OpenAI call failed after ${elapsed}s`);
