@@ -262,9 +262,14 @@ export function validateCompliance(circuits: any[], incomingSupply: any): Valida
     }
 
     // Ring final cable size validation (PHASE 2)
-    const isRingCircuit = circuit.circuitType?.toLowerCase().includes('ring') || 
-                          circuit.loadType?.toLowerCase().includes('ring') ||
-                          (loadType.includes('socket') && circuit.protectionDevice?.rating === 32);
+    const isExplicitlyRadial = circuit.name?.toLowerCase().includes('radial') ||
+                                circuit.loadType?.toLowerCase().includes('radial') ||
+                                circuit.circuitType?.toLowerCase().includes('radial');
+    
+    const isRingCircuit = (circuit.circuitType?.toLowerCase().includes('ring') || 
+                           circuit.loadType?.toLowerCase().includes('ring') ||
+                           (loadType.includes('socket') && circuit.protectionDevice?.rating === 32)) && 
+                          !isExplicitlyRadial;
     
     if (isRingCircuit && circuit.cableSize > 2.5) {
       const loadPower = circuit.loadPower || 0;
