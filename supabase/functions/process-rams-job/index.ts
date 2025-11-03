@@ -119,6 +119,19 @@ Deno.serve(async (req) => {
   );
 
   let jobId: string | null = null;
+  let hsHeartbeatInterval: number | undefined;
+  let installerHeartbeatInterval: number | undefined;
+  
+  // Helper function to check if job was cancelled
+  const checkIfCancelled = async (jobId: string): Promise<boolean> => {
+    const { data } = await supabase
+      .from('rams_generation_jobs')
+      .select('status')
+      .eq('id', jobId)
+      .single();
+    
+    return data?.status === 'cancelled';
+  };
   
   try {
     const body = await req.json();
@@ -134,6 +147,15 @@ Deno.serve(async (req) => {
 
     if (fetchError || !job) {
       throw new Error(`Job not found: ${jobId}`);
+    }
+
+    // Check if already cancelled
+    if (job.status === 'cancelled') {
+      console.log(`🚫 Job ${jobId} was already cancelled`);
+      return new Response(
+        JSON.stringify({ success: false, message: 'Job was cancelled' }),
+        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     // ✅ QUICK WIN #3: Check cache first (instant response for common jobs)
@@ -208,9 +230,25 @@ Deno.serve(async (req) => {
 
     console.log(`🚀 Starting parallel agent invocation for job: ${jobId}`);
 
+    // Check cancellation before starting
+    if (await checkIfCancelled(jobId)) {
+      console.log(`🚫 Job ${jobId} cancelled before agent invocation`);
+      return new Response(
+        JSON.stringify({ success: false, message: 'Job was cancelled' }),
+        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     // H&S heartbeat: 15% → 45% (updates every 15s while H&S is running)
     let hsHeartbeatProgress = 15;
-    const hsHeartbeatInterval = setInterval(async () => {
+    hsHeartbeatInterval = setInterval(async () => {
+      // Check for cancellation in heartbeat
+      if (await checkIfCancelled(jobId!)) {
+        console.log(`🚫 Job ${jobId} cancelled during H&S heartbeat`);
+        clearInterval(hsHeartbeatInterval);
+        clearInterval(installerHeartbeatInterval);
+        return;
+      }
       if (hsHeartbeatProgress <= 45) {
         await supabase
           .from('rams_generation_jobs')
@@ -225,7 +263,14 @@ Deno.serve(async (req) => {
 
     // Installer heartbeat: 45% → 80% (updates every 15s while Installer is running)
     let installerHeartbeatProgress = 45;
-    const installerHeartbeatInterval = setInterval(async () => {
+    installerHeartbeatInterval = setInterval(async () => {
+      // Check for cancellation in heartbeat
+      if (await checkIfCancelled(jobId!)) {
+        console.log(`🚫 Job ${jobId} cancelled during Installer heartbeat`);
+        clearInterval(hsHeartbeatInterval);
+        clearInterval(installerHeartbeatInterval);
+        return;
+      }
       if (installerHeartbeatProgress <= 80) {
         await supabase
           .from('rams_generation_jobs')
@@ -272,8 +317,17 @@ Deno.serve(async (req) => {
     ]);
 
     // Clear both heartbeat intervals
-    clearInterval(hsHeartbeatInterval);
-    clearInterval(installerHeartbeatInterval);
+    if (hsHeartbeatInterval) clearInterval(hsHeartbeatInterval);
+    if (installerHeartbeatInterval) clearInterval(installerHeartbeatInterval);
+
+    // Check if cancelled after agents complete
+    if (await checkIfCancelled(jobId)) {
+      console.log(`🚫 Job ${jobId} cancelled after agents completed`);
+      return new Response(
+        JSON.stringify({ success: false, message: 'Job was cancelled' }),
+        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
     // Extract H&S data
     let hsData, hsError;

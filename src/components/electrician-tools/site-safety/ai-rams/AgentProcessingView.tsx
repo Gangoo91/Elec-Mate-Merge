@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Shield, Wrench, CheckCircle, Clock, Zap } from 'lucide-react';
+import { Shield, Wrench, CheckCircle, Clock, Zap, XCircle } from 'lucide-react';
 import { TimelineExpectation } from './TimelineExpectation';
 import { animateValue } from '@/utils/animation-helpers';
+import { Button } from '@/components/ui/button';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 
 interface AgentStep {
   name: string;
@@ -18,6 +20,8 @@ interface AgentProcessingViewProps {
   elapsedTime: number;
   estimatedTimeRemaining: number;
   agentSteps: AgentStep[];
+  onCancel?: () => void;
+  isCancelling?: boolean;
 }
 
 export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
@@ -26,8 +30,11 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
   elapsedTime,
   estimatedTimeRemaining,
   agentSteps,
+  onCancel,
+  isCancelling = false,
 }) => {
   const [displayProgress, setDisplayProgress] = React.useState(0);
+  const [showCancelDialog, setShowCancelDialog] = useState(false);
 
   React.useEffect(() => {
     const cleanup = animateValue(
@@ -243,6 +250,49 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
 
       {/* Timeline */}
       <TimelineExpectation />
+
+      {/* Cancel Button */}
+      {onCancel && (
+        <Card className="border-red-500/20 bg-red-950/20">
+          <CardContent className="pt-6 pb-5">
+            <div className="flex flex-col items-center gap-4 text-center">
+              <XCircle className="w-8 h-8 text-red-400" />
+              <div>
+                <h3 className="text-lg font-semibold text-red-400 mb-1">
+                  Need to Stop?
+                </h3>
+                <p className="text-sm text-gray-400">
+                  You can cancel this generation if you need to make changes to your input
+                </p>
+              </div>
+              <Button
+                variant="outline"
+                onClick={() => setShowCancelDialog(true)}
+                disabled={isCancelling}
+                className="border-red-500/40 hover:border-red-500 hover:bg-red-500/10 text-red-400"
+              >
+                {isCancelling ? 'Cancelling...' : 'Cancel Generation'}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Confirmation Dialog */}
+      <ConfirmationDialog
+        open={showCancelDialog}
+        onOpenChange={setShowCancelDialog}
+        title="Cancel RAMS Generation?"
+        description="Are you sure you want to cancel? This will stop the generation and cannot be undone. You can start a new generation afterwards."
+        confirmText="Yes, Cancel Generation"
+        cancelText="No, Continue"
+        onConfirm={() => {
+          setShowCancelDialog(false);
+          onCancel?.();
+        }}
+        variant="destructive"
+        loading={isCancelling}
+      />
     </div>
   );
 };

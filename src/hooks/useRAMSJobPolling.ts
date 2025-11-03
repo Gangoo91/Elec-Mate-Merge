@@ -22,7 +22,7 @@ interface UseRAMSJobPollingReturn {
   startPolling: () => void;
   stopPolling: () => void;
   progress: number;
-  status: 'idle' | 'pending' | 'processing' | 'complete' | 'failed';
+  status: 'idle' | 'pending' | 'processing' | 'complete' | 'failed' | 'cancelled';
   currentStep: string;
   ramsData: any;
   methodData: any;
@@ -81,8 +81,8 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
         }
       }
 
-      // Stop polling when complete or failed
-      if (data.status === 'complete' || data.status === 'failed') {
+      // Stop polling when complete, failed, or cancelled
+      if (data.status === 'complete' || data.status === 'failed' || data.status === 'cancelled') {
         setIsPolling(false);
       }
     } catch (error) {
@@ -144,7 +144,7 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
     startPolling,
     stopPolling,
     progress: job?.progress || 0,
-    status: jobId ? ((job?.status as 'pending' | 'processing' | 'complete' | 'failed') || 'pending') : 'idle',
+    status: jobId ? ((job?.status as 'idle' | 'pending' | 'processing' | 'complete' | 'failed' | 'cancelled') || 'pending') : 'idle',
     currentStep: job?.current_step || '',
     ramsData: job?.rams_data,
     methodData: job?.method_data,

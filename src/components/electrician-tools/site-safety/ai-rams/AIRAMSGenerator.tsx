@@ -24,8 +24,9 @@ export const AIRAMSGenerator: React.FC = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [resumedJob, setResumedJob] = useState(false);
+  const [isCancelling, setIsCancelling] = useState(false);
   
-  const { job, startPolling, progress, status, currentStep, ramsData, methodData, error } = useRAMSJobPolling(currentJobId);
+  const { job, startPolling, stopPolling, progress, status, currentStep, ramsData, methodData, error } = useRAMSJobPolling(currentJobId);
   const { requestPermission, showCompletionNotification, showErrorNotification } = useRAMSNotifications();
 
   // Check for in-progress jobs on mount (only if user initiated in this session)
@@ -174,6 +175,57 @@ export const AIRAMSGenerator: React.FC = () => {
     startPolling();
   };
 
+  const handleCancel = async () => {
+    if (!currentJobId) return;
+    
+    setIsCancelling(true);
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('cancel-rams-job', {
+        body: { jobId: currentJobId }
+      });
+      
+      if (error || !data?.success) {
+        toast({
+          title: "Cancellation failed",
+          description: error?.message || data?.error || "Could not cancel generation",
+          variant: 'destructive'
+        });
+        setIsCancelling(false);
+        return;
+      }
+      
+      // Stop polling and clear state
+      stopPolling();
+      sessionStorage.removeItem('rams-generation-active');
+      
+      toast({
+        title: "Generation cancelled",
+        description: "You can start a new generation with corrected input",
+        variant: 'default'
+      });
+      
+      // Reset to input form
+      setCurrentJobId(null);
+      setShowResults(false);
+      setShowCelebration(false);
+      setCelebrationShown(false);
+      setGenerationStartTime(0);
+      setGenerationEndTime(0);
+      setResumedJob(false);
+      
+    } catch (err) {
+      console.error('Cancel error:', err);
+      toast({
+        title: "Cancellation failed",
+        description: "An unexpected error occurred",
+        variant: 'destructive'
+      });
+    } finally {
+      setIsCancelling(false);
+    }
+  };
+
   const handleStartOver = () => {
     // Clear session flag
     sessionStorage.removeItem('rams-generation-active');
@@ -260,6 +312,8 @@ export const AIRAMSGenerator: React.FC = () => {
                 currentStep={currentStep}
                 elapsedTime={generationStartTime > 0 ? Math.floor((Date.now() - generationStartTime) / 1000) : 0}
                 estimatedTimeRemaining={Math.max(0, Math.floor((300 * (100 - progress)) / 100))}
+                onCancel={status === 'processing' || status === 'pending' ? handleCancel : undefined}
+                isCancelling={isCancelling}
                 agentSteps={[
                   {
                     name: 'health-safety',
@@ -278,15 +332,21 @@ export const AIRAMSGenerator: React.FC = () => {
                 ]}
               />
 
-              {error && (
-                <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
-                  <p className="text-red-600 dark:text-red-400">{error}</p>
+              {(error || status === 'cancelled') && (
+                <div className={`p-4 border rounded-lg ${
+                  status === 'cancelled' 
+                    ? 'bg-orange-500/10 border-orange-500/30' 
+                    : 'bg-red-500/10 border-red-500/30'
+                }`}>
+                  <p className={status === 'cancelled' ? 'text-orange-600 dark:text-orange-400' : 'text-red-600 dark:text-red-400'}>
+                    {status === 'cancelled' ? 'Generation was cancelled' : error}
+                  </p>
                   <Button
                     variant="outline"
                     onClick={handleStartOver}
                     className="mt-3"
                   >
-                    Try Again
+                    {status === 'cancelled' ? 'Start New Generation' : 'Try Again'}
                   </Button>
                 </div>
               )}
