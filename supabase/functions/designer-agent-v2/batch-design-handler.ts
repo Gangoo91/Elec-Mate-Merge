@@ -1753,18 +1753,18 @@ Return ONLY a valid JSON object with this structure:
 
 Include all required fields: cableSize, cpcSize, protectionDevice, calculations, justifications.`;
 
-            const ultraSimpleResult = await providerRetry(async () => {
+            const ultraSimpleResult = await withRetry(async () => {
               return await callOpenAI({
                 messages: [
                   { role: 'system', content: `${systemPrompt.substring(0, 4950)}... Return response as JSON.` }, // Truncated with JSON mention
                   { role: 'user', content: ultraSimpleQuery }
                 ],
                 model: 'gpt-5-mini-2025-08-07',
-                temperature: 0.2,
-                max_completion_tokens: 8000,
+                // GPT-5 models do not support temperature parameter
+                max_tokens: 8000,
                 response_format: { type: "json_object" }
-              }, openAiKey);
-            }, 2, 1000);
+              }, openAiKey, 30000);
+            }, { maxRetries: 2, baseDelayMs: 1000, maxDelayMs: 5000 });
 
             if (ultraSimpleResult.content) {
               const parsed = JSON.parse(ultraSimpleResult.content);
@@ -1795,18 +1795,18 @@ Include all required fields: cableSize, cpcSize, protectionDevice, calculations,
             
             const noJsonModeQuery = `${ultraSimpleQuery}\n\nIMPORTANT: You must return a valid JSON object. Do not include any markdown formatting or code blocks.`;
             
-            const noJsonModeResult = await providerRetry(async () => {
+            const noJsonModeResult = await withRetry(async () => {
               return await callOpenAI({
                 messages: [
                   { role: 'system', content: `${systemPrompt.substring(0, 4950)}... Return response as valid JSON only.` },
                   { role: 'user', content: noJsonModeQuery }
                 ],
                 model: 'gpt-5-mini-2025-08-07',
-                temperature: 0.2,
-                max_completion_tokens: 8000
+                // GPT-5 models do not support temperature parameter
+                max_tokens: 8000
                 // NO response_format parameter - model decides format
-              }, openAiKey);
-            }, 2, 1000);
+              }, openAiKey, 30000);
+            }, { maxRetries: 2, baseDelayMs: 1000, maxDelayMs: 5000 });
 
             if (noJsonModeResult.content) {
               // Extract JSON from response (might have markdown wrappers like ```json)
@@ -1955,7 +1955,7 @@ Include all required fields: cableSize, cpcSize, protectionDevice, calculations,
   if (!toolCall && allToolCalls.length === 0) {
     logger.warn('⚠️ No tool calls in any batch, retrying first batch with Gemini');
     
-    const retryResult = await providerRetry(async () => {
+    const retryResult = await withRetry(async () => {
       return await callGemini({
         messages: [
           { 
@@ -2028,7 +2028,7 @@ Return your design using the provided tool schema.`
         tools: requestBody.tools,
         tool_choice: requestBody.tool_choice
       }, geminiKey);
-    }, 3, 2000);
+    }, { maxRetries: 3, baseDelayMs: 2000, maxDelayMs: 8000 });
 
     const retryData = {
       choices: [{
