@@ -158,7 +158,7 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
         const summary = {
           totalSteps: installationSteps.length,
           estimatedDuration: formatDuration(totalMinutes),
-          requiredQualifications: [mergedResult.competencyRequirements.minimumQualifications],
+          requiredQualifications: [mergedResult.competencyRequirements.competencyRequirements],
           toolsRequired: allTools,
           materialsRequired: [],
           overallRiskLevel: overallRisk as 'low' | 'medium' | 'high'

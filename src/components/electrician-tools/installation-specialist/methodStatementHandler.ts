@@ -25,8 +25,8 @@ export interface MergedMethodStatementOutput {
   };
   workAtHeightEquipment: string[];
   competencyRequirements: {
-    minimumQualifications: string;
-    mandatoryTraining: string;
+    competencyRequirements: string;
+    trainingRequired: string;
     supervisionLevel: string;
     additionalCertifications: string;
   };
@@ -51,9 +51,7 @@ export const generateMethodStatement = async (
     
     const { data: installerData, error: installerError } = await supabase.functions.invoke('installer-v3', {
       body: { 
-        query: `Search RAG for installation procedures and create detailed installation steps for: ${userQuery}
-        
-CRITICAL: Search RAG first for relevant installation procedures, best practices, and BS 7671 requirements`,
+        query: userQuery, // Pass clean query - installer-v3 handles RAG internally
         projectDetails,
         conversationId
       }
@@ -101,9 +99,7 @@ CRITICAL: Search RAG first for relevant installation procedures, best practices,
       // Health-Safety-v3 - Searches RAG for hazards, then fills hazards per step
       supabase.functions.invoke('health-safety-v3', {
         body: {
-          query: `Search RAG for health & safety hazards, then assess risks for each step of: ${userQuery}
-          
-CRITICAL: Search RAG first for relevant hazards, control measures, and safety requirements`,
+          query: userQuery, // Pass clean query - health-safety-v3 handles RAG internally
           projectType: 'installation',
           workType: installerOutput.workType || 'electrical installation',
           location: projectDetails?.location || 'Site location',
@@ -122,17 +118,7 @@ CRITICAL: Search RAG first for relevant hazards, control measures, and safety re
       // Maintenance-v3 - FINAL REVIEWER: Searches RAG, validates installer+H&S, fills gaps, completes method statement
       supabase.functions.invoke('maintenance-v3', {
         body: {
-          query: `FINAL REVIEW & VALIDATION: Search RAG for procedures, then validate and complete comprehensive method statement for: ${userQuery}
-          
-CRITICAL TASKS AS FINAL REVIEWER (in order):
-1. SEARCH RAG FIRST for inspection, testing, and commissioning procedures
-2. VALIDATE installer steps for completeness, safety, and BS 7671 compliance
-3. ADD missing information from RAG knowledge (testing procedures, inspection checkpoints, fault diagnosis)
-4. ENHANCE quality with specific tool requirements, torque settings, acceptance criteria
-5. FILL ALL remaining method statement fields (tools, materials, practical tips, warnings, compliance regulations)
-6. CROSS-CHECK that all outputs align and are consistent
-7. ENSURE comprehensive BS 7671:2018+A3:2024 compliance references`,
-          
+          query: userQuery, // Pass clean query - maintenance-v3 handles RAG as final reviewer
           projectType: 'installation',
           equipmentType: installerOutput.equipmentType || 'electrical installation',
           workType: installerOutput.workType || 'electrical installation',
@@ -353,8 +339,8 @@ function mergeAgentOutputs(installer: any, maintenance: any | null, healthSafety
     
     // Competency requirements (from H&S, or defaults)
     competencyRequirements: {
-      minimumQualifications: healthSafety?.competency?.qualifications || '18th Edition BS 7671:2018+A3:2024, ECS Gold Card',
-      mandatoryTraining: healthSafety?.competency?.training || 'Site induction, Manual Handling, Working at Height',
+      competencyRequirements: healthSafety?.competency?.qualifications || '18th Edition BS 7671:2018+A3:2024, ECS Gold Card',
+      trainingRequired: healthSafety?.competency?.training || 'Site induction, Manual Handling, Working at Height',
       supervisionLevel: healthSafety?.competency?.supervision || 'Continuous supervision by qualified electrician',
       additionalCertifications: healthSafety?.competency?.additional || 'N/A'
     },
