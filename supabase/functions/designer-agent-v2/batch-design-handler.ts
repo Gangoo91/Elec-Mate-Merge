@@ -11,10 +11,10 @@ import { withRetry } from '../_shared/retry.ts';
 import { TypeGuards, applyDefaultCircuitValues } from './type-guards.ts';
 import { CircuitDesignError, ERROR_TEMPLATES } from './error-handler.ts';
 import { PerformanceMonitor } from './performance-monitor.ts';
-import { buildStructuredDesignPrompt, buildDesignQuery, extractSearchTerms } from './modules/prompt-builder.ts';
 import { categorizeCircuits, generateWarnings } from './modules/post-processing.ts';
 import { callOpenAIWithRetry, parseToolCalls } from './modules/ai-caller.ts';
 import { buildRAGSearches, mergeRegulations } from './modules/rag-composer.ts';
+import { parseQueryEntities } from '../_shared/query-parser.ts';
 
 const INSTALLATION_CONTEXT = {
   domestic: `Design compliant with Part P Building Regulations and BS 7671:2018+A3:2024.
