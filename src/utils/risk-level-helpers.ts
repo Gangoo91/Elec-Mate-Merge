@@ -64,6 +64,7 @@ export function getRiskColorsByLevel(level: RiskLevel): RiskLevelColors {
 
 /**
  * Get risk level label
+ * @deprecated No longer used - risk levels shown via color coding only
  */
 export function getRiskLevelLabel(level: RiskLevel): string {
   return level.toUpperCase();

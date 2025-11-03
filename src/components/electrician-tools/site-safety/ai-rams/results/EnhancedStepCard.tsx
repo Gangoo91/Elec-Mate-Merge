@@ -24,39 +24,30 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({ step, index 
   return (
     <Card 
       className={cn(
-        "mb-3 overflow-hidden transition-all",
+        "mb-3 overflow-hidden transition-all active:scale-[0.99]",
         `border-l-4 ${riskColors.border}`,
         isEvenRow ? "bg-card" : "bg-card/60"
       )}
     >
       <MobileAccordion type="single" collapsible>
         <MobileAccordionItem value="step-details" className="border-0">
-          {/* Collapsed State - Matches Screenshot */}
+          {/* Collapsed State - Mobile Optimised */}
           <div className="flex items-center gap-3 p-4">
-            {/* Step Number Badge */}
+            {/* Step Number Badge - Color indicates risk level */}
             <div className={cn(
-              "flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg",
+              "flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg shadow-lg",
               riskColors.bg,
-              riskColors.text,
-              "shadow-lg"
+              riskColors.text
             )}>
               {step.stepNumber}
             </div>
 
-            {/* Step Title */}
-            <div className="flex-1 min-w-0">
+            {/* Step Title - Full width for better readability */}
+            <div className="flex-1 min-w-0 pr-2">
               <h4 className="font-bold text-elec-light text-base leading-tight line-clamp-2">
                 {step.title}
               </h4>
             </div>
-
-            {/* Risk Level Badge */}
-            <Badge className={cn(
-              "flex-shrink-0 font-bold text-xs px-2 py-1",
-              riskColors.badge
-            )}>
-              {step.riskLevel}
-            </Badge>
           </div>
 
           {/* Trigger for Expansion */}

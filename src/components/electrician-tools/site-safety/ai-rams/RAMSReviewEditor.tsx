@@ -168,10 +168,6 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     }));
   };
 
-  const getRiskLevelBadge = (level: string) => {
-    const colors = getRiskColorsByLevel(level as 'low' | 'medium' | 'high');
-    return colors.badge;
-  };
 
   const handleGenerateRAMSPDF = async () => {
     setIsGenerating(true);
@@ -857,9 +853,6 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                             Step {step.stepNumber}
                           </Badge>
                           <span className="font-medium text-foreground line-clamp-1">{step.title || 'Untitled Step'}</span>
-                          <Badge variant="outline" className={cn("ml-auto mr-4 text-xs", getRiskLevelBadge(step.riskLevel || 'low'))}>
-                            {step.riskLevel || 'low'}
-                          </Badge>
                         </div>
                       </AccordionTrigger>
                       

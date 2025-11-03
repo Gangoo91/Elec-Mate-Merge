@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ChevronDown, Shield, AlertTriangle, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { getRiskColors, getRiskLevelLabel } from '@/utils/risk-level-helpers';
+import { getRiskColors } from '@/utils/risk-level-helpers';
 import type { RAMSRisk } from '@/types/rams';
 import { 
   MobileAccordion,
@@ -24,12 +24,11 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
   index
 }) => {
   const riskColors = getRiskColors(risk.riskRating);
-  const riskLevel = getRiskLevelLabel(risk.riskRating <= 4 ? 'low' : risk.riskRating <= 12 ? 'medium' : 'high');
 
   return (
     <Card 
       className={cn(
-        "mb-4 overflow-hidden transition-all hover:shadow-lg",
+        "mb-3 overflow-hidden transition-all hover:shadow-lg active:scale-[0.99]",
         `border-l-4 ${riskColors.border}`,
         "bg-card"
       )}
@@ -38,28 +37,19 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
         <MobileAccordionItem value="risk-details" className="border-0">
           <div className="p-4 pb-0">
             {/* Header - Always Visible */}
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex items-center gap-3">
-                <div className={cn(
-                  "flex items-center justify-center w-12 h-12 rounded-lg font-bold text-sm",
-                  riskColors.bg,
-                  riskColors.text
-                )}>
-                  #{index + 1}
-                </div>
-                <div className="flex-1">
-                  <h4 className="font-bold text-elec-light text-base leading-tight line-clamp-2">
-                    {risk.hazard || 'Untitled Hazard'}
-                  </h4>
-                </div>
-              </div>
-              <Badge className={cn(
-                "ml-2 font-bold text-xs px-3 py-1",
-                riskColors.badge,
-                riskColors.glow
+            <div className="flex items-start gap-3 mb-3">
+              <div className={cn(
+                "flex items-center justify-center w-12 h-12 rounded-lg font-bold text-sm shrink-0",
+                riskColors.bg,
+                riskColors.text
               )}>
-                {riskLevel}
-              </Badge>
+                #{index + 1}
+              </div>
+              <div className="flex-1 min-w-0">
+                <h4 className="font-bold text-elec-light text-base leading-tight line-clamp-2">
+                  {risk.hazard || 'Untitled Hazard'}
+                </h4>
+              </div>
             </div>
 
             {/* Risk Score Badge */}
