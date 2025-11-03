@@ -12,8 +12,8 @@ interface HeroSummaryProps {
   toolsCount: number;
   hazardsCount: number;
   competency?: {
-    minimumQualifications?: string;
-    mandatoryTraining?: string[];
+    competencyRequirements?: string;
+    trainingRequired?: string;
   };
   siteLogistics?: {
     vehicleAccess?: string;
@@ -98,14 +98,14 @@ export const InstallationHeroSummary = ({
           <div>
             <div className="text-xs text-muted-foreground mb-1">Minimum Qualifications</div>
             <div className="text-sm font-medium text-foreground">
-              {competency?.minimumQualifications || '18th Edition BS 7671'}
+              {competency?.competencyRequirements || '18th Edition BS 7671'}
             </div>
           </div>
-          {competency?.mandatoryTraining && competency.mandatoryTraining.length > 0 && (
+          {competency?.trainingRequired && (
             <div>
               <div className="text-xs text-muted-foreground mb-1">Training Required</div>
               <div className="text-sm font-medium text-foreground">
-                {competency.mandatoryTraining.join(', ')}
+                {competency.trainingRequired}
               </div>
             </div>
           )}

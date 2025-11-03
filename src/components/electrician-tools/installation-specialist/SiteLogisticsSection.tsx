@@ -11,9 +11,9 @@ interface SiteLogistics {
 }
 
 interface CompetencyRequirements {
-  minimumQualifications?: string;
-  mandatoryTraining?: string[];
-  supervisionRequirements?: string;
+  competencyRequirements?: string;
+  trainingRequired?: string;
+  supervisionLevel?: string;
 }
 
 interface SiteLogisticsSectionProps {
@@ -125,31 +125,24 @@ export const SiteLogisticsSection = ({ logistics, competency }: SiteLogisticsSec
             <div className="flex-1">
               <div className="text-sm font-semibold text-foreground mb-3">Competency Requirements</div>
               
-              {competency.minimumQualifications && (
+              {competency.competencyRequirements && (
                 <div className="mb-3">
                   <div className="text-xs text-muted-foreground mb-1">Minimum Qualifications</div>
-                  <div className="text-sm text-foreground">{competency.minimumQualifications}</div>
+                  <div className="text-sm text-foreground">{competency.competencyRequirements}</div>
                 </div>
               )}
 
-              {competency.mandatoryTraining && competency.mandatoryTraining.length > 0 && (
+              {competency.trainingRequired && (
                 <div className="mb-3">
-                  <div className="text-xs text-muted-foreground mb-1">Mandatory Training</div>
-                  <ul className="space-y-1">
-                    {competency.mandatoryTraining.map((training, idx) => (
-                      <li key={idx} className="text-sm text-foreground flex items-start gap-2">
-                        <span className="text-primary mt-0.5">•</span>
-                        {training}
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="text-xs text-muted-foreground mb-1">Training Required</div>
+                  <div className="text-sm text-foreground">{competency.trainingRequired}</div>
                 </div>
               )}
 
-              {competency.supervisionRequirements && (
+              {competency.supervisionLevel && (
                 <div>
                   <div className="text-xs text-muted-foreground mb-1">Supervision Requirements</div>
-                  <div className="text-sm text-foreground">{competency.supervisionRequirements}</div>
+                  <div className="text-sm text-foreground">{competency.supervisionLevel}</div>
                 </div>
               )}
             </div>
