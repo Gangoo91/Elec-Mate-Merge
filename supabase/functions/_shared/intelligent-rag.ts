@@ -134,6 +134,7 @@ export interface HybridSearchResult {
   healthSafetyDocs: any[];
   installationDocs: any[];
   maintenanceDocs: any[];
+  practicalWorkDocs: any[]; // NEW - Practical Work Intelligence
   searchMethod: 'exact' | 'vector' | 'keyword' | 'hybrid' | 'cached';
   searchTimeMs: number;
   embedding?: number[];
@@ -308,6 +309,18 @@ async function vectorSearchWithEmbedding(
     searchTypes.push('health_safety');
   }
 
+  // PRACTICAL WORK INTELLIGENCE - New primary source for hands-on guidance
+  if (!priority || priority.practical_work > 50) {
+    searches.push(
+      supabase.rpc('search_practical_work_intelligence_hybrid', {
+        query_text: params.expandedQuery,
+        match_count: 15,
+        filter_trade: params.context?.agentType || null // 'installer', 'commissioning', 'maintenance'
+      })
+    );
+    searchTypes.push('practical_work');
+  }
+
   // PHASE 3: Installation knowledge search - skip if low priority
   if (!priority || priority.installation >= 50) {
     searches.push(
@@ -369,6 +382,14 @@ async function vectorSearchWithEmbedding(
     }
   });
 
+  // Transform Practical Work results to include hybrid_score normalization
+  if (resultMap.practical_work && resultMap.practical_work.length > 0) {
+    resultMap.practical_work = resultMap.practical_work.map((pw: any) => ({
+      ...pw,
+      similarity: pw.hybrid_score ? pw.hybrid_score / 10 : 0 // Normalize to 0-1
+    }));
+  }
+
   // IMPROVEMENT: Ensure minimum quality threshold
   const totalResults = (resultMap.bs7671?.length || 0) + 
                       (resultMap.design?.length || 0) + 
@@ -428,6 +449,7 @@ async function vectorSearchWithEmbedding(
     healthSafetyDocs: resultMap.health_safety || [],
     installationDocs: resultMap.installation || [],
     maintenanceDocs: resultMap.maintenance || [],
+    practicalWorkDocs: resultMap.practical_work || [], // NEW
     embedding,
     timeMs: Date.now() - startTime,
     qualityMetrics: {

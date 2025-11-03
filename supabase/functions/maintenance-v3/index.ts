@@ -410,104 +410,104 @@ Deno.serve(async (req) => {
     const expandedQuery = `${actualQuery} ${equipmentType || ''} ${maintenanceType || ''} maintenance inspection testing procedures`;
     console.log('🔍 Expanded query:', expandedQuery);
 
-    // Generate embedding for query
-    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openaiApiKey}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'text-embedding-3-small',
-        input: expandedQuery
-      })
-    });
-
-    if (!embeddingResponse.ok) {
-      throw new Error(`Embedding generation failed: ${embeddingResponse.statusText}`);
-    }
-
-    const embeddingData = await embeddingResponse.json();
-    const queryEmbedding = embeddingData.data[0].embedding;
-
     // Conditional RAG based on detail level for faster response
     const useFullRAG = detailLevel === 'full';
     
-    // ✅ FIX: Use cleaner query for BS 7671 intelligence search
-    const intelligenceQuery = `${equipmentType || ''} ${actualQuery}`.trim();
+    // NEW: Use Practical Work Intelligence as primary source
+    const practicalWorkSearch = await supabase.rpc('search_practical_work_intelligence_hybrid', {
+      query_text: expandedQuery,
+      match_count: 10,
+      filter_trade: 'maintenance'
+    });
+
+    const practicalWorkDocs = practicalWorkSearch?.data || [];
     
-    // Parallel RAG: Maintenance Knowledge + BS 7671 Intelligence (full mode only)
-    const [ragResults, bs7671Intelligence] = await Promise.all([
-      supabase.rpc('search_maintenance_hybrid', {
+    console.log(`📦 Practical Work search: ${practicalWorkDocs.length} results`);
+
+    // Build context with cascade priority
+    let maintenanceContext = '';
+
+    if (practicalWorkDocs.length >= 4) {
+      // TIER 1: Practical Work Intelligence
+      maintenanceContext = '## PRACTICAL MAINTENANCE PROCEDURES:\n\n';
+      maintenanceContext += practicalWorkDocs.slice(0, 10).map((pw: any) => 
+        `**${pw.primary_topic}** (${pw.equipment_category || 'General'})\n` +
+        `${pw.content}\n` +
+        `${pw.maintenance_interval ? `Frequency: ${pw.maintenance_interval}\n` : ''}` +
+        `${pw.tools_required?.length > 0 ? `Tools: ${pw.tools_required.join(', ')}\n` : ''}` +
+        `${pw.bs7671_regulations?.length > 0 ? `BS 7671: ${pw.bs7671_regulations.join(', ')}` : ''}`
+      ).join('\n\n---\n\n');
+      
+      // Add regulations if in full mode
+      if (useFullRAG) {
+        const bs7671Intelligence = await supabase.rpc('search_bs7671_intelligence_hybrid', {
+          query_text: expandedQuery,
+          match_count: 6
+        });
+
+        const bs7671Data = bs7671Intelligence?.data || [];
+        
+        if (bs7671Data.length > 0) {
+          maintenanceContext += '\n\n## RELEVANT REGULATIONS:\n\n';
+          maintenanceContext += bs7671Data.slice(0, 8).map((reg: any) =>
+            `**${reg.regulation_number}**: ${reg.content}`
+          ).join('\n\n');
+        }
+      }
+      
+      console.log('✅ Using Practical Work Intelligence + Regulations', {
+        practicalWorkCount: practicalWorkDocs.length,
+        mode: useFullRAG ? 'full' : 'quick'
+      });
+    } else {
+      // TIER 2: Fallback to Maintenance Knowledge RAG
+      console.log('⚠️ Using fallback knowledge (insufficient Practical Work data)');
+      
+      // Generate embedding for fallback
+      const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${openaiApiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'text-embedding-3-small',
+          input: expandedQuery
+        })
+      });
+
+      const embeddingData = await embeddingResponse.json();
+      const queryEmbedding = embeddingData.data[0].embedding;
+
+      const ragResults = await supabase.rpc('search_maintenance_hybrid', {
         query_text: expandedQuery,
         query_embedding: queryEmbedding,
         equipment_filter: equipmentType || null,
         match_count: 6
-      }),
-      // Skip BS 7671 intelligence for quick mode to reduce latency
-      useFullRAG ? (async () => {
-        console.log('🔍 Intelligence search query:', intelligenceQuery);
-        
-        try {
-          const result = await Promise.race([
-            supabase.rpc('search_bs7671_intelligence_hybrid', {
-              query_text: intelligenceQuery,
-              match_count: 6
-            }),
-            new Promise((resolve) => 
-              setTimeout(() => resolve({ data: null, error: { message: 'Intelligence search timeout (8s)' } }), 8000)
-            )
-          ]);
-          
-          // ✅ Fallback: If no results, try simplified query with just equipment type
-          if (!result.data || result.data.length === 0) {
-            console.log('🔄 Retrying intelligence search with simplified query...');
-            const fallbackQuery = equipmentType || 'electrical installation';
-            console.log('🔍 Fallback query:', fallbackQuery);
-            
-            const fallbackResult = await supabase.rpc('search_bs7671_intelligence_hybrid', {
-              query_text: fallbackQuery,
-              match_count: 6
-            });
-            
-            if (fallbackResult.error) {
-              console.error('⚠️ Fallback intelligence search failed:', fallbackResult.error);
-              return { data: null, error: fallbackResult.error };
-            }
-            
-            return fallbackResult;
-          }
-          
-          return result;
-        } catch (err) {
-          console.error('⚠️ Intelligence search failed:', err);
-          return { data: null, error: err };
-        }
-      })() : Promise.resolve({ data: null, error: null })
-    ]);
+      });
 
-    const { data: maintenanceData, error: ragError } = ragResults;
-    const { data: bs7671Data, error: bs7671Error } = bs7671Intelligence;
+      const maintenanceData = ragResults?.data || [];
+      
+      maintenanceContext = maintenanceData
+        .map((doc: any) => doc.content || '')
+        .join('\n\n');
+    }
 
-    if (ragError) console.error('❌ Maintenance RAG error:', ragError);
-    if (bs7671Error) console.error('❌ BS 7671 Intelligence error:', bs7671Error);
+    // Log RAG quality metrics
+    const ragQuality = {
+      practicalWorkCount: practicalWorkDocs?.length || 0,
+      practicalWorkAvgScore: practicalWorkDocs?.length > 0
+        ? (practicalWorkDocs.reduce((s: number, d: any) => s + (d.hybrid_score || 0), 0) / practicalWorkDocs.length).toFixed(2)
+        : 'N/A',
+      usedFallback: practicalWorkDocs?.length < 4,
+      fallbackSource: practicalWorkDocs?.length < 4 ? 'maintenance_knowledge' : 'none',
+      mode: detailLevel
+    };
 
-    // Enhanced logging with intelligence status and mode
-    console.log(`📚 Retrieved ${maintenanceData?.length || 0} maintenance docs, ${bs7671Data?.length || 0} BS 7671 regs (mode: ${detailLevel}, intelligence ${bs7671Data ? 'OK' : useFullRAG ? 'FAILED' : 'SKIPPED'})`);
+    console.log('📊 RAG Quality Metrics:', ragQuality);
 
-    // Build enriched context from both sources
-    const maintenanceContext = maintenanceData?.map((doc: any, idx: number) => 
-      `[MAINTENANCE DOC ${idx + 1}]\nTopic: ${doc.topic}\nSource: ${doc.source}\nContent: ${doc.content}\n`
-    ).join('\n\n') || '';
-
-    const bs7671Context = bs7671Data?.map((reg: any, idx: number) => 
-      `[BS 7671 REG ${idx + 1}] ${reg.regulation_number}\nTopic: ${reg.primary_topic || 'N/A'}\nCategory: ${reg.category || 'N/A'}\nKeywords: ${reg.keywords?.join(', ') || 'N/A'}\nApplication: ${reg.practical_application || 'N/A'}\nContent: ${reg.content}\n`
-    ).join('\n\n') || '';
-
-    // ✅ PHASE 1: Enhanced fallback message when intelligence search fails
-    const ragContext = maintenanceContext || bs7671Context
-      ? `=== MAINTENANCE KNOWLEDGE ===\n${maintenanceContext}\n\n=== BS 7671 REGULATIONS ${bs7671Data ? '(INTELLIGENCE)' : '(FALLBACK: Use Chapter 64 principles)'} ===\n${bs7671Context || 'Intelligence search unavailable. Apply BS 7671 Chapter 64 inspection and testing requirements.'}`
-      : 'No specific knowledge found. Use general BS 7671 Chapter 64 principles.';
+    // ✅ PHASE 1: Enhanced context already built in maintenanceContext variable above
+    const ragContext = maintenanceContext || 'No specific knowledge found. Use general BS 7671 Chapter 64 principles.';
 
     // Construct user message with context
     const userMessage = `Equipment: ${equipmentType || 'Not specified'}

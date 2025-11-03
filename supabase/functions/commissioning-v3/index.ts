@@ -84,23 +84,60 @@ serve(async (req) => {
     const ragResults = await intelligentRAGSearch({
       circuitType: circuitType || 'general',
       searchTerms: `${query} testing commissioning GN3 Chapter 64 inspection procedures`.split(' ').filter(w => w.length > 3),
-      expandedQuery: `${query} testing commissioning GN3 Chapter 64 inspection procedures`
+      expandedQuery: `${query} testing commissioning GN3 Chapter 64 inspection procedures`,
+      context: {
+        agentType: 'commissioning', // NEW - for trade filtering
+        ragPriority: {
+          practical_work: 90,      // PRIMARY - hands-on testing procedures
+          bs7671: 80,              // HIGH - Chapter 64 testing requirements
+          inspection: 40,          // FALLBACK
+          design: 0,
+          installation: 0,
+          health_safety: 0,
+          project_mgmt: 0
+        }
+      }
     });
-    
-    // Use regulations (Chapter 64) for testing knowledge
-    const testKnowledge = ragResults?.regulations || [];
     
     logger.debug('Testing knowledge retrieved', { 
-      duration: Date.now() - ragStart,
-      count: testKnowledge?.length || 0
+      duration: Date.now() - ragStart
     });
 
-    // Step 3: Build testing context from GN3 knowledge (LIMIT to top 10 to prevent token overflow)
-    const testContext = testKnowledge && testKnowledge.length > 0
-      ? testKnowledge.slice(0, 10).map((test: any) => 
-          `**${test.regulation_number || 'Testing Procedure'}**\n${test.content || test.section || 'No content available'}`
-        ).join('\n\n')
-      : 'No specific testing procedures found. Refer to GN3 and BS 7671 Chapter 64.';
+    // Build context with cascade priority
+    let testContext = '';
+
+    // TIER 1: Practical Work Intelligence + Regulations Intelligence
+    const practicalWorkDocs = ragResults?.practicalWorkDocs || [];
+    const regulations = ragResults?.regulations || [];
+
+    if (practicalWorkDocs.length >= 3) {
+      testContext += '## PRACTICAL TESTING PROCEDURES:\n\n';
+      testContext += practicalWorkDocs.slice(0, 8).map((pw: any) => 
+        `**${pw.primary_topic}**\n${pw.content}\n` +
+        `${pw.expected_results ? `Expected Results: ${pw.expected_results}\n` : ''}` +
+        `${pw.tools_required?.length > 0 ? `Tools: ${pw.tools_required.join(', ')}` : ''}`
+      ).join('\n\n---\n\n');
+      
+      testContext += '\n\n## RELEVANT BS 7671 REGULATIONS:\n\n';
+      testContext += regulations.slice(0, 10).map((reg: any) => 
+        `**${reg.regulation_number}**\n${reg.content}`
+      ).join('\n\n');
+      
+      logger.info('✅ Using Practical Work Intelligence + Regulations', {
+        practicalWorkCount: practicalWorkDocs.length,
+        regulationsCount: regulations.length
+      });
+    } else {
+      // Fallback to regulations only
+      testContext = regulations.slice(0, 10).map((reg: any) => 
+        `**${reg.regulation_number || 'Testing Procedure'}**\n${reg.content || reg.section || 'No content available'}`
+      ).join('\n\n');
+      
+      logger.info('⚠️ Using Regulations only (insufficient Practical Work data)', {
+        practicalWorkCount: practicalWorkDocs.length,
+        regulationsCount: regulations.length
+      });
+    }
 
     // Build conversation context with DESIGN DATA
     let contextSection = '';

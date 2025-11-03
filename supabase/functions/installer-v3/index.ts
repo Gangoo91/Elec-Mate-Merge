@@ -262,25 +262,45 @@ serve(async (req) => {
       const queryEmbedding = await generateEmbeddingWithRetry(expandedQuery, OPENAI_API_KEY);
       logger.debug('Embedding generated', { duration: Date.now() - embeddingStart });
 
-      // Use intelligent RAG with cross-encoder reranking
-    const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
+      // Use intelligent RAG with Practical Work Intelligence as primary source
+      const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
       const ragResults = await intelligentRAGSearch({
         circuitType: installationMethod,
         searchTerms: expandedQuery.split(' ').filter(w => w.length > 3),
         expandedQuery,
         context: {
+          agentType: 'installer', // NEW - for trade filtering
           ragPriority: {
-            bs7671: 30,           // MINIMAL - optional compliance references
-            design: 0,            // Skip - not designing, just installing
-            health_safety: 0,     // Skip - not doing risk assessment
-            installation: 95,     // PRIMARY - step-by-step installation procedures
-            inspection: 0,        // Skip - not relevant
-            project_mgmt: 0       // Skip - not relevant
+            practical_work: 95,      // PRIMARY - hands-on installation procedures
+            bs7671: 70,              // SECONDARY - compliance references  
+            installation: 30,        // TERTIARY FALLBACK - only if practical_work insufficient
+            design: 0,
+            health_safety: 0,
+            inspection: 0,
+            project_mgmt: 0
           }
         }
       });
       
-      installKnowledge = ragResults?.installationDocs || [];
+      // TIER 1: Practical Work Intelligence (if available)
+      const practicalWorkDocs = ragResults?.practicalWorkDocs || [];
+      
+      if (practicalWorkDocs.length >= 5) {
+        installKnowledge = practicalWorkDocs;
+        logger.info('✅ Using Practical Work Intelligence', { 
+          count: practicalWorkDocs.length,
+          avgScore: (practicalWorkDocs.reduce((s, d) => s + (d.similarity || 0), 0) / practicalWorkDocs.length).toFixed(2)
+        });
+      } else {
+        // TIER 2: Fallback to Installation Knowledge RAG
+        const installDocs = ragResults?.installationDocs || [];
+        installKnowledge = installDocs;
+        
+        logger.info('⚠️ Using Installation Knowledge RAG (fallback)', { 
+          count: installDocs.length,
+          reason: `Insufficient Practical Work Intelligence (${practicalWorkDocs.length} < 5)`
+        });
+      }
 
       timings.ragRetrieval = Date.now() - timings.start - timings.cacheCheck;
     }
@@ -295,12 +315,27 @@ serve(async (req) => {
       ragDuration: timings.ragRetrieval
     });
 
-    // PHASE 3: Build installation context with FULL content for detailed procedures
-    const installContext = installKnowledge && installKnowledge.length > 0
-      ? installKnowledge.map((inst: any) => 
-          `${inst.topic}:\n${inst.content}` // REMOVED 400 char truncation - use full content
-        ).join('\n\n---\n\n')
-      : 'Apply general BS 7671 installation methods and best practices.';
+    // PHASE 3: Build installation context - format based on source
+    let installContext = '';
+    
+    if (installKnowledge && installKnowledge.length > 0) {
+      // Check if it's Practical Work Intelligence (has primary_topic field)
+      if (installKnowledge[0]?.primary_topic) {
+        installContext = installKnowledge.map((pw: any) => 
+          `**${pw.primary_topic}** (${pw.equipment_category || 'General'})\n` +
+          `${pw.content}\n` +
+          `${pw.tools_required?.length > 0 ? `Tools: ${pw.tools_required.join(', ')}\n` : ''}` +
+          `${pw.bs7671_regulations?.length > 0 ? `Regulations: ${pw.bs7671_regulations.join(', ')}` : ''}`
+        ).join('\n\n---\n\n');
+      } else {
+        // Installation Knowledge RAG format
+        installContext = installKnowledge.map((inst: any) => 
+          `${inst.topic}:\n${inst.content}`
+        ).join('\n\n---\n\n');
+      }
+    } else {
+      installContext = 'Apply general BS 7671 installation methods and best practices.';
+    }
 
     logger.info('Installation context prepared', {
       contextLength: installContext.length,
@@ -342,6 +377,16 @@ serve(async (req) => {
 
     // Phase 1: Enhanced conversational system prompt with expert guidance
     const systemPrompt = `You are a master electrician with 20+ years of installation experience across residential, commercial, and industrial projects. You're chatting with a colleague who needs practical, on-site advice.
+
+**PRIMARY KNOWLEDGE SOURCES:**
+1. **Practical Work Intelligence** - Verified, enriched installation procedures from real-world scenarios
+2. **BS 7671:2018+A3:2024 Regulations Intelligence** - Compliance requirements and testing standards
+3. **Installation Knowledge Base (fallback)** - General installation guidance
+
+PRACTICAL WORK INTELLIGENCE (YOU MUST USE THIS DATA FIRST):
+${installContext}
+
+${installContext.includes('Practical Work') || installContext.includes('Tools:') ? '' : 'NOTE: Limited Practical Work Intelligence available - using general installation knowledge'}
 
 **CRITICAL: ALL OUTPUT MUST BE IN UK ENGLISH**
 - Use UK spellings: realise (not realize), analyse (not analyze), minimise (not minimize), categorise (not categorize), organise (not organize), authorised (not authorized), recognised (not recognized), whilst (not while)
