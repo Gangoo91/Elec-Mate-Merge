@@ -6,7 +6,7 @@ import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { loadCoreRegulationsCache } from './core-regulations-cache.ts';
 import { validateDesign, calculateCircuitConfidence, calculateOverallConfidence } from './validation-pipeline.ts';
 import { extractCircuitsWithAI } from './ai-circuit-extractor.ts';
-import { callGemini, AIProviderError } from '../_shared/ai-providers.ts';
+import { callGemini, callOpenAI, AIProviderError } from '../_shared/ai-providers.ts';
 import { TypeGuards, applyDefaultCircuitValues } from './type-guards.ts';
 import { CircuitDesignError, ERROR_TEMPLATES } from './error-handler.ts';
 import { PerformanceMonitor } from './performance-monitor.ts';
@@ -2551,7 +2551,7 @@ Always cite regulation numbers and show working for calculations.`
         diversityApplied: true,
         diversityFactor: 0.7,
         aiResponse: designData.response?.substring(0, 500) // Truncate long AI responses
-      },
+      }, // Close design object
       metadata: {
         ragCalls: ragResults.regulations?.length || 0,
         model: aiConfig?.model || 'gpt-5-mini-2025-08-07',
