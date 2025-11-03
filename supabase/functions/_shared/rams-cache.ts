@@ -36,13 +36,13 @@ export async function checkRAMSCache(params: {
     // Generate embedding for query
     const embedding = await generateEmbeddingWithRetry(params.jobDescription, params.openAiKey);
     
-    // Search for similar cached result
+    // Search for similar cached result (lowered threshold for better cache hits)
     const { data, error } = await params.supabase.rpc('match_rams_cache', {
       query_embedding: embedding,
       work_type: params.workType,
       job_scale: params.jobScale,
-      similarity_threshold: 0.95, // Very high threshold (near-identical jobs)
-      match_count: 1
+      similarity_threshold: 0.85, // Lowered from 0.95 to 0.85 (85% similarity)
+      match_count: 3 // Check top 3 matches instead of 1
     });
     
     if (error) {
@@ -51,28 +51,46 @@ export async function checkRAMSCache(params: {
     }
     
     if (data && data.length > 0) {
-      const cacheEntry = data[0];
+      // Score each match based on similarity + job description overlap
+      const scoredMatches = data.map((match: any) => {
+        const descWords = params.jobDescription.toLowerCase().split(/\s+/);
+        const cacheDescWords = (match.job_description || '').toLowerCase().split(/\s+/);
+        const wordOverlap = descWords.filter(w => cacheDescWords.includes(w)).length;
+        const overlapScore = wordOverlap / Math.max(descWords.length, 1);
+        
+        return {
+          ...match,
+          finalScore: (match.similarity * 0.7) + (overlapScore * 0.3)
+        };
+      });
       
-      // Update hit count and last_used_at
-      await params.supabase
-        .from('rams_semantic_cache')
-        .update({ 
-          hit_count: cacheEntry.hit_count + 1,
-          last_used_at: new Date().toISOString()
-        })
-        .eq('id', cacheEntry.id);
+      const bestMatch = scoredMatches.reduce((best: any, curr: any) => 
+        curr.finalScore > best.finalScore ? curr : best
+      );
       
-      console.log(`✅ RAMS cache HIT! (similarity: ${(cacheEntry.similarity * 100).toFixed(1)}%, hits: ${cacheEntry.hit_count + 1})`);
-      
-      return { 
-        hit: true, 
-        data: {
-          rams_data: cacheEntry.rams_data,
-          method_data: cacheEntry.method_data,
-          similarity: cacheEntry.similarity,
-          hit_count: cacheEntry.hit_count + 1
-        }
-      };
+      // Accept if combined score >= 0.80
+      if (bestMatch.finalScore >= 0.80) {
+        // Update hit count and last_used_at
+        await params.supabase
+          .from('rams_semantic_cache')
+          .update({ 
+            hit_count: bestMatch.hit_count + 1,
+            last_used_at: new Date().toISOString()
+          })
+          .eq('id', bestMatch.id);
+        
+        console.log(`✅ RAMS cache HIT! (similarity: ${(bestMatch.similarity * 100).toFixed(1)}%, combined: ${(bestMatch.finalScore * 100).toFixed(1)}%, hits: ${bestMatch.hit_count + 1})`);
+        
+        return { 
+          hit: true, 
+          data: {
+            rams_data: bestMatch.rams_data,
+            method_data: bestMatch.method_data,
+            similarity: bestMatch.similarity,
+            hit_count: bestMatch.hit_count + 1
+          }
+        };
+      }
     }
     
     console.log('❌ Cache miss - generating new RAMS');

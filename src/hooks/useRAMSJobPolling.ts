@@ -64,15 +64,15 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
           setLastCurrentStep(data.current_step || '');
           setLastActivityUpdate(Date.now());
         } else {
-          // No activity - check if stuck
+          // No activity - check if stuck (increased timeout to 5 minutes)
           const stuckDuration = Date.now() - lastActivityUpdate;
-          if (stuckDuration > 180000) {
-            console.error('❌ STUCK JOB DETECTED: No activity in 180s at', data.progress + '%');
+          if (stuckDuration > 300000) {
+            console.error('❌ STUCK JOB DETECTED: No activity in 300s at', data.progress + '%');
             await supabase
               .from('rams_generation_jobs')
               .update({
                 status: 'failed',
-                error_message: 'Generation timed out - no activity detected for 3 minutes. Please try again.'
+                error_message: 'Generation timed out - no activity detected for 5 minutes. Please try again.'
               })
               .eq('id', jobId);
             setIsPolling(false);
@@ -96,10 +96,38 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
     // Initial poll
     pollJob();
 
-    // Poll every 2 seconds
-    const interval = setInterval(pollJob, 2000);
+    // Progressive polling backoff
+    let pollInterval = 2000; // Start at 2s
+    let pollCount = 0;
+    let timeoutId: number;
 
-    return () => clearInterval(interval);
+    const poll = () => {
+      pollJob();
+      pollCount++;
+      
+      // Progressive backoff:
+      // 0-10 polls (0-20s): 2s interval (fast initial feedback)
+      // 11-30 polls (20s-2min): 5s interval
+      // 31+ polls (2min+): 10s interval
+      if (pollCount === 10) {
+        pollInterval = 5000;
+        console.log('📊 Polling: Switching to 5s interval');
+      }
+      if (pollCount === 30) {
+        pollInterval = 10000;
+        console.log('📊 Polling: Switching to 10s interval');
+      }
+      
+      timeoutId = window.setTimeout(poll, pollInterval);
+    };
+
+    poll(); // Start polling
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, [jobId, isPolling, pollJob]);
 
   const startPolling = useCallback(() => {

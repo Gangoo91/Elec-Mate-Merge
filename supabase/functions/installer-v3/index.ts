@@ -551,6 +551,28 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
 
     let aiResult;
     try {
+      const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+      const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+      const supabase = createClient(supabaseUrl, supabaseKey);
+      
+      // Start heartbeat to prevent "stuck job" false positives
+      const heartbeatInterval = setInterval(async () => {
+        try {
+          const jobId = body.jobId;
+          if (jobId) {
+            await supabase
+              .from('rams_generation_jobs')
+              .update({ 
+                current_step: `AI processing installation steps... (${Math.floor((Date.now() - aiCallStart) / 1000)}s)`,
+                progress: Math.min((body.currentProgress || 0) + 1, 95)
+              })
+              .eq('id', jobId);
+          }
+        } catch (err) {
+          console.warn('Heartbeat update failed (non-critical):', err);
+        }
+      }, 30000);
+      
       logger.info('🚀 Calling OpenAI GPT-5-mini directly - 30k tokens, 240s timeout');
       
       aiResult = await callOpenAI({

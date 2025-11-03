@@ -249,7 +249,36 @@ serve(async (req) => {
       };
     });
     
-    // PHASE 2: Reuse BS 7671 regulations from Designer (filter for H&S relevant ones)
+    // PHASE 2A: DIRECT search of regulations_intelligence for pre-structured hazards
+    logger.info('🔍 Searching regulations_intelligence for hazards...');
+    const { data: regulationHazards, error: regError } = await supabase
+      .from('regulations_intelligence')
+      .select('regulation_number, primary_topic, keywords, category, subcategory, applies_to')
+      .contains('keywords', [
+        'hazard', 'risk', 'protection', 'safety', 'shock', 'burn', 'fire', 
+        'explosion', 'RCD', 'bonding', 'earthing', 'isolation'
+      ])
+      .or(`category.eq.Protection,category.eq.Safety,category.eq.Earthing`)
+      .limit(20);
+
+    if (!regError && regulationHazards) {
+      logger.info(`✅ Found ${regulationHazards.length} pre-structured hazard regulations`);
+      
+      // Merge with existing RAG results (prioritize regulations_intelligence)
+      hsKnowledge.regulations = [
+        ...(regulationHazards || []).map(r => ({
+          regulation_number: r.regulation_number,
+          content: r.primary_topic,
+          keywords: r.keywords,
+          category: r.category,
+          subcategory: r.subcategory,
+          source: 'regulations_intelligence'
+        })),
+        ...(hsKnowledge.regulations || [])
+      ].slice(0, 30); // Top 30 total
+    }
+    
+    // PHASE 2B: Reuse BS 7671 regulations from Designer (filter for H&S relevant ones)
     const sharedRegs = sharedRegulations || [];
     if (sharedRegs.length >= 8) {
       logger.info('📦 Filtering shared regulations from Designer for H&S relevance');
@@ -813,6 +842,24 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     
     let aiResult;
     try {
+      // Start heartbeat to prevent "stuck job" false positives
+      const heartbeatInterval = setInterval(async () => {
+        try {
+          const jobId = body.jobId;
+          if (jobId) {
+            await supabase
+              .from('rams_generation_jobs')
+              .update({ 
+                current_step: `AI processing H&S assessment... (${Math.floor((Date.now() - aiGenerationStartTime) / 1000)}s)`,
+                progress: Math.min((body.currentProgress || 0) + 1, 95) // Increment slowly
+              })
+              .eq('id', jobId);
+          }
+        } catch (err) {
+          console.warn('Heartbeat update failed (non-critical):', err);
+        }
+      }, 30000); // Every 30 seconds
+      
       // Log progress every 30 seconds
       progressInterval = setInterval(() => {
         const elapsed = Math.round((Date.now() - aiGenerationStartTime) / 1000);
