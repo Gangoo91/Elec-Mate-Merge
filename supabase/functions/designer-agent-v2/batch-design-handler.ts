@@ -337,25 +337,43 @@ function buildStructuredDesignPrompt(
       }).join('\n')
     : '';
   
-  return `You are a senior electrical design engineer specializing in BS 7671:2018+A3:2024 compliant installations.
-
-INSTALLATION TYPE: ${type}
-${INSTALLATION_CONTEXT[type] || ''}
-
-INCOMING SUPPLY:
-- Voltage: ${supply.voltage}V ${supply.phases}
-- Ze: ${supply.Ze}Ω
-- Earthing: ${supply.earthingSystem}
-- PFC: ${supply.pscc || 3500}A
-- Main Switch: ${supply.mainSwitchRating || 100}A
-
-${specialRequirements.length > 0 ? `SPECIAL REQUIREMENTS:\n${specialRequirements.join('\n')}\n\n` : ''}${installationConstraints.length > 0 ? `CONSTRAINTS:\n${installationConstraints.join('\n')}\n\n` : ''}CIRCUITS (${circuits.length} total):
-${circuits.length > 0 ? circuits.map((c: any, i: number) => `${i+1}. ${c.name} - ${c.loadType}, ${(c.loadPower/1000).toFixed(1)}kW, ${c.cableLength}m, ${c.phases}-phase`).join('\n') : 'Infer circuits from project requirements.'}
-
-${circuitHints ? `CIRCUIT HINTS:\n${circuitHints}\n\n` : ''}BS 7671 REGULATIONS (RAG Retrieved):
-${regulations}
-
-DESIGN INSTRUCTIONS:
+  // Build prompt parts separately to avoid nested template literal issues
+  let prompt = 'You are a senior electrical design engineer specializing in BS 7671:2018+A3:2024 compliant installations.\n\n';
+  
+  prompt += 'INSTALLATION TYPE: ' + type + '\n';
+  prompt += (INSTALLATION_CONTEXT[type] || '') + '\n\n';
+  
+  prompt += 'INCOMING SUPPLY:\n';
+  prompt += '- Voltage: ' + supply.voltage + 'V ' + supply.phases + '\n';
+  prompt += '- Ze: ' + supply.Ze + 'Ω\n';
+  prompt += '- Earthing: ' + supply.earthingSystem + '\n';
+  prompt += '- PFC: ' + (supply.pscc || 3500) + 'A\n';
+  prompt += '- Main Switch: ' + (supply.mainSwitchRating || 100) + 'A\n\n';
+  
+  if (specialRequirements.length > 0) {
+    prompt += 'SPECIAL REQUIREMENTS:\n' + specialRequirements.join('\n') + '\n\n';
+  }
+  
+  if (installationConstraints.length > 0) {
+    prompt += 'CONSTRAINTS:\n' + installationConstraints.join('\n') + '\n\n';
+  }
+  
+  prompt += 'CIRCUITS (' + circuits.length + ' total):\n';
+  if (circuits.length > 0) {
+    prompt += circuits.map((c: any, i: number) => 
+      (i+1) + '. ' + c.name + ' - ' + c.loadType + ', ' + (c.loadPower/1000).toFixed(1) + 'kW, ' + c.cableLength + 'm, ' + c.phases + '-phase'
+    ).join('\n') + '\n\n';
+  } else {
+    prompt += 'Infer circuits from project requirements.\n\n';
+  }
+  
+  if (circuitHints) {
+    prompt += 'CIRCUIT HINTS:\n' + circuitHints + '\n\n';
+  }
+  
+  prompt += 'BS 7671 REGULATIONS (RAG Retrieved):\n' + regulations + '\n\n';
+  
+  prompt += `DESIGN INSTRUCTIONS:
 Use the regulations above to design compliant circuits. For each circuit:
 
 1. Calculate Ib (design current) from load power
@@ -378,6 +396,8 @@ CABLE SIZING:
 Cite specific regulations (e.g., "Reg 433.1.1"), show calculations, use plain English justifications.
 
 You MUST call the design_circuits function to return your complete design. Do not output text or markdown - only call the tool.`;
+  
+  return prompt;
 }
 
 // ============= MAIN LOGIC =============
@@ -1442,7 +1462,7 @@ Design the following circuit${batch.length > 1 ? 's' : ''}:\n${batch.map((c: any
       const result = await withRetry(async () => {
         return await callOpenAI({
           messages: [
-            { role: 'system', content: useSimplifiedSchema ? `${systemPrompt}\n\nIMPORTANT: Return your response as valid JSON.` : systemPrompt },
+            { role: 'system', content: useSimplifiedSchema ? systemPrompt + '\n\nIMPORTANT: Return your response as valid JSON.' : systemPrompt },
             { role: 'user', content: batchQuery }
           ],
           model: 'gpt-5-mini-2025-08-07',
@@ -1582,7 +1602,7 @@ Include all required fields: cableSize, cpcSize, protectionDevice, calculations,
             const ultraSimpleResult = await withRetry(async () => {
               return await callOpenAI({
                 messages: [
-                  { role: 'system', content: `${systemPrompt.substring(0, 4950)}... Return response as JSON.` }, // Truncated with JSON mention
+                  { role: 'system', content: systemPrompt.substring(0, 4950) + '... Return response as JSON.' }, // Truncated with JSON mention
                   { role: 'user', content: ultraSimpleQuery }
                 ],
                 model: 'gpt-5-mini-2025-08-07',
@@ -1619,12 +1639,12 @@ Include all required fields: cableSize, cpcSize, protectionDevice, calculations,
           try {
             logger.info(`🔄 Strategy 3: Trying without response_format enforcement for ${circuitName}`);
             
-            const noJsonModeQuery = `${ultraSimpleQuery}\n\nIMPORTANT: You must return a valid JSON object. Do not include any markdown formatting or code blocks.`;
+            const noJsonModeQuery = ultraSimpleQuery + '\n\nIMPORTANT: You must return a valid JSON object. Do not include any markdown formatting or code blocks.';
             
             const noJsonModeResult = await withRetry(async () => {
               return await callOpenAI({
                 messages: [
-                  { role: 'system', content: `${systemPrompt.substring(0, 4950)}... Return response as valid JSON only.` },
+                  { role: 'system', content: systemPrompt.substring(0, 4950) + '... Return response as valid JSON only.' },
                   { role: 'user', content: noJsonModeQuery }
                 ],
                 model: 'gpt-5-mini-2025-08-07',
@@ -1782,69 +1802,57 @@ Include all required fields: cableSize, cpcSize, protectionDevice, calculations,
     logger.warn('⚠️ No tool calls in any batch, retrying first batch with Gemini');
     
     const retryResult = await withRetry(async () => {
+      const ragKnowledgeBase = 'KNOWLEDGE BASE (' + ragResults.regulations.length + ' verified regulations):\n' +
+        ragResults.regulations.map((r: any) => r.regulation_number + ': ' + r.content.substring(0, 200) + '...').join('\n\n');
+      
       return await callGemini({
         messages: [
           { 
             role: 'system', 
-            content: `You are an expert electrical designer specialising in BS 7671:2018+A3:2024 compliant circuit design.
-
-KNOWLEDGE BASE (${ragResults.regulations.length} verified regulations):
-${ragResults.regulations.map((r: any) => `${r.regulation_number}: ${r.content.substring(0, 200)}...`).join('\n\n')}
-
-YOUR ROLE: Design compliant electrical circuits with complete details for each circuit.
-
-🚨 CRITICAL: RING FINAL CIRCUIT REQUIREMENTS (BS 7671 Appendix 15 / Reg 433.1.204):
-
-**MANDATORY CABLE SIZE FOR ALL RING FINALS:**
-- cableSize: 2.5 (numeric value, NOT 4, 6, or 10)
-- cpcSize: 1.5 (numeric value)
-- cableType: "2.5mm²/1.5mm² Twin and Earth (PVC), copper"
-- protectionDevice.rating: 32 (NEVER 40, 50, or 63)
-
-**IF YOU USE ANY OTHER CABLE SIZE FOR A RING FINAL, THE DESIGN WILL BE REJECTED**
-
-Ring Final Circuit Rules:
-✅ CORRECT: 2.5mm²/1.5mm² T&E + 32A Type B MCB/RCBO
-❌ WRONG: 4mm², 6mm², 10mm², or any other cable size
-❌ WRONG: 40A, 50A, 63A protection (only 32A permitted)
-
-If total load > 7.36kW (32A × 230V):
-- Split into MULTIPLE 2.5mm² ring circuits
-- Example: 14kW load = Circuit 1: 7kW ring (2.5mm²) + Circuit 2: 7kW ring (2.5mm²)
-- NEVER increase cable size to 4mm² or larger
-
-Socket diversity (Appendix 15): 100% first 10 outlets, 50% next 10, 25% remainder
-
-INSTRUCTIONS:
-1. For each circuit in the "circuits" array, include:
-   - name, circuitNumber, loadType, loadPower, phases
-   - socketCount (for socket circuits: estimate number of outlets, e.g., 16 for office desks)
-   - cableSize (mm²), cpcSize (mm²), cableLength (m)
-   - protectionDevice: { type, rating, curve, kaRating }
-   - rcdProtected (boolean), afddRequired (boolean)
-   - calculations: { Ib, In, Iz, voltageDrop: { volts, percent, compliant, limit }, zs, maxZs }
-   - justifications (PHASE 5): { 
-       cableSize: "Detailed explanation referencing Appendix 4 table, showing Iz calculation with derating factors Ca×Cg×Ci = X, resulting Iz = YA > In = ZA",
-       protection: "Device selection per Reg 533.X, breaking capacity XkA > PSCC = YkA, curve type chosen per Reg 533.X for load characteristics",
-       rcd: "RCD requirement per Reg 411.3.3 [cite specific sub-regulation], type and rating per [regulation]",
-       diversity: "Diversity applied per Appendix 15 Table X: [show calculation], final load = XW",
-       voltageDrop: "Voltage drop calc: (mV/A/m) × Ib × L = XV < limit YV (Z%)",
-       earthFault: "Zs = Ze + R1+R2 = X + Y = ZΩ < maxZs = WΩ per Table 41.X",
-       testResults: "Expected R1+R2 = XΩ, IR > 1MΩ, RCD trip < 40ms at 1×IΔn"
-     }
-   - warnings: [] (array of strings)
-   - installationMethod: "Detailed method including reference (e.g., 'Clipped direct (Method C), Cg=1.0, Ca=1.0, Ci=0.5')"
-
-2. In the "materials" array, list required materials with:
-   - name, specification, quantity, unit
-
-3. In the "warnings" array, include any compliance notes or important advisories
-
-4. In the "response" field, provide a brief conversational summary in UK English
-
-Reference BS 7671 regulations (e.g., "433.1.1", "525.1", "411.3.2") in justifications.
-
-Return your design using the provided tool schema.`
+            content: 'You are an expert electrical designer specialising in BS 7671:2018+A3:2024 compliant circuit design.\n\n' +
+              ragKnowledgeBase + '\n\n' +
+              'YOUR ROLE: Design compliant electrical circuits with complete details for each circuit.\n\n' +
+              '🚨 CRITICAL: RING FINAL CIRCUIT REQUIREMENTS (BS 7671 Appendix 15 / Reg 433.1.204):\n\n' +
+              '**MANDATORY CABLE SIZE FOR ALL RING FINALS:**\n' +
+              '- cableSize: 2.5 (numeric value, NOT 4, 6, or 10)\n' +
+              '- cpcSize: 1.5 (numeric value)\n' +
+              '- cableType: "2.5mm²/1.5mm² Twin and Earth (PVC), copper"\n' +
+              '- protectionDevice.rating: 32 (NEVER 40, 50, or 63)\n\n' +
+              '**IF YOU USE ANY OTHER CABLE SIZE FOR A RING FINAL, THE DESIGN WILL BE REJECTED**\n\n' +
+              'Ring Final Circuit Rules:\n' +
+              '✅ CORRECT: 2.5mm²/1.5mm² T&E + 32A Type B MCB/RCBO\n' +
+              '❌ WRONG: 4mm², 6mm², 10mm², or any other cable size\n' +
+              '❌ WRONG: 40A, 50A, 63A protection (only 32A permitted)\n\n' +
+              'If total load > 7.36kW (32A × 230V):\n' +
+              '- Split into MULTIPLE 2.5mm² ring circuits\n' +
+              '- Example: 14kW load = Circuit 1: 7kW ring (2.5mm²) + Circuit 2: 7kW ring (2.5mm²)\n' +
+              '- NEVER increase cable size to 4mm² or larger\n\n' +
+              'Socket diversity (Appendix 15): 100% first 10 outlets, 50% next 10, 25% remainder\n\n' +
+              'INSTRUCTIONS:\n' +
+              '1. For each circuit in the "circuits" array, include:\n' +
+              '   - name, circuitNumber, loadType, loadPower, phases\n' +
+              '   - socketCount (for socket circuits: estimate number of outlets, e.g., 16 for office desks)\n' +
+              '   - cableSize (mm²), cpcSize (mm²), cableLength (m)\n' +
+              '   - protectionDevice: { type, rating, curve, kaRating }\n' +
+              '   - rcdProtected (boolean), afddRequired (boolean)\n' +
+              '   - calculations: { Ib, In, Iz, voltageDrop: { volts, percent, compliant, limit }, zs, maxZs }\n' +
+              '   - justifications (PHASE 5): { \n' +
+              '       cableSize: "Detailed explanation referencing Appendix 4 table, showing Iz calculation with derating factors Ca×Cg×Ci = X, resulting Iz = YA > In = ZA",\n' +
+              '       protection: "Device selection per Reg 533.X, breaking capacity XkA > PSCC = YkA, curve type chosen per Reg 533.X for load characteristics",\n' +
+              '       rcd: "RCD requirement per Reg 411.3.3 [cite specific sub-regulation], type and rating per [regulation]",\n' +
+              '       diversity: "Diversity applied per Appendix 15 Table X: [show calculation], final load = XW",\n' +
+              '       voltageDrop: "Voltage drop calc: (mV/A/m) × Ib × L = XV < limit YV (Z%)",\n' +
+              '       earthFault: "Zs = Ze + R1+R2 = X + Y = ZΩ < maxZs = WΩ per Table 41.X",\n' +
+              '       testResults: "Expected R1+R2 = XΩ, IR > 1MΩ, RCD trip < 40ms at 1×IΔn"\n' +
+              '     }\n' +
+              '   - warnings: [] (array of strings)\n' +
+              '   - installationMethod: "Detailed method including reference (e.g., \'Clipped direct (Method C), Cg=1.0, Ca=1.0, Ci=0.5\')"\n\n' +
+              '2. In the "materials" array, list required materials with:\n' +
+              '   - name, specification, quantity, unit\n\n' +
+              '3. In the "warnings" array, include any compliance notes or important advisories\n\n' +
+              '4. In the "response" field, provide a brief conversational summary in UK English\n\n' +
+              'Reference BS 7671 regulations (e.g., "433.1.1", "525.1", "411.3.2") in justifications.\n\n' +
+              'Return your design using the provided tool schema.'
           },
           { role: 'user', content: query }
         ],
@@ -1893,57 +1901,52 @@ Return your design using the provided tool schema.`
         `${r.regulation_number}: ${r.content.substring(0, 200)}...`
       ).join('\n\n');
       
-      const jsonResult = await providerRetry(async () => {
+      const jsonResponse = await providerRetry(async () => {
         return await callGemini({
           messages: [
             { 
               role: 'system', 
-              content: `You are an expert electrical designer specialising in BS 7671:2018+A3:2024 compliant circuit design.
-
-KNOWLEDGE BASE (top ${topRegulations.length} regulations):
-${compactRagContext}
-
-Return EXACTLY a single JSON object with keys: response, circuits, materials, warnings. No markdown, no prose outside JSON.
-
-You MUST populate all RAG-driven fields using the regulations provided:
-1. diversityFactor & diversityJustification (BS 7671 Appendix 15)
-2. faultCurrentAnalysis (Regulation 434.5.2)
-3. earthingRequirements (Sections 411, 544)
-4. deratingFactors (Appendix 4 tables - show Ca, Cg, Ci)
-5. installationGuidance (Appendix 4 reference methods)
-6. specialLocationCompliance (Sections 701/702/714)
-7. expectedTestResults (R1+R2, Zs, insulation, RCD times)
-
-Structure:
-- response: brief summary in UK English
-- circuits: array of circuit objects with:
-  * name, circuitNumber, loadType, loadPower, phases
-  * cableSize, cpcSize, cableLength
-  * protectionDevice: {type, rating, curve, breakingCapacity}
-  * rcdProtected, rcdRating
-  * voltageDrop: {volts, percent, compliant, limit}
-  * zs, maxZs
-  * justifications: {cableSize, protection, rcd}
-  * warnings: array of strings
-  * installationMethod
-  * diversityFactor, diversityJustification
-  * faultCurrentAnalysis: {psccAtCircuit, deviceBreakingCapacity, compliant, marginOfSafety, regulation}
-  * earthingRequirements: {cpcSize, supplementaryBonding, bondingConductorSize, justification, regulation}
-  * deratingFactors: {Ca, Cg, Ci, overall, explanation, tableReferences}
-  * installationGuidance: {referenceMethod, description, clipSpacing, practicalTips[], regulation}
-  * specialLocationCompliance: {isSpecialLocation, locationType, requirements[], zonesApplicable, regulation}
-  * expectedTestResults: {r1r2: {at20C, at70C, calculation}, zs: {calculated, maxPermitted, compliant}, insulationResistance: {testVoltage, minResistance}, polarity, rcdTest: {at1x, at5x, regulation}}
-- materials: array of material objects with name, specification, quantity, unit
-- warnings: array of strings
-
-Always cite regulation numbers and show working for calculations.`
+              content: 'You are an expert electrical designer specialising in BS 7671:2018+A3:2024 compliant circuit design.\n\n' +
+                'KNOWLEDGE BASE (top ' + topRegulations.length + ' regulations):\n' +
+                compactRagContext + '\n\n' +
+                'Return EXACTLY a single JSON object with keys: response, circuits, materials, warnings. No markdown, no prose outside JSON.\n\n' +
+                'You MUST populate all RAG-driven fields using the regulations provided:\n' +
+                '1. diversityFactor & diversityJustification (BS 7671 Appendix 15)\n' +
+                '2. faultCurrentAnalysis (Regulation 434.5.2)\n' +
+                '3. earthingRequirements (Sections 411, 544)\n' +
+                '4. deratingFactors (Appendix 4 tables - show Ca, Cg, Ci)\n' +
+                '5. installationGuidance (Appendix 4 reference methods)\n' +
+                '6. specialLocationCompliance (Sections 701/702/714)\n' +
+                '7. expectedTestResults (R1+R2, Zs, insulation, RCD times)\n\n' +
+                'Structure:\n' +
+                '- response: brief summary in UK English\n' +
+                '- circuits: array of circuit objects with:\n' +
+                '  * name, circuitNumber, loadType, loadPower, phases\n' +
+                '  * cableSize, cpcSize, cableLength\n' +
+                '  * protectionDevice: {type, rating, curve, breakingCapacity}\n' +
+                '  * rcdProtected, rcdRating\n' +
+                '  * voltageDrop: {volts, percent, compliant, limit}\n' +
+                '  * zs, maxZs\n' +
+                '  * justifications: {cableSize, protection, rcd}\n' +
+                '  * warnings: array of strings\n' +
+                '  * installationMethod\n' +
+                '  * diversityFactor, diversityJustification\n' +
+                '  * faultCurrentAnalysis: {psccAtCircuit, deviceBreakingCapacity, compliant, marginOfSafety, regulation}\n' +
+                '  * earthingRequirements: {cpcSize, supplementaryBonding, bondingConductorSize, justification, regulation}\n' +
+                '  * deratingFactors: {Ca, Cg, Ci, overall, explanation, tableReferences}\n' +
+                '  * installationGuidance: {referenceMethod, description, clipSpacing, practicalTips[], regulation}\n' +
+                '  * specialLocationCompliance: {isSpecialLocation, locationType, requirements[], zonesApplicable, regulation}\n' +
+                '  * expectedTestResults: {r1r2: {at20C, at70C, calculation}, zs: {calculated, maxPermitted, compliant}, insulationResistance: {testVoltage, minResistance}, polarity, rcdTest: {at1x, at5x, regulation}}\n' +
+                '- materials: array of material objects with name, specification, quantity, unit\n' +
+                '- warnings: array of strings\n\n' +
+                'Always cite regulation numbers and show working for calculations.'
             },
             { role: 'user', content: query }
           ],
-          max_completion_tokens: aiConfig?.maxTokens || 24000, // Increased for complex multi-circuit designs
+          max_completion_tokens: aiConfig?.maxTokens || 24000,
           response_format: { type: "json_object" }
-        })
-      });
+        }, geminiKey);
+      }, { maxRetries: 3, baseDelayMs: 2000, maxDelayMs: 8000 });
       
       if (!jsonResponse.ok) {
         const errorText = await jsonResponse.text();
