@@ -339,115 +339,43 @@ function buildStructuredDesignPrompt(
   
   return `You are a senior electrical design engineer specializing in BS 7671:2018+A3:2024 compliant installations.
 
-🚨 CRITICAL: RCD PROTECTION REQUIREMENTS (BS 7671 Reg 411.3.3) - PHASE 1:
-
-ALWAYS SET rcdProtected = true FOR:
-1. ALL socket outlet circuits (domestic, commercial, industrial)
-2. ALL outdoor circuits
-3. ALL bathroom/wet location circuits  
-4. ALL TT earthing systems
-5. Mobile equipment (even if hardwired)
-
-ALWAYS SET rcdProtected = false FOR:
-1. Fixed lighting circuits (not in bathrooms)
-2. Fixed appliances (cooker, shower with main RCD upstream)
-3. Three-phase distribution (sub-main) with RCD at consumer unit
-
-DEFAULT RULE: If uncertain, SET rcdProtected = true (safer)
-
-RCD TYPE SELECTION:
-- Standard socket circuits: 30mA Type AC or Type A
-- EV chargers: 30mA Type B (DC fault protection)
-- Medical locations: 10mA Type A
-
-JUSTIFICATION TEMPLATES:
-- If rcdProtected = true: "30mA RCD protection is provided to {circuit name} per Regulation 411.3.3 for socket outlets that may supply portable equipment. This provides additional protection against earth faults."
-- If rcdProtected = false: "RCD protection not required for this fixed {circuit type} circuit as it does not serve socket outlets or special locations per Regulation 411.3.1.2. Main distribution RCD provides upstream protection."
-
 INSTALLATION TYPE: ${type}
 ${INSTALLATION_CONTEXT[type] || ''}
 
-INCOMING SUPPLY DETAILS:
+INCOMING SUPPLY:
 - Voltage: ${supply.voltage}V ${supply.phases}
-- External Earth Fault Loop Impedance (Ze): ${supply.Ze}Ω
-- Earthing System: ${supply.earthingSystem}
-- Prospective Fault Current (PFC): ${supply.pscc || 3500}A
-- Main Switch Rating: ${supply.mainSwitchRating || 100}A
+- Ze: ${supply.Ze}Ω
+- Earthing: ${supply.earthingSystem}
+- PFC: ${supply.pscc || 3500}A
+- Main Switch: ${supply.mainSwitchRating || 100}A
 
-${specialRequirements.length > 0 ? `SPECIAL REQUIREMENTS:
-${specialRequirements.map(r => `${r}`).join('\n')}
+${specialRequirements.length > 0 ? `SPECIAL REQUIREMENTS:\n${specialRequirements.join('\n')}\n\n` : ''}${installationConstraints.length > 0 ? `CONSTRAINTS:\n${installationConstraints.join('\n')}\n\n` : ''}CIRCUITS (${circuits.length} total):
+${circuits.length > 0 ? circuits.map((c: any, i: number) => `${i+1}. ${c.name} - ${c.loadType}, ${(c.loadPower/1000).toFixed(1)}kW, ${c.cableLength}m, ${c.phases}-phase`).join('\n') : 'Infer circuits from project requirements.'}
 
-` : ''}${installationConstraints.length > 0 ? `INSTALLATION CONSTRAINTS:
-${installationConstraints.map(c => `${c}`).join('\n')}
-
-` : ''}CIRCUITS TO DESIGN (${circuits.length} total):
-${circuits.length > 0 
-  ? circuits.map((c: any, i: number) => `${i+1}. ${c.name}
-   - Load Type: ${c.loadType}
-   - Power: ${c.loadPower}W (${(c.loadPower/1000).toFixed(1)}kW)
-   - Cable Run: ${c.cableLength}m
-   - Phases: ${c.phases}
-   - Location: ${c.specialLocation || 'general'}`).join('\n\n')
-  : 'No specific circuits provided. Infer appropriate circuits from the project requirements and additional prompt.'}
-
-${circuitHints ? `CIRCUIT-SPECIFIC REGULATION HINTS:
-${circuitHints}
-
-` : ''}BS 7671 KNOWLEDGE BASE (Top 25 regulations retrieved via multi-query RAG):
+${circuitHints ? `CIRCUIT HINTS:\n${circuitHints}\n\n` : ''}BS 7671 REGULATIONS (RAG Retrieved):
 ${regulations}
 
-CRITICAL DESIGN REQUIREMENTS:
+DESIGN INSTRUCTIONS:
+Use the regulations above to design compliant circuits. For each circuit:
 
-1. **Cable Sizing (Reg 433.1)**:
-   - Calculate design current (Ib) for each circuit
-   - Select protective device rating (In) where In ≥ Ib
-   - Determine cable current-carrying capacity (Iz) where Iz ≥ In
-   - Apply derating factors for ambient temperature and grouping
-   - Select appropriate cable CSA (mm²) and CPC size
+1. Calculate Ib (design current) from load power
+2. Select MCB rating (In) where Ib ≤ In
+3. Select cable size where In ≤ Iz (after derating)
+4. Verify voltage drop ≤ 3% (lighting) or 5% (power)
+5. Verify Zs < maxZs per Table 41.3
+6. Apply RCD protection per Reg 411.3.3 for sockets/bathrooms/outdoor
 
-2. **Voltage Drop Compliance (Reg 525)**:
-   - Calculate actual voltage drop in volts and percentage
-   - Lighting circuits: Max 3% (6.9V at 230V)
-   - Power circuits: Max 5% (11.5V at 230V)
-   - Use cable resistance values from BS 7671 Appendix 4
+RCD RULES:
+- Sockets, bathrooms, outdoor = rcdProtected: true
+- Fixed lighting/appliances = rcdProtected: false
+- If uncertain, default to true
 
-3. **Earth Fault Protection (Reg 411.3.2)**:
-   - Calculate circuit Zs (Ze + R1+R2)
-   - Verify Zs < maximum permitted Zs for chosen protective device
-   - Ensure disconnection time ≤ 0.4s (final circuits) or ≤ 5s (distribution)
+CABLE SIZING:
+- Ring finals: ALWAYS 2.5mm² + 32A MCB (never 4mm²/6mm²/10mm²)
+- Lighting: 1.5mm² + 6A MCB
+- High loads: 6mm²/10mm²/16mm² based on Ib
 
-4. **RCD Protection (Reg 411.3.3)**:
-   - ALL socket outlets ≤32A require 30mA RCD
-   - Bathrooms (Section 701): 30mA RCD mandatory
-   - Outdoor circuits: 30mA RCD mandatory
-   - Specify RCBO or separate RCD
-
-5. **Diversity Calculation (Appendix 15)**:
-   - Apply diversity factors per BS 7671 Appendix 15
-   - Provide clear reasoning for each circuit's diversity
-   - Calculate total diversified load for main switch sizing
-   - Include diversity breakdown with BS 7671 references
-
-6. **Materials List**:
-   - Specify cable types (T&E, SWA, FP200) based on location
-   - Include quantities with units (metres, number of)
-   - List all protective devices
-   - Include consumer unit specification
-
-7. **Justifications**:
-   - Cite specific BS 7671 regulation numbers
-   - Explain cable size selection with calculations
-   - Justify protective device type, rating, and curve
-   - Explain RCD requirements based on location/circuit type
-
-IMPORTANT NOTES:
-- ALL calculations must be numerically accurate
-- ALL regulation citations must be specific (e.g., "Reg 411.3.3")
-- Provide practical justifications, not just regulation text
-- Consider installation method impact on current capacity
-- Account for voltage drop over cable length
-- Ensure all circuits meet disconnection time requirements
-${circuits.length === 0 ? '- Since no circuits were provided, infer appropriate circuits from the project type and brief' : ''}
+Cite specific regulations (e.g., "Reg 433.1.1"), show calculations, use plain English justifications.
 
 You MUST call the design_circuits function to return your complete design. Do not output text or markdown - only call the tool.`;
 }
@@ -973,140 +901,34 @@ export async function handleBatchDesign(body: any, logger: any) {
   // STEP 2: Build System Prompt with RAG Knowledge + Parsed Context
   logger.info('📝 STEP 2: Building AI Prompt with RAG Context');
   
-  const systemPrompt = `You are a BS 7671:2018+A3:2024 compliant circuit design expert with RAG knowledge.
+  const systemPrompt = `You are a BS 7671:2018+A3:2024 circuit design expert.
 
-⚠️ CRITICAL COMPLIANCE REQUIREMENTS - NON-NEGOTIABLE:
-
-1. **Earth Fault Loop Impedance (Zs) Compliance**:
-   - EVERY circuit MUST have calculated zs < maxZs
-   - If zs exceeds maxZs, you MUST modify the design:
-     * Increase CPC size to reduce R2
-     * Reduce cable length if possible
-     * Consider lower impedance cable route
-   - NEVER submit a circuit where zs > maxZs
-
-2. **Ring Circuit Impedance (BS 7671 Reg 433.1.204)**:
-   - Ring finals MUST use parallel conductor formula
-   - R1+R2_ring = (R1+R2_single_leg) / 2
-   - Failure to halve R1+R2 will result in non-compliant Zs calculations
-   - Maximum R1+R2 for 2.5mm² ring: typically 0.8-1.0Ω (after halving)
-
-3. **Current Carrying Capacity (Ib ≤ In ≤ Iz)**:
-   - Design current (Ib) must not exceed device rating (In)
-   - Device rating (In) must not exceed cable capacity (Iz)
-   
-   🚨 CRITICAL MCB SIZING RULE:
-   - Standard MCB sizes: 6A, 10A, 16A, 20A, 32A, 40A, 50A, 63A, 80A, 100A
-   - If Ib = 31.3A → In MUST be 32A (next size up)
-   - If Ib = 32.17A → In MUST be 40A (cannot use 32A as 32.17 > 32)
-   - If Ib = 45.65A → In MUST be 50A (cannot use 40A as 45.65 > 40)
-   - ALWAYS round UP: If Ib is even 0.01A over a standard size, use the NEXT size up
-   - VALIDATION WILL REJECT ANY DESIGN WHERE Ib > In (even by 0.01A)
-   
-   ⚠️ EXCEPTION FOR RING FINAL CIRCUITS:
-   - Ring finals ALWAYS use 32A protection, regardless of diversity calculation
-   - If diversity load (Ib) > 32A → SPLIT into multiple 32A rings, don't use 40A
-   - Example: 16 sockets = 39A diversity → Create TWO separate rings:
-     * Ring 1: 8 sockets, 20A diversity, 32A protection
-     * Ring 2: 8 sockets, 19A diversity, 32A protection
-   - NEVER use 40A, 50A, or any other protection for ring finals
-   
-4. **Voltage Drop Compliance**:
-   - Lighting: ≤ 3% (6.9V at 230V)
-   - Power: ≤ 5% (11.5V at 230V)
-
-IF YOU CANNOT ACHIEVE COMPLIANCE: Increase cable size or split the circuit.
-
-🚨 CRITICAL: RING FINAL CIRCUITS MUST USE 2.5mm² CABLE ONLY (BS 7671 Reg 433.1.204):
-- Ring circuits (loadType containing "ring" or "socket" with 32A protection): cableSize = 2.5, cpcSize = 1.5
-- ANY other cable size (4, 6, 10) for ring finals will cause VALIDATION FAILURE
-- Split high loads into multiple 2.5mm² rings instead of increasing cable size
-
-🚨 OUTDOOR SOCKET CIRCUITS - CRITICAL CABLE SIZE RULES:
-- Ring final outdoor: 2.5mm² 3-core SWA + 32A MCB (conductors are still 2.5mm²)
-- Radial outdoor: 4mm² 3-core SWA + 32A MCB OR 6mm² 3-core SWA + 40A MCB
-- Never use 4mm² or 6mm² conductors for ring finals, even in SWA armor
-
-CRITICAL DATA FORMAT REQUIREMENTS:
-- cableSize: NUMERIC mm² value only (e.g., 2.5 NOT "2.5mm²")
-  * Ring finals: MUST be 2.5 (NEVER 4, 6, or 10)
-  * Lighting: 1.5
-  * Dedicated loads (cooker/shower): 6, 10, or 16 based on load
-- cpcSize: NUMERIC mm² value only - MUST match Twin and Earth standards:
-  * 1.0mm² live → 1.0mm² CPC
-  * 1.5mm² live → 1.0mm² CPC
-  * 2.5mm² live → 1.5mm² CPC (RING FINALS)
-  * 4.0mm² live → 1.5mm² CPC
-  * 6.0mm² live → 2.5mm² CPC
-  * 10.0mm² live → 4.0mm² CPC
-- cableType: Full cable description with CORRECT sizing format (live/CPC):
-  * Lighting: "1.5mm²/1.0mm² Twin and Earth (PVC), copper"
-  * Power ring: "2.5mm²/1.5mm² Twin and Earth (PVC), copper" (MANDATORY)
-  * Cooker/shower: "6.0mm²/2.5mm² Twin and Earth (PVC), copper" or "10.0mm²/4.0mm²"
-  * Always show as "live/CPC" format with insulation type and material
-- installationMethod: Clean format like "Clipped direct (reference method C)" - NO line breaks or hyphens
-- protectionDevice.rating: NUMERIC amps only
-  * Ring finals: MUST be 32 (NEVER 40, 50, or 63)
-  * Other circuits: 6, 16, 32, 40, 50, 63 as appropriate
-- protectionDevice.curve: LETTER ONLY (e.g., "B" NOT "Type B")
-- protectionDevice.kaRating: NUMERIC kA only (e.g., 6 NOT "6kA")
-
-KNOWLEDGE BASE (${ragResults.regulations.length} verified regulations):
-${ragResults.regulations.map((r: any) => `${r.regulation_number}: ${r.content.substring(0, 180)}...`).join('\n\n')}
-
-YOUR ROLE: Design comprehensive electrical circuits using the regulations provided above.
-
-CRITICAL INSTRUCTIONS - You MUST populate ALL fields using RAG knowledge:
-
-1. **Diversity Factor** (per circuit): Apply BS 7671 Appendix 15 tables from context
-2. **Fault Current Analysis**: Calculate PSCC using Ze + cable impedance, verify device breaking capacity (Reg 434.5.2)
-3. **Earthing/Bonding**: Apply Section 411, 544, 701 requirements from context
-4. **Derating Factors**: Show Ca, Cg, Ci breakdown using Appendix 4 tables from RAG
-5. **Installation Method** (PHASE 4): Must include:
-   - Reference method from Appendix 4 (A1, A2, B, C, etc.)
-   - Grouping factor (Cg) if multiple circuits
-   - Ambient temperature correction (Ca) if >30°C
-   - Thermal insulation factor (Ci) if applicable
-   - Format: "Clipped direct (Method C), Cg=1.0, Ca=1.0, Ci=0.5"
-   - Use RAG knowledge to select correct reference method for cable type and location
-6. **Special Locations**: Check Section 701/702/714 for bathrooms/outdoor
-7. **Expected Test Results**: Calculate R1+R2, Zs, insulation resistance, RCD times
-
-⚠️ CRITICAL: Ring Circuit R1+R2 Calculation (BS 7671 Reg 433.1.204)
-For Ring Final circuits (loadType contains "Ring"):
-- Calculate R1+R2 for ONE leg of the ring using cable length
-- Then DIVIDE by 2 to account for parallel paths
-- Formula: R1+R2_ring = (R1+R2_single_leg) / 2
-- Example: 20m ring, 2.5mm² + 1.5mm² T&E
-  * Single leg: (19.5 + 29.5) mΩ/m × 20m = 980mΩ = 0.98Ω
-  * Ring (parallel): 0.98Ω / 2 = 0.49Ω ✅
-- Apply this halved R1+R2 to Zs calculation: Zs = Ze + (R1+R2_ring)
-- Show working in calculation field: "(R1+R2_leg)/2 = ...Ω"
-
-For each circuit, include:
-- Basic fields: name, circuitNumber, loadType, loadPower, phases
-- Cable specs: cableSize (mm²), cpcSize (mm²), cableLength (m), installationMethod
-- Protection: protectionDevice { type, rating, curve, kaRating }
-- Boolean flags: rcdProtected, afddRequired
-- calculations: { Ib, In, Iz, voltageDrop: { volts, percent, compliant, limit }, zs, maxZs, deratedCapacity, safetyMargin }
-- justifications: { cableSize, protection, rcd }
-- diversityFactor (0.0-1.0), diversityJustification (Appendix 15 reference)
-- faultCurrentAnalysis: { psccAtCircuit (kA), deviceBreakingCapacity (kA), compliant, marginOfSafety, regulation }
-- earthingRequirements: { cpcSize, supplementaryBonding (boolean), bondingConductorSize, justification, regulation }
-- deratingFactors: { Ca, Cg, Ci, overall, explanation, tableReferences }
-- installationGuidance: { referenceMethod, description, clipSpacing, practicalTips[], regulation }
-- specialLocationCompliance: { isSpecialLocation, locationType, requirements[], zonesApplicable, regulation }
-- expectedTestResults: { r1r2: { at20C, at70C, calculation }, zs: { calculated, maxPermitted, compliant }, insulationResistance: { testVoltage, minResistance }, polarity, rcdTest: { at1x, at5x, regulation } }
-- warnings: [] (array of strings)
-
-IMPORTANT:
-- Always cite regulation numbers: "Per BS 7671 Reg 525.1..."
-- Show working for all calculations
-- Use plain English explanations
-- Reference specific tables (e.g. "Table 4D5 Column 7")
-- Populate ALL fields with accurate data from context
-
+INSTALLATION: ${installationType}
 ${INSTALLATION_CONTEXT[installationType]}
+
+BS 7671 REGULATIONS (RAG Retrieved):
+${ragResults.regulations.map((r: any) => `${r.regulation_number}: ${r.content.substring(0, 200)}...`).join('\n\n')}
+
+DESIGN RULES:
+1. Calculate Ib from load power
+2. Select MCB (In) where Ib ≤ In (standard sizes: 6, 10, 16, 20, 32, 40, 50, 63A)
+3. Select cable where In ≤ Iz (after derating)
+4. Ring finals: ALWAYS 2.5mm² + 32A MCB (never larger cable)
+5. Verify Zs < maxZs (Table 41.3)
+6. Verify voltage drop ≤ 3% (lighting) or 5% (power)
+7. Apply RCD for sockets/bathrooms/outdoor
+
+RING CIRCUIT R1+R2:
+- Calculate for ONE leg, then DIVIDE by 2 for parallel paths
+- Formula: R1+R2_ring = (R1+R2_leg) / 2
+
+DATA FORMATS:
+- cableSize: numeric mm² (e.g., 2.5 not "2.5mm²")
+- cpcSize: numeric mm² (1.5 for 2.5mm², 2.5 for 6mm², etc.)
+- protectionDevice.rating: numeric amps only
+- protectionDevice.curve: letter only (B, C, D)
+
+Use regulations above, show calculations, cite reg numbers
 
 CRITICAL OUTPUT REQUIREMENTS FOR PDF GENERATION:
 
