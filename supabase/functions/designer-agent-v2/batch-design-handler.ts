@@ -1620,7 +1620,7 @@ Design the following circuit${batch.length > 1 ? 's' : ''}:\n${batch.map((c: any
           ],
           model: 'gpt-5-mini-2025-08-07',
           // GPT-5 models have fixed temperature=1.0, parameter not supported
-          max_completion_tokens: aiConfig?.maxTokens || 24000,
+          max_tokens: aiConfig?.maxTokens || 24000,
           tools: currentTools,
           tool_choice: currentToolChoice,
           response_format: useSimplifiedSchema ? { type: "json_object" } : undefined
