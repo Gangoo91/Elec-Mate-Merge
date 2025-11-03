@@ -484,6 +484,13 @@ Include phases, resources, compliance requirements, and risk management.`;
       projectMeta: {}
     };
     
+    // Check which agents have provided outputs
+    const designer = previousAgentOutputs?.some((o: any) => o.agent === 'designer');
+    const cost = previousAgentOutputs?.some((o: any) => o.agent === 'cost-engineer');
+    const hs = previousAgentOutputs?.some((o: any) => o.agent === 'health-safety');
+    const installer = previousAgentOutputs?.some((o: any) => o.agent === 'installer');
+    const comm = previousAgentOutputs?.some((o: any) => o.agent === 'commissioning');
+    
     // Enhance structured data with aggregated specialist outputs
     const enhancedStructuredData = {
       projectPlan: projectPlan || { phases: [] },
