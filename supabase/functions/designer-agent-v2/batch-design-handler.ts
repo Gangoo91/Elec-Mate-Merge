@@ -2570,21 +2570,21 @@ Always cite regulation numbers and show working for calculations.`
   }), { 
     headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
   });
-} catch (error) {
-  logger.error('❌ Design handler error', { error });
-  
-  if (error instanceof CircuitDesignError) {
-    return error.toResponse();
+  } catch (error) {
+    logger.error('❌ Design handler error', { error });
+    
+    if (error instanceof CircuitDesignError) {
+      return error.toResponse();
+    }
+    
+    // Unknown errors
+    return new CircuitDesignError(
+      'INTERNAL_ERROR',
+      error instanceof Error ? error.message : 'Unknown error occurred',
+      { stack: error instanceof Error ? error.stack : undefined },
+      ['Try again', 'Contact support if the issue persists']
+    ).toResponse();
   }
-  
-  // Unknown errors
-  return new CircuitDesignError(
-    'INTERNAL_ERROR',
-    error instanceof Error ? error.message : 'Unknown error occurred',
-    { stack: error instanceof Error ? error.stack : undefined },
-    ['Try again', 'Contact support if the issue persists']
-  ).toResponse();
-}
 }
 
 /**
