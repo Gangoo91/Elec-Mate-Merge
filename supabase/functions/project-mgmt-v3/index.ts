@@ -379,35 +379,51 @@ Include phases, resources, compliance requirements, and risk management.`;
       toolChoice: { type: 'function', function: { name: 'provide_project_plan' } }
     });
 
-    const aiData = JSON.parse(aiResult.content);
-    
-    // Validate AI response structure
-    if (!aiData.choices || !aiData.choices[0] || !aiData.choices[0].message) {
-      logger.error('Invalid AI response structure', { aiData });
-      throw new Error('AI returned invalid response structure');
+    let pmResult;
+
+    // Check if aiResult has toolCalls (new ai-wrapper format)
+    if (aiResult.toolCalls && aiResult.toolCalls.length > 0) {
+      // ai-wrapper already extracted the tool arguments
+      pmResult = JSON.parse(aiResult.content);
+      logger.debug('Parsed tool call from ai-wrapper', { hasToolCalls: true });
+    } else {
+      // Fallback: try to parse as full OpenAI response structure
+      try {
+        const aiData = JSON.parse(aiResult.content);
+        
+        if (!aiData.choices || !aiData.choices[0] || !aiData.choices[0].message) {
+          logger.error('Invalid AI response structure', { aiData });
+          throw new Error('AI returned invalid response structure');
+        }
+        
+        const message = aiData.choices[0].message;
+        
+        if (!message.tool_calls || !message.tool_calls[0]) {
+          logger.error('No tool calls in AI response', { 
+            hasToolCalls: !!message.tool_calls,
+            finishReason: aiData.choices[0].finish_reason,
+            messageKeys: Object.keys(message)
+          });
+          throw new Error('AI did not return expected tool call');
+        }
+        
+        const toolCall = message.tool_calls[0];
+        
+        if (!toolCall.function || !toolCall.function.arguments) {
+          logger.error('Invalid tool call structure', { toolCall });
+          throw new Error('Tool call missing function arguments');
+        }
+        
+        pmResult = JSON.parse(toolCall.function.arguments);
+        logger.debug('Parsed tool call from legacy format', { hasToolCalls: false });
+      } catch (parseError) {
+        logger.error('Failed to parse AI response', { 
+          error: parseError instanceof Error ? parseError.message : String(parseError),
+          contentPreview: aiResult.content.substring(0, 200)
+        });
+        throw new Error('Failed to parse AI response structure');
+      }
     }
-    
-    const message = aiData.choices[0].message;
-    
-    // Check if tool_calls exists and has data
-    if (!message.tool_calls || !message.tool_calls[0]) {
-      logger.error('No tool calls in AI response', { 
-        hasToolCalls: !!message.tool_calls,
-        finishReason: aiData.choices[0].finish_reason,
-        messageKeys: Object.keys(message)
-      });
-      throw new Error('AI did not return expected tool call');
-    }
-    
-    const toolCall = message.tool_calls[0];
-    
-    // Validate tool call structure
-    if (!toolCall.function || !toolCall.function.arguments) {
-      logger.error('Invalid tool call structure', { toolCall });
-      throw new Error('Tool call missing function arguments');
-    }
-    
-    const pmResult = JSON.parse(toolCall.function.arguments);
 
     // IMPROVEMENT: Response Quality Validation
     const { validateResponse } = await import('../_shared/response-validation.ts');
