@@ -1,3 +1,4 @@
+// Cache invalidation: 2025-11-03-v2 - Force Supabase bundler refresh
 import { corsHeaders, createClient } from '../_shared/deps.ts';
 import { intelligentRAGSearch } from '../_shared/intelligent-rag.ts';
 import { chunkArray, RequestDeduplicator, generateRequestKey } from './parallel-utils.ts';
