@@ -894,9 +894,16 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.setFontSize(16);
     this.doc.setFont("helvetica", "bold");
     this.doc.text("4. DETAILED RISK ASSESSMENT", this.MARGIN, this.yPosition);
+    this.yPosition += 12;
+    
+    // Add explanatory note
+    this.doc.setFontSize(9);
+    this.doc.setFont("helvetica", "italic");
+    this.doc.setTextColor(100, 100, 100);
+    this.doc.text("Hazards ranked 1-N where 1 = highest risk score", this.MARGIN, this.yPosition);
     this.yPosition += 16;
 
-    // Sort risks by rating (highest first) then deduplicate
+    // Risks are already sorted by risk rating in backend (highest first)
     const sortedRisks = [...data.risks].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0));
     const deduplicatedRisks = deduplicateRisks(sortedRisks);
     

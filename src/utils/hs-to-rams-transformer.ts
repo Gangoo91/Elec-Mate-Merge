@@ -203,9 +203,17 @@ export function transformHealthSafetyOutputToMethodStatement(
     projectName?: string;
     location?: string;
     assessor?: string;
+    contractor?: string;
+    supervisor?: string;
   }
 ): Partial<import('@/types/method-statement').MethodStatementData> {
   return {
+    // Project details
+    ...(projectDetails?.projectName && { jobTitle: projectDetails.projectName }),
+    ...(projectDetails?.location && { location: projectDetails.location }),
+    ...(projectDetails?.contractor && { contractor: projectDetails.contractor }),
+    ...(projectDetails?.supervisor && { supervisor: projectDetails.supervisor }),
+    
     // Full risk assessment with all details
     riskAssessment: hsOutput.riskAssessmentDetailed ? {
       hazards: hsOutput.riskAssessmentDetailed.hazards,

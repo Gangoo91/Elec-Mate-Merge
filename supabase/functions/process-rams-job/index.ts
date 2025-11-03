@@ -11,7 +11,7 @@ const corsHeaders = {
  * Maps: hazards → risks, ppe → ppeDetails
  * PHASE 3: Enhanced with fallback logic for various response structures
  */
-function transformHealthSafetyResponse(hsData: any): any {
+function transformHealthSafetyResponse(hsData: any, projectDetails?: any): any {
   console.log('🔄 [PHASE 1 DIAGNOSTIC] Starting transformation...', {
     hasData: !!hsData,
     hasDataField: !!hsData?.data,
@@ -87,10 +87,12 @@ function transformHealthSafetyResponse(hsData: any): any {
     emergencyProcedures: sourceData.emergencyProcedures || [],
     complianceRegulations: sourceData.complianceRegulations || [],
     
-    projectName: '',
-    location: '',
+    projectName: projectDetails?.projectName || '',
+    location: projectDetails?.location || '',
     date: new Date().toISOString().split('T')[0],
-    assessor: '',
+    assessor: projectDetails?.assessor || '',
+    contractor: projectDetails?.contractor || '',
+    supervisor: projectDetails?.supervisor || '',
     activities: []
   };
 
@@ -430,13 +432,25 @@ Deno.serve(async (req) => {
     // ✅ QUICK WIN #3: Store in cache for future reuse
     console.log('💾 Storing result in semantic cache...');
     
-    // Safe transformation with fallback - guard against null hsData
-    const transformedRamsData = hsData ? transformHealthSafetyResponse(hsData) : null;
-    const ramsDataFinal = transformedRamsData || {
-      projectName: '',
-      location: '',
+    // Extract project details from the job to pass through to final document
+    const projectDetails = {
+      projectName: job.project_name || job.prompt?.split('\n')[0]?.substring(0, 100) || 'Electrical Installation Project',
+      location: job.location || 'To be specified',
+      contractor: 'To be specified',
+      supervisor: 'To be specified',
+      assessor: 'Site Electrician',
+      jobScale: job.job_scale
+    };
+    
+    // Safe transformation with fallback - guard against null hsData and pass project details
+    const transformedRamsData = hsData ? transformHealthSafetyResponse(hsData, projectDetails) : null;
+    let ramsDataFinal = transformedRamsData || {
+      projectName: projectDetails.projectName,
+      location: projectDetails.location,
       date: new Date().toISOString().split('T')[0],
-      assessor: '',
+      assessor: projectDetails.assessor,
+      contractor: projectDetails.contractor,
+      supervisor: projectDetails.supervisor,
       activities: [],
       risks: [],
       ppeDetails: [],
@@ -444,12 +458,39 @@ Deno.serve(async (req) => {
       complianceRegulations: []
     };
     
+    // Sort hazards by risk rating (highest first) and renumber as 1, 2, 3...
+    if (ramsDataFinal.risks && ramsDataFinal.risks.length > 0) {
+      ramsDataFinal.risks.sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0));
+      ramsDataFinal.risks.forEach((risk, index) => {
+        risk.id = `${index + 1}`;
+      });
+    }
+    
+    // Merge installer data with RAMS data for complete document
+    const combinedRAMSData = {
+      ...ramsDataFinal,
+      // Ensure project details are populated
+      projectName: projectDetails.projectName,
+      location: projectDetails.location,
+      contractor: projectDetails.contractor,
+      supervisor: projectDetails.supervisor,
+      // Merge method statement details from installer
+      ...(installerData?.data && {
+        practicalTips: installerData.data.practicalTips,
+        commonMistakes: installerData.data.commonMistakes,
+        toolsRequired: installerData.data.toolsRequired,
+        materialsRequired: installerData.data.materialsRequired,
+        duration: installerData.data.duration,
+        teamSize: installerData.data.teamSize
+      })
+    };
+    
     await storeRAMSCache({
       supabase,
       jobDescription: job.job_description,
       workType: job.job_scale,
       jobScale: job.job_scale,
-      ramsData: ramsDataFinal,
+      ramsData: combinedRAMSData,
       methodData: installerData?.data ?? null, // ✅ Guard against null installerData
       openAiKey: OPENAI_API_KEY
     });
@@ -472,14 +513,14 @@ Deno.serve(async (req) => {
       ...(hsData ? { hs_input_preview: JSON.stringify(hsData).slice(0, 300) } : {})
     };
     
-    // Mark complete with safe property access
+    // Mark complete with safe property access and merged data
     await supabase
       .from('rams_generation_jobs')
       .update({
         status: 'complete',
         progress: 100,
         current_step: currentStepMessage,
-        rams_data: ramsDataFinal,
+        rams_data: combinedRAMSData,
         ...(installerData?.data ? { method_data: installerData.data } : {}),
         ...(installerData ? { raw_installer_response: installerData } : {}),
         completed_at: new Date().toISOString(),
@@ -497,14 +538,37 @@ Deno.serve(async (req) => {
   } catch (error: any) {
     console.error('❌ Job processing failed:', error);
     
+    // Clear heartbeat intervals
+    if (hsHeartbeatInterval) clearInterval(hsHeartbeatInterval);
+    if (installerHeartbeatInterval) clearInterval(installerHeartbeatInterval);
+    
     // jobId already extracted at top of try block
     if (jobId) {
+      // Provide a user-friendly current_step message based on the error
+      let friendlyMessage = 'Generation failed';
+      if (error.message?.includes('timeout') || error.message?.includes('150000ms')) {
+        friendlyMessage = 'AI agents timed out - job too complex. Please try a simpler job or break it into smaller tasks.';
+      } else if (error.message?.includes('OPENAI_API_KEY') || error.message?.includes('API key')) {
+        friendlyMessage = 'AI service configuration issue - please contact support';
+      } else if (error.message?.includes('cancelled')) {
+        friendlyMessage = 'Generation was cancelled by user';
+      } else {
+        friendlyMessage = `Generation failed: ${error.message?.substring(0, 100)}`;
+      }
+      
       await supabase
         .from('rams_generation_jobs')
         .update({
           status: 'failed',
+          current_step: friendlyMessage,
           error_message: error.message,
-          completed_at: new Date().toISOString()
+          completed_at: new Date().toISOString(),
+          generation_metadata: {
+            phase: 'orchestrator',
+            error_type: error.name || 'Error',
+            reason: error.message?.slice(0, 300),
+            stack_preview: error.stack?.slice(0, 500)
+          }
         })
         .eq('id', jobId);
     }

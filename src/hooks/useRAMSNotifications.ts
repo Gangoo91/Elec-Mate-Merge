@@ -82,11 +82,15 @@ export const useRAMSNotifications = () => {
     });
   };
 
-  const showErrorNotification = ({ jobId, projectName }: Omit<RAMSNotificationOptions, 'onNotificationClick'>) => {
+  const showErrorNotification = ({ 
+    jobId, 
+    projectName, 
+    errorMessage 
+  }: Omit<RAMSNotificationOptions, 'onNotificationClick'> & { errorMessage?: string }) => {
     const title = '⚠️ RAMS Generation Failed';
-    const body = projectName 
+    const body = errorMessage || (projectName 
       ? `Failed to generate RAMS for "${projectName}". Please try again.`
-      : 'Failed to generate RAMS document. Please try again.';
+      : 'Failed to generate RAMS document. Please try again.');
 
     // Always use toast for errors (more visible)
     toast({

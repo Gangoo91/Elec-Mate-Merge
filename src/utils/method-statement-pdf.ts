@@ -271,20 +271,31 @@ class MethodStatementPDFGenerator {
   private renderStepContent(step: MethodStep): void {
     const description = safeText(step.description);
     
+    // Add subtle background shading (zebra stripe effect)
+    const stepBgColor: [number, number, number] = step.stepNumber % 2 === 0 ? [250, 250, 250] : [255, 255, 255];
+    this.doc.setFillColor(...stepBgColor);
+    
+    // Description section with better formatting
+    this.doc.setFontSize(9);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.setTextColor(...this.PRIMARY_COLOR);
+    this.doc.text("Description:", this.MARGIN + 5, this.yPosition);
+    this.yPosition += 6;
+    
     // Check if description contains procedure steps (numbered lists, bullets)
     const lines = description.split('\n');
     const hasProcedureSteps = lines.some(line => /^\d+\.|\-|\•/.test(line.trim()));
     
-    this.doc.setFontSize(10);
+    this.doc.setFontSize(9);
     this.doc.setTextColor(51, 65, 85);
     this.doc.setFont("helvetica", "normal");
     
     if (hasProcedureSteps) {
-      // Render as structured list
+      // Render as structured list with proper indentation
       lines.forEach(line => {
         const trimmed = line.trim();
         if (trimmed) {
-          const indent = trimmed.match(/^\d+\./) ? this.MARGIN + 5 : this.MARGIN + 10;
+          const indent = trimmed.match(/^\d+\./) ? this.MARGIN + 10 : this.MARGIN + 15;
           const wrappedLine = this.doc.splitTextToSize(trimmed, this.pageWidth - indent - this.MARGIN - 5);
           wrappedLine.forEach((subLine: string) => {
             this.checkPageBreak(6);
@@ -294,109 +305,157 @@ class MethodStatementPDFGenerator {
         }
       });
     } else {
-      // Render as wrapped paragraph
-      const wrappedDesc = this.doc.splitTextToSize(description, this.pageWidth - (2 * this.MARGIN) - 10);
+      // Render as wrapped paragraph with indentation
+      const wrappedDesc = this.doc.splitTextToSize(description, this.pageWidth - (2 * this.MARGIN) - 15);
       wrappedDesc.forEach((line: string) => {
         this.checkPageBreak(6);
-        this.doc.text(line, this.MARGIN + 5, this.yPosition);
+        this.doc.text(line, this.MARGIN + 10, this.yPosition);
         this.yPosition += 5;
       });
     }
     
-    this.yPosition += 5;
+    this.yPosition += 8;
     
-    // Render step detail boxes
+    // Render step detail boxes with enhanced layout
     this.renderStepDetailBoxes(step);
   }
 
   private renderStepDetailBoxes(step: MethodStep): void {
+    // Duration and Risk boxes in a more compact layout
+    this.checkPageBreak(20);
+    
     const boxWidth = (this.pageWidth - (2 * this.MARGIN) - 10) / 2;
-    let xPos = this.MARGIN;
+    let xPos = this.MARGIN + 5;
     
-    // Duration and Risk level boxes
-    this.checkPageBreak(18);
-    
-    // Duration box
-    this.doc.setFillColor(245, 245, 245);
-    this.doc.rect(xPos, this.yPosition, boxWidth, 12, 'F');
+    // Duration box with icon
+    this.doc.setFillColor(240, 240, 245);
+    this.doc.setDrawColor(200, 200, 210);
+    this.doc.setLineWidth(0.5);
+    this.doc.roundedRect(xPos, this.yPosition, boxWidth, 14, 2, 2, 'FD');
     this.doc.setFontSize(8);
     this.doc.setFont("helvetica", "bold");
-    this.doc.setTextColor(100, 100, 100);
-    this.doc.text("⏱ DURATION", xPos + 3, this.yPosition + 4);
+    this.doc.setTextColor(...this.ACCENT_COLOR);
+    this.doc.text("⏱ Duration:", xPos + 3, this.yPosition + 5);
     this.doc.setFont("helvetica", "normal");
     this.doc.setTextColor(0, 0, 0);
-    this.doc.text(safeText(step.estimatedDuration), xPos + 3, this.yPosition + 9);
+    this.doc.setFontSize(9);
+    this.doc.text(safeText(step.estimatedDuration), xPos + 3, this.yPosition + 10);
     
-    // Risk level box
+    // Risk level box with color coding
     xPos += boxWidth + 5;
     const riskColor = this.getRiskColor(step.riskLevel);
     this.doc.setFillColor(...riskColor);
-    this.doc.rect(xPos, this.yPosition, boxWidth, 12, 'F');
+    this.doc.setLineWidth(0);
+    this.doc.roundedRect(xPos, this.yPosition, boxWidth, 14, 2, 2, 'F');
     this.doc.setTextColor(255, 255, 255);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("⚠ RISK LEVEL", xPos + 3, this.yPosition + 4);
-    this.doc.text(step.riskLevel.toUpperCase(), xPos + 3, this.yPosition + 9);
+    this.doc.setFontSize(8);
+    this.doc.text("⚠ Risk Level:", xPos + 3, this.yPosition + 5);
+    this.doc.setFontSize(10);
+    this.doc.text(step.riskLevel.toUpperCase(), xPos + 3, this.yPosition + 11);
     
-    this.yPosition += 18;
+    this.yPosition += 20;
     
-    // Safety requirements (as bullet list with warning icon)
+    // Safety requirements - highlighted section with amber background
     if (step.safetyRequirements && step.safetyRequirements.length > 0) {
-      this.checkPageBreak(8);
-      this.doc.setFontSize(9);
+      this.checkPageBreak(10);
+      
+      // Amber highlight box
+      this.doc.setFillColor(255, 251, 235);
+      this.doc.setDrawColor(245, 158, 11);
+      this.doc.setLineWidth(0.5);
+      
+      this.doc.setFontSize(10);
       this.doc.setFont("helvetica", "bold");
       this.doc.setTextColor(...this.DANGER_COLOR);
-      this.doc.text("⚠ SAFETY REQUIREMENTS:", this.MARGIN, this.yPosition);
+      this.doc.text("⚠ Safety Requirements:", this.MARGIN + 10, this.yPosition);
       this.yPosition += 6;
       
+      this.doc.setFontSize(9);
       this.doc.setFont("helvetica", "normal");
       this.doc.setTextColor(0, 0, 0);
       step.safetyRequirements.forEach(req => {
         this.checkPageBreak(6);
-        const wrappedReq = this.doc.splitTextToSize(`• ${req}`, this.pageWidth - (2 * this.MARGIN) - 10);
+        const wrappedReq = this.doc.splitTextToSize(`• ${req}`, this.pageWidth - (2 * this.MARGIN) - 20);
         wrappedReq.forEach((line: string) => {
-          this.doc.text(line, this.MARGIN + 5, this.yPosition);
+          this.doc.text(line, this.MARGIN + 15, this.yPosition);
           this.yPosition += 5;
         });
       });
-      this.yPosition += 3;
+      this.yPosition += 5;
     }
     
-    // Equipment needed (as bullet list with tool icon)
+    // Equipment needed - clean bullet list
     if (step.equipmentNeeded && step.equipmentNeeded.length > 0) {
       this.checkPageBreak(8);
-      this.doc.setFontSize(9);
+      this.doc.setFontSize(10);
       this.doc.setFont("helvetica", "bold");
       this.doc.setTextColor(...this.ACCENT_COLOR);
-      this.doc.text("🔧 EQUIPMENT NEEDED:", this.MARGIN, this.yPosition);
+      this.doc.text("🔧 Equipment Needed:", this.MARGIN + 10, this.yPosition);
       this.yPosition += 6;
       
+      this.doc.setFontSize(9);
       this.doc.setFont("helvetica", "normal");
       this.doc.setTextColor(0, 0, 0);
       step.equipmentNeeded.forEach(equip => {
         this.checkPageBreak(6);
-        this.doc.text(`• ${equip}`, this.MARGIN + 5, this.yPosition);
-        this.yPosition += 5;
+        const wrappedEquip = this.doc.splitTextToSize(`• ${equip}`, this.pageWidth - (2 * this.MARGIN) - 20);
+        wrappedEquip.forEach((line: string) => {
+          this.doc.text(line, this.MARGIN + 15, this.yPosition);
+          this.yPosition += 5;
+        });
       });
-      this.yPosition += 3;
+      this.yPosition += 5;
     }
     
-    // Qualifications (highlighted with certification icon)
+    // Qualifications - with certification icon
     if (step.qualifications && step.qualifications.length > 0) {
       this.checkPageBreak(8);
-      this.doc.setFontSize(9);
+      this.doc.setFontSize(10);
       this.doc.setFont("helvetica", "bold");
       this.doc.setTextColor(...this.WARNING_COLOR);
-      this.doc.text("📋 REQUIRED QUALIFICATIONS:", this.MARGIN, this.yPosition);
+      this.doc.text("📋 Required Qualifications:", this.MARGIN + 10, this.yPosition);
       this.yPosition += 6;
       
+      this.doc.setFontSize(9);
       this.doc.setFont("helvetica", "normal");
       this.doc.setTextColor(0, 0, 0);
       step.qualifications.forEach(qual => {
         this.checkPageBreak(6);
-        this.doc.text(`• ${qual}`, this.MARGIN + 5, this.yPosition);
+        const wrappedQual = this.doc.splitTextToSize(`• ${qual}`, this.pageWidth - (2 * this.MARGIN) - 20);
+        wrappedQual.forEach((line: string) => {
+          this.doc.text(line, this.MARGIN + 15, this.yPosition);
+          this.yPosition += 5;
+        });
+      });
+      this.yPosition += 5;
+    }
+    
+    // Critical points section (if step notes contain warnings)
+    if (step.notes && step.notes.toLowerCase().includes('critical')) {
+      this.checkPageBreak(10);
+      
+      // Red highlight for critical points
+      this.doc.setFillColor(254, 242, 242);
+      this.doc.setDrawColor(239, 68, 68);
+      this.doc.setLineWidth(0.5);
+      
+      this.doc.setFontSize(10);
+      this.doc.setFont("helvetica", "bold");
+      this.doc.setTextColor(220, 38, 38);
+      this.doc.text("❗ Critical Points:", this.MARGIN + 10, this.yPosition);
+      this.yPosition += 6;
+      
+      this.doc.setFontSize(9);
+      this.doc.setFont("helvetica", "normal");
+      this.doc.setTextColor(0, 0, 0);
+      const wrappedNotes = this.doc.splitTextToSize(step.notes, this.pageWidth - (2 * this.MARGIN) - 20);
+      wrappedNotes.forEach((line: string) => {
+        this.checkPageBreak(6);
+        this.doc.text(line, this.MARGIN + 15, this.yPosition);
         this.yPosition += 5;
       });
-      this.yPosition += 3;
+      this.yPosition += 5;
     }
     
     // Dependencies (if any)

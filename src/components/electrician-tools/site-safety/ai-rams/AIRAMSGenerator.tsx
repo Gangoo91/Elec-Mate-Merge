@@ -25,6 +25,7 @@ export const AIRAMSGenerator: React.FC = () => {
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [resumedJob, setResumedJob] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
+  const lastErrorNotifiedJobRef = React.useRef<string | null>(null);
   
   const { job, startPolling, stopPolling, progress, status, currentStep, ramsData, methodData, error } = useRAMSJobPolling(currentJobId);
   const { requestPermission, showCompletionNotification, showErrorNotification } = useRAMSNotifications();
@@ -121,11 +122,13 @@ export const AIRAMSGenerator: React.FC = () => {
     }
   }, [status, ramsData, celebrationShown, currentJobId]);
 
-  // Show error notification
+  // Show error notification (prevent duplicate toasts for old jobs)
   useEffect(() => {
-    if (status === 'failed' && error) {
+    if (status === 'failed' && error && currentJobId && lastErrorNotifiedJobRef.current !== currentJobId) {
+      lastErrorNotifiedJobRef.current = currentJobId;
       showErrorNotification({
-        jobId: currentJobId || ''
+        jobId: currentJobId,
+        errorMessage: error
       });
     }
   }, [status, error, currentJobId]);
@@ -156,6 +159,9 @@ export const AIRAMSGenerator: React.FC = () => {
   ) => {
     // Mark session as having active generation
     sessionStorage.setItem('rams-generation-active', 'true');
+    
+    // Reset error notification tracker for new generation
+    lastErrorNotifiedJobRef.current = null;
     
     setGenerationStartTime(Date.now());
     setShowResults(true);
