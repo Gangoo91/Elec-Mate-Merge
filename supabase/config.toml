@@ -78,6 +78,10 @@ timeout_sec = 480
 verify_jwt = false
 timeout_sec = 300
 
+[functions.installer-rag-direct]
+verify_jwt = false
+timeout_sec = 120
+
 [functions.project-mgmt-v3]
 verify_jwt = false
 timeout_sec = 300

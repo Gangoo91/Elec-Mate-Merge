@@ -44,92 +44,90 @@ export const generateMethodStatement = async (
   onProgress?: (message: string) => void
 ): Promise<MergedMethodStatementOutput> => {
   try {
-    // ===== NEW ARCHITECTURE: Use agent-router for parallel orchestration =====
-    // All 3 agents run in parallel with shared RAG searches (like RAMS)
+    // ===== DIRECT RAG ARCHITECTURE: Fast, reliable, enforced JSON =====
     if (onProgress) onProgress('STAGE_1_START');
-    if (onProgress) onProgress('🚀 Starting AI agents in parallel (installer, health-safety, maintenance)...');
+    if (onProgress) onProgress('🔍 Searching installation knowledge base...');
     
-    const { data: routerData, error: routerError } = await supabase.functions.invoke('agent-router', {
+    const { data: directData, error: directError } = await supabase.functions.invoke('installer-rag-direct', {
       body: {
-        conversationId,
-        userMessage: userQuery,
-        selectedAgents: ['installer', 'health-safety', 'maintenance'],
-        messages: [],
-        currentDesign: projectDetails,
-        mode: 'method-statement' // Special mode for template generation
+        query: userQuery,
+        projectDetails
       }
     });
     
-    if (routerError) throw routerError;
-    
-    if (!routerData?.success) {
-      throw new Error(routerData?.error || 'Agent router failed');
+    if (directError) {
+      console.error('Direct RAG error:', directError);
+      throw directError;
     }
     
-    // Extract agent responses
-    const responses = routerData.responses || [];
-    const installerResponse = responses.find((r: any) => r.agent === 'installer')?.response;
-    const healthSafetyResponse = responses.find((r: any) => r.agent === 'health-safety')?.response;
-    const maintenanceResponse = responses.find((r: any) => r.agent === 'maintenance')?.response;
-    
-    if (!installerResponse?.structuredData) {
-      throw new Error('Installer agent returned no structured data');
+    if (!directData?.success) {
+      const diagnostics = directData?.diagnostics || {};
+      console.error('Direct RAG failed:', {
+        error: directData?.error,
+        diagnostics
+      });
+      throw new Error(directData?.error || 'Failed to generate method statement - no structured data returned');
     }
     
-    const installerData = installerResponse.structuredData;
-    const installerStepsArray = installerData?.steps || [];
-    
-    if (installerStepsArray.length === 0) {
-      throw new Error('Installer agent returned no installation steps');
-    }
-    
-    // Transform installer response to expected format
-    const installerOutput = {
-      installationSteps: installerStepsArray,
-      workType: installerData?.workType || 'electrical installation',
-      equipmentType: installerData?.equipmentType || 'electrical installation',
-      jobTitle: installerData?.jobTitle || 'Installation Work',
-      description: installerData?.description || '',
-      estimatedDuration: installerData?.totalDuration || 'Not specified',
-      requiredQualifications: installerData?.requiredQualifications || [],
-      toolsRequired: installerData?.toolsRequired || [],
-      materialsRequired: installerData?.materialsRequired || [],
-      detectedHazards: installerData?.detectedHazards || [],
-      conditionalFlags: installerData?.conditionalFlags || {}
-    };
-    
-    console.log('✅ Parallel agents completed:', { 
-      steps: installerOutput.installationSteps.length,
-      ragEfficiency: routerData.metadata?.ragEfficiency
+    // Log performance metrics
+    const diag = directData.diagnostics || {};
+    console.log('✅ Direct RAG completed:', {
+      totalMs: diag.totalMs,
+      ragMs: diag.ragMs,
+      aiMs: diag.aiMs,
+      pwCount: diag.pwCount,
+      regsCount: diag.regsCount,
+      stepsCount: directData.steps?.length || 0
     });
     
+    if (onProgress) onProgress(`⚡ Retrieved ${diag.pwCount || 0} procedures + ${diag.regsCount || 0} regulations (${diag.ragMs || 0}ms)`);
     if (onProgress) onProgress('STAGE_2_START');
+    if (onProgress) onProgress('🤖 Generating method statement...');
+    
+    // Transform direct RAG output to expected format
+    const installerOutput = {
+      installationSteps: (directData.steps || []).map((step: any, index: number) => ({
+        step: index + 1,
+        stepNumber: index + 1,
+        title: step.title,
+        description: step.detail,
+        content: step.detail,
+        tools: step.tools || [],
+        equipmentNeeded: step.tools || [],
+        materials: step.materials || [],
+        safetyRequirements: [],
+        qualifications: [],
+        estimatedDuration: 'Not specified',
+        riskLevel: 'medium' as const,
+        linkedHazards: [],
+        inspectionCheckpoints: [],
+        notes: ''
+      })),
+      workType: 'electrical installation',
+      equipmentType: 'electrical installation',
+      jobTitle: userQuery,
+      description: userQuery,
+      estimatedDuration: 'Not specified',
+      requiredQualifications: directData.competencyRequirements?.roles || [],
+      toolsRequired: directData.materials || [],
+      materialsRequired: directData.materials || [],
+      detectedHazards: [],
+      conditionalFlags: {},
+      testingProcedures: directData.testingProcedures || [],
+      equipmentSchedule: directData.equipmentSchedule || [],
+      siteLogistics: directData.siteLogistics || {},
+      competencyRequirements: directData.competencyRequirements || { roles: [], trainingRequired: [] },
+      tips: directData.tips || [],
+      citations: directData.citations || []
+    };
+    
     if (onProgress) onProgress('STAGE_3_START');
-    if (onProgress) onProgress('✅ All agents completed in parallel');
+    if (onProgress) onProgress(`✅ Generated ${installerOutput.installationSteps.length} installation steps`);
     if (onProgress) onProgress('STAGE_4_START');
-    
-    // Extract health-safety and maintenance outputs
-    const maintenanceOutput = maintenanceResponse?.structuredData || null;
-    const healthSafetyOutput = healthSafetyResponse?.structuredData || null;
-    
-    if (maintenanceOutput) {
-      if (onProgress) onProgress('✅ Final validation & inspection procedures complete');
-    } else {
-      console.warn('⚠️ Maintenance agent (final reviewer) failed, continuing without validation');
-      if (onProgress) onProgress('⚠️ Final validation unavailable, using installer baseline');
-    }
-    
-    if (healthSafetyOutput) {
-      if (onProgress) onProgress('✅ Risk assessment complete');
-    } else {
-      console.warn('⚠️ H&S agent failed, continuing without risk assessment');
-      if (onProgress) onProgress('⚠️ Risk assessment unavailable, using baseline hazards');
-    }
-    
     if (onProgress) onProgress('STAGE_5_COMPLETE');
     
-    // Merge outputs (handles null agents gracefully)
-    return mergeAgentOutputs(installerOutput, maintenanceOutput, healthSafetyOutput);
+    // Return simplified output (no parallel agents for now - focus on speed)
+    return mergeAgentOutputs(installerOutput, null, null);
     
   } catch (error) {
     console.error('Method statement generation failed:', error);
