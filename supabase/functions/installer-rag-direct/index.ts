@@ -1,6 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { searchPracticalWorkBatch, searchBS7671Batch } from '../_shared/rag-batch-loader.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -35,26 +36,25 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // DIRECT RAG CALLS - NO GATING, NO THRESHOLDS
+    // DIRECT RAG CALLS - Using Shared Module (Same as AI RAMS)
     console.log('📚 Starting direct RAG retrieval...');
     ragStartTime = Date.now();
 
-    const [pwResult, regsResult] = await Promise.all([
-      supabase.rpc('search_practical_work_intelligence_hybrid', {
-        query_text: query,
-        match_count: 95,
-        filter_trade: 'installer'
+    const keywords = query.split(' ').filter(w => w.length > 3);
+    
+    const [practicalWork, regulations] = await Promise.all([
+      searchPracticalWorkBatch(supabase, {
+        keywords,
+        limit: 95,
+        activity_filter: ['installer']
       }),
-      supabase.rpc('search_bs7671_intelligence_hybrid', {
-        query_text: query,
-        match_count: 85
+      searchBS7671Batch(supabase, {
+        keywords,
+        limit: 85
       })
     ]);
 
     const ragTime = Date.now() - ragStartTime;
-
-    const practicalWork = pwResult.data || [];
-    const regulations = regsResult.data || [];
 
     console.log('✅ RAG retrieved', {
       practicalCount: practicalWork.length,
@@ -81,14 +81,14 @@ serve(async (req) => {
       .map((pw: any, idx: number) => {
         const tools = pw.tools_required ? `\nTools: ${pw.tools_required.join(', ')}` : '';
         const regs = pw.bs7671_regulations ? `\nBS 7671: ${pw.bs7671_regulations.join(', ')}` : '';
-        return `[PW${idx + 1}] ${pw.primary_topic || 'Installation Guidance'}\n${pw.content}${tools}${regs}`;
+        return `[PW${idx + 1}] ${pw.keywords?.join(', ') || 'Installation Guidance'}\n${pw.content}${tools}${regs}`;
       })
       .join('\n\n');
 
     const regsContext = regulations
       .slice(0, 12)
       .map((reg: any, idx: number) => {
-        return `[REG${idx + 1}] ${reg.regulation_number}: ${reg.content}`;
+        return `[REG${idx + 1}] ${reg.regulation_number || 'BS7671'}: ${reg.content}`;
       })
       .join('\n\n');
 
@@ -357,12 +357,12 @@ Use the RAG context above to ensure accuracy. Return ONLY the JSON object.`;
       citationsCount: normalizedResult.citations.length
     });
 
-    // Calculate average scores
+    // Calculate average scores (similarity is 0-1 range from shared module)
     const avgPwScore = practicalWork.length > 0
-      ? practicalWork.reduce((sum: number, pw: any) => sum + (pw.hybrid_score || 0), 0) / practicalWork.length
+      ? practicalWork.reduce((sum: number, pw: any) => sum + (pw.similarity || 0), 0) / practicalWork.length
       : 0;
     const avgRegScore = regulations.length > 0
-      ? regulations.reduce((sum: number, reg: any) => sum + (reg.hybrid_score || 0), 0) / regulations.length
+      ? regulations.reduce((sum: number, reg: any) => sum + (reg.similarity || 0), 0) / regulations.length
       : 0;
 
     return new Response(
