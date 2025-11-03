@@ -269,17 +269,18 @@ serve(async (req) => {
         searchTerms: expandedQuery.split(' ').filter(w => w.length > 3),
         expandedQuery,
         context: {
-          agentType: 'installer', // NEW - for trade filtering
-          skipEmbedding: true,    // NO EMBEDDING NEEDED - all keyword searches
+          agentType: 'installer',
           ragPriority: {
-            practical_work: 95,   // PRIMARY - keyword-only hybrid search
+            practical_work: 95,   // PRIMARY - keyword hybrid, vector fallback if <5 results
             bs7671: 85,           // SECONDARY - keyword-only hybrid search
             health_safety: 0,
             design: 0,
             installation: 0,
             inspection: 0,
             project_mgmt: 0
-          }
+          },
+          minKeywordResults: 5,   // Trigger vector fallback if keyword < 5 results
+          useVectorFallback: true // Enable vector search fallback for practical_work
         }
       });
       

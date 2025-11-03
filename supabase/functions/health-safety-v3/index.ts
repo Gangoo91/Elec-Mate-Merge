@@ -226,7 +226,7 @@ serve(async (req) => {
         context: {
           ragPriority: {
             health_safety: 95,    // PRIMARY - vector search required
-            bs7671: 80,           // SECONDARY - keyword-only hybrid search
+            bs7671: 85,           // SECONDARY - keyword-only hybrid search
             practical_work: 70,   // TERTIARY - keyword-only hybrid search
             design: 0,
             installation: 0,
