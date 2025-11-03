@@ -658,6 +658,14 @@ export async function handleBatchDesign(body: any, logger: any) {
    - ALWAYS round UP: If Ib is even 0.01A over a standard size, use the NEXT size up
    - VALIDATION WILL REJECT ANY DESIGN WHERE Ib > In (even by 0.01A)
    
+   ⚠️ EXCEPTION FOR RING FINAL CIRCUITS:
+   - Ring finals ALWAYS use 32A protection, regardless of diversity calculation
+   - If diversity load (Ib) > 32A → SPLIT into multiple 32A rings, don't use 40A
+   - Example: 16 sockets = 39A diversity → Create TWO separate rings:
+     * Ring 1: 8 sockets, 20A diversity, 32A protection
+     * Ring 2: 8 sockets, 19A diversity, 32A protection
+   - NEVER use 40A, 50A, or any other protection for ring finals
+   
 4. **Voltage Drop Compliance**:
    - Lighting: ≤ 3% (6.9V at 230V)
    - Power: ≤ 5% (11.5V at 230V)
