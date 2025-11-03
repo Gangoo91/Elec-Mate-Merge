@@ -270,12 +270,13 @@ serve(async (req) => {
         expandedQuery,
         context: {
           agentType: 'installer', // NEW - for trade filtering
+          skipEmbedding: true,    // NO EMBEDDING NEEDED - all keyword searches
           ragPriority: {
-            practical_work: 95,      // PRIMARY - hands-on installation procedures
-            bs7671: 70,              // SECONDARY - compliance references  
-            installation: 30,        // TERTIARY FALLBACK - only if practical_work insufficient
-            design: 0,
+            practical_work: 95,   // PRIMARY - keyword-only hybrid search
+            bs7671: 85,           // SECONDARY - keyword-only hybrid search
             health_safety: 0,
+            design: 0,
+            installation: 0,
             inspection: 0,
             project_mgmt: 0
           }

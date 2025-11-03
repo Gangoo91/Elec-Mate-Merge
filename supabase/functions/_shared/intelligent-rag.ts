@@ -201,29 +201,46 @@ async function vectorSearch(
     }
   }
 
-  // PHASE 1 & 5: Generate embedding with correct dimensions (3072) for accuracy
-  const [embeddingData, _] = await Promise.all([
-    // Embedding generation (200ms) - PHASE 1: text-embedding-3-large for 3072d
-    fetch('https://api.openai.com/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        input: params.expandedQuery,
-        model: 'text-embedding-3-small', // 1536D to match database schema
-      }),
-    }).then(res => {
-      if (!res.ok) throw new Error(`OpenAI embedding failed: ${res.status}`);
-      return res.json();
-    }),
-    
-    // Keyword extraction preparation (50ms) - runs in parallel
-    Promise.resolve(expandSearchTerms(params.expandedQuery))
-  ]);
+  // CONDITIONAL EMBEDDING: Only generate if vector search needed
+  const priority = params.context?.ragPriority;
+  const skipEmbedding = params.context?.skipEmbedding === true;
+  
+  // Check if ANY search requires vector embeddings
+  const needsEmbedding = !skipEmbedding && (
+    (!priority || priority.health_safety > 50) ||  // health_safety needs vector
+    (!priority || priority.design > 50) ||         // design needs vector
+    (!priority || priority.installation >= 50)     // installation needs vector
+  );
 
-  const embedding = embeddingData.data[0].embedding;
+  let embedding: number[] | null = null;
+
+  if (needsEmbedding) {
+    console.log('🔄 Generating embedding for vector searches...');
+    const [embeddingData, _] = await Promise.all([
+      // Embedding generation (200ms)
+      fetch('https://api.openai.com/v1/embeddings', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          input: params.expandedQuery,
+          model: 'text-embedding-3-small', // 1536D to match database schema
+        }),
+      }).then(res => {
+        if (!res.ok) throw new Error(`OpenAI embedding failed: ${res.status}`);
+        return res.json();
+      }),
+      
+      // Keyword extraction preparation (50ms) - runs in parallel
+      Promise.resolve(expandSearchTerms(params.expandedQuery))
+    ]);
+
+    embedding = embeddingData.data[0].embedding;
+  } else {
+    console.log('⚡ Skipping embedding - all searches use keyword-only');
+  }
 
   return await vectorSearchWithEmbedding(supabase, params, embedding, startTime);
 }
@@ -231,9 +248,9 @@ async function vectorSearch(
 async function vectorSearchWithEmbedding(
   supabase: any,
   params: HybridSearchParams,
-  embedding: number[],
+  embedding: number[] | null,
   startTime: number
-): Promise<{ regulations: any[]; designDocs: any[]; healthSafetyDocs: any[]; installationDocs: any[]; maintenanceDocs: any[]; embedding: number[]; timeMs: number }> {
+): Promise<{ regulations: any[]; designDocs: any[]; healthSafetyDocs: any[]; installationDocs: any[]; maintenanceDocs: any[]; embedding?: number[]; timeMs: number }> {
   
   const priority = params.context?.ragPriority;
   
@@ -286,7 +303,12 @@ async function vectorSearchWithEmbedding(
           return result;
         }
         
-        // PHASE 1.3: Fallback to vector search only if hybrid insufficient
+        // PHASE 1.3: Fallback to vector search only if hybrid insufficient AND embedding exists
+        if (!embedding) {
+          console.log('⚡ No embedding available - using hybrid results only');
+          return result;
+        }
+        
         console.log(`⚠️ Hybrid search insufficient (${hybridResults.length} results), trying vector search`);
         return supabase.rpc('search_bs7671_embeddings', {
           query_embedding: embedding,
@@ -314,8 +336,8 @@ async function vectorSearchWithEmbedding(
   }
 
   // Issue 8: Reduced RAG result limits for faster processing
-  // Design knowledge search
-  if (!priority || priority.design > 50) {
+  // Design knowledge search (requires embedding)
+  if (embedding && (!priority || priority.design > 50)) {
     searches.push(
       supabase.rpc('search_design_knowledge', {
         query_embedding: embedding,
@@ -326,8 +348,8 @@ async function vectorSearchWithEmbedding(
     searchTypes.push('design');
   }
 
-  // Health & Safety search
-  if (!priority || priority.health_safety > 50) {
+  // Health & Safety search (requires embedding)
+  if (embedding && (!priority || priority.health_safety > 50)) {
     searches.push(
       supabase.rpc('search_health_safety', {
         query_embedding: embedding,
@@ -355,8 +377,8 @@ async function vectorSearchWithEmbedding(
     searchTypes.push('practical_work');
   }
 
-  // PHASE 3: Installation knowledge search - skip if low priority
-  if (!priority || priority.installation >= 50) {
+  // PHASE 3: Installation knowledge search - skip if low priority or no embedding
+  if (embedding && (!priority || priority.installation >= 50)) {
     searches.push(
       supabase.rpc('search_installation_knowledge', {
         query_embedding: embedding,
@@ -367,7 +389,7 @@ async function vectorSearchWithEmbedding(
     );
     searchTypes.push('installation');
   } else {
-    console.log('⏭️ Skipping installation search (low priority)');
+    console.log('⏭️ Skipping installation search (low priority or no embedding)');
   }
 
   // PHASE 4: Maintenance knowledge search - skip entirely (not needed for RAMS)
@@ -484,7 +506,7 @@ async function vectorSearchWithEmbedding(
     installationDocs: resultMap.installation || [],
     maintenanceDocs: resultMap.maintenance || [],
     practicalWorkDocs: resultMap.practical_work || [], // NEW
-    embedding,
+    embedding: embedding || undefined,
     timeMs: Date.now() - startTime,
     qualityMetrics: {
       failedSearches,

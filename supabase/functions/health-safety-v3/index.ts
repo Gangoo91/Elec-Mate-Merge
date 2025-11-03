@@ -225,12 +225,13 @@ serve(async (req) => {
         expandedQuery: effectiveQuery,
         context: {
           ragPriority: {
-            bs7671: 0,            // Skip - H&S doesn't cite regulations, focuses on procedures
-            design: 0,            // Skip - not designing circuits
-            health_safety: 95,    // PRIMARY - risk procedures, PPE, HSE guidance, COSHH
-            installation: 30,     // MINIMAL - just context of what's being installed
-            inspection: 0,        // Skip - not relevant
-            project_mgmt: 0       // Skip - not relevant
+            health_safety: 95,    // PRIMARY - vector search required
+            bs7671: 80,           // SECONDARY - keyword-only hybrid search
+            practical_work: 70,   // TERTIARY - keyword-only hybrid search
+            design: 0,
+            installation: 0,
+            inspection: 0,
+            project_mgmt: 0
           },
           maxSearchTime: 8000,    // 8 seconds max total
           skipFailedSearches: true,
