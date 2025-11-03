@@ -338,10 +338,10 @@ const HealthSafetyInterface = () => {
 
       {/* 6. RESULTS DISPLAY (when showResults) */}
       {showResults && (
-        <Card className="p-3 sm:p-6">
-          <div className="flex items-center justify-between mb-4">
+        <Card className="p-3 sm:p-6 relative z-10">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
             <h4 className="font-semibold text-lg">Safety Documentation Results</h4>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <Button 
                 type="button"
                 size="sm" 
