@@ -1,7 +1,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import { searchPracticalWorkBatch, searchBS7671Batch } from '../_shared/rag-batch-loader.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -36,23 +35,49 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // DIRECT RAG CALLS - Using Shared Module (Same as AI RAMS)
-    console.log('📚 Starting direct RAG retrieval...');
+    // DIRECT TABLE QUERIES - Bypassing broken RPC
+    console.log('📚 Starting direct table RAG retrieval...');
     ragStartTime = Date.now();
 
     const keywords = query.split(' ').filter(w => w.length > 3);
+    const searchQuery = keywords.join(' | '); // OR search
     
-    const [practicalWork, regulations] = await Promise.all([
-      searchPracticalWorkBatch(supabase, {
-        keywords,
-        limit: 95,
-        activity_filter: ['installer']
-      }),
-      searchBS7671Batch(supabase, {
-        keywords,
-        limit: 85
-      })
-    ]);
+    // Query practical_work_intelligence table directly
+    const { data: pwData, error: pwError } = await supabase
+      .from('practical_work_intelligence')
+      .select('*')
+      .or(`primary_topic.ilike.%${query}%,installation_method.ilike.%${query}%`)
+      .limit(95);
+
+    if (pwError) console.error('PW query error:', pwError);
+
+    // Query bs7671_intelligence table directly
+    const { data: regData, error: regError } = await supabase
+      .from('bs7671_intelligence')
+      .select('*')
+      .or(`regulation_text.ilike.%${query}%,regulation_number.ilike.%${query}%`)
+      .limit(85);
+
+    if (regError) console.error('Regs query error:', regError);
+
+    // Transform to RAGResult format (same as shared module)
+    const practicalWork = (pwData || []).map((row: any) => ({
+      content: row.primary_topic || row.installation_method || '',
+      primary_topic: row.primary_topic,
+      keywords: row.keywords,
+      equipment_category: row.equipment_category,
+      tools_required: row.tools_required,
+      bs7671_regulations: row.bs7671_regulations,
+      source_table: 'practical_work_intelligence',
+      similarity: 0.85 // Default similarity for direct query
+    }));
+
+    const regulations = (regData || []).map((row: any) => ({
+      content: row.regulation_text || '',
+      regulation_number: row.regulation_number,
+      source_table: 'bs7671_intelligence',
+      similarity: 0.85
+    }));
 
     const ragTime = Date.now() - ragStartTime;
 
@@ -100,15 +125,15 @@ serve(async (req) => {
         steps: {
           type: "array",
           items: {
-            type: "object",
-            properties: {
-              title: { type: "string" },
-              detail: { type: "string" },
-              tools: { type: "array", items: { type: "string" } },
-              materials: { type: "array", items: { type: "string" } }
-            },
-            required: [],
-            additionalProperties: false
+                  type: "object",
+                  properties: {
+                    title: { type: "string" },
+                    detail: { type: "string" },
+                    tools: { type: "array", items: { type: "string" } },
+                    materials: { type: "array", items: { type: "string" } }
+                  },
+                  required: ["title", "detail", "tools", "materials"],
+                  additionalProperties: false
           }
         },
         tips: { type: "array", items: { type: "string" } },
@@ -123,7 +148,7 @@ serve(async (req) => {
               spec: { type: "string" },
               qty: { type: "string" }
             },
-            required: ["item", "spec"],
+            required: ["item", "spec", "qty"],
             additionalProperties: false
           }
         },
@@ -134,6 +159,7 @@ serve(async (req) => {
             isolation: { type: "string" },
             permits: { type: "string" }
           },
+          required: ["access", "isolation", "permits"],
           additionalProperties: false
         },
         competencyRequirements: {
@@ -142,7 +168,7 @@ serve(async (req) => {
             roles: { type: "array", items: { type: "string" } },
             trainingRequired: { type: "array", items: { type: "string" } }
           },
-          required: ["roles"],
+          required: ["roles", "trainingRequired"],
           additionalProperties: false
         },
         citations: {
@@ -159,7 +185,7 @@ serve(async (req) => {
           }
         }
       },
-      required: ["success", "steps", "competencyRequirements", "citations"],
+      required: ["success", "steps", "tips", "materials", "testingProcedures", "equipmentSchedule", "siteLogistics", "competencyRequirements", "citations"],
       additionalProperties: false
     };
 
