@@ -485,6 +485,32 @@ Deno.serve(async (req) => {
       })
     };
     
+    // Link hazards to method statement steps
+    if (combinedRAMSData.risks && installerData?.data?.steps) {
+      installerData.data.steps.forEach((step: any) => {
+        if (!step.linkedHazards) {
+          step.linkedHazards = [];
+        }
+        
+        // Find hazards that mention this step or its keywords
+        combinedRAMSData.risks.forEach((risk: any) => {
+          const riskText = (risk.hazard + ' ' + (risk.risk || '')).toLowerCase();
+          const stepText = (step.description || '').toLowerCase();
+          
+          // Link if hazard contains keywords from step description
+          const stepKeywords = stepText.match(/\b(electrical|wiring|cable|circuit|testing|isolation|live|connection|termination|installation)\b/gi) || [];
+          const matches = stepKeywords.some(keyword => riskText.includes(keyword.toLowerCase()));
+          
+          if (matches && !step.linkedHazards.includes(risk.hazard)) {
+            step.linkedHazards.push(risk.hazard);
+          }
+        });
+        
+        // Limit to top 3 most relevant hazards per step
+        step.linkedHazards = step.linkedHazards.slice(0, 3);
+      });
+    }
+    
     await storeRAMSCache({
       supabase,
       jobDescription: job.job_description,

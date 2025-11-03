@@ -237,35 +237,134 @@ class MethodStatementPDFGenerator {
   }
 
   private addMethodSteps(data: MethodStatementData): void {
-    this.checkPageBreak(30);
-    
-    this.doc.setTextColor(...this.PRIMARY_COLOR);
-    this.doc.setFontSize(16);
+    this.doc.addPage();
+    this.currentPage++;
+    this.yPosition = this.MARGIN + 10;
+    this.addDocumentHeader();
+
+    // Section header
+    this.doc.setFillColor(...this.PRIMARY_COLOR);
+    this.doc.rect(0, this.yPosition, this.pageWidth, 12, 'F');
+    this.doc.setTextColor(255, 255, 255);
+    this.doc.setFontSize(14);
     this.doc.setFont("helvetica", "bold");
-    this.doc.text("METHOD STEPS", this.MARGIN, this.yPosition);
-    this.yPosition += 20;
+    this.doc.text("4. METHOD STATEMENT - SAFE SYSTEM OF WORK", this.pageWidth / 2, this.yPosition + 8, { align: "center" });
+    this.yPosition += 18;
 
-    data.steps.forEach((step, index) => {
-      this.checkPageBreak(100);
+    // Build table data from steps
+    const tableData = data.steps.map(step => [
+      step.stepNumber.toString(),
+      this.formatDescription(step),
+      this.formatLinkedHazards(step),
+      this.formatQualifications(step),
+      this.formatSafety(step),
+      this.formatEquipment(step),
+      step.riskLevel.toUpperCase()
+    ]);
 
-      // Step header with risk badge
-      const riskColor = this.getRiskColor(step.riskLevel);
-      this.doc.setFillColor(...riskColor);
-      this.doc.rect(this.MARGIN, this.yPosition, this.pageWidth - (2 * this.MARGIN), 12, 'F');
-      
-      this.doc.setTextColor(255, 255, 255);
-      this.doc.setFontSize(12);
-      this.doc.setFont("helvetica", "bold");
-      this.doc.text(`STEP ${step.stepNumber}: ${safeText(step.title)}`, this.MARGIN + 5, this.yPosition + 8);
-      this.doc.text(`RISK: ${step.riskLevel.toUpperCase()}`, this.pageWidth - this.MARGIN - 5, this.yPosition + 8, { align: "right" });
-      
-      this.yPosition += 18;
-
-      // Render structured step content
-      this.renderStepContent(step);
+    autoTable(this.doc, {
+      startY: this.yPosition,
+      head: [[
+        'STEP',
+        'ACTIVITY / TASK DESCRIPTION',
+        'HAZARDS IDENTIFIED',
+        'QUALIFICATIONS',
+        'SAFETY',
+        'EQUIPMENT NEEDED',
+        'RISK LEVEL'
+      ]],
+      body: tableData,
+      theme: 'grid',
+      styles: {
+        fontSize: 8,
+        cellPadding: 3,
+        valign: 'top',
+        lineColor: [0, 0, 0],
+        lineWidth: 0.5
+      },
+      headStyles: {
+        fillColor: [64, 64, 64],
+        textColor: [255, 255, 255],
+        fontSize: 9,
+        fontStyle: 'bold',
+        halign: 'center',
+        valign: 'middle'
+      },
+      columnStyles: {
+        0: { cellWidth: 12, halign: 'center', fontStyle: 'bold' },
+        1: { cellWidth: 50 },
+        2: { cellWidth: 35 },
+        3: { cellWidth: 25 },
+        4: { cellWidth: 30 },
+        5: { cellWidth: 30 },
+        6: { cellWidth: 18, halign: 'center', fontStyle: 'bold' }
+      },
+      didDrawCell: (data) => {
+        // Color-code risk level cells
+        if (data.column.index === 6 && data.section === 'body') {
+          const risk = data.cell.text[0]?.toLowerCase();
+          if (risk === 'high') {
+            data.cell.styles.fillColor = [220, 38, 38];
+            data.cell.styles.textColor = [255, 255, 255];
+          } else if (risk === 'medium') {
+            data.cell.styles.fillColor = [245, 158, 11];
+            data.cell.styles.textColor = [0, 0, 0];
+          } else {
+            data.cell.styles.fillColor = [34, 197, 94];
+            data.cell.styles.textColor = [255, 255, 255];
+          }
+        }
+      }
     });
 
+    this.yPosition = (this.doc as any).lastAutoTable.finalY + 10;
     this.addPageNumber();
+  }
+
+  // Helper methods to format data for table cells
+  private formatDescription(step: MethodStep): string {
+    let desc = safeText(step.title) + '\n\n';
+    desc += safeText(step.description);
+    
+    // Add SAFETY CRITICAL OPERATION marker if present
+    if (step.notes && step.notes.toLowerCase().includes('critical')) {
+      desc += '\n\n⚠️ SAFETY CRITICAL:\n' + step.notes;
+    }
+    
+    return desc;
+  }
+
+  private formatLinkedHazards(step: MethodStep): string {
+    if (!step.linkedHazards || step.linkedHazards.length === 0) {
+      return 'See Risk Assessment';
+    }
+    
+    // Format hazards as bullet list
+    return step.linkedHazards.map(h => `• ${h}`).join('\n');
+  }
+
+  private formatQualifications(step: MethodStep): string {
+    if (!step.qualifications || step.qualifications.length === 0) {
+      return 'Competent Person\n18th Edition';
+    }
+    
+    return step.qualifications.map(q => `• ${q}`).join('\n');
+  }
+
+  private formatSafety(step: MethodStep): string {
+    if (!step.safetyRequirements || step.safetyRequirements.length === 0) {
+      return 'Follow safe working practices';
+    }
+    
+    return step.safetyRequirements.map(s => `• ${s}`).join('\n');
+  }
+
+  private formatEquipment(step: MethodStep): string {
+    if (!step.equipmentNeeded || step.equipmentNeeded.length === 0) {
+      return 'Standard tools';
+    }
+    
+    return step.equipmentNeeded.map(e => `• ${e}`).join('\n');
   }
 
   private renderStepContent(step: MethodStep): void {

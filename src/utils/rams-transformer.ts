@@ -69,15 +69,15 @@ export function transformInstallerOutputToMethodStatement(
     stepNumber: step.stepNumber,
     title: extractStepTitle(step.description),
     description: step.description,
-    safetyRequirements: step.safetyRequirements,
-    equipmentNeeded: [...step.toolsRequired, ...step.materialsNeeded],
-    qualifications: installerOutput.requiredQualifications.filter(qual => 
+    safetyRequirements: step.safetyRequirements || [],
+    equipmentNeeded: [...(step.toolsRequired || []), ...(step.materialsNeeded || [])],
+    qualifications: installerOutput.requiredQualifications?.filter(qual => 
       step.description.toLowerCase().includes(qual.toLowerCase().split(' ')[0])
-    ),
+    ) || [],
     estimatedDuration: step.estimatedTime,
     riskLevel: determineStepRiskLevel(step),
-    linkedHazards: step.hazards || [],
-    notes: step.criticalPoints.join('; '),
+    linkedHazards: (step as any).linkedHazards || step.hazards || [],
+    notes: step.criticalPoints?.join('; ') || '',
   }));
 
   // Aggregate tools and materials at document level
