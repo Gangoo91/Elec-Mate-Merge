@@ -393,7 +393,6 @@ serve(async (req) => {
     
     console.log(`✅ [V3] Retrieved ${structuredHazards.length} pre-structured hazards`);
     
-    // ✨ Part 3C: RAG Effectiveness Logging for H&S
     logger.info('📊 RAG Effectiveness Check - Health & Safety', {
       totalStructuredHazards: structuredHazards.length,
       highConfidence: structuredHazards.filter(h => h.confidence_score > 0.7).length,
