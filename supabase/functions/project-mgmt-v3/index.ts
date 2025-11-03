@@ -380,7 +380,33 @@ Include phases, resources, compliance requirements, and risk management.`;
     });
 
     const aiData = JSON.parse(aiResult.content);
-    const toolCall = aiData.choices[0].message.tool_calls[0];
+    
+    // Validate AI response structure
+    if (!aiData.choices || !aiData.choices[0] || !aiData.choices[0].message) {
+      logger.error('Invalid AI response structure', { aiData });
+      throw new Error('AI returned invalid response structure');
+    }
+    
+    const message = aiData.choices[0].message;
+    
+    // Check if tool_calls exists and has data
+    if (!message.tool_calls || !message.tool_calls[0]) {
+      logger.error('No tool calls in AI response', { 
+        hasToolCalls: !!message.tool_calls,
+        finishReason: aiData.choices[0].finish_reason,
+        messageKeys: Object.keys(message)
+      });
+      throw new Error('AI did not return expected tool call');
+    }
+    
+    const toolCall = message.tool_calls[0];
+    
+    // Validate tool call structure
+    if (!toolCall.function || !toolCall.function.arguments) {
+      logger.error('Invalid tool call structure', { toolCall });
+      throw new Error('Tool call missing function arguments');
+    }
+    
     const pmResult = JSON.parse(toolCall.function.arguments);
 
     // IMPROVEMENT: Response Quality Validation
