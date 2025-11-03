@@ -7,6 +7,9 @@ import { loadCoreRegulationsCache } from './core-regulations-cache.ts';
 import { validateDesign, calculateCircuitConfidence, calculateOverallConfidence } from './validation-pipeline.ts';
 import { extractCircuitsWithAI } from './ai-circuit-extractor.ts';
 import { callGemini, AIProviderError } from '../_shared/ai-providers.ts';
+import { TypeGuards, applyDefaultCircuitValues } from './type-guards.ts';
+import { CircuitDesignError, ERROR_TEMPLATES } from './error-handler.ts';
+import { PerformanceMonitor } from './performance-monitor.ts';
 
 const INSTALLATION_CONTEXT = {
   domestic: `Design compliant with Part P Building Regulations and BS 7671:2018+A3:2024.
@@ -517,15 +520,108 @@ function validateCircuitRequirements(circuits: any[], logger: any): {
 }
 
 export async function handleBatchDesign(body: any, logger: any) {
-  const { projectInfo, incomingSupply, circuits: inputCircuits, aiConfig } = body;
-  const installationType = projectInfo.installationType || 'domestic';
+  // Initialize performance monitor
+  const perfMonitor = new PerformanceMonitor(crypto.randomUUID());
   
-  logger.info('💭 AI-Powered Batch Design Starting (RAG-First Mode)', {
-    circuitCount: inputCircuits.length,
-    installationType: projectInfo.installationType,
-    hasAdditionalPrompt: !!projectInfo.additionalPrompt,
-    model: aiConfig?.model || 'openai/gpt-5'
-  });
+  try {
+    // PRIORITY 1: INPUT VALIDATION - Fail fast on invalid input
+    const stopValidation = perfMonitor.startStage('inputValidation');
+    
+    const validationErrors: string[] = [];
+    
+    // Required top-level fields
+    if (!body.projectInfo?.name || typeof body.projectInfo.name !== 'string') {
+      validationErrors.push('projectInfo.name is required and must be a string');
+    }
+    
+    if (!body.incomingSupply?.voltage || typeof body.incomingSupply.voltage !== 'number') {
+      validationErrors.push('incomingSupply.voltage is required and must be a number');
+    }
+    
+    if (!body.incomingSupply?.ze || typeof body.incomingSupply.ze !== 'number') {
+      validationErrors.push('incomingSupply.ze is required and must be a number');
+    }
+    
+    if (!Array.isArray(body.circuits)) {
+      validationErrors.push('circuits must be an array');
+    } else {
+      // Validate circuit limits
+      if (body.circuits.length === 0 && !body.projectInfo?.additionalPrompt?.trim()) {
+        validationErrors.push('At least 1 circuit or a design prompt is required');
+      }
+      
+      if (body.circuits.length > 50) {
+        validationErrors.push(`Maximum 50 circuits per design (you provided ${body.circuits.length})`);
+      }
+      
+      // Validate each circuit
+      body.circuits.forEach((circuit: any, i: number) => {
+        if (!circuit.name || typeof circuit.name !== 'string' || circuit.name.trim().length === 0) {
+          validationErrors.push(`Circuit ${i + 1}: name must be a non-empty string`);
+        }
+        
+        if (!circuit.loadPower || typeof circuit.loadPower !== 'number' || circuit.loadPower <= 0) {
+          validationErrors.push(`Circuit ${i + 1}: loadPower must be a positive number (got ${circuit.loadPower})`);
+        }
+        
+        if (circuit.loadPower && circuit.loadPower > 100000) {
+          validationErrors.push(`Circuit ${i + 1}: loadPower ${circuit.loadPower}W seems unrealistic (max 100kW)`);
+        }
+        
+        if (!circuit.loadType || typeof circuit.loadType !== 'string') {
+          validationErrors.push(`Circuit ${i + 1}: loadType is required`);
+        }
+        
+        if (circuit.cableLength && (circuit.cableLength < 1 || circuit.cableLength > 500)) {
+          validationErrors.push(`Circuit ${i + 1}: cableLength must be between 1-500m (got ${circuit.cableLength}m)`);
+        }
+        
+        if (circuit.phases && ![1, 3].includes(circuit.phases)) {
+          validationErrors.push(`Circuit ${i + 1}: phases must be 1 or 3 (got ${circuit.phases})`);
+        }
+      });
+    }
+    
+    // Sanitize text inputs
+    if (body.projectInfo?.additionalPrompt) {
+      body.projectInfo.additionalPrompt = body.projectInfo.additionalPrompt
+        .trim()
+        .substring(0, 5000)
+        .replace(/[<>]/g, '');
+    }
+    
+    stopValidation();
+    
+    // Return validation errors immediately
+    if (validationErrors.length > 0) {
+      logger.error('❌ Input validation failed', { 
+        errorCount: validationErrors.length,
+        errors: validationErrors 
+      });
+      
+      throw new CircuitDesignError(
+        'INVALID_INPUT',
+        'Invalid input parameters provided',
+        { validationErrors },
+        ['Please correct the input errors and try again']
+      );
+    }
+    
+    const { projectInfo, incomingSupply, circuits: inputCircuits, aiConfig } = body;
+    const installationType = projectInfo.installationType || 'domestic';
+    
+    logger.info('✅ Input validation passed', {
+      circuitCount: inputCircuits.length,
+      installationType,
+      hasAdditionalPrompt: !!projectInfo.additionalPrompt
+    });
+    
+    logger.info('💭 AI-Powered Batch Design Starting (RAG-First Mode)', {
+      circuitCount: inputCircuits.length,
+      installationType: projectInfo.installationType,
+      hasAdditionalPrompt: !!projectInfo.additionalPrompt,
+      model: aiConfig?.model || 'openai/gpt-5'
+    });
 
   // Get OpenAI API key (primary model for circuit design)
   const openAiKey = Deno.env.get('OPENAI_API_KEY');
@@ -605,49 +701,90 @@ export async function handleBatchDesign(body: any, logger: any) {
     circuitCount: allCircuits.length 
   });
 
-  // PHASE 2: Add timeout wrapper for RAG reliability (static imports)
-  // Initialize request deduplicator for RAG searches
+  // PRIORITY 4: RAG SEARCH RESILIENCE - 3-tier fallback
+  const stopRag = perfMonitor.startStage('ragSearch');
   const deduplicator = new RequestDeduplicator();
+  const ragDurations: number[] = [];
+  let failedSearches = 0;
+  let cacheHits = 0;
   
   const ragSearchesWithTimeout = uniqueLoadTypes.slice(0, 8).map((loadType: string) => {
     const requestKey = generateRequestKey('rag', loadType, installationType);
+    const ragStart = Date.now();
     
     return deduplicator.deduplicate(
       requestKey,
-      () => withTimeout(
-        intelligentRAGSearch({
-          circuitType: loadType,
-          searchTerms: [loadType, 'circuit design', ...extractSearchTerms(query, allCircuits)],
-          expandedQuery: `${loadType} circuit design requirements ${installationType}`,
-          context: {
-            ragPriority: aiConfig?.ragPriority || {
-              design: 95,
-              bs7671: 85,
-              installation: 75
+      async () => {
+        // Attempt 1: Full RAG search (20s timeout)
+        try {
+          const result = await withTimeout(
+            intelligentRAGSearch({
+              circuitType: loadType,
+              searchTerms: [loadType, 'circuit design', ...extractSearchTerms(query, allCircuits)],
+              expandedQuery: `${loadType} circuit design requirements ${installationType}`,
+              context: {
+                ragPriority: aiConfig?.ragPriority || {
+                  design: 95,
+                  bs7671: 85,
+                  installation: 75
+                }
+              }
+            }),
+            20000,
+            `RAG search for ${loadType}`
+          );
+          ragDurations.push(Date.now() - ragStart);
+          return { ...result, searchMethod: 'full' };
+        } catch (error) {
+          logger.warn(`⚠️ RAG timeout for ${loadType} (attempt 1), trying simplified search`);
+          
+          // Attempt 2: Simplified search (10s timeout)
+          try {
+            const result = await withTimeout(
+              intelligentRAGSearch({
+                circuitType: loadType,
+                searchTerms: [loadType],
+                expandedQuery: loadType,
+                context: {
+                  ragPriority: { bs7671: 90, design: 80, practical_work: 0 }
+                }
+              }),
+              10000,
+              `RAG retry for ${loadType}`
+            );
+            ragDurations.push(Date.now() - ragStart);
+            return { ...result, searchMethod: 'simplified' };
+          } catch (retryError) {
+            logger.warn(`⚠️ RAG retry failed for ${loadType}, using core regulations cache`);
+            
+            // Attempt 3: Fallback to cached core regulations (instant)
+            try {
+              const supabase = createClient(supabaseUrl, supabaseKey);
+              const cacheResult = await loadCoreRegulationsCache(supabase);
+              cacheHits++;
+              ragDurations.push(Date.now() - ragStart);
+              
+              return {
+                regulations: cacheResult.regulations.filter((r: any) => 
+                  r.regulation_number?.includes('433') ||
+                  r.regulation_number?.includes('411') ||
+                  r.regulation_number?.includes('525')
+                ),
+                designDocs: [],
+                searchMethod: 'cache_fallback'
+              };
+            } catch (cacheError) {
+              logger.error(`❌ All RAG attempts failed for ${loadType}`);
+              failedSearches++;
+              return { 
+                regulations: [], 
+                designDocs: [], 
+                searchMethod: 'failed' 
+              };
             }
           }
-        }),
-        20000, // PHASE 1.1: Increased from 10s to 20s for complex searches
-        `RAG search for ${loadType}`
-      ).catch(async (error) => {
-        // PHASE 1.1: Retry once with simpler search if timeout occurs
-        logger.warn(`⚠️ RAG timeout for ${loadType}, retrying with simplified search`);
-        return withTimeout(
-          intelligentRAGSearch({
-            circuitType: loadType,
-            searchTerms: [loadType],
-            expandedQuery: loadType,
-            context: {
-              ragPriority: { bs7671: 90, design: 80, practical_work: 0 } // Skip slow searches
-            }
-          }),
-          10000, // 10s retry timeout
-          `RAG retry for ${loadType}`
-        ).catch(() => {
-          logger.error(`⚠️ RAG retry failed for ${loadType}`);
-          return { regulations: [], designDocs: [], searchMethod: 'failed' };
-        });
-      })
+        }
+      }
     );
   });
 
@@ -691,46 +828,41 @@ export async function handleBatchDesign(body: any, logger: any) {
   logger.info('📡 Starting parallel RAG searches with deduplication', {
     searchCount: ragSearchesWithTimeout.length,
     deduplicatedCount: deduplicator.getPendingCount(),
-    timeout: '15s per search',
+    timeout: '20s per search (with 3-tier fallback)',
     maxTotalTime: '~45s'
   });
 
-  const startTime = Date.now();
   const allRAGResults = await Promise.all(ragSearchesWithTimeout);
-  const ragElapsedMs = Date.now() - startTime;
   
   // Clean up deduplicator after all requests complete
   deduplicator.clear();
+  stopRag();
   
-  // PHASE 4.1: Add RAG performance metrics and alerts
-  const timeouts = allRAGResults.filter((r: any) => r.searchMethod === 'timeout' || r.searchMethod === 'failed').length;
-  const successfulSearches = allRAGResults.filter((r: any) => r.regulations?.length > 0).length;
-  
-  logger.info('✅ All RAG searches complete', {
-    totalTimeMs: ragElapsedMs,
-    successfulSearches,
-    timeouts,
-    failedSearches: allRAGResults.filter((r: any) => r.searchMethod === 'failed').length,
-    
-    // PHASE 4.1: NEW PERFORMANCE METRICS
-    performanceByType: uniqueLoadTypes.map((type, index) => ({
-      circuitType: type,
-      timeMs: allRAGResults[index]?.searchTimeMs || 0,
-      resultsCount: allRAGResults[index]?.regulations?.length || 0,
-      status: allRAGResults[index]?.searchMethod || 'unknown'
-    })),
-    pendingRequestsCount: deduplicator.getPendingCount(),
-    avgResponseTime: ragElapsedMs / ragSearchesWithTimeout.length,
-    slowestSearch: Math.max(...allRAGResults.map(r => r.searchTimeMs || 0))
+  // Record RAG performance stats
+  perfMonitor.recordRAGStats({
+    searchCount: ragSearchesWithTimeout.length,
+    failedSearches,
+    cacheHits,
+    durations: ragDurations
   });
   
-  // PHASE 4.1: Alert if performance degraded
-  if (ragElapsedMs > 30000) {
-    logger.warn('⚠️ RAG search performance degraded', {
-      totalTime: ragElapsedMs,
-      threshold: 30000,
-      action: 'Consider increasing database resources or optimizing queries'
-    });
+  const successfulSearches = allRAGResults.filter((r: any) => r.regulations?.length > 0).length;
+  
+  // Check if we got ANY regulations
+  const totalRegulations = allRAGResults.reduce((sum, r) => sum + (r?.regulations?.length || 0), 0);
+  
+  if (totalRegulations === 0) {
+    logger.error('❌ All RAG searches returned no results');
+    throw ERROR_TEMPLATES.RAG_SEARCH_FAILED(uniqueLoadTypes);
+  }
+  
+  logger.info('✅ All RAG searches complete', {
+    successfulSearches,
+    failedSearches,
+    cacheHits,
+    totalRegulations,
+    methods: allRAGResults.map(r => r?.searchMethod || 'unknown')
+  });
   }
 
   // PHASE 2: Merge and deduplicate regulations (by reg number AND content hash)
@@ -2227,43 +2359,27 @@ Always cite regulation numbers and show working for calculations.`
     circuitNumber: index + 1 // Sequential numbering: 1, 2, 3, 4...
   }));
     
-  // CRITICAL VALIDATION: Ensure circuits is an array
+  // PRIORITY 2 & 3: Type validation and better error messages
   if (!designData.circuits || !Array.isArray(designData.circuits)) {
     logger.error('🚨 AI returned invalid circuits data', {
       circuitsType: typeof designData.circuits,
       circuitsValue: designData.circuits,
       hasCircuits: !!designData.circuits
     });
-    return new Response(JSON.stringify({
-      version: 'v3.2.0-gpt5-mini-24k', // Version identifier for debugging
-      success: false,
-      error: 'AI returned invalid circuits data. Please try again.',
-      code: 'INVALID_CIRCUITS',
-      design: null
-    }), {
-      status: 200,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
+    throw new CircuitDesignError(
+      'INVALID_CIRCUITS',
+      'AI returned invalid circuits data',
+      { circuitsType: typeof designData.circuits },
+      ['Try again', 'If the issue persists, contact support']
+    );
   }
   
   if (designData.circuits.length === 0) {
-    logger.error('🚨 AI returned empty circuits array - returning structured error', {
-      circuitCount: 0,
-      inputCircuits: inputCircuits.length,
-      additionalPrompt: projectInfo.additionalPrompt?.substring(0, 100)
-    });
-    
-    // FIX: Return structured 200 response instead of throwing (prevents retry loop)
-    return new Response(JSON.stringify({
-      version: 'v3.2.0-gpt5-mini-24k', // Version identifier for debugging
-      success: false,
-      error: 'AI returned no circuits after fallback. Try adding a bit more detail (e.g., circuit names/powers) or reduce complexity.',
-      code: 'NO_CIRCUITS',
-      design: null
-    }), {
-      status: 200,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
+    logger.error('🚨 No circuits generated');
+    throw ERROR_TEMPLATES.NO_CIRCUITS(
+      inputCircuits.length,
+      !!projectInfo.additionalPrompt
+    );
   }
   
   logger.info('✅ Design data merged successfully', {
@@ -2271,6 +2387,22 @@ Always cite regulation numbers and show working for calculations.`
     circuitCount: designData.circuits.length,
     hasMaterials: !!designData.materials,
     materialCount: designData.materials?.length || 0
+  });
+  
+  // PRIORITY 2: TYPE GUARDS - Validate and fix incomplete circuits
+  const stopPostProcessing = perfMonitor.startStage('postProcessing');
+  
+  logger.info('🔍 Validating circuit data with type guards');
+  designData.circuits = designData.circuits.map((circuit: any, index: number) => {
+    if (!TypeGuards.isValidCircuit(circuit)) {
+      logger.warn(`⚠️ Circuit ${index + 1} incomplete, applying defaults`, {
+        hasName: !!circuit?.name,
+        hasCalculations: TypeGuards.hasCalculations(circuit),
+        hasProtection: TypeGuards.hasProtectionDevice(circuit)
+      });
+      circuit = applyDefaultCircuitValues(circuit);
+    }
+    return circuit;
   });
   
   // 📄 POST-PROCESSING: Ensure all PDF-required fields are populated
@@ -2284,6 +2416,8 @@ Always cite regulation numbers and show working for calculations.`
   // 🔧 PHASE 3: AUTO-CORRECT RCD PROTECTION
   logger.info('🔧 Auto-correcting missing RCD protection flags');
   autoCorrectRCDProtection(designData.circuits, incomingSupply, logger);
+  
+  stopPostProcessing();
   
   // 🔍 MULTI-STAGE VALIDATION PIPELINE
   logger.info('🔍 Running multi-stage validation pipeline');
@@ -2422,8 +2556,6 @@ Always cite regulation numbers and show working for calculations.`
       ragCalls: ragResults.regulations?.length || 0,
       model: aiConfig?.model || 'gpt-5-mini-2025-08-07',
       tokensUsed: totalTokens,
-      aiTimeMs: aiElapsedMs,
-      ragTimeMs: ragElapsedMs,
       batchesProcessed: circuitBatches.length,
       parallelProcessing: circuitBatches.length > 1,
       validationPassed: validationResult.passed,
@@ -2432,11 +2564,27 @@ Always cite regulation numbers and show working for calculations.`
       confidence: {
         overall: overallConfidence,
         perCircuit: perCircuitConfidence
-      }
+      },
+      performance: perfMonitor.finish()
     }
   }), { 
     headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
   });
+  } catch (error) {
+    logger.error('❌ Design handler error', { error });
+    
+    if (error instanceof CircuitDesignError) {
+      return error.toResponse();
+    }
+    
+    // Unknown errors
+    return new CircuitDesignError(
+      'INTERNAL_ERROR',
+      error instanceof Error ? error.message : 'Unknown error occurred',
+      { stack: error instanceof Error ? error.stack : undefined },
+      ['Try again', 'Contact support if the issue persists']
+    ).toResponse();
+  }
 }
 
 /**
