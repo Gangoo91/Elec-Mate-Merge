@@ -64,9 +64,7 @@ timeout_sec = 300
 verify_jwt = false
 timeout_sec = 480
 
-[functions.designer-v3]
-verify_jwt = false
-timeout_sec = 300
+# [functions.designer-v3] - REMOVED: Not used in frontend
 
 [functions.cost-engineer-v3]
 verify_jwt = false

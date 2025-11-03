@@ -898,55 +898,8 @@ export function useAIRAMS(): UseAIRAMSReturn {
           hasError: !!hsError,
           willAttemptCache: true
         });
-        // STEP 3: Poll for cached response if timeout occurred
-        const pollForCachedResponse = async (): Promise<any | null> => {
-          console.log('🔄 Polling ai_response_cache for completed response...');
-          try {
-            const { data: { user } } = await supabase.auth.getUser();
-            if (!user) return null;
-
-            // Check cache for recent completed responses
-            const { data: cachedResults } = await supabase
-              .from('ai_response_cache')
-              .select('*')
-              .gte('timestamp', new Date(Date.now() - 600000).toISOString()) // Last 10 minutes
-              .order('timestamp', { ascending: false })
-              .limit(5);
-
-            if (cachedResults && cachedResults.length > 0) {
-              for (const cached of cachedResults) {
-                if (cached.response && typeof cached.response === 'object') {
-                  const responseObj = cached.response as any;
-                  // Check multiple possible paths for hazards
-                  const hazards = responseObj?.structuredData?.riskAssessment?.hazards ||
-                                 responseObj?.riskAssessment?.hazards;
-                  
-                  if (Array.isArray(hazards) && hazards.length >= 8) {
-                    console.log(`✅ Found cached response with ${hazards.length} hazards`);
-                    // Ensure hazards are at both levels for compatibility
-                    const normalizedResponse = {
-                      success: true,
-                      ...responseObj,
-                      riskAssessment: responseObj.riskAssessment || responseObj.structuredData?.riskAssessment,
-                      structuredData: {
-                        ...(responseObj.structuredData || {}),
-                        riskAssessment: responseObj.structuredData?.riskAssessment || responseObj.riskAssessment
-                      }
-                    };
-                    return normalizedResponse;
-                  }
-                }
-              }
-              console.log('⚠️ Cache checked but no responses with sufficient hazards found');
-            } else {
-              console.log('⚠️ No cached results found in last 10 minutes');
-            }
-          } catch (err) {
-            console.error('Cache poll error:', err);
-          }
-          return null;
-        };
-
+        // STEP 3: No polling needed - cache table removed
+        
         // Validate data before triggering fallback
         if (mutableHsError) {
           const isTimeout = mutableHsError.message?.toLowerCase().includes('timeout');
@@ -965,20 +918,8 @@ export function useAIRAMS(): UseAIRAMSReturn {
                 description: `Risk assessment completed successfully with ${extractedHazards.length} hazards despite connection issues`,
               });
             } else {
-              // Try to get cached response
-              const cachedData = await pollForCachedResponse();
-              if (cachedData) {
-                console.log('✅ Using cached response from database');
-                hsDataToUse = cachedData;
-                shouldUseFallback = false;
-                mutableHsError = null;
-                toast({
-                  title: "Retrieved from cache",
-                  description: "Risk assessment recovered from recent generation",
-                });
-              } else {
-                shouldUseFallback = true;
-              }
+              // Cache removed - use fallback
+              shouldUseFallback = true;
             }
           } else {
             // ✅ FIX: Non-timeout error - use AI data if we have ANY hazards

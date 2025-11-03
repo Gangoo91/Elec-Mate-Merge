@@ -249,50 +249,6 @@ export type Database = {
           user_id?: string
           user_rating?: number | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "ai_interaction_feedback_conversation_id_fkey"
-            columns: ["conversation_id"]
-            isOneToOne: false
-            referencedRelation: "conversation_memory"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      ai_response_cache: {
-        Row: {
-          cache_key: string
-          citations: Json | null
-          confidence: number | null
-          created_at: string
-          hits: number | null
-          id: string
-          query: string
-          response: string
-          timestamp: string
-        }
-        Insert: {
-          cache_key: string
-          citations?: Json | null
-          confidence?: number | null
-          created_at?: string
-          hits?: number | null
-          id?: string
-          query: string
-          response: string
-          timestamp?: string
-        }
-        Update: {
-          cache_key?: string
-          citations?: Json | null
-          confidence?: number | null
-          created_at?: string
-          hits?: number | null
-          id?: string
-          query?: string
-          response?: string
-          timestamp?: string
-        }
         Relationships: []
       }
       assessment_tracking: {
@@ -976,62 +932,6 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
-      }
-      conversation_memory: {
-        Row: {
-          active_agents: string[] | null
-          conversation_data: Json
-          created_at: string
-          id: string
-          last_agent: string | null
-          message_count: number | null
-          plan_data: Json
-          project_name: string | null
-          result_id: string | null
-          resumed_at: string | null
-          session_id: string
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          active_agents?: string[] | null
-          conversation_data?: Json
-          created_at?: string
-          id?: string
-          last_agent?: string | null
-          message_count?: number | null
-          plan_data?: Json
-          project_name?: string | null
-          result_id?: string | null
-          resumed_at?: string | null
-          session_id: string
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          active_agents?: string[] | null
-          conversation_data?: Json
-          created_at?: string
-          id?: string
-          last_agent?: string | null
-          message_count?: number | null
-          plan_data?: Json
-          project_name?: string | null
-          result_id?: string | null
-          resumed_at?: string | null
-          session_id?: string
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "conversation_memory_result_id_fkey"
-            columns: ["result_id"]
-            isOneToOne: false
-            referencedRelation: "install_planner_results"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       conversations: {
         Row: {
@@ -2273,39 +2173,6 @@ export type Database = {
           product_url?: string | null
           source_url?: string | null
           supplier?: string
-        }
-        Relationships: []
-      }
-      hs_query_cache: {
-        Row: {
-          created_at: string | null
-          expires_at: string | null
-          hit_count: number | null
-          id: string
-          query: string
-          query_hash: string
-          results: Json
-          work_type: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          expires_at?: string | null
-          hit_count?: number | null
-          id?: string
-          query: string
-          query_hash: string
-          results: Json
-          work_type?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          expires_at?: string | null
-          hit_count?: number | null
-          id?: string
-          query?: string
-          query_hash?: string
-          results?: Json
-          work_type?: string | null
         }
         Relationships: []
       }
