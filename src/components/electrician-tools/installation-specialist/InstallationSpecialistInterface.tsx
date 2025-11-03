@@ -84,7 +84,9 @@ const InstallationSpecialistInterface = () => {
 
     try {
       if (useFullMethodStatement) {
-        // 3-AGENT METHOD STATEMENT MODE (Installer first, then H&S + Maintenance parallel)
+        // 3-AGENT PARALLEL METHOD STATEMENT MODE
+        applyProgress(1, 10, 'Initializing all agents...');
+        
         const query = `Create a comprehensive method statement for: ${description}
 
 Project Context:
@@ -94,6 +96,8 @@ Project Context:
 ${projectDetails.clientName ? `- Client: ${projectDetails.clientName}` : ''}
 ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianName}` : ''}`;
 
+        applyProgress(1, 20, 'Running all agents in parallel...');
+
         const mergedResult = await generateMethodStatement(
           query,
           projectDetails,
@@ -101,37 +105,16 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           (msg) => {
             setMethodStatementProgress(msg);
             
-            // Priority 1: Check explicit stage tokens FIRST (from backend)
-            const t = msg.trim().toUpperCase();
-            if (t.startsWith('STAGE_1_START') || t.includes('STAGE_1_START')) {
-              return applyProgress(1, 20, 'Analysing installation requirements...');
-            }
-            if (t.startsWith('STAGE_2_START') || t.includes('STAGE_2_START')) {
-              return applyProgress(2, 40, 'Checking BS 7671 regulations...');
-            }
-            if (t.startsWith('STAGE_3_START') || t.includes('STAGE_3_START')) {
-              return applyProgress(3, 60, 'Creating step-by-step instructions...');
-            }
-            if (t.startsWith('STAGE_4_START') || t.includes('STAGE_4_START')) {
-              return applyProgress(4, 85, 'Listing tools and materials...');
-            }
-            if (t.startsWith('STAGE_5_COMPLETE') || t.includes('STAGE_5_COMPLETE')) {
-              return applyProgress(5, 95, 'Adding safety notes and checks...');
-            }
-
-            // Priority 2: Content hints as fallback (check specific phrases before generic)
+            // Simplified progress for parallel execution
             const m = msg.toLowerCase();
-            if (m.includes('final validation') || m.includes('inspection items')) {
-              applyProgress(4, 90, 'Finalising method and inspection items...');
-            } else if (m.includes('risk assessment complete')) {
-              applyProgress(3, 70, 'Risk assessment complete...');
-            } else if (m.includes('generating steps') && m.includes('installation')) {
-              applyProgress(2, 45, 'Generating installation steps...');
-            } else if (m.includes('searching installation procedures')) {
-              applyProgress(1, 25, 'Searching installation procedures...');
-            } else if (m.includes('searching') && !m.includes('generating') && progress.stage < 2) {
-              // Generic "Searching" only if we haven't progressed beyond stage 1
-              applyProgress(1, 20, 'Analysing installation requirements...');
+            if (m.includes('installer') || m.includes('installation steps')) {
+              applyProgress(2, 30, 'Generating installation steps...');
+            } else if (m.includes('health') || m.includes('safety') || m.includes('hazard')) {
+              applyProgress(3, 50, 'Identifying hazards and safety measures...');
+            } else if (m.includes('maintenance') || m.includes('testing')) {
+              applyProgress(4, 70, 'Creating testing procedures...');
+            } else if (m.includes('merging') || m.includes('combining')) {
+              applyProgress(5, 85, 'Merging all agent outputs...');
             }
           }
         );

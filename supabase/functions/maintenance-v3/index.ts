@@ -406,92 +406,67 @@ Deno.serve(async (req) => {
       throw new Error('OPENAI_API_KEY not configured');
     }
 
-    // Expand query for better RAG retrieval
+    // Expand query for better RAG retrieval with MAINTENANCE-SPECIFIC keywords
     const expandedQuery = `${actualQuery} ${equipmentType || ''} ${maintenanceType || ''} maintenance inspection testing procedures`;
+    const maintenanceEnhancedQuery = `${expandedQuery} periodic inspection testing maintenance servicing fault diagnosis troubleshooting procedures`;
     console.log('🔍 Expanded query:', expandedQuery);
 
-    // Conditional RAG based on detail level for faster response
-    const useFullRAG = detailLevel === 'full';
-    
-    // NEW: Use Practical Work Intelligence as primary source
-    const practicalWorkSearch = await supabase.rpc('search_practical_work_intelligence_hybrid', {
-      query_text: expandedQuery,
-      match_count: 10,
-      filter_trade: 'maintenance'
-    });
+    // OPTIMIZED: Parallel keyword-only RAG (maintenance-focused)
+    console.log('🔍 Starting parallel maintenance RAG (keyword-only)...');
+    const ragStartTime = Date.now();
 
-    const practicalWorkDocs = practicalWorkSearch?.data || [];
-    
-    console.log(`📦 Practical Work search: ${practicalWorkDocs.length} results`);
+    const [practicalWorkResult, bs7671Result] = await Promise.all([
+      // TIER 1: Practical Work Intelligence - KEYWORD-ONLY (maintenance procedures)
+      supabase.rpc('search_practical_work_intelligence_hybrid', {
+        query_text: maintenanceEnhancedQuery, // Enhanced query
+        match_count: 12,
+        filter_trade: 'maintenance' // CRITICAL: Filter for maintenance content
+      }),
+      
+      // TIER 2: BS 7671 Regulations Intelligence - KEYWORD-ONLY (testing requirements)
+      supabase.rpc('search_bs7671_intelligence_hybrid', {
+        query_text: `${maintenanceEnhancedQuery} inspection testing verification certification`, // Testing-focused
+        match_count: 8
+      })
+    ]);
 
-    // Build context with cascade priority
+    const practicalWorkDocs = practicalWorkResult?.data || [];
+    const bs7671Data = bs7671Result?.data || [];
+
+    // Build comprehensive maintenance context
     let maintenanceContext = '';
 
-    if (practicalWorkDocs.length >= 4) {
-      // TIER 1: Practical Work Intelligence
+    if (practicalWorkDocs.length > 0) {
       maintenanceContext = '## PRACTICAL MAINTENANCE PROCEDURES:\n\n';
-      maintenanceContext += practicalWorkDocs.slice(0, 10).map((pw: any) => 
+      maintenanceContext += practicalWorkDocs.map((pw: any) => 
         `**${pw.primary_topic}** (${pw.equipment_category || 'General'})\n` +
         `${pw.content}\n` +
         `${pw.maintenance_interval ? `Frequency: ${pw.maintenance_interval}\n` : ''}` +
+        `${pw.expected_results ? `Expected Results: ${pw.expected_results}\n` : ''}` +
         `${pw.tools_required?.length > 0 ? `Tools: ${pw.tools_required.join(', ')}\n` : ''}` +
-        `${pw.bs7671_regulations?.length > 0 ? `BS 7671: ${pw.bs7671_regulations.join(', ')}` : ''}`
+        `${pw.bs7671_regulations?.length > 0 ? `Regulations: ${pw.bs7671_regulations.join(', ')}` : ''}`
       ).join('\n\n---\n\n');
-      
-      // Add regulations if in full mode
-      if (useFullRAG) {
-        const bs7671Intelligence = await supabase.rpc('search_bs7671_intelligence_hybrid', {
-          query_text: expandedQuery,
-          match_count: 6
-        });
-
-        const bs7671Data = bs7671Intelligence?.data || [];
-        
-        if (bs7671Data.length > 0) {
-          maintenanceContext += '\n\n## RELEVANT REGULATIONS:\n\n';
-          maintenanceContext += bs7671Data.slice(0, 8).map((reg: any) =>
-            `**${reg.regulation_number}**: ${reg.content}`
-          ).join('\n\n');
-        }
-      }
-      
-      console.log('✅ Using Practical Work Intelligence + Regulations', {
-        practicalWorkCount: practicalWorkDocs.length,
-        mode: useFullRAG ? 'full' : 'quick'
-      });
-    } else {
-      // TIER 2: Fallback to Maintenance Knowledge RAG
-      console.log('⚠️ Using fallback knowledge (insufficient Practical Work data)');
-      
-      // Generate embedding for fallback
-      const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${openaiApiKey}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: 'text-embedding-3-small',
-          input: expandedQuery
-        })
-      });
-
-      const embeddingData = await embeddingResponse.json();
-      const queryEmbedding = embeddingData.data[0].embedding;
-
-      const ragResults = await supabase.rpc('search_maintenance_hybrid', {
-        query_text: expandedQuery,
-        query_embedding: queryEmbedding,
-        equipment_filter: equipmentType || null,
-        match_count: 6
-      });
-
-      const maintenanceData = ragResults?.data || [];
-      
-      maintenanceContext = maintenanceData
-        .map((doc: any) => doc.content || '')
-        .join('\n\n');
     }
+
+    if (bs7671Data.length > 0) {
+      maintenanceContext += '\n\n## BS 7671 TESTING & INSPECTION REQUIREMENTS:\n\n';
+      maintenanceContext += bs7671Data.map((reg: any) =>
+        `**${reg.regulation_number}**: ${reg.content || reg.regulation_text}\n` +
+        `${reg.primary_topic ? `Topic: ${reg.primary_topic}\n` : ''}` +
+        `${reg.keywords?.length > 0 ? `Keywords: ${reg.keywords.join(', ')}` : ''}`
+      ).join('\n\n');
+    }
+
+    const ragDuration = Date.now() - ragStartTime;
+
+    console.log('✅ Maintenance RAG complete (parallel keyword-only)', {
+      practicalWork: practicalWorkDocs.length,
+      bs7671: bs7671Data.length,
+      avgPracticalScore: practicalWorkDocs.length > 0
+        ? (practicalWorkDocs.reduce((s: number, d: any) => s + (d.hybrid_score || 0), 0) / practicalWorkDocs.length).toFixed(2)
+        : 'N/A',
+      duration: ragDuration
+    });
 
     // Log RAG quality metrics
     const ragQuality = {

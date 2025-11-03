@@ -206,48 +206,107 @@ serve(async (req) => {
       throw new Error('OPENAI_API_KEY not configured');
     }
 
-    // Step 1: Use intelligent RAG with cross-encoder reranking
-    console.log('🔍 [DIAGNOSTIC] Starting intelligent RAG for H&S...');
-    logger.debug('Starting intelligent RAG for H&S');
+    // OPTIMIZED: Direct parallel RAG searches (H&S specific)
+    console.log('🔍 [DIAGNOSTIC] Starting optimized parallel RAG for H&S...');
+    logger.debug('Starting H&S RAG: vector for health-safety, keyword for BS 7671');
     const ragStartTime = Date.now();
     
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
     
-    const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
-    
-    // Add strict timeout to prevent 2+ minute RAG searches
-    const hsKnowledge = await Promise.race([
-      intelligentRAGSearch({
-        circuitType: workType,
-        searchTerms: query.split(' ').filter(w => w.length > 3),
-        expandedQuery: effectiveQuery,
-        context: {
-          ragPriority: {
-            health_safety: 95,    // PRIMARY - vector search required
-            bs7671: 85,           // SECONDARY - keyword-only hybrid search
-            practical_work: 70,   // TERTIARY - keyword-only hybrid search
-            design: 0,
-            installation: 0,
-            inspection: 0,
-            project_mgmt: 0
-          },
-          maxSearchTime: 8000,    // 8 seconds max total
-          skipFailedSearches: true,
-          useCache: true
+    const [healthSafetyVectorResult, bs7671HybridResult] = await Promise.all([
+      // TIER 1: Health & Safety Knowledge - VECTOR SEARCH (nuanced hazard detection)
+      (async () => {
+        try {
+          // Generate embedding for health-safety vector search ONLY
+          const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${OPENAI_API_KEY}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              model: 'text-embedding-3-small',
+              input: effectiveQuery
+            })
+          });
+          
+          const embeddingData = await embeddingResponse.json();
+          const queryEmbedding = embeddingData.data[0].embedding;
+          
+          // Use vector search for health_safety_knowledge (nuanced hazard matching)
+          const { data, error } = await supabase.rpc('search_health_safety_hybrid', {
+            query_text: effectiveQuery,
+            query_embedding: queryEmbedding,
+            scale_filter: workType || null, // 'domestic', 'commercial', 'industrial'
+            match_count: 12
+          });
+          
+          if (error) {
+            console.error('Health-safety vector search error:', error);
+            return [];
+          }
+          
+          return data || [];
+        } catch (error) {
+          console.error('Health-safety vector search failed:', error);
+          return [];
         }
-      }),
-      new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('RAG search timeout - using cached results')), 10000)  // 10s max (RAG has internal 8s limit)
-      )
-    ]).catch(error => {
-      logger.warn('RAG search timeout, using minimal context', { error });
-      return { 
-        regulations: [],
-        healthSafetyDocs: [],
-        installationDocs: []
-      };
+      })(),
+      
+      // TIER 2: BS 7671 Regulations Intelligence - KEYWORD-ONLY HYBRID (fast, structured)
+      (async () => {
+        try {
+          const { data, error } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
+            query_text: effectiveQuery,
+            match_count: 10
+          });
+          
+          if (error) {
+            console.error('BS 7671 keyword search error:', error);
+            return [];
+          }
+          
+          return data || [];
+        } catch (error) {
+          console.error('BS 7671 keyword search failed:', error);
+          return [];
+        }
+      })()
+    ]);
+
+    // Process results
+    const healthSafetyDocs = healthSafetyVectorResult || [];
+    const bs7671Data = bs7671HybridResult || [];
+
+    // Build knowledge object
+    const hsKnowledge = {
+      healthSafetyDocs: healthSafetyDocs.map((doc: any) => ({
+        topic: doc.topic,
+        content: doc.content,
+        source: doc.source,
+        scale: doc.scale,
+        hybrid_score: doc.hybrid_score || doc.similarity
+      })),
+      regulations: bs7671Data.map((reg: any) => ({
+        regulation_number: reg.regulation_number,
+        content: reg.content || reg.regulation_text,
+        primary_topic: reg.primary_topic,
+        keywords: reg.keywords,
+        category: reg.category,
+        hybrid_score: reg.hybrid_score || 0,
+        source: 'bs7671_intelligence'
+      })),
+      installationDocs: []
+    };
+
+    performanceMetrics.ragRetrieval = Date.now() - ragStartTime;
+
+    logger.info('✅ H&S RAG complete (parallel vector+keyword)', {
+      healthSafetyDocs: healthSafetyDocs.length,
+      regulations: bs7671Data.length,
+      duration: performanceMetrics.ragRetrieval
     });
     
     // PHASE 2A: DIRECT search of regulations_intelligence for pre-structured hazards
