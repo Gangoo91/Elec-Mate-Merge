@@ -3,14 +3,18 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { CheckCircle2, Clock, Wrench, Package, ShieldCheck, Plus, RotateCcw, Download } from "lucide-react";
+import { Plus, RotateCcw, Download, AlertCircle } from "lucide-react";
 import { InstallationStepCard } from "./InstallationStepCard";
 import { InstallationStep, InstallationMethodSummary, InstallationProjectDetails } from "@/types/installation-method";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { CategorisedToolsList } from "./CategorisedToolsList";
-import { categorizeTools, categorizeMaterials } from "@/utils/toolsCategorisation";
 import { ProjectMetadataForm } from "./ProjectMetadataForm";
+import { InstallationHeroSummary } from "./InstallationHeroSummary";
+import { TestingProceduresSection } from "./TestingProceduresSection";
+import { EquipmentScheduleSection } from "./EquipmentScheduleSection";
+import { SiteLogisticsSection } from "./SiteLogisticsSection";
+import { ConditionalProceduresSection } from "./ConditionalProceduresSection";
+import { MobileButton } from "@/components/ui/mobile-button";
 
 interface ProjectMetadata {
   documentRef: string;
@@ -63,6 +67,21 @@ export const InstallationResultsEditor = ({
   const [steps, setSteps] = useState<InstallationStep[]>(initialSteps);
   const [showMetadataForm, setShowMetadataForm] = useState(false);
   const [projectMetadata, setProjectMetadata] = useState<ProjectMetadata | undefined>(initialMetadata);
+
+  // Extract comprehensive data from fullMethodStatement
+  const testingProcedures = fullMethodStatement?.testingProcedures || [];
+  const equipmentSchedule = fullMethodStatement?.equipmentSchedule || [];
+  const qualityRequirements = fullMethodStatement?.qualityRequirements || [];
+  const siteLogistics = fullMethodStatement?.siteLogistics || {};
+  const conditionalFlags = fullMethodStatement?.conditionalFlags || {};
+  const competencyRequirements = fullMethodStatement?.competencyRequirements || {};
+  const workAtHeightEquipment = fullMethodStatement?.workAtHeightEquipment || [];
+
+  // Count hazards from steps
+  const totalHazards = steps.reduce((count, step) => {
+    const linkedHazards = (step as any).linkedHazards || [];
+    return count + linkedHazards.length;
+  }, 0);
 
   const riskColors = {
     low: 'bg-success/10 text-success border-success/20',
@@ -128,7 +147,7 @@ export const InstallationResultsEditor = ({
         description: "Creating your installation method document...",
       });
 
-      // Build comprehensive method statement payload
+      // Build comprehensive method statement payload with ALL 3-agent data
       const methodStatementPayload = {
         jobTitle: `Installation Method: ${projectDetails?.installationType || 'General Installation'}`,
         description: projectDetails?.projectName || 'Electrical Installation Method Statement',
@@ -145,7 +164,9 @@ export const InstallationResultsEditor = ({
           title: step.title,
           description: step.content,
           safetyRequirements: step.safety || [],
-          equipmentNeeded: step.toolsRequired || [],
+          linkedHazards: (step as any).linkedHazards || [],
+          inspectionCheckpoints: (step as any).inspectionCheckpoints || [],
+          equipmentNeeded: (step as any).toolsRequired || step.toolsRequired || [],
           qualifications: summary.requiredQualifications || [],
           estimatedDuration: step.estimatedDuration || 'Not specified',
           riskLevel: step.riskLevel || 'medium'
@@ -154,7 +175,24 @@ export const InstallationResultsEditor = ({
         materialsRequired: summary.materialsRequired || [],
         overallRiskLevel: summary.overallRiskLevel || 'medium',
         estimatedDuration: summary.estimatedDuration || 'Not specified',
-        requiredQualifications: summary.requiredQualifications || ['18th Edition BS 7671:2018+A3:2024']
+        requiredQualifications: summary.requiredQualifications || ['18th Edition BS 7671:2018+A3:2024'],
+        
+        // NEW: Comprehensive data from all 3 agents
+        testingProcedures: testingProcedures,
+        equipmentSchedule: equipmentSchedule,
+        qualityRequirements: qualityRequirements,
+        siteLogistics: siteLogistics,
+        conditionalFlags: conditionalFlags,
+        competencyRequirements: competencyRequirements,
+        workAtHeightEquipment: workAtHeightEquipment,
+        
+        // User-provided metadata
+        projectMetadata: projectMetadata ? {
+          ...projectMetadata,
+          siteManagerName: projectMetadata.siteManagerName || '',
+          firstAiderName: projectMetadata.firstAiderName || '',
+          safetyOfficerName: projectMetadata.safetyOfficerName || ''
+        } : undefined
       };
 
       console.log('📄 Sending PDF generation request:', methodStatementPayload);
@@ -207,7 +245,7 @@ export const InstallationResultsEditor = ({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* Installation Title */}
       {jobTitle && (
         <div className="mb-4">
@@ -218,127 +256,127 @@ export const InstallationResultsEditor = ({
         </div>
       )}
 
-      {/* Summary Card */}
-      <Card className="p-4 sm:p-6 bg-gradient-to-br from-primary/10 via-primary/5 to-background border-primary/20">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-primary/10">
-              <CheckCircle2 className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-foreground">{steps.length}</div>
-              <div className="text-xs text-foreground/70">Steps</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-primary/10">
-              <Clock className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <div className="text-lg font-semibold text-foreground">{summary.estimatedDuration}</div>
-              <div className="text-xs text-foreground/70">Duration</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-primary/10">
-              <Wrench className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <div className="text-lg font-semibold text-foreground">{summary.toolsRequired.length}</div>
-              <div className="text-xs text-foreground/70">Tools</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-primary/10">
-              <ShieldCheck className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <Badge className={`${riskColors[summary.overallRiskLevel]} font-bold px-3 py-1`}>
-                {summary.overallRiskLevel.toUpperCase()}
-              </Badge>
-              <div className="text-xs text-foreground/70 mt-1">Risk Level</div>
-            </div>
-          </div>
-        </div>
+      {/* Hero Summary - Mobile-optimized swipeable cards */}
+      <InstallationHeroSummary
+        steps={steps.length}
+        duration={summary.estimatedDuration}
+        riskLevel={summary.overallRiskLevel}
+        toolsCount={summary.toolsRequired?.length || 0}
+        hazardsCount={totalHazards}
+        competency={competencyRequirements}
+        siteLogistics={siteLogistics}
+      />
 
-        {/* Tools & Materials - Categorised */}
-        {(summary.toolsRequired.length > 0 || summary.materialsRequired.length > 0) && (
-          <>
-            <Separator className="my-4 sm:my-6" />
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-              {summary.toolsRequired.length > 0 && (
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Wrench className="h-4 w-4 text-primary" />
-                    <span className="font-semibold text-sm text-foreground">Tools Required</span>
-                  </div>
-                  <CategorisedToolsList 
-                    categorisedItems={categorizeTools(summary.toolsRequired)} 
-                    icon={<Wrench className="h-4 w-4 text-primary" />}
-                  />
-                </div>
-              )}
-              {summary.materialsRequired.length > 0 && (
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Package className="h-4 w-4 text-primary" />
-                    <span className="font-semibold text-sm text-foreground">Materials Required</span>
-                  </div>
-                  <CategorisedToolsList 
-                    categorisedItems={categorizeMaterials(summary.materialsRequired)} 
-                    icon={<Package className="h-4 w-4 text-primary" />}
-                  />
-                </div>
-              )}
+      {/* Metadata Banner (if incomplete) */}
+      {!projectMetadata?.siteManagerName && (
+        <Card className="p-4 bg-warning/10 border-warning/40">
+          <div className="flex items-start gap-3">
+            <AlertCircle className="h-5 w-5 text-warning flex-shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <h4 className="font-semibold text-sm text-foreground mb-1">Complete Project Details for Professional PDF</h4>
+              <p className="text-xs text-muted-foreground mb-3">
+                Emergency contacts and site information required for comprehensive documentation
+              </p>
+              <MobileButton
+                onClick={() => setShowMetadataForm(true)}
+                variant="elec"
+                size="sm"
+              >
+                Complete Form
+              </MobileButton>
             </div>
-          </>
-        )}
-      </Card>
+          </div>
+        </Card>
+      )}
 
       {/* Project Metadata Form (conditional) */}
-      {showMetadataForm && projectMetadata && (
+      {showMetadataForm && (
         <ProjectMetadataForm
-          metadata={projectMetadata}
+          metadata={projectMetadata || {
+            documentRef: '',
+            issueDate: '',
+            reviewDate: '',
+            companyName: '',
+            contractor: '',
+            siteManagerName: '',
+            siteManagerPhone: '',
+            firstAiderName: '',
+            firstAiderPhone: '',
+            safetyOfficerName: '',
+            safetyOfficerPhone: '',
+            assemblyPoint: '',
+            startDate: '',
+            completionDate: '',
+            siteSupervisor: '',
+            clientContact: '',
+            preparedByName: '',
+            preparedByPosition: '',
+            preparedDate: '',
+            authorisedByName: '',
+            authorisedByPosition: '',
+            authorisedDate: ''
+          }}
           onChange={setProjectMetadata}
         />
       )}
 
-      {/* Action Buttons */}
-      <div className="flex flex-wrap gap-2">
-        <Button onClick={addNewStep} variant="outline" className="gap-2">
-          <Plus className="h-4 w-4" />
-          Add Step
-        </Button>
-        <Button 
-          onClick={() => setShowMetadataForm(!showMetadataForm)} 
-          variant={showMetadataForm ? "default" : "outline"} 
-          className="gap-2"
-        >
-          <CheckCircle2 className="h-4 w-4" />
-          {showMetadataForm ? 'Hide' : 'Edit'} Project Metadata
-        </Button>
-        <Button onClick={handleExportPDF} variant="outline" className="gap-2">
-          <Download className="h-4 w-4" />
-          Export PDF
-        </Button>
-        <Button onClick={onReset} variant="outline" className="gap-2">
-          <RotateCcw className="h-4 w-4" />
-          Start Over
-        </Button>
+      {/* Conditional Procedures (Work at Height, Hot Works, etc.) */}
+      <ConditionalProceduresSection
+        flags={conditionalFlags}
+        workAtHeightEquipment={workAtHeightEquipment}
+      />
+
+      {/* Installation Steps - Timeline View */}
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-foreground">Installation Procedure ({steps.length} Steps)</h3>
+          <MobileButton onClick={addNewStep} variant="outline" size="sm" icon={<Plus className="h-4 w-4" />}>
+            Add Step
+          </MobileButton>
+        </div>
+        <div className="space-y-3">
+          {steps.map((step, index) => (
+            <InstallationStepCard
+              key={step.stepNumber}
+              step={step}
+              onUpdate={(updated) => updateStep(index, updated)}
+              onDelete={() => deleteStep(index)}
+              onMoveUp={index > 0 ? () => moveStep(index, 'up') : undefined}
+              onMoveDown={index < steps.length - 1 ? () => moveStep(index, 'down') : undefined}
+            />
+          ))}
+        </div>
       </div>
 
-      {/* Editable Steps */}
-      <div className="space-y-3">
-        {steps.map((step, index) => (
-          <InstallationStepCard
-            key={step.stepNumber}
-            step={step}
-            onUpdate={(updated) => updateStep(index, updated)}
-            onDelete={() => deleteStep(index)}
-            onMoveUp={index > 0 ? () => moveStep(index, 'up') : undefined}
-            onMoveDown={index < steps.length - 1 ? () => moveStep(index, 'down') : undefined}
-          />
-        ))}
+      {/* Testing & Commissioning */}
+      <TestingProceduresSection procedures={testingProcedures} />
+
+      {/* Equipment Schedule */}
+      <EquipmentScheduleSection equipment={equipmentSchedule} />
+
+      {/* Site Logistics & Competency */}
+      <SiteLogisticsSection
+        logistics={siteLogistics}
+        competency={competencyRequirements}
+      />
+
+      {/* Action Buttons - Sticky on mobile */}
+      <div className="sticky bottom-0 left-0 right-0 z-10 p-4 bg-gradient-to-t from-background via-background to-background/95 border-t border-border backdrop-blur-sm md:static md:p-0 md:bg-transparent md:border-0">
+        <div className="flex flex-wrap gap-2">
+          <MobileButton onClick={handleExportPDF} variant="elec" size="wide" icon={<Download className="h-4 w-4" />}>
+            Generate PDF
+          </MobileButton>
+          <MobileButton 
+            onClick={() => setShowMetadataForm(!showMetadataForm)} 
+            variant={showMetadataForm ? "default" : "outline"}
+            className="flex-1 md:flex-none"
+          >
+            {showMetadataForm ? 'Hide' : 'Edit'} Metadata
+          </MobileButton>
+          <MobileButton onClick={onReset} variant="outline" icon={<RotateCcw className="h-4 w-4" />}>
+            Start Over
+          </MobileButton>
+        </div>
       </div>
     </div>
   );
