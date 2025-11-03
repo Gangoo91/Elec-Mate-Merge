@@ -84,7 +84,7 @@ CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blo
         ],
         model: 'gemini-2.5-flash',
         temperature: 0.3,
-        max_tokens: 2000,
+        max_tokens: 8000,  // Increased to handle detailed room JSON with multiple symbols
         response_format: { type: 'json_object' }
       }, geminiKey);
 
