@@ -546,11 +546,14 @@ Include phases, resources, compliance requirements, and risk management.`;
     return new Response(
       JSON.stringify({
         success: true,
-        response: enrichedResponse.response,
-        enrichment: enrichedResponse.enrichment,
-        citations: enrichedResponse.citations,
-        rendering: enrichedResponse.rendering,
-        structuredData: enhancedStructuredData,
+        data: {
+          response: enrichedResponse.response,
+          enrichment: enrichedResponse.enrichment,
+          citations: enrichedResponse.citations,
+          rendering: enrichedResponse.rendering,
+          structuredData: enhancedStructuredData,
+          projectPlan: enhancedStructuredData
+        },
         suggestedNextAgents: suggestNextAgents(
           'project-manager',
           query,
