@@ -452,40 +452,52 @@ Include phases, resources, compliance requirements, and risk management.`;
     // Return enriched response with aggregated data for PDF export
     const { response, suggestedNextAgents, projectPlan, resources, compliance, risks, recommendations } = pmResult;
     
+    // Ensure aggregatedData exists with defaults
+    const safeAggregatedData = aggregatedData || {
+      circuits: [],
+      totalCost: 0,
+      materials: [],
+      labour: { hours: 0, rate: 45 },
+      hazards: [],
+      requiredPPE: [],
+      testSchedule: [],
+      projectMeta: {}
+    };
+    
     // Enhance structured data with aggregated specialist outputs
     const enhancedStructuredData = {
-      projectPlan,
+      projectPlan: projectPlan || { phases: [] },
       resources: {
-        ...resources,
-        materials: aggregatedData.materials,
+        ...(resources || {}),
+        materials: safeAggregatedData.materials || [],
         labour: [
           {
             role: 'Electrician',
-            hours: aggregatedData.labour.hours,
-            rate: aggregatedData.labour.rate
+            hours: safeAggregatedData.labour?.hours || 0,
+            rate: safeAggregatedData.labour?.rate || 45
           },
           ...(resources?.labour || [])
         ],
-        totalCost: aggregatedData.totalCost
+        totalCost: safeAggregatedData.totalCost || 0
       },
-      compliance,
+      compliance: compliance || {},
       risks: [
-        ...(aggregatedData.hazards.map((h: any) => ({
-          risk: h.hazard || h.risk,
-          mitigation: h.controls || h.mitigation,
-          severity: h.riskRating >= 15 ? 'High' : h.riskRating >= 8 ? 'Medium' : 'Low'
-        })) || []),
+        ...((safeAggregatedData.hazards || []).map((h: any) => ({
+          risk: h.hazard || h.risk || 'Unknown risk',
+          mitigation: h.controls || h.mitigation || 'To be determined',
+          severity: (h.riskRating || 0) >= 15 ? 'High' : (h.riskRating || 0) >= 8 ? 'Medium' : 'Low'
+        }))),
         ...(risks || [])
       ],
-      recommendations,
-      phases: projectPlan?.phases?.map((phase: any, idx: number) => ({
+      recommendations: recommendations || [],
+      phases: (projectPlan?.phases || []).map((phase: any, idx: number) => ({
         ...phase,
         phase: idx + 1,
         tasks: phase.tasks || [],
         resources: phase.resources || [],
         duration: phase.duration || '1 day'
-      })) || [],
-      milestones: projectPlan?.phases?.flatMap((p: any) => 
+      })),
+      milestones: (projectPlan?.phases || []).flatMap((p: any) => 
         (p.milestones || []).map((m: string) => ({
           milestone: m,
           targetDate: 'TBC',
