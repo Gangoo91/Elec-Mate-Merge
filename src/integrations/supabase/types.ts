@@ -8141,6 +8141,21 @@ export type Database = {
         }[]
       }
       trigger_materials_weekly_refresh: { Args: never; Returns: undefined }
+      unified_rag_search: {
+        Args: {
+          agent_priorities?: Json
+          match_count?: number
+          query_embedding: string
+          query_text: string
+        }
+        Returns: {
+          content: string
+          hybrid_score: number
+          metadata: Json
+          regulation_number: string
+          source: string
+        }[]
+      }
       upsert_design_pattern: {
         Args: {
           p_cable_length: number
