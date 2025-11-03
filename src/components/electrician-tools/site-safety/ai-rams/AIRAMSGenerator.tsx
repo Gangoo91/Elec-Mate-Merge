@@ -214,13 +214,39 @@ export const AIRAMSGenerator: React.FC = () => {
       setGenerationEndTime(0);
       setResumedJob(false);
       
-    } catch (err) {
+    } catch (err: any) {
       console.error('Cancel error:', err);
-      toast({
-        title: "Cancellation failed",
-        description: "An unexpected error occurred",
-        variant: 'destructive'
-      });
+      
+      // Extract error message from edge function response
+      const errorMessage = err?.message || 'An unexpected error occurred';
+      
+      // If job is already in terminal state, treat as successful cancellation
+      if (errorMessage.includes('already failed') || 
+          errorMessage.includes('already completed') || 
+          errorMessage.includes('already cancelled')) {
+        
+        // Clear session and reset UI
+        sessionStorage.removeItem('rams-generation-active');
+        setCurrentJobId(null);
+        setShowResults(false);
+        setShowCelebration(false);
+        setCelebrationShown(false);
+        setGenerationStartTime(0);
+        setGenerationEndTime(0);
+        setResumedJob(false);
+        
+        toast({
+          title: "Job already ended",
+          description: "This generation has already finished. You can start a new one.",
+          variant: 'default'
+        });
+      } else {
+        toast({
+          title: "Cancellation failed",
+          description: errorMessage,
+          variant: 'destructive'
+        });
+      }
     } finally {
       setIsCancelling(false);
     }
