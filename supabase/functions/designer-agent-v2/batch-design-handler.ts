@@ -35,6 +35,48 @@ const INSTALLATION_CONTEXT = {
 // ============= HELPER FUNCTIONS (Must be declared before use) =============
 
 /**
+ * Auto-correct missing RCD protection flags (PHASE 3)
+ * Fixes AI omissions before validation runs
+ */
+function autoCorrectRCDProtection(circuits: any[], incomingSupply: any, logger: any): void {
+  let correctionCount = 0;
+  
+  circuits.forEach((circuit, index) => {
+    const loadType = circuit.loadType?.toLowerCase() || '';
+    const location = circuit.specialLocation?.toLowerCase() || '';
+    
+    // Check if RCD should be enabled but isn't
+    const shouldHaveRCD = 
+      loadType.includes('socket') ||
+      loadType.includes('outdoor') ||
+      location.includes('bathroom') ||
+      location.includes('outdoor') ||
+      incomingSupply.earthingSystem === 'TT';
+    
+    if (shouldHaveRCD && !circuit.rcdProtected) {
+      logger.warn(`🔧 Auto-correcting missing RCD protection for circuit ${index + 1}: ${circuit.name}`);
+      
+      circuit.rcdProtected = true;
+      circuit.rcdProtectedText = circuit.protectionDevice?.type === 'RCBO' ? '30mA RCBO' : '30mA RCD';
+      
+      // Update justification if missing or incomplete
+      if (!circuit.justifications) {
+        circuit.justifications = {};
+      }
+      if (!circuit.justifications.rcd || circuit.justifications.rcd.length < 50) {
+        circuit.justifications.rcd = `30mA RCD protection is provided to the ${circuit.name} per Regulation 411.3.3 for socket outlets that may supply portable equipment. This provides additional protection against earth faults.`;
+      }
+      
+      correctionCount++;
+    }
+  });
+  
+  if (correctionCount > 0) {
+    logger.info(`✅ Auto-corrected ${correctionCount} circuits with missing RCD protection`);
+  }
+}
+
+/**
  * Auto-correct undersized MCB ratings before validation
  * Ensures Ib ≤ In by rounding up to next standard MCB size
  */
@@ -288,6 +330,31 @@ function buildStructuredDesignPrompt(
     : '';
   
   return `You are a senior electrical design engineer specializing in BS 7671:2018+A3:2024 compliant installations.
+
+🚨 CRITICAL: RCD PROTECTION REQUIREMENTS (BS 7671 Reg 411.3.3) - PHASE 1:
+
+ALWAYS SET rcdProtected = true FOR:
+1. ALL socket outlet circuits (domestic, commercial, industrial)
+2. ALL outdoor circuits
+3. ALL bathroom/wet location circuits  
+4. ALL TT earthing systems
+5. Mobile equipment (even if hardwired)
+
+ALWAYS SET rcdProtected = false FOR:
+1. Fixed lighting circuits (not in bathrooms)
+2. Fixed appliances (cooker, shower with main RCD upstream)
+3. Three-phase distribution (sub-main) with RCD at consumer unit
+
+DEFAULT RULE: If uncertain, SET rcdProtected = true (safer)
+
+RCD TYPE SELECTION:
+- Standard socket circuits: 30mA Type AC or Type A
+- EV chargers: 30mA Type B (DC fault protection)
+- Medical locations: 10mA Type A
+
+JUSTIFICATION TEMPLATES:
+- If rcdProtected = true: "30mA RCD protection is provided to {circuit name} per Regulation 411.3.3 for socket outlets that may supply portable equipment. This provides additional protection against earth faults."
+- If rcdProtected = false: "RCD protection not required for this fixed {circuit type} circuit as it does not serve socket outlets or special locations per Regulation 411.3.1.2. Main distribution RCD provides upstream protection."
 
 INSTALLATION TYPE: ${type}
 ${INSTALLATION_CONTEXT[type] || ''}
@@ -1347,8 +1414,22 @@ Return complete circuit objects using the provided tool schema.`;
       circuits: batch.map((c: any) => c.name || c.loadType)
     });
     
+    // PHASE 4: Add RCD reminder for socket/outdoor circuits
+    const hasSocketCircuits = batch.some((c: any) => 
+      c.loadType?.toLowerCase().includes('socket') ||
+      c.specialLocation?.toLowerCase().includes('outdoor')
+    );
+    
+    const rcdReminder = hasSocketCircuits ? `
+🚨 CRITICAL FOR THIS BATCH: Socket circuits in this batch MUST have rcdProtected = true per Regulation 411.3.3.
+Set rcdProtected = true for ALL socket circuits.
+` : '';
+    
     // Create batch-specific query with equipment-specific guidance for high-power circuits
-    let batchQuery = `${query}\n\nDesign the following circuit${batch.length > 1 ? 's' : ''}:\n${batch.map((c: any, i: number) => 
+    let batchQuery = `${query}
+
+${rcdReminder}
+Design the following circuit${batch.length > 1 ? 's' : ''}:\n${batch.map((c: any, i: number) => 
       `${i + 1}. ${c.name || c.loadType} (${c.loadType}, ${c.loadPower}W, ${c.cableLength}m, ${c.phases}-phase${c.specialLocation ? `, ${c.specialLocation}` : ''})`
     ).join('\n')}`;
     
@@ -2199,6 +2280,10 @@ Always cite regulation numbers and show working for calculations.`
   // 🔧 AUTO-CORRECT MCB SIZING (Ib ≤ In enforcement)
   logger.info('🔧 Auto-correcting MCB sizing before validation');
   designData.circuits = autoCorrectMCBSizing(designData.circuits, logger);
+  
+  // 🔧 PHASE 3: AUTO-CORRECT RCD PROTECTION
+  logger.info('🔧 Auto-correcting missing RCD protection flags');
+  autoCorrectRCDProtection(designData.circuits, incomingSupply, logger);
   
   // 🔍 MULTI-STAGE VALIDATION PIPELINE
   logger.info('🔍 Running multi-stage validation pipeline');

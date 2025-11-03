@@ -172,10 +172,19 @@ export function validateCompliance(circuits: any[], incomingSupply: any): Valida
   circuits.forEach((circuit, index) => {
     const loadType = circuit.loadType?.toLowerCase() || '';
     const location = circuit.specialLocation?.toLowerCase() || '';
+    const circuitName = circuit.name?.toLowerCase() || '';
 
-    // RCD Protection Requirements
+    // PHASE 2: Check if this is genuinely a fixed industrial circuit
+    const isFixedIndustrial = 
+      (location.includes('industrial') || location.includes('workshop')) &&
+      (circuitName.includes('fixed') || 
+       circuitName.includes('machine') || 
+       circuitName.includes('three phase supply') ||
+       circuit.loadPower > 10000); // >10kW suggests fixed machinery
+
+    // RCD Protection Requirements (with industrial exception)
     const requiresRCD = 
-      loadType.includes('socket') ||
+      (loadType.includes('socket') && !isFixedIndustrial) ||  // Exception for fixed industrial
       loadType.includes('outdoor') ||
       location.includes('bathroom') ||
       location.includes('outdoor') ||
@@ -189,7 +198,18 @@ export function validateCompliance(circuits: any[], incomingSupply: any): Valida
         category: 'compliance',
         message: `RCD protection required but not specified`,
         regulation: 'Reg 411.3.3',
-        suggestedFix: 'Add 30mA RCD or RCBO protection'
+        suggestedFix: 'Add 30mA RCD or RCBO protection (Type A minimum)'
+      });
+    } else if (loadType.includes('socket') && isFixedIndustrial && !circuit.rcdProtected) {
+      // Add warning instead of error for fixed industrial circuits
+      warnings.push({
+        circuitIndex: index,
+        circuitName: circuit.name,
+        severity: 'warning',
+        category: 'compliance',
+        message: `Fixed industrial socket circuit without RCD - verify equipment is not portable`,
+        regulation: 'Reg 411.3.3',
+        suggestedFix: 'Consider RCD protection even for fixed machinery as best practice'
       });
     }
 
