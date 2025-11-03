@@ -30,6 +30,7 @@ serve(async (req) => {
 
   const requestId = generateRequestId();
   const logger = createLogger(requestId, { function: 'project-mgmt-v3' });
+  const requestStartTime = Date.now();
 
   try {
     const body = await req.json();
@@ -454,11 +455,11 @@ Include phases, resources, compliance requirements, and risk management.`;
     );
 
     // Log RAG metrics for observability
-    const totalTime = Date.now() - requestId;
+    const totalTime = Date.now() - requestStartTime;
     const { error: metricsError } = await supabase.from('agent_metrics').insert({
       function_name: 'project-mgmt-v3',
       request_id: requestId,
-      rag_time: ragStart ? Date.now() - ragStart : null,
+      rag_time: Date.now() - ragStart,
       total_time: totalTime,
       regulation_count: pmKnowledge?.length || 0,
       success: true,
@@ -553,7 +554,7 @@ Include phases, resources, compliance requirements, and risk management.`;
         suggestedNextAgents: suggestNextAgents(
           'project-manager',
           query,
-          responseStr,
+          enrichedResponse.response,
           (previousAgentOutputs || []).map((o: any) => o.agent)
         ).map((s: any) => ({
           ...s,
