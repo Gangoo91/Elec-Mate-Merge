@@ -652,7 +652,7 @@ export async function handleBatchDesign(body: any, logger: any) {
       resultsCount: allRAGResults[index]?.regulations?.length || 0,
       status: allRAGResults[index]?.searchMethod || 'unknown'
     })),
-    cacheHitRate: deduplicator.getCacheHitRate(),
+    pendingRequestsCount: deduplicator.getPendingCount(),
     avgResponseTime: ragElapsedMs / ragSearchesWithTimeout.length,
     slowestSearch: Math.max(...allRAGResults.map(r => r.searchTimeMs || 0))
   });
