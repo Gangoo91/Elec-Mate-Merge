@@ -1072,10 +1072,41 @@ Return complete circuit objects using the provided tool schema.`;
   // Separate high-power circuits for individual processing
   // ============================================
   
+  // STEP 4.5: Deduplicate circuits BEFORE batching to prevent duplicate processing
+  const circuitDedupeKey = (c: any) => `${(c.name || c.loadType).toLowerCase().trim()}_${c.loadType}_${c.loadPower}`;
+  const seenCircuits = new Map<string, any>();
+  
+  [...highPowerCircuits, ...standardCircuits].forEach(circuit => {
+    const key = circuitDedupeKey(circuit);
+    if (!seenCircuits.has(key)) {
+      seenCircuits.set(key, circuit);
+    } else {
+      logger.warn(`⚠️ Removing duplicate circuit: ${circuit.name || circuit.loadType}`, { 
+        duplicateKey: key 
+      });
+    }
+  });
+  
+  const deduplicatedCircuits = Array.from(seenCircuits.values());
+  
+  // Re-categorize after deduplication
+  const deduplicatedHigh = deduplicatedCircuits.filter(c => 
+    highPowerCircuits.some(hc => circuitDedupeKey(hc) === circuitDedupeKey(c))
+  );
+  const deduplicatedStandard = deduplicatedCircuits.filter(c => 
+    standardCircuits.some(sc => circuitDedupeKey(sc) === circuitDedupeKey(c))
+  );
+  
+  logger.info('✅ Deduplication complete', {
+    before: highPowerCircuits.length + standardCircuits.length,
+    after: deduplicatedCircuits.length,
+    removed: (highPowerCircuits.length + standardCircuits.length) - deduplicatedCircuits.length
+  });
+  
   // Create batches: high-power get individual processing, standard get batched
   const BATCH_SIZE = 2;
-  const standardBatches = chunkArray(standardCircuits, BATCH_SIZE);
-  const individualBatches = highPowerCircuits.map(c => [c]); // Each high-power circuit in its own batch
+  const standardBatches = chunkArray(deduplicatedStandard, BATCH_SIZE);
+  const individualBatches = deduplicatedHigh.map(c => [c]); // Each high-power circuit in its own batch
   
   const circuitBatches = [...individualBatches, ...standardBatches];
 

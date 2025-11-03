@@ -26,9 +26,34 @@ interface MultiCircuitRendererProps {
 }
 
 export const MultiCircuitRenderer = ({ data, foundRegulations, ragMetadata, agentChain }: MultiCircuitRendererProps) => {
-  // Transform circuits to ensure cableSpec and protection are present
-  const transformedCircuits = (data.circuits || []).map(circuit => ({
+  // STEP 1: Deduplicate circuits based on unique identifier
+  const deduplicateCircuits = (circuits: any[]) => {
+    const seen = new Map<string, any>();
+    const duplicates: string[] = [];
+    
+    circuits.forEach((circuit, index) => {
+      const uniqueKey = `${(circuit.name || '').toLowerCase()}_${circuit.circuitNumber || index}_${circuit.loadPower}`;
+      
+      if (seen.has(uniqueKey)) {
+        duplicates.push(circuit.name || circuit.loadType);
+      } else {
+        seen.set(uniqueKey, circuit);
+      }
+    });
+    
+    if (duplicates.length > 0) {
+      console.warn('⚠️ Duplicate circuits detected and removed:', duplicates);
+    }
+    
+    return Array.from(seen.values());
+  };
+  
+  // STEP 2: Transform circuits to ensure cableSpec and protection are present
+  const deduplicatedCircuits = deduplicateCircuits(data.circuits || []);
+  
+  const transformedCircuits = deduplicatedCircuits.map((circuit, index) => ({
     ...circuit,
+    id: circuit.id || `${circuit.name}-${circuit.circuitNumber || index}`,
     cableSpec: circuit.cableSpec || `${circuit.cableSize} cable`,
     protection: circuit.protection || circuit.mcbRating || 'TBD',
     complianceStatus: circuit.complianceStatus === 'review' ? 'warning' : circuit.complianceStatus || 'pass'

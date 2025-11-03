@@ -104,7 +104,7 @@ export const MultiCircuitResultsDisplay = ({
 
       {/* Individual Circuit Cards - EXACT MATCH TO SINGLE CIRCUIT */}
       {circuits.map((circuit, index) => (
-        <Card key={circuit.id} className="p-5">
+        <Card key={`${circuit.id}-${index}`} className="p-5">
           <div className="space-y-4">
             {/* Header */}
             <div className="flex justify-between items-start">
