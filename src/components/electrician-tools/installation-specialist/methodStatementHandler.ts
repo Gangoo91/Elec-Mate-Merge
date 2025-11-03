@@ -44,128 +44,91 @@ export const generateMethodStatement = async (
   onProgress?: (message: string) => void
 ): Promise<MergedMethodStatementOutput> => {
   try {
-    // ===== PHASE 1: INSTALLER AGENT (Sequential - must go first) =====
-    // Searches RAG for installation procedures and generates base installation steps
+    // ===== NEW ARCHITECTURE: Use agent-router for parallel orchestration =====
+    // All 3 agents run in parallel with shared RAG searches (like RAMS)
     if (onProgress) onProgress('STAGE_1_START');
-    if (onProgress) onProgress('🔧 Searching installation procedures & generating steps...');
+    if (onProgress) onProgress('🚀 Starting AI agents in parallel (installer, health-safety, maintenance)...');
     
-    const { data: installerData, error: installerError } = await supabase.functions.invoke('installer-v3', {
-      body: { 
-        query: userQuery, // Pass clean query - installer-v3 handles RAG internally
-        projectDetails,
-        conversationId
+    const { data: routerData, error: routerError } = await supabase.functions.invoke('agent-router', {
+      body: {
+        conversationId,
+        userMessage: userQuery,
+        selectedAgents: ['installer', 'health-safety', 'maintenance'],
+        messages: [],
+        currentDesign: projectDetails,
+        mode: 'method-statement' // Special mode for template generation
       }
     });
     
-    console.log('📦 Installer response structure:', JSON.stringify(installerData, null, 2));
+    if (routerError) throw routerError;
     
-    if (installerError) throw installerError;
-    
-    if (!installerData?.success) {
-      throw new Error(installerData?.error || 'Installer agent failed');
+    if (!routerData?.success) {
+      throw new Error(routerData?.error || 'Agent router failed');
     }
     
-    // Extract steps from installer-v3 response structure
-    const installerStepsArray = installerData?.data?.steps || [];
+    // Extract agent responses
+    const responses = routerData.responses || [];
+    const installerResponse = responses.find((r: any) => r.agent === 'installer')?.response;
+    const healthSafetyResponse = responses.find((r: any) => r.agent === 'health-safety')?.response;
+    const maintenanceResponse = responses.find((r: any) => r.agent === 'maintenance')?.response;
+    
+    if (!installerResponse?.structuredData) {
+      throw new Error('Installer agent returned no structured data');
+    }
+    
+    const installerData = installerResponse.structuredData;
+    const installerStepsArray = installerData?.steps || [];
     
     if (installerStepsArray.length === 0) {
       throw new Error('Installer agent returned no installation steps');
     }
     
-    // Transform installer-v3 steps to expected format
+    // Transform installer response to expected format
     const installerOutput = {
       installationSteps: installerStepsArray,
-      workType: installerData?.data?.workType || 'electrical installation',
-      equipmentType: installerData?.data?.equipmentType || 'electrical installation',
-      jobTitle: installerData?.data?.jobTitle || 'Installation Work',
-      description: installerData?.data?.description || '',
-      estimatedDuration: installerData?.data?.totalDuration || 'Not specified',
-      requiredQualifications: installerData?.data?.requiredQualifications || [],
-      toolsRequired: installerData?.data?.toolsRequired || [],
-      materialsRequired: installerData?.data?.materialsRequired || [],
-      detectedHazards: installerData?.data?.detectedHazards || [],
-      conditionalFlags: installerData?.data?.conditionalFlags || {}
+      workType: installerData?.workType || 'electrical installation',
+      equipmentType: installerData?.equipmentType || 'electrical installation',
+      jobTitle: installerData?.jobTitle || 'Installation Work',
+      description: installerData?.description || '',
+      estimatedDuration: installerData?.totalDuration || 'Not specified',
+      requiredQualifications: installerData?.requiredQualifications || [],
+      toolsRequired: installerData?.toolsRequired || [],
+      materialsRequired: installerData?.materialsRequired || [],
+      detectedHazards: installerData?.detectedHazards || [],
+      conditionalFlags: installerData?.conditionalFlags || {}
     };
     
-    console.log('✅ Installer completed:', { steps: installerOutput.installationSteps.length });
+    console.log('✅ Parallel agents completed:', { 
+      steps: installerOutput.installationSteps.length,
+      ragEfficiency: routerData.metadata?.ragEfficiency
+    });
     
     if (onProgress) onProgress('STAGE_2_START');
-    
-    // ===== PHASE 2: H&S + MAINTENANCE AGENTS (Parallel - both search RAG concurrently) =====
     if (onProgress) onProgress('STAGE_3_START');
-    if (onProgress) onProgress('⚡ Searching RAG for hazards & testing procedures in parallel...');
-    
-    const [healthSafetyResult, maintenanceResult] = await Promise.allSettled([
-      // Health-Safety-v3 - Searches RAG for hazards, then fills hazards per step
-      supabase.functions.invoke('health-safety-v3', {
-        body: {
-          query: userQuery, // Pass clean query - health-safety-v3 handles RAG internally
-          projectType: 'installation',
-          workType: installerOutput.workType || 'electrical installation',
-          location: projectDetails?.location || 'Site location',
-          // CRITICAL: Pass installation steps in structured format for step-specific hazard linking
-          installationSteps: installerOutput.installationSteps.map((s: any, i: number) => ({
-            stepNumber: i + 1,
-            title: s.title || s.stepTitle || `Step ${i + 1}`,
-            description: s.description || s.content || '',
-            safetyRequirements: s.safetyRequirements || [],
-            equipmentNeeded: s.equipmentNeeded || s.tools || []
-          })),
-          detectedHazards: installerOutput.detectedHazards || []
-        }
-      }),
-      
-      // Maintenance-v3 - FINAL REVIEWER: Searches RAG, validates installer+H&S, fills gaps, completes method statement
-      supabase.functions.invoke('maintenance-v3', {
-        body: {
-          query: userQuery, // Pass clean query - maintenance-v3 handles RAG as final reviewer
-          projectType: 'installation',
-          equipmentType: installerOutput.equipmentType || 'electrical installation',
-          workType: installerOutput.workType || 'electrical installation',
-          maintenanceType: 'preventive',
-          location: projectDetails?.location || 'Site location',
-          
-          // INSTALLER OUTPUT FOR FINAL REVIEW & VALIDATION
-          installerSteps: installerOutput.installationSteps,
-          installerJobDetails: {
-            jobTitle: installerOutput.jobTitle,
-            description: installerOutput.description,
-            workType: installerOutput.workType,
-            estimatedDuration: installerOutput.estimatedDuration,
-            requiredQualifications: installerOutput.requiredQualifications,
-            toolsRequired: installerOutput.toolsRequired,
-            materialsRequired: installerOutput.materialsRequired,
-            detectedHazards: installerOutput.detectedHazards || []
-          }
-        }
-      })
-    ]);
-    
-    // Handle parallel results with graceful degradation
-    let maintenanceOutput = null;
-    let healthSafetyOutput = null;
-    
+    if (onProgress) onProgress('✅ All agents completed in parallel');
     if (onProgress) onProgress('STAGE_4_START');
     
-    if (maintenanceResult.status === 'fulfilled') {
-      maintenanceOutput = maintenanceResult.value.data?.result;
+    // Extract health-safety and maintenance outputs
+    const maintenanceOutput = maintenanceResponse?.structuredData || null;
+    const healthSafetyOutput = healthSafetyResponse?.structuredData || null;
+    
+    if (maintenanceOutput) {
       if (onProgress) onProgress('✅ Final validation & inspection procedures complete');
     } else {
-      console.warn('⚠️ Maintenance agent (final reviewer) failed, continuing without validation:', maintenanceResult.reason);
+      console.warn('⚠️ Maintenance agent (final reviewer) failed, continuing without validation');
       if (onProgress) onProgress('⚠️ Final validation unavailable, using installer baseline');
     }
     
-    if (healthSafetyResult.status === 'fulfilled') {
-      healthSafetyOutput = healthSafetyResult.value.data?.result;
+    if (healthSafetyOutput) {
       if (onProgress) onProgress('✅ Risk assessment complete');
     } else {
-      console.warn('⚠️ H&S agent failed, continuing without risk assessment:', healthSafetyResult.reason);
+      console.warn('⚠️ H&S agent failed, continuing without risk assessment');
       if (onProgress) onProgress('⚠️ Risk assessment unavailable, using baseline hazards');
     }
     
     if (onProgress) onProgress('STAGE_5_COMPLETE');
     
-    // STEP 3: Merge outputs (handles null agents gracefully)
+    // Merge outputs (handles null agents gracefully)
     return mergeAgentOutputs(installerOutput, maintenanceOutput, healthSafetyOutput);
     
   } catch (error) {

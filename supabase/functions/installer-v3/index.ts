@@ -357,6 +357,10 @@ serve(async (req) => {
       warningIfPoor: installKnowledge.length < 3 ? '⚠️ INSUFFICIENT RAG DATA - AI may hallucinate!' : null
     });
 
+    // ✨ Part 3: Add real-time progress streaming during AI call
+    let lastProgressLog = Date.now();
+    const PROGRESS_LOG_INTERVAL = 10000; // 10s
+    
     // Build conversation context
     let contextSection = '';
     if (previousAgentOutputs && previousAgentOutputs.length > 0) {
@@ -577,6 +581,26 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
       const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
       const supabase = createClient(supabaseUrl, supabaseKey);
+      
+      // ✨ REAL-TIME PROGRESS UPDATES every 10s
+      let aiCallElapsed = 0;
+      const progressInterval = setInterval(() => {
+        aiCallElapsed += 10;
+        logger.info(`🤖 AI generating installation steps (${aiCallElapsed}s)...`);
+        
+        // Show granular progress based on time elapsed
+        if (aiCallElapsed === 10) {
+          logger.info('   → Analyzing installation requirements...');
+        } else if (aiCallElapsed === 20) {
+          logger.info('   → Sequencing installation steps...');
+        } else if (aiCallElapsed === 30) {
+          logger.info('   → Adding practical procedures...');
+        } else if (aiCallElapsed === 40) {
+          logger.info('   → Enriching with safety requirements...');
+        } else if (aiCallElapsed > 50 && aiCallElapsed % 20 === 0) {
+          logger.info('   → Finalizing comprehensive method statement...');
+        }
+      }, 10000);
       
       // Start heartbeat to prevent "stuck job" false positives
       const heartbeatInterval = setInterval(async () => {

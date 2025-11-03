@@ -92,14 +92,16 @@ serve(async (req) => {
       selectedAgents,
       messages = [],
       currentDesign,
-      contextFromPreviousAgent
+      contextFromPreviousAgent,
+      mode // NEW: 'method-statement' or undefined
     } = await req.json();
 
     logger.info('🚀 Agent router invoked', { 
       conversationId, 
       userMessage: userMessage?.slice(0, 50), 
       agents: selectedAgents,
-      messageCount: messages.length 
+      messageCount: messages.length,
+      mode 
     });
 
     if (!userMessage) {
@@ -137,18 +139,64 @@ serve(async (req) => {
       }
     }
 
-    // Call agents sequentially with retry logic
-    const agentResponses: Array<{ agent: string; response: AgentResponse }> = [];
+    // NEW: For method-statement mode, run all agents in PARALLEL
+    let agentResponses: Array<{ agent: string; response: AgentResponse }> = [];
     let totalRAGCalls = 0;
     
-    for (const agentType of selectedAgents) {
-      const endpoint = AGENT_ENDPOINTS[agentType];
-      if (!endpoint) {
-        logger.warn('Unknown agent type', { agentType });
-        continue;
-      }
+    if (mode === 'method-statement') {
+      logger.info('🚀 Method Statement Mode: Running all agents in PARALLEL');
+      
+      // Run all agents in parallel
+      const parallelCalls = selectedAgents.map(agentType => {
+        const endpoint = AGENT_ENDPOINTS[agentType];
+        if (!endpoint) {
+          logger.warn('Unknown agent type', { agentType });
+          return Promise.resolve({ agent: agentType, response: null, hadError: true });
+        }
 
-      logger.info(`Calling ${agentType} agent`);
+        logger.info(`Starting ${agentType} agent (parallel)`);
+        
+        const shouldUseSharedRegs = agentType !== 'designer' && agentType !== 'designer-multi' && sharedRegulations.length > 0;
+        
+        return invokeAgentWithRetry(
+          agentType,
+          endpoint,
+          {
+            query: contextFromPreviousAgent ? `${contextFromPreviousAgent}\n\n${userMessage}` : userMessage,
+            messages: [
+              ...messages,
+              { role: 'user', content: userMessage }
+            ],
+            conversationId,
+            currentDesign,
+            previousAgentOutputs: [],
+            requestSuggestions: true,
+            sharedRegulations: shouldUseSharedRegs ? sharedRegulations : undefined,
+            contextFromPreviousAgent,
+            projectDetails: currentDesign
+          },
+          supabase,
+          logger
+        ).then(response => ({ agent: agentType, response, hadError: response.hadError }));
+      });
+      
+      const results = await Promise.all(parallelCalls);
+      agentResponses = results
+        .filter(r => r.response && !r.hadError)
+        .map(r => ({ agent: r.agent, response: r.response.data || r.response.partialResponse }));
+      
+      logger.info(`✅ Parallel execution complete: ${agentResponses.length}/${selectedAgents.length} agents succeeded`);
+      
+    } else {
+      // Original sequential execution for other modes
+      for (const agentType of selectedAgents) {
+        const endpoint = AGENT_ENDPOINTS[agentType];
+        if (!endpoint) {
+          logger.warn('Unknown agent type', { agentType });
+          continue;
+        }
+
+        logger.info(`Calling ${agentType} agent`);
       
       // PHASE 2: Pass shared regulations to non-designer agents
       const shouldUseSharedRegs = agentType !== 'designer' && agentType !== 'designer-multi' && sharedRegulations.length > 0;
@@ -208,11 +256,12 @@ serve(async (req) => {
         logger.info(`♻️ ${agentType} reused ${sharedRegulations.length} shared regulations (0ms RAG)`);
       }
 
-      logger.info(`${agentType} completed`, { 
-        hasSuggestions: !!(response.data?.suggestedNextAgents?.length),
-        hadError: response.hadError,
-        usedSharedRegs: shouldUseSharedRegs
-      });
+        logger.info(`${agentType} completed`, { 
+          hasSuggestions: !!(response.data?.suggestedNextAgents?.length),
+          hadError: response.hadError,
+          usedSharedRegs: shouldUseSharedRegs
+        });
+      }
     }
     
     // Helper: Invoke agent with retry
