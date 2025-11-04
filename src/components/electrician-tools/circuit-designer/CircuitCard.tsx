@@ -9,14 +9,15 @@ import {
 
 interface CircuitCardProps {
   circuit: CircuitDesign;
-  onViewWorkings: () => void;
-  onViewJustification: () => void;
+  onViewWorkings?: () => void;
+  onViewJustification?: () => void;
+  className?: string;
 }
 
 const fmt = (n: unknown, dp = 1, fallback = '—') => 
   (typeof n === 'number' && !isNaN(n) ? n.toFixed(dp) : fallback);
 
-export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification }: CircuitCardProps) => {
+export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, className = '' }: CircuitCardProps) => {
   // Calculate compliance status
   const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
   const zsCompliant = (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999);
@@ -26,7 +27,7 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification }: Ci
   const status = !isCompliant ? 'fail' : hasWarnings ? 'warning' : 'pass';
 
   return (
-    <Card className="bg-card border-elec-yellow/30 overflow-hidden shadow-lg shadow-elec-yellow/5 transition-all duration-300 hover:shadow-elec-yellow/10 mx-auto max-w-2xl">
+    <Card className={`bg-card border-elec-yellow/30 overflow-hidden shadow-lg shadow-elec-yellow/5 transition-all duration-300 hover:shadow-elec-yellow/10 mx-auto max-w-2xl ${className}`}>
       {/* Header */}
       <div className="bg-gradient-to-br from-elec-yellow/15 via-elec-yellow/10 to-transparent border-b border-elec-yellow/20 p-5 sm:p-6">
         <div className="flex items-start justify-between mb-2">
@@ -207,18 +208,20 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification }: Ci
         )}
       </div>
 
-      {/* Single Action - More Details */}
-      <div className="p-4 pt-2 border-t border-elec-yellow/10">
-        <MobileButton
-          variant="elec-outline"
-          size="default"
-          icon={<Calculator className="h-4 w-4" />}
-          onClick={onViewWorkings}
-          className="w-full border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
-        >
-          View Detailed Calculations
-        </MobileButton>
-      </div>
+      {/* Single Action - More Details (optional for desktop) */}
+      {onViewWorkings && (
+        <div className="p-4 pt-2 border-t border-elec-yellow/10">
+          <MobileButton
+            variant="elec-outline"
+            size="default"
+            icon={<Calculator className="h-4 w-4" />}
+            onClick={onViewWorkings}
+            className="w-full border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
+          >
+            View Detailed Calculations
+          </MobileButton>
+        </div>
+      )}
     </Card>
   );
 };

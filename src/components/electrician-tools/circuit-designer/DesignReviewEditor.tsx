@@ -22,6 +22,7 @@ import { AgentType } from '@/types/agent-request';
 import { useNavigate } from 'react-router-dom';
 import { calculateExpectedR1R2, getMaxZsForDevice, mapLoadTypeToCircuitDescription } from '@/utils/eic-transformer';
 import { MobileCircuitResults } from './MobileCircuitResults';
+import { CircuitCard } from './CircuitCard';
 
 interface DesignReviewEditorProps {
   design: InstallationDesign;
@@ -722,39 +723,36 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       {/* Agent Flow Diagram */}
       <AgentFlowDiagram currentAgent="designer" onQuickForward={handleQuickForward} />
 
-      {/* Summary Card */}
-      <Card className="p-6 bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h2 className="text-2xl font-bold">{design.projectName}</h2>
-            <p className="text-muted-foreground">{design.location}</p>
+      {/* Compact Project Summary */}
+      <Card className="p-4 bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div className="flex items-center gap-6">
+            <div>
+              <h2 className="text-xl font-bold">{design.projectName}</h2>
+              <p className="text-sm text-muted-foreground">{design.location}</p>
+            </div>
+            <div className="flex items-center gap-4 text-sm">
+              <div className="flex items-center gap-1.5">
+                <Zap className="h-4 w-4 text-primary" />
+                <span className="font-semibold">{design.totalLoad / 1000}kW</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <TrendingDown className="h-4 w-4 text-green-500" />
+                <span className="font-semibold">
+                  {design.diversityBreakdown 
+                    ? `${fmt(design.diversityBreakdown.diversifiedLoad, 1)}kW`
+                    : `${design.totalLoad / 1000}kW`}
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Shield className="h-4 w-4 text-primary" />
+                <span className="font-semibold">{design.consumerUnit.mainSwitchRating}A</span>
+              </div>
+            </div>
           </div>
           <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${allCompliant ? 'bg-green-500/10 text-green-600' : 'bg-amber-500/10 text-amber-600'}`}>
             {allCompliant ? <CheckCircle2 className="h-5 w-5" /> : <AlertTriangle className="h-5 w-5" />}
             <span className="font-semibold">{allCompliant ? 'All Compliant' : 'Issues Found'}</span>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
-          <div>
-            <p className="text-sm text-white/80">Total Load</p>
-            <p className="text-lg font-bold text-white">{design.totalLoad / 1000}kW</p>
-          </div>
-          <div>
-            <p className="text-sm text-white/80">After Diversity</p>
-            <p className="text-lg font-bold text-white">
-              {design.diversityBreakdown 
-                ? `${fmt(design.diversityBreakdown.diversifiedLoad, 1)}kW`
-                : `${design.totalLoad / 1000}kW`}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-white/80">Circuits</p>
-            <p className="text-lg font-bold text-white">{design.circuits.length}</p>
-          </div>
-          <div>
-            <p className="text-sm text-white/80">Consumer Unit</p>
-            <p className="text-lg font-bold text-white">{design.consumerUnit.mainSwitchRating}A</p>
           </div>
         </div>
       </Card>
@@ -828,47 +826,57 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         </Card>
       )}
 
-      {/* Circuit Navigation with Counter */}
-      <Card className="p-4 bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
+      {/* Enhanced Circuit Selector Pills */}
+      <Card className="p-4 bg-card border-elec-yellow/20">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Zap className="h-5 w-5 text-primary" />
-              <h3 className="font-semibold text-foreground">Circuit Navigation</h3>
+              <h3 className="font-semibold">Select Circuit to View</h3>
               <Badge variant="default" className="ml-2">
-                {design.circuits.length} Circuit{design.circuits.length !== 1 ? 's' : ''} Designed
+                {design.circuits.length} Circuit{design.circuits.length !== 1 ? 's' : ''}
               </Badge>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                const element = document.getElementById('circuit-summary-table');
-                element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }}
-              className="gap-2"
-            >
-              <FileText className="h-4 w-4" />
-              View All
-            </Button>
           </div>
           
-          <p className="text-sm text-muted-foreground">
-            Click a circuit below to view detailed specifications and calculations
-          </p>
-          
-          <div className="flex gap-2 overflow-x-auto pb-2">
-            {design.circuits.map((circuit, idx) => (
-              <Button
-                key={idx}
-                variant={selectedCircuit === idx ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setSelectedCircuit(idx)}
-                className="flex-shrink-0 min-w-[60px]"
-              >
-                <span className="font-mono">C{circuit.circuitNumber}</span>
-              </Button>
-            ))}
+          <div className="flex gap-3 overflow-x-auto pb-2 hide-scrollbar">
+            {design.circuits.map((circuit, idx) => {
+              const isActive = idx === selectedCircuit;
+              const hasWarnings = circuit.warnings?.length > 0;
+              const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
+              const zsCompliant = (circuit.calculations?.zs ?? 0) < (circuit.calculations?.maxZs ?? 999);
+              const hasIssues = !vdCompliant || !zsCompliant;
+              
+              return (
+                <button
+                  key={idx}
+                  onClick={() => setSelectedCircuit(idx)}
+                  className={`flex-shrink-0 px-6 py-4 rounded-xl border-2 transition-all ${
+                    isActive 
+                      ? 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow shadow-lg shadow-elec-yellow/20' 
+                      : 'bg-elec-dark/60 border-elec-yellow/20 text-elec-light/60 hover:border-elec-yellow/40'
+                  }`}
+                >
+                  <div className="flex flex-col items-center gap-2 min-w-[100px]">
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg font-bold">
+                        Way {idx + 1}
+                        {circuit.phases === 'three' && (
+                          <span className="text-xs ml-1 opacity-70">3Ø</span>
+                        )}
+                      </span>
+                      {(hasWarnings || hasIssues) && <AlertTriangle className="h-4 w-4 text-amber-400" />}
+                    </div>
+                    <div className="text-sm font-semibold">
+                      {circuit.protectionDevice?.rating}A {circuit.protectionDevice?.curve}
+                    </div>
+                    <div className="text-xs opacity-70 line-clamp-1 max-w-[120px]">
+                      {circuit.name}
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
       </Card>
