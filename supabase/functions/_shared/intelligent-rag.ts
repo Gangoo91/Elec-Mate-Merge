@@ -7,8 +7,6 @@
 import { createClient } from './deps.ts';
 import type { ContextEnvelope, FoundRegulation } from './agent-context.ts';
 
-const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-
 /**
  * PHASE 1: Build context-enriched query using conversation state
  */
@@ -183,6 +181,7 @@ async function exactRegulationSearch(
 async function vectorSearch(
   supabase: any,
   params: HybridSearchParams,
+  openAiKey: string,
   skipIfFound: number = 3
 ): Promise<{ regulations: any[]; designDocs: any[]; healthSafetyDocs: any[]; installationDocs: any[]; maintenanceDocs: any[]; embedding: number[]; timeMs: number }> {
   const startTime = Date.now();
@@ -196,6 +195,7 @@ async function vectorSearch(
         supabase,
         params,
         params.context.embeddingCache.embedding,
+        openAiKey,
         startTime
       );
     }
@@ -221,7 +221,7 @@ async function vectorSearch(
       fetch('https://api.openai.com/v1/embeddings', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+          'Authorization': `Bearer ${openAiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -242,13 +242,14 @@ async function vectorSearch(
     console.log('⚡ Skipping embedding - all searches use keyword-only');
   }
 
-  return await vectorSearchWithEmbedding(supabase, params, embedding, startTime);
+  return await vectorSearchWithEmbedding(supabase, params, embedding, openAiKey, startTime);
 }
 
 async function vectorSearchWithEmbedding(
   supabase: any,
   params: HybridSearchParams,
   embedding: number[] | null,
+  openAiKey: string,
   startTime: number
 ): Promise<{ regulations: any[]; designDocs: any[]; healthSafetyDocs: any[]; installationDocs: any[]; maintenanceDocs: any[]; embedding?: number[]; timeMs: number }> {
   
@@ -479,7 +480,7 @@ async function vectorSearchWithEmbedding(
         finalScore: reg.hybrid_score,
         rank: idx + 1
       }));
-    } else if (OPENAI_API_KEY) {
+    } else if (openAiKey) {
       // Only rerank if we have API key
       console.log('🔍 Running cross-encoder reranking');
       const { rerankWithCrossEncoder } = await import('./cross-encoder-reranker.ts');
@@ -489,7 +490,7 @@ async function vectorSearchWithEmbedding(
         resultMap.bs7671 = await rerankWithCrossEncoder(
           query,
           bs7671Results,
-          OPENAI_API_KEY,
+          openAiKey,
           logger
         );
       } catch (error) {
@@ -568,11 +569,12 @@ async function keywordFallback(
  * PHASE 7C: Added RAG result caching for 3x faster repeat queries
  */
 export async function intelligentRAGSearch(
-  params: HybridSearchParams
+  params: HybridSearchParams,
+  openAiKey: string,
+  supabase: any,
+  logger: any
 ): Promise<HybridSearchResult> {
-  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  // Supabase and logger are now passed as parameters
 
   // 🆕 PHASE 7C: Check RAG cache FIRST
   const { getCachedQuery, cacheQuery, hashQuery } = await import('./query-cache.ts');
@@ -627,7 +629,7 @@ export async function intelligentRAGSearch(
   if (exactResults.regulations.length < 5) {
     // Use enriched query for better vector matching
     const enrichedParams = { ...params, expandedQuery: enrichedQuery };
-    vectorResults = await vectorSearch(supabase, enrichedParams);
+    vectorResults = await vectorSearch(supabase, enrichedParams, openAiKey);
     console.log(`✅ Tier 2 (Vector): ${vectorResults.regulations.length} regs, ${vectorResults.designDocs.length} design, ${vectorResults.installationDocs.length} installation, ${vectorResults.maintenanceDocs.length} maintenance docs in ${vectorResults.timeMs}ms`);
     searchMethod = exactResults.regulations.length > 0 ? 'hybrid' : 'vector';
     embedding = vectorResults.embedding;
@@ -669,17 +671,16 @@ export async function intelligentRAGSearch(
   });
   
   // Step 2: Cross-Encoder Reranking (ALWAYS applied for best quality)
-  const OPENAI_KEY = Deno.env.get('OPENAI_API_KEY');
-  const logger = { info: console.log, warn: console.warn, error: console.error, debug: console.log };
+  const logger2 = { info: console.log, warn: console.warn, error: console.error, debug: console.log };
   
   let finalRegulations: any[];
-  if (OPENAI_KEY && dedupedRegulations.length > 0) {
+  if (openAiKey && dedupedRegulations.length > 0) {
     console.log(`🎯 Applying cross-encoder reranking to ${dedupedRegulations.length} regulations`);
     finalRegulations = await rerankWithCrossEncoder(
       params.expandedQuery,
       dedupedRegulations,
-      OPENAI_KEY,
-      logger
+      openAiKey,
+      logger2
     );
   } else {
     finalRegulations = dedupedRegulations;
