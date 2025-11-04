@@ -715,10 +715,7 @@ serve(async (req) => {
       dataSource,
       isLive: dataSource === 'live_api',
       // Debug information
-      apiProvider: 'metalpriceapi.com',
-      apiKeySuffix,
-      triedLive,
-      liveAttemptError
+      apiProvider: 'metalpriceapi.com'
     }
 
     console.log('Successfully aggregated pricing data:', {
