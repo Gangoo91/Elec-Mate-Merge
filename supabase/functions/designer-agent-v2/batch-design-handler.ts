@@ -12,7 +12,7 @@ import { buildRAGSearches, mergeRegulations } from './modules/rag-composer.ts';
 import { validateDesign } from './validation-pipeline.ts';
 import { formatRegulationsAsTOON, estimateTokenSavings } from '../_shared/toon-formatter.ts';
 
-const VERSION = 'v3.7.0-rebuild';
+const VERSION = 'v3.7.1-timeout-fix';
 
 /**
  * Enhanced RAG-first design instructions for the AI
@@ -566,7 +566,7 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
       // Continue with circuits as-is if validation fails
     }
     
-    // Check for critical validation errors
+    // Check for critical validation errors - early exit for fast feedback
     if (validationResult && !validationResult.passed && validationResult.errors.length > 0) {
       const criticalErrors = validationResult.errors.filter(e => e.severity === 'critical');
       
@@ -576,23 +576,36 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
           errors: criticalErrors
         });
         
-        return new CircuitDesignError(
-          'NON_COMPLIANT_DESIGN',
-          `Design contains ${criticalErrors.length} BS 7671 compliance error(s)`,
+        // Return validation errors immediately without full design formatting (faster response)
+        return new Response(
+          JSON.stringify({
+            version: VERSION,
+            success: false,
+            code: 'NON_COMPLIANT_DESIGN',
+            error: `${criticalErrors.length} critical compliance error(s) detected`,
+            technicalDetails: {
+              validationErrors: criticalErrors.map(e => ({
+                circuit: e.circuitName || `Circuit ${e.circuitIndex + 1}`,
+                severity: e.severity,
+                category: e.category,
+                message: e.message,
+                regulation: e.regulation,
+                suggestedFix: e.suggestedFix
+              })),
+              circuitCount: processedCircuits.length
+            },
+            suggestions: [
+              'Review the circuits with errors and add required protection devices',
+              'RCD protection is required for socket outlets, bathrooms, and outdoor circuits',
+              'Use RCBO (combined MCB+RCD) for individual circuit protection',
+              'Consult BS 7671 Regulation 411.3.3 for RCD requirements'
+            ]
+          }),
           {
-            validationErrors: criticalErrors.map(e => ({
-              circuit: e.circuitName,
-              message: e.message,
-              regulation: e.regulation || 'N/A',
-              suggestedFix: e.suggestedFix || ''
-            }))
-          },
-          [
-            'Review circuit parameters carefully',
-            'Adjust cable sizes, protection devices, or RCD settings',
-            'Ensure all circuits meet BS 7671 requirements'
-          ]
-        ).toResponse(VERSION);
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          }
+        );
       }
     }
     

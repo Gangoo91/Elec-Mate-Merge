@@ -64,6 +64,9 @@ export const Timeouts = {
   
   /** Practical work enrichment (6 min) - Extended timeout for 10K token generation with GPT-5 Mini */
   PRACTICAL_WORK: 360000,
+  
+  /** Edge function max allowed (6 min) - for complex multi-circuit designs with validation */
+  EDGE_FUNCTION_MAX: 360000,
 };
 
 /**

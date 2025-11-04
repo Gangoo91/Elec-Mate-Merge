@@ -3,8 +3,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { DesignInputs, InstallationDesign } from '@/types/installation-design';
 
-// Fix 3: Client-side timeout increased to 300s for large response transfer
-const CLIENT_TIMEOUT_MS = 300000; // 300s (5m) - extra buffer for large responses
+// Fix 3: Client-side timeout increased to 360s to prevent premature reconnection
+const CLIENT_TIMEOUT_MS = 360000; // 360s (6m) - extra buffer for validation + formatting
 
 /**
  * Timeout wrapper for promises
@@ -127,12 +127,16 @@ export const useAIDesigner = () => {
         
         // Create abort controller for timeout safety
         const abortController = new AbortController();
-        const timeoutId = setTimeout(() => abortController.abort(), CLIENT_TIMEOUT_MS);
+        const timeoutId = setTimeout(() => {
+          console.error('❌ Client timeout reached after', CLIENT_TIMEOUT_MS / 1000, 'seconds');
+          abortController.abort();
+        }, CLIENT_TIMEOUT_MS);
 
         // Keep connection alive with progress updates
         const invokeStartTime = Date.now();
         const keepaliveInterval = setInterval(() => {
           const elapsedSeconds = Math.floor((Date.now() - invokeStartTime) / 1000);
+          console.log(`⏱️ Request still active after ${elapsedSeconds}s`);
           setProgress(prev => {
             if (!prev) return prev;
             return {
@@ -140,7 +144,7 @@ export const useAIDesigner = () => {
               message: `${prev.message.split(' (')[0]} (${elapsedSeconds}s elapsed)`
             };
           });
-        }, 10000); // Update every 10 seconds
+        }, 5000); // Update every 5 seconds (more responsive)
 
         let data, invokeError;
         try {
@@ -173,7 +177,7 @@ export const useAIDesigner = () => {
           });
           
           // Wrap with extended client-side timeout  
-          const result = await withTimeout(invokePromise, 300000); // 5 minutes
+          const result = await withTimeout(invokePromise, 360000); // 6 minutes - matches CLIENT_TIMEOUT_MS
           data = result.data;
           invokeError = result.error;
         } finally {
