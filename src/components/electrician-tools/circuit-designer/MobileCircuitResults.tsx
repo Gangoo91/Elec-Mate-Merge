@@ -143,7 +143,12 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold">Way {idx + 1}</span>
+                  <span className="text-sm font-semibold">
+                    Way {idx + 1}
+                    {circuit.phases === 'three' && (
+                      <span className="text-[10px] ml-1 opacity-70">3Ø</span>
+                    )}
+                  </span>
                   {status === 'warning' && <AlertTriangle className="h-3 w-3 text-amber-400" />}
                 </div>
               </button>

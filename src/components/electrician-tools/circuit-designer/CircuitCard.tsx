@@ -33,7 +33,14 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification }: Ci
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
               <Zap className="h-5 w-5 text-elec-yellow" />
-              <h3 className="text-lg sm:text-xl font-bold text-elec-light">Way {circuit.circuitNumber || 'N/A'}</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-elec-light">
+                Way {circuit.circuitNumber || 'N/A'}
+                {circuit.phases === 'three' && (
+                  <span className="text-sm font-normal text-elec-yellow/80 ml-2">
+                    (L1, L2, L3)
+                  </span>
+                )}
+              </h3>
             </div>
             <p className="text-base sm:text-lg font-semibold text-elec-light/90">{circuit.name}</p>
             <p className="text-sm text-elec-light/60 mt-1 capitalize">
@@ -64,6 +71,9 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification }: Ci
         </div>
         <div className="text-base sm:text-lg text-elec-light/60 mb-2">
           {circuit.protectionDevice.type} · {circuit.protectionDevice.kaRating}kA
+          {circuit.phases === 'three' && (
+            <span className="text-elec-yellow/70 ml-2">· 3-Phase</span>
+          )}
         </div>
         {circuit.rcdProtected && (
           <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 mt-3 px-4 py-1.5">
