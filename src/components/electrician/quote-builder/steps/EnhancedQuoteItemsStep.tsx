@@ -224,23 +224,25 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
       if (debouncedSearch.trim().length >= 3) {
         setIsSearchingRAG(true);
         try {
-          const { data, error } = await supabase.functions.invoke('search-pricing-rag', {
+          const { data, error } = await supabase.functions.invoke('search-materials-fast', {
             body: {
               query: debouncedSearch,
               categoryFilter: newItem.subcategory && newItem.subcategory !== 'all-categories' ? newItem.subcategory : null,
               supplierFilter: 'all',
-              matchThreshold: 0.6,
-              matchCount: 30
+              limit: 30
             }
           });
 
-          if (error) throw error;
+          if (error) {
+            console.warn('Fast search failed:', error);
+            throw error;
+          }
 
           if (data?.materials) {
             setRagResults(data.materials);
           }
         } catch (err) {
-          console.warn('RAG search failed, using instant results only:', err);
+          console.warn('Material search failed, using instant results only:', err);
           // Silent fallback - just show instant results without error message
           setRagResults([]);
         } finally {
@@ -401,7 +403,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                       <div className="space-y-2">
                         <Label htmlFor="materialSearch" className="text-sm font-medium flex items-center gap-2">
                           <Search className="h-4 w-4" />
-                          Search 43k Materials
+                          Search Materials
                         </Label>
                         <Input
                           id="materialSearch"
@@ -413,7 +415,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                         {materialSearch.length >= 2 && (
                           <div className="flex items-center gap-2 text-xs text-muted-foreground">
                             <span>Instant: {filteredMaterials.length} found</span>
-                            {isSearchingRAG && <span className="animate-pulse">• Searching 43k materials...</span>}
+                            {isSearchingRAG && <span className="animate-pulse">• Searching database...</span>}
                             {!isSearchingRAG && ragResults.length > 0 && <span>• RAG: {ragResults.length} found</span>}
                           </div>
                         )}
@@ -536,7 +538,7 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                           {isSearchingRAG && ragResults.length === 0 && filteredMaterials.length === 0 && (
                             <div className="text-center py-8 text-muted-foreground">
                               <Search className="h-8 w-8 mx-auto mb-2 animate-pulse" />
-                              <p className="text-sm">Searching 43,371 materials...</p>
+                              <p className="text-sm">Searching materials database...</p>
                             </div>
                           )}
 
