@@ -35,6 +35,20 @@ const CostEngineerInterface = () => {
     });
   };
 
+  const handleFillTestData = () => {
+    setProjectName("Smith Residence Full Rewire");
+    setClientInfo("Mr & Mrs John Smith");
+    setLocation("Manchester, M15 4AA");
+    setAdditionalInfo("Limited parking on street. Access to loft required. Working hours: 8am-5pm weekdays only.");
+    setProjectType("domestic");
+    setPrompt("Complete rewire of a 3-bedroom semi-detached house built in 1970s. Property requires:\n\n- New 18th Edition consumer unit with RCBO protection\n- Complete rewire including new cables and back boxes\n- 12x LED downlights in kitchen (dimmable)\n- 8x LED downlights in living room\n- New sockets throughout (minimum 2 double sockets per bedroom)\n- Outdoor double socket with RCD protection\n- Garden lighting circuit with 4x spike lights\n- Smoke and heat detector system linked to consumer unit\n- All work to comply with BS 7671:2018+A2:2022\n\nProperty is occupied, dustsheets and daily cleanup required.");
+    
+    toast({
+      title: "Test data loaded",
+      description: "All fields populated with sample project data",
+    });
+  };
+
   const handleGenerate = async () => {
     if (!prompt.trim()) {
       toast({
@@ -270,14 +284,25 @@ const CostEngineerInterface = () => {
             </p>
           </div>
 
-          <Button 
-            onClick={handleGenerate}
-            disabled={!prompt.trim()}
-            className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold h-14 sm:h-16 text-base sm:text-lg touch-manipulation"
-          >
-            <Sparkles className="h-5 w-5 mr-2" />
-            Generate
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Button
+              variant="outline"
+              onClick={handleFillTestData}
+              className="border-elec-yellow/30 hover:bg-elec-yellow/10 h-12 sm:h-14 text-sm sm:text-base touch-manipulation"
+            >
+              <Sparkles className="h-4 w-4 mr-2" />
+              Fill Test Data
+            </Button>
+            
+            <Button 
+              onClick={handleGenerate}
+              disabled={!prompt.trim()}
+              className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold h-14 sm:h-16 text-base sm:text-lg touch-manipulation"
+            >
+              <Sparkles className="h-5 w-5 mr-2" />
+              Generate Cost Analysis
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>
