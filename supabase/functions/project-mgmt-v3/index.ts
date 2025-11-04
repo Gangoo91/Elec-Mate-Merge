@@ -448,7 +448,7 @@ Include phases, resources, compliance requirements, and risk management.`;
 
     // Step 5: Enrich response with UI metadata
     const enrichedResponse = enrichResponse(
-      pmResult,
+      pmResult.response || 'Project plan generated successfully',
       pmKnowledge, // Already has confidence scores from rag-project-mgmt.ts
       'project-mgmt',
       { projectType, scope, timeline }
