@@ -20,7 +20,7 @@ import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggest
 const COST_ENGINEER_PRICING = {
   ELECTRICIAN_RATE_PER_HOUR: 50.00,
   APPRENTICE_RATE_PER_HOUR: 25.00,
-  MATERIAL_MARKUP_PERCENT: 10,
+  MATERIAL_MARKUP_PERCENT: 15,
   VAT_RATE: 20
 };
 
@@ -206,8 +206,13 @@ serve(async (req) => {
       // Generate embedding
       generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY),
       
-      // Use optimized pricing RAG module
-      searchPricingKnowledge(enhancedQuery, await generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY), supabase, logger, parsedEntities.jobType),
+      // Use optimized pricing RAG module with 15% markup applied
+      searchPricingKnowledge(enhancedQuery, await generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY), supabase, logger, parsedEntities.jobType).then(results => 
+        results.map(item => ({
+          ...item,
+          base_cost: Number((item.base_cost * (1 + COST_ENGINEER_PRICING.MATERIAL_MARKUP_PERCENT / 100)).toFixed(2))
+        }))
+      ),
       
       // Combined installation + design knowledge with intelligent RAG
       intelligentRAGSearch(
@@ -240,7 +245,7 @@ serve(async (req) => {
 
     // Step 5: Build pricing context using RAG module formatter
     const pricingContext = formatPricingContext(finalPricingResults) +
-      `\n\nFALLBACK MARKET RATES (use if not in database):\n- 2.5mm² T&E cable: £0.98/metre\n- 1.5mm² T&E cable: £0.80/metre\n- 6mm² T&E cable: £2.20/metre\n- 10mm² T&E cable: £3.90/metre\n- 2.5mm² SWA: £3.50/m, 4mm² SWA: £4.80/m, 6mm² SWA: £6.20/m, 10mm² SWA: £9.50/m\n- SWA gland 20mm: £10 (x2)\n- Consumer units: 8-way £136, 10-way £156, 12-way £185, 16-way £245\n- 40A RCBO: £28.50`;
+      `\n\nFALLBACK MARKET RATES (use if not in database, 15% markup applied):\n- 2.5mm² T&E cable: £1.13/metre\n- 1.5mm² T&E cable: £0.92/metre\n- 6mm² T&E cable: £2.53/metre\n- 10mm² T&E cable: £4.49/metre\n- 2.5mm² SWA: £4.03/m, 4mm² SWA: £5.52/m, 6mm² SWA: £8.21/m, 10mm² SWA: £10.93/m\n- SWA gland 20mm: £11.50 (x2)\n- Consumer units: 8-way £156.40, 10-way £179.40, 12-way £212.75, 16-way £281.75\n- 40A RCBO: £32.78`;
 
     // Build installation context (trimmed: 120 chars max)
     const installationContext = installationResults && installationResults.length > 0

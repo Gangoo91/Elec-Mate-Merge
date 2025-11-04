@@ -187,9 +187,9 @@ export function formatPricingContext(results: PricingResult[]): string {
     return 'No database pricing found. Use fallback market rates.';
   }
 
-  return `DATABASE PRICES (${results.length} items):\n` +
+  return `DATABASE PRICES (${results.length} items, 15% markup applied):\n` +
     results.map(p => 
-      `- ${p.item_name}: £${p.base_cost} (${p.wholesaler}${p.in_stock ? '' : ' - awaiting stock'})`
+      `- ${p.item_name}: £${p.base_cost.toFixed(2)} (${p.wholesaler}${p.in_stock ? '' : ' - awaiting stock'})`
     ).join('\n');
 }
 
