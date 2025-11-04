@@ -312,7 +312,10 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
       timings.ragSearch = Date.now() - ragStart;
       logger.info('RAG search complete', { regulationCount: regulations.length });
     } catch (error) {
-      logger.error('RAG search failed', { error });
+      logger.error('RAG search failed', { 
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined
+      });
       return ERROR_TEMPLATES.RAG_SEARCH_FAILED(['bs7671', 'design_knowledge']).toResponse(VERSION);
     }
     

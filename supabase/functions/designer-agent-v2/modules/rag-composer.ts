@@ -18,7 +18,7 @@ export async function buildRAGSearches(
   logger.info('Performing intelligent RAG search...', { searchTerms });
 
   const ragResults = await intelligentRAGSearch({
-    query,
+    expandedQuery: query,
     searchTerms,
     priorities: {
       bs7671: 95,
