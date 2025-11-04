@@ -1414,8 +1414,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       className="absolute right-2 top-2 z-10 text-white/70 hover:text-white hover:bg-white/10"
                       onClick={() => {
                         const eicCircuits = design.circuits.map((circuit, index) => {
-                          const liveSize = circuit.cableSize.toString();
-                          const cpcSize = circuit.cpcSize.toString();
+                          const liveSize = (circuit.cableSize ?? 2.5).toString();
+                          const cpcSize = (circuit.cpcSize ?? 1.5).toString();
                           const lengthM = circuit.cableLength;
                           
                           const expectedR1R2 = calculateExpectedR1R2(liveSize, cpcSize, lengthM);
@@ -1491,8 +1491,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                           electricianName: design.electricianName,
                           consumerUnit: design.consumerUnit,
                           eicCircuits: design.circuits.map((circuit, index) => {
-                            const liveSize = circuit.cableSize.toString();
-                            const cpcSize = circuit.cpcSize.toString();
+                            const liveSize = (circuit.cableSize ?? 2.5).toString();
+                            const cpcSize = (circuit.cpcSize ?? 1.5).toString();
                             const lengthM = circuit.cableLength;
                             
                             const expectedR1R2 = calculateExpectedR1R2(liveSize, cpcSize, lengthM);
