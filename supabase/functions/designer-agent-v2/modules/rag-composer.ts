@@ -6,6 +6,34 @@
 import { intelligentRAGSearch } from '../../_shared/intelligent-rag.ts';
 
 /**
+ * Get critical topics based on installation type
+ */
+function getCriticalTopicsForType(type: 'domestic' | 'commercial' | 'industrial'): string[] {
+  const critical: Record<string, string[]> = {
+    domestic: [
+      'ring final calculation',
+      'cpc sizing table',
+      'socket rcd protection',
+      'voltage drop mV/A/m'
+    ],
+    commercial: [
+      'emergency lighting design',
+      'fire alarm circuits',
+      'diversity factors',
+      'discrimination selectivity'
+    ],
+    industrial: [
+      'motor circuit design',
+      'three-phase distribution',
+      'harmonics power factor',
+      'industrial socket requirements'
+    ]
+  };
+  
+  return critical[type] || critical.domestic;
+}
+
+/**
  * Build RAG searches for circuit design
  */
 export async function buildRAGSearches(
@@ -13,9 +41,15 @@ export async function buildRAGSearches(
   searchTerms: string[],
   openAiKey: string,
   supabase: any,
-  logger: any
+  logger: any,
+  installationType?: 'domestic' | 'commercial' | 'industrial'
 ): Promise<any> {
-  logger.info('Performing intelligent RAG search with enhanced thresholds...', { searchTerms });
+  const type = installationType || 'domestic';
+  
+  logger.info('Performing intelligent RAG search with context-aware boosts...', { 
+    searchTerms, 
+    installationType: type 
+  });
 
   const ragResults = await intelligentRAGSearch({
     expandedQuery: query,
@@ -27,16 +61,12 @@ export async function buildRAGSearches(
       practical_work: 0,
       health_safety: 0
     },
-    limit: 30
+    limit: 30,
+    installationType: type     // Pass context for boost prioritization
   }, openAiKey, supabase, logger);
 
-  // PHASE 4: Force-include critical design knowledge if missing
-  const criticalTopics = [
-    'ring final calculation',
-    'cpc sizing table',
-    'voltage drop mV/A/m',
-    'zs calculation method'
-  ];
+  // PHASE 4: Force-include critical design knowledge based on installation type
+  const criticalTopics = getCriticalTopicsForType(type);
 
   const foundTopics = (ragResults.designDocs || []).map((d: any) => (d.topic || '').toLowerCase());
   const missingCritical = criticalTopics.filter(topic =>

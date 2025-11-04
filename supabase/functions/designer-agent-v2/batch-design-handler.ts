@@ -334,14 +334,21 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
       );
     }
     
-    const { projectInfo, supply, circuits: inputCircuits, additionalPrompt, specialRequirements, installationConstraints } = body;
+    const { projectInfo, supply, circuits: inputCircuits, additionalPrompt, specialRequirements, installationConstraints, installationType } = body;
     const circuits = inputCircuits || [];
+    
+    // Extract installation type from multiple sources
+    const type = installationType || projectInfo?.installationType || 'domestic';
     
     // 2. Build query and search terms
     const query = buildDesignQuery(projectInfo, supply, circuits, specialRequirements || [], installationConstraints || []);
     const searchTerms = extractSearchTerms(query, circuits);
     
-    logger.info('Design query built', { circuitCount: circuits.length, searchTerms });
+    logger.info('Design query built', { 
+      circuitCount: circuits.length, 
+      searchTerms,
+      installationType: type 
+    });
     
     // 3. RAG search
     const ragStart = Date.now();
@@ -357,10 +364,13 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     
     let regulations: any[] = [];
     try {
-      const ragResults = await buildRAGSearches(query, searchTerms, openAiKey, supabase, logger);
+      const ragResults = await buildRAGSearches(query, searchTerms, openAiKey, supabase, logger, type);
       regulations = mergeRegulations(ragResults);
       timings.ragSearch = Date.now() - ragStart;
-      logger.info('RAG search complete', { regulationCount: regulations.length });
+      logger.info('RAG search complete', { 
+        regulationCount: regulations.length,
+        installationType: type 
+      });
     } catch (error) {
       logger.error('RAG search failed', { 
         error: error instanceof Error ? error.message : String(error),

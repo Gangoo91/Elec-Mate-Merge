@@ -155,6 +155,7 @@ export const useAIDesigner = () => {
                 earthingSystem: inputs.earthingSystem || 'TN-C-S'
               },
               additionalPrompt: inputs.additionalPrompt || '', // Move to root level
+              installationType: inputs.propertyType || 'domestic', // Pass installation type for context-aware RAG
               circuits: inputs.circuits.map(c => ({
                 name: c.name,
                 loadType: c.loadType,

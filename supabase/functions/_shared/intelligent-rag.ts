@@ -41,23 +41,52 @@ function buildContextEnrichedQuery(
  * IMPROVEMENT #2: Query Expansion Intelligence
  * Expands search terms with synonyms and electrical domain terms
  */
-function expandSearchTerms(query: string): string[] {
-  const synonyms: Record<string, string[]> = {
+function expandSearchTerms(
+  query: string,
+  installationType?: 'domestic' | 'commercial' | 'industrial'
+): string[] {
+  const baseExpansion: Record<string, string[]> = {
     'shower': ['electric shower', 'instantaneous water heater', 'high load', 'bathroom heating'],
     'socket': ['power outlet', 'ring main', 'radial circuit', '13A outlet', 'socket outlet'],
     'protection': ['overload', 'short circuit', 'fault protection', 'MCB', 'RCBO', 'RCD'],
     'cable': ['conductor', 'wiring', 'cable sizing', 'current capacity', 'wire'],
     'earth': ['ground', 'earthing', 'protective conductor', 'CPC', 'bonding'],
-    'voltage drop': ['volt drop', 'VD', 'voltage loss', 'cable sizing', 'mV/A/m', 'appendix 4'],
     'consumer unit': ['CU', 'distribution board', 'DB', 'fuse box', 'consumer board'],
     'lighting': ['light', 'illumination', 'luminaire', 'lamp', 'lighting circuit'],
     'cooker': ['cooking appliance', 'oven', 'hob', 'cooker circuit'],
-    'immersion': ['immersion heater', 'water heater', 'hot water'],
-    'ring': ['ring final', 'ring circuit', 'ring main', 'parallel paths', 'divide by 4', '÷4'],
-    'cpc': ['protective conductor', 'earth conductor', 'table 54.7', 'cpc sizing'],
-    'zs': ['earth fault loop', 'fault loop impedance', 'r1+r2', 'max zs'],
-    'calculation': ['formula', 'method', 'design', 'sizing', 'appendix'],
+    'immersion': ['immersion heater', 'water heater', 'hot water']
   };
+  
+  // Context-specific expansions
+  const contextExpansion: Record<string, Record<string, string[]>> = {
+    domestic: {
+      'socket': ['ring final', '433.1.204', 'rcd protection', '32a'],
+      'shower': ['electric shower', 'high load', 'isolator', 'pull cord'],
+      'lighting': ['lighting circuit', '3% voltage drop', '6a mcb'],
+      'ring': ['ring final', 'ring circuit', 'ring main', 'parallel paths', 'divide by 4', '÷4'],
+      'cpc': ['protective conductor', 'earth conductor', 'table 54.7', 'cpc sizing'],
+      'voltage drop': ['volt drop', 'VD', 'voltage loss', 'cable sizing', 'mV/A/m', 'appendix 4'],
+      'zs': ['earth fault loop', 'fault loop impedance', 'r1+r2', 'max zs'],
+      'calculation': ['formula', 'method', 'design', 'sizing', 'appendix']
+    },
+    commercial: {
+      'socket': ['radial circuit', 'diversity', 'three-phase'],
+      'lighting': ['emergency lighting', 'maintained', 'non-maintained', '560.'],
+      'fire': ['fire alarm', 'fire detection', '560.7'],
+      'emergency': ['emergency lighting', 'safety lighting', 'escape route'],
+      'diversity': ['maximum demand', 'load assessment', 'diversity factors']
+    },
+    industrial: {
+      'motor': ['motor circuit', '552.', 'dol starter', 'soft start'],
+      'socket': ['industrial socket', 'bs en 60309', '553.1.6'],
+      'power': ['high power', 'busbar', 'distribution', 'harmonics'],
+      'three-phase': ['3-phase', '400v', 'line voltage', 'balanced load'],
+      'harmonics': ['harmonic distortion', 'power factor', 'thd']
+    }
+  };
+  
+  const type = installationType || 'domestic';
+  const relevantExpansion = { ...baseExpansion, ...contextExpansion[type] };
   
   const terms = query.toLowerCase().split(/\s+/);
   const expanded = new Set(terms);
@@ -67,7 +96,7 @@ function expandSearchTerms(query: string): string[] {
   
   // Expand with synonyms
   terms.forEach(term => {
-    Object.entries(synonyms).forEach(([key, values]) => {
+    Object.entries(relevantExpansion).forEach(([key, values]) => {
       if (term.includes(key) || key.includes(term)) {
         values.forEach(v => expanded.add(v));
       }
@@ -81,77 +110,115 @@ function expandSearchTerms(query: string): string[] {
  * IMPROVEMENT #3: Regulation Re-ranking
  * Boosts critical regulations based on recency, safety importance
  */
-function reRankRegulations(regulations: any[]): any[] {
+function applyContextualBoosts(
+  regulations: any[], 
+  installationType: 'domestic' | 'commercial' | 'industrial'
+): any[] {
+  
   return regulations.map(reg => {
     let boostScore = 1.0;
     const regNumber = reg.regulation_number?.toLowerCase() || '';
     const content = reg.content?.toLowerCase() || '';
+    const topic = reg.topic?.toLowerCase() || '';
     
-    // PHASE 1: CRITICAL CALCULATION BOOSTS
-    
-    // Boost ring final circuit guidance (CRITICAL for parallel path calculations)
-    if (regNumber.includes('433.1.204') || 
-        content.includes('ring final') ||
-        content.includes('ring circuit')) {
-      boostScore *= 1.45; // +45% boost
+    // BASE BOOSTS (apply to all installation types)
+    if (regNumber.includes('appendix 4') || content.includes('mv/a/m')) {
+      boostScore *= 1.38; // Voltage drop tables needed everywhere
     }
     
-    // Boost Appendix 15 (ring final design methodology)
-    if ((regNumber.includes('appendix') && regNumber.includes('15')) ||
-        content.includes('appendix 15')) {
-      boostScore *= 1.50; // +50% boost (HIGHEST PRIORITY)
+    // DOMESTIC-SPECIFIC BOOSTS
+    if (installationType === 'domestic') {
+      if (regNumber.includes('433.1.204') || content.includes('ring final')) {
+        boostScore *= 1.50;
+      }
+      if (regNumber.includes('appendix 15') || topic.includes('ring final')) {
+        boostScore *= 1.55;
+      }
+      if (regNumber.includes('54.7') || content.includes('table 54.7')) {
+        boostScore *= 1.45;
+      }
+      if (regNumber.includes('411.3.3') || content.includes('socket-outlet')) {
+        boostScore *= 1.40;
+      }
+      if (regNumber.includes('701.') || regNumber.includes('702.')) {
+        boostScore *= 1.35;
+      }
     }
     
-    // Boost Table 54.7 (CPC sizing) - CRITICAL for compliance
-    if (regNumber.includes('54.7') ||
-        regNumber.includes('table 54') ||
-        content.includes('table 54.7')) {
-      boostScore *= 1.40; // +40% boost
+    // COMMERCIAL-SPECIFIC BOOSTS
+    if (installationType === 'commercial') {
+      if (regNumber.includes('560.') || content.includes('emergency lighting')) {
+        boostScore *= 1.50;
+      }
+      if (regNumber.includes('560.7') || content.includes('fire alarm')) {
+        boostScore *= 1.48;
+      }
+      if (content.includes('diversity') || topic.includes('demand')) {
+        boostScore *= 1.42;
+      }
+      if (content.includes('three-phase') || content.includes('3-phase')) {
+        boostScore *= 1.38;
+      }
+      if (content.includes('discrimination') || content.includes('selectivity')) {
+        boostScore *= 1.35;
+      }
     }
     
-    // Boost Appendix 4 (conductor resistances & mV/A/m)
-    if ((regNumber.includes('appendix') && regNumber.includes('4')) ||
-        content.includes('appendix 4') ||
-        content.includes('mv/a/m') ||
-        content.includes('conductor resistance')) {
-      boostScore *= 1.38; // +38% boost
+    // INDUSTRIAL-SPECIFIC BOOSTS
+    if (installationType === 'industrial') {
+      if (regNumber.includes('552.') || content.includes('motor')) {
+        boostScore *= 1.55;
+      }
+      if (content.includes('busbar') || content.includes('high power')) {
+        boostScore *= 1.50;
+      }
+      if (regNumber.includes('553.1.6') || content.includes('industrial socket')) {
+        boostScore *= 1.48;
+      }
+      if (content.includes('three-phase') || content.includes('400v')) {
+        boostScore *= 1.45;
+      }
+      if (content.includes('harmonic') || content.includes('power factor')) {
+        boostScore *= 1.40;
+      }
+      if (content.includes('ip rating') || content.includes('ingress protection')) {
+        boostScore *= 1.38;
+      }
     }
     
-    // Boost Zs calculation guidance
-    if (content.includes('zs =') ||
-        content.includes('earth fault loop') ||
-        content.includes('r1+r2')) {
-      boostScore *= 1.35; // +35% boost
-    }
+    // Content-based boosts for design knowledge
+    if (content.includes('÷ 4') || content.includes('divide by 4')) boostScore *= 1.50;
+    if (content.includes('ring final') && content.includes('calculation')) boostScore *= 1.45;
+    if (content.includes('table 54.7') || topic.includes('cpc')) boostScore *= 1.40;
+    if (content.includes('mv/a/m') || content.includes('voltage drop table')) boostScore *= 1.38;
+    if (content.includes('zs =') || content.includes('r1+r2')) boostScore *= 1.35;
     
-    // EXISTING BOOSTS (kept for compatibility)
-    
-    // Boost Amendment 3:2024 regulations (most recent)
+    // Amendment 3 boost
     if (reg.amendment?.includes('A3:2024') || reg.amendment?.includes('Amendment 3')) {
       boostScore *= 1.3;
     }
     
-    // Boost protective regulations (Chapter 41, 43)
+    // Protective regulations
     if (reg.regulation_number?.match(/^(41|43)/)) {
       boostScore *= 1.25;
     }
     
-    // Boost voltage drop (525) - critical for cable sizing
+    // Voltage drop regulations
     if (reg.regulation_number?.includes('525')) {
       boostScore *= 1.2;
     }
     
-    // Boost earthing and bonding (Chapter 54)
+    // Earthing and bonding
     if (reg.regulation_number?.match(/^54/)) {
       boostScore *= 1.15;
     }
     
-    // Boost RCD protection regulations
+    // RCD protection
     if (reg.content?.toLowerCase().includes('rcd') || reg.regulation_number?.includes('531')) {
       boostScore *= 1.15;
     }
     
-    // Boost special locations (Part 7) when relevant
+    // Special locations
     if (reg.regulation_number?.match(/^70/)) {
       boostScore *= 1.1;
     }
@@ -169,6 +236,7 @@ export interface HybridSearchParams {
   searchTerms: string[];
   expandedQuery: string;
   context?: ContextEnvelope;
+  installationType?: 'domestic' | 'commercial' | 'industrial';
 }
 
 export interface HybridSearchResult {
@@ -279,7 +347,7 @@ async function vectorSearch(
       }),
       
       // Keyword extraction preparation (50ms) - runs in parallel
-      Promise.resolve(expandSearchTerms(params.expandedQuery))
+      Promise.resolve(expandSearchTerms(params.expandedQuery, params.installationType))
     ]);
 
     embedding = embeddingData.data[0].embedding;
@@ -545,9 +613,13 @@ async function vectorSearchWithEmbedding(
     }
   }
 
+  // Apply contextual boosts to all results
+  const boostedRegs = applyContextualBoosts(resultMap.bs7671 || [], params.installationType || 'domestic');
+  const boostedDesign = applyContextualBoosts(resultMap.design || [], params.installationType || 'domestic');
+
   return {
-    regulations: resultMap.bs7671 || [],
-    designDocs: resultMap.design || [],
+    regulations: boostedRegs,
+    designDocs: boostedDesign,
     healthSafetyDocs: resultMap.health_safety || [],
     installationDocs: resultMap.installation || [],
     maintenanceDocs: resultMap.maintenance || [],
