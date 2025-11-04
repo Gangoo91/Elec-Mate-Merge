@@ -26,17 +26,19 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification }: Ci
   const status = !isCompliant ? 'fail' : hasWarnings ? 'warning' : 'pass';
 
   return (
-    <Card className="bg-card border-elec-yellow/30 overflow-hidden shadow-lg shadow-elec-yellow/5 transition-all duration-300 hover:shadow-elec-yellow/10">
+    <Card className="bg-card border-elec-yellow/30 overflow-hidden shadow-lg shadow-elec-yellow/5 transition-all duration-300 hover:shadow-elec-yellow/10 mx-auto max-w-2xl">
       {/* Header */}
-      <div className="bg-gradient-to-br from-elec-yellow/15 via-elec-yellow/10 to-transparent border-b border-elec-yellow/20 p-4">
+      <div className="bg-gradient-to-br from-elec-yellow/15 via-elec-yellow/10 to-transparent border-b border-elec-yellow/20 p-5 sm:p-6">
         <div className="flex items-start justify-between mb-2">
           <div className="flex-1">
-            <div className="flex items-center gap-2 mb-1">
+            <div className="flex items-center gap-2 mb-2">
               <Zap className="h-5 w-5 text-elec-yellow" />
-              <h3 className="text-base font-bold text-elec-light">Way {circuit.circuitNumber}</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-elec-light">Way {circuit.circuitNumber || 'N/A'}</h3>
             </div>
-            <p className="text-sm text-elec-light/80">{circuit.name}</p>
-            <p className="text-xs text-elec-light/60 mt-1 capitalize">{circuit.loadType.replace('-', ' ')}</p>
+            <p className="text-base sm:text-lg font-semibold text-elec-light/90">{circuit.name}</p>
+            <p className="text-sm text-elec-light/60 mt-1 capitalize">
+              {circuit.loadType.replace('-', ' ')}
+            </p>
           </div>
           <Badge 
             variant={status === 'pass' ? 'default' : status === 'warning' ? 'outline' : 'destructive'}
@@ -55,51 +57,51 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification }: Ci
       </div>
 
       {/* Protection Device - Hero Display */}
-      <div className="bg-gradient-to-b from-elec-dark/40 to-transparent p-6 text-center border-b border-elec-yellow/10">
-        <Shield className="h-12 w-12 text-elec-yellow/70 mx-auto mb-3" />
-        <div className="text-2xl font-bold text-elec-light mb-1">
+      <div className="bg-gradient-to-b from-elec-dark/40 to-transparent p-6 sm:p-8 text-center border-b border-elec-yellow/10">
+        <Shield className="h-14 w-14 sm:h-16 sm:w-16 text-elec-yellow/70 mx-auto mb-4" />
+        <div className="text-3xl sm:text-4xl font-bold text-elec-light mb-2">
           {circuit.protectionDevice.rating}A Type {circuit.protectionDevice.curve}
         </div>
-        <div className="text-sm text-elec-light/60">
+        <div className="text-base sm:text-lg text-elec-light/60 mb-2">
           {circuit.protectionDevice.type} · {circuit.protectionDevice.kaRating}kA
         </div>
         {circuit.rcdProtected && (
-          <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 mt-3">
-            <Shield className="h-3 w-3 mr-1" />
+          <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 mt-3 px-4 py-1.5">
+            <Shield className="h-3.5 w-3.5 mr-1.5" />
             30mA RCD
           </Badge>
         )}
       </div>
 
       {/* Key Specifications */}
-      <div className="p-4 space-y-3">
+      <div className="p-4 sm:p-6 space-y-3">
         {/* Load */}
-        <div className="flex items-center justify-between p-3 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
-          <div className="flex items-center gap-2">
-            <Zap className="h-4 w-4 text-elec-yellow/70" />
-            <span className="text-sm text-elec-light/70">Load</span>
+        <div className="flex items-center justify-between p-4 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
+          <div className="flex items-center gap-3">
+            <Zap className="h-5 w-5 text-elec-yellow/70" />
+            <span className="text-base sm:text-lg text-elec-light/70">Load</span>
           </div>
           <div className="text-right">
-            <div className="text-base font-semibold text-elec-light">
+            <div className="text-lg sm:text-xl font-semibold text-elec-light">
               {(circuit.loadPower / 1000).toFixed(1)}kW
             </div>
-            <div className="text-xs text-elec-light/60">
+            <div className="text-sm text-elec-light/60">
               {fmt(circuit.designCurrent, 1)}A
             </div>
           </div>
         </div>
 
         {/* Cable */}
-        <div className="flex items-center justify-between p-3 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
-          <div className="flex items-center gap-2">
-            <Cable className="h-4 w-4 text-elec-yellow/70" />
-            <span className="text-sm text-elec-light/70">Cable</span>
+        <div className="flex items-center justify-between p-4 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
+          <div className="flex items-center gap-3">
+            <Cable className="h-5 w-5 text-elec-yellow/70" />
+            <span className="text-base sm:text-lg text-elec-light/70">Cable</span>
           </div>
           <div className="text-right">
-            <div className="text-base font-semibold text-elec-light">
+            <div className="text-lg sm:text-xl font-semibold text-elec-light">
               {circuit.cableSize}mm² / {circuit.cpcSize}mm²
             </div>
-            <div className="text-xs text-elec-light/60">
+            <div className="text-sm text-elec-light/60">
               {circuit.cableLength}m length
             </div>
           </div>
@@ -144,34 +146,34 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification }: Ci
         )}
 
         {/* Voltage Drop */}
-        <div className="flex items-center justify-between p-3 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
-          <div className="flex items-center gap-2">
-            <TrendingDown className="h-4 w-4 text-elec-yellow/70" />
-            <span className="text-sm text-elec-light/70">Voltage Drop</span>
+        <div className="flex items-center justify-between p-4 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
+          <div className="flex items-center gap-3">
+            <TrendingDown className="h-5 w-5 text-elec-yellow/70" />
+            <span className="text-base sm:text-lg text-elec-light/70">Voltage Drop</span>
           </div>
           <div className="text-right">
-            <div className={`text-base font-semibold ${vdCompliant ? 'text-green-400' : 'text-red-400'}`}>
+            <div className={`text-lg sm:text-xl font-semibold ${vdCompliant ? 'text-green-400' : 'text-red-400'}`}>
               {fmt(circuit.calculations?.voltageDrop?.percent, 2)}%
               {vdCompliant ? ' ✓' : ' ✗'}
             </div>
-            <div className="text-xs text-elec-light/60">
+            <div className="text-sm text-elec-light/60">
               Limit: {circuit.calculations?.voltageDrop?.limit ?? 5}%
             </div>
           </div>
         </div>
 
         {/* Earth Loop Impedance */}
-        <div className="flex items-center justify-between p-3 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
-          <div className="flex items-center gap-2">
-            <Shield className="h-4 w-4 text-elec-yellow/70" />
-            <span className="text-sm text-elec-light/70">Earth Loop (Zs)</span>
+        <div className="flex items-center justify-between p-4 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
+          <div className="flex items-center gap-3">
+            <Shield className="h-5 w-5 text-elec-yellow/70" />
+            <span className="text-base sm:text-lg text-elec-light/70">Earth Loop (Zs)</span>
           </div>
           <div className="text-right">
-            <div className={`text-base font-semibold ${zsCompliant ? 'text-green-400' : 'text-red-400'}`}>
+            <div className={`text-lg sm:text-xl font-semibold ${zsCompliant ? 'text-green-400' : 'text-red-400'}`}>
               {fmt(circuit.calculations?.zs, 2)}Ω
               {zsCompliant ? ' ✓' : ' ✗'}
             </div>
-            <div className="text-xs text-elec-light/60">
+            <div className="text-sm text-elec-light/60">
               Max: {fmt(circuit.calculations?.maxZs, 2)}Ω
             </div>
           </div>

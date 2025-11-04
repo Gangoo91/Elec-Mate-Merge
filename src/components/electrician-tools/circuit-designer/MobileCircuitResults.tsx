@@ -99,7 +99,7 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
       </div>
 
       {/* Enhanced Circuit Selector */}
-      <div className="px-4 py-4 border-b border-elec-yellow/10 bg-gradient-to-b from-elec-dark/50 to-transparent">
+      <div className="px-3 sm:px-4 py-4 border-b border-elec-yellow/10 bg-gradient-to-b from-elec-dark/50 to-transparent">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-semibold text-elec-light flex items-center gap-2">
             <Zap className="h-4 w-4 text-elec-yellow" />
@@ -124,7 +124,7 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
         </div>
 
         {/* Scrollable Circuit Pills */}
-        <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar">
+        <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar snap-x snap-mandatory">
           {design.circuits.map((circuit, idx) => {
             const isActive = idx === selectedCircuitIndex;
             const status = circuit.warnings?.length > 0 ? 'warning' : 'pass';
@@ -136,14 +136,14 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
                   setSelectedCircuitIndex(idx);
                   if ('vibrate' in navigator) navigator.vibrate(10);
                 }}
-                className={`flex-shrink-0 px-4 py-2 rounded-lg border-2 transition-all touch-manipulation ${
+                className={`flex-shrink-0 px-5 py-2.5 rounded-lg border-2 transition-all touch-manipulation snap-center ${
                   isActive 
                     ? 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow font-semibold shadow-lg shadow-elec-yellow/20' 
                     : 'bg-elec-dark/60 border-elec-yellow/20 text-elec-light/60 hover:border-elec-yellow/40'
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-xs">Way {circuit.circuitNumber}</span>
+                  <span className="text-sm font-semibold">Way {idx + 1}</span>
                   {status === 'warning' && <AlertTriangle className="h-3 w-3 text-amber-400" />}
                 </div>
               </button>
@@ -153,7 +153,7 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
       </div>
 
       {/* Main Circuit Card - Swipeable */}
-      <div {...swipeHandlers} className="px-4 mb-6">
+      <div {...swipeHandlers} className="px-2 sm:px-4 mb-6">
         <CircuitCard 
           circuit={selectedCircuit}
           onViewWorkings={() => setShowWorkingsSheet(true)}
