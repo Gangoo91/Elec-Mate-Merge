@@ -36,16 +36,32 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   const [selectedCircuit, setSelectedCircuit] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
 
-  // Debug: Log on mount
+  // Debug: Log on mount and validate circuits
   useEffect(() => {
+    const currentCircuit = design.circuits?.[selectedCircuit];
+    const hasValidCircuits = design.circuits?.every(c => 
+      typeof c.cableSize === 'number' && 
+      typeof c.cpcSize === 'number' &&
+      c.protectionDevice &&
+      c.calculations &&
+      c.justifications
+    );
+    
     console.log('📊 DesignReviewEditor mounted:', {
       circuitCount: design.circuits?.length,
       circuits: design.circuits,
       selectedCircuit,
-      currentCircuit: design.circuits?.[selectedCircuit],
-      hasDesign: !!design
+      currentCircuit,
+      hasDesign: !!design,
+      hasValidCircuits
     });
-  }, []);
+    
+    // Auto-reset to first circuit if current selection is invalid
+    if (currentCircuit === undefined && design.circuits?.length > 0) {
+      console.warn('⚠️ Selected circuit undefined on mount, resetting to 0');
+      setSelectedCircuit(0);
+    }
+  }, [design.circuits, selectedCircuit]);
   const [exportSuccess, setExportSuccess] = useState(false);
   const [exportId, setExportId] = useState('');
   const [showJsonPreview, setShowJsonPreview] = useState(false);
@@ -881,8 +897,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       </td>
                       <td className="py-3 px-2">
                         <div className="text-xs">
-                          <div className="font-medium">{circuit.cableSize}mm²</div>
-                          <div className="text-muted-foreground">{circuit.cableLength}m</div>
+                          <div className="font-medium">{circuit.cableSize ?? 'N/A'}mm²</div>
+                          <div className="text-muted-foreground">{circuit.cableLength ?? 0}m</div>
                         </div>
                       </td>
                       <td className="py-3 px-2">
@@ -917,7 +933,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       </Card>
 
       {/* Circuit Detail Card */}
-      {currentCircuit && (currentCircuit.cableSize || currentCircuit.cableSize === 0) && currentCircuit.protectionDevice && currentCircuit.calculations ? (
+      {currentCircuit && 
+       typeof currentCircuit.cableSize === 'number' && 
+       currentCircuit.protectionDevice && 
+       currentCircuit.calculations && 
+       currentCircuit.justifications ? (
         <Card className="p-6">
           <div className="space-y-6">
             {/* Header */}
@@ -1159,13 +1179,13 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               <div className="space-y-2 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Cable Sizing:</p>
-                  <p className="text-white/70">{currentCircuit.justifications.cableSize}</p>
+                  <p className="text-white/70">{currentCircuit.justifications?.cableSize ?? 'No justification provided'}</p>
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Protection:</p>
-                  <p className="text-white/70">{currentCircuit.justifications.protection}</p>
+                  <p className="text-white/70">{currentCircuit.justifications?.protection ?? 'No justification provided'}</p>
                 </div>
-                {currentCircuit.justifications.rcd && (
+                {currentCircuit.justifications?.rcd && (
                   <div>
                     <p className="font-medium text-white mb-1">RCD Protection:</p>
                     <p className="text-white/70">{currentCircuit.justifications.rcd}</p>
