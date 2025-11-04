@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -500,25 +501,41 @@ ${ragContext}
 
 Provide comprehensive maintenance instructions following the tool schema structure. Be specific with test values, procedures, and BS 7671 references.`;
 
-    // Call AI with tool calling
+    // Call AI with tool calling (with 6-minute timeout protection)
     console.log('🤖 Calling AI with maintenance tool schema...');
 
-    const aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openaiApiKey}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'gpt-5-mini',  // Upgraded for better structured output
-        messages: [
-          { role: 'system', content: MAINTENANCE_SYSTEM_PROMPT },
-          { role: 'user', content: userMessage }
-        ],
-        tools: [{ type: 'function', function: MAINTENANCE_TOOL_SCHEMA }],
-        tool_choice: { type: 'function', function: { name: 'provide_maintenance_guidance' } }
-      })
-    });
+    let aiResponse;
+    try {
+      aiResponse = await withTimeout(
+        fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${openaiApiKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: 'gpt-5-mini',  // Upgraded for better structured output
+            messages: [
+              { role: 'system', content: MAINTENANCE_SYSTEM_PROMPT },
+              { role: 'user', content: userMessage }
+            ],
+            tools: [{ type: 'function', function: MAINTENANCE_TOOL_SCHEMA }],
+            tool_choice: { type: 'function', function: { name: 'provide_maintenance_guidance' } }
+          })
+        }),
+        Timeouts.PRACTICAL_WORK,  // 6 minutes - maximum timeout for GPT-5 Mini with large outputs
+        'OpenAI maintenance guidance generation'
+      );
+    } catch (error: any) {
+      if (error.name === 'TimeoutError') {
+        console.error('⏱️ AI call timed out after 6 minutes');
+        throw new Error(
+          'Maintenance generation took too long. This can happen with very complex equipment in Full Detail mode. ' +
+          'Try: 1) Using Quick mode for faster results, 2) Simplifying the equipment description, or 3) Breaking into smaller maintenance tasks.'
+        );
+      }
+      throw error;
+    }
 
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
