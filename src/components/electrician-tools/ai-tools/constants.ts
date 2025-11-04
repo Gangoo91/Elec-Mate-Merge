@@ -1,4 +1,4 @@
-import { Brain, Search, Wrench, AlertTriangle, CheckCircle, Megaphone, Calendar, PenTool } from "lucide-react";
+import { Brain, Search, Wrench, AlertTriangle, CheckCircle, Megaphone } from "lucide-react";
 
 export const toolOptions = [
   { 
@@ -32,21 +32,9 @@ export const toolOptions = [
     description: "BS 7671 compliance check with pass/fail assessment"
   },
   { 
-    value: "maintenance-advisor", 
-    label: "Maintenance Advisor", 
-    icon: Calendar,
-    description: "Generate equipment-specific maintenance schedules from GN3 guidance"
-  },
-  { 
     value: "explainer", 
     label: "Client Explainer", 
     icon: Megaphone,
     description: "Convert technical findings into client-friendly explanations"
-  },
-  { 
-    value: "diagram-builder", 
-    label: "Circuit Diagram Builder", 
-    icon: PenTool,
-    description: "Draw floor plans, circuit layouts & installation diagrams with drag-and-drop symbols"
   }
 ];
