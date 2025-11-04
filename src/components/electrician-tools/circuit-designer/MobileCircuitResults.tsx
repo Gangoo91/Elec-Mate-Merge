@@ -98,8 +98,8 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
         </div>
       </div>
 
-      {/* Circuit Selector Carousel */}
-      <div className="px-4 mb-4">
+      {/* Enhanced Circuit Selector */}
+      <div className="px-4 py-4 border-b border-elec-yellow/10 bg-gradient-to-b from-elec-dark/50 to-transparent">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-semibold text-elec-light flex items-center gap-2">
             <Zap className="h-4 w-4 text-elec-yellow" />
@@ -109,48 +109,46 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
             <button
               onClick={() => navigateCircuit('prev')}
               disabled={selectedCircuitIndex === 0}
-              className="p-2 rounded-lg bg-card border border-elec-yellow/30 disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation"
-              aria-label="Previous circuit"
+              className="p-2 bg-elec-dark border border-elec-yellow/30 rounded-lg hover:bg-elec-yellow/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all touch-manipulation"
             >
-              <ArrowLeft className="h-4 w-4 text-elec-yellow" />
+              <ArrowLeft className="h-4 w-4 text-elec-light" />
             </button>
             <button
               onClick={() => navigateCircuit('next')}
               disabled={selectedCircuitIndex === design.circuits.length - 1}
-              className="p-2 rounded-lg bg-card border border-elec-yellow/30 disabled:opacity-30 disabled:cursor-not-allowed touch-manipulation"
-              aria-label="Next circuit"
+              className="p-2 bg-elec-dark border border-elec-yellow/30 rounded-lg hover:bg-elec-yellow/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all touch-manipulation"
             >
-              <ArrowRight className="h-4 w-4 text-elec-yellow" />
+              <ArrowRight className="h-4 w-4 text-elec-light" />
             </button>
           </div>
         </div>
 
-        {/* Carousel Dots */}
-        <div className="flex items-center justify-center gap-2 overflow-x-auto pb-2">
-          {design.circuits.map((circuit, index) => (
-            <button
-              key={circuit.circuitNumber}
-              onClick={() => {
-                setSelectedCircuitIndex(index);
-                if ('vibrate' in navigator) navigator.vibrate(10);
-              }}
-              className={`flex flex-col items-center gap-1 min-w-[60px] p-2 rounded-lg transition-all touch-manipulation ${
-                index === selectedCircuitIndex 
-                  ? 'bg-elec-yellow/20 border border-elec-yellow' 
-                  : 'bg-card border border-elec-yellow/20'
-              }`}
-              aria-label={`Go to circuit ${index + 1}`}
-            >
-              <span className={`text-xs font-medium ${
-                index === selectedCircuitIndex ? 'text-elec-yellow' : 'text-elec-light/60'
-              }`}>
-                C{circuit.circuitNumber}
-              </span>
-              <div className={`h-1.5 w-1.5 rounded-full ${
-                index === selectedCircuitIndex ? 'bg-elec-yellow' : 'bg-elec-light/30'
-              }`} />
-            </button>
-          ))}
+        {/* Scrollable Circuit Pills */}
+        <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar">
+          {design.circuits.map((circuit, idx) => {
+            const isActive = idx === selectedCircuitIndex;
+            const status = circuit.warnings?.length > 0 ? 'warning' : 'pass';
+            
+            return (
+              <button
+                key={idx}
+                onClick={() => {
+                  setSelectedCircuitIndex(idx);
+                  if ('vibrate' in navigator) navigator.vibrate(10);
+                }}
+                className={`flex-shrink-0 px-4 py-2 rounded-lg border-2 transition-all touch-manipulation ${
+                  isActive 
+                    ? 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow font-semibold shadow-lg shadow-elec-yellow/20' 
+                    : 'bg-elec-dark/60 border-elec-yellow/20 text-elec-light/60 hover:border-elec-yellow/40'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-xs">Way {circuit.circuitNumber}</span>
+                  {status === 'warning' && <AlertTriangle className="h-3 w-3 text-amber-400" />}
+                </div>
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -163,9 +161,9 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
         />
       </div>
 
-      {/* Quick Actions - Fixed at bottom */}
-      <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-elec-dark via-elec-dark to-elec-dark/0 p-4 pt-8">
-        <div className="grid grid-cols-2 gap-3 max-w-2xl mx-auto">
+      {/* Action Panel - Scrollable */}
+      <div className="px-4 pb-6 space-y-3">
+        <div className="grid grid-cols-2 gap-3">
           <MobileButton
             variant="elec-outline"
             size="wide"
@@ -183,6 +181,17 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
             Export PDF
           </MobileButton>
         </div>
+        
+        {/* Additional Quick Actions */}
+        <MobileButton
+          variant="outline"
+          size="wide"
+          icon={<FileText className="h-4 w-4" />}
+          onClick={() => setShowJustificationSheet(true)}
+          className="w-full border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
+        >
+          View Full Justifications
+        </MobileButton>
       </div>
 
       {/* Bottom Sheets */}

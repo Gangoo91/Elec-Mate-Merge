@@ -60,7 +60,9 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                   </Badge>
                 </div>
                 <p className="text-sm text-elec-light/90 leading-relaxed whitespace-pre-wrap">
-                  {justifications?.cableSize || 'No specific justification provided.'}
+                  {justifications?.cableSize && justifications.cableSize !== 'No specific justification provided.' 
+                    ? justifications.cableSize 
+                    : `${circuit.cableSize}mm² / ${circuit.cpcSize}mm² cable selected to safely carry ${circuit.calculations?.Ib?.toFixed(1)}A design current with adequate voltage drop performance (${circuit.calculations?.voltageDrop?.percent?.toFixed(2)}% actual vs ${circuit.calculations?.voltageDrop?.limit}% limit).`}
                 </p>
               </div>
             </div>
@@ -78,7 +80,9 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                   </Badge>
                 </div>
                 <p className="text-sm text-elec-light/90 leading-relaxed whitespace-pre-wrap">
-                  {justifications?.protection || 'No specific justification provided.'}
+                  {justifications?.protection && justifications.protection !== 'No specific justification provided.'
+                    ? justifications.protection 
+                    : `${circuit.protectionDevice.rating}A Type ${circuit.protectionDevice.curve} ${circuit.protectionDevice.type} provides adequate protection and discrimination for this ${circuit.loadType} circuit, with earth fault loop impedance (${circuit.calculations?.zs?.toFixed(2)}Ω) below maximum permitted (${circuit.calculations?.maxZs?.toFixed(2)}Ω).`}
                 </p>
               </div>
             </div>

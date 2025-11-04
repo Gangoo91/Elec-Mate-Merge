@@ -26,9 +26,9 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification }: Ci
   const status = !isCompliant ? 'fail' : hasWarnings ? 'warning' : 'pass';
 
   return (
-    <Card className="bg-card border-elec-yellow/30 overflow-hidden">
+    <Card className="bg-card border-elec-yellow/30 overflow-hidden shadow-lg shadow-elec-yellow/5 transition-all duration-300 hover:shadow-elec-yellow/10">
       {/* Header */}
-      <div className="bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5 border-b border-elec-yellow/20 p-4">
+      <div className="bg-gradient-to-br from-elec-yellow/15 via-elec-yellow/10 to-transparent border-b border-elec-yellow/20 p-4">
         <div className="flex items-start justify-between mb-2">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
@@ -41,10 +41,10 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification }: Ci
           <Badge 
             variant={status === 'pass' ? 'default' : status === 'warning' ? 'outline' : 'destructive'}
             className={`${
-              status === 'pass' ? 'bg-green-500/20 text-green-400 border-green-500/30' :
+              status === 'pass' ? 'bg-green-500/20 text-green-400 border-green-500/30 animate-pulse-subtle' :
               status === 'warning' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' :
-              'bg-red-500/20 text-red-400 border-red-500/30'
-            } h-7`}
+              'bg-red-500/20 text-red-400 border-red-500/30 animate-pulse-subtle'
+            } h-7 transition-all duration-300`}
           >
             {status === 'pass' && <CheckCircle2 className="h-3 w-3 mr-1" />}
             {status === 'warning' && <AlertTriangle className="h-3 w-3 mr-1" />}
@@ -105,6 +105,44 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification }: Ci
           </div>
         </div>
 
+        {/* Inline Justification Preview - Cable */}
+        {circuit.justifications?.cableSize && circuit.justifications.cableSize !== 'No specific justification provided.' && (
+          <div className="p-3 bg-elec-yellow/5 rounded-lg border border-elec-yellow/20">
+            <div className="flex items-center gap-2 mb-2">
+              <FileText className="h-3.5 w-3.5 text-elec-yellow/80" />
+              <span className="text-xs font-semibold text-elec-light/70">Why this cable size?</span>
+            </div>
+            <p className="text-xs text-elec-light/70 leading-relaxed line-clamp-3">
+              {circuit.justifications.cableSize}
+            </p>
+            <button
+              onClick={onViewJustification}
+              className="text-xs text-elec-yellow hover:text-elec-yellow/80 mt-2 underline"
+            >
+              See full justification →
+            </button>
+          </div>
+        )}
+
+        {/* Inline Justification Preview - Protection */}
+        {circuit.justifications?.protection && circuit.justifications.protection !== 'No specific justification provided.' && (
+          <div className="p-3 bg-blue-500/5 rounded-lg border border-blue-500/20">
+            <div className="flex items-center gap-2 mb-2">
+              <Shield className="h-3.5 w-3.5 text-blue-400/80" />
+              <span className="text-xs font-semibold text-blue-100/70">Why this protection device?</span>
+            </div>
+            <p className="text-xs text-blue-100/70 leading-relaxed line-clamp-3">
+              {circuit.justifications.protection}
+            </p>
+            <button
+              onClick={onViewJustification}
+              className="text-xs text-blue-400 hover:text-blue-400/80 mt-2 underline"
+            >
+              See full justification →
+            </button>
+          </div>
+        )}
+
         {/* Voltage Drop */}
         <div className="flex items-center justify-between p-3 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
           <div className="flex items-center gap-2">
@@ -157,25 +195,16 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification }: Ci
         )}
       </div>
 
-      {/* Action Buttons */}
-      <div className="p-4 pt-0 grid grid-cols-2 gap-3">
+      {/* Single Action - More Details */}
+      <div className="p-4 pt-2 border-t border-elec-yellow/10">
         <MobileButton
-          variant="outline"
+          variant="elec-outline"
           size="default"
           icon={<Calculator className="h-4 w-4" />}
           onClick={onViewWorkings}
-          className="border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
+          className="w-full border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
         >
-          Workings
-        </MobileButton>
-        <MobileButton
-          variant="outline"
-          size="default"
-          icon={<FileText className="h-4 w-4" />}
-          onClick={onViewJustification}
-          className="border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
-        >
-          Why?
+          View Detailed Calculations
         </MobileButton>
       </div>
     </Card>

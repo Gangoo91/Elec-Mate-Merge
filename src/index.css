@@ -393,11 +393,29 @@
       margin: 0 auto;
     }
     
-    /* Ultra-wide: 1600px+ (Maximum 4 columns to maintain readability) */
+  /* Ultra-wide: 1600px+ (Maximum 4 columns to maintain readability) */
     @media (min-width: 1600px) {
       grid-template-columns: repeat(4, 1fr);
       gap: 3rem; /* 48px */
     }
+  }
+
+  @keyframes pulse-subtle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.85; }
+  }
+
+  .animate-pulse-subtle {
+    animation: pulse-subtle 3s ease-in-out infinite;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 }
 
