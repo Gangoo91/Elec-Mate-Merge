@@ -363,10 +363,10 @@ export const useAIDesigner = () => {
       setProgressWithPersistence({ stage: 8, message: 'Design complete!', percent: 100 });
       
       // Validate design structure before accepting
-      const hasInvalidCircuits = data.design.circuits.some((c: any) => !c.protectionDevice);
+      const hasInvalidCircuits = data.circuits.some((c: any) => !c.protectionDevice);
       if (hasInvalidCircuits) {
         console.warn('⚠️ Some circuits missing protection device data, applying defaults');
-        data.design.circuits = data.design.circuits.map((c: any) => ({
+        data.circuits = data.circuits.map((c: any) => ({
           ...c,
           protectionDevice: c.protectionDevice || {
             type: 'MCB',
@@ -378,7 +378,7 @@ export const useAIDesigner = () => {
       }
       
       // Validate calculations structure
-      const hasInvalidCalculations = data.design.circuits.some((c: any) => 
+      const hasInvalidCalculations = data.circuits.some((c: any) => 
         !c.calculations || 
         typeof c.calculations.Ib !== 'number' ||
         !c.calculations.voltageDrop
@@ -386,7 +386,7 @@ export const useAIDesigner = () => {
       
       if (hasInvalidCalculations) {
         console.warn('⚠️ Some circuits missing calculation data, applying defaults');
-        data.design.circuits = data.design.circuits.map((c: any) => {
+        data.circuits = data.circuits.map((c: any) => {
           const Ib = c.designCurrent || c.calculations?.Ib || (c.loadPower || 0) / (c.voltage || 230);
           return {
             ...c,
@@ -410,11 +410,34 @@ export const useAIDesigner = () => {
         });
       }
       
-      console.log('✅ Design generated successfully', data.design);
-      setDesignData(data.design);
+      // Wrap backend response into InstallationDesign format
+      const design: InstallationDesign = {
+        projectName: data.projectInfo?.name || inputs.projectName,
+        location: data.projectInfo?.location || '',
+        installationType: data.projectInfo?.installationType || inputs.propertyType,
+        totalLoad: data.circuits.reduce((sum: number, c: any) => sum + (c.loadPower || 0), 0),
+        diversityApplied: false,
+        circuits: data.circuits,
+        consumerUnit: {
+          type: 'main-switch',
+          mainSwitchRating: inputs.mainSwitchRating || 100,
+          incomingSupply: {
+            voltage: data.supply?.voltage || inputs.voltage || 230,
+            phases: data.supply?.phases || inputs.phases || 'single',
+            incomingPFC: (data.supply?.pfc || inputs.pscc || 3500) * 1000,
+            Ze: data.supply?.ze || inputs.ze || 0.35,
+            earthingSystem: data.supply?.earthingSystem || inputs.earthingSystem || 'TN-C-S'
+          }
+        },
+        materials: [],
+        practicalGuidance: []
+      };
+      
+      console.log('✅ Design generated successfully', design);
+      setDesignData(design);
 
       toast.success('Design generated successfully', {
-        description: `${data.design.circuits.length} circuits designed and verified`
+        description: `${design.circuits.length} circuits designed and verified`
       });
 
       // Hold at 100% briefly before clearing

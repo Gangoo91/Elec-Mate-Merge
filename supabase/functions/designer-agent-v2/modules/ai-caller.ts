@@ -23,8 +23,7 @@ export async function callOpenAIWithRetry(
     const response = await callOpenAI(
       {
         messages,
-        model: 'gpt-5-mini',
-        temperature: 0.3,
+        model: 'gpt-5-mini-2025-08-07',
         max_tokens: 24000,
         tools,
         tool_choice

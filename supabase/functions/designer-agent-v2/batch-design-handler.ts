@@ -436,6 +436,36 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
       // Continue with circuits as-is if validation fails
     }
     
+    // Check for critical validation errors
+    if (validationResult && !validationResult.passed && validationResult.errors.length > 0) {
+      const criticalErrors = validationResult.errors.filter(e => e.severity === 'critical');
+      
+      if (criticalErrors.length > 0) {
+        logger.error('Design validation failed with critical errors', {
+          errorCount: criticalErrors.length,
+          errors: criticalErrors
+        });
+        
+        return new CircuitDesignError(
+          'NON_COMPLIANT_DESIGN',
+          `Design contains ${criticalErrors.length} BS 7671 compliance error(s)`,
+          {
+            validationErrors: criticalErrors.map(e => ({
+              circuit: e.circuitName,
+              message: e.message,
+              regulation: e.regulation || 'N/A',
+              suggestedFix: e.suggestedFix || ''
+            }))
+          },
+          [
+            'Review circuit parameters carefully',
+            'Adjust cable sizes, protection devices, or RCD settings',
+            'Ensure all circuits meet BS 7671 requirements'
+          ]
+        ).toResponse(VERSION);
+      }
+    }
+    
     timings.total = Date.now() - startTime;
     
     // 9. Build response
