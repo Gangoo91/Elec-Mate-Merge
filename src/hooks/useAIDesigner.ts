@@ -145,8 +145,7 @@ export const useAIDesigner = () => {
               mode: 'batch-design',
               projectInfo: {
                 name: inputs.projectName,
-                installationType: inputs.propertyType,
-                additionalPrompt: inputs.additionalPrompt || ''
+                installationType: inputs.propertyType
               },
               supply: {
                 voltage: inputs.voltage || 230,
@@ -155,6 +154,7 @@ export const useAIDesigner = () => {
                 pfc: (inputs.pscc || 3500) / 1000, // Convert from A to kA
                 earthingSystem: inputs.earthingSystem || 'TN-C-S'
               },
+              additionalPrompt: inputs.additionalPrompt || '', // Move to root level
               circuits: inputs.circuits.map(c => ({
                 name: c.name,
                 loadType: c.loadType,
