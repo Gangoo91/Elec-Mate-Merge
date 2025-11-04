@@ -95,7 +95,7 @@ const ElectricianHubRoutes = () => (
     <Route path="safety-shares/resources" element={<SafetyResources />} />
     <Route path="safety-shares/resources-enhanced" element={<SafetyResourcesEnhanced />} />
     <Route path="safety-shares/lfe" element={<LearningFromExperience />} />
-    <Route path="live-pricing" element={<LivePricingRedesigned />} />
+    <Route path="live-pricing" element={<LivePricing />} />
     <Route path="mental-health" element={<ElectricianMentalHealth />} />
     <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
     <Route path="mental-health/resources" element={<MentalHealthResources />} />
