@@ -646,13 +646,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
     );
   }
 
-  // Guard: Ensure selectedCircuit index is valid
-  if (selectedCircuit >= design.circuits.length) {
+  // Synchronous index correction to prevent accessing undefined
+  const safeCircuitIndex = selectedCircuit >= design.circuits.length ? 0 : selectedCircuit;
+  const currentCircuit = design.circuits[safeCircuitIndex];
+
+  // Update the state if it was out of bounds (for next render)
+  if (selectedCircuit >= design.circuits.length && selectedCircuit !== 0) {
     console.warn(`Selected circuit index ${selectedCircuit} is out of bounds (total: ${design.circuits.length}), resetting to 0`);
     setSelectedCircuit(0);
   }
-
-  const currentCircuit = design.circuits[selectedCircuit];
 
   // Guard: If currentCircuit is undefined or missing required properties, show error
   if (!currentCircuit) {
