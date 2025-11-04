@@ -178,7 +178,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
             disabled={isExportingPDF}
             variant="outline"
             size="sm"
-            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 animate-pulse"
           >
             {isExportingPDF ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Download className="mr-2 h-4 w-4" />}
             Export PDF
@@ -195,52 +195,56 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
       </div>
 
       {/* Equipment Health Dashboard */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-4">
         {/* Risk Score */}
-        <Card className="border-elec-yellow/20 bg-elec-card">
-          <CardContent className="pt-6">
+        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/80 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 group">
+          <CardContent className="pt-5 pb-5">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm text-elec-light/60 mb-1">Risk Level</p>
-                <p className={`text-2xl font-bold ${getRiskColor(results.riskLevel).split(' ')[0]}`}>
+                <p className="text-xs sm:text-sm text-elec-light/60 mb-1.5">Risk Level</p>
+                <p className={`text-xl sm:text-2xl font-bold ${getRiskColor(results.riskLevel).split(' ')[0]}`}>
                   {results.riskScore || 0}
                 </p>
-                <Badge className={`mt-2 ${getRiskColor(results.riskLevel)}`}>
+                <Badge className={`mt-2 ${getRiskColor(results.riskLevel)} transition-colors`}>
                   {results.riskLevel || 'unknown'}
                 </Badge>
               </div>
-              <AlertTriangle className={`h-8 w-8 ${getRiskColor(results.riskLevel).split(' ')[0]}`} />
+              <div className="bg-elec-yellow/10 p-2 rounded-lg group-hover:bg-elec-yellow/20 transition-colors">
+                <AlertTriangle className={`h-6 w-6 sm:h-8 sm:w-8 ${getRiskColor(results.riskLevel).split(' ')[0]}`} />
+              </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Compliance Status */}
-        <Card className="border-elec-yellow/20 bg-elec-card">
-          <CardContent className="pt-6">
+        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/80 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 group">
+          <CardContent className="pt-5 pb-5">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm text-elec-light/60 mb-1">Compliance</p>
-                <Badge className={`mt-2 ${getComplianceColor(results.complianceStatus)}`}>
+                <p className="text-xs sm:text-sm text-elec-light/60 mb-1.5">Compliance</p>
+                <Badge className={`mt-2 ${getComplianceColor(results.complianceStatus)} transition-colors`}>
                   {results.complianceStatus?.replace('-', ' ') || 'unknown'}
                 </Badge>
                 {results.nextEICRDue && (
                   <p className="text-xs text-elec-light/50 mt-2">EICR: {results.nextEICRDue}</p>
                 )}
               </div>
-              <CheckCircle2 className={`h-8 w-8 ${getComplianceColor(results.complianceStatus).split(' ')[0]}`} />
+              <div className="bg-elec-yellow/10 p-2 rounded-lg group-hover:bg-elec-yellow/20 transition-colors">
+                <CheckCircle2 className={`h-6 w-6 sm:h-8 sm:w-8 ${getComplianceColor(results.complianceStatus).split(' ')[0]}`} />
+              </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Annual Cost */}
-        <Card className="border-elec-yellow/20 bg-elec-card">
-          <CardContent className="pt-6">
+        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/80 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 group">
+          <CardContent className="pt-5 pb-5">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm text-elec-light/60 mb-1">Annual Cost</p>
+                <p className="text-xs sm:text-sm text-elec-light/60 mb-1.5">Annual Cost</p>
                 {results.annualCostEstimate ? (
                   <>
-                    <p className="text-2xl font-bold text-elec-light">
+                    <p className="text-xl sm:text-2xl font-bold text-elec-light">
                       £{results.annualCostEstimate.min}
                     </p>
                     <p className="text-xs text-elec-light/50 mt-1">
@@ -251,23 +255,27 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                   <p className="text-lg text-elec-light/40">N/A</p>
                 )}
               </div>
-              <PoundSterling className="h-8 w-8 text-elec-yellow" />
+              <div className="bg-elec-yellow/10 p-2 rounded-lg group-hover:bg-elec-yellow/20 transition-colors">
+                <PoundSterling className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
+              </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Total Hours */}
-        <Card className="border-elec-yellow/20 bg-elec-card">
-          <CardContent className="pt-6">
+        <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/80 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 group">
+          <CardContent className="pt-5 pb-5">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm text-elec-light/60 mb-1">Annual Hours</p>
-                <p className="text-2xl font-bold text-elec-light">
+                <p className="text-xs sm:text-sm text-elec-light/60 mb-1.5">Annual Hours</p>
+                <p className="text-xl sm:text-2xl font-bold text-elec-light">
                   {results.totalEstimatedHours || 0}h
                 </p>
                 <p className="text-xs text-elec-light/50 mt-1">per year</p>
               </div>
-              <Clock className="h-8 w-8 text-elec-yellow" />
+              <div className="bg-elec-yellow/10 p-2 rounded-lg group-hover:bg-elec-yellow/20 transition-colors">
+                <Clock className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -327,32 +335,32 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
               </p>
             </div>
           ) : (
-            <Accordion type="single" collapsible className="space-y-2">
+            <Accordion type="single" collapsible className="space-y-3">
               {results.schedule.map((task, idx) => (
               <AccordionItem 
                 key={idx} 
                 value={`task-${idx}`}
-                className="border border-elec-gray/20 rounded-lg px-4 data-[state=open]:bg-elec-dark/30"
+                className="border border-elec-gray/20 rounded-lg px-3 sm:px-4 bg-gradient-to-r from-elec-dark/40 to-elec-dark/20 hover:border-elec-yellow/40 transition-all duration-200 data-[state=open]:bg-gradient-to-r data-[state=open]:from-elec-dark/60 data-[state=open]:to-elec-dark/40 data-[state=open]:border-elec-yellow/50"
               >
-                <AccordionTrigger className="hover:no-underline py-4">
-                  <div className="flex items-center gap-3 w-full text-left">
-                    <Badge className={getPriorityColor(task.priority)}>
+                <AccordionTrigger className="hover:no-underline py-4 sm:py-5">
+                  <div className="flex items-center gap-2 sm:gap-3 w-full text-left">
+                    <Badge className={`${getPriorityColor(task.priority)} transition-colors text-xs`}>
                       {task.priority}
                     </Badge>
-                    <div className="flex-1">
-                      <p className="font-medium text-white">{task.task}</p>
-                      <p className="text-xs text-white/80 mt-1">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-elec-light text-sm sm:text-base truncate sm:whitespace-normal">{task.task}</p>
+                      <p className="text-xs text-elec-light/70 mt-1">
                         {task.interval} • {task.regulation || 'Industry standard'}
                       </p>
                     </div>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="pb-4 pt-2">
-                  <div className="space-y-3 pl-2">
+                <AccordionContent className="pb-4 sm:pb-5 pt-2">
+                  <div className="space-y-3 pl-1 sm:pl-2">
                     {task.estimatedDurationMinutes && (
                       <div className="flex items-start gap-2 text-sm">
                         <Clock className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
-                        <span className="text-white">
+                        <span className="text-elec-light">
                           Duration: {task.estimatedDurationMinutes} minutes
                         </span>
                       </div>
@@ -360,7 +368,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                     {task.estimatedCost && (
                       <div className="flex items-start gap-2 text-sm">
                         <PoundSterling className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
-                        <span className="text-white">
+                        <span className="text-elec-light">
                           Cost: £{task.estimatedCost.min} - £{task.estimatedCost.max}
                         </span>
                       </div>
@@ -369,8 +377,8 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                       <div className="flex items-start gap-2 text-sm">
                         <FileText className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
                         <div className="flex-1">
-                          <p className="text-white font-medium">Required Qualifications:</p>
-                          <p className="text-white/90 text-xs mt-1">
+                          <p className="text-elec-light font-medium">Required Qualifications:</p>
+                          <p className="text-elec-light/80 text-xs mt-1">
                             {task.requiredQualifications.join(', ')}
                           </p>
                         </div>
@@ -380,8 +388,8 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                       <div className="flex items-start gap-2 text-sm">
                         <Wrench className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
                         <div className="flex-1">
-                          <p className="text-white font-medium">Tools Required:</p>
-                          <p className="text-white/90 text-xs mt-1">
+                          <p className="text-elec-light font-medium">Tools Required:</p>
+                          <p className="text-elec-light/80 text-xs mt-1">
                             {task.toolsRequired.join(', ')}
                           </p>
                         </div>
@@ -391,8 +399,8 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                       <div className="flex items-start gap-2 text-sm">
                         <FileText className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
                         <div className="flex-1">
-                          <p className="text-white font-medium">Procedure:</p>
-                          <ol className="text-white/90 text-xs mt-1 space-y-1 list-decimal list-inside text-left">
+                          <p className="text-elec-light font-medium">Procedure:</p>
+                          <ol className="text-elec-light/80 text-xs mt-1 space-y-1 list-decimal list-inside text-left">
                             {task.procedure
                               .filter(step => step && step.trim().length > 0)
                               .map((step, i) => (
@@ -404,11 +412,11 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                       </div>
                     )}
                     {task.safetyPrecautions && Array.isArray(task.safetyPrecautions) && task.safetyPrecautions.length > 0 && (
-                      <div className="flex items-start gap-2 text-sm p-2 bg-orange-400/5 border border-orange-400/20 rounded">
+                      <div className="flex items-start gap-2 text-sm p-3 bg-orange-400/5 border border-orange-400/20 rounded-lg">
                         <AlertTriangle className="h-4 w-4 text-orange-400 shrink-0 mt-0.5" />
                         <div className="flex-1">
-                          <p className="text-white font-medium">Safety Precautions:</p>
-                          <ul className="text-white/90 text-xs mt-1 space-y-1 list-disc list-inside text-left">
+                          <p className="text-elec-light font-medium">Safety Precautions:</p>
+                          <ul className="text-elec-light/80 text-xs mt-1 space-y-1 list-disc list-inside text-left">
                             {task.safetyPrecautions
                               .filter(precaution => precaution && precaution.trim().length > 0)
                               .map((precaution, i) => (
