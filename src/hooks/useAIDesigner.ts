@@ -409,6 +409,12 @@ export const useAIDesigner = () => {
         practicalGuidance: []
       };
       
+      console.log('🔍 Design object created:', {
+        circuitCount: design.circuits?.length,
+        circuits: design.circuits,
+        projectName: design.projectName,
+        hasCircuits: !!design.circuits && design.circuits.length > 0
+      });
       console.log('✅ Design generated successfully', design);
       setDesignData(design);
 

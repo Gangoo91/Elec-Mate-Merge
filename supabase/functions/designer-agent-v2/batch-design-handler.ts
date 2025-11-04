@@ -480,6 +480,13 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     // 10. Build response
     const confidence = calculateOverallConfidence(safeCircuits);
     
+    console.log('✅ Batch design complete', {
+      circuitCount: safeCircuits.length,
+      firstCircuit: safeCircuits[0],
+      hasAllFields: safeCircuits[0] && 'cableSize' in safeCircuits[0],
+      circuits: safeCircuits
+    });
+    
     logger.info('Batch design complete', { 
       circuitCount: safeCircuits.length, 
       confidence,

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -35,6 +35,17 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   const navigate = useNavigate();
   const [selectedCircuit, setSelectedCircuit] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
+
+  // Debug: Log on mount
+  useEffect(() => {
+    console.log('📊 DesignReviewEditor mounted:', {
+      circuitCount: design.circuits?.length,
+      circuits: design.circuits,
+      selectedCircuit,
+      currentCircuit: design.circuits?.[selectedCircuit],
+      hasDesign: !!design
+    });
+  }, []);
   const [exportSuccess, setExportSuccess] = useState(false);
   const [exportId, setExportId] = useState('');
   const [showJsonPreview, setShowJsonPreview] = useState(false);
@@ -618,10 +629,38 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
     }
   };
 
+  // Guard: If no circuits at all, show error
+  if (!design.circuits || design.circuits.length === 0) {
+    console.error('❌ No circuits in design:', design);
+    return (
+      <Card className="p-6">
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>No Circuits Generated</AlertTitle>
+          <AlertDescription>
+            The AI did not generate any circuits. Please try again with different parameters.
+          </AlertDescription>
+        </Alert>
+        <Button onClick={onReset} className="mt-4">Try Again</Button>
+      </Card>
+    );
+  }
+
+  // Guard: Ensure selectedCircuit index is valid
+  if (selectedCircuit >= design.circuits.length) {
+    console.warn(`Selected circuit index ${selectedCircuit} is out of bounds (total: ${design.circuits.length}), resetting to 0`);
+    setSelectedCircuit(0);
+  }
+
   const currentCircuit = design.circuits[selectedCircuit];
 
   // Guard: If currentCircuit is undefined or missing required properties, show error
   if (!currentCircuit) {
+    console.error('❌ Current circuit is undefined:', {
+      selectedCircuit,
+      circuitCount: design.circuits.length,
+      circuits: design.circuits
+    });
     return (
       <Card className="p-6">
         <Alert variant="destructive">
@@ -631,6 +670,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             The selected circuit could not be found. Please try selecting a different circuit.
           </AlertDescription>
         </Alert>
+        <Button onClick={onReset} className="mt-4">Reset</Button>
       </Card>
     );
   }

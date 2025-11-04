@@ -92,7 +92,15 @@ export const AIInstallationDesigner = () => {
       )}
 
       {currentView === 'results' && designData && (
-        <DesignReviewEditor design={designData} onReset={handleReset} />
+        <>
+          {console.log('🎨 Rendering DesignReviewEditor with:', {
+            circuitCount: designData.circuits?.length,
+            hasCircuits: !!designData.circuits,
+            firstCircuit: designData.circuits?.[0],
+            designData
+          })}
+          <DesignReviewEditor design={designData} onReset={handleReset} />
+        </>
       )}
     </div>
   );
