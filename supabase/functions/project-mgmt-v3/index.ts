@@ -90,7 +90,7 @@ serve(async (req) => {
       circuitType: projectType || 'general',
       searchTerms: `${query} ${projectType || ''} project planning timeline coordination`.split(' ').filter(w => w.length > 3),
       expandedQuery: `${query} ${projectType || ''} project planning timeline coordination`
-    });
+    }, OPENAI_API_KEY, supabase, logger);
     
     // Use design docs for PM knowledge (project management guides)
     const pmKnowledge = ragResults?.designDocs || [];
