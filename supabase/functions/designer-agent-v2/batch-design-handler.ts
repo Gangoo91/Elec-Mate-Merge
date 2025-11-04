@@ -10,6 +10,7 @@ import { CircuitDesignError, ERROR_TEMPLATES } from './error-handler.ts';
 import { callOpenAIWithRetry, parseToolCalls } from './modules/ai-caller.ts';
 import { buildRAGSearches, mergeRegulations } from './modules/rag-composer.ts';
 import { validateDesign } from './validation-pipeline.ts';
+import { formatRegulationsAsTOON, estimateTokenSavings } from '../_shared/toon-formatter.ts';
 
 const VERSION = 'v3.7.0-rebuild';
 
@@ -18,7 +19,23 @@ const VERSION = 'v3.7.0-rebuild';
  */
 const DESIGN_INSTRUCTIONS = `You are a senior BS 7671:2018+A3:2024 electrical design engineer designing compliant UK electrical circuits.
 
-CRITICAL: Use ONLY the <regulations> provided below. Each regulation contains calculation formulas, worked examples, and technical data.
+CRITICAL: Use ONLY the <regulations> provided below in TOON format. Each regulation contains calculation formulas, worked examples, and technical data.
+
+TOON FORMAT GUIDE:
+- S <section>: Section grouping (Part 4, Part 5, etc.)
+- R <number>: Regulation number or topic
+- C <content>: Regulation content
+- Cat <category>: Optional category
+
+Example:
+S Protection
+  R 433.1.1
+    C The protective device must be suitable for the design current...
+  R 433.1.204
+    C For ring final circuits, live conductors shall be 2.5mm²...
+S Selection
+  R 525.1
+    C Voltage drop shall not exceed 3% for lighting, 5% for other uses...
 
 CALCULATION PROCESS (from RAG context):
 1. Calculate design current (Ib):
@@ -356,8 +373,14 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
       return ERROR_TEMPLATES.RAG_SEARCH_FAILED(['No regulations retrieved']).toResponse(VERSION);
     }
     
-    // 4. Build AI prompt
-    const regulationsText = regulations
+    // 4. Build AI prompt with TOON format
+    const regulationsText = formatRegulationsAsTOON(
+      regulations.slice(0, 20),
+      300  // Max content length per regulation
+    );
+    
+    // Log token savings
+    const oldFormat = regulations
       .slice(0, 20)
       .map(r => {
         const regNum = r.regulation_number || r.topic || 'General';
@@ -365,6 +388,15 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
         return regNum + ': ' + content;
       })
       .join('\n\n');
+    
+    const tokenStats = estimateTokenSavings(oldFormat, regulationsText);
+    logger.info('TOON format token savings', {
+      regulationCount: Math.min(regulations.length, 20),
+      oldTokens: tokenStats.oldTokens,
+      toonTokens: tokenStats.toonTokens,
+      savings: tokenStats.savings,
+      savingsPercent: tokenStats.savingsPercent + '%'
+    });
     
     const userPrompt = DESIGN_INSTRUCTIONS + '\n\n<regulations>\n' + regulationsText + '\n</regulations>\n\n' +
                        'JOB CONTEXT:\n' + query + '\n\n' +
