@@ -190,22 +190,26 @@ serve(async (req) => {
         
         // Update database with live prices for caching (with timeout)
         for (const metal of commodityData) {
-          await withTimeout(
-            supabase
+            // Store in database - use insert and silently handle duplicates
+            await withTimeout(
+              supabase
               .from('commodity_prices')
-              .upsert({
+              .insert({
                 metal_type: metal.metal_type,
                 price_per_kg: parseFloat(metal.price_per_kg),
                 daily_change_percent: metal.daily_change_percent,
                 currency: 'GBP',
                 data_source: 'live_api',
                 last_updated: new Date().toISOString()
-              }, {
-                onConflict: 'metal_type,currency'
               }),
             Timeouts.QUICK,
-            `database upsert for ${metal.metal_type}`
-          );
+            `database insert for ${metal.metal_type}`
+          ).catch(err => {
+            // Silently ignore duplicate errors
+            if (!err?.message?.includes('duplicate') && !err?.message?.includes('unique')) {
+              logger.warn(`Failed to cache ${metal.metal_type} price`, { error: err });
+            }
+          });
         }
       } else {
         throw new Error('No valid data from MetalPriceAPI');

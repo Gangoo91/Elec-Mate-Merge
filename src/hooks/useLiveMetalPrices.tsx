@@ -74,15 +74,32 @@ export const useLiveMetalPrices = () => {
 
       if (pricesError) {
         logger.error('Error from fetch-metal-prices function:', pricesError);
-        throw new Error(pricesError.message);
+        toast({
+          title: 'Unable to Fetch Live Prices',
+          description: 'Displaying cached pricing data. Please try refreshing in a moment.',
+          variant: 'destructive'
+        });
+        // Return null to use cached/fallback data
+        return null;
       }
 
-      logger.info('Raw response from fetch-metal-prices:', pricesData);
+      logger.info('Raw response from fetch-metal-prices:', {
+        hasData: !!pricesData,
+        dataSource: pricesData?.dataSource,
+        isLive: pricesData?.isLive,
+        metalCount: pricesData?.metalPrices?.length,
+        regionalCount: pricesData?.regionalJobPricing?.length
+      });
       
       // Check if we have the expected structure
       if (!pricesData) {
         logger.warn('No data returned from fetch-metal-prices function');
-        throw new Error('No data returned from pricing service');
+        toast({
+          title: 'No Pricing Data Available',
+          description: 'Unable to load pricing information. Please try again later.',
+          variant: 'destructive'
+        });
+        return null;
       }
 
       // Log regional pricing data specifically
@@ -133,11 +150,15 @@ export const useLiveMetalPrices = () => {
       const errorMessage = err instanceof Error ? err.message : 'Failed to fetch metal prices';
       logger.error('Error in fetchPrices:', errorMessage, err);
       setError(errorMessage);
-      toast({
-        title: 'Error',
-        description: errorMessage,
-        variant: 'destructive'
-      });
+      
+      // Only show toast if we don't already have cached data
+      if (!data) {
+        toast({
+          title: 'Connection Issue',
+          description: 'Unable to load live pricing. Please check your connection and try again.',
+          variant: 'destructive'
+        });
+      }
       return null;
     } finally {
       setIsLoading(false);
@@ -153,10 +174,22 @@ export const useLiveMetalPrices = () => {
     const newData = await fetchPrices(forceLive);
     
     if (newData) {
-      logger.info('Prices refreshed successfully');
+      logger.info('Prices refreshed successfully', {
+        dataSource: newData.dataSource,
+        isLive: newData.isLive
+      });
       toast({
         title: 'Prices Updated',
-        description: 'Latest material pricing and regional job data has been loaded',
+        description: newData.isLive 
+          ? 'Live scrap metal prices loaded from MetalPriceAPI'
+          : 'Latest cached pricing data has been loaded',
+        variant: newData.isLive ? 'default' : 'default'
+      });
+    } else {
+      toast({
+        title: 'Refresh Failed',
+        description: 'Could not update prices. Displaying cached data.',
+        variant: 'destructive'
       });
     }
   };
