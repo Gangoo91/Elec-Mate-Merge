@@ -352,7 +352,6 @@ export function validateCompliance(circuits: any[], incomingSupply: any): Valida
         regulation: 'Reg 433.1'
       });
     }
-    }
   });
 
   return {
