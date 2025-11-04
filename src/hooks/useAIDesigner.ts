@@ -148,16 +148,12 @@ export const useAIDesigner = () => {
                 installationType: inputs.propertyType,
                 additionalPrompt: inputs.additionalPrompt || ''
               },
-              incomingSupply: {
+              supply: {
                 voltage: inputs.voltage || 230,
                 phases: inputs.phases || 'single',
-                Ze: inputs.ze || 0.35,
-                earthingSystem: inputs.earthingSystem || 'TN-C-S',
-                pscc: inputs.pscc || 3500,
-                mainSwitchRating: inputs.mainSwitchRating || 100,
-                ambientTemp: inputs.ambientTemp || 30,
-                installationMethod: inputs.installationMethod || 'clipped-direct',
-                groupingFactor: inputs.groupingFactor || 1
+                ze: inputs.ze || 0.35,
+                pfc: (inputs.pscc || 3500) / 1000, // Convert from A to kA
+                earthingSystem: inputs.earthingSystem || 'TN-C-S'
               },
               circuits: inputs.circuits.map(c => ({
                 name: c.name,
