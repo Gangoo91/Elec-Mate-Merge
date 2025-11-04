@@ -166,8 +166,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           
           cableSizing: {
             regulation: "433.1.1",
-            tabulatedCapacity_It: circuit.deratingFactors?.Ca ? (circuit.calculations.Iz / circuit.deratingFactors.overall) : 0,
-            nominalCurrent_In: circuit.protectionDevice.rating,
+            tabulatedCapacity_It: circuit.deratingFactors?.Ca && circuit.calculations?.Iz ? (circuit.calculations.Iz / circuit.deratingFactors.overall) : 0,
+            nominalCurrent_In: circuit.protectionDevice?.rating ?? 0,
             effectiveCapacity_Iz: circuit.calculations?.Iz ?? 0,
             safetyMargin: circuit.calculations?.safetyMargin ?? 0,
             safetyMarginPercent: `${fmt(circuit.calculations?.safetyMargin, 1)}%`,
