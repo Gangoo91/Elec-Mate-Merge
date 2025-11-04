@@ -13,7 +13,7 @@ type ViewMode = 'input' | 'processing' | 'results' | 'validation-error';
 
 export const AIInstallationDesigner = () => {
   const [currentView, setCurrentView] = useState<ViewMode>('input');
-  const { generateDesign, resetDesign, isProcessing, designData, error, progress, retryMessage } = useAIDesigner();
+  const { generateDesign, resetDesign, isProcessing, designData, error, errorCode, progress, retryMessage } = useAIDesigner();
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
     // Pre-fill form with context from another agent
@@ -29,8 +29,8 @@ export const AIInstallationDesigner = () => {
     if (success) {
       setCurrentView('results');
     } else {
-      // PHASE 6: Check if it's a validation error
-      if (error && error.includes('NON_COMPLIANT_DESIGN')) {
+      // PHASE 6: Check if it's a validation error using errorCode
+      if (errorCode === 'NON_COMPLIANT_DESIGN') {
         setCurrentView('validation-error');
       } else {
         setCurrentView('input');

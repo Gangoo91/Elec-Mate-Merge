@@ -39,19 +39,19 @@ export const DesignProcessingView = ({ progress, retryMessage, onCancel }: Desig
     },
     { 
       name: 'Extracting Circuits', 
-      description: 'AI parsing circuit descriptions (20-30s)',
+      description: 'AI parsing circuit descriptions',
       icon: '⚡',
       estimatedSeconds: 25
     },
     { 
       name: 'Searching Regulations', 
-      description: 'Querying BS 7671 18th Edition database',
+      description: 'Querying BS 7671 18th Edition',
       icon: '📚',
       estimatedSeconds: 10
     },
     { 
       name: 'AI Circuit Design', 
-      description: 'Calculating cable sizes, protection devices (2-3 min)',
+      description: 'Calculating cable sizes, protection',
       icon: '🤖',
       estimatedSeconds: 125
     },
@@ -69,7 +69,7 @@ export const DesignProcessingView = ({ progress, retryMessage, onCancel }: Desig
     },
     { 
       name: 'Downloading Data', 
-      description: 'Transferring design to your browser',
+      description: 'Transferring design to browser',
       icon: '⬇️',
       estimatedSeconds: 5
     }
@@ -91,64 +91,74 @@ export const DesignProcessingView = ({ progress, retryMessage, onCancel }: Desig
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-4">
-      <Card className="p-6 sm:p-8 max-w-2xl w-full">
-        {/* Header */}
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold mb-2">Generating Your Design</h2>
-          <p className="text-muted-foreground text-sm">
-            AI is analysing circuits and checking BS 7671 18th Edition compliance
+      <Card className="p-4 sm:p-6 lg:p-8 max-w-2xl w-full">
+        {/* Header - Mobile optimized */}
+        <div className="text-center mb-4 sm:mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">Generating Your Design</h2>
+          <p className="text-muted-foreground text-xs sm:text-sm">
+            AI is analysing circuits and checking BS 7671 compliance
           </p>
         </div>
 
         {/* Retry Message */}
         {retryMessage && (
-          <div className="mb-6 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-            <p className="text-sm text-amber-600 dark:text-amber-400 flex items-center gap-2">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              {retryMessage}
+          <div className="mb-4 p-2.5 sm:p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+            <p className="text-xs sm:text-sm text-amber-600 dark:text-amber-400 flex items-center gap-2">
+              <Loader2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 animate-spin flex-shrink-0" />
+              <span className="line-clamp-2">{retryMessage}</span>
             </p>
           </div>
         )}
 
-        {/* Time Statistics */}
-        <div className="grid grid-cols-2 gap-4 mb-6 p-4 bg-muted/50 rounded-lg">
+        {/* Time Statistics - Fixed width, monospace */}
+        <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-4 p-3 bg-muted/50 rounded-lg">
           <div className="text-center">
-            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-1">
-              <Clock className="h-4 w-4" />
-              Elapsed
+            <div className="flex items-center justify-center gap-1 text-[10px] sm:text-xs text-muted-foreground mb-1">
+              <Clock className="h-3 w-3 flex-shrink-0" />
+              <span>Elapsed</span>
             </div>
-            <div className="text-2xl font-bold">{formatTime(elapsedTime)}</div>
+            <div className="text-base sm:text-lg font-mono font-bold min-w-[70px] sm:min-w-[80px] mx-auto tabular-nums">
+              {formatTime(elapsedTime)}
+            </div>
           </div>
           <div className="text-center">
-            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-1">
-              <Clock className="h-4 w-4" />
-              Remaining
+            <div className="flex items-center justify-center gap-1 text-[10px] sm:text-xs text-muted-foreground mb-1">
+              <Clock className="h-3 w-3 flex-shrink-0" />
+              <span>Remaining</span>
             </div>
-            <div className="text-2xl font-bold text-primary">{formatTime(remainingSeconds)}</div>
+            <div className="text-base sm:text-lg font-mono font-bold text-primary min-w-[70px] sm:min-w-[80px] mx-auto tabular-nums">
+              {formatTime(remainingSeconds)}
+            </div>
           </div>
         </div>
 
-        {/* Current Progress */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">{stageDetails[currentStage]?.icon || '⏳'}</span>
-              <div>
-                <div className="text-sm font-medium">
-                  {progress?.message || 'Initialising...'}
-                </div>
-                <div className="text-xs text-muted-foreground">
-                  {stageDetails[currentStage]?.description || 'Please wait...'}
-                </div>
+        {/* Current Stage - Fixed height */}
+        <div className="mb-4 p-2.5 sm:p-3 bg-primary/5 border border-primary/20 rounded-lg min-h-[70px] sm:min-h-[80px] flex items-center">
+          <div className="flex items-center gap-2 sm:gap-3 w-full">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center flex-shrink-0 text-2xl sm:text-3xl">
+              {stageDetails[currentStage]?.icon || '⏳'}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-xs sm:text-sm font-semibold truncate">
+                {progress?.message || 'Initialising...'}
+              </div>
+              <div className="text-[10px] sm:text-xs text-muted-foreground line-clamp-1 mt-0.5">
+                {stageDetails[currentStage]?.description || 'Please wait...'}
               </div>
             </div>
-            <span className="text-lg font-bold text-primary">{currentPercent}%</span>
+            <div className="text-base sm:text-lg font-mono font-bold text-primary flex-shrink-0 min-w-[40px] sm:min-w-[45px] text-right tabular-nums">
+              {currentPercent}%
+            </div>
           </div>
-          <Progress value={currentPercent} className="h-2" />
         </div>
 
-        {/* Stage Timeline */}
-        <div className="space-y-2 mb-6">
+        {/* Progress Bar - Larger touch target */}
+        <div className="mb-4">
+          <Progress value={currentPercent} className="h-2.5 sm:h-3" />
+        </div>
+
+        {/* Stage Timeline - Fixed height cards */}
+        <div className="space-y-1.5 sm:space-y-2 mb-4">
           {stageDetails.map((stage, index) => {
             const isComplete = currentStage > index;
             const isCurrent = currentStage === index;
@@ -156,37 +166,30 @@ export const DesignProcessingView = ({ progress, retryMessage, onCancel }: Desig
             return (
               <div
                 key={index}
-                className={`flex items-center gap-3 p-3 rounded-lg transition-all ${
-                  isCurrent ? 'bg-primary/5 border border-primary/20 shadow-sm' : ''
+                className={`flex items-center gap-2 p-2 rounded-lg transition-all min-h-[48px] sm:min-h-[52px] ${
+                  isCurrent ? 'bg-primary/5 border border-primary/20' : ''
                 }`}
               >
                 {isComplete ? (
-                  <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
+                  <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0" />
                 ) : isCurrent ? (
-                  <Loader2 className="h-5 w-5 text-primary animate-spin flex-shrink-0" />
+                  <Loader2 className="h-4 w-4 text-primary animate-spin flex-shrink-0" />
                 ) : (
-                  <div className="h-5 w-5 rounded-full border-2 border-muted flex-shrink-0" />
+                  <div className="h-4 w-4 rounded-full border-2 border-muted flex-shrink-0" />
                 )}
                 <div className="flex-1 min-w-0">
-                  <div
-                    className={`text-sm ${
-                      isComplete 
-                        ? 'text-muted-foreground line-through' 
-                        : isCurrent 
-                        ? 'font-medium' 
-                        : 'text-muted-foreground'
-                    }`}
-                  >
+                  <div className={`text-xs sm:text-sm truncate ${
+                    isComplete ? 'text-muted-foreground line-through' : 
+                    isCurrent ? 'font-semibold' : 'text-muted-foreground'
+                  }`}>
                     {stage.name}
                   </div>
-                  {isCurrent && (
-                    <div className="text-xs text-muted-foreground mt-0.5">
-                      {stage.description}
-                    </div>
-                  )}
+                  <div className="text-[10px] sm:text-xs text-muted-foreground line-clamp-1 mt-0.5">
+                    {stage.description}
+                  </div>
                 </div>
                 {!isComplete && !isCurrent && (
-                  <span className="text-xs text-muted-foreground flex-shrink-0">
+                  <span className="text-[10px] sm:text-xs text-muted-foreground flex-shrink-0 font-mono tabular-nums">
                     ~{stage.estimatedSeconds}s
                   </span>
                 )}
@@ -195,17 +198,17 @@ export const DesignProcessingView = ({ progress, retryMessage, onCancel }: Desig
           })}
         </div>
 
-        {/* Cancel Button */}
+        {/* Cancel Button - Mobile optimized */}
         {onCancel && (
-          <div className="flex justify-center pt-4 border-t">
+          <div className="flex justify-center pt-3 sm:pt-4 border-t">
             <Button 
               variant="outline" 
               onClick={onCancel}
-              className="gap-2"
+              className="gap-2 min-h-[44px] touch-manipulation"
               size="sm"
             >
               <XCircle className="h-4 w-4" />
-              Cancel Generation
+              <span className="text-xs sm:text-sm">Cancel Generation</span>
             </Button>
           </div>
         )}

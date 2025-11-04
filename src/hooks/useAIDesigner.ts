@@ -45,10 +45,12 @@ export const useAIDesigner = () => {
     }
   };
   const [retryMessage, setRetryMessage] = useState('');
+  const [errorCode, setErrorCode] = useState<string | null>(null);
 
   const generateDesign = async (inputs: DesignInputs): Promise<boolean> => {
     setIsProcessing(true);
     setError(null);
+    setErrorCode(null);
     setStartTime(Date.now());
     setDesignData(null);
 
@@ -328,10 +330,11 @@ export const useAIDesigner = () => {
         setProgressWithPersistence(null);
         
         const errorMsg = data.error || 'Design generation failed';
-        const errorCode = data.code || 'UNKNOWN_ERROR';
+        const code = data.code || 'UNKNOWN_ERROR';
+        setErrorCode(code);
         
         // Handle non-compliant design errors (PHASE 6)
-        if (errorCode === 'NON_COMPLIANT_DESIGN' && data.technicalDetails?.validationErrors) {
+        if (code === 'NON_COMPLIANT_DESIGN' && data.technicalDetails?.validationErrors) {
           console.error('❌ Design validation failed:', data.technicalDetails.validationErrors);
           
           // Build detailed error message
@@ -464,6 +467,7 @@ export const useAIDesigner = () => {
   const resetDesign = () => {
     setDesignData(null);
     setError(null);
+    setErrorCode(null);
     setProgress(null);
   };
 
@@ -473,6 +477,7 @@ export const useAIDesigner = () => {
     isProcessing,
     designData,
     error,
+    errorCode,
     progress,
     retryMessage
   };
