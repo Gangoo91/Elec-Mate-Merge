@@ -157,8 +157,8 @@ export const DesignProcessingView = ({ progress, retryMessage, onCancel }: Desig
           <Progress value={currentPercent} className="h-2.5 sm:h-3" />
         </div>
 
-        {/* Stage Timeline - Fixed height cards */}
-        <div className="space-y-1.5 sm:space-y-2 mb-4">
+        {/* Stage Timeline - Properly aligned with fixed icon column */}
+        <div className="space-y-0.5 sm:space-y-1 mb-4">
           {stageDetails.map((stage, index) => {
             const isComplete = currentStage > index;
             const isCurrent = currentStage === index;
@@ -166,32 +166,41 @@ export const DesignProcessingView = ({ progress, retryMessage, onCancel }: Desig
             return (
               <div
                 key={index}
-                className={`flex items-center gap-2 p-2 rounded-lg transition-all min-h-[48px] sm:min-h-[52px] ${
-                  isCurrent ? 'bg-primary/5 border border-primary/20' : ''
+                className={`flex items-start gap-0 transition-all ${
+                  isCurrent ? 'bg-primary/10 border-2 border-primary/30 rounded-lg -mx-1 px-3 py-3' : 'px-2 py-2.5'
                 }`}
               >
-                {isComplete ? (
-                  <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0" />
-                ) : isCurrent ? (
-                  <Loader2 className="h-4 w-4 text-primary animate-spin flex-shrink-0" />
-                ) : (
-                  <div className="h-4 w-4 rounded-full border-2 border-muted flex-shrink-0" />
-                )}
-                <div className="flex-1 min-w-0">
-                  <div className={`text-xs sm:text-sm truncate ${
+                {/* Fixed-width icon column - 32px */}
+                <div className="w-8 flex items-center justify-center flex-shrink-0 pt-0.5">
+                  {isComplete ? (
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                  ) : isCurrent ? (
+                    <Loader2 className="h-5 w-5 text-primary animate-spin" />
+                  ) : (
+                    <div className="h-5 w-5 rounded-full border-2 border-muted" />
+                  )}
+                </div>
+                
+                {/* Content - flex-grow to fill space */}
+                <div className="flex-1 min-w-0 pl-3">
+                  <div className={`text-sm sm:text-base font-medium leading-tight ${
                     isComplete ? 'text-muted-foreground line-through' : 
-                    isCurrent ? 'font-semibold' : 'text-muted-foreground'
+                    isCurrent ? 'font-semibold text-foreground' : 'text-muted-foreground'
                   }`}>
                     {stage.name}
                   </div>
-                  <div className="text-[10px] sm:text-xs text-muted-foreground line-clamp-1 mt-0.5">
+                  <div className="text-xs sm:text-sm text-muted-foreground mt-1 leading-relaxed">
                     {stage.description}
                   </div>
                 </div>
+                
+                {/* Time estimate - fixed-width right column */}
                 {!isComplete && !isCurrent && (
-                  <span className="text-[10px] sm:text-xs text-muted-foreground flex-shrink-0 font-mono tabular-nums">
-                    ~{stage.estimatedSeconds}s
-                  </span>
+                  <div className="w-12 text-right flex-shrink-0 pt-0.5">
+                    <span className="text-xs text-muted-foreground font-mono tabular-nums">
+                      ~{stage.estimatedSeconds}s
+                    </span>
+                  </div>
                 )}
               </div>
             );
