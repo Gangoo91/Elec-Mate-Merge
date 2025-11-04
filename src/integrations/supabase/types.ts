@@ -8142,6 +8142,8 @@ export type Database = {
           topic: string
         }[]
       }
+      show_limit: { Args: never; Returns: number }
+      show_trgm: { Args: { "": string }; Returns: string[] }
       trigger_materials_weekly_refresh: { Args: never; Returns: undefined }
       unified_rag_search: {
         Args: {
