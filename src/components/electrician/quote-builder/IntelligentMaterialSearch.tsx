@@ -74,32 +74,31 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
     setSearchResults([]);
 
     try {
-      console.log('🔍 Searching 43k materials:', { searchQuery, selectedCategory, selectedSupplier });
+      console.log('🔍 Fast searching 43k materials:', { searchQuery, selectedCategory, selectedSupplier });
 
-      const { data, error: functionError } = await supabase.functions.invoke('search-pricing-rag', {
+      const { data, error: functionError } = await supabase.functions.invoke('search-materials-fast', {
         body: {
           query: searchQuery,
           categoryFilter: selectedCategory !== "all" ? selectedCategory : null,
           supplierFilter: selectedSupplier !== "all" ? selectedSupplier : null,
-          matchThreshold: 0.5,
-          matchCount: 50
+          limit: 50
         }
       });
 
       if (functionError) {
-        console.error('❌ RAG search error:', functionError);
+        console.error('❌ Fast search error:', functionError);
         throw new Error(functionError.message);
       }
 
-      console.log('✅ RAG search results:', data);
+      console.log('✅ Fast search results:', data);
 
       if (data?.materials && data.materials.length > 0) {
         setSearchResults(data.materials);
-        setSearchMethod(data.searchMethod || 'rag');
+        setSearchMethod(data.searchMethod || 'fast_keyword');
         
         toast({
           title: "Search Complete",
-          description: `Found ${data.materials.length} materials from 43k database`,
+          description: `Found ${data.materials.length} materials using fast PostgreSQL search`,
         });
       } else {
         setError("No materials found. Try different keywords or filters.");
@@ -258,7 +257,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
               Found <span className="font-semibold text-white">{searchResults.length}</span> materials
               {searchMethod && (
                 <span className="ml-2 text-xs text-elec-yellow">
-                  ({searchMethod === 'rag' ? 'AI-powered' : 'Keyword'} search)
+                  ({searchMethod === 'fast_keyword' ? 'Fast PostgreSQL' : 'Keyword'} search)
                 </span>
               )}
             </p>
