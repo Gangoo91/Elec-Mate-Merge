@@ -64,48 +64,38 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
 
   return (
     <div className="min-h-screen bg-elec-dark pb-20">
-      {/* Sticky Project Summary */}
-      <div className="sticky top-0 z-20 bg-gradient-to-b from-elec-dark to-elec-dark/95 backdrop-blur-sm border-b border-elec-yellow/20 pb-4 mb-4">
-        <Card className="bg-card/90 border-elec-yellow/30 p-4">
-          <div className="flex items-start justify-between mb-3">
-            <div className="flex-1">
-              <h2 className="text-lg font-bold text-elec-light mb-1">{design.projectName}</h2>
-              <p className="text-sm text-elec-light/70">{design.location}</p>
-            </div>
-            <Badge 
-              variant={overallStatus === 'pass' ? 'default' : overallStatus === 'warning' ? 'outline' : 'destructive'}
-              className={
-                overallStatus === 'pass' ? 'bg-green-500/20 text-green-400 border-green-500/30' :
-                overallStatus === 'warning' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' :
-                'bg-red-500/20 text-red-400 border-red-500/30'
-              }
-            >
-              {overallStatus === 'pass' && <CheckCircle2 className="h-3 w-3 mr-1" />}
-              {overallStatus === 'warning' && <AlertTriangle className="h-3 w-3 mr-1" />}
-              {overallStatus === 'fail' && <AlertCircle className="h-3 w-3 mr-1" />}
-              {overallStatus === 'pass' ? 'Pass' : overallStatus === 'warning' ? 'Warning' : 'Review'}
-            </Badge>
+      {/* Compact Page Header (scrolls away) */}
+      <div className="px-4 pt-4 pb-3 border-b border-elec-yellow/20">
+        <div className="flex items-center justify-between">
+          <div className="flex-1 min-w-0">
+            <h1 className="text-base font-bold text-elec-light truncate">
+              {design.projectName}
+            </h1>
+            <p className="text-xs text-elec-light/60 truncate">{design.location}</p>
           </div>
-
-          <div className="grid grid-cols-2 gap-3 text-sm">
-            <div>
-              <p className="text-elec-light/60 text-xs">Total Load</p>
-              <p className="text-elec-light font-semibold">{(design.totalLoad / 1000).toFixed(1)}kW</p>
-            </div>
-            <div>
-              <p className="text-elec-light/60 text-xs">Circuits</p>
-              <p className="text-elec-light font-semibold">{design.circuits.length}</p>
-            </div>
-            <div>
-              <p className="text-elec-light/60 text-xs">Consumer Unit</p>
-              <p className="text-elec-light font-semibold">{design.consumerUnit.mainSwitchRating}A</p>
-            </div>
-            <div>
-              <p className="text-elec-light/60 text-xs">Earthing</p>
-              <p className="text-elec-light font-semibold">{design.consumerUnit.incomingSupply.earthingSystem}</p>
-            </div>
-          </div>
-        </Card>
+          <Badge 
+            variant={overallStatus === 'pass' ? 'default' : overallStatus === 'warning' ? 'outline' : 'destructive'}
+            className={`ml-3 flex-shrink-0 ${
+              overallStatus === 'pass' ? 'bg-green-500/20 text-green-400 border-green-500/30' :
+              overallStatus === 'warning' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' :
+              'bg-red-500/20 text-red-400 border-red-500/30'
+            }`}
+          >
+            {overallStatus === 'pass' && <CheckCircle2 className="h-3 w-3 mr-1" />}
+            {overallStatus === 'warning' && <AlertTriangle className="h-3 w-3 mr-1" />}
+            {overallStatus === 'fail' && <AlertCircle className="h-3 w-3 mr-1" />}
+            {overallStatus === 'pass' ? 'Pass' : overallStatus === 'warning' ? 'Warning' : 'Review'}
+          </Badge>
+        </div>
+        
+        {/* Quick stats inline - minimal */}
+        <div className="flex items-center gap-4 mt-2 text-xs text-elec-light/70">
+          <span>{design.circuits.length} circuits</span>
+          <span>•</span>
+          <span>{(design.totalLoad / 1000).toFixed(1)}kW</span>
+          <span>•</span>
+          <span>{design.consumerUnit.mainSwitchRating}A</span>
+        </div>
       </div>
 
       {/* Circuit Selector Carousel */}
