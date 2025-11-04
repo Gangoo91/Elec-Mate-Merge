@@ -421,12 +421,21 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
       throw error;
     }
     
-    // 6. Parse tool calls
+    // 6. Parse tool calls and merge all circuits from multiple tool calls
     let designedCircuits: any[] = [];
     try {
       const toolCalls = parseToolCalls(aiResponse);
-      designedCircuits = toolCalls[0]?.arguments?.circuits || [];
-      logger.info('AI designed circuits', { count: designedCircuits.length });
+      
+      // Merge circuits from all tool calls (AI might split large designs across multiple calls)
+      for (const toolCall of toolCalls) {
+        const circuits = toolCall?.arguments?.circuits || [];
+        designedCircuits.push(...circuits);
+      }
+      
+      logger.info('AI designed circuits', { 
+        count: designedCircuits.length,
+        toolCallCount: toolCalls.length 
+      });
     } catch (error) {
       logger.error('Failed to parse tool calls', { error });
       return ERROR_TEMPLATES.NO_CIRCUITS(circuits.length, !!additionalPrompt).toResponse(VERSION);
