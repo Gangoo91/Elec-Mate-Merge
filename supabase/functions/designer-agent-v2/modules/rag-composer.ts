@@ -46,17 +46,24 @@ export async function buildRAGSearches(
 ): Promise<any> {
   const type = installationType || 'domestic';
   
-  logger.info('Performing intelligent RAG search with context-aware boosts...', { 
+  logger.info('Performing intelligent RAG search with calculation formula lookup...', { 
     searchTerms, 
     installationType: type 
   });
+
+  // PHASE 0: Direct calculation formula lookup (instant, no embedding needed)
+  const { data: calcFormulas } = await supabase
+    .from('circuit_design_calculations')
+    .select('*');
+
+  logger.info('✅ Loaded calculation formulas', { count: calcFormulas?.length || 0 });
 
   const ragResults = await intelligentRAGSearch({
     expandedQuery: query,
     searchTerms,
     priorities: {
       design_knowledge: 95,    // Design docs FIRST: +95% boost, vector search, 15 results
-      bs7671: 85,              // Regulations SECOND: +85% boost, keyword search, 10 results
+      bs7671: 90,              // Regulations BOOSTED: +90% boost (up from 85), keyword search, 10 results
       installation_knowledge: 0,
       practical_work: 0,
       health_safety: 0
@@ -64,6 +71,10 @@ export async function buildRAGSearches(
     limit: 30,
     installationType: type     // Pass context for boost prioritization
   }, openAiKey, supabase, logger);
+  
+  // Inject calculation formulas at the top
+  ragResults.calculationFormulas = calcFormulas || [];
+  ragResults.designDocs = ragResults.designDocs || [];
 
   // PHASE 4: Force-include critical design knowledge based on installation type
   const criticalTopics = getCriticalTopicsForType(type);

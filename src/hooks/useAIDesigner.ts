@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { DesignInputs, InstallationDesign } from '@/types/installation-design';
+import { ensureCalculations } from '@/lib/calculators/bs7671-calculations';
 
 // Fix 3: Client-side timeout increased to 360s to prevent premature reconnection
 const CLIENT_TIMEOUT_MS = 360000; // 360s (6m) - extra buffer for validation + formatting
@@ -419,11 +420,32 @@ export const useAIDesigner = () => {
         practicalGuidance: []
       };
       
+      // PHASE 4: Client-side calculation backfill for missing voltage drop / Zs
+      console.log('🔍 Checking for missing calculations...');
+      let backfilledCount = 0;
+      design.circuits = design.circuits.map((circuit: any) => {
+        const { circuit: updatedCircuit, modified } = ensureCalculations(
+          circuit, 
+          design.consumerUnit.incomingSupply
+        );
+        if (modified) backfilledCount++;
+        return updatedCircuit;
+      });
+      
+      if (backfilledCount > 0) {
+        console.warn(`⚠️ Backfilled ${backfilledCount} circuit(s) with client-side calculations`);
+        toast.info(`Calculations Completed`, {
+          description: `${backfilledCount} circuit(s) had missing data - calculations added automatically`,
+          duration: 3000
+        });
+      }
+      
       console.log('🔍 Design object created:', {
         circuitCount: design.circuits?.length,
         circuits: design.circuits,
         projectName: design.projectName,
-        hasCircuits: !!design.circuits && design.circuits.length > 0
+        hasCircuits: !!design.circuits && design.circuits.length > 0,
+        backfilledCircuits: backfilledCount
       });
       console.log('✅ Design generated successfully', design);
       setDesignData(design);

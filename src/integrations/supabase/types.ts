@@ -7404,6 +7404,15 @@ export type Database = {
       }
     }
     Views: {
+      circuit_design_calculations: {
+        Row: {
+          calculation_type: string | null
+          formula: string | null
+          metadata: Json | null
+          regulation: string | null
+        }
+        Relationships: []
+      }
       current_prices: {
         Row: {
           category: string | null

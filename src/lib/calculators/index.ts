@@ -9,3 +9,6 @@ export * from './engines/diversityEngine';
 export * from './engines/earthFaultLoopEngine';
 export * from './engines/harmonicAnalysisEngine';
 export * from './engines/thermalConstraintsEngine';
+
+// Client-side fallback calculations
+export { ensureCalculations } from './bs7671-calculations';
