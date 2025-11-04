@@ -247,11 +247,21 @@ export async function retrievePMKnowledge(
 
     return resultsWithConfidence;
   } catch (error) {
+    const errorDetails = error && typeof error === 'object' 
+      ? JSON.stringify(error, Object.getOwnPropertyNames(error)) 
+      : String(error);
+    
     logger.error('Hybrid PM search failed', {
-      error: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : errorDetails,
+      errorCode: (error as any)?.code,
+      errorDetails: (error as any)?.details || (error as any)?.hint,
       duration: Date.now() - searchStart
     });
-    throw error;
+    
+    // Re-throw with better error message
+    throw new Error(
+      `PM knowledge search failed: ${error instanceof Error ? error.message : errorDetails}`
+    );
   }
 }
 

@@ -813,7 +813,7 @@ Provide comprehensive maintenance instructions following the tool schema structu
         metadata: {
           requestId: crypto.randomUUID(),
           timestamp: new Date().toISOString(),
-          ragResultsCount: maintenanceData?.length || 0,
+          ragResultsCount: practicalWorkDocs?.length || 0,
           bs7671Count: bs7671Data?.length || 0,
           intelligenceStatus: bs7671Data ? 'OK' : 'FAILED',
           equipmentType,
