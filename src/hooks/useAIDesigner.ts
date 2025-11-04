@@ -331,16 +331,16 @@ export const useAIDesigner = () => {
         const errorCode = data.code || 'UNKNOWN_ERROR';
         
         // Handle non-compliant design errors (PHASE 6)
-        if (errorCode === 'NON_COMPLIANT_DESIGN' && data.validationErrors) {
-          console.error('❌ Design validation failed:', data.validationErrors);
+        if (errorCode === 'NON_COMPLIANT_DESIGN' && data.technicalDetails?.validationErrors) {
+          console.error('❌ Design validation failed:', data.technicalDetails.validationErrors);
           
           // Build detailed error message
-          const errorDetails = data.validationErrors.map((e: any) => 
+          const errorDetails = data.technicalDetails.validationErrors.map((e: any) => 
             `• ${e.circuit}: ${e.message}${e.regulation ? ` (${e.regulation})` : ''}`
           ).join('\n');
           
           toast.error('Design Non-Compliant with BS 7671', {
-            description: `${data.validationErrors.length} compliance error(s) detected. Review and adjust parameters.`,
+            description: `${data.technicalDetails.validationErrors.length} compliance error(s) detected. Review and adjust parameters.`,
             duration: 10000
           });
           
