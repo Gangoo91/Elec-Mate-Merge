@@ -220,9 +220,9 @@ export function generateExpectedValues(circuit: {
   
   const expectedZs = calculateExpectedZs(circuit.ze, r1r2Result.at70C);
   const maxZs = getMaxZsForDevice({
-    deviceType: circuit.protectionDevice.type,
-    rating: circuit.protectionDevice.rating,
-    curve: circuit.protectionDevice.curve,
+    deviceType: circuit.protectionDevice?.type ?? 'MCB',
+    rating: circuit.protectionDevice?.rating ?? 6,
+    curve: circuit.protectionDevice?.curve ?? 'B',
     voltage: circuit.voltage,
     disconnectionTime: 0.4 // Standard 0.4s for final circuits
   });

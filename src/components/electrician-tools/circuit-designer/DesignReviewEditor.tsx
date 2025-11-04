@@ -8,7 +8,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { InstallationDesign, CircuitDesign } from '@/types/installation-design';
 import { 
-  CheckCircle2, AlertTriangle, Download, Zap, Cable, Shield, 
+  CheckCircle2, AlertTriangle, AlertCircle, Download, Zap, Cable, Shield, 
   TrendingDown, Percent, Gauge, Wrench, MapPin, ClipboardCheck, FileText,
   Upload, Loader2, Check, ChevronDown, Copy
 } from 'lucide-react';
@@ -747,7 +747,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       </div>
 
       {/* Circuit Detail Card */}
-      {currentCircuit && (
+      {currentCircuit && currentCircuit.cableSize && currentCircuit.protectionDevice && currentCircuit.calculations ? (
         <Card className="p-6">
           <div className="space-y-6">
             {/* Header */}
@@ -848,11 +848,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
                       <span className="text-sm text-white/80 min-w-[120px]">Live Conductor:</span>
-                      <span className="font-medium text-white">{currentCircuit.cableSize}mm²</span>
+                      <span className="font-medium text-white">{currentCircuit.cableSize ?? 'N/A'}mm²</span>
                     </div>
                     <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
                       <span className="text-sm text-white/80 min-w-[120px]">CPC:</span>
-                      <span className="font-medium text-white">{currentCircuit.cpcSize}mm²</span>
+                      <span className="font-medium text-white">{currentCircuit.cpcSize ?? 'N/A'}mm²</span>
                     </div>
                     <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
                       <span className="text-sm text-white/80 min-w-[120px]">Length:</span>
@@ -902,15 +902,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div className="flex items-center justify-between sm:justify-start sm:gap-4 py-2 px-3 bg-background/30 rounded-lg">
                       <span className="text-sm text-white/80">Type:</span>
-                      <span className="font-medium text-white">{currentCircuit.protectionDevice.type}</span>
+                      <span className="font-medium text-white">{currentCircuit.protectionDevice?.type ?? 'MCB'}</span>
                     </div>
                     <div className="flex items-center justify-between sm:justify-start sm:gap-4 py-2 px-3 bg-background/30 rounded-lg">
                       <span className="text-sm text-white/80">Rating:</span>
-                      <span className="font-medium text-white">{currentCircuit.protectionDevice.rating}A Type {currentCircuit.protectionDevice.curve}</span>
+                      <span className="font-medium text-white">{currentCircuit.protectionDevice?.rating ?? 'N/A'}A Type {currentCircuit.protectionDevice?.curve ?? 'B'}</span>
                     </div>
                     <div className="flex items-center justify-between sm:justify-start sm:gap-4 py-2 px-3 bg-background/30 rounded-lg">
                       <span className="text-sm text-white/80">Breaking Capacity:</span>
-                      <Badge variant="secondary" className="font-medium">{currentCircuit.protectionDevice.kaRating}kA</Badge>
+                      <Badge variant="secondary" className="font-medium">{currentCircuit.protectionDevice?.kaRating ?? 6}kA</Badge>
                     </div>
                   </div>
 
@@ -1268,8 +1268,17 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             )}
           </div>
         </Card>
+      ) : (
+        <Card className="p-6">
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Circuit Data Incomplete</AlertTitle>
+            <AlertDescription>
+              This circuit is missing required design data. Please regenerate the design.
+            </AlertDescription>
+          </Alert>
+        </Card>
       )}
-
 
       {/* Send to EIC Testing Card */}
       <Card className="bg-gradient-to-br from-emerald-500/10 to-green-500/10 border-emerald-500/30">

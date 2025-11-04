@@ -88,12 +88,12 @@ export function generateSingleLineDiagram(
       x: centerX - 25,
       y: currentY,
       props: {
-        rating: circuitData.protectionDevice.rating,
-        curve: circuitData.protectionDevice.curve || 'B',
-        rcdRating: circuitData.rcdRating,
+        rating: circuitData.protectionDevice?.rating ?? 0,
+        curve: circuitData.protectionDevice?.curve || 'B',
+        rcdRating: circuitData.rcdRating ?? 30,
         rcdType: 'A',
         label: `Circuit ${circuitData.circuitNumber}`,
-        kaRating: circuitData.protectionDevice.kaRating
+        kaRating: circuitData.protectionDevice?.kaRating ?? 6
       }
     });
     currentY += 110;
@@ -104,10 +104,10 @@ export function generateSingleLineDiagram(
       x: centerX - 20,
       y: currentY,
       props: {
-        rating: circuitData.protectionDevice.rating,
-        curve: circuitData.protectionDevice.curve || 'B',
+        rating: circuitData.protectionDevice?.rating ?? 0,
+        curve: circuitData.protectionDevice?.curve || 'B',
         label: `Circuit ${circuitData.circuitNumber}`,
-        kaRating: circuitData.protectionDevice.kaRating
+        kaRating: circuitData.protectionDevice?.kaRating ?? 6
       }
     });
     currentY += 90;
@@ -249,11 +249,11 @@ export function generateConsumerUnitDiagram(
         x: deviceX - 25,
         y: deviceY,
         props: {
-          rating: circuit.protectionDevice.rating,
-          curve: circuit.protectionDevice.curve || 'B',
-          rcdRating: circuit.rcdRating,
+          rating: circuit.protectionDevice?.rating ?? 0,
+          curve: circuit.protectionDevice?.curve || 'B',
+          rcdRating: circuit.rcdRating ?? 30,
           label: `C${circuit.circuitNumber}`,
-          kaRating: circuit.protectionDevice.kaRating
+          kaRating: circuit.protectionDevice?.kaRating ?? 6
         }
       });
     } else {
@@ -263,10 +263,10 @@ export function generateConsumerUnitDiagram(
         x: deviceX - 20,
         y: deviceY,
         props: {
-          rating: circuit.protectionDevice.rating,
-          curve: circuit.protectionDevice.curve || 'B',
+          rating: circuit.protectionDevice?.rating ?? 0,
+          curve: circuit.protectionDevice?.curve || 'B',
           label: `C${circuit.circuitNumber}`,
-          kaRating: circuit.protectionDevice.kaRating
+          kaRating: circuit.protectionDevice?.kaRating ?? 6
         }
       });
     }

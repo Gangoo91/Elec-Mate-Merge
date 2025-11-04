@@ -468,11 +468,20 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     
     timings.total = Date.now() - startTime;
     
-    // 9. Build response
-    const confidence = calculateOverallConfidence(processedCircuits);
+    // 9. Apply safety defaults to ensure all circuits have complete data
+    const safeCircuits = processedCircuits.map(c => {
+      if (!TypeGuards.isValidCircuit(c)) {
+        logger.warn(`Circuit ${c.name} failed validation, applying defaults`);
+        return applyDefaultCircuitValues(c);
+      }
+      return c;
+    });
+    
+    // 10. Build response
+    const confidence = calculateOverallConfidence(safeCircuits);
     
     logger.info('Batch design complete', { 
-      circuitCount: processedCircuits.length, 
+      circuitCount: safeCircuits.length, 
       confidence,
       totalTime: timings.total 
     });
@@ -481,7 +490,7 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
       JSON.stringify({
         version: VERSION,
         success: true,
-        circuits: processedCircuits,
+        circuits: safeCircuits,
         regulations: regulations.slice(0, 15).map(r => ({
           number: r.regulation_number || r.topic,
           content: (r.content || '').substring(0, 400)

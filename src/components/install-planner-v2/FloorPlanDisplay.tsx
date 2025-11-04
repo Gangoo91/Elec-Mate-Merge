@@ -137,7 +137,7 @@ export const FloorPlanDisplay = ({ circuits, roomLayout }: FloorPlanDisplayProps
                             fontSize="10"
                             className="fill-muted-foreground"
                           >
-                            {circuit.cableSize}mm² · {circuit.protectionDevice.rating}A
+                            {circuit.cableSize ?? 'N/A'}mm² · {circuit.protectionDevice?.rating ?? 'N/A'}A
                           </text>
                         </g>
                       );

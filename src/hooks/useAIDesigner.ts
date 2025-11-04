@@ -362,55 +362,31 @@ export const useAIDesigner = () => {
       // Complete progress to 100%
       setProgressWithPersistence({ stage: 8, message: 'Design complete!', percent: 100 });
       
-      // Validate design structure before accepting
-      const hasInvalidCircuits = data.circuits.some((c: any) => !c.protectionDevice);
-      if (hasInvalidCircuits) {
-        console.warn('⚠️ Some circuits missing protection device data, applying defaults');
-        data.circuits = data.circuits.map((c: any) => ({
-          ...c,
-          protectionDevice: c.protectionDevice || {
-            type: 'MCB',
-            rating: Math.ceil((c.designCurrent || c.calculations?.Ib || 0) * 1.25),
-            curve: 'B',
-            kaRating: 6
-          }
-        }));
+      // Comprehensive circuit structure validation
+      const validateCircuitStructure = (circuit: any): boolean => {
+        return !!(
+          circuit.name &&
+          typeof circuit.cableSize === 'number' &&
+          typeof circuit.cpcSize === 'number' &&
+          typeof circuit.cableLength === 'number' &&
+          circuit.protectionDevice?.type &&
+          typeof circuit.protectionDevice.rating === 'number' &&
+          circuit.calculations?.Ib !== undefined &&
+          circuit.calculations?.voltageDrop?.percent !== undefined
+        );
+      };
+
+      const invalidCircuits = data.circuits.filter((c: any) => !validateCircuitStructure(c));
+      if (invalidCircuits.length > 0) {
+        const invalidNames = invalidCircuits.map((c: any) => c?.name || 'Unnamed').join(', ');
+        console.error('Invalid circuits detected:', invalidCircuits);
+        throw new Error(
+          `${invalidCircuits.length} circuit(s) have incomplete data structure: ${invalidNames}. ` +
+          `All circuits must have valid cableSize, cpcSize, cableLength, protectionDevice, and calculations.`
+        );
       }
       
-      // Validate calculations structure
-      const hasInvalidCalculations = data.circuits.some((c: any) => 
-        !c.calculations || 
-        typeof c.calculations.Ib !== 'number' ||
-        !c.calculations.voltageDrop
-      );
-      
-      if (hasInvalidCalculations) {
-        console.warn('⚠️ Some circuits missing calculation data, applying defaults');
-        data.circuits = data.circuits.map((c: any) => {
-          const Ib = c.designCurrent || c.calculations?.Ib || (c.loadPower || 0) / (c.voltage || 230);
-          return {
-            ...c,
-            calculations: {
-              Ib: Ib,
-              In: c.calculations?.In ?? c.protectionDevice?.rating ?? Math.ceil(Ib * 1.25),
-              Iz: c.calculations?.Iz ?? c.protectionDevice?.rating ?? Math.ceil(Ib * 1.25),
-              safetyMargin: c.calculations?.safetyMargin ?? 20,
-              voltageDrop: c.calculations?.voltageDrop ?? {
-                volts: 0,
-                percent: 0,
-                compliant: true,
-                limit: (c.voltage || 230) * 0.05
-              },
-              zs: c.calculations?.zs ?? c.ze ?? 0.35,
-              maxZs: c.calculations?.maxZs ?? 2.19,
-              deratedCapacity: c.calculations?.deratedCapacity ?? c.calculations?.Iz ?? 0,
-              ...c.calculations
-            }
-          };
-        });
-      }
-      
-      // Wrap backend response into InstallationDesign format
+      // Wrap backend response into InstallationDesign format with safe property access
       const design: InstallationDesign = {
         projectName: data.projectInfo?.name || inputs.projectName,
         location: data.projectInfo?.location || '',

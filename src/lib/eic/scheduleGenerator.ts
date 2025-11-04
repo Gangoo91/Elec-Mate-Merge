@@ -122,12 +122,12 @@ export function generateEICSchedule(
     circuitDescription: circuit.name,
     referenceMethod: getReferenceMethodCode(circuit.calculationResults.installationMethod),
     pointsServed: String(getPointsServed(circuit.loadType)),
-    liveSize: `${circuit.cableSize}`,
-    cpcSize: `${circuit.cpcSize}`,
-    protectiveDeviceType: circuit.protectionDevice.type,
-    protectiveDeviceCurve: circuit.protectionDevice.curve,
-    protectiveDeviceRating: String(circuit.protectionDevice.rating),
-    protectiveDeviceKaRating: String(circuit.protectionDevice.kaRating),
+    liveSize: `${circuit.cableSize ?? 2.5}`,
+    cpcSize: `${circuit.cpcSize ?? 1.5}`,
+    protectiveDeviceType: circuit.protectionDevice?.type ?? 'MCB',
+    protectiveDeviceCurve: circuit.protectionDevice?.curve ?? 'B',
+    protectiveDeviceRating: String(circuit.protectionDevice?.rating ?? 6),
+    protectiveDeviceKaRating: String(circuit.protectionDevice?.kaRating ?? 6),
     bsStandard: 'BS 7671:2018+A3:2024',
 
     // Pre-calculated expected values

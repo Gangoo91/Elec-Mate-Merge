@@ -123,10 +123,10 @@ export function generateDesignSpecificationPDF(design: InstallationDesign): jsPD
   const circuitOverview = design.circuits.map((circuit, idx) => [
     (idx + 1).toString(),
     circuit.name,
-    `${circuit.loadPower}W`,
-    `${circuit.cableSize}mm²`,
-    `${circuit.protectionDevice.type} ${circuit.protectionDevice.rating}A ${circuit.protectionDevice.curve}`,
-    `${circuit.calculations.voltageDrop.volts.toFixed(2)}V (${circuit.calculations.voltageDrop.percent.toFixed(2)}%)`
+    `${circuit.loadPower ?? 0}W`,
+    `${circuit.cableSize ?? 'N/A'}mm²`,
+    `${circuit.protectionDevice?.type ?? 'MCB'} ${circuit.protectionDevice?.rating ?? 'N/A'}A ${circuit.protectionDevice?.curve ?? 'B'}`,
+    `${circuit.calculations?.voltageDrop?.volts?.toFixed(2) ?? '0.00'}V (${circuit.calculations?.voltageDrop?.percent?.toFixed(2) ?? '0.00'}%)`
   ]);
   
   autoTable(doc, {
@@ -194,13 +194,13 @@ export function generateDesignSpecificationPDF(design: InstallationDesign): jsPD
     yPos += 8;
     
     const cableProtection = [
-      ["Cable Size (Live)", `${circuit.cableSize}mm²`],
-      ["CPC Size", `${circuit.cpcSize}mm²`],
-      ["Cable Type", circuit.cableType || `${circuit.cableSize}/${circuit.cpcSize}mm² T&E`],
-      ["Protection Device", `${circuit.protectionDevice.type}`],
-      ["Rating (In)", `${circuit.protectionDevice.rating}A`],
-      ["Type Curve", `Type ${circuit.protectionDevice.curve}`],
-      ["Breaking Capacity", `${circuit.protectionDevice.kaRating}kA`],
+      ["Cable Size (Live)", `${circuit.cableSize ?? 'N/A'}mm²`],
+      ["CPC Size", `${circuit.cpcSize ?? 'N/A'}mm²`],
+      ["Cable Type", circuit.cableType || `${circuit.cableSize ?? 'N/A'}/${circuit.cpcSize ?? 'N/A'}mm² T&E`],
+      ["Protection Device", `${circuit.protectionDevice?.type ?? 'MCB'}`],
+      ["Rating (In)", `${circuit.protectionDevice?.rating ?? 'N/A'}A`],
+      ["Type Curve", `Type ${circuit.protectionDevice?.curve ?? 'B'}`],
+      ["Breaking Capacity", `${circuit.protectionDevice?.kaRating ?? 6}kA`],
       ["RCD Protected", circuit.rcdProtected ? "Yes (30mA)" : "No"],
       ["AFDD Required", circuit.afddRequired ? "Yes" : "No"]
     ];
