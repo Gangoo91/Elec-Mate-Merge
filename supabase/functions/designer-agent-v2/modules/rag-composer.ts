@@ -55,8 +55,8 @@ export async function buildRAGSearches(
     expandedQuery: query,
     searchTerms,
     priorities: {
-      bs7671: 95,              // Vector threshold 0.65+ (95% confidence)
-      design_knowledge: 85,    // Keyword-only with 85% relevance
+      design_knowledge: 95,    // Design docs FIRST: +95% boost, vector search, 15 results
+      bs7671: 85,              // Regulations SECOND: +85% boost, keyword search, 10 results
       installation_knowledge: 0,
       practical_work: 0,
       health_safety: 0
