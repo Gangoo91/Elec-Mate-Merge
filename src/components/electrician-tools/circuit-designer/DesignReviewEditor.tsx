@@ -788,34 +788,152 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         </Card>
       )}
 
-      {/* Circuit Navigation */}
-      <div className="flex gap-2 overflow-x-auto pb-2">
-        {design.circuits.map((circuit, idx) => (
-          <Button
-            key={idx}
-            variant={selectedCircuit === idx ? 'default' : 'outline'}
-            size="sm"
-            onClick={() => setSelectedCircuit(idx)}
-            className="flex-shrink-0"
-          >
-            C{circuit.circuitNumber}
-          </Button>
-        ))}
-      </div>
+      {/* Circuit Navigation with Counter */}
+      <Card className="p-4 bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Zap className="h-5 w-5 text-primary" />
+              <h3 className="font-semibold text-foreground">Circuit Navigation</h3>
+              <Badge variant="default" className="ml-2">
+                {design.circuits.length} Circuit{design.circuits.length !== 1 ? 's' : ''} Designed
+              </Badge>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const element = document.getElementById('circuit-summary-table');
+                element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+              className="gap-2"
+            >
+              <FileText className="h-4 w-4" />
+              View All
+            </Button>
+          </div>
+          
+          <p className="text-sm text-muted-foreground">
+            Click a circuit below to view detailed specifications and calculations
+          </p>
+          
+          <div className="flex gap-2 overflow-x-auto pb-2">
+            {design.circuits.map((circuit, idx) => (
+              <Button
+                key={idx}
+                variant={selectedCircuit === idx ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setSelectedCircuit(idx)}
+                className="flex-shrink-0 min-w-[60px]"
+              >
+                <span className="font-mono">C{circuit.circuitNumber}</span>
+              </Button>
+            ))}
+          </div>
+        </div>
+      </Card>
+
+      {/* All Circuits Summary Table */}
+      <Card className="p-6" id="circuit-summary-table">
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <FileText className="h-5 w-5 text-primary" />
+            <h3 className="text-lg font-semibold">All Circuits Overview</h3>
+          </div>
+          
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border">
+                  <th className="text-left py-2 px-2 font-semibold">Circuit</th>
+                  <th className="text-left py-2 px-2 font-semibold">Name</th>
+                  <th className="text-left py-2 px-2 font-semibold">Load</th>
+                  <th className="text-left py-2 px-2 font-semibold">Cable</th>
+                  <th className="text-left py-2 px-2 font-semibold">Protection</th>
+                  <th className="text-left py-2 px-2 font-semibold">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {design.circuits.map((circuit, idx) => {
+                  const hasCompliance = circuit.calculations?.voltageDrop?.compliant && 
+                    (circuit.calculations?.zs ?? 0) < (circuit.calculations?.maxZs ?? 999);
+                  
+                  return (
+                    <tr 
+                      key={idx} 
+                      className={`border-b border-border/50 hover:bg-muted/50 cursor-pointer transition-colors ${selectedCircuit === idx ? 'bg-primary/10' : ''}`}
+                      onClick={() => setSelectedCircuit(idx)}
+                    >
+                      <td className="py-3 px-2">
+                        <span className="font-mono font-semibold text-primary">C{circuit.circuitNumber}</span>
+                      </td>
+                      <td className="py-3 px-2">
+                        <div>
+                          <div className="font-medium">{circuit.name}</div>
+                          <div className="text-xs text-muted-foreground capitalize">{circuit.loadType}</div>
+                        </div>
+                      </td>
+                      <td className="py-3 px-2">
+                        <div>
+                          <div className="font-medium">{(circuit.loadPower / 1000).toFixed(1)}kW</div>
+                          <div className="text-xs text-muted-foreground">{circuit.calculations?.Ib?.toFixed(1)}A</div>
+                        </div>
+                      </td>
+                      <td className="py-3 px-2">
+                        <div className="text-xs">
+                          <div className="font-medium">{circuit.cableSize}mm²</div>
+                          <div className="text-muted-foreground">{circuit.cableLength}m</div>
+                        </div>
+                      </td>
+                      <td className="py-3 px-2">
+                        <Badge variant="outline" className="text-xs">
+                          {circuit.protectionDevice?.rating}A {circuit.protectionDevice?.curve}
+                        </Badge>
+                      </td>
+                      <td className="py-3 px-2">
+                        {hasCompliance ? (
+                          <Badge variant="success" className="text-xs gap-1">
+                            <CheckCircle2 className="h-3 w-3" />
+                            Pass
+                          </Badge>
+                        ) : (
+                          <Badge variant="warning" className="text-xs gap-1">
+                            <AlertTriangle className="h-3 w-3" />
+                            Review
+                          </Badge>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          
+          <p className="text-xs text-muted-foreground">
+            Click any row to view detailed specifications and calculations
+          </p>
+        </div>
+      </Card>
 
       {/* Circuit Detail Card */}
       {currentCircuit && (currentCircuit.cableSize || currentCircuit.cableSize === 0) && currentCircuit.protectionDevice && currentCircuit.calculations ? (
         <Card className="p-6">
           <div className="space-y-6">
             {/* Header */}
-            <div>
-              <h3 className="text-xl font-bold flex items-center gap-2">
-                <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-sm">
-                  C{currentCircuit.circuitNumber}
-                </span>
-                {currentCircuit.name}
-              </h3>
-              <p className="text-muted-foreground capitalize">{currentCircuit.loadType}</p>
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-xl font-bold flex items-center gap-2">
+                  <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-sm">
+                    C{currentCircuit.circuitNumber}
+                  </span>
+                  {currentCircuit.name}
+                </h3>
+                <p className="text-muted-foreground capitalize">{currentCircuit.loadType}</p>
+              </div>
+              <Badge variant="outline" className="text-xs">
+                Circuit {selectedCircuit + 1} of {design.circuits.length}
+              </Badge>
             </div>
 
             {/* Special Location Alert */}
