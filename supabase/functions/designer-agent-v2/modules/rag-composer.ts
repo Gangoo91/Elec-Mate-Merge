@@ -15,15 +15,15 @@ export async function buildRAGSearches(
   supabase: any,
   logger: any
 ): Promise<any> {
-  logger.info('Performing intelligent RAG search...', { searchTerms });
+  logger.info('Performing intelligent RAG search with enhanced thresholds...', { searchTerms });
 
   const ragResults = await intelligentRAGSearch({
     expandedQuery: query,
     searchTerms,
     priorities: {
-      bs7671: 95,
-      design_knowledge: 90,
-      installation_knowledge: 70,
+      bs7671: 95,              // Vector threshold 0.65+ (95% confidence)
+      design_knowledge: 85,    // Keyword-only with 85% relevance
+      installation_knowledge: 0,
       practical_work: 0,
       health_safety: 0
     },
