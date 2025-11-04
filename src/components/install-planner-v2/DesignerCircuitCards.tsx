@@ -47,7 +47,7 @@ export const DesignerCircuitCards = ({ circuits }: { circuits: Circuit[] }) => {
                 </div>
                 <div className="text-center">
                   <p className="text-xs text-muted-foreground">Cable Size</p>
-                  <p className="text-3xl sm:text-4xl font-bold text-foreground">{circuit.cableSize}</p>
+                  <p className="text-3xl sm:text-4xl font-bold text-foreground">{circuit.cableSize ?? 'N/A'}</p>
                 </div>
               </div>
               

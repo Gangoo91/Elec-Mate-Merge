@@ -54,8 +54,8 @@ export const MultiCircuitRenderer = ({ data, foundRegulations, ragMetadata, agen
   const transformedCircuits = deduplicatedCircuits.map((circuit, index) => ({
     ...circuit,
     id: circuit.id || `${circuit.name}-${circuit.circuitNumber || index}`,
-    cableSpec: circuit.cableSpec || `${circuit.cableSize} cable`,
-    protection: circuit.protection || circuit.mcbRating || 'TBD',
+    cableSpec: circuit.cableSpec || (circuit.cableSize ? `${circuit.cableSize}mm² cable` : 'Cable TBD'),
+    protection: circuit.protection || circuit.mcbRating || circuit.protectionDevice?.rating || 'TBD',
     complianceStatus: circuit.complianceStatus === 'review' ? 'warning' : circuit.complianceStatus || 'pass'
   }));
 

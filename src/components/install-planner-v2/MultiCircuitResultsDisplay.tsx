@@ -145,7 +145,7 @@ export const MultiCircuitResultsDisplay = ({
               <div className="flex justify-between p-3 bg-muted/30 rounded-md">
                 <span className="text-sm text-muted-foreground">Cable Size</span>
                 <span className="font-bold text-primary text-base">
-                  {circuit.cableSize}
+                  {circuit.cableSize ?? 'TBD'}
                   <span className="text-xs text-muted-foreground ml-1">
                     ({circuit.cableSpec})
                   </span>
