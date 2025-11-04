@@ -772,12 +772,6 @@ export async function intelligentRAGSearch(
   // Reassign to ensure design-first ordering
   allDesignDocs = merged.filter(r => r.source === 'design');
   allRegulations = merged.filter(r => r.source === 'regulation');
-  
-  // IMPROVEMENT #3: Apply additional regulation-specific re-ranking
-  if (allRegulations.length > 0) {
-    allRegulations = reRankRegulations(allRegulations);
-    console.log(`📊 Re-ranked ${allRegulations.length} regulations by importance (design knowledge prioritized)`);
-  }
 
   // Tier 3: Keyword fallback (if still needed)
   if (allRegulations.length < 3 || allDesignDocs.length < 3) {
