@@ -48,11 +48,15 @@ function expandSearchTerms(query: string): string[] {
     'protection': ['overload', 'short circuit', 'fault protection', 'MCB', 'RCBO', 'RCD'],
     'cable': ['conductor', 'wiring', 'cable sizing', 'current capacity', 'wire'],
     'earth': ['ground', 'earthing', 'protective conductor', 'CPC', 'bonding'],
-    'voltage drop': ['volt drop', 'VD', 'voltage loss', 'cable sizing'],
+    'voltage drop': ['volt drop', 'VD', 'voltage loss', 'cable sizing', 'mV/A/m', 'appendix 4'],
     'consumer unit': ['CU', 'distribution board', 'DB', 'fuse box', 'consumer board'],
     'lighting': ['light', 'illumination', 'luminaire', 'lamp', 'lighting circuit'],
     'cooker': ['cooking appliance', 'oven', 'hob', 'cooker circuit'],
     'immersion': ['immersion heater', 'water heater', 'hot water'],
+    'ring': ['ring final', 'ring circuit', 'ring main', 'parallel paths', 'divide by 4', '÷4'],
+    'cpc': ['protective conductor', 'earth conductor', 'table 54.7', 'cpc sizing'],
+    'zs': ['earth fault loop', 'fault loop impedance', 'r1+r2', 'max zs'],
+    'calculation': ['formula', 'method', 'design', 'sizing', 'appendix'],
   };
   
   const terms = query.toLowerCase().split(/\s+/);
@@ -80,6 +84,47 @@ function expandSearchTerms(query: string): string[] {
 function reRankRegulations(regulations: any[]): any[] {
   return regulations.map(reg => {
     let boostScore = 1.0;
+    const regNumber = reg.regulation_number?.toLowerCase() || '';
+    const content = reg.content?.toLowerCase() || '';
+    
+    // PHASE 1: CRITICAL CALCULATION BOOSTS
+    
+    // Boost ring final circuit guidance (CRITICAL for parallel path calculations)
+    if (regNumber.includes('433.1.204') || 
+        content.includes('ring final') ||
+        content.includes('ring circuit')) {
+      boostScore *= 1.45; // +45% boost
+    }
+    
+    // Boost Appendix 15 (ring final design methodology)
+    if ((regNumber.includes('appendix') && regNumber.includes('15')) ||
+        content.includes('appendix 15')) {
+      boostScore *= 1.50; // +50% boost (HIGHEST PRIORITY)
+    }
+    
+    // Boost Table 54.7 (CPC sizing) - CRITICAL for compliance
+    if (regNumber.includes('54.7') ||
+        regNumber.includes('table 54') ||
+        content.includes('table 54.7')) {
+      boostScore *= 1.40; // +40% boost
+    }
+    
+    // Boost Appendix 4 (conductor resistances & mV/A/m)
+    if ((regNumber.includes('appendix') && regNumber.includes('4')) ||
+        content.includes('appendix 4') ||
+        content.includes('mv/a/m') ||
+        content.includes('conductor resistance')) {
+      boostScore *= 1.38; // +38% boost
+    }
+    
+    // Boost Zs calculation guidance
+    if (content.includes('zs =') ||
+        content.includes('earth fault loop') ||
+        content.includes('r1+r2')) {
+      boostScore *= 1.35; // +35% boost
+    }
+    
+    // EXISTING BOOSTS (kept for compatibility)
     
     // Boost Amendment 3:2024 regulations (most recent)
     if (reg.amendment?.includes('A3:2024') || reg.amendment?.includes('Amendment 3')) {
@@ -635,17 +680,43 @@ export async function intelligentRAGSearch(
     embedding = vectorResults.embedding;
   }
 
-  // Merge results
-  let allRegulations = [...exactResults.regulations, ...vectorResults.regulations];
-  let allDesignDocs = vectorResults.designDocs;
-  let allHealthSafetyDocs = vectorResults.healthSafetyDocs;
-  let allInstallationDocs = vectorResults.installationDocs;
-  let allMaintenanceDocs = vectorResults.maintenanceDocs;
+  // PHASE 2: Merge and fuse ALL results for unified re-ranking
+  const allResults = [
+    ...exactResults.regulations.map(r => ({ ...r, source: 'regulation', sourceType: 'exact', baseScore: r.relevance || 100 })),
+    ...vectorResults.regulations.map(r => ({ ...r, source: 'regulation', sourceType: 'vector', baseScore: r.similarity || 0.7 })),
+    ...vectorResults.designDocs.map(d => ({ ...d, source: 'design', sourceType: 'vector', baseScore: (d.similarity || 0.7) * 1.25 })), // +25% for design knowledge
+    ...vectorResults.healthSafetyDocs.map(h => ({ ...h, source: 'health_safety', sourceType: 'vector', baseScore: h.similarity || 0.7 })),
+    ...vectorResults.installationDocs.map(i => ({ ...i, source: 'installation', sourceType: 'vector', baseScore: i.similarity || 0.7 })),
+    ...vectorResults.maintenanceDocs.map(m => ({ ...m, source: 'maintenance', sourceType: 'vector', baseScore: m.similarity || 0.7 })),
+  ];
   
-  // IMPROVEMENT #3: Apply re-ranking to boost important regulations
+  // PHASE 2: Apply content-based boosts across ALL sources
+  const reranked = allResults.map(result => {
+    let boostScore = result.baseScore;
+    const content = (result.content || '').toLowerCase();
+    const topic = (result.topic || result.regulation_number || '').toLowerCase();
+    
+    // CRITICAL BOOSTS for calculation guidance
+    if (content.includes('÷ 4') || content.includes('divide by 4')) boostScore *= 1.50;
+    if (content.includes('ring final') && content.includes('calculation')) boostScore *= 1.45;
+    if (content.includes('table 54.7') || topic.includes('cpc')) boostScore *= 1.40;
+    if (content.includes('mv/a/m') || content.includes('voltage drop table')) boostScore *= 1.38;
+    if (content.includes('zs =') || content.includes('r1+r2')) boostScore *= 1.35;
+    
+    return { ...result, finalScore: boostScore };
+  }).sort((a, b) => b.finalScore - a.finalScore);
+  
+  // Separate back into typed arrays
+  let allRegulations = reranked.filter(r => r.source === 'regulation');
+  let allDesignDocs = reranked.filter(r => r.source === 'design');
+  let allHealthSafetyDocs = reranked.filter(r => r.source === 'health_safety');
+  let allInstallationDocs = reranked.filter(r => r.source === 'installation');
+  let allMaintenanceDocs = reranked.filter(r => r.source === 'maintenance');
+  
+  // IMPROVEMENT #3: Apply additional regulation-specific re-ranking
   if (allRegulations.length > 0) {
     allRegulations = reRankRegulations(allRegulations);
-    console.log(`📊 Re-ranked ${allRegulations.length} regulations by importance`);
+    console.log(`📊 Re-ranked ${allRegulations.length} regulations by importance (design knowledge prioritized)`);
   }
 
   // Tier 3: Keyword fallback (if still needed)

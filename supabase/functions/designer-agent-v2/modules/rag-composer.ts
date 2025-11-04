@@ -30,6 +30,42 @@ export async function buildRAGSearches(
     limit: 30
   }, openAiKey, supabase, logger);
 
+  // PHASE 4: Force-include critical design knowledge if missing
+  const criticalTopics = [
+    'ring final calculation',
+    'cpc sizing table',
+    'voltage drop mV/A/m',
+    'zs calculation method'
+  ];
+
+  const foundTopics = (ragResults.designDocs || []).map((d: any) => (d.topic || '').toLowerCase());
+  const missingCritical = criticalTopics.filter(topic =>
+    !foundTopics.some(found => found.includes(topic.replace(/ /g, '')))
+  );
+
+  if (missingCritical.length > 0) {
+    logger.warn('Missing critical design knowledge, attempting direct lookup', {
+      missing: missingCritical
+    });
+    
+    const { data: criticalDocs } = await supabase
+      .from('design_knowledge')
+      .select('*')
+      .or(missingCritical.map(topic => 
+        `topic.ilike.%${topic}%`
+      ).join(','))
+      .limit(5);
+      
+    if (criticalDocs && criticalDocs.length > 0) {
+      ragResults.designDocs = ragResults.designDocs || [];
+      ragResults.designDocs.unshift(...criticalDocs);
+      logger.info('✅ Added critical design knowledge', {
+        count: criticalDocs.length,
+        topics: criticalDocs.map((d: any) => d.topic)
+      });
+    }
+  }
+
   return ragResults;
 }
 
