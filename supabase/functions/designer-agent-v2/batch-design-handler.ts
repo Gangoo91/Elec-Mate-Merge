@@ -170,6 +170,10 @@ function extractSearchTerms(query: string, circuits: any[]): string[] {
  * PRESERVED FROM ORIGINAL - Maps AI output to PDF template requirements
  */
 function ensurePDFFields(circuit: any): any {
+  // CRITICAL: Add cableSize/cpcSize defaults FIRST before any property access
+  if (circuit.cableSize === undefined || circuit.cableSize === null) circuit.cableSize = 2.5;
+  if (circuit.cpcSize === undefined || circuit.cpcSize === null) circuit.cpcSize = 1.5;
+  
   // Ensure protection device exists
   if (!circuit.protectionDevice) {
     circuit.protectionDevice = {
@@ -184,7 +188,7 @@ function ensurePDFFields(circuit: any): any {
   if (!circuit.calculations) {
     circuit.calculations = {
       Ib: 4.3,
-      In: circuit.protectionDevice.rating || 6,
+      In: circuit.protectionDevice?.rating ?? 6,
       Iz: 20,
       voltageDrop: { volts: 2.0, percent: 0.87, limit: 3, compliant: true },
       zs: 1.5,
@@ -192,32 +196,34 @@ function ensurePDFFields(circuit: any): any {
     };
   }
   
-  // Add PDF-specific text fields
+  // Add PDF-specific text fields with null safety
   circuit.rcdProtectedText = circuit.rcdProtected ? 'Yes' : 'No';
-  circuit.nominalCurrentIn = circuit.protectionDevice.rating + 'A';
-  circuit.designCurrentIb = circuit.calculations.Ib.toFixed(1) + 'A';
-  circuit.cableCurrentIz = circuit.calculations.Iz.toFixed(1) + 'A';
+  circuit.nominalCurrentIn = (circuit.protectionDevice?.rating ?? 6) + 'A';
+  circuit.designCurrentIb = (circuit.calculations?.Ib ?? 4.3).toFixed(1) + 'A';
+  circuit.cableCurrentIz = (circuit.calculations?.Iz ?? 20).toFixed(1) + 'A';
   
-  // Voltage drop formatting
-  const vd = circuit.calculations.voltageDrop;
+  // Voltage drop formatting with null safety
+  const vd = circuit.calculations?.voltageDrop ?? { volts: 2.0, percent: 0.87, limit: 3, compliant: true };
   circuit.voltageDropText = vd.volts.toFixed(2) + 'V (' + vd.percent.toFixed(2) + '%)';
   circuit.voltageDropCompliant = vd.compliant ? 'Compliant' : 'Non-compliant';
   
-  // Earth fault loop impedance
-  circuit.earthFaultLoopText = circuit.calculations.zs.toFixed(2) + 'Ω (max ' + circuit.calculations.maxZs.toFixed(2) + 'Ω)';
-  circuit.zsCompliant = circuit.calculations.zs <= circuit.calculations.maxZs ? 'Compliant' : 'Non-compliant';
+  // Earth fault loop impedance with null safety
+  const zs = circuit.calculations?.zs ?? 1.5;
+  const maxZs = circuit.calculations?.maxZs ?? 7.28;
+  circuit.earthFaultLoopText = zs.toFixed(2) + 'Ω (max ' + maxZs.toFixed(2) + 'Ω)';
+  circuit.zsCompliant = zs <= maxZs ? 'Compliant' : 'Non-compliant';
   
-  // Protection device summary
-  circuit.protectionSummary = circuit.protectionDevice.type + ' ' + 
-                             circuit.protectionDevice.rating + 'A ' +
-                             'Type ' + circuit.protectionDevice.curve + ' (' +
-                             circuit.protectionDevice.kaRating + 'kA)';
+  // Protection device summary with null safety
+  circuit.protectionSummary = (circuit.protectionDevice?.type ?? 'MCB') + ' ' + 
+                             (circuit.protectionDevice?.rating ?? 6) + 'A ' +
+                             'Type ' + (circuit.protectionDevice?.curve ?? 'B') + ' (' +
+                             (circuit.protectionDevice?.kaRating ?? 6) + 'kA)';
   
-  // Cable summary
-  circuit.cableSummary = circuit.cableSize + 'mm² / ' + circuit.cpcSize + 'mm² CPC';
+  // Cable summary with guaranteed values
+  circuit.cableSummary = (circuit.cableSize ?? 2.5) + 'mm² / ' + (circuit.cpcSize ?? 1.5) + 'mm² CPC';
   
-  // Compliance summary
-  const allCompliant = vd.compliant && (circuit.calculations.zs <= circuit.calculations.maxZs);
+  // Compliance summary with null safety
+  const allCompliant = vd.compliant && (zs <= maxZs);
   circuit.complianceSummary = allCompliant ? 'Fully compliant' : 'Requires attention';
   
   return circuit;

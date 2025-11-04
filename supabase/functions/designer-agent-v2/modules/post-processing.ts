@@ -48,8 +48,8 @@ export function generateWarnings(circuits: any[], supply: any): string[] {
       warnings.push(`⚠️ ${circuit.name}: High voltage drop (${circuit.calculations.voltageDrop.percent.toFixed(2)}%)`);
     }
 
-    // Cable size warnings for ring finals
-    if (circuit.loadType?.includes('socket') && circuit.cableSize > 2.5) {
+    // Cable size warnings for ring finals (with null safety)
+    if (circuit.loadType?.includes('socket') && (circuit.cableSize ?? 2.5) > 2.5) {
       warnings.push(`⚠️ ${circuit.name}: Oversized cable for ring final (should be 2.5mm²)`);
     }
 

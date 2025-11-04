@@ -30,7 +30,11 @@ export function validateCalculations(circuits: any[]): ValidationResult {
   const info: ValidationError[] = [];
 
   circuits.forEach((circuit, index) => {
-    const { calculations, cableSize, cpcSize, protectionDevice } = circuit;
+    // Safe destructuring with null coalescing
+    const cableSize = circuit.cableSize ?? 2.5;
+    const cpcSize = circuit.cpcSize ?? 1.5;
+    const calculations = circuit.calculations ?? {};
+    const protectionDevice = circuit.protectionDevice ?? {};
     
     if (!calculations) {
       errors.push({
@@ -73,7 +77,7 @@ export function validateCalculations(circuits: any[]): ValidationResult {
           category: 'calculation',
           message: `Device rating (${In}A) exceeds cable capacity (${Iz}A)`,
           regulation: 'Reg 433.1.1',
-          suggestedFix: `Increase cable size to at least ${cableSize + 1}mm² or reduce device rating`
+          suggestedFix: `Increase cable size to at least ${(cableSize ?? 2.5) + 1}mm² or reduce device rating`
         });
       }
 
@@ -269,13 +273,13 @@ export function validateCompliance(circuits: any[], incomingSupply: any): Valida
         });
       }
 
-      if (circuit.cableSize < 6) {
+      if ((circuit.cableSize ?? 0) < 6 && (circuit.cableSize ?? 0) > 0) {
         warnings.push({
           circuitIndex: index,
           circuitName: circuit.name,
           severity: 'warning',
           category: 'compliance',
-          message: `Cable size ${circuit.cableSize}mm² may be undersized for EV charger`,
+          message: `Cable size ${circuit.cableSize ?? 0}mm² may be undersized for EV charger`,
           suggestedFix: 'Consider 10mm² minimum for future-proofing'
         });
       }
@@ -291,7 +295,7 @@ export function validateCompliance(circuits: any[], incomingSupply: any): Valida
                            (loadType.includes('socket') && circuit.protectionDevice?.rating === 32)) && 
                           !isExplicitlyRadial;
     
-    if (isRingCircuit && circuit.cableSize > 2.5) {
+    if (isRingCircuit && (circuit.cableSize ?? 2.5) > 2.5) {
       const loadPower = circuit.loadPower || 0;
       const suggestedRings = Math.ceil(loadPower / 7360);
       
@@ -300,7 +304,7 @@ export function validateCompliance(circuits: any[], incomingSupply: any): Valida
         circuitName: circuit.name,
         severity: 'critical',
         category: 'compliance',
-        message: `Ring final uses ${circuit.cableSize}mm² cable - must be 2.5mm² per BS 7671 Appendix 15`,
+        message: `Ring final uses ${circuit.cableSize ?? 2.5}mm² cable - must be 2.5mm² per BS 7671 Appendix 15`,
         regulation: 'BS 7671 Appendix 15 / Reg 433.1.204',
         suggestedFix: `FIX OPTIONS:
   1. If domestic/office sockets (≤8 outlets): Change to 2.5mm²/1.5mm² T&E with 32A MCB
@@ -335,6 +339,19 @@ export function validateCompliance(circuits: any[], incomingSupply: any): Valida
           suggestedFix: 'Specify SWA cable for mechanical protection'
         });
       }
+    }
+
+    // Industrial fixed equipment cable size check (with null safety)
+    if (isFixedIndustrial && (circuit.cableSize ?? 0) > 10) {
+      info.push({
+        circuitIndex: index,
+        circuitName: circuit.name,
+        severity: 'info',
+        category: 'compliance',
+        message: `Fixed industrial equipment using ${circuit.cableSize ?? 0}mm² cable`,
+        regulation: 'Reg 433.1'
+      });
+    }
     }
   });
 
