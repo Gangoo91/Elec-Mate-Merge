@@ -210,11 +210,16 @@ serve(async (req) => {
       searchPricingKnowledge(enhancedQuery, await generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY), supabase, logger, parsedEntities.jobType),
       
       // Combined installation + design knowledge with intelligent RAG
-      intelligentRAGSearch({
-        circuitType: parsedEntities.jobType,
-        searchTerms: enhancedQuery.split(' ').filter(w => w.length > 3),
-        expandedQuery: enhancedQuery
-      }),
+      intelligentRAGSearch(
+        {
+          circuitType: parsedEntities.jobType,
+          searchTerms: enhancedQuery.split(' ').filter(w => w.length > 3),
+          expandedQuery: enhancedQuery
+        },
+        OPENAI_API_KEY,
+        supabase,
+        logger
+      ),
       
       // NEW: Search project_mgmt_knowledge for labour time standards
       searchLabourTimeKnowledge(labourQuery, await generateEmbeddingWithRetry(labourQuery, OPENAI_API_KEY), supabase, logger, parsedEntities.jobType)
