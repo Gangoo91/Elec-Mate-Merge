@@ -620,6 +620,21 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
   const currentCircuit = design.circuits[selectedCircuit];
 
+  // Guard: If currentCircuit is undefined or missing required properties, show error
+  if (!currentCircuit) {
+    return (
+      <Card className="p-6">
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Circuit Not Found</AlertTitle>
+          <AlertDescription>
+            The selected circuit could not be found. Please try selecting a different circuit.
+          </AlertDescription>
+        </Alert>
+      </Card>
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* Agent Flow Diagram */}
