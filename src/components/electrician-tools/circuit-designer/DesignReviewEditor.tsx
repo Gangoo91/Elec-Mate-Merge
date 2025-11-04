@@ -21,6 +21,7 @@ import { AgentFlowDiagram } from '@/components/install-planner-v2/AgentFlowDiagr
 import { AgentType } from '@/types/agent-request';
 import { useNavigate } from 'react-router-dom';
 import { calculateExpectedR1R2, getMaxZsForDevice, mapLoadTypeToCircuitDescription } from '@/utils/eic-transformer';
+import { MobileCircuitResults } from './MobileCircuitResults';
 
 interface DesignReviewEditorProps {
   design: InstallationDesign;
@@ -35,6 +36,17 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   const navigate = useNavigate();
   const [selectedCircuit, setSelectedCircuit] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+
+  // Responsive breakpoint detection
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Debug: Log on mount and validate circuits
   useEffect(() => {
@@ -693,6 +705,18 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
     );
   }
 
+  // Mobile-first responsive rendering
+  if (isMobile) {
+    return (
+      <MobileCircuitResults 
+        design={design} 
+        onReset={onReset} 
+        onExport={handleExportPDF}
+      />
+    );
+  }
+
+  // Desktop view
   return (
     <div className="space-y-6">
       {/* Agent Flow Diagram */}

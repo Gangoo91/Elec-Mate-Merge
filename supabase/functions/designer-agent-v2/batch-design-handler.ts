@@ -263,6 +263,13 @@ function ensurePDFFields(circuit: any): any {
                              'Type ' + (circuit.protectionDevice?.curve ?? 'B') + ' (' +
                              (circuit.protectionDevice?.kaRating ?? 6) + 'kA)';
   
+  // CRITICAL: Enforce 1.5mm² minimum for lighting circuits (BS 7671 requirement)
+  if (circuit.loadType === 'lighting' && circuit.cableSize && circuit.cableSize < 1.5) {
+    circuit.cableSize = 1.5;
+    if (!circuit.warnings) circuit.warnings = [];
+    circuit.warnings.push('Cable size increased to 1.5mm² (BS 7671 minimum for fixed wiring)');
+  }
+  
   // Cable summary with guaranteed values
   circuit.cableSummary = (circuit.cableSize ?? 2.5) + 'mm² / ' + (circuit.cpcSize ?? 1.5) + 'mm² CPC';
   

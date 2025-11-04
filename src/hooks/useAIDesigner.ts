@@ -28,6 +28,7 @@ export const useAIDesigner = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [designData, setDesignData] = useState<InstallationDesign | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [startTime, setStartTime] = useState<number>(0);
   const [progress, setProgress] = useState<DesignProgress | null>(() => {
     // Restore progress from localStorage on mount
     const savedProgress = localStorage.getItem('designer-progress');
@@ -48,6 +49,7 @@ export const useAIDesigner = () => {
   const generateDesign = async (inputs: DesignInputs): Promise<boolean> => {
     setIsProcessing(true);
     setError(null);
+    setStartTime(Date.now());
     setDesignData(null);
 
     // Validate inputs - must have either circuits OR a prompt description
@@ -419,8 +421,12 @@ export const useAIDesigner = () => {
       console.log('✅ Design generated successfully', design);
       setDesignData(design);
 
-      toast.success('Design generated successfully', {
-        description: `${design.circuits.length} circuits designed and verified`
+      // Calculate generation time
+      const generationTime = Math.round((Date.now() - startTime) / 1000);
+      
+      toast.success('Circuit Design Complete ⚡', {
+        description: `${design.circuits.length} circuit${design.circuits.length !== 1 ? 's' : ''} designed in ${generationTime}s`,
+        duration: 5000,
       });
 
       // Hold at 100% briefly before clearing
