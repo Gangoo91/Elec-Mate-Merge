@@ -402,64 +402,43 @@ async function vectorSearchWithEmbedding(
     }
   }
 
-  // BS 7671 search - PHASE 1.3: Hybrid search FIRST, vector search only if insufficient
-  if (!priority || priority.bs7671 > 50) {
-    searches.push(
-      supabase.rpc('search_bs7671_intelligence_hybrid', {
-        query_text: params.expandedQuery,
-        match_count: matchCount, // PHASE 5: Dynamic match count
-      }).then(async (result: any) => {
-        // PHASE 1.3: Check if hybrid results are sufficient
-        const hybridResults = result?.data || [];
-        
-        if (hybridResults && hybridResults.length >= 10) {
-          console.log(`✅ Hybrid search sufficient: ${hybridResults.length} BS 7671 results`);
-          return result;
-        }
-        
-        // PHASE 1.3: Fallback to vector search only if hybrid insufficient AND embedding exists
-        if (!embedding) {
-          console.log('⚡ No embedding available - using hybrid results only');
-          return result;
-        }
-        
-        console.log(`⚠️ Hybrid search insufficient (${hybridResults.length} results), trying vector search`);
-        return supabase.rpc('search_bs7671_embeddings', {
-          query_embedding: embedding,
-          match_threshold: 0.50,
-          match_count: matchCount
-        }).then((vectorResult: any) => {
-          const vectorResults = vectorResult?.data || [];
-          console.log(`✅ Vector search returned ${vectorResults.length} additional results`);
-          
-          // Merge and deduplicate hybrid + vector results
-          const combined = [...hybridResults, ...vectorResults];
-          const seen = new Set<string>();
-          const unique = combined.filter(r => {
-            const key = r.regulation_number || r.content?.substring(0, 50);
-            if (seen.has(key)) return false;
-            seen.add(key);
-            return true;
-          });
-          
-          return { data: unique, error: null };
-        });
-      })
-    );
-    searchTypes.push('bs7671');
-  }
-
-  // Issue 8: Reduced RAG result limits for faster processing
-  // Design knowledge search (requires embedding)
+  // PRIORITY 1: Design knowledge search (requires embedding) - SEARCH FIRST
   if (embedding && (!priority || priority.design > 50)) {
     searches.push(
       supabase.rpc('search_design_knowledge', {
         query_embedding: embedding,
         match_threshold: 0.50,
-        match_count: 6, // Reduced from 12
+        match_count: 15, // Increased from 6 - design knowledge is PRIMARY source
       })
     );
     searchTypes.push('design');
+  }
+
+  // PRIORITY 2: BS 7671 regulations - Keyword search at 85% priority
+  if (!priority || priority.bs7671 > 50) {
+    searches.push(
+      supabase
+        .from('regulations_intelligence')
+        .select('*')
+        .textSearch('fts', params.expandedQuery, { 
+          type: 'websearch',
+          config: 'english'
+        })
+        .limit(matchCount)
+        .then((result: any) => {
+          if (result?.data) {
+            // Apply 85% base score to keyword search results
+            const withScores = result.data.map((reg: any) => ({
+              ...reg,
+              hybrid_score: 0.85, // 85% base score for keyword search
+              search_method: 'keyword'
+            }));
+            return { data: withScores, error: null };
+          }
+          return result;
+        })
+    );
+    searchTypes.push('bs7671');
   }
 
   // Health & Safety search (requires embedding)
@@ -756,7 +735,7 @@ export async function intelligentRAGSearch(
   const allResults = [
     ...exactResults.regulations.map(r => ({ ...r, source: 'regulation', sourceType: 'exact', baseScore: r.relevance || 100 })),
     ...vectorResults.regulations.map(r => ({ ...r, source: 'regulation', sourceType: 'vector', baseScore: r.similarity || 0.7 })),
-    ...vectorResults.designDocs.map(d => ({ ...d, source: 'design', sourceType: 'vector', baseScore: (d.similarity || 0.7) * 1.25 })), // +25% for design knowledge
+    ...vectorResults.designDocs.map(d => ({ ...d, source: 'design', sourceType: 'vector', baseScore: (d.similarity || 0.7) * 1.95 })), // +95% for design knowledge (PRIORITY 1)
     ...vectorResults.healthSafetyDocs.map(h => ({ ...h, source: 'health_safety', sourceType: 'vector', baseScore: h.similarity || 0.7 })),
     ...vectorResults.installationDocs.map(i => ({ ...i, source: 'installation', sourceType: 'vector', baseScore: i.similarity || 0.7 })),
     ...vectorResults.maintenanceDocs.map(m => ({ ...m, source: 'maintenance', sourceType: 'vector', baseScore: m.similarity || 0.7 })),
@@ -778,12 +757,21 @@ export async function intelligentRAGSearch(
     return { ...result, finalScore: boostScore };
   }).sort((a, b) => b.finalScore - a.finalScore);
   
-  // Separate back into typed arrays
+  // Separate back into typed arrays - DESIGN DOCS DOMINATE TOP 10
   let allRegulations = reranked.filter(r => r.source === 'regulation');
   let allDesignDocs = reranked.filter(r => r.source === 'design');
   let allHealthSafetyDocs = reranked.filter(r => r.source === 'health_safety');
   let allInstallationDocs = reranked.filter(r => r.source === 'installation');
   let allMaintenanceDocs = reranked.filter(r => r.source === 'maintenance');
+  
+  // PRIORITY FUSION: Ensure design docs dominate top results
+  const topDesignDocs = allDesignDocs.slice(0, 10);
+  const topRegulations = allRegulations.slice(0, 10);
+  const merged = [...topDesignDocs, ...topRegulations].sort((a, b) => b.finalScore - a.finalScore);
+  
+  // Reassign to ensure design-first ordering
+  allDesignDocs = merged.filter(r => r.source === 'design');
+  allRegulations = merged.filter(r => r.source === 'regulation');
   
   // IMPROVEMENT #3: Apply additional regulation-specific re-ranking
   if (allRegulations.length > 0) {
@@ -845,7 +833,7 @@ export async function intelligentRAGSearch(
 
   const totalTime = Date.now() - totalStartTime;
 
-  console.log(`📊 Total RAG Results: ${uniqueRegulations.length} regs, ${uniqueDesignDocs.length} design, ${allHealthSafetyDocs.length} H&S, ${uniqueInstallationDocs.length} installation, ${uniqueMaintenanceDocs.length} maintenance in ${totalTime}ms via ${searchMethod}`);
+  console.log(`📊 Total RAG Results (DESIGN-FIRST): ${uniqueDesignDocs.length} design (PRIORITY 1), ${uniqueRegulations.length} regs (PRIORITY 2), ${allHealthSafetyDocs.length} H&S, ${uniqueInstallationDocs.length} installation, ${uniqueMaintenanceDocs.length} maintenance in ${totalTime}ms via ${searchMethod}`);
 
   const finalResult = {
     regulations: uniqueRegulations.map(reg => ({
