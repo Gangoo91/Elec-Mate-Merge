@@ -297,7 +297,7 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     const ragStart = Date.now();
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-    const openAiKey = Deno.env.get('LOVABLE_API_KEY');
+    const openAiKey = Deno.env.get('OPENAI_API_KEY');
     
     if (!supabaseUrl || !supabaseKey || !openAiKey) {
       throw new Error('Missing required environment variables');
