@@ -126,13 +126,13 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         },
         
         cableSpecification: {
-          liveConductors: circuit.cableSize,
-          liveConductorsString: `${circuit.cableSize}mm²`,
-          cpc: circuit.cpcSize,
-          cpcString: `${circuit.cpcSize}mm²`,
-          cableType: circuit.cableType || `${circuit.cableSize}/${circuit.cpcSize}mm² T&E`,
-          cableLength: circuit.cableLength,
-          cableLengthString: `${circuit.cableLength}m`,
+          liveConductors: circuit.cableSize ?? 2.5,
+          liveConductorsString: `${circuit.cableSize ?? 2.5}mm²`,
+          cpc: circuit.cpcSize ?? 1.5,
+          cpcString: `${circuit.cpcSize ?? 1.5}mm²`,
+          cableType: circuit.cableType || `${circuit.cableSize ?? 2.5}/${circuit.cpcSize ?? 1.5}mm² T&E`,
+          cableLength: circuit.cableLength ?? 0,
+          cableLengthString: `${circuit.cableLength ?? 0}m`,
           installationMethod: circuit.installationMethod,
           installationMethodDescription: circuit.installationMethod === 'clipped-direct' ? 'Method C - Clipped Direct (Reference Method 100)' :
                                           circuit.installationMethod === 'enclosed-conduit' ? 'Method B - Enclosed in Conduit (Reference Method 3)' :
@@ -547,8 +547,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               name: c.name,
               loadType: c.loadType,
               phases: c.phases === 'three' ? 'three-phase' : 'single-phase',
-              cableSize: c.cableSize,
-              cpcSize: c.cpcSize,
+              cableSize: c.cableSize ?? 2.5,
+              cpcSize: c.cpcSize ?? 1.5,
               cableLength: c.cableLength,
               protectionDevice: c.protectionDevice,
               rcdProtected: c.rcdProtected,
@@ -804,7 +804,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       </div>
 
       {/* Circuit Detail Card */}
-      {currentCircuit && currentCircuit.cableSize && currentCircuit.protectionDevice && currentCircuit.calculations ? (
+      {currentCircuit && (currentCircuit.cableSize || currentCircuit.cableSize === 0) && currentCircuit.protectionDevice && currentCircuit.calculations ? (
         <Card className="p-6">
           <div className="space-y-6">
             {/* Header */}
