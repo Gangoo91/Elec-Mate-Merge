@@ -43,6 +43,11 @@ RCD PROTECTION REQUIREMENTS (BS 7671):
 - 30mA RCD for additional protection
 - Use RCBO where discrimination required
 
+RING FINAL CIRCUITS (BS 7671 Appendix 15):
+- MUST use 2.5mm² cable only
+- If calculations show >2.5mm² needed (voltage drop), design as RADIAL circuit instead
+- Ring finals are limited to 32A protection and 2.5mm² cable - no exceptions
+
 CRITICAL RULES:
 - EVERY calculation MUST reference a regulation number from <regulations>
 - Do NOT use assumed values - if data missing from regulations, state clearly in warnings
