@@ -498,13 +498,13 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
     const { response, suggestedNextAgents, testingProcedure, certification } = commResult;
     
     // Log RAG metrics for observability
-    const totalTime = Date.now() - requestId;
+    const totalTime = Date.now() - ragStart;
     const { error: metricsError } = await supabase.from('agent_metrics').insert({
       function_name: 'commissioning-v3',
       request_id: requestId,
       rag_time: ragStart ? Date.now() - ragStart : null,
       total_time: totalTime,
-      regulation_count: testKnowledge?.length || 0,
+      regulation_count: ragResults?.regulations?.length || 0,
       success: true,
       query_type: circuitType || 'general'
     });
