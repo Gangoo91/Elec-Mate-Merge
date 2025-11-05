@@ -43,22 +43,22 @@ export const InstallationHeroSummary = ({
       title: "Overview",
       icon: CheckCircle2,
       content: (
-        <div className="grid grid-cols-2 gap-4">
-          <div className="text-center">
-            <div className="text-4xl font-bold text-primary mb-1">{steps}</div>
-            <div className="text-xs text-muted-foreground">Installation Steps</div>
+        <div className="grid grid-cols-2 gap-5">
+          <div className="text-center p-3 rounded-xl bg-gradient-to-br from-primary/10 to-transparent hover:from-primary/20 transition-all">
+            <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br from-elec-yellow to-primary mb-2">{steps}</div>
+            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Installation Steps</div>
           </div>
-          <div className="text-center">
-            <div className="text-2xl font-semibold text-foreground mb-1">{duration}</div>
-            <div className="text-xs text-muted-foreground">Est. Duration</div>
+          <div className="text-center p-3 rounded-xl bg-gradient-to-br from-blue-500/10 to-transparent hover:from-blue-500/20 transition-all">
+            <div className="text-3xl font-bold text-foreground mb-2">{duration}</div>
+            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Est. Duration</div>
           </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-primary mb-1">{toolsCount}</div>
-            <div className="text-xs text-muted-foreground">Tools Required</div>
+          <div className="text-center p-3 rounded-xl bg-gradient-to-br from-primary/10 to-transparent hover:from-primary/20 transition-all">
+            <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br from-elec-yellow to-primary mb-2">{toolsCount}</div>
+            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Tools Required</div>
           </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-destructive mb-1">{hazardsCount}</div>
-            <div className="text-xs text-muted-foreground">Hazards Identified</div>
+          <div className="text-center p-3 rounded-xl bg-gradient-to-br from-destructive/10 to-transparent hover:from-destructive/20 transition-all">
+            <div className="text-5xl font-black text-destructive mb-2 drop-shadow-lg">{hazardsCount}</div>
+            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Hazards Identified</div>
           </div>
         </div>
       )
@@ -67,24 +67,24 @@ export const InstallationHeroSummary = ({
       title: "Risk Profile",
       icon: ShieldCheck,
       content: (
-        <div className="text-center space-y-4">
-          <Badge className={cn("text-2xl px-6 py-3 font-bold", riskColors[riskLevel])}>
+        <div className="text-center space-y-5">
+          <Badge className={cn("text-2xl px-8 py-4 font-black shadow-xl animate-pulse", riskColors[riskLevel])}>
             {riskLevel.toUpperCase()} RISK
           </Badge>
-          <div className="flex justify-center gap-1 mt-4">
+          <div className="flex justify-center gap-1.5 mt-5">
             {[...Array(10)].map((_, i) => (
               <Circle
                 key={i}
                 className={cn(
-                  "h-3 w-3",
+                  "h-4 w-4 transition-all",
                   i < (riskLevel === 'high' ? 8 : riskLevel === 'medium' ? 5 : 2)
-                    ? "fill-current text-primary"
+                    ? "fill-current text-elec-yellow drop-shadow-md"
                     : "text-muted"
                 )}
               />
             ))}
           </div>
-          <p className="text-sm text-muted-foreground mt-2">
+          <p className="text-base font-semibold text-muted-foreground mt-3">
             {hazardsCount} control measures required
           </p>
         </div>
@@ -147,7 +147,7 @@ export const InstallationHeroSummary = ({
   });
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div {...handlers} className="relative overflow-hidden">
         <div 
           className="flex transition-transform duration-300 ease-out"
@@ -157,12 +157,12 @@ export const InstallationHeroSummary = ({
             const Icon = card.icon;
             return (
               <div key={index} className="min-w-full px-1">
-                <Card className="p-6 bg-gradient-to-br from-primary/10 via-primary/5 to-background border-primary/20">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 rounded-lg bg-primary/10">
-                      <Icon className="h-5 w-5 text-primary" />
+                <Card className="p-6 bg-gradient-to-br from-elec-yellow/5 via-blue-500/5 to-background border-primary/30 shadow-lg shadow-primary/10 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 animate-fade-in">
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-primary/20 shadow-md">
+                      <Icon className="h-6 w-6 text-elec-yellow" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground">{card.title}</h3>
+                    <h3 className="text-xl font-bold text-foreground">{card.title}</h3>
                   </div>
                   {card.content}
                 </Card>
@@ -172,25 +172,25 @@ export const InstallationHeroSummary = ({
         </div>
       </div>
 
-      {/* Indicator dots */}
-      <div className="flex justify-center gap-2">
+      {/* Indicator dots with glow effect */}
+      <div className="flex justify-center gap-2.5">
         {cards.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentCard(index)}
             className={cn(
-              "h-2 rounded-full transition-all touch-manipulation",
+              "h-2.5 rounded-full transition-all touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center",
               currentCard === index 
-                ? "w-8 bg-primary" 
-                : "w-2 bg-muted-foreground/30"
+                ? "w-10 bg-gradient-to-r from-elec-yellow to-primary shadow-lg shadow-elec-yellow/40" 
+                : "w-2.5 bg-muted-foreground/30 hover:bg-muted-foreground/50"
             )}
             aria-label={`Go to card ${index + 1}`}
           />
         ))}
       </div>
 
-      <p className="text-xs text-center text-muted-foreground">
-        Swipe or tap dots to explore
+      <p className="text-sm text-center text-muted-foreground font-medium animate-fade-in">
+        ← Swipe or tap dots to explore →
       </p>
     </div>
   );

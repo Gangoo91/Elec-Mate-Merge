@@ -49,24 +49,28 @@ export const InstallationStepCard = ({
 
   return (
     <Card className={cn(
-      "relative overflow-hidden transition-all",
-      isExpanded && "ring-2 ring-primary/20"
+      "relative overflow-hidden transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 animate-fade-in",
+      isExpanded && "ring-2 ring-primary/30 shadow-xl shadow-primary/20"
     )}>
-      {/* Timeline connector (vertical line) */}
-      <div className="absolute left-6 top-12 bottom-0 w-0.5 bg-gradient-to-b from-primary/40 to-transparent" />
+      {/* Timeline connector (vertical line with gradient) */}
+      <div className="absolute left-6 top-12 bottom-0 w-1 bg-gradient-to-b from-elec-yellow via-primary/60 to-transparent rounded-full" />
       
       <div className="p-4 sm:p-5">
         <div className="flex items-start gap-3">
-          {/* Step number with timeline dot */}
+          {/* Step number with timeline dot and pulse effect */}
           <div className="relative flex-shrink-0">
             <div className={cn(
-              "w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg transition-all",
+              "w-12 h-12 rounded-full flex items-center justify-center font-black text-xl transition-all duration-300",
               isExpanded 
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
-                : "bg-primary/20 text-primary"
+                ? "bg-gradient-to-br from-elec-yellow to-primary text-black shadow-2xl shadow-elec-yellow/40 scale-110" 
+                : "bg-gradient-to-br from-primary/30 to-primary/10 text-primary shadow-md hover:scale-105"
             )}>
               {step.stepNumber}
             </div>
+            {/* Animated pulse ring on active */}
+            {isExpanded && (
+              <div className="absolute inset-0 rounded-full bg-elec-yellow/20 animate-ping" />
+            )}
           </div>
 
           <div className="flex-1 min-w-0">
@@ -141,14 +145,24 @@ export const InstallationStepCard = ({
                     </div>
                   </div>
                   
-                  {/* Expand/Collapse button */}
+                  {/* Expand/Collapse button with icon animation */}
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setIsExpanded(!isExpanded)}
-                    className="shrink-0"
+                    className="shrink-0 gap-1.5 font-semibold hover:bg-primary/10 hover:text-primary transition-all min-h-[44px]"
                   >
-                    {isExpanded ? "Collapse" : "Expand"}
+                    {isExpanded ? (
+                      <>
+                        <ChevronUp className="h-4 w-4 transition-transform" />
+                        Collapse
+                      </>
+                    ) : (
+                      <>
+                        <ChevronDown className="h-4 w-4 transition-transform" />
+                        Expand
+                      </>
+                    )}
                   </Button>
                 </div>
 
@@ -157,75 +171,83 @@ export const InstallationStepCard = ({
                   {step.content}
                 </div>
 
-                {/* Expandable section */}
+                {/* Expandable section with slide-down animation */}
                 {isExpanded && (
-                  <div className="space-y-4 pt-3 border-t border-border animate-fade-in">
-                    {/* Linked Hazards */}
+                  <div className="space-y-4 pt-4 border-t border-border/50 animate-fade-in">
+                    {/* Linked Hazards with gradient background */}
                     {linkedHazards.length > 0 && (
-                      <div className="p-3 bg-destructive/5 border border-destructive/20 rounded-lg">
-                        <div className="flex items-start gap-2 mb-2">
-                          <ShieldAlert className="h-4 w-4 text-destructive flex-shrink-0 mt-0.5" />
-                          <div className="font-semibold text-sm text-foreground">Linked Hazards ({linkedHazards.length})</div>
+                      <div className="p-4 bg-gradient-to-br from-red-500/10 to-orange-500/5 border border-destructive/30 rounded-xl shadow-sm hover:shadow-md transition-all">
+                        <div className="flex items-start gap-2.5 mb-3">
+                          <div className="p-1.5 bg-destructive/20 rounded-lg">
+                            <ShieldAlert className="h-5 w-5 text-destructive" />
+                          </div>
+                          <div className="font-bold text-base text-foreground">Linked Hazards ({linkedHazards.length})</div>
                         </div>
-                        <ul className="space-y-1.5 text-sm">
+                        <ul className="space-y-2 text-sm">
                           {linkedHazards.map((hazard: string, i: number) => (
-                            <li key={i} className="flex items-start gap-2">
-                              <span className="text-destructive mt-0.5">•</span>
-                              <span className="text-foreground">{hazard}</span>
+                            <li key={i} className="flex items-start gap-2.5 p-2 bg-background/50 rounded-lg">
+                              <span className="text-destructive font-bold mt-0.5">⚠</span>
+                              <span className="text-foreground leading-relaxed">{hazard}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
                     )}
 
-                    {/* Safety Requirements */}
+                    {/* Safety Requirements with shield gradient */}
                     {step.safety && step.safety.length > 0 && (
-                      <div className="p-3 bg-warning/5 border border-warning/30 rounded-lg">
-                        <div className="flex items-start gap-2 mb-2">
-                          <AlertTriangle className="h-4 w-4 text-warning flex-shrink-0 mt-0.5" />
-                          <div className="font-semibold text-sm text-foreground">Safety Requirements</div>
+                      <div className="p-4 bg-gradient-to-br from-orange-500/10 to-yellow-500/5 border border-warning/40 rounded-xl shadow-sm hover:shadow-md transition-all">
+                        <div className="flex items-start gap-2.5 mb-3">
+                          <div className="p-1.5 bg-warning/20 rounded-lg">
+                            <AlertTriangle className="h-5 w-5 text-warning" />
+                          </div>
+                          <div className="font-bold text-base text-foreground">Safety Requirements</div>
                         </div>
-                        <ul className="space-y-1.5 text-sm">
+                        <ul className="space-y-2 text-sm">
                           {step.safety.map((note, i) => (
-                            <li key={i} className="flex items-start gap-2">
-                              <span className="text-warning mt-0.5">•</span>
-                              <span className="text-foreground">{note}</span>
+                            <li key={i} className="flex items-start gap-2.5 p-2 bg-background/50 rounded-lg">
+                              <span className="text-warning font-bold mt-0.5">🛡️</span>
+                              <span className="text-foreground leading-relaxed">{note}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
                     )}
 
-                    {/* Tools Required */}
+                    {/* Tools Required with electric yellow theme */}
                     {toolsRequired.length > 0 && (
-                      <div className="p-3 bg-primary/5 border border-primary/20 rounded-lg">
-                        <div className="flex items-start gap-2 mb-2">
-                          <Wrench className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                          <div className="font-semibold text-sm text-foreground">Tools Required ({toolsRequired.length})</div>
+                      <div className="p-4 bg-gradient-to-br from-elec-yellow/10 to-blue-500/5 border border-primary/30 rounded-xl shadow-sm hover:shadow-md transition-all">
+                        <div className="flex items-start gap-2.5 mb-3">
+                          <div className="p-1.5 bg-elec-yellow/20 rounded-lg">
+                            <Wrench className="h-5 w-5 text-elec-yellow" />
+                          </div>
+                          <div className="font-bold text-base text-foreground">Tools Required ({toolsRequired.length})</div>
                         </div>
-                        <ul className="grid grid-cols-2 gap-1.5 text-sm">
+                        <ul className="grid grid-cols-2 gap-2 text-sm">
                           {toolsRequired.map((tool: string, i: number) => (
-                            <li key={i} className="flex items-start gap-1.5">
-                              <span className="text-primary mt-0.5">•</span>
-                              <span className="text-foreground">{tool}</span>
+                            <li key={i} className="flex items-start gap-2 p-2 bg-background/50 rounded-lg">
+                              <span className="text-elec-yellow font-bold mt-0.5">🔧</span>
+                              <span className="text-foreground leading-relaxed">{tool}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
                     )}
 
-                    {/* Inspection Checkpoints */}
+                    {/* Inspection Checkpoints with success gradient */}
                     {inspectionCheckpoints.length > 0 && (
-                      <div className="p-3 bg-success/5 border border-success/20 rounded-lg">
-                        <div className="flex items-start gap-2 mb-2">
-                          <CheckCircle2 className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
-                          <div className="font-semibold text-sm text-foreground">Inspection Checkpoints</div>
+                      <div className="p-4 bg-gradient-to-br from-green-500/10 to-emerald-500/5 border border-success/30 rounded-xl shadow-sm hover:shadow-md transition-all">
+                        <div className="flex items-start gap-2.5 mb-3">
+                          <div className="p-1.5 bg-success/20 rounded-lg">
+                            <CheckCircle2 className="h-5 w-5 text-success" />
+                          </div>
+                          <div className="font-bold text-base text-foreground">Inspection Checkpoints</div>
                         </div>
-                        <ul className="space-y-1.5 text-sm">
+                        <ul className="space-y-2 text-sm">
                           {inspectionCheckpoints.map((checkpoint: string, i: number) => (
-                            <li key={i} className="flex items-start gap-2">
-                              <span className="text-success mt-0.5">•</span>
-                              <span className="text-foreground">{checkpoint}</span>
+                            <li key={i} className="flex items-start gap-2.5 p-2 bg-background/50 rounded-lg">
+                              <span className="text-success font-bold mt-0.5">✓</span>
+                              <span className="text-foreground leading-relaxed">{checkpoint}</span>
                             </li>
                           ))}
                         </ul>

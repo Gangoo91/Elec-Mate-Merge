@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Plus, RotateCcw, Download, AlertCircle } from "lucide-react";
+import { Plus, RotateCcw, Download, AlertCircle, Wrench, CheckCircle2 } from "lucide-react";
 import { InstallationStepCard } from "./InstallationStepCard";
 import { InstallationStep, InstallationMethodSummary, InstallationProjectDetails } from "@/types/installation-method";
 import { toast } from "@/hooks/use-toast";
@@ -257,14 +257,33 @@ export const InstallationResultsEditor = ({
   };
 
   return (
-    <div className="space-y-6">
-      {/* Installation Title */}
+    <div className="space-y-6 animate-fade-in">
+      {/* Electric-Themed Hero Banner */}
       {jobTitle && (
-        <div className="mb-4">
-          <h2 className="text-2xl font-bold text-foreground mb-1">{jobTitle}</h2>
-          <p className="text-sm text-muted-foreground">
-            {installationType ? `${installationType.charAt(0).toUpperCase() + installationType.slice(1)} Installation` : 'Installation Method Statement'}
-          </p>
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-elec-yellow/10 via-primary/10 to-background border border-primary/30 p-6 sm:p-8 shadow-xl shadow-primary/10">
+          <div className="absolute inset-0 bg-grid-pattern opacity-5" />
+          <div className="relative z-10">
+            <div className="flex items-start gap-4 mb-3">
+              <div className="p-3 rounded-xl bg-gradient-to-br from-elec-yellow to-primary shadow-lg">
+                <Wrench className="h-8 w-8 text-black" />
+              </div>
+              <div className="flex-1">
+                <h2 className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-elec-yellow via-primary to-blue-400 mb-2 leading-tight">
+                  {jobTitle}
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {installationType && (
+                    <Badge className="bg-gradient-to-r from-elec-yellow/20 to-primary/20 text-foreground border-elec-yellow/40 px-3 py-1 text-sm font-semibold">
+                      {installationType.charAt(0).toUpperCase() + installationType.slice(1)} Installation
+                    </Badge>
+                  )}
+                  <Badge className="bg-gradient-to-r from-success/20 to-emerald-500/20 text-success border-success/40 px-3 py-1 text-sm font-semibold animate-pulse">
+                    ✓ Method Statement Ready
+                  </Badge>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
@@ -279,22 +298,27 @@ export const InstallationResultsEditor = ({
         siteLogistics={siteLogistics}
       />
 
-      {/* Metadata Banner (if incomplete) */}
+      {/* Enhanced Metadata Call-to-Action Banner */}
       {!projectMetadata?.siteManagerName && (
-        <Card className="p-4 bg-warning/10 border-warning/40">
-          <div className="flex items-start gap-3">
-            <AlertCircle className="h-5 w-5 text-warning flex-shrink-0 mt-0.5" />
+        <Card className="relative overflow-hidden p-5 bg-gradient-to-br from-warning/15 via-orange-500/10 to-background border-2 border-warning/50 shadow-lg animate-fade-in">
+          <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-warning/5 to-transparent" />
+          <div className="relative flex items-start gap-4">
+            <div className="p-3 rounded-xl bg-warning/20 shadow-md">
+              <AlertCircle className="h-6 w-6 text-warning" />
+            </div>
             <div className="flex-1">
-              <h4 className="font-semibold text-sm text-foreground mb-1">Complete Project Details for Professional PDF</h4>
-              <p className="text-xs text-muted-foreground mb-3">
-                Emergency contacts and site information required for comprehensive documentation
+              <h4 className="font-bold text-lg text-foreground mb-2">Complete Project Details for Professional PDF</h4>
+              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                Add emergency contacts and site information to generate a comprehensive, regulation-compliant method statement
               </p>
               <MobileButton
                 onClick={() => setShowMetadataForm(true)}
                 variant="elec"
-                size="sm"
+                size="default"
+                className="shadow-lg hover:shadow-xl transition-all"
               >
-                Complete Form
+                <CheckCircle2 className="h-4 w-4 mr-2" />
+                Complete Form Now
               </MobileButton>
             </div>
           </div>
@@ -372,20 +396,31 @@ export const InstallationResultsEditor = ({
         competency={competencyRequirements}
       />
 
-      {/* Action Buttons - Sticky on mobile */}
-      <div className="sticky bottom-0 left-0 right-0 z-10 p-4 bg-gradient-to-t from-background via-background to-background/95 border-t border-border backdrop-blur-sm md:static md:p-0 md:bg-transparent md:border-0">
-        <div className="flex flex-wrap gap-2">
-          <MobileButton onClick={handleExportPDF} variant="elec" size="wide" icon={<Download className="h-4 w-4" />}>
+      {/* Enhanced Action Buttons - Frosted glass sticky footer */}
+      <div className="sticky bottom-0 left-0 right-0 z-20 p-4 sm:p-6 bg-gradient-to-t from-background via-background/98 to-background/90 border-t border-primary/20 backdrop-blur-xl shadow-2xl shadow-primary/10 md:static md:p-0 md:bg-transparent md:border-0 md:shadow-none">
+        <div className="flex flex-wrap gap-3">
+          <MobileButton 
+            onClick={handleExportPDF} 
+            variant="elec" 
+            size="wide"
+            className="shadow-xl hover:shadow-2xl transition-all text-base font-bold"
+          >
+            <Download className="h-5 w-5 mr-2" />
             Generate PDF
           </MobileButton>
           <MobileButton 
             onClick={() => setShowMetadataForm(!showMetadataForm)} 
             variant={showMetadataForm ? "default" : "outline"}
-            className="flex-1 md:flex-none"
+            className="flex-1 md:flex-none min-h-[48px] font-semibold"
           >
             {showMetadataForm ? 'Hide' : 'Edit'} Metadata
           </MobileButton>
-          <MobileButton onClick={onReset} variant="outline" icon={<RotateCcw className="h-4 w-4" />}>
+          <MobileButton 
+            onClick={onReset} 
+            variant="outline"
+            className="min-h-[48px] font-semibold hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50"
+          >
+            <RotateCcw className="h-4 w-4 mr-2" />
             Start Over
           </MobileButton>
         </div>
