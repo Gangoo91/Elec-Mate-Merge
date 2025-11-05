@@ -7834,20 +7834,14 @@ export type Database = {
         }[]
       }
       search_bs7671_intelligence_hybrid: {
-        Args: { match_count?: number; query_text: string }
+        Args: { match_count?: number; search_keywords: string }
         Returns: {
-          applies_to: string[]
           category: string
-          content: string
-          hybrid_score: number
-          id: string
-          keyword_match_score: number
           keywords: string[]
           primary_topic: string
           regulation_id: string
           regulation_number: string
-          section: string
-          subcategory: string
+          relevance_score: number
         }[]
       }
       search_design_hybrid: {
