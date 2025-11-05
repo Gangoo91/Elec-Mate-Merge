@@ -206,9 +206,9 @@ serve(async (req) => {
       // Generate embedding
       generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY),
       
-      // Use optimized pricing RAG module with 15% markup applied (LIMIT TO TOP 30)
-      searchPricingKnowledge(enhancedQuery, await generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY), supabase, logger, parsedEntities.jobType).then(results => 
-        results.slice(0, 30).map(item => ({
+      // Use optimized pricing RAG module with 15% markup applied (LIMIT TO TOP 20 for gpt-5-mini)
+      searchPricingKnowledge(enhancedQuery, await generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY), supabase, logger, parsedEntities.jobType).then(results =>
+        results.slice(0, 20).map(item => ({
           ...item,
           base_cost: Number((item.base_cost * (1 + COST_ENGINEER_PRICING.MATERIAL_MARKUP_PERCENT / 100)).toFixed(2))
         }))
@@ -438,11 +438,11 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
 4. Add value engineering suggestions
 5. Include VAT (20%)`;
 
-    // Step 4: Call AI with GPT-5 (more reliable for complex JSON schemas)
+    // Step 4: Call AI with GPT-5-Mini (faster, with fallback to GPT-5 if JSON parsing fails)
     logger.debug('Calling AI', { provider: 'OpenAI' });
-    logger.info('🤖 Calling OpenAI GPT-5', {
-      model: 'gpt-5-2025-08-07',
-      maxTokens: 16000,
+    logger.info('🤖 Calling OpenAI GPT-5-Mini', {
+      model: 'gpt-5-mini-2025-08-07',
+      maxTokens: 12000,
       timeoutMs: 180000,
       hasTools: true
     });
@@ -453,10 +453,10 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
     let aiResult;
     try {
       aiResult = await callAI(OPENAI_API_KEY, {
-        model: 'gpt-5-2025-08-07',
+        model: 'gpt-5-mini-2025-08-07',
         systemPrompt,
         userPrompt,
-        maxTokens: 16000,
+        maxTokens: 12000,
         timeoutMs: 180000,
         jsonMode: true, // Force strict JSON output (prevents malformed arrays)
         tools: [{
@@ -813,29 +813,132 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       );
     }
 
-    // Robust tool-call parsing (matches universal wrapper contract)
+    // Robust tool-call parsing with GPT-5 fallback (matches universal wrapper contract)
     let costResult: any;
-    try {
-      if (aiResult.toolCalls && aiResult.toolCalls.length > 0) {
-        // AI wrapper already extracted tool call args into content
-        costResult = parseJsonWithRepair(aiResult.content, logger, 'cost-engineer-tool-call');
-      } else {
-        // Direct JSON mode response
-        costResult = parseJsonWithRepair(aiResult.content, logger, 'cost-engineer-json-mode');
+    let parseRetries = 0;
+    const maxParseRetries = 1;
+    
+    while (!costResult && parseRetries <= maxParseRetries) {
+      try {
+        if (aiResult.toolCalls && aiResult.toolCalls.length > 0) {
+          // AI wrapper already extracted tool call args into content
+          costResult = parseJsonWithRepair(aiResult.content, logger, 'cost-engineer-tool-call');
+        } else {
+          // Direct JSON mode response
+          costResult = parseJsonWithRepair(aiResult.content, logger, 'cost-engineer-json-mode');
+        }
+        
+        // Validate critical structure
+        if (!costResult.materials || !costResult.labour || !costResult.response) {
+          throw new Error('AI returned incomplete cost estimate structure');
+        }
+        
+      } catch (parseError: any) {
+        logger.error('JSON parsing failed', { 
+          attempt: parseRetries + 1,
+          error: parseError.message,
+          rawLength: aiResult.content?.length,
+          preview: aiResult.content?.substring(0, 500)
+        });
+        
+        // If first attempt failed and we're using gpt-5-mini, retry with gpt-5
+        if (parseRetries === 0) {
+          logger.warn('Retrying with GPT-5 for more reliable JSON generation');
+          
+          try {
+            aiResult = await callAI(OPENAI_API_KEY, {
+              model: 'gpt-5-2025-08-07',
+              systemPrompt,
+              userPrompt,
+              maxTokens: 16000,
+              timeoutMs: 180000,
+              jsonMode: true,
+              tools: [{
+                type: 'function',
+                function: {
+                  name: 'provide_cost_estimate',
+                  description: 'Return detailed cost estimate with materials and labour breakdown',
+                  parameters: {
+                    type: 'object',
+                    properties: {
+                      response: {
+                        type: 'string',
+                        description: 'Professional response explaining the estimate, regulations, and recommendations'
+                      },
+                      materials: {
+                        type: 'object',
+                        properties: {
+                          items: {
+                            type: 'array',
+                            items: {
+                              type: 'object',
+                              properties: {
+                                description: { type: 'string' },
+                                quantity: { type: 'number' },
+                                wholesalePrice: { type: 'number' },
+                                markup: { type: 'number' },
+                                unitPrice: { type: 'number' },
+                                total: { type: 'number' },
+                                inStock: { type: 'boolean' }
+                              },
+                              required: ['description', 'quantity', 'unitPrice', 'total']
+                            }
+                          },
+                          subtotal: { type: 'number' },
+                          vat: { type: 'number' },
+                          total: { type: 'number' }
+                        },
+                        required: ['items', 'subtotal', 'vat', 'total']
+                      },
+                      labour: {
+                        type: 'object',
+                        properties: {
+                          tasks: {
+                            type: 'array',
+                            items: {
+                              type: 'object',
+                              properties: {
+                                description: { type: 'string' },
+                                hours: { type: 'number' },
+                                rate: { type: 'number' },
+                                total: { type: 'number' }
+                              },
+                              required: ['description', 'hours', 'rate', 'total']
+                            }
+                          },
+                          subtotal: { type: 'number' },
+                          vat: { type: 'number' },
+                          total: { type: 'number' }
+                        },
+                        required: ['tasks', 'subtotal', 'vat', 'total']
+                      },
+                      summary: {
+                        type: 'object',
+                        properties: {
+                          materialsSubtotal: { type: 'number' },
+                          labourSubtotal: { type: 'number' },
+                          totalBeforeVAT: { type: 'number' },
+                          vat: { type: 'number' },
+                          totalWithVAT: { type: 'number' }
+                        },
+                        required: ['materialsSubtotal', 'labourSubtotal', 'totalBeforeVAT', 'vat', 'totalWithVAT']
+                      }
+                    },
+                    required: ['response', 'materials', 'labour', 'summary']
+                  }
+                }
+              }]
+            });
+            parseRetries++;
+          } catch (retryError: any) {
+            logger.error('GPT-5 fallback also failed', { error: retryError.message });
+            throw new Error('AI response formatting issue. Please try again.');
+          }
+        } else {
+          // Both attempts failed
+          throw new Error('AI response formatting issue. Please try again.');
+        }
       }
-      
-      // Validate critical structure
-      if (!costResult.materials || !costResult.labour || !costResult.response) {
-        throw new Error('AI returned incomplete cost estimate structure');
-      }
-      
-    } catch (parseError: any) {
-      logger.error('JSON parsing failed completely', { 
-        error: parseError.message,
-        rawLength: aiResult.content?.length,
-        preview: aiResult.content?.substring(0, 500)
-      });
-      throw new Error('AI response formatting issue. Please try again.');
     }
 
     // ===== POST-PROCESSING: ENFORCE PRICING RULES =====
