@@ -829,15 +829,15 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                           done: risk.done || false
                         })),
                       
-                      // Emergency Information
-                      emergencyProcedures: ramsData.emergencyProcedures || [],
-                      siteManagerName: ramsData.siteManagerName || '',
-                      siteManagerPhone: ramsData.siteManagerPhone || '',
-                      firstAiderName: ramsData.firstAiderName || '',
-                      firstAiderPhone: ramsData.firstAiderPhone || '',
-                      safetyOfficerName: ramsData.safetyOfficerName || '',
-                      safetyOfficerPhone: ramsData.safetyOfficerPhone || '',
-                      assemblyPoint: ramsData.assemblyPoint || '',
+          // Emergency Information
+          emergencyProcedures: ramsData.emergencyProcedures || [],
+          siteManagerName: methodData.siteManagerName || '',
+          siteManagerPhone: methodData.siteManagerPhone || '',
+          firstAiderName: methodData.firstAiderName || '',
+          firstAiderPhone: methodData.firstAiderPhone || '',
+          safetyOfficerName: methodData.safetyOfficerName || '',
+          safetyOfficerPhone: methodData.safetyOfficerPhone || '',
+          assemblyPoint: methodData.assemblyPoint || '',
                       
                       // Compliance
                       complianceRegulations: ramsData.complianceRegulations || [],
