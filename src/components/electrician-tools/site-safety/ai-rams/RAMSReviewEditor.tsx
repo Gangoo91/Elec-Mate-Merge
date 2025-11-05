@@ -79,7 +79,23 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       qualifications: step.qualifications || [],
       estimatedDuration: step.estimatedDuration || '15 minutes',
       safetyRequirements: step.safetyRequirements || []
-    }))
+    })),
+    // Normalize document-level array fields to ensure they're always arrays
+    toolsRequired: Array.isArray(initialMethodData.toolsRequired) 
+      ? initialMethodData.toolsRequired 
+      : [],
+    materialsRequired: Array.isArray(initialMethodData.materialsRequired)
+      ? initialMethodData.materialsRequired
+      : [],
+    practicalTips: Array.isArray(initialMethodData.practicalTips)
+      ? initialMethodData.practicalTips
+      : [],
+    commonMistakes: Array.isArray(initialMethodData.commonMistakes)
+      ? initialMethodData.commonMistakes
+      : [],
+    requiredQualifications: Array.isArray(initialMethodData.requiredQualifications)
+      ? initialMethodData.requiredQualifications
+      : []
   };
 
   const [ramsData, setRamsData] = useState<RAMSData>(normalizedRamsData);
