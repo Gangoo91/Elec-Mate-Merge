@@ -433,34 +433,13 @@ Deno.serve(async (req) => {
     console.log('💾 Storing result in semantic cache...');
     
     // Extract project details from the job to pass through to final document
-    const projectInfo = job.project_info || {};
     const projectDetails = {
-      projectName: job.project_name || 
-                   projectInfo.projectName || 
-                   job.prompt?.split('\n')[0]?.substring(0, 100) || 
-                   'Electrical Installation Project',
-      location: job.location || 
-                projectInfo.location || 
-                projectInfo.siteAddress || 
-                'To be specified',
-      contractor: projectInfo.contractor || 
-                  projectInfo.companyName || 
-                  'To be specified',
-      supervisor: projectInfo.supervisor || 
-                  projectInfo.supervisorName || 
-                  'To be specified',
-      assessor: projectInfo.assessor || 
-                projectInfo.assessorName || 
-                'Site Electrician',
-      jobScale: job.job_scale,
-      // Preserve emergency contacts
-      siteManagerName: projectInfo.siteManagerName || '',
-      siteManagerPhone: projectInfo.siteManagerPhone || '',
-      firstAiderName: projectInfo.firstAiderName || '',
-      firstAiderPhone: projectInfo.firstAiderPhone || '',
-      safetyOfficerName: projectInfo.safetyOfficerName || '',
-      safetyOfficerPhone: projectInfo.safetyOfficerPhone || '',
-      assemblyPoint: projectInfo.assemblyPoint || ''
+      projectName: job.project_name || job.prompt?.split('\n')[0]?.substring(0, 100) || 'Electrical Installation Project',
+      location: job.location || 'To be specified',
+      contractor: 'To be specified',
+      supervisor: 'To be specified',
+      assessor: 'Site Electrician',
+      jobScale: job.job_scale
     };
     
     // Safe transformation with fallback - guard against null hsData and pass project details
@@ -490,20 +469,11 @@ Deno.serve(async (req) => {
     // Merge installer data with RAMS data for complete document
     const combinedRAMSData = {
       ...ramsDataFinal,
-      // Ensure ALL project details are populated
+      // Ensure project details are populated
       projectName: projectDetails.projectName,
       location: projectDetails.location,
       contractor: projectDetails.contractor,
       supervisor: projectDetails.supervisor,
-      assessor: projectDetails.assessor,
-      // Include emergency contacts
-      siteManagerName: projectDetails.siteManagerName,
-      siteManagerPhone: projectDetails.siteManagerPhone,
-      firstAiderName: projectDetails.firstAiderName,
-      firstAiderPhone: projectDetails.firstAiderPhone,
-      safetyOfficerName: projectDetails.safetyOfficerName,
-      safetyOfficerPhone: projectDetails.safetyOfficerPhone,
-      assemblyPoint: projectDetails.assemblyPoint,
       // Merge method statement details from installer
       ...(installerData?.data && {
         practicalTips: installerData.data.practicalTips,
@@ -515,111 +485,29 @@ Deno.serve(async (req) => {
       })
     };
     
-    // Helper: Determine what phase this step is (planning, procurement, installation, testing, isolation)
-    function determineStepPhase(stepText: string): string {
-      if (/planning|survey|inspect site|assess|review|check site|preliminary|walkthrough/i.test(stepText)) {
-        return 'planning';
-      }
-      if (/procurement|ordering|purchase|supplier|materials list|equipment list|obtain|acquire/i.test(stepText)) {
-        return 'procurement';
-      }
-      if (/isolat|shutdown|de-energi|lock.?off|prove dead|test dead|permit to work/i.test(stepText)) {
-        return 'isolation';
-      }
-      if (/test|commission|verify|measure|inspect after|certificate|continuity|insulation resistance/i.test(stepText)) {
-        return 'testing';
-      }
-      if (/install|mount|fix|terminate|connect|run cable|drill|route|pull cable/i.test(stepText)) {
-        return 'installation';
-      }
-      return 'general';
-    }
-
-    // Helper: Check if a hazard is relevant to a specific step
-    function isHazardRelevantToStep(
-      riskText: string,
-      stepText: string,
-      stepPhase: string,
-      hazardLinkedStep: number,
-      currentStepNumber: number
-    ): boolean {
-      // 1. If hazard specifies a step number, only link to that step
-      if (hazardLinkedStep > 0 && hazardLinkedStep === currentStepNumber) {
-        return true;
-      }
-      
-      // 2. If hazard is general (linkedToStep = 0), apply phase logic
-      if (hazardLinkedStep === 0) {
-        // Planning phase: Only link planning/survey hazards
-        if (stepPhase === 'planning') {
-          return /slip|trip|fall(?! from height)|unauthori|access|survey|site visit|traffic|pedestrian/i.test(riskText) &&
-                 !/live|electric shock|voltage|energi|battery acid|thermal|drilling|height work/i.test(riskText);
-        }
-        
-        // Procurement phase: Only link admin/logistics hazards when receiving deliveries
-        if (stepPhase === 'procurement') {
-          return (/manual handling|lifting|vehicle|delivery|storage/i.test(riskText) &&
-                  (stepText.includes('receiv') || stepText.includes('collect') || stepText.includes('deliver'))) ||
-                 /ordering|specification/i.test(riskText);
-        }
-        
-        // Isolation phase: Electrical hazards ONLY
-        if (stepPhase === 'isolation') {
-          return /electric|shock|live|voltage|energi|arc flash|isolation|permit/i.test(riskText);
-        }
-        
-        // Installation phase: Physical work hazards
-        if (stepPhase === 'installation') {
-          return /electric|drill|dust|height|manual handling|vibration|noise|cut|sharp|cable|fixing|power tool/i.test(riskText);
-        }
-        
-        // Testing phase: Testing-specific hazards
-        if (stepPhase === 'testing') {
-          return /electric|shock|test equipment|meter|voltage indicator|proving unit|continuity/i.test(riskText);
-        }
-      }
-      
-      return false;
-    }
-
-    // Link hazards to method statement steps (INTELLIGENT PHASE-AWARE VERSION)
+    // Link hazards to method statement steps
     if (combinedRAMSData.risks && installerData?.data?.steps) {
-      installerData.data.steps.forEach((step: any, stepIndex: number) => {
+      installerData.data.steps.forEach((step: any) => {
         if (!step.linkedHazards) {
           step.linkedHazards = [];
         }
         
-        const stepDesc = (step.description || '').toLowerCase();
-        const stepTitle = (step.title || '').toLowerCase();
-        const stepSafety = (step.safetyRequirements || []).join(' ').toLowerCase();
-        const combinedStepText = `${stepTitle} ${stepDesc} ${stepSafety}`;
-        
-        // Determine step phase
-        const stepPhase = determineStepPhase(combinedStepText);
-        
-        // Find hazards that match this specific phase and step activities
+        // Find hazards that mention this step or its keywords
         combinedRAMSData.risks.forEach((risk: any) => {
-          const riskHazard = (risk.hazard || '').toLowerCase();
-          const riskDesc = (risk.risk || '').toLowerCase();
-          const riskControls = (risk.controls || '').toLowerCase();
-          const combinedRiskText = `${riskHazard} ${riskDesc} ${riskControls}`;
+          const riskText = (risk.hazard + ' ' + (risk.risk || '')).toLowerCase();
+          const stepText = (step.description || '').toLowerCase();
           
-          // Check if hazard is relevant to this step
-          const isRelevant = isHazardRelevantToStep(
-            combinedRiskText,
-            combinedStepText,
-            stepPhase,
-            risk.linkedToStep || 0,
-            stepIndex + 1
-          );
+          // Link if hazard contains keywords from step description
+          const stepKeywords = stepText.match(/\b(electrical|wiring|cable|circuit|testing|isolation|live|connection|termination|installation)\b/gi) || [];
+          const matches = stepKeywords.some(keyword => riskText.includes(keyword.toLowerCase()));
           
-          if (isRelevant && !step.linkedHazards.includes(risk.hazard)) {
+          if (matches && !step.linkedHazards.includes(risk.hazard)) {
             step.linkedHazards.push(risk.hazard);
           }
         });
         
-        // Limit to top 4 most relevant hazards per step
-        step.linkedHazards = step.linkedHazards.slice(0, 4);
+        // Limit to top 3 most relevant hazards per step
+        step.linkedHazards = step.linkedHazards.slice(0, 3);
       });
     }
     
