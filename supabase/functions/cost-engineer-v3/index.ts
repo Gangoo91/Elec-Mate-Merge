@@ -458,6 +458,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
         userPrompt,
         maxTokens: 12000,
         timeoutMs: 180000,
+        jsonMode: true, // Force strict JSON output (prevents malformed arrays)
         tools: [{
         type: 'function',
         function: {
@@ -814,12 +815,27 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
 
     // Robust tool-call parsing (matches universal wrapper contract)
     let costResult: any;
-    if (aiResult.toolCalls && aiResult.toolCalls.length > 0) {
-      // AI wrapper already extracted tool call args into content
-      costResult = parseJsonWithRepair(aiResult.content, logger, 'cost-engineer-v3');
-    } else {
-      // Fallback: repair-parse the entire body
-      costResult = parseJsonWithRepair(aiResult.content, logger, 'cost-engineer-v3');
+    try {
+      if (aiResult.toolCalls && aiResult.toolCalls.length > 0) {
+        // AI wrapper already extracted tool call args into content
+        costResult = parseJsonWithRepair(aiResult.content, logger, 'cost-engineer-tool-call');
+      } else {
+        // Direct JSON mode response
+        costResult = parseJsonWithRepair(aiResult.content, logger, 'cost-engineer-json-mode');
+      }
+      
+      // Validate critical structure
+      if (!costResult.materials || !costResult.labour || !costResult.response) {
+        throw new Error('AI returned incomplete cost estimate structure');
+      }
+      
+    } catch (parseError: any) {
+      logger.error('JSON parsing failed completely', { 
+        error: parseError.message,
+        rawLength: aiResult.content?.length,
+        preview: aiResult.content?.substring(0, 500)
+      });
+      throw new Error('AI response formatting issue. Please try again.');
     }
 
     // ===== POST-PROCESSING: ENFORCE PRICING RULES =====
