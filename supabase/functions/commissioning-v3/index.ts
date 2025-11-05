@@ -81,23 +81,27 @@ serve(async (req) => {
     const ragStart = Date.now();
     
     const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
-    const ragResults = await intelligentRAGSearch({
-      circuitType: circuitType || 'general',
-      searchTerms: `${query} testing commissioning GN3 Chapter 64 inspection procedures`.split(' ').filter(w => w.length > 3),
-      expandedQuery: `${query} testing commissioning GN3 Chapter 64 inspection procedures`,
-      context: {
-        agentType: 'commissioning', // NEW - for trade filtering
-        ragPriority: {
-          practical_work: 90,      // PRIMARY - hands-on testing procedures
-          bs7671: 80,              // HIGH - Chapter 64 testing requirements
-          inspection: 40,          // FALLBACK
-          design: 0,
-          installation: 0,
-          health_safety: 0,
-          project_mgmt: 0
+    const ragResults = await intelligentRAGSearch(
+      {
+        circuitType: circuitType || 'general',
+        searchTerms: `${query} testing commissioning GN3 Chapter 64 inspection procedures`.split(' ').filter(w => w.length > 3),
+        expandedQuery: `${query} testing commissioning GN3 Chapter 64 inspection procedures`,
+        context: {
+          agentType: 'commissioning', // NEW - for trade filtering
+          ragPriority: {
+            practical_work: 90,      // PRIMARY - hands-on testing procedures
+            bs7671: 80,              // HIGH - Chapter 64 testing requirements
+            inspection: 40,          // FALLBACK
+            design: 0,
+            installation: 0,
+            health_safety: 0,
+            project_mgmt: 0
+          }
         }
-      }
-    });
+      },
+      OPENAI_API_KEY,
+      supabase
+    );
     
     logger.debug('Testing knowledge retrieved', { 
       duration: Date.now() - ragStart
