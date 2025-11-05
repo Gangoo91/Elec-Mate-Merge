@@ -97,7 +97,14 @@ const CostEngineerInterface = () => {
           totalCost: structuredData.summary.grandTotal,
           materialsTotal: structuredData.materials?.subtotal || 0,
           labourTotal: structuredData.labour?.subtotal || 0,
-          materials: structuredData.materials?.items || [],
+          materials: structuredData.materials?.items?.map((m: any) => ({
+            item: m.description || m.item || 'Unknown item',
+            quantity: m.quantity,
+            unit: m.unit,
+            unitPrice: m.unitPrice,
+            total: m.total,
+            supplier: m.supplier
+          })) || [],
           labour: {
             hours: structuredData.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0,
             rate: 50,
