@@ -15,55 +15,10 @@ export function buildOptimizedSystemPrompt(
 
 **CORE REQUIREMENTS:**
 - Use UK English exclusively (realise, analyse, earthing, metres)
-
-**CRITICAL: ALL OUTPUT MUST BE IN UK ENGLISH**
-- Use UK spellings: realise (not realize), analyse (not analyze), minimise (not minimize), categorise (not categorize), organise (not organize), authorised (not authorized), recognised (not recognized), utilise (not utilize), whilst (not while)
-- Use UK terminology: earthing (not grounding), consumer unit (not breaker panel), metre (not meter for distance), spanner (not wrench)
-- Use UK measurements: metres, millimetres, litres (not meters, millimeters, liters)
-- Reference UK standards: BS 7671, BS EN ISO, HSE guidance, CDM Regulations
-
 - Generate 8-12 hazards for domestic, 15-20 for commercial/industrial
 - Each hazard needs: description, likelihood (1-5), severity (1-5), controls
 - Link hazards to installation steps when relevant (linkedToStep field)
 - Include 5-8 PPE items (standard electrical work)
-- Include 4-6 emergency procedures that are ACTIONABLE and SPECIFIC to electrical work (e.g., "If electric shock occurs: Do NOT touch the casualty - isolate supply first, then begin CPR if trained")
-
-**COMPREHENSIVE HAZARD DESCRIPTIONS:**
-Each hazard description must include:
-✓ WHAT the hazard is (e.g., "Electric shock from live conductors")
-✓ WHERE it occurs (e.g., "during connection or testing of the 3-phase motor circuit")  
-✓ WHEN it's present (e.g., "when isolator is closed", "during initial energisation")
-✓ WHO is at risk (implied: the electrician/operative)
-✓ WHY it's dangerous (optional but helpful: "leading to severe burns or cardiac arrest")
-
-Example: ❌ "Electric shock hazard" 
-Example: ✅ "Electric shock from live conductors during connection or testing of the 3-phase motor circuit, particularly when isolator is closed or during initial energisation"
-
-**COMPREHENSIVE CONTROL MEASURES:**
-Each control measure must be ACTIONABLE and SPECIFIC:
-✓ Start with the PRIMARY control (e.g., "Isolate supply at the correct upstream point")
-✓ Add SECONDARY controls (e.g., "lock-off/tag-out per permit-to-work")
-✓ Include VERIFICATION steps (e.g., "Prove dead using a calibrated proving unit")
-✓ Reference SPECIFIC regulations (e.g., "BS 7671, Regulation 522.6")
-✓ Specify WHO does what (e.g., "Only competent, authorised electricians to undertake live work")
-✓ Include EQUIPMENT requirements (e.g., "Use safe systems of work for testing (one-hand rule), insulated tools")
-
-Example: ❌ "Use PPE and isolate"
-Example: ✅ "Isolate supply at the correct upstream point and lock-off/tag-out per permit-to-work. Prove dead using a calibrated proving unit rated for the system before touching conductors (BS 7671, Regulation 522.6). Use safe systems of work for testing (one-hand rule where practicable), insulated tools, test equipment with current calibration labels. Only competent, authorised electricians to undertake live work."
-
-**COMPREHENSIVE PPE PURPOSES:**
-Each PPE purpose must explain:
-✓ WHAT it protects against (specific hazard)
-✓ WHEN it's needed (during which activities)
-✓ WHY the standard matters (protection level)
-
-**PPE GLOVE TYPES - BE SPECIFIC:**
-- Arc flash/insulated gloves (e.g., EN 60903 Class 00/0) = "Protect against electric shock when handling live parts or where isolation cannot be guaranteed; used during testing and connection work where proximity to conductors cannot be avoided"
-- Standard work gloves (e.g., EN 388 Level 3) = "Protect against cuts, abrasions, and impact injuries when handling sharp edges, cable trunking, or rough surfaces during installation work"
-
-Example: ❌ "Protects hands"
-Example: ✅ "Arc flash insulated gloves (EN 60903): Protect against electric shock when handling live parts during testing phases where full isolation cannot be guaranteed"
-Example: ✅ "Work gloves (EN 388): Protect against cuts and abrasions when handling cable trunking, drilling, and installing conduit systems"
 
 **CRITICAL:** Focus ONLY on the job described. Don't add generic hazards.
 
