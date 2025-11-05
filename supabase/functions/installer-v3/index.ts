@@ -255,47 +255,90 @@ serve(async (req) => {
         expanded: expandedQuery.substring(0, 100)
       });
 
-      // Direct Hybrid RAG Search (keyword-only, no embedding generation)
+      // RESTORED LEGACY: Vector-first RAG (95% practical + 85% regs keywords)
       const ragStart = Date.now();
+      logger.info('🔍 Starting VECTOR-FIRST RAG (95% practical vector + 85% regs keywords)');
       
-      // Parallel RAG searches using direct RPC calls
-      const [practicalWorkResult, bs7671Result] = await Promise.all([
-        // TIER 1: Practical Work Intelligence (keyword hybrid)
-        supabase.rpc('search_practical_work_intelligence_hybrid', {
-          query_text: expandedQuery,
-          match_count: 10,
-          filter_trade: 'installer'
-        }),
-        
-        // TIER 2: BS 7671 Regulations Intelligence (keyword hybrid)
-        supabase.rpc('search_bs7671_intelligence_hybrid', {
-          query_text: expandedQuery,
-          match_count: 8
+      // Generate embedding ONCE for vector search
+      const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'text-embedding-3-small',
+          input: expandedQuery
         })
+      });
+      
+      const embeddingData = await embeddingResponse.json();
+      const queryEmbedding = embeddingData.data[0].embedding;
+      
+      // Parallel RAG searches: vector-first
+      const [practicalWorkResult, bs7671Result] = await Promise.all([
+        // TIER 1: Practical Work Intelligence - PURE VECTOR SEARCH (95% weight)
+        (async () => {
+          try {
+            const { data, error } = await supabase.rpc('search_installation_knowledge', {
+              query_embedding: queryEmbedding,
+              method_filter: null,
+              match_threshold: 0.50,
+              match_count: 10
+            });
+            
+            if (error) throw error;
+            
+            // Apply 95% weight to vector results
+            return (data || []).map((row: any) => ({
+              primary_topic: row.topic || row.primary_topic,
+              content: row.content,
+              equipment_category: row.metadata?.equipment || 'General',
+              tools_required: row.metadata?.tools || [],
+              bs7671_regulations: row.metadata?.regulations || [],
+              hybrid_score: (row.similarity || 0.7) * 0.95, // 95% weight
+              confidence_score: row.similarity || 0.7,
+              source: 'practical_work_intelligence'
+            }));
+          } catch (error) {
+            console.error('Practical work vector search failed:', error);
+            return [];
+          }
+        })(),
+        
+        // TIER 2: BS 7671 Regulations - KEYWORD SEARCH (85% weight)
+        (async () => {
+          try {
+            const { data, error } = await supabase
+              .from('regulations_intelligence')
+              .select('*')
+              .textSearch('fts', expandedQuery, { 
+                type: 'websearch',
+                config: 'english'
+              })
+              .limit(8);
+            
+            if (error) throw error;
+            
+            // Apply 85% weight to keyword results
+            return (data || []).map((row: any) => ({
+              regulation_number: row.regulation_number,
+              content: row.content || row.primary_topic,
+              primary_topic: row.primary_topic,
+              keywords: row.keywords,
+              category: row.category,
+              hybrid_score: 0.85, // 85% weight for keywords
+              source: 'bs7671_intelligence'
+            }));
+          } catch (error) {
+            console.error('BS 7671 keyword search failed:', error);
+            return [];
+          }
+        })()
       ]);
 
-      // Process Practical Work results
-      const practicalWorkDocs = (practicalWorkResult.data || []).map((row: any) => ({
-        primary_topic: row.primary_topic,
-        content: row.content,
-        equipment_category: row.equipment_category,
-        tools_required: row.tools_required,
-        bs7671_regulations: row.bs7671_regulations,
-        hybrid_score: row.hybrid_score / 10, // Normalize to 0-1
-        confidence_score: row.confidence_score,
-        source: 'practical_work_intelligence'
-      }));
-
-      // Process BS 7671 results
-      const bs7671Docs = (bs7671Result.data || []).map((row: any) => ({
-        regulation_number: row.regulation_number,
-        content: row.content || row.regulation_text,
-        primary_topic: row.primary_topic,
-        keywords: row.keywords,
-        category: row.category,
-        hybrid_score: row.hybrid_score || 0,
-        source: 'bs7671_intelligence'
-      }));
+      const practicalWorkDocs = practicalWorkResult || [];
+      const bs7671Docs = bs7671Result || [];
 
       // Merge and prioritize (Practical Work first)
       installKnowledge = [...practicalWorkDocs, ...bs7671Docs];
