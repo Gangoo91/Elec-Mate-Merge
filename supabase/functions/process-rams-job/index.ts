@@ -539,6 +539,25 @@ Deno.serve(async (req) => {
       ...(hsData ? { hs_input_preview: JSON.stringify(hsData).slice(0, 300) } : {})
     };
     
+    // Extract emergency contacts from project_info and add to method_data
+    const emergencyContacts = job.project_info ? {
+      siteManagerName: job.project_info.siteManagerName || "",
+      siteManagerPhone: job.project_info.siteManagerPhone || "",
+      firstAiderName: job.project_info.firstAiderName || "",
+      firstAiderPhone: job.project_info.firstAiderPhone || "",
+      safetyOfficerName: job.project_info.safetyOfficerName || "",
+      safetyOfficerPhone: job.project_info.safetyOfficerPhone || "",
+      assemblyPoint: job.project_info.assemblyPoint || ""
+    } : {};
+
+    // Merge emergency contacts into method_data
+    const finalMethodData = installerData?.data ? {
+      ...installerData.data,
+      ...emergencyContacts
+    } : null;
+
+    console.log('🚨 Emergency contacts extracted:', emergencyContacts);
+
     // Mark complete with safe property access and merged data
     await supabase
       .from('rams_generation_jobs')
@@ -547,7 +566,7 @@ Deno.serve(async (req) => {
         progress: 100,
         current_step: currentStepMessage,
         rams_data: combinedRAMSData,
-        ...(installerData?.data ? { method_data: installerData.data } : {}),
+        ...(finalMethodData ? { method_data: finalMethodData } : {}),
         ...(installerData ? { raw_installer_response: installerData } : {}),
         completed_at: new Date().toISOString(),
         generation_metadata: generationMetadata
