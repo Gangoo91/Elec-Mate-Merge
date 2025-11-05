@@ -797,104 +797,88 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 </h5>
                 <pre className="text-xs font-mono text-muted-foreground whitespace-pre-wrap break-words">
                   {JSON.stringify({
-                    project_name: ramsData.projectName || '',
-                    location: ramsData.location || '',
-                    date: ramsData.date || new Date().toISOString().split('T')[0],
-                    assessor: ramsData.assessor || '',
-                    contractor: methodData.contractor || '',
-                    supervisor: ramsData.supervisor || methodData.supervisor || '',
-                    activities: (ramsData.activities || []).join(', '),
+                    ramsData: {
+                      project_name: ramsData.projectName || '',
+                      location: ramsData.location || '',
+                      date: ramsData.date || new Date().toISOString().split('T')[0],
+                      assessor: ramsData.assessor || '',
+                      contractor: methodData.contractor || '',
+                      supervisor: ramsData.supervisor || methodData.supervisor || '',
+                      activities: [methodData.workType || "Electrical installation work"],
+                      
+                      // PPE
+                      requiredPPE: ramsData.requiredPPE || [],
+                      ppeDetails: ramsData.ppeDetails || [],
+                      
+                      // Risk Assessment Data
+                      risks: (ramsData.risks || [])
+                        .sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0))
+                        .map((risk, index) => ({
+                          number: index + 1,
+                          hazard: risk.hazard || '',
+                          risk: risk.risk || '',
+                          likelihood: risk.likelihood || 3,
+                          severity: risk.severity || 3,
+                          riskRating: risk.riskRating || 9,
+                          controls: risk.controls || '',
+                          linkedToStep: risk.linkedToStep || 0,
+                          residualRisk: risk.residualRisk || 6,
+                          furtherAction: risk.furtherAction || '',
+                          responsible: risk.responsible || '',
+                          actionBy: risk.actionBy || '',
+                          done: risk.done || false
+                        })),
+                      
+                      // Emergency Information
+                      emergencyProcedures: ramsData.emergencyProcedures || [],
+                      siteManagerName: ramsData.siteManagerName || '',
+                      siteManagerPhone: ramsData.siteManagerPhone || '',
+                      firstAiderName: ramsData.firstAiderName || '',
+                      firstAiderPhone: ramsData.firstAiderPhone || '',
+                      safetyOfficerName: ramsData.safetyOfficerName || '',
+                      safetyOfficerPhone: ramsData.safetyOfficerPhone || '',
+                      assemblyPoint: ramsData.assemblyPoint || '',
+                      
+                      // Compliance
+                      complianceRegulations: ramsData.complianceRegulations || [],
+                      complianceWarnings: ramsData.complianceWarnings || []
+                    },
                     
-                    // Risk Assessment Data
-                    risks: (ramsData.risks || [])
-                      .sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0))
-                      .map((risk, index) => ({
-                        number: index + 1,
-                        hazard: risk.hazard || '',
-                        risk: risk.risk || '',
-                        likelihood: risk.likelihood || 3,
-                        severity: risk.severity || 3,
-                        risk_rating: risk.riskRating || 9,
-                        controls: risk.controls || '',
-                        residual_risk: risk.residualRisk || 6,
-                        linked_to_step: risk.linkedToStep || 0,
-                        risk_level: risk.riskRating >= 15 ? 'High' : risk.riskRating >= 8 ? 'Medium' : 'Low',
-                        residual_likelihood: risk.likelihood && risk.severity 
-                          ? Math.max(1, risk.likelihood - 1) 
-                          : risk.likelihood || 2,
-                        residual_severity: risk.severity || 2,
-                        residual_risk_level: (risk.residualRisk || 6) >= 15 ? 'High' : (risk.residualRisk || 6) >= 8 ? 'Medium' : 'Low',
-                        regulation: risk.linkedToStep ? `Step ${risk.linkedToStep}` : 'General',
+                    methodStatementData: {
+                      jobTitle: methodData.jobTitle || ramsData.projectName || '',
+                      description: methodData.description || '',
+                      workType: methodData.workType || '',
+                      location: methodData.location || ramsData.location || '',
+                      contractor: methodData.contractor || '',
+                      supervisor: methodData.supervisor || '',
+                      
+                      // Installation Steps
+                      steps: (methodData.steps || []).map((step, index) => ({
+                        stepNumber: index + 1,
+                        title: step.title || '',
+                        description: step.description || '',
+                        safetyRequirements: step.safetyRequirements || [],
+                        equipmentNeeded: step.equipmentNeeded || [],
+                        estimatedDuration: step.estimatedDuration || '15 minutes',
+                        qualifications: step.qualifications || [],
+                        riskLevel: step.riskLevel || 'low',
+                        linkedHazards: step.linkedHazards || [],
+                        dependencies: step.dependencies || [],
+                        isCompleted: step.isCompleted || false,
+                        notes: step.notes || ''
                       })),
-                    
-                    // PPE Details
-                    ppe_items: (ramsData.ppeDetails || []).map((ppe, index) => ({
-                      item_number: index + 1,
-                      ppe_type: ppe.ppeType || '',
-                      standard: ppe.standard || 'BS EN Standards',
-                      mandatory: ppe.mandatory ? 'Yes' : 'No',
-                      purpose: ppe.purpose || ''
-                    })),
-                    
-                    // Method Statement Data
-                    job_title: methodData.jobTitle || ramsData.projectName || '',
-                    job_description: methodData.description || '',
-                    reference_number: `MS-${Date.now()}`,
-                    
-                    installation_steps: (methodData.steps || []).map((step, index) => ({
-                      step_number: index + 1,
-                      title: step.title || '',
-                      description: step.description || '',
-                      safety_requirements: (step.safetyRequirements || []).join(', '),
-                      equipment_needed: (step.equipmentNeeded || []).join(', '),
-                      estimated_duration: step.estimatedDuration || '15 minutes',
-                      qualifications: (step.qualifications || []).join(', '),
-                      risk_level: step.riskLevel || 'low'
-                    })),
-                    
-                    // Tools & Equipment
-                    tools_required: Array.isArray(methodData.toolsRequired) 
-                      ? methodData.toolsRequired.join(', ') 
-                      : methodData.toolsRequired || '',
-                    
-                    // Additional Information
-                    practical_tips: Array.isArray(methodData.practicalTips) 
-                      ? methodData.practicalTips.join(' | ') 
-                      : methodData.practicalTips || '',
-                    common_mistakes: Array.isArray(methodData.commonMistakes) 
-                      ? methodData.commonMistakes.join(' | ') 
-                      : methodData.commonMistakes || '',
-                    
-                    // Emergency Procedures
-                    emergency_procedures: Array.isArray(ramsData.emergencyProcedures) 
-                      ? ramsData.emergencyProcedures.join(' | ') 
-                      : ramsData.emergencyProcedures || '',
-                    
-                    // Compliance
-                    compliance_regulations: Array.isArray(ramsData.complianceRegulations) 
-                      ? ramsData.complianceRegulations.join(', ') 
-                      : ramsData.complianceRegulations || '',
-                    
-                    // Contact Information
-                    site_manager_name: ramsData.siteManagerName || '',
-                    site_manager_phone: ramsData.siteManagerPhone || '',
-                    first_aider_name: ramsData.firstAiderName || '',
-                    first_aider_phone: ramsData.firstAiderPhone || '',
-                    safety_officer_name: ramsData.safetyOfficerName || '',
-                    safety_officer_phone: ramsData.safetyOfficerPhone || '',
-                    assembly_point: ramsData.assemblyPoint || '',
-                    
-                    // Summary Stats
-                    total_risks: (ramsData.risks || []).length,
-                    high_risks: (ramsData.risks || []).filter(r => (r.riskRating || 0) >= 15).length,
-                    medium_risks: (ramsData.risks || []).filter(r => (r.riskRating || 0) >= 8 && (r.riskRating || 0) < 15).length,
-                    low_risks: (ramsData.risks || []).filter(r => (r.riskRating || 0) < 8).length,
-                    total_steps: (methodData.steps || []).length,
-                    total_ppe_items: (ramsData.ppeDetails || []).length,
-                    
-                    // Metadata
-                    generated_date: new Date().toISOString().split('T')[0],
-                    document_version: '1.0'
+                      
+                      // Tools & Materials
+                      toolsRequired: methodData.toolsRequired || [],
+                      materialsRequired: methodData.materialsRequired || [],
+                      
+                      // Additional Information
+                      practicalTips: methodData.practicalTips || [],
+                      commonMistakes: methodData.commonMistakes || [],
+                      
+                      // Compliance
+                      complianceRegulations: methodData.complianceRegulations || []
+                    }
                   }, null, 2)}
                 </pre>
               </div>
