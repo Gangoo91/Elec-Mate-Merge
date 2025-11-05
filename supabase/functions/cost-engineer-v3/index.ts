@@ -438,11 +438,11 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
 4. Add value engineering suggestions
 5. Include VAT (20%)`;
 
-    // Step 4: Call AI with GPT-5-Mini
+    // Step 4: Call AI with GPT-5 (more reliable for complex JSON schemas)
     logger.debug('Calling AI', { provider: 'OpenAI' });
-    logger.info('🤖 Calling OpenAI GPT-5-Mini', {
-      model: 'gpt-5-mini-2025-08-07',
-      maxTokens: 12000,
+    logger.info('🤖 Calling OpenAI GPT-5', {
+      model: 'gpt-5-2025-08-07',
+      maxTokens: 16000,
       timeoutMs: 180000,
       hasTools: true
     });
@@ -453,10 +453,10 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
     let aiResult;
     try {
       aiResult = await callAI(OPENAI_API_KEY, {
-        model: 'gpt-5-mini-2025-08-07',
+        model: 'gpt-5-2025-08-07',
         systemPrompt,
         userPrompt,
-        maxTokens: 12000,
+        maxTokens: 16000,
         timeoutMs: 180000,
         jsonMode: true, // Force strict JSON output (prevents malformed arrays)
         tools: [{
