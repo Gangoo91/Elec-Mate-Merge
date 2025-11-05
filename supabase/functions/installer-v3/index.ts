@@ -423,6 +423,39 @@ ${installContext.includes('Practical Work') || installContext.includes('Tools:')
 - Reference UK standards: BS 7671, BS EN ISO, HSE guidance, CDM Regulations
 - Use UK trade terminology: first fix (not rough-in), second fix (not trim-out)
 
+**QUALIFICATIONS PER STEP - MANDATORY:**
+For each step, populate the qualifications array based on the activity type. Never leave it empty.
+
+ELECTRICAL WORK:
+- Any live work, isolation, lock-off → "Qualified Electrician (BS 7671 18th Edition)" + "Competent Person (EWR 1989 Reg 16)"
+- Testing and certification → "Inspection & Testing qualified (e.g., City & Guilds 2391)"
+- 3-phase, HV, or "authorised person" work → "Authorised Person (EWR 1989)"
+- Live work (only if unavoidable) → "Live Working Trained (HSE GS38)"
+
+HEIGHT WORK:
+- Ladders over 2m → "Working at Height trained (WAHR 2005)"
+- MEWP, scissor lift, cherry picker → "IPAF 3a/3b certified operator"
+- Scaffold tower → "PASMA trained operative"
+- Full scaffold → "CISRS scaffold awareness" (or "CISRS scaffold erector" if erecting)
+- Harness, fall arrest → "Fall arrest equipment user training"
+
+SPECIALIZED:
+- Confined space entry → "Confined Space Entry trained (Safe System of Work)"
+- Asbestos area → "Asbestos Awareness (CAT A minimum)"
+- Manual handling over 25kg → "Manual Handling trained"
+- Hot work (welding, grinding) → "Hot Work Permit competent person"
+
+MANAGEMENT/PLANNING:
+- Planning, design, specifications → "Electrical Designer" or "Senior Electrician"
+- Procurement, ordering, logistics → "Project Coordinator" or "Contracts Manager"
+- Supervision of work → "Site Supervisor (SSSTS certified)"
+- Multi-trade coordination → "First Line Manager (SMSTS)"
+
+DEFAULT RULE:
+- If step involves any electrical installation work → Minimum "Competent Person (EWR 1989)" 
+- If planning/procurement only → "Project Coordinator" or "Electrical Designer"
+- If no specific qualification identified → "Competent Person (as defined by EWR 1989)"
+
 ⚠️ CRITICAL: MATCH EQUIPMENT TO WORK PHASE
 Each step has a distinct phase - match equipment accordingly:
 
@@ -655,6 +688,11 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
                     },
                      tools: { type: 'array', items: { type: 'string' }, description: 'Equipment needed for this step. CONTEXT-SPECIFIC tools for THIS EXACT PHASE only. Examples: Planning phase = drawings, camera, notepad. Procurement phase = supplier details, order forms (or "No special tools required"). Installation phase = drills, cables, fixings. Testing phase = test equipment. DO NOT list installation tools for planning/procurement phases. This maps to equipmentNeeded in the frontend.' },
                     materials: { type: 'array', items: { type: 'string' } },
+                    qualifications: { 
+                      type: 'array', 
+                      items: { type: 'string' },
+                      description: 'Required qualifications based on step activity. Infer from keywords: "planning/design"→Electrical Designer, "isolation/testing"→Qualified Electrician (BS 7671 18th Edition), "3-phase/authorised"→Authorised Person (EWR 1989), "MEWP/lift"→IPAF 3a/3b, "scaffold"→PASMA, "height work"→Working at Height (WAHR 2005), "confined space"→Confined Space Entry, "asbestos"→Asbestos Awareness (CAT A), "heavy lifting"→Manual Handling, "supervision"→Site Supervisor (SSSTS). Default electrical work: Competent Person (EWR 1989)'
+                    },
                     safetyNotes: { type: 'array', items: { type: 'string', description: 'Safety requirements for this step. STEP-SPECIFIC safety requirements for THIS STEP ONLY (not general project safety). In UK English (authorised, organise, metres). If no specific safety requirements for this step, return empty array. Example: Planning phase should have NO or minimal safety notes. Installation/isolation phases MUST have specific requirements like "Isolation and lock-off required". This maps to safetyRequirements in the frontend.' } },
                     estimatedTime: { type: 'number', description: 'Estimated time in minutes for this step. This maps to estimatedDuration in the frontend.' }
                   },
@@ -805,8 +843,92 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
 
     logger.info(`✅ Extracted ${steps.length} installation steps from AI response`);
 
+    // Auto-fill qualifications for steps that don't have them
+    steps.forEach((step: any) => {
+      if (!step.qualifications || step.qualifications.length === 0) {
+        step.qualifications = inferQualifications(step.title, step.description);
+      }
+    });
+
     timings.aiGeneration = Date.now() - timings.start - timings.ragRetrieval - timings.cacheCheck;
     timings.total = Date.now() - timings.start;
+
+    // Helper function: Infer qualifications from step title and description
+    function inferQualifications(title: string, description: string): string[] {
+      const text = (title + ' ' + description).toLowerCase();
+      const quals: string[] = [];
+      
+      // Electrical qualifications
+      if (text.match(/isolat|lock.?off|dead testing|live work|energi[sz]|voltage/)) {
+        quals.push('Qualified Electrician (BS 7671 18th Edition)');
+        quals.push('Competent Person (EWR 1989 Reg 16)');
+      }
+      if (text.match(/3.?phase|authorised person|high voltage|hv/)) {
+        quals.push('Authorised Person (EWR 1989)');
+      }
+      if (text.match(/test|inspect|certif|2391/)) {
+        quals.push('Inspection & Testing qualified (e.g., City & Guilds 2391)');
+      }
+      if (text.match(/live work|hot work/)) {
+        quals.push('Live Working Trained (HSE GS38)');
+      }
+      
+      // Height work qualifications
+      if (text.match(/mewp|scissor lift|cherry picker|elevated platform/)) {
+        quals.push('IPAF 3a/3b certified operator');
+      }
+      if (text.match(/scaffold|tower/) && !text.match(/inspect|awareness/)) {
+        quals.push('PASMA trained operative');
+      }
+      if (text.match(/scaffold/) && text.match(/erect/)) {
+        quals.push('CISRS scaffold erector');
+      }
+      if (text.match(/ladder|height|overhead|elevated/) && !text.match(/mewp|scissor/)) {
+        quals.push('Working at Height trained (WAHR 2005)');
+      }
+      if (text.match(/harness|fall arrest|lanyard/)) {
+        quals.push('Fall arrest equipment user');
+      }
+      
+      // Specialized qualifications
+      if (text.match(/confined space|enclosure entry|vault|chamber/)) {
+        quals.push('Confined Space Entry trained');
+      }
+      if (text.match(/asbestos/)) {
+        quals.push('Asbestos Awareness (CAT A minimum)');
+      }
+      if (text.match(/lift|manual handling|heavy/) && !text.match(/mewp|elevated/)) {
+        quals.push('Manual Handling trained');
+      }
+      if (text.match(/weld|grind|hot work permit/)) {
+        quals.push('Hot Work Permit competent person');
+      }
+      
+      // Management/planning qualifications
+      if (text.match(/design|plan|specification|calculate/)) {
+        quals.push('Electrical Designer');
+      }
+      if (text.match(/procurement|order|supply|logistics/)) {
+        quals.push('Project Coordinator');
+      }
+      if (text.match(/supervis|manage|oversee/)) {
+        quals.push('Site Supervisor (SSSTS)');
+      }
+      if (text.match(/multi.?trade|coordination|programme/)) {
+        quals.push('First Line Manager (SMSTS)');
+      }
+      
+      // Default if no specific quals identified
+      if (quals.length === 0 && text.match(/electrical|install|cable|circuit|wire/)) {
+        quals.push('Competent Person (EWR 1989)');
+      } else if (quals.length === 0 && text.match(/plan|survey|assess/)) {
+        quals.push('Electrical Designer');
+      } else if (quals.length === 0) {
+        quals.push('Competent Person (as defined by EWR 1989)');
+      }
+      
+      return [...new Set(quals)]; // Remove duplicates
+    }
 
     // IMPROVEMENT: Response Quality Validation
     const { validateResponse } = await import('../_shared/response-validation.ts');
@@ -861,7 +983,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
           description: step.description || '',
           safetyRequirements: step.safetyNotes || step.safetyRequirements || [],
           equipmentNeeded: step.tools || step.equipmentNeeded || step.equipmentRequired || [],
-          qualifications: [],
+          qualifications: step.qualifications || [],
           estimatedDuration: step.estimatedTime ? `${step.estimatedTime} minutes` : '15-30 minutes',
           riskLevel: 'medium' as const,
           dependencies: [],
