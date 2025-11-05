@@ -268,7 +268,7 @@ export const InstallationResultsEditor = ({
                 <Wrench className="h-8 w-8 text-black" />
               </div>
               <div className="flex-1">
-                <h2 className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-elec-yellow via-primary to-blue-400 mb-2 leading-tight">
+                <h2 className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-elec-yellow via-primary to-blue-400 mb-2 leading-tight">
                   {jobTitle}
                 </h2>
                 <div className="flex flex-wrap gap-2">
