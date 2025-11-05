@@ -1037,7 +1037,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
           }
         }],
         tool_choice: { type: 'function', function: { name: 'provide_safety_assessment' } }
-      }, OPENAI_API_KEY, 150000); // ✅ FIX #2: 150s timeout - increased buffer for complex jobs
+      }, OPENAI_API_KEY, 210000); // ✅ 210s timeout (3.5min) - 70s buffer over 140s average for reliability
       
       if (heartbeatInterval) clearInterval(heartbeatInterval); // ✅ Add null check
       if (progressInterval) clearInterval(progressInterval);

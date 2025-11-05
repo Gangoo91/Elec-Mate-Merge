@@ -133,9 +133,15 @@ export const AIRAMSGenerator: React.FC = () => {
     }
   }, [status, error, currentJobId]);
 
-  // Trigger celebration when generation completes
+  // Trigger celebration when generation completes WITH REAL DATA
   useEffect(() => {
-    if (ramsData && methodData && status === 'complete' && showResults && !celebrationShown) {
+    const hasRealData = ramsData && 
+                        methodData && 
+                        status === 'complete' && 
+                        ramsData.risks?.length > 0 && 
+                        !currentStep?.includes('partial');
+                        
+    if (hasRealData && showResults && !celebrationShown) {
       // Clear session flag on completion
       sessionStorage.removeItem('rams-generation-active');
       
@@ -144,7 +150,7 @@ export const AIRAMSGenerator: React.FC = () => {
       setCelebrationShown(true);
       triggerHaptic([100, 50, 100, 50, 200]);
     }
-  }, [ramsData, methodData, status, showResults, celebrationShown]);
+  }, [ramsData, methodData, status, currentStep, showResults, celebrationShown]);
 
   const handleGenerate = async (
     jobDescription: string,
