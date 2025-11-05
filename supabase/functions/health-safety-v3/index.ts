@@ -215,34 +215,16 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
     
-    // RESTORED LEGACY: Vector-first with 95% weight + Keywords 85%
-    logger.info('🔍 Starting VECTOR-FIRST RAG (95% health-safety vector + 85% regs keywords)');
-    
-    // Generate embedding ONCE for both vector searches
-    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'text-embedding-3-small',
-        input: effectiveQuery
-      })
-    });
-    
-    const embeddingData = await embeddingResponse.json();
-    const queryEmbedding = embeddingData.data[0].embedding;
+    // CORRECTED LEGACY: Vector H&S (95%) + Keyword Regs (85%)
+    logger.info('🔍 Starting LEGACY RAG (95% health-safety VECTOR + 85% regs KEYWORDS)');
     
     const [healthSafetyVectorResult, bs7671KeywordResult] = await Promise.all([
       // TIER 1: Health & Safety Knowledge - PURE VECTOR SEARCH (95% weight)
       (async () => {
         try {
           const { data, error } = await supabase.rpc('search_health_safety', {
-            query_embedding: queryEmbedding,
-            scale_filter: workType || null,
-            source_filter: null,
-            match_threshold: 0.50,
+            query_text: effectiveQuery,
+            query_embedding: null, // RPC generates embedding
             match_count: 12
           });
           
@@ -266,14 +248,10 @@ serve(async (req) => {
       // TIER 2: BS 7671 Regulations - KEYWORD SEARCH (85% weight)
       (async () => {
         try {
-          const { data, error } = await supabase
-            .from('regulations_intelligence')
-            .select('*')
-            .textSearch('fts', effectiveQuery, { 
-              type: 'websearch',
-              config: 'english'
-            })
-            .limit(10);
+          const { data, error } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
+            query_text: effectiveQuery,
+            match_count: 10
+          });
           
           if (error) {
             console.error('BS 7671 keyword search error:', error);
@@ -283,7 +261,7 @@ serve(async (req) => {
           // Apply 85% weight to keyword results
           return (data || []).map((row: any) => ({
             ...row,
-            hybrid_score: 0.85, // 85% weight for keywords
+            hybrid_score: (row.hybrid_score || 0.75) * 0.85, // 85% weight for keywords
             search_method: 'keyword'
           }));
         } catch (error) {
@@ -295,7 +273,7 @@ serve(async (req) => {
 
     // Process results
     const healthSafetyDocs = healthSafetyVectorResult || [];
-    const bs7671Data = bs7671HybridResult || [];
+    const bs7671Data = bs7671KeywordResult || [];
 
     // Build knowledge object
     const hsKnowledge = {

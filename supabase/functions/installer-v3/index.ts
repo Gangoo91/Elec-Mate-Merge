@@ -255,53 +255,35 @@ serve(async (req) => {
         expanded: expandedQuery.substring(0, 100)
       });
 
-      // RESTORED LEGACY: Vector-first RAG (95% practical + 85% regs keywords)
+      // CORRECTED LEGACY: Keyword Practical (95%) + Keyword Regs (85%)
       const ragStart = Date.now();
-      logger.info('🔍 Starting VECTOR-FIRST RAG (95% practical vector + 85% regs keywords)');
+      logger.info('🔍 Starting LEGACY RAG (95% practical KEYWORDS + 85% regs KEYWORDS)');
       
-      // Generate embedding ONCE for vector search
-      const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: 'text-embedding-3-small',
-          input: expandedQuery
-        })
-      });
-      
-      const embeddingData = await embeddingResponse.json();
-      const queryEmbedding = embeddingData.data[0].embedding;
-      
-      // Parallel RAG searches: vector-first
+      // Parallel RAG searches: BOTH KEYWORD-BASED
       const [practicalWorkResult, bs7671Result] = await Promise.all([
-        // TIER 1: Practical Work Intelligence - PURE VECTOR SEARCH (95% weight)
+        // TIER 1: Practical Work Intelligence - KEYWORD SEARCH (95% weight)
         (async () => {
           try {
-            const { data, error } = await supabase.rpc('search_installation_knowledge', {
-              query_embedding: queryEmbedding,
-              method_filter: null,
-              match_threshold: 0.50,
+            const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
+              query_text: expandedQuery,
               match_count: 10
             });
             
             if (error) throw error;
             
-            // Apply 95% weight to vector results
+            // Apply 95% weight to keyword results
             return (data || []).map((row: any) => ({
               primary_topic: row.topic || row.primary_topic,
               content: row.content,
               equipment_category: row.metadata?.equipment || 'General',
               tools_required: row.metadata?.tools || [],
               bs7671_regulations: row.metadata?.regulations || [],
-              hybrid_score: (row.similarity || 0.7) * 0.95, // 95% weight
-              confidence_score: row.similarity || 0.7,
+              hybrid_score: (row.hybrid_score || 0.75) * 0.95, // 95% weight
+              confidence_score: row.hybrid_score || 0.75,
               source: 'practical_work_intelligence'
             }));
           } catch (error) {
-            console.error('Practical work vector search failed:', error);
+            console.error('Practical work keyword search failed:', error);
             return [];
           }
         })(),
@@ -309,14 +291,10 @@ serve(async (req) => {
         // TIER 2: BS 7671 Regulations - KEYWORD SEARCH (85% weight)
         (async () => {
           try {
-            const { data, error } = await supabase
-              .from('regulations_intelligence')
-              .select('*')
-              .textSearch('fts', expandedQuery, { 
-                type: 'websearch',
-                config: 'english'
-              })
-              .limit(8);
+            const { data, error } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
+              query_text: expandedQuery,
+              match_count: 8
+            });
             
             if (error) throw error;
             
@@ -327,7 +305,7 @@ serve(async (req) => {
               primary_topic: row.primary_topic,
               keywords: row.keywords,
               category: row.category,
-              hybrid_score: 0.85, // 85% weight for keywords
+              hybrid_score: (row.hybrid_score || 0.75) * 0.85, // 85% weight for keywords
               source: 'bs7671_intelligence'
             }));
           } catch (error) {
