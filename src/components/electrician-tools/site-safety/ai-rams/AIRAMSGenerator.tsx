@@ -272,10 +272,53 @@ export const AIRAMSGenerator: React.FC = () => {
   };
   
   const saveToDatabase = async () => {
+    if (!currentJobId || !ramsData || !methodData) {
+      toast({
+        title: "Cannot Save",
+        description: "No data to save",
+        variant: 'destructive'
+      });
+      return;
+    }
+
     setIsSaving(true);
-    // Save logic here
-    setLastSaved(new Date());
-    setIsSaving(false);
+    
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
+
+      // Update the job with latest edits
+      const { error: updateError } = await supabase
+        .from('rams_generation_jobs')
+        .update({
+          rams_data: ramsData,
+          method_data: methodData,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', currentJobId)
+        .eq('user_id', user.id);
+
+      if (updateError) throw updateError;
+
+      setLastSaved(new Date());
+      
+      toast({
+        title: "Saved Successfully",
+        description: "Your changes have been saved",
+        variant: 'success'
+      });
+    } catch (error) {
+      console.error('Save error:', error);
+      toast({
+        title: "Save Failed",
+        description: error instanceof Error ? error.message : "Could not save changes",
+        variant: 'destructive'
+      });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   // Calculate stats for celebration

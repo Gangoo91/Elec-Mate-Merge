@@ -71,11 +71,12 @@ export function transformInstallerOutputToMethodStatement(
     description: step.description,
     safetyRequirements: step.safetyRequirements || [],
     equipmentNeeded: [...(step.toolsRequired || []), ...(step.materialsNeeded || [])],
-    qualifications: [], // Qualifications now at document level only
+    qualifications: (step as any).qualifications || [], // ✅ FIX: Preserve step-level qualifications
     estimatedDuration: step.estimatedTime,
     riskLevel: determineStepRiskLevel(step),
     linkedHazards: (step as any).linkedHazards || step.hazards || [],
     notes: step.criticalPoints?.join('; ') || '',
+    assignedPersonnel: (step as any).assignedPersonnel || [], // ✅ NEW: Assigned personnel field
   }));
 
   // Aggregate tools and materials at document level

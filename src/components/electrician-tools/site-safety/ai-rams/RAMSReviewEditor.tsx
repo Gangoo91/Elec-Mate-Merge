@@ -106,12 +106,28 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   const [showMobileSheet, setShowMobileSheet] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [expandedSteps, setExpandedSteps] = useState<Set<string>>(new Set());
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   
   const { isVisible: keyboardVisible } = useMobileKeyboard();
 
+  // Notify parent of updates and track unsaved changes
   useEffect(() => {
     onUpdate(ramsData, methodData);
+    setHasUnsavedChanges(true);
   }, [ramsData, methodData]);
+
+  // Auto-save after 30 seconds of inactivity
+  useEffect(() => {
+    if (!hasUnsavedChanges || !onSave) return;
+    
+    const autoSaveTimer = setTimeout(() => {
+      console.log('🔄 Auto-saving changes...');
+      onSave();
+      setHasUnsavedChanges(false);
+    }, 30000); // Auto-save after 30s of inactivity
+    
+    return () => clearTimeout(autoSaveTimer);
+  }, [hasUnsavedChanges, onSave]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -757,6 +773,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                         key={step.id}
                         step={step}
                         index={index}
+                        editable={true}
+                        onUpdate={updateStep}
+                        onRemove={removeStep}
                       />
                     ))}
                   </div>

@@ -12,6 +12,7 @@ export interface MethodStep {
   isCompleted?: boolean;
   notes?: string;
   linkedHazards?: string[]; // IDs of linked hazards
+  assignedPersonnel?: string[]; // NEW: Array of team member names
 }
 
 export interface MethodStatementRiskAssessment {
