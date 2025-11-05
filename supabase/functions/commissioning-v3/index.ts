@@ -471,7 +471,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
     const validation = validateResponse(
       commResult.response,
       effectiveQuery,
-      { testKnowledge, circuitType }
+      { regulations: ragResults?.regulations || [], circuitType }
     );
 
     if (!validation.isValid) {
@@ -489,7 +489,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
     // Step 5: Enrich response with UI metadata
     const enrichedResponse = enrichResponse(
       commResult,
-      testKnowledge,
+      ragResults?.regulations || [],
       'commissioning',
       { circuitType, testType: query }
     );
