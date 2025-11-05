@@ -1004,8 +1004,8 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
         })),
         metadata: {
           requestId,
-          provider: useOpenAI ? 'openai' : 'lovable-ai',
-          model: useOpenAI ? 'gpt-5-2025-08-07' : 'gemini-2.5-flash',
+          provider: 'OpenAI',
+          model: 'gpt-5-mini-2025-08-07',
           totalMs: Date.now() - functionStart,
           ragMs: Date.now() - ragStart,
           aiMs: aiResult?.duration || (Date.now() - aiStart),
