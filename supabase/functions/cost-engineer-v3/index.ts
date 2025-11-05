@@ -215,11 +215,26 @@ serve(async (req) => {
       ),
       
       // Combined installation + design knowledge with intelligent RAG
+      // COST ENGINEER OPTIMIZED PRIORITIES: Pricing (95), Practical Work (85), BS 7671 (80)
       intelligentRAGSearch(
         {
           circuitType: parsedEntities.jobType,
           searchTerms: enhancedQuery.split(' ').filter(w => w.length > 3),
-          expandedQuery: enhancedQuery
+          expandedQuery: enhancedQuery,
+          context: {
+            ragPriority: {
+              bs7671: 80,           // BS 7671 regulations - compliance checking
+              practical_work: 85,   // Practical work - HIGHEST priority for labour estimation
+              design: 0,            // Skip design calculations (Designer Agent's domain)
+              health_safety: 0,     // Skip H&S (H&S Agent's domain)
+              installation: 0,      // Skip installation (covered by practical_work)
+              inspection: 0,        // Skip inspection (not needed for costing)
+              project_mgmt: 0       // Skip PM (using separate labour search)
+            },
+            agentType: 'cost-engineer',
+            skipEmbedding: false
+          },
+          installationType: parsedEntities.installationType || 'domestic'
         },
         OPENAI_API_KEY,
         supabase,
@@ -235,29 +250,30 @@ serve(async (req) => {
     const installationResults = ragResults?.installationDocs || [];
     const pmResults = ragResults?.designDocs || [];
     
-    logger.info('RAG search complete', {
+    logger.info('RAG search complete with Cost Engineer priorities', {
       pricingItems: finalPricingResults?.length || 0,
-      installationGuides: installationResults.length,
-      pmGuides: pmResults.length,
+      practicalWorkGuides: ragResults?.practicalWorkDocs?.length || 0,
+      regulations: ragResults?.regulations?.length || 0,
       labourTimeEntries: labourTimeResults.length,
-      avgInstallScore: installationResults.length > 0 ? (installationResults.reduce((s: number, r: any) => s + (r.finalScore || 0), 0) / installationResults.length).toFixed(3) : 'N/A'
+      skippedSources: ['design', 'health_safety', 'installation'],
+      priorities: { practicalWork: 85, regulations: 80, pricing: 95 }
     });
 
     // Step 5: Build pricing context using RAG module formatter
     const pricingContext = formatPricingContext(finalPricingResults) +
       `\n\nFALLBACK MARKET RATES (use if not in database, 15% markup applied):\n- 2.5mm² T&E cable: £1.13/metre\n- 1.5mm² T&E cable: £0.92/metre\n- 6mm² T&E cable: £2.53/metre\n- 10mm² T&E cable: £4.49/metre\n- 2.5mm² SWA: £4.03/m, 4mm² SWA: £5.52/m, 6mm² SWA: £8.21/m, 10mm² SWA: £10.93/m\n- SWA gland 20mm: £11.50 (x2)\n- Consumer units: 8-way £156.40, 10-way £179.40, 12-way £212.75, 16-way £281.75\n- 40A RCBO: £32.78`;
 
-    // Build installation context (trimmed: 120 chars max)
-    const installationContext = installationResults && installationResults.length > 0
-      ? installationResults.map((r: any) => 
-          `- ${r.topic}: ${r.content.substring(0, 120)}...`
+    // Build PRACTICAL WORK context (from Practical Work Intelligence - PRIORITY)
+    const practicalWorkContext = ragResults?.practicalWorkDocs && ragResults.practicalWorkDocs.length > 0
+      ? ragResults.practicalWorkDocs.map((pw: any) => 
+          `- ${pw.activity}: ${pw.step_description?.substring(0, 120)}... (${pw.time_estimate || 'time varies'})`
         ).join('\n')
       : '';
 
-    // Build compact PM context (60 chars max)
-    const pmContext = pmResults && pmResults.length > 0
-      ? pmResults.map((r: any) => 
-          `- ${r.topic}: ${r.content.substring(0, 60)}...`
+    // Build regulations context (trimmed for compliance checks)
+    const regulationsContext = ragResults?.regulations && ragResults.regulations.length > 0
+      ? ragResults.regulations.slice(0, 5).map((reg: any) =>
+          `- ${reg.regulation_number}: ${reg.content?.substring(0, 100)}...`
         ).join('\n')
       : '';
 
@@ -292,7 +308,8 @@ CABLE RULES:
 - Outdoor/garden: SWA cable (armoured)
 - Underground: SWA at 600mm depth
 - Factory: SWA for exposed runs
-${installationContext ? `\nINSTALLATION NOTES:\n${installationContext.substring(0, 400)}...\n` : ''}
+${practicalWorkContext ? `\nPRACTICAL INSTALLATION METHODS (PRIORITY):\n${practicalWorkContext}\n` : ''}
+${regulationsContext ? `\nREGULATORY REQUIREMENTS:\n${regulationsContext}\n` : ''}
 ${labourTimeContext ? `\n${labourTimeContext}\n` : ''}
 
 LABOUR CALCULATION RULES:
