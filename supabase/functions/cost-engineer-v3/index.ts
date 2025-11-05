@@ -206,9 +206,9 @@ serve(async (req) => {
       // Generate embedding
       generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY),
       
-      // Use optimized pricing RAG module with 15% markup applied
+      // Use optimized pricing RAG module with 15% markup applied (LIMIT TO TOP 30)
       searchPricingKnowledge(enhancedQuery, await generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY), supabase, logger, parsedEntities.jobType).then(results => 
-        results.map(item => ({
+        results.slice(0, 30).map(item => ({
           ...item,
           base_cost: Number((item.base_cost * (1 + COST_ENGINEER_PRICING.MATERIAL_MARKUP_PERCENT / 100)).toFixed(2))
         }))
@@ -250,29 +250,30 @@ serve(async (req) => {
     const installationResults = ragResults?.installationDocs || [];
     const pmResults = ragResults?.designDocs || [];
     
-    logger.info('RAG search complete with Cost Engineer priorities', {
+    logger.info('RAG search complete with Cost Engineer priorities (CONTEXT REDUCED)', {
       pricingItems: finalPricingResults?.length || 0,
       practicalWorkGuides: ragResults?.practicalWorkDocs?.length || 0,
       regulations: ragResults?.regulations?.length || 0,
       labourTimeEntries: labourTimeResults.length,
       skippedSources: ['design', 'health_safety', 'installation'],
-      priorities: { practicalWork: 85, regulations: 80, pricing: 95 }
+      priorities: { practicalWork: 85, regulations: 80, pricing: 95 },
+      limits: { pricing: 30, practicalWork: 5, regulations: 3 }
     });
 
     // Step 5: Build pricing context using RAG module formatter
     const pricingContext = formatPricingContext(finalPricingResults) +
       `\n\nFALLBACK MARKET RATES (use if not in database, 15% markup applied):\n- 2.5mm² T&E cable: £1.13/metre\n- 1.5mm² T&E cable: £0.92/metre\n- 6mm² T&E cable: £2.53/metre\n- 10mm² T&E cable: £4.49/metre\n- 2.5mm² SWA: £4.03/m, 4mm² SWA: £5.52/m, 6mm² SWA: £8.21/m, 10mm² SWA: £10.93/m\n- SWA gland 20mm: £11.50 (x2)\n- Consumer units: 8-way £156.40, 10-way £179.40, 12-way £212.75, 16-way £281.75\n- 40A RCBO: £32.78`;
 
-    // Build PRACTICAL WORK context (from Practical Work Intelligence - PRIORITY)
+    // Build PRACTICAL WORK context (from Practical Work Intelligence - PRIORITY) - LIMIT TO TOP 5
     const practicalWorkContext = ragResults?.practicalWorkDocs && ragResults.practicalWorkDocs.length > 0
-      ? ragResults.practicalWorkDocs.map((pw: any) => 
+      ? ragResults.practicalWorkDocs.slice(0, 5).map((pw: any) => 
           `- ${pw.activity}: ${pw.step_description?.substring(0, 120)}... (${pw.time_estimate || 'time varies'})`
         ).join('\n')
       : '';
 
-    // Build regulations context (trimmed for compliance checks)
+    // Build regulations context (trimmed for compliance checks) - LIMIT TO TOP 3
     const regulationsContext = ragResults?.regulations && ragResults.regulations.length > 0
-      ? ragResults.regulations.slice(0, 5).map((reg: any) =>
+      ? ragResults.regulations.slice(0, 3).map((reg: any) =>
           `- ${reg.regulation_number}: ${reg.content?.substring(0, 100)}...`
         ).join('\n')
       : '';
