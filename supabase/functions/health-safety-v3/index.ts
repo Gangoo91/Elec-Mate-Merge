@@ -962,12 +962,12 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
           hazardProperties: 11,
           ppeProperties: 5,
           maxTokens: 12000,
-          timeout: 150000
+          timeout: 230000
         }
       });
       
       // ✅ DIRECT OPENAI CALL: 30k tokens, no wrapper, no fallback
-      logger.info(`🚀 Calling OpenAI GPT-5-mini directly - 12k tokens, 150s timeout`);
+      logger.info(`🚀 Calling OpenAI GPT-5-mini directly - 12k tokens, 230s timeout`);
       
       aiResult = await callOpenAI({
         messages: [
@@ -1042,7 +1042,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
           }
         }],
         tool_choice: { type: 'function', function: { name: 'provide_safety_assessment' } }
-      }, OPENAI_API_KEY, 150000); // ✅ FIX #2: 150s timeout - increased buffer for complex jobs
+      }, OPENAI_API_KEY, 230000); // ✅ FIX #2: 230s timeout - matches installer-v3 for complex jobs
       
       if (heartbeatInterval) clearInterval(heartbeatInterval); // ✅ Add null check
       if (progressInterval) clearInterval(progressInterval);
@@ -1053,7 +1053,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       logger.info('✅ [DIAGNOSTIC] OpenAI API call completed:', {
         apiCallMs: apiCallDuration,
         apiCallSeconds: Math.round(apiCallDuration / 1000),
-        withinTimeout: apiCallDuration < 150000,
+        withinTimeout: apiCallDuration < 230000,
         tokensUsed: aiResult.usage?.total_tokens || 'unknown',
         totalDuration: performanceMetrics.aiGeneration,
         totalDurationSeconds: Math.round(performanceMetrics.aiGeneration / 1000)
