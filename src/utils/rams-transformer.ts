@@ -71,9 +71,7 @@ export function transformInstallerOutputToMethodStatement(
     description: step.description,
     safetyRequirements: step.safetyRequirements || [],
     equipmentNeeded: [...(step.toolsRequired || []), ...(step.materialsNeeded || [])],
-    qualifications: installerOutput.requiredQualifications?.filter(qual => 
-      step.description.toLowerCase().includes(qual.toLowerCase().split(' ')[0])
-    ) || [],
+    qualifications: [], // Qualifications now at document level only
     estimatedDuration: step.estimatedTime,
     riskLevel: determineStepRiskLevel(step),
     linkedHazards: (step as any).linkedHazards || step.hazards || [],
@@ -107,6 +105,7 @@ export function transformInstallerOutputToMethodStatement(
     toolsRequired: Array.from(allToolsSet),
     materialsRequired: Array.from(allMaterialsSet),
     totalEstimatedTime: installerOutput.totalDuration,
+    requiredQualifications: installerOutput.requiredQualifications || [],
     
     // Enhanced fields from installer agent
     scopeOfWork: enhancedOutput.scopeOfWork,

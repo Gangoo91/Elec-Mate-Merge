@@ -141,7 +141,8 @@ serve(async (req) => {
         totalEstimatedTime: methodData.totalEstimatedTime || "",
         difficultyLevel: methodData.difficultyLevel || "",
         complianceRegulations: methodData.complianceRegulations || [],
-        complianceWarnings: methodData.complianceWarnings || []
+        complianceWarnings: methodData.complianceWarnings || [],
+        requiredQualifications: methodData.requiredQualifications || []
       }
     };
 

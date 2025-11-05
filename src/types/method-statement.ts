@@ -157,6 +157,7 @@ export interface MethodStatementData {
   difficultyLevel?: string;
   complianceRegulations?: string[];
   complianceWarnings?: string[];
+  requiredQualifications?: string[];
   
   // Enhanced AI-generated fields
   riskAssessment?: MethodStatementRiskAssessment;
