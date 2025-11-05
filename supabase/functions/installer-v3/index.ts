@@ -423,6 +423,16 @@ ${installContext.includes('Practical Work') || installContext.includes('Tools:')
 - Reference UK standards: BS 7671, BS EN ISO, HSE guidance, CDM Regulations
 - Use UK trade terminology: first fix (not rough-in), second fix (not trim-out)
 
+⚠️ CRITICAL: QUALIFICATIONS PER STEP
+For each step, specify WHO can perform this work in the "qualifications" array:
+- Isolation/shutdown: ["18th Edition BS 7671", "Authorised Person (AP)", "Safe Isolation Trained"]
+- Installation: ["Qualified Electrician", "CSCS Card", "18th Edition BS 7671"]
+- Testing/commissioning: ["18th Edition BS 7671", "Test Equipment Competent", "Inspection & Testing Qualified"]
+- Planning/survey: ["Site Manager", "H&S Awareness", "CDM trained"]
+- Procurement: ["Procurement Authorised"] OR ["Material Specification Knowledge"] (or empty if anyone can order)
+- Supervision required: Add "Competent supervision if trainee"
+DO NOT leave qualifications empty unless truly no qualification is needed (rare).
+
 ⚠️ CRITICAL: MATCH EQUIPMENT TO WORK PHASE
 Each step has a distinct phase - match equipment accordingly:
 
@@ -656,6 +666,11 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
                      tools: { type: 'array', items: { type: 'string' }, description: 'Equipment needed for this step. CONTEXT-SPECIFIC tools for THIS EXACT PHASE only. Examples: Planning phase = drawings, camera, notepad. Procurement phase = supplier details, order forms (or "No special tools required"). Installation phase = drills, cables, fixings. Testing phase = test equipment. DO NOT list installation tools for planning/procurement phases. This maps to equipmentNeeded in the frontend.' },
                     materials: { type: 'array', items: { type: 'string' } },
                     safetyNotes: { type: 'array', items: { type: 'string', description: 'Safety requirements for this step. STEP-SPECIFIC safety requirements for THIS STEP ONLY (not general project safety). In UK English (authorised, organise, metres). If no specific safety requirements for this step, return empty array. Example: Planning phase should have NO or minimal safety notes. Installation/isolation phases MUST have specific requirements like "Isolation and lock-off required". This maps to safetyRequirements in the frontend.' } },
+                    qualifications: { 
+                      type: 'array', 
+                      items: { type: 'string' },
+                      description: 'Required qualifications/competencies for the person performing THIS STEP. Be specific to step activities. Examples: Planning = ["Site Manager", "H&S Awareness"]. Isolation = ["18th Edition BS 7671", "Authorised Person (AP)", "Safe Isolation Trained"]. Installation = ["Qualified Electrician", "CSCS Card", "18th Edition BS 7671"]. Testing = ["18th Edition BS 7671", "Test Equipment Competent"]. Procurement = ["Procurement Authorised"] or empty if anyone can order. DO NOT leave empty unless truly no qualification needed.'
+                    },
                     estimatedTime: { type: 'number', description: 'Estimated time in minutes for this step. This maps to estimatedDuration in the frontend.' }
                   },
                   required: ['step', 'title', 'description']
@@ -861,7 +876,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
           description: step.description || '',
           safetyRequirements: step.safetyNotes || step.safetyRequirements || [],
           equipmentNeeded: step.tools || step.equipmentNeeded || step.equipmentRequired || [],
-          qualifications: [],
+          qualifications: step.qualifications || inferQualificationsFromStep(step),
           estimatedDuration: step.estimatedTime ? `${step.estimatedTime} minutes` : '15-30 minutes',
           riskLevel: 'medium' as const,
           dependencies: [],
@@ -886,6 +901,44 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         }
       }
     };
+
+    // Helper: Infer qualifications if AI didn't provide them
+    function inferQualificationsFromStep(step: any): string[] {
+      const desc = (step.description || '').toLowerCase();
+      const safety = (step.safetyNotes || []).join(' ').toLowerCase();
+      const title = (step.title || '').toLowerCase();
+      const combined = `${title} ${desc} ${safety}`;
+      
+      const qualifications: string[] = [];
+      
+      // Isolation work
+      if (/isolat|lock.?off|prove dead|test dead|energi|permit to work/i.test(combined)) {
+        qualifications.push('18th Edition BS 7671', 'Authorised Person (AP)', 'Safe Isolation Trained');
+      }
+      // Installation work
+      else if (/install|terminate|connect|fix|mount|drill|cable run|pulling cable|routing|first fix|second fix/i.test(combined)) {
+        qualifications.push('Qualified Electrician', 'CSCS Card', '18th Edition BS 7671');
+      }
+      // Testing work
+      else if (/test|commission|inspect after|measure|certificate|continuity|insulation resistance/i.test(combined)) {
+        qualifications.push('18th Edition BS 7671', 'Test Equipment Competent', 'Inspection & Testing Qualified');
+      }
+      // Planning/survey
+      else if (/planning|survey|assess|review|site visit|walkthrough|risk assessment/i.test(combined)) {
+        qualifications.push('Site Manager', 'H&S Awareness', 'CDM trained');
+      }
+      // Procurement
+      else if (/procurement|order|purchase|supplier|obtain materials/i.test(combined)) {
+        qualifications.push('Procurement Authorised', 'Material Specification Knowledge');
+      }
+      
+      // Default if nothing matches
+      if (qualifications.length === 0) {
+        qualifications.push('Competent Person', 'Competent supervision if trainee');
+      }
+      
+      return qualifications;
+    }
 
     // Phase 5: Store in cache for 1 hour
     await supabase
