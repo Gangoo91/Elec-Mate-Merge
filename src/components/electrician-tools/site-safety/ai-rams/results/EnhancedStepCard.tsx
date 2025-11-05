@@ -35,17 +35,24 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
   const isEvenRow = index % 2 === 0;
   const [isEditing, setIsEditing] = useState(false);
   const [editedStep, setEditedStep] = useState<MethodStep>(step);
+  const [isSaving, setIsSaving] = useState(false);
 
   // Sync editedStep with prop changes (e.g., after save)
   useEffect(() => {
     setEditedStep(step);
-  }, [step]);
+    
+    // If we just saved, exit edit mode now that props have updated
+    if (isSaving) {
+      setIsEditing(false);
+      setIsSaving(false);
+    }
+  }, [step, isSaving]);
 
   const handleSave = () => {
     if (onUpdate) {
+      setIsSaving(true);
       onUpdate(step.id, editedStep);
     }
-    setIsEditing(false);
   };
 
   const handleCancel = () => {
