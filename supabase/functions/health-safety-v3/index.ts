@@ -1372,14 +1372,14 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
       hasAllRequiredData: true
     });
 
-    // ✅ PHASE 1A: Build standardized response structure
+    // ✅ PHASE 1A: Build final response structure
     performanceMetrics.totalTime = Date.now() - performanceMetrics.startTime;
     const generationTimeMs = Date.now() - requestStart;
     const hazardCount = validatedRiskAssessment.hazards?.length || 0;
     const ppeCount = validatedRiskAssessment.ppeDetails?.length || 0;
 
-    // Build standardized response
-    const standardizedResponse: HealthSafetyV3Response = {
+    // Build final response (reusing standardizedResponse variable from line 1228)
+    const finalResponse: HealthSafetyV3Response = {
       success: true,
       data: {
         hazards: validatedRiskAssessment.hazards.map((h: any, index: number) => ({
@@ -1437,7 +1437,7 @@ Include all safety controls, PPE requirements, and emergency procedures.`;
     });
     
     return new Response(
-      JSON.stringify(standardizedResponse),
+      JSON.stringify(finalResponse),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 200 
