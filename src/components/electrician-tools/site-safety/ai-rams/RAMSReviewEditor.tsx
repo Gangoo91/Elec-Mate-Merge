@@ -853,17 +853,27 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     })),
                     
                     // Tools & Equipment
-                    tools_required: (methodData.toolsRequired || []).join(', '),
+                    tools_required: Array.isArray(methodData.toolsRequired) 
+                      ? methodData.toolsRequired.join(', ') 
+                      : methodData.toolsRequired || '',
                     
                     // Additional Information
-                    practical_tips: (methodData.practicalTips || []).join(' | '),
-                    common_mistakes: (methodData.commonMistakes || []).join(' | '),
+                    practical_tips: Array.isArray(methodData.practicalTips) 
+                      ? methodData.practicalTips.join(' | ') 
+                      : methodData.practicalTips || '',
+                    common_mistakes: Array.isArray(methodData.commonMistakes) 
+                      ? methodData.commonMistakes.join(' | ') 
+                      : methodData.commonMistakes || '',
                     
                     // Emergency Procedures
-                    emergency_procedures: (ramsData.emergencyProcedures || []).join(' | '),
+                    emergency_procedures: Array.isArray(ramsData.emergencyProcedures) 
+                      ? ramsData.emergencyProcedures.join(' | ') 
+                      : ramsData.emergencyProcedures || '',
                     
                     // Compliance
-                    compliance_regulations: (ramsData.complianceRegulations || []).join(', '),
+                    compliance_regulations: Array.isArray(ramsData.complianceRegulations) 
+                      ? ramsData.complianceRegulations.join(', ') 
+                      : ramsData.complianceRegulations || '',
                     
                     // Contact Information
                     site_manager_name: ramsData.siteManagerName || '',
