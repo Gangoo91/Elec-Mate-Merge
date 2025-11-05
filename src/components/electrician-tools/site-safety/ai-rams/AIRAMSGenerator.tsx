@@ -289,16 +289,15 @@ export const AIRAMSGenerator: React.FC = () => {
         throw new Error('User not authenticated');
       }
 
-      // Update the job with latest edits
-      const { error: updateError } = await supabase
-        .from('rams_generation_jobs')
-        .update({
-          rams_data: ramsData,
-          method_data: methodData,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', currentJobId)
-        .eq('user_id', user.id);
+    // Update the job with latest edits
+    const { error: updateError } = await supabase
+      .from('rams_generation_jobs')
+      .update({
+        rams_data: ramsData,
+        method_data: methodData
+      })
+      .eq('id', currentJobId)
+      .eq('user_id', user.id);
 
       if (updateError) throw updateError;
 
