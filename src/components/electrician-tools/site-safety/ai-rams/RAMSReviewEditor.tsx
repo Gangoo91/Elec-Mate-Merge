@@ -776,8 +776,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               Download Documents
             </h4>
             
-            {/* Desktop View - Download Combined RAMS */}
-            <div className="hidden md:flex p-4">
+            {/* Desktop View - PDF Monkey JSON Preview & Download */}
+            <div className="hidden md:flex flex-col gap-4 p-4">
               <Button
                 onClick={handleGenerateCombinedRAMS}
                 disabled={isGenerating}
@@ -788,6 +788,106 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 <FileText className="h-5 w-5" />
                 Download Combined RAMS
               </Button>
+              
+              {/* PDF Monkey JSON Preview */}
+              <div className="mt-4 p-4 bg-muted/50 rounded-lg border border-border max-h-[600px] overflow-auto">
+                <h5 className="font-semibold text-sm text-foreground mb-2 flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  PDF Monkey Payload Preview
+                </h5>
+                <pre className="text-xs font-mono text-muted-foreground whitespace-pre-wrap break-words">
+                  {JSON.stringify({
+                    project_name: ramsData.projectName || '',
+                    location: ramsData.location || '',
+                    date: ramsData.date || new Date().toISOString().split('T')[0],
+                    assessor: ramsData.assessor || '',
+                    contractor: methodData.contractor || '',
+                    supervisor: ramsData.supervisor || methodData.supervisor || '',
+                    activities: (ramsData.activities || []).join(', '),
+                    
+                    // Risk Assessment Data
+                    risks: (ramsData.risks || [])
+                      .sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0))
+                      .map((risk, index) => ({
+                        number: index + 1,
+                        hazard: risk.hazard || '',
+                        risk: risk.risk || '',
+                        likelihood: risk.likelihood || 3,
+                        severity: risk.severity || 3,
+                        risk_rating: risk.riskRating || 9,
+                        controls: risk.controls || '',
+                        residual_risk: risk.residualRisk || 6,
+                        linked_to_step: risk.linkedToStep || 0,
+                        risk_level: risk.riskRating >= 15 ? 'High' : risk.riskRating >= 8 ? 'Medium' : 'Low',
+                        residual_likelihood: risk.likelihood && risk.severity 
+                          ? Math.max(1, risk.likelihood - 1) 
+                          : risk.likelihood || 2,
+                        residual_severity: risk.severity || 2,
+                        residual_risk_level: (risk.residualRisk || 6) >= 15 ? 'High' : (risk.residualRisk || 6) >= 8 ? 'Medium' : 'Low',
+                        regulation: risk.linkedToStep ? `Step ${risk.linkedToStep}` : 'General',
+                      })),
+                    
+                    // PPE Details
+                    ppe_items: (ramsData.ppeDetails || []).map((ppe, index) => ({
+                      item_number: index + 1,
+                      ppe_type: ppe.ppeType || '',
+                      standard: ppe.standard || 'BS EN Standards',
+                      mandatory: ppe.mandatory ? 'Yes' : 'No',
+                      purpose: ppe.purpose || ''
+                    })),
+                    
+                    // Method Statement Data
+                    job_title: methodData.jobTitle || ramsData.projectName || '',
+                    job_description: methodData.description || '',
+                    reference_number: `MS-${Date.now()}`,
+                    
+                    installation_steps: (methodData.steps || []).map((step, index) => ({
+                      step_number: index + 1,
+                      title: step.title || '',
+                      description: step.description || '',
+                      safety_requirements: (step.safetyRequirements || []).join(', '),
+                      equipment_needed: (step.equipmentNeeded || []).join(', '),
+                      estimated_duration: step.estimatedDuration || '15 minutes',
+                      qualifications: (step.qualifications || []).join(', '),
+                      risk_level: step.riskLevel || 'low'
+                    })),
+                    
+                    // Tools & Equipment
+                    tools_required: (methodData.toolsRequired || []).join(', '),
+                    
+                    // Additional Information
+                    practical_tips: (methodData.practicalTips || []).join(' | '),
+                    common_mistakes: (methodData.commonMistakes || []).join(' | '),
+                    
+                    // Emergency Procedures
+                    emergency_procedures: (ramsData.emergencyProcedures || []).join(' | '),
+                    
+                    // Compliance
+                    compliance_regulations: (ramsData.complianceRegulations || []).join(', '),
+                    
+                    // Contact Information
+                    site_manager_name: ramsData.siteManagerName || '',
+                    site_manager_phone: ramsData.siteManagerPhone || '',
+                    first_aider_name: ramsData.firstAiderName || '',
+                    first_aider_phone: ramsData.firstAiderPhone || '',
+                    safety_officer_name: ramsData.safetyOfficerName || '',
+                    safety_officer_phone: ramsData.safetyOfficerPhone || '',
+                    assembly_point: ramsData.assemblyPoint || '',
+                    
+                    // Summary Stats
+                    total_risks: (ramsData.risks || []).length,
+                    high_risks: (ramsData.risks || []).filter(r => (r.riskRating || 0) >= 15).length,
+                    medium_risks: (ramsData.risks || []).filter(r => (r.riskRating || 0) >= 8 && (r.riskRating || 0) < 15).length,
+                    low_risks: (ramsData.risks || []).filter(r => (r.riskRating || 0) < 8).length,
+                    total_steps: (methodData.steps || []).length,
+                    total_ppe_items: (ramsData.ppeDetails || []).length,
+                    
+                    // Metadata
+                    generated_date: new Date().toISOString().split('T')[0],
+                    document_version: '1.0'
+                  }, null, 2)}
+                </pre>
+              </div>
             </div>
 
             {/* Mobile View - Direct download button */}
