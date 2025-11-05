@@ -28,9 +28,86 @@ TOON FORMAT GUIDE:
 - C <content>: Regulation content with formulas and worked examples
 - Cat <category>: Optional category
 
-MANDATORY CALCULATIONS (MUST BE COMPLETED FOR EVERY CIRCUIT):
+DESIGN METHODOLOGY - ITERATIVE CABLE SIZING (CRITICAL):
 
-1. VOLTAGE DROP (ALWAYS REQUIRED - NO EXCEPTIONS):
+You MUST design COMPLIANT circuits, not just calculate non-compliant circuits. Follow this mandatory process for EVERY circuit:
+
+STEP 1: Start with minimum cable size for circuit type:
+   - Lighting: 1.5mm² minimum (BS 7671 Reg 525)
+   - Sockets: 2.5mm² minimum
+   - Showers/cookers: 6mm² minimum
+   - EV chargers: 6mm² minimum
+
+STEP 2: Calculate voltage drop using Appendix 4:
+   Vd = (mV/A/m × Ib × L) / 1000
+   Vd% = (Vd / supply voltage) × 100
+
+STEP 3: IF voltage drop exceeds limit (3% lighting, 5% other uses):
+   - Select NEXT LARGER cable size from this sequence: 1.5→2.5→4→6→10→16→25→35mm²
+   - RECALCULATE voltage drop with new mV/A/m value
+   - Repeat STEP 3 until voltage drop ≤ limit
+   
+STEP 4: Calculate earth fault loop impedance Zs:
+   Zs = Ze + (R1+R2)
+   R1+R2 = [(r1 + r2) × L / 1000] × 1.2
+
+STEP 5: VERIFY Zs ≤ maxZs for selected protection device
+   - If Zs > maxZs: increase CPC size and recalculate
+
+STEP 6: Only when BOTH voltage drop AND Zs are compliant:
+   - Return this as the final design
+   - Set voltageDrop.compliant = true
+   - Include worked calculation showing iteration steps
+
+CRITICAL DESIGN RULES:
+❌ You MUST NOT return a design with voltageDrop.compliant = false
+❌ You MUST NOT return a design where zs > maxZs
+✅ You MUST iterate cable sizes until you achieve compliance
+✅ For long runs (>100m), expect larger cables (10mm², 16mm², 25mm²)
+✅ Show your working - include calculation steps in justifications
+
+WORKED EXAMPLE - 250m LIGHTING RUN (900W total, Ib = 3.9A):
+
+Iteration 1: Try 1.5mm²
+  - Appendix 4: 1.5mm² = 29 mV/A/m
+  - Vd = (29 × 3.9 × 250) / 1000 = 28.3V
+  - Vd% = (28.3 / 230) × 100 = 12.3%
+  - Limit = 3% for lighting
+  - Result: 12.3% > 3% ❌ FAIL → Try larger cable
+
+Iteration 2: Try 2.5mm²
+  - Appendix 4: 2.5mm² = 18 mV/A/m
+  - Vd = (18 × 3.9 × 250) / 1000 = 17.6V
+  - Vd% = (17.6 / 230) × 100 = 7.66%
+  - Result: 7.66% > 3% ❌ FAIL → Try larger cable
+
+Iteration 3: Try 4mm²
+  - Appendix 4: 4mm² = 11 mV/A/m
+  - Vd = (11 × 3.9 × 250) / 1000 = 10.7V
+  - Vd% = (10.7 / 230) × 100 = 4.66%
+  - Result: 4.66% > 3% ❌ FAIL → Try larger cable
+
+Iteration 4: Try 6mm²
+  - Appendix 4: 6mm² = 7.3 mV/A/m
+  - Vd = (7.3 × 3.9 × 250) / 1000 = 7.1V
+  - Vd% = (7.1 / 230) × 100 = 3.09%
+  - Result: 3.09% > 3% ❌ FAIL → Try larger cable
+
+Iteration 5: Try 10mm²
+  - Appendix 4: 10mm² = 4.4 mV/A/m
+  - Vd = (4.4 × 3.9 × 250) / 1000 = 4.3V
+  - Vd% = (4.3 / 230) × 100 = 1.87%
+  - Result: 1.87% < 3% ✅ PASS
+  
+FINAL DESIGN: 10mm² / 4mm² CPC
+  - voltageDrop.volts = 4.3
+  - voltageDrop.percent = 1.87
+  - voltageDrop.limit = 3
+  - voltageDrop.compliant = true ✓
+
+MANDATORY CALCULATIONS FOR EVERY CIRCUIT:
+
+1. VOLTAGE DROP CALCULATION:
    Formula: Vd = (mV/A/m × Ib × L) / 1000
    
    Where:
@@ -39,50 +116,52 @@ MANDATORY CALCULATIONS (MUST BE COMPLETED FOR EVERY CIRCUIT):
    - L = cable length in metres
    
    YOU MUST:
-   - Find the mV/A/m value for the selected cable size in Appendix 4 tables in <regulations>
-   - Calculate the voltage drop in volts: Vd = (mV/A/m × Ib × L) / 1000
-   - Calculate percentage: (Vd / supply voltage) × 100
+   - Start with minimum cable size and ITERATE until compliant
+   - Find mV/A/m from Appendix 4 for each cable size tested
+   - Calculate Vd in volts and percentage
    - Compare against limit: 3% for lighting, 5% for other uses
-   - State "compliant: true/false"
+   - Return ONLY a compliant design (voltageDrop.compliant = true)
    
-   Example: "Using Appendix 4: 2.5mm² = 18 mV/A/m. Vd = (18 × 13 × 20) / 1000 = 4.68V = 2.0% ✓"
-   
-   IF MISSING: Design is INVALID
+   Example justification: "Cable sizing: Tried 2.5mm² (7.66% ❌) → 4mm² (4.66% ❌) → 6mm² (3.09% ❌) → 10mm² (1.87% ✓). Selected 10mm² to achieve <3% voltage drop for 250m lighting run."
 
-2. EARTH FAULT LOOP IMPEDANCE Zs (ALWAYS REQUIRED - NO EXCEPTIONS):
+2. EARTH FAULT LOOP IMPEDANCE Zs:
    Formula: Zs = Ze + (R1+R2)
    
    Where:
-   - Ze = external earth fault loop impedance (given in supply data)
-   - R1+R2 = cable resistance calculated as: [(r1 + r2) × L / 1000] × 1.2
-   - r1, r2 = conductor resistances in mΩ/m at 20°C (from Table 54.7 in <regulations>)
+   - Ze = external earth fault loop impedance (from supply data)
+   - R1+R2 = [(r1 + r2) × L / 1000] × 1.2
+   - r1, r2 = conductor resistances from Table 54.7 in <regulations>
    - L = cable length in metres
-   - 1.2 = temperature correction factor for 70°C operation
+   - 1.2 = temperature correction factor (70°C operation)
    
    YOU MUST:
-   - Find r1 and r2 values from Table 54.7 in <regulations>
-   - Calculate R1+R2 = [(r1 + r2) × L / 1000] × 1.2
+   - Find r1 and r2 from Table 54.7
+   - Calculate R1+R2 with temperature correction
    - Calculate Zs = Ze + (R1+R2)
-   - Find maxZs from Appendix 3 tables in <regulations> for the protection device
-   - Compare: Zs must be ≤ maxZs
-   - State "Zs = X.XXΩ, maxZs = Y.YYΩ, compliant: true/false"
+   - Find maxZs from Appendix 3 for selected device
+   - Verify Zs ≤ maxZs
+   - If Zs > maxZs, increase CPC size and recalculate
    
-   Example: "Table 54.7: 2.5mm²=7.41mΩ/m, 1.5mm²=12.10mΩ/m. R1+R2=[(7.41+12.10)×20/1000]×1.2=0.47Ω. Zs=Ze(0.35)+0.47=0.82Ω ≤ maxZs(1.37Ω) ✓"
-   
-   IF MISSING: Design is INVALID
+   Example: "Table 54.7: 10mm²=1.83mΩ/m, 4mm²=4.61mΩ/m. R1+R2=[(1.83+4.61)×250/1000]×1.2=1.93Ω. Zs=Ze(0.35)+1.93=2.28Ω ≤ maxZs(7.28Ω) ✓"
 
 3. PROTECTION DEVICE SELECTION:
-   - Calculate Ib (design current): Ib = P / U for single-phase, Ib = P / (U × √3 × cosφ) for three-phase
-   - Select In (protection rating): In ≥ Ib
-   - Get maxZs from Appendix 3 tables for selected device
-   - Verify Zs ≤ maxZs (0.4s disconnection time for final circuits)
+   - Calculate Ib: Single-phase: Ib = P / U, Three-phase: Ib = P / (U × √3 × cosφ)
+   - Select In ≥ Ib
+   - Verify Zs ≤ maxZs (0.4s disconnection for final circuits)
 
-CRITICAL RULES:
-- If voltage drop OR Zs calculations are missing, the ENTIRE DESIGN IS INVALID
-- Every calculation MUST cite the specific regulation/table number (e.g., "Appendix 4", "Table 54.7", "Appendix 3")
-- If regulation data is missing from <regulations>, state "INSUFFICIENT DATA: Need [specific table/value]" in warnings
-- NEVER guess mV/A/m, conductor resistance, or maxZs values
-- All outputs in UK English (favour, colour, earthing, etc.)
+INVALID DESIGNS (YOU MUST NEVER RETURN THESE):
+❌ voltageDrop.compliant = false
+❌ zs > maxZs
+❌ Cable sizes that fail voltage drop limits
+❌ Guessing cable sizes without iterating through calculations
+❌ Returning incomplete calculations
+
+VALID DESIGNS (ONLY RETURN THESE):
+✅ voltageDrop.percent ≤ limit (3% or 5%)
+✅ voltageDrop.compliant = true
+✅ zs ≤ maxZs
+✅ All calculations complete with worked examples
+✅ Justifications show iteration process
 
 RCD PROTECTION REQUIREMENTS (BS 7671):
 - Mandatory for: sockets ≤32A, outdoors, bathrooms, mobile equipment
@@ -91,15 +170,16 @@ RCD PROTECTION REQUIREMENTS (BS 7671):
 
 RING FINAL CIRCUITS (BS 7671 Appendix 15):
 - MUST use 2.5mm² cable only
-- If calculations show >2.5mm² needed (voltage drop), design as RADIAL circuit instead
+- If calculations show >2.5mm² needed, design as RADIAL circuit instead
 - Ring finals limited to 32A protection and 2.5mm² cable - no exceptions
 
 OUTPUT REQUIREMENTS:
 - Call design_circuits tool with ALL circuits
-- EVERY circuit MUST have complete voltageDrop object with percent, volts, limit, compliant
-- EVERY circuit MUST have zs, maxZs in calculations
-- Include worked examples showing calculation steps
-- Reference specific regulation numbers/tables for all values used
+- EVERY circuit MUST have voltageDrop.compliant = true (iterate until achieved)
+- EVERY circuit MUST have zs ≤ maxZs
+- Include worked examples showing iteration steps in justifications
+- Reference specific regulation/table numbers for all values
+- All outputs in UK English (favour, colour, earthing, etc.)
 
 Do NOT output conversational text - call the tool only.`;
 
@@ -519,6 +599,69 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     if (designedCircuits.length === 0) {
       return ERROR_TEMPLATES.NO_CIRCUITS(circuits.length, !!additionalPrompt).toResponse(VERSION);
     }
+    
+    // 6.5. VALIDATION: Reject non-compliant designs (AI MUST iterate until compliant)
+    logger.info('Validating compliance before processing...');
+    for (let i = 0; i < designedCircuits.length; i++) {
+      const circuit = designedCircuits[i];
+      const circuitName = circuit.name || `Circuit ${i + 1}`;
+      
+      // Check voltage drop compliance
+      if (circuit.calculations?.voltageDrop?.compliant === false) {
+        const vd = circuit.calculations.voltageDrop;
+        throw new CircuitDesignError(
+          'NON_COMPLIANT_DESIGN',
+          `Circuit "${circuitName}" has excessive voltage drop (${vd.percent?.toFixed(2)}% exceeds ${vd.limit}% limit)`,
+          { 
+            circuit: circuitName,
+            cableSize: circuit.cableSize,
+            voltageDrop: vd,
+            reason: 'AI failed to iterate cable sizes to achieve compliance'
+          },
+          [
+            'The AI should have selected a larger cable size (e.g., 4mm² → 6mm² → 10mm²)',
+            'This indicates the AI did not follow iterative sizing logic',
+            'Design rejected - please retry generation with the same inputs'
+          ]
+        );
+      }
+      
+      // Check Zs compliance
+      if (circuit.calculations?.zs > circuit.calculations?.maxZs) {
+        throw new CircuitDesignError(
+          'NON_COMPLIANT_DESIGN',
+          `Circuit "${circuitName}" has excessive earth fault loop impedance (Zs ${circuit.calculations.zs.toFixed(2)}Ω exceeds max ${circuit.calculations.maxZs.toFixed(2)}Ω)`,
+          { 
+            circuit: circuitName,
+            zs: circuit.calculations.zs,
+            maxZs: circuit.calculations.maxZs,
+            cableLength: circuit.cableLength
+          },
+          [
+            'Cable run may be too long for this circuit',
+            'Consider increasing CPC size or reducing cable length',
+            'Verify Ze value is correct for your installation'
+          ]
+        );
+      }
+      
+      // Check that voltage drop calculation exists
+      if (!circuit.calculations?.voltageDrop || 
+          circuit.calculations.voltageDrop.percent === undefined ||
+          circuit.calculations.voltageDrop.percent === 0) {
+        throw new CircuitDesignError(
+          'INCOMPLETE_DESIGN',
+          `Circuit "${circuitName}" is missing voltage drop calculations`,
+          { circuit: circuitName },
+          [
+            'AI did not complete mandatory voltage drop calculations',
+            'This is a critical design requirement',
+            'Please retry generation'
+          ]
+        );
+      }
+    }
+    logger.info('✅ All circuits passed compliance validation');
     
     // 7. Normalise and add PDF fields
     const validationStart = Date.now();
