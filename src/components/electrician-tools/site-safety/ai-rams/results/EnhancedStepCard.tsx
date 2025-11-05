@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -35,6 +35,11 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
   const isEvenRow = index % 2 === 0;
   const [isEditing, setIsEditing] = useState(false);
   const [editedStep, setEditedStep] = useState<MethodStep>(step);
+
+  // Sync editedStep with prop changes (e.g., after save)
+  useEffect(() => {
+    setEditedStep(step);
+  }, [step]);
 
   const handleSave = () => {
     if (onUpdate) {
