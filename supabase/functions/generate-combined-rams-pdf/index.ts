@@ -74,11 +74,17 @@ serve(async (req) => {
         risks: [...ramsData.risks].sort((a: any, b: any) => (b.riskRating || 0) - (a.riskRating || 0)).map((risk: any) => ({
           id: risk.id || `risk-${risk.hazard?.substring(0, 10)}`,
           hazard: risk.hazard,
+          linkedToStep: risk.linkedToStep || 0,
           likelihood: risk.likelihood,
           severity: risk.severity,
           riskRating: risk.riskRating,
+          riskLevel: risk.riskLevel || 'medium',
           controls: risk.controls,
+          residualLikelihood: risk.residualLikelihood || Math.max(1, risk.likelihood - 2),
+          residualSeverity: risk.residualSeverity || Math.max(1, risk.severity - 1),
           residualRisk: risk.residualRisk,
+          residualRiskLevel: risk.residualRiskLevel || 'low',
+          regulation: risk.regulation || '',
           furtherAction: risk.furtherAction || "",
           responsible: risk.responsible || ramsData.assessor,
           actionBy: risk.actionBy || new Date(Date.now() + 7*24*60*60*1000).toISOString().split('T')[0],
@@ -101,7 +107,17 @@ serve(async (req) => {
           standard: ppe.standard,
           mandatory: ppe.mandatory,
           purpose: ppe.purpose
-        })) || []
+        })) || [],
+        emergencyProcedures: ramsData.emergencyProcedures || [
+          "In case of electric shock: Turn off power immediately, call 999, start CPR if trained",
+          "In case of fire: Activate fire alarm, evacuate to assembly point, call 999",
+          "In case of injury: Administer first aid, call first aider, report to supervisor"
+        ],
+        complianceRegulations: ramsData.complianceRegulations || [
+          "Electricity at Work Regulations 1989",
+          "Health and Safety at Work etc. Act 1974",
+          "Management of Health and Safety at Work Regulations 1999"
+        ]
       },
       methodStatementData: {
         jobTitle: methodData.jobTitle,
