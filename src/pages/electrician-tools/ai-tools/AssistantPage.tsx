@@ -1,7 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import AIAssistant from "@/components/electrician-tools/ai-tools/AIAssistant";
+import ConversationalSearch from "@/components/electrician-tools/ai-tools/ConversationalSearch";
 
 const AssistantPage = () => {
   return (
@@ -23,7 +23,7 @@ const AssistantPage = () => {
           </div>
 
           {/* Content */}
-          <AIAssistant />
+          <ConversationalSearch />
         </div>
       </div>
     </div>

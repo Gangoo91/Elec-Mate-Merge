@@ -103,6 +103,10 @@ verify_jwt = false
 timeout_sec = 300
 
 # AI Assistant & RAG Search Functions
+[functions.conversational-search]
+verify_jwt = false
+timeout_sec = 180
+
 [functions.electrician-ai-assistant]
 verify_jwt = false
 timeout_sec = 180
