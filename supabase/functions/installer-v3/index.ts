@@ -34,7 +34,6 @@ interface InstallerV3Response {
     materialsRequired: string[];
     practicalTips: string[];
     commonMistakes: string[];
-    requiredQualifications: string[];
   };
   metadata: {
     generationTimeMs: number;
@@ -673,11 +672,6 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
               toolsRequired: {
                 type: 'array',
                 items: { type: 'string' }
-              },
-              requiredQualifications: {
-                type: 'array',
-                items: { type: 'string' },
-                description: 'Required qualifications for personnel performing this work. In UK English. Examples: "ECS Gold Card (JIB Approved Electrician)", "18th Edition BS 7671 Wiring Regulations", "City & Guilds 2391 Inspection & Testing", "IPAF 3a Mobile Boom (for work at height)", "PASMA Tower Scaffold", "Asbestos Awareness Training (if applicable)". Base on work complexity, risk level, and BS 7671 requirements.'
               }
             },
             required: ['response'],
@@ -877,8 +871,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         toolsRequired: installResult.toolsRequired || [],
         materialsRequired: installResult.materialsRequired || [],
         practicalTips: installResult.practicalTips || [],
-        commonMistakes: installResult.commonMistakes || [],
-        requiredQualifications: installResult.requiredQualifications || []
+        commonMistakes: installResult.commonMistakes || []
       },
       metadata: {
         generationTimeMs: timings.total,
