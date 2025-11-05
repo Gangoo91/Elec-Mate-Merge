@@ -85,13 +85,13 @@ serve(async (req) => {
           done: risk.done || false
         })),
         // Emergency contacts as individual fields (not nested object)
-        siteManagerName: ramsData.siteManagerName || "",
-        siteManagerPhone: ramsData.siteManagerPhone || "",
-        firstAiderName: ramsData.firstAiderName || "",
-        firstAiderPhone: ramsData.firstAiderPhone || "",
-        safetyOfficerName: ramsData.safetyOfficerName || "",
-        safetyOfficerPhone: ramsData.safetyOfficerPhone || "",
-        assemblyPoint: ramsData.assemblyPoint || "",
+        siteManagerName: methodData.siteManagerName || "",
+        siteManagerPhone: methodData.siteManagerPhone || "",
+        firstAiderName: methodData.firstAiderName || "",
+        firstAiderPhone: methodData.firstAiderPhone || "",
+        safetyOfficerName: methodData.safetyOfficerName || "",
+        safetyOfficerPhone: methodData.safetyOfficerPhone || "",
+        assemblyPoint: methodData.assemblyPoint || "",
         // PPE data - both legacy and enhanced
         requiredPPE: ramsData.requiredPPE || [],
         ppeDetails: ramsData.ppeDetails?.map((ppe: any) => ({
