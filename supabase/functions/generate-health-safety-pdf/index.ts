@@ -55,16 +55,35 @@ serve(async (req) => {
           assessor: 'AI Health & Safety Advisor',
           projectType: healthSafetyData.workType || 'general',
           // Sort hazards by risk score (highest first)
-          hazards: [...(healthSafetyData.hazards || [])].sort((a: any, b: any) => (b.riskScore || 0) - (a.riskScore || 0)).map((hazard: any) => ({
-            hazard: hazard.hazard,
-            likelihood: hazard.likelihood,
-            severity: hazard.severity,
-            riskScore: hazard.riskScore,
-            riskLevel: hazard.riskLevel || getRiskLevel(hazard.riskScore),
-            controlMeasures: hazard.controlMeasures || hazard.controlMeasure || 'Control measures to be determined on site',
-            residualRisk: hazard.residualRisk,
-            regulation: hazard.regulation || 'BS 7671:2018+A2:2022'
-          })),
+          hazards: [...(healthSafetyData.hazards || [])].sort((a: any, b: any) => (b.riskScore || 0) - (a.riskScore || 0)).map((hazard: any) => {
+            const rawControlMeasures = hazard.controlMeasures || hazard.controlMeasure || 'Control measures to be determined on site';
+            const parsedControls = parseControlMeasures(rawControlMeasures);
+            
+            return {
+              hazard: hazard.hazard,
+              likelihood: hazard.likelihood,
+              severity: hazard.severity,
+              riskScore: hazard.riskScore,
+              riskLevel: hazard.riskLevel || getRiskLevel(hazard.riskScore),
+              // Structured control measures for better PDF formatting
+              controlMeasures: {
+                primary: parsedControls.primaryAction,
+                eliminate: parsedControls.eliminate,
+                substitute: parsedControls.substitute,
+                engineer: parsedControls.engineerControls,
+                administrative: parsedControls.administrativeControls,
+                verification: parsedControls.verification,
+                competency: parsedControls.competency,
+                equipment: parsedControls.equipmentStandards,
+                regulation: parsedControls.regulation,
+                additional: parsedControls.other.join(' | ')
+              },
+              // Keep raw for backward compatibility
+              controlMeasuresRaw: rawControlMeasures,
+              residualRisk: hazard.residualRisk,
+              regulation: hazard.regulation || 'BS 7671:2018+A2:2022'
+            };
+          }),
           // PPE requirements
           ppe: (healthSafetyData.ppe || []).map((p: any) => ({
             ppeType: p.ppeType,
@@ -180,6 +199,53 @@ serve(async (req) => {
     });
   }
 });
+
+function parseControlMeasures(controlMeasureText: string) {
+  const sections = {
+    primaryAction: '',
+    eliminate: '',
+    substitute: '',
+    engineerControls: '',
+    administrativeControls: '',
+    verification: '',
+    competency: '',
+    equipmentStandards: '',
+    regulation: '',
+    other: [] as string[]
+  };
+  
+  // Split by section headers
+  const parts = controlMeasureText.split(/(?=PRIMARY ACTION:|ELIMINATE:|SUBSTITUTE:|ENGINEER CONTROLS:|ADMINISTRATIVE CONTROLS:|VERIFICATION:|COMPETENCY REQUIREMENT:|EQUIPMENT STANDARDS:|REGULATION:)/i);
+  
+  parts.forEach(part => {
+    const trimmed = part.trim();
+    if (!trimmed) return;
+    
+    if (trimmed.match(/^PRIMARY ACTION:/i)) {
+      sections.primaryAction = trimmed.replace(/^PRIMARY ACTION:/i, '').trim();
+    } else if (trimmed.match(/^ELIMINATE:/i)) {
+      sections.eliminate = trimmed.replace(/^ELIMINATE:/i, '').trim();
+    } else if (trimmed.match(/^SUBSTITUTE:/i)) {
+      sections.substitute = trimmed.replace(/^SUBSTITUTE:/i, '').trim();
+    } else if (trimmed.match(/^ENGINEER CONTROLS:/i)) {
+      sections.engineerControls = trimmed.replace(/^ENGINEER CONTROLS:/i, '').trim();
+    } else if (trimmed.match(/^ADMINISTRATIVE CONTROLS:/i)) {
+      sections.administrativeControls = trimmed.replace(/^ADMINISTRATIVE CONTROLS:/i, '').trim();
+    } else if (trimmed.match(/^VERIFICATION:/i)) {
+      sections.verification = trimmed.replace(/^VERIFICATION:/i, '').trim();
+    } else if (trimmed.match(/^COMPETENCY REQUIREMENT:/i)) {
+      sections.competency = trimmed.replace(/^COMPETENCY REQUIREMENT:/i, '').trim();
+    } else if (trimmed.match(/^EQUIPMENT STANDARDS:/i)) {
+      sections.equipmentStandards = trimmed.replace(/^EQUIPMENT STANDARDS:/i, '').trim();
+    } else if (trimmed.match(/^REGULATION:/i)) {
+      sections.regulation = trimmed.replace(/^REGULATION:/i, '').trim();
+    } else {
+      sections.other.push(trimmed);
+    }
+  });
+  
+  return sections;
+}
 
 function getRiskLevel(score: number): string {
   if (score <= 4) return 'Low';
