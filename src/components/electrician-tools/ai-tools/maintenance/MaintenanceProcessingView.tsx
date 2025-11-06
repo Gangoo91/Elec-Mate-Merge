@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle2, Loader2, Wrench, AlertTriangle, Calendar, CheckCircle } from "lucide-react";
+import { CheckCircle2, Loader2, Wrench, AlertTriangle, Calendar, CheckCircle, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Progress } from "@/components/ui/progress";
 
 interface MaintenanceProcessingViewProps {
   progress: string;
@@ -27,10 +27,34 @@ const FULL_STEPS = [
 ];
 
 const WHAT_HAPPENING_STAGES = [
-  { id: 1, text: 'Searching BS 7671 maintenance requirements', icon: Wrench, activeSteps: [0, 1] },
-  { id: 2, text: 'Analysing equipment risk factors', icon: AlertTriangle, activeSteps: [2, 3] },
-  { id: 3, text: 'Generating maintenance tasks and schedules', icon: Calendar, activeSteps: [4, 5] },
-  { id: 4, text: 'Creating compliance checklist', icon: CheckCircle, activeSteps: [6, 7] },
+  { 
+    id: 1, 
+    title: 'Searching BS 7671 maintenance requirements', 
+    description: 'Finding relevant maintenance procedures, inspection intervals, and regulations',
+    icon: Wrench, 
+    activeSteps: [0, 1] 
+  },
+  { 
+    id: 2, 
+    title: 'Analysing equipment risk factors', 
+    description: 'Assessing failure modes, environmental conditions, and usage patterns',
+    icon: AlertTriangle, 
+    activeSteps: [2, 3] 
+  },
+  { 
+    id: 3, 
+    title: 'Generating maintenance tasks and schedules', 
+    description: 'Creating detailed maintenance procedures with optimal timing intervals',
+    icon: Calendar, 
+    activeSteps: [4, 5] 
+  },
+  { 
+    id: 4, 
+    title: 'Creating compliance checklist', 
+    description: 'Cross-checking with BS 7671 requirements and certification needs',
+    icon: CheckCircle, 
+    activeSteps: [6, 7] 
+  },
 ];
 
 export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', startTime }: MaintenanceProcessingViewProps) => {
@@ -68,149 +92,126 @@ export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', sta
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  const currentStepText = STEPS[currentStep]?.text || 'Processing...';
+
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-4">
-      <Card className="w-full max-w-2xl border-elec-yellow/20 bg-elec-card/80 backdrop-blur-sm">
-        <CardContent className="pt-8 pb-8">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-elec-yellow/10 border border-elec-yellow/20 rounded-full mb-4 animate-pulse">
-              <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
-            </div>
-            <h3 className="text-2xl font-bold text-elec-light mb-2">
-              Generating Your Maintenance Plan
+      <div className="w-full max-w-2xl border border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm rounded-lg p-6 sm:p-8">
+        {/* Header */}
+        <div className="flex items-center gap-4 mb-6">
+          <div className="flex items-center justify-center w-14 h-14 bg-elec-yellow/10 border border-elec-yellow/20 rounded-full shrink-0">
+            <Zap className="h-7 w-7 text-elec-yellow" />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-xl sm:text-2xl font-bold text-foreground">
+              AI Maintenance Specialist
             </h3>
-            <p className="text-sm text-elec-light/60">
-              {detailLevel === 'quick' ? 'This typically takes 20-45 seconds' : 'This typically takes 1-3 minutes'}
+            <p className="text-sm text-muted-foreground mt-0.5">
+              Searching BS 7671 regulations...
             </p>
           </div>
+        </div>
 
-          {/* Time Tracker */}
-          <div className="grid grid-cols-3 gap-3 mb-6">
-            <div className="bg-elec-dark/30 border border-elec-yellow/10 rounded-lg p-3 text-center">
-              <div className="text-xs text-elec-light/50 mb-1">Elapsed</div>
-              <div className="text-lg font-bold text-elec-yellow">{formatTime(elapsedTime)}</div>
+        {/* Progress Section */}
+        <div className="mb-4">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm font-medium text-muted-foreground">Progress</span>
+            <span className="text-sm font-bold text-elec-yellow">{Math.round(progressPercent)}%</span>
+          </div>
+          <Progress 
+            value={progressPercent} 
+            className="h-2 bg-elec-dark/50"
+          />
+        </div>
+
+        {/* Current Step */}
+        <div className="mb-6">
+          <p className="text-sm text-muted-foreground">
+            <span className="inline-block w-1.5 h-1.5 bg-elec-yellow rounded-full mr-2 animate-pulse"></span>
+            {currentStepText}
+          </p>
+        </div>
+
+        {/* Time Tracker */}
+        <div className="border border-elec-yellow/20 rounded-lg p-4 mb-6">
+          <div className="grid grid-cols-3 gap-4 text-center">
+            <div>
+              <div className="text-xs text-muted-foreground mb-1">Elapsed Time</div>
+              <div className="text-xl font-bold text-elec-yellow">{formatTime(elapsedTime)}</div>
             </div>
-            <div className="bg-elec-dark/30 border border-elec-yellow/10 rounded-lg p-3 text-center">
-              <div className="text-xs text-elec-light/50 mb-1">Remaining</div>
-              <div className="text-lg font-bold text-elec-light">{formatTime(remainingTime)}</div>
+            <div>
+              <div className="text-xs text-muted-foreground mb-1">Estimated Remaining</div>
+              <div className="text-xl font-bold text-foreground">{formatTime(remainingTime)}</div>
             </div>
-            <div className="bg-elec-dark/30 border border-elec-yellow/10 rounded-lg p-3 text-center">
-              <div className="text-xs text-elec-light/50 mb-1">Total</div>
-              <div className="text-lg font-bold text-elec-light/70">{formatTime(ESTIMATED_TIME)}</div>
+            <div>
+              <div className="text-xs text-muted-foreground mb-1">Total Estimate</div>
+              <div className="text-xl font-bold text-muted-foreground">{formatTime(ESTIMATED_TIME)}</div>
             </div>
           </div>
+        </div>
 
-          {/* Progress Bar */}
-          <div className="mb-8">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium text-elec-light/70">Progress</span>
-              <span className="text-sm font-bold text-elec-yellow">{Math.round(progressPercent)}%</span>
-            </div>
-            <div className="h-2 bg-elec-dark/50 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-elec-yellow to-amber-500 transition-all duration-700 ease-out"
-                style={{ width: `${progressPercent}%` }}
-              />
-            </div>
+        {/* What's Happening Section */}
+        <div>
+          <div className="flex items-center gap-2 mb-4">
+            <Zap className="h-4 w-4 text-elec-yellow" />
+            <h4 className="text-base font-semibold text-foreground">What's Happening?</h4>
           </div>
-
-          {/* What's Happening Section */}
-          <div className="mb-6">
-            <h4 className="text-sm font-semibold text-elec-light mb-3">What's Happening?</h4>
-            <div className="space-y-2">
-              {WHAT_HAPPENING_STAGES.map((stage) => {
-                const isActive = stage.activeSteps.includes(currentStep);
-                const isComplete = currentStep > Math.max(...stage.activeSteps);
-                
-                return (
-                  <div
-                    key={stage.id}
-                    className={`flex items-center gap-3 p-2.5 rounded-lg transition-all duration-300 ${
-                      isActive
-                        ? 'bg-elec-yellow/10 border border-elec-yellow/30'
-                        : isComplete
-                        ? 'bg-elec-dark/20'
-                        : 'bg-elec-dark/10 opacity-40'
-                    }`}
-                  >
-                    <div className="flex items-center justify-center w-6 h-6 shrink-0">
-                      {isComplete ? (
-                        <CheckCircle2 className="h-4 w-4 text-green-400" />
-                      ) : isActive ? (
-                        <stage.icon className="h-4 w-4 text-elec-yellow" />
-                      ) : (
-                        <stage.icon className="h-4 w-4 text-elec-light/30" />
-                      )}
-                    </div>
-                    <span
-                      className={`text-xs font-medium ${
-                        isActive
-                          ? 'text-elec-yellow'
-                          : isComplete
-                          ? 'text-elec-light/60'
-                          : 'text-elec-light/30'
-                      }`}
-                    >
-                      {stage.text}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Steps */}
           <div className="space-y-3">
-            {STEPS.map((step, index) => {
-              const isComplete = index < currentStep;
-              const isCurrent = index === currentStep;
-              const isPending = index > currentStep;
-
+            {WHAT_HAPPENING_STAGES.map((stage) => {
+              const isActive = stage.activeSteps.includes(currentStep);
+              const isComplete = currentStep > Math.max(...stage.activeSteps);
+              const StageIcon = stage.icon;
+              
               return (
                 <div
-                  key={step.id}
-                  className={`flex items-center gap-3 p-3 rounded-lg transition-all duration-300 ${
-                    isCurrent
+                  key={stage.id}
+                  className={`rounded-lg p-3 transition-all duration-300 ${
+                    isActive
                       ? 'bg-elec-yellow/10 border border-elec-yellow/30'
-                      : isComplete
-                      ? 'bg-elec-dark/30'
-                      : 'bg-elec-dark/10 opacity-40'
+                      : 'border border-transparent'
                   }`}
                 >
-                  <div className="flex items-center justify-center w-8 h-8 shrink-0">
-                    {isComplete ? (
-                      <CheckCircle2 className="h-5 w-5 text-green-400" />
-                    ) : isCurrent ? (
-                      <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
-                    ) : (
-                      <span className="text-xl">{step.icon}</span>
-                    )}
+                  <div className="flex items-start gap-3">
+                    <div className="flex items-center justify-center w-5 h-5 shrink-0 mt-0.5">
+                      {isComplete ? (
+                        <CheckCircle2 className="h-5 w-5 text-green-400" />
+                      ) : isActive ? (
+                        <StageIcon className="h-5 w-5 text-elec-yellow" />
+                      ) : (
+                        <StageIcon className="h-5 w-5 text-muted-foreground/30" />
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <div
+                        className={`text-sm font-medium mb-0.5 ${
+                          isActive
+                            ? 'text-foreground'
+                            : isComplete
+                            ? 'text-muted-foreground'
+                            : 'text-muted-foreground/50'
+                        }`}
+                      >
+                        {stage.title}
+                      </div>
+                      <div
+                        className={`text-xs ${
+                          isActive
+                            ? 'text-muted-foreground'
+                            : isComplete
+                            ? 'text-muted-foreground/60'
+                            : 'text-muted-foreground/40'
+                        }`}
+                      >
+                        {stage.description}
+                      </div>
+                    </div>
                   </div>
-                  <span
-                    className={`text-sm font-medium ${
-                      isCurrent
-                        ? 'text-elec-yellow'
-                        : isComplete
-                        ? 'text-elec-light/70'
-                        : 'text-elec-light/40'
-                    }`}
-                  >
-                    {step.text}
-                  </span>
                 </div>
               );
             })}
           </div>
-
-          {/* Footer */}
-          <div className="mt-8 text-center">
-            <p className="text-xs text-elec-light/50">
-              Powered by AI • BS 7671:2018+A3:2024 Compliant
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };
