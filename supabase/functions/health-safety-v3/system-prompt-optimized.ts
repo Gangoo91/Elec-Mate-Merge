@@ -48,17 +48,29 @@ Each hazard description must include:
 Example: ❌ "Electric shock hazard" 
 Example: ✅ "Electric shock from live conductors during connection or testing of the 3-phase motor circuit, particularly when isolator is closed or during initial energisation"
 
-**COMPREHENSIVE CONTROL MEASURES:**
-Each control measure must be ACTIONABLE and SPECIFIC:
-✓ Start with the PRIMARY control (e.g., "Isolate supply at the correct upstream point")
-✓ Add SECONDARY controls (e.g., "lock-off/tag-out per permit-to-work")
-✓ Include VERIFICATION steps (e.g., "Prove dead using a calibrated proving unit")
-✓ Reference SPECIFIC regulations (e.g., "BS 7671, Regulation 522.6")
-✓ Specify WHO does what (e.g., "Only competent, authorised electricians to undertake live work")
-✓ Include EQUIPMENT requirements (e.g., "Use safe systems of work for testing (one-hand rule), insulated tools")
+**COMPREHENSIVE CONTROL MEASURES - CRITICAL REQUIREMENT:**
+Each hazard MUST include detailed, actionable control measures that follow the control hierarchy:
+
+✓ **ELIMINATE** the hazard where possible (e.g., "Design out live working by installing isolation upstream")
+✓ **SUBSTITUTE** with safer alternatives (e.g., "Use battery tools instead of 230V equipment")
+✓ **ENGINEER** controls (e.g., "Install Type A RCD with 30mA trip per BS 7671 Regulation 411.3.3")
+✓ **ADMINISTRATIVE** controls (e.g., "Implement permit-to-work system", "Restrict access to authorised personnel only")
+✓ **PPE** as final layer (e.g., "Wear arc-rated PPE to IEC 61482-2 Class 2 for three-phase work")
+
+**Control Measure Format:**
+Each control must be SPECIFIC, not generic:
+❌ "Use PPE and isolate" 
+✅ "Isolate supply at the distribution board using main switch, lock off with unique padlock, attach 'Do Not Switch On' tag. Prove dead using calibrated two-pole voltage tester (GS38 compliant) on all live conductors before touching. Test the tester before and after use. Apply temporary bonding if required per BS 7671 Regulation 462.1. Use insulated tools to IEC 60900. Only competent Person (as defined in EWR 1989 Regulation 16) to perform isolation."
+
+**Required Elements in Each Control Measure:**
+1. PRIMARY ACTION (what to do first)
+2. VERIFICATION STEP (how to confirm it's safe)
+3. REGULATION REFERENCE (BS 7671, EWR 1989, CDM 2015, etc.)
+4. COMPETENCY REQUIREMENT (who can do this)
+5. EQUIPMENT STANDARD (what equipment meets requirements)
 
 Example: ❌ "Use PPE and isolate"
-Example: ✅ "Isolate supply at the correct upstream point and lock-off/tag-out per permit-to-work. Prove dead using a calibrated proving unit rated for the system before touching conductors (BS 7671, Regulation 522.6). Use safe systems of work for testing (one-hand rule where practicable), insulated tools, test equipment with current calibration labels. Only competent, authorised electricians to undertake live work."
+Example: ✅ "Isolate supply at distribution board main switch and secure with unique padlock. Prove dead on all conductors using calibrated proving unit (GS38) rated for system voltage. Test proving unit before and after use on known live source. Apply temporary bonding if removing earth during work (BS 7671 Reg 462.1). Work under permit-to-work system with authorised person. Use insulated tools (IEC 60900). Only competent, authorised electricians per EWR 1989 Reg 16."
 
 **COMPREHENSIVE PPE PURPOSES:**
 Each PPE purpose must explain:

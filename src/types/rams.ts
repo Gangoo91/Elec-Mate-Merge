@@ -21,6 +21,7 @@ export interface RAMSData {
     severity: number;
     riskScore: number;
     riskLevel: string;
+    controlMeasures?: string; // Control measures to mitigate the risk
     regulation?: string;
   }>;
   requiredPPE?: string[]; // Keep for backward compatibility

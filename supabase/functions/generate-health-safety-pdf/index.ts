@@ -61,9 +61,9 @@ serve(async (req) => {
             severity: hazard.severity,
             riskScore: hazard.riskScore,
             riskLevel: hazard.riskLevel || getRiskLevel(hazard.riskScore),
-            controlMeasures: hazard.controlMeasures,
+            controlMeasures: hazard.controlMeasures || hazard.controlMeasure || 'Control measures to be determined on site',
             residualRisk: hazard.residualRisk,
-            regulation: hazard.regulation
+            regulation: hazard.regulation || 'BS 7671:2018+A2:2022'
           })),
           // PPE requirements
           ppe: (healthSafetyData.ppe || []).map((p: any) => ({
