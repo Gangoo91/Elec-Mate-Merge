@@ -1,8 +1,8 @@
-import { Card } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { CheckCircle2, Loader2, Wrench } from 'lucide-react';
-import { GenerationTimer } from '../site-safety/ai-rams/GenerationTimer';
+import { Wrench, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 interface InstallationProcessingViewProps {
   progress: {
@@ -15,112 +15,141 @@ interface InstallationProcessingViewProps {
 }
 
 export const InstallationProcessingView = ({ progress, startTime, onCancel, onQuickMode }: InstallationProcessingViewProps) => {
-  const stages = [
-    { key: 'initializing', label: 'Starting up...', percent: 0 },
-    { key: 'parsing', label: 'Understanding installation requirements...', percent: 20 },
-    { key: 'rag', label: 'Searching BS 7671 installation methods...', percent: 40 },
-    { key: 'ai', label: 'Generating step-by-step procedures...', percent: 70 },
-    { key: 'validation', label: 'Verifying regulation compliance...', percent: 90 },
-    { key: 'complete', label: 'Complete!', percent: 100 }
-  ];
+  const [elapsedTime, setElapsedTime] = useState(0);
 
-  const currentStageIndex = stages.findIndex(s => s.key === progress?.stage);
-  const currentPercent = currentStageIndex >= 0 ? stages[currentStageIndex].percent : 0;
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setElapsedTime((prev) => prev + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  // Map stages to percentage values
+  const progressMap: Record<string, number> = {
+    'initializing': 10,
+    'parsing': 25,
+    'rag': 50,
+    'ai': 75,
+    'validation': 90,
+    'complete': 100
+  };
+
+  const progressValue = progress ? progressMap[progress.stage] : 0;
+  const currentStep = progress?.message || 'Initializing...';
+
+  const estimatedTotal = 180; // 3 minutes estimate
+  const estimatedRemaining = Math.max(0, estimatedTotal - elapsedTime);
 
   return (
-    <div className="min-h-[60vh] flex items-center justify-center px-4">
-      <Card className="p-6 sm:p-8 max-w-2xl w-full mx-auto">
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center">
-              <Wrench className="h-8 w-8 text-blue-400 animate-pulse" />
+    <div className="space-y-6 animate-fade-in">
+      {/* Agent Card */}
+      <Card className="overflow-hidden border-blue-500/20 bg-gradient-to-br from-blue-500/10 via-background to-background">
+        <CardContent className="p-6">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className={`p-3 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 ${progressValue < 100 ? 'animate-pulse' : ''}`}>
+                <Wrench className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg">Installation Specialist</h3>
+                <p className="text-sm text-muted-foreground">
+                  {progressValue < 100 ? 'Generating installation method...' : 'Complete'}
+                </p>
+              </div>
             </div>
-            <GenerationTimer isRunning={true} />
+            {onCancel && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onCancel}
+                className="text-muted-foreground hover:text-destructive touch-manipulation"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            )}
           </div>
-          <h2 className="text-2xl font-bold mb-2 text-foreground">Generating Installation Method</h2>
-          <p className="text-muted-foreground">
-            Creating step-by-step installation guidance with BS 7671 compliance
-          </p>
-        </div>
 
-        <div className="space-y-6">
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-foreground">{progress?.message || 'Initialising...'}</span>
-              <span className="text-sm text-muted-foreground">{currentPercent}%</span>
+          <div className="space-y-3">
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Progress</span>
+              <span className="font-medium">{progressValue}%</span>
             </div>
-            <Progress value={currentPercent} className="h-2 bg-blue-500/20" />
-          </div>
-
-          {/* What's Happening Section */}
-          <div className="bg-blue-500/5 rounded-lg p-4 border border-blue-500/20">
-            <h3 className="text-sm font-semibold text-foreground mb-2">What's Happening?</h3>
-            <p className="text-sm text-muted-foreground">{progress?.message || 'Initialising...'}</p>
-          </div>
-
-          <div className="space-y-2">
-            {stages.map((stage, index) => {
-              const isComplete = currentStageIndex > index;
-              const isCurrent = currentStageIndex === index;
-
-              return (
-                <div
-                  key={stage.key}
-                  className={`flex items-start gap-3 p-2.5 rounded-lg transition-all ${
-                    isCurrent ? 'bg-blue-500/5 border border-blue-500/20' : ''
-                  }`}
-                >
-                  {isComplete ? (
-                    <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  ) : isCurrent ? (
-                    <Loader2 className="h-5 w-5 text-blue-400 animate-spin flex-shrink-0 mt-0.5" />
-                  ) : (
-                    <div className="h-5 w-5 rounded-full border-2 border-muted flex-shrink-0 mt-0.5" />
-                  )}
-                  <span
-                    className={`text-sm text-left flex-1 ${
-                      isComplete ? 'text-muted-foreground line-through' : 
-                      isCurrent ? 'font-medium text-foreground' : 
-                      'text-muted-foreground'
-                    }`}
-                  >
-                    {stage.label}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="text-center text-sm text-muted-foreground pt-4">
-            Estimated time: 3–5 minutes
-          </div>
-
-          {(onCancel || onQuickMode) && (
-            <div className="flex gap-2 justify-center pt-4">
-              {onCancel && (
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={onCancel}
-                  className="min-h-[44px] touch-manipulation"
-                >
-                  Cancel
-                </Button>
-              )}
-              {onQuickMode && (
-                <Button 
-                  variant="default" 
-                  size="sm" 
-                  onClick={onQuickMode}
-                  className="min-h-[44px] touch-manipulation"
-                >
-                  Switch to Quick Mode
-                </Button>
-              )}
+            <Progress value={progressValue} className="h-2" />
+            
+            <div className="pt-2 text-sm text-muted-foreground">
+              <p className="flex items-center gap-2">
+                <span className="inline-block w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
+                {currentStep}
+              </p>
             </div>
-          )}
-        </div>
+          </div>
+        </CardContent>
       </Card>
+
+      {/* Timeline Card */}
+      <Card>
+        <CardContent className="p-6">
+          <h4 className="font-semibold mb-4">Generation Timeline</h4>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Elapsed Time</span>
+              <span className="font-mono">{formatTime(elapsedTime)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Estimated Remaining</span>
+              <span className="font-mono">{formatTime(estimatedRemaining)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Total Estimate</span>
+              <span className="font-mono">{formatTime(estimatedTotal)}</span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* What's Happening */}
+      <Card className="bg-muted/50">
+        <CardContent className="p-6">
+          <h4 className="font-semibold mb-3">What's Happening?</h4>
+          <ul className="space-y-2 text-sm text-muted-foreground">
+            <li className="flex items-start gap-2">
+              <span className="text-blue-400 mt-1">•</span>
+              <span>Analysing installation requirements against BS 7671 regulations</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-400 mt-1">•</span>
+              <span>Searching for compliant installation methods and procedures</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-400 mt-1">•</span>
+              <span>Generating step-by-step installation guidance with safety controls</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-400 mt-1">•</span>
+              <span>Creating equipment lists and inspection checkpoints</span>
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
+
+      {onQuickMode && (
+        <div className="flex justify-center pt-2">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={onQuickMode}
+            className="min-h-[44px] touch-manipulation"
+          >
+            Switch to Quick Mode
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
