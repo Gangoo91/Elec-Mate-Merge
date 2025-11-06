@@ -21,7 +21,8 @@ import {
   Download,
   Eye,
   EyeOff,
-  AlertTriangle
+  AlertTriangle,
+  CheckCircle2
 } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { toast } from "sonner";
@@ -29,6 +30,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
 import { useSimpleAgent } from "@/hooks/useSimpleAgent";
+import ProjectManagerProcessingView from "./ProjectManagerProcessingView";
 
 interface ExampleScenario {
   title: string;
@@ -79,8 +81,9 @@ const ProjectManagerInterface = () => {
   const [duration, setDuration] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState<any>(null);
+  const [generationStartTime, setGenerationStartTime] = useState<number>(0);
   
-  const { callAgent, isLoading } = useSimpleAgent();
+  const { callAgent, isLoading, progress } = useSimpleAgent();
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
     if (contextData) {
@@ -117,8 +120,9 @@ const ProjectManagerInterface = () => {
   };
 
   const handleGenerate = async () => {
-    setShowResults(false);
+    setShowResults(true);
     setResults(null);
+    setGenerationStartTime(Date.now());
     
     const request = {
       query: prompt,
@@ -131,7 +135,6 @@ const ProjectManagerInterface = () => {
     
     if (response?.success && response.data) {
       setResults(response.data);
-      setShowResults(true);
       toast.success("Project Plan Generated", {
         description: "Your comprehensive project plan is ready"
       });
@@ -174,6 +177,215 @@ const ProjectManagerInterface = () => {
     }
   };
 
+  // Show loading view when generating
+  if (showResults && isLoading) {
+    return <ProjectManagerProcessingView progress={progress} startTime={generationStartTime} />;
+  }
+
+  // Show results when complete
+  if (showResults && results) {
+    return (
+      <div className="space-y-4">
+        <Card className="p-3 sm:p-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+            <h4 className="font-semibold text-lg">Project Plan Results</h4>
+            <div className="flex items-center gap-2 flex-wrap">
+              <Button 
+                type="button"
+                size="sm" 
+                variant="outline"
+                onClick={handleCopy}
+                className="touch-manipulation"
+              >
+                <Copy className="h-4 w-4 mr-2" />
+                Copy
+              </Button>
+              <Button 
+                type="button"
+                size="sm" 
+                variant="outline"
+                onClick={handleExportPDF}
+                className="touch-manipulation"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Export PDF
+              </Button>
+              <SendToAgentDropdown 
+                currentAgent="project-manager" 
+                currentOutput={{ prompt, selectedType, projectName, results }} 
+              />
+            </div>
+          </div>
+
+          {/* Project Plan Summary */}
+          {results.response && (
+            <Card className="p-4 mb-4 bg-muted/50">
+              <h5 className="font-semibold mb-2 flex items-center gap-2">
+                <FileText className="h-4 w-4 text-pink-400" />
+                Project Overview
+              </h5>
+              <p className="text-sm whitespace-pre-wrap">{results.response}</p>
+            </Card>
+          )}
+
+          {/* Phases */}
+          {results.projectPlan?.phases && results.projectPlan.phases.length > 0 && (
+            <Card className="p-4 mb-4">
+              <h5 className="font-semibold mb-3 flex items-center gap-2">
+                <Calendar className="h-4 w-4 text-pink-400" />
+                Project Phases ({results.projectPlan.totalDuration} {results.projectPlan.totalDurationUnit})
+              </h5>
+              <div className="space-y-3">
+                {results.projectPlan.phases.map((phase: any, idx: number) => (
+                  <div key={idx} className={`p-3 border rounded-lg ${phase.criticalPath ? 'border-pink-400 bg-pink-400/5' : 'border-muted'}`}>
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex-1">
+                        <div className="font-semibold flex items-center gap-2">
+                          {phase.phase}
+                          {phase.criticalPath && (
+                            <span className="text-xs bg-pink-400/20 text-pink-400 px-2 py-0.5 rounded">Critical Path</span>
+                          )}
+                        </div>
+                        <div className="text-xs text-muted-foreground mt-1">
+                          Duration: {phase.duration} {phase.durationUnit} • Start: {phase.startDay || 'Day 1'}
+                        </div>
+                      </div>
+                    </div>
+                    {phase.description && (
+                      <p className="text-sm text-muted-foreground mb-2">{phase.description}</p>
+                    )}
+                    {phase.tasks && phase.tasks.length > 0 && (
+                      <div className="mt-2 space-y-1">
+                        <div className="text-xs font-medium text-muted-foreground">Tasks:</div>
+                        {phase.tasks.map((task: any, taskIdx: number) => (
+                          <div key={taskIdx} className="text-xs pl-3 border-l-2 border-pink-400/30 py-1">
+                            • {task.task || task.name || task}
+                            {task.duration && <span className="text-muted-foreground"> ({task.duration})</span>}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {phase.dependencies && phase.dependencies.length > 0 && (
+                      <div className="mt-2 text-xs">
+                        <span className="text-muted-foreground">Dependencies: </span>
+                        <span className="text-foreground">{phase.dependencies.join(', ')}</span>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
+
+          {/* Resources */}
+          {results.projectPlan?.resources && (
+            <Card className="p-4 mb-4">
+              <h5 className="font-semibold mb-3 flex items-center gap-2">
+                <Users className="h-4 w-4 text-pink-400" />
+                Resource Requirements
+              </h5>
+              <div className="space-y-4">
+                {results.projectPlan.resources.labour && results.projectPlan.resources.labour.length > 0 && (
+                  <div>
+                    <div className="text-sm font-medium mb-2">Labour</div>
+                    <div className="space-y-2">
+                      {results.projectPlan.resources.labour.map((item: any, idx: number) => (
+                        <div key={idx} className="flex items-center justify-between text-sm bg-muted/30 p-2 rounded">
+                          <span>{item.role || item.name || item}</span>
+                          <span className="text-muted-foreground">{item.quantity || item.count || '1'} person</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {results.projectPlan.resources.materials && results.projectPlan.resources.materials.length > 0 && (
+                  <div>
+                    <div className="text-sm font-medium mb-2">Key Materials</div>
+                    <div className="space-y-2">
+                      {results.projectPlan.resources.materials.map((item: any, idx: number) => (
+                        <div key={idx} className="flex items-center justify-between text-sm bg-muted/30 p-2 rounded">
+                          <span>{item.description || item.name || item}</span>
+                          <span className="text-muted-foreground">{item.quantity || item.amount || '-'}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </Card>
+          )}
+
+          {/* Risks */}
+          {results.projectPlan?.risks && results.projectPlan.risks.length > 0 && (
+            <Card className="p-4 mb-4">
+              <h5 className="font-semibold mb-3 flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4 text-pink-400" />
+                Risk Management
+              </h5>
+              <div className="space-y-3">
+                {results.projectPlan.risks.map((risk: any, idx: number) => (
+                  <div key={idx} className="p-3 border border-pink-400/20 rounded-lg bg-pink-400/5">
+                    <div className="font-medium text-sm mb-1">{risk.risk || risk.description || risk}</div>
+                    {risk.mitigation && (
+                      <div className="text-xs text-muted-foreground">
+                        <span className="font-medium">Mitigation:</span> {risk.mitigation}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
+
+          {/* Milestones */}
+          {results.projectPlan?.milestones && results.projectPlan.milestones.length > 0 && (
+            <Card className="p-4 mb-4">
+              <h5 className="font-semibold mb-3 flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-pink-400" />
+                Key Milestones
+              </h5>
+              <div className="space-y-2">
+                {results.projectPlan.milestones.map((milestone: any, idx: number) => (
+                  <div key={idx} className="flex items-center gap-3 text-sm p-2 bg-muted/30 rounded">
+                    <div className="w-2 h-2 rounded-full bg-pink-400 flex-shrink-0" />
+                    <div className="flex-1">
+                      {milestone.milestone || milestone.name || milestone}
+                    </div>
+                    {milestone.date && (
+                      <span className="text-muted-foreground text-xs">{milestone.date}</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
+
+          {/* Raw Response Fallback */}
+          {!results.projectPlan && results.rawResponse && (
+            <Card className="p-4">
+              <h5 className="font-semibold mb-2">Detailed Plan</h5>
+              <p className="text-sm whitespace-pre-wrap">{results.rawResponse}</p>
+            </Card>
+          )}
+        </Card>
+
+        {/* Start Over Button */}
+        <Button 
+          type="button"
+          variant="outline"
+          onClick={() => {
+            setShowResults(false);
+            setResults(null);
+          }}
+          className="w-full touch-manipulation"
+        >
+          Create New Plan
+        </Button>
+      </div>
+    );
+  }
+
+  // Show input form by default
   return (
     <form className="space-y-3 sm:space-y-4 pb-6" onSubmit={(e) => { e.preventDefault(); handleGenerate(); }}>
       {/* Agent Inbox */}
@@ -375,222 +587,6 @@ const ProjectManagerInterface = () => {
         <Clipboard className="h-5 w-5 mr-2" />
         {isLoading ? 'Generating Plan...' : 'Generate Project Plan'}
       </Button>
-
-      {/* 6. RESULTS DISPLAY (when showResults) */}
-      {showResults && results && (
-        <Card className="p-3 sm:p-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
-            <h4 className="font-semibold text-lg">Project Plan Results</h4>
-            <div className="flex items-center gap-2 flex-wrap">
-              <Button 
-                type="button"
-                size="sm" 
-                variant="outline"
-                onClick={handleCopy}
-                className="touch-manipulation"
-              >
-                <Copy className="h-4 w-4 mr-2" />
-                Copy
-              </Button>
-              <Button 
-                type="button"
-                size="sm" 
-                variant="outline"
-                onClick={handleExportPDF}
-                className="touch-manipulation"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Export PDF
-              </Button>
-              <SendToAgentDropdown 
-                currentAgent="project-manager" 
-                currentOutput={{ prompt, selectedType, projectName, results }} 
-              />
-            </div>
-          </div>
-
-          {/* Project Plan Summary */}
-          {results.response && (
-            <Card className="p-4 mb-4 bg-muted/50">
-              <h5 className="font-semibold mb-2 flex items-center gap-2">
-                <FileText className="h-4 w-4 text-pink-400" />
-                Project Overview
-              </h5>
-              <p className="text-sm whitespace-pre-wrap">{results.response}</p>
-            </Card>
-          )}
-
-          {/* Phases */}
-          {results.projectPlan?.phases && results.projectPlan.phases.length > 0 && (
-            <Card className="p-4 mb-4">
-              <h5 className="font-semibold mb-3 flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-pink-400" />
-                Project Phases ({results.projectPlan.totalDuration} {results.projectPlan.totalDurationUnit})
-              </h5>
-              <div className="space-y-3">
-                {results.projectPlan.phases.map((phase: any, idx: number) => (
-                  <div key={idx} className={`p-3 border rounded-lg ${phase.criticalPath ? 'border-pink-400 bg-pink-400/5' : 'border-muted'}`}>
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex-1">
-                        <h6 className="font-medium flex items-center gap-2">
-                          {phase.phase}
-                          {phase.criticalPath && (
-                            <span className="text-xs bg-pink-400/20 text-pink-400 px-2 py-0.5 rounded">Critical Path</span>
-                          )}
-                        </h6>
-                        <p className="text-xs text-muted-foreground">
-                          Duration: {phase.duration} {phase.durationUnit}
-                        </p>
-                      </div>
-                    </div>
-                    {phase.tasks && phase.tasks.length > 0 && (
-                      <div className="mt-2">
-                        <p className="text-xs font-medium mb-1">Tasks:</p>
-                        <ul className="list-disc list-inside text-xs space-y-0.5 text-muted-foreground">
-                          {phase.tasks.map((task: string, tidx: number) => (
-                            <li key={tidx}>{task}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {phase.milestones && phase.milestones.length > 0 && (
-                      <div className="mt-2">
-                        <p className="text-xs font-medium mb-1">Milestones:</p>
-                        <ul className="list-disc list-inside text-xs space-y-0.5 text-muted-foreground">
-                          {phase.milestones.map((milestone: string, midx: number) => (
-                            <li key={midx}>{milestone}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </Card>
-          )}
-
-          {/* Resources */}
-          {results.resources && (
-            <Card className="p-4 mb-4">
-              <h5 className="font-semibold mb-3 flex items-center gap-2">
-                <Users className="h-4 w-4 text-pink-400" />
-                Resources Required
-              </h5>
-              {results.resources.team && results.resources.team.length > 0 && (
-                <div className="mb-3">
-                  <p className="text-xs font-medium mb-2">Team:</p>
-                  <div className="space-y-2">
-                    {results.resources.team.map((member: any, idx: number) => (
-                      <div key={idx} className="text-sm flex items-center justify-between p-2 bg-muted/50 rounded">
-                        <span>{member.role}</span>
-                        <span className="text-xs text-muted-foreground">
-                          {member.quantity}x for {member.duration} {member.durationUnit || 'days'}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {results.resources.equipment && results.resources.equipment.length > 0 && (
-                <div>
-                  <p className="text-xs font-medium mb-2">Equipment:</p>
-                  <ul className="list-disc list-inside text-xs space-y-1 text-muted-foreground">
-                    {results.resources.equipment.map((item: string, idx: number) => (
-                      <li key={idx}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </Card>
-          )}
-
-          {/* Compliance */}
-          {results.compliance && (
-            <Card className="p-4 mb-4">
-              <h5 className="font-semibold mb-3 flex items-center gap-2">
-                <FileCheck className="h-4 w-4 text-pink-400" />
-                Compliance Requirements
-              </h5>
-              {results.compliance.notifications && results.compliance.notifications.length > 0 && (
-                <div className="mb-3">
-                  <p className="text-xs font-medium mb-1">Notifications:</p>
-                  <ul className="list-disc list-inside text-xs space-y-0.5 text-muted-foreground">
-                    {results.compliance.notifications.map((notif: string, idx: number) => (
-                      <li key={idx}>{notif}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {results.compliance.certifications && results.compliance.certifications.length > 0 && (
-                <div className="mb-3">
-                  <p className="text-xs font-medium mb-1">Certifications:</p>
-                  <ul className="list-disc list-inside text-xs space-y-0.5 text-muted-foreground">
-                    {results.compliance.certifications.map((cert: string, idx: number) => (
-                      <li key={idx}>{cert}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {results.compliance.inspections && results.compliance.inspections.length > 0 && (
-                <div>
-                  <p className="text-xs font-medium mb-1">Inspections:</p>
-                  <ul className="list-disc list-inside text-xs space-y-0.5 text-muted-foreground">
-                    {results.compliance.inspections.map((insp: string, idx: number) => (
-                      <li key={idx}>{insp}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </Card>
-          )}
-
-          {/* Risks */}
-          {results.risks && results.risks.length > 0 && (
-            <Card className="p-4 mb-4">
-              <h5 className="font-semibold mb-3 flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 text-pink-400" />
-                Risk Register
-              </h5>
-              <div className="space-y-2">
-                {results.risks.map((risk: any, idx: number) => (
-                  <div key={idx} className="p-3 border border-muted rounded-lg">
-                    <div className="flex items-start justify-between mb-1">
-                      <p className="text-sm font-medium flex-1">{risk.risk}</p>
-                      {risk.severity && (
-                        <span className={`text-xs px-2 py-0.5 rounded ${
-                          risk.severity === 'High' ? 'bg-red-500/20 text-red-400' :
-                          risk.severity === 'Medium' ? 'bg-yellow-500/20 text-yellow-400' :
-                          'bg-green-500/20 text-green-400'
-                        }`}>
-                          {risk.severity}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      <strong>Mitigation:</strong> {risk.mitigation}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          )}
-
-          {/* Recommendations */}
-          {results.recommendations && results.recommendations.length > 0 && (
-            <Card className="p-4">
-              <h5 className="font-semibold mb-3 flex items-center gap-2">
-                <Lightbulb className="h-4 w-4 text-pink-400" />
-                Recommendations
-              </h5>
-              <ul className="list-disc list-inside text-sm space-y-1.5 text-muted-foreground">
-                {results.recommendations.map((rec: string, idx: number) => (
-                  <li key={idx}>{rec}</li>
-                ))}
-              </ul>
-            </Card>
-          )}
-        </Card>
-      )}
     </form>
   );
 };
