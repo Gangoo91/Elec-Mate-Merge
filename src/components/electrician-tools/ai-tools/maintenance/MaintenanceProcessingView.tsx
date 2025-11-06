@@ -39,7 +39,7 @@ const WHAT_HAPPENING_STAGES = [
     description: 'Cross-checking with BS 7671 requirements and certification needs',
     icon: CheckCircle, 
     minPercent: 75,
-    maxPercent: 95
+    maxPercent: 100
   },
 ];
 
@@ -75,7 +75,7 @@ export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', sta
 
   // Find current stage based on progress percentage
   const currentStage = WHAT_HAPPENING_STAGES.find(
-    s => progressPercent >= s.minPercent && progressPercent < s.maxPercent
+    s => progressPercent >= s.minPercent && progressPercent <= s.maxPercent
   );
   const currentStepText = currentStage?.title || 'Processing...';
 
@@ -143,8 +143,8 @@ export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', sta
           </div>
           <div className="space-y-3">
             {WHAT_HAPPENING_STAGES.map((stage) => {
-              const isActive = progressPercent >= stage.minPercent && progressPercent < stage.maxPercent;
-              const isComplete = progressPercent >= stage.maxPercent;
+              const isActive = progressPercent >= stage.minPercent && progressPercent <= stage.maxPercent;
+              const isComplete = progressPercent > stage.maxPercent;
               const StageIcon = stage.icon;
               
               return (
