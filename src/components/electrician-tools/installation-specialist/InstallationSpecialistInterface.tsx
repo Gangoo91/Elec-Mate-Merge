@@ -14,6 +14,7 @@ const InstallationSpecialistInterface = () => {
   const [celebrationShown, setCelebrationShown] = useState(false);
   const [methodData, setMethodData] = useState<any>(null);
   const [generationStartTime, setGenerationStartTime] = useState(0);
+  const [isGenerating, setIsGenerating] = useState(false);
   const [projectInfo, setProjectInfo] = useState<ProjectDetailsType>({
     projectName: '',
     location: '',
@@ -27,6 +28,7 @@ const InstallationSpecialistInterface = () => {
     setGenerationStartTime(Date.now());
     setShowResults(true);
     setCelebrationShown(false);
+    setIsGenerating(true);
     setProjectInfo(projectDetails);
     lastProjectRef.current = { details: projectDetails, description };
 
@@ -257,6 +259,8 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
       });
       
       setShowResults(false);
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -280,13 +284,14 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
     return <InstallationInput onGenerate={handleGenerate} isProcessing={isLoading} />;
   }
 
-  if (isLoading) {
+  if (isLoading || isGenerating) {
     return (
       <InstallationProcessingView 
         progress={progress}
         startTime={generationStartTime}
         onCancel={() => {
           setShowResults(false);
+          setIsGenerating(false);
         }}
         onQuickMode={() => {
           if (lastProjectRef.current) {
