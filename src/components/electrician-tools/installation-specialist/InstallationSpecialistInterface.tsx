@@ -57,12 +57,14 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
             if (message === 'STAGE_1_START') {
               setFullModeProgress({ stage: 'initializing', message: 'Starting up...' });
             } else if (message === 'STAGE_2_START') {
-              setFullModeProgress({ stage: 'rag', message: 'Searching BS 7671 regulations...' });
+              setFullModeProgress({ stage: 'parsing', message: 'Parsing requirements...' });
             } else if (message === 'STAGE_3_START') {
-              setFullModeProgress({ stage: 'ai', message: 'Generating installation steps...' });
+              setFullModeProgress({ stage: 'rag', message: 'Searching BS 7671 regulations...' });
             } else if (message === 'STAGE_4_START') {
+              setFullModeProgress({ stage: 'ai', message: 'Generating installation steps...' });
+            } else if (message === 'STAGE_5_START') {
               setFullModeProgress({ stage: 'validation', message: 'Validating compliance...' });
-            } else if (message === 'STAGE_5_COMPLETE') {
+            } else if (message === 'STAGE_6_COMPLETE') {
               setFullModeProgress({ stage: 'complete', message: 'Method statement ready!' });
             } else if (message.startsWith('🔍') || message.startsWith('⚡') || message.startsWith('🤖') || message.startsWith('✅')) {
               // Preserve current stage but update message
