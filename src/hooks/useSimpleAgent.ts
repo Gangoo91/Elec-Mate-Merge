@@ -15,7 +15,7 @@ export interface UseSimpleAgentReturn {
   error: string | null;
   clearError: () => void;
   progress: {
-    stage: 'initializing' | 'parsing' | 'rag' | 'ai' | 'validation' | 'complete';
+    stage: 'initializing' | 'rag' | 'ai' | 'validation' | 'complete';
     message: string;
   } | null;
 }
@@ -46,7 +46,7 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<{
-    stage: 'initializing' | 'parsing' | 'rag' | 'ai' | 'validation' | 'complete';
+    stage: 'initializing' | 'rag' | 'ai' | 'validation' | 'complete';
     message: string;
   } | null>(null);
 
@@ -65,10 +65,8 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
     const progressTimer = setInterval(() => {
       const elapsed = Date.now() - startTime;
       
-      if (elapsed < 3000) {
+      if (elapsed < 5000) {
         setProgress({ stage: 'initializing', message: 'Starting up...' });
-      } else if (elapsed < 10000) {
-        setProgress({ stage: 'parsing', message: 'Understanding your query...' });
       } else if (elapsed < 30000) {
         setProgress({ stage: 'rag', message: 'Searching BS 7671 regulations...' });
       } else if (elapsed < 60000) {

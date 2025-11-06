@@ -46,7 +46,6 @@ export const generateMethodStatement = async (
   try {
     // ===== DIRECT RAG ARCHITECTURE: Fast, reliable, enforced JSON =====
     if (onProgress) onProgress('STAGE_1_START');
-    if (onProgress) onProgress('STAGE_2_START');
     if (onProgress) onProgress('🔍 Searching installation knowledge base...');
     
     const { data: directData, error: directError } = await supabase.functions.invoke('installer-rag-direct', {
@@ -82,7 +81,7 @@ export const generateMethodStatement = async (
     });
     
     if (onProgress) onProgress(`⚡ Retrieved ${diag.pwCount || 0} procedures + ${diag.regsCount || 0} regulations (${diag.ragMs || 0}ms)`);
-    if (onProgress) onProgress('STAGE_3_START');
+    if (onProgress) onProgress('STAGE_2_START');
     if (onProgress) onProgress('🤖 Generating method statement...');
     
     // Transform direct RAG output to expected format
@@ -122,10 +121,10 @@ export const generateMethodStatement = async (
       citations: directData.citations || []
     };
     
-    if (onProgress) onProgress('STAGE_4_START');
+    if (onProgress) onProgress('STAGE_3_START');
     if (onProgress) onProgress(`✅ Generated ${installerOutput.installationSteps.length} installation steps`);
-    if (onProgress) onProgress('STAGE_5_START');
-    if (onProgress) onProgress('STAGE_6_COMPLETE');
+    if (onProgress) onProgress('STAGE_4_START');
+    if (onProgress) onProgress('STAGE_5_COMPLETE');
     
     // Return simplified output (no parallel agents for now - focus on speed)
     return mergeAgentOutputs(installerOutput, null, null);

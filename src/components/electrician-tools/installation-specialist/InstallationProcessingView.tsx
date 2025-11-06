@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 
 interface InstallationProcessingViewProps {
   progress: {
-    stage: 'initializing' | 'parsing' | 'rag' | 'ai' | 'validation' | 'complete';
+    stage: 'initializing' | 'rag' | 'ai' | 'validation' | 'complete';
     message: string;
   } | null;
   startTime: number;
@@ -33,10 +33,9 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
   // Map stages to percentage values
   const progressMap: Record<string, number> = {
     'initializing': 10,
-    'parsing': 25,
-    'rag': 50,
-    'ai': 75,
-    'validation': 90,
+    'rag': 25,
+    'ai': 50,
+    'validation': 75,
     'complete': 100
   };
 
@@ -49,7 +48,6 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
   // Define all stages with their labels
   const allStages = [
     { stage: 'initializing', label: 'Initializing system' },
-    { stage: 'parsing', label: 'Parsing requirements' },
     { stage: 'rag', label: 'Searching BS 7671 regulations' },
     { stage: 'ai', label: 'Generating installation steps' },
     { stage: 'validation', label: 'Validating compliance' },
