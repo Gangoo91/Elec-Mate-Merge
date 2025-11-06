@@ -8,68 +8,45 @@ interface MaintenanceProcessingViewProps {
   startTime?: number | null;
 }
 
-const QUICK_STEPS = [
-  { id: 1, text: 'Analysing equipment...', icon: '📋' },
-  { id: 2, text: 'Generating schedule...', icon: '🛠️' },
-  { id: 3, text: 'Calculating costs...', icon: '💷' },
-  { id: 4, text: 'Finalising plan...', icon: '📄' },
-];
-
-const FULL_STEPS = [
-  { id: 1, text: 'Analysing equipment details...', icon: '📋' },
-  { id: 2, text: 'Searching BS 7671 & GN3 regulations...', icon: '📚' },
-  { id: 3, text: 'Calculating risk scores...', icon: '📊' },
-  { id: 4, text: 'Generating detailed tasks...', icon: '🛠️' },
-  { id: 5, text: 'Expanding procedures...', icon: '📝' },
-  { id: 6, text: 'Analysing failure modes...', icon: '⚠️' },
-  { id: 7, text: 'Creating compliance checklist...', icon: '✅' },
-  { id: 8, text: 'Finalising maintenance plan...', icon: '📄' },
-];
-
 const WHAT_HAPPENING_STAGES = [
   { 
     id: 1, 
     title: 'Searching BS 7671 maintenance requirements', 
     description: 'Finding relevant maintenance procedures, inspection intervals, and regulations',
     icon: Wrench, 
-    activeSteps: [0, 1] 
+    minPercent: 0,
+    maxPercent: 25
   },
   { 
     id: 2, 
     title: 'Analysing equipment risk factors', 
     description: 'Assessing failure modes, environmental conditions, and usage patterns',
     icon: AlertTriangle, 
-    activeSteps: [2, 3] 
+    minPercent: 25,
+    maxPercent: 50
   },
   { 
     id: 3, 
     title: 'Generating maintenance tasks and schedules', 
     description: 'Creating detailed maintenance procedures with optimal timing intervals',
     icon: Calendar, 
-    activeSteps: [4, 5] 
+    minPercent: 50,
+    maxPercent: 75
   },
   { 
     id: 4, 
     title: 'Creating compliance checklist', 
     description: 'Cross-checking with BS 7671 requirements and certification needs',
     icon: CheckCircle, 
-    activeSteps: [6, 7] 
+    minPercent: 75,
+    maxPercent: 95
   },
 ];
 
 export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', startTime }: MaintenanceProcessingViewProps) => {
-  const STEPS = detailLevel === 'quick' ? QUICK_STEPS : FULL_STEPS;
-  const [currentStep, setCurrentStep] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
   
   const ESTIMATED_TIME = detailLevel === 'quick' ? 25 : 70; // seconds
-
-  useEffect(() => {
-    const stepIndex = STEPS.findIndex(step => step.text === progress);
-    if (stepIndex !== -1) {
-      setCurrentStep(stepIndex);
-    }
-  }, [progress, STEPS]);
 
   // Time tracking
   useEffect(() => {
@@ -83,8 +60,12 @@ export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', sta
     return () => clearInterval(interval);
   }, [startTime]);
 
-  const progressPercent = ((currentStep + 1) / STEPS.length) * 100;
-  const remainingTime = Math.max(0, ESTIMATED_TIME - elapsedTime);
+  // Calculate percentage-based progress (cap at 95% until complete)
+  const progressPercent = Math.min(95, (elapsedTime / ESTIMATED_TIME) * 100);
+  
+  // Dynamically extend total time if processing takes longer than estimated
+  const dynamicTotalTime = Math.max(ESTIMATED_TIME, elapsedTime + 10);
+  const remainingTime = Math.max(0, dynamicTotalTime - elapsedTime);
   
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -92,7 +73,11 @@ export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', sta
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const currentStepText = STEPS[currentStep]?.text || 'Processing...';
+  // Find current stage based on progress percentage
+  const currentStage = WHAT_HAPPENING_STAGES.find(
+    s => progressPercent >= s.minPercent && progressPercent < s.maxPercent
+  );
+  const currentStepText = currentStage?.title || 'Processing...';
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-4">
@@ -145,7 +130,7 @@ export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', sta
             </div>
             <div>
               <div className="text-xs text-muted-foreground mb-1">Total Estimate</div>
-              <div className="text-xl font-bold text-muted-foreground">{formatTime(ESTIMATED_TIME)}</div>
+              <div className="text-xl font-bold text-muted-foreground">{formatTime(dynamicTotalTime)}</div>
             </div>
           </div>
         </div>
@@ -158,8 +143,8 @@ export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', sta
           </div>
           <div className="space-y-3">
             {WHAT_HAPPENING_STAGES.map((stage) => {
-              const isActive = stage.activeSteps.includes(currentStep);
-              const isComplete = currentStep > Math.max(...stage.activeSteps);
+              const isActive = progressPercent >= stage.minPercent && progressPercent < stage.maxPercent;
+              const isComplete = progressPercent >= stage.maxPercent;
               const StageIcon = stage.icon;
               
               return (
