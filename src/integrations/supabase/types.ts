@@ -2107,6 +2107,60 @@ export type Database = {
           },
         ]
       }
+      health_safety_jobs: {
+        Row: {
+          completed_at: string | null
+          created_at: string | null
+          current_step: string | null
+          error_message: string | null
+          id: string
+          output_data: Json | null
+          progress: number | null
+          project_info: Json | null
+          query: string
+          raw_response: Json | null
+          started_at: string | null
+          status: string | null
+          updated_at: string | null
+          user_id: string
+          work_type: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string | null
+          current_step?: string | null
+          error_message?: string | null
+          id?: string
+          output_data?: Json | null
+          progress?: number | null
+          project_info?: Json | null
+          query: string
+          raw_response?: Json | null
+          started_at?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id: string
+          work_type?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string | null
+          current_step?: string | null
+          error_message?: string | null
+          id?: string
+          output_data?: Json | null
+          progress?: number | null
+          project_info?: Json | null
+          query?: string
+          raw_response?: Json | null
+          started_at?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string
+          work_type?: string | null
+        }
+        Relationships: []
+      }
       health_safety_knowledge: {
         Row: {
           content: string

@@ -99,3 +99,50 @@ export const triggerHaptic = (pattern: number | number[] = 100): void => {
     navigator.vibrate(pattern);
   }
 };
+
+/**
+ * Trigger confetti animation
+ */
+export const triggerConfetti = (): void => {
+  // Simple confetti effect using CSS animations
+  const colors = ['#f97316', '#fb923c', '#fdba74'];
+  const particleCount = 50;
+  
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.style.position = 'fixed';
+    particle.style.width = '10px';
+    particle.style.height = '10px';
+    particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = '-10px';
+    particle.style.opacity = '1';
+    particle.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+    particle.style.zIndex = '9999';
+    particle.style.pointerEvents = 'none';
+    
+    document.body.appendChild(particle);
+    
+    const duration = 2000 + Math.random() * 1000;
+    const rotation = Math.random() * 360;
+    const xMovement = (Math.random() - 0.5) * 200;
+    
+    particle.animate([
+      { 
+        transform: `translateY(0) translateX(0) rotate(0deg)`,
+        opacity: 1 
+      },
+      { 
+        transform: `translateY(${window.innerHeight}px) translateX(${xMovement}px) rotate(${rotation}deg)`,
+        opacity: 0 
+      }
+    ], {
+      duration,
+      easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+    });
+    
+    setTimeout(() => {
+      particle.remove();
+    }, duration);
+  }
+};
