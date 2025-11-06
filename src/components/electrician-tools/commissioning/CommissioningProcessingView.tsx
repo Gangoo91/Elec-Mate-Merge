@@ -5,17 +5,18 @@ import { CheckCircle2, Search, Zap, Shield } from "lucide-react";
 
 interface CommissioningProcessingViewProps {
   progress: {
-    stage: 'parsing' | 'rag' | 'ai' | 'validation' | 'complete';
+    stage: 'initializing' | 'parsing' | 'rag' | 'ai' | 'validation' | 'complete';
     message: string;
   } | null;
   startTime: number;
 }
 
 const STAGE_PERCENTAGES = {
-  parsing: 20,
-  rag: 40,
-  ai: 70,
-  validation: 90,
+  initializing: 0,
+  parsing: 10,
+  rag: 25,
+  ai: 50,
+  validation: 75,
   complete: 100
 };
 
@@ -63,7 +64,8 @@ const CommissioningProcessingView = ({ progress, startTime }: CommissioningProce
           </div>
           <Progress value={percentage} className="h-2" />
           <p className="text-xs text-muted-foreground">
-            • {progress?.stage === 'parsing' && 'Understanding your testing requirements...'}
+            • {progress?.stage === 'initializing' && 'Starting up...'}
+            {progress?.stage === 'parsing' && 'Understanding your testing requirements...'}
             {progress?.stage === 'rag' && 'Searching BS 7671 testing procedures...'}
             {progress?.stage === 'ai' && 'Generating detailed test procedures...'}
             {progress?.stage === 'validation' && 'Verifying regulation compliance...'}

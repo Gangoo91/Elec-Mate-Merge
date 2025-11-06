@@ -15,7 +15,7 @@ export interface UseSimpleAgentReturn {
   error: string | null;
   clearError: () => void;
   progress: {
-    stage: 'parsing' | 'rag' | 'ai' | 'validation' | 'complete';
+    stage: 'initializing' | 'parsing' | 'rag' | 'ai' | 'validation' | 'complete';
     message: string;
   } | null;
 }
@@ -46,26 +46,44 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<{
-    stage: 'parsing' | 'rag' | 'ai' | 'validation' | 'complete';
+    stage: 'initializing' | 'parsing' | 'rag' | 'ai' | 'validation' | 'complete';
     message: string;
   } | null>(null);
 
   const callAgent = async (agent: AgentType, request: RichAgentRequest | LegacyAgentRequest): Promise<AgentResponse | null> => {
     setIsLoading(true);
     setError(null);
-    setProgress({ stage: 'parsing', message: 'Understanding your query...' });
+    setProgress({ stage: 'initializing', message: 'Starting up...' });
 
     const functionName = AGENT_FUNCTIONS[agent];
     const agentName = AGENT_NAMES[agent];
+    const startTime = Date.now();
 
     console.log(`🤖 Calling ${agentName} (${functionName})`, request);
 
-    try {
-      setProgress({ stage: 'rag', message: 'Searching BS 7671 regulations...' });
+    // Client-side progress simulation
+    const progressTimer = setInterval(() => {
+      const elapsed = Date.now() - startTime;
       
+      if (elapsed < 3000) {
+        setProgress({ stage: 'initializing', message: 'Starting up...' });
+      } else if (elapsed < 10000) {
+        setProgress({ stage: 'parsing', message: 'Understanding your query...' });
+      } else if (elapsed < 30000) {
+        setProgress({ stage: 'rag', message: 'Searching BS 7671 regulations...' });
+      } else if (elapsed < 60000) {
+        setProgress({ stage: 'ai', message: 'Generating detailed procedures...' });
+      } else {
+        setProgress({ stage: 'validation', message: 'Verifying regulation compliance...' });
+      }
+    }, 1000);
+
+    try {
       const { data, error: invokeError } = await supabase.functions.invoke(functionName, {
         body: request
       });
+
+      clearInterval(progressTimer);
 
       if (invokeError) {
         throw invokeError;
@@ -85,6 +103,7 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
       return data as AgentResponse;
 
     } catch (err) {
+      clearInterval(progressTimer);
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
       console.error(`❌ ${agentName} error:`, errorMessage);
       
@@ -97,6 +116,7 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
       return null;
 
     } finally {
+      clearInterval(progressTimer);
       setIsLoading(false);
       setTimeout(() => setProgress(null), 2000);
     }
