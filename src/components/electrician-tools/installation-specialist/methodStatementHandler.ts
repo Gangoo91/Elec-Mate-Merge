@@ -37,6 +37,9 @@ export interface MergedMethodStatementOutput {
   };
 }
 
+// Helper to add delays between progress updates
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 export const generateMethodStatement = async (
   userQuery: string,
   projectDetails: any,
@@ -45,8 +48,17 @@ export const generateMethodStatement = async (
 ): Promise<MergedMethodStatementOutput> => {
   try {
     // ===== DIRECT RAG ARCHITECTURE: Fast, reliable, enforced JSON =====
-    if (onProgress) onProgress('STAGE_1_START');
-    if (onProgress) onProgress('🔍 Searching installation knowledge base...');
+    if (onProgress) {
+      onProgress('STAGE_1_START');
+      await delay(800);
+      onProgress('🔍 Searching installation knowledge base...');
+      await delay(500);
+    }
+    
+    if (onProgress) {
+      onProgress('STAGE_2_START');
+      await delay(800);
+    }
     
     const { data: directData, error: directError } = await supabase.functions.invoke('installer-rag-direct', {
       body: {
@@ -80,9 +92,14 @@ export const generateMethodStatement = async (
       stepsCount: directData.steps?.length || 0
     });
     
-    if (onProgress) onProgress(`⚡ Retrieved ${diag.pwCount || 0} procedures + ${diag.regsCount || 0} regulations (${diag.ragMs || 0}ms)`);
-    if (onProgress) onProgress('STAGE_2_START');
-    if (onProgress) onProgress('🤖 Generating method statement...');
+    if (onProgress) {
+      onProgress(`⚡ Retrieved ${diag.pwCount || 0} procedures + ${diag.regsCount || 0} regulations (${diag.ragMs || 0}ms)`);
+      await delay(1000);
+      onProgress('STAGE_3_START');
+      await delay(800);
+      onProgress('🤖 Generating method statement...');
+      await delay(500);
+    }
     
     // Transform direct RAG output to expected format
     const installerOutput = {
@@ -121,10 +138,15 @@ export const generateMethodStatement = async (
       citations: directData.citations || []
     };
     
-    if (onProgress) onProgress('STAGE_3_START');
-    if (onProgress) onProgress(`✅ Generated ${installerOutput.installationSteps.length} installation steps`);
-    if (onProgress) onProgress('STAGE_4_START');
-    if (onProgress) onProgress('STAGE_5_COMPLETE');
+    if (onProgress) {
+      onProgress(`✅ Generated ${installerOutput.installationSteps.length} installation steps`);
+      await delay(1000);
+      onProgress('STAGE_4_START');
+      await delay(800);
+      onProgress('✅ Validating compliance requirements...');
+      await delay(1000);
+      onProgress('STAGE_5_COMPLETE');
+    }
     
     // Return simplified output (no parallel agents for now - focus on speed)
     return mergeAgentOutputs(installerOutput, null, null);

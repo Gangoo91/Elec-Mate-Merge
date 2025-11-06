@@ -16,6 +16,10 @@ interface InstallationProcessingViewProps {
 
 export const InstallationProcessingView = ({ progress, startTime, onCancel, onQuickMode }: InstallationProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [simulatedProgress, setSimulatedProgress] = useState<{
+    stage: 'initializing' | 'rag' | 'ai' | 'validation' | 'complete';
+    message: string;
+  } | null>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,6 +27,24 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
     }, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  // Auto-advance stages based on elapsed time if real progress hasn't updated
+  useEffect(() => {
+    if (!progress) return;
+
+    const elapsed = elapsedTime;
+    
+    // Time-based stage advancement (similar to simple agent)
+    if (elapsed <= 5) {
+      setSimulatedProgress({ stage: 'initializing', message: 'Starting up systems...' });
+    } else if (elapsed <= 20) {
+      setSimulatedProgress({ stage: 'rag', message: 'Searching BS 7671 regulations...' });
+    } else if (elapsed <= 60) {
+      setSimulatedProgress({ stage: 'ai', message: 'Generating installation steps...' });
+    } else if (elapsed <= 90) {
+      setSimulatedProgress({ stage: 'validation', message: 'Validating compliance...' });
+    }
+  }, [elapsedTime, progress]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -39,8 +61,10 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
     'complete': 100
   };
 
-  const progressValue = progress ? progressMap[progress.stage] : 0;
-  const currentStep = progress?.message || 'Initializing...';
+  // Use real progress if available, otherwise use simulated
+  const displayProgress = progress?.stage !== 'initializing' ? progress : (simulatedProgress || progress);
+  const progressValue = displayProgress ? progressMap[displayProgress.stage] : 0;
+  const currentStep = displayProgress?.message || 'Initializing...';
 
   const estimatedTotal = 180; // 3 minutes estimate
   const estimatedRemaining = Math.max(0, estimatedTotal - elapsedTime);
@@ -54,8 +78,8 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
     { stage: 'complete', label: 'Complete' }
   ];
 
-  // Get current stage index
-  const currentStageIndex = progress ? allStages.findIndex(s => s.stage === progress.stage) : -1;
+  // Get current stage index using display progress
+  const currentStageIndex = displayProgress ? allStages.findIndex(s => s.stage === displayProgress.stage) : -1;
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -93,7 +117,7 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
             </div>
             <Progress value={progressValue} className="h-2" />
             
-            {currentStep && progress && (
+            {currentStep && displayProgress && (
               <div className="pt-3 mt-3 border-t border-border text-xs text-muted-foreground">
                 <p className="flex items-center gap-2">
                   <span className="inline-block w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></span>
@@ -127,7 +151,7 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
           <h4 className="font-semibold mb-4">What's Happening?</h4>
           <div className="space-y-3">
             <div className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
-              progress?.stage === 'rag' ? 'bg-purple-500/10' : ''
+              displayProgress?.stage === 'rag' ? 'bg-purple-500/10' : ''
             }`}>
               <Search className="h-5 w-5 text-primary mt-0.5 shrink-0" />
               <div>
@@ -136,7 +160,7 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
               </div>
             </div>
             <div className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
-              progress?.stage === 'ai' && currentStageIndex <= 2 ? 'bg-purple-500/10' : ''
+              displayProgress?.stage === 'ai' && currentStageIndex <= 2 ? 'bg-purple-500/10' : ''
             }`}>
               <Zap className="h-5 w-5 text-primary mt-0.5 shrink-0" />
               <div>
@@ -145,7 +169,7 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
               </div>
             </div>
             <div className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
-              progress?.stage === 'ai' && currentStageIndex > 2 ? 'bg-purple-500/10' : ''
+              displayProgress?.stage === 'ai' && currentStageIndex > 2 ? 'bg-purple-500/10' : ''
             }`}>
               <Clock className="h-5 w-5 text-primary mt-0.5 shrink-0" />
               <div>
@@ -154,7 +178,7 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
               </div>
             </div>
             <div className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
-              progress?.stage === 'validation' ? 'bg-purple-500/10' : ''
+              displayProgress?.stage === 'validation' ? 'bg-purple-500/10' : ''
             }`}>
               <ShieldCheck className="h-5 w-5 text-primary mt-0.5 shrink-0" />
               <div>
