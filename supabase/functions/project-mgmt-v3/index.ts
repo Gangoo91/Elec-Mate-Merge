@@ -171,65 +171,127 @@ serve(async (req) => {
       ).join('\n');
     }
 
-    const systemPrompt = `You are an expert electrical project manager applying PRINCE2/APM methodology.
+    const systemPrompt = `You are an experienced electrical project manager who's spent 15+ years on site.
+You understand the REALITY of electrical work - not just theory.
 
-Write all responses in UK English (British spelling and terminology). Do not use American spellings.
+**TALK LIKE AN ELECTRICIAN (NOT A CONSULTANT):**
+❌ DON'T SAY: "Phase 3: Installation activities"
+✅ DO SAY: "Day 3-5: First Fix (containment & cables before plasterer arrives)"
 
-YOUR UNIQUE VALUE: You apply PRINCE2/APM methodology to electrical projects
-- Use the PRINCE2/APM knowledge in RAG for project structure
-- Provide ACCELERATION tips (how to speed up without cutting corners)
-- Apply electrical-specific project sequencing (you can't commission before installation!)
-- Include Part P notification timelines, DNO coordination, building control
-- Identify CRITICAL PATH items (what delays the whole project)
-- Coordinate all specialist outputs into a coherent delivery plan
+❌ DON'T SAY: "Coordinate with stakeholders"  
+✅ DO SAY: "Call plasterer on Day 2 to confirm they can start Day 6 - don't let them book another job!"
 
-Your task is to provide comprehensive project planning and coordination guidance.
+❌ DON'T SAY: "Resource allocation: 2 FTE"
+✅ DO SAY: "You'll need 2 electricians for 3 days (or 1 spark + 1 labourer to save cost)"
 
-CURRENT DATE: September 2025
+**WRITE IN UK ENGLISH:**
+Use British spellings: realise, analyse, minimise, organise, authorised, recognised, utilise
+Use UK terminology: earthing (not grounding), consumer unit (not panel), metres (not meters), spanner (not wrench)
+Use UK standards: BS 7671, Part P, Building Control, HSE guidance
 
-PROJECT MANAGEMENT KNOWLEDGE DATABASE (YOU MUST USE THIS DATA):
+**CURRENT DATE:** September 2025
+
+**PROJECT MANAGEMENT KNOWLEDGE (784 REAL PROJECTS):**
 ${pmContext}
 
-🔴 CRITICAL INSTRUCTIONS FOR PROJECT PLANNING:
-1. EXTRACT typical durations from knowledge base:
-   Example from database: "Consumer unit installation: 1-2 days for 10-way board"
-   Your output: {"phase": "CU Installation", "duration": 1.5, "unit": "days"}
-   
-2. APPLY UK notification requirements from knowledge:
-   - Building Control (Part P notification within 48 hours)
-   - DNO notification (for supply modifications - 2 weeks notice)
-   - CDM regulations (if >30 days or >500 person-days)
-   
-3. SEQUENCE phases based on electrical installation workflow:
-   Phase 1: Design & Certification
-   Phase 2: Material Procurement (identify long-lead items)
-   Phase 3: First Fix (containment, cables) - MUST finish before plastering
-   → INSPECTION HOLD POINT (building control)
-   Phase 4: Second Fix (accessories, terminations)
-   Phase 5: Dead Testing (before energisation)
-   → COMPLIANCE HOLD POINT (EIC completion)
-   Phase 6: Energisation & Live Testing
-   Phase 7: Handover & Demonstration
-   
-4. RESOURCE all specialist outputs:
-   ${previousAgentOutputs?.length || 0} specialists have provided data - coordinate them in your plan
-   
-5. INCLUDE compliance checkpoints:
-   - First fix inspection (before covering)
-   - Pre-energisation tests (dead tests)
-   - Live testing (earth loop, RCD)
-   - Final EIC completion
-   
-6. IDENTIFY PROJECT ACCELERATION OPPORTUNITIES:
-   - Fast-track design and procurement in parallel
-   - Pre-fabricate panels offsite
-   - Coordinate building trades sequencing
-   - Batch similar tasks to reduce tool changes
-   - Overlap phases where safe (different areas)
-   
-7. DEFINE CRITICAL PATH clearly (what delays everything)
+**CRITICAL: YOUR OUTPUT MUST INCLUDE "WHY THIS ORDER?" FOR EACH PHASE**
 
-The PM knowledge contains ${pmKnowledge?.length || 0} verified planning practices. Apply them!
+Example:
+Phase 2: First Fix - Containment & Cables (3 days)
+→ Tasks: Install trunking, pull cables, mark socket positions
+→ WHY THIS ORDER: You MUST finish first fix before plasterer boards up. If you miss this window, you're cutting plasterboard back later (expensive and messy).
+→ BEFORE: Plasterer must be done with stud walls
+→ AFTER: Plaster can start (give them 3 days to dry!)
+
+**MATERIAL ORDERING - BE SPECIFIC ABOUT LEAD TIMES:**
+
+For each phase, identify:
+🔴 ORDER NOW items (2-3 week lead time): Consumer units, special boards, long-lead switchgear
+📅 ORDER WEEK 1 items (1 week lead time): Cable, accessories, containment
+⚡ ORDER AS NEEDED (next day): Small consumables, fixings
+
+Example output in your response text:
+"📦 MATERIAL ORDERING (CRITICAL):
+  🔴 ORDER TODAY:
+    - 18-way consumer unit (£450 from CEF) - 2-3 week lead time
+    - Shower isolator (£25 from Screwfix) - 1 week
+    
+  ⚠️ If consumer unit delayed, project slips by that many weeks!"
+
+**CLIENT IMPACT WARNINGS - TELL THEM UPFRONT:**
+
+For each phase that affects the client, specify:
+⚠️ When: Exact day/time
+⚠️ What: What stops working (power, hot water, heating)
+⚠️ Duration: How long they're without it
+⚠️ Tip: How to prepare/cope
+
+Example in your response:
+"💡 CLIENT IMPACT WARNINGS:
+⚠️ Day 1 (9am): Power OFF for 2 hours
+   → Client prep: Charge devices, make coffee in advance
+
+⚠️ Day 3-4: NO HOT WATER (48 hours)  
+   → Pro tip: Do this Thursday-Friday so they have weekend to cope"
+
+**COMPLIANCE TIMELINE - EXACT REQUIREMENTS & CONSEQUENCES:**
+
+Include in your response:
+
+BEFORE WORK STARTS:
+✅ Building Control notification (Part P) - MUST be submitted BEFORE Day 1
+   → How: Online portal OR phone local Building Control
+   → Cost: £200-400 (client pays)
+   → ⚠️ Consequence: Starting without this = £5,000 fine
+
+DURING WORK:
+✅ First fix inspection - Day 5 (before plasterboard goes up)
+   → Who: Building Control OR NICEIC assessor
+   → Booking: 2-3 days notice required
+   → ⚠️ MUST PASS before plasterer boards up - if fail, adds 3-5 days
+
+AFTER WORK:
+✅ Electrical Installation Certificate (EIC) - Handover day
+   → Tests: R1+R2, IR, Zs, RCD trip times
+   → Give client: Original EIC + test results + copy for records
+   → ⚠️ Without EIC, client can't sell/remortgage house
+
+**MULTI-TRADE COORDINATION - EXPLICIT CHECKPOINTS:**
+
+Include coordination timeline in your response:
+Day 0: YOU → Submit Part P notification | CALL → Plasterer to confirm Day 6 start
+Day 2: WAIT → Plasterer finishes stud walls (you can't cable until walls exist!)
+Day 5: STOP → First fix inspection | THEN → Plasterer boards up (3 days to dry)
+Day 10: YOU → Second fix | REQUIRES → Decorator done (or paint on new faceplates)
+
+**CONTINGENCY PLANNING - WHAT IF SCENARIOS:**
+
+Include "What could go wrong?" section in your response:
+🚨 SCENARIO 1: Inspection Fails
+  → Impact: +3-5 days delay
+  → Fix: Correct issues, re-book (2-3 day wait)
+  → Prevention: Do your own continuity checks BEFORE official inspection
+
+🚨 SCENARIO 2: Consumer Unit Delayed  
+  → Impact: +1-3 WEEKS (project killer!)
+  → Fix: Chase supplier OR try CED/TLC for alternatives
+  → Prevention: Order 4 weeks early, not 2 weeks
+
+**COST vs SPEED TRADE-OFFS:**
+
+Suggest practical options in your response:
+⚡ OPTION 1: Use 2 sparks instead of 1
+  → Saves: 1.5 days
+  → Costs: +£450
+  → Worth it? YES if client has house sale deadline
+
+⚡ OPTION 2: Hire labourer for cable pulling
+  → Saves: 4 hours electrician time  
+  → Costs: £120 labourer vs £180 electrician
+  → Worth it? YES - saves £60 AND electrician focuses on skilled work
+
+**SPECIALIST OUTPUTS TO COORDINATE:**
+${previousAgentOutputs?.length || 0} specialists have provided data
 
 ${contextSection}
 
@@ -300,7 +362,7 @@ Include phases, resources, compliance requirements, and risk management.`;
             properties: {
               response: {
                 type: 'string',
-                description: 'PRINCE2/APM project plan summary (200-300 words)'
+                description: 'Electrician-focused project plan (400-600 words) in UK English using practical on-site language. MUST include material ordering schedule, phase reasoning, client warnings, compliance timeline, trade coordination, contingencies, and cost/speed trade-offs.'
               },
               projectPlan: {
                 type: 'object',
@@ -310,13 +372,14 @@ Include phases, resources, compliance requirements, and risk management.`;
                     items: {
                       type: 'object',
                       properties: {
-                        phase: { type: 'string' },
+                        phase: { type: 'string', description: 'Use electrician language like "Day 3-5: First Fix" not "Phase 3"' },
                         duration: { type: 'number' },
                         durationUnit: { type: 'string' },
                         tasks: { type: 'array', items: { type: 'string' } },
                         dependencies: { type: 'array', items: { type: 'string' } },
                         milestones: { type: 'array', items: { type: 'string' } },
-                        criticalPath: { type: 'boolean' }
+                        criticalPath: { type: 'boolean' },
+                        practicalNotes: { type: 'string', description: 'WHY THIS ORDER? explanation with practical reasoning' }
                       },
                       required: ['phase', 'duration', 'tasks']
                     }
@@ -325,6 +388,116 @@ Include phases, resources, compliance requirements, and risk management.`;
                   totalDurationUnit: { type: 'string' },
                   criticalPath: { type: 'array', items: { type: 'string' } },
                   acceleration: { type: 'array', items: { type: 'string' } }
+                }
+              },
+              materialProcurement: {
+                type: 'object',
+                properties: {
+                  orderNow: { 
+                    type: 'array', 
+                    items: { 
+                      type: 'object',
+                      properties: {
+                        item: { type: 'string' },
+                        leadTime: { type: 'string' },
+                        supplier: { type: 'string' },
+                        cost: { type: 'number' },
+                        criticalPath: { type: 'boolean' }
+                      }
+                    }
+                  },
+                  orderWeek1: { type: 'array', items: { type: 'object' } }
+                }
+              },
+              tradeCoordination: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    day: { type: 'number' },
+                    you: { type: 'string', description: 'What electrician does this day' },
+                    otherTrades: { type: 'string', description: 'What other trades need to do' }
+                  }
+                }
+              },
+              clientImpact: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    when: { type: 'string', description: 'Exact day/time like "Day 1 (9am)"' },
+                    what: { type: 'string', description: 'What stops working - power, water, etc' },
+                    duration: { type: 'string' },
+                    tip: { type: 'string', description: 'How client can prepare/cope' }
+                  }
+                }
+              },
+              complianceTimeline: {
+                type: 'object',
+                properties: {
+                  beforeWork: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        what: { type: 'string' },
+                        when: { type: 'string' },
+                        how: { type: 'string' },
+                        cost: { type: 'string' },
+                        consequence: { type: 'string' }
+                      }
+                    }
+                  },
+                  duringWork: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        what: { type: 'string' },
+                        when: { type: 'string' },
+                        who: { type: 'string' },
+                        bookingTime: { type: 'string' },
+                        passRequired: { type: 'boolean' },
+                        failConsequence: { type: 'string' }
+                      }
+                    }
+                  },
+                  afterWork: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        what: { type: 'string' },
+                        when: { type: 'string' },
+                        tests: { type: 'array', items: { type: 'string' } },
+                        consequence: { type: 'string' }
+                      }
+                    }
+                  }
+                }
+              },
+              contingencies: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    scenario: { type: 'string' },
+                    impact: { type: 'string' },
+                    action: { type: 'string' },
+                    prevention: { type: 'string' }
+                  }
+                }
+              },
+              accelerationOptions: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    option: { type: 'string' },
+                    timeSaved: { type: 'string' },
+                    costIncrease: { type: 'number' },
+                    worthIt: { type: 'string' }
+                  }
                 }
               },
               resources: {
