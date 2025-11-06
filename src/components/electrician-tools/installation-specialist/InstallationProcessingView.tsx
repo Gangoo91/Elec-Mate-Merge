@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { Wrench, X, CheckCircle2, Circle, Loader2 } from 'lucide-react';
+import { Wrench, X, CheckCircle2, Circle, Loader2, Search, Zap, Clock, ShieldCheck } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 interface InstallationProcessingViewProps {
@@ -158,25 +158,37 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
       {/* What's Happening */}
       <Card className="bg-muted/50">
         <CardContent className="p-6">
-          <h4 className="font-semibold mb-3">What's Happening?</h4>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li className="flex items-start gap-2">
-              <span className="text-blue-400 mt-1">•</span>
-              <span>Analysing installation requirements against BS 7671 regulations</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-blue-400 mt-1">•</span>
-              <span>Searching for compliant installation methods and procedures</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-blue-400 mt-1">•</span>
-              <span>Generating step-by-step installation guidance with safety controls</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-blue-400 mt-1">•</span>
-              <span>Creating equipment lists and inspection checkpoints</span>
-            </li>
-          </ul>
+          <h4 className="font-semibold mb-4">What's Happening?</h4>
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <Search className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+              <div>
+                <div className="font-medium text-foreground">Searching BS 7671 installation requirements</div>
+                <div className="text-sm text-muted-foreground">Finding relevant cable routing, protection, and accessory regulations</div>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <Zap className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+              <div>
+                <div className="font-medium text-foreground">Calculating cable sizes and protection</div>
+                <div className="text-sm text-muted-foreground">Determining conductor CSA, voltage drop, and protective device ratings</div>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <Clock className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+              <div>
+                <div className="font-medium text-foreground">Generating step-by-step procedures</div>
+                <div className="text-sm text-muted-foreground">Creating detailed installation instructions with first fix and second fix</div>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <ShieldCheck className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+              <div>
+                <div className="font-medium text-foreground">Verifying regulation compliance</div>
+                <div className="text-sm text-muted-foreground">Cross-checking with BS 7671 requirements and certification needs</div>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
 
