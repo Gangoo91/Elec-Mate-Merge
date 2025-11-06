@@ -96,7 +96,9 @@ export const generateMethodStatement = async (
       onProgress(`⚡ Retrieved ${diag.pwCount || 0} procedures + ${diag.regsCount || 0} regulations (${diag.ragMs || 0}ms)`);
       await delay(1000);
       onProgress('STAGE_3_START');
-      await delay(800);
+      await delay(1000);
+      onProgress('STAGE_3_5_START');
+      await delay(1000);
       onProgress('🤖 Generating method statement...');
       await delay(500);
     }

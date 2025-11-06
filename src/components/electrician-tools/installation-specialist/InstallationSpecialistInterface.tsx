@@ -23,7 +23,7 @@ const InstallationSpecialistInterface = () => {
   
   const { callAgent, isLoading, progress } = useSimpleAgent();
   const [fullModeProgress, setFullModeProgress] = useState<{
-    stage: 'initializing' | 'rag' | 'ai' | 'validation' | 'complete';
+    stage: 'initializing' | 'rag' | 'ai' | 'generation' | 'validation' | 'complete';
     message: string;
   } | null>(null);
   const lastProjectRef = useRef<{details: ProjectDetailsType, description: string} | null>(null);
@@ -59,7 +59,9 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
             } else if (message === 'STAGE_2_START') {
               setFullModeProgress({ stage: 'rag', message: 'Searching BS 7671 regulations...' });
             } else if (message === 'STAGE_3_START') {
-              setFullModeProgress({ stage: 'ai', message: 'Generating installation steps...' });
+              setFullModeProgress({ stage: 'ai', message: 'Calculating cable sizes...' });
+            } else if (message === 'STAGE_3_5_START') {
+              setFullModeProgress({ stage: 'generation', message: 'Generating step-by-step procedures...' });
             } else if (message === 'STAGE_4_START') {
               setFullModeProgress({ stage: 'validation', message: 'Validating compliance...' });
             } else if (message === 'STAGE_5_COMPLETE') {

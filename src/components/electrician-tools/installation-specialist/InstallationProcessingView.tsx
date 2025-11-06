@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 
 interface InstallationProcessingViewProps {
   progress: {
-    stage: 'initializing' | 'rag' | 'ai' | 'validation' | 'complete';
+    stage: 'initializing' | 'rag' | 'ai' | 'generation' | 'validation' | 'complete';
     message: string;
   } | null;
   startTime: number;
@@ -17,7 +17,7 @@ interface InstallationProcessingViewProps {
 export const InstallationProcessingView = ({ progress, startTime, onCancel, onQuickMode }: InstallationProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [simulatedProgress, setSimulatedProgress] = useState<{
-    stage: 'initializing' | 'rag' | 'ai' | 'validation' | 'complete';
+    stage: 'initializing' | 'rag' | 'ai' | 'generation' | 'validation' | 'complete';
     message: string;
   } | null>(null);
 
@@ -39,8 +39,10 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
       setSimulatedProgress({ stage: 'initializing', message: 'Starting up systems...' });
     } else if (elapsed <= 20) {
       setSimulatedProgress({ stage: 'rag', message: 'Searching BS 7671 regulations...' });
-    } else if (elapsed <= 60) {
-      setSimulatedProgress({ stage: 'ai', message: 'Generating installation steps...' });
+    } else if (elapsed <= 50) {
+      setSimulatedProgress({ stage: 'ai', message: 'Calculating requirements...' });
+    } else if (elapsed <= 70) {
+      setSimulatedProgress({ stage: 'generation', message: 'Generating procedures...' });
     } else if (elapsed <= 90) {
       setSimulatedProgress({ stage: 'validation', message: 'Validating compliance...' });
     }
@@ -57,6 +59,7 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
     'initializing': 10,
     'rag': 25,
     'ai': 50,
+    'generation': 60,
     'validation': 75,
     'complete': 100
   };
@@ -73,7 +76,8 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
   const allStages = [
     { stage: 'initializing', label: 'Initializing system' },
     { stage: 'rag', label: 'Searching BS 7671 regulations' },
-    { stage: 'ai', label: 'Generating installation steps' },
+    { stage: 'ai', label: 'Calculating cable sizes' },
+    { stage: 'generation', label: 'Generating step-by-step procedures' },
     { stage: 'validation', label: 'Validating compliance' },
     { stage: 'complete', label: 'Complete' }
   ];
@@ -160,7 +164,7 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
               </div>
             </div>
             <div className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
-              displayProgress?.stage === 'ai' && currentStageIndex <= 2 ? 'bg-purple-500/10' : ''
+              displayProgress?.stage === 'ai' ? 'bg-purple-500/10' : ''
             }`}>
               <Zap className="h-5 w-5 text-primary mt-0.5 shrink-0" />
               <div>
@@ -169,7 +173,7 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
               </div>
             </div>
             <div className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
-              displayProgress?.stage === 'ai' && currentStageIndex > 2 ? 'bg-purple-500/10' : ''
+              displayProgress?.stage === 'generation' ? 'bg-purple-500/10' : ''
             }`}>
               <Clock className="h-5 w-5 text-primary mt-0.5 shrink-0" />
               <div>
