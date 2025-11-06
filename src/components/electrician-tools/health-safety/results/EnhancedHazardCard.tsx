@@ -18,7 +18,7 @@ export const EnhancedHazardCard = ({ hazard, index }: EnhancedHazardCardProps) =
 
   return (
     <div 
-      className={`rounded-lg border-l-4 ${riskColors.border} bg-elec-card/50 overflow-hidden hover:shadow-lg transition-all ${riskColors.glow}`}
+      className={`rounded-lg border-l-4 ${riskColors.border} bg-elec-card/50 overflow-hidden hover:shadow-lg transition-all`}
     >
       <MobileAccordion type="single" collapsible>
         <MobileAccordionItem value={`hazard-${index}`}>
