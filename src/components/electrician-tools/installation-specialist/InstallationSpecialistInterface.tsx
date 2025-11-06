@@ -22,6 +22,10 @@ const InstallationSpecialistInterface = () => {
   });
   
   const { callAgent, isLoading, progress } = useSimpleAgent();
+  const [fullModeProgress, setFullModeProgress] = useState<{
+    stage: 'initializing' | 'parsing' | 'rag' | 'ai' | 'validation' | 'complete';
+    message: string;
+  } | null>(null);
   const lastProjectRef = useRef<{details: ProjectDetailsType, description: string} | null>(null);
 
   const handleGenerate = async (projectDetails: ProjectDetailsType, description: string, useFullMode: boolean) => {
@@ -48,7 +52,23 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           query,
           projectDetails,
           'ms-' + Date.now(),
-          () => {} // Progress callback - not needed with useSimpleAgent
+          (message: string) => {
+            // Map stage markers to progress stages
+            if (message === 'STAGE_1_START') {
+              setFullModeProgress({ stage: 'initializing', message: 'Starting up...' });
+            } else if (message === 'STAGE_2_START') {
+              setFullModeProgress({ stage: 'rag', message: 'Searching BS 7671 regulations...' });
+            } else if (message === 'STAGE_3_START') {
+              setFullModeProgress({ stage: 'ai', message: 'Generating installation steps...' });
+            } else if (message === 'STAGE_4_START') {
+              setFullModeProgress({ stage: 'validation', message: 'Validating compliance...' });
+            } else if (message === 'STAGE_5_COMPLETE') {
+              setFullModeProgress({ stage: 'complete', message: 'Method statement ready!' });
+            } else if (message.startsWith('🔍') || message.startsWith('⚡') || message.startsWith('🤖') || message.startsWith('✅')) {
+              // Preserve current stage but update message
+              setFullModeProgress(prev => prev ? { ...prev, message } : null);
+            }
+          }
         );
 
         // Transform merged result for UI display
@@ -261,6 +281,7 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
       setShowResults(false);
     } finally {
       setIsGenerating(false);
+      setTimeout(() => setFullModeProgress(null), 2000);
     }
   };
 
@@ -287,11 +308,12 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
   if (isLoading || isGenerating) {
     return (
       <InstallationProcessingView 
-        progress={progress}
+        progress={fullModeProgress || progress}
         startTime={generationStartTime}
         onCancel={() => {
           setShowResults(false);
           setIsGenerating(false);
+          setFullModeProgress(null);
         }}
         onQuickMode={() => {
           if (lastProjectRef.current) {
