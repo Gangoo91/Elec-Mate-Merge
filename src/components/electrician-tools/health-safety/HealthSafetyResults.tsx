@@ -19,27 +19,68 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
     toast.success("Copied to clipboard");
   };
 
-  const handleExportPDF = () => {
+  const handleExportPDF = async () => {
+    const loadingToast = toast.loading("Generating professional PDF...");
+    
     try {
-      const { generateRiskAssessmentPDF } = require('@/utils/pdf-generators/risk-assessment-pdf');
-      
-      const pdfData = {
-        projectName: data.projectName || 'Untitled Project',
-        location: data.location || 'Not specified',
-        assessor: 'AI Health & Safety Advisor',
-        date: new Date().toISOString().split('T')[0],
-        projectType: data.workType || 'general',
-        hazards: data.hazards || [],
-        requiredPPE: data.ppe?.map((p: any) => p.ppeType) || [],
-        emergencyProcedures: data.emergencyProcedures || [],
-        notes: data.notes
-      };
-      
-      const pdf = generateRiskAssessmentPDF(pdfData);
-      pdf.save(`Risk-Assessment-${data.projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`);
-      
-      toast.success("PDF exported successfully");
+      const { supabase } = await import('@/integrations/supabase/client');
+      const { data: { user } } = await supabase.auth.getUser();
+
+      // Try PDF Monkey first
+      const { data: pdfResult, error } = await supabase.functions.invoke('generate-health-safety-pdf', {
+        body: {
+          healthSafetyData: data,
+          userId: user?.id
+        }
+      });
+
+      if (error) throw error;
+
+      // Check if we should use fallback
+      if (pdfResult?.useFallback) {
+        console.log('Using jsPDF fallback:', pdfResult.message);
+        toast.dismiss(loadingToast);
+        
+        // Fallback to jsPDF
+        const { generateRiskAssessmentPDF } = require('@/utils/pdf-generators/risk-assessment-pdf');
+        
+        const pdfData = {
+          projectName: data.projectName || 'Untitled Project',
+          location: data.location || 'Not specified',
+          assessor: 'AI Health & Safety Advisor',
+          date: new Date().toISOString().split('T')[0],
+          projectType: data.workType || 'general',
+          hazards: data.hazards || [],
+          requiredPPE: data.ppe?.map((p: any) => p.ppeType) || [],
+          emergencyProcedures: data.emergencyProcedures || [],
+          notes: data.notes
+        };
+        
+        const pdf = generateRiskAssessmentPDF(pdfData);
+        pdf.save(`Risk-Assessment-${data.projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`);
+        
+        toast.success("PDF exported successfully (basic format)");
+        return;
+      }
+
+      // Success with PDF Monkey
+      if (pdfResult?.success && pdfResult?.downloadUrl) {
+        toast.dismiss(loadingToast);
+        
+        // Trigger download
+        const link = document.createElement('a');
+        link.href = pdfResult.downloadUrl;
+        link.download = `Health-Safety-${data.projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        toast.success("Professional PDF exported successfully");
+      } else {
+        throw new Error('PDF generation failed');
+      }
     } catch (error) {
+      toast.dismiss(loadingToast);
       console.error('PDF generation error:', error);
       toast.error("Failed to export PDF");
     }

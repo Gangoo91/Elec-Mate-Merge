@@ -55,6 +55,10 @@ timeout_sec = 180
 verify_jwt = false
 timeout_sec = 180
 
+[functions.generate-health-safety-pdf]
+verify_jwt = true
+timeout_sec = 180
+
 # V3 Agent Functions - Active
 [functions.designer-agent]
 verify_jwt = false
