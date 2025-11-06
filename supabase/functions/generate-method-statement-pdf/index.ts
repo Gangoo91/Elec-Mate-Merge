@@ -69,8 +69,26 @@ serve(async (req) => {
 
   try {
     const requestBody = await req.json();
+    console.log('📥 Received request body keys:', Object.keys(requestBody));
+    
     const methodData = requestBody.methodData || requestBody.methodStatement;
+    
+    if (!methodData) {
+      console.error('❌ No method data found in request. Body keys:', Object.keys(requestBody));
+      return new Response(JSON.stringify({ 
+        success: false,
+        useFallback: true,
+        error: 'No method data provided. Expected methodData or methodStatement in request body.'
+      }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    
+    console.log('✅ Method data received. Keys:', Object.keys(methodData));
+    
     const pdfMonkeyApiKey = Deno.env.get('PDF_MONKEY_API_KEY');
+
 
     console.log('Generating Method Statement PDF with template:', METHOD_STATEMENT_TEMPLATE_ID);
 
