@@ -1,17 +1,22 @@
 import { useEffect } from "react";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, FileText, Clock, Zap } from "lucide-react";
 import confetti from "canvas-confetti";
 import type { CommissioningResponse } from "@/types/commissioning-response";
+import {
+  Dialog,
+  DialogContent,
+} from "@/components/ui/dialog";
 
 interface CommissioningSuccessProps {
   results: CommissioningResponse;
   onViewResults: () => void;
   generationTime: number; // seconds
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-const CommissioningSuccess = ({ results, onViewResults, generationTime }: CommissioningSuccessProps) => {
+const CommissioningSuccess = ({ results, onViewResults, generationTime, open, onOpenChange }: CommissioningSuccessProps) => {
   useEffect(() => {
     // Confetti animation
     const duration = 3000;
@@ -66,8 +71,8 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime }: Commis
   const timeSaved = 120; // 2 hours vs manual BS 7671 lookup
 
   return (
-    <div className="min-h-[70vh] flex items-center justify-center animate-fade-in p-4">
-      <Card className="max-w-2xl w-full p-6 sm:p-8 bg-gradient-to-br from-purple-500/10 via-background to-background border-purple-500/30">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-2xl p-6 sm:p-8 bg-gradient-to-br from-purple-500/10 via-background to-background border-purple-500/30">
         <div className="text-center space-y-6">
           {/* Success Icon */}
           <div className="flex justify-center">
@@ -135,7 +140,10 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime }: Commis
 
           {/* View Results Button */}
           <Button 
-            onClick={onViewResults}
+            onClick={() => {
+              onViewResults();
+              onOpenChange(false);
+            }}
             size="lg"
             className="w-full bg-gradient-to-r from-purple-400 to-purple-600 hover:from-purple-500 hover:to-purple-700 text-white h-12 sm:h-14 touch-manipulation text-base sm:text-lg"
           >
@@ -147,8 +155,8 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime }: Commis
             Generated in {generationTime}s
           </p>
         </div>
-      </Card>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 

@@ -89,27 +89,27 @@ const CommissioningInterface = () => {
     return <CommissioningProcessingView progress={progress} startTime={generationStartTime} />;
   }
 
-  // Show celebration screen after success
-  if (showCelebration && results) {
-    return (
-      <CommissioningSuccess 
-        results={results} 
-        onViewResults={handleViewResults}
-        generationTime={generationTime}
-      />
-    );
-  }
-
   // Show results page
   if (results) {
     return (
-      <CommissioningResults 
-        results={results}
-        projectName={projectInfo.projectName}
-        location={projectInfo.location}
-        installationDate={projectInfo.installationDate}
-        onStartOver={handleStartOver}
-      />
+      <>
+        <CommissioningResults 
+          results={results}
+          projectName={projectInfo.projectName}
+          location={projectInfo.location}
+          installationDate={projectInfo.installationDate}
+          onStartOver={handleStartOver}
+        />
+        
+        {/* Success celebration popup */}
+        <CommissioningSuccess 
+          results={results} 
+          onViewResults={handleViewResults}
+          generationTime={generationTime}
+          open={showCelebration}
+          onOpenChange={setShowCelebration}
+        />
+      </>
     );
   }
 
