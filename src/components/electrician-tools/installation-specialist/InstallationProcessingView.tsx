@@ -93,35 +93,6 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
             </div>
             <Progress value={progressValue} className="h-2" />
             
-            <div className="pt-4 space-y-2">
-              {allStages.map((stage, index) => {
-                const isCompleted = index < currentStageIndex;
-                const isCurrent = index === currentStageIndex;
-                const isPending = index > currentStageIndex;
-
-                return (
-                  <div key={stage.stage} className="flex items-center gap-3 text-sm">
-                    {isCompleted && (
-                      <CheckCircle2 className="h-4 w-4 text-green-400 flex-shrink-0" />
-                    )}
-                    {isCurrent && (
-                      <Loader2 className="h-4 w-4 text-blue-400 animate-spin flex-shrink-0" />
-                    )}
-                    {isPending && (
-                      <Circle className="h-4 w-4 text-muted-foreground/40 flex-shrink-0" />
-                    )}
-                    <span className={
-                      isCompleted ? 'text-green-400 line-through' :
-                      isCurrent ? 'text-foreground font-medium' :
-                      'text-muted-foreground'
-                    }>
-                      {stage.label}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-
             {currentStep && progress && (
               <div className="pt-3 mt-3 border-t border-border text-xs text-muted-foreground">
                 <p className="flex items-center gap-2">
