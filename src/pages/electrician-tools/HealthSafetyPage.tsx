@@ -25,7 +25,7 @@ const HealthSafetyPage = () => {
               AI Health & Safety Advisor
             </h1>
             <p className="text-muted-foreground text-sm sm:text-base mt-1">
-              Risk Assessments, Method Statements & Safety Procedures
+              Risk Assessments & Safety Procedures
             </p>
           </div>
 

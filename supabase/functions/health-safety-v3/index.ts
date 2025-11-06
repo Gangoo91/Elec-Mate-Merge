@@ -1,3 +1,12 @@
+/**
+ * Health & Safety Agent V3 - Risk Assessment Specialist
+ * 
+ * SCOPE: Risk Assessment ONLY
+ * This agent identifies hazards, assesses risks, and specifies control measures.
+ * It does NOT generate method statements or installation procedures.
+ * Use the Installer agent for step-by-step installation guidance.
+ */
+
 // DEPLOYMENT v4.4.0 - DIAGNOSTIC MODE - 2025-10-29
 const VERSION = 'v4.4.0-diagnostic';
 const BOOT_TIME = new Date().toISOString();
@@ -542,41 +551,6 @@ serve(async (req) => {
       contextSection += '5. If unsure what the user means, reference what was discussed to clarify\n';
     }
 
-    // METHOD STATEMENT CRITICAL THINKING GUIDANCE
-    const methodThinkingGuidance = `
-**METHOD STATEMENT CRITICAL THINKING:**
-Your method statement must think 3 steps ahead of what the user would consider.
-
-**EXAMPLE - Replacing a Consumer Unit:**
-
-User thinks:
-1. Isolate supply
-2. Remove old CU
-3. Install new CU
-4. Test circuits
-
-YOU must think:
-0. BEFORE ARRIVAL: Notify DNO of isolation (5 days notice if seal break), check client has occupancy insurance during power outage, arrange generator if critical loads (freezer, medical equipment)
-1. PRE-WORK: Customer belongings protection (dust sheets over items below CU), establish exclusion zone (1m), post "Electrical Work - No Entry" signs, identify location of main incoming fuse (often outside meter cupboard), photograph existing installation for records
-2. ISOLATION: Check DNO cutout seal intact, contact DNO for seal removal if required, isolate main switch, test dead at distribution board AND at each circuit end (sockets, lights), LOTO with personal lock, display "Danger - Men Working" sign
-3. DISCONNECTION: Photograph all final circuit terminations (reference for reconnection), label all cables with circuit designation, safe removal sequence (earth first on removal, earth last on installation), store removed CU in safe location away from work area
-4. INSTALLATION: Check mounting surface structural integrity (some cavity walls need backing plate), verify new CU orientation (upright, level, accessible), route incoming tails with strain relief, segregate final circuits by function (lighting/power/immersion)
-5. TERMINATION: Torque settings per manufacturer (typically 35-40Nm for main switch, 2.5Nm for MCBs), double-check polarity, ensure earth bonding to gas/water <600mm of entry point per Reg 544.1
-6. TESTING: Full sequence: Continuity of protective conductors, Insulation resistance (500V megger), Polarity, Earth fault loop impedance, RCD operation (×1, ×5, ramp test), verify all readings meet BS 7671 Table 41.5
-7. ENERGIZATION: Remove LOTO, inform all persons on site, energize main switch, verify voltage at incoming terminals (230V ±10%), close each MCB individually while checking for overload/fault, test sample outlets on each circuit
-8. HANDOVER: Complete Minor Works Certificate or EIC, explain new consumer unit operation to client, label all circuits, demonstrate RCD test button, advise 10-year inspection interval per BS 7671 Regulation 514.12.1
-
-**OTHER EXAMPLES OF DEEPER THINKING:**
-
-Cable Installation:
-- Not just "install cable" → Consider: Is building occupied? (work out of hours to avoid disruption), Is there asbestos? (Cat A survey needed before penetrations), Are there bats? (protected species, works restricted March-October), What about fire stopping after cables pass through compartment walls? (120-minute rated where required)
-
-MEWP Work:
-- Not just "use MEWP" → Consider: Ground bearing capacity (request ground survey for soft ground/cellars below), Overhead power lines (obtain CAT scan + visual check + 3m exclusion), Weather restrictions (wind speed <12.5 m/s, no rain if electrical work), Rescue plan (who retrieves operator if MEWP fails at height? - need second MEWP or fire brigade pre-arrangement)
-
-Testing & Commissioning:
-- Not just "test circuits" → Consider: Will testing trip any existing circuits? (test sequence to minimise disruption), Can we test without inconveniencing client? (arrange testing during quiet hours), Do we need a standby generator? (care homes, cold storage), Have we allowed time for thermal imaging? (identify loose connections under load), What about proving functional testing? (operate all emergency lighting, fire alarm testing coordination)
-`;
 
     logger.info('💭 THINKING: Identifying electrical hazards and risks');
     
@@ -887,14 +861,14 @@ ${contextSection}
 
 Return comprehensive risk assessment with practical controls from the knowledge base.`;
 
-    const userPrompt = `Provide a risk assessment and method statement for:
+    const userPrompt = `Provide a comprehensive risk assessment for:
 ${query}
 
 ${workType ? `Work Type: ${workType}` : ''}
 ${location ? `Location: ${location}` : ''}
 ${hazards ? `Known Hazards: ${hazards.join(', ')}` : ''}
 
-Include all safety controls, PPE requirements, and emergency procedures.`;
+Include all hazards, risk scores, safety controls, PPE requirements, and emergency procedures.`;
 
     // Step 4: Call AI with optimized timeout and error handling
     console.log('🤖 [DIAGNOSTIC] Preparing OpenAI call...');

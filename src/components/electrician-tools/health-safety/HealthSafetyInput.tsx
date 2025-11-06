@@ -27,9 +27,9 @@ interface ExampleScenario {
 
 const EXAMPLE_SCENARIOS: ExampleScenario[] = [
   {
-    title: "RAMS - Domestic Rewire",
+    title: "Risk Assessment - Domestic Rewire",
     icon: Shield,
-    prompt: "Create a comprehensive risk assessment and method statement for a full rewire of a 3-bedroom house with occupants remaining in situ during works"
+    prompt: "Create a comprehensive risk assessment for a full rewire of a 3-bedroom house with occupants remaining in situ during works"
   },
   {
     title: "Live Environment Working",
@@ -39,7 +39,7 @@ const EXAMPLE_SCENARIOS: ExampleScenario[] = [
   {
     title: "Working at Height",
     icon: HardHat,
-    prompt: "Method statement for installing external lighting 4 metres high on commercial building, including scaffold access and fall prevention"
+    prompt: "Risk assessment for installing external lighting 4 metres high on commercial building, including scaffold access and fall prevention"
   },
   {
     title: "Confined Space Entry",
@@ -119,7 +119,7 @@ export const HealthSafetyInput = ({ onGenerate, isProcessing }: HealthSafetyInpu
         <Textarea 
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder="e.g., Provide a risk assessment and method statement for installing a 3-phase distribution board in an active commercial kitchen, including live environment hazards and control measures"
+          placeholder="e.g., Provide a risk assessment for installing a 3-phase distribution board in an active commercial kitchen, including live environment hazards and control measures"
           className="min-h-[120px] text-sm sm:text-base resize-none"
           maxLength={500}
         />
