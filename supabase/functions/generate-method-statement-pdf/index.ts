@@ -68,7 +68,8 @@ serve(async (req) => {
   }
 
   try {
-    const { methodData } = await req.json();
+    const requestBody = await req.json();
+    const methodData = requestBody.methodData || requestBody.methodStatement;
     const pdfMonkeyApiKey = Deno.env.get('PDF_MONKEY_API_KEY');
 
     console.log('Generating Method Statement PDF with template:', METHOD_STATEMENT_TEMPLATE_ID);
@@ -275,6 +276,7 @@ serve(async (req) => {
       success: true,
       documentId: documentId,
       downloadUrl: downloadUrl,
+      publicUrl: downloadUrl,
       status: status
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

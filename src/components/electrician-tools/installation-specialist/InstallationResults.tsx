@@ -67,6 +67,7 @@ export const InstallationResults = ({
   const [steps, setSteps] = useState<InstallationStep[]>(initialSteps);
   const [showMetadataForm, setShowMetadataForm] = useState(false);
   const [projectMetadata, setProjectMetadata] = useState<ProjectMetadata | undefined>(initialMetadata);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
   // Extract comprehensive data
   const testingProcedures = fullMethodStatement?.testingProcedures || [];
@@ -133,6 +134,7 @@ export const InstallationResults = ({
 
   const handleExportPDF = async () => {
     try {
+      setIsGeneratingPDF(true);
       toast({
         title: "Generating PDF",
         description: "Creating your installation method document...",
@@ -141,6 +143,20 @@ export const InstallationResults = ({
       const methodStatementPayload = {
         jobTitle: `Installation Method: ${projectDetails?.installationType || 'General Installation'}`,
         description: projectDetails?.projectName || 'Electrical Installation Method Statement',
+        projectName: projectDetails?.projectName || 'N/A',
+        location: projectDetails?.location || 'Site Location',
+        contractor: projectMetadata?.contractor || projectDetails?.electricianName || 'Contractor',
+        supervisor: projectMetadata?.siteSupervisor || projectDetails?.electricianName || 'Supervisor',
+        workType: projectDetails?.installationType || 'Electrical Installation',
+        duration: summary.estimatedDuration || 'Variable',
+        teamSize: '1-2 persons',
+        siteManagerName: projectMetadata?.siteManagerName || '',
+        siteManagerPhone: projectMetadata?.siteManagerPhone || '',
+        firstAiderName: projectMetadata?.firstAiderName || '',
+        firstAiderPhone: projectMetadata?.firstAiderPhone || '',
+        safetyOfficerName: projectMetadata?.safetyOfficerName || '',
+        safetyOfficerPhone: projectMetadata?.safetyOfficerPhone || '',
+        assemblyPoint: projectMetadata?.assemblyPoint || 'Main Car Park',
         projectDetails: {
           projectName: projectDetails?.projectName || 'N/A',
           location: projectDetails?.location || 'Site Location',
@@ -159,11 +175,11 @@ export const InstallationResults = ({
           equipmentNeeded: (step as any).toolsRequired || step.toolsRequired || [],
           qualifications: summary.requiredQualifications || [],
           estimatedDuration: step.estimatedDuration || 'Not specified',
-          riskLevel: step.riskLevel || 'medium'
+          riskLevel: (step.riskLevel || 'medium').toUpperCase()
         })),
         toolsRequired: summary.toolsRequired || [],
         materialsRequired: summary.materialsRequired || [],
-        overallRiskLevel: summary.overallRiskLevel || 'medium',
+        overallRiskLevel: (summary.overallRiskLevel || 'medium').toUpperCase(),
         estimatedDuration: summary.estimatedDuration || 'Not specified',
         requiredQualifications: summary.requiredQualifications || ['18th Edition BS 7671:2018+A3:2024'],
         testingProcedures: fullMethodStatement?.testingProcedures || [],
@@ -206,6 +222,8 @@ export const InstallationResults = ({
         description: error instanceof Error ? error.message : "Could not generate PDF. Please try again.",
         variant: "destructive",
       });
+    } finally {
+      setIsGeneratingPDF(false);
     }
   };
 
@@ -349,10 +367,11 @@ export const InstallationResults = ({
             onClick={handleExportPDF} 
             variant="elec" 
             size="wide"
+            disabled={isGeneratingPDF}
             className="shadow-xl hover:shadow-2xl transition-all text-base font-bold"
           >
             <Download className="h-5 w-5 mr-2" />
-            Generate PDF
+            {isGeneratingPDF ? 'Generating PDF...' : 'Generate PDF'}
           </MobileButton>
           <MobileButton 
             onClick={() => setShowMetadataForm(!showMetadataForm)} 
