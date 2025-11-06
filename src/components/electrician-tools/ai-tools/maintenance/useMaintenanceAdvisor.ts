@@ -130,6 +130,7 @@ export const useMaintenanceAdvisor = () => {
   const [results, setResults] = useState<MaintenanceResults | null>(null);
   const [progress, setProgress] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [startTime, setStartTime] = useState<number | null>(null);
 
   const updateInput = (updates: Partial<MaintenanceInput>) => {
     setInput(prev => ({ ...prev, ...updates }));
@@ -157,6 +158,7 @@ export const useMaintenanceAdvisor = () => {
     setState('processing');
     setIsProcessing(true);
     setResults(null);
+    setStartTime(Date.now());
 
     try {
       const isQuick = input.detailLevel === 'quick';
@@ -298,6 +300,7 @@ export const useMaintenanceAdvisor = () => {
     results,
     progress,
     isProcessing,
+    startTime,
     updateInput,
     generateSchedule,
     resetForm,

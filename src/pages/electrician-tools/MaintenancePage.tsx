@@ -13,6 +13,7 @@ const MaintenancePage = () => {
     results,
     progress,
     isProcessing,
+    startTime,
     updateInput,
     generateSchedule,
     resetForm,
@@ -50,7 +51,11 @@ const MaintenancePage = () => {
           )}
           
           {state === 'processing' && (
-            <MaintenanceProcessingView progress={progress} detailLevel={input.detailLevel} />
+            <MaintenanceProcessingView 
+              progress={progress} 
+              detailLevel={input.detailLevel} 
+              startTime={startTime}
+            />
           )}
           
           {state === 'results' && results && (
