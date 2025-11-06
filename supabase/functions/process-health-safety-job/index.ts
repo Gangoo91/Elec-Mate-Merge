@@ -14,13 +14,16 @@ Deno.serve(async (req) => {
   const requestId = generateRequestId();
   const logger = createLogger(requestId, { function: 'process-health-safety-job' });
 
+  let jobId: string | null = null;
+  
   try {
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
-    const { jobId } = await req.json();
+    const body = await req.json();
+    jobId = body.jobId;
     logger.info('Processing job', { jobId });
 
     // Get job details
@@ -61,27 +64,25 @@ Deno.serve(async (req) => {
       })
       .eq('id', jobId);
 
-    // Step 2: Call health-safety agent (25-75%)
-    logger.info('Calling health-safety agent');
+    // Step 2: Call health-safety-v3 agent (25-75%)
+    logger.info('Calling health-safety-v3 agent');
     
-    const agentResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/simple-agent`, {
+    const agentResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/health-safety-v3`, {
       method: 'POST',
       headers: {
         'Authorization': req.headers.get('Authorization') || '',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        agentName: 'health-safety',
-        context: {
-          query: job.query,
-          workType: job.work_type,
-          ...job.project_info
-        }
+        query: job.query,
+        workType: job.work_type,
+        projectInfo: job.project_info
       })
     });
 
     if (!agentResponse.ok) {
-      throw new Error(`Agent call failed: ${agentResponse.statusText}`);
+      const errorText = await agentResponse.text();
+      throw new Error(`Agent call failed: ${agentResponse.status} ${agentResponse.statusText} - ${errorText}`);
     }
 
     const agentData = await agentResponse.json();
@@ -129,7 +130,6 @@ Deno.serve(async (req) => {
   } catch (error: any) {
     logger.error('Job processing failed', { error: error.message });
 
-    const { jobId } = await req.json();
     if (jobId) {
       const supabase = createClient(
         Deno.env.get('SUPABASE_URL')!,
