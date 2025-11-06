@@ -951,9 +951,9 @@ function getAgentFunctionName(agent: string): string {
     'design': 'designer-agent',
     'cost-engineer': 'cost-engineer-agent',
     'cost': 'cost-engineer-agent',
-    'installer': 'installer-agent',
-    'installation': 'installer-agent',
-    'commissioning': 'commissioning-agent',
+    'installer': 'installer-v3',
+    'installation': 'installer-v3',
+    'commissioning': 'commissioning-v3',
     'health-safety': 'health-safety-agent',
     'project-manager': 'project-manager-agent',
     'inspector': 'inspector-agent'

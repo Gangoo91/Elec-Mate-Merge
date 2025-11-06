@@ -89,8 +89,8 @@ serve(async (req) => {
         context: {
           agentType: 'commissioning', // NEW - for trade filtering
           ragPriority: {
-            practical_work: 90,      // PRIMARY - hands-on testing procedures
-            bs7671: 80,              // HIGH - Chapter 64 testing requirements
+            practical_work: 95,      // PRIMARY - hands-on testing procedures
+            bs7671: 85,              // HIGH - Chapter 64 testing requirements
             inspection: 40,          // FALLBACK
             design: 0,
             installation: 0,
