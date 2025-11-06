@@ -64,10 +64,15 @@ Deno.serve(async (req) => {
       })
       .eq('id', jobId);
 
-    // Step 2: Call health-safety-v3 agent (25-75%)
+    // Step 2: Call health-safety-v3 agent with heartbeat (25-70%)
     logger.info('Calling health-safety-v3 agent');
     
-    const agentResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/health-safety-v3`, {
+    const startTime = Date.now();
+    let currentProgress = 25;
+    let heartbeatInterval: number | undefined;
+
+    // Start the AI call
+    const agentPromise = fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/health-safety-v3`, {
       method: 'POST',
       headers: {
         'Authorization': req.headers.get('Authorization') || '',
@@ -80,28 +85,52 @@ Deno.serve(async (req) => {
       })
     });
 
-    if (!agentResponse.ok) {
-      const errorText = await agentResponse.text();
-      throw new Error(`Agent call failed: ${agentResponse.status} ${agentResponse.statusText} - ${errorText}`);
+    // Heartbeat: Update progress every 8 seconds (25% → 70%)
+    heartbeatInterval = setInterval(async () => {
+      const elapsed = Date.now() - startTime;
+      
+      // Gradually increase from 25% to 70% over 120 seconds (2 minutes)
+      currentProgress = Math.min(70, 25 + Math.floor((elapsed / 120000) * 45));
+      
+      await supabase
+        .from('health_safety_jobs')
+        .update({
+          progress: currentProgress,
+          current_step: 'Analyzing regulations and generating risk assessment...'
+        })
+        .eq('id', jobId);
+        
+      logger.info('Heartbeat progress update', { progress: currentProgress, elapsed });
+    }, 8000);
+
+    let agentResponse;
+    let agentData;
+
+    try {
+      agentResponse = await agentPromise;
+      
+      if (!agentResponse.ok) {
+        const errorText = await agentResponse.text();
+        throw new Error(`Agent call failed: ${agentResponse.status} ${agentResponse.statusText} - ${errorText}`);
+      }
+
+      agentData = await agentResponse.json();
+      
+      logger.info('Agent call completed', { duration: Date.now() - startTime });
+      
+    } finally {
+      // Always clear the heartbeat interval
+      if (heartbeatInterval !== undefined) {
+        clearInterval(heartbeatInterval);
+      }
     }
 
-    const agentData = await agentResponse.json();
-
-    await supabase
-      .from('health_safety_jobs')
-      .update({
-        progress: 50,
-        current_step: 'Generating risk assessments...'
-      })
-      .eq('id', jobId);
-
-    await new Promise(resolve => setTimeout(resolve, 800));
-
+    // Jump to 75%
     await supabase
       .from('health_safety_jobs')
       .update({
         progress: 75,
-        current_step: 'Creating control measures & PPE lists...'
+        current_step: 'Finalizing safety documentation...'
       })
       .eq('id', jobId);
 
