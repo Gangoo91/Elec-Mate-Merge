@@ -130,26 +130,21 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
                 </p>
               </div>
             )}
-          </div>
-        </CardContent>
-      </Card>
 
-      {/* Timeline Card */}
-      <Card>
-        <CardContent className="p-6">
-          <h4 className="font-semibold mb-4">Generation Timeline</h4>
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Elapsed Time</span>
-              <span className="font-mono">{formatTime(elapsedTime)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Estimated Remaining</span>
-              <span className="font-mono">{formatTime(estimatedRemaining)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Total Estimate</span>
-              <span className="font-mono">{formatTime(estimatedTotal)}</span>
+            {/* Time Statistics Grid */}
+            <div className="grid grid-cols-3 gap-4 pt-4 mt-4 border-t border-border">
+              <div className="text-center">
+                <div className="text-xs text-muted-foreground mb-1">Elapsed Time</div>
+                <div className="text-2xl font-bold text-purple-400">{formatTime(elapsedTime)}</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xs text-muted-foreground mb-1">Estimated Remaining</div>
+                <div className="text-2xl font-bold text-pink-400">{formatTime(estimatedRemaining)}</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xs text-muted-foreground mb-1">Total Estimate</div>
+                <div className="text-2xl font-bold text-purple-400">{formatTime(estimatedTotal)}</div>
+              </div>
             </div>
           </div>
         </CardContent>
@@ -159,29 +154,37 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
       <Card className="bg-muted/50">
         <CardContent className="p-6">
           <h4 className="font-semibold mb-4">What's Happening?</h4>
-          <div className="space-y-4">
-            <div className="flex items-start gap-3">
+          <div className="space-y-3">
+            <div className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
+              progress?.stage === 'rag' ? 'bg-purple-500/10' : ''
+            }`}>
               <Search className="h-5 w-5 text-primary mt-0.5 shrink-0" />
               <div>
                 <div className="font-medium text-foreground">Searching BS 7671 installation requirements</div>
                 <div className="text-sm text-muted-foreground">Finding relevant cable routing, protection, and accessory regulations</div>
               </div>
             </div>
-            <div className="flex items-start gap-3">
+            <div className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
+              progress?.stage === 'ai' && currentStageIndex <= 2 ? 'bg-purple-500/10' : ''
+            }`}>
               <Zap className="h-5 w-5 text-primary mt-0.5 shrink-0" />
               <div>
                 <div className="font-medium text-foreground">Calculating cable sizes and protection</div>
                 <div className="text-sm text-muted-foreground">Determining conductor CSA, voltage drop, and protective device ratings</div>
               </div>
             </div>
-            <div className="flex items-start gap-3">
+            <div className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
+              progress?.stage === 'ai' && currentStageIndex > 2 ? 'bg-purple-500/10' : ''
+            }`}>
               <Clock className="h-5 w-5 text-primary mt-0.5 shrink-0" />
               <div>
                 <div className="font-medium text-foreground">Generating step-by-step procedures</div>
                 <div className="text-sm text-muted-foreground">Creating detailed installation instructions with first fix and second fix</div>
               </div>
             </div>
-            <div className="flex items-start gap-3">
+            <div className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
+              progress?.stage === 'validation' ? 'bg-purple-500/10' : ''
+            }`}>
               <ShieldCheck className="h-5 w-5 text-primary mt-0.5 shrink-0" />
               <div>
                 <div className="font-medium text-foreground">Verifying regulation compliance</div>
