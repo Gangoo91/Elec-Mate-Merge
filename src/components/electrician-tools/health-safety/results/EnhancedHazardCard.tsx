@@ -45,14 +45,31 @@ export const EnhancedHazardCard = ({ hazard, index }: EnhancedHazardCardProps) =
               {/* Control Measures */}
               {hazard.controlMeasure && (
                 <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
-                  <div className="flex items-start gap-2">
+                  <div className="flex items-start gap-2 mb-3">
                     <Shield className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <div className="text-xs font-semibold text-amber-500 uppercase mb-1">
-                        Control Measures
-                      </div>
-                      <div className="text-sm">{hazard.controlMeasure}</div>
+                    <div className="text-xs font-semibold text-amber-500 uppercase">
+                      Control Measures
                     </div>
+                  </div>
+                  <div className="space-y-2 text-sm">
+                    {hazard.controlMeasure.split(/(?=PRIMARY ACTION:|ENGINEER CONTROLS:|ADMINISTRATIVE CONTROLS:|VERIFICATION:|COMPETENCY REQUIREMENT:|EQUIPMENT STANDARDS:|REGULATION:|ELIMINATE|SUBSTITUTE)/i)
+                      .filter(section => section.trim())
+                      .map((section, idx) => {
+                        const match = section.match(/^([A-Z\s]+):/);
+                        if (match) {
+                          const label = match[1].trim();
+                          const content = section.substring(match[0].length).trim();
+                          return (
+                            <div key={idx} className="pl-3 border-l-2 border-amber-500/40">
+                              <div className="text-xs font-bold text-amber-600 mb-0.5">{label}</div>
+                              <div className="text-foreground/90 leading-relaxed">{content}</div>
+                            </div>
+                          );
+                        }
+                        return (
+                          <div key={idx} className="text-foreground/90 leading-relaxed">{section}</div>
+                        );
+                      })}
                   </div>
                 </div>
               )}
