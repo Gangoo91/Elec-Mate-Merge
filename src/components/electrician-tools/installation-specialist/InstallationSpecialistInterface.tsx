@@ -1,92 +1,38 @@
-import { useState, useRef, useEffect } from "react";
-import { toast } from "@/hooks/use-toast";
-import { InstallationInputForm } from "./InstallationInputForm";
+import { useState, useRef } from "react";
+import { toast } from "sonner";
+import { InstallationInput } from "./InstallationInput";
 import { InstallationProcessingView } from "./InstallationProcessingView";
-import { InstallationResultsEditor } from "./InstallationResultsEditor";
+import { InstallationResults } from "./InstallationResults";
+import InstallationSuccess from "./InstallationSuccess";
 import { InstallationProjectDetails as ProjectDetailsType } from "@/types/installation-method";
 import { generateMethodStatement } from "./methodStatementHandler";
-import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 import { useSimpleAgent } from "@/hooks/useSimpleAgent";
 
-type ViewMode = 'input' | 'processing' | 'results';
-
 const InstallationSpecialistInterface = () => {
-  const [currentView, setCurrentView] = useState<ViewMode>('input');
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [progress, setProgress] = useState({ stage: 0, percent: 0, message: '' });
+  const [showResults, setShowResults] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [celebrationShown, setCelebrationShown] = useState(false);
   const [methodData, setMethodData] = useState<any>(null);
-  const [installationGuide, setInstallationGuide] = useState("");
-  const [generateFullMethodStatement, setGenerateFullMethodStatement] = useState(true);
-  const [methodStatementProgress, setMethodStatementProgress] = useState<string>('');
+  const [generationStartTime, setGenerationStartTime] = useState(0);
+  const [projectInfo, setProjectInfo] = useState<ProjectDetailsType>({
+    projectName: '',
+    location: '',
+    installationType: 'domestic'
+  });
   
-  // Watchdog refs for detecting stalls
-  const lastAdvanceRef = useRef(Date.now());
+  const { callAgent, isLoading, progress } = useSimpleAgent();
   const lastProjectRef = useRef<{details: ProjectDetailsType, description: string} | null>(null);
-  const watchdogShownRef = useRef(false);
-  
-  const { callAgent } = useSimpleAgent();
 
-  const handleTaskAccept = (contextData: any, instruction: string | null) => {
-    if (contextData) {
-      // Load context from another agent
-      console.log('Installation task received from another agent:', contextData, instruction);
-      toast({ title: 'Context loaded', description: 'Work forwarded from another agent' });
-    }
-  };
-
-  // Helper to advance progress without going backwards
-  const applyProgress = (stage: number, percent: number, message: string) => {
-    setProgress(prev => {
-      const shouldUpdate = stage > prev.stage || (stage === prev.stage && percent > prev.percent);
-      if (shouldUpdate) {
-        lastAdvanceRef.current = Date.now();
-      }
-      return shouldUpdate ? { stage, percent, message } : prev;
-    });
-  };
-
-  // Watchdog timer to detect stalls
-  useEffect(() => {
-    if (!isProcessing) {
-      watchdogShownRef.current = false;
-      return;
-    }
-    
-    const watchdogId = setInterval(() => {
-      const stuckMs = Date.now() - lastAdvanceRef.current;
-      if (stuckMs > 120000 && (progress.stage === 1 || progress.stage === 2) && !watchdogShownRef.current) {
-        watchdogShownRef.current = true;
-        toast({
-          title: 'Taking longer than usual',
-          description: 'The full method statement can take 3-5 minutes. Use the "Switch to Quick Mode" button below for a faster result.',
-        });
-        clearInterval(watchdogId);
-      }
-    }, 5000);
-    
-    return () => clearInterval(watchdogId);
-  }, [isProcessing, progress.stage]);
-
-  const handleGenerate = async (projectDetails: ProjectDetailsType, description: string, useFullMethodStatement: boolean = false) => {
-    // Store for Quick Mode fallback
+  const handleGenerate = async (projectDetails: ProjectDetailsType, description: string, useFullMode: boolean) => {
+    setGenerationStartTime(Date.now());
+    setShowResults(true);
+    setCelebrationShown(false);
+    setProjectInfo(projectDetails);
     lastProjectRef.current = { details: projectDetails, description };
-    
-    // Update the internal state based on user selection from the form
-    setGenerateFullMethodStatement(useFullMethodStatement);
-    setCurrentView('processing');
-    setIsProcessing(true);
-    setMethodData(null);
-    setInstallationGuide("");
-    setMethodStatementProgress('');
-    setProgress({ stage: 0, percent: 0, message: '' });
-    lastAdvanceRef.current = Date.now();
-    watchdogShownRef.current = false;
 
     try {
-      if (useFullMethodStatement) {
+      if (useFullMode) {
         // 3-AGENT PARALLEL METHOD STATEMENT MODE
-        applyProgress(1, 10, 'Initializing all agents...');
-        
         const query = `Create a comprehensive method statement for: ${description}
 
 Project Context:
@@ -96,30 +42,12 @@ Project Context:
 ${projectDetails.clientName ? `- Client: ${projectDetails.clientName}` : ''}
 ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianName}` : ''}`;
 
-        applyProgress(1, 20, 'Running all agents in parallel...');
-
         const mergedResult = await generateMethodStatement(
           query,
           projectDetails,
           'ms-' + Date.now(),
-          (msg) => {
-            setMethodStatementProgress(msg);
-            
-            // Simplified progress for parallel execution
-            const m = msg.toLowerCase();
-            if (m.includes('installer') || m.includes('installation steps')) {
-              applyProgress(2, 30, 'Generating installation steps...');
-            } else if (m.includes('health') || m.includes('safety') || m.includes('hazard')) {
-              applyProgress(3, 50, 'Identifying hazards and safety measures...');
-            } else if (m.includes('maintenance') || m.includes('testing')) {
-              applyProgress(4, 70, 'Creating testing procedures...');
-            } else if (m.includes('merging') || m.includes('combining')) {
-              applyProgress(5, 85, 'Merging all agent outputs...');
-            }
-          }
+          () => {} // Progress callback - not needed with useSimpleAgent
         );
-
-        applyProgress(5, 100, 'Complete!');
 
         // Transform merged result for UI display
         const installationSteps = mergedResult.installationSteps.map((step: any) => ({
@@ -140,7 +68,6 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
         const overallRisk = riskLevels.includes('high') ? 'high' : 
                            riskLevels.includes('medium') ? 'medium' : 'low';
 
-        // Calculate actual total duration from steps
         const totalMinutes = installationSteps.reduce((sum: number, step: any) => {
           const stepTime = typeof step.estimatedDuration === 'number' 
             ? step.estimatedDuration 
@@ -164,7 +91,6 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           overallRiskLevel: overallRisk as 'low' | 'medium' | 'high'
         };
 
-        // Initialize default project metadata
         const today = new Date().toISOString().split('T')[0];
         const nextYear = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
         
@@ -200,33 +126,15 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           summary,
           projectDetails,
           projectMetadata: defaultMetadata,
-          // Store full merged data for PDF generation
           _fullMethodStatement: mergedResult
         });
 
-        toast({
-          title: "Method Statement Generated",
-          description: `Complete with ${summary.totalSteps} steps, testing procedures, and risk assessment`,
-          variant: "success",
+        toast.success("Method Statement Generated", {
+          description: `Complete with ${summary.totalSteps} steps, testing procedures, and step-specific hazards`
         });
 
       } else {
-        // QUICK MODE - Just installer-v3
-        const stages = [
-          { stage: 1, percent: 20, message: 'Analysing installation requirements...' },
-          { stage: 2, percent: 50, message: 'Generating step-by-step procedures...' },
-          { stage: 3, percent: 80, message: 'Compiling safety requirements...' },
-          { stage: 4, percent: 95, message: 'Finalising installation method...' }
-        ];
-        
-        let stageIndex = 0;
-        const progressInterval = setInterval(() => {
-          if (stageIndex < stages.length) {
-            applyProgress(stages[stageIndex].stage, stages[stageIndex].percent, stages[stageIndex].message);
-            stageIndex++;
-          }
-        }, 1500);
-
+        // QUICK MODE - Just installer agent
         const query = `Create a detailed step-by-step installation method for: ${description}
 
 Project Context:
@@ -244,12 +152,8 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           }
         });
 
-        clearInterval(progressInterval);
-        applyProgress(5, 100, 'Complete!');
-
         if (!response?.success) throw new Error(response?.error || 'Failed to generate installation method');
 
-        // Match installer-v3 response structure: response.data.steps
         const steps = response.data?.steps || [];
 
         const installationSteps = steps.map((step: any, index: number) => ({
@@ -268,7 +172,6 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
         const overallRisk = riskLevels.includes('high') ? 'high' : 
                            riskLevels.includes('medium') ? 'medium' : 'low';
 
-        // Calculate actual total duration from steps
         const totalMinutes = installationSteps.reduce((sum: number, step: any) => {
           const stepTime = typeof step.estimatedDuration === 'number' 
             ? step.estimatedDuration 
@@ -292,9 +195,6 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           overallRiskLevel: overallRisk as 'low' | 'medium' | 'high'
         };
 
-        setInstallationGuide(response.response || '');
-        
-        // Initialize default project metadata for Quick Mode too
         const today = new Date().toISOString().split('T')[0];
         const defaultMetadata = {
           documentRef: `MS-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
@@ -329,106 +229,105 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           projectDetails,
           projectMetadata: defaultMetadata
         });
-
-        toast({
-          title: "Installation Guide Generated",
-          description: `${summary.totalSteps} steps created successfully`,
-          variant: "success",
-        });
       }
 
-      setCurrentView('results');
+      // Show celebration if first time
+      if (!celebrationShown) {
+        setShowCelebration(true);
+        setCelebrationShown(true);
+      }
 
     } catch (error) {
       console.error('Installation guide generation error:', error);
       
       let errorMessage = "Could not generate installation guide. Please try again.";
-      let errorTitle = "Generation Failed";
       
       if (error instanceof Error) {
-        if (error.message.includes('timeout') || error.message.includes('timed out')) {
-          errorTitle = "Request Timed Out";
-          errorMessage = "The installation method is taking longer than expected (>5 minutes). This can happen with complex installations. Please try again or use Quick Mode for faster results.";
-        } else if (error.message.includes('rate limit') || error.message.includes('429')) {
-          errorTitle = "Too Many Requests";
+        if (error.message.includes('timeout')) {
+          errorMessage = "Request timed out. Please try again or use Quick Mode.";
+        } else if (error.message.includes('rate limit')) {
           errorMessage = "Rate limit exceeded. Please wait a moment and try again.";
-        } else if (error.message.includes('API key') || error.message.includes('LOVABLE_API_KEY')) {
-          errorTitle = "Configuration Error";
-          errorMessage = "AI service is not properly configured. Please contact support.";
-        } else if (error.message.includes('network') || error.message.includes('fetch')) {
-          errorTitle = "Network Error";
-          errorMessage = "Connection issue detected. Please check your internet and try again.";
         } else {
           errorMessage = error.message;
         }
       }
       
-      toast({
-        title: errorTitle,
-        description: errorMessage,
-        variant: "destructive",
+      toast.error("Generation Failed", {
+        description: errorMessage
       });
       
-      setCurrentView('input');
-    } finally {
-      setIsProcessing(false);
+      setShowResults(false);
     }
   };
 
-  const handleReset = () => {
-    setCurrentView('input');
+  const handleStartOver = () => {
+    setShowResults(false);
+    setShowCelebration(false);
     setMethodData(null);
-    setInstallationGuide("");
+    setCelebrationShown(false);
   };
 
-  return (
-    <div className="space-y-3 sm:space-y-4 pb-6">
-      {/* Agent Inbox */}
-      <AgentInbox currentAgent="installer" onTaskAccept={handleTaskAccept} />
+  const handleViewResults = () => {
+    setShowCelebration(false);
+  };
 
-      {currentView === 'input' && (
-        <InstallationInputForm
-          onGenerate={handleGenerate}
-          isProcessing={isProcessing}
-        />
-      )}
+  const generationTime = generationStartTime > 0 
+    ? Math.round((Date.now() - generationStartTime) / 1000) 
+    : 0;
 
-        {currentView === 'processing' && (
-          <InstallationProcessingView 
-            progress={progress} 
-            isGenerating={isProcessing}
-            onCancel={() => {
-              setIsProcessing(false);
-              setCurrentView('input');
-            }}
-            onQuickMode={() => {
-              setIsProcessing(false);
-              if (lastProjectRef.current) {
-                handleGenerate(
-                  lastProjectRef.current.details,
-                  lastProjectRef.current.description,
-                  false
-                );
-              }
-            }}
-          />
-        )}
+  // VIEW LOGIC
+  if (!showResults) {
+    return <InstallationInput onGenerate={handleGenerate} isProcessing={isLoading} />;
+  }
 
-      {currentView === 'results' && methodData && (
-        <InstallationResultsEditor
+  if (isLoading) {
+    return (
+      <InstallationProcessingView 
+        progress={progress}
+        startTime={generationStartTime}
+        onCancel={() => {
+          setShowResults(false);
+        }}
+        onQuickMode={() => {
+          if (lastProjectRef.current) {
+            handleGenerate(
+              lastProjectRef.current.details,
+              lastProjectRef.current.description,
+              false
+            );
+          }
+        }}
+      />
+    );
+  }
+
+  if (methodData) {
+    return (
+      <>
+        <InstallationResults
           jobTitle={methodData.jobTitle}
           installationType={methodData.installationType}
-          installationGuide={installationGuide}
+          installationGuide=""
           steps={methodData.steps}
           summary={methodData.summary}
           projectDetails={methodData.projectDetails}
           projectMetadata={methodData.projectMetadata}
           fullMethodStatement={methodData._fullMethodStatement}
-          onReset={handleReset}
+          onStartOver={handleStartOver}
         />
-      )}
-    </div>
-  );
+        
+        <InstallationSuccess 
+          results={methodData}
+          onViewResults={handleViewResults}
+          generationTime={generationTime}
+          open={showCelebration}
+          onOpenChange={setShowCelebration}
+        />
+      </>
+    );
+  }
+
+  return <InstallationInput onGenerate={handleGenerate} isProcessing={isLoading} />;
 };
 
 export default InstallationSpecialistInterface;
