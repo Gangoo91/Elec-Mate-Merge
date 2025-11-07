@@ -422,8 +422,76 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
               <div className="p-4 rounded-lg bg-elec-dark/60 border border-elec-yellow/10 max-h-[600px] overflow-auto">
                 <pre className="text-xs font-mono text-muted-foreground whitespace-pre">
                   {JSON.stringify({
-                    projectContext: projectContext || {},
-                    costAnalysis: structuredData || analysis
+                    project_name: projectContext?.projectName || '',
+                    client_name: projectContext?.clientInfo || '',
+                    location: projectContext?.location || '',
+                    project_type: projectContext?.projectType || 'domestic',
+                    generated_date: new Date().toLocaleDateString('en-GB'),
+                    
+                    summary: {
+                      materials_subtotal: analysis.materialsTotal,
+                      labour_subtotal: analysis.labourTotal,
+                      net_total: analysis.subtotal,
+                      vat: analysis.vatAmount,
+                      vat_rate: analysis.vatRate,
+                      grand_total: analysis.totalCost
+                    },
+                    
+                    materials: {
+                      items: analysis.materials.map((m: any) => ({
+                        description: m.item || '',
+                        quantity: m.quantity,
+                        unit: m.unit,
+                        unit_price: m.unitPrice,
+                        total: m.total,
+                        supplier: m.supplier || ''
+                      })),
+                      subtotal: analysis.materialsTotal
+                    },
+                    
+                    labour: {
+                      tasks: structuredData?.labour?.tasks?.map((t: any) => ({
+                        description: t.description,
+                        hours: t.hours,
+                        rate: t.rate,
+                        total: t.total
+                      })) || [{
+                        description: analysis.labour.description,
+                        hours: analysis.labour.hours,
+                        rate: analysis.labour.rate,
+                        total: analysis.labour.total
+                      }],
+                      subtotal: analysis.labourTotal
+                    },
+                    
+                    timescales: structuredData?.timescales ? {
+                      overall: structuredData.timescales.overall || '',
+                      phases: (Array.isArray(structuredData.timescales.phases) ? structuredData.timescales.phases : []).map((p: any) => ({
+                        name: p.name || '',
+                        duration: p.duration || '',
+                        description: p.description || ''
+                      }))
+                    } : null,
+                    
+                    alternatives: (Array.isArray(structuredData?.alternatives) ? structuredData.alternatives : []).map((alt: any) => ({
+                      title: alt.title || '',
+                      description: alt.description || '',
+                      cost_change: alt.costChange || ''
+                    })),
+                    
+                    order_list: structuredData?.orderList ? {
+                      suppliers: (Array.isArray(structuredData.orderList.suppliers) ? structuredData.orderList.suppliers : []).map((s: any) => ({
+                        name: s.name || '',
+                        items: (Array.isArray(s.items) ? s.items : []).map((item: any) => ({
+                          description: item.description || '',
+                          quantity: item.quantity || 0,
+                          unit: item.unit || ''
+                        })),
+                        subtotal: s.subtotal || 0
+                      }))
+                    } : null,
+                    
+                    additional_requirements: projectContext?.additionalInfo || ''
                   }, null, 2)}
                 </pre>
               </div>
