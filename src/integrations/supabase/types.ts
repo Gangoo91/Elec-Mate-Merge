@@ -8092,21 +8092,48 @@ export type Database = {
               tools_required: Json
             }[]
           }
-      search_practical_work_intelligence_hybrid: {
-        Args: {
-          filter_trade?: string
-          match_count?: number
-          query_text: string
-        }
-        Returns: {
-          bs7671_regulations: string[]
-          content: string
-          hybrid_score: number
-          id: string
-          primary_topic: string
-          tools_required: string[]
-        }[]
-      }
+      search_practical_work_intelligence_hybrid:
+        | {
+            Args: {
+              filter_trade?: string
+              match_count?: number
+              query_text: string
+            }
+            Returns: {
+              bs7671_regulations: string[]
+              content: string
+              hybrid_score: number
+              id: string
+              primary_topic: string
+              tools_required: string[]
+            }[]
+          }
+        | {
+            Args: {
+              filter_trade?: string
+              match_count?: number
+              query_embedding?: string
+              query_text: string
+            }
+            Returns: {
+              activity_types: string[]
+              bs7671_regulations: string[]
+              equipment_category: string
+              equipment_subcategory: string
+              facet_type: string
+              hybrid_score: number
+              id: string
+              installation_method: string
+              maintenance_tasks: string[]
+              materials_needed: string[]
+              primary_topic: string
+              skill_level: string
+              team_size: number
+              test_procedures: string[]
+              tools_required: string[]
+              typical_duration_minutes: number
+            }[]
+          }
       search_pricing: {
         Args: {
           category_filter?: string
