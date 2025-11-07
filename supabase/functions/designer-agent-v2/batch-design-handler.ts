@@ -163,10 +163,22 @@ VALID DESIGNS (ONLY RETURN THESE):
 ✅ All calculations complete with worked examples
 ✅ Justifications show iteration process
 
-RCD PROTECTION REQUIREMENTS (BS 7671):
-- Mandatory for: sockets ≤32A, outdoors, bathrooms, mobile equipment
-- 30mA RCD for additional protection
-- Use RCBO where discrimination required
+RCD PROTECTION REQUIREMENTS (BS 7671) - MANDATORY:
+YOU MUST set rcdProtected: true for these circuits:
+✅ ALL socket outlets ≤32A (domestic/commercial)
+✅ ALL outdoor circuits
+✅ ALL bathroom circuits
+✅ ALL EV chargers (Type A RCD with 6mA DC sensitivity or Type B)
+✅ ALL mobile equipment
+✅ TT earthing systems (all final circuits)
+
+PROTECTION DEVICE SELECTION:
+- Socket circuits: Use RCBO (combined MCB+RCD) rated 30mA Type A minimum
+- EV chargers: RCBO 30mA Type A (6mA DC) or Type B
+- Bathrooms: RCBO 30mA Type A minimum
+- Outdoor: RCBO 30mA Type A minimum
+- Lighting (non-bathroom): MCB acceptable (RCD not mandatory unless outdoor)
+- Fixed heating/cooking: MCB acceptable (RCD not mandatory)
 
 RING FINAL CIRCUITS (BS 7671 Appendix 15):
 - MUST use 2.5mm² cable only
