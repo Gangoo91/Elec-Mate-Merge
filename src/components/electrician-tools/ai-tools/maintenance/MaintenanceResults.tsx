@@ -300,25 +300,25 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
 
       {/* Scheduled Tasks */}
       <Card className="border-elec-yellow/20 bg-elec-card">
-        <CardHeader>
-          <div className="flex items-center justify-between">
+        <CardHeader className="pb-3 sm:pb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
-              <CardTitle className="text-elec-light flex items-center gap-2">
-                <Calendar className="h-5 w-5" />
+              <CardTitle className="text-elec-light flex items-center gap-2 text-xl sm:text-2xl">
+                <Calendar className="h-5 w-5 sm:h-6 sm:w-6" />
                 Scheduled Tasks
               </CardTitle>
-              <CardDescription className="text-elec-light/60">
+              <CardDescription className="text-elec-light/60 text-sm sm:text-base mt-1">
                 {results.schedule?.length || 0} maintenance tasks identified
               </CardDescription>
             </div>
-            <div className="flex gap-2 text-xs">
-              <Badge variant="outline" className="border-red-400/30 text-red-400">
+            <div className="flex gap-2 text-xs sm:text-sm flex-wrap">
+              <Badge variant="outline" className="border-red-400/30 text-red-400 whitespace-nowrap">
                 {results.schedule?.filter(t => t.priority === 'high').length || 0} High
               </Badge>
-              <Badge variant="outline" className="border-yellow-400/30 text-yellow-400">
+              <Badge variant="outline" className="border-yellow-400/30 text-yellow-400 whitespace-nowrap">
                 {results.schedule?.filter(t => t.priority === 'medium').length || 0} Med
               </Badge>
-              <Badge variant="outline" className="border-green-400/30 text-green-400">
+              <Badge variant="outline" className="border-green-400/30 text-green-400 whitespace-nowrap">
                 {results.schedule?.filter(t => t.priority === 'low').length || 0} Low
               </Badge>
             </div>
@@ -335,21 +335,21 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
               </p>
             </div>
           ) : (
-            <Accordion type="single" collapsible className="space-y-3">
+            <Accordion type="single" collapsible className="space-y-2 sm:space-y-3">
               {results.schedule.map((task, idx) => (
               <AccordionItem 
                 key={idx} 
                 value={`task-${idx}`}
-                className="border border-elec-gray/20 rounded-lg px-3 sm:px-4 bg-gradient-to-r from-elec-dark/40 to-elec-dark/20 hover:border-elec-yellow/40 transition-all duration-200 data-[state=open]:bg-gradient-to-r data-[state=open]:from-elec-dark/60 data-[state=open]:to-elec-dark/40 data-[state=open]:border-elec-yellow/50"
+                className="border border-elec-gray/20 rounded-lg px-2 sm:px-4 bg-gradient-to-r from-elec-dark/40 to-elec-dark/20 hover:border-elec-yellow/40 transition-all duration-200 data-[state=open]:bg-gradient-to-r data-[state=open]:from-elec-dark/60 data-[state=open]:to-elec-dark/40 data-[state=open]:border-elec-yellow/50"
               >
-                <AccordionTrigger className="hover:no-underline py-4 sm:py-5">
-                  <div className="flex items-center gap-2 sm:gap-3 w-full text-left">
-                    <Badge className={`${getPriorityColor(task.priority)} transition-colors text-xs`}>
+                <AccordionTrigger className="hover:no-underline py-3 sm:py-5">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full text-left">
+                    <Badge className={`${getPriorityColor(task.priority)} transition-colors text-xs self-start sm:self-center shrink-0`}>
                       {task.priority}
                     </Badge>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-elec-light text-sm sm:text-base truncate sm:whitespace-normal">{task.task}</p>
-                      <p className="text-xs text-elec-light/70 mt-1">
+                    <div className="flex-1 min-w-0 pr-2">
+                      <p className="font-medium text-elec-light text-sm sm:text-base leading-tight sm:leading-normal">{task.task}</p>
+                      <p className="text-xs text-elec-light/70 mt-1 leading-tight">
                         {task.interval} • {task.regulation || 'Industry standard'}
                       </p>
                     </div>
