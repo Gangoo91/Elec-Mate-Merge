@@ -4,8 +4,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { 
   Package, Clock, TrendingUp, FileText, Copy, Download, Save, 
-  CheckCircle2, ChevronRight, Sparkles, Calendar, Star 
+  CheckCircle2, ChevronRight, Sparkles, Calendar, Star, Eye 
 } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { ParsedCostAnalysis } from "@/utils/cost-analysis-parser";
 import CostStatCard from "./CostStatCard";
 import { toast } from "@/hooks/use-toast";
@@ -31,6 +33,7 @@ interface CostAnalysisResultsProps {
 
 const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredData, projectContext }: CostAnalysisResultsProps) => {
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const [showPayloadPreview, setShowPayloadPreview] = useState(false);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-GB', {
@@ -47,42 +50,44 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
     });
   };
 
+  const buildPdfPayload = () => {
+    return {
+      projectContext: {
+        projectName: projectContext?.projectName || projectName || 'Electrical Project',
+        clientInfo: projectContext?.clientInfo || '',
+        location: projectContext?.location || '',
+        additionalInfo: projectContext?.additionalInfo || '',
+        projectType: projectContext?.projectType || 'domestic'
+      },
+      costAnalysis: structuredData || {
+        response: analysis.rawText,
+        materials: {
+          items: analysis.materials,
+          subtotal: analysis.materialsTotal
+        },
+        labour: {
+          tasks: [{
+            description: analysis.labour.description,
+            hours: analysis.labour.hours,
+            rate: analysis.labour.rate,
+            total: analysis.labour.total
+          }],
+          subtotal: analysis.labourTotal
+        },
+        summary: {
+          subtotal: analysis.subtotal,
+          vat: analysis.vatAmount,
+          grandTotal: analysis.totalCost
+        }
+      }
+    };
+  };
+
   const handleExportPDF = async () => {
     setIsGeneratingPDF(true);
     
     try {
-      // Send COMPLETE structured data - exactly what's shown in Raw JSON Response
-      const pdfData = {
-        projectContext: {
-          projectName: projectContext?.projectName || projectName || 'Electrical Project',
-          clientInfo: projectContext?.clientInfo || '',
-          location: projectContext?.location || '',
-          additionalInfo: projectContext?.additionalInfo || '',
-          projectType: projectContext?.projectType || 'domestic'
-        },
-        costAnalysis: structuredData || {
-          // Fallback if no structuredData (legacy support)
-          response: analysis.rawText,
-          materials: {
-            items: analysis.materials,
-            subtotal: analysis.materialsTotal
-          },
-          labour: {
-            tasks: [{
-              description: analysis.labour.description,
-              hours: analysis.labour.hours,
-              rate: analysis.labour.rate,
-              total: analysis.labour.total
-            }],
-            subtotal: analysis.labourTotal
-          },
-          summary: {
-            subtotal: analysis.subtotal,
-            vat: analysis.vatAmount,
-            grandTotal: analysis.totalCost
-          }
-        }
-      };
+      const pdfData = buildPdfPayload();
       
       // Call edge function to generate PDF
       const { data, error } = await supabase.functions.invoke('generate-cost-engineer-pdf', {
@@ -533,6 +538,14 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
           Copy to Clipboard
         </Button>
         <Button 
+          onClick={() => setShowPayloadPreview(true)}
+          variant="outline"
+          className="flex-1 touch-manipulation"
+        >
+          <Eye className="h-4 w-4 mr-2" />
+          Preview Payload
+        </Button>
+        <Button 
           onClick={handleExportPDF}
           variant="outline"
           className="flex-1 touch-manipulation"
@@ -561,6 +574,54 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
           Start New Cost Analysis
         </Button>
       </div>
+
+      {/* Payload Preview Dialog */}
+      <Dialog open={showPayloadPreview} onOpenChange={setShowPayloadPreview}>
+        <DialogContent className="max-w-4xl max-h-[85vh]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Eye className="h-5 w-5 text-elec-yellow" />
+              PDF Payload Preview
+            </DialogTitle>
+            <DialogDescription>
+              This is the exact JSON payload that will be sent to the PDF generator
+            </DialogDescription>
+          </DialogHeader>
+          
+          <ScrollArea className="h-[500px] w-full rounded-lg border border-elec-yellow/20 bg-elec-dark/60 p-4">
+            <pre className="text-xs text-foreground font-mono leading-relaxed">
+              {JSON.stringify(buildPdfPayload(), null, 2)}
+            </pre>
+          </ScrollArea>
+
+          <DialogFooter className="gap-2 sm:gap-3">
+            <Button
+              variant="outline"
+              onClick={() => {
+                navigator.clipboard.writeText(JSON.stringify(buildPdfPayload(), null, 2));
+                toast({
+                  title: "Payload copied",
+                  description: "JSON payload copied to clipboard",
+                });
+              }}
+            >
+              <Copy className="h-4 w-4 mr-2" />
+              Copy JSON
+            </Button>
+            <Button
+              onClick={() => {
+                setShowPayloadPreview(false);
+                handleExportPDF();
+              }}
+              disabled={isGeneratingPDF}
+              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+            >
+              <Download className="h-4 w-4 mr-2" />
+              {isGeneratingPDF ? 'Generating...' : 'Generate PDF'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
