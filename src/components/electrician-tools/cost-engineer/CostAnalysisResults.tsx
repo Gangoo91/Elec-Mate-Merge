@@ -51,81 +51,37 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
     setIsGeneratingPDF(true);
     
     try {
-      // Prepare data payload for PDF template
+      // Send COMPLETE structured data - exactly what's shown in Raw JSON Response
       const pdfData = {
-        projectName: projectContext?.projectName || projectName || 'Electrical Project',
-        clientName: projectContext?.clientInfo || '',
-        location: projectContext?.location || '',
-        projectType: projectContext?.projectType || 'domestic',
-        generatedDate: new Date().toLocaleDateString('en-GB'),
-        
-        summary: {
-          materialsSubtotal: analysis.materialsTotal,
-          labourSubtotal: analysis.labourTotal,
-          netTotal: analysis.subtotal,
-          vat: analysis.vatAmount,
-          vatRate: analysis.vatRate,
-          grandTotal: analysis.totalCost
+        projectContext: {
+          projectName: projectContext?.projectName || projectName || 'Electrical Project',
+          clientInfo: projectContext?.clientInfo || '',
+          location: projectContext?.location || '',
+          additionalInfo: projectContext?.additionalInfo || '',
+          projectType: projectContext?.projectType || 'domestic'
         },
-        
-        materials: {
-          items: analysis.materials.map((m: any) => ({
-            description: m.item || '',
-            quantity: m.quantity,
-            unit: m.unit,
-            unitPrice: m.unitPrice,
-            total: m.total,
-            supplier: m.supplier || ''
-          })),
-          subtotal: analysis.materialsTotal,
-          markup: structuredData?.materials?.markup || 0,
-          totalWithMarkup: structuredData?.materials?.totalWithMarkup || analysis.materialsTotal
-        },
-        
-        labour: {
-          tasks: structuredData?.labour?.tasks?.map((t: any) => ({
-            description: t.description,
-            hours: t.hours,
-            rate: t.rate,
-            total: t.total
-          })) || [{
-            description: analysis.labour.description || 'Electrical installation labour',
-            hours: analysis.labour.hours || 0,
-            rate: analysis.labour.rate || 0,
-            total: analysis.labour.total || analysis.labourTotal
-          }],
-          subtotal: analysis.labourTotal
-        },
-        
-        // Enhanced V3 data with proper structure
-        timescales: structuredData?.timescales ? {
-          overall: structuredData.timescales.overall || '',
-          phases: (Array.isArray(structuredData.timescales.phases) ? structuredData.timescales.phases : []).map((p: any) => ({
-            name: p.name || '',
-            duration: p.duration || '',
-            description: p.description || ''
-          }))
-        } : null,
-        
-        alternatives: (Array.isArray(structuredData?.alternatives) ? structuredData.alternatives : []).map((alt: any) => ({
-          title: alt.title || '',
-          description: alt.description || '',
-          costChange: alt.costChange || ''
-        })),
-        
-        orderList: structuredData?.orderList ? {
-          suppliers: (Array.isArray(structuredData.orderList.suppliers) ? structuredData.orderList.suppliers : []).map((s: any) => ({
-            name: s.name || '',
-            items: (Array.isArray(s.items) ? s.items : []).map((item: any) => ({
-              description: item.description || '',
-              quantity: item.quantity || 0,
-              unit: item.unit || ''
-            })),
-            subtotal: s.subtotal || 0
-          }))
-        } : null,
-        
-        additionalRequirements: projectContext?.additionalInfo || ''
+        costAnalysis: structuredData || {
+          // Fallback if no structuredData (legacy support)
+          response: analysis.rawText,
+          materials: {
+            items: analysis.materials,
+            subtotal: analysis.materialsTotal
+          },
+          labour: {
+            tasks: [{
+              description: analysis.labour.description,
+              hours: analysis.labour.hours,
+              rate: analysis.labour.rate,
+              total: analysis.labour.total
+            }],
+            subtotal: analysis.labourTotal
+          },
+          summary: {
+            subtotal: analysis.subtotal,
+            vat: analysis.vatAmount,
+            grandTotal: analysis.totalCost
+          }
+        }
       };
       
       // Call edge function to generate PDF
