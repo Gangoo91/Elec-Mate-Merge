@@ -18,9 +18,16 @@ interface CostAnalysisResultsProps {
   projectName?: string;
   onNewAnalysis: () => void;
   structuredData?: any; // V3 structured response
+  projectContext?: {
+    projectName?: string;
+    clientInfo?: string;
+    location?: string;
+    additionalInfo?: string;
+    projectType?: string;
+  };
 }
 
-const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredData }: CostAnalysisResultsProps) => {
+const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredData, projectContext }: CostAnalysisResultsProps) => {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-GB', {
       style: 'currency',
@@ -311,7 +318,11 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
                 <h3 className="text-lg font-semibold text-foreground">Raw JSON Response</h3>
                 <Button
                   onClick={() => {
-                    navigator.clipboard.writeText(JSON.stringify(structuredData || analysis, null, 2));
+                    const fullData = {
+                      projectContext: projectContext || {},
+                      costAnalysis: structuredData || analysis
+                    };
+                    navigator.clipboard.writeText(JSON.stringify(fullData, null, 2));
                     toast({
                       title: "JSON copied",
                       description: "JSON data copied to clipboard",
@@ -327,7 +338,10 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
 
               <div className="p-4 rounded-lg bg-elec-dark/60 border border-elec-yellow/10 max-h-[600px] overflow-auto">
                 <pre className="text-xs font-mono text-muted-foreground whitespace-pre">
-                  {JSON.stringify(structuredData || analysis, null, 2)}
+                  {JSON.stringify({
+                    projectContext: projectContext || {},
+                    costAnalysis: structuredData || analysis
+                  }, null, 2)}
                 </pre>
               </div>
             </TabsContent>

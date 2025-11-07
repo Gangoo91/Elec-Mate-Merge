@@ -171,6 +171,14 @@ const CostEngineerInterface = () => {
         analysis={parsedResults}
         projectName={projectName}
         onNewAnalysis={handleNewAnalysis}
+        structuredData={structuredData}
+        projectContext={{
+          projectName,
+          clientInfo,
+          location,
+          additionalInfo,
+          projectType
+        }}
       />
     );
   }
