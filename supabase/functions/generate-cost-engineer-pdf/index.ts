@@ -38,116 +38,24 @@ serve(async (req) => {
       hasOrderList: !!costAnalysis.orderList
     });
 
-    // Transform complete V3 structure for PDF Monkey template (snake_case)
+    // Send original camelCase structure to match PDF Monkey template expectations
     const payload = {
-      // Project Header
-      project_name: projectContext.projectName || 'Electrical Project',
-      client_name: projectContext.clientInfo || '',
-      location: projectContext.location || '',
-      project_type: projectContext.projectType || 'domestic',
-      additional_info: projectContext.additionalInfo || '',
-      generated_date: new Date().toLocaleDateString('en-GB'),
-      
-      // AI Response Text
-      response: costAnalysis.response || '',
-      
-      // Materials - FULL V3 structure
-      materials: {
-        items: (costAnalysis.materials?.items || []).map((item: any) => ({
-          description: item.description || '',
-          quantity: item.quantity || 0,
-          unit: item.unit || 'each',
-          unit_price: item.unitPrice || 0,
-          total: item.total || 0,
-          supplier: item.supplier || '',
-          wholesale_price: item.wholesalePrice || 0,
-          markup: item.markup || 0,
-          in_database: item.inDatabase || false,
-          in_stock: item.inStock !== false
-        })),
-        subtotal: costAnalysis.materials?.subtotal || 0,
-        vat: costAnalysis.materials?.vat || 0,
-        total: costAnalysis.materials?.total || 0,
-        total_markup: costAnalysis.materials?.totalMarkup || 0,
-        subtotal_with_markup: costAnalysis.materials?.subtotalWithMarkup || 0
-      },
-      
-      // Labour - FULL V3 structure
-      labour: {
-        tasks: (costAnalysis.labour?.tasks || []).map((task: any) => ({
-          description: task.description || '',
-          hours: task.hours || 0,
-          workers: task.workers || 1,
-          electrician_hours: task.electricianHours || 0,
-          apprentice_hours: task.apprenticeHours || 0,
-          rate: task.rate || 0,
-          total: task.total || 0
-        })),
-        subtotal: costAnalysis.labour?.subtotal || 0,
-        vat: costAnalysis.labour?.vat || 0,
-        total: costAnalysis.labour?.total || 0
-      },
-      
-      // Summary - FULL breakdown
-      summary: {
-        materials_wholesale: costAnalysis.summary?.materialsWholesale || 0,
-        materials_markup: costAnalysis.summary?.materialsMarkup || 0,
-        materials_subtotal: costAnalysis.summary?.materialsSubtotal || 0,
-        materials_vat: costAnalysis.summary?.materialsVAT || 0,
-        materials_total: costAnalysis.summary?.materialsTotal || 0,
-        labour_subtotal: costAnalysis.summary?.labourSubtotal || 0,
-        labour_vat: costAnalysis.summary?.labourVAT || 0,
-        labour_total: costAnalysis.summary?.labourTotal || 0,
-        subtotal: costAnalysis.summary?.subtotal || 0,
-        vat: costAnalysis.summary?.vat || 0,
-        grand_total: costAnalysis.summary?.grandTotal || 0
-      },
-      
-      // Timescales - FULL V3
-      timescales: costAnalysis.timescales ? {
-        phases: (costAnalysis.timescales.phases || []).map((p: any) => ({
-          phase: p.phase || '',
-          days: p.days || 0,
-          description: p.description || ''
-        })),
-        total_days: costAnalysis.timescales.totalDays || 0,
-        total_weeks: costAnalysis.timescales.totalWeeks || 0,
-        start_to_finish: costAnalysis.timescales.startToFinish || '',
-        critical_path: costAnalysis.timescales.criticalPath || '',
-        assumptions: costAnalysis.timescales.assumptions || []
-      } : null,
-      
-      // Alternatives - FULL V3
-      alternatives: costAnalysis.alternatives ? {
-        budget: costAnalysis.alternatives.budget || null,
-        standard: costAnalysis.alternatives.standard || null,
-        premium: costAnalysis.alternatives.premium || null,
-        recommended: costAnalysis.alternatives.recommended || 'standard'
-      } : null,
-      
-      // Order List - FULL V3
-      order_list: costAnalysis.orderList ? {
-        by_supplier: costAnalysis.orderList.bySupplier || {},
-        total_items: costAnalysis.orderList.totalItems || 0,
-        estimated_delivery: costAnalysis.orderList.estimatedDelivery || '',
-        notes: costAnalysis.orderList.notes || []
-      } : null,
-      
-      // Value Engineering
-      value_engineering: costAnalysis.valueEngineering || [],
-      
-      // Suggested Next Agents
-      suggested_next_agents: costAnalysis.suggestedNextAgents || [],
-      
-      // Notes
-      notes: costAnalysis.notes || [],
-      
-      // Metadata
-      _generated_at: new Date().toISOString(),
-      _cache_bust: Date.now()
+      projectContext,
+      costAnalysis
     };
 
-    console.log('[COST-PDF] Transformed payload for template');
+    console.log('[COST-PDF] Payload structure being sent to PDF Monkey:', {
+      hasProjectContext: !!payload.projectContext,
+      hasProjectName: !!payload.projectContext?.projectName,
+      hasCostAnalysis: !!payload.costAnalysis,
+      materialsCount: payload.costAnalysis?.materials?.items?.length || 0,
+      labourTasksCount: payload.costAnalysis?.labour?.tasks?.length || 0,
+      hasTimescales: !!payload.costAnalysis?.timescales,
+      hasAlternatives: !!payload.costAnalysis?.alternatives,
+      hasOrderList: !!payload.costAnalysis?.orderList
+    });
+    
+    console.log('[COST-PDF] Full payload (first 500 chars):', JSON.stringify(payload).substring(0, 500));
 
     // Create PDF document via PDF Monkey
     const createResponse = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
