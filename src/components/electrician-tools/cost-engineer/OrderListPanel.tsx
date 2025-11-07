@@ -42,7 +42,8 @@ const OrderListPanel = ({ orderList }: OrderListPanelProps) => {
     let csv = 'Supplier,Code,Description,Quantity,Unit,Unit Price,Total\n';
     
     Object.entries(orderList.bySupplier).forEach(([supplier, data]) => {
-      data.items.forEach(item => {
+      const items = data.items || [];
+      items.forEach(item => {
         csv += `"${supplier}","${item.code || 'N/A'}","${item.description}",${item.quantity},"${item.unit}",${item.unitPrice},${item.total}\n`;
       });
     });
@@ -111,10 +112,10 @@ const OrderListPanel = ({ orderList }: OrderListPanelProps) => {
                   <Building2 className="h-4 w-4 text-elec-yellow" />
                   <h3 className="font-semibold text-foreground">{supplier}</h3>
                   <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
-                    {data.items.length} items
+                    {data.items?.length || 0} items
                   </Badge>
                 </div>
-                <p className="font-bold text-elec-yellow">{formatCurrency(data.subtotal)}</p>
+                <p className="font-bold text-elec-yellow">{formatCurrency(data.subtotal || 0)}</p>
               </div>
 
               {/* Account Info */}
@@ -126,7 +127,7 @@ const OrderListPanel = ({ orderList }: OrderListPanelProps) => {
 
               {/* Items List */}
               <div className="space-y-2">
-                {data.items.map((item, idx) => (
+                {(data.items || []).map((item, idx) => (
                   <div 
                     key={idx}
                     className="flex items-start justify-between gap-4 text-sm"
