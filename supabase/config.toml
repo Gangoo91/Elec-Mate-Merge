@@ -197,6 +197,11 @@ timeout_sec = 60
 verify_jwt = false
 timeout_sec = 180
 
+# Cost Engineer PDF Generation
+[functions.generate-cost-engineer-pdf]
+verify_jwt = false
+timeout_sec = 180
+
 # Job Queue Architecture for RAMS Generation
 [functions.create-rams-job]
 verify_jwt = false

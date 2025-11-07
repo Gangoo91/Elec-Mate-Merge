@@ -12,6 +12,8 @@ import { toast } from "@/hooks/use-toast";
 import TimescalesPanel from "./TimescalesPanel";
 import AlternativeQuotesPanel from "./AlternativeQuotesPanel";
 import OrderListPanel from "./OrderListPanel";
+import { supabase } from "@/integrations/supabase/client";
+import { useState } from "react";
 
 interface CostAnalysisResultsProps {
   analysis: ParsedCostAnalysis;
@@ -28,6 +30,8 @@ interface CostAnalysisResultsProps {
 }
 
 const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredData, projectContext }: CostAnalysisResultsProps) => {
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-GB', {
       style: 'currency',
@@ -43,11 +47,79 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
     });
   };
 
-  const handleExportPDF = () => {
-    toast({
-      title: "PDF Export",
-      description: "PDF export feature coming soon",
-    });
+  const handleExportPDF = async () => {
+    setIsGeneratingPDF(true);
+    
+    try {
+      // Prepare data payload for PDF template
+      const pdfData = {
+        projectName: projectContext?.projectName || projectName || 'Electrical Project',
+        clientName: projectContext?.clientInfo || '',
+        location: projectContext?.location || '',
+        projectType: projectContext?.projectType || 'domestic',
+        generatedDate: new Date().toLocaleDateString('en-GB'),
+        
+        summary: {
+          materialsSubtotal: analysis.materialsTotal,
+          labourSubtotal: analysis.labourTotal,
+          netTotal: analysis.subtotal,
+          vat: analysis.vatAmount,
+          vatRate: analysis.vatRate,
+          grandTotal: analysis.totalCost
+        },
+        
+        materials: {
+          items: analysis.materials,
+          subtotal: analysis.materialsTotal
+        },
+        
+        labour: {
+          tasks: structuredData?.labour?.tasks || [{
+            description: 'Electrical installation labour',
+            hours: analysis.labour.hours || 0,
+            rate: analysis.labour.rate || 0,
+            total: analysis.labourTotal
+          }],
+          subtotal: analysis.labourTotal
+        },
+        
+        // Include V3 enhanced data if available
+        timescales: structuredData?.timescales,
+        alternatives: structuredData?.alternatives,
+        orderList: structuredData?.orderList,
+        
+        additionalRequirements: projectContext?.additionalInfo || ''
+      };
+      
+      // Call edge function to generate PDF
+      const { data, error } = await supabase.functions.invoke('generate-cost-engineer-pdf', {
+        body: pdfData
+      });
+      
+      if (error) throw error;
+      
+      if (data.success && data.downloadUrl) {
+        // Open PDF in new tab
+        window.open(data.downloadUrl, '_blank');
+        
+        toast({
+          title: "PDF Generated Successfully",
+          description: "Your cost estimate PDF is ready",
+        });
+      } else {
+        throw new Error(data.error || 'PDF generation failed');
+      }
+      
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      toast({
+        title: "PDF Generation Failed",
+        description: error instanceof Error ? error.message : "Failed to generate PDF",
+        variant: "destructive"
+      });
+    } finally {
+      setIsGeneratingPDF(false);
+    }
   };
 
   const handleSaveToLibrary = () => {
@@ -374,9 +446,10 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
           onClick={handleExportPDF}
           variant="outline"
           className="flex-1 touch-manipulation"
+          disabled={isGeneratingPDF}
         >
           <Download className="h-4 w-4 mr-2" />
-          Export PDF
+          {isGeneratingPDF ? 'Generating PDF...' : 'Export PDF'}
         </Button>
         <Button 
           onClick={handleSaveToLibrary}
