@@ -1059,50 +1059,61 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
     }
 
     // Recalculate summary
-    const materialsSubtotal = costResult.materials?.subtotal || 0;
-    const materialsMarkup = costResult.materials?.totalMarkup || 0;
-    const labourSubtotal = costResult.labour?.subtotal || 0;
-    const subtotal = materialsSubtotal + materialsMarkup + labourSubtotal;
-    const vat = subtotal * (COST_ENGINEER_PRICING.VAT_RATE / 100);
-    const grandTotal = subtotal + vat;
+    const materialsWholesale = costResult.materials?.subtotal || 0;  // Wholesale price
+    const materialsMarkup = costResult.materials?.totalMarkup || 0;  // 15% markup amount
+    const materialsSubtotalWithMarkup = costResult.materials?.subtotalWithMarkup || 0;  // Wholesale + Markup
+    const materialsVat = costResult.materials?.vat || 0;
+    const materialsTotal = costResult.materials?.total || 0;  // With VAT
+    
+    const labourSubtotal = costResult.labour?.subtotal || 0;  // No VAT
+    const labourVat = costResult.labour?.vat || 0;
+    const labourTotal = costResult.labour?.total || 0;  // With VAT
+    
+    // CORRECTED CALCULATION: Materials (with markup) + Labour
+    const netBeforeVAT = materialsSubtotalWithMarkup + labourSubtotal;
+    const totalVAT = materialsVat + labourVat;
+    const grandTotal = materialsTotal + labourTotal;
 
     costResult.summary = {
-      materialsSubtotal: Number(materialsSubtotal.toFixed(2)),
-      materialsMarkup: Number(materialsMarkup.toFixed(2)),
-      materialsTotal: costResult.materials?.total || 0,
-      labourTotal: costResult.labour?.total || 0,
-      subtotal: Number(subtotal.toFixed(2)),
-      vat: Number(vat.toFixed(2)),
+      materialsWholesale: Number(materialsWholesale.toFixed(2)),  // Wholesale cost
+      materialsMarkup: Number(materialsMarkup.toFixed(2)),        // 15% markup
+      materialsSubtotal: Number(materialsSubtotalWithMarkup.toFixed(2)),  // Materials with markup
+      materialsVAT: Number(materialsVat.toFixed(2)),
+      materialsTotal: Number(materialsTotal.toFixed(2)),
+      
+      labourSubtotal: Number(labourSubtotal.toFixed(2)),
+      labourVAT: Number(labourVat.toFixed(2)),
+      labourTotal: Number(labourTotal.toFixed(2)),
+      
+      subtotal: Number(netBeforeVAT.toFixed(2)),  // Net before VAT
+      vat: Number(totalVAT.toFixed(2)),
       grandTotal: Number(grandTotal.toFixed(2))
     };
 
 
     // VALIDATION: Verify calculations match the rules
-    const materialsSubtotalCheck = costResult.materials?.subtotal || 0;
-    const labourSubtotalCheck = costResult.labour?.subtotal || 0;
-    const calculatedSubtotal = materialsSubtotalCheck + labourSubtotalCheck;
+    const materialsCheck = costResult.materials?.subtotalWithMarkup || 0;
+    const labourCheck = costResult.labour?.subtotal || 0;
+    const calculatedSubtotal = materialsCheck + labourCheck;
     const reportedSubtotal = costResult.summary.subtotal || 0;
     
     if (Math.abs(reportedSubtotal - calculatedSubtotal) > 0.01) {
-      logger.error('Calculation mismatch detected', {
-        materialsSubtotal: materialsSubtotalCheck,
-        labourSubtotal: labourSubtotalCheck,
+      logger.error('❌ CALCULATION MISMATCH', {
+        materialsWithMarkup: materialsCheck,
+        labourSubtotal: labourCheck,
         calculatedSubtotal,
         reportedSubtotal,
-        difference: reportedSubtotal - calculatedSubtotal,
+        difference: (reportedSubtotal - calculatedSubtotal).toFixed(2),
         differencePercent: ((reportedSubtotal - calculatedSubtotal) / calculatedSubtotal * 100).toFixed(2) + '%'
       });
       
       // AUTO-CORRECT: Force correct calculation
-      costResult.summary.subtotal = calculatedSubtotal;
-      costResult.summary.vat = calculatedSubtotal * (COST_ENGINEER_PRICING.VAT_RATE / 100);
-      costResult.summary.grandTotal = calculatedSubtotal + costResult.summary.vat;
+      costResult.summary.subtotal = Number(calculatedSubtotal.toFixed(2));
+      const correctedVAT = calculatedSubtotal * (COST_ENGINEER_PRICING.VAT_RATE / 100);
+      costResult.summary.vat = Number(correctedVAT.toFixed(2));
+      costResult.summary.grandTotal = Number((calculatedSubtotal + correctedVAT).toFixed(2));
       
-      logger.info('Auto-corrected calculations', {
-        correctedSubtotal: costResult.summary.subtotal,
-        correctedVat: costResult.summary.vat,
-        correctedGrandTotal: costResult.summary.grandTotal
-      });
+      logger.info('✅ Auto-corrected calculations', costResult.summary);
     }
 
     // Validate RAG usage

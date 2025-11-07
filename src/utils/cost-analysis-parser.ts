@@ -22,6 +22,8 @@ export interface AdditionalCost {
 export interface ParsedCostAnalysis {
   totalCost: number;
   materialsTotal: number;
+  materialsWholesale?: number;
+  materialsMarkup?: number;
   labourTotal: number;
   materials: MaterialItem[];
   labour: LabourDetails;

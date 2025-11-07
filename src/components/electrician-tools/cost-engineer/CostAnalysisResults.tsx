@@ -333,29 +333,58 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
               </div>
 
               <div className="space-y-3">
-                {/* Subtotals */}
-                <div className="p-4 rounded-lg bg-elec-dark/40 border border-elec-yellow/10 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Materials Subtotal</span>
-                    <span className="font-semibold text-foreground">{formatCurrency(analysis.materialsTotal)}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Labour Subtotal</span>
-                    <span className="font-semibold text-foreground">{formatCurrency(analysis.labourTotal)}</span>
-                  </div>
+                {/* MATERIALS BREAKDOWN WITH MARKUP */}
+                <div className="p-4 rounded-lg bg-blue-500/5 border border-blue-500/20 space-y-3">
+                  <h4 className="font-semibold text-blue-400 flex items-center gap-2">
+                    <Package className="h-4 w-4" />
+                    Materials Breakdown
+                  </h4>
                   
-                  {/* Show discrepancy warning if Net Total doesn't match calculation */}
-                  {Math.abs(analysis.subtotal - (analysis.materialsTotal + analysis.labourTotal)) > 0.01 && (
-                    <div className="flex items-center justify-between bg-amber-500/10 border border-amber-500/30 rounded px-3 py-2">
-                      <span className="text-xs text-amber-500 font-medium">⚠️ Additional Costs Detected</span>
-                      <span className="text-xs font-semibold text-amber-500">
-                        {formatCurrency(analysis.subtotal - (analysis.materialsTotal + analysis.labourTotal))}
-                      </span>
+                  {structuredData?.summary?.materialsWholesale !== undefined ? (
+                    <>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">Wholesale Cost</span>
+                        <span className="font-medium text-foreground">
+                          {formatCurrency(structuredData.summary.materialsWholesale)}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">Markup (15%)</span>
+                        <span className="font-medium text-green-500">
+                          +{formatCurrency(structuredData.summary.materialsMarkup || 0)}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between pt-2 border-t border-blue-500/20">
+                        <span className="font-medium text-foreground">Materials Subtotal</span>
+                        <span className="font-bold text-foreground">
+                          {formatCurrency(structuredData.summary.materialsSubtotal || analysis.materialsTotal)}
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Materials Subtotal</span>
+                      <span className="font-semibold text-foreground">{formatCurrency(analysis.materialsTotal)}</span>
                     </div>
                   )}
-                  
-                  <div className="flex items-center justify-between pt-2 border-t border-elec-yellow/10">
-                    <span className="font-medium text-foreground">Net Total</span>
+                </div>
+
+                {/* LABOUR BREAKDOWN */}
+                <div className="p-4 rounded-lg bg-green-500/5 border border-green-500/20 space-y-3">
+                  <h4 className="font-semibold text-green-400 flex items-center gap-2">
+                    <Clock className="h-4 w-4" />
+                    Labour Breakdown
+                  </h4>
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Labour Subtotal</span>
+                    <span className="font-bold text-foreground">{formatCurrency(analysis.labourTotal)}</span>
+                  </div>
+                </div>
+                
+                {/* Net Total (Before VAT) */}
+                <div className="p-4 rounded-lg bg-elec-dark/40 border border-elec-yellow/10">
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium text-foreground">Net Total (Before VAT)</span>
                     <span className="font-bold text-foreground">{formatCurrency(analysis.subtotal)}</span>
                   </div>
                 </div>
