@@ -105,16 +105,38 @@ If voltage drop exceeds limit:
       }
     ];
     
-    // Insert entries
+    // Insert entries using the new unique constraint
     for (const entry of entries) {
-      const { error } = await supabase
+      // First check if entry exists
+      const { data: existing } = await supabase
         .from('design_knowledge')
-        .upsert(entry, { onConflict: 'topic' });
+        .select('id')
+        .eq('topic', entry.topic)
+        .single();
       
-      if (error) {
-        logger?.warn('Failed to insert design knowledge entry', { topic: entry.topic, error });
+      if (existing) {
+        // Update existing entry
+        const { error } = await supabase
+          .from('design_knowledge')
+          .update(entry)
+          .eq('topic', entry.topic);
+        
+        if (error) {
+          logger?.warn('Failed to update design knowledge entry', { topic: entry.topic, error });
+        } else {
+          logger?.info('✅ Updated design knowledge', { topic: entry.topic });
+        }
       } else {
-        logger?.info('✅ Seeded design knowledge', { topic: entry.topic });
+        // Insert new entry
+        const { error } = await supabase
+          .from('design_knowledge')
+          .insert(entry);
+        
+        if (error) {
+          logger?.warn('Failed to insert design knowledge entry', { topic: entry.topic, error });
+        } else {
+          logger?.info('✅ Seeded design knowledge', { topic: entry.topic });
+        }
       }
     }
     
