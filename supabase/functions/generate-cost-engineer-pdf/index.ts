@@ -85,7 +85,7 @@ serve(async (req) => {
         }))
       } : null,
       
-      alternatives: (data.alternatives || []).map((alt: any) => ({
+      alternatives: (Array.isArray(data.alternatives) ? data.alternatives : []).map((alt: any) => ({
         title: alt.title || '',
         description: alt.description || '',
         cost_change: alt.costChange || ''
