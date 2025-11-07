@@ -282,11 +282,11 @@ export const InstallationResults = ({
       {!projectMetadata?.siteManagerName && (
         <Card className="relative overflow-hidden p-5 bg-gradient-to-br from-warning/15 via-orange-500/10 to-background border-2 border-warning/50 shadow-lg">
           <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-warning/5 to-transparent" />
-          <div className="relative flex items-start gap-4">
+          <div className="relative flex flex-col sm:flex-row items-center sm:items-start gap-4">
             <div className="p-3 rounded-xl bg-warning/20 shadow-md">
               <AlertCircle className="h-6 w-6 text-warning" />
             </div>
-            <div className="flex-1">
+            <div className="flex-1 w-full text-center sm:text-left">
               <h4 className="font-bold text-lg text-foreground mb-2">Complete Project Details for Professional PDF</h4>
               <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
                 Add emergency contacts and site information to generate a comprehensive, regulation-compliant method statement
