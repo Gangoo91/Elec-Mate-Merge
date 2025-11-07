@@ -234,11 +234,11 @@ export const InstallationResults = ({
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 via-primary/10 to-background border border-blue-500/30 p-6 sm:p-8 shadow-xl">
           <div className="absolute inset-0 bg-grid-pattern opacity-5" />
           <div className="relative z-10">
-            <div className="flex items-start gap-4 mb-3">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 mb-3">
               <div className="p-3 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 shadow-lg">
                 <Wrench className="h-8 w-8 text-white" />
               </div>
-              <div className="flex-1">
+              <div className="flex-1 w-full text-center sm:text-left">
                 <h2 className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 mb-2 leading-tight">
                   {jobTitle}
                 </h2>
