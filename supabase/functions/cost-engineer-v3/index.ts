@@ -390,6 +390,18 @@ PRICING RULES:
 - Material markup: +${COST_ENGINEER_PRICING.MATERIAL_MARKUP_PERCENT}% on wholesale
 - VAT: ${COST_ENGINEER_PRICING.VAT_RATE}%
 
+CRITICAL CALCULATION RULES:
+- materials.subtotal = sum of all material item totals (with markup already included in unitPrice)
+- materials.vat = materials.subtotal × 0.20
+- materials.total = materials.subtotal + materials.vat
+- labour.subtotal = sum of all labour task totals
+- labour.vat = labour.subtotal × 0.20
+- labour.total = labour.subtotal + labour.vat
+- summary.subtotal = materials.subtotal + labour.subtotal (NET TOTAL before VAT)
+- summary.vat = materials.vat + labour.vat
+- summary.grandTotal = materials.total + labour.total
+- DO NOT add any overhead, margin, or profit to summary.subtotal - it must equal materials.subtotal + labour.subtotal exactly
+
 TIMESCALE CALCULATION:
 - First fix: 0.5-0.7 days per 10m²
 - Second fix: 0.3-0.4 days per 10m²
@@ -523,13 +535,28 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
               summary: {
                 type: 'object',
                 properties: {
-                  materialsTotal: { type: 'number' },
-                  labourTotal: { type: 'number' },
-                  subtotal: { type: 'number' },
-                  vat: { type: 'number' },
-                  grandTotal: { type: 'number' }
+                  materialsTotal: { 
+                    type: 'number',
+                    description: 'Total materials with VAT (materials.total)'
+                  },
+                  labourTotal: { 
+                    type: 'number',
+                    description: 'Total labour with VAT (labour.total)'
+                  },
+                  subtotal: { 
+                    type: 'number',
+                    description: 'Net total before VAT - MUST equal materials.subtotal + labour.subtotal'
+                  },
+                  vat: { 
+                    type: 'number',
+                    description: 'Total VAT (materials.vat + labour.vat)'
+                  },
+                  grandTotal: { 
+                    type: 'number',
+                    description: 'Grand total (materialsTotal + labourTotal)'
+                  }
                 },
-                required: ['grandTotal']
+                required: ['materialsTotal', 'labourTotal', 'subtotal', 'vat', 'grandTotal']
               },
               timescales: {
                 type: 'object',
