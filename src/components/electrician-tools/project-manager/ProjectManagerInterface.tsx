@@ -16,21 +16,14 @@ import {
   Factory,
   FileText,
   Lightbulb,
-  ChevronDown,
-  Copy,
-  Download,
-  Eye,
-  EyeOff,
-  AlertTriangle,
-  CheckCircle2
+  ChevronDown
 } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { toast } from "sonner";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
-import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
 import { useSimpleAgent } from "@/hooks/useSimpleAgent";
 import ProjectManagerProcessingView from "./ProjectManagerProcessingView";
+import ProjectManagerResults from "./ProjectManagerResults";
 
 interface ExampleScenario {
   title: string;
@@ -141,41 +134,6 @@ const ProjectManagerInterface = () => {
     }
   };
 
-  const handleCopy = () => {
-    if (results) {
-      navigator.clipboard.writeText(JSON.stringify(results, null, 2));
-      toast.success("Copied to clipboard");
-    }
-  };
-
-  const handleExportPDF = () => {
-    if (!results) return;
-    
-    try {
-      const { generateProjectExecutionPlanPDF } = require('@/utils/pdf-generators/project-execution-plan-pdf');
-      
-      const pdfData = {
-        projectName: projectName || 'Untitled Project',
-        projectManager: 'AI Project Manager',
-        startDate: startDate || new Date().toISOString().split('T')[0],
-        endDate: results.endDate || 'TBC',
-        phases: results.phases || [],
-        resources: results.resources || { materials: [], labour: [], totalCost: 0 },
-        risks: results.risks || [],
-        milestones: results.milestones || [],
-        referencedDocuments: results.referencedDocuments || [],
-        notes: results.notes
-      };
-      
-      const pdf = generateProjectExecutionPlanPDF(pdfData);
-      pdf.save(`Project-Plan-${projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`);
-      
-      toast.success("PDF exported", { description: "Project Execution Plan downloaded successfully" });
-    } catch (error) {
-      console.error('PDF generation error:', error);
-      toast.error("Export failed", { description: "Could not generate PDF" });
-    }
-  };
 
   // Show loading view when generating
   if (showResults && isLoading) {
@@ -185,203 +143,17 @@ const ProjectManagerInterface = () => {
   // Show results when complete
   if (showResults && results) {
     return (
-      <div className="space-y-4">
-        <Card className="p-3 sm:p-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
-            <h4 className="font-semibold text-lg">Project Plan Results</h4>
-            <div className="flex items-center gap-2 flex-wrap">
-              <Button 
-                type="button"
-                size="sm" 
-                variant="outline"
-                onClick={handleCopy}
-                className="touch-manipulation"
-              >
-                <Copy className="h-4 w-4 mr-2" />
-                Copy
-              </Button>
-              <Button 
-                type="button"
-                size="sm" 
-                variant="outline"
-                onClick={handleExportPDF}
-                className="touch-manipulation"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Export PDF
-              </Button>
-              <SendToAgentDropdown 
-                currentAgent="project-manager" 
-                currentOutput={{ prompt, selectedType, projectName, results }} 
-              />
-            </div>
-          </div>
-
-          {/* Project Plan Summary */}
-          {results.response && (
-            <Card className="p-4 mb-4 bg-muted/50">
-              <h5 className="font-semibold mb-2 flex items-center gap-2">
-                <FileText className="h-4 w-4 text-pink-400" />
-                Project Overview
-              </h5>
-              <p className="text-sm whitespace-pre-wrap">{results.response}</p>
-            </Card>
-          )}
-
-          {/* Phases */}
-          {results.projectPlan?.phases && results.projectPlan.phases.length > 0 && (
-            <Card className="p-4 mb-4">
-              <h5 className="font-semibold mb-3 flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-pink-400" />
-                Project Phases ({results.projectPlan.totalDuration} {results.projectPlan.totalDurationUnit})
-              </h5>
-              <div className="space-y-3">
-                {results.projectPlan.phases.map((phase: any, idx: number) => (
-                  <div key={idx} className={`p-3 border rounded-lg ${phase.criticalPath ? 'border-pink-400 bg-pink-400/5' : 'border-muted'}`}>
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex-1">
-                        <div className="font-semibold flex items-center gap-2">
-                          {phase.phase}
-                          {phase.criticalPath && (
-                            <span className="text-xs bg-pink-400/20 text-pink-400 px-2 py-0.5 rounded">Critical Path</span>
-                          )}
-                        </div>
-                        <div className="text-xs text-muted-foreground mt-1">
-                          Duration: {phase.duration} {phase.durationUnit} • Start: {phase.startDay || 'Day 1'}
-                        </div>
-                      </div>
-                    </div>
-                    {phase.description && (
-                      <p className="text-sm text-muted-foreground mb-2">{phase.description}</p>
-                    )}
-                    {phase.tasks && phase.tasks.length > 0 && (
-                      <div className="mt-2 space-y-1">
-                        <div className="text-xs font-medium text-muted-foreground">Tasks:</div>
-                        {phase.tasks.map((task: any, taskIdx: number) => (
-                          <div key={taskIdx} className="text-xs pl-3 border-l-2 border-pink-400/30 py-1">
-                            • {task.task || task.name || task}
-                            {task.duration && <span className="text-muted-foreground"> ({task.duration})</span>}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    {phase.dependencies && phase.dependencies.length > 0 && (
-                      <div className="mt-2 text-xs">
-                        <span className="text-muted-foreground">Dependencies: </span>
-                        <span className="text-foreground">{phase.dependencies.join(', ')}</span>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </Card>
-          )}
-
-          {/* Resources */}
-          {results.projectPlan?.resources && (
-            <Card className="p-4 mb-4">
-              <h5 className="font-semibold mb-3 flex items-center gap-2">
-                <Users className="h-4 w-4 text-pink-400" />
-                Resource Requirements
-              </h5>
-              <div className="space-y-4">
-                {results.projectPlan.resources.labour && results.projectPlan.resources.labour.length > 0 && (
-                  <div>
-                    <div className="text-sm font-medium mb-2">Labour</div>
-                    <div className="space-y-2">
-                      {results.projectPlan.resources.labour.map((item: any, idx: number) => (
-                        <div key={idx} className="flex items-center justify-between text-sm bg-muted/30 p-2 rounded">
-                          <span>{item.role || item.name || item}</span>
-                          <span className="text-muted-foreground">{item.quantity || item.count || '1'} person</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {results.projectPlan.resources.materials && results.projectPlan.resources.materials.length > 0 && (
-                  <div>
-                    <div className="text-sm font-medium mb-2">Key Materials</div>
-                    <div className="space-y-2">
-                      {results.projectPlan.resources.materials.map((item: any, idx: number) => (
-                        <div key={idx} className="flex items-center justify-between text-sm bg-muted/30 p-2 rounded">
-                          <span>{item.description || item.name || item}</span>
-                          <span className="text-muted-foreground">{item.quantity || item.amount || '-'}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </Card>
-          )}
-
-          {/* Risks */}
-          {results.projectPlan?.risks && results.projectPlan.risks.length > 0 && (
-            <Card className="p-4 mb-4">
-              <h5 className="font-semibold mb-3 flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 text-pink-400" />
-                Risk Management
-              </h5>
-              <div className="space-y-3">
-                {results.projectPlan.risks.map((risk: any, idx: number) => (
-                  <div key={idx} className="p-3 border border-pink-400/20 rounded-lg bg-pink-400/5">
-                    <div className="font-medium text-sm mb-1">{risk.risk || risk.description || risk}</div>
-                    {risk.mitigation && (
-                      <div className="text-xs text-muted-foreground">
-                        <span className="font-medium">Mitigation:</span> {risk.mitigation}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </Card>
-          )}
-
-          {/* Milestones */}
-          {results.projectPlan?.milestones && results.projectPlan.milestones.length > 0 && (
-            <Card className="p-4 mb-4">
-              <h5 className="font-semibold mb-3 flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-pink-400" />
-                Key Milestones
-              </h5>
-              <div className="space-y-2">
-                {results.projectPlan.milestones.map((milestone: any, idx: number) => (
-                  <div key={idx} className="flex items-center gap-3 text-sm p-2 bg-muted/30 rounded">
-                    <div className="w-2 h-2 rounded-full bg-pink-400 flex-shrink-0" />
-                    <div className="flex-1">
-                      {milestone.milestone || milestone.name || milestone}
-                    </div>
-                    {milestone.date && (
-                      <span className="text-muted-foreground text-xs">{milestone.date}</span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </Card>
-          )}
-
-          {/* Raw Response Fallback */}
-          {!results.projectPlan && results.rawResponse && (
-            <Card className="p-4">
-              <h5 className="font-semibold mb-2">Detailed Plan</h5>
-              <p className="text-sm whitespace-pre-wrap">{results.rawResponse}</p>
-            </Card>
-          )}
-        </Card>
-
-        {/* Start Over Button */}
-        <Button 
-          type="button"
-          variant="outline"
-          onClick={() => {
-            setShowResults(false);
-            setResults(null);
-          }}
-          className="w-full touch-manipulation"
-        >
-          Create New Plan
-        </Button>
-      </div>
+      <ProjectManagerResults
+        results={results}
+        prompt={prompt}
+        selectedType={selectedType}
+        projectName={projectName}
+        startDate={startDate}
+        onStartOver={() => {
+          setShowResults(false);
+          setResults(null);
+        }}
+      />
     );
   }
 
