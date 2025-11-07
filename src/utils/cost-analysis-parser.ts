@@ -119,13 +119,29 @@ export function parseCostAnalysis(aiResponse: string): ParsedCostAnalysis {
     vatAmount = parseFloat(vatMatch[2].replace(/,/g, ''));
   }
 
-  // Extract subtotal
+  // FORCE CALCULATION: Always calculate subtotal from components
+  // Do NOT trust extracted "Net Total" from AI as it may include hidden margins
+  const calculatedSubtotal = materialsTotal + labourTotal;
+  
+  // Extract subtotal from text for validation only
   const subtotalMatch = aiResponse.match(/(?:Subtotal|Net Total):\s*£([\d.,]+)/i);
-  if (subtotalMatch) {
-    subtotal = parseFloat(subtotalMatch[1].replace(/,/g, ''));
-  } else {
-    subtotal = materialsTotal + labourTotal;
+  const extractedSubtotal = subtotalMatch ? parseFloat(subtotalMatch[1].replace(/,/g, '')) : 0;
+  
+  // Detect and log discrepancies
+  if (extractedSubtotal > 0 && Math.abs(extractedSubtotal - calculatedSubtotal) > 0.01) {
+    const difference = extractedSubtotal - calculatedSubtotal;
+    console.warn('⚠️ SUBTOTAL MISMATCH DETECTED:', {
+      extracted: extractedSubtotal,
+      calculated: calculatedSubtotal,
+      difference: difference,
+      differencePercent: ((difference / calculatedSubtotal) * 100).toFixed(2) + '%',
+      materials: materialsTotal,
+      labour: labourTotal
+    });
   }
+  
+  // Always use calculated value
+  subtotal = calculatedSubtotal;
 
   // Calculate VAT if not found
   if (vatAmount === 0 && subtotal > 0) {

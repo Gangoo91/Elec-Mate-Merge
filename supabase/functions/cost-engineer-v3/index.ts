@@ -1076,6 +1076,35 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       grandTotal: Number(grandTotal.toFixed(2))
     };
 
+
+    // VALIDATION: Verify calculations match the rules
+    const materialsSubtotalCheck = costResult.materials?.subtotal || 0;
+    const labourSubtotalCheck = costResult.labour?.subtotal || 0;
+    const calculatedSubtotal = materialsSubtotalCheck + labourSubtotalCheck;
+    const reportedSubtotal = costResult.summary.subtotal || 0;
+    
+    if (Math.abs(reportedSubtotal - calculatedSubtotal) > 0.01) {
+      logger.error('Calculation mismatch detected', {
+        materialsSubtotal: materialsSubtotalCheck,
+        labourSubtotal: labourSubtotalCheck,
+        calculatedSubtotal,
+        reportedSubtotal,
+        difference: reportedSubtotal - calculatedSubtotal,
+        differencePercent: ((reportedSubtotal - calculatedSubtotal) / calculatedSubtotal * 100).toFixed(2) + '%'
+      });
+      
+      // AUTO-CORRECT: Force correct calculation
+      costResult.summary.subtotal = calculatedSubtotal;
+      costResult.summary.vat = calculatedSubtotal * (COST_ENGINEER_PRICING.VAT_RATE / 100);
+      costResult.summary.grandTotal = calculatedSubtotal + costResult.summary.vat;
+      
+      logger.info('Auto-corrected calculations', {
+        correctedSubtotal: costResult.summary.subtotal,
+        correctedVat: costResult.summary.vat,
+        correctedGrandTotal: costResult.summary.grandTotal
+      });
+    }
+
     // Validate RAG usage
     if (finalPricingResults && finalPricingResults.length > 0) {
       const usedPricingData = costResult.materials?.items?.some((item: any) => 

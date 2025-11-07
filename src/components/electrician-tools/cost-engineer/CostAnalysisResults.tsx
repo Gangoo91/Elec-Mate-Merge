@@ -271,6 +271,17 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
                     <span className="text-muted-foreground">Labour Subtotal</span>
                     <span className="font-semibold text-foreground">{formatCurrency(analysis.labourTotal)}</span>
                   </div>
+                  
+                  {/* Show discrepancy warning if Net Total doesn't match calculation */}
+                  {Math.abs(analysis.subtotal - (analysis.materialsTotal + analysis.labourTotal)) > 0.01 && (
+                    <div className="flex items-center justify-between bg-amber-500/10 border border-amber-500/30 rounded px-3 py-2">
+                      <span className="text-xs text-amber-500 font-medium">⚠️ Additional Costs Detected</span>
+                      <span className="text-xs font-semibold text-amber-500">
+                        {formatCurrency(analysis.subtotal - (analysis.materialsTotal + analysis.labourTotal))}
+                      </span>
+                    </div>
+                  )}
+                  
                   <div className="flex items-center justify-between pt-2 border-t border-elec-yellow/10">
                     <span className="font-medium text-foreground">Net Total</span>
                     <span className="font-bold text-foreground">{formatCurrency(analysis.subtotal)}</span>
