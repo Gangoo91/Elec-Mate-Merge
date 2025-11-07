@@ -129,7 +129,7 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
       <Card className="border-elec-yellow/20">
         <Tabs defaultValue="materials" className="w-full">
           <CardHeader className="pb-4">
-            <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:inline-flex">
+            <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-flex">
               <TabsTrigger value="materials" className="text-xs sm:text-sm">
                 <Package className="h-4 w-4 mr-2 hidden sm:inline" />
                 Materials
@@ -141,6 +141,10 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
               <TabsTrigger value="summary" className="text-xs sm:text-sm">
                 <FileText className="h-4 w-4 mr-2 hidden sm:inline" />
                 Full Report
+              </TabsTrigger>
+              <TabsTrigger value="json" className="text-xs sm:text-sm">
+                <FileText className="h-4 w-4 mr-2 hidden sm:inline" />
+                Raw JSON
               </TabsTrigger>
             </TabsList>
           </CardHeader>
@@ -299,6 +303,32 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
                     </pre>
                   </div>
                 </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="json" className="mt-0 space-y-4">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-foreground">Raw JSON Response</h3>
+                <Button
+                  onClick={() => {
+                    navigator.clipboard.writeText(JSON.stringify(structuredData || analysis, null, 2));
+                    toast({
+                      title: "JSON copied",
+                      description: "JSON data copied to clipboard",
+                    });
+                  }}
+                  variant="outline"
+                  size="sm"
+                >
+                  <Copy className="h-4 w-4 mr-2" />
+                  Copy JSON
+                </Button>
+              </div>
+
+              <div className="p-4 rounded-lg bg-elec-dark/60 border border-elec-yellow/10 max-h-[600px] overflow-auto">
+                <pre className="text-xs font-mono text-muted-foreground whitespace-pre">
+                  {JSON.stringify(structuredData || analysis, null, 2)}
+                </pre>
               </div>
             </TabsContent>
           </CardContent>
