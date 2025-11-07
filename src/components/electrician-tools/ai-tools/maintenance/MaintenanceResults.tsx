@@ -343,13 +343,13 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
                 className="border border-elec-gray/20 rounded-lg px-2 sm:px-4 bg-gradient-to-r from-elec-dark/40 to-elec-dark/20 hover:border-elec-yellow/40 transition-all duration-200 data-[state=open]:bg-gradient-to-r data-[state=open]:from-elec-dark/60 data-[state=open]:to-elec-dark/40 data-[state=open]:border-elec-yellow/50"
               >
                 <AccordionTrigger className="hover:no-underline py-3 sm:py-5">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full text-left">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full text-left pr-6 sm:pr-8">
                     <Badge className={`${getPriorityColor(task.priority)} transition-colors text-xs self-start sm:self-center shrink-0`}>
                       {task.priority}
                     </Badge>
-                    <div className="flex-1 min-w-0 pr-2">
-                      <p className="font-medium text-elec-light text-sm sm:text-base leading-tight sm:leading-normal">{task.task}</p>
-                      <p className="text-xs text-elec-light/70 mt-1 leading-tight">
+                    <div className="flex-1 min-w-0 overflow-hidden">
+                      <p className="font-medium text-elec-light text-sm sm:text-base leading-tight sm:leading-normal break-words overflow-wrap-anywhere">{task.task}</p>
+                      <p className="text-xs text-elec-light/70 mt-1 leading-tight break-words">
                         {task.interval} • {task.regulation || 'Industry standard'}
                       </p>
                     </div>
