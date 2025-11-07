@@ -77,7 +77,9 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
             total: m.total,
             supplier: m.supplier || ''
           })),
-          subtotal: analysis.materialsTotal
+          subtotal: analysis.materialsTotal,
+          markup: structuredData?.materials?.markup || 0,
+          totalWithMarkup: structuredData?.materials?.totalWithMarkup || analysis.materialsTotal
         },
         
         labour: {
