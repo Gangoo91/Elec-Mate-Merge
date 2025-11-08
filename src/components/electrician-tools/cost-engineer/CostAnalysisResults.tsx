@@ -2,9 +2,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { 
   Package, Clock, TrendingUp, FileText, Copy, Download, Save, 
-  CheckCircle2, ChevronRight, Sparkles, Calendar, Star, Eye 
+  CheckCircle2, ChevronRight, Sparkles, Calendar, Star, Eye, Settings, InfoIcon 
 } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -192,16 +193,40 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
       </div>
 
       {/* Profitability Dashboard - NEW */}
-      {structuredData?.profitabilityAnalysis && (
-        <ProfitabilityDashboard profitabilityAnalysis={structuredData.profitabilityAnalysis} />
-      )}
-
-      {/* Job Overheads Breakdown - NEW */}
-      {structuredData?.profitabilityAnalysis?.jobOverheads && (
-        <JobOverheadsBreakdown 
-          jobOverheads={structuredData.profitabilityAnalysis.jobOverheads}
-          directCosts={structuredData.profitabilityAnalysis.directCosts}
-        />
+      {structuredData?.profitabilityAnalysis ? (
+        <>
+          <ProfitabilityDashboard profitabilityAnalysis={structuredData.profitabilityAnalysis} />
+          
+          {/* Job Overheads Breakdown */}
+          {structuredData.profitabilityAnalysis.jobOverheads && (
+            <JobOverheadsBreakdown 
+              jobOverheads={structuredData.profitabilityAnalysis.jobOverheads}
+              directCosts={structuredData.profitabilityAnalysis.directCosts}
+            />
+          )}
+        </>
+      ) : (
+        <Alert className="border-blue-500/30 bg-blue-500/5">
+          <InfoIcon className="h-5 w-5 text-blue-500" />
+          <AlertDescription className="ml-2 text-sm">
+            <strong className="text-foreground">Profitability Analysis Unavailable</strong>
+            <p className="text-muted-foreground mt-1">
+              Configure your business settings (hourly rates, overheads, profit targets) to unlock break-even analysis, quote tiers, and profit guidance.
+            </p>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="mt-3 border-blue-500/30 hover:bg-blue-500/10"
+              onClick={() => {
+                const settingsBtn = document.querySelector('[data-business-settings-trigger]') as HTMLButtonElement;
+                settingsBtn?.click();
+              }}
+            >
+              <Settings className="h-4 w-4 mr-2" />
+              Configure Business Settings
+            </Button>
+          </AlertDescription>
+        </Alert>
       )}
 
       {/* Enhanced Panels for V3 Data */}

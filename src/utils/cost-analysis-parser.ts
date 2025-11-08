@@ -32,6 +32,27 @@ export interface ParsedCostAnalysis {
   vatRate: number;
   subtotal: number;
   rawText: string;
+  profitabilityAnalysis?: {
+    directCosts: {
+      materials: number;
+      labour: number;
+      total: number;
+    };
+    jobOverheads: {
+      allocatedBusinessOverheads: number;
+      travel: number;
+      permitsAndFees: number;
+      wasteDisposal: number;
+      total: number;
+    };
+    breakEvenPoint: number;
+    quoteTiers: {
+      minimum: { price: number; margin: number; marginPercent: number };
+      target: { price: number; margin: number; marginPercent: number };
+      premium: { price: number; margin: number; marginPercent: number };
+    };
+    recommendations: string[];
+  };
 }
 
 /**
