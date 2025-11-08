@@ -668,14 +668,24 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               
               {/* Enhanced Risks Section */}
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-3">
                   <h4 className="text-xl font-bold text-elec-light flex items-center gap-3">
                     <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                     <span>Identified Hazards</span>
                   </h4>
-                  <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-bold">
-                    {ramsData.risks?.length || 0} Risks
-                  </Badge>
+                  <div className="flex items-center gap-2">
+                    <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-bold">
+                      {ramsData.risks?.length || 0} Risks
+                    </Badge>
+                    <Button 
+                      onClick={addRisk} 
+                      size="sm" 
+                      className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card"
+                    >
+                      <Plus className="h-4 w-4 mr-1" />
+                      Add Hazard
+                    </Button>
+                  </div>
                 </div>
                 
                 {/* Empty state when no risks */}
@@ -685,20 +695,14 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                       <AlertTriangle className="h-16 w-16 text-elec-yellow/40 mx-auto mb-4" />
                       <h3 className="text-lg font-semibold text-elec-light mb-2">No Hazards Identified Yet</h3>
                       <p className="text-sm text-elec-light/60 mb-4">
-                        Add hazards manually or regenerate to identify potential risks for this installation.
+                        Add hazards manually using the button above or regenerate to identify potential risks for this installation.
                       </p>
-                      <div className="flex gap-2 justify-center">
-                        <Button onClick={addRisk} variant="outline" size="sm" className="border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10">
-                          <Plus className="h-4 w-4 mr-2" />
-                          Add Hazard
+                      {onRegenerate && (
+                        <Button onClick={onRegenerate} variant="outline" size="sm" className="border-orange-500/40 text-orange-500 hover:bg-orange-500/10">
+                          <Sparkles className="h-4 w-4 mr-2" />
+                          Try Again
                         </Button>
-                        {onRegenerate && (
-                          <Button onClick={onRegenerate} variant="outline" size="sm" className="border-orange-500/40 text-orange-500 hover:bg-orange-500/10">
-                            <Sparkles className="h-4 w-4 mr-2" />
-                            Try Again
-                          </Button>
-                        )}
-                      </div>
+                      )}
                     </CardContent>
                   </Card>
                 )}
@@ -711,6 +715,9 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                         key={risk.id}
                         risk={risk}
                         index={sortedIndex}
+                        editable={true}
+                        onUpdate={updateRisk}
+                        onRemove={removeRisk}
                       />
                     ))}
                   </div>
