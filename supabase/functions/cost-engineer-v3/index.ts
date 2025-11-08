@@ -1461,6 +1461,14 @@ MATERIALS: ${costResult.materials.items.length} items, £${costResult.summary.ma
 LABOUR: ${totalHours} hours
 TARGET QUOTE: £${targetPrice}
 
+CRITICAL JSON FORMATTING RULES:
+- Use apostrophes (') for ALL contractions in text fields: "we're" NOT "we"re"
+- Use apostrophes (') for possessives: "it's" NOT "it"s", "that's" NOT "that"s"
+- Keep scripts professional and simple
+- Avoid quotes within quoted strings - use apostrophes instead
+- Example GOOD script: "While we're upgrading your electrics, it makes sense to add an EV charger now - we'll connect it to the new consumer unit."
+- Example BAD script: "While we"re upgrading..." (will break JSON parsing)
+
 Provide:
 1. Upsell Opportunities (3-5 relevant add-ons with: name, price, win_rate %, why relevant, time required, client script, is_hot boolean)
 2. Future Pipeline (2-4 likely future jobs: title, priority high/medium/low, timing, estimated_value, description, follow-up trigger)
@@ -1582,7 +1590,12 @@ Provide:
 
             // Parse business opportunities (valuable but non-critical)
             if (opportunitiesResult.status === 'fulfilled') {
-              businessOpportunities = parseJsonWithRepair(opportunitiesResult.value.content, logger, 'business-opportunities');
+              // Sanitize JSON content to fix common quote issues before parsing
+              const sanitizedContent = opportunitiesResult.value.content
+                .replace(/([^\\])"([a-z])/gi, "$1'$2") // Replace unescaped quotes followed by letters
+                .replace(/([a-z])"s\b/gi, "$1's"); // Fix possessives like "it"s" → "it's"
+              
+              businessOpportunities = parseJsonWithRepair(sanitizedContent, logger, 'business-opportunities');
               logger.info('Business opportunities parsed successfully', {
                 upsellCount: businessOpportunities.upsells?.length,
                 pipelineCount: businessOpportunities.pipeline?.length
