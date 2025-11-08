@@ -392,22 +392,185 @@ serve(async (req) => {
     let lastProgressLog = Date.now();
     const PROGRESS_LOG_INTERVAL = 10000; // 10s
     
-    // Build conversation context
+    // Build conversation context - PHASE 1: Circuit Design Data First
     let contextSection = '';
+
+    // 🆕 PHASE 1: Add complete circuit design context from Designer Agent
+    if (currentDesign?.circuits && currentDesign.circuits.length > 0) {
+      contextSection += '\n\n═══════════════════════════════════════════════\n';
+      contextSection += '📋 CIRCUIT DESIGN FROM DESIGNER AGENT\n';
+      contextSection += '═══════════════════════════════════════════════\n\n';
+      
+      contextSection += `Project: ${currentDesign.projectName || 'Unnamed Project'}\n`;
+      contextSection += `Location: ${currentDesign.location || 'Not specified'}\n`;
+      contextSection += `Type: ${currentDesign.installationType || 'Domestic'} Installation\n`;
+      contextSection += `Total Circuits: ${currentDesign.circuits.length}\n\n`;
+      
+      currentDesign.circuits.forEach((circuit: any, index: number) => {
+        contextSection += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+        contextSection += `Circuit #${index + 1}: ${circuit.name}\n`;
+        contextSection += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+        
+        // Core specifications
+        contextSection += `Load Details:\n`;
+        contextSection += `  • Load Type: ${circuit.loadType}\n`;
+        contextSection += `  • Load Power: ${circuit.loadPower}W\n`;
+        contextSection += `  • Design Current (Ib): ${circuit.calculations?.Ib || circuit.designCurrent}A\n`;
+        contextSection += `  • Voltage: ${circuit.voltage}V ${circuit.phases === 'three' ? '3-phase' : 'single-phase'}\n\n`;
+        
+        // Cable specifications
+        contextSection += `Cable Specification:\n`;
+        contextSection += `  • Cable Size: ${circuit.cableSize}mm² live conductors\n`;
+        contextSection += `  • CPC Size: ${circuit.cpcSize}mm²\n`;
+        contextSection += `  • Cable Type: ${circuit.cableType || `${circuit.cableSize}mm² / ${circuit.cpcSize}mm² CPC T&E`}\n`;
+        contextSection += `  • Cable Length: ${circuit.cableLength}m\n`;
+        contextSection += `  • Installation Method: ${circuit.installationMethod}\n\n`;
+        
+        // Protection
+        contextSection += `Protection & Safety:\n`;
+        contextSection += `  • Protection Device: ${circuit.protectionDevice.rating}A ${circuit.protectionDevice.type} Type ${circuit.protectionDevice.curve} (${circuit.protectionDevice.kaRating}kA)\n`;
+        contextSection += `  • Device Rating (In): ${circuit.protectionDevice.rating}A\n`;
+        contextSection += `  • RCD Protected: ${circuit.rcdProtected ? 'Yes (30mA)' : 'No'}\n`;
+        if (circuit.afddRequired) {
+          contextSection += `  • AFDD Required: Yes\n`;
+        }
+        contextSection += `\n`;
+        
+        // Calculations & Compliance
+        if (circuit.calculations) {
+          contextSection += `Design Calculations:\n`;
+          if (circuit.calculations.voltageDrop) {
+            contextSection += `  • Voltage Drop: ${circuit.calculations.voltageDrop.voltageDropVolts}V (${circuit.calculations.voltageDrop.voltageDropPercent}%) ${circuit.calculations.voltageDrop.compliant ? '✅ COMPLIANT' : '❌ NON-COMPLIANT'}\n`;
+            contextSection += `    (Limit: ${circuit.calculations.voltageDrop.limit}%)\n`;
+          }
+          if (circuit.calculations.zs !== undefined) {
+            const maxZs = circuit.calculations.zs?.max || circuit.maxZs;
+            const actualZs = circuit.calculations.zs?.calculated || circuit.calculations.zs;
+            contextSection += `  • Earth Fault Loop Impedance:\n`;
+            contextSection += `    - Actual Zs: ${actualZs}Ω\n`;
+            if (maxZs) {
+              contextSection += `    - Max Zs: ${maxZs}Ω\n`;
+              contextSection += `    - Status: ${actualZs < maxZs ? '✅ COMPLIANT' : '❌ NON-COMPLIANT'}\n`;
+            }
+          }
+          if (circuit.calculations.Iz) {
+            contextSection += `  • Corrected Current-Carrying Capacity (Iz): ${circuit.calculations.Iz}A\n`;
+          }
+          contextSection += `\n`;
+        }
+        
+        // Installation guidance if available
+        if (circuit.installationGuidance) {
+          contextSection += `Installation Guidance from Designer:\n`;
+          contextSection += `  • Reference Method: ${circuit.installationGuidance.referenceMethod}\n`;
+          contextSection += `  • ${circuit.installationGuidance.description}\n`;
+          contextSection += `  • Clip Spacing: ${circuit.installationGuidance.clipSpacing}\n`;
+          if (circuit.installationGuidance.practicalTips && circuit.installationGuidance.practicalTips.length > 0) {
+            contextSection += `  • Tips:\n`;
+            circuit.installationGuidance.practicalTips.forEach((tip: string) => {
+              contextSection += `    - ${tip}\n`;
+            });
+          }
+          contextSection += `\n`;
+        }
+        
+        // Special location compliance
+        if (circuit.specialLocationCompliance?.isSpecialLocation) {
+          contextSection += `⚠️ SPECIAL LOCATION REQUIREMENTS:\n`;
+          contextSection += `  • Location Type: ${circuit.specialLocationCompliance.locationType}\n`;
+          if (circuit.specialLocationCompliance.zonesApplicable) {
+            contextSection += `  • Zones: ${circuit.specialLocationCompliance.zonesApplicable}\n`;
+          }
+          circuit.specialLocationCompliance.requirements.forEach((req: string) => {
+            contextSection += `  • ${req}\n`;
+          });
+          contextSection += `\n`;
+        }
+        
+        // Warnings from designer
+        if (circuit.warnings && circuit.warnings.length > 0) {
+          contextSection += `⚠️ DESIGNER WARNINGS:\n`;
+          circuit.warnings.forEach((warning: string) => {
+            contextSection += `  • ${warning}\n`;
+          });
+          contextSection += `\n`;
+        }
+        
+        // Justifications (regulatory references)
+        if (circuit.justifications) {
+          contextSection += `Regulatory Justifications:\n`;
+          if (circuit.justifications.cableSize) {
+            contextSection += `  • Cable Sizing: ${circuit.justifications.cableSize}\n`;
+          }
+          if (circuit.justifications.protection) {
+            contextSection += `  • Protection: ${circuit.justifications.protection}\n`;
+          }
+          if (circuit.justifications.rcd) {
+            contextSection += `  • RCD: ${circuit.justifications.rcd}\n`;
+          }
+          contextSection += `\n`;
+        }
+      });
+      
+      contextSection += `═══════════════════════════════════════════════\n\n`;
+      contextSection += `✅ USE THIS CIRCUIT DATA: Generate installation steps specific to these exact specifications.\n`;
+      contextSection += `✅ DO NOT re-calculate cable sizes or protection devices - they are already correctly designed.\n`;
+      contextSection += `✅ FOCUS ON: Physical installation procedures, clip spacing, routing methods, termination steps.\n\n`;
+    }
+
+    // 🆕 PHASE 2: Add consumer unit details if available
+    if (currentDesign?.consumerUnit) {
+      contextSection += `Consumer Unit Configuration:\n`;
+      contextSection += `  • Type: ${currentDesign.consumerUnit.type}\n`;
+      contextSection += `  • Main Switch Rating: ${currentDesign.consumerUnit.mainSwitchRating}A\n`;
+      contextSection += `  • Earthing System: ${currentDesign.consumerUnit.incomingSupply?.earthingSystem}\n`;
+      contextSection += `  • Ze: ${currentDesign.consumerUnit.incomingSupply?.Ze}Ω\n`;
+      contextSection += `  • PFC: ${currentDesign.consumerUnit.incomingSupply?.incomingPFC}kA\n\n`;
+    }
+
+    // 🆕 PHASE 3: Add materials list if available
+    if (currentDesign?.materials && currentDesign.materials.length > 0) {
+      contextSection += `Materials Specified by Designer:\n`;
+      currentDesign.materials.slice(0, 10).forEach((material: any) => {
+        contextSection += `  • ${material.quantity} ${material.unit} ${material.name} (${material.specification})\n`;
+      });
+      if (currentDesign.materials.length > 10) {
+        contextSection += `  • ... and ${currentDesign.materials.length - 10} more items\n`;
+      }
+      contextSection += `\n`;
+    }
+
+    // 🆕 PHASE 4: Add shared regulations
+    if (sharedRegulations && sharedRegulations.length > 0) {
+      contextSection += `BS 7671 Regulations Referenced by Designer:\n`;
+      sharedRegulations.slice(0, 15).forEach((reg: string) => {
+        contextSection += `  • ${reg}\n`;
+      });
+      if (sharedRegulations.length > 15) {
+        contextSection += `  • ... and ${sharedRegulations.length - 15} more references\n`;
+      }
+      contextSection += `\n`;
+    }
+
+    // EXISTING CODE: Previous agent outputs (keep for backward compatibility)
     if (previousAgentOutputs && previousAgentOutputs.length > 0) {
       const designerOutput = previousAgentOutputs.find((o: any) => o.agent === 'designer');
       const costOutput = previousAgentOutputs.find((o: any) => o.agent === 'cost-engineer');
       
-      contextSection += '\n\nPREVIOUS SPECIALIST OUTPUTS:\n';
-      if (designerOutput?.response?.structuredData) {
-        const d = designerOutput.response.structuredData;
-        contextSection += `DESIGNER: ${d.cableSize} cable, ${d.circuitBreaker} breaker, ${d.installationMethod}\n`;
-      }
-      if (costOutput?.response?.structuredData) {
-        const c = costOutput.response.structuredData;
-        contextSection += `COST ENGINEER: Total £${c.totalCost}, ${c.materials?.length || 0} materials\n`;
+      if (designerOutput || costOutput) {
+        contextSection += '\n\nPREVIOUS SPECIALIST OUTPUTS:\n';
+        if (designerOutput?.response?.structuredData) {
+          const d = designerOutput.response.structuredData;
+          contextSection += `DESIGNER: ${d.cableSize} cable, ${d.circuitBreaker} breaker, ${d.installationMethod}\n`;
+        }
+        if (costOutput?.response?.structuredData) {
+          const c = costOutput.response.structuredData;
+          contextSection += `COST ENGINEER: Total £${c.totalCost}, ${c.materials?.length || 0} materials\n`;
+        }
       }
     }
+
+    // EXISTING CODE: Conversation history (keep unchanged)
     if (messages && messages.length > 0) {
       contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
         `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
@@ -425,15 +588,31 @@ serve(async (req) => {
     // Phase 1: RAG-FIRST System Prompt - Knowledge base intelligence comes FIRST
     const systemPrompt = `You are a master electrician with 20+ years of installation experience across residential, commercial, and industrial projects. You're chatting with a colleague who needs practical, on-site advice.
 
-🎯 **PRIMARY INSTRUCTION: USE THE KNOWLEDGE BASE BELOW**
+🎯 **PRIMARY INSTRUCTION: USE THE PROVIDED CIRCUIT DESIGN DATA**
 
+${currentDesign?.circuits && currentDesign.circuits.length > 0 ? `
+⚡️ CRITICAL: A complete circuit design has been provided by the Designer Agent in the context section below.
+DO NOT re-calculate cable sizes or protection devices - they are ALREADY CORRECTLY DESIGNED.
+Your job is to create INSTALLATION PROCEDURES for these exact specifications.
+
+Focus on:
+✅ Physical installation steps (cable routing, fixing methods, clip spacing)
+✅ Termination procedures (stripping, crimping, torque settings)
+✅ Testing sequence (continuity, insulation resistance, polarity)
+✅ Safety precautions specific to this installation
+✅ Tool and equipment requirements
+✅ Quality checkpoints at each stage
+
+${contextSection}
+` : ''}
+
+📚 **PRACTICAL WORK INTELLIGENCE - USE THIS DATA FOR PROCEDURES:**
 The Practical Work Intelligence database contains VERIFIED procedures from 10,000+ real installations. Your job is to:
 1. **SELECT** the most relevant procedures from the knowledge base
 2. **ADAPT** them to this specific job (cable sizes, distances, equipment)
 3. **SEQUENCE** them in logical installation order
 4. **ENHANCE** with specific measurements and quality checks
 
-📚 **PRACTICAL WORK INTELLIGENCE - USE THIS DATA FIRST:**
 ${installContext}
 
 ${installContext.includes('Practical Work') || installContext.includes('Tools:') ? 
