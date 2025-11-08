@@ -38,7 +38,17 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, circuitType, voltage, messages, previousAgentOutputs, sharedRegulations } = body;
+    const { query, circuitType, voltage, messages, previousAgentOutputs, sharedRegulations, currentDesign, projectDetails } = body;
+
+    // Track context sources
+    const contextSources = {
+      sharedRegulations: !!(sharedRegulations && sharedRegulations.length > 0),
+      previousAgentOutputs: previousAgentOutputs?.map((o: any) => o.agent) || [],
+      projectDetails: !!projectDetails,
+      circuitDesign: !!(currentDesign?.circuits || previousAgentOutputs?.find((o: any) => o.agent === 'designer'))
+    };
+
+    logger.info('📦 Context received:', contextSources);
 
     // PHASE 1: Query Enhancement
     const { enhanceQuery, logEnhancement } = await import('../_shared/query-enhancer.ts');

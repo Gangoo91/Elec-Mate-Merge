@@ -22,6 +22,7 @@ import { AgentSuggestions } from "./AgentSuggestions";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { RegulationCitationTooltip } from "@/components/agent-response/RegulationCitationTooltip";
 import { ContextFlowIndicator } from "./ContextFlowIndicator";
+import { Badge } from "@/components/ui/badge";
 
 interface AgentResponseRendererProps {
   content: string;
@@ -205,7 +206,7 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, e
   return (
     <div className="space-y-4 text-left max-w-full overflow-hidden">
       {/* PHASE 5: Context Flow Indicator */}
-      {contextSources.length > 0 && agentId && (
+      {contextSources && agentId && (
         <ContextFlowIndicator 
           agentId={agentId} 
           contextSources={contextSources}

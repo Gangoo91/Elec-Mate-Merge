@@ -147,6 +147,7 @@ interface Message {
   thinkingMessage?: string;  // NEW: What the agent is thinking about
   enrichment?: any;  // Frontend Response Enrichment
   rendering?: any;   // Frontend Response Enrichment
+  metadata?: any;    // NEW: Agent metadata for context tracking
 }
 
 interface IntelligentAIPlannerProps {
@@ -223,6 +224,7 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const [lastSentMessage, setLastSentMessage] = useState<string>("");
   const [lastSendFailed, setLastSendFailed] = useState<boolean>(false);
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
+  const [showDebugContext, setShowDebugContext] = useState(false); // NEW: Debug mode toggle
   
   // Agent suggestions from responses
   const [suggestedAgents, setSuggestedAgents] = useState<Array<{agent: string; reason: string; priority?: string}>>([]);
@@ -468,6 +470,8 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
       const enrichedStructuredData = structuredData && typeof structuredData === 'object'
         ? { ...structuredData, response }
         : { response };
+      
+      console.log('📊 Agent metadata:', fullAgentResponse?.metadata);
       
       if (enrichedStructuredData) {
         console.log('✅ Structured data received:', enrichedStructuredData);

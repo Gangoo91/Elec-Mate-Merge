@@ -11,12 +11,74 @@ interface ContextSource {
 
 interface ContextFlowIndicatorProps {
   agentId: string;
-  contextSources: ContextSource[];
+  contextSources: Array<{
+    name: string;
+    received: boolean;
+    itemCount?: number;
+    details?: string;
+  }> | {
+    sharedRegulations?: boolean;
+    previousAgentOutputs?: string[];
+    projectDetails?: boolean;
+    circuitDesign?: boolean;
+    coordinating?: number;
+  };
 }
 
 export const ContextFlowIndicator = ({ agentId, contextSources }: ContextFlowIndicatorProps) => {
-  const receivedCount = contextSources.filter(s => s.received).length;
-  const totalCount = contextSources.length;
+  // Handle both array format (from useMemo in AgentResponseRenderer) and object format (from metadata)
+  let sources: Array<{ name: string; received: boolean; itemCount?: number; details?: string; }> = [];
+  
+  if (Array.isArray(contextSources)) {
+    // Already in correct format from AgentResponseRenderer
+    sources = contextSources;
+  } else {
+    // Build from metadata object format
+    if (contextSources.sharedRegulations !== undefined) {
+      sources.push({
+        name: 'Shared Regulations',
+        received: contextSources.sharedRegulations,
+        details: 'BS 7671 regulations from Designer'
+      });
+    }
+    
+    if (contextSources.previousAgentOutputs !== undefined) {
+      sources.push({
+        name: 'Previous Agent Outputs',
+        received: contextSources.previousAgentOutputs.length > 0,
+        itemCount: contextSources.previousAgentOutputs.length,
+        details: contextSources.previousAgentOutputs.join(', ') || 'None'
+      });
+    }
+    
+    if (contextSources.projectDetails !== undefined) {
+      sources.push({
+        name: 'Project Details',
+        received: contextSources.projectDetails,
+        details: 'Client, location, budget, timeline'
+      });
+    }
+    
+    if (contextSources.circuitDesign !== undefined) {
+      sources.push({
+        name: 'Circuit Design Data',
+        received: contextSources.circuitDesign,
+        details: 'Cable sizes, breakers, calculations'
+      });
+    }
+    
+    if (contextSources.coordinating !== undefined) {
+      sources.push({
+        name: 'Coordinating Specialists',
+        received: contextSources.coordinating > 0,
+        itemCount: contextSources.coordinating,
+        details: `${contextSources.coordinating} specialist outputs`
+      });
+    }
+  }
+  
+  const receivedCount = sources.filter(s => s.received).length;
+  const totalCount = sources.length;
   
   if (totalCount === 0) return null;
   
@@ -32,7 +94,7 @@ export const ContextFlowIndicator = ({ agentId, contextSources }: ContextFlowInd
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-2">
-        {contextSources.map((source, idx) => (
+        {sources.map((source, idx) => (
           <div 
             key={idx}
             className="flex items-center justify-between gap-3 p-2 rounded-md bg-background/50"

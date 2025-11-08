@@ -152,7 +152,17 @@ serve(async (req) => {
   const executionPromise = (async (): Promise<Response> => {
   try {
     const body = await req.json();
-    const { query, cableType, installationMethod, location, messages, previousAgentOutputs, sharedRegulations } = body;
+    const { query, cableType, installationMethod, location, messages, previousAgentOutputs, sharedRegulations, currentDesign, projectDetails } = body;
+
+    // Track context sources
+    const contextSources = {
+      sharedRegulations: !!(sharedRegulations && sharedRegulations.length > 0),
+      previousAgentOutputs: previousAgentOutputs?.map((o: any) => o.agent) || [],
+      projectDetails: !!projectDetails,
+      circuitDesign: !!(currentDesign?.circuits || previousAgentOutputs?.find((o: any) => o.agent === 'designer'))
+    };
+
+    logger.info('📦 Context received:', contextSources);
 
     // Enhanced input validation BEFORE any processing
     if (!query || typeof query !== 'string' || query.trim().length === 0) {

@@ -150,7 +150,17 @@ serve(async (req) => {
     console.log('📥 [DIAGNOSTIC] Parsing request body...');
     const body = await req.json();
     console.log('✅ [DIAGNOSTIC] Request body parsed successfully');
-    const { query, workType, location, hazards, messages, previousAgentOutputs, sharedRegulations } = body;
+    const { query, workType, location, hazards, messages, previousAgentOutputs, sharedRegulations, currentDesign, projectDetails } = body;
+    
+    // Track context sources
+    const contextSources = {
+      sharedRegulations: !!(sharedRegulations && sharedRegulations.length > 0),
+      previousAgentOutputs: previousAgentOutputs?.map((o: any) => o.agent) || [],
+      projectDetails: !!projectDetails,
+      circuitDesign: !!(currentDesign?.circuits || previousAgentOutputs?.find((o: any) => o.agent === 'designer'))
+    };
+
+    logger.info('📦 Context received:', contextSources);
     console.log('📋 [DIAGNOSTIC] Request params:', {
       queryLength: query?.length,
       workType,

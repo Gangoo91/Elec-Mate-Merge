@@ -54,9 +54,15 @@ export const handleConsultation = async (
       }
 
       return {
-        responses: data.responses || [],
+        responses: (data.responses || []).map((r: any) => ({
+          ...r,
+          // Preserve metadata from agent response
+          metadata: r.response?.metadata
+        })),
         suggestedNextAgents: data.suggestedNextAgents || [],
-        consultedAgents: data.consultedAgents || []
+        consultedAgents: data.consultedAgents || [],
+        // NEW: Return router metadata as well
+        routerMetadata: data.metadata
       };
     } catch (err) {
       lastError = err instanceof Error ? err : new Error('Agent consultation failed');
