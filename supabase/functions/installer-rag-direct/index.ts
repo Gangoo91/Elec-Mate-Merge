@@ -19,7 +19,13 @@ serve(async (req) => {
   let aiStartTime = 0;
 
   try {
-    const { query, projectDetails } = await req.json();
+    const { 
+      query, 
+      projectDetails, 
+      previousAgentOutputs, 
+      currentDesign, 
+      sharedRegulations 
+    } = await req.json();
     
     if (!query) {
       return new Response(
@@ -29,6 +35,15 @@ serve(async (req) => {
     }
 
     console.log('🚀 installer-rag-direct started', { query: query.substring(0, 100) });
+
+    // Log designer context if available
+    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
+      console.log('📦 Received designer context:', {
+        agents: previousAgentOutputs.map((a: any) => a.agent),
+        hasDesign: !!currentDesign,
+        sharedRegCount: sharedRegulations?.length || 0
+      });
+    }
 
     // Connect to Supabase
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -51,14 +66,34 @@ serve(async (req) => {
 
     if (pwError) console.error('PW query error:', pwError);
 
-    // Query bs7671_intelligence table directly
-    const { data: regData, error: regError } = await supabase
-      .from('bs7671_intelligence')
-      .select('*')
-      .or(`regulation_text.ilike.%${query}%,regulation_number.ilike.%${query}%`)
-      .limit(85);
+    // Handle regulations - reuse shared or query
+    let regulations = [];
 
-    if (regError) console.error('Regs query error:', regError);
+    if (sharedRegulations && sharedRegulations.length > 0) {
+      console.log('📚 Reusing shared regulations from designer:', sharedRegulations.length);
+      regulations = sharedRegulations.map((reg: any) => ({
+        content: reg.content || reg.regulation_text || '',
+        regulation_number: reg.regulation_number || reg.number,
+        source_table: 'bs7671_intelligence',
+        similarity: 0.95 // High confidence - came from designer
+      }));
+    } else {
+      // Query bs7671_intelligence table directly
+      const { data: regData, error: regError } = await supabase
+        .from('bs7671_intelligence')
+        .select('*')
+        .or(`regulation_text.ilike.%${query}%,regulation_number.ilike.%${query}%`)
+        .limit(85);
+
+      if (regError) console.error('Regs query error:', regError);
+
+      regulations = (regData || []).map((row: any) => ({
+        content: row.regulation_text || '',
+        regulation_number: row.regulation_number,
+        source_table: 'bs7671_intelligence',
+        similarity: 0.85
+      }));
+    }
 
     // Transform to RAGResult format (same as shared module)
     const practicalWork = (pwData || []).map((row: any) => ({
@@ -72,13 +107,6 @@ serve(async (req) => {
       similarity: 0.85 // Default similarity for direct query
     }));
 
-    const regulations = (regData || []).map((row: any) => ({
-      content: row.regulation_text || '',
-      regulation_number: row.regulation_number,
-      source_table: 'bs7671_intelligence',
-      similarity: 0.85
-    }));
-
     const ragTime = Date.now() - ragStartTime;
 
     console.log('✅ RAG retrieved', {
@@ -86,6 +114,27 @@ serve(async (req) => {
       regsCount: regulations.length,
       ragMs: ragTime
     });
+
+    // Build designer context prompt if available
+    let designerContextPrompt = '';
+    if (currentDesign && currentDesign.circuits && currentDesign.circuits.length > 0) {
+      const circuit = currentDesign.circuits[0]; // Use first circuit as reference
+      designerContextPrompt = `\n\n**CRITICAL: DESIGN ALREADY COMPLETED BY AI DESIGNER**
+The following circuit design has been calculated and MUST be used:
+- Cable Size: ${circuit.cableSize || 'Not specified'}
+- Protection Device: ${circuit.protection || 'Not specified'}
+- Installation Method: ${currentDesign.installationMethod || circuit.installationMethod || 'Not specified'}
+- RCD Protection: ${circuit.rcdProtection ? 'Required' : 'Not required'}
+- Load: ${circuit.loadPower || circuit.load || 'Not specified'}W
+
+DO NOT recalculate cable sizes or protection devices. Use these exact specifications in your installation steps.`;
+
+      console.log('✅ Using designer specifications:', {
+        cable: circuit.cableSize,
+        protection: circuit.protection,
+        method: currentDesign.installationMethod || circuit.installationMethod
+      });
+    }
 
     // Smart fallback if RAG fails
     let ragContext = '';
@@ -190,6 +239,7 @@ serve(async (req) => {
     };
 
     const systemPrompt = `You are an expert UK electrician creating Method Statements for installation work.
+${designerContextPrompt}
 
 **CRITICAL RULES:**
 - Use ONLY UK English spelling and terminology
@@ -299,6 +349,18 @@ Use the RAG context above to ensure accuracy. Return ONLY the JSON object.`;
     let parsedResult;
     try {
       parsedResult = JSON.parse(content);
+      
+      // Validate designer specs were referenced
+      if (designerContextPrompt && parsedResult.steps) {
+        const cableSize = currentDesign?.circuits?.[0]?.cableSize;
+        const stepsText = JSON.stringify(parsedResult.steps).toLowerCase();
+        
+        if (cableSize && !stepsText.includes(cableSize.toLowerCase())) {
+          console.warn('⚠️ AI may not have used designer cable size:', cableSize);
+        } else if (cableSize) {
+          console.log('✅ Designer cable size confirmed in steps:', cableSize);
+        }
+      }
     } catch (parseError) {
       console.error('❌ JSON parse failed, attempting repair pass...', parseError);
 
