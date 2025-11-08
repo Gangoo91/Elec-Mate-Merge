@@ -745,7 +745,12 @@ Include phases, resources, compliance requirements, and risk management.`;
         ).map((s: any) => ({
           ...s,
           contextHint: generateContextHint(s.agent, 'project-manager', enhancedStructuredData)
-        }))
+        })),
+        metadata: {
+          contextSources,
+          receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none',
+          coordinatingCount: previousAgentOutputs?.length || 0
+        }
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

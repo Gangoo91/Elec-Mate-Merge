@@ -929,7 +929,9 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
           ragRetrieval: timings.ragRetrieval,
           aiGeneration: timings.aiGeneration,
           totalTime: timings.total
-        }
+        },
+        contextSources,
+        receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none'
       }
     };
 

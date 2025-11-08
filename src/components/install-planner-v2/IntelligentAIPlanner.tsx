@@ -543,7 +543,8 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
           structuredData: enrichedStructuredData,
           enrichment: fullAgentResponse?.enrichment,
           citations: fullAgentResponse?.citations,
-          rendering: fullAgentResponse?.rendering
+          rendering: fullAgentResponse?.rendering,
+          metadata: fullAgentResponse?.metadata
         }];
       });
     },
@@ -1264,20 +1265,31 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
             <Sparkles className="h-4 w-4 text-elec-yellow" />
             <h2 className="font-semibold text-sm md:text-base text-white">AI Design</h2>
           </div>
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => {
-              if (hasMeaningfulContent) {
-                setShowExitConfirm(true);
-              } else {
-                handleNewChat();
-              }
-            }}
-            className="text-xs h-6 px-2 text-elec-yellow hover:bg-elec-yellow/10"
-          >
-            New Chat
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowDebugContext(!showDebugContext)}
+              className="text-xs h-6 px-2 text-muted-foreground hover:text-foreground"
+            >
+              <AlertCircle className="h-3 w-3 mr-1" />
+              {showDebugContext ? 'Hide' : 'Show'} Context
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => {
+                if (hasMeaningfulContent) {
+                  setShowExitConfirm(true);
+                } else {
+                  handleNewChat();
+                }
+              }}
+              className="text-xs h-6 px-2 text-elec-yellow hover:bg-elec-yellow/10"
+            >
+              New Chat
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -1377,6 +1389,29 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
                         }, 100);
                       }}
                     />
+                    
+                    {/* Debug Mode: Show raw context data */}
+                    {showDebugContext && message.metadata && (
+                      <Alert className="mt-3 border-blue-500/30 bg-blue-500/10">
+                        <AlertCircle className="h-4 w-4 text-blue-400" />
+                        <AlertDescription className="text-xs space-y-1 text-blue-200">
+                          <div><strong>Received from:</strong> {message.metadata.receivedFrom || 'none'}</div>
+                          {message.metadata.contextSources && (
+                            <>
+                              <div><strong>Shared regulations:</strong> {message.metadata.contextSources.sharedRegulations ? '✅ Yes' : '❌ No'}</div>
+                              <div><strong>Previous outputs:</strong> {message.metadata.contextSources.previousAgentOutputs?.length > 0 
+                                ? `✅ ${message.metadata.contextSources.previousAgentOutputs.join(', ')}` 
+                                : '❌ None'}</div>
+                              <div><strong>Project details:</strong> {message.metadata.contextSources.projectDetails ? '✅ Yes' : '❌ No'}</div>
+                              <div><strong>Circuit design:</strong> {message.metadata.contextSources.circuitDesign ? '✅ Yes' : '❌ No'}</div>
+                              {message.metadata.contextSources.coordinating !== undefined && (
+                                <div><strong>Coordinating:</strong> {message.metadata.contextSources.coordinating} specialists</div>
+                              )}
+                            </>
+                          )}
+                        </AlertDescription>
+                      </Alert>
+                    )}
                   </AgentChatErrorBoundary>
                 )}
 

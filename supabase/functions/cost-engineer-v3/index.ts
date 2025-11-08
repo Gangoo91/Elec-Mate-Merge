@@ -1796,7 +1796,9 @@ Provide:
           ragMs: Date.now() - ragStart,
           aiMs: Date.now() - aiStart,
           pricingItems: finalPricingResults?.length || 0,
-          labourTimeItems: labourTimeResults?.length || 0
+          labourTimeItems: labourTimeResults?.length || 0,
+          contextSources,
+          receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none'
         }
       }),
       { 

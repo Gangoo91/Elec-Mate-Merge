@@ -1396,7 +1396,9 @@ Include all hazards, risk scores, safety controls, PPE requirements, and emergen
           ragRetrieval: performanceMetrics.ragRetrieval,
           aiGeneration: performanceMetrics.aiGeneration,
           totalTime: performanceMetrics.totalTime
-        }
+        },
+        contextSources,
+        receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none'
       }
     };
 

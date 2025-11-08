@@ -538,7 +538,13 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
         ).map((s: any) => ({
           ...s,
           contextHint: generateContextHint(s.agent, 'commissioning', { testingProcedure, certification })
-        }))
+        })),
+        metadata: {
+          contextSources,
+          receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none',
+          ragTimeMs: ragStart ? Date.now() - ragStart : null,
+          totalTimeMs: totalTime
+        }
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
