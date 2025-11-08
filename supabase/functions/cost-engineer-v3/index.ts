@@ -1,4 +1,4 @@
-// Deployed: 2025-10-11 21:30 UTC
+// Deployed: 2025-11-08 - Fixed aiResult undefined error
 import { serve } from '../_shared/deps.ts';
 import {
   corsHeaders, 
