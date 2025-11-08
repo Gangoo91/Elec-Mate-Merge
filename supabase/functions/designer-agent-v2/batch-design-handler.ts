@@ -577,6 +577,19 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     
     logger.info(`❌ Cache miss - proceeding with full design (${timings.cacheCheck}ms)`);
     
+    // ✅ Initialize Supabase client BEFORE circuit processing
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Missing required Supabase environment variables');
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // PHASE 1: Seed design knowledge on first run (non-blocking)
+    seedDesignKnowledge(supabase, logger).catch(e => logger.warn('Seed failed', e));
+    
     // Extract installation type from multiple sources
     const type = installationType || projectInfo?.installationType || 'domestic';
     
@@ -666,24 +679,16 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     
     // ============= ONLY PROCEED WITH RAG/AI IF SOME CIRCUITS NEED IT =============
     const ragStart = Date.now();
-    const supabaseUrl = Deno.env.get('SUPABASE_URL');
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-    const openAiKey = Deno.env.get('OPENAI_API_KEY');
-    
-    if (!supabaseUrl || !supabaseKey || !openAiKey) {
-      throw new Error('Missing required environment variables');
-    }
-    
-    const supabase = createClient(supabaseUrl, supabaseKey);
-    
-    // PHASE 1: Seed design knowledge on first run (non-blocking)
-    seedDesignKnowledge(supabase, logger).catch(e => logger.warn('Seed failed', e));
     
     let regulations: any[] = [];
     let designedCircuits: any[] = [];
     
     // Only do RAG/AI if there are circuits that need it
     if (aiRequiredCircuits.length > 0) {
+      const openAiKey = Deno.env.get('OPENAI_API_KEY');
+      if (!openAiKey) {
+        throw new Error('Missing required OPENAI_API_KEY environment variable');
+      }
       try {
         // ============= EXECUTE IN PARALLEL: RAG Search + Core Regs Pre-load =============
         const [ragResults, coreRegs] = await Promise.all([
