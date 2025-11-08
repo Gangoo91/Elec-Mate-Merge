@@ -1553,6 +1553,30 @@ Provide:
             toolChoice: { type: 'function', function: { name: 'provide_business_opportunities' } }
           });
 
+          // Define fallback objects FIRST (before they're used)
+          const defaultCore = {
+            complexity: { rating: 3, label: 'Medium', explanation: 'Standard electrical job', factors: ['Standard complexity'] },
+            risk: { overallLevel: 'Medium', factors: [{ factor_name: 'General site risks', risk_level: 'medium', description: 'Standard safety precautions required' }] },
+            confidence: { overall: 75, materials: 80, labour: 75, contingency: 70, recommendation: 'Estimate based on standard rates and typical job complexity' },
+            reasoning: 'Price calculated from standard labour times and current material costs with appropriate contingency.',
+            actions: ['Confirm site access and supply isolation', 'Order materials 3-5 days before start', 'Schedule installation with client']
+          };
+
+          const defaultBusiness = {
+            upsells: [],
+            pipeline: [],
+            conversations: {
+              opening: 'Based on the work required, I\'ve prepared a detailed quote that covers all materials, labour, and compliance with BS 7671 regulations.',
+              tooExpensive: 'This price reflects current material costs and the proper installation time needed to meet BS 7671 standards. Cutting corners isn\'t an option when it comes to electrical safety.',
+              discountRequest: 'The quote is already competitive for the quality and compliance level provided. However, I can explore alternative solutions if budget is a concern.'
+            },
+            siteChecklist: {
+              critical: ['Verify main supply can be safely isolated', 'Check for asbestos risk in older properties', 'Confirm access to all work areas'],
+              important: ['Measure accurate cable runs', 'Check for hidden obstacles (plasterboard, insulation)', 'Identify earthing system type', 'Note any existing installation defects']
+            },
+            propertyContext: { age: 'Unknown', installationAge: 'Unknown' }
+          };
+
           // Run both calls in parallel with coordinated timeout
           const enhancementWithRetry = async (callFn: Promise<any>, fallback: any, name: string) => {
             try {
@@ -1576,29 +1600,6 @@ Provide:
               setTimeout(() => reject(new Error('Enhancement calls exceeded 300s timeout')), 300000)
             )
           ]);
-
-          const defaultCore = {
-            complexity: { rating: 3, label: 'Medium', explanation: 'Standard electrical job', factors: ['Standard complexity'] },
-            risk: { overallLevel: 'Medium', factors: [{ factor_name: 'General site risks', risk_level: 'medium', description: 'Standard safety precautions required' }] },
-            confidence: { overall: 75, materials: 80, labour: 75, contingency: 70, recommendation: 'Estimate based on standard rates and typical job complexity' },
-            reasoning: 'Price calculated from standard labour times and current material costs with appropriate contingency.',
-            actions: ['Confirm site access and supply isolation', 'Order materials 3-5 days before start', 'Schedule installation with client']
-          };
-
-          const defaultBusiness = {
-            upsells: [],
-            pipeline: [],
-            conversations: {
-              opening: 'Based on the work required, I\'ve prepared a detailed quote that covers all materials, labour, and compliance with BS 7671 regulations.',
-              tooExpensive: 'This price reflects current material costs and the proper installation time needed to meet BS 7671 standards. Cutting corners isn\'t an option when it comes to electrical safety.',
-              discountRequest: 'The quote is already competitive for the quality and compliance level provided. However, I can explore alternative solutions if budget is a concern.'
-            },
-            siteChecklist: {
-              critical: ['Verify main supply can be safely isolated', 'Check for asbestos risk in older properties', 'Confirm access to all work areas'],
-              important: ['Measure accurate cable runs', 'Check for hidden obstacles (plasterboard, insulation)', 'Identify earthing system type', 'Note any existing installation defects']
-            },
-            propertyContext: { age: 'Unknown', installationAge: 'Unknown' }
-          };
 
 
           const enhancementMs = Date.now() - enhancementStart;
