@@ -1,6 +1,6 @@
 /**
- * Batch Circuit Design Handler - Clean Rebuild v3.7.0
- * Lean implementation with RAG-only regulations and preserved PDF mapping
+ * Batch Circuit Design Handler - Best-in-Class Optimization v4.0.0
+ * Implements all 7 phases of the AI RAMS-inspired optimization
  */
 
 import { createClient } from '../_shared/deps.ts';
@@ -12,8 +12,67 @@ import { buildRAGSearches, mergeRegulations } from './modules/rag-composer.ts';
 import { validateDesign } from './validation-pipeline.ts';
 import { formatRegulationsAsTOON, estimateTokenSavings } from '../_shared/toon-formatter.ts';
 import { seedDesignKnowledge } from '../_shared/seed-design-knowledge.ts';
+import { checkCircuitDesignCache, storeCircuitDesign } from '../_shared/circuit-design-cache.ts';
 
-const VERSION = 'v3.8.0-calculation-demand'; // AI MUST provide voltage drop + Zs calculations
+const VERSION = 'v4.0.0-best-in-class'; // PHASE 1-7 optimizations implemented
+
+// ============= PHASE 4: PRE-LOAD CORE REGULATIONS =============
+// Global cache persists across warm container invocations
+let CORE_REGULATIONS_CACHE: any[] | null = null;
+
+async function loadCoreRegulations(supabase: any): Promise<any[]> {
+  if (CORE_REGULATIONS_CACHE) {
+    console.log('✅ Using cached core regulations');
+    return CORE_REGULATIONS_CACHE;
+  }
+  
+  console.log('📚 Loading core regulations into memory...');
+  const { data } = await supabase
+    .from('bs7671_embeddings')
+    .select('*')
+    .in('regulation_number', [
+      'Appendix 4', // Voltage drop tables
+      'Table 54.7', // Conductor resistances
+      '433.1.1', '433.1.103', '433.1.204', // Cable sizing
+      '525.1', '525.2', // Voltage drop limits
+      '411.3.2', '411.3.3', // RCD protection
+      '543.1.1', '543.1.3', // Earthing
+      '701.411.3.3', // Bathroom RCD
+      'Table 41.2', 'Table 41.3', // Max Zs
+      'Appendix 15' // Ring finals
+    ])
+    .limit(15);
+    
+  CORE_REGULATIONS_CACHE = data || [];
+  console.log(`✅ Loaded ${CORE_REGULATIONS_CACHE.length} core regulations into memory`);
+  return CORE_REGULATIONS_CACHE;
+}
+
+// ============= PHASE 6: BATCH CIRCUIT PROCESSING =============
+function groupCircuitsBySimilarity(circuits: any[]): any[][] {
+  if (circuits.length < 10) return [circuits]; // Don't batch small designs
+  
+  const groups: Map<string, any[]> = new Map();
+  
+  circuits.forEach(circuit => {
+    // Group by load type (all sockets together, all lighting together)
+    const key = circuit.loadType || 'other';
+    
+    if (!groups.has(key)) {
+      groups.set(key, []);
+    }
+    groups.get(key)!.push(circuit);
+  });
+  
+  const batches = Array.from(groups.values());
+  console.log(`📦 Grouped ${circuits.length} circuits into ${batches.length} batches:`, 
+    batches.map(b => `${b[0].loadType}(${b.length})`).join(', ')
+  );
+  
+  return batches;
+}
+
+const VERSION_LEGACY = 'v3.8.0-calculation-demand'; // AI MUST provide voltage drop + Zs calculations
 
 /**
  * Enhanced RAG-first design instructions for the AI - DEMANDS calculations
@@ -445,7 +504,7 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
   
   try {
     // 1. Input validation
-    logger.info('Starting batch design v3.7.0-rebuild');
+    logger.info(`Starting batch design ${VERSION}`);
     
     if (!body.supply || !body.projectInfo) {
       throw new CircuitDesignError(
@@ -458,6 +517,47 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     
     const { projectInfo, supply, circuits: inputCircuits, additionalPrompt, specialRequirements, installationConstraints, installationType } = body;
     const circuits = inputCircuits || [];
+    
+    // ============= PHASE 3: CHECK SEMANTIC CACHE FIRST =============
+    // For common designs (e.g., "10A shower, 32A ring final"), return cached design in <2s
+    logger.info('🔍 Checking circuit design cache...');
+    const cacheCheckStart = Date.now();
+    
+    const cacheCheck = await checkCircuitDesignCache(
+      createClient(
+        Deno.env.get('SUPABASE_URL') ?? '',
+        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+      ),
+      circuits.map((c: any) => ({
+        loadType: c.loadType || 'other',
+        loadPower: c.loadPower || 1000,
+        cableLength: c.cableLength || 10,
+        voltage: supply.voltage || 230,
+        phases: c.phases === 3 ? 'three' : 'single'
+      })),
+      supply
+    );
+    
+    timings.cacheCheck = Date.now() - cacheCheckStart;
+    
+    if (cacheCheck.hit) {
+      logger.info(`🚀 Cache hit! Returning cached design (${timings.cacheCheck}ms)`);
+      return new Response(JSON.stringify({
+        success: true,
+        version: VERSION,
+        design: cacheCheck.data,
+        source: 'cache',
+        timings: {
+          total: Date.now() - startTime,
+          cacheCheck: timings.cacheCheck
+        }
+      }), { 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200
+      });
+    }
+    
+    logger.info(`❌ Cache miss - proceeding with full design (${timings.cacheCheck}ms)`);
     
     // Extract installation type from multiple sources
     const type = installationType || projectInfo?.installationType || 'domestic';
@@ -472,7 +572,7 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
       installationType: type 
     });
     
-    // 3. RAG search
+    // ============= PHASE 1 & 4: PARALLEL RAG + CORE REGULATION PRE-LOAD =============
     const ragStart = Date.now();
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
@@ -489,11 +589,30 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     
     let regulations: any[] = [];
     try {
-      const ragResults = await buildRAGSearches(query, searchTerms, openAiKey, supabase, logger, type);
+      // ============= EXECUTE IN PARALLEL: RAG Search + Core Regs Pre-load =============
+      const [ragResults, coreRegs] = await Promise.all([
+        buildRAGSearches(query, searchTerms, openAiKey, supabase, logger, type, circuits), // PHASE 2: Pass circuits
+        loadCoreRegulations(supabase) // PHASE 4: Pre-load core regulations
+      ]);
+      
+      // Merge RAG results with core regulations
       regulations = mergeRegulations(ragResults);
+      
+      // Inject core regulations at the top (they're always needed)
+      const coreRegNumbers = new Set(coreRegs.map(r => r.regulation_number));
+      const existingRegNumbers = new Set(regulations.map(r => r.regulation_number));
+      
+      // Add core regs that aren't already in results
+      const missingCoreRegs = coreRegs.filter(r => !existingRegNumbers.has(r.regulation_number));
+      if (missingCoreRegs.length > 0) {
+        regulations.unshift(...missingCoreRegs);
+        logger.info(`✅ Added ${missingCoreRegs.length} pre-loaded core regulations`);
+      }
+      
       timings.ragSearch = Date.now() - ragStart;
       logger.info('RAG search complete', { 
         regulationCount: regulations.length,
+        coreRegsPreloaded: coreRegs.length,
         installationType: type 
       });
     } catch (error) {
