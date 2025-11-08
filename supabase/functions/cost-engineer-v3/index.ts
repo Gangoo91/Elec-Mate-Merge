@@ -1328,6 +1328,228 @@ Return ONLY profitability analysis object.`;
             breakEvenTotal: costResult.profitabilityAnalysis.breakEven.total,
             targetQuote: costResult.profitabilityAnalysis.quotingGuidance.target.total
           });
+
+          // ==== TIER 1: PDF ENRICHMENT CALCULATIONS ====
+          const totalHours = costResult.labour.tasks.reduce((sum: number, task: any) => sum + (task.hours || 0), 0);
+          const materialsNet = costResult.materials.items.reduce((sum: number, item: any) => {
+            const netCost = (item.total || 0) / 1.15; // Reverse 15% markup
+            return sum + netCost;
+          }, 0);
+          const materialsMarkup = costResult.summary.materialsSubtotal - materialsNet;
+          const markupPercent = materialsNet > 0 ? ((materialsMarkup / materialsNet) * 100) : 15;
+
+          costResult.pdfEnrichment = {
+            materialsNet: Number(materialsNet.toFixed(2)),
+            materialsMarkup: Number(materialsMarkup.toFixed(2)),
+            markupPercent: Number(markupPercent.toFixed(1)),
+            labourHours: totalHours,
+            labourRate: businessSettings?.labourRates?.electrician || 45,
+            profitPerHour: {
+              minimum: totalHours > 0 ? Number((costResult.profitabilityAnalysis.quotingGuidance.minimum.profit / totalHours).toFixed(2)) : 0,
+              target: totalHours > 0 ? Number((costResult.profitabilityAnalysis.quotingGuidance.target.profit / totalHours).toFixed(2)) : 0,
+              premium: totalHours > 0 ? Number((costResult.profitabilityAnalysis.quotingGuidance.premium.profit / totalHours).toFixed(2)) : 0
+            },
+            dates: {
+              generated: new Date().toISOString(),
+              displayDate: new Date().toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+            },
+            contingency: {
+              percent: 10,
+              amount: Number((costResult.summary.subtotal * 0.10).toFixed(2))
+            }
+          };
+
+          logger.info('PDF enrichment calculations added', { 
+            materialsNet: costResult.pdfEnrichment.materialsNet,
+            profitPerHour: costResult.pdfEnrichment.profitPerHour.target
+          });
+
+          // ==== TIER 2: AI CONTEXTUAL INTELLIGENCE ====
+          logger.info('🤖 Starting AI contextual intelligence enhancement');
+          const enhancementStart = Date.now();
+
+          const enhancementSystemPrompt = `You are an expert electrical business consultant analyzing jobs for UK electricians.`;
+
+          const enhancementUserPrompt = `Based on this electrical job estimate, provide comprehensive business intelligence:
+
+JOB DESCRIPTION: ${query}
+MATERIALS: ${costResult.materials.items.length} items, £${costResult.summary.materialsSubtotal}
+LABOUR: ${totalHours} hours, £${costResult.summary.labourSubtotal}
+BREAK-EVEN: £${breakEvenSubtotal}
+TARGET QUOTE: £${targetPrice}
+
+Provide:
+1. Complexity Analysis (rating 1-5, clear explanation, 3-5 key complexity factors)
+2. Risk Assessment (3-5 specific risks with severity low/medium/high and brief mitigation)
+3. Confidence Scores (materials %, labour %, contingency % with brief recommendation)
+4. AI Reasoning (2-3 sentences explaining why this price is right for this job)
+5. Top 3 Actions (specific, prioritized next steps for the electrician)
+6. Upsell Opportunities (3-5 relevant add-ons: name, price estimate, win rate %, why relevant, time required, client script)
+7. Future Pipeline (2-4 likely future jobs based on property type: title, priority high/medium/low, timing, value estimate, description, follow-up trigger)
+8. Conversation Scripts (opening pitch, "too expensive" response, discount request response)
+9. Site Checklist (3-5 critical checks, 3-5 important checks)
+10. Property Context (estimate property age and electrical installation age from job description)`;
+
+          try {
+            const enhancementResult = await callAI(OPENAI_API_KEY, {
+              model: 'gpt-5-mini-2025-08-07',
+              systemPrompt: enhancementSystemPrompt,
+              userPrompt: enhancementUserPrompt,
+              maxTokens: 6000,
+              timeoutMs: 45000,
+              jsonMode: true,
+              tools: [{
+                type: 'function',
+                function: {
+                  name: 'provide_business_intelligence',
+                  description: 'Provide comprehensive business intelligence for electrical job',
+                  parameters: {
+                    type: 'object',
+                    properties: {
+                      complexity: {
+                        type: 'object',
+                        properties: {
+                          rating: { type: 'number', minimum: 1, maximum: 5 },
+                          label: { type: 'string' },
+                          explanation: { type: 'string' },
+                          factors: { type: 'array', items: { type: 'string' } }
+                        },
+                        required: ['rating', 'label', 'explanation', 'factors']
+                      },
+                      risk: {
+                        type: 'object',
+                        properties: {
+                          overallLevel: { type: 'string', enum: ['Low', 'Medium', 'High'] },
+                          factors: {
+                            type: 'array',
+                            items: {
+                              type: 'object',
+                              properties: {
+                                factor_name: { type: 'string' },
+                                risk_level: { type: 'string', enum: ['low', 'medium', 'high'] },
+                                description: { type: 'string' }
+                              }
+                            }
+                          }
+                        },
+                        required: ['overallLevel', 'factors']
+                      },
+                      confidence: {
+                        type: 'object',
+                        properties: {
+                          overall: { type: 'number', minimum: 0, maximum: 100 },
+                          materials: { type: 'number', minimum: 0, maximum: 100 },
+                          labour: { type: 'number', minimum: 0, maximum: 100 },
+                          contingency: { type: 'number', minimum: 0, maximum: 100 },
+                          recommendation: { type: 'string' }
+                        },
+                        required: ['overall', 'materials', 'labour', 'contingency', 'recommendation']
+                      },
+                      reasoning: { type: 'string' },
+                      actions: {
+                        type: 'array',
+                        items: { type: 'string' },
+                        minItems: 3,
+                        maxItems: 3
+                      },
+                      upsells: {
+                        type: 'array',
+                        items: {
+                          type: 'object',
+                          properties: {
+                            opportunity_name: { type: 'string' },
+                            price: { type: 'number' },
+                            win_rate: { type: 'number', minimum: 0, maximum: 100 },
+                            why: { type: 'string' },
+                            time: { type: 'string' },
+                            script: { type: 'string' },
+                            is_hot: { type: 'boolean' }
+                          }
+                        }
+                      },
+                      pipeline: {
+                        type: 'array',
+                        items: {
+                          type: 'object',
+                          properties: {
+                            opportunity_title: { type: 'string' },
+                            priority: { type: 'string', enum: ['high', 'medium', 'low'] },
+                            timing: { type: 'string' },
+                            estimated_value: { type: 'number' },
+                            description: { type: 'string' },
+                            trigger: { type: 'string' }
+                          }
+                        }
+                      },
+                      conversations: {
+                        type: 'object',
+                        properties: {
+                          opening: { type: 'string' },
+                          tooExpensive: { type: 'string' },
+                          discountRequest: { type: 'string' }
+                        },
+                        required: ['opening', 'tooExpensive', 'discountRequest']
+                      },
+                      siteChecklist: {
+                        type: 'object',
+                        properties: {
+                          critical: { type: 'array', items: { type: 'string' } },
+                          important: { type: 'array', items: { type: 'string' } }
+                        },
+                        required: ['critical', 'important']
+                      },
+                      propertyContext: {
+                        type: 'object',
+                        properties: {
+                          age: { type: 'string' },
+                          installationAge: { type: 'string' }
+                        },
+                        required: ['age', 'installationAge']
+                      }
+                    },
+                    required: ['complexity', 'risk', 'confidence', 'reasoning', 'actions', 'upsells', 'pipeline', 'conversations', 'siteChecklist', 'propertyContext']
+                  }
+                }
+              }],
+              toolChoice: { type: 'function', function: { name: 'provide_business_intelligence' } }
+            });
+
+            const enhancementMs = Date.now() - enhancementStart;
+            logger.info('✅ AI enhancement completed', { duration: enhancementMs });
+
+            const enhancement = parseJsonWithRepair(enhancementResult.content, logger, 'ai-enhancement');
+            costResult.aiEnhancement = enhancement;
+
+            logger.info('AI enhancement attached', { 
+              complexityRating: enhancement.complexity?.rating,
+              upsellCount: enhancement.upsells?.length,
+              pipelineCount: enhancement.pipeline?.length
+            });
+
+          } catch (enhancementError: any) {
+            logger.warn('AI enhancement failed, using defaults', { error: enhancementError.message });
+            // Provide minimal defaults if AI enhancement fails
+            costResult.aiEnhancement = {
+              complexity: { rating: 3, label: 'Medium', explanation: 'Standard electrical job', factors: [] },
+              risk: { overallLevel: 'Medium', factors: [] },
+              confidence: { overall: 75, materials: 80, labour: 75, contingency: 70, recommendation: 'Estimate based on standard rates' },
+              reasoning: 'Price calculated from standard labour times and current material costs.',
+              actions: ['Confirm site access', 'Order materials', 'Schedule installation'],
+              upsells: [],
+              pipeline: [],
+              conversations: {
+                opening: 'Based on the work required, here\'s a detailed quote.',
+                tooExpensive: 'This price reflects current material costs and proper installation time to BS 7671 standards.',
+                discountRequest: 'The quote is already competitive for the quality of work provided.'
+              },
+              siteChecklist: {
+                critical: ['Verify supply isolation', 'Check asbestos risk'],
+                important: ['Measure cable runs', 'Check access']
+              },
+              propertyContext: { age: 'Unknown', installationAge: 'Unknown' }
+            };
+          }
+
         } catch (parseError: any) {
           logger.warn('Failed to parse profitability analysis, continuing without it', { error: parseError.message });
         }
