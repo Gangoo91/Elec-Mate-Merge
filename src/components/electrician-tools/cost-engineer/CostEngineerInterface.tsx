@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Calculator, Lightbulb, Sparkles } from "lucide-react";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import { MobileButton } from "@/components/ui/mobile-button";
 
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -232,14 +232,14 @@ const CostEngineerInterface = () => {
   }
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className="mobile-section-spacing">
       {/* Business Settings - Top Priority */}
-      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-elec-dark/50">
-        <CardHeader>
-          <CardTitle className="text-lg sm:text-xl flex items-center gap-2">
+      <Card className="mobile-card border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-elec-dark/50">
+        <CardHeader className="space-y-2">
+          <CardTitle className="mobile-heading flex items-center gap-2">
             💰 Business Profitability Settings
           </CardTitle>
-          <CardDescription className="text-xs sm:text-sm">
+          <CardDescription className="mobile-text">
             Configure your overheads and profit targets to get accurate break-even and quote recommendations
           </CardDescription>
         </CardHeader>
@@ -252,74 +252,73 @@ const CostEngineerInterface = () => {
       </Card>
 
       {/* Project Information - Always Visible at Top */}
-      <Card className="border-elec-yellow/20 bg-elec-card/50">
-        <CardHeader>
-          <CardTitle className="text-lg sm:text-xl flex items-center gap-2">
+      <Card className="mobile-card border-elec-yellow/20 bg-elec-card/50">
+        <CardHeader className="space-y-2">
+          <CardTitle className="mobile-heading flex items-center gap-2">
             Project Information
             <span className="text-xs font-normal px-2 py-1 rounded-full bg-green-500/20 text-green-500 border border-green-500/30">
               +15% accuracy
             </span>
           </CardTitle>
-          <CardDescription className="text-xs sm:text-sm">
+          <CardDescription className="mobile-text">
             Add project details for more precise pricing and professional reports
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="mobile-input-spacing">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="project-name">Project Name</Label>
-              <Input
-                id="project-name"
-                value={projectName}
-                onChange={(e) => setProjectName(e.target.value)}
-                placeholder="e.g., Smith Residence Rewire"
-                className="touch-manipulation"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="client-info">Client Name</Label>
-              <Input
-                id="client-info"
-                value={clientInfo}
-                onChange={(e) => setClientInfo(e.target.value)}
-                placeholder="e.g., Mr & Mrs Smith"
-                className="touch-manipulation"
-              />
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="location">Location/Postcode</Label>
-            <Input
-              id="location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="e.g., Manchester, M1 1AA"
-              className="touch-manipulation"
+            <MobileInputWrapper
+              label="Project Name"
+              value={projectName}
+              onChange={setProjectName}
+              placeholder="e.g., Smith Residence Rewire"
+              hint="Client or property name"
+              inputMode="text"
+            />
+            <MobileInputWrapper
+              label="Client Name"
+              value={clientInfo}
+              onChange={setClientInfo}
+              placeholder="e.g., Mr & Mrs Smith"
+              hint="Customer contact name"
+              inputMode="text"
             />
           </div>
 
+          <MobileInputWrapper
+            label="Location/Postcode"
+            value={location}
+            onChange={setLocation}
+            placeholder="e.g., Manchester, M1 1AA"
+            hint="Project location for regional pricing"
+            inputMode="text"
+          />
+
           <div className="space-y-2">
-            <Label htmlFor="additional-info">Additional Requirements</Label>
+            <Label className="mobile-small-text font-semibold">
+              Additional Requirements
+            </Label>
             <Textarea
-              id="additional-info"
               value={additionalInfo}
               onChange={(e) => setAdditionalInfo(e.target.value)}
               placeholder="e.g., Access restrictions, parking arrangements, special requirements..."
-              className="min-h-[100px]"
+              className="min-h-[120px] text-base resize-none"
+              style={{ fontSize: '16px' }}
             />
+            <p className="mobile-small-text text-muted-foreground">
+              Optional: Access, parking, working hours, special conditions
+            </p>
           </div>
         </CardContent>
       </Card>
 
       {/* Project Type Selector */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/50">
-        <CardHeader>
-          <CardTitle className="text-xl sm:text-2xl flex items-center gap-2">
+      <Card className="mobile-card border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/50">
+        <CardHeader className="space-y-2">
+          <CardTitle className="mobile-heading flex items-center gap-2">
             <Calculator className="h-6 w-6 text-elec-yellow" />
             Select Project Type
           </CardTitle>
-          <CardDescription className="text-sm sm:text-base">
+          <CardDescription className="mobile-text">
             Choose your project category and browse examples for inspiration
           </CardDescription>
         </CardHeader>
@@ -333,24 +332,31 @@ const CostEngineerInterface = () => {
       </Card>
 
       {/* Describe Your Project */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/50">
-        <CardHeader>
-          <CardTitle className="text-xl sm:text-2xl flex items-center gap-2">
+      <Card className="mobile-card border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/50">
+        <CardHeader className="space-y-2">
+          <CardTitle className="mobile-heading flex items-center gap-2">
             <Lightbulb className="h-6 w-6 text-elec-yellow" />
             Describe Your Project
           </CardTitle>
-          <CardDescription className="text-sm sm:text-base">
+          <CardDescription className="mobile-text">
             Be specific about the work required for accurate material pricing and labour estimates
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="project-description" className="text-base font-semibold">
+            <div className="flex items-center justify-between mb-2">
+              <Label htmlFor="project-description" className="mobile-text font-semibold">
                 Project Description
               </Label>
-              <span className={`text-xs ${prompt.length >= 100 && prompt.length <= 300 ? 'text-green-500' : prompt.length < 100 ? 'text-yellow-500' : 'text-orange-500'}`}>
-                {prompt.length} characters {prompt.length >= 100 && prompt.length <= 300 ? '✓' : prompt.length < 100 ? '(add more detail)' : '(very detailed)'}
+              <span className={`mobile-small-text font-medium px-2 py-1 rounded ${
+                prompt.length >= 100 && prompt.length <= 300 
+                  ? 'text-green-500 bg-green-500/10' 
+                  : prompt.length < 100 
+                  ? 'text-yellow-500 bg-yellow-500/10' 
+                  : 'text-orange-500 bg-orange-500/10'
+              }`}>
+                {prompt.length} chars
+                {prompt.length >= 100 && prompt.length <= 300 ? ' ✓' : ''}
               </span>
             </div>
             <Textarea
@@ -358,31 +364,35 @@ const CostEngineerInterface = () => {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="e.g., Complete rewire of 3-bedroom house including new consumer unit, LED downlights throughout, outdoor power and garden lighting..."
-              className="min-h-[180px] sm:min-h-[200px] text-base"
+              className="min-h-[200px] sm:min-h-[220px] text-base resize-none"
+              style={{ fontSize: '16px' }}
             />
-            <p className="text-xs text-muted-foreground">
+            <p className="mobile-small-text text-muted-foreground">
               💡 Tip: Include property type, number of rooms, specific requirements, and special features
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Button
+          <div className="flex flex-col gap-3 pt-2">
+            <MobileButton
               variant="outline"
+              size="default"
               onClick={handleFillTestData}
-              className="border-elec-yellow/30 hover:bg-elec-yellow/10 h-12 sm:h-14 text-sm sm:text-base touch-manipulation"
+              className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10"
             >
               <Sparkles className="h-4 w-4 mr-2" />
               Fill Test Data
-            </Button>
+            </MobileButton>
             
-            <Button 
+            <MobileButton 
+              variant="elec"
+              size="lg"
               onClick={handleGenerate}
               disabled={!prompt.trim()}
-              className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold h-14 sm:h-16 text-base sm:text-lg touch-manipulation"
+              className="w-full font-semibold text-lg"
             >
               <Sparkles className="h-5 w-5 mr-2" />
               Generate Cost Analysis
-            </Button>
+            </MobileButton>
           </div>
         </CardContent>
       </Card>
