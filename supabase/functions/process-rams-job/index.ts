@@ -295,7 +295,7 @@ Deno.serve(async (req) => {
         }
       }),
       new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Health-safety agent timeout after 240s')), 240000)
+        setTimeout(() => reject(new Error('Health-safety agent timeout after 300s')), 300000)
       )
     ]);
 
