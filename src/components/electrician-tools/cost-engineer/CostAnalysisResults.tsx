@@ -14,6 +14,8 @@ import { toast } from "@/hooks/use-toast";
 import TimescalesPanel from "./TimescalesPanel";
 import AlternativeQuotesPanel from "./AlternativeQuotesPanel";
 import OrderListPanel from "./OrderListPanel";
+import ProfitabilityDashboard from "./ProfitabilityDashboard";
+import JobOverheadsBreakdown from "./JobOverheadsBreakdown";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 
@@ -188,6 +190,19 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
           iconColor="text-elec-yellow"
         />
       </div>
+
+      {/* Profitability Dashboard - NEW */}
+      {structuredData?.profitabilityAnalysis && (
+        <ProfitabilityDashboard profitabilityAnalysis={structuredData.profitabilityAnalysis} />
+      )}
+
+      {/* Job Overheads Breakdown - NEW */}
+      {structuredData?.profitabilityAnalysis?.jobOverheads && (
+        <JobOverheadsBreakdown 
+          jobOverheads={structuredData.profitabilityAnalysis.jobOverheads}
+          directCosts={structuredData.profitabilityAnalysis.directCosts}
+        />
+      )}
 
       {/* Enhanced Panels for V3 Data */}
       {structuredData?.timescales && (
