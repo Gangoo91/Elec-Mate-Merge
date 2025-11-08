@@ -12,6 +12,7 @@ import ProjectTypeSelector from "./ProjectTypeSelector";
 import CostAnalysisProcessingView from "./CostAnalysisProcessingView";
 import CostAnalysisResults from "./CostAnalysisResults";
 import { parseCostAnalysis, ParsedCostAnalysis } from "@/utils/cost-analysis-parser";
+import { BusinessSettingsDialog, BusinessSettings, DEFAULT_BUSINESS_SETTINGS } from "./BusinessSettingsDialog";
 
 type ViewState = 'input' | 'processing' | 'results';
 
@@ -25,6 +26,7 @@ const CostEngineerInterface = () => {
   const [clientInfo, setClientInfo] = useState("");
   const [location, setLocation] = useState("");
   const [additionalInfo, setAdditionalInfo] = useState("");
+  const [businessSettings, setBusinessSettings] = useState<BusinessSettings>(DEFAULT_BUSINESS_SETTINGS);
   
 
   const handleExampleSelect = (example: string) => {
@@ -71,7 +73,8 @@ const CostEngineerInterface = () => {
             projectName: projectName,
             clientInfo: clientInfo,
             additionalInfo: additionalInfo
-          }
+          },
+          businessSettings: businessSettings
         }
       });
 
@@ -185,6 +188,24 @@ const CostEngineerInterface = () => {
 
   return (
     <div className="space-y-4 sm:space-y-6">
+      {/* Business Settings - Top Priority */}
+      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-elec-dark/50">
+        <CardHeader>
+          <CardTitle className="text-lg sm:text-xl flex items-center gap-2">
+            💰 Business Profitability Settings
+          </CardTitle>
+          <CardDescription className="text-xs sm:text-sm">
+            Configure your overheads and profit targets to get accurate break-even and quote recommendations
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <BusinessSettingsDialog 
+            onSettingsChange={setBusinessSettings}
+            currentSettings={businessSettings}
+          />
+        </CardContent>
+      </Card>
+
       {/* Project Information - Always Visible at Top */}
       <Card className="border-elec-yellow/20 bg-elec-card/50">
         <CardHeader>

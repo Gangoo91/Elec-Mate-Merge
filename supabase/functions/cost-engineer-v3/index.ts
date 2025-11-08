@@ -130,7 +130,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, materials, labourHours, region, messages, previousAgentOutputs, sharedRegulations } = body;
+    const { query, materials, labourHours, region, messages, previousAgentOutputs, sharedRegulations, businessSettings } = body;
 
     // PHASE 1: Query Enhancement
     const { enhanceQuery, logEnhancement } = await import('../_shared/query-enhancer.ts');
@@ -149,7 +149,8 @@ serve(async (req) => {
     logger.info('💰 Cost Engineer V3 invoked', { 
       query: effectiveQuery.substring(0, 50),
       enhanced: enhancement.addedContext.length > 0,
-      hasSharedRegs: !!sharedRegulations?.length
+      hasSharedRegs: !!sharedRegulations?.length,
+      hasBusinessSettings: !!businessSettings
     });
     if (materials && !Array.isArray(materials)) {
       throw new ValidationError('materials must be an array');
@@ -390,6 +391,57 @@ PRICING RULES:
 - Material markup: +${COST_ENGINEER_PRICING.MATERIAL_MARKUP_PERCENT}% on wholesale
 - VAT: ${COST_ENGINEER_PRICING.VAT_RATE}%
 
+${businessSettings ? `
+===== PROFITABILITY ANALYSIS ENABLED =====
+
+ELECTRICIAN'S BUSINESS SETTINGS:
+Monthly Overheads:
+- Van costs: £${businessSettings.monthlyOverheads.vanCosts}
+- Tool depreciation: £${businessSettings.monthlyOverheads.toolDepreciation}
+- Business insurance: £${businessSettings.monthlyOverheads.insurance}
+- Office/admin: £${businessSettings.monthlyOverheads.adminCosts}
+- Marketing: £${businessSettings.monthlyOverheads.marketing}
+- Total monthly overheads: £${Object.values(businessSettings.monthlyOverheads).reduce((a: number, b: number) => a + b, 0)}/month
+- Per working day (22 days): £${(Object.values(businessSettings.monthlyOverheads).reduce((a: number, b: number) => a + b, 0) / 22).toFixed(2)}/day
+
+Labour Rates:
+- Qualified electrician: £${businessSettings.labourRates.electrician}/hr
+- Apprentice: £${businessSettings.labourRates.apprentice}/hr
+- Target personal income: £${businessSettings.labourRates.targetIncome}/month
+
+Profit Margin Targets:
+- Minimum margin: ${businessSettings.profitTargets.minimum}%
+- Target margin: ${businessSettings.profitTargets.target}%
+- Premium margin: ${businessSettings.profitTargets.premium}%
+
+Job-Specific Costs:
+- Average travel per job: £${businessSettings.jobCosts.travel}
+- Permits/parking: £${businessSettings.jobCosts.permits}
+- Waste disposal: £${businessSettings.jobCosts.waste}
+
+PROFITABILITY CALCULATION REQUIREMENTS:
+1. Estimate total job duration in working days
+2. Calculate job overhead allocation:
+   - Daily overhead rate = monthly overheads / 22 working days
+   - Job overhead = daily rate × estimated job days
+   - Add job-specific costs (travel + permits + waste)
+3. Calculate break-even point:
+   - Direct costs (materials + labour subtotals)
+   - Add job overhead allocation
+   - This is the MINIMUM quote - electrician makes £0 profit
+4. Calculate profitability tiers:
+   - Minimum quote = break-even × (1 + ${businessSettings.profitTargets.minimum}%)
+   - Target quote = break-even × (1 + ${businessSettings.profitTargets.target}%) ← RECOMMENDED
+   - Premium quote = break-even × (1 + ${businessSettings.profitTargets.premium}%)
+5. Provide clear recommendations:
+   - Show break-even with warning: "Never quote below this"
+   - Highlight target quote as recommended
+   - Explain profit amount at each tier
+   - Show what portion goes to overheads vs take-home profit
+
+CRITICAL: You MUST include a 'profitabilityAnalysis' object in your response with this structure.
+` : ''}
+
 CRITICAL CALCULATION RULES:
 - materials.subtotal = sum of all material item totals (with markup already included in unitPrice)
 - materials.vat = materials.subtotal × 0.20
@@ -584,6 +636,90 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                   }
                 },
                 required: ['phases', 'totalDays', 'startToFinish']
+              },
+              profitabilityAnalysis: {
+                type: 'object',
+                description: 'Break-even and profitability guidance based on electrician business settings',
+                properties: {
+                  directCosts: {
+                    type: 'object',
+                    properties: {
+                      materials: { type: 'number' },
+                      labour: { type: 'number' },
+                      total: { type: 'number' }
+                    },
+                    required: ['materials', 'labour', 'total']
+                  },
+                  jobOverheads: {
+                    type: 'object',
+                    properties: {
+                      estimatedDuration: { type: 'string', description: 'e.g., "4.5 days"' },
+                      overheadAllocation: { type: 'number', description: '(monthlyOverheads / 22) × job_days' },
+                      travelCosts: { type: 'number' },
+                      permitsCosts: { type: 'number' },
+                      wasteCosts: { type: 'number' },
+                      total: { type: 'number' }
+                    },
+                    required: ['estimatedDuration', 'overheadAllocation', 'total']
+                  },
+                  breakEven: {
+                    type: 'object',
+                    properties: {
+                      subtotal: { type: 'number', description: 'direct costs + job overheads' },
+                      vat: { type: 'number' },
+                      total: { type: 'number' },
+                      explanation: { type: 'string' }
+                    },
+                    required: ['subtotal', 'vat', 'total', 'explanation']
+                  },
+                  quotingGuidance: {
+                    type: 'object',
+                    properties: {
+                      minimum: {
+                        type: 'object',
+                        properties: {
+                          margin: { type: 'number' },
+                          subtotal: { type: 'number' },
+                          vat: { type: 'number' },
+                          total: { type: 'number' },
+                          profit: { type: 'number' },
+                          explanation: { type: 'string' }
+                        },
+                        required: ['margin', 'subtotal', 'vat', 'total', 'profit', 'explanation']
+                      },
+                      target: {
+                        type: 'object',
+                        properties: {
+                          margin: { type: 'number' },
+                          subtotal: { type: 'number' },
+                          vat: { type: 'number' },
+                          total: { type: 'number' },
+                          profit: { type: 'number' },
+                          explanation: { type: 'string' }
+                        },
+                        required: ['margin', 'subtotal', 'vat', 'total', 'profit', 'explanation']
+                      },
+                      premium: {
+                        type: 'object',
+                        properties: {
+                          margin: { type: 'number' },
+                          subtotal: { type: 'number' },
+                          vat: { type: 'number' },
+                          total: { type: 'number' },
+                          profit: { type: 'number' },
+                          explanation: { type: 'string' }
+                        },
+                        required: ['margin', 'subtotal', 'vat', 'total', 'profit', 'explanation']
+                      }
+                    },
+                    required: ['minimum', 'target', 'premium']
+                  },
+                  recommendations: {
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Actionable pricing recommendations'
+                  }
+                }
               },
               alternatives: {
                 type: 'object',
