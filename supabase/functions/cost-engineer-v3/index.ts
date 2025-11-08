@@ -452,7 +452,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
     logger.info('🤖 Calling OpenAI GPT-5-Mini for core estimate', {
       model: 'gpt-5-mini-2025-08-07',
       maxTokens: 8000,
-      timeoutMs: 90000, // Reduced to 90s for faster failure
+      timeoutMs: 280000, // Extended to 280s for complex multi-circuit designs
       hasTools: true,
       splitMode: 'core-estimate'
     });
@@ -467,7 +467,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
         systemPrompt,
         userPrompt,
         maxTokens: 8000, // Reduced from 12000
-        timeoutMs: 90000, // Reduced from 180000
+        timeoutMs: 280000, // Extended to 280s for complex designs
         jsonMode: true,
         tools: [{
         type: 'function',
@@ -1389,7 +1389,7 @@ Provide:
             systemPrompt: 'You are an expert electrical business consultant analyzing jobs for UK electricians.',
             userPrompt: coreIntelligencePrompt,
             maxTokens: 3000,
-            timeoutMs: 90000,
+            timeoutMs: 280000,
             jsonMode: true,
             tools: [{
               type: 'function',
@@ -1481,7 +1481,7 @@ Provide:
             systemPrompt: 'You are an expert electrical business consultant helping UK electricians maximize revenue and manage client conversations.',
             userPrompt: businessOpportunitiesPrompt,
             maxTokens: 4000,
-            timeoutMs: 90000,
+            timeoutMs: 280000,
             jsonMode: true,
             tools: [{
               type: 'function',
