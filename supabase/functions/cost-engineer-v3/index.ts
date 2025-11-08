@@ -1368,7 +1368,7 @@ Return ONLY profitability analysis object.`;
           model: 'gpt-5-mini-2025-08-07',
           totalMs: Date.now() - functionStart,
           ragMs: Date.now() - ragStart,
-          aiMs: aiResult?.duration || (Date.now() - aiStart),
+          aiMs: Date.now() - aiStart,
           pricingItems: finalPricingResults?.length || 0,
           labourTimeItems: labourTimeResults?.length || 0
         }
