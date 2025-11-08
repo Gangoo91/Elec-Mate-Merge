@@ -133,16 +133,16 @@ export const DesignProcessingView = ({ progress, retryMessage, onCancel }: Desig
         </div>
 
         {/* Current Stage - Fixed height */}
-        <div className="mb-4 p-2.5 sm:p-3 bg-primary/5 border border-primary/20 rounded-lg min-h-[70px] sm:min-h-[80px] flex items-center">
+        <div className="mb-4 p-3 sm:p-4 bg-elec-yellow/10 border-2 border-elec-yellow/40 rounded-lg min-h-[80px] sm:min-h-[90px] flex items-center shadow-lg">
           <div className="flex items-center gap-2 sm:gap-3 w-full">
             <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center flex-shrink-0 text-2xl sm:text-3xl">
               {stageDetails[currentStage]?.icon || '⏳'}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-xs sm:text-sm font-semibold truncate">
+              <div className="text-sm sm:text-base font-bold truncate text-white">
                 {progress?.message || 'Initialising...'}
               </div>
-              <div className="text-[10px] sm:text-xs text-muted-foreground line-clamp-1 mt-0.5">
+              <div className="text-xs sm:text-sm text-elec-light/90 line-clamp-1 mt-0.5">
                 {stageDetails[currentStage]?.description || 'Please wait...'}
               </div>
             </div>
@@ -158,7 +158,7 @@ export const DesignProcessingView = ({ progress, retryMessage, onCancel }: Desig
         </div>
 
         {/* Stage Timeline - Properly aligned with fixed icon column */}
-        <div className="space-y-0.5 sm:space-y-1 mb-4">
+        <div className="space-y-1 sm:space-y-1.5 mb-4">
           {stageDetails.map((stage, index) => {
             const isComplete = currentStage > index;
             const isCurrent = currentStage === index;
@@ -182,22 +182,22 @@ export const DesignProcessingView = ({ progress, retryMessage, onCancel }: Desig
                 </div>
                 
                 {/* Content - flex-grow to fill space */}
-                <div className="flex-1 min-w-0 pl-3">
-                  <div className={`text-sm sm:text-base font-medium leading-tight ${
-                    isComplete ? 'text-muted-foreground line-through' : 
-                    isCurrent ? 'font-semibold text-foreground' : 'text-muted-foreground'
+                <div className="flex-1 min-w-0 pl-3 text-left">
+                  <div className={`text-base sm:text-lg font-semibold leading-tight text-left ${
+                    isComplete ? 'text-elec-light/50 line-through' : 
+                    isCurrent ? 'font-bold text-white' : 'text-elec-light/70'
                   }`}>
                     {stage.name}
                   </div>
-                  <div className="text-xs sm:text-sm text-muted-foreground mt-1 leading-relaxed">
+                  <div className="text-sm sm:text-base text-elec-light/90 mt-1 leading-relaxed text-left">
                     {stage.description}
                   </div>
                 </div>
                 
                 {/* Time estimate - fixed-width right column */}
                 {!isComplete && !isCurrent && (
-                  <div className="w-12 text-right flex-shrink-0 pt-0.5">
-                    <span className="text-xs text-muted-foreground font-mono tabular-nums">
+                  <div className="w-14 text-right flex-shrink-0 pt-0.5">
+                    <span className="text-sm text-elec-yellow/90 font-mono font-semibold tabular-nums">
                       ~{stage.estimatedSeconds}s
                     </span>
                   </div>
