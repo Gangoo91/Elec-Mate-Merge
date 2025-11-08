@@ -636,6 +636,120 @@ export type Database = {
         }
         Relationships: []
       }
+      circuit_design_calculations: {
+        Row: {
+          calculation_name: string
+          circuit_type: string
+          created_at: string | null
+          formula: string
+          id: string
+          notes: string | null
+          regulation_reference: string | null
+          table_data: Json | null
+          worked_example: Json | null
+        }
+        Insert: {
+          calculation_name: string
+          circuit_type: string
+          created_at?: string | null
+          formula: string
+          id?: string
+          notes?: string | null
+          regulation_reference?: string | null
+          table_data?: Json | null
+          worked_example?: Json | null
+        }
+        Update: {
+          calculation_name?: string
+          circuit_type?: string
+          created_at?: string | null
+          formula?: string
+          id?: string
+          notes?: string | null
+          regulation_reference?: string | null
+          table_data?: Json | null
+          worked_example?: Json | null
+        }
+        Relationships: []
+      }
+      circuit_level_cache: {
+        Row: {
+          cable_length: number
+          circuit_hash: string
+          circuit_type: string
+          created_at: string | null
+          design: Json
+          hit_count: number | null
+          id: string
+          last_hit_at: string | null
+          load_power: number
+          voltage: number
+        }
+        Insert: {
+          cable_length: number
+          circuit_hash: string
+          circuit_type: string
+          created_at?: string | null
+          design: Json
+          hit_count?: number | null
+          id?: string
+          last_hit_at?: string | null
+          load_power: number
+          voltage: number
+        }
+        Update: {
+          cable_length?: number
+          circuit_hash?: string
+          circuit_type?: string
+          created_at?: string | null
+          design?: Json
+          hit_count?: number | null
+          id?: string
+          last_hit_at?: string | null
+          load_power?: number
+          voltage?: number
+        }
+        Relationships: []
+      }
+      circuit_template_cache: {
+        Row: {
+          circuit_type: string
+          created_at: string | null
+          id: string
+          last_used_at: string | null
+          length_range_max: number | null
+          power_range_max: number | null
+          power_range_min: number | null
+          template_design: Json
+          template_key: string
+          usage_count: number | null
+        }
+        Insert: {
+          circuit_type: string
+          created_at?: string | null
+          id?: string
+          last_used_at?: string | null
+          length_range_max?: number | null
+          power_range_max?: number | null
+          power_range_min?: number | null
+          template_design: Json
+          template_key: string
+          usage_count?: number | null
+        }
+        Update: {
+          circuit_type?: string
+          created_at?: string | null
+          id?: string
+          last_used_at?: string | null
+          length_range_max?: number | null
+          power_range_max?: number | null
+          power_range_min?: number | null
+          template_design?: Json
+          template_key?: string
+          usage_count?: number | null
+        }
+        Relationships: []
+      }
       commodity_prices: {
         Row: {
           created_at: string
@@ -7491,15 +7605,6 @@ export type Database = {
       }
     }
     Views: {
-      circuit_design_calculations: {
-        Row: {
-          calculation_type: string | null
-          formula: string | null
-          metadata: Json | null
-          regulation: string | null
-        }
-        Relationships: []
-      }
       current_prices: {
         Row: {
           category: string | null
