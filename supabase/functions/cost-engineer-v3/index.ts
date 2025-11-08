@@ -1272,8 +1272,62 @@ Return ONLY profitability analysis object.`;
             profitabilityAnalysis = parseJsonWithRepair(profitabilityResult.content, logger, 'profitability-json');
           }
           
-          costResult.profitabilityAnalysis = profitabilityAnalysis;
-          logger.info('Profitability analysis attached to response', { breakEvenPoint: profitabilityAnalysis.breakEvenPoint });
+          // Transform profitability analysis to match frontend interface
+          const jobDuration = costResult.timescales?.totalDays || 1;
+          const breakEvenSubtotal = profitabilityAnalysis.breakEvenPoint || 0;
+          const minimumPrice = profitabilityAnalysis.quoteTiers?.minimum?.price || 0;
+          const targetPrice = profitabilityAnalysis.quoteTiers?.target?.price || 0;
+          const premiumPrice = profitabilityAnalysis.quoteTiers?.premium?.price || 0;
+          
+          costResult.profitabilityAnalysis = {
+            directCosts: profitabilityAnalysis.directCosts || { materials: 0, labour: 0, total: 0 },
+            jobOverheads: {
+              estimatedDuration: `${jobDuration} day${jobDuration > 1 ? 's' : ''}`,
+              overheadAllocation: profitabilityAnalysis.jobOverheads?.allocatedBusinessOverheads || 0,
+              travelCosts: profitabilityAnalysis.jobOverheads?.travel || 0,
+              permitsCosts: profitabilityAnalysis.jobOverheads?.permitsAndFees || 0,
+              wasteCosts: profitabilityAnalysis.jobOverheads?.wasteDisposal || 0,
+              total: profitabilityAnalysis.jobOverheads?.total || 0
+            },
+            breakEven: {
+              subtotal: breakEvenSubtotal,
+              vat: breakEvenSubtotal * 0.20,
+              total: breakEvenSubtotal * 1.20,
+              explanation: `You must charge at least this amount to cover all direct costs (£${(profitabilityAnalysis.directCosts?.total || 0).toFixed(2)}) plus allocated job overheads (£${(profitabilityAnalysis.jobOverheads?.total || 0).toFixed(2)}).`
+            },
+            quotingGuidance: {
+              minimum: {
+                margin: profitabilityAnalysis.quoteTiers?.minimum?.marginPercent || 0,
+                subtotal: minimumPrice,
+                vat: minimumPrice * 0.20,
+                total: minimumPrice * 1.20,
+                profit: profitabilityAnalysis.quoteTiers?.minimum?.margin || 0,
+                explanation: `Minimum viable quote - covers costs with small ${(profitabilityAnalysis.quoteTiers?.minimum?.marginPercent || 0).toFixed(1)}% margin`
+              },
+              target: {
+                margin: profitabilityAnalysis.quoteTiers?.target?.marginPercent || 0,
+                subtotal: targetPrice,
+                vat: targetPrice * 0.20,
+                total: targetPrice * 1.20,
+                profit: profitabilityAnalysis.quoteTiers?.target?.margin || 0,
+                explanation: `Recommended quote - healthy ${(profitabilityAnalysis.quoteTiers?.target?.marginPercent || 0).toFixed(1)}% profit margin for business growth`
+              },
+              premium: {
+                margin: profitabilityAnalysis.quoteTiers?.premium?.marginPercent || 0,
+                subtotal: premiumPrice,
+                vat: premiumPrice * 0.20,
+                total: premiumPrice * 1.20,
+                profit: profitabilityAnalysis.quoteTiers?.premium?.margin || 0,
+                explanation: `Premium quote - strong ${(profitabilityAnalysis.quoteTiers?.premium?.marginPercent || 0).toFixed(1)}% margin for high-value clients`
+              }
+            },
+            recommendations: profitabilityAnalysis.recommendations || []
+          };
+          
+          logger.info('Profitability analysis transformed and attached', { 
+            breakEvenTotal: costResult.profitabilityAnalysis.breakEven.total,
+            targetQuote: costResult.profitabilityAnalysis.quotingGuidance.target.total
+          });
         } catch (parseError: any) {
           logger.warn('Failed to parse profitability analysis, continuing without it', { error: parseError.message });
         }
