@@ -547,6 +547,34 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       state: { fromAgentSelector: true }
     });
   };
+  
+  const handleCreateInstallationMethod = () => {
+    // Build context from current design
+    const context = {
+      design: design,
+      previousOutputs: [{
+        agent: 'designer',
+        response: {
+          structuredData: {
+            cableSize: design.circuits?.[0]?.cableSize,
+            cableType: design.circuits?.[0]?.cableType,
+            protection: `${design.circuits?.[0]?.protectionDevice?.rating}A ${design.circuits?.[0]?.protectionDevice?.type}`,
+            installationMethod: design.circuits?.[0]?.installationMethod,
+            rcdProtected: design.circuits?.[0]?.rcdProtected,
+            circuits: design.circuits?.length || 0
+          }
+        },
+        timestamp: new Date().toISOString()
+      }],
+      regulations: design.circuits?.flatMap(c => 
+        c.justifications ? Object.values(c.justifications) : []
+      ).filter(Boolean) || []
+    };
+    
+    const encoded = encodeURIComponent(JSON.stringify(context));
+    navigate(`/electrician/installation-specialist?designContext=${encoded}`);
+    toast.success("Opening Installation Specialist with design context");
+  };
 
   const allCompliant = design.circuits.every(c => 
     c.calculations.voltageDrop.compliant && 
@@ -1797,6 +1825,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         <Button size="lg" onClick={handleExportPDF} className="flex-1">
           <Download className="h-5 w-5 mr-2" />
           Export PDF
+        </Button>
+        <Button size="lg" variant="secondary" onClick={handleCreateInstallationMethod} className="flex-1">
+          <Wrench className="h-5 w-5 mr-2" />
+          Create Installation Method
         </Button>
         <SendToAgentDropdown 
           currentAgent="designer" 

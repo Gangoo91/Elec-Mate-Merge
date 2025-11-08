@@ -8,7 +8,11 @@ import { InstallationProjectDetails as ProjectDetailsType } from "@/types/instal
 import { generateMethodStatement } from "./methodStatementHandler";
 import { useSimpleAgent } from "@/hooks/useSimpleAgent";
 
-const InstallationSpecialistInterface = () => {
+interface InstallationSpecialistInterfaceProps {
+  designerContext?: any;
+}
+
+const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecialistInterfaceProps) => {
   const [showResults, setShowResults] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [celebrationShown, setCelebrationShown] = useState(false);
@@ -52,6 +56,7 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           query,
           projectDetails,
           'ms-' + Date.now(),
+          designerContext,
           (message: string) => {
             // Map stage markers to progress stages
             if (message === 'STAGE_1_START') {
@@ -173,7 +178,11 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           projectContext: {
             projectType: projectDetails.installationType as 'domestic' | 'commercial' | 'industrial',
             buildingAge: 'modern',
-          }
+          },
+          // Pass designer context if available
+          previousAgentOutputs: designerContext?.previousOutputs || [],
+          currentDesign: designerContext?.design || null,
+          sharedRegulations: designerContext?.regulations || []
         });
 
         if (!response?.success) throw new Error(response?.error || 'Failed to generate installation method');

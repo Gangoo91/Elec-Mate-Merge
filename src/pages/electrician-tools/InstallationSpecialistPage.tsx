@@ -2,10 +2,28 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Wrench } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import InstallationSpecialistInterface from "@/components/electrician-tools/installation-specialist/InstallationSpecialistInterface";
+import React from "react";
 
 const InstallationSpecialistPage = () => {
   const location = useLocation();
   const fromAgentSelector = location.state?.fromAgentSelector;
+  
+  // Extract designer context from URL if present
+  const [designerContext, setDesignerContext] = React.useState<any>(null);
+  
+  React.useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const contextParam = params.get('designContext');
+    if (contextParam) {
+      try {
+        const decoded = JSON.parse(decodeURIComponent(contextParam));
+        setDesignerContext(decoded);
+        console.log('📦 Loaded designer context:', decoded);
+      } catch (err) {
+        console.error('Failed to parse designer context:', err);
+      }
+    }
+  }, [location]);
 
   return (
     <div className="min-h-screen bg-elec-dark">
@@ -30,7 +48,7 @@ const InstallationSpecialistPage = () => {
           </div>
 
           {/* Main Content */}
-          <InstallationSpecialistInterface />
+          <InstallationSpecialistInterface designerContext={designerContext} />
         </div>
       </div>
     </div>

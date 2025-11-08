@@ -44,6 +44,7 @@ export const generateMethodStatement = async (
   userQuery: string,
   projectDetails: any,
   conversationId: string,
+  designerContext?: any,
   onProgress?: (message: string) => void
 ): Promise<MergedMethodStatementOutput> => {
   try {
@@ -63,7 +64,11 @@ export const generateMethodStatement = async (
     const { data: directData, error: directError } = await supabase.functions.invoke('installer-rag-direct', {
       body: {
         query: userQuery,
-        projectDetails
+        projectDetails,
+        // Pass designer context to edge function
+        previousAgentOutputs: designerContext?.previousOutputs || [],
+        currentDesign: designerContext?.design || null,
+        sharedRegulations: designerContext?.regulations || []
       }
     });
     
