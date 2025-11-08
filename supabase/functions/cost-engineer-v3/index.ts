@@ -1553,21 +1553,29 @@ Provide:
             toolChoice: { type: 'function', function: { name: 'provide_business_opportunities' } }
           });
 
-          // Run both calls in parallel with retry logic
+          // Run both calls in parallel with coordinated timeout
           const enhancementWithRetry = async (callFn: Promise<any>, fallback: any, name: string) => {
             try {
-              const result = await Promise.race([
-                callFn,
-                new Promise((_, reject) => 
-                  setTimeout(() => reject(new Error('Enhancement timeout')), 285000)
-                )
-              ]);
+              const result = await callFn;
               return { status: 'fulfilled', value: result };
             } catch (error) {
               logger.warn(`${name} failed, using fallback`, { error });
               return { status: 'rejected', reason: error, fallback };
             }
           };
+
+          // Wrap parallel calls with coordinated 300s timeout
+          const parallelEnhancement = Promise.all([
+            enhancementWithRetry(coreIntelligenceCall, defaultCore, 'Core Intelligence'),
+            enhancementWithRetry(businessOpportunitiesCall, defaultBusiness, 'Business Opportunities')
+          ]);
+
+          const [coreResult, opportunitiesResult] = await Promise.race([
+            parallelEnhancement,
+            new Promise<never>((_, reject) => 
+              setTimeout(() => reject(new Error('Enhancement calls exceeded 300s timeout')), 300000)
+            )
+          ]);
 
           const defaultCore = {
             complexity: { rating: 3, label: 'Medium', explanation: 'Standard electrical job', factors: ['Standard complexity'] },
@@ -1592,10 +1600,6 @@ Provide:
             propertyContext: { age: 'Unknown', installationAge: 'Unknown' }
           };
 
-          const [coreResult, opportunitiesResult] = await Promise.all([
-            enhancementWithRetry(coreIntelligenceCall, defaultCore, 'Core Intelligence'),
-            enhancementWithRetry(businessOpportunitiesCall, defaultBusiness, 'Business Opportunities')
-          ]);
 
           const enhancementMs = Date.now() - enhancementStart;
           logger.info('✅ AI enhancement calls completed', { 
@@ -1609,19 +1613,27 @@ Provide:
             let coreIntelligence;
             let businessOpportunities;
 
-            // Robust JSON sanitization function
+            // Enhanced JSON sanitization function
             const sanitizeAIJson = (jsonStr: string): string => {
               return jsonStr
-                // Fix ALL contraction patterns
-                .replace(/"(we|they|you|it|that|what|who|he|she)"(re|ll|ve|d|s)\b/gi, "'$1'$2") 
-                // Fix possessives: "it"s" → "it's"
-                .replace(/([a-z])"s\b/gi, "$1's")
-                // Fix negations: "don"t" → "don't"
-                .replace(/"(don|can|won|shouldn|wouldn|couldn|isn|aren|hasn|haven)"t\b/gi, "'$1't")
-                // Escape remaining unescaped quotes within strings
-                .replace(/: "([^"]*)"([a-z])/gi, (match, p1, p2) => `: "${p1}'${p2}`)
-                // Clean up any double apostrophes
-                .replace(/''+/g, "'");
+                // Fix ALL contraction patterns (we're, they'll, it's, etc.)
+                .replace(/"(we|they|you|it|that|what|who|he|she|I)"(re|ll|ve|d|s|m)\b/gi, "'$1'$2")
+                // Fix possessives: "client"s" → "client's"
+                .replace(/([a-zA-Z])"s\b/g, "$1's")
+                // Fix negations: "don"t", "can"t", "won"t" → "don't", "can't", "won't"
+                .replace(/"(don|can|won|shouldn|wouldn|couldn|isn|aren|hasn|haven|didn|doesn|wasn|weren)"t\b/gi, "'$1't")
+                // Fix unescaped quotes in script strings: "While we"re" → "While we're"
+                .replace(/"([^"]*)"([a-z])/gi, (match, p1, p2) => {
+                  // Only replace if not at property boundary
+                  if (p1.includes(':')) return match;
+                  return `"${p1}'${p2}`;
+                })
+                // Escape ampersands in text: & → \u0026
+                .replace(/([^\\])&/g, '$1\\u0026')
+                // Clean up double apostrophes
+                .replace(/''+/g, "'")
+                // Remove any trailing commas before closing braces/brackets
+                .replace(/,(\s*[}\]])/g, '$1');
             };
 
             // Parse core intelligence (critical data)

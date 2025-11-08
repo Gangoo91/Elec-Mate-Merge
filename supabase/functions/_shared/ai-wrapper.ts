@@ -132,7 +132,7 @@ export async function callAI(
     temperature,
     maxTokens = 2000,
     responseFormat = 'text',
-    timeoutMs = 70000, // 70s for complex tasks
+    timeoutMs = 280000, // 280s for complex tasks (Cost Engineer needs this)
     systemPrompt,
     userPrompt,
     requireJSON = false,
