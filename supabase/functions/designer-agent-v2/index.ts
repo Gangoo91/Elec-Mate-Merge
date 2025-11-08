@@ -3,7 +3,7 @@ import { corsHeaders, serve } from '../_shared/deps.ts';
 import { createLogger } from '../_shared/logger.ts';
 import { handleBatchDesign } from './batch-design-handler.ts';
 
-const VERSION = 'v3.6.0-timeout-fix'; // Extended timeout for complex multi-circuit designs
+const VERSION = 'v4.0.0-best-in-class'; // All 7 optimization phases deployed
 
 serve(async (req) => {
   // Monitor request lifecycle for timeout debugging
