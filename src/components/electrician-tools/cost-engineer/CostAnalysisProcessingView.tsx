@@ -58,6 +58,7 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
   const [currentSubstep, setCurrentSubstep] = useState(0);
   const [progress, setProgress] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [progressMessage, setProgressMessage] = useState("");
 
   const totalDuration = ANALYSIS_STAGES.reduce((sum, stage) => sum + stage.duration, 0);
   const estimatedTime = `${totalDuration - 10}-${totalDuration + 10} seconds`;
@@ -70,6 +71,19 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
 
     return () => clearInterval(timer);
   }, []);
+
+  // Progress messages at key milestones
+  useEffect(() => {
+    if (elapsedTime >= 30 && elapsedTime < 90) {
+      setProgressMessage("Searching regulations and pricing database...");
+    } else if (elapsedTime >= 90 && elapsedTime < 150) {
+      setProgressMessage("Generating detailed estimate with AI...");
+    } else if (elapsedTime >= 150 && elapsedTime < 210) {
+      setProgressMessage("Calculating profitability and business insights...");
+    } else if (elapsedTime >= 210) {
+      setProgressMessage("Almost complete, finalising report...");
+    }
+  }, [elapsedTime]);
 
   useEffect(() => {
     let stageStartTime = 0;
@@ -119,6 +133,11 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
               <br />
               <span className="text-elec-yellow/70">This typically takes 2-3 minutes for accurate results</span>
             </p>
+            {progressMessage && (
+              <p className="text-sm text-elec-yellow font-medium mt-3 animate-fade-in">
+                {progressMessage}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">

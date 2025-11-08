@@ -15,6 +15,7 @@ import { parseQueryEntities, type ParsedEntities } from '../_shared/query-parser
 import { searchPricingKnowledge, formatPricingContext, searchLabourTimeKnowledge, formatLabourTimeContext } from '../_shared/rag-cost-engineer.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
+import { sanitizeAIJson, safeJsonParse } from '../_shared/json-sanitizer.ts';
 
 // ===== COST ENGINEER PRICING CONSTANTS =====
 const COST_ENGINEER_PRICING = {
@@ -1614,33 +1615,11 @@ Provide:
             let coreIntelligence;
             let businessOpportunities;
 
-            // Enhanced JSON sanitization function
-            const sanitizeAIJson = (jsonStr: string): string => {
-              return jsonStr
-                // Fix ALL contraction patterns (we're, they'll, it's, etc.)
-                .replace(/"(we|they|you|it|that|what|who|he|she|I)"(re|ll|ve|d|s|m)\b/gi, "'$1'$2")
-                // Fix possessives: "client"s" → "client's"
-                .replace(/([a-zA-Z])"s\b/g, "$1's")
-                // Fix negations: "don"t", "can"t", "won"t" → "don't", "can't", "won't"
-                .replace(/"(don|can|won|shouldn|wouldn|couldn|isn|aren|hasn|haven|didn|doesn|wasn|weren)"t\b/gi, "'$1't")
-                // Fix unescaped quotes in script strings: "While we"re" → "While we're"
-                .replace(/"([^"]*)"([a-z])/gi, (match, p1, p2) => {
-                  // Only replace if not at property boundary
-                  if (p1.includes(':')) return match;
-                  return `"${p1}'${p2}`;
-                })
-                // Escape ampersands in text: & → \u0026
-                .replace(/([^\\])&/g, '$1\\u0026')
-                // Clean up double apostrophes
-                .replace(/''+/g, "'")
-                // Remove any trailing commas before closing braces/brackets
-                .replace(/,(\s*[}\]])/g, '$1');
-            };
-
             // Parse core intelligence (critical data)
             if (coreResult.status === 'fulfilled') {
-              const sanitizedCore = sanitizeAIJson(coreResult.value.content);
-              coreIntelligence = parseJsonWithRepair(sanitizedCore, logger, 'core-intelligence');
+              const rawCore = coreResult.value.content;
+              logger.debug('Parsing JSON for core-intelligence', { rawLength: rawCore.length });
+              coreIntelligence = safeJsonParse(rawCore, 'core-intelligence');
               logger.info('Core intelligence parsed successfully', {
                 complexityRating: coreIntelligence.complexity?.rating
               });
@@ -1651,12 +1630,23 @@ Provide:
 
             // Parse business opportunities (valuable but non-critical)
             if (opportunitiesResult.status === 'fulfilled') {
-              const sanitizedOpportunities = sanitizeAIJson(opportunitiesResult.value.content);
-              businessOpportunities = parseJsonWithRepair(sanitizedOpportunities, logger, 'business-opportunities');
-              logger.info('Business opportunities parsed successfully', {
-                upsellCount: businessOpportunities.upsells?.length,
-                pipelineCount: businessOpportunities.pipeline?.length
-              });
+              const rawOpportunities = opportunitiesResult.value.content;
+              logger.debug('Parsing JSON for business-opportunities', { rawLength: rawOpportunities.length });
+              
+              try {
+                businessOpportunities = safeJsonParse(rawOpportunities, 'business-opportunities');
+                logger.info('Business opportunities parsed successfully', {
+                  upsellCount: businessOpportunities.upsells?.length,
+                  pipelineCount: businessOpportunities.pipeline?.length
+                });
+              } catch (parseError: any) {
+                logger.warn('JSON parse failed for business-opportunities', { 
+                  error: parseError.message,
+                  sample: rawOpportunities.substring(0, 500)
+                });
+                logger.error('Failed to parse AI enhancement results', { error: `Invalid JSON from AI: ${parseError.message}. Repair failed: ${rawOpportunities.substring(0, 100)}...` });
+                businessOpportunities = defaultBusiness;
+              }
             } else {
               logger.warn('Business opportunities call failed, using fallback', { error: opportunitiesResult.reason });
               businessOpportunities = (opportunitiesResult as any).fallback || defaultBusiness;

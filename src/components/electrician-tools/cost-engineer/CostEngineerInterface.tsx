@@ -64,6 +64,18 @@ const CostEngineerInterface = () => {
     setViewState('processing');
 
     try {
+      // Create abort controller for 6-minute timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 360000); // 6 minutes
+
+      // Show extended wait message after 2 minutes
+      const longWaitTimeout = setTimeout(() => {
+        toast({
+          title: "Complex analysis in progress",
+          description: "This may take up to 5 minutes for accurate results...",
+        });
+      }, 120000); // 2 minutes
+
       const { data, error } = await supabase.functions.invoke('cost-engineer-v3', {
         body: { 
           query: prompt,
@@ -77,6 +89,9 @@ const CostEngineerInterface = () => {
           businessSettings: businessSettings
         }
       });
+
+      clearTimeout(timeoutId);
+      clearTimeout(longWaitTimeout);
 
       if (error) {
         console.error('Edge function error:', error);
@@ -138,11 +153,20 @@ const CostEngineerInterface = () => {
       console.error('Cost analysis error:', error);
       setViewState('input');
       
-      toast({
-        title: "Analysis failed",
-        description: error.message || 'Failed to generate cost analysis. Please try again.',
-        variant: "destructive"
-      });
+      // Handle timeout specifically
+      if (error.name === 'AbortError') {
+        toast({
+          title: "Analysis timeout",
+          description: "Request took longer than expected. Try a simpler query or contact support.",
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Analysis failed",
+          description: error.message || 'Failed to generate cost analysis. Please try again.',
+          variant: "destructive"
+        });
+      }
     }
   };
 
