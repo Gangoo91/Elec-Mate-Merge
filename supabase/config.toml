@@ -72,7 +72,7 @@ timeout_sec = 480
 
 [functions.cost-engineer-v3]
 verify_jwt = false
-timeout_sec = 240
+timeout_sec = 360
 
 [functions.health-safety-v3]
 verify_jwt = false
