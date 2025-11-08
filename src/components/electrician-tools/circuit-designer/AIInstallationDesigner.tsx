@@ -8,6 +8,7 @@ import { AgentInbox } from '@/components/install-planner-v2/AgentInbox';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { OptimizationTestPanel } from './OptimizationTestPanel';
 
 type ViewMode = 'input' | 'processing' | 'results' | 'validation-error';
 
@@ -47,6 +48,11 @@ export const AIInstallationDesigner = () => {
     <div className="min-h-screen bg-background space-y-6">
       {/* Agent Inbox */}
       <AgentInbox currentAgent="designer" onTaskAccept={handleTaskAccept} />
+
+      {/* Optimization Test Panel */}
+      {currentView === 'input' && (
+        <OptimizationTestPanel />
+      )}
 
       {currentView === 'input' && (
         <DesignInputForm onGenerate={handleGenerate} isProcessing={isProcessing} />
