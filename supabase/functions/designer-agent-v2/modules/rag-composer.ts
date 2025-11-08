@@ -4,6 +4,7 @@
  */
 
 import { intelligentRAGSearch } from '../../_shared/intelligent-rag.ts';
+import { filterRegulationsForCircuit } from '../../_shared/circuit-regulation-mapper.ts';
 
 /**
  * PHASE 2: Pre-Structured Calculation Formulas Retrieval
@@ -143,6 +144,40 @@ export async function buildRAGSearches(
   // Inject calculation formulas at the top (PHASE 2: Pre-structured calculations)
   ragResults.calculationFormulas = calculationFormulas;
   ragResults.designDocs = ragResults.designDocs || [];
+
+  // ============= PHASE 2: CIRCUIT-SPECIFIC RAG FILTERING =============
+  // Extract unique circuit types from batch
+  const circuitTypesSet = new Set(
+    circuits?.map(c => (c.loadType || 'socket').toLowerCase()) || ['socket']
+  );
+  
+  // If batch has multiple circuit types, keep all regulations
+  // If batch is homogeneous (all same type), filter aggressively to reduce tokens
+  if (circuitTypesSet.size === 1) {
+    const singleType = Array.from(circuitTypesSet)[0];
+    logger.info(`🔍 Homogeneous batch detected: ${singleType}, applying aggressive RAG filtering`);
+    
+    const originalRegCount = ragResults.regulations?.length || 0;
+    const originalDocCount = ragResults.designDocs?.length || 0;
+    
+    // Filter regulations to ONLY those relevant for this circuit type
+    ragResults.regulations = filterRegulationsForCircuit(
+      ragResults.regulations || [],
+      singleType
+    );
+    
+    ragResults.designDocs = filterRegulationsForCircuit(
+      ragResults.designDocs || [],
+      singleType
+    );
+    
+    const newRegCount = ragResults.regulations?.length || 0;
+    const newDocCount = ragResults.designDocs?.length || 0;
+    
+    logger.info(`📉 RAG filtered: regulations ${originalRegCount}→${newRegCount}, docs ${originalDocCount}→${newDocCount} (${Math.round((1 - (newRegCount + newDocCount) / (originalRegCount + originalDocCount)) * 100)}% reduction)`);
+  } else {
+    logger.info(`🔀 Mixed batch with ${circuitTypesSet.size} types, keeping all regulations to avoid missing requirements`);
+  }
 
   // PHASE 4: Force-include critical design knowledge based on installation type
   const criticalTopics = getCriticalTopicsForType(type);

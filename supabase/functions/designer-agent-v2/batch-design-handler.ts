@@ -13,6 +13,8 @@ import { validateDesign } from './validation-pipeline.ts';
 import { formatRegulationsAsTOON, estimateTokenSavings } from '../_shared/toon-formatter.ts';
 import { seedDesignKnowledge } from '../_shared/seed-design-knowledge.ts';
 import { checkCircuitDesignCache, storeCircuitDesign } from '../_shared/circuit-design-cache.ts';
+import { findMatchingTemplate, applyTemplate } from '../_shared/circuit-templates.ts';
+import { checkCircuitCache, storeCircuitCache } from '../_shared/circuit-level-cache.ts';
 
 const VERSION = 'v4.0.0-best-in-class'; // PHASE 1-7 optimizations implemented
 
@@ -50,13 +52,22 @@ async function loadCoreRegulations(supabase: any): Promise<any[]> {
 
 // ============= PHASE 6: BATCH CIRCUIT PROCESSING =============
 function groupCircuitsBySimilarity(circuits: any[]): any[][] {
-  if (circuits.length < 10) return [circuits]; // Don't batch small designs
+  // PHASE 5: Don't batch if ≤5 circuits (process all at once to avoid overhead)
+  if (circuits.length <= 5) {
+    console.log(`📦 Small batch (${circuits.length} circuits), processing all at once`);
+    return [circuits];
+  }
   
   const groups: Map<string, any[]> = new Map();
   
   circuits.forEach(circuit => {
-    // Group by load type (all sockets together, all lighting together)
-    const key = circuit.loadType || 'other';
+    // Group by load type AND complexity
+    const isComplex = 
+      (circuit.loadPower || 0) > 7200 || // High power (>32A)
+      (circuit.cableLength || 0) > 100 || // Long run
+      circuit.specialLocation !== 'none'; // Special location
+    
+    const key = `${circuit.loadType || 'other'}_${isComplex ? 'complex' : 'simple'}`;
     
     if (!groups.has(key)) {
       groups.set(key, []);
@@ -64,9 +75,16 @@ function groupCircuitsBySimilarity(circuits: any[]): any[][] {
     groups.get(key)!.push(circuit);
   });
   
-  const batches = Array.from(groups.values());
+  // Convert to batches of 3-4 circuits max (prevents AI timeout)
+  const batches: any[][] = [];
+  groups.forEach(group => {
+    for (let i = 0; i < group.length; i += 4) {
+      batches.push(group.slice(i, i + 4));
+    }
+  });
+  
   console.log(`📦 Grouped ${circuits.length} circuits into ${batches.length} batches:`, 
-    batches.map(b => `${b[0].loadType}(${b.length})`).join(', ')
+    batches.map(b => `${b[0]?.loadType}(${b.length})`).join(', ')
   );
   
   return batches;
@@ -572,7 +590,81 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
       installationType: type 
     });
     
-    // ============= PHASE 1 & 4: PARALLEL RAG + CORE REGULATION PRE-LOAD =============
+    // ============= PHASE 3 & 4: TEMPLATE & CIRCUIT-LEVEL CACHE CHECKS =============
+    // Process circuits through: Cache → Templates → AI (in that order)
+    const cachedCircuits: any[] = [];
+    const templatedCircuits: any[] = [];
+    const aiRequiredCircuits: any[] = [];
+    
+    const voltage = supply.voltage || 230;
+    
+    logger.info('🔍 Checking circuit-level cache and templates...');
+    
+    for (const circuit of circuits) {
+      // PHASE 4: Check circuit-level cache first (30-day TTL, ~60% hit rate)
+      const cachedDesign = await checkCircuitCache(supabase, circuit, voltage);
+      
+      if (cachedDesign) {
+        logger.info(`💾 Cache hit for "${circuit.name}" (${circuit.loadType})`);
+        cachedCircuits.push({ ...cachedDesign, name: circuit.name });
+        continue;
+      }
+      
+      // PHASE 3: Check if circuit matches a template (instant <5s design)
+      const template = findMatchingTemplate(
+        circuit.loadType || 'other',
+        circuit.loadPower || 1000,
+        circuit.cableLength || 30
+      );
+      
+      if (template) {
+        logger.info(`⚡ Using template for "${circuit.name}" (${circuit.loadType})`);
+        const design = applyTemplate(template, circuit, supply);
+        templatedCircuits.push(design);
+        
+        // Store in circuit cache for next time
+        await storeCircuitCache(supabase, circuit, voltage, design);
+        continue;
+      }
+      
+      // AI required for complex/non-standard circuits
+      logger.info(`🤖 AI required for "${circuit.name}" (${circuit.loadType}) - complex/non-standard`);
+      aiRequiredCircuits.push(circuit);
+    }
+    
+    logger.info(`📊 Circuit distribution: ${cachedCircuits.length} cached, ${templatedCircuits.length} templated, ${aiRequiredCircuits.length} require AI`);
+    
+    // If ALL circuits were handled by cache/templates, skip AI entirely!
+    if (aiRequiredCircuits.length === 0) {
+      const allDesigns = [...cachedCircuits, ...templatedCircuits];
+      logger.info(`🚀 All circuits resolved from cache/templates - no AI call needed! (${allDesigns.length} circuits in ${Date.now() - startTime}ms)`);
+      
+      return new Response(JSON.stringify({
+        version: VERSION,
+        success: true,
+        circuits: allDesigns.map(c => ensurePDFFields(safeCircuit(c))),
+        regulations: [],
+        projectInfo,
+        supply,
+        metadata: {
+          version: VERSION,
+          model: 'Templates & Cache',
+          timings: {
+            total: Date.now() - startTime,
+            cacheHits: cachedCircuits.length,
+            templateHits: templatedCircuits.length,
+            aiCalls: 0
+          },
+          source: 'cache-and-templates',
+          timestamp: new Date().toISOString()
+        }
+      }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+    
+    // ============= ONLY PROCEED WITH RAG/AI IF SOME CIRCUITS NEED IT =============
     const ragStart = Date.now();
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
@@ -588,153 +680,180 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     seedDesignKnowledge(supabase, logger).catch(e => logger.warn('Seed failed', e));
     
     let regulations: any[] = [];
-    try {
-      // ============= EXECUTE IN PARALLEL: RAG Search + Core Regs Pre-load =============
-      const [ragResults, coreRegs] = await Promise.all([
-        buildRAGSearches(query, searchTerms, openAiKey, supabase, logger, type, circuits), // PHASE 2: Pass circuits
-        loadCoreRegulations(supabase) // PHASE 4: Pre-load core regulations
-      ]);
+    let designedCircuits: any[] = [];
+    
+    // Only do RAG/AI if there are circuits that need it
+    if (aiRequiredCircuits.length > 0) {
+      try {
+        // ============= EXECUTE IN PARALLEL: RAG Search + Core Regs Pre-load =============
+        const [ragResults, coreRegs] = await Promise.all([
+          buildRAGSearches(query, searchTerms, openAiKey, supabase, logger, type, aiRequiredCircuits), // PHASE 2: Pass AI-required circuits only
+          loadCoreRegulations(supabase) // PHASE 4: Pre-load core regulations
+        ]);
       
-      // Merge RAG results with core regulations
-      regulations = mergeRegulations(ragResults);
-      
-      // Inject core regulations at the top (they're always needed)
-      const coreRegNumbers = new Set(coreRegs.map(r => r.regulation_number));
-      const existingRegNumbers = new Set(regulations.map(r => r.regulation_number));
-      
-      // Add core regs that aren't already in results
-      const missingCoreRegs = coreRegs.filter(r => !existingRegNumbers.has(r.regulation_number));
-      if (missingCoreRegs.length > 0) {
-        regulations.unshift(...missingCoreRegs);
-        logger.info(`✅ Added ${missingCoreRegs.length} pre-loaded core regulations`);
+        // Merge RAG results with core regulations
+        regulations = mergeRegulations(ragResults);
+        
+        // Inject core regulations at the top (they're always needed)
+        const coreRegNumbers = new Set(coreRegs.map(r => r.regulation_number));
+        const existingRegNumbers = new Set(regulations.map(r => r.regulation_number));
+        
+        // Add core regs that aren't already in results
+        const missingCoreRegs = coreRegs.filter(r => !existingRegNumbers.has(r.regulation_number));
+        if (missingCoreRegs.length > 0) {
+          regulations.unshift(...missingCoreRegs);
+          logger.info(`✅ Added ${missingCoreRegs.length} pre-loaded core regulations`);
+        }
+        
+        timings.ragSearch = Date.now() - ragStart;
+        logger.info('RAG search complete', { 
+          regulationCount: regulations.length,
+          coreRegsPreloaded: coreRegs.length,
+          installationType: type 
+        });
+      } catch (error) {
+        logger.error('RAG search failed', { 
+          error: error instanceof Error ? error.message : String(error),
+          stack: error instanceof Error ? error.stack : undefined
+        });
+        return ERROR_TEMPLATES.RAG_SEARCH_FAILED(['bs7671', 'design_knowledge']).toResponse(VERSION);
       }
       
-      timings.ragSearch = Date.now() - ragStart;
-      logger.info('RAG search complete', { 
-        regulationCount: regulations.length,
-        coreRegsPreloaded: coreRegs.length,
-        installationType: type 
-      });
-    } catch (error) {
-      logger.error('RAG search failed', { 
-        error: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : undefined
-      });
-      return ERROR_TEMPLATES.RAG_SEARCH_FAILED(['bs7671', 'design_knowledge']).toResponse(VERSION);
-    }
-    
-    if (regulations.length === 0) {
-      return ERROR_TEMPLATES.RAG_SEARCH_FAILED(['No regulations retrieved']).toResponse(VERSION);
-    }
-    
-    // 4. Build AI prompt with TOON format
-    const regulationsText = formatRegulationsAsTOON(
-      regulations.slice(0, 20),
-      300  // Max content length per regulation
-    );
-    
-    // Log token savings
-    const oldFormat = regulations
-      .slice(0, 20)
-      .map(r => {
-        const regNum = r.regulation_number || r.topic || 'General';
-        const content = (r.content || '').substring(0, 300);
-        return regNum + ': ' + content;
-      })
-      .join('\n\n');
-    
-    const tokenStats = estimateTokenSavings(oldFormat, regulationsText);
-    logger.info('TOON format token savings', {
-      regulationCount: Math.min(regulations.length, 20),
-      oldTokens: tokenStats.oldTokens,
-      toonTokens: tokenStats.toonTokens,
-      savings: tokenStats.savings,
-      savingsPercent: tokenStats.savingsPercent + '%'
-    });
-    
-    const userPrompt = DESIGN_INSTRUCTIONS + '\n\n<regulations>\n' + regulationsText + '\n</regulations>\n\n' +
-                       'JOB CONTEXT:\n' + query + '\n\n' +
-                       (additionalPrompt ? 'ADDITIONAL REQUIREMENTS:\n' + additionalPrompt + '\n\n' : '') +
-                       'Design ALL circuits using the design_circuits tool. Do not output text.';
-    
-    const messages = [
-      {
-        role: 'system',
-        content: 'You are a senior BS 7671 (2018+A3:2024) electrical design engineer. Use UK English. Output by calling the provided tool only.'
-      },
-      {
-        role: 'user',
-        content: userPrompt
+      if (regulations.length === 0) {
+        return ERROR_TEMPLATES.RAG_SEARCH_FAILED(['No regulations retrieved']).toResponse(VERSION);
       }
+      
+      // 4. Build AI prompt with TOON format (only for AI-required circuits)
+      const regulationsText = formatRegulationsAsTOON(
+        regulations.slice(0, 20),
+        300  // Max content length per regulation
+      );
+      
+      const tokenStats = estimateTokenSavings(
+        regulations.slice(0, 20).map(r => {
+          const regNum = r.regulation_number || r.topic || 'General';
+          const content = (r.content || '').substring(0, 300);
+          return regNum + ': ' + content;
+        }).join('\n\n'),
+        regulationsText
+      );
+      
+      logger.info('TOON format token savings', {
+        regulationCount: Math.min(regulations.length, 20),
+        oldTokens: tokenStats.oldTokens,
+        toonTokens: tokenStats.toonTokens,
+        savings: tokenStats.savings,
+        savingsPercent: tokenStats.savingsPercent + '%'
+      });
+      
+      // Build query for ONLY AI-required circuits
+      const aiQuery = buildDesignQuery(
+        projectInfo, 
+        supply, 
+        aiRequiredCircuits,  // NOT all circuits, just the ones that need AI
+        specialRequirements || [], 
+        installationConstraints || []
+      );
+      
+      const userPrompt = DESIGN_INSTRUCTIONS + '\n\n<regulations>\n' + regulationsText + '\n</regulations>\n\n' +
+                         'JOB CONTEXT:\n' + aiQuery + '\n\n' +
+                         (additionalPrompt ? 'ADDITIONAL REQUIREMENTS:\n' + additionalPrompt + '\n\n' : '') +
+                         'Design ALL circuits using the design_circuits tool. Do not output text.';
+      
+      const messages = [
+        {
+          role: 'system',
+          content: 'You are a senior BS 7671 (2018+A3:2024) electrical design engineer. Use UK English. Output by calling the provided tool only.'
+        },
+        {
+          role: 'user',
+          content: userPrompt
+        }
+      ];
+      
+      // 5. Call AI model (only for circuits that need it)
+      const modelStart = Date.now();
+      logger.info(`Calling AI model for ${aiRequiredCircuits.length} circuits...`);
+      
+      let aiResponse;
+      try {
+        aiResponse = await callOpenAIWithRetry(
+          messages,
+          [DESIGN_TOOL_SCHEMA],
+          { type: 'function', function: { name: 'design_circuits' } },
+          openAiKey,
+          logger,
+          280000 // 280s timeout for complex designs
+        );
+        timings.modelCall = Date.now() - modelStart;
+      } catch (error: any) {
+        logger.error('AI model call failed', { error });
+        
+        if (error.message?.includes('402') || error.statusCode === 402) {
+          throw new CircuitDesignError(
+            'AI_TIMEOUT',
+            'AI service requires payment - please add credits to your Lovable workspace',
+            { error: error.message },
+            ['Add credits at Settings > Workspace > Usage']
+          );
+        }
+        
+        if (error.message?.includes('429') || error.statusCode === 429) {
+          throw new CircuitDesignError(
+            'AI_TIMEOUT',
+            'AI service rate limit exceeded - please try again in a few moments',
+            { error: error.message },
+            ['Wait 30-60 seconds before retrying']
+          );
+        }
+        
+        throw error;
+      }
+      
+      // 6. Parse tool calls and extract AI-designed circuits
+      try {
+        const toolCalls = parseToolCalls(aiResponse);
+        
+        // Merge circuits from all tool calls (AI might split large designs across multiple calls)
+        for (const toolCall of toolCalls) {
+          const circuits = toolCall?.arguments?.circuits || [];
+          designedCircuits.push(...circuits);
+        }
+        
+        logger.info('AI designed circuits', { 
+          count: designedCircuits.length,
+          toolCallCount: toolCalls.length 
+        });
+        
+        // Store AI-designed circuits in cache for next time
+        for (let i = 0; i < aiRequiredCircuits.length; i++) {
+          if (designedCircuits[i]) {
+            await storeCircuitCache(supabase, aiRequiredCircuits[i], voltage, designedCircuits[i]);
+          }
+        }
+      } catch (error) {
+        logger.error('Failed to parse tool calls', { error });
+        return ERROR_TEMPLATES.NO_CIRCUITS(aiRequiredCircuits.length, !!additionalPrompt).toResponse(VERSION);
+      }
+      
+      if (designedCircuits.length === 0) {
+        return ERROR_TEMPLATES.NO_CIRCUITS(aiRequiredCircuits.length, !!additionalPrompt).toResponse(VERSION);
+      }
+    }  // End of if (aiRequiredCircuits.length > 0)
+    
+    // ============= MERGE ALL CIRCUITS: CACHED + TEMPLATED + AI-DESIGNED =============
+    const allDesignedCircuits = [
+      ...cachedCircuits,
+      ...templatedCircuits,
+      ...designedCircuits
     ];
     
-    // 5. Call AI model
-    const modelStart = Date.now();
-    logger.info('Calling AI model...');
-    
-    let aiResponse;
-    try {
-      aiResponse = await callOpenAIWithRetry(
-        messages,
-        [DESIGN_TOOL_SCHEMA],
-        { type: 'function', function: { name: 'design_circuits' } },
-        openAiKey,
-        logger,
-        280000 // 280s timeout for complex designs
-      );
-      timings.modelCall = Date.now() - modelStart;
-    } catch (error: any) {
-      logger.error('AI model call failed', { error });
-      
-      if (error.message?.includes('402') || error.statusCode === 402) {
-        throw new CircuitDesignError(
-          'AI_TIMEOUT',
-          'AI service requires payment - please add credits to your Lovable workspace',
-          { error: error.message },
-          ['Add credits at Settings > Workspace > Usage']
-        );
-      }
-      
-      if (error.message?.includes('429') || error.statusCode === 429) {
-        throw new CircuitDesignError(
-          'AI_TIMEOUT',
-          'AI service rate limit exceeded - please try again in a few moments',
-          { error: error.message },
-          ['Wait 30-60 seconds before retrying']
-        );
-      }
-      
-      throw error;
-    }
-    
-    // 6. Parse tool calls and merge all circuits from multiple tool calls
-    let designedCircuits: any[] = [];
-    try {
-      const toolCalls = parseToolCalls(aiResponse);
-      
-      // Merge circuits from all tool calls (AI might split large designs across multiple calls)
-      for (const toolCall of toolCalls) {
-        const circuits = toolCall?.arguments?.circuits || [];
-        designedCircuits.push(...circuits);
-      }
-      
-      logger.info('AI designed circuits', { 
-        count: designedCircuits.length,
-        toolCallCount: toolCalls.length 
-      });
-    } catch (error) {
-      logger.error('Failed to parse tool calls', { error });
-      return ERROR_TEMPLATES.NO_CIRCUITS(circuits.length, !!additionalPrompt).toResponse(VERSION);
-    }
-    
-    if (designedCircuits.length === 0) {
-      return ERROR_TEMPLATES.NO_CIRCUITS(circuits.length, !!additionalPrompt).toResponse(VERSION);
-    }
+    logger.info(`📊 Final circuit count: ${allDesignedCircuits.length} (${cachedCircuits.length} cached + ${templatedCircuits.length} templated + ${designedCircuits.length} AI-designed)`);
     
     // 6.5. VALIDATION: Reject non-compliant designs (AI MUST iterate until compliant)
     logger.info('Validating compliance before processing...');
-    for (let i = 0; i < designedCircuits.length; i++) {
-      const circuit = designedCircuits[i];
+    for (let i = 0; i < allDesignedCircuits.length; i++) {
+      const circuit = allDesignedCircuits[i];
       const circuitName = circuit.name || `Circuit ${i + 1}`;
       
       // Check voltage drop compliance
@@ -794,9 +913,9 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     }
     logger.info('✅ All circuits passed compliance validation');
     
-    // 7. Normalise and add PDF fields
+    // 7. Normalise and add PDF fields (using merged circuits)
     const validationStart = Date.now();
-    const processedCircuits = designedCircuits.map(c => {
+    const processedCircuits = allDesignedCircuits.map(c => {
       const safe = safeCircuit(c);
       return ensurePDFFields(safe);
     });
@@ -949,11 +1068,18 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
         supply,
         metadata: {
           version: VERSION,
-          model: 'gpt-5-mini via Lovable AI',
+          model: aiRequiredCircuits.length > 0 ? 'gpt-5-mini via Lovable AI' : 'Templates & Cache',
           timings,
           ragHits: regulations.length,
           confidence,
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
+          optimizations: {
+            cachedCircuits: cachedCircuits.length,
+            templatedCircuits: templatedCircuits.length,
+            aiDesignedCircuits: designedCircuits.length,
+            totalCircuits: safeCircuits.length,
+            cacheHitRate: ((cachedCircuits.length + templatedCircuits.length) / safeCircuits.length * 100).toFixed(1) + '%'
+          }
         }
       }),
       {
