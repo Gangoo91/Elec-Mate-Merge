@@ -603,6 +603,39 @@ export type Database = {
         }
         Relationships: []
       }
+      circuit_design_cache: {
+        Row: {
+          cache_hash: string
+          circuits: Json
+          created_at: string | null
+          design: Json
+          hit_count: number | null
+          id: string
+          last_hit_at: string | null
+          supply: Json
+        }
+        Insert: {
+          cache_hash: string
+          circuits: Json
+          created_at?: string | null
+          design: Json
+          hit_count?: number | null
+          id?: string
+          last_hit_at?: string | null
+          supply: Json
+        }
+        Update: {
+          cache_hash?: string
+          circuits?: Json
+          created_at?: string | null
+          design?: Json
+          hit_count?: number | null
+          id?: string
+          last_hit_at?: string | null
+          supply?: Json
+        }
+        Relationships: []
+      }
       commodity_prices: {
         Row: {
           created_at: string
@@ -7692,6 +7725,7 @@ export type Database = {
       cleanup_ai_cache: { Args: never; Returns: undefined }
       cleanup_cost_query_cache: { Args: never; Returns: undefined }
       cleanup_expired_cables_cache: { Args: never; Returns: undefined }
+      cleanup_expired_circuit_design_cache: { Args: never; Returns: undefined }
       cleanup_expired_course_cache: { Args: never; Returns: undefined }
       cleanup_expired_course_dates_cache: { Args: never; Returns: undefined }
       cleanup_expired_design_exports: { Args: never; Returns: undefined }
