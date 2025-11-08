@@ -14,7 +14,7 @@ export interface CircuitTemplate {
 export const STANDARD_TEMPLATES: CircuitTemplate[] = [
   {
     circuitType: 'socket',
-    powerRange: { min: 0, max: 7200 }, // Up to 32A at 230V
+    powerRange: { min: 0, max: 8000 }, // Up to 32A at 230V (expanded for 7360W rings)
     maxLength: 40, // 40m max for 2.5mm² ring
     standardDesign: {
       loadType: 'sockets',
@@ -44,7 +44,7 @@ export const STANDARD_TEMPLATES: CircuitTemplate[] = [
 
   {
     circuitType: 'sockets',
-    powerRange: { min: 0, max: 7200 },
+    powerRange: { min: 0, max: 8000 },
     maxLength: 40,
     standardDesign: {
       loadType: 'sockets',
@@ -97,6 +97,66 @@ export const STANDARD_TEMPLATES: CircuitTemplate[] = [
         cableSize: '1.5mm² + 1.0mm CPC suitable for lighting loads up to 1.5kW. Provides adequate current capacity and voltage drop compliance for typical lighting circuits.',
         protection: '6A Type B MCB provides overcurrent protection. Rating exceeds design current with appropriate margin for inrush and lamp failures.',
         voltageDrop: '3% voltage drop limit for lighting circuits per BS 7671 to prevent visible flickering or dimming, stricter than 5% for power circuits.'
+      },
+      warnings: []
+    }
+  },
+
+  {
+    circuitType: 'shower',
+    powerRange: { min: 7000, max: 10500 },
+    maxLength: 20,
+    standardDesign: {
+      loadType: 'other',
+      cableSize: 10,
+      cpcSize: 4,
+      cableType: 'T&E',
+      protectionDevice: { type: 'MCB', rating: 40, curve: 'B', kaRating: 6 },
+      rcdProtected: true,
+      installationMethod: 'clipped-direct',
+      phases: 1,
+      calculations: {
+        Ib: 41,
+        In: 40,
+        Iz: 57,
+        voltageDrop: { volts: 0, percent: 0, limit: 5, compliant: true },
+        zs: 0,
+        maxZs: 1.19
+      },
+      justifications: {
+        cableSize: '10mm² with 4mm² CPC typical for 9–10.5 kW showers with short runs.',
+        protection: '40A Type B MCB selected; RCD protection required in bathrooms per 701.',
+        voltageDrop: '5% limit for power circuits; computed from Appendix 4 mV/A/m.'
+      },
+      warnings: []
+    }
+  },
+
+  {
+    circuitType: 'cooker',
+    powerRange: { min: 5000, max: 8000 },
+    maxLength: 25,
+    standardDesign: {
+      loadType: 'other',
+      cableSize: 6,
+      cpcSize: 2.5,
+      cableType: 'T&E',
+      protectionDevice: { type: 'MCB', rating: 32, curve: 'B', kaRating: 6 },
+      rcdProtected: false,
+      installationMethod: 'clipped-direct',
+      phases: 1,
+      calculations: {
+        Ib: 31,
+        In: 32,
+        Iz: 34,
+        voltageDrop: { volts: 0, percent: 0, limit: 5, compliant: true },
+        zs: 0,
+        maxZs: 1.37
+      },
+      justifications: {
+        cableSize: '6mm² radial suitable for ~7 kW cookers at modest lengths.',
+        protection: '32A Type B MCB standard; RCD optional for fixed cooking appliances.',
+        voltageDrop: '5% limit for power circuits per 525.'
       },
       warnings: []
     }
