@@ -219,6 +219,19 @@ export async function buildRAGSearches(
 export function mergeRegulations(ragResults: any): any[] {
   const regulations = new Map();
 
+  // PHASE 1: Add pre-structured calculation formulas FIRST (highest priority)
+  if (ragResults.calculationFormulas && ragResults.calculationFormulas.length > 0) {
+    ragResults.calculationFormulas.forEach((calc: any, idx: number) => {
+      regulations.set(`CALC-${idx}`, {
+        regulation_number: calc.regulation_reference || `Calculation-${calc.circuit_type}`,
+        topic: calc.calculation_name,
+        content: formatCalculationForAI(calc),
+        category: 'calculation_formula',
+        circuit_type: calc.circuit_type
+      });
+    });
+  }
+
   // Merge BS 7671 results
   if (ragResults.regulations) {
     ragResults.regulations.forEach((reg: any) => {
@@ -233,5 +246,59 @@ export function mergeRegulations(ragResults: any): any[] {
     });
   }
 
+  // Merge design docs (if not already included)
+  if (ragResults.designDocs) {
+    ragResults.designDocs.forEach((doc: any, idx: number) => {
+      const key = doc.regulation_number || `DOC-${idx}`;
+      if (!regulations.has(key)) {
+        regulations.set(key, { ...doc, regulation_number: key });
+      }
+    });
+  }
+
   return Array.from(regulations.values());
+}
+
+/**
+ * Format calculation formula for AI consumption
+ * Pre-structures calculation data so AI can directly apply formulas
+ */
+function formatCalculationForAI(calc: any): string {
+  let content = `${calc.calculation_name}\n\n`;
+  
+  if (calc.formula) {
+    content += `Formula: ${calc.formula}\n\n`;
+  }
+  
+  if (calc.worked_example) {
+    content += `Worked Example:\n`;
+    if (typeof calc.worked_example === 'object') {
+      Object.entries(calc.worked_example).forEach(([key, value]) => {
+        content += `  ${key}: ${value}\n`;
+      });
+    } else {
+      content += `${calc.worked_example}\n`;
+    }
+    content += '\n';
+  }
+  
+  if (calc.table_data) {
+    content += `Table Data:\n`;
+    if (Array.isArray(calc.table_data)) {
+      calc.table_data.forEach((row: any) => {
+        if (typeof row === 'object') {
+          content += `  ${JSON.stringify(row)}\n`;
+        } else {
+          content += `  ${row}\n`;
+        }
+      });
+    }
+    content += '\n';
+  }
+  
+  if (calc.notes) {
+    content += `Notes: ${calc.notes}`;
+  }
+  
+  return content.trim();
 }
