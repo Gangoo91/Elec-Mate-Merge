@@ -1184,7 +1184,7 @@ Return ONLY profitability analysis object.`;
           systemPrompt: profitabilitySystemPrompt,
           userPrompt: profitabilityUserPrompt,
           maxTokens: 4000,
-          timeoutMs: 60000,
+          timeoutMs: 280000,
           jsonMode: true,
           tools: [{
             type: 'function',
@@ -1553,10 +1553,48 @@ Provide:
             toolChoice: { type: 'function', function: { name: 'provide_business_opportunities' } }
           });
 
-          // Run both calls in parallel
-          const [coreResult, opportunitiesResult] = await Promise.allSettled([
-            coreIntelligenceCall,
-            businessOpportunitiesCall
+          // Run both calls in parallel with retry logic
+          const enhancementWithRetry = async (callFn: Promise<any>, fallback: any, name: string) => {
+            try {
+              const result = await Promise.race([
+                callFn,
+                new Promise((_, reject) => 
+                  setTimeout(() => reject(new Error('Enhancement timeout')), 285000)
+                )
+              ]);
+              return { status: 'fulfilled', value: result };
+            } catch (error) {
+              logger.warn(`${name} failed, using fallback`, { error });
+              return { status: 'rejected', reason: error, fallback };
+            }
+          };
+
+          const defaultCore = {
+            complexity: { rating: 3, label: 'Medium', explanation: 'Standard electrical job', factors: ['Standard complexity'] },
+            risk: { overallLevel: 'Medium', factors: [{ factor_name: 'General site risks', risk_level: 'medium', description: 'Standard safety precautions required' }] },
+            confidence: { overall: 75, materials: 80, labour: 75, contingency: 70, recommendation: 'Estimate based on standard rates and typical job complexity' },
+            reasoning: 'Price calculated from standard labour times and current material costs with appropriate contingency.',
+            actions: ['Confirm site access and supply isolation', 'Order materials 3-5 days before start', 'Schedule installation with client']
+          };
+
+          const defaultBusiness = {
+            upsells: [],
+            pipeline: [],
+            conversations: {
+              opening: 'Based on the work required, I\'ve prepared a detailed quote that covers all materials, labour, and compliance with BS 7671 regulations.',
+              tooExpensive: 'This price reflects current material costs and the proper installation time needed to meet BS 7671 standards. Cutting corners isn\'t an option when it comes to electrical safety.',
+              discountRequest: 'The quote is already competitive for the quality and compliance level provided. However, I can explore alternative solutions if budget is a concern.'
+            },
+            siteChecklist: {
+              critical: ['Verify main supply can be safely isolated', 'Check for asbestos risk in older properties', 'Confirm access to all work areas'],
+              important: ['Measure accurate cable runs', 'Check for hidden obstacles (plasterboard, insulation)', 'Identify earthing system type', 'Note any existing installation defects']
+            },
+            propertyContext: { age: 'Unknown', installationAge: 'Unknown' }
+          };
+
+          const [coreResult, opportunitiesResult] = await Promise.all([
+            enhancementWithRetry(coreIntelligenceCall, defaultCore, 'Core Intelligence'),
+            enhancementWithRetry(businessOpportunitiesCall, defaultBusiness, 'Business Opportunities')
           ]);
 
           const enhancementMs = Date.now() - enhancementStart;
@@ -1571,51 +1609,44 @@ Provide:
             let coreIntelligence;
             let businessOpportunities;
 
+            // Robust JSON sanitization function
+            const sanitizeAIJson = (jsonStr: string): string => {
+              return jsonStr
+                // Fix ALL contraction patterns
+                .replace(/"(we|they|you|it|that|what|who|he|she)"(re|ll|ve|d|s)\b/gi, "'$1'$2") 
+                // Fix possessives: "it"s" → "it's"
+                .replace(/([a-z])"s\b/gi, "$1's")
+                // Fix negations: "don"t" → "don't"
+                .replace(/"(don|can|won|shouldn|wouldn|couldn|isn|aren|hasn|haven)"t\b/gi, "'$1't")
+                // Escape remaining unescaped quotes within strings
+                .replace(/: "([^"]*)"([a-z])/gi, (match, p1, p2) => `: "${p1}'${p2}`)
+                // Clean up any double apostrophes
+                .replace(/''+/g, "'");
+            };
+
             // Parse core intelligence (critical data)
             if (coreResult.status === 'fulfilled') {
-              coreIntelligence = parseJsonWithRepair(coreResult.value.content, logger, 'core-intelligence');
+              const sanitizedCore = sanitizeAIJson(coreResult.value.content);
+              coreIntelligence = parseJsonWithRepair(sanitizedCore, logger, 'core-intelligence');
               logger.info('Core intelligence parsed successfully', {
                 complexityRating: coreIntelligence.complexity?.rating
               });
             } else {
-              logger.warn('Core intelligence call failed, using defaults', { error: coreResult.reason });
-              coreIntelligence = {
-                complexity: { rating: 3, label: 'Medium', explanation: 'Standard electrical job', factors: ['Standard complexity'] },
-                risk: { overallLevel: 'Medium', factors: [{ factor_name: 'General site risks', risk_level: 'medium', description: 'Standard safety precautions required' }] },
-                confidence: { overall: 75, materials: 80, labour: 75, contingency: 70, recommendation: 'Estimate based on standard rates and typical job complexity' },
-                reasoning: 'Price calculated from standard labour times and current material costs with appropriate contingency.',
-                actions: ['Confirm site access and supply isolation', 'Order materials 3-5 days before start', 'Schedule installation with client']
-              };
+              logger.warn('Core intelligence call failed, using fallback', { error: coreResult.reason });
+              coreIntelligence = (coreResult as any).fallback || defaultCore;
             }
 
             // Parse business opportunities (valuable but non-critical)
             if (opportunitiesResult.status === 'fulfilled') {
-              // Sanitize JSON content to fix common quote issues before parsing
-              const sanitizedContent = opportunitiesResult.value.content
-                .replace(/([^\\])"([a-z])/gi, "$1'$2") // Replace unescaped quotes followed by letters
-                .replace(/([a-z])"s\b/gi, "$1's"); // Fix possessives like "it"s" → "it's"
-              
-              businessOpportunities = parseJsonWithRepair(sanitizedContent, logger, 'business-opportunities');
+              const sanitizedOpportunities = sanitizeAIJson(opportunitiesResult.value.content);
+              businessOpportunities = parseJsonWithRepair(sanitizedOpportunities, logger, 'business-opportunities');
               logger.info('Business opportunities parsed successfully', {
                 upsellCount: businessOpportunities.upsells?.length,
                 pipelineCount: businessOpportunities.pipeline?.length
               });
             } else {
-              logger.warn('Business opportunities call failed, using defaults', { error: opportunitiesResult.reason });
-              businessOpportunities = {
-                upsells: [],
-                pipeline: [],
-                conversations: {
-                  opening: 'Based on the work required, I\'ve prepared a detailed quote that covers all materials, labour, and compliance with BS 7671 regulations.',
-                  tooExpensive: 'This price reflects current material costs and the proper installation time needed to meet BS 7671 standards. Cutting corners isn\'t an option when it comes to electrical safety.',
-                  discountRequest: 'The quote is already competitive for the quality and compliance level provided. However, I can explore alternative solutions if budget is a concern.'
-                },
-                siteChecklist: {
-                  critical: ['Verify main supply can be safely isolated', 'Check for asbestos risk in older properties', 'Confirm access to all work areas'],
-                  important: ['Measure accurate cable runs', 'Check for hidden obstacles (plasterboard, insulation)', 'Identify earthing system type', 'Note any existing installation defects']
-                },
-                propertyContext: { age: 'Unknown', installationAge: 'Unknown' }
-              };
+              logger.warn('Business opportunities call failed, using fallback', { error: opportunitiesResult.reason });
+              businessOpportunities = (opportunitiesResult as any).fallback || defaultBusiness;
             }
 
             // Merge both results
