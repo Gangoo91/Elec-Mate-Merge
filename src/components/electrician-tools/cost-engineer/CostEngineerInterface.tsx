@@ -64,18 +64,7 @@ const CostEngineerInterface = () => {
     setViewState('processing');
 
     try {
-      // Create abort controller for 6-minute timeout
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 360000); // 6 minutes
-
-      // Show extended wait message after 2 minutes
-      const longWaitTimeout = setTimeout(() => {
-        toast({
-          title: "Complex analysis in progress",
-          description: "This may take up to 5 minutes for accurate results...",
-        });
-      }, 120000); // 2 minutes
-
+      // PHASE 1: Get core estimate (fast, <120s to avoid 150s gateway timeout)
       const { data, error } = await supabase.functions.invoke('cost-engineer-v3', {
         body: { 
           query: prompt,
@@ -86,36 +75,31 @@ const CostEngineerInterface = () => {
             clientInfo: clientInfo,
             additionalInfo: additionalInfo
           },
-          businessSettings: businessSettings
+          businessSettings: businessSettings,
+          skipProfitability: true // Skip profitability in first call
         }
       });
 
-      clearTimeout(timeoutId);
-      clearTimeout(longWaitTimeout);
-
       if (error) {
-        console.error('Edge function error:', error);
-        throw new Error(error.message || 'Failed to invoke cost-engineer-v3');
+        console.error('Core estimate error:', error);
+        throw new Error(error.message || 'Failed to get core estimate');
       }
 
       if (!data || !data.success) {
         throw new Error(data?.error || 'Cost Engineer returned unsuccessful response');
       }
 
-      // V3 returns both narrative text AND structured data
-      const aiResponse = data.response;
-      const structuredData = data.structuredData;
+      // Store core estimate data
+      const coreStructuredData = data.structuredData;
+      setStructuredData(coreStructuredData);
 
-      // Store structured data for enhanced panels
-      setStructuredData(structuredData);
-
-      // Use structured data if available, otherwise parse markdown
-      if (structuredData && structuredData.summary) {
+      // Parse core results
+      if (coreStructuredData && coreStructuredData.summary) {
         setParsedResults({
-          totalCost: structuredData.summary.grandTotal,
-          materialsTotal: structuredData.materials?.subtotal || 0,
-          labourTotal: structuredData.labour?.subtotal || 0,
-          materials: structuredData.materials?.items?.map((m: any) => ({
+          totalCost: coreStructuredData.summary.grandTotal,
+          materialsTotal: coreStructuredData.materials?.subtotal || 0,
+          labourTotal: coreStructuredData.labour?.subtotal || 0,
+          materials: coreStructuredData.materials?.items?.map((m: any) => ({
             item: m.description || m.item || 'Unknown item',
             quantity: m.quantity,
             unit: m.unit,
@@ -124,30 +108,67 @@ const CostEngineerInterface = () => {
             supplier: m.supplier
           })) || [],
           labour: {
-            hours: structuredData.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0,
+            hours: coreStructuredData.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0,
             rate: 50,
-            total: structuredData.labour?.subtotal || 0,
-            description: structuredData.labour?.tasks?.[0]?.description || 'Installation labour'
+            total: coreStructuredData.labour?.subtotal || 0,
+            description: coreStructuredData.labour?.tasks?.[0]?.description || 'Installation labour'
           },
           additionalCosts: [],
-          vatAmount: structuredData.summary.vat,
+          vatAmount: coreStructuredData.summary.vat,
           vatRate: 20,
-          subtotal: structuredData.summary.subtotal,
-          rawText: aiResponse
+          subtotal: coreStructuredData.summary.subtotal,
+          rawText: data.response
         });
       } else {
-        // Fallback to parsing markdown
-        const parsed = parseCostAnalysis(aiResponse);
+        const parsed = parseCostAnalysis(data.response);
         setParsedResults(parsed);
       }
-      
-      setTimeout(() => {
-        setViewState('results');
-        toast({
-          title: "Analysis complete!",
-          description: "Your cost breakdown is ready",
-        });
-      }, 2000);
+
+      // Show results immediately
+      setViewState('results');
+      toast({
+        title: "Core estimate ready!",
+        description: "Fetching profitability analysis...",
+      });
+
+      // PHASE 2: Get profitability analysis in background (only if business settings exist)
+      if (businessSettings && Object.keys(businessSettings).length > 0) {
+        try {
+          const { data: profData, error: profError } = await supabase.functions.invoke('cost-engineer-v3', {
+            body: {
+              query: prompt,
+              region: location || 'UK',
+              projectContext: {
+                projectType: projectType,
+                projectName: projectName,
+                clientInfo: clientInfo,
+                additionalInfo: additionalInfo
+              },
+              businessSettings: businessSettings,
+              skipProfitability: false // Get profitability this time
+            }
+          });
+
+          if (!profError && profData?.success && profData.structuredData) {
+            // Merge profitability data into existing structured data
+            setStructuredData({
+              ...coreStructuredData,
+              profitabilityAnalysis: profData.structuredData.profitabilityAnalysis
+            });
+
+            toast({
+              title: "Profitability analysis complete!",
+              description: "Full analysis with break-even pricing ready",
+            });
+          }
+        } catch (profError: any) {
+          console.warn('Profitability fetch failed:', profError);
+          toast({
+            title: "Note",
+            description: "Core estimate ready. Profitability analysis unavailable.",
+          });
+        }
+      }
 
     } catch (error: any) {
       console.error('Cost analysis error:', error);

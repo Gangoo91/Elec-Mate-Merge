@@ -131,7 +131,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, materials, labourHours, region, messages, previousAgentOutputs, sharedRegulations, businessSettings } = body;
+    const { query, materials, labourHours, region, messages, previousAgentOutputs, sharedRegulations, businessSettings, skipProfitability } = body;
 
     // PHASE 1: Query Enhancement
     const { enhanceQuery, logEnhancement } = await import('../_shared/query-enhancer.ts');
@@ -151,7 +151,9 @@ serve(async (req) => {
       query: effectiveQuery.substring(0, 50),
       enhanced: enhancement.addedContext.length > 0,
       hasSharedRegs: !!sharedRegulations?.length,
-      hasBusinessSettings: !!businessSettings
+      hasBusinessSettings: !!businessSettings,
+      skipProfitability: !!skipProfitability,
+      mode: skipProfitability ? 'core-only' : 'full'
     });
     if (materials && !Array.isArray(materials)) {
       throw new ValidationError('materials must be an array');
@@ -1115,9 +1117,9 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       logger.info('✅ Auto-corrected calculations', costResult.summary);
     }
 
-    // ==== CALL 2: PROFITABILITY ANALYSIS (only if businessSettings exist) ====
-    if (businessSettings) {
-      logger.info('🧮 Starting profitability analysis', { hasBusinessSettings: true });
+    // ==== CALL 2: PROFITABILITY ANALYSIS (only if businessSettings exist AND not skipped) ====
+    if (businessSettings && !skipProfitability) {
+      logger.info('🧮 Starting profitability analysis', { hasBusinessSettings: true, splitMode: true });
       const profitabilityStart = Date.now();
       
       const profitabilitySystemPrompt = `Profitability Analysis for UK Electrician
