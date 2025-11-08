@@ -26,68 +26,75 @@ const TimescalesPanel = ({ timescales }: TimescalesPanelProps) => {
   return (
     <Card className="border-elec-yellow/20">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold text-foreground flex items-center gap-2">
-          <Calendar className="h-5 w-5 text-elec-yellow" />
+        <CardTitle className="mobile-heading text-foreground flex items-center gap-2">
+          <Calendar className="h-6 w-6 text-elec-yellow" />
           Project Timescales
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Summary Badge */}
-        <div className="flex items-center justify-between p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-          <div>
-            <p className="text-sm text-muted-foreground">Total Duration</p>
-            <p className="text-xl font-bold text-foreground">{timescales.startToFinish}</p>
+        <div className="p-5 rounded-xl bg-gradient-to-br from-elec-yellow/10 to-elec-dark/50 border-2 border-elec-yellow/30">
+          <p className="mobile-text text-elec-light mb-2 font-semibold">Total Duration</p>
+          <div className="flex items-center justify-between">
+            <p className="text-xl sm:text-2xl font-bold text-foreground leading-tight">{timescales.startToFinish}</p>
+            <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-lg px-4 py-2 font-bold tabular-nums">
+              {timescales.totalDays} days
+            </Badge>
           </div>
-          <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-lg px-3 py-1">
-            {timescales.totalDays} days
-          </Badge>
         </div>
 
         {/* Phases Breakdown */}
         <div className="space-y-3">
-          <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
+          <h4 className="mobile-text font-bold text-foreground flex items-center gap-2">
             <Clock className="h-4 w-4" />
             Phase Breakdown
           </h4>
-          {timescales.phases.map((phase, idx) => (
-            <div 
-              key={idx}
-              className="p-3 rounded-lg bg-elec-dark/40 border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors"
-            >
-              <div className="flex items-start justify-between mb-2">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-elec-yellow font-bold text-sm">{idx + 1}.</span>
-                    <p className="font-medium text-foreground">{phase.phase}</p>
+          {timescales.phases.map((phase, idx) => {
+            const phasePercentage = (phase.days / timescales.totalDays) * 100;
+            
+            return (
+              <div 
+                key={idx}
+                className="p-5 rounded-xl bg-elec-dark/40 border-2 border-elec-yellow/10 space-y-3"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-elec-yellow font-bold text-base">{idx + 1}.</span>
+                      <h4 className="mobile-text font-bold text-foreground">{phase.phase}</h4>
+                    </div>
+                    <p className="mobile-small-text text-elec-light leading-relaxed font-medium ml-6">{phase.description}</p>
                   </div>
-                  <p className="text-sm text-muted-foreground ml-6">{phase.description}</p>
+                  <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow mobile-small-text font-bold shrink-0 tabular-nums">
+                    {phase.days} days
+                  </Badge>
                 </div>
-                <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow shrink-0 ml-2">
-                  {phase.days} day{phase.days !== 1 ? 's' : ''}
-                </Badge>
-              </div>
-              
-              {/* Visual Progress Bar */}
-              <div className="ml-6 mt-2">
-                <div className="h-2 bg-elec-dark/60 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-elec-yellow/40 rounded-full"
-                    style={{ width: `${(phase.days / timescales.totalDays) * 100}%` }}
-                  />
+                
+                {/* Progress bar */}
+                <div className="space-y-2 ml-6">
+                  <div className="h-3 sm:h-2 bg-elec-dark/60 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-elec-yellow to-elec-yellow/70 rounded-full transition-all"
+                      style={{ width: `${phasePercentage}%` }}
+                    />
+                  </div>
+                  <p className="mobile-small-text text-elec-light/70 font-medium tabular-nums">
+                    {Math.round(phasePercentage)}% of total project
+                  </p>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Critical Path */}
         {timescales.criticalPath && (
-          <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/30">
-            <div className="flex items-start gap-2">
-              <AlertTriangle className="h-5 w-5 text-orange-500 shrink-0 mt-0.5" />
+          <div className="p-4 rounded-xl bg-orange-500/10 border-2 border-orange-500/30">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="h-5 w-5 text-orange-400 shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm font-semibold text-foreground mb-1">Critical Path</p>
-                <p className="text-xs text-muted-foreground">{timescales.criticalPath}</p>
+                <p className="mobile-text font-bold text-foreground mb-2">Critical Path</p>
+                <p className="mobile-small-text text-elec-light leading-relaxed font-medium">{timescales.criticalPath}</p>
               </div>
             </div>
           </div>
@@ -95,12 +102,12 @@ const TimescalesPanel = ({ timescales }: TimescalesPanelProps) => {
 
         {/* Assumptions */}
         {timescales.assumptions && timescales.assumptions.length > 0 && (
-          <div className="pt-3 border-t border-elec-yellow/10">
-            <p className="text-xs font-semibold text-muted-foreground mb-2">Assumptions:</p>
-            <ul className="space-y-1">
+          <div className="p-4 rounded-xl bg-elec-dark/40 border-2 border-elec-yellow/10">
+            <p className="mobile-text font-bold text-foreground mb-3">Assumptions:</p>
+            <ul className="space-y-2">
               {timescales.assumptions.map((assumption, idx) => (
-                <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
-                  <span className="text-elec-yellow mt-0.5">•</span>
+                <li key={idx} className="mobile-small-text text-elec-light flex items-start gap-2 leading-relaxed font-medium">
+                  <span className="text-elec-yellow mt-0.5 font-bold">•</span>
                   <span>{assumption}</span>
                 </li>
               ))}

@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -134,7 +135,7 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
   const profitMargin = analysis.subtotal > 0 ? ((analysis.totalCost - analysis.subtotal) / analysis.subtotal * 100).toFixed(1) : '0';
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
+    <div className="mobile-safe-area mobile-section-spacing animate-fade-in">
       {/* Success Header */}
       <Card className="bg-gradient-to-br from-green-500/10 to-elec-yellow/10 border-green-500/30">
         <CardHeader className="pb-4">
@@ -144,16 +145,16 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
                 <CheckCircle2 className="h-6 w-6 text-green-500" />
               </div>
               <div>
-                <CardTitle className="text-xl sm:text-2xl text-foreground flex items-center gap-2">
+                <CardTitle className="mobile-heading font-bold text-foreground flex items-center gap-2">
                   Cost Analysis Complete
                   <Sparkles className="h-5 w-5 text-elec-yellow" />
                 </CardTitle>
-                <CardDescription className="text-sm sm:text-base mt-1">
+                <CardDescription className="mobile-text text-elec-light mt-1">
                   {projectName || 'Electrical Installation Project'}
                 </CardDescription>
               </div>
             </div>
-            <Badge className="bg-green-500/20 text-green-500 border-green-500/30 text-base sm:text-lg px-4 py-2 font-bold self-start sm:self-center">
+            <Badge className="bg-green-500/20 text-green-500 border-green-500/30 text-base sm:text-lg px-4 py-2 font-bold self-start sm:self-center tabular-nums">
               {formatCurrency(analysis.totalCost)}
             </Badge>
           </div>
@@ -161,7 +162,7 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
       </Card>
 
       {/* Quick Stats Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-4 mobile-card-spacing">
         <CostStatCard
           icon={Package}
           label="Materials"
@@ -246,22 +247,25 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
       <Card className="border-elec-yellow/20">
         <Tabs defaultValue="materials" className="w-full">
           <CardHeader className="pb-4">
-            <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-flex">
-              <TabsTrigger value="materials" className="text-xs sm:text-sm">
-                <Package className="h-4 w-4 mr-2 hidden sm:inline" />
-                Materials
+            <TabsList className="grid w-full grid-cols-4 h-auto">
+              <TabsTrigger value="materials" className="mobile-small-text h-12 sm:h-10">
+                <Package className="h-4 w-4 mr-1 sm:mr-2" />
+                <span className="hidden xs:inline">Materials</span>
+                <span className="xs:hidden">Mat.</span>
               </TabsTrigger>
-              <TabsTrigger value="labour" className="text-xs sm:text-sm">
-                <Clock className="h-4 w-4 mr-2 hidden sm:inline" />
-                Labour
+              <TabsTrigger value="labour" className="mobile-small-text h-12 sm:h-10">
+                <Clock className="h-4 w-4 mr-1 sm:mr-2" />
+                <span className="hidden xs:inline">Labour</span>
+                <span className="xs:hidden">Lab.</span>
               </TabsTrigger>
-              <TabsTrigger value="summary" className="text-xs sm:text-sm">
-                <FileText className="h-4 w-4 mr-2 hidden sm:inline" />
-                Full Report
+              <TabsTrigger value="summary" className="mobile-small-text h-12 sm:h-10">
+                <FileText className="h-4 w-4 mr-1 sm:mr-2" />
+                <span className="hidden xs:inline">Report</span>
+                <span className="xs:hidden">Rep.</span>
               </TabsTrigger>
-              <TabsTrigger value="json" className="text-xs sm:text-sm">
-                <FileText className="h-4 w-4 mr-2 hidden sm:inline" />
-                Raw JSON
+              <TabsTrigger value="json" className="mobile-small-text h-12 sm:h-10">
+                <FileText className="h-4 w-4 mr-1 sm:mr-2" />
+                JSON
               </TabsTrigger>
             </TabsList>
           </CardHeader>
@@ -269,7 +273,7 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
           <CardContent>
             <TabsContent value="materials" className="mt-0 space-y-3">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-foreground">Materials Breakdown</h3>
+                <h3 className="mobile-heading text-foreground">Materials Breakdown</h3>
                 <Badge variant="outline" className="border-blue-500/30 text-blue-500">
                   {analysis.materials.length} items
                 </Badge>
@@ -280,45 +284,43 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
                   {analysis.materials.map((material, idx) => (
                     <div 
                       key={idx}
-                      className="flex items-start justify-between p-3 sm:p-4 rounded-lg bg-elec-dark/40 border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors"
+                      className="flex items-start justify-between p-4 sm:p-4 rounded-xl bg-elec-dark/40 border-2 border-elec-yellow/10 hover:border-elec-yellow/30 transition-all"
                     >
                       <div className="flex-1 min-w-0 pr-4">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-elec-yellow font-bold text-sm">{idx + 1}.</span>
-                          <p className="font-medium text-sm sm:text-base text-foreground">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-elec-yellow font-bold text-base">{idx + 1}.</span>
+                          <p className="mobile-text font-semibold text-foreground">
                             {material.item}
                           </p>
                         </div>
-                        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground ml-6">
-                          <span>Qty: {material.quantity} {material.unit}</span>
-                          {material.supplier && <span>Supplier: {material.supplier}</span>}
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 mobile-small-text text-elec-light ml-6">
+                          <span className="font-medium">Qty: {material.quantity} {material.unit}</span>
+                          {material.supplier && <span className="font-medium">Supplier: {material.supplier}</span>}
                         </div>
                       </div>
                       <div className="text-right shrink-0">
-                        <p className="font-bold text-sm sm:text-base text-foreground">
+                        <p className="mobile-text font-bold text-foreground tabular-nums">
                           {formatCurrency(material.total)}
                         </p>
                       </div>
                     </div>
                   ))}
                   
-                  <div className="pt-3 mt-3 border-t border-elec-yellow/20">
-                    <div className="flex items-center justify-between p-3 sm:p-4 rounded-lg bg-blue-500/10">
-                      <p className="font-semibold text-base sm:text-lg text-foreground">Materials Subtotal</p>
-                      <p className="font-bold text-lg sm:text-xl text-blue-500">
-                        {formatCurrency(analysis.materialsTotal)}
-                      </p>
-                    </div>
+                  <div className="flex items-center justify-between p-4 rounded-xl bg-blue-500/10 border-2 border-blue-500/30">
+                    <p className="mobile-text font-bold text-foreground">Materials Subtotal</p>
+                    <p className="text-xl sm:text-2xl font-bold text-blue-500 tabular-nums">
+                      {formatCurrency(analysis.materialsTotal)}
+                    </p>
                   </div>
                 </div>
               ) : (
-                <p className="text-muted-foreground text-center py-8">No materials data available</p>
+                <p className="mobile-text text-elec-light text-center py-8">No materials data available</p>
               )}
             </TabsContent>
 
             <TabsContent value="labour" className="mt-0 space-y-3">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-foreground">Labour Calculation</h3>
+                <h3 className="mobile-heading text-foreground">Labour Calculation</h3>
                 <Badge variant="outline" className="border-green-500/30 text-green-500">
                   {analysis.labour.hours > 0 ? `${analysis.labour.hours} hours` : 'Estimated'}
                 </Badge>
@@ -326,121 +328,119 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
 
               {analysis.labourTotal > 0 ? (
                 <div className="space-y-3">
-                  <div className="p-4 sm:p-6 rounded-lg bg-elec-dark/40 border border-elec-yellow/10 space-y-4">
+                  <div className="p-5 sm:p-6 rounded-xl bg-elec-dark/40 border-2 border-elec-yellow/10 space-y-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Installation Time</span>
-                      <span className="font-semibold text-foreground">
+                      <span className="mobile-text text-elec-light font-medium">Installation Time</span>
+                      <span className="mobile-text font-bold text-foreground">
                         {analysis.labour.hours > 0 ? `${analysis.labour.hours} hours` : 'To be confirmed'}
                       </span>
                     </div>
 
                     {analysis.labour.rate > 0 && (
                       <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Labour Rate</span>
-                        <span className="font-semibold text-foreground">
+                        <span className="mobile-text text-elec-light font-medium">Labour Rate</span>
+                        <span className="mobile-text font-bold text-foreground tabular-nums">
                           {formatCurrency(analysis.labour.rate)}/day
                         </span>
                       </div>
                     )}
 
                     <div className="flex items-center justify-between pt-3 border-t border-elec-yellow/10">
-                      <span className="text-muted-foreground">Description</span>
-                      <span className="font-semibold text-foreground text-right max-w-[60%]">
+                      <span className="mobile-text text-elec-light font-medium">Description</span>
+                      <span className="mobile-text font-bold text-foreground text-right max-w-[60%]">
                         {analysis.labour.description}
                       </span>
                     </div>
                   </div>
 
-                  <div className="p-3 sm:p-4 rounded-lg bg-green-500/10">
-                    <div className="flex items-center justify-between">
-                      <p className="font-semibold text-base sm:text-lg text-foreground">Labour Subtotal</p>
-                      <p className="font-bold text-lg sm:text-xl text-green-500">
-                        {formatCurrency(analysis.labourTotal)}
-                      </p>
-                    </div>
+                  <div className="flex items-center justify-between p-4 rounded-xl bg-green-500/10 border-2 border-green-500/30">
+                    <p className="mobile-text font-bold text-foreground">Labour Subtotal</p>
+                    <p className="text-xl sm:text-2xl font-bold text-green-500 tabular-nums">
+                      {formatCurrency(analysis.labourTotal)}
+                    </p>
                   </div>
                 </div>
               ) : (
-                <p className="text-muted-foreground text-center py-8">No labour data available</p>
+                <p className="mobile-text text-elec-light text-center py-8">No labour data available</p>
               )}
             </TabsContent>
 
             <TabsContent value="summary" className="mt-0 space-y-4">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-foreground">Complete Cost Summary</h3>
+                <h3 className="mobile-heading text-foreground">Complete Cost Summary</h3>
               </div>
 
               <div className="space-y-3">
                 {/* MATERIALS BREAKDOWN WITH MARKUP */}
-                <div className="p-4 rounded-lg bg-blue-500/5 border border-blue-500/20 space-y-3">
-                  <h4 className="font-semibold text-blue-400 flex items-center gap-2">
+                <div className="p-4 rounded-xl bg-blue-500/5 border-2 border-blue-500/20 space-y-3">
+                  <h4 className="mobile-text font-bold text-blue-400 flex items-center gap-2">
                     <Package className="h-4 w-4" />
                     Materials Breakdown
                   </h4>
                   
                   {structuredData?.summary?.materialsWholesale !== undefined ? (
                     <>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Wholesale Cost</span>
-                        <span className="font-medium text-foreground">
+                      <div className="flex items-center justify-between">
+                        <span className="mobile-small-text text-elec-light font-medium">Wholesale Cost</span>
+                        <span className="mobile-small-text font-bold text-foreground tabular-nums">
                           {formatCurrency(structuredData.summary.materialsWholesale)}
                         </span>
                       </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Markup (15%)</span>
-                        <span className="font-medium text-green-500">
+                      <div className="flex items-center justify-between">
+                        <span className="mobile-small-text text-elec-light font-medium">Markup (15%)</span>
+                        <span className="mobile-small-text font-bold text-green-500 tabular-nums">
                           +{formatCurrency(structuredData.summary.materialsMarkup || 0)}
                         </span>
                       </div>
                       <div className="flex items-center justify-between pt-2 border-t border-blue-500/20">
-                        <span className="font-medium text-foreground">Materials Subtotal</span>
-                        <span className="font-bold text-foreground">
+                        <span className="mobile-text text-elec-light font-medium">Materials Subtotal</span>
+                        <span className="mobile-text font-bold text-foreground tabular-nums">
                           {formatCurrency(structuredData.summary.materialsSubtotal || analysis.materialsTotal)}
                         </span>
                       </div>
                     </>
                   ) : (
                     <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Materials Subtotal</span>
-                      <span className="font-semibold text-foreground">{formatCurrency(analysis.materialsTotal)}</span>
+                      <span className="mobile-text text-elec-light font-medium">Materials Subtotal</span>
+                      <span className="mobile-text font-bold text-foreground tabular-nums">{formatCurrency(analysis.materialsTotal)}</span>
                     </div>
                   )}
                 </div>
 
                 {/* LABOUR BREAKDOWN */}
-                <div className="p-4 rounded-lg bg-green-500/5 border border-green-500/20 space-y-3">
-                  <h4 className="font-semibold text-green-400 flex items-center gap-2">
+                <div className="p-4 rounded-xl bg-green-500/5 border-2 border-green-500/20 space-y-3">
+                  <h4 className="mobile-text font-bold text-green-400 flex items-center gap-2">
                     <Clock className="h-4 w-4" />
                     Labour Breakdown
                   </h4>
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Labour Subtotal</span>
-                    <span className="font-bold text-foreground">{formatCurrency(analysis.labourTotal)}</span>
+                    <span className="mobile-text text-elec-light font-medium">Labour Subtotal</span>
+                    <span className="mobile-text font-bold text-foreground tabular-nums">{formatCurrency(analysis.labourTotal)}</span>
                   </div>
                 </div>
                 
                 {/* Net Total (Before VAT) */}
-                <div className="p-4 rounded-lg bg-elec-dark/40 border border-elec-yellow/10">
+                <div className="p-4 rounded-xl bg-elec-dark/40 border-2 border-elec-yellow/10">
                   <div className="flex items-center justify-between">
-                    <span className="font-medium text-foreground">Net Total (Before VAT)</span>
-                    <span className="font-bold text-foreground">{formatCurrency(analysis.subtotal)}</span>
+                    <span className="mobile-text text-elec-light font-medium">Net Total (Before VAT)</span>
+                    <span className="mobile-text font-bold text-foreground tabular-nums">{formatCurrency(analysis.subtotal)}</span>
                   </div>
                 </div>
 
                 {/* VAT */}
-                <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                <div className="p-4 rounded-xl bg-elec-yellow/10 border-2 border-elec-yellow/20">
                   <div className="flex items-center justify-between">
-                    <span className="font-medium text-foreground">VAT ({analysis.vatRate}%)</span>
-                    <span className="font-bold text-elec-yellow">{formatCurrency(analysis.vatAmount)}</span>
+                    <span className="mobile-text text-elec-light font-medium">VAT ({analysis.vatRate}%)</span>
+                    <span className="mobile-text font-bold text-elec-yellow tabular-nums">{formatCurrency(analysis.vatAmount)}</span>
                   </div>
                 </div>
 
                 {/* Grand Total */}
-                <div className="p-5 sm:p-6 rounded-lg bg-gradient-to-br from-green-500/20 to-elec-yellow/20 border-2 border-green-500/30">
+                <div className="p-5 sm:p-6 rounded-xl bg-gradient-to-br from-green-500/20 to-elec-yellow/20 border-2 border-green-500/30">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-muted-foreground mb-1">Final Quote Total</p>
-                      <p className="text-2xl sm:text-3xl font-bold text-foreground">
+                      <p className="mobile-small-text text-elec-light mb-1 font-semibold">Final Quote Total</p>
+                      <p className="text-2xl sm:text-3xl font-bold text-foreground tabular-nums">
                         {formatCurrency(analysis.totalCost)}
                       </p>
                     </div>
