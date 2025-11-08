@@ -404,7 +404,8 @@ export const useAIDesigner = () => {
         installationType: data.projectInfo?.installationType || inputs.propertyType,
         totalLoad: data.circuits.reduce((sum: number, c: any) => sum + (c.loadPower || 0), 0),
         diversityApplied: false,
-        circuits: data.circuits,
+        // Ensure circuits is always an array (never undefined)
+        circuits: Array.isArray(data.circuits) ? data.circuits : [],
         consumerUnit: {
           type: 'main-switch',
           mainSwitchRating: inputs.mainSwitchRating || 100,

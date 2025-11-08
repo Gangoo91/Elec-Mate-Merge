@@ -81,6 +81,24 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   
   // Transform design to enhanced PDF JSON structure with human-readable strings
   const transformToEnhancedPdfJson = (design: InstallationDesign) => {
+    // GUARD: Prevent crashes if circuits undefined
+    if (!design.circuits || !Array.isArray(design.circuits) || design.circuits.length === 0) {
+      console.warn('⚠️ transformToEnhancedPdfJson called with invalid circuits');
+      return {
+        document: { 
+          type: "Circuit Design Specification", 
+          error: "No circuits available",
+          standard: "BS 7671:2018+A3:2024"
+        },
+        circuits: [],
+        project: {
+          name: design.projectName,
+          location: design.location || 'N/A',
+          installationType: design.installationType
+        }
+      };
+    }
+    
     const totalConnectedLoad = design.circuits.reduce((sum, c) => sum + (c.loadPower || 0), 0);
     const diversifiedLoad = design.diversityBreakdown?.diversifiedLoad || totalConnectedLoad * 0.65;
     const supplyVoltage = design.consumerUnit?.incomingSupply?.voltage || 230;

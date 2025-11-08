@@ -156,7 +156,7 @@ export interface InstallationDesign {
   totalLoad: number;
   diversityApplied: boolean;
   diversityFactor?: number;
-  circuits: CircuitDesign[];
+  circuits?: CircuitDesign[]; // Optional - may be undefined in error states
   consumerUnit: ConsumerUnit;
   materials: MaterialItem[];
   costEstimate?: {

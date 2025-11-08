@@ -93,13 +93,22 @@ export const AIInstallationDesigner = () => {
 
       {currentView === 'results' && designData && (
         <>
-          {console.log('🎨 Rendering DesignReviewEditor with:', {
-            circuitCount: designData.circuits?.length,
-            hasCircuits: !!designData.circuits,
-            firstCircuit: designData.circuits?.[0],
-            designData
-          })}
-          <DesignReviewEditor design={designData} onReset={handleReset} />
+          {(!designData.circuits || designData.circuits.length === 0) ? (
+            <div className="container mx-auto px-4 py-8 max-w-4xl">
+              <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>No Circuits Generated</AlertTitle>
+                <AlertDescription>
+                  The AI didn't generate any circuits. Please try again with a different description or add circuits manually.
+                </AlertDescription>
+              </Alert>
+              <div className="mt-4">
+                <Button onClick={handleReset}>Try Again</Button>
+              </div>
+            </div>
+          ) : (
+            <DesignReviewEditor design={designData} onReset={handleReset} />
+          )}
         </>
       )}
     </div>
