@@ -2,12 +2,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Plus, FileText, Clock, CheckCircle, TrendingUp, ArrowLeft, XCircle } from "lucide-react";
+import { Plus, FileText, Clock, CheckCircle, TrendingUp, ArrowLeft, XCircle, Brain } from "lucide-react";
 import RecentQuotesList from "@/components/electrician/quote-builder/RecentQuotesList";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
 import FinancialSnapshot from "@/components/electrician/quote-builder/FinancialSnapshot";
 import { EmptyStateGuide } from "@/components/electrician/shared/EmptyStateGuide";
 import React, { useState } from "react";
+import { toast } from "sonner";
 
 const QuoteBuilder = () => {
   const navigate = useNavigate();
@@ -154,14 +155,42 @@ const QuoteBuilder = () => {
         <div className="max-w-[1400px] mx-auto px-4 md:px-4">
           {/* Prominent Create Quote Section */}
           <section className="text-center space-y-6 md:space-y-6 mb-12 md:mb-12">
-          <Button 
-            onClick={() => navigate('/electrician/quote-builder/create')}
-            size="lg"
-            className="mobile-button-primary w-full md:w-auto px-8 md:px-12 py-4 md:py-6 text-lg md:text-xl font-bold bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-elec-dark shadow-2xl hover:shadow-3xl transition-all duration-300 group transform hover:scale-105"
-          >
-            <Plus className="mr-2 md:mr-3 h-5 w-5 md:h-6 md:w-6 group-hover:rotate-90 transition-transform duration-300" />
-            Create New Quote
-          </Button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Button 
+              onClick={() => navigate('/electrician/quote-builder/create')}
+              size="lg"
+              className="mobile-button-primary w-full md:w-auto px-8 md:px-12 py-4 md:py-6 text-lg md:text-xl font-bold bg-gradient-to-r from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow/80 text-elec-dark shadow-2xl hover:shadow-3xl transition-all duration-300 group transform hover:scale-105"
+            >
+              <Plus className="mr-2 md:mr-3 h-5 w-5 md:h-6 md:w-6 group-hover:rotate-90 transition-transform duration-300" />
+              Create New Quote
+            </Button>
+            
+            {/* PHASE 4: Quote to AI Planner Flow */}
+            <Button
+              onClick={() => {
+                if (savedQuotes.length === 0) {
+                  toast.error('No quotes available', {
+                    description: 'Create a quote first to use AI Planner'
+                  });
+                  return;
+                }
+                const latestQuote = savedQuotes[0];
+                const sessionId = `quote-context-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+                sessionStorage.setItem(sessionId, JSON.stringify({
+                  quote: latestQuote,
+                  timestamp: new Date().toISOString()
+                }));
+                navigate(`/electrician/ai-planner?quoteSessionId=${sessionId}`);
+                toast.success('Opening AI Planner with quote data');
+              }}
+              size="lg"
+              variant="outline"
+              className="w-full md:w-auto px-6 md:px-8 py-4 md:py-6 text-base md:text-lg border-elec-yellow/30 hover:bg-elec-yellow/10"
+            >
+              <Brain className="mr-2 h-5 w-5" />
+              Get AI Planning Help
+            </Button>
+          </div>
           <p className="text-sm md:text-lg text-muted-foreground">
             Professional electrical quotes in minutes
           </p>

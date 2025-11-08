@@ -1,13 +1,33 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, CheckCircle } from "lucide-react";
 import { QuoteWizard } from "@/components/electrician/quote-builder/QuoteWizard";
 import { useQuoteStorage } from "@/hooks/useQuoteStorage";
+import { useState, useEffect } from "react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { transformCostOutputToQuoteItems } from "@/utils/cost-to-quote-transformer";
 
 const QuoteBuilderCreate = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { refreshQuotes } = useQuoteStorage();
+  const [costContext, setCostContext] = useState<any>(null);
+
+  // PHASE 1: Load cost data from sessionStorage
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const costSessionId = params.get('costSessionId');
+    
+    if (costSessionId) {
+      const storedContext = sessionStorage.getItem(costSessionId);
+      if (storedContext) {
+        const parsed = JSON.parse(storedContext);
+        setCostContext(parsed.costData);
+        sessionStorage.removeItem(costSessionId);
+      }
+    }
+  }, [location]);
 
   const handleQuoteGenerated = () => {
     refreshQuotes();
@@ -73,8 +93,22 @@ const QuoteBuilderCreate = () => {
       </header>
 
       {/* Quote Wizard Content */}
-      <div className="px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8">
-        <QuoteWizard onQuoteGenerated={handleQuoteGenerated} />
+      <div className="px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8 space-y-4">
+        {/* PHASE 1: Show cost context indicator */}
+        {costContext && (
+          <Alert className="bg-emerald-500/10 border-emerald-500/30">
+            <CheckCircle className="h-4 w-4 text-emerald-400" />
+            <AlertTitle>Cost Engineer Data Loaded</AlertTitle>
+            <AlertDescription>
+              {costContext.materials?.length || 0} materials and labour estimate pre-filled from AI Cost Engineer
+            </AlertDescription>
+          </Alert>
+        )}
+        
+        <QuoteWizard 
+          onQuoteGenerated={handleQuoteGenerated}
+          initialCostData={costContext}
+        />
       </div>
     </div>
   );

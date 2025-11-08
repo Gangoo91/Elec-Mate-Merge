@@ -139,6 +139,30 @@ serve(async (req) => {
       }
     }
 
+    // PHASE 3: Extract job details from context
+    let projectMeta: any = {};
+    if (currentDesign) {
+      projectMeta = {
+        projectName: currentDesign.projectName || currentDesign.design?.projectName,
+        location: currentDesign.location || currentDesign.design?.location,
+        clientName: currentDesign.clientName,
+        budget: currentDesign.budget,
+        deadline: currentDesign.deadline,
+        buildingType: currentDesign.buildingType || currentDesign.design?.installationType
+      };
+    }
+    
+    // Extract from messages if not in currentDesign
+    if (!projectMeta.clientName && messages.length > 0) {
+      const clientMatch = messages.find(m => m.content?.toLowerCase().includes('client:'));
+      if (clientMatch) {
+        const match = clientMatch.content.match(/client:\s*([^\n]+)/i);
+        if (match) projectMeta.clientName = match[1].trim();
+      }
+    }
+    
+    logger.info('📋 Project metadata extracted:', projectMeta);
+
     // NEW: For method-statement mode, run all agents in PARALLEL
     let agentResponses: Array<{ agent: string; response: AgentResponse }> = [];
     let totalRAGCalls = 0;
@@ -146,8 +170,11 @@ serve(async (req) => {
     if (mode === 'method-statement') {
       logger.info('🚀 Method Statement Mode: Running all agents in PARALLEL');
       
-      // Run all agents in parallel
-      const parallelCalls = selectedAgents.map(agentType => {
+      // PHASE 2 FIX: Accumulate responses as they complete
+      const completedResponses: Array<{ agent: string; response: AgentResponse }> = [];
+      
+      // Run all agents in parallel with progressive context
+      const parallelCalls = selectedAgents.map((agentType, index) => {
         const endpoint = AGENT_ENDPOINTS[agentType];
         if (!endpoint) {
           logger.warn('Unknown agent type', { agentType });
@@ -169,15 +196,28 @@ serve(async (req) => {
             ],
             conversationId,
             currentDesign,
-            previousAgentOutputs: [],
+            // PHASE 2: Pass completed agents' outputs (accumulating)
+            previousAgentOutputs: completedResponses,
             requestSuggestions: true,
             sharedRegulations: shouldUseSharedRegs ? sharedRegulations : undefined,
             contextFromPreviousAgent,
-            projectDetails: currentDesign
+            // PHASE 3: Pass job details
+            projectDetails: { ...currentDesign, ...projectMeta }
           },
           supabase,
           logger
-        ).then(response => ({ agent: agentType, response, hadError: response.hadError }));
+        ).then(response => {
+          const result = { agent: agentType, response, hadError: response.hadError };
+          // Accumulate successful responses
+          if (!response.hadError && response.data) {
+            completedResponses.push({ 
+              agent: agentType, 
+              response: response.data 
+            });
+            logger.info(`✅ ${agentType} completed - now ${completedResponses.length} outputs available to other agents`);
+          }
+          return result;
+        });
       });
       
       const results = await Promise.all(parallelCalls);
@@ -216,7 +256,9 @@ serve(async (req) => {
           requestSuggestions: true,
           // PHASE 2: Include shared knowledge
           sharedRegulations: shouldUseSharedRegs ? sharedRegulations : undefined,
-          contextFromPreviousAgent
+          contextFromPreviousAgent,
+          // PHASE 3: Include job details
+          projectDetails: { ...currentDesign, ...projectMeta }
         },
         supabase,
         logger

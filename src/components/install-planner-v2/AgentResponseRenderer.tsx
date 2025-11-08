@@ -2,7 +2,7 @@ import { parseAgentResponse, ParsedSection, cleanAgentText } from "@/utils/agent
 import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Brain, BookOpen, Loader2 } from "lucide-react";
+import { ChevronDown, Brain, BookOpen, Loader2, FileText } from "lucide-react";
 import { useMemo, memo, useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { toast } from "sonner";
@@ -21,6 +21,7 @@ import { MultiCircuitRenderer } from "./MultiCircuitRenderer";
 import { AgentSuggestions } from "./AgentSuggestions";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { RegulationCitationTooltip } from "@/components/agent-response/RegulationCitationTooltip";
+import { ContextFlowIndicator } from "./ContextFlowIndicator";
 
 interface AgentResponseRendererProps {
   content: string;
@@ -33,9 +34,10 @@ interface AgentResponseRendererProps {
   question?: string;
   onSelectAgent?: (agentId: string) => void;
   isThinking?: boolean;
+  metadata?: any; // PHASE 5: Context flow metadata
 }
 
-export const AgentResponseRenderer = memo(({ content, agentId, structuredData, enrichment, citations, rendering, conversationId, question, onSelectAgent, isThinking }: AgentResponseRendererProps) => {
+export const AgentResponseRenderer = memo(({ content, agentId, structuredData, enrichment, citations, rendering, conversationId, question, onSelectAgent, isThinking, metadata }: AgentResponseRendererProps) => {
   // ✅ ALL HOOKS FIRST - before any conditional logic
   const [showFullText, setShowFullText] = useState(false);
   const [showReasoningDrawer, setShowReasoningDrawer] = useState(false);
@@ -47,6 +49,54 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, e
     : [];
   const callouts = rendering?.callouts || [];
   const enrichedCitations = citations || [];
+  
+  // PHASE 5: Build context flow indicators
+  const contextSources = useMemo(() => {
+    if (!metadata) return [];
+    
+    const sources: Array<{name: string; received: boolean; itemCount?: number; details?: string}> = [];
+    
+    // Check for shared regulations
+    if (metadata.cachedRegulations !== undefined) {
+      sources.push({
+        name: 'Shared Regulations',
+        received: metadata.cachedRegulations > 0,
+        itemCount: metadata.cachedRegulations,
+        details: 'From previous agents (0ms RAG)'
+      });
+    }
+    
+    // Check for previous agent outputs
+    if (metadata.previousAgentCount !== undefined) {
+      sources.push({
+        name: 'Previous Agent Outputs',
+        received: metadata.previousAgentCount > 0,
+        itemCount: metadata.previousAgentCount,
+        details: `${metadata.previousAgentCount} agents consulted`
+      });
+    }
+    
+    // Check for project details
+    if (metadata.hasProjectDetails !== undefined) {
+      sources.push({
+        name: 'Project Details',
+        received: metadata.hasProjectDetails,
+        details: metadata.projectName ? `Project: ${metadata.projectName}` : 'Client info, location, budget'
+      });
+    }
+    
+    // Check for designer context
+    if (metadata.hasDesignerContext !== undefined) {
+      sources.push({
+        name: 'Circuit Design',
+        received: metadata.hasDesignerContext,
+        itemCount: metadata.circuitCount,
+        details: metadata.circuitCount ? `${metadata.circuitCount} circuits designed` : 'Designer specifications'
+      });
+    }
+    
+    return sources;
+  }, [metadata]);
   
   // Helper function to highlight terms in text with type safety
   const highlightText = (text: string, terms: string[]): React.ReactNode => {
@@ -154,6 +204,14 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, e
   
   return (
     <div className="space-y-4 text-left max-w-full overflow-hidden">
+      {/* PHASE 5: Context Flow Indicator */}
+      {contextSources.length > 0 && agentId && (
+        <ContextFlowIndicator 
+          agentId={agentId} 
+          contextSources={contextSources}
+        />
+      )}
+      
       {/* Enriched Callouts/Warnings */}
       {callouts.length > 0 && callouts.filter((c: any) => c.placement === 'top').map((callout: any, idx: number) => (
         <Alert key={`callout-${idx}`} variant={callout.type === 'warning' ? 'destructive' : 'default'} className="border-l-4">
@@ -349,12 +407,43 @@ export const AgentResponseRenderer = memo(({ content, agentId, structuredData, e
             && structuredData.materials
             && structuredData.labour
             && structuredData.summary && (
-            <CostEngineerCards data={{
-              materials: structuredData.materials,
-              labour: structuredData.labour,
-              valueEngineering: structuredData.valueEngineering,
-              summary: structuredData.summary
-            }} />
+            <>
+              <CostEngineerCards data={{
+                materials: structuredData.materials,
+                labour: structuredData.labour,
+                valueEngineering: structuredData.valueEngineering,
+                summary: structuredData.summary
+              }} />
+              
+              {/* PHASE 1: Cost to Quote Flow */}
+              <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/5 to-elec-yellow/10">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="space-y-1">
+                      <p className="text-sm font-semibold">Create Quote from This Estimate</p>
+                      <p className="text-xs text-muted-foreground">
+                        Export this cost breakdown to Quote Builder with all materials and labour pre-filled
+                      </p>
+                    </div>
+                    <Button
+                      onClick={() => {
+                        const sessionId = `cost-context-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+                        sessionStorage.setItem(sessionId, JSON.stringify({
+                          costData: structuredData,
+                          timestamp: new Date().toISOString()
+                        }));
+                        window.open(`/electrician/quote-builder/create?costSessionId=${sessionId}`, '_blank');
+                        toast.success('Opening Quote Builder with cost data');
+                      }}
+                      className="flex-shrink-0"
+                    >
+                      <FileText className="h-4 w-4 mr-2" />
+                      Create Quote
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </>
           )}
           
           {(() => {

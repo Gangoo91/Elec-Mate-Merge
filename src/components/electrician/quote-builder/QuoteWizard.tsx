@@ -23,9 +23,10 @@ const steps = [
 interface QuoteWizardProps {
   onQuoteGenerated?: () => void;
   initialQuote?: any;
+  initialCostData?: any; // PHASE 1: Support cost data import
 }
 
-export const QuoteWizard = ({ onQuoteGenerated, initialQuote }: QuoteWizardProps) => {
+export const QuoteWizard = ({ onQuoteGenerated, initialQuote, initialCostData }: QuoteWizardProps) => {
 const {
     quote,
     currentStep,
@@ -46,6 +47,15 @@ const {
   } = useQuoteBuilder(onQuoteGenerated, initialQuote);
 
   const [lastSaved, setLastSaved] = React.useState<Date>();
+
+  // PHASE 1: Import cost data into quote items
+  useEffect(() => {
+    if (initialCostData && initialCostData.materials) {
+      const { transformCostOutputToQuoteItems } = require('@/utils/cost-to-quote-transformer');
+      const items = transformCostOutputToQuoteItems(initialCostData);
+      items.forEach(item => addItem(item));
+    }
+  }, [initialCostData]);
 
   const canProceed = () => {
     switch (currentStep) {

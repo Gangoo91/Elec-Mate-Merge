@@ -159,6 +159,34 @@ export const IntelligentAIPlanner = ({ planData, updatePlanData, onReset }: Inte
   const location = useLocation();
   const resumeState = location.state as any;
   const preSelectedAgent = resumeState?.preSelectedAgent as AgentType | undefined;
+  const [quoteContext, setQuoteContext] = useState<any>(null);
+  
+  // PHASE 4: Load quote context from sessionStorage
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const quoteSessionId = params.get('quoteSessionId');
+    
+    if (quoteSessionId) {
+      const storedContext = sessionStorage.getItem(quoteSessionId);
+      if (storedContext) {
+        const parsed = JSON.parse(storedContext);
+        setQuoteContext(parsed.quote);
+        
+        // Update currentDesign with quote data (without modifying InstallPlanDataV2 type)
+        const currentDesignUpdate: any = {
+          ...planData,
+          projectName: parsed.quote.jobDetails?.title || 'Quoted Project',
+          location: parsed.quote.jobDetails?.location || '',
+          clientName: parsed.quote.client?.name || '',
+          estimatedBudget: parsed.quote.total || 0
+        };
+        updatePlanData(currentDesignUpdate);
+        
+        sessionStorage.removeItem(quoteSessionId);
+        toast.success('Quote data loaded into AI Planner');
+      }
+    }
+  }, [location]);
   
   const [messages, setMessages] = useState<Message[]>(
     resumeState?.resumeMessages || [
