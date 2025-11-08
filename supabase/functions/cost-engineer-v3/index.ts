@@ -301,6 +301,7 @@ serve(async (req) => {
 
     const labourTimeContext = formatLabourTimeContext(labourTimeResults);
     
+    // SPLIT AI CALLS: Core estimate first, then profitability (prevents timeout)
     const systemPrompt = `UK Electrical Cost Engineer. September 2025.
 
 ${pricingContext}
@@ -391,57 +392,6 @@ PRICING RULES:
 - Material markup: +${COST_ENGINEER_PRICING.MATERIAL_MARKUP_PERCENT}% on wholesale
 - VAT: ${COST_ENGINEER_PRICING.VAT_RATE}%
 
-${businessSettings ? `
-===== PROFITABILITY ANALYSIS ENABLED =====
-
-ELECTRICIAN'S BUSINESS SETTINGS:
-Monthly Overheads:
-- Van costs: £${businessSettings.monthlyOverheads.vanCosts}
-- Tool depreciation: £${businessSettings.monthlyOverheads.toolDepreciation}
-- Business insurance: £${businessSettings.monthlyOverheads.insurance}
-- Office/admin: £${businessSettings.monthlyOverheads.adminCosts}
-- Marketing: £${businessSettings.monthlyOverheads.marketing}
-- Total monthly overheads: £${Object.values(businessSettings.monthlyOverheads).reduce((a: number, b: number) => a + b, 0)}/month
-- Per working day (22 days): £${(Object.values(businessSettings.monthlyOverheads).reduce((a: number, b: number) => a + b, 0) / 22).toFixed(2)}/day
-
-Labour Rates:
-- Qualified electrician: £${businessSettings.labourRates.electrician}/hr
-- Apprentice: £${businessSettings.labourRates.apprentice}/hr
-- Target personal income: £${businessSettings.labourRates.targetIncome}/month
-
-Profit Margin Targets:
-- Minimum margin: ${businessSettings.profitTargets.minimum}%
-- Target margin: ${businessSettings.profitTargets.target}%
-- Premium margin: ${businessSettings.profitTargets.premium}%
-
-Job-Specific Costs:
-- Average travel per job: £${businessSettings.jobCosts.travel}
-- Permits/parking: £${businessSettings.jobCosts.permits}
-- Waste disposal: £${businessSettings.jobCosts.waste}
-
-PROFITABILITY CALCULATION REQUIREMENTS:
-1. Estimate total job duration in working days
-2. Calculate job overhead allocation:
-   - Daily overhead rate = monthly overheads / 22 working days
-   - Job overhead = daily rate × estimated job days
-   - Add job-specific costs (travel + permits + waste)
-3. Calculate break-even point:
-   - Direct costs (materials + labour subtotals)
-   - Add job overhead allocation
-   - This is the MINIMUM quote - electrician makes £0 profit
-4. Calculate profitability tiers:
-   - Minimum quote = break-even × (1 + ${businessSettings.profitTargets.minimum}%)
-   - Target quote = break-even × (1 + ${businessSettings.profitTargets.target}%) ← RECOMMENDED
-   - Premium quote = break-even × (1 + ${businessSettings.profitTargets.premium}%)
-5. Provide clear recommendations:
-   - Show break-even with warning: "Never quote below this"
-   - Highlight target quote as recommended
-   - Explain profit amount at each tier
-   - Show what portion goes to overheads vs take-home profit
-
-CRITICAL: You MUST include a 'profitabilityAnalysis' object in your response with this structure.
-` : ''}
-
 CRITICAL CALCULATION RULES:
 - materials.subtotal = sum of all material item totals (with markup already included in unitPrice)
 - materials.vat = materials.subtotal × 0.20
@@ -453,12 +403,6 @@ CRITICAL CALCULATION RULES:
 - summary.vat = materials.vat + labour.vat
 - summary.grandTotal = materials.total + labour.total
 - DO NOT add any overhead, margin, or profit to summary.subtotal - it must equal materials.subtotal + labour.subtotal exactly
-
-TIMESCALE CALCULATION:
-- First fix: 0.5-0.7 days per 10m²
-- Second fix: 0.3-0.4 days per 10m²
-- Testing: 0.5-1 day per property
-- Break down by phases with critical path
 
 ALTERNATIVE QUOTES:
 1. BUDGET: Minimum BS 7671 compliant
@@ -480,7 +424,7 @@ INSTRUCTIONS:
 
 ${region ? `Region: ${region}\n` : ''}${contextSection}
 
-Output compact JSON (max 1800 tokens) with timescales, alternatives, and orderList:
+Output compact JSON (max 1200 tokens) with timescales, alternatives, and orderList:
 {
   "response": "Cost analysis narrative",
   "materials": { "items": [...], "subtotal": 0, "vat": 0, "total": 0 },
@@ -498,31 +442,33 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
 
 1. Match materials to database (${finalPricingResults?.length || 0} items above)
 2. Extract exact prices + suppliers
-3. Calculate labour tasks
+3. Calculate labour tasks realistically
 4. Add value engineering suggestions
-5. Include VAT (20%)`;
+5. Include VAT (20%)
+6. Provide timescale breakdown and alternative quotes`;
 
-    // Step 4: Call AI with GPT-5-Mini (faster, with fallback to GPT-5 if JSON parsing fails)
-    logger.debug('Calling AI', { provider: 'OpenAI' });
-    logger.info('🤖 Calling OpenAI GPT-5-Mini', {
+    // ==== CALL 1: CORE COST ESTIMATE (Faster, no profitability) ====
+    logger.debug('Calling AI for core cost estimate', { provider: 'OpenAI' });
+    logger.info('🤖 Calling OpenAI GPT-5-Mini for core estimate', {
       model: 'gpt-5-mini-2025-08-07',
-      maxTokens: 12000,
-      timeoutMs: 180000,
-      hasTools: true
+      maxTokens: 8000,
+      timeoutMs: 90000, // Reduced to 90s for faster failure
+      hasTools: true,
+      splitMode: 'core-estimate'
     });
     
     const { callAI } = await import('../_shared/ai-wrapper.ts');
     const aiStart = Date.now();
     
-    let aiResult;
+    let coreResult;
     try {
-      aiResult = await callAI(OPENAI_API_KEY, {
+      coreResult = await callAI(OPENAI_API_KEY, {
         model: 'gpt-5-mini-2025-08-07',
         systemPrompt,
         userPrompt,
-        maxTokens: 12000,
-        timeoutMs: 180000,
-        jsonMode: true, // Force strict JSON output (prevents malformed arrays)
+        maxTokens: 8000, // Reduced from 12000
+        timeoutMs: 90000, // Reduced from 180000
+        jsonMode: true,
         tools: [{
         type: 'function',
         function: {
@@ -533,7 +479,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
             properties: {
               response: {
                 type: 'string',
-                description: 'Detailed cost analysis (150-250 words) with value engineering recommendations'
+                description: 'Detailed cost analysis (150-200 words) with value engineering recommendations'
               },
               materials: {
                 type: 'object',
@@ -636,90 +582,6 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                   }
                 },
                 required: ['phases', 'totalDays', 'startToFinish']
-              },
-              profitabilityAnalysis: {
-                type: 'object',
-                description: 'Break-even and profitability guidance based on electrician business settings',
-                properties: {
-                  directCosts: {
-                    type: 'object',
-                    properties: {
-                      materials: { type: 'number' },
-                      labour: { type: 'number' },
-                      total: { type: 'number' }
-                    },
-                    required: ['materials', 'labour', 'total']
-                  },
-                  jobOverheads: {
-                    type: 'object',
-                    properties: {
-                      estimatedDuration: { type: 'string', description: 'e.g., "4.5 days"' },
-                      overheadAllocation: { type: 'number', description: '(monthlyOverheads / 22) × job_days' },
-                      travelCosts: { type: 'number' },
-                      permitsCosts: { type: 'number' },
-                      wasteCosts: { type: 'number' },
-                      total: { type: 'number' }
-                    },
-                    required: ['estimatedDuration', 'overheadAllocation', 'total']
-                  },
-                  breakEven: {
-                    type: 'object',
-                    properties: {
-                      subtotal: { type: 'number', description: 'direct costs + job overheads' },
-                      vat: { type: 'number' },
-                      total: { type: 'number' },
-                      explanation: { type: 'string' }
-                    },
-                    required: ['subtotal', 'vat', 'total', 'explanation']
-                  },
-                  quotingGuidance: {
-                    type: 'object',
-                    properties: {
-                      minimum: {
-                        type: 'object',
-                        properties: {
-                          margin: { type: 'number' },
-                          subtotal: { type: 'number' },
-                          vat: { type: 'number' },
-                          total: { type: 'number' },
-                          profit: { type: 'number' },
-                          explanation: { type: 'string' }
-                        },
-                        required: ['margin', 'subtotal', 'vat', 'total', 'profit', 'explanation']
-                      },
-                      target: {
-                        type: 'object',
-                        properties: {
-                          margin: { type: 'number' },
-                          subtotal: { type: 'number' },
-                          vat: { type: 'number' },
-                          total: { type: 'number' },
-                          profit: { type: 'number' },
-                          explanation: { type: 'string' }
-                        },
-                        required: ['margin', 'subtotal', 'vat', 'total', 'profit', 'explanation']
-                      },
-                      premium: {
-                        type: 'object',
-                        properties: {
-                          margin: { type: 'number' },
-                          subtotal: { type: 'number' },
-                          vat: { type: 'number' },
-                          total: { type: 'number' },
-                          profit: { type: 'number' },
-                          explanation: { type: 'string' }
-                        },
-                        required: ['margin', 'subtotal', 'vat', 'total', 'profit', 'explanation']
-                      }
-                    },
-                    required: ['minimum', 'target', 'premium']
-                  },
-                  recommendations: {
-                    type: 'array',
-                    items: { type: 'string' },
-                    description: 'Actionable pricing recommendations'
-                  }
-                }
               },
               alternatives: {
                 type: 'object',
@@ -835,16 +697,16 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       toolChoice: { type: 'function', function: { name: 'provide_cost_estimate' } }
       });
       const aiMs = Date.now() - aiStart;
-      logger.info('AI call succeeded', { provider: 'openai', duration: aiMs });
+      logger.info('✅ Core estimate AI call succeeded', { provider: 'openai', duration: aiMs, splitMode: 'core-estimate' });
     } catch (aiError) {
       const aiMs = Date.now() - aiStart;
-      logger.error('❌ OpenAI API call failed', { 
+      logger.error('❌ Core estimate AI call failed', { 
         duration: aiMs,
         error: aiError instanceof Error ? aiError.message : String(aiError),
         errorName: aiError instanceof Error ? aiError.name : 'Unknown',
         stack: aiError instanceof Error ? aiError.stack?.split('\n')[0] : undefined,
         model: 'gpt-5-mini-2025-08-07',
-        maxTokens: 12000,
+        maxTokens: 8000,
         hadApiKey: !!OPENAI_API_KEY,
         apiKeyPrefix: OPENAI_API_KEY?.substring(0, 7)
       });
@@ -853,8 +715,8 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       throw new Error(`AI generation failed: ${aiError instanceof Error ? aiError.message : 'Unknown error'}`);
     }
 
-    // Step 4c: Deterministic fallback if all AI fails
-    if (!aiResult) {
+    // Deterministic fallback if core AI fails
+    if (!coreResult) {
       logger.info('Building deterministic quick estimate from RAG + heuristics');
       
       const materialItems: any[] = [];
@@ -976,19 +838,19 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       );
     }
 
-    // Robust tool-call parsing with GPT-5 fallback (matches universal wrapper contract)
+    // Parse core result with GPT-5 fallback if needed
     let costResult: any;
     let parseRetries = 0;
     const maxParseRetries = 1;
     
     while (!costResult && parseRetries <= maxParseRetries) {
       try {
-        if (aiResult.toolCalls && aiResult.toolCalls.length > 0) {
+        if (coreResult.toolCalls && coreResult.toolCalls.length > 0) {
           // AI wrapper already extracted tool call args into content
-          costResult = parseJsonWithRepair(aiResult.content, logger, 'cost-engineer-tool-call');
+          costResult = parseJsonWithRepair(coreResult.content, logger, 'cost-engineer-tool-call');
         } else {
           // Direct JSON mode response
-          costResult = parseJsonWithRepair(aiResult.content, logger, 'cost-engineer-json-mode');
+          costResult = parseJsonWithRepair(coreResult.content, logger, 'cost-engineer-json-mode');
         }
         
         // Validate critical structure
@@ -1000,8 +862,8 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
         logger.error('JSON parsing failed', { 
           attempt: parseRetries + 1,
           error: parseError.message,
-          rawLength: aiResult.content?.length,
-          preview: aiResult.content?.substring(0, 500)
+          rawLength: coreResult.content?.length,
+          preview: coreResult.content?.substring(0, 500)
         });
         
         // If first attempt failed and we're using gpt-5-mini, retry with gpt-5
@@ -1009,12 +871,12 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
           logger.warn('Retrying with GPT-5 for more reliable JSON generation');
           
           try {
-            aiResult = await callAI(OPENAI_API_KEY, {
+            coreResult = await callAI(OPENAI_API_KEY, {
               model: 'gpt-5-2025-08-07',
               systemPrompt,
               userPrompt,
-              maxTokens: 16000,
-              timeoutMs: 180000,
+              maxTokens: 12000,
+              timeoutMs: 120000,
               jsonMode: true,
               tools: [{
                 type: 'function',
@@ -1252,6 +1114,181 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       logger.info('✅ Auto-corrected calculations', costResult.summary);
     }
 
+    // ==== CALL 2: PROFITABILITY ANALYSIS (only if businessSettings exist) ====
+    if (businessSettings) {
+      logger.info('🧮 Starting profitability analysis', { hasBusinessSettings: true });
+      const profitabilityStart = Date.now();
+      
+      const profitabilitySystemPrompt = `Profitability Analysis for UK Electrician
+
+BUSINESS SETTINGS:
+Monthly Overheads:
+- Van costs: £${businessSettings.monthlyOverheads.vanCosts}
+- Tool depreciation: £${businessSettings.monthlyOverheads.toolDepreciation}
+- Business insurance: £${businessSettings.monthlyOverheads.insurance}
+- Office/admin: £${businessSettings.monthlyOverheads.adminCosts}
+- Marketing: £${businessSettings.monthlyOverheads.marketing}
+- Total monthly overheads: £${Object.values(businessSettings.monthlyOverheads).reduce((a: number, b: number) => a + b, 0)}/month
+- Per working day (22 days): £${(Object.values(businessSettings.monthlyOverheads).reduce((a: number, b: number) => a + b, 0) / 22).toFixed(2)}/day
+
+Labour Rates:
+- Qualified electrician: £${businessSettings.labourRates.electrician}/hr
+- Apprentice: £${businessSettings.labourRates.apprentice}/hr
+- Target personal income: £${businessSettings.labourRates.targetIncome}/month
+
+Profit Margin Targets:
+- Minimum margin: ${businessSettings.profitTargets.minimum}%
+- Target margin: ${businessSettings.profitTargets.target}%
+- Premium margin: ${businessSettings.profitTargets.premium}%
+
+Job-Specific Costs:
+- Average travel per job: £${businessSettings.jobCosts.travel}
+- Permits/parking: £${businessSettings.jobCosts.permits}
+- Waste disposal: £${businessSettings.jobCosts.waste}
+
+CURRENT JOB COSTS:
+- Materials subtotal (with markup): £${costResult.summary.materialsSubtotal}
+- Labour subtotal: £${costResult.summary.labourSubtotal}
+- Total labour hours: ${costResult.labour.tasks.reduce((sum: number, task: any) => sum + (task.hours || 0), 0)} hours
+- Estimated job duration: ${costResult.timescales?.totalDays || 0} days
+
+PROFITABILITY CALCULATION REQUIREMENTS:
+1. Estimate total job duration in working days (use timescales.totalDays from job)
+2. Calculate job overhead allocation:
+   - Daily overhead rate = monthly overheads / 22 working days
+   - Job overhead = daily rate × estimated job days
+   - Add job-specific costs (travel + permits + waste)
+3. Calculate break-even point:
+   - Direct costs = materials subtotal + labour subtotal (from above)
+   - Job overheads = allocated overheads + travel + permits + waste
+   - Break-even subtotal = direct costs + job overheads
+   - Break-even VAT = break-even subtotal × 0.20
+   - Break-even total = break-even subtotal + VAT
+4. Calculate profitability tiers:
+   - Minimum: break-even subtotal × (1 + ${businessSettings.profitTargets.minimum / 100})
+   - Target: break-even subtotal × (1 + ${businessSettings.profitTargets.target / 100}) ← RECOMMENDED
+   - Premium: break-even subtotal × (1 + ${businessSettings.profitTargets.premium / 100})
+5. For each tier, calculate:
+   - Margin amount = (tier subtotal - break-even subtotal)
+   - VAT = tier subtotal × 0.20
+   - Total with VAT = tier subtotal + VAT
+6. Provide clear recommendations
+
+Return ONLY profitability analysis object.`;
+
+      const profitabilityUserPrompt = `Calculate profitability analysis for this job using the business settings and job costs above.`;
+
+      try {
+        const profitabilityResult = await callAI(OPENAI_API_KEY, {
+          model: 'gpt-5-mini-2025-08-07',
+          systemPrompt: profitabilitySystemPrompt,
+          userPrompt: profitabilityUserPrompt,
+          maxTokens: 4000,
+          timeoutMs: 60000,
+          jsonMode: true,
+          tools: [{
+            type: 'function',
+            function: {
+              name: 'calculate_profitability',
+              description: 'Calculate break-even and profitability guidance',
+              parameters: {
+                type: 'object',
+                properties: {
+                  directCosts: {
+                    type: 'object',
+                    properties: {
+                      materials: { type: 'number' },
+                      labour: { type: 'number' },
+                      total: { type: 'number' }
+                    },
+                    required: ['materials', 'labour', 'total']
+                  },
+                  jobOverheads: {
+                    type: 'object',
+                    properties: {
+                      allocatedBusinessOverheads: { type: 'number' },
+                      travel: { type: 'number' },
+                      permitsAndFees: { type: 'number' },
+                      wasteDisposal: { type: 'number' },
+                      total: { type: 'number' }
+                    },
+                    required: ['allocatedBusinessOverheads', 'total']
+                  },
+                  breakEvenPoint: { type: 'number' },
+                  quoteTiers: {
+                    type: 'object',
+                    properties: {
+                      minimum: {
+                        type: 'object',
+                        properties: {
+                          price: { type: 'number' },
+                          margin: { type: 'number' },
+                          marginPercent: { type: 'number' }
+                        },
+                        required: ['price', 'margin', 'marginPercent']
+                      },
+                      target: {
+                        type: 'object',
+                        properties: {
+                          price: { type: 'number' },
+                          margin: { type: 'number' },
+                          marginPercent: { type: 'number' }
+                        },
+                        required: ['price', 'margin', 'marginPercent']
+                      },
+                      premium: {
+                        type: 'object',
+                        properties: {
+                          price: { type: 'number' },
+                          margin: { type: 'number' },
+                          marginPercent: { type: 'number' }
+                        },
+                        required: ['price', 'margin', 'marginPercent']
+                      }
+                    },
+                    required: ['minimum', 'target', 'premium']
+                  },
+                  recommendations: {
+                    type: 'array',
+                    items: { type: 'string' }
+                  }
+                },
+                required: ['directCosts', 'jobOverheads', 'breakEvenPoint', 'quoteTiers', 'recommendations']
+              }
+            }
+          }],
+          toolChoice: { type: 'function', function: { name: 'calculate_profitability' } }
+        });
+
+        const profitabilityMs = Date.now() - profitabilityStart;
+        logger.info('✅ Profitability analysis completed', { duration: profitabilityMs });
+
+        // Parse and attach profitability analysis
+        try {
+          let profitabilityAnalysis;
+          if (profitabilityResult.toolCalls && profitabilityResult.toolCalls.length > 0) {
+            profitabilityAnalysis = parseJsonWithRepair(profitabilityResult.content, logger, 'profitability-tool-call');
+          } else {
+            profitabilityAnalysis = parseJsonWithRepair(profitabilityResult.content, logger, 'profitability-json');
+          }
+          
+          costResult.profitabilityAnalysis = profitabilityAnalysis;
+          logger.info('Profitability analysis attached to response', { breakEvenPoint: profitabilityAnalysis.breakEvenPoint });
+        } catch (parseError: any) {
+          logger.warn('Failed to parse profitability analysis, continuing without it', { error: parseError.message });
+        }
+
+      } catch (profitError: any) {
+        logger.warn('Profitability analysis failed, continuing without it', { 
+          error: profitError.message,
+          duration: Date.now() - profitabilityStart
+        });
+        // Don't fail the entire request if profitability fails
+      }
+    } else {
+      logger.info('Skipping profitability analysis (no business settings provided)');
+    }
+
     // Validate RAG usage
     if (finalPricingResults && finalPricingResults.length > 0) {
       const usedPricingData = costResult.materials?.items?.some((item: any) => 
@@ -1270,7 +1307,8 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
 
     logger.info('Cost estimate completed', { 
       grandTotal: costResult.summary?.grandTotal,
-      itemsCount: costResult.materials?.items?.length
+      itemsCount: costResult.materials?.items?.length,
+      hasProfitability: !!costResult.profitabilityAnalysis
     });
 
     // Step 5: Build response metadata (cost-specific, no regulations needed)
