@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { InstallationDesign, CircuitDesign } from '@/types/installation-design';
 import { 
@@ -38,6 +40,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   const [selectedCircuit, setSelectedCircuit] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+  const [selectedCircuitsForInstall, setSelectedCircuitsForInstall] = useState<number[]>([0]);
+  const [showCircuitSelector, setShowCircuitSelector] = useState(false);
 
   // Responsive breakpoint detection
   useEffect(() => {
@@ -548,32 +552,87 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
     });
   };
   
-  const handleCreateInstallationMethod = () => {
-    // Build context from current design
+  const handleProceedToInstaller = () => {
+    // Build context from selected circuits (Phase 2: Structured protection data)
     const context = {
       design: design,
+      selectedCircuits: selectedCircuitsForInstall.map(idx => {
+        const circuit = design.circuits[idx];
+        return {
+          circuitIndex: idx,
+          name: circuit.name,
+          loadType: circuit.loadType,
+          loadPower: circuit.loadPower,
+          cableSize: circuit.cableSize,
+          cpcSize: circuit.cpcSize,
+          cableType: circuit.cableType || `${circuit.cableSize}mm² / ${circuit.cpcSize}mm² CPC`,
+          cableLength: circuit.cableLength,
+          installationMethod: circuit.installationMethod,
+          
+          // Structured protection device
+          protectionDevice: {
+            type: circuit.protectionDevice.type,
+            rating: circuit.protectionDevice.rating,
+            curve: circuit.protectionDevice.curve,
+            kaRating: circuit.protectionDevice.kaRating
+          },
+          
+          // Protection summary string for display
+          protectionSummary: `${circuit.protectionDevice.rating}A ${circuit.protectionDevice.type} Type ${circuit.protectionDevice.curve} (${circuit.protectionDevice.kaRating}kA)`,
+          
+          rcdProtected: circuit.rcdProtected,
+          voltage: circuit.voltage,
+          phases: circuit.phases,
+          
+          // Include calculations for validation
+          calculations: {
+            designCurrent: circuit.calculations.Ib,
+            voltageDrop: circuit.calculations.voltageDrop,
+            zs: circuit.calculations.zs,
+            maxZs: circuit.calculations.maxZs
+          }
+        };
+      }),
+      
       previousOutputs: [{
         agent: 'designer',
         response: {
           structuredData: {
-            cableSize: design.circuits?.[0]?.cableSize,
-            cableType: design.circuits?.[0]?.cableType,
-            protection: `${design.circuits?.[0]?.protectionDevice?.rating}A ${design.circuits?.[0]?.protectionDevice?.type}`,
-            installationMethod: design.circuits?.[0]?.installationMethod,
-            rcdProtected: design.circuits?.[0]?.rcdProtected,
-            circuits: design.circuits?.length || 0
+            circuitCount: selectedCircuitsForInstall.length,
+            projectName: design.projectName,
+            location: design.location,
+            installationType: design.installationType
           }
         },
         timestamp: new Date().toISOString()
       }],
-      regulations: design.circuits?.flatMap(c => 
-        c.justifications ? Object.values(c.justifications) : []
-      ).filter(Boolean) || []
+      
+      // Extract unique regulations (avoid duplicates)
+      regulations: Array.from(new Set(
+        design.circuits
+          ?.filter((_, idx) => selectedCircuitsForInstall.includes(idx))
+          .flatMap(c => c.justifications ? Object.values(c.justifications) : [])
+          .filter(Boolean)
+      )) || []
     };
     
-    const encoded = encodeURIComponent(JSON.stringify(context));
-    navigate(`/electrician/installation-specialist?designContext=${encoded}`);
-    toast.success("Opening Installation Specialist with design context");
+    // Phase 3: Use sessionStorage instead of URL params
+    const sessionId = `design-context-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    sessionStorage.setItem(sessionId, JSON.stringify(context));
+    
+    navigate(`/electrician/installation-specialist?sessionId=${sessionId}`);
+    toast.success(`Opening Installation Specialist with ${selectedCircuitsForInstall.length} circuit(s)`);
+  };
+  
+  const handleCreateInstallationMethod = () => {
+    // If multiple circuits, show selector dialog
+    if (design.circuits && design.circuits.length > 1) {
+      setShowCircuitSelector(true);
+    } else {
+      // Single circuit - proceed directly
+      setSelectedCircuitsForInstall([0]);
+      handleProceedToInstaller();
+    }
   };
 
   const allCompliant = design.circuits.every(c => 
@@ -1830,6 +1889,53 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           <Wrench className="h-5 w-5 mr-2" />
           Create Installation Method
         </Button>
+        
+        {/* Phase 1: Circuit Selection Dialog */}
+        <Dialog open={showCircuitSelector} onOpenChange={setShowCircuitSelector}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>Select Circuits for Installation Method</DialogTitle>
+              <DialogDescription>
+                Choose which circuits you want to create installation methods for
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-2 max-h-[400px] overflow-y-auto">
+              {design.circuits?.map((circuit, idx) => (
+                <div key={idx} className="flex items-start gap-3 p-3 rounded-lg border border-border/50 hover:bg-accent/5">
+                  <Checkbox 
+                    checked={selectedCircuitsForInstall.includes(idx)}
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        setSelectedCircuitsForInstall([...selectedCircuitsForInstall, idx]);
+                      } else {
+                        setSelectedCircuitsForInstall(selectedCircuitsForInstall.filter(i => i !== idx));
+                      }
+                    }}
+                  />
+                  <div className="flex-1">
+                    <label className="text-sm font-medium cursor-pointer">
+                      <strong>C{circuit.circuitNumber || idx + 1}:</strong> {circuit.name}
+                    </label>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      {circuit.cableSize}mm² / {circuit.cpcSize}mm² CPC • {circuit.protectionDevice.rating}A {circuit.protectionDevice.type} • {circuit.cableLength}m
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setShowCircuitSelector(false)}>
+                Cancel
+              </Button>
+              <Button onClick={() => {
+                setShowCircuitSelector(false);
+                handleProceedToInstaller();
+              }} disabled={selectedCircuitsForInstall.length === 0}>
+                Create Method ({selectedCircuitsForInstall.length} circuit{selectedCircuitsForInstall.length > 1 ? 's' : ''})
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
         <SendToAgentDropdown 
           currentAgent="designer" 
           currentOutput={design} 

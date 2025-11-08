@@ -8,19 +8,38 @@ const InstallationSpecialistPage = () => {
   const location = useLocation();
   const fromAgentSelector = location.state?.fromAgentSelector;
   
-  // Extract designer context from URL if present
+  // Extract designer context (Phase 3: sessionStorage support)
   const [designerContext, setDesignerContext] = React.useState<any>(null);
   
   React.useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const contextParam = params.get('designContext');
-    if (contextParam) {
-      try {
-        const decoded = JSON.parse(decodeURIComponent(contextParam));
-        setDesignerContext(decoded);
-        console.log('📦 Loaded designer context:', decoded);
-      } catch (err) {
-        console.error('Failed to parse designer context:', err);
+    
+    // Check for session ID first (new method)
+    const sessionId = params.get('sessionId');
+    if (sessionId) {
+      const storedContext = sessionStorage.getItem(sessionId);
+      if (storedContext) {
+        try {
+          const parsed = JSON.parse(storedContext);
+          setDesignerContext(parsed);
+          console.log('📦 Loaded designer context from sessionStorage:', parsed);
+          // Clean up after retrieval
+          sessionStorage.removeItem(sessionId);
+        } catch (err) {
+          console.error('Failed to parse sessionStorage context:', err);
+        }
+      }
+    } else {
+      // Fallback to old URL param method (backward compatibility)
+      const contextParam = params.get('designContext');
+      if (contextParam) {
+        try {
+          const decoded = JSON.parse(decodeURIComponent(contextParam));
+          setDesignerContext(decoded);
+          console.log('📦 Loaded designer context from URL:', decoded);
+        } catch (err) {
+          console.error('Failed to parse URL designContext:', err);
+        }
       }
     }
   }, [location]);

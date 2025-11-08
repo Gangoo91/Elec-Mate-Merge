@@ -23,7 +23,8 @@ serve(async (req) => {
       query, 
       projectDetails, 
       previousAgentOutputs, 
-      currentDesign, 
+      currentDesign,
+      selectedCircuits, // NEW: array of circuit objects (Phase 4)
       sharedRegulations 
     } = await req.json();
     
@@ -115,9 +116,34 @@ serve(async (req) => {
       ragMs: ragTime
     });
 
-    // Build designer context prompt if available
+    // Phase 4: Inject designer context for multi-circuit designs
     let designerContextPrompt = '';
-    if (currentDesign && currentDesign.circuits && currentDesign.circuits.length > 0) {
+    if (selectedCircuits && selectedCircuits.length > 0) {
+      const circuitSpecs = selectedCircuits.map((circuit: any, idx: number) => {
+        return `
+Circuit ${idx + 1}: ${circuit.name}
+- Cable: ${circuit.cableSize}mm² / ${circuit.cpcSize}mm² CPC (${circuit.cableType})
+- Length: ${circuit.cableLength}m
+- Installation Method: ${circuit.installationMethod}
+- Protection: ${circuit.protectionSummary}
+- RCD: ${circuit.rcdProtected ? 'Yes (30mA)' : 'No'}
+- Load: ${circuit.loadPower}W (${circuit.phases}-phase, ${circuit.voltage}V)
+- Design Current: ${circuit.calculations.designCurrent}A
+`;
+      }).join('\n');
+
+      designerContextPrompt = `\n\n**CRITICAL: DESIGN ALREADY COMPLETED BY AI DESIGNER**
+The following circuit design(s) have been calculated and MUST be used:
+
+${circuitSpecs}
+
+DO NOT recalculate cable sizes, protection devices, or installation methods. 
+Use these exact specifications in your installation steps.
+If installing multiple circuits, provide sequential installation steps for each circuit.`;
+
+      console.log('✅ Using designer specifications for circuits:', selectedCircuits.map((c: any) => c.name));
+    } else if (currentDesign && currentDesign.circuits && currentDesign.circuits.length > 0) {
+      // Fallback: Single circuit from old format
       const circuit = currentDesign.circuits[0]; // Use first circuit as reference
       designerContextPrompt = `\n\n**CRITICAL: DESIGN ALREADY COMPLETED BY AI DESIGNER**
 The following circuit design has been calculated and MUST be used:
@@ -129,7 +155,7 @@ The following circuit design has been calculated and MUST be used:
 
 DO NOT recalculate cable sizes or protection devices. Use these exact specifications in your installation steps.`;
 
-      console.log('✅ Using designer specifications:', {
+      console.log('✅ Using legacy single-circuit designer context:', {
         cable: circuit.cableSize,
         protection: circuit.protection,
         method: currentDesign.installationMethod || circuit.installationMethod

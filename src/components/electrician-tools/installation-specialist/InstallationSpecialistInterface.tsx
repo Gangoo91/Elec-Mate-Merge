@@ -1,5 +1,7 @@
 import { useState, useRef } from "react";
 import { toast } from "sonner";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { CheckCircle } from "lucide-react";
 import { InstallationInput } from "./InstallationInput";
 import { InstallationProcessingView } from "./InstallationProcessingView";
 import { InstallationResults } from "./InstallationResults";
@@ -313,7 +315,28 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
 
   // VIEW LOGIC
   if (!showResults) {
-    return <InstallationInput onGenerate={handleGenerate} isProcessing={isLoading} />;
+    return (
+      <>
+        {/* Phase 5: Context Indicator UI */}
+        {designerContext?.selectedCircuits && designerContext.selectedCircuits.length > 0 && (
+          <Alert className="mb-4 bg-emerald-500/10 border-emerald-500/30">
+            <CheckCircle className="h-4 w-4 text-emerald-400" />
+            <AlertTitle>Using Circuit Design Context</AlertTitle>
+            <AlertDescription>
+              {designerContext.selectedCircuits.length} circuit(s) from AI Designer loaded:
+              <ul className="mt-2 space-y-1">
+                {designerContext.selectedCircuits.map((c: any, idx: number) => (
+                  <li key={idx} className="text-xs">
+                    • <strong>{c.name}</strong>: {c.cableSize}mm² cable, {c.protectionSummary}
+                  </li>
+                ))}
+              </ul>
+            </AlertDescription>
+          </Alert>
+        )}
+        <InstallationInput onGenerate={handleGenerate} isProcessing={isLoading} />
+      </>
+    );
   }
 
   if (isLoading || isGenerating) {
