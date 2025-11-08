@@ -152,14 +152,14 @@ export const CircuitBuilderCard = ({ circuit, circuitNumber, installationType, o
   // Collapsed view
   if (!isEditing) {
     return (
-      <Card className="p-4 hover:shadow-md transition-shadow">
+      <Card className="p-5 sm:p-4 hover:shadow-md transition-shadow">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-start gap-3 flex-1 min-w-0">
-            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-              <span className="text-sm font-bold text-primary">C{circuitNumber}</span>
+            <div className="flex-shrink-0 w-12 h-12 sm:w-10 sm:h-10 rounded-full bg-primary/10 flex items-center justify-center">
+              <span className="text-base sm:text-sm font-bold text-primary">C{circuitNumber}</span>
             </div>
             <div className="flex-1 min-w-0">
-              <h4 className="font-semibold text-foreground truncate">{circuit.name}</h4>
+              <h4 className="font-semibold text-base sm:text-sm text-foreground truncate">{circuit.name}</h4>
               <p className="text-sm text-muted-foreground">{loadTypeLabels[circuit.loadType]}</p>
               <div className="flex flex-wrap gap-3 mt-2 text-xs text-muted-foreground">
                 {circuit.loadPower ? (
@@ -186,17 +186,17 @@ export const CircuitBuilderCard = ({ circuit, circuitNumber, installationType, o
               variant="ghost"
               size="sm"
               onClick={() => setIsEditing(true)}
-              className="h-10 w-10 md:h-9 md:w-9"
+              className="h-12 w-12 sm:h-10 sm:w-10 md:h-9 md:w-9 touch-manipulation active:scale-95 transition-transform"
             >
-              <Pencil className="h-4 w-4" />
+              <Pencil className="h-5 w-5 sm:h-4 sm:w-4" />
             </Button>
             <Button
               variant="ghost"
               size="sm"
               onClick={onDelete}
-              className="h-10 w-10 md:h-9 md:w-9"
+              className="h-12 w-12 sm:h-10 sm:w-10 md:h-9 md:w-9 touch-manipulation active:scale-95 transition-transform"
             >
-              <Trash2 className="h-4 w-4" />
+              <Trash2 className="h-5 w-5 sm:h-4 sm:w-4" />
             </Button>
           </div>
         </div>

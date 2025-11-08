@@ -27,16 +27,16 @@ export const InstallationTypeDetection = ({
   return (
     <div className="space-y-2 sm:space-y-3">
       {isDetected && (
-        <div className="flex items-center gap-2 text-xs sm:text-sm flex-wrap">
+        <div className="flex items-center gap-2 text-sm flex-wrap">
           <span className="text-muted-foreground">AI detected:</span>
-          <Badge variant="secondary" className="gap-1 text-xs">
+          <Badge variant="secondary" className="gap-1 text-sm sm:text-xs">
             {types.find(t => t.value === detectedType)?.label}
             <span className="text-xs opacity-70">({confidence}%)</span>
           </Badge>
         </div>
       )}
       
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-col xs:flex-row flex-wrap gap-3 sm:gap-2">
         {types.map(({ value, label, icon: Icon }) => (
           <Button
             key={value}
@@ -45,12 +45,12 @@ export const InstallationTypeDetection = ({
             size="sm"
             onClick={() => onTypeChange(value)}
             className={cn(
-              'min-w-[100px] sm:min-w-[120px] h-10 gap-2 touch-manipulation',
-              selectedType === value && 'shadow-sm'
+              'flex-1 min-w-[120px] h-14 sm:h-12 gap-2 touch-manipulation active:scale-95 transition-transform',
+              selectedType === value && 'shadow-[0_0_20px_rgba(var(--primary),0.4)] border-2 scale-105 sm:scale-100'
             )}
           >
-            <Icon className="h-4 w-4 flex-shrink-0" />
-            <span className="text-sm">{label}</span>
+            <Icon className="h-6 w-6 sm:h-5 sm:w-5 flex-shrink-0" />
+            <span className="text-base sm:text-sm font-semibold">{label}</span>
           </Button>
         ))}
       </div>

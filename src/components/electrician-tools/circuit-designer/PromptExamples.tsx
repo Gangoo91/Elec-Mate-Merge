@@ -30,9 +30,9 @@ export const PromptExamples = ({ installationType, onSelectExample }: PromptExam
 
   return (
     <div className="space-y-2">
-      <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
-        <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
-        <span className="text-xs sm:text-sm">Example prompts - click to use:</span>
+      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <Sparkles className="h-4 w-4 flex-shrink-0" />
+        <span className="text-sm font-medium">Example prompts - tap to use:</span>
       </div>
       <div className="grid gap-2">
         {examples[installationType].map((example, idx) => (
@@ -42,9 +42,9 @@ export const PromptExamples = ({ installationType, onSelectExample }: PromptExam
             variant="outline"
             size="sm"
             onClick={() => onSelectExample(example)}
-            className="h-auto py-2 px-3 text-left justify-start whitespace-normal hover:bg-accent touch-manipulation min-h-[44px]"
+            className="h-auto py-3 px-4 text-left justify-start whitespace-normal hover:bg-accent touch-manipulation min-h-[52px] active:scale-[0.98] transition-transform"
           >
-            <span className="text-xs sm:text-sm leading-relaxed">{example}</span>
+            <span className="text-sm leading-relaxed">{example}</span>
           </Button>
         ))}
       </div>

@@ -153,6 +153,22 @@
   .bg-section-expanded {
     @apply bg-[#1a1a1a];
   }
+  
+  /* Safe area insets for mobile devices */
+  .pb-safe {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  
+  .pt-safe {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+  
+  /* Prevent iOS zoom on input focus */
+  @supports (-webkit-touch-callout: none) {
+    input, textarea, select {
+      font-size: 16px !important;
+    }
+  }
 }
 
 /* Hide scrollbars for specific dropdown and popover components only */

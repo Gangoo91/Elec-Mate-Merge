@@ -262,17 +262,17 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
   return (
     <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 pb-6">
       {/* 1. HERO PROMPT SECTION */}
-      <Card className="p-3 sm:p-6 bg-gradient-to-br from-primary/5 via-background to-background border-primary/20">
-        <div className="space-y-3 sm:space-y-4">
-          <div className="flex items-start gap-2 sm:gap-3">
-            <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/10 flex items-center justify-center animate-pulse">
-              <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+      <Card className="p-4 sm:p-6 bg-gradient-to-br from-primary/5 via-background to-background border-primary/20">
+        <div className="space-y-2 sm:space-y-3">
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-primary/10 flex items-center justify-center animate-pulse">
+              <Sparkles className="h-6 w-6 sm:h-6 sm:w-6 text-primary" />
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="text-lg sm:text-2xl font-bold text-foreground leading-tight">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground leading-snug">
                 What electrical work do you need designed?
               </h2>
-              <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+              <p className="text-sm sm:text-base text-muted-foreground mt-1 leading-relaxed">
                 Describe your requirements in plain English - AI will handle the rest
               </p>
             </div>
@@ -285,7 +285,8 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
               ? "e.g., 3-bed house rewire, kitchen extension, 2 showers, EV charger..."
               : "Example: 3-bed house complete rewire with new consumer unit, kitchen extension with integrated appliances, 2 bathrooms with 10.5kW showers, EV charger on driveway, outdoor sockets for garden..."
             }
-            className="min-h-[120px] sm:min-h-[140px] text-base resize-none touch-manipulation"
+            className="min-h-[160px] sm:min-h-[180px] text-base resize-none touch-manipulation"
+            style={{ fontSize: '16px' }}
           />
 
           <InstallationTypeDetection
@@ -303,11 +304,11 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
       </Card>
 
       {/* 2. PROJECT INFORMATION */}
-      <Card className="p-3 sm:p-6">
-        <div className="space-y-3 sm:space-y-4">
+      <Card className="p-4 sm:p-6">
+        <div className="space-y-4 sm:space-y-4">
           <div className="flex items-center gap-2">
-            <Building2 className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-            <h3 className="text-base sm:text-lg font-semibold">Project Information</h3>
+            <Building2 className="h-5 w-5 sm:h-5 sm:w-5 text-primary" />
+            <h3 className="text-lg sm:text-xl font-bold">Project Information</h3>
           </div>
 
           <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
@@ -343,15 +344,15 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
       {/* 3. SUPPLY DETAILS (Collapsible) */}
       <Collapsible open={supplyOpen} onOpenChange={setSupplyOpen}>
         <Card className="overflow-hidden">
-          <CollapsibleTrigger className="w-full p-3 sm:p-6 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
+          <CollapsibleTrigger className="w-full p-4 sm:p-6 min-h-[56px] flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation active:scale-[0.98]">
             <div className="flex items-center gap-2 flex-wrap">
               <div className="flex items-center gap-2">
-                <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
-                <h3 className="text-base sm:text-lg font-semibold text-left">Supply Details</h3>
+                <Zap className="h-5 w-5 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
+                <h3 className="text-lg sm:text-xl font-bold text-left">Supply Details</h3>
               </div>
               <Badge variant="secondary" className="text-xs whitespace-nowrap">Smart defaults applied</Badge>
             </div>
-            <ChevronDown className={`h-5 w-5 transition-transform flex-shrink-0 ml-2 ${supplyOpen ? 'rotate-180' : ''}`} />
+            <ChevronDown className={`h-6 w-6 sm:h-5 sm:w-5 transition-transform flex-shrink-0 ml-2 ${supplyOpen ? 'rotate-180' : ''}`} />
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className="p-3 sm:p-6 pt-0 space-y-3 sm:space-y-4">
@@ -428,11 +429,11 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
       {/* 4. EMERGENCY CONTACTS (Collapsible) */}
       <Collapsible open={emergencyOpen} onOpenChange={setEmergencyOpen}>
         <Card className="overflow-hidden">
-          <CollapsibleTrigger className="w-full p-3 sm:p-6 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
+          <CollapsibleTrigger className="w-full p-4 sm:p-6 min-h-[56px] flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation active:scale-[0.98]">
             <div className="flex items-center gap-2 flex-wrap">
               <div className="flex items-center gap-2">
-                <Info className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
-                <h3 className="text-base sm:text-lg font-semibold text-left">Emergency Contacts</h3>
+                <Info className="h-5 w-5 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
+                <h3 className="text-lg sm:text-xl font-bold text-left">Emergency Contacts</h3>
               </div>
               <Badge variant="outline" className="text-xs whitespace-nowrap">Optional</Badge>
             </div>
