@@ -46,27 +46,27 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
             remarkPlugins={[remarkGfm]}
             components={{
               h1: ({ children }) => (
-                <h1 className="text-base sm:text-lg font-bold mt-4 mb-2 first:mt-0 text-white">
+                <h1 className="text-base sm:text-lg font-bold mt-4 mb-2 first:mt-0 text-white text-left">
                   {children}
                 </h1>
               ),
               h2: ({ children }) => (
-                <h2 className="text-sm sm:text-base font-semibold mt-4 mb-2 first:mt-0 text-white">
+                <h2 className="text-sm sm:text-base font-semibold mt-4 mb-2 first:mt-0 text-white text-left">
                   {children}
                 </h2>
               ),
               h3: ({ children }) => (
-                <h3 className="text-sm font-semibold mt-3 mb-1.5 first:mt-0 text-white">
+                <h3 className="text-sm font-semibold mt-3 mb-1.5 first:mt-0 text-white text-left">
                   {children}
                 </h3>
               ),
               p: ({ children }) => (
-                <p className="text-sm sm:text-base leading-relaxed my-2 text-white">
+                <p className="text-sm sm:text-base leading-relaxed my-3 text-white text-left">
                   {children}
                 </p>
               ),
               ul: ({ children }) => (
-                <ul className="space-y-1.5 my-3 pl-0">
+                <ul className="space-y-1.5 my-3 pl-4">
                   {children}
                 </ul>
               ),
@@ -76,7 +76,7 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
                 </ol>
               ),
               li: ({ children }) => (
-                <li className="text-sm sm:text-base leading-relaxed before:content-['⚡'] before:text-elec-yellow before:mr-2 before:font-bold list-none text-white">
+                <li className="text-sm sm:text-base leading-relaxed list-disc marker:text-white/60 text-white text-left">
                   {children}
                 </li>
               ),
