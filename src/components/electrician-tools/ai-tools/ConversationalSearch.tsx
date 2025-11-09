@@ -259,113 +259,70 @@ export default function ConversationalSearch() {
   };
 
   return (
-    <div className="flex flex-col max-w-6xl mx-auto px-4 md:px-6 relative space-y-8">
-      {/* Hero Section */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center"
-      >
-        <div className="flex items-center justify-center gap-3 mb-3">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-elec-yellow via-elec-yellow/80 to-yellow-600 flex items-center justify-center shadow-lg shadow-elec-yellow/20">
-            <Zap className="w-6 h-6 text-elec-dark" />
-          </div>
-          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground via-foreground/90 to-foreground/80 bg-clip-text text-transparent">
-            AI Assistant
-          </h1>
+    <div className="flex flex-col h-screen max-w-6xl mx-auto relative pb-safe">
+      {/* Empty State - Hero & Categories (only show when no messages) */}
+      {messages.length === 0 && (
+        <div className="flex-1 overflow-y-auto px-4 md:px-6 py-4 space-y-8">
+          {/* Hero Section */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center"
+          >
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-elec-yellow via-elec-yellow/80 to-yellow-600 flex items-center justify-center shadow-lg shadow-elec-yellow/20">
+                <Zap className="w-6 h-6 text-elec-dark" />
+              </div>
+              <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground via-foreground/90 to-foreground/80 bg-clip-text text-transparent">
+                AI Assistant
+              </h1>
+            </div>
+            <p className="text-white/90 text-sm md:text-base max-w-2xl mx-auto">
+              Instant BS 7671 answers · 18th Edition compliant
+            </p>
+          </motion.div>
+
+          {/* Electrical Fact - Subtle hint */}
+          <motion.div
+            key={factIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center"
+          >
+            <p className="text-xs text-white/70">
+              💡 <span className="font-medium">Did you know?</span> {ELECTRICAL_FACTS[factIndex]}
+            </p>
+          </motion.div>
+
+          {/* Category Cards - Quick Access Templates */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <h2 className="text-lg font-semibold text-white/90 mb-4 flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-elec-yellow" />
+              Quick Start Templates
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+              {CATEGORIES.map((category, idx) => (
+                <CategoryCard
+                  key={idx}
+                  icon={category.icon}
+                  title={category.title}
+                  description={category.description}
+                  examples={category.examples}
+                  color={category.color}
+                  onClick={handleSend}
+                />
+              ))}
+            </div>
+          </motion.div>
         </div>
-        <p className="text-white/90 text-sm md:text-base max-w-2xl mx-auto">
-          Instant BS 7671 answers · 18th Edition compliant
-        </p>
-      </motion.div>
+      )}
 
-      {/* Electrical Fact - Subtle hint */}
-      <motion.div
-        key={factIndex}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="text-center"
-      >
-        <p className="text-xs text-white/70">
-          💡 <span className="font-medium">Did you know?</span> {ELECTRICAL_FACTS[factIndex]}
-        </p>
-      </motion.div>
-
-      {/* Premium Input Area */}
-      <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/20 via-elec-blue/20 to-elec-yellow/20 rounded-2xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity" />
-        
-        <div className="relative border-2 border-border/50 rounded-2xl bg-card/80 backdrop-blur-sm p-3 md:p-4 shadow-xl transition-all focus-within:border-elec-yellow/50 focus-within:shadow-2xl focus-within:shadow-elec-yellow/10">
-          <div className="flex gap-3">
-            <textarea
-              ref={inputRef}
-              value={input}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-              placeholder={ROTATING_PLACEHOLDERS[placeholderIndex]}
-              className="flex-1 bg-transparent border-none outline-none resize-none text-foreground placeholder:text-white/40 min-h-[48px] max-h-[120px] text-base"
-              disabled={isStreaming}
-              rows={1}
-              style={{ fontSize: '16px' }}
-            />
-            
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleSend()}
-              disabled={!input.trim() || isStreaming}
-              className="h-12 w-12 shrink-0 rounded-xl bg-gradient-to-br from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg shadow-elec-yellow/30 transition-all disabled:shadow-none"
-            >
-              {isStreaming ? (
-                <Loader2 className="w-5 h-5 animate-spin text-elec-dark" />
-              ) : (
-                <Send className="w-5 h-5 text-elec-dark" />
-              )}
-            </motion.button>
-          </div>
-
-          <div className="flex items-center justify-between mt-2 text-xs text-white/50">
-            <span>Press Enter to send, Shift+Enter for new line</span>
-            {charCount > 0 && (
-              <motion.span
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className={charCount > 1800 ? 'text-orange-500' : ''}
-              >
-                {charCount}/2000
-              </motion.span>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Category Cards - Quick Access Templates */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <h2 className="text-lg font-semibold text-white/90 mb-4 flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-elec-yellow" />
-          Quick Start Templates
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-          {CATEGORIES.map((category, idx) => (
-            <CategoryCard
-              key={idx}
-              icon={category.icon}
-              title={category.title}
-              description={category.description}
-              examples={category.examples}
-              color={category.color}
-              onClick={handleSend}
-            />
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Messages Container - Only show if messages exist */}
+      {/* Active State - Messages Container (only show if messages exist) */}
       {messages.length > 0 && (
-        <div className="space-y-4">
+        <div className="flex-1 overflow-y-auto px-4 md:px-6 py-4 space-y-4">
           <AnimatePresence mode="popLayout">
             {messages.map((message, idx) => (
               <motion.div
@@ -422,13 +379,68 @@ export default function ConversationalSearch() {
           )}
 
           <div ref={messagesEndRef} />
+        </div>
+      )}
 
-          {/* Floating Action Button - Clear Conversation */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex justify-end"
-          >
+      {/* Premium Input Area - STICKY AT BOTTOM */}
+      <div className="sticky bottom-0 z-20 px-4 md:px-6 pb-4 pt-2 bg-gradient-to-t from-elec-dark via-elec-dark to-transparent backdrop-blur-lg border-t border-border/30">
+        {/* Conversation continuity indicator */}
+        {messages.length > 0 && (
+          <div className="text-xs text-white/50 mb-2 text-center">
+            💬 Continuing conversation • Ask follow-up questions
+          </div>
+        )}
+        
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/20 via-elec-blue/20 to-elec-yellow/20 rounded-2xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity" />
+          
+          <div className="relative border-2 border-border/50 rounded-2xl bg-card/80 backdrop-blur-sm p-3 md:p-4 shadow-xl transition-all focus-within:border-elec-yellow/50 focus-within:shadow-2xl focus-within:shadow-elec-yellow/10">
+            <div className="flex gap-3">
+              <textarea
+                ref={inputRef}
+                value={input}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                placeholder={ROTATING_PLACEHOLDERS[placeholderIndex]}
+                className="flex-1 bg-transparent border-none outline-none resize-none text-foreground placeholder:text-white/40 min-h-[48px] max-h-[120px] text-base"
+                disabled={isStreaming}
+                rows={1}
+                style={{ fontSize: '16px' }}
+              />
+              
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => handleSend()}
+                disabled={!input.trim() || isStreaming}
+                className="h-12 w-12 shrink-0 rounded-xl bg-gradient-to-br from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg shadow-elec-yellow/30 transition-all disabled:shadow-none"
+              >
+                {isStreaming ? (
+                  <Loader2 className="w-5 h-5 animate-spin text-elec-dark" />
+                ) : (
+                  <Send className="w-5 h-5 text-elec-dark" />
+                )}
+              </motion.button>
+            </div>
+
+            <div className="flex items-center justify-between mt-2 text-xs text-white/50">
+              <span>Press Enter to send, Shift+Enter for new line</span>
+              {charCount > 0 && (
+                <motion.span
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className={charCount > 1800 ? 'text-orange-500' : ''}
+                >
+                  {charCount}/2000
+                </motion.span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Clear button - inline below input */}
+        {messages.length > 0 && (
+          <div className="flex justify-end mt-2">
             <Button
               variant="outline"
               size="sm"
@@ -438,9 +450,9 @@ export default function ConversationalSearch() {
               <Trash2 className="w-4 h-4 mr-2" />
               Clear
             </Button>
-          </motion.div>
-        </div>
-      )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
