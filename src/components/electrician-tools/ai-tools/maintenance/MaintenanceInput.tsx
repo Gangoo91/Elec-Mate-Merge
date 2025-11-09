@@ -59,14 +59,14 @@ export const MaintenanceInput = ({
     <div className="space-y-6">
       {/* Info Card */}
       <Card className="border-elec-yellow/20 bg-elec-card/50">
-        <CardContent className="pt-6">
-          <div className="flex items-start gap-4">
+        <CardContent className="pt-6 px-4 sm:px-6">
+          <div className="flex items-start gap-4 w-full">
             <div className="p-4 bg-elec-yellow/10 rounded-lg shrink-0">
               <Lightbulb className="h-8 w-8 text-elec-yellow" />
             </div>
-            <div className="flex-1 space-y-4">
+            <div className="flex-1 min-w-0 space-y-4">
               <h4 className="font-semibold text-white text-lg">How this works</h4>
-              <p className="text-base text-white leading-relaxed">
+              <p className="text-base text-white leading-relaxed break-words">
                 Provide detailed equipment information and we'll generate a comprehensive maintenance schedule 
                 based on BS 7671:2018+A3:2024 and GN3 guidance, including risk assessment, cost estimates, 
                 and compliance checklist.
