@@ -147,31 +147,7 @@ serve(async (req) => {
     const classification = classifyQuery(queryText);
     console.log(`📊 Query Type: ${classification.type} | Needs Design: ${classification.needsDesignKnowledge}`);
 
-    // STEP 1.5: Generate query embedding for hybrid RAG searches
-    console.log('🔢 Generating query embedding');
-    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'text-embedding-3-small',
-        input: queryText
-      })
-    });
-
-    if (!embeddingResponse.ok) {
-      const errorText = await embeddingResponse.text();
-      console.error('❌ Embedding generation failed:', embeddingResponse.status, errorText);
-      throw new Error(`Embedding generation failed: ${embeddingResponse.status}`);
-    }
-
-    const embeddingData = await embeddingResponse.json();
-    const queryEmbedding = embeddingData.data[0].embedding;
-    console.log(`✅ Embedding generated (${queryEmbedding.length} dimensions)`);
-
-    // STEP 2: Conditional Parallel RAG Search
+    // STEP 2: Parallel RAG Search (simplified - matches RAMS pattern)
     const ragPromises: Array<Promise<any>> = [
       // BS7671 Intelligence (keyword hybrid)
       supabase.rpc('search_bs7671_intelligence_hybrid', {
@@ -179,21 +155,21 @@ serve(async (req) => {
         match_count: 8
       }),
       
-      // Practical Work Intelligence (hybrid with embeddings)
+      // Practical Work Intelligence (RPC generates embedding internally)
       supabase.rpc('search_practical_work_intelligence_hybrid', {
         query_text: queryText,
-        query_embedding: queryEmbedding,
+        query_embedding: null,
         match_count: 6,
         filter_trade: null
       })
     ];
 
-    // Conditionally add Design Knowledge (hybrid with embeddings)
+    // Conditionally add Design Knowledge (RPC generates embedding internally)
     if (classification.needsDesignKnowledge) {
       ragPromises.push(
         supabase.rpc('search_design_hybrid', {
           query_text: queryText,
-          query_embedding: queryEmbedding,
+          query_embedding: null,
           match_count: 5
         })
       );
@@ -239,7 +215,7 @@ serve(async (req) => {
     if (bs7671Items.length > 0) {
       regulationsContext += '\n\n[RELEVANT BS 7671 REGULATIONS]\n' + 
         bs7671Items.map(r => 
-          `§ ${r.item.regulation_number}: ${r.item.content || r.item.regulation_text || ''}`
+          `Reg. ${r.item.regulation_number}: ${r.item.content || r.item.regulation_text || ''}`
         ).join('\n\n');
     }
 
@@ -275,7 +251,7 @@ Writing style:
 - **Structure your response with clear H2 section headers** (use ## in markdown)
 - Use paragraphs for explanations, bullets only for distinct steps or lists
 - Start with the main point, then explain details
-- Cite regulation numbers naturally: "According to § 411.3.3, all circuits..."
+- Cite regulation numbers naturally: "According to Reg. 411.3.3, all circuits..."
 - Keep responses between 150-300 words unless more detail is needed
 - Use British English
 - Be precise and safety-focused, but friendly and approachable
@@ -305,10 +281,10 @@ Example good response:
 "Right, for bathroom socket circuits, you need to follow a few key requirements.
 
 ## Mandatory RCD Protection
-BS 7671 requires 30 mA RCD protection as additional protection (§ 701.411.3). This is on top of the standard automatic disconnection requirements. The key thing is that this applies to all socket-outlets in rooms containing a bath or shower.
+BS 7671 requires 30 mA RCD protection as additional protection (Reg. 701.411.3). This is on top of the standard automatic disconnection requirements. The key thing is that this applies to all socket-outlets in rooms containing a bath or shower.
 
 ## Equipotential Bonding
-You'll also need supplementary equipotential bonding for any exposed metalwork like pipes or radiators (§ 701.413.1.2). The bonding reduces touch voltages to safe levels during fault conditions.
+You'll also need supplementary equipotential bonding for any exposed metalwork like pipes or radiators (Reg. 701.413.1.2). The bonding reduces touch voltages to safe levels during fault conditions.
 
 ## Practical Implementation
 For the RCD itself, I'd recommend individual RCBOs rather than a single RCD covering multiple circuits. Makes fault-finding much easier and you won't lose the whole installation if one device trips.
