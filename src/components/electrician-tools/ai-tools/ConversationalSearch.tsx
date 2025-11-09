@@ -259,13 +259,13 @@ export default function ConversationalSearch() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-12rem)] max-w-5xl mx-auto relative">
+    <div className="flex flex-col max-w-5xl mx-auto relative space-y-6">
       {/* Hero Section */}
-      <div className="mb-8 text-center">
+      <div className="text-center">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="inline-flex items-center gap-2 mb-4"
+          className="inline-flex items-center gap-2 mb-3"
         >
           <Zap className="w-8 h-8 text-elec-yellow" />
           <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-elec-yellow via-elec-yellow/80 to-elec-yellow bg-clip-text text-transparent">
@@ -277,67 +277,63 @@ export default function ConversationalSearch() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="text-muted-foreground mb-3"
+          className="text-muted-foreground"
         >
           Instant answers from BS 7671:2018+A3:2024
         </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="flex items-center justify-center gap-4 text-xs text-muted-foreground/70"
-        >
-          <span className="flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-elec-yellow" />
-            Powered by OpenAI GPT-5
-          </span>
-          <span>•</span>
-          <span>100% UK Compliant</span>
-          <span>•</span>
-          <span>Instant Responses</span>
-        </motion.div>
       </div>
 
-      {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto mb-4 pr-2 space-y-4">
-        <AnimatePresence mode="popLayout">
-          {messages.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="flex flex-col items-center justify-center h-full space-y-8 py-8"
+      {/* Premium Input Area - Now at Top */}
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/20 via-elec-blue/20 to-elec-yellow/20 rounded-2xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity" />
+        
+        <div className="relative border-2 border-border/50 rounded-2xl bg-card/80 backdrop-blur-sm p-4 shadow-xl transition-all focus-within:border-elec-yellow/50 focus-within:shadow-2xl focus-within:shadow-elec-yellow/10">
+          <div className="flex gap-3">
+            <textarea
+              ref={inputRef}
+              value={input}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              placeholder={ROTATING_PLACEHOLDERS[placeholderIndex]}
+              className="flex-1 bg-transparent border-none outline-none resize-none text-foreground placeholder:text-muted-foreground/50 min-h-[48px] max-h-[120px] text-base"
+              disabled={isStreaming}
+              rows={1}
+              style={{ fontSize: '16px' }}
+            />
+            
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleSend()}
+              disabled={!input.trim() || isStreaming}
+              className="h-12 w-12 shrink-0 rounded-xl bg-gradient-to-br from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg shadow-elec-yellow/30 transition-all disabled:shadow-none"
             >
-              {/* Category Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-4xl px-4">
-                {CATEGORIES.map((category, idx) => (
-                  <motion.div
-                    key={category.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.1 }}
-                  >
-                    <CategoryCard
-                      {...category}
-                      onClick={handleSend}
-                    />
-                  </motion.div>
-                ))}
-              </div>
+              {isStreaming ? (
+                <Loader2 className="w-5 h-5 animate-spin text-elec-dark" />
+              ) : (
+                <Send className="w-5 h-5 text-elec-dark" />
+              )}
+            </motion.button>
+          </div>
 
-              {/* Rotating Electrical Fact */}
-              <motion.div
-                key={factIndex}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="text-sm text-muted-foreground/70 max-w-md text-center"
+          <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground/60">
+            <span>Press Enter to send, Shift+Enter for new line</span>
+            {charCount > 0 && (
+              <motion.span
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className={charCount > 1800 ? 'text-orange-500' : ''}
               >
-                <span className="font-medium">Did you know?</span> {ELECTRICAL_FACTS[factIndex]}
-              </motion.div>
-            </motion.div>
-          )}
+                {charCount}/2000
+              </motion.span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Messages Container - No Scroll */}
+      <div className="space-y-4 min-h-[200px]">
+        <AnimatePresence mode="popLayout">
 
           {messages.map((message, idx) => (
             <motion.div
@@ -410,52 +406,34 @@ export default function ConversationalSearch() {
         </motion.div>
       )}
 
-      {/* Premium Input Area */}
-      <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/20 via-elec-blue/20 to-elec-yellow/20 rounded-2xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity" />
-        
-        <div className="relative border-2 border-border/50 rounded-2xl bg-card/80 backdrop-blur-sm p-4 shadow-xl transition-all focus-within:border-elec-yellow/50 focus-within:shadow-2xl focus-within:shadow-elec-yellow/10">
-          <div className="flex gap-3">
-            <textarea
-              ref={inputRef}
-              value={input}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-              placeholder={ROTATING_PLACEHOLDERS[placeholderIndex]}
-              className="flex-1 bg-transparent border-none outline-none resize-none text-foreground placeholder:text-muted-foreground/50 min-h-[48px] max-h-[120px] text-base"
-              disabled={isStreaming}
-              rows={1}
-              style={{ fontSize: '16px' }}
-            />
-            
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleSend()}
-              disabled={!input.trim() || isStreaming}
-              className="h-12 w-12 shrink-0 rounded-xl bg-gradient-to-br from-elec-yellow to-elec-yellow/90 hover:from-elec-yellow/90 hover:to-elec-yellow disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg shadow-elec-yellow/30 transition-all disabled:shadow-none"
+      {/* Category Cards - Always Visible at Bottom */}
+      <div className="mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+          {CATEGORIES.map((category, idx) => (
+            <motion.div
+              key={category.title}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.05 }}
             >
-              {isStreaming ? (
-                <Loader2 className="w-5 h-5 animate-spin text-elec-dark" />
-              ) : (
-                <Send className="w-5 h-5 text-elec-dark" />
-              )}
-            </motion.button>
-          </div>
-
-          <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground/60">
-            <span>Press Enter to send, Shift+Enter for new line</span>
-            {charCount > 0 && (
-              <motion.span
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className={charCount > 1800 ? 'text-orange-500' : ''}
-              >
-                {charCount}/2000
-              </motion.span>
-            )}
-          </div>
+              <CategoryCard
+                {...category}
+                onClick={handleSend}
+              />
+            </motion.div>
+          ))}
         </div>
+
+        {/* Rotating Electrical Fact */}
+        <motion.div
+          key={factIndex}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          className="text-sm text-muted-foreground/70 text-center mt-6"
+        >
+          <span className="font-medium">Did you know?</span> {ELECTRICAL_FACTS[factIndex]}
+        </motion.div>
       </div>
     </div>
   );
