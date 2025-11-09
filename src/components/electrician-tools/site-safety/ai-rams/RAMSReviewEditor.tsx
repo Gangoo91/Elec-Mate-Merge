@@ -767,40 +767,58 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                 )}
 
                 {/* Installation Steps */}
-                {methodData.steps && methodData.steps.length > 0 ? (
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between mb-3">
-                      <h4 className="text-lg font-bold text-elec-light flex items-center gap-2">
-                        <FileText className="h-5 w-5 text-elec-yellow" />
-                        Installation Steps ({methodData.steps.length})
-                      </h4>
-                    </div>
-                    {methodData.steps.map((step, index) => (
-                      <EnhancedStepCard
-                        key={step.id}
-                        step={step}
-                        index={index}
-                        editable={true}
-                        onUpdate={updateStep}
-                        onRemove={removeStep}
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  <Card className="border-dashed border-elec-yellow/30">
-                    <CardContent className="p-8 text-center">
-                      <FileText className="h-16 w-16 text-elec-yellow/40 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-elec-light mb-2">No Installation Steps Yet</h3>
-                      <p className="text-sm text-elec-light/60 mb-4">
-                        Add installation steps or regenerate to create method statement.
-                      </p>
-                      <Button onClick={addStep} variant="outline" size="sm" className="border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/10">
-                        <Plus className="h-4 w-4 mr-2" />
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="text-lg font-bold text-elec-light flex items-center gap-2">
+                      <FileText className="h-5 w-5 text-elec-yellow" />
+                      Installation Steps
+                    </h4>
+                    <div className="flex items-center gap-2">
+                      <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-bold">
+                        {methodData.steps?.length || 0} Steps
+                      </Badge>
+                      <Button 
+                        onClick={addStep} 
+                        size="sm" 
+                        className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card"
+                      >
+                        <Plus className="h-4 w-4 mr-1" />
                         Add Step
                       </Button>
-                    </CardContent>
-                  </Card>
-                )}
+                    </div>
+                  </div>
+                  
+                  {methodData.steps && methodData.steps.length > 0 ? (
+                    <>
+                      {methodData.steps.map((step, index) => (
+                        <EnhancedStepCard
+                          key={step.id}
+                          step={step}
+                          index={index}
+                          editable={true}
+                          onUpdate={updateStep}
+                          onRemove={removeStep}
+                        />
+                      ))}
+                    </>
+                  ) : (
+                    <Card className="border-dashed border-elec-yellow/30">
+                      <CardContent className="p-8 text-center">
+                        <FileText className="h-16 w-16 text-elec-yellow/40 mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold text-elec-light mb-2">No Installation Steps Yet</h3>
+                        <p className="text-sm text-elec-light/60 mb-4">
+                          Add installation steps manually using the button above or regenerate to create method statement.
+                        </p>
+                        {onRegenerate && (
+                          <Button onClick={onRegenerate} variant="outline" size="sm" className="border-orange-500/40 text-orange-500 hover:bg-orange-500/10">
+                            <Sparkles className="h-4 w-4 mr-2" />
+                            Try Again
+                          </Button>
+                        )}
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
 
                 {/* Risk Assessment Summary */}
                 <RiskAssessmentSummary methodData={methodData as MethodStatementData} />

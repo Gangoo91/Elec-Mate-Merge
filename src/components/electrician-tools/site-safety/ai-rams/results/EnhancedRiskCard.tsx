@@ -10,12 +10,14 @@ import { cn } from '@/lib/utils';
 import { getRiskColors } from '@/utils/risk-level-helpers';
 import type { RAMSRisk } from '@/types/rams';
 import { toast } from '@/hooks/use-toast';
+import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
 import { 
   MobileAccordion,
   MobileAccordionItem,
   MobileAccordionTrigger,
   MobileAccordionContent
 } from '@/components/ui/mobile-accordion';
+import { RiskEditSheet } from './RiskEditSheet';
 
 interface EnhancedRiskCardProps {
   risk: RAMSRisk;
@@ -32,7 +34,9 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
   onUpdate,
   onRemove
 }) => {
+  const { isMobile } = useMobileEnhanced();
   const [isEditing, setIsEditing] = useState(false);
+  const [showEditSheet, setShowEditSheet] = useState(false);
   const [editedRisk, setEditedRisk] = useState<RAMSRisk>(risk);
   const [isSaving, setIsSaving] = useState(false);
   
@@ -84,8 +88,29 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
     }
   };
 
+  const handleEditClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isMobile) {
+      setShowEditSheet(true);
+    } else {
+      setIsEditing(true);
+    }
+  };
+
   return (
-    <Card 
+    <>
+      <RiskEditSheet
+        risk={risk}
+        open={showEditSheet}
+        onOpenChange={setShowEditSheet}
+        onSave={(riskId, updates) => {
+          if (onUpdate) {
+            onUpdate(riskId, updates);
+          }
+        }}
+        onDelete={onRemove}
+      />
+      <Card
       className={cn(
         "mb-3 overflow-hidden transition-all hover:shadow-lg active:scale-[0.99]",
         `border-l-4 ${riskColors.border}`,
@@ -122,10 +147,7 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsEditing(true);
-                  }}
+                  onClick={handleEditClick}
                   className="shrink-0"
                 >
                   <Edit3 className="h-4 w-4" />
@@ -338,5 +360,6 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
         </MobileAccordionItem>
       </MobileAccordion>
     </Card>
+    </>
   );
 };

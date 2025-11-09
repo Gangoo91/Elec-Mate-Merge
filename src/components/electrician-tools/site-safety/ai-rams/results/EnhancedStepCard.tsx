@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Shield, Wrench, Award, Clock, AlertTriangle, Edit3, Save, X, Trash2, Users, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { getRiskColorsByLevel } from '@/utils/risk-level-helpers';
+import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
 import type { MethodStep } from '@/types/method-statement';
 import {
   MobileAccordion,
@@ -15,6 +16,7 @@ import {
   MobileAccordionTrigger,
   MobileAccordionContent
 } from '@/components/ui/mobile-accordion';
+import { StepEditSheet } from './StepEditSheet';
 
 interface EnhancedStepCardProps {
   step: MethodStep;
@@ -31,9 +33,11 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
   onUpdate,
   onRemove
 }) => {
+  const { isMobile } = useMobileEnhanced();
   const riskColors = getRiskColorsByLevel(step.riskLevel);
   const isEvenRow = index % 2 === 0;
   const [isEditing, setIsEditing] = useState(false);
+  const [showEditSheet, setShowEditSheet] = useState(false);
   const [editedStep, setEditedStep] = useState<MethodStep>(step);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -111,8 +115,29 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
     }
   };
 
+  const handleEditClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isMobile) {
+      setShowEditSheet(true);
+    } else {
+      setIsEditing(true);
+    }
+  };
+
   return (
-    <Card 
+    <>
+      <StepEditSheet
+        step={step}
+        open={showEditSheet}
+        onOpenChange={setShowEditSheet}
+        onSave={(stepId, updates) => {
+          if (onUpdate) {
+            onUpdate(stepId, updates);
+          }
+        }}
+        onDelete={onRemove}
+      />
+      <Card
       className={cn(
         "mb-3 overflow-hidden transition-all active:scale-[0.99]",
         `border-l-4 ${riskColors.border}`,
@@ -152,10 +177,7 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsEditing(true);
-                }}
+                onClick={handleEditClick}
                 className="shrink-0"
               >
                 <Edit3 className="h-4 w-4" />
@@ -433,5 +455,6 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
         </MobileAccordionItem>
       </MobileAccordion>
     </Card>
+    </>
   );
 };
