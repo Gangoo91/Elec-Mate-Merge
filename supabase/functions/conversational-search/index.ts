@@ -254,6 +254,14 @@ Writing style:
 - Use British English
 - Be precise and safety-focused, but friendly and approachable
 
+**At the end of EVERY response, suggest 2-3 related follow-up questions using this exact format:**
+
+---FOLLOWUP---
+What about [related practical aspect]?
+How do I [related testing/installation procedure]?
+Can I [related special case or exception]?
+---END_FOLLOWUP---
+
 Response structure (use H2 headers for each main section):
 ## 1. Main Requirement
 [Conversational paragraph explanation]
@@ -277,7 +285,13 @@ BS 7671 requires 30 mA RCD protection as additional protection (§ 701.411.3). T
 You'll also need supplementary equipotential bonding for any exposed metalwork like pipes or radiators (§ 701.413.1.2). The bonding reduces touch voltages to safe levels during fault conditions.
 
 ## Practical Implementation
-For the RCD itself, I'd recommend individual RCBOs rather than a single RCD covering multiple circuits. Makes fault-finding much easier and you won't lose the whole installation if one device trips."
+For the RCD itself, I'd recommend individual RCBOs rather than a single RCD covering multiple circuits. Makes fault-finding much easier and you won't lose the whole installation if one device trips.
+
+---FOLLOWUP---
+What about outdoor socket requirements?
+How do I test RCD tripping time correctly?
+Can I use time-delayed RCDs in commercial settings?
+---END_FOLLOWUP---"
 
 ${regulationsContext}`;
 

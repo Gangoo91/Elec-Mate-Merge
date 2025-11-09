@@ -10,6 +10,7 @@ interface Message {
   role: 'user' | 'assistant';
   content: string;
   timestamp?: Date;
+  followUpQuestions?: string[];
 }
 
 const CATEGORIES = [
@@ -170,7 +171,32 @@ export default function ConversationalSearch() {
 
       while (true) {
         const { done, value } = await reader.read();
-        if (done) break;
+        if (done) {
+          // Extract follow-up questions from final content
+          const followUpMatch = assistantContent.match(/---FOLLOWUP---([\s\S]*?)---END_FOLLOWUP---/);
+          if (followUpMatch) {
+            const questions = followUpMatch[1]
+              .trim()
+              .split('\n')
+              .map(q => q.replace(/^[•\-*]\s*/, '').trim())
+              .filter(q => q.length > 0 && q.endsWith('?'));
+            
+            // Remove follow-up section from displayed content
+            assistantContent = assistantContent.replace(/---FOLLOWUP---[\s\S]*?---END_FOLLOWUP---/g, '').trim();
+            
+            // Update last message with follow-ups
+            setMessages(prev => {
+              const newMessages = [...prev];
+              const lastMessage = newMessages[newMessages.length - 1];
+              if (lastMessage?.role === 'assistant') {
+                lastMessage.followUpQuestions = questions;
+                lastMessage.content = assistantContent;
+              }
+              return newMessages;
+            });
+          }
+          break;
+        }
 
         buffer += decoder.decode(value, { stream: true });
         
@@ -342,7 +368,7 @@ export default function ConversationalSearch() {
                   </div>
                 ) : (
                   <div className="flex justify-start">
-                    <div className="max-w-[90%]">
+                    <div className="max-w-[90%] space-y-3">
                       <InspectorMessage
                         message={{
                           role: 'assistant',
@@ -351,6 +377,37 @@ export default function ConversationalSearch() {
                         }}
                         isStreaming={isStreaming && idx === messages.length - 1}
                       />
+                      
+                      {/* Follow-up Question Pills */}
+                      {message.followUpQuestions && message.followUpQuestions.length > 0 && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.3 }}
+                          className="space-y-2"
+                        >
+                          <div className="flex items-center gap-2 text-xs text-white/60">
+                            <Sparkles className="w-3 h-3" />
+                            <span>You might also ask:</span>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {message.followUpQuestions.map((question, qIdx) => (
+                              <motion.button
+                                key={qIdx}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => {
+                                  setInput(question);
+                                  inputRef.current?.focus();
+                                }}
+                                className="text-xs px-3 py-2 rounded-lg bg-gradient-to-r from-elec-blue/20 to-elec-yellow/20 border border-elec-yellow/30 text-white/90 hover:border-elec-yellow/60 hover:bg-elec-yellow/10 transition-all text-left"
+                              >
+                                💡 {question}
+                              </motion.button>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
                     </div>
                   </div>
                 )}
