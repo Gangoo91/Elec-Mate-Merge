@@ -288,7 +288,7 @@ export default function ConversationalSearch() {
     <div className="flex flex-col h-screen max-w-6xl mx-auto relative pb-safe">
       {/* Empty State - Hero & Categories (only show when no messages) */}
       {messages.length === 0 && (
-        <div className="flex-1 overflow-y-auto px-4 md:px-6 py-4 space-y-8">
+        <div className="flex-1 px-4 md:px-6 py-4 space-y-8">
           {/* Hero Section */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -348,7 +348,7 @@ export default function ConversationalSearch() {
 
       {/* Active State - Messages Container (only show if messages exist) */}
       {messages.length > 0 && (
-        <div className="flex-1 overflow-y-auto px-4 md:px-6 py-4 space-y-4">
+        <div className="flex-1 px-4 md:px-6 py-4 space-y-4">
           <AnimatePresence mode="popLayout">
             {messages.map((message, idx) => (
               <motion.div
