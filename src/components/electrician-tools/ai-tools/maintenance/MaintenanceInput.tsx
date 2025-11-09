@@ -61,42 +61,39 @@ export const MaintenanceInput = ({
       <Card className="border-elec-yellow/20 bg-elec-card/50">
         <CardContent className="pt-6">
           <div className="flex items-start gap-4">
-            <div className="p-3 bg-elec-yellow/10 rounded-lg shrink-0">
-              <Lightbulb className="h-6 w-6 text-elec-yellow" />
+            <div className="p-4 bg-elec-yellow/10 rounded-lg shrink-0">
+              <Lightbulb className="h-8 w-8 text-elec-yellow" />
             </div>
-            <div className="flex-1 space-y-3">
-              <h4 className="font-semibold text-elec-light">How this works</h4>
-              <p className="text-sm text-elec-light/70">
+            <div className="flex-1 space-y-4">
+              <h4 className="font-semibold text-white text-lg">How this works</h4>
+              <p className="text-base text-white leading-relaxed">
                 Provide detailed equipment information and we'll generate a comprehensive maintenance schedule 
                 based on BS 7671:2018+A3:2024 and GN3 guidance, including risk assessment, cost estimates, 
                 and compliance checklist.
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Button
                   onClick={() => handleQuickFill('domestic')}
                   variant="outline"
-                  size="sm"
-                  className="border-elec-gray/30 text-elec-light/80 hover:bg-elec-dark/50 hover:text-elec-yellow"
+                  className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:text-elec-yellow h-12 touch-manipulation w-full sm:w-auto"
                 >
-                  <Sparkles className="mr-1 h-3 w-3" />
+                  <Sparkles className="mr-2 h-4 w-4" />
                   Domestic Example
                 </Button>
                 <Button
                   onClick={() => handleQuickFill('commercial')}
                   variant="outline"
-                  size="sm"
-                  className="border-elec-gray/30 text-elec-light/80 hover:bg-elec-dark/50 hover:text-elec-yellow"
+                  className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:text-elec-yellow h-12 touch-manipulation w-full sm:w-auto"
                 >
-                  <Sparkles className="mr-1 h-3 w-3" />
+                  <Sparkles className="mr-2 h-4 w-4" />
                   Commercial Example
                 </Button>
                 <Button
                   onClick={() => handleQuickFill('industrial')}
                   variant="outline"
-                  size="sm"
-                  className="border-elec-gray/30 text-elec-light/80 hover:bg-elec-dark/50 hover:text-elec-yellow"
+                  className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:text-elec-yellow h-12 touch-manipulation w-full sm:w-auto"
                 >
-                  <Sparkles className="mr-1 h-3 w-3" />
+                  <Sparkles className="mr-2 h-4 w-4" />
                   Industrial Example
                 </Button>
               </div>
@@ -108,37 +105,37 @@ export const MaintenanceInput = ({
       {/* Main Input Form */}
       <Card className="border-elec-yellow/20 bg-elec-card">
         <CardHeader>
-          <CardTitle className="text-elec-light">Equipment Details</CardTitle>
-          <CardDescription className="text-elec-light/60">
+          <CardTitle className="text-white text-xl sm:text-2xl">Equipment Details</CardTitle>
+          <CardDescription className="text-white text-base">
             The more information you provide, the better the maintenance plan
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-5">
           {/* Detail Level Toggle */}
-          <div className="space-y-3 pb-4 border-b border-elec-gray/20">
-            <Label className="text-elec-light font-medium">Detail Level</Label>
-            <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-4 pb-5 border-b border-elec-gray/20">
+            <Label className="text-white font-semibold text-base">Detail Level</Label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <button
                 type="button"
                 onClick={() => onInputChange({ detailLevel: 'quick' })}
-                className={`p-4 rounded-lg border-2 transition-all ${
+                className={`p-5 rounded-xl border-2 transition-all touch-manipulation min-h-[88px] ${
                   input.detailLevel === 'quick'
                     ? 'border-elec-yellow bg-elec-yellow/10'
-                    : 'border-elec-gray/30 hover:border-elec-gray/50'
+                    : 'border-elec-gray/30 hover:border-elec-yellow/50'
                 }`}
               >
                 <div className="flex items-start gap-3">
-                  <Zap className={`h-5 w-5 mt-0.5 ${input.detailLevel === 'quick' ? 'text-elec-yellow' : 'text-elec-light/60'}`} />
-                  <div className="text-left">
-                    <div className="flex items-center gap-2 mb-1">
-                      <p className={`font-semibold text-sm ${input.detailLevel === 'quick' ? 'text-elec-yellow' : 'text-elec-light'}`}>
+                  <Zap className={`h-6 w-6 mt-0.5 ${input.detailLevel === 'quick' ? 'text-elec-yellow' : 'text-white'}`} />
+                  <div className="text-left flex-1">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <p className={`font-semibold text-base ${input.detailLevel === 'quick' ? 'text-elec-yellow' : 'text-white'}`}>
                         Quick
                       </p>
                       <Badge variant="outline" className="border-green-400/30 text-green-400 text-xs">
                         20-45s
                       </Badge>
                     </div>
-                    <p className="text-xs text-elec-light/60">
+                    <p className="text-sm text-white">
                       Essential tasks, concise regulations, core failures
                     </p>
                   </div>
@@ -148,24 +145,24 @@ export const MaintenanceInput = ({
               <button
                 type="button"
                 onClick={() => onInputChange({ detailLevel: 'full' })}
-                className={`p-4 rounded-lg border-2 transition-all ${
+                className={`p-5 rounded-xl border-2 transition-all touch-manipulation min-h-[88px] ${
                   input.detailLevel === 'full'
                     ? 'border-elec-yellow bg-elec-yellow/10'
-                    : 'border-elec-gray/30 hover:border-elec-gray/50'
+                    : 'border-elec-gray/30 hover:border-elec-yellow/50'
                 }`}
               >
                 <div className="flex items-start gap-3">
-                  <FileText className={`h-5 w-5 mt-0.5 ${input.detailLevel === 'full' ? 'text-elec-yellow' : 'text-elec-light/60'}`} />
-                  <div className="text-left">
-                    <div className="flex items-center gap-2 mb-1">
-                      <p className={`font-semibold text-sm ${input.detailLevel === 'full' ? 'text-elec-yellow' : 'text-elec-light'}`}>
+                  <FileText className={`h-6 w-6 mt-0.5 ${input.detailLevel === 'full' ? 'text-elec-yellow' : 'text-white'}`} />
+                  <div className="text-left flex-1">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <p className={`font-semibold text-base ${input.detailLevel === 'full' ? 'text-elec-yellow' : 'text-white'}`}>
                         Full Detail
                       </p>
                       <Badge variant="outline" className="border-blue-400/30 text-blue-400 text-xs">
                         1-3m
                       </Badge>
                     </div>
-                    <p className="text-xs text-elec-light/60">
+                    <p className="text-sm text-white">
                       Detailed procedures, full regulations, comprehensive analysis
                     </p>
                   </div>
@@ -175,14 +172,15 @@ export const MaintenanceInput = ({
           </div>
 
           {/* Equipment Type */}
-          <div className="space-y-2">
-            <Label htmlFor="equipment-type" className="text-elec-light font-medium">
+          <div className="space-y-3">
+            <Label htmlFor="equipment-type" className="text-white font-semibold text-base">
               Equipment Type <span className="text-red-400">*</span>
             </Label>
             <Select value={input.equipmentType} onValueChange={(val) => onInputChange({ equipmentType: val })}>
               <SelectTrigger 
                 id="equipment-type" 
-                className="h-11 bg-elec-dark border-elec-gray/30 text-elec-light"
+                className="h-14 bg-elec-dark border-elec-gray/30 text-white text-base touch-manipulation"
+                style={{ fontSize: '16px' }}
               >
                 <SelectValue placeholder="Select equipment type" />
               </SelectTrigger>
@@ -201,8 +199,8 @@ export const MaintenanceInput = ({
           </div>
 
           {/* Equipment Description */}
-          <div className="space-y-2">
-            <Label htmlFor="description" className="text-elec-light font-medium">
+          <div className="space-y-3">
+            <Label htmlFor="description" className="text-white font-semibold text-base">
               Equipment Description <span className="text-red-400">*</span>
             </Label>
             <Textarea
@@ -210,16 +208,17 @@ export const MaintenanceInput = ({
               placeholder="E.g., 18th Edition RCBO consumer unit with 10 circuits, metal enclosure, surge protection included"
               value={input.equipmentDescription}
               onChange={(e) => onInputChange({ equipmentDescription: e.target.value })}
-              className="min-h-[100px] bg-elec-dark border-elec-gray/30 text-elec-light placeholder:text-elec-light/40 resize-none"
+              className="min-h-[140px] bg-elec-dark border-elec-gray/30 text-white placeholder:text-white/60 resize-none touch-manipulation text-base"
+              style={{ fontSize: '16px' }}
               maxLength={1000}
             />
-            <p className="text-xs text-elec-light/50">{input.equipmentDescription.length}/1000 characters</p>
+            <p className="text-sm text-white/70">{input.equipmentDescription.length}/1000 characters</p>
           </div>
 
           {/* Location & Age */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="location" className="text-elec-light font-medium">
+            <div className="space-y-3">
+              <Label htmlFor="location" className="text-white font-semibold text-base">
                 Location <span className="text-red-400">*</span>
               </Label>
               <Input
@@ -227,12 +226,13 @@ export const MaintenanceInput = ({
                 placeholder="E.g., Main entrance hall"
                 value={input.location}
                 onChange={(e) => onInputChange({ location: e.target.value })}
-                className="h-11 bg-elec-dark border-elec-gray/30 text-elec-light placeholder:text-elec-light/40"
+                className="h-14 bg-elec-dark border-elec-gray/30 text-white placeholder:text-white/60 text-base touch-manipulation"
+                style={{ fontSize: '16px' }}
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="age" className="text-elec-light font-medium">Age (Years)</Label>
+            <div className="space-y-3">
+              <Label htmlFor="age" className="text-white font-semibold text-base">Age (Years)</Label>
               <Input
                 id="age"
                 type="number"
@@ -240,17 +240,18 @@ export const MaintenanceInput = ({
                 placeholder="0"
                 value={input.ageYears || ''}
                 onChange={(e) => onInputChange({ ageYears: parseInt(e.target.value) || 0 })}
-                className="h-11 bg-elec-dark border-elec-gray/30 text-elec-light placeholder:text-elec-light/40"
+                className="h-14 bg-elec-dark border-elec-gray/30 text-white placeholder:text-white/60 text-base touch-manipulation"
+                style={{ fontSize: '16px' }}
               />
             </div>
           </div>
 
           {/* Building Context */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="building-type" className="text-elec-light font-medium">Building Type</Label>
+            <div className="space-y-3">
+              <Label htmlFor="building-type" className="text-white font-semibold text-base">Building Type</Label>
               <Select value={input.buildingType} onValueChange={(val: any) => onInputChange({ buildingType: val })}>
-                <SelectTrigger id="building-type" className="h-11 bg-elec-dark border-elec-gray/30 text-elec-light">
+                <SelectTrigger id="building-type" className="h-14 bg-elec-dark border-elec-gray/30 text-white text-base touch-manipulation" style={{ fontSize: '16px' }}>
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -261,10 +262,10 @@ export const MaintenanceInput = ({
               </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="environment" className="text-elec-light font-medium">Environment</Label>
+            <div className="space-y-3">
+              <Label htmlFor="environment" className="text-white font-semibold text-base">Environment</Label>
               <Select value={input.environment} onValueChange={(val: any) => onInputChange({ environment: val })}>
-                <SelectTrigger id="environment" className="h-11 bg-elec-dark border-elec-gray/30 text-elec-light">
+                <SelectTrigger id="environment" className="h-14 bg-elec-dark border-elec-gray/30 text-white text-base touch-manipulation" style={{ fontSize: '16px' }}>
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
@@ -276,10 +277,10 @@ export const MaintenanceInput = ({
               </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="criticality" className="text-elec-light font-medium">Criticality</Label>
+            <div className="space-y-3">
+              <Label htmlFor="criticality" className="text-white font-semibold text-base">Criticality</Label>
               <Select value={input.criticality} onValueChange={(val: any) => onInputChange({ criticality: val })}>
-                <SelectTrigger id="criticality" className="h-11 bg-elec-dark border-elec-gray/30 text-elec-light">
+                <SelectTrigger id="criticality" className="h-14 bg-elec-dark border-elec-gray/30 text-white text-base touch-manipulation" style={{ fontSize: '16px' }}>
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
@@ -293,89 +294,96 @@ export const MaintenanceInput = ({
 
           {/* Optional Details - Collapsible */}
           <details className="group">
-            <summary className="cursor-pointer text-sm font-medium text-elec-yellow hover:text-elec-yellow/80 list-none flex items-center gap-2">
+            <summary className="cursor-pointer text-base font-semibold text-elec-yellow hover:text-elec-yellow/80 list-none flex items-center gap-2 touch-manipulation py-2">
               <span className="group-open:rotate-90 transition-transform">▶</span>
               Additional Details (Optional)
             </summary>
-            <div className="mt-4 space-y-4">
+            <div className="mt-5 space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="manufacturer" className="text-elec-light font-medium">Manufacturer</Label>
+                <div className="space-y-3">
+                  <Label htmlFor="manufacturer" className="text-white font-semibold text-base">Manufacturer</Label>
                   <Input
                     id="manufacturer"
                     placeholder="E.g., Hager, Schneider"
                     value={input.manufacturer || ''}
                     onChange={(e) => onInputChange({ manufacturer: e.target.value })}
-                    className="h-11 bg-elec-dark border-elec-gray/30 text-elec-light"
+                    className="h-14 bg-elec-dark border-elec-gray/30 text-white placeholder:text-white/60 text-base touch-manipulation"
+                    style={{ fontSize: '16px' }}
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="model" className="text-elec-light font-medium">Model Number</Label>
+                <div className="space-y-3">
+                  <Label htmlFor="model" className="text-white font-semibold text-base">Model Number</Label>
                   <Input
                     id="model"
                     placeholder="E.g., VML910CU"
                     value={input.modelNumber || ''}
                     onChange={(e) => onInputChange({ modelNumber: e.target.value })}
-                    className="h-11 bg-elec-dark border-elec-gray/30 text-elec-light"
+                    className="h-14 bg-elec-dark border-elec-gray/30 text-white placeholder:text-white/60 text-base touch-manipulation"
+                    style={{ fontSize: '16px' }}
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="last-inspection" className="text-elec-light font-medium">Last Inspection Date</Label>
+                <div className="space-y-3">
+                  <Label htmlFor="last-inspection" className="text-white font-semibold text-base">Last Inspection Date</Label>
                   <Input
                     id="last-inspection"
                     type="date"
                     value={input.lastInspectionDate || ''}
                     onChange={(e) => onInputChange({ lastInspectionDate: e.target.value })}
-                    className="h-11 bg-elec-dark border-elec-gray/30 text-elec-light"
+                    className="h-14 bg-elec-dark border-elec-gray/30 text-white text-base touch-manipulation"
+                    style={{ fontSize: '16px' }}
                   />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="issues" className="text-elec-light font-medium">Known Issues</Label>
+              <div className="space-y-3">
+                <Label htmlFor="issues" className="text-white font-semibold text-base">Known Issues</Label>
                 <Textarea
                   id="issues"
                   placeholder="Any known problems or concerns..."
                   value={input.currentIssues || ''}
                   onChange={(e) => onInputChange({ currentIssues: e.target.value })}
-                  className="min-h-[80px] bg-elec-dark border-elec-gray/30 text-elec-light placeholder:text-elec-light/40 resize-none"
+                  className="min-h-[100px] bg-elec-dark border-elec-gray/30 text-white placeholder:text-white/60 resize-none touch-manipulation text-base"
+                  style={{ fontSize: '16px' }}
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="client" className="text-elec-light font-medium">Client Name</Label>
+                <div className="space-y-3">
+                  <Label htmlFor="client" className="text-white font-semibold text-base">Client Name</Label>
                   <Input
                     id="client"
                     placeholder="Client name"
                     value={input.clientName || ''}
                     onChange={(e) => onInputChange({ clientName: e.target.value })}
-                    className="h-11 bg-elec-dark border-elec-gray/30 text-elec-light"
+                    className="h-14 bg-elec-dark border-elec-gray/30 text-white placeholder:text-white/60 text-base touch-manipulation"
+                    style={{ fontSize: '16px' }}
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="assessor" className="text-elec-light font-medium">Assessor Name</Label>
+                <div className="space-y-3">
+                  <Label htmlFor="assessor" className="text-white font-semibold text-base">Assessor Name</Label>
                   <Input
                     id="assessor"
                     placeholder="Your name"
                     value={input.assessorName || ''}
                     onChange={(e) => onInputChange({ assessorName: e.target.value })}
-                    className="h-11 bg-elec-dark border-elec-gray/30 text-elec-light"
+                    className="h-14 bg-elec-dark border-elec-gray/30 text-white placeholder:text-white/60 text-base touch-manipulation"
+                    style={{ fontSize: '16px' }}
                   />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="site-address" className="text-elec-light font-medium">Site Address</Label>
+              <div className="space-y-3">
+                <Label htmlFor="site-address" className="text-white font-semibold text-base">Site Address</Label>
                 <Input
                   id="site-address"
                   placeholder="Full site address"
                   value={input.siteAddress || ''}
                   onChange={(e) => onInputChange({ siteAddress: e.target.value })}
-                  className="h-11 bg-elec-dark border-elec-gray/30 text-elec-light"
+                  className="h-14 bg-elec-dark border-elec-gray/30 text-white placeholder:text-white/60 text-base touch-manipulation"
+                  style={{ fontSize: '16px' }}
                 />
               </div>
             </div>

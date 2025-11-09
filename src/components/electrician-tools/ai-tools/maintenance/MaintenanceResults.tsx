@@ -156,19 +156,18 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
       )}
       
       {/* Header Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="flex flex-col gap-4">
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold text-elec-light">Maintenance Plan</h2>
-          <p className="text-sm text-elec-light/60 mt-1">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white">Maintenance Plan</h2>
+          <p className="text-base text-white mt-2">
             {results.schedule?.length || 0} tasks • Generated {new Date().toLocaleDateString('en-GB')}
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-3">
           <Button
             onClick={handleCopy}
             variant="outline"
-            size="sm"
-            className="border-elec-gray/30 text-elec-light hover:bg-elec-dark/50"
+            className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-12 touch-manipulation flex-1 sm:flex-none"
           >
             <Copy className="mr-2 h-4 w-4" />
             Copy
@@ -176,9 +175,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           <Button
             onClick={handleExportPDF}
             disabled={isExportingPDF}
-            variant="outline"
-            size="sm"
-            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 animate-pulse"
+            className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12 touch-manipulation flex-1 sm:flex-none"
           >
             {isExportingPDF ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Download className="mr-2 h-4 w-4" />}
             Export PDF
@@ -186,10 +183,9 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           <Button
             onClick={onReset}
             variant="outline"
-            size="sm"
-            className="border-elec-gray/30 text-elec-light hover:bg-elec-dark/50"
+            className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10 h-12 touch-manipulation sm:w-12 sm:p-0"
           >
-            <RefreshCw className="h-4 w-4" />
+            <RefreshCw className="h-5 w-5" />
           </Button>
         </div>
       </div>
@@ -201,8 +197,8 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           <CardContent className="pt-5 pb-5">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-xs sm:text-sm text-elec-light/60 mb-1.5">Risk Level</p>
-                <p className={`text-xl sm:text-2xl font-bold ${getRiskColor(results.riskLevel).split(' ')[0]}`}>
+                <p className="text-sm sm:text-base text-white mb-2">Risk Level</p>
+                <p className={`text-2xl sm:text-3xl font-bold ${getRiskColor(results.riskLevel).split(' ')[0]}`}>
                   {results.riskScore || 0}
                 </p>
                 <Badge className={`mt-2 ${getRiskColor(results.riskLevel)} transition-colors`}>
@@ -221,7 +217,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           <CardContent className="pt-5 pb-5">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-xs sm:text-sm text-elec-light/60 mb-1.5">Compliance</p>
+                <p className="text-sm sm:text-base text-white mb-2">Compliance</p>
                 <Badge className={`mt-2 ${getComplianceColor(results.complianceStatus)} transition-colors`}>
                   {results.complianceStatus?.replace('-', ' ') || 'unknown'}
                 </Badge>
@@ -241,7 +237,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           <CardContent className="pt-5 pb-5">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-xs sm:text-sm text-elec-light/60 mb-1.5">Annual Cost</p>
+                <p className="text-sm sm:text-base text-white mb-2">Annual Cost</p>
                 {results.annualCostEstimate ? (
                   <>
                     <p className="text-xl sm:text-2xl font-bold text-elec-light">
@@ -267,7 +263,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
           <CardContent className="pt-5 pb-5">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-xs sm:text-sm text-elec-light/60 mb-1.5">Annual Hours</p>
+                <p className="text-sm sm:text-base text-white mb-2">Annual Hours</p>
                 <p className="text-xl sm:text-2xl font-bold text-elec-light">
                   {results.totalEstimatedHours || 0}h
                 </p>
@@ -300,14 +296,14 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
 
       {/* Scheduled Tasks */}
       <Card className="border-elec-yellow/20 bg-elec-card">
-        <CardHeader className="pb-3 sm:pb-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <CardHeader className="pb-4 sm:pb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <CardTitle className="text-elec-light flex items-center gap-2 text-xl sm:text-2xl">
-                <Calendar className="h-5 w-5 sm:h-6 sm:w-6" />
+              <CardTitle className="text-white flex items-center gap-3 text-2xl sm:text-3xl">
+                <Calendar className="h-6 w-6 sm:h-7 sm:w-7" />
                 Scheduled Tasks
               </CardTitle>
-              <CardDescription className="text-elec-light/60 text-sm sm:text-base mt-1">
+              <CardDescription className="text-white text-base sm:text-lg mt-2">
                 {results.schedule?.length || 0} maintenance tasks identified
               </CardDescription>
             </div>
@@ -335,50 +331,50 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
               </p>
             </div>
           ) : (
-            <Accordion type="single" collapsible className="space-y-2 sm:space-y-3">
+            <Accordion type="single" collapsible className="space-y-4">
               {results.schedule.map((task, idx) => (
               <AccordionItem 
                 key={idx} 
                 value={`task-${idx}`}
-                className="border border-elec-gray/20 rounded-lg px-2 sm:px-4 bg-gradient-to-r from-elec-dark/40 to-elec-dark/20 hover:border-elec-yellow/40 transition-all duration-200 data-[state=open]:bg-gradient-to-r data-[state=open]:from-elec-dark/60 data-[state=open]:to-elec-dark/40 data-[state=open]:border-elec-yellow/50"
+                className="border border-elec-yellow/20 rounded-xl px-4 sm:px-5 bg-gradient-to-r from-elec-card/50 to-elec-dark/30 hover:border-elec-yellow/40 transition-all duration-200 data-[state=open]:bg-gradient-to-r data-[state=open]:from-elec-card/70 data-[state=open]:to-elec-dark/50 data-[state=open]:border-elec-yellow/60 touch-manipulation"
               >
-                <AccordionTrigger className="hover:no-underline py-3 sm:py-5">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full text-left pr-6 sm:pr-8">
-                    <Badge className={`${getPriorityColor(task.priority)} transition-colors text-xs self-start sm:self-center shrink-0`}>
+                <AccordionTrigger className="hover:no-underline py-5 sm:py-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full text-left pr-8 sm:pr-10">
+                    <Badge className={`${getPriorityColor(task.priority)} transition-colors text-sm self-start sm:self-center shrink-0`}>
                       {task.priority}
                     </Badge>
                     <div className="flex-1 min-w-0 overflow-hidden">
-                      <p className="font-medium text-elec-light text-sm sm:text-base leading-tight sm:leading-normal break-words overflow-wrap-anywhere">{task.task}</p>
-                      <p className="text-xs text-elec-light/70 mt-1 leading-tight break-words">
+                      <p className="font-semibold text-white text-base sm:text-lg leading-tight sm:leading-normal break-words overflow-wrap-anywhere">{task.task}</p>
+                      <p className="text-sm text-white mt-2 leading-tight break-words">
                         {task.interval} • {task.regulation || 'Industry standard'}
                       </p>
                     </div>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="pb-4 sm:pb-5 pt-2">
-                  <div className="space-y-3 pl-1 sm:pl-2">
+                <AccordionContent className="pb-6 pt-2">
+                  <div className="space-y-4 pl-2">
                     {task.estimatedDurationMinutes && (
-                      <div className="flex items-start gap-2 text-sm">
-                        <Clock className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
-                        <span className="text-elec-light">
+                      <div className="flex items-start gap-3 text-base">
+                        <Clock className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
+                        <span className="text-white">
                           Duration: {task.estimatedDurationMinutes} minutes
                         </span>
                       </div>
                     )}
                     {task.estimatedCost && (
-                      <div className="flex items-start gap-2 text-sm">
-                        <PoundSterling className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
-                        <span className="text-elec-light">
+                      <div className="flex items-start gap-3 text-base">
+                        <PoundSterling className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
+                        <span className="text-white">
                           Cost: £{task.estimatedCost.min} - £{task.estimatedCost.max}
                         </span>
                       </div>
                     )}
                     {task.requiredQualifications && task.requiredQualifications.length > 0 && (
-                      <div className="flex items-start gap-2 text-sm">
-                        <FileText className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
+                      <div className="flex items-start gap-3 text-base">
+                        <FileText className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
                         <div className="flex-1">
-                          <p className="text-elec-light font-medium">Required Qualifications:</p>
-                          <p className="text-elec-light/80 text-xs mt-1">
+                          <p className="text-white font-semibold">Required Qualifications:</p>
+                          <p className="text-white text-sm mt-1">
                             {task.requiredQualifications.join(', ')}
                           </p>
                         </div>

@@ -83,65 +83,65 @@ export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', sta
     <div className="min-h-[60vh] flex items-center justify-center px-4">
       <div className="w-full max-w-2xl border border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm rounded-lg p-6 sm:p-8">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-6">
-          <div className="flex items-center justify-center w-14 h-14 bg-elec-yellow/10 border border-elec-yellow/20 rounded-full shrink-0">
-            <Zap className="h-7 w-7 text-elec-yellow" />
+        <div className="flex items-center gap-4 mb-8">
+          <div className="flex items-center justify-center w-16 h-16 bg-elec-yellow/10 border border-elec-yellow/20 rounded-full shrink-0">
+            <Zap className="h-8 w-8 text-elec-yellow" />
           </div>
           <div className="flex-1">
-            <h3 className="text-xl sm:text-2xl font-bold text-foreground">
+            <h3 className="text-2xl sm:text-3xl font-bold text-white">
               AI Maintenance Specialist
             </h3>
-            <p className="text-sm text-muted-foreground mt-0.5">
+            <p className="text-base text-white mt-1">
               Searching BS 7671 regulations...
             </p>
           </div>
         </div>
 
         {/* Progress Section */}
-        <div className="mb-4">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium text-muted-foreground">Progress</span>
-            <span className="text-sm font-bold text-elec-yellow">{Math.round(progressPercent)}%</span>
+        <div className="mb-6">
+          <div className="flex justify-between items-center mb-3">
+            <span className="text-base font-semibold text-white">Progress</span>
+            <span className="text-lg font-bold text-elec-yellow">{Math.round(progressPercent)}%</span>
           </div>
           <Progress 
             value={progressPercent} 
-            className="h-2 bg-elec-dark/50"
+            className="h-4 bg-elec-dark/50"
           />
         </div>
 
         {/* Current Step */}
-        <div className="mb-6">
-          <p className="text-sm text-muted-foreground">
-            <span className="inline-block w-1.5 h-1.5 bg-elec-yellow rounded-full mr-2 animate-pulse"></span>
+        <div className="mb-8">
+          <p className="text-base text-white">
+            <span className="inline-block w-2 h-2 bg-elec-yellow rounded-full mr-2 animate-pulse"></span>
             {currentStepText}
           </p>
         </div>
 
         {/* Time Tracker */}
-        <div className="border border-elec-yellow/20 rounded-lg p-4 mb-6">
+        <div className="border border-elec-yellow/20 rounded-lg p-5 mb-8">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <div className="text-xs text-muted-foreground mb-1">Elapsed Time</div>
-              <div className="text-xl font-bold text-elec-yellow">{formatTime(elapsedTime)}</div>
+              <div className="text-sm text-white mb-2">Elapsed Time</div>
+              <div className="text-2xl font-bold text-elec-yellow">{formatTime(elapsedTime)}</div>
             </div>
             <div>
-              <div className="text-xs text-muted-foreground mb-1">Estimated Remaining</div>
-              <div className="text-xl font-bold text-foreground">{formatTime(remainingTime)}</div>
+              <div className="text-sm text-white mb-2">Estimated Remaining</div>
+              <div className="text-2xl font-bold text-white">{formatTime(remainingTime)}</div>
             </div>
             <div>
-              <div className="text-xs text-muted-foreground mb-1">Total Estimate</div>
-              <div className="text-xl font-bold text-muted-foreground">{formatTime(dynamicTotalTime)}</div>
+              <div className="text-sm text-white mb-2">Total Estimate</div>
+              <div className="text-2xl font-bold text-white/80">{formatTime(dynamicTotalTime)}</div>
             </div>
           </div>
         </div>
 
         {/* What's Happening Section */}
         <div>
-          <div className="flex items-center gap-2 mb-4">
-            <Zap className="h-4 w-4 text-elec-yellow" />
-            <h4 className="text-base font-semibold text-foreground">What's Happening?</h4>
+          <div className="flex items-center gap-2 mb-5">
+            <Zap className="h-5 w-5 text-elec-yellow" />
+            <h4 className="text-lg font-semibold text-white">What's Happening?</h4>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {WHAT_HAPPENING_STAGES.map((stage) => {
               const isActive = progressPercent >= stage.minPercent && progressPercent <= stage.maxPercent;
               const isComplete = progressPercent > stage.maxPercent;
@@ -150,41 +150,41 @@ export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', sta
               return (
                 <div
                   key={stage.id}
-                  className={`rounded-lg p-3 transition-all duration-300 ${
+                  className={`rounded-xl p-4 transition-all duration-300 ${
                     isActive
                       ? 'bg-elec-yellow/10 border border-elec-yellow/30'
                       : 'border border-transparent'
                   }`}
                 >
-                  <div className="flex items-start gap-3">
-                    <div className="flex items-center justify-center w-5 h-5 shrink-0 mt-0.5">
+                  <div className="flex items-start gap-4">
+                    <div className="flex items-center justify-center w-6 h-6 shrink-0 mt-0.5">
                       {isComplete ? (
-                        <CheckCircle2 className="h-5 w-5 text-green-400" />
+                        <CheckCircle2 className="h-6 w-6 text-green-400" />
                       ) : isActive ? (
-                        <StageIcon className="h-5 w-5 text-elec-yellow" />
+                        <StageIcon className="h-6 w-6 text-elec-yellow" />
                       ) : (
-                        <StageIcon className="h-5 w-5 text-muted-foreground/30" />
+                        <StageIcon className="h-6 w-6 text-white/30" />
                       )}
                     </div>
                     <div className="flex-1">
                       <div
-                        className={`text-sm font-medium mb-0.5 ${
+                        className={`text-base font-semibold mb-1 ${
                           isActive
-                            ? 'text-foreground'
+                            ? 'text-white'
                             : isComplete
-                            ? 'text-muted-foreground'
-                            : 'text-muted-foreground/50'
+                            ? 'text-white/80'
+                            : 'text-white/50'
                         }`}
                       >
                         {stage.title}
                       </div>
                       <div
-                        className={`text-xs ${
+                        className={`text-sm ${
                           isActive
-                            ? 'text-muted-foreground'
+                            ? 'text-white'
                             : isComplete
-                            ? 'text-muted-foreground/60'
-                            : 'text-muted-foreground/40'
+                            ? 'text-white/70'
+                            : 'text-white/40'
                         }`}
                       >
                         {stage.description}
