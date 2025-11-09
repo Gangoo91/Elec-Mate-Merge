@@ -20,39 +20,41 @@ export default function CategoryCard({
 }: CategoryCardProps) {
   return (
     <motion.div
-      whileHover={{ scale: 1.02, y: -2 }}
-      whileTap={{ scale: 0.98 }}
-      className="group relative overflow-hidden rounded-lg border border-border/50 bg-card/50 backdrop-blur-sm p-3 cursor-pointer transition-all hover:border-elec-yellow/50 hover:shadow-lg hover:shadow-elec-yellow/10"
+      whileHover={{ scale: 1.02, y: -4 }}
+      className="group relative overflow-hidden rounded-xl border-2 border-border/30 bg-card/80 backdrop-blur-sm p-4 transition-all hover:border-elec-yellow/60 hover:shadow-xl hover:shadow-elec-yellow/20"
     >
       {/* Gradient overlay on hover */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-10 transition-opacity`} />
+      <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-5 transition-opacity`} />
       
-      <div className="relative z-10">
-        {/* Icon */}
-        <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center mb-2 group-hover:scale-110 transition-transform`}>
-          <Icon className="w-4 h-4 text-white" />
+      <div className="relative z-10 space-y-3">
+        {/* Icon & Title */}
+        <div className="flex items-center gap-3">
+          <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg`}>
+            <Icon className="w-5 h-5 text-white" />
+          </div>
+          <h3 className="text-sm font-bold text-white group-hover:text-elec-yellow transition-colors">
+            {title}
+          </h3>
         </div>
-
-        {/* Title */}
-        <h3 className="text-sm font-semibold text-foreground mb-1 group-hover:text-elec-yellow transition-colors">
-          {title}
-        </h3>
         
-        {/* Description - hidden on mobile, shown on desktop */}
-        <p className="text-xs text-muted-foreground mb-2 hidden md:block line-clamp-2">
+        {/* Description - visible on all screens but smaller on mobile */}
+        <p className="text-xs text-white/60 line-clamp-2 min-h-[2rem]">
           {description}
         </p>
 
-        {/* Example query - only show first one */}
+        {/* Example query button - more prominent */}
         <button
           onClick={(e) => {
             e.stopPropagation();
             onClick(examples[0]);
           }}
-          className="w-full text-left text-xs text-muted-foreground hover:text-elec-yellow transition-colors py-1 rounded hover:bg-elec-yellow/5 flex items-center gap-1.5"
+          className="w-full text-left text-xs font-medium text-white/80 hover:text-elec-yellow transition-all py-2 px-3 rounded-lg bg-elec-yellow/10 hover:bg-elec-yellow/20 border border-elec-yellow/20 hover:border-elec-yellow/40 flex items-center gap-2 group/btn"
         >
-          <span className="w-1 h-1 rounded-full bg-elec-yellow/50 flex-shrink-0" />
-          <span className="line-clamp-1">{examples[0]}</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-elec-yellow flex-shrink-0 group-hover/btn:animate-pulse" />
+          <span className="line-clamp-1 flex-1">{examples[0]}</span>
+          <svg className="w-3 h-3 opacity-0 group-hover/btn:opacity-100 transition-opacity flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
         </button>
       </div>
     </motion.div>

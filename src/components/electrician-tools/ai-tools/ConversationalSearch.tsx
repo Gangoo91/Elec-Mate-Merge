@@ -274,7 +274,7 @@ export default function ConversationalSearch() {
             AI Assistant
           </h1>
         </div>
-        <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
+        <p className="text-white/90 text-sm md:text-base max-w-2xl mx-auto">
           Instant BS 7671 answers · 18th Edition compliant
         </p>
       </motion.div>
@@ -286,29 +286,9 @@ export default function ConversationalSearch() {
         animate={{ opacity: 1 }}
         className="text-center"
       >
-        <p className="text-xs text-muted-foreground/70">
+        <p className="text-xs text-white/70">
           💡 <span className="font-medium">Did you know?</span> {ELECTRICAL_FACTS[factIndex]}
         </p>
-      </motion.div>
-
-      {/* Category Cards - Quick Access Templates */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-          {CATEGORIES.map((category, idx) => (
-            <CategoryCard
-              key={idx}
-              icon={category.icon}
-              title={category.title}
-              description={category.description}
-              examples={category.examples}
-              color={category.color}
-              onClick={handleSend}
-            />
-          ))}
-        </div>
       </motion.div>
 
       {/* Premium Input Area */}
@@ -323,7 +303,7 @@ export default function ConversationalSearch() {
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               placeholder={ROTATING_PLACEHOLDERS[placeholderIndex]}
-              className="flex-1 bg-transparent border-none outline-none resize-none text-foreground placeholder:text-muted-foreground/50 min-h-[48px] max-h-[120px] text-base"
+              className="flex-1 bg-transparent border-none outline-none resize-none text-foreground placeholder:text-white/40 min-h-[48px] max-h-[120px] text-base"
               disabled={isStreaming}
               rows={1}
               style={{ fontSize: '16px' }}
@@ -344,7 +324,7 @@ export default function ConversationalSearch() {
             </motion.button>
           </div>
 
-          <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground/60">
+          <div className="flex items-center justify-between mt-2 text-xs text-white/50">
             <span>Press Enter to send, Shift+Enter for new line</span>
             {charCount > 0 && (
               <motion.span
@@ -358,6 +338,30 @@ export default function ConversationalSearch() {
           </div>
         </div>
       </div>
+
+      {/* Category Cards - Quick Access Templates */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <h2 className="text-lg font-semibold text-white/90 mb-4 flex items-center gap-2">
+          <Sparkles className="w-5 h-5 text-elec-yellow" />
+          Quick Start Templates
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          {CATEGORIES.map((category, idx) => (
+            <CategoryCard
+              key={idx}
+              icon={category.icon}
+              title={category.title}
+              description={category.description}
+              examples={category.examples}
+              color={category.color}
+              onClick={handleSend}
+            />
+          ))}
+        </div>
+      </motion.div>
 
       {/* Messages Container - Only show if messages exist */}
       {messages.length > 0 && (
