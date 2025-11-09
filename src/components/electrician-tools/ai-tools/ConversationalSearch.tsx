@@ -285,7 +285,7 @@ export default function ConversationalSearch() {
   };
 
   return (
-    <div className="flex flex-col h-screen max-w-6xl mx-auto relative pb-safe">
+    <div className="flex flex-col h-screen max-w-6xl mx-auto relative pb-safe overflow-y-auto">
       {/* Empty State - Hero & Categories (only show when no messages) */}
       {messages.length === 0 && (
         <div className="flex-1 px-4 md:px-6 py-4 space-y-8">
