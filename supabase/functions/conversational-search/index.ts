@@ -151,13 +151,13 @@ serve(async (req) => {
     const ragPromises: Array<Promise<any>> = [
       // Always search BS7671 Intelligence (keyword hybrid - fast!)
       supabase.rpc('search_bs7671_intelligence_hybrid', {
-        query_text: queryText,
+        search_keywords: queryText,
         match_count: 8
       }),
       
       // Always search Practical Work Intelligence (keyword hybrid - fast!)
       supabase.rpc('search_practical_work_intelligence_hybrid', {
-        query_text: queryText,
+        search_keywords: queryText,
         match_count: 6,
         filter_trade: null
       })
@@ -167,7 +167,7 @@ serve(async (req) => {
     if (classification.needsDesignKnowledge) {
       ragPromises.push(
         supabase.rpc('search_design_hybrid', {
-          query_text: queryText,
+          search_keywords: queryText,
           match_count: 5
         })
       );
@@ -178,10 +178,15 @@ serve(async (req) => {
     const ragResults = await Promise.all(ragPromises);
     const ragDuration = Date.now() - ragStartTime;
 
-    // Extract results
+    // Extract results with error handling
     const bs7671Results = ragResults[0]?.data || [];
     const practicalResults = ragResults[1]?.data || [];
     const designResults = classification.needsDesignKnowledge ? (ragResults[2]?.data || []) : [];
+
+    // Log any RAG errors
+    if (ragResults[0]?.error) console.error('BS7671 RAG error:', ragResults[0].error);
+    if (ragResults[1]?.error) console.error('Practical RAG error:', ragResults[1].error);
+    if (ragResults[2]?.error) console.error('Design RAG error:', ragResults[2].error);
 
     console.log(`✅ RAG Complete (${ragDuration}ms) | BS7671: ${bs7671Results.length} | Practical: ${practicalResults.length} | Design: ${designResults.length}`);
 

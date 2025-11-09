@@ -259,7 +259,7 @@ export default function ConversationalSearch() {
   };
 
   return (
-    <div className="flex flex-col max-w-5xl mx-auto relative space-y-6">
+    <div className="flex flex-col max-w-6xl mx-auto px-4 md:px-6 relative space-y-8">
       {/* Hero Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -296,7 +296,7 @@ export default function ConversationalSearch() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {CATEGORIES.map((category, idx) => (
             <CategoryCard
               key={idx}
@@ -315,7 +315,7 @@ export default function ConversationalSearch() {
       <div className="relative">
         <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/20 via-elec-blue/20 to-elec-yellow/20 rounded-2xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity" />
         
-        <div className="relative border-2 border-border/50 rounded-2xl bg-card/80 backdrop-blur-sm p-4 shadow-xl transition-all focus-within:border-elec-yellow/50 focus-within:shadow-2xl focus-within:shadow-elec-yellow/10">
+        <div className="relative border-2 border-border/50 rounded-2xl bg-card/80 backdrop-blur-sm p-3 md:p-4 shadow-xl transition-all focus-within:border-elec-yellow/50 focus-within:shadow-2xl focus-within:shadow-elec-yellow/10">
           <div className="flex gap-3">
             <textarea
               ref={inputRef}
@@ -403,11 +403,16 @@ export default function ConversationalSearch() {
               animate={{ opacity: 1, y: 0 }}
               className="flex justify-start"
             >
-              <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl px-4 py-3 flex items-center gap-3 shadow-lg">
-                <Loader2 className="w-4 h-4 animate-spin text-elec-yellow" />
-                <span className="text-sm text-muted-foreground">
-                  Searching BS 7671 regulations...
-                </span>
+              <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl px-4 py-3 shadow-lg">
+                <div className="flex items-center gap-3 mb-2">
+                  <Loader2 className="w-4 h-4 animate-spin text-elec-yellow" />
+                  <span className="text-sm font-medium">Searching knowledge bases...</span>
+                </div>
+                <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                  <span className="px-2 py-1 rounded-md bg-blue-500/10 text-blue-400">BS 7671 Regulations</span>
+                  <span className="px-2 py-1 rounded-md bg-green-500/10 text-green-400">Practical Guides</span>
+                  <span className="px-2 py-1 rounded-md bg-purple-500/10 text-purple-400">Design Knowledge</span>
+                </div>
               </div>
             </motion.div>
           )}
