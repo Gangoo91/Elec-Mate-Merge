@@ -8235,26 +8235,28 @@ export type Database = {
         Args: {
           filter_trade?: string
           match_count?: number
-          query_embedding?: string
+          query_embedding: string
           query_text: string
         }
         Returns: {
-          activity_types: string[]
+          applies_to: string[]
           bs7671_regulations: string[]
+          cable_sizes: string[]
+          confidence_score: number
+          content: string
           equipment_category: string
-          equipment_subcategory: string
-          facet_type: string
+          expected_results: string
           hybrid_score: number
-          id: string
-          installation_method: string
+          keywords: string[]
+          location_types: string[]
+          maintenance_interval: string
           maintenance_tasks: string[]
           materials_needed: string[]
+          power_ratings: string[]
+          practical_work_id: string
           primary_topic: string
-          skill_level: string
-          team_size: number
           test_procedures: string[]
           tools_required: string[]
-          typical_duration_minutes: number
         }[]
       }
       search_pricing: {
