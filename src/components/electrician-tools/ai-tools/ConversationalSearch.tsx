@@ -275,7 +275,7 @@ export default function ConversationalSearch() {
           </h1>
         </div>
         <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
-          Instant answers from BS 7671, the IET Wiring Regulations (18th Edition)
+          Instant BS 7671 answers · 18th Edition compliant
         </p>
       </motion.div>
 
