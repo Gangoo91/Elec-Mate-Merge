@@ -17,13 +17,13 @@ export async function callOpenAIWithRetry(
   logger: any,
   timeoutMs: number = 280000
 ): Promise<any> {
-  logger.info('Calling OpenAI GPT-5 Mini with retry...');
+  logger.info('Calling OpenAI GPT-5 (flagship model) with retry...');
 
   return await withRetry(async () => {
     const response = await callOpenAI(
       {
         messages,
-        model: 'gpt-5-mini-2025-08-07',
+        model: 'gpt-5-2025-08-07', // BEST-IN-CLASS: Flagship GPT-5 for superior reasoning
         max_tokens: 24000,
         tools,
         tool_choice

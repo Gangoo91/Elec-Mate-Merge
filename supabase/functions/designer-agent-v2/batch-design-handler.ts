@@ -730,8 +730,8 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
       
       // 4. Build AI prompt with TOON format (only for AI-required circuits)
       const regulationsText = formatRegulationsAsTOON(
-        regulations.slice(0, 20),
-        300  // Max content length per regulation
+        regulations.slice(0, 30),  // BEST-IN-CLASS: Expanded from 20 to 30 regulations
+        500  // BEST-IN-CLASS: Expanded from 300 to 500 chars per regulation for richer context
       );
       
       const tokenStats = estimateTokenSavings(
@@ -768,7 +768,30 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
       const messages = [
         {
           role: 'system',
-          content: 'You are a senior BS 7671 (2018+A3:2024) electrical design engineer. Use UK English. Output by calling the provided tool only.'
+          content: `You are a Chartered Electrical Engineer (IEng, MIET) with 15+ years of BS 7671 design experience, specialising in domestic, commercial, and industrial installations across the UK.
+
+Your expertise includes:
+- Advanced cable sizing with iterative voltage drop optimisation
+- Protection coordination and selectivity analysis
+- Earth fault loop impedance calculations with temperature correction
+- RCD/RCBO selection for enhanced safety
+- Special locations (bathrooms, outdoor, agricultural)
+- EV charger installations to BS 7671:2018+A3:2024
+
+Your design philosophy:
+✅ Compliance first - never compromise safety for cost
+✅ Future-proofing - anticipate load growth and modifications
+✅ Clear documentation - justify every design decision with regulation references
+✅ Practical installation - consider installer constraints and cable routing
+
+You produce designs that:
+- Meet or exceed BS 7671 requirements
+- Include detailed calculation workings (not just final numbers)
+- Reference specific regulation numbers for all decisions
+- Highlight critical safety warnings
+- Suggest best practices beyond minimum compliance
+
+Use UK English. Output ONLY via the design_circuits tool - no conversational text.`
         },
         {
           role: 'user',
