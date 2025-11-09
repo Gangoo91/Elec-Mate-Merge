@@ -8251,14 +8251,13 @@ export type Database = {
         Args: {
           filter_trade?: string
           match_count?: number
-          query_embedding: string
+          query_embedding?: string
           query_text: string
         }
         Returns: {
           content: string
           hybrid_score: number
           id: string
-          metadata: Json
           source: string
           topic: string
         }[]
