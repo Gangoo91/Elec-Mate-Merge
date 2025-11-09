@@ -261,29 +261,57 @@ export default function ConversationalSearch() {
   return (
     <div className="flex flex-col max-w-5xl mx-auto relative space-y-6">
       {/* Hero Section */}
-      <div className="text-center">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="inline-flex items-center gap-2 mb-3"
-        >
-          <Zap className="w-8 h-8 text-elec-yellow" />
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-elec-yellow via-elec-yellow/80 to-elec-yellow bg-clip-text text-transparent">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center"
+      >
+        <div className="flex items-center justify-center gap-3 mb-3">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-elec-yellow via-elec-yellow/80 to-yellow-600 flex items-center justify-center shadow-lg shadow-elec-yellow/20">
+            <Zap className="w-6 h-6 text-elec-dark" />
+          </div>
+          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-foreground via-foreground/90 to-foreground/80 bg-clip-text text-transparent">
             AI Assistant
           </h1>
-        </motion.div>
-        
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="text-muted-foreground"
-        >
-          Instant answers from BS 7671:2018+A3:2024
-        </motion.p>
-      </div>
+        </div>
+        <p className="text-muted-foreground text-sm md:text-base max-w-2xl mx-auto">
+          Instant answers from BS 7671, the IET Wiring Regulations (18th Edition)
+        </p>
+      </motion.div>
 
-      {/* Premium Input Area - Now at Top */}
+      {/* Electrical Fact - Subtle hint */}
+      <motion.div
+        key={factIndex}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="text-center"
+      >
+        <p className="text-xs text-muted-foreground/70">
+          💡 <span className="font-medium">Did you know?</span> {ELECTRICAL_FACTS[factIndex]}
+        </p>
+      </motion.div>
+
+      {/* Category Cards - Quick Access Templates */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
+          {CATEGORIES.map((category, idx) => (
+            <CategoryCard
+              key={idx}
+              icon={category.icon}
+              title={category.title}
+              description={category.description}
+              examples={category.examples}
+              color={category.color}
+              onClick={handleSend}
+            />
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Premium Input Area */}
       <div className="relative">
         <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/20 via-elec-blue/20 to-elec-yellow/20 rounded-2xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity" />
         
@@ -331,110 +359,79 @@ export default function ConversationalSearch() {
         </div>
       </div>
 
-      {/* Messages Container - No Scroll */}
-      <div className="space-y-4 min-h-[200px]">
-        <AnimatePresence mode="popLayout">
-
-          {messages.map((message, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, x: message.role === 'user' ? 20 : -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-            >
-              {message.role === 'user' ? (
-                <div className="flex justify-end">
-                  <div className="max-w-[85%] rounded-2xl px-4 py-3 bg-gradient-to-br from-elec-yellow to-elec-yellow/90 text-elec-dark shadow-lg shadow-elec-yellow/20">
-                    <div className="whitespace-pre-wrap break-words font-medium">
-                      {message.content}
+      {/* Messages Container - Only show if messages exist */}
+      {messages.length > 0 && (
+        <div className="space-y-4">
+          <AnimatePresence mode="popLayout">
+            {messages.map((message, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: message.role === 'user' ? 20 : -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+              >
+                {message.role === 'user' ? (
+                  <div className="flex justify-end">
+                    <div className="max-w-[85%] rounded-2xl px-4 py-3 bg-gradient-to-br from-elec-yellow to-elec-yellow/90 text-elec-dark shadow-lg shadow-elec-yellow/20">
+                      <div className="whitespace-pre-wrap break-words font-medium">
+                        {message.content}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ) : (
-                <div className="flex justify-start">
-                  <div className="max-w-[90%]">
-                    <InspectorMessage
-                      message={{
-                        role: 'assistant',
-                        content: message.content,
-                        agentName: 'BS 7671 Assistant'
-                      }}
-                      isStreaming={isStreaming && idx === messages.length - 1}
-                    />
+                ) : (
+                  <div className="flex justify-start">
+                    <div className="max-w-[90%]">
+                      <InspectorMessage
+                        message={{
+                          role: 'assistant',
+                          content: message.content,
+                          agentName: 'BS 7671 Assistant'
+                        }}
+                        isStreaming={isStreaming && idx === messages.length - 1}
+                      />
+                    </div>
                   </div>
-                </div>
-              )}
-            </motion.div>
-          ))}
-        </AnimatePresence>
+                )}
+              </motion.div>
+            ))}
+          </AnimatePresence>
 
-        {isSearching && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex justify-start"
-          >
-            <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl px-4 py-3 flex items-center gap-3 shadow-lg">
-              <Loader2 className="w-4 h-4 animate-spin text-elec-yellow" />
-              <span className="text-sm text-muted-foreground">
-                Searching BS 7671 regulations...
-              </span>
-            </div>
-          </motion.div>
-        )}
-
-        <div ref={messagesEndRef} />
-      </div>
-
-      {/* Floating Action Buttons */}
-      {messages.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="absolute top-0 right-0 flex gap-2"
-        >
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleClearConversation}
-            className="border-border/50 bg-card/50 backdrop-blur-sm hover:bg-destructive/10 hover:border-destructive/50 hover:text-destructive"
-          >
-            <Trash2 className="w-4 h-4 mr-2" />
-            Clear
-          </Button>
-        </motion.div>
-      )}
-
-      {/* Category Cards - Always Visible at Bottom */}
-      <div className="mt-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-          {CATEGORIES.map((category, idx) => (
+          {isSearching && (
             <motion.div
-              key={category.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.05 }}
+              className="flex justify-start"
             >
-              <CategoryCard
-                {...category}
-                onClick={handleSend}
-              />
+              <div className="bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl px-4 py-3 flex items-center gap-3 shadow-lg">
+                <Loader2 className="w-4 h-4 animate-spin text-elec-yellow" />
+                <span className="text-sm text-muted-foreground">
+                  Searching BS 7671 regulations...
+                </span>
+              </div>
             </motion.div>
-          ))}
-        </div>
+          )}
 
-        {/* Rotating Electrical Fact */}
-        <motion.div
-          key={factIndex}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          className="text-sm text-muted-foreground/70 text-center mt-6"
-        >
-          <span className="font-medium">Did you know?</span> {ELECTRICAL_FACTS[factIndex]}
-        </motion.div>
-      </div>
+          <div ref={messagesEndRef} />
+
+          {/* Floating Action Button - Clear Conversation */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex justify-end"
+          >
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleClearConversation}
+              className="border-border/50 bg-card/50 backdrop-blur-sm hover:bg-destructive/10 hover:border-destructive/50 hover:text-destructive"
+            >
+              <Trash2 className="w-4 h-4 mr-2" />
+              Clear
+            </Button>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }
