@@ -51,12 +51,12 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
                 </h1>
               ),
               h2: ({ children }) => (
-                <h2 className="text-sm sm:text-base font-semibold mt-4 mb-2 first:mt-0 text-white text-left">
+                <h2 className="text-base sm:text-lg font-bold mt-6 mb-3 first:mt-0 text-white text-left pb-2 border-b-2 border-elec-yellow/30">
                   {children}
                 </h2>
               ),
               h3: ({ children }) => (
-                <h3 className="text-sm font-semibold mt-3 mb-1.5 first:mt-0 text-white text-left">
+                <h3 className="text-sm sm:text-base font-semibold mt-4 mb-2 first:mt-0 text-elec-yellow text-left">
                   {children}
                 </h3>
               ),

@@ -151,13 +151,13 @@ serve(async (req) => {
     const ragPromises: Array<Promise<any>> = [
       // Always search BS7671 Intelligence (keyword hybrid - fast!)
       supabase.rpc('search_bs7671_intelligence_hybrid', {
-        search_keywords: queryText,
+        query_text: queryText,
         match_count: 8
       }),
       
       // Always search Practical Work Intelligence (keyword hybrid - fast!)
       supabase.rpc('search_practical_work_intelligence_hybrid', {
-        search_keywords: queryText,
+        query_text: queryText,
         match_count: 6,
         filter_trade: null
       })
@@ -167,7 +167,7 @@ serve(async (req) => {
     if (classification.needsDesignKnowledge) {
       ragPromises.push(
         supabase.rpc('search_design_hybrid', {
-          search_keywords: queryText,
+          query_text: queryText,
           match_count: 5
         })
       );
@@ -246,20 +246,38 @@ ${knowledgeSources.map(s => `- ${s}`).join('\n')}
 
 Writing style:
 - Write as if you're talking to a colleague - conversational and natural
-- Use paragraphs instead of bullet points wherever possible
-- Start with the main point, then explain the details
-- Only use bullet lists for sequential steps or multiple distinct items that need separation
-- Cite regulation numbers naturally in sentences: "According to § 411.3.3, all circuits..."
+- **Structure your response with clear H2 section headers** (use ## in markdown)
+- Use paragraphs for explanations, bullets only for distinct steps or lists
+- Start with the main point, then explain details
+- Cite regulation numbers naturally: "According to § 411.3.3, all circuits..."
 - Keep responses between 150-300 words unless more detail is needed
 - Use British English
 - Be precise and safety-focused, but friendly and approachable
 
-Example good response style:
-"Right, for bathroom socket circuits, BS 7671 requires 30 mA RCD protection as additional protection (§ 701.411.3). This is on top of the standard automatic disconnection requirements.
+Response structure (use H2 headers for each main section):
+## 1. Main Requirement
+[Conversational paragraph explanation]
 
-You'll also need supplementary equipotential bonding for any exposed metalwork like pipes or radiators (§ 701.413.1.2). The bonding reduces touch voltages to safe levels.
+## 2. Related Requirements  
+[Conversational paragraph explanation]
 
-For the RCD itself, I'd recommend individual RCBOs rather than a single RCD - makes fault-finding much easier and you won't lose the whole circuit if one device trips."
+## 3. Practical Steps (if applicable)
+[Conversational paragraph, then bullet points for steps if needed]
+
+## 4. Summary Checklist (for complex topics)
+[Brief bullet list of key takeaways]
+
+Example good response:
+"Right, for bathroom socket circuits, you need to follow a few key requirements.
+
+## Mandatory RCD Protection
+BS 7671 requires 30 mA RCD protection as additional protection (§ 701.411.3). This is on top of the standard automatic disconnection requirements. The key thing is that this applies to all socket-outlets in rooms containing a bath or shower.
+
+## Equipotential Bonding
+You'll also need supplementary equipotential bonding for any exposed metalwork like pipes or radiators (§ 701.413.1.2). The bonding reduces touch voltages to safe levels during fault conditions.
+
+## Practical Implementation
+For the RCD itself, I'd recommend individual RCBOs rather than a single RCD covering multiple circuits. Makes fault-finding much easier and you won't lose the whole installation if one device trips."
 
 ${regulationsContext}`;
 
