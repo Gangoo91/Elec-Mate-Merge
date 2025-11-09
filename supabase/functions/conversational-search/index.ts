@@ -147,27 +147,53 @@ serve(async (req) => {
     const classification = classifyQuery(queryText);
     console.log(`📊 Query Type: ${classification.type} | Needs Design: ${classification.needsDesignKnowledge}`);
 
+    // STEP 1.5: Generate query embedding for hybrid RAG searches
+    console.log('🔢 Generating query embedding');
+    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${openAiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'text-embedding-3-small',
+        input: queryText
+      })
+    });
+
+    if (!embeddingResponse.ok) {
+      const errorText = await embeddingResponse.text();
+      console.error('❌ Embedding generation failed:', embeddingResponse.status, errorText);
+      throw new Error(`Embedding generation failed: ${embeddingResponse.status}`);
+    }
+
+    const embeddingData = await embeddingResponse.json();
+    const queryEmbedding = embeddingData.data[0].embedding;
+    console.log(`✅ Embedding generated (${queryEmbedding.length} dimensions)`);
+
     // STEP 2: Conditional Parallel RAG Search
     const ragPromises: Array<Promise<any>> = [
-      // Always search BS7671 Intelligence (keyword hybrid - fast!)
+      // BS7671 Intelligence (keyword hybrid)
       supabase.rpc('search_bs7671_intelligence_hybrid', {
-        query_text: queryText,
+        search_keywords: queryText,
         match_count: 8
       }),
       
-      // Always search Practical Work Intelligence (keyword hybrid - fast!)
+      // Practical Work Intelligence (hybrid with embeddings)
       supabase.rpc('search_practical_work_intelligence_hybrid', {
         query_text: queryText,
+        query_embedding: queryEmbedding,
         match_count: 6,
         filter_trade: null
       })
     ];
 
-    // Conditionally add Design Knowledge (vector search - slower, only when needed)
+    // Conditionally add Design Knowledge (hybrid with embeddings)
     if (classification.needsDesignKnowledge) {
       ragPromises.push(
         supabase.rpc('search_design_hybrid', {
           query_text: queryText,
+          query_embedding: queryEmbedding,
           match_count: 5
         })
       );
