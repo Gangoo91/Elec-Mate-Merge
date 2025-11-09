@@ -7,6 +7,113 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Query Classification for Smart RAG Routing
+interface QueryClassification {
+  type: 'regulation' | 'practical' | 'design' | 'general';
+  needsDesignKnowledge: boolean;
+  weights: {
+    bs7671: number;
+    practical: number;
+    design: number;
+  };
+}
+
+function classifyQuery(query: string): QueryClassification {
+  const lowerQuery = query.toLowerCase();
+  
+  // Regulation-focused: explicit reg numbers or "what does" questions
+  if (/§|\d{3}\.\d|regulation \d|part \d|chapter \d/.test(query) || 
+      /what (does|is)|define|definition/.test(lowerQuery)) {
+    return {
+      type: 'regulation',
+      needsDesignKnowledge: false,
+      weights: { bs7671: 2.0, practical: 0.5, design: 0.3 }
+    };
+  }
+  
+  // Practical-focused: installation, testing, procedures
+  if (/how (do|to)|install|procedure|steps|test|commission|inspect/.test(lowerQuery)) {
+    return {
+      type: 'practical',
+      needsDesignKnowledge: false,
+      weights: { bs7671: 0.7, practical: 2.0, design: 0.5 }
+    };
+  }
+  
+  // Design-focused: calculations, sizing, voltage drop
+  if (/size|calculate|design|kw|amp|voltage drop|cable|circuit|load|diversity/.test(lowerQuery)) {
+    return {
+      type: 'design',
+      needsDesignKnowledge: true,
+      weights: { bs7671: 0.8, practical: 0.5, design: 2.0 }
+    };
+  }
+  
+  // General: balanced approach with design knowledge
+  return {
+    type: 'general',
+    needsDesignKnowledge: true,
+    weights: { bs7671: 1.0, practical: 0.9, design: 0.95 }
+  };
+}
+
+// RRF (Reciprocal Rank Fusion) for intelligent result merging
+interface RagResult {
+  id?: string;
+  regulation_number?: string;
+  content?: string;
+  regulation_text?: string;
+  hybrid_score?: number;
+  similarity?: number;
+  primary_topic?: string;
+}
+
+interface ScoredResult {
+  item: RagResult;
+  score: number;
+  sources: string[];
+}
+
+function fuseResults(
+  sources: Array<{ data: RagResult[] | null; weight: number; source: string }>
+): ScoredResult[] {
+  const k = 60; // RRF constant
+  const scores = new Map<string, ScoredResult>();
+  
+  sources.forEach(({ data, weight, source }) => {
+    if (!data || data.length === 0) return;
+    
+    data.forEach((item, rank) => {
+      // Generate unique ID for deduplication
+      const itemId = item.id || 
+                     item.regulation_number || 
+                     item.content?.substring(0, 50) || 
+                     `${source}-${rank}`;
+      
+      // RRF score: 1 / (k + rank)
+      const rrfScore = weight / (k + rank + 1);
+      
+      const existing = scores.get(itemId);
+      if (existing) {
+        existing.score += rrfScore;
+        if (!existing.sources.includes(source)) {
+          existing.sources.push(source);
+        }
+      } else {
+        scores.set(itemId, {
+          item,
+          score: rrfScore,
+          sources: [source]
+        });
+      }
+    });
+  });
+  
+  return Array.from(scores.values())
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 12); // Top 12 results
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -33,40 +140,112 @@ serve(async (req) => {
     const lastUserMessage = messages.filter((m: any) => m.role === 'user').pop();
     const queryText = lastUserMessage?.content || '';
 
-    console.log('🔍 RAG Search for:', queryText);
+    console.log('🔍 Query:', queryText);
 
-    // Parallel RAG search using hybrid intelligence search
-    const { data: ragResults, error: ragError } = await supabase.rpc(
-      'search_bs7671_intelligence_hybrid',
-      {
+    // STEP 1: Classify query for smart RAG routing
+    const ragStartTime = Date.now();
+    const classification = classifyQuery(queryText);
+    console.log(`📊 Query Type: ${classification.type} | Needs Design: ${classification.needsDesignKnowledge}`);
+
+    // STEP 2: Conditional Parallel RAG Search
+    const ragPromises: Array<Promise<any>> = [
+      // Always search BS7671 Intelligence (keyword hybrid - fast!)
+      supabase.rpc('search_bs7671_intelligence_hybrid', {
         query_text: queryText,
         match_count: 8
-      }
-    );
+      }),
+      
+      // Always search Practical Work Intelligence (keyword hybrid - fast!)
+      supabase.rpc('search_practical_work_intelligence_hybrid', {
+        query_text: queryText,
+        match_count: 6,
+        filter_trade: null
+      })
+    ];
 
-    if (ragError) {
-      console.error('RAG search error:', ragError);
+    // Conditionally add Design Knowledge (vector search - slower, only when needed)
+    if (classification.needsDesignKnowledge) {
+      ragPromises.push(
+        supabase.rpc('search_design_hybrid', {
+          query_text: queryText,
+          match_count: 5
+        })
+      );
+      console.log('🎯 Including Design Knowledge (vector search)');
     }
 
-    // Format regulations as context
+    // Execute all searches in parallel
+    const ragResults = await Promise.all(ragPromises);
+    const ragDuration = Date.now() - ragStartTime;
+
+    // Extract results
+    const bs7671Results = ragResults[0]?.data || [];
+    const practicalResults = ragResults[1]?.data || [];
+    const designResults = classification.needsDesignKnowledge ? (ragResults[2]?.data || []) : [];
+
+    console.log(`✅ RAG Complete (${ragDuration}ms) | BS7671: ${bs7671Results.length} | Practical: ${practicalResults.length} | Design: ${designResults.length}`);
+
+    // STEP 3: RRF Fusion - merge results intelligently
+    const fusionStartTime = Date.now();
+    const sources = [
+      { data: bs7671Results, weight: classification.weights.bs7671, source: 'regulation' },
+      { data: practicalResults, weight: classification.weights.practical, source: 'practical' }
+    ];
+
+    if (classification.needsDesignKnowledge && designResults.length > 0) {
+      sources.push({ data: designResults, weight: classification.weights.design, source: 'design' });
+    }
+
+    const fusedResults = fuseResults(sources);
+    const fusionDuration = Date.now() - fusionStartTime;
+    console.log(`🔀 Fusion Complete (${fusionDuration}ms) | Top ${fusedResults.length} results`);
+
+    // STEP 4: Format context dynamically based on available sources
     let regulationsContext = '';
-    if (ragResults && ragResults.length > 0) {
-      console.log(`✅ Found ${ragResults.length} relevant regulations`);
-      regulationsContext = '\n\n[RELEVANT BS 7671 REGULATIONS]\n' + 
-        ragResults.map((r: any) => 
-          `§ ${r.regulation_number}: ${r.content || r.regulation_text || ''}`
+    
+    // Add BS7671 regulations
+    const bs7671Items = fusedResults.filter(r => r.sources.includes('regulation')).slice(0, 5);
+    if (bs7671Items.length > 0) {
+      regulationsContext += '\n\n[RELEVANT BS 7671 REGULATIONS]\n' + 
+        bs7671Items.map(r => 
+          `§ ${r.item.regulation_number}: ${r.item.content || r.item.regulation_text || ''}`
         ).join('\n\n');
     }
 
-    // System prompt optimized for BS 7671 expertise
-    const systemPrompt = `You are an expert on BS 7671 (UK IET Wiring Regulations, 18th Edition). You provide accurate, practical guidance for electricians.
+    // Add Practical Work guidance
+    const practicalItems = fusedResults.filter(r => r.sources.includes('practical')).slice(0, 4);
+    if (practicalItems.length > 0) {
+      regulationsContext += '\n\n[PRACTICAL GUIDANCE]\n' + 
+        practicalItems.map(r => 
+          `• ${r.item.primary_topic || 'Guidance'}: ${r.item.content || ''}`
+        ).join('\n\n');
+    }
+
+    // Add Design Knowledge (if available)
+    const designItems = fusedResults.filter(r => r.sources.includes('design')).slice(0, 3);
+    if (designItems.length > 0) {
+      regulationsContext += '\n\n[DESIGN KNOWLEDGE]\n' + 
+        designItems.map(r => 
+          `• ${r.item.content || ''}`
+        ).join('\n\n');
+    }
+
+    // STEP 5: Build dynamic system prompt
+    const knowledgeSources = [];
+    if (bs7671Items.length > 0) knowledgeSources.push('BS 7671 regulations');
+    if (practicalItems.length > 0) knowledgeSources.push('practical installation procedures');
+    if (designItems.length > 0) knowledgeSources.push('design calculations');
+
+    const systemPrompt = `You are an expert on BS 7671 (UK IET Wiring Regulations, 18th Edition) with access to:
+${knowledgeSources.map(s => `- ${s}`).join('\n')}
 
 When answering:
 - Cite specific regulation numbers using this format: § 411.3.3
-- Explain technical concepts in clear, professional British English
-- Provide practical application advice where relevant
+- Provide practical steps when available
+- Include design calculations for sizing/selection questions
 - Keep responses conversational and under 300 words unless detail is requested
 - Be precise and safety-focused
+- Use British English
 
 ${regulationsContext}`;
 
@@ -76,7 +255,8 @@ ${regulationsContext}`;
       ...messages
     ];
 
-    console.log('🤖 Calling OpenAI GPT-5 Mini with streaming...');
+    const totalPrepTime = Date.now() - ragStartTime;
+    console.log(`🤖 Calling GPT-5 Mini (prep: ${totalPrepTime}ms)`);
 
     // Call OpenAI API with streaming
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -90,7 +270,6 @@ ${regulationsContext}`;
         messages: openAiMessages,
         stream: true,
         max_completion_tokens: 2000
-        // NO temperature parameter for GPT-5
       }),
     });
 
@@ -103,6 +282,16 @@ ${regulationsContext}`;
           JSON.stringify({ error: 'Rate limit exceeded. Please wait a moment and try again.' }),
           { 
             status: 429, 
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          }
+        );
+      }
+      
+      if (response.status === 402) {
+        return new Response(
+          JSON.stringify({ error: 'Payment required. Please add credits to your workspace.' }),
+          { 
+            status: 402, 
             headers: { ...corsHeaders, 'Content-Type': 'application/json' }
           }
         );
