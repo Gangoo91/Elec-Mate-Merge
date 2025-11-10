@@ -62,6 +62,22 @@ serve(async (req) => {
     // Step 1: Identify component from image
     logger.info('Analyzing component image');
     
+    // Fetch and convert image to base64
+    let imageBase64: string;
+    if (component_image_url.startsWith('data:')) {
+      // Already base64
+      imageBase64 = component_image_url.split(',')[1];
+    } else {
+      // Fetch from URL and convert to base64
+      const imageResponse = await fetch(component_image_url);
+      if (!imageResponse.ok) {
+        throw new Error(`Failed to fetch image: ${imageResponse.status}`);
+      }
+      const imageBuffer = await imageResponse.arrayBuffer();
+      const base64 = btoa(String.fromCharCode(...new Uint8Array(imageBuffer)));
+      imageBase64 = base64;
+    }
+    
     const imageAnalysisData = await withRetry(
       () => withTimeout(
         fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`, {
@@ -86,7 +102,7 @@ Be concise and technical.`
                 {
                   inlineData: {
                     mimeType: 'image/jpeg',
-                    data: component_image_url.split(',')[1] || component_image_url
+                    data: imageBase64
                   }
                 }
               ]
