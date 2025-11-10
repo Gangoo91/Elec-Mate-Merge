@@ -204,7 +204,7 @@ export async function callAI(
 
         // Add explicit timeout to prevent indefinite hanging
         const controller = new AbortController();
-        const fetchTimeout = setTimeout(() => controller.abort(), 120000); // 2 min max per attempt
+        const fetchTimeout = setTimeout(() => controller.abort(), timeoutMs); // Use passed timeout parameter
 
         let response;
         try {
@@ -223,7 +223,7 @@ export async function callAI(
           
           // Handle abort as timeout
           if (fetchError.name === 'AbortError') {
-            throw new AIError('OpenAI API call timed out after 120s', providerName, undefined, true);
+            throw new AIError(`AI API call timed out after ${timeoutMs}ms`, providerName, undefined, true);
           }
           throw fetchError;
         }

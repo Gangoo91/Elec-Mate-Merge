@@ -540,10 +540,10 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
 
     // ==== CALL 1: CORE COST ESTIMATE (Faster, no profitability) ====
     logger.debug('Calling AI for core cost estimate', { provider: 'OpenAI' });
-    logger.info('🤖 Calling OpenAI GPT-5-Mini for core estimate', {
-      model: 'gpt-5-mini-2025-08-07',
-      maxTokens: 12000,
-      timeoutMs: 280000, // Extended to 280s for complex multi-circuit designs
+    logger.info('🤖 Calling OpenAI GPT-5-Nano for core estimate', {
+      model: 'gpt-5-nano-2025-08-07',
+      maxTokens: 8000,
+      timeoutMs: 180000, // 3 minutes is plenty for nano
       hasTools: true,
       splitMode: 'core-estimate'
     });
@@ -554,11 +554,11 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
     let coreResult;
     try {
       coreResult = await callAI(OPENAI_API_KEY, {
-        model: 'gpt-5-mini-2025-08-07',
+        model: 'gpt-5-nano-2025-08-07', // Fast, accurate structured output
         systemPrompt,
         userPrompt,
-        maxTokens: 12000, // Increased for enhanced intelligence features
-        timeoutMs: 280000, // Extended to 280s for complex designs
+        maxTokens: 8000,
+        timeoutMs: 180000, // 3 minutes for nano
         jsonMode: true,
         tools: [{
         type: 'function',
@@ -1124,11 +1124,11 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
           
           try {
             coreResult = await callAI(OPENAI_API_KEY, {
-              model: 'gpt-5-2025-08-07',
+              model: 'gpt-5-mini-2025-08-07', // Fallback to mini if nano fails
               systemPrompt,
               userPrompt,
-              maxTokens: 12000,
-              timeoutMs: 120000,
+              maxTokens: 8000,
+              timeoutMs: 180000,
               jsonMode: true,
               tools: [{
                 type: 'function',
