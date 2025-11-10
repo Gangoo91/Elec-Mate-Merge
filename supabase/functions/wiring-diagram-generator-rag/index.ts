@@ -124,14 +124,13 @@ serve(async (req) => {
               role: 'user',
               parts: [
                 {
-                  text: `Identify this electrical component. Provide:
-1. Component type (e.g., "Electric Shower", "Socket Outlet", "Light Switch")
-2. Ratings visible (amps/watts/volts)
-3. Manufacturer and model (if visible)
-4. Terminal markings (L, N, E, COM, L1, L2, etc.)
-5. Any specific features (2-gang, 3-position, IP rating, etc.)
+                  text: `Identify this electrical component CONCISELY (max 10 bullet points):
+• Component type (e.g., "Electric Shower", "Consumer Unit", "Socket Outlet")
+• Key ratings (amps/watts/volts)
+• Main terminal labels (L, N, E, COM, L1, L2, etc.)
+• Manufacturer/model if clearly visible
 
-Be concise and technical.`
+Keep it brief - list facts only, no explanations.`
                 },
                 {
                   inlineData: {
@@ -142,7 +141,7 @@ Be concise and technical.`
               ]
             }],
             generationConfig: {
-              maxOutputTokens: 1024,
+              maxOutputTokens: 2048,
               temperature: 0.2
             }
           }),
