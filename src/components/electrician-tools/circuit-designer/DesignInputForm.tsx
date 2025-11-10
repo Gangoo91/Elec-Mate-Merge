@@ -197,7 +197,7 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
 
     if (circuits.length === 0 && !promptDescription.trim()) {
       toast.error('Circuits or description required', {
-        description: 'Please either add circuits manually or describe your requirements in the AI prompt'
+        description: 'Use the AI prompt field at the top to describe your requirements, or manually add circuits below'
       });
       return;
     }

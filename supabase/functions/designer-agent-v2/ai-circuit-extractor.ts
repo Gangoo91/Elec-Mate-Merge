@@ -80,8 +80,8 @@ Extract ALL circuits with their specifications.`;
     const { callOpenAI, withRetry, withTimeout, AIProviderError } = await import('../_shared/ai-providers.ts');
 
     // Timeout configuration: allow more time for complex circuit extractions
-    const RETRY_TIMEOUT = 35000; // 35s total for all retries
-    const PER_ATTEMPT_TIMEOUT = 30000; // 30s per OpenAI attempt (increased from 20s)
+    const RETRY_TIMEOUT = 90000; // 90s total (1.5 minutes)
+    const PER_ATTEMPT_TIMEOUT = 45000; // 45s per OpenAI attempt
     
     // FIX 1: Wrap retry in timeout (NOT the OpenAI call itself)
     const aiExtractionPromise = withTimeout(
@@ -340,11 +340,11 @@ function parseCircuitsWithRegex(prompt: string, logger: any): any[] {
       }
     ];
     
-    // Find first matching category (50%+ keyword match)
+    // Find first matching category (2+ keywords OR 40%+ match)
     for (const inference of keywordInference) {
       const matchCount = inference.keywords.filter(kw => lowerPrompt.includes(kw)).length;
       
-      if (matchCount / inference.keywords.length >= 0.5) {
+      if (matchCount >= 2 || matchCount / inference.keywords.length >= 0.4) {
         logger.info(`📝 Regex inferred circuits from keywords: ${inference.keywords.join(', ')}`);
         circuits.push(...inference.circuits.map((c, i) => ({
           ...c,
