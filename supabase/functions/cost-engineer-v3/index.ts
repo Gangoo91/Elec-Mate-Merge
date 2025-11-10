@@ -405,128 +405,36 @@ serve(async (req) => {
     // SPLIT AI CALLS: Core estimate first, then profitability (prevents timeout)
     const systemPrompt = `UK Electrical Cost Engineer. September 2025.
 
-${pricingContext}
+${pricingContext ? `DATABASE PRICING (PRIORITY):\n${pricingContext.substring(0, 1000)}\n` : ''}
+${practicalWorkContext ? `INSTALL METHODS:\n${practicalWorkContext.substring(0, 800)}\n` : ''}
+${regulationsContext ? `REGULATIONS:\n${regulationsContext.substring(0, 600)}\n` : ''}
+${labourTimeContext ? `${labourTimeContext.substring(0, 500)}\n` : ''}
 
-CABLE RULES:
-- Indoor: T&E cable
-- Outdoor/garden: SWA cable (armoured)
-- Underground: SWA at 600mm depth
-- Factory: SWA for exposed runs
+CORE RULES:
+• Indoor: T&E cable | Outdoor: SWA cable | Underground: SWA @ 600mm
+• Regional rate: ${detectedRegion} £${adjustedLabourRate.toFixed(2)}/hr
+• Overheads: £${AUTO_OVERHEADS_2025.perJobDay}/day
+• Complexity: ${complexityLabel} (${complexityRating}/5) - ${complexityRating >= 3 ? `+${complexityRating >= 4 ? '25%' : '20%'} margin` : '15% margin'}
+• Waste: Cable ${WASTE_FACTORS.cable * 100}%, Materials ${WASTE_FACTORS.materials * 100}%
+• VAT: 20% on all items
 
-${practicalWorkContext ? `PRACTICAL INSTALLATION METHODS (PRIORITY):\n${practicalWorkContext}\n` : ''}
-${regulationsContext ? `REGULATORY REQUIREMENTS:\n${regulationsContext}\n` : ''}
-${labourTimeContext ? `${labourTimeContext}\n` : ''}
+LABOUR ESTIMATES (use handbook data if available, else):
+${parsedEntities.jobType === 'board_change' ? 
+  `• CU replacement: 10hrs (7h install + 3h test) @ £${adjustedLabourRate.toFixed(2)}/hr` :
+  `• 3-bed rewire: 45hrs (24h first + 16h second + 5h test)
+• Extensions: 0.5hr/socket, 0.35hr/light
+• Showers: 4hrs | Cooker: 3hrs
+• Scale: 1-bed (0.6x), 2-bed (0.7x), 4-bed (1.3x), 5-bed (1.6x)`}
 
-REGIONAL PRICING: ${detectedRegion} rate £${adjustedLabourRate.toFixed(2)}/hr (base £${COST_ENGINEER_PRICING.ELECTRICIAN_RATE_PER_HOUR}/hr)
-OVERHEADS: £${AUTO_OVERHEADS_2025.perJobDay}/day (van, tools, insurance, admin)
-${parsedEntities.jobType === 'rewire' || /rewire|consumer unit/.test(query) ? `COMPLIANCE: Building Control £${AUTO_OVERHEADS_2025.certification.buildingControl}, NICEIC £${AUTO_OVERHEADS_2025.certification.niceicPerCircuit}/circuit` : ''}
-COMPLEXITY: ${complexityLabel} (${complexityRating}/5) - ${complexityRating >= 3 ? `High risk: +${complexityRating >= 4 ? '25%' : '20%'} margin, +${complexityRating * 10}% time` : '15% standard margin'}
-WASTE: Cable ${WASTE_FACTORS.cable * 100}%, Materials ${WASTE_FACTORS.materials * 100}%${complexityRating >= 3 ? `, Complex +${WASTE_FACTORS.complexJob * 100}%` : ''}
+CRITICAL MATH:
+• materials.subtotal = Σ(item totals with markup)
+• labour.subtotal = Σ(task totals)
+• summary.subtotal = materials.subtotal + labour.subtotal (NET before VAT)
+• summary.vat = subtotal × 0.20
+• summary.grandTotal = subtotal + vat
+• NO hidden margins in subtotal!
 
-LABOUR CALCULATION RULES:
-${labourTimeResults.length > 0 ? `**PRIORITY: Use labour time standards from PROJECT-AND-COST-ENGINEERS-HANDBOOK above**
-
-If specific task found in handbook:
-- Use exact time from handbook
-- Adjust for complexity, access, team size
-- Show breakdown: setup + installation + testing
-
-If NOT found in handbook, use these fallback estimates:` : ''}
-${parsedEntities.jobType === 'board_change' ?
-  `- Consumer unit replacement: 7hrs install + 3hrs testing = 10hrs @ £${adjustedLabourRate.toFixed(2)}/hr` :
-  `- Rewire (3-bed): 24hrs first fix + 16hrs second fix + 5hrs testing = 45hrs
-- Extensions: 0.5hr per socket, 0.35hr per light, +1hr setup/testing
-- Showers: 4hrs install + testing
-- Cooker circuits: 3hrs install + testing
-- Scale by property: 1-bed (0.6x), 2-bed (0.7x), 4-bed (1.3x), 5-bed (1.6x)`}
-- DO NOT add "Contingency" as a labour line item
-${labourTimeResults.length > 0 ? `\n**REMINDER**: Prioritise handbook data above before using fallback estimates!` : ''}
-
-TIMESCALE CALCULATION:
-- First fix: 0.5-0.7 days per 10m² floor area (chasing, cabling, conduit)
-- Second fix: 0.3-0.4 days per 10m² floor area (accessories, consumer unit, downlights)
-- Testing: 0.5-1 day per property (full EICR testing + certification)
-- Buffer ${complexityRating >= 3 ? '15-20%' : '10-15%'} for ${complexityRating >= 3 ? 'high-complexity' : 'standard'} jobs
-- Break down by phases: First Fix → Second Fix → Testing & Handover
-- Identify critical path and dependencies
-- Working days: Mon-Fri (5 days/week standard)
-
-MATERIAL QUANTITY RULES:
-${parsedEntities.consumerUnitWays ? 
-  `- Consumer unit: ${parsedEntities.consumerUnitWays}-way with RCD/RCBO protection` :
-  '- Consumer unit: 8-10 way with RCD protection (default for 3-bed)'
-}
-${parsedEntities.circuitCount ? 
-  `- Number of circuits: ${parsedEntities.circuitCount}` : 
-  ''
-}
-${parsedEntities.jobType === 'board_change' ?
-  `- JOB TYPE: Consumer unit replacement only - NO cable runs unless explicitly mentioned
-  - Include new tails if specified (16mm² tails, meter to CU)
-  - RCBO per circuit or dual RCD configuration based on budget` :
-  `- 2.5mm² T&E: 150-200m (50-65m per bedroom + common areas)
-- 1.5mm² T&E: 100-150m (35-50m per bedroom + common areas)
-- 6mm² T&E: 25-35m (shower circuits only)
-- 10mm² T&E: 15-25m (cooker circuit only)
-- Sockets: 24-30 (8-10 per bedroom + common)
-- Light switches: 10-12
-- Downlights: 12-16 (if LED refit)
-Scale by bedrooms: 1-bed (0.5x), 2-bed (0.7x), 4-bed (1.3x), 5-bed (1.6x)`
-}
-
-LABOUR RATES:
-- Qualified Electrician: £50.00/hour
-- Apprentice/Improver: £25.00/hour
-For jobs >40 hours, consider 2-person team (electrician + apprentice = £75/hr combined, reduces time by 30%)
-
-PRICING RULES:
-- Material markup: +${COST_ENGINEER_PRICING.MATERIAL_MARKUP_PERCENT}% on wholesale
-- VAT: ${COST_ENGINEER_PRICING.VAT_RATE}%
-
-CRITICAL CALCULATION RULES:
-- materials.subtotal = sum of all material item totals (with markup already included in unitPrice)
-- materials.vat = materials.subtotal × 0.20
-- materials.total = materials.subtotal + materials.vat
-- labour.subtotal = sum of all labour task totals
-- labour.vat = labour.subtotal × 0.20
-- labour.total = labour.subtotal + labour.vat
-- summary.subtotal = materials.subtotal + labour.subtotal (NET TOTAL before VAT)
-- summary.vat = materials.vat + labour.vat
-- summary.grandTotal = materials.total + labour.total
-- DO NOT add any overhead, margin, or profit to summary.subtotal - it must equal materials.subtotal + labour.subtotal exactly
-
-ALTERNATIVE QUOTES:
-1. BUDGET: Minimum BS 7671 compliant
-2. STANDARD: Recommended specification
-3. PREMIUM: High-spec with smart features
-
-ORDER LIST:
-- Group materials by supplier (CEF, TLC, etc)
-- Include product codes and delivery estimates
-
-INSTRUCTIONS:
-1. Match materials to database (prefer database over fallback)
-2. Use realistic quantities (see rules above)
-3. Calculate labour realistically (45hrs for 3-bed rewire: 24h first fix + 16h second fix + 5h testing)
-4. For large jobs (>40hrs), suggest 2-person team
-5. Mark items as "inDatabase: true/false"
-6. Identify value engineering opportunities
-7. DO NOT include "Contingency" as a labour task - buffer is already built into time estimates
-
-${region ? `Region: ${region}\n` : ''}${contextSection}
-
-Output compact JSON (max 1200 tokens) with timescales, alternatives, and orderList:
-{
-  "response": "Cost analysis narrative",
-  "materials": { "items": [...], "subtotal": 0, "vat": 0, "total": 0 },
-  "labour": { "tasks": [...], "subtotal": 0, "vat": 0, "total": 0 },
-  "summary": { "materialsTotal": 0, "labourTotal": 0, "subtotal": 0, "vat": 0, "grandTotal": 0 },
-  "timescales": {"phases": [...], "totalDays": 0, "totalWeeks": 0, "startToFinish": "...", "criticalPath": "...", "assumptions": [...]},
-  "alternatives": {"budget": {...}, "standard": {...}, "premium": {...}, "recommended": "standard"},
-  "orderList": {"bySupplier": {...}, "totalItems": 0, "estimatedDelivery": "...", "notes": [...]},
-  "valueEngineering": [...],
-  "suggestedNextAgents": [...]
-}`;
+Return JSON with: response, materials, labour, summary, timescales, alternatives, orderList, compliance, complexity, siteChecklist, valueEngineering, upsells, conversations, pipeline`;
 
     const userPrompt = `Cost estimate for: ${query}
 ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `\nLabour: ${labourHours}hrs` : ''}
@@ -540,10 +448,10 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
 
     // ==== CALL 1: CORE COST ESTIMATE (Faster, no profitability) ====
     logger.debug('Calling AI for core cost estimate', { provider: 'OpenAI' });
-    logger.info('🤖 Calling OpenAI GPT-5-Nano for core estimate', {
-      model: 'gpt-5-nano-2025-08-07',
+    logger.info('🤖 Calling OpenAI GPT-4o-mini for core estimate', {
+      model: 'gpt-4o-mini',
       maxTokens: 8000,
-      timeoutMs: 180000, // 3 minutes is plenty for nano
+      timeoutMs: 120000, // 2 minutes for gpt-4o-mini
       hasTools: true,
       splitMode: 'core-estimate'
     });
@@ -554,11 +462,11 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
     let coreResult;
     try {
       coreResult = await callAI(OPENAI_API_KEY, {
-        model: 'gpt-5-nano-2025-08-07', // Fast, accurate structured output
+        model: 'gpt-4o-mini', // Stable, proven reliable
         systemPrompt,
         userPrompt,
         maxTokens: 8000,
-        timeoutMs: 180000, // 3 minutes for nano
+        timeoutMs: 120000, // 2 minutes sufficient
         jsonMode: true,
         tools: [{
         type: 'function',
