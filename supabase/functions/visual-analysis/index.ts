@@ -526,11 +526,9 @@ RESPONSE REQUIREMENTS:
 
     console.log(`🚀 Calling Direct Gemini API (gemini-2.5-flash)...`);
 
-    // Both component_identify and fault_diagnosis need extra time due to increased token limits
+    // All modes now use 4000 tokens in full mode, so all need extended timeout
     // Timeout must be proportional to maxOutputTokens (2500-4000 tokens)
-    const timeout = (analysis_settings.mode === 'component_identify' || analysis_settings.mode === 'fault_diagnosis')
-      ? (analysis_settings.fast_mode ? 24000 : 30000)  // 24s fast, 30s full for high-token modes
-      : (analysis_settings.fast_mode ? 12000 : 20000); // 12s fast, 20s full for other modes
+    const timeout = analysis_settings.fast_mode ? 24000 : 30000; // 24s fast, 30s full for all modes
     // Component identification needs more tokens due to comprehensive structured response
     // Gemini 2.5 Flash uses internal reasoning (thoughts) that count against token limit
     const maxTokens = analysis_settings.mode === 'component_identify' 
