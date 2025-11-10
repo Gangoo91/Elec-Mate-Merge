@@ -41,7 +41,7 @@ const OrderListPanel = ({ orderList }: OrderListPanelProps) => {
   const handleExportCSV = () => {
     let csv = 'Supplier,Code,Description,Quantity,Unit,Unit Price,Total\n';
     
-    Object.entries(orderList.bySupplier).forEach(([supplier, data]) => {
+    Object.entries(orderList.bySupplier || {}).forEach(([supplier, data]) => {
       const items = data.items || [];
       items.forEach(item => {
         csv += `"${supplier}","${item.code || 'N/A'}","${item.description}",${item.quantity},"${item.unit}",${item.unitPrice},${item.total}\n`;
@@ -101,7 +101,7 @@ const OrderListPanel = ({ orderList }: OrderListPanelProps) => {
 
         {/* Supplier Breakdown */}
         <div className="space-y-4">
-          {Object.entries(orderList.bySupplier).map(([supplier, data]) => (
+          {Object.entries(orderList.bySupplier || {}).map(([supplier, data]) => (
             <div 
               key={supplier}
               className="p-5 rounded-xl bg-elec-dark/40 border-2 border-elec-yellow/10 space-y-4"

@@ -750,7 +750,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                     items: { type: 'string' }
                   }
                 },
-                required: ['bySupplier', 'totalItems']
+                required: ['totalItems'] // bySupplier is optional for graceful degradation
               },
               compliance: {
                 type: 'object',
@@ -964,6 +964,48 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       
       if (!coreResult.pipeline) {
         coreResult.pipeline = [];
+      }
+      
+      // Add graceful degradation for missing orderList
+      if (!coreResult.orderList || !coreResult.orderList.bySupplier) {
+        logger.info('OrderList missing, generating default from materials');
+        
+        // Group materials by supplier
+        const bySupplier: Record<string, { items: any[], subtotal: number, accountNumber?: string }> = {};
+        let totalItems = 0;
+        
+        if (coreResult.materials && coreResult.materials.items) {
+          coreResult.materials.items.forEach((material: any) => {
+            const supplier = material.supplier || 'CEF/Rexel';
+            
+            if (!bySupplier[supplier]) {
+              bySupplier[supplier] = {
+                items: [],
+                subtotal: 0,
+                accountNumber: supplier === 'CEF/Rexel' ? 'Use your trade account' : undefined
+              };
+            }
+            
+            bySupplier[supplier].items.push({
+              code: material.code || undefined,
+              description: material.name,
+              quantity: material.quantity,
+              unit: material.unit || 'ea',
+              unitPrice: material.unitCost || 0,
+              total: material.total
+            });
+            
+            bySupplier[supplier].subtotal += material.total;
+            totalItems += material.quantity;
+          });
+        }
+        
+        coreResult.orderList = {
+          bySupplier,
+          totalItems,
+          estimatedDelivery: '1-2 working days (trade counter collection)',
+          notes: ['Order list generated from materials breakdown', 'Verify stock availability before ordering']
+        };
       }
     }
 
