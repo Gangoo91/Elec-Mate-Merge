@@ -25,6 +25,46 @@ const COST_ENGINEER_PRICING = {
   VAT_RATE: 20
 };
 
+// ===== AUTOMATIC OVERHEADS 2025 (UK Industry Averages) =====
+const AUTO_OVERHEADS_2025 = {
+  monthly: {
+    van: 450,          // Insurance + fuel + maintenance
+    tools: 150,        // Depreciation + insurance
+    insurance: 120,    // Public liability + professional indemnity
+    admin: 100,        // Software, phone, accounting
+    marketing: 80,     // Website, ads, directories
+    total: 900         // £900/month = £40.90/day (22 working days)
+  },
+  perJobDay: 40.90,
+  certification: {
+    niceicPerCircuit: 2.50,    // Per circuit notification
+    buildingControl: 250,       // For notifiable work (rewires, new CUs)
+    eicr: 0                     // Included in testing time
+  }
+};
+
+// ===== REGIONAL MULTIPLIERS 2025 =====
+const REGIONAL_MULTIPLIERS: Record<string, number> = {
+  london: 1.35,
+  southeast: 1.20,
+  scotland: 1.08,
+  northwest: 1.02,
+  yorkshire: 1.02,
+  wales: 0.98,
+  southwest: 1.05,
+  eastMidlands: 1.00,
+  westMidlands: 1.00,
+  northeast: 0.95,
+  other: 1.00
+};
+
+// ===== WASTE & CONTINGENCY FACTORS =====
+const WASTE_FACTORS = {
+  cable: 0.10,           // 10% cable waste (offcuts, damage)
+  materials: 0.05,       // 5% general materials contingency
+  complexJob: 0.10       // Additional 10% for heritage/complex sites
+};
+
 // ===== LABOUR CALCULATION HEURISTICS =====
 const LABOUR_HEURISTICS = {
   rewire: {
@@ -326,6 +366,42 @@ serve(async (req) => {
 
     const labourTimeContext = formatLabourTimeContext(labourTimeResults);
     
+    // Detect region from location string for automatic labour rate adjustment
+    const detectRegion = (locationStr: string = ''): string => {
+      const loc = locationStr.toLowerCase();
+      if (/london|sw\d|se\d|ec\d|wc\d|n\d|e\d|nw\d|w\d/.test(loc)) return 'london';
+      if (/brighton|kent|surrey|sussex|berkshire|hampshire|ox\d|rg\d|gu\d|bn\d/.test(loc)) return 'southeast';
+      if (/glasgow|edinburgh|aberdeen|dundee|eh\d|g\d/.test(loc)) return 'scotland';
+      if (/manchester|liverpool|preston|bolton|m\d\d|l\d|pr\d/.test(loc)) return 'northwest';
+      if (/leeds|sheffield|bradford|york|ls\d|s\d\d|bd\d/.test(loc)) return 'yorkshire';
+      if (/cardiff|swansea|newport|cf\d|sa\d|np\d/.test(loc)) return 'wales';
+      if (/bristol|bath|exeter|plymouth|bs\d|ex\d|pl\d/.test(loc)) return 'southwest';
+      if (/birmingham|coventry|wolverhampton|b\d\d|cv\d|wv\d/.test(loc)) return 'westMidlands';
+      if (/nottingham|leicester|derby|ng\d|le\d|de\d/.test(loc)) return 'eastMidlands';
+      if (/newcastle|sunderland|durham|ne\d|sr\d|dh\d/.test(loc)) return 'northeast';
+      return 'other';
+    };
+    
+    const detectedRegion = detectRegion(region);
+    const regionalMultiplier = REGIONAL_MULTIPLIERS[detectedRegion] || 1.0;
+    const adjustedLabourRate = COST_ENGINEER_PRICING.ELECTRICIAN_RATE_PER_HOUR * regionalMultiplier;
+    
+    // Detect job complexity from query for automatic risk assessment
+    const detectComplexity = (queryStr: string): number => {
+      const q = queryStr.toLowerCase();
+      let complexity = 0;
+      if (/heritage|listed|conservation|victorian|edwardian|1930s|1920s/.test(q)) complexity += 2;
+      if (/asbestos|artex|hazard/.test(q)) complexity += 2;
+      if (/occupied|working around|live/.test(q)) complexity += 1;
+      if (/restricted access|narrow|difficult access/.test(q)) complexity += 1;
+      if (/rewire|full rewire|complete rewire/.test(q)) complexity += 1;
+      if (/commercial|industrial|factory/.test(q)) complexity += 1;
+      return Math.min(complexity, 5); // Cap at 5
+    };
+    
+    const complexityRating = detectComplexity(query);
+    const complexityLabel = complexityRating >= 4 ? 'Very High' : complexityRating >= 3 ? 'High' : complexityRating >= 2 ? 'Medium' : 'Standard';
+    
     // SPLIT AI CALLS: Core estimate first, then profitability (prevents timeout)
     const systemPrompt = `UK Electrical Cost Engineer. September 2025.
 
@@ -336,54 +412,81 @@ CABLE RULES:
 - Outdoor/garden: SWA cable (armoured)
 - Underground: SWA at 600mm depth
 - Factory: SWA for exposed runs
-${practicalWorkContext ? `\nPRACTICAL INSTALLATION METHODS (PRIORITY):\n${practicalWorkContext}\n` : ''}
-${regulationsContext ? `\nREGULATORY REQUIREMENTS:\n${regulationsContext}\n` : ''}
-${labourTimeContext ? `\n${labourTimeContext}\n` : ''}
+
+${practicalWorkContext ? `PRACTICAL INSTALLATION METHODS (PRIORITY):\n${practicalWorkContext}\n` : ''}
+${regulationsContext ? `REGULATORY REQUIREMENTS:\n${regulationsContext}\n` : ''}
+${labourTimeContext ? `${labourTimeContext}\n` : ''}
+
+=== AUTOMATIC REGIONAL PRICING ===
+Location: ${region || 'UK General'}
+Detected Region: ${detectedRegion} (${Math.round((regionalMultiplier - 1) * 100)}% ${regionalMultiplier >= 1 ? 'premium' : 'discount'})
+Base Labour Rate: £${COST_ENGINEER_PRICING.ELECTRICIAN_RATE_PER_HOUR}/hr
+Regional Adjusted Rate: £${adjustedLabourRate.toFixed(2)}/hr
+**USE £${adjustedLabourRate.toFixed(2)}/hr for all electrician labour calculations**
+
+=== AUTOMATIC OVERHEAD CALCULATION (UK Industry Averages 2025) ===
+Daily Business Overheads: £${AUTO_OVERHEADS_2025.perJobDay}/day
+Monthly Breakdown:
+- Van (insurance, fuel, maintenance): £${AUTO_OVERHEADS_2025.monthly.van}
+- Tools & equipment: £${AUTO_OVERHEADS_2025.monthly.tools}
+- Insurance (PL + PI): £${AUTO_OVERHEADS_2025.monthly.insurance}
+- Admin (software, phone): £${AUTO_OVERHEADS_2025.monthly.admin}
+- Marketing: £${AUTO_OVERHEADS_2025.monthly.marketing}
+Total Monthly: £${AUTO_OVERHEADS_2025.monthly.total} (£${AUTO_OVERHEADS_2025.perJobDay}/day)
+
+**You MUST include overhead allocation in every response based on job duration**
+
+=== AUTOMATIC COMPLIANCE COSTS ===
+${parsedEntities.jobType === 'rewire' || parsedEntities.jobType === 'board_change' || /rewire|consumer unit|new circuit/.test(query) ? `
+Notifiable Work Detected:
+- Building Control notification: £${AUTO_OVERHEADS_2025.certification.buildingControl} (required for rewires/new CUs)
+- NICEIC notification: £${AUTO_OVERHEADS_2025.certification.niceicPerCircuit} per circuit
+- EICR Certificate: Included in testing time
+**Include these in compliance costs section**
+` : `Standard installation - no Building Control notification required`}
+
+=== MANDATORY RISK & COMPLEXITY ASSESSMENT ===
+Detected Complexity: ${complexityLabel} (${complexityRating}/5)
+${complexityRating >= 3 ? `
+HIGH COMPLEXITY FACTORS DETECTED:
+${/heritage|listed|victorian|edwardian/.test(query) ? '- Heritage property - asbestos risk, careful chasing required\n' : ''}${/asbestos/.test(query) ? '- Asbestos present - survey and safe removal essential\n' : ''}${/occupied|live/.test(query) ? '- Occupied property - dustsheets, daily cleanup, extended timescales\n' : ''}${/restricted access|narrow/.test(query) ? '- Restricted access - slower progress, equipment limitations\n' : ''}
+Recommended Margin: ${complexityRating >= 4 ? '25-30%' : '20-25%'} (vs 15% standard)
+Additional Time Buffer: +${complexityRating * 10}%
+` : 'Standard complexity - 15% margin recommended'}
+
+=== WASTE & CONTINGENCY (MANDATORY) ===
+Cable Waste Allowance: ${WASTE_FACTORS.cable * 100}% (offcuts, damage,測量 errors)
+Materials Contingency: ${WASTE_FACTORS.materials * 100}% (stock availability, spec changes)
+${complexityRating >= 3 ? `Complex Job Buffer: +${WASTE_FACTORS.complexJob * 100}% additional\n` : ''}
+**Add separate line items for waste and contingency in materials breakdown**
 
 LABOUR CALCULATION RULES:
-${labourTimeResults.length > 0 ? `
-**PRIORITY: Use labour time standards from PROJECT-AND-COST-ENGINEERS-HANDBOOK above**
+${labourTimeResults.length > 0 ? `**PRIORITY: Use labour time standards from PROJECT-AND-COST-ENGINEERS-HANDBOOK above**
 
 If specific task found in handbook:
 - Use exact time from handbook
 - Adjust for complexity, access, team size
 - Show breakdown: setup + installation + testing
 
-If NOT found in handbook, use these fallback estimates:
-` : ''}
+If NOT found in handbook, use these fallback estimates:` : ''}
 ${parsedEntities.jobType === 'board_change' ?
-  `- Consumer unit replacement: 7hrs install + 3hrs testing = 10hrs @ £50/hr = £500` :
+  `- Consumer unit replacement: 7hrs install + 3hrs testing = 10hrs @ £${adjustedLabourRate.toFixed(2)}/hr` :
   `- Rewire (3-bed): 24hrs first fix + 16hrs second fix + 5hrs testing = 45hrs
 - Extensions: 0.5hr per socket, 0.35hr per light, +1hr setup/testing
 - Showers: 4hrs install + testing
 - Cooker circuits: 3hrs install + testing
-- Scale by property: 1-bed (0.6x), 2-bed (0.7x), 4-bed (1.3x), 5-bed (1.6x)`
-}
+- Scale by property: 1-bed (0.6x), 2-bed (0.7x), 4-bed (1.3x), 5-bed (1.6x)`}
 - DO NOT add "Contingency" as a labour line item
-
-${labourTimeResults.length > 0 ? `**REMINDER**: Prioritise handbook data above before using fallback estimates!\n` : ''}
+${labourTimeResults.length > 0 ? `\n**REMINDER**: Prioritise handbook data above before using fallback estimates!` : ''}
 
 TIMESCALE CALCULATION:
 - First fix: 0.5-0.7 days per 10m² floor area (chasing, cabling, conduit)
 - Second fix: 0.3-0.4 days per 10m² floor area (accessories, consumer unit, downlights)
 - Testing: 0.5-1 day per property (full EICR testing + certification)
-- Buffer 10-15% for complex jobs (restricted access, heritage buildings)
+- Buffer ${complexityRating >= 3 ? '15-20%' : '10-15%'} for ${complexityRating >= 3 ? 'high-complexity' : 'standard'} jobs
 - Break down by phases: First Fix → Second Fix → Testing & Handover
 - Identify critical path and dependencies
 - Working days: Mon-Fri (5 days/week standard)
-
-ALTERNATIVE QUOTES - Generate 3 pricing tiers:
-1. BUDGET: Minimum BS 7671 compliant (dual RCD consumer unit, basic white accessories, standard cables)
-2. STANDARD: Recommended specification (RCBO consumer unit for better isolation, mid-range brushed steel accessories, LED where suitable)
-3. PREMIUM: High-spec with smart features (Schneider Wiser smart CU, designer accessories like Varilight/MK, full LED upgrade with dimming, smart switches)
-- Mark "standard" as recommended tier
-- Clearly state tradeoffs for each tier
-
-ORDER LIST - Group materials by supplier:
-- CEF, TLC, Screwfix, etc.
-- Include product codes where available from database
-- Add delivery estimates (2-3 working days typical)
-- Note trade account setup opportunities for bulk discounts
 
 MATERIAL QUANTITY RULES:
 ${parsedEntities.consumerUnitWays ? 
@@ -686,15 +789,104 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                 },
                 required: ['bySupplier', 'totalItems']
               },
+              compliance: {
+                type: 'object',
+                description: 'Regulatory compliance costs',
+                properties: {
+                  items: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        description: { type: 'string' },
+                        total: { type: 'number' },
+                        required: { type: 'boolean' },
+                        note: { type: 'string' }
+                      },
+                      required: ['description', 'total', 'required']
+                    }
+                  },
+                  subtotal: { type: 'number' }
+                },
+                required: ['items', 'subtotal']
+              },
+              complexity: {
+                type: 'object',
+                description: 'Mandatory risk and complexity assessment',
+                properties: {
+                  rating: { type: 'number', description: '1-5 complexity score' },
+                  label: { type: 'string', enum: ['Standard', 'Medium', 'High', 'Very High'] },
+                  factors: { type: 'array', items: { type: 'string' } },
+                  recommendedMargin: { type: 'number', description: 'Percentage margin for this complexity level' },
+                  explanation: { type: 'string' }
+                },
+                required: ['rating', 'label', 'factors', 'recommendedMargin', 'explanation']
+              },
+              siteChecklist: {
+                type: 'object',
+                description: 'Pre-start site requirements',
+                properties: {
+                  critical: { type: 'array', items: { type: 'string' }, description: 'Must-do items before starting' },
+                  important: { type: 'array', items: { type: 'string' }, description: 'Important considerations' }
+                },
+                required: ['critical', 'important']
+              },
               valueEngineering: {
                 type: 'array',
+                description: 'Cost-saving alternatives with exact calculations',
                 items: {
                   type: 'object',
                   properties: {
                     suggestion: { type: 'string' },
-                    potentialSaving: { type: 'number' }
+                    currentCost: { type: 'number' },
+                    alternativeCost: { type: 'number' },
+                    saving: { type: 'number' },
+                    tradeoff: { type: 'string' },
+                    recommendation: { type: 'string' }
                   },
-                  required: ['suggestion', 'potentialSaving']
+                  required: ['suggestion', 'currentCost', 'alternativeCost', 'saving', 'tradeoff', 'recommendation']
+                }
+              },
+              upsells: {
+                type: 'array',
+                description: 'Automatic upsell opportunities based on job type',
+                items: {
+                  type: 'object',
+                  properties: {
+                    opportunity: { type: 'string' },
+                    price: { type: 'number' },
+                    winRate: { type: 'number', description: 'Percentage likelihood of acceptance' },
+                    timing: { type: 'string' },
+                    script: { type: 'string', description: 'Word-for-word conversation script' },
+                    isHot: { type: 'boolean', description: 'High-priority upsell' }
+                  },
+                  required: ['opportunity', 'price', 'winRate', 'timing', 'script', 'isHot']
+                }
+              },
+              conversations: {
+                type: 'object',
+                description: 'Client conversation scripts for common scenarios',
+                properties: {
+                  opening: { type: 'string' },
+                  tooExpensive: { type: 'string' },
+                  discountRequest: { type: 'string' }
+                },
+                required: ['opening', 'tooExpensive', 'discountRequest']
+              },
+              pipeline: {
+                type: 'array',
+                description: 'Future revenue opportunities',
+                items: {
+                  type: 'object',
+                  properties: {
+                    opportunity: { type: 'string' },
+                    timing: { type: 'string' },
+                    estimatedValue: { type: 'number' },
+                    priority: { type: 'string', enum: ['high', 'medium', 'low'] },
+                    trigger: { type: 'string' },
+                    description: { type: 'string' }
+                  },
+                  required: ['opportunity', 'timing', 'estimatedValue', 'priority', 'description']
                 }
               },
               notes: {
@@ -714,7 +906,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                 }
               }
             },
-            required: ['response', 'materials', 'summary', 'timescales', 'alternatives', 'orderList'],
+            required: ['response', 'materials', 'summary', 'timescales', 'alternatives', 'orderList', 'complexity', 'compliance', 'siteChecklist', 'valueEngineering', 'upsells', 'conversations', 'pipeline'],
             additionalProperties: false
           }
         }
