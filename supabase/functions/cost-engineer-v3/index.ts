@@ -405,6 +405,12 @@ serve(async (req) => {
     // SPLIT AI CALLS: Core estimate first, then profitability (prevents timeout)
     const systemPrompt = `UK Electrical Cost Engineer. September 2025.
 
+CRITICAL JSON FORMATTING RULES:
+• Never use contractions (it's → it is, we're → we are, don't → do not)
+• Always use full words to prevent JSON parsing errors
+• Ensure all text is properly formatted for JSON strings
+• Do not use possessive apostrophes (client's → client)
+
 ${pricingContext ? `DATABASE PRICING (PRIORITY):\n${pricingContext.substring(0, 1000)}\n` : ''}
 ${practicalWorkContext ? `INSTALL METHODS:\n${practicalWorkContext.substring(0, 800)}\n` : ''}
 ${regulationsContext ? `REGULATIONS:\n${regulationsContext.substring(0, 600)}\n` : ''}
@@ -1444,6 +1450,8 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       
       const profitabilitySystemPrompt = `Profitability Analysis for UK Electrician
 
+CRITICAL JSON FORMATTING: Never use contractions (it's → it is, we're → we are, don't → do not). Always use full words.
+
 BUSINESS SETTINGS:
 Monthly Overheads:
 - Van costs: £${businessSettings.monthlyOverheads.vanCosts}
@@ -1709,7 +1717,7 @@ Provide:
 
           const coreIntelligenceCall = callAI(OPENAI_API_KEY, {
             model: 'gpt-5-mini-2025-08-07',
-            systemPrompt: 'You are an expert electrical business consultant analyzing jobs for UK electricians.',
+            systemPrompt: 'You are an expert electrical business consultant analyzing jobs for UK electricians. CRITICAL: Never use contractions (it\'s → it is, we\'re → we are, don\'t → do not). Always use full words to prevent JSON parsing errors.',
             userPrompt: coreIntelligencePrompt,
             maxTokens: 3000,
             timeoutMs: 280000,
@@ -1801,7 +1809,7 @@ Provide:
 
           const businessOpportunitiesCall = callAI(OPENAI_API_KEY, {
             model: 'gpt-5-mini-2025-08-07',
-            systemPrompt: 'You are an expert electrical business consultant helping UK electricians maximize revenue and manage client conversations.',
+            systemPrompt: 'You are an expert electrical business consultant helping UK electricians maximize revenue and manage client conversations. CRITICAL: Never use contractions (it\'s → it is, we\'re → we are, don\'t → do not). Always use full words to prevent JSON parsing errors.',
             userPrompt: businessOpportunitiesPrompt,
             maxTokens: 4000,
             timeoutMs: 280000,

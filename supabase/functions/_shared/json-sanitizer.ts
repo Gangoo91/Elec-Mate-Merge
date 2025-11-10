@@ -50,7 +50,17 @@ export function sanitizeAIJson(raw: string): string {
     ["property\\'s", "property"],
     ["house\\'s", "house"],
     ["home\\'s", "home"],
-    ["system\\'s", "system"]
+    ["system\\'s", "system"],
+    ["let\\'s", "let us"],
+    ["let's", "let us"],
+    ["there\\'s", "there is"],
+    ["there's", "there is"],
+    ["here\\'s", "here is"],
+    ["here's", "here is"],
+    ["what\\'s", "what is"],
+    ["what's", "what is"],
+    ["where\\'s", "where is"],
+    ["where's", "where is"]
   ];
   
   contractions.forEach(([pattern, replacement]) => {
@@ -65,16 +75,16 @@ export function sanitizeAIJson(raw: string): string {
   cleaned = cleaned.replace(/\\u003c/g, '<');
   cleaned = cleaned.replace(/\\u003e/g, '>');
   
-  // 3. Fix unescaped quotes within strings (greedy last resort)
-  // This finds patterns like "text"text" and escapes the middle quote
-  cleaned = cleaned.replace(/"([^"]*)"([^":])/g, '"$1\\"$2');
-  
-  // 4. Remove any trailing commas before closing braces/brackets
+  // 3. Remove any trailing commas before closing braces/brackets
   cleaned = cleaned.replace(/,(\s*[}\]])/g, '$1');
   
-  // 5. Fix common AI mistakes with newlines in strings
-  cleaned = cleaned.replace(/\n/g, ' ');
+  // 4. Fix common AI mistakes with newlines in strings (but preserve intentional line breaks)
+  cleaned = cleaned.replace(/(?<!\\)\n/g, ' ');  // Replace unescaped newlines with spaces
   cleaned = cleaned.replace(/\r/g, '');
+  
+  // 5. Remove any remaining single quotes that aren't part of contractions (should already be handled)
+  // This is a last resort cleanup
+  cleaned = cleaned.replace(/([^\\])'/g, '$1');
   
   return cleaned;
 }

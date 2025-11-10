@@ -4,6 +4,7 @@
  */
 
 import { createClient as createSupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { sanitizeAIJson } from './json-sanitizer.ts';
 
 // ============= CORS =============
 export const corsHeaders = {
@@ -190,20 +191,25 @@ export function parseJsonWithRepair(raw: string, logger: Logger, context: string
     cleaned = cleaned.slice(start, end + 1);
   }
   
-  // Step 3: Normalise symbols
+  // Step 3: Apply AI-specific sanitization (handles contractions, unicode escapes)
+  // This must come BEFORE any quote conversion to avoid breaking contractions
+  cleaned = sanitizeAIJson(cleaned);
+  logger.debug(`Applied AI JSON sanitization`, { context });
+  
+  // Step 4: Normalise symbols
   cleaned = cleaned
     .replace(/[\u2018\u2019]/g, "'")      // Smart single quotes → '
     .replace(/[\u201C\u201D]/g, '"')      // Smart double quotes → "
     .replace(/[\u2013\u2014]/g, '-')      // En/em dashes → -
     .replace(/\u00D7/g, 'x');             // Multiplication sign → x
   
-  // Step 4: Apply existing repair strategies
+  // Step 5: Apply basic repair strategies (AFTER sanitization)
   cleaned = cleaned
     .replace(/,(\s*[}\]])/g, '$1')              // Remove trailing commas
-    .replace(/([{,]\s*)(\w+):/g, '$1"$2":')    // Quote unquoted keys
-    .replace(/'/g, '"');                        // Single to double quotes
+    .replace(/([{,]\s*)(\w+):/g, '$1"$2":');   // Quote unquoted keys
+    // NOTE: Do NOT convert all single quotes to double quotes here - sanitizeAIJson already handled contractions
   
-  // Step 5: Try parsing
+  // Step 6: Try parsing
   try {
     const parsed = JSON.parse(cleaned);
     if (cleaned.length < raw.length) {
