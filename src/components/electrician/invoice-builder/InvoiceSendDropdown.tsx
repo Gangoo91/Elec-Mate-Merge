@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Quote } from '@/types/quote';
 import { Button } from '@/components/ui/button';
+import { FEATURES } from '@/config/features';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
-import { Mail, MessageCircle, Loader2, MailOpen } from 'lucide-react';
+import { Mail, MessageCircle, Loader2, MailOpen, AlertCircle } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
@@ -448,8 +449,8 @@ ${companyName}`;
             </>
           ) : (
             <>
-              <Mail className="mr-2 h-4 w-4" />
-              Send
+              <MessageCircle className="mr-2 h-4 w-4" />
+              {FEATURES.EMAIL_INTEGRATION_ENABLED ? 'Send' : 'Share'}
             </>
           )}
         </Button>
@@ -458,37 +459,50 @@ ${companyName}`;
         <DropdownMenuLabel className="text-xs text-muted-foreground">
           Send Options
         </DropdownMenuLabel>
-        <DropdownMenuItem
-          onClick={handleSendEmail}
-          disabled={isSendingEmail}
-          className="cursor-pointer"
-        >
-          {isSendingEmail ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <Mail className="mr-2 h-4 w-4" />
-          )}
-          <div className="flex flex-col">
-            <span>Send via Gmail/Outlook</span>
-            <span className="text-xs text-muted-foreground">Send invoice with PDF attachment</span>
+        
+        {!FEATURES.EMAIL_INTEGRATION_ENABLED && (
+          <div className="px-2 py-3 text-xs text-muted-foreground bg-amber-50 dark:bg-amber-950/20 rounded-md mx-2 mb-2 border border-amber-200 dark:border-amber-800">
+            <AlertCircle className="h-3 w-3 inline mr-1" />
+            Email sending temporarily disabled for testing
           </div>
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={handleSendViaEmailClient}
-          disabled={isGeneratingMailtoLink}
-          className="cursor-pointer"
-        >
-          {isGeneratingMailtoLink ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <MailOpen className="mr-2 h-4 w-4" />
-          )}
-          <div className="flex flex-col">
-            <span>Send via My Email App</span>
-            <span className="text-xs text-muted-foreground">Opens your email client</span>
-          </div>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
+        )}
+        
+        {FEATURES.EMAIL_INTEGRATION_ENABLED && (
+          <>
+            <DropdownMenuItem
+              onClick={handleSendEmail}
+              disabled={isSendingEmail}
+              className="cursor-pointer"
+            >
+              {isSendingEmail ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Mail className="mr-2 h-4 w-4" />
+              )}
+              <div className="flex flex-col">
+                <span>Send via Gmail/Outlook</span>
+                <span className="text-xs text-muted-foreground">Send invoice with PDF attachment</span>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={handleSendViaEmailClient}
+              disabled={isGeneratingMailtoLink}
+              className="cursor-pointer"
+            >
+              {isGeneratingMailtoLink ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <MailOpen className="mr-2 h-4 w-4" />
+              )}
+              <div className="flex flex-col">
+                <span>Send via My Email App</span>
+                <span className="text-xs text-muted-foreground">Opens your email client</span>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+          </>
+        )}
+        
         <DropdownMenuItem
           onClick={handleShareWhatsApp}
           disabled={isSharingWhatsApp}

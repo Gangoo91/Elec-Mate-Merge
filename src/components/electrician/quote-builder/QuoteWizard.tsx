@@ -13,6 +13,7 @@ import { QuoteProgressIndicator } from "./QuoteProgressIndicator";
 import { SmartContinueButton } from "./SmartContinueButton";
 import { EmailStatusBanner } from "./EmailStatusBanner";
 import { AutoSaveIndicator } from "../shared/AutoSaveIndicator";
+import { FEATURES } from '@/config/features';
 
 const steps = [
   { title: "Client & Company", icon: User, description: "Customer and company details" },
@@ -149,7 +150,7 @@ const {
   return (
     <div className="w-full mx-auto space-y-4 md:space-y-6">
       {/* Email Status Banner */}
-      <EmailStatusBanner />
+      {FEATURES.EMAIL_INTEGRATION_ENABLED && <EmailStatusBanner />}
       
       {/* Progress and Auto-Save Indicator */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">

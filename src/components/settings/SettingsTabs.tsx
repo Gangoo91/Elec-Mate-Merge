@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { ChevronDown } from "lucide-react";
 import { useIsMobile } from '@/hooks/use-mobile';
+import { FEATURES } from '@/config/features';
 import AccountTab from './AccountTab';
 import NotificationsTab from './NotificationsTab';
 import AppearanceTab from './AppearanceTab';
@@ -29,7 +30,7 @@ import {
 } from "lucide-react";
 import { EmailSettingsTab } from './EmailSettingsTab';
 
-const TABS = [
+const ALL_TABS = [
   { id: 'account', label: 'Account', icon: User, component: AccountTab, description: 'Manage your account preferences' },
   { id: 'company', label: 'Company Profile', icon: Building, component: CompanyProfileSettings, description: 'Configure your company details and branding for professional quotes' },
   { id: 'email', label: 'Email Integration', icon: Mail, component: EmailSettingsTab, description: 'Connect Gmail or Outlook to send invoices from your email' },
@@ -39,6 +40,14 @@ const TABS = [
   { id: 'security', label: 'Security', icon: ShieldCheck, component: SecurityTab, description: 'Manage your account security settings' },
   { id: 'help', label: 'Help & Support', icon: HelpCircle, component: HelpSupportTab, description: 'Find help and contact support' },
 ];
+
+// Filter tabs based on feature flags
+const TABS = ALL_TABS.filter(tab => {
+  if (tab.id === 'email' && !FEATURES.EMAIL_INTEGRATION_ENABLED) {
+    return false;
+  }
+  return true;
+});
 
 const SettingsTabs = () => {
   const isMobile = useIsMobile();
