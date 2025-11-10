@@ -45,8 +45,11 @@ export const InvoiceGenerationStep = ({
     return new Date(date).toLocaleDateString('en-GB');
   };
 
-  // Items already merged in database during save
-  const allItems = invoice.items || [];
+  // Combine original items and additional items for display
+  const allItems = [
+    ...(invoice.items || []),
+    ...(invoice.additional_invoice_items || [])
+  ];
 
   const handlePreviewPDF = async () => {
     setIsPreviewing(true);
