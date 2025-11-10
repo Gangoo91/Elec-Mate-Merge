@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Shield, Wrench, CheckCircle, Clock, Zap, XCircle } from 'lucide-react';
+import { Shield, Wrench, CheckCircle, Clock, Zap, XCircle, FileText, ChevronDown } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { TimelineExpectation } from './TimelineExpectation';
 import { animateValue } from '@/utils/animation-helpers';
 import { Button } from '@/components/ui/button';
@@ -22,6 +23,7 @@ interface AgentProcessingViewProps {
   agentSteps: AgentStep[];
   onCancel?: () => void;
   isCancelling?: boolean;
+  jobDescription?: string;
 }
 
 export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
@@ -32,6 +34,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
   agentSteps,
   onCancel,
   isCancelling = false,
+  jobDescription,
 }) => {
   const [displayProgress, setDisplayProgress] = React.useState(0);
   const [showCancelDialog, setShowCancelDialog] = useState(false);
@@ -132,6 +135,32 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
           </div>
         </CardContent>
       </Card>
+
+      {/* Job Description Card */}
+      {jobDescription && (
+        <Card className="border-blue-500/20 bg-blue-950/20">
+          <CardContent className="pt-5 pb-5">
+            <Collapsible defaultOpen={false}>
+              <CollapsibleTrigger asChild>
+                <button className="w-full flex items-center justify-between group touch-manipulation">
+                  <div className="flex items-center gap-3">
+                    <FileText className="h-5 w-5 text-blue-400" />
+                    <span className="font-semibold text-white">Your Job Description</span>
+                  </div>
+                  <ChevronDown className="h-4 w-4 text-gray-400 transition-transform group-data-[state=open]:rotate-180" />
+                </button>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <div className="mt-4 p-4 rounded-lg bg-elec-grey/40 border border-blue-500/20">
+                  <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap">
+                    {jobDescription}
+                  </p>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Agent Cards - Mobile Optimized Vertical Layout */}
       <div className="space-y-6">

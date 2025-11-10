@@ -25,6 +25,7 @@ export const AIRAMSGenerator: React.FC = () => {
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [resumedJob, setResumedJob] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
+  const [currentJobDescription, setCurrentJobDescription] = useState<string>('');
   const lastErrorNotifiedJobRef = React.useRef<string | null>(null);
   
   const { job, startPolling, stopPolling, progress, status, currentStep, ramsData, methodData, error } = useRAMSJobPolling(currentJobId);
@@ -169,6 +170,7 @@ export const AIRAMSGenerator: React.FC = () => {
     // Reset error notification tracker for new generation
     lastErrorNotifiedJobRef.current = null;
     
+    setCurrentJobDescription(jobDescription);
     setGenerationStartTime(Date.now());
     setShowResults(true);
     setShowCelebration(false);
@@ -275,6 +277,7 @@ export const AIRAMSGenerator: React.FC = () => {
     setGenerationStartTime(0);
     setGenerationEndTime(0);
     setResumedJob(false);
+    setCurrentJobDescription('');
   };
   
   const saveToDatabase = async () => {
@@ -394,6 +397,7 @@ export const AIRAMSGenerator: React.FC = () => {
                 estimatedTimeRemaining={Math.max(0, Math.floor((300 * (100 - progress)) / 100))}
                 onCancel={status === 'processing' || status === 'pending' ? handleCancel : undefined}
                 isCancelling={isCancelling}
+                jobDescription={currentJobDescription}
                 agentSteps={[
                   {
                     name: 'health-safety',
