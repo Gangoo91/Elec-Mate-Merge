@@ -890,3 +890,55 @@ export const bs7671RegulationLookup = {
     section: "Part 7 - Requirements for special installations or locations"
   }
 };
+
+// Export grouped hazard database for the UI
+export const hazardDatabase = [
+  {
+    category: "Electrical",
+    icon: "⚡",
+    color: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
+    hazards: enhancedRiskDatabase.filter(h => h.category === "electrical")
+  },
+  {
+    category: "EV Charging",
+    icon: "🔌",
+    color: "bg-blue-500/20 text-blue-400 border-blue-500/30",
+    hazards: enhancedRiskDatabase.filter(h => h.category === "ev-charging")
+  },
+  {
+    category: "Renewable Energy",
+    icon: "☀️",
+    color: "bg-green-500/20 text-green-400 border-green-500/30",
+    hazards: enhancedRiskDatabase.filter(h => h.category === "renewable")
+  },
+  {
+    category: "Working at Height",
+    icon: "🪜",
+    color: "bg-orange-500/20 text-orange-400 border-orange-500/30",
+    hazards: enhancedRiskDatabase.filter(h => h.category === "height")
+  },
+  {
+    category: "Industrial",
+    icon: "🏭",
+    color: "bg-purple-500/20 text-purple-400 border-purple-500/30",
+    hazards: enhancedRiskDatabase.filter(h => h.category === "industrial")
+  },
+  {
+    category: "Healthcare",
+    icon: "🏥",
+    color: "bg-red-500/20 text-red-400 border-red-500/30",
+    hazards: enhancedRiskDatabase.filter(h => h.category === "healthcare")
+  },
+  {
+    category: "Marine",
+    icon: "⚓",
+    color: "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
+    hazards: enhancedRiskDatabase.filter(h => h.category === "marine")
+  },
+  {
+    category: "Excavation",
+    icon: "⛏️",
+    color: "bg-amber-500/20 text-amber-400 border-amber-500/30",
+    hazards: enhancedRiskDatabase.filter(h => h.category === "excavation")
+  }
+];

@@ -10,7 +10,7 @@ import { RAMSQuickAdd } from "@/components/electrician-tools/site-safety/RAMSQui
 import RAMSGenerator from "@/components/electrician-tools/site-safety/RAMSGenerator";
 import MethodStatementGenerator from "@/components/electrician-tools/site-safety/MethodStatementGenerator";
 import IntegratedRAMSGenerator from "@/components/electrician-tools/site-safety/IntegratedRAMSGenerator";
-import EnhancedHazardDatabase from "@/components/electrician-tools/site-safety/enhanced/EnhancedHazardDatabase";
+import { EnhancedHazardDatabase } from "@/components/electrician-tools/site-safety/enhanced/EnhancedHazardDatabase";
 import PhotoDocumentation from "@/components/electrician-tools/site-safety/PhotoDocumentation";
 import TeamBriefingTemplates from "@/components/electrician-tools/site-safety/TeamBriefingTemplates";
 import NearMissReporting from "@/components/electrician-tools/site-safety/NearMissReporting";
