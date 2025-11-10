@@ -220,7 +220,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                         />
                       </div>
                       <div className="text-sm text-gray-400 font-medium">
-                        {agent.progress}% complete
+                        {agent.progress.toFixed(2)}% complete
                       </div>
                     </div>
                   )}
