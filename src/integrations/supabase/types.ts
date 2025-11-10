@@ -7857,6 +7857,8 @@ export type Database = {
         Args: { content: string; source_url: string; title: string }
         Returns: string
       }
+      generate_invoice_number: { Args: never; Returns: string }
+      generate_standalone_invoice_number: { Args: never; Returns: string }
       get_chat_messages_with_upvote_status: {
         Args: { user_id: string }
         Returns: {

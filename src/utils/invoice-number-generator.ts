@@ -1,46 +1,25 @@
 import { supabase } from '@/integrations/supabase/client';
 
 /**
- * Generates a sequential invoice number in the format Invoice/XXX
- * e.g., Invoice/001, Invoice/002, etc.
+ * Generates a sequential invoice number using database sequence
+ * This ensures atomic number generation without race conditions
+ * Format: Invoice/001, Invoice/002, etc.
  */
 export const generateSequentialInvoiceNumber = async (): Promise<string> => {
   try {
-    // Query existing invoices to find the highest sequence number
-    // Look for invoice_number field in quotes table where invoice_raised = true
-    const { data: existingInvoices, error } = await supabase
-      .from('quotes')
-      .select('invoice_number')
-      .eq('invoice_raised', true)
-      .not('invoice_number', 'is', null)
-      .like('invoice_number', 'Invoice/%')
-      .order('invoice_number', { ascending: false })
-      .limit(1);
+    // Use database function for atomic sequence generation
+    const { data, error } = await supabase.rpc('generate_invoice_number');
 
     if (error) {
-      console.warn('Error querying existing invoices, using fallback:', error);
+      console.warn('Error calling generate_invoice_number function:', error);
+      // Fallback to timestamp-based unique number
       return `Invoice/T${Date.now().toString().slice(-6)}`;
     }
 
-    let nextSequence = 1;
-
-    if (existingInvoices && existingInvoices.length > 0) {
-      const lastInvoiceNumber = existingInvoices[0].invoice_number;
-      
-      // Extract the sequence number (e.g., "Invoice/023" -> 23)
-      const sequenceMatch = lastInvoiceNumber.match(/\/(\d+)$/);
-      if (sequenceMatch) {
-        const lastSequence = parseInt(sequenceMatch[1], 10);
-        nextSequence = lastSequence + 1;
-      }
-    }
-
-    // Format with leading zeros (001, 002, 023)
-    const sequenceString = nextSequence.toString().padStart(3, '0');
-    
-    return `Invoice/${sequenceString}`;
+    return data as string;
   } catch (error) {
-    console.warn('Error generating sequential invoice number, using fallback:', error);
+    console.warn('Error generating invoice number, using fallback:', error);
+    // Fallback to timestamp-based unique number
     return `Invoice/T${Date.now().toString().slice(-6)}`;
   }
 };
@@ -60,45 +39,24 @@ export const validateInvoiceNumberFormat = (invoiceNumber: string): boolean => {
 };
 
 /**
- * Generates a sequential standalone invoice number in the format Invoice/S001, Invoice/S002, etc.
- * For invoices created directly (not from quotes)
+ * Generates a sequential standalone invoice number using database function
+ * Format: Invoice/S001, Invoice/S002, etc. (for invoices not from quotes)
  */
 export const generateStandaloneInvoiceNumber = async (): Promise<string> => {
   try {
-    // Query existing standalone invoices with S prefix
-    const { data: existingInvoices, error } = await supabase
-      .from('quotes')
-      .select('invoice_number')
-      .eq('invoice_raised', true)
-      .not('invoice_number', 'is', null)
-      .like('invoice_number', 'Invoice/S%')
-      .order('invoice_number', { ascending: false })
-      .limit(1);
+    // Use database function for standalone invoice generation
+    const { data, error } = await supabase.rpc('generate_standalone_invoice_number');
 
     if (error) {
-      console.warn('Error querying existing standalone invoices, using fallback:', error);
+      console.warn('Error calling generate_standalone_invoice_number function:', error);
+      // Fallback to timestamp-based unique number
       return `Invoice/ST${Date.now().toString().slice(-6)}`;
     }
 
-    let nextSequence = 1;
-
-    if (existingInvoices && existingInvoices.length > 0) {
-      const lastInvoiceNumber = existingInvoices[0].invoice_number;
-      
-      // Extract the sequence number (e.g., "Invoice/S023" -> 23)
-      const sequenceMatch = lastInvoiceNumber.match(/\/S(\d+)$/);
-      if (sequenceMatch) {
-        const lastSequence = parseInt(sequenceMatch[1], 10);
-        nextSequence = lastSequence + 1;
-      }
-    }
-
-    // Format with leading zeros (S001, S002, S023)
-    const sequenceString = nextSequence.toString().padStart(3, '0');
-    
-    return `Invoice/S${sequenceString}`;
+    return data as string;
   } catch (error) {
     console.warn('Error generating standalone invoice number, using fallback:', error);
+    // Fallback to timestamp-based unique number
     return `Invoice/ST${Date.now().toString().slice(-6)}`;
   }
 };

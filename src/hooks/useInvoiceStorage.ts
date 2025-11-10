@@ -99,7 +99,10 @@ export const useInvoiceStorage = () => {
     }
   };
 
-  const saveInvoice = async (invoice: Partial<Invoice>): Promise<boolean> => {
+  const saveInvoice = async (invoice: Partial<Invoice>, retryCount = 0): Promise<boolean> => {
+    const MAX_RETRIES = 3;
+    const RETRY_DELAY = 500;
+
     try {
       const { data: { user } } = await supabase.auth.getUser();
       
@@ -126,7 +129,8 @@ export const useInvoiceStorage = () => {
           : await generateSequentialInvoiceNumber();
         
         console.log('📝 Generated invoice number:', finalInvoiceNumber, 
-                    isStandaloneInvoice ? '(standalone)' : '(quote-based)');
+                    isStandaloneInvoice ? '(standalone)' : '(quote-based)',
+                    retryCount > 0 ? `(retry ${retryCount})` : '');
       }
 
       // Merge additional invoice items into the main items array
@@ -298,11 +302,29 @@ export const useInvoiceStorage = () => {
       // 5. Return success without refetching (database trigger handles updated_at)
       setInvoices(prev => prev.map(inv => inv.id === invoice.id ? convertDbRowToQuote(updatedQuote) : inv));
       return true;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving invoice:', error);
+      
+      // Check if it's a duplicate key error (PostgreSQL error code 23505)
+      const isDuplicateKeyError = error?.code === '23505' || 
+                                   error?.message?.includes('duplicate key') ||
+                                   error?.message?.includes('invoice_number_key');
+      
+      if (isDuplicateKeyError && retryCount < MAX_RETRIES) {
+        console.warn(`⚠️ Duplicate invoice number detected, retrying... (${retryCount + 1}/${MAX_RETRIES})`);
+        
+        // Wait before retrying with exponential backoff
+        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * Math.pow(2, retryCount)));
+        
+        // Retry with a fresh invoice number by clearing the existing one
+        return saveInvoice({ ...invoice, invoice_number: undefined }, retryCount + 1);
+      }
+      
       toast({
         title: 'Error saving invoice',
-        description: 'Failed to save invoice. Please try again.',
+        description: isDuplicateKeyError && retryCount >= MAX_RETRIES
+          ? 'Failed to generate unique invoice number after multiple attempts. Please try again.'
+          : 'Failed to save invoice. Please try again.',
         variant: 'destructive',
       });
       return false;
