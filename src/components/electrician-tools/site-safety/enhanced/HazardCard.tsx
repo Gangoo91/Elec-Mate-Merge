@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { ChevronDown, AlertTriangle, FileText, Copy, Check, Share2, Bookmark } from 'lucide-react';
+import { ChevronDown, AlertTriangle, FileText, Copy, Check, Share2, Bookmark, Ban, RefreshCw, Wrench, ClipboardList, Shield, Zap, Skull, Lightbulb, Search, GraduationCap, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -48,12 +48,12 @@ export const HazardCard = memo(({
 
   const getControlHierarchyIcon = (type: string) => {
     switch (type) {
-      case 'elimination': return '🚫';
-      case 'substitution': return '🔄';
-      case 'engineering': return '🔧';
-      case 'administrative': return '📋';
-      case 'ppe': return '🦺';
-      default: return '•';
+      case 'elimination': return <Ban className="w-4 h-4" />;
+      case 'substitution': return <RefreshCw className="w-4 h-4" />;
+      case 'engineering': return <Wrench className="w-4 h-4" />;
+      case 'administrative': return <ClipboardList className="w-4 h-4" />;
+      case 'ppe': return <Shield className="w-4 h-4" />;
+      default: return null;
     }
   };
 
@@ -94,7 +94,9 @@ export const HazardCard = memo(({
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center gap-3 flex-1 min-w-0">
-          <span className="text-xl flex-shrink-0">{hazard.categoryIcon || '⚡'}</span>
+          <div className="flex-shrink-0">
+            <Zap className="w-5 h-5 text-elec-yellow" />
+          </div>
           <span className="font-medium truncate">{hazard.hazard}</span>
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
@@ -121,7 +123,9 @@ export const HazardCard = memo(({
         >
           <div className="flex items-start justify-between gap-3 mb-2">
             <div className="flex items-center gap-2 flex-1 min-w-0">
-              <span className="text-xl flex-shrink-0">{hazard.categoryIcon || '⚡'}</span>
+              <div className="flex-shrink-0">
+                <Zap className="w-5 h-5 text-elec-yellow" />
+              </div>
               <h3 className="font-bold truncate">{hazard.hazard}</h3>
             </div>
             <div className="flex items-center gap-2 flex-shrink-0">
@@ -153,9 +157,90 @@ export const HazardCard = memo(({
 
           {/* Consequence */}
           {hazard.consequence && (
-            <div className="bg-red-500/10 border border-red-500/30 rounded p-2 text-sm">
-              <span className="text-red-400">💀 </span>
-              {hazard.consequence}
+            <div className="bg-red-500/10 border border-red-500/30 rounded p-2 text-sm flex items-start gap-2">
+              <Skull className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+              <span>{hazard.consequence}</span>
+            </div>
+          )}
+
+          {/* Expanded content in compact view */}
+          {isExpanded && (
+            <div className="space-y-3 mt-4 pt-4 border-t border-border/30 animate-accordion-down">
+              {/* Control Measures - Compact Version */}
+              {hazard.controlMeasures && (
+                <div className="space-y-2">
+                  {['elimination', 'substitution', 'engineering', 'administrative', 'ppe'].map(type => {
+                    const measures = hazard.controlMeasures[type];
+                    if (!measures || measures.length === 0) return null;
+                    
+                    return (
+                      <div key={type} className={cn("rounded border p-2", getControlHierarchyColor(type))}>
+                        <div className="text-xs font-semibold uppercase tracking-wide mb-1 flex items-center gap-1">
+                          {getControlHierarchyIcon(type)}
+                          <span>{getControlHierarchyLabel(type)}</span>
+                        </div>
+                        <ul className="space-y-1 text-xs">
+                          {measures.slice(0, 3).map((measure: string, idx: number) => (
+                            <li key={idx} className="flex gap-1">
+                              <span className="text-muted-foreground">•</span>
+                              <span>{measure}</span>
+                            </li>
+                          ))}
+                          {measures.length > 3 && (
+                            <li className="text-muted-foreground italic">
+                              +{measures.length - 3} more controls
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Emergency Procedures - First 3 */}
+              {hazard.emergencyProcedures && hazard.emergencyProcedures.length > 0 && (
+                <div>
+                  <div className="text-xs font-semibold uppercase mb-2 flex items-center gap-1">
+                    <AlertTriangle className="w-3 h-3 text-red-400" />
+                    Emergency Procedures
+                  </div>
+                  <div className="space-y-1">
+                    {hazard.emergencyProcedures.slice(0, 3).map((proc: string, idx: number) => (
+                      <div key={idx} className="text-xs bg-red-500/5 p-2 rounded border border-red-500/20">
+                        {idx + 1}. {proc}
+                      </div>
+                    ))}
+                    {hazard.emergencyProcedures.length > 3 && (
+                      <div className="text-xs text-muted-foreground text-center">
+                        +{hazard.emergencyProcedures.length - 3} more steps
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Guidance Notes - First 2 */}
+              {hazard.guidanceNotes && hazard.guidanceNotes.length > 0 && (
+                <div>
+                  <div className="text-xs font-semibold uppercase mb-2 flex items-center gap-1">
+                    <Lightbulb className="w-3 h-3 text-indigo-400" />
+                    Guidance Notes
+                  </div>
+                  <div className="space-y-1">
+                    {hazard.guidanceNotes.slice(0, 2).map((note: string, idx: number) => (
+                      <div key={idx} className="text-xs bg-indigo-500/5 p-2 rounded border border-indigo-500/20">
+                        • {note}
+                      </div>
+                    ))}
+                    {hazard.guidanceNotes.length > 2 && (
+                      <div className="text-xs text-muted-foreground text-center">
+                        +{hazard.guidanceNotes.length - 2} more notes
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
@@ -182,7 +267,7 @@ export const HazardCard = memo(({
           <div className="flex items-start justify-between gap-3 mb-3">
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-2xl">{hazard.categoryIcon || '⚡'}</span>
+                <Zap className="w-6 h-6 text-elec-yellow" />
                 <h3 className="text-lg md:text-xl font-bold">{hazard.hazard}</h3>
                 {isBookmarked && <Bookmark className="w-5 h-5 text-elec-yellow fill-elec-yellow" />}
               </div>
@@ -279,7 +364,7 @@ export const HazardCard = memo(({
                     <div className={cn("rounded-lg border", getControlHierarchyColor(type))}>
                       <CollapsibleTrigger className="w-full p-3 flex items-center justify-between hover:bg-background/5 transition-colors">
                         <div className="flex items-center gap-2">
-                          <span className="text-base">{getControlHierarchyIcon(type)}</span>
+                          {getControlHierarchyIcon(type)}
                           <div className="text-xs font-semibold uppercase tracking-wide">
                             {getControlHierarchyLabel(type)}
                           </div>
@@ -362,7 +447,8 @@ export const HazardCard = memo(({
               {hazard.guidanceNotes && hazard.guidanceNotes.length > 0 && (
                 <div>
                   <div className="text-xs font-semibold uppercase tracking-wide mb-2 flex items-center gap-2">
-                    💡 Guidance Notes
+                    <Lightbulb className="w-4 h-4 text-indigo-400" />
+                    Guidance Notes
                   </div>
                   <div className="space-y-2">
                     {hazard.guidanceNotes.map((note: string, idx: number) => (
@@ -379,7 +465,8 @@ export const HazardCard = memo(({
               {hazard.emergencyProcedures && hazard.emergencyProcedures.length > 0 && (
                 <div>
                   <div className="text-xs font-semibold uppercase tracking-wide mb-2 flex items-center gap-2">
-                    🚨 Emergency Procedures
+                    <AlertTriangle className="w-4 h-4 text-red-400" />
+                    Emergency Procedures
                   </div>
                   <div className="space-y-2">
                     {hazard.emergencyProcedures.map((proc: string, idx: number) => (
@@ -398,12 +485,13 @@ export const HazardCard = memo(({
               {hazard.inspectionChecks && hazard.inspectionChecks.length > 0 && (
                 <div>
                   <div className="text-xs font-semibold uppercase tracking-wide mb-2 flex items-center gap-2">
-                    🔍 Inspection Checks
+                    <Search className="w-4 h-4 text-cyan-400" />
+                    Inspection Checks
                   </div>
                   <div className="space-y-1">
                     {hazard.inspectionChecks.map((check: string, idx: number) => (
                       <div key={idx} className="flex items-start gap-2 text-sm bg-cyan-500/5 p-2 rounded border border-cyan-500/20">
-                        <span className="text-cyan-400 flex-shrink-0">✓</span>
+                        <Check className="w-3 h-3 text-cyan-400 flex-shrink-0 mt-0.5" />
                         <span className="text-muted-foreground">{check}</span>
                       </div>
                     ))}
@@ -415,7 +503,8 @@ export const HazardCard = memo(({
               {hazard.trainingRequired && hazard.trainingRequired.length > 0 && (
                 <div>
                   <div className="text-xs font-semibold uppercase tracking-wide mb-2 flex items-center gap-2">
-                    🎓 Training Required
+                    <GraduationCap className="w-4 h-4 text-amber-400" />
+                    Training Required
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {hazard.trainingRequired.map((training: string, idx: number) => (
@@ -431,7 +520,8 @@ export const HazardCard = memo(({
               {hazard.realWorldScenarios && hazard.realWorldScenarios.length > 0 && (
                 <div>
                   <div className="text-xs font-semibold uppercase tracking-wide mb-2 flex items-center gap-2">
-                    📖 Real-World Scenarios
+                    <BookOpen className="w-4 h-4 text-pink-400" />
+                    Real-World Scenarios
                   </div>
                   <div className="space-y-2">
                     {hazard.realWorldScenarios.map((scenario: string, idx: number) => (
