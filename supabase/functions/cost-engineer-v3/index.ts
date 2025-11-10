@@ -426,6 +426,35 @@ ${parsedEntities.jobType === 'board_change' ?
 • Showers: 4hrs | Cooker: 3hrs
 • Scale: 1-bed (0.6x), 2-bed (0.7x), 4-bed (1.3x), 5-bed (1.6x)`}
 
+CONFIDENCE SCORING:
+• Materials confidence: 
+  - 90-100%: All items in database with recent prices
+  - 70-89%: Mix of database + estimates
+  - <70%: Mostly estimates, flag for user review
+• Labour confidence:
+  - 90-100%: Standard tasks with handbook times
+  - 70-89%: Some complexity requiring on-site assessment
+  - <70%: High uncertainty, needs survey
+• Contingency: 5-10% for standard, 10-20% for complex
+
+RISK ASSESSMENT (always include 3-5 risks):
+• Technical: Cable routes, existing wiring condition, access restrictions
+• Financial: Material price volatility, scope creep, payment delays
+• Schedule: Access issues, weather delays, supplier lead times
+• Safety: Asbestos, live working, height work, confined spaces
+
+PAYMENT TERMS (industry standard):
+• Deposit: 30-40% for materials procurement
+• Progress: 30-40% at first fix complete (if multi-day job)
+• Balance: 20-40% on completion + test cert
+• Terms: Net 14 days, 2% late fee per month after 30 days
+
+QUOTE TIER SELECTION:
+• sparse (20% margin): Low-profit work to keep busy during quiet periods
+• normal (30% margin): Target pricing for standard workload - RECOMMENDED DEFAULT
+• busy (40% margin): Premium pricing when calendar is full
+• Selection factors: Diary availability, client relationship, job appeal, competition
+
 CRITICAL MATH:
 • materials.subtotal = Σ(item totals with markup)
 • labour.subtotal = Σ(task totals)
@@ -434,7 +463,7 @@ CRITICAL MATH:
 • summary.grandTotal = subtotal + vat
 • NO hidden margins in subtotal!
 
-Return JSON with: response, materials, labour, summary, timescales, alternatives, orderList, compliance, complexity, siteChecklist, valueEngineering, upsells, conversations, pipeline`;
+Return JSON with: response, materials, labour, summary, timescales, alternatives, orderList, compliance, complexity, confidence, riskAssessment, paymentTerms, recommendedQuote, siteChecklist, valueEngineering, upsells, conversations, pipeline`;
 
     const userPrompt = `Cost estimate for: ${query}
 ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `\nLabour: ${labourHours}hrs` : ''}
@@ -693,6 +722,98 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                 },
                 required: ['rating', 'label', 'factors', 'recommendedMargin', 'explanation']
               },
+              confidence: {
+                type: 'object',
+                description: 'Confidence levels for cost accuracy (0-100%)',
+                properties: {
+                  materials: {
+                    type: 'object',
+                    properties: {
+                      level: { type: 'number', minimum: 0, maximum: 100 },
+                      reason: { type: 'string' },
+                      factors: { type: 'array', items: { type: 'string' } }
+                    },
+                    required: ['level', 'reason']
+                  },
+                  labour: {
+                    type: 'object',
+                    properties: {
+                      level: { type: 'number', minimum: 0, maximum: 100 },
+                      reason: { type: 'string' },
+                      factors: { type: 'array', items: { type: 'string' } }
+                    },
+                    required: ['level', 'reason']
+                  },
+                  contingency: {
+                    type: 'object',
+                    properties: {
+                      percentage: { type: 'number' },
+                      reason: { type: 'string' }
+                    },
+                    required: ['percentage', 'reason']
+                  }
+                },
+                required: ['materials', 'labour', 'contingency']
+              },
+              riskAssessment: {
+                type: 'object',
+                description: 'Specific project risks with mitigation',
+                properties: {
+                  risks: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        category: { type: 'string', enum: ['Technical', 'Financial', 'Schedule', 'Safety'] },
+                        risk: { type: 'string' },
+                        severity: { type: 'string', enum: ['low', 'medium', 'high', 'critical'] },
+                        likelihood: { type: 'string', enum: ['unlikely', 'possible', 'likely'] },
+                        mitigation: { type: 'string' },
+                        contingency: { type: 'number', description: 'Additional cost if risk occurs' }
+                      },
+                      required: ['category', 'risk', 'severity', 'likelihood', 'mitigation']
+                    }
+                  }
+                },
+                required: ['risks']
+              },
+              paymentTerms: {
+                type: 'object',
+                description: 'Recommended payment structure for this project',
+                properties: {
+                  depositPercent: { type: 'number' },
+                  depositAmount: { type: 'number' },
+                  balanceAmount: { type: 'number' },
+                  paymentMilestones: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        stage: { type: 'string' },
+                        percentage: { type: 'number' },
+                        amount: { type: 'number' },
+                        trigger: { type: 'string' }
+                      },
+                      required: ['stage', 'percentage', 'amount', 'trigger']
+                    }
+                  },
+                  terms: { type: 'string' },
+                  lateFeePolicy: { type: 'string' }
+                },
+                required: ['depositPercent', 'depositAmount', 'balanceAmount', 'terms']
+              },
+              recommendedQuote: {
+                type: 'object',
+                description: 'AI-recommended quote tier based on job analysis',
+                properties: {
+                  tier: { type: 'string', enum: ['sparse', 'normal', 'busy'] },
+                  amount: { type: 'number' },
+                  reasoning: { type: 'string' },
+                  confidence: { type: 'number', minimum: 0, maximum: 100 },
+                  factors: { type: 'array', items: { type: 'string' } }
+                },
+                required: ['tier', 'amount', 'reasoning']
+              },
               siteChecklist: {
                 type: 'object',
                 description: 'Pre-start site requirements',
@@ -777,7 +898,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                 }
               }
             },
-            required: ['response', 'materials', 'summary', 'timescales', 'alternatives', 'orderList'],
+            required: ['response', 'materials', 'summary', 'timescales', 'alternatives', 'orderList', 'confidence', 'recommendedQuote'],
             additionalProperties: false
           }
         }
