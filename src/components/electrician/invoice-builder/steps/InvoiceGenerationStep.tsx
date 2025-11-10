@@ -185,19 +185,36 @@ export const InvoiceGenerationStep = ({
       </Card>
 
       <Card className="p-4 bg-primary/5">
+        <h3 className="font-semibold mb-3">Cost Breakdown</h3>
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span>Subtotal:</span>
-            <span>{formatCurrency(invoice.subtotal || 0)}</span>
+            <span>Subtotal (Materials & Labour):</span>
+            <span className="font-medium">{formatCurrency(invoice.subtotal || 0)}</span>
           </div>
-          {invoice.vatAmount && invoice.vatAmount > 0 && (
-            <div className="flex justify-between text-sm">
-              <span>VAT:</span>
-              <span>{formatCurrency(invoice.vatAmount)}</span>
+          
+          {(invoice.overhead !== undefined && invoice.overhead !== 0) && (
+            <div className="flex justify-between text-sm text-muted-foreground">
+              <span>Overhead ({invoice.settings?.overheadPercentage || 0}%):</span>
+              <span>{formatCurrency(invoice.overhead)}</span>
             </div>
           )}
+          
+          {(invoice.profit !== undefined && invoice.profit !== 0) && (
+            <div className="flex justify-between text-sm text-muted-foreground">
+              <span>Profit Margin ({invoice.settings?.profitMargin || 0}%):</span>
+              <span>{formatCurrency(invoice.profit)}</span>
+            </div>
+          )}
+          
+          {invoice.settings?.vatRegistered && (
+            <div className="flex justify-between text-sm">
+              <span>VAT ({invoice.settings?.vatRate || 20}%):</span>
+              <span className="font-medium">{formatCurrency(invoice.vatAmount || 0)}</span>
+            </div>
+          )}
+          
           <div className="flex justify-between text-lg font-bold pt-2 border-t border-primary/20">
-            <span>Total:</span>
+            <span>Total Amount Due:</span>
             <span>{formatCurrency(invoice.total || 0)}</span>
           </div>
         </div>
