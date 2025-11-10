@@ -526,9 +526,10 @@ RESPONSE REQUIREMENTS:
 
     console.log(`🚀 Calling Direct Gemini API (gemini-2.5-flash)...`);
 
-    // Component identification needs extra time due to comprehensive UK electrical knowledge base
-    const timeout = analysis_settings.mode === 'component_identify'
-      ? (analysis_settings.fast_mode ? 24000 : 30000)  // 24s fast, 30s full for component ID
+    // Both component_identify and fault_diagnosis need extra time due to increased token limits
+    // Timeout must be proportional to maxOutputTokens (2500-4000 tokens)
+    const timeout = (analysis_settings.mode === 'component_identify' || analysis_settings.mode === 'fault_diagnosis')
+      ? (analysis_settings.fast_mode ? 24000 : 30000)  // 24s fast, 30s full for high-token modes
       : (analysis_settings.fast_mode ? 12000 : 20000); // 12s fast, 20s full for other modes
     // Component identification needs more tokens due to comprehensive structured response
     // Gemini 2.5 Flash uses internal reasoning (thoughts) that count against token limit
