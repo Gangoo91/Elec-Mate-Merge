@@ -18,6 +18,9 @@ import AlternativeQuotesPanel from "./AlternativeQuotesPanel";
 import OrderListPanel from "./OrderListPanel";
 import ProfitabilityDashboard from "./ProfitabilityDashboard";
 import JobOverheadsBreakdown from "./JobOverheadsBreakdown";
+import { DetailedMaterialsBreakdown } from "./DetailedMaterialsBreakdown";
+import { DetailedLabourBreakdown } from "./DetailedLabourBreakdown";
+import { EnhancedProfitabilityDashboard } from "./EnhancedProfitabilityDashboard";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 
@@ -193,19 +196,15 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
         />
       </div>
 
-      {/* Profitability Dashboard - NEW */}
+      {/* Enhanced Profitability Dashboard */}
       {structuredData?.profitabilityAnalysis ? (
-        <>
-          <ProfitabilityDashboard profitabilityAnalysis={structuredData.profitabilityAnalysis} />
-          
-          {/* Job Overheads Breakdown */}
-          {structuredData.profitabilityAnalysis.jobOverheads && (
-            <JobOverheadsBreakdown 
-              jobOverheads={structuredData.profitabilityAnalysis.jobOverheads}
-              directCosts={structuredData.profitabilityAnalysis.directCosts}
-            />
-          )}
-        </>
+        <EnhancedProfitabilityDashboard 
+          directCosts={structuredData.profitabilityAnalysis.directCosts}
+          jobOverheads={structuredData.profitabilityAnalysis.jobOverheads}
+          breakEvenPoint={structuredData.profitabilityAnalysis.breakEvenPoint}
+          quoteTiers={structuredData.profitabilityAnalysis.quoteTiers}
+          recommendations={structuredData.profitabilityAnalysis.recommendations || []}
+        />
       ) : (
         <Alert className="border-blue-500/30 bg-blue-500/5">
           <InfoIcon className="h-5 w-5 text-blue-500" />
@@ -228,6 +227,77 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
             </Button>
           </AlertDescription>
         </Alert>
+      )}
+
+      {/* Detailed Materials Breakdown with Pricing Transparency */}
+      {structuredData?.materials && structuredData.materials.items && structuredData.materials.items.length > 0 && (
+        <DetailedMaterialsBreakdown 
+          materials={structuredData.materials.items.map((item: any) => ({
+            description: item.description || item.item || 'Unknown item',
+            quantity: item.quantity || 1,
+            unit: item.unit || 'each',
+            wholesalePrice: item.wholesalePrice || item.unitPrice || 0,
+            markupPercent: item.markupPercent || 15,
+            markupAmount: item.markupAmount || (item.wholesalePrice || item.unitPrice || 0) * 0.15,
+            unitPrice: item.unitPrice || 0,
+            total: item.total || 0,
+            supplier: item.supplier || 'Trade Supplier',
+            supplierCode: item.supplierCode,
+            inStock: item.inStock !== false,
+            inDatabase: item.inDatabase !== false,
+            alternativeSuppliers: item.alternativeSuppliers
+          }))}
+          wholesaleTotal={structuredData.summary?.materialsWholesale || analysis.materialsTotal / 1.15}
+          markupTotal={structuredData.summary?.materialsMarkup || analysis.materialsTotal * 0.15}
+          subtotal={structuredData.summary?.materialsSubtotal || analysis.materialsTotal}
+          wastagePercent={structuredData.materials.wastagePercent || 0}
+          wastageAmount={structuredData.materials.wastageAmount || 0}
+          finalTotal={analysis.materialsTotal}
+        />
+      )}
+
+      {/* Detailed Labour Breakdown with Team Composition */}
+      {structuredData?.labour && structuredData.labour.tasks && structuredData.labour.tasks.length > 0 && (
+        <DetailedLabourBreakdown 
+          tasks={structuredData.labour.tasks.map((task: any) => ({
+            description: task.description || 'Installation work',
+            hours: task.hours || 0,
+            teamComposition: task.teamComposition,
+            electricianHours: task.electricianHours || task.hours || 0,
+            apprenticeHours: task.apprenticeHours || 0,
+            electricianRate: task.electricianRate || 50,
+            apprenticeRate: task.apprenticeRate || 25,
+            electricianCost: task.electricianCost || (task.electricianHours || task.hours || 0) * 50,
+            apprenticeCost: task.apprenticeCost || (task.apprenticeHours || 0) * 25,
+            total: task.total || 0,
+            category: task.category
+          }))}
+          electricianTotalHours={
+            structuredData.labour.tasks.reduce((sum: number, t: any) => 
+              sum + (t.electricianHours || t.hours || 0), 0
+            )
+          }
+          apprenticeTotalHours={
+            structuredData.labour.tasks.reduce((sum: number, t: any) => 
+              sum + (t.apprenticeHours || 0), 0
+            )
+          }
+          electricianSubtotal={
+            structuredData.labour.tasks.reduce((sum: number, t: any) => 
+              sum + (t.electricianCost || (t.electricianHours || t.hours || 0) * 50), 0
+            )
+          }
+          apprenticeSubtotal={
+            structuredData.labour.tasks.reduce((sum: number, t: any) => 
+              sum + (t.apprenticeCost || 0), 0
+            )
+          }
+          labourSubtotal={structuredData.labour.subtotal || analysis.labourTotal}
+          overheadAllocation={structuredData.labour.overheadAllocation}
+          travelTime={structuredData.labour.travelTime}
+          travelCost={structuredData.labour.travelCost}
+          finalTotal={analysis.labourTotal}
+        />
       )}
 
       {/* Enhanced Panels for V3 Data */}
