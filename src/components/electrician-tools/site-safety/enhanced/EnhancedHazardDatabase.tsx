@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-import { Search, AlertTriangle, Shield, Bookmark, LayoutGrid, List as ListIcon, Maximize2, X, SlidersHorizontal, BarChart3, ChevronDown, AlertCircle } from 'lucide-react';
+import { Search, AlertTriangle, Shield, Bookmark, LayoutGrid, List as ListIcon, Maximize2, X, SlidersHorizontal, BarChart3, ChevronDown, AlertCircle, Zap } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -134,24 +134,31 @@ export const EnhancedHazardDatabase = () => {
     });
   };
 
+  const activeFilterCount = [
+    selectedCategory !== 'all',
+    selectedRiskLevel !== 'all',
+    selectedWorkType !== 'all',
+    selectedRegulation !== 'all'
+  ].filter(Boolean).length;
+
   return (
     <div className="min-h-screen bg-background">
-      {/* HEADER */}
+      {/* MOBILE-OPTIMISED HEADER */}
       <div className="bg-background border-b border-border/30">
-        <div className="max-w-7xl mx-auto px-4 py-3">
+        <div className={cn("max-w-7xl mx-auto", isMobile ? "px-3 py-3" : "px-4 py-3")}>
           {/* Row 1: Title + Actions */}
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <Shield className="w-5 h-5 text-elec-yellow" />
-              <h1 className="font-bold text-lg">Hazard Database</h1>
-              <Badge variant="outline" className="ml-2">
+              <h1 className={cn("font-bold", isMobile ? "text-base" : "text-lg")}>Hazard Database</h1>
+              <Badge variant="outline" className={cn(isMobile ? "text-xs" : "")}>
                 {filteredHazards.length}
               </Badge>
             </div>
             
             <div className="flex items-center gap-2">
-              {/* Bookmarks */}
-              {bookmarkedHazards.size > 0 && (
+              {/* Bookmarks - Desktop Only */}
+              {!isMobile && bookmarkedHazards.size > 0 && (
                 <Button
                   variant={showBookmarkedOnly ? 'default' : 'outline'}
                   size="sm"
@@ -162,18 +169,20 @@ export const EnhancedHazardDatabase = () => {
                 </Button>
               )}
               
-              {/* View Toggle */}
-              <ToggleGroup type="single" value={viewMode} onValueChange={(v) => v && setViewMode(v as any)}>
-                <ToggleGroupItem value="detailed" size="sm" title="Detailed view">
-                  <Maximize2 className="w-4 h-4" />
-                </ToggleGroupItem>
-                <ToggleGroupItem value="compact" size="sm" title="Compact grid">
-                  <LayoutGrid className="w-4 h-4" />
-                </ToggleGroupItem>
-                <ToggleGroupItem value="list" size="sm" title="List view">
-                  <ListIcon className="w-4 h-4" />
-                </ToggleGroupItem>
-              </ToggleGroup>
+              {/* View Toggle - Desktop Only */}
+              {!isMobile && (
+                <ToggleGroup type="single" value={viewMode} onValueChange={(v) => v && setViewMode(v as any)}>
+                  <ToggleGroupItem value="detailed" size="sm" title="Detailed view">
+                    <Maximize2 className="w-4 h-4" />
+                  </ToggleGroupItem>
+                  <ToggleGroupItem value="compact" size="sm" title="Compact grid">
+                    <LayoutGrid className="w-4 h-4" />
+                  </ToggleGroupItem>
+                  <ToggleGroupItem value="list" size="sm" title="List view">
+                    <ListIcon className="w-4 h-4" />
+                  </ToggleGroupItem>
+                </ToggleGroup>
+              )}
 
               {/* Desktop: Stats Popover */}
               {!isMobile && (
@@ -215,31 +224,43 @@ export const EnhancedHazardDatabase = () => {
 
               {/* Mobile: Filters Trigger */}
               {isMobile && (
-                <Button variant="outline" size="sm" onClick={() => setShowMobileFilters(true)}>
-                  <SlidersHorizontal className="w-4 h-4" />
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="h-10 relative"
+                  onClick={() => setShowMobileFilters(true)}
+                >
+                  <SlidersHorizontal className="w-5 h-5 mr-1" />
+                  Filters
+                  {hasActiveFilters && (
+                    <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
+                      {activeFilterCount}
+                    </Badge>
+                  )}
                 </Button>
               )}
             </div>
           </div>
 
-          {/* Row 2: Search Bar */}
+          {/* Row 2: Search Bar - Mobile Optimised */}
           <div className="relative mb-3">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Search hazards, regulations, or keywords..."
+              placeholder={isMobile ? "Search hazards..." : "Search hazards, regulations, or keywords..."}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-11 h-11 text-base"
+              className={cn("pl-11 text-base", isMobile ? "h-14" : "h-11")}
+              style={{ fontSize: '16px' }}
             />
             {searchTerm && (
               <Button
                 variant="ghost"
                 size="sm"
-                className="absolute right-2 top-1/2 -translate-y-1/2"
+                className={cn("absolute right-2 top-1/2 -translate-y-1/2", isMobile ? "h-10 w-10" : "")}
                 onClick={() => setSearchTerm('')}
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </Button>
             )}
           </div>
@@ -304,11 +325,14 @@ export const EnhancedHazardDatabase = () => {
       </div>
 
       {/* MAIN CONTENT */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className={cn(
+        "max-w-7xl mx-auto py-4 sm:py-6",
+        isMobile ? "px-3 pb-20" : "px-4 sm:px-6 lg:px-8"
+      )}>
         {/* Hazards Grid */}
         {filteredHazards.length > 0 ? (
           <div className={cn(
-            "gap-4",
+            isMobile ? "gap-3" : "gap-4",
             viewMode === 'detailed' && "grid grid-cols-1",
             viewMode === 'compact' && "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
             viewMode === 'list' && "space-y-2"
@@ -328,10 +352,10 @@ export const EnhancedHazardDatabase = () => {
             ))}
           </div>
         ) : (
-          <Card className="border-dashed border-2 p-12 text-center">
-            <AlertCircle className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-            <h3 className="font-semibold text-lg mb-2">No hazards found</h3>
-            <p className="text-muted-foreground mb-4">
+          <Card className={cn("border-dashed border-2 text-center", isMobile ? "p-6" : "p-12")}>
+            <AlertCircle className={cn("mx-auto mb-4 text-muted-foreground", isMobile ? "w-10 h-10" : "w-12 h-12")} />
+            <h3 className={cn("font-semibold mb-2", isMobile ? "text-base" : "text-lg")}>No hazards found</h3>
+            <p className="text-muted-foreground mb-4 text-sm">
               Try adjusting your filters or search term
             </p>
             <Button onClick={clearAllFilters}>Clear All Filters</Button>
@@ -339,66 +363,58 @@ export const EnhancedHazardDatabase = () => {
         )}
       </div>
 
-      {/* MOBILE: Stats Drawer */}
-      {isMobile && (
-        <Drawer>
-          <DrawerTrigger asChild>
-            <Button variant="outline" className="fixed bottom-20 right-4 z-30 shadow-lg" size="sm">
-              <BarChart3 className="w-4 h-4 mr-2" />
-              Stats
-            </Button>
-          </DrawerTrigger>
-          <DrawerContent>
-            <DrawerHeader>
-              <DrawerTitle>Hazard Statistics</DrawerTitle>
-            </DrawerHeader>
-            <div className="px-4 pb-4 overflow-y-auto max-h-[60vh]">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="text-center p-3 rounded bg-red-500/10 border border-red-500/20">
-                  <div className="text-2xl font-bold text-red-400">{stats.veryHigh}</div>
-                  <div className="text-xs text-muted-foreground">Critical</div>
-                </div>
-                <div className="text-center p-3 rounded bg-orange-500/10 border border-orange-500/20">
-                  <div className="text-2xl font-bold text-orange-400">{stats.high}</div>
-                  <div className="text-xs text-muted-foreground">High Risk</div>
-                </div>
-                <div className="text-center p-3 rounded bg-yellow-500/10 border border-yellow-500/20">
-                  <div className="text-2xl font-bold text-yellow-400">{stats.medium}</div>
-                  <div className="text-xs text-muted-foreground">Medium</div>
-                </div>
-                <div className="text-center p-3 rounded bg-green-500/10 border border-green-500/20">
-                  <div className="text-2xl font-bold text-green-400">{stats.low}</div>
-                  <div className="text-xs text-muted-foreground">Low</div>
-                </div>
-              </div>
-              <div className="text-center pt-3 mt-3 border-t border-border/30">
-                <div className="text-2xl font-bold">{stats.totalHazards}</div>
-                <div className="text-xs text-muted-foreground">Total Hazards</div>
-              </div>
-            </div>
-          </DrawerContent>
-        </Drawer>
-      )}
 
-      {/* MOBILE: Filter Sheet */}
+      {/* MOBILE: Filter Sheet - Enhanced */}
       {isMobile && (
         <Sheet open={showMobileFilters} onOpenChange={setShowMobileFilters}>
-          <SheetContent side="bottom" className="h-[85vh]">
-            <SheetHeader>
+          <SheetContent side="bottom" className="h-[90vh] rounded-t-xl">
+            <SheetHeader className="border-b pb-3">
               <SheetTitle>Filter Hazards</SheetTitle>
-              <SheetDescription>
-                {filteredHazards.length} of {stats.totalHazards} hazards
+              <SheetDescription className="flex items-center gap-2">
+                <Badge variant="outline" className="text-base">
+                  {filteredHazards.length} / {stats.totalHazards}
+                </Badge>
+                <span className="text-sm text-muted-foreground">hazards shown</span>
               </SheetDescription>
             </SheetHeader>
-            <ScrollArea className="h-[calc(85vh-8rem)] py-4">
-              <div className="space-y-4 px-4">
+            <ScrollArea className="h-[calc(90vh-10rem)] py-4">
+              <div className="space-y-6 px-4">
+                {/* Quick Filter Presets */}
+                <div className="space-y-2">
+                  <div className="text-xs font-semibold text-muted-foreground uppercase">Quick Filters</div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button
+                      variant="outline"
+                      className="h-14 flex-col gap-1"
+                      onClick={() => {
+                        setSelectedRiskLevel('high');
+                        setShowMobileFilters(false);
+                      }}
+                    >
+                      <AlertTriangle className="w-5 h-5 text-red-400" />
+                      <span className="text-xs font-medium">High Risk</span>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="h-14 flex-col gap-1"
+                      onClick={() => {
+                        setSelectedCategory('Electrical');
+                        setShowMobileFilters(false);
+                      }}
+                    >
+                      <Zap className="w-5 h-5 text-elec-yellow" />
+                      <span className="text-xs font-medium">Electrical</span>
+                    </Button>
+                  </div>
+                </div>
+
                 {/* Category Buttons */}
                 <div>
-                  <label className="text-sm font-semibold mb-2 block">Category</label>
+                  <label className="text-sm font-semibold mb-3 block">Category</label>
                   <div className="flex flex-wrap gap-2">
                     <Button
                       variant={selectedCategory === 'all' ? 'default' : 'outline'}
-                      size="sm"
+                      className="h-12 text-sm"
                       onClick={() => setSelectedCategory('all')}
                     >
                       All
@@ -407,10 +423,11 @@ export const EnhancedHazardDatabase = () => {
                       <Button
                         key={cat.category}
                         variant={selectedCategory === cat.category ? 'default' : 'outline'}
-                        size="sm"
+                        className="h-12 text-sm"
                         onClick={() => setSelectedCategory(cat.category)}
                       >
-                        {cat.icon} {cat.category}
+                        {cat.icon && <span className="mr-2">{cat.icon}</span>}
+                        {cat.category}
                       </Button>
                     ))}
                   </div>
@@ -418,33 +435,33 @@ export const EnhancedHazardDatabase = () => {
 
                 {/* Risk Level Buttons */}
                 <div>
-                  <label className="text-sm font-semibold mb-2 block">Risk Level</label>
+                  <label className="text-sm font-semibold mb-3 block">Risk Level</label>
                   <div className="flex flex-wrap gap-2">
                     <Button
                       variant={selectedRiskLevel === 'all' ? 'default' : 'outline'}
-                      size="sm"
+                      className="h-12 text-sm"
                       onClick={() => setSelectedRiskLevel('all')}
                     >
                       All
                     </Button>
                     <Button
                       variant={selectedRiskLevel === 'high' ? 'destructive' : 'outline'}
-                      size="sm"
+                      className="h-12 text-sm"
                       onClick={() => setSelectedRiskLevel('high')}
                     >
-                      <AlertTriangle className="w-3 h-3 mr-1" />
+                      <AlertTriangle className="w-4 h-4 mr-1" />
                       High
                     </Button>
                     <Button
                       variant={selectedRiskLevel === 'medium' ? 'default' : 'outline'}
-                      size="sm"
+                      className="h-12 text-sm"
                       onClick={() => setSelectedRiskLevel('medium')}
                     >
                       Medium
                     </Button>
                     <Button
                       variant={selectedRiskLevel === 'low' ? 'default' : 'outline'}
-                      size="sm"
+                      className="h-12 text-sm"
                       onClick={() => setSelectedRiskLevel('low')}
                     >
                       Low
@@ -454,13 +471,13 @@ export const EnhancedHazardDatabase = () => {
 
                 {/* Work Type */}
                 <div>
-                  <label className="text-sm font-semibold mb-2 block">Work Type</label>
+                  <label className="text-sm font-semibold mb-3 block">Work Type</label>
                   <div className="flex flex-wrap gap-2">
                     {['all', 'Installation', 'Maintenance', 'Testing', 'Inspection', 'Emergency'].map(type => (
                       <Button
                         key={type}
                         variant={selectedWorkType === type ? 'default' : 'outline'}
-                        size="sm"
+                        className="h-12 text-sm"
                         onClick={() => setSelectedWorkType(type)}
                       >
                         {type === 'all' ? 'All' : type}
@@ -470,11 +487,11 @@ export const EnhancedHazardDatabase = () => {
                 </div>
               </div>
             </ScrollArea>
-            <div className="border-t p-4 flex gap-2">
-              <Button variant="outline" onClick={clearAllFilters} className="flex-1">
+            <div className="border-t p-4 flex gap-2 pb-safe">
+              <Button variant="outline" onClick={clearAllFilters} className="flex-1 h-12">
                 Clear All
               </Button>
-              <Button onClick={() => setShowMobileFilters(false)} className="flex-1">
+              <Button onClick={() => setShowMobileFilters(false)} className="flex-1 h-12">
                 Apply
               </Button>
             </div>
@@ -482,46 +499,106 @@ export const EnhancedHazardDatabase = () => {
         </Sheet>
       )}
 
-      {/* MOBILE: Bottom Action Bar */}
+      {/* MOBILE: Fixed Bottom Action Bar */}
       {isMobile && (
-        <div className="fixed bottom-0 left-0 right-0 z-30 bg-background/98 backdrop-blur-md border-t border-border/30 p-3">
-          <div className="flex items-center justify-around">
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-background/98 backdrop-blur-md border-t border-border/30 pb-safe">
+          <div className="grid grid-cols-4 gap-1 p-2">
+            {/* View Mode */}
             <Button
               variant="ghost"
               size="sm"
+              className="h-14 flex-col gap-1 text-xs"
+              onClick={() => {
+                const modes: Array<'detailed' | 'compact' | 'list'> = ['detailed', 'compact', 'list'];
+                const currentIndex = modes.indexOf(viewMode);
+                const nextMode = modes[(currentIndex + 1) % modes.length];
+                setViewMode(nextMode);
+              }}
+            >
+              {viewMode === 'detailed' && <Maximize2 className="w-5 h-5" />}
+              {viewMode === 'compact' && <LayoutGrid className="w-5 h-5" />}
+              {viewMode === 'list' && <ListIcon className="w-5 h-5" />}
+              <span className="text-[10px] text-muted-foreground">
+                {viewMode === 'detailed' ? 'Detailed' : viewMode === 'compact' ? 'Grid' : 'List'}
+              </span>
+            </Button>
+
+            {/* Filters */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-14 flex-col gap-1 text-xs relative"
               onClick={() => setShowMobileFilters(true)}
-              className="flex flex-col items-center gap-1"
             >
               <SlidersHorizontal className="w-5 h-5" />
-              <span className="text-xs">Filters</span>
+              <span className="text-[10px] text-muted-foreground">Filters</span>
               {hasActiveFilters && (
-                <Badge variant="secondary" className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-[10px]">
-                  {[selectedCategory !== 'all', selectedRiskLevel !== 'all', selectedWorkType !== 'all'].filter(Boolean).length}
+                <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-[10px]">
+                  {activeFilterCount}
                 </Badge>
               )}
             </Button>
 
-            {bookmarkedHazards.size > 0 && (
+            {/* Stats */}
+            <Drawer>
+              <DrawerTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-14 flex-col gap-1 text-xs"
+                >
+                  <BarChart3 className="w-5 h-5" />
+                  <span className="text-[10px] text-muted-foreground">Stats</span>
+                </Button>
+              </DrawerTrigger>
+              <DrawerContent className="pb-safe">
+                <DrawerHeader>
+                  <DrawerTitle>Statistics</DrawerTitle>
+                </DrawerHeader>
+                <div className="px-4 pb-6">
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="text-center p-4 rounded-lg bg-red-500/10 border border-red-500/20">
+                      <div className="text-3xl font-bold text-red-400">{stats.veryHigh}</div>
+                      <div className="text-xs text-muted-foreground mt-1">Critical</div>
+                    </div>
+                    <div className="text-center p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
+                      <div className="text-3xl font-bold text-orange-400">{stats.high}</div>
+                      <div className="text-xs text-muted-foreground mt-1">High Risk</div>
+                    </div>
+                    <div className="text-center p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
+                      <div className="text-3xl font-bold text-yellow-400">{stats.medium}</div>
+                      <div className="text-xs text-muted-foreground mt-1">Medium</div>
+                    </div>
+                    <div className="text-center p-4 rounded-lg bg-green-500/10 border border-green-500/20">
+                      <div className="text-3xl font-bold text-green-400">{stats.low}</div>
+                      <div className="text-xs text-muted-foreground mt-1">Low</div>
+                    </div>
+                  </div>
+                  <div className="text-center pt-4 mt-4 border-t border-border/30">
+                    <div className="text-3xl font-bold">{stats.totalHazards}</div>
+                    <div className="text-sm text-muted-foreground mt-1">Total Hazards</div>
+                  </div>
+                </div>
+              </DrawerContent>
+            </Drawer>
+
+            {/* Bookmarks (if any) */}
+            {bookmarkedHazards.size > 0 ? (
               <Button
                 variant={showBookmarkedOnly ? 'default' : 'ghost'}
                 size="sm"
+                className="h-14 flex-col gap-1 text-xs relative"
                 onClick={() => setShowBookmarkedOnly(!showBookmarkedOnly)}
-                className="flex flex-col items-center gap-1"
               >
                 <Bookmark className={cn("w-5 h-5", showBookmarkedOnly && "fill-current")} />
-                <span className="text-xs">{bookmarkedHazards.size}</span>
+                <span className="text-[10px] text-muted-foreground">Saved</span>
+                <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-[10px]">
+                  {bookmarkedHazards.size}
+                </Badge>
               </Button>
+            ) : (
+              <div />
             )}
-
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={clearAllFilters}
-              className="flex flex-col items-center gap-1"
-            >
-              <X className="w-5 h-5" />
-              <span className="text-xs">Clear</span>
-            </Button>
           </div>
         </div>
       )}
