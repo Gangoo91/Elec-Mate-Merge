@@ -1,14 +1,17 @@
 import { useState, useMemo, useCallback } from 'react';
-import { Search, AlertTriangle, Shield, Bookmark, LayoutGrid, List as ListIcon, Maximize2 } from 'lucide-react';
+import { Search, AlertTriangle, Shield, Bookmark, LayoutGrid, List as ListIcon, Maximize2, X, SlidersHorizontal, BarChart3, ChevronDown, AlertCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Card } from '@/components/ui/card';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
 import { hazardDatabase } from '@/data/enhanced-hazard-database';
-import { HazardStatsDashboard } from './HazardStatsDashboard';
-import { RiskMatrixVisual } from './RiskMatrixVisual';
-import { RegulationQuickReference } from './RegulationQuickReference';
 import { HazardCard } from './HazardCard';
 import { useToast } from '@/hooks/use-toast';
 import { useHazardFilters } from '@/hooks/useHazardFilters';
@@ -45,6 +48,7 @@ export const EnhancedHazardDatabase = () => {
   const [viewMode, setViewMode] = useState<'detailed' | 'compact' | 'list'>('detailed');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [bookmarkedHazards, setBookmarkedHazards] = useState<Set<string>>(new Set());
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   // Get filtered hazards with bookmarks
   const filteredHazards = useMemo(() => 
@@ -130,258 +134,183 @@ export const EnhancedHazardDatabase = () => {
     });
   };
 
-  const handleRiskMatrixClick = useCallback((minScore: number, maxScore: number) => {
-    setRiskScoreFilter({ min: minScore, max: maxScore });
-  }, [setRiskScoreFilter]);
-
-  const handleRegulationClick = useCallback((regulation: string) => {
-    setSelectedRegulation(regulation);
-  }, [setSelectedRegulation]);
-
   return (
-    <div className={cn(
-      "min-h-screen bg-background",
-      !isMobile && "flex gap-6 p-6"
-    )}>
-      {/* LEFT PANEL - Desktop Only */}
-      {!isMobile && (
-        <aside className="w-[360px] sticky top-6 h-[calc(100vh-3rem)] overflow-y-auto space-y-4">
-          {/* Statistics Dashboard */}
-          <HazardStatsDashboard
-            totalHazards={stats.totalHazards}
-            veryHighRisk={stats.veryHigh}
-            highRisk={stats.high}
-            mediumRisk={stats.medium}
-            lowRisk={stats.low}
-            totalControls={stats.totalControls}
-            categoryBreakdown={stats.categoryBreakdown}
-          />
-
-          {/* Risk Matrix */}
-          <RiskMatrixVisual 
-            hazards={filteredHazards}
-            onRiskLevelClick={handleRiskMatrixClick}
-          />
-
-          {/* Regulation Quick Reference */}
-          <RegulationQuickReference
-            hazards={filteredHazards}
-            onRegulationClick={handleRegulationClick}
-          />
-
-          {/* Bookmarks */}
-          {bookmarkedHazards.size > 0 && (
-            <div className="bg-elec-card/50 rounded-lg border border-border/50 p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Bookmark className="w-4 h-4 text-elec-yellow" />
-                <h3 className="font-semibold">Bookmarked</h3>
-                <Badge variant="outline" className="ml-auto">{bookmarkedHazards.size}</Badge>
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowBookmarkedOnly(!showBookmarkedOnly)}
-                className="w-full"
-              >
-                {showBookmarkedOnly ? 'Show All' : 'Show Bookmarked Only'}
-              </Button>
-            </div>
-          )}
-        </aside>
-      )}
-
-      {/* RIGHT PANEL - Main Content */}
-      <main className={cn("flex-1", isMobile && "p-4 space-y-6")}>
-        {/* Mobile: Show stats at top */}
-        {isMobile && (
-          <HazardStatsDashboard
-            totalHazards={stats.totalHazards}
-            veryHighRisk={stats.veryHigh}
-            highRisk={stats.high}
-            mediumRisk={stats.medium}
-            lowRisk={stats.low}
-            totalControls={stats.totalControls}
-            categoryBreakdown={stats.categoryBreakdown}
-          />
-        )}
-
-        {/* View Mode Toggle & Control Hierarchy - Sticky */}
-        <div className="sticky top-0 z-10 bg-gradient-to-r from-elec-card/95 to-elec-card/80 backdrop-blur-sm rounded-lg border border-border/50 p-3 shadow-lg space-y-3">
-          {/* View Mode Toggle */}
-          <div className="flex items-center justify-between gap-3">
+    <div className="min-h-screen bg-background">
+      {/* STICKY HEADER */}
+      <div className="sticky top-0 z-20 bg-background/98 backdrop-blur-md border-b border-border/30">
+        <div className="max-w-7xl mx-auto px-4 py-3">
+          {/* Row 1: Title + Actions */}
+          <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-elec-yellow" />
-              <span className="text-xs font-semibold uppercase tracking-wide">Hazard Database</span>
+              <Shield className="w-5 h-5 text-elec-yellow" />
+              <h1 className="font-bold text-lg">Hazard Database</h1>
+              <Badge variant="outline" className="ml-2">
+                {filteredHazards.length}
+              </Badge>
             </div>
-            <ToggleGroup type="single" value={viewMode} onValueChange={(v) => v && setViewMode(v as any)} className="gap-1">
-              <ToggleGroupItem value="detailed" size="sm" className="text-xs px-2">
-                <Maximize2 className="w-3 h-3 mr-1" />
-                {!isMobile && 'Detail'}
-              </ToggleGroupItem>
-              <ToggleGroupItem value="compact" size="sm" className="text-xs px-2">
-                <LayoutGrid className="w-3 h-3 mr-1" />
-                {!isMobile && 'Compact'}
-              </ToggleGroupItem>
-              <ToggleGroupItem value="list" size="sm" className="text-xs px-2">
-                <ListIcon className="w-3 h-3 mr-1" />
-                {!isMobile && 'List'}
-              </ToggleGroupItem>
+            
+            <div className="flex items-center gap-2">
+              {/* Bookmarks */}
+              {bookmarkedHazards.size > 0 && (
+                <Button
+                  variant={showBookmarkedOnly ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setShowBookmarkedOnly(!showBookmarkedOnly)}
+                >
+                  <Bookmark className={cn("w-4 h-4 mr-1", showBookmarkedOnly && "fill-current")} />
+                  {bookmarkedHazards.size}
+                </Button>
+              )}
+              
+              {/* View Toggle */}
+              <ToggleGroup type="single" value={viewMode} onValueChange={(v) => v && setViewMode(v as any)}>
+                <ToggleGroupItem value="detailed" size="sm" title="Detailed view">
+                  <Maximize2 className="w-4 h-4" />
+                </ToggleGroupItem>
+                <ToggleGroupItem value="compact" size="sm" title="Compact grid">
+                  <LayoutGrid className="w-4 h-4" />
+                </ToggleGroupItem>
+                <ToggleGroupItem value="list" size="sm" title="List view">
+                  <ListIcon className="w-4 h-4" />
+                </ToggleGroupItem>
+              </ToggleGroup>
 
-            </ToggleGroup>
+              {/* Desktop: Stats Popover */}
+              {!isMobile && (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" size="sm">
+                      <BarChart3 className="w-4 h-4 mr-1" />
+                      Stats
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80" align="end">
+                    <div className="space-y-3">
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="text-center p-3 rounded bg-red-500/10 border border-red-500/20">
+                          <div className="text-2xl font-bold text-red-400">{stats.veryHigh}</div>
+                          <div className="text-xs text-muted-foreground">Critical</div>
+                        </div>
+                        <div className="text-center p-3 rounded bg-orange-500/10 border border-orange-500/20">
+                          <div className="text-2xl font-bold text-orange-400">{stats.high}</div>
+                          <div className="text-xs text-muted-foreground">High Risk</div>
+                        </div>
+                        <div className="text-center p-3 rounded bg-yellow-500/10 border border-yellow-500/20">
+                          <div className="text-2xl font-bold text-yellow-400">{stats.medium}</div>
+                          <div className="text-xs text-muted-foreground">Medium</div>
+                        </div>
+                        <div className="text-center p-3 rounded bg-green-500/10 border border-green-500/20">
+                          <div className="text-2xl font-bold text-green-400">{stats.low}</div>
+                          <div className="text-xs text-muted-foreground">Low</div>
+                        </div>
+                      </div>
+                      <div className="text-center pt-2 border-t border-border/30">
+                        <div className="text-xl font-bold">{stats.totalHazards}</div>
+                        <div className="text-xs text-muted-foreground">Total Hazards</div>
+                      </div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              )}
+
+              {/* Mobile: Filters Trigger */}
+              {isMobile && (
+                <Button variant="outline" size="sm" onClick={() => setShowMobileFilters(true)}>
+                  <SlidersHorizontal className="w-4 h-4" />
+                </Button>
+              )}
+            </div>
           </div>
 
-          {/* Control Hierarchy Legend */}
-          <div className="flex flex-wrap gap-2 text-xs">
-            <Badge className="bg-red-500/20 text-red-400 border-red-500/30">🚫 P1 Elimination</Badge>
-            <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30">🔄 P2 Substitution</Badge>
-            <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">🔧 P3 Engineering</Badge>
-            <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30">📋 P4 Administrative</Badge>
-            <Badge className="bg-green-500/20 text-green-400 border-green-500/30">🦺 P5 PPE</Badge>
-          </div>
-        </div>
-
-        {/* Search & Filters */}
-        <div className="bg-elec-card/50 rounded-lg border border-border/50 p-4 space-y-4">
-          {/* Search Bar */}
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          {/* Row 2: Search Bar */}
+          <div className="relative mb-3">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Search by hazard, regulation, or keyword..."
+              placeholder="Search hazards, regulations, or keywords..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-background/50"
+              className="pl-11 h-11 text-base"
             />
+            {searchTerm && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="absolute right-2 top-1/2 -translate-y-1/2"
+                onClick={() => setSearchTerm('')}
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            )}
           </div>
 
-          {/* Filter Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="bg-background/50">
-                <SelectValue placeholder="Category" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
-                {hazardDatabase.map(cat => (
-                  <SelectItem key={cat.category} value={cat.category}>
-                    {cat.icon} {cat.category}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          {/* Row 3: Quick Filter Chips - Desktop Only */}
+          {!isMobile && (
+            <div className="flex flex-wrap gap-2">
+              {/* Category Chips */}
+              <Button
+                variant={selectedCategory === 'all' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setSelectedCategory('all')}
+              >
+                All
+              </Button>
+              {hazardDatabase.slice(0, 6).map(cat => (
+                <Button
+                  key={cat.category}
+                  variant={selectedCategory === cat.category ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setSelectedCategory(cat.category)}
+                >
+                  {cat.icon} {cat.category}
+                </Button>
+              ))}
 
-            <Select value={selectedRiskLevel} onValueChange={setSelectedRiskLevel}>
-              <SelectTrigger className="bg-background/50">
-                <SelectValue placeholder="Risk Level" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Risk Levels</SelectItem>
-                <SelectItem value="high">High Risk</SelectItem>
-                <SelectItem value="medium">Medium Risk</SelectItem>
-                <SelectItem value="low">Low Risk</SelectItem>
-              </SelectContent>
-            </Select>
+              <Separator orientation="vertical" className="h-8" />
 
-            <Select value={selectedWorkType} onValueChange={setSelectedWorkType}>
-              <SelectTrigger className="bg-background/50">
-                <SelectValue placeholder="Work Type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Work Types</SelectItem>
-                <SelectItem value="Installation">Installation</SelectItem>
-                <SelectItem value="Maintenance">Maintenance</SelectItem>
-                <SelectItem value="Testing">Testing</SelectItem>
-                <SelectItem value="Fault-Finding">Fault-Finding</SelectItem>
-                <SelectItem value="Inspection">Inspection</SelectItem>
-                <SelectItem value="Emergency">Emergency</SelectItem>
-              </SelectContent>
-            </Select>
+              {/* Risk Level Filters */}
+              <Button
+                variant={selectedRiskLevel === 'high' ? 'destructive' : 'outline'}
+                size="sm"
+                onClick={() => setSelectedRiskLevel(selectedRiskLevel === 'high' ? 'all' : 'high')}
+              >
+                <AlertTriangle className="w-3 h-3 mr-1" />
+                High ({stats.veryHigh + stats.high})
+              </Button>
+              <Button
+                variant={selectedRiskLevel === 'medium' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setSelectedRiskLevel(selectedRiskLevel === 'medium' ? 'all' : 'medium')}
+              >
+                Medium ({stats.medium})
+              </Button>
+              <Button
+                variant={selectedRiskLevel === 'low' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setSelectedRiskLevel(selectedRiskLevel === 'low' ? 'all' : 'low')}
+              >
+                Low ({stats.low})
+              </Button>
 
-            <Select value={selectedRegulation} onValueChange={setSelectedRegulation}>
-              <SelectTrigger className="bg-background/50">
-                <SelectValue placeholder="Regulation" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Regulations</SelectItem>
-                <SelectItem value="411.3.3">411.3.3 - RCD Protection</SelectItem>
-                <SelectItem value="514.11">514.11 - Isolation</SelectItem>
-                <SelectItem value="701.415.2">701.415.2 - Bonding</SelectItem>
-                <SelectItem value="522.6.101">522.6.101 - Underground</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Active Filters */}
-          {hasActiveFilters && (
-            <div className="flex flex-wrap gap-2 items-center">
-              <span className="text-xs text-muted-foreground">Active filters:</span>
-              {searchTerm && (
-                <Badge variant="outline" className="text-xs">
-                  Search: "{searchTerm}"
-                  <button onClick={() => setSearchTerm('')} className="ml-1">×</button>
-                </Badge>
+              {/* Clear Filters */}
+              {hasActiveFilters && (
+                <Button variant="ghost" size="sm" onClick={clearAllFilters}>
+                  Clear All
+                </Button>
               )}
-              {selectedCategory !== 'all' && (
-                <Badge variant="outline" className="text-xs">
-                  {selectedCategory}
-                  <button onClick={() => setSelectedCategory('all')} className="ml-1">×</button>
-                </Badge>
-              )}
-              {selectedRiskLevel !== 'all' && (
-                <Badge variant="outline" className="text-xs">
-                  {selectedRiskLevel} risk
-                  <button onClick={() => setSelectedRiskLevel('all')} className="ml-1">×</button>
-                </Badge>
-              )}
-              {selectedWorkType !== 'all' && (
-                <Badge variant="outline" className="text-xs">
-                  {selectedWorkType}
-                  <button onClick={() => setSelectedWorkType('all')} className="ml-1">×</button>
-                </Badge>
-              )}
-              {selectedRegulation !== 'all' && (
-                <Badge variant="outline" className="text-xs">
-                  BS7671: {selectedRegulation}
-                  <button onClick={() => setSelectedRegulation('all')} className="ml-1">×</button>
-                </Badge>
-              )}
-              {riskScoreFilter && (
-                <Badge variant="outline" className="text-xs">
-                  Score: {riskScoreFilter.min}-{riskScoreFilter.max}
-                  <button onClick={() => setRiskScoreFilter(null)} className="ml-1">×</button>
-                </Badge>
-              )}
-              {showBookmarkedOnly && (
-                <Badge variant="outline" className="text-xs">
-                  Bookmarked only
-                  <button onClick={() => setShowBookmarkedOnly(false)} className="ml-1">×</button>
-                </Badge>
-              )}
-              <span className="text-xs text-muted-foreground">
-                Showing {filteredHazards.length} of {stats.totalHazards} hazards
-              </span>
             </div>
           )}
         </div>
+      </div>
 
-        {/* Mobile: Show side panels */}
-        {isMobile && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <RiskMatrixVisual 
-              hazards={filteredHazards}
-              onRiskLevelClick={handleRiskMatrixClick}
-            />
-            <RegulationQuickReference
-              hazards={filteredHazards}
-              onRegulationClick={handleRegulationClick}
-            />
-          </div>
-        )}
-
-        {/* Hazard Cards */}
+      {/* MAIN CONTENT */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* Hazards Grid */}
         {filteredHazards.length > 0 ? (
           <div className={cn(
-            "space-y-3",
+            "gap-4",
+            viewMode === 'detailed' && "grid grid-cols-1",
+            viewMode === 'compact' && "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
             viewMode === 'list' && "space-y-2"
           )}>
             {filteredHazards.map((hazard) => (
@@ -399,49 +328,203 @@ export const EnhancedHazardDatabase = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 bg-elec-card/30 rounded-lg border border-border/50">
-            <AlertTriangle className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-            <p className="text-muted-foreground mb-4">No hazards match your filters</p>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={clearAllFilters}
-            >
-              Clear All Filters
-            </Button>
-          </div>
+          <Card className="border-dashed border-2 p-12 text-center">
+            <AlertCircle className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+            <h3 className="font-semibold text-lg mb-2">No hazards found</h3>
+            <p className="text-muted-foreground mb-4">
+              Try adjusting your filters or search term
+            </p>
+            <Button onClick={clearAllFilters}>Clear All Filters</Button>
+          </Card>
         )}
+      </div>
 
-        {/* Mobile Quick Action Bar - Bottom Sticky */}
-        {isMobile && (
-          <div className="fixed bottom-0 left-0 right-0 z-20 bg-elec-card/95 backdrop-blur-sm border-t border-border/50 p-3 flex justify-around items-center shadow-lg">
+      {/* MOBILE: Stats Drawer */}
+      {isMobile && (
+        <Drawer>
+          <DrawerTrigger asChild>
+            <Button variant="outline" className="fixed bottom-20 right-4 z-30 shadow-lg" size="sm">
+              <BarChart3 className="w-4 h-4 mr-2" />
+              Stats
+            </Button>
+          </DrawerTrigger>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>Hazard Statistics</DrawerTitle>
+            </DrawerHeader>
+            <div className="px-4 pb-4 overflow-y-auto max-h-[60vh]">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="text-center p-3 rounded bg-red-500/10 border border-red-500/20">
+                  <div className="text-2xl font-bold text-red-400">{stats.veryHigh}</div>
+                  <div className="text-xs text-muted-foreground">Critical</div>
+                </div>
+                <div className="text-center p-3 rounded bg-orange-500/10 border border-orange-500/20">
+                  <div className="text-2xl font-bold text-orange-400">{stats.high}</div>
+                  <div className="text-xs text-muted-foreground">High Risk</div>
+                </div>
+                <div className="text-center p-3 rounded bg-yellow-500/10 border border-yellow-500/20">
+                  <div className="text-2xl font-bold text-yellow-400">{stats.medium}</div>
+                  <div className="text-xs text-muted-foreground">Medium</div>
+                </div>
+                <div className="text-center p-3 rounded bg-green-500/10 border border-green-500/20">
+                  <div className="text-2xl font-bold text-green-400">{stats.low}</div>
+                  <div className="text-xs text-muted-foreground">Low</div>
+                </div>
+              </div>
+              <div className="text-center pt-3 mt-3 border-t border-border/30">
+                <div className="text-2xl font-bold">{stats.totalHazards}</div>
+                <div className="text-xs text-muted-foreground">Total Hazards</div>
+              </div>
+            </div>
+          </DrawerContent>
+        </Drawer>
+      )}
+
+      {/* MOBILE: Filter Sheet */}
+      {isMobile && (
+        <Sheet open={showMobileFilters} onOpenChange={setShowMobileFilters}>
+          <SheetContent side="bottom" className="h-[85vh]">
+            <SheetHeader>
+              <SheetTitle>Filter Hazards</SheetTitle>
+              <SheetDescription>
+                {filteredHazards.length} of {stats.totalHazards} hazards
+              </SheetDescription>
+            </SheetHeader>
+            <ScrollArea className="h-[calc(85vh-8rem)] py-4">
+              <div className="space-y-4 px-4">
+                {/* Category Buttons */}
+                <div>
+                  <label className="text-sm font-semibold mb-2 block">Category</label>
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      variant={selectedCategory === 'all' ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => setSelectedCategory('all')}
+                    >
+                      All
+                    </Button>
+                    {hazardDatabase.map(cat => (
+                      <Button
+                        key={cat.category}
+                        variant={selectedCategory === cat.category ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setSelectedCategory(cat.category)}
+                      >
+                        {cat.icon} {cat.category}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Risk Level Buttons */}
+                <div>
+                  <label className="text-sm font-semibold mb-2 block">Risk Level</label>
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      variant={selectedRiskLevel === 'all' ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => setSelectedRiskLevel('all')}
+                    >
+                      All
+                    </Button>
+                    <Button
+                      variant={selectedRiskLevel === 'high' ? 'destructive' : 'outline'}
+                      size="sm"
+                      onClick={() => setSelectedRiskLevel('high')}
+                    >
+                      <AlertTriangle className="w-3 h-3 mr-1" />
+                      High
+                    </Button>
+                    <Button
+                      variant={selectedRiskLevel === 'medium' ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => setSelectedRiskLevel('medium')}
+                    >
+                      Medium
+                    </Button>
+                    <Button
+                      variant={selectedRiskLevel === 'low' ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => setSelectedRiskLevel('low')}
+                    >
+                      Low
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Work Type */}
+                <div>
+                  <label className="text-sm font-semibold mb-2 block">Work Type</label>
+                  <div className="flex flex-wrap gap-2">
+                    {['all', 'Installation', 'Maintenance', 'Testing', 'Inspection', 'Emergency'].map(type => (
+                      <Button
+                        key={type}
+                        variant={selectedWorkType === type ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setSelectedWorkType(type)}
+                      >
+                        {type === 'all' ? 'All' : type}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </ScrollArea>
+            <div className="border-t p-4 flex gap-2">
+              <Button variant="outline" onClick={clearAllFilters} className="flex-1">
+                Clear All
+              </Button>
+              <Button onClick={() => setShowMobileFilters(false)} className="flex-1">
+                Apply
+              </Button>
+            </div>
+          </SheetContent>
+        </Sheet>
+      )}
+
+      {/* MOBILE: Bottom Action Bar */}
+      {isMobile && (
+        <div className="fixed bottom-0 left-0 right-0 z-30 bg-background/98 backdrop-blur-md border-t border-border/30 p-3">
+          <div className="flex items-center justify-around">
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setShowBookmarkedOnly(!showBookmarkedOnly)}
-              className={cn("flex flex-col items-center gap-1", showBookmarkedOnly && "text-elec-yellow")}
+              onClick={() => setShowMobileFilters(true)}
+              className="flex flex-col items-center gap-1"
             >
-              <Bookmark className={cn("w-5 h-5", showBookmarkedOnly && "fill-elec-yellow")} />
-              <span className="text-xs">
-                {showBookmarkedOnly ? 'All' : `Saved (${bookmarkedHazards.size})`}
-              </span>
+              <SlidersHorizontal className="w-5 h-5" />
+              <span className="text-xs">Filters</span>
+              {hasActiveFilters && (
+                <Badge variant="secondary" className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-[10px]">
+                  {[selectedCategory !== 'all', selectedRiskLevel !== 'all', selectedWorkType !== 'all'].filter(Boolean).length}
+                </Badge>
+              )}
             </Button>
+
+            {bookmarkedHazards.size > 0 && (
+              <Button
+                variant={showBookmarkedOnly ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setShowBookmarkedOnly(!showBookmarkedOnly)}
+                className="flex flex-col items-center gap-1"
+              >
+                <Bookmark className={cn("w-5 h-5", showBookmarkedOnly && "fill-current")} />
+                <span className="text-xs">{bookmarkedHazards.size}</span>
+              </Button>
+            )}
+
             <Button
               variant="ghost"
               size="sm"
               onClick={clearAllFilters}
               className="flex flex-col items-center gap-1"
             >
-              <Shield className="w-5 h-5" />
+              <X className="w-5 h-5" />
               <span className="text-xs">Clear</span>
             </Button>
-            <div className="flex flex-col items-center">
-              <span className="text-lg font-bold text-elec-yellow">{filteredHazards.length}</span>
-              <span className="text-xs text-muted-foreground">Hazards</span>
-            </div>
           </div>
-        )}
-      </main>
+        </div>
+      )}
     </div>
   );
 };
