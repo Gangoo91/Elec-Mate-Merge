@@ -358,6 +358,91 @@ export const HazardCard = memo(({
                 </div>
               )}
 
+              {/* Guidance Notes */}
+              {hazard.guidanceNotes && hazard.guidanceNotes.length > 0 && (
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-wide mb-2 flex items-center gap-2">
+                    💡 Guidance Notes
+                  </div>
+                  <div className="space-y-2">
+                    {hazard.guidanceNotes.map((note: string, idx: number) => (
+                      <div key={idx} className="flex items-start gap-2 text-sm bg-indigo-500/5 p-2 rounded border border-indigo-500/20">
+                        <span className="text-indigo-400 flex-shrink-0">•</span>
+                        <span className="text-muted-foreground">{note}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Emergency Procedures */}
+              {hazard.emergencyProcedures && hazard.emergencyProcedures.length > 0 && (
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-wide mb-2 flex items-center gap-2">
+                    🚨 Emergency Procedures
+                  </div>
+                  <div className="space-y-2">
+                    {hazard.emergencyProcedures.map((proc: string, idx: number) => (
+                      <div key={idx} className="flex items-start gap-3 bg-red-500/5 p-3 rounded border border-red-500/20">
+                        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center font-bold text-xs">
+                          {idx + 1}
+                        </div>
+                        <span className="text-sm text-muted-foreground">{proc}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Inspection Checks */}
+              {hazard.inspectionChecks && hazard.inspectionChecks.length > 0 && (
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-wide mb-2 flex items-center gap-2">
+                    🔍 Inspection Checks
+                  </div>
+                  <div className="space-y-1">
+                    {hazard.inspectionChecks.map((check: string, idx: number) => (
+                      <div key={idx} className="flex items-start gap-2 text-sm bg-cyan-500/5 p-2 rounded border border-cyan-500/20">
+                        <span className="text-cyan-400 flex-shrink-0">✓</span>
+                        <span className="text-muted-foreground">{check}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Training Required */}
+              {hazard.trainingRequired && hazard.trainingRequired.length > 0 && (
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-wide mb-2 flex items-center gap-2">
+                    🎓 Training Required
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {hazard.trainingRequired.map((training: string, idx: number) => (
+                      <Badge key={idx} variant="outline" className="text-xs bg-amber-500/5 border-amber-500/30">
+                        {training}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Real World Scenarios */}
+              {hazard.realWorldScenarios && hazard.realWorldScenarios.length > 0 && (
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-wide mb-2 flex items-center gap-2">
+                    📖 Real-World Scenarios
+                  </div>
+                  <div className="space-y-2">
+                    {hazard.realWorldScenarios.map((scenario: string, idx: number) => (
+                      <div key={idx} className="p-3 bg-pink-500/5 rounded border border-pink-500/20">
+                        <p className="text-sm text-muted-foreground italic">{scenario}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Related Hazards */}
               {(hazard as any).relatedHazards && Array.isArray((hazard as any).relatedHazards) && (hazard as any).relatedHazards.length > 0 && (
                 <div>

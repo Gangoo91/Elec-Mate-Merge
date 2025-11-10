@@ -280,6 +280,17 @@ export interface EnhancedRiskConsequence {
   environment: string[];
   additionalGuidance?: string;
   inspectionRequirements?: string[];
+  // NEW ENHANCED FIELDS FOR BEST-IN-CLASS
+  guidanceNotes?: string[];
+  emergencyProcedures?: string[];
+  inspectionChecks?: string[];
+  trainingRequired?: string[];
+  realWorldScenarios?: string[];
+  hseGuidanceRef?: string[];
+  relatedHazards?: string[]; // IDs of related hazards
+  costOfFailure?: string;
+  lastUpdated?: string;
+  sources?: string[];
 }
 
 // Maintain backwards compatibility

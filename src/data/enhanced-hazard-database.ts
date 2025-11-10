@@ -1,6 +1,7 @@
 import { EnhancedRiskConsequence } from "./hazards";
 
 // 🚀 COMPREHENSIVE ENHANCED RISK DATABASE - ELECTRICAL SAFETY EXCELLENCE
+// Export main database with enhanced fields
 export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
   // ⚡ Critical Electrical Hazards
   {
@@ -19,7 +20,43 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     bs7671References: ["514.11 - Isolation and switching", "Part 4 - Protection for safety", "411 - Protective measure: automatic disconnection"],
     category: "electrical",
     workType: ["installation", "maintenance", "testing", "fault-finding"],
-    environment: ["indoor", "outdoor", "confined-space"]
+    environment: ["indoor", "outdoor", "confined-space"],
+    guidanceNotes: [
+      "Always assume conductors are live until proven dead with a properly calibrated voltage detector",
+      "Isolation devices must be locked off and tagged - only the person who locked off should remove",
+      "Safe working distance of 600mm must be maintained from live conductors unless wearing appropriate insulated gloves",
+      "Never work alone on high-voltage or hazardous electrical systems"
+    ],
+    emergencyProcedures: [
+      "If someone receives an electric shock, DO NOT touch them if still in contact with live conductor",
+      "Isolate power source immediately using nearest isolation point or emergency stop",
+      "Call 999 and request ambulance - state 'electrical injury'",
+      "Begin CPR if trained and casualty not breathing - do not delay",
+      "Use AED (defibrillator) if available - electrical injury victims respond well to defibrillation",
+      "Monitor casualty until paramedics arrive - even if they seem recovered, internal damage may be present"
+    ],
+    inspectionChecks: [
+      "Verify isolation device is locked and tagged before starting work",
+      "Test voltage detector on known live source before and after use (proving unit)",
+      "Check condition of insulated tools - no cracks, damage, or missing insulation",
+      "Inspect PPE for damage, check date labels haven't expired",
+      "Ensure adequate lighting to see conductor colours and connections clearly"
+    ],
+    trainingRequired: [
+      "BS7671:2018+A2:2022 18th Edition Wiring Regulations",
+      "Safe Isolation Procedures (GS38)",
+      "Emergency First Aid at Work with CPR/AED",
+      "Electrical Safety Awareness Training"
+    ],
+    realWorldScenarios: [
+      "Electrician working alone on consumer unit replacement touches live busbar - collapses. No one present to isolate or help. Fatal. LESSON: Never work alone on live equipment.",
+      "Tester assumes circuit is dead after switching MCB. Doesn't use voltage tester. Gets 230V shock through screwdriver. LESSON: Always prove dead, never assume.",
+      "Contractor cuts cable during renovation without checking plans. Strikes 230V buried cable. Severe burns to hands. LESSON: Always use cable detection equipment before cutting/drilling."
+    ],
+    relatedHazards: ["elec-shock-002", "arc-fault-001", "live-testing-001"],
+    costOfFailure: "Fatal injury: £1.5-3M+ fine, imprisonment, business closure. Serious injury: £500k+, HSE investigation, reputation damage, loss of contracts.",
+    hseGuidanceRef: ["HSG85 - Electricity at work: Safe working practices", "GS38 - Electrical test equipment for use on low voltage electrical systems"],
+    lastUpdated: "2025-01-15"
   },
   {
     id: "elec-shock-002", 
@@ -35,7 +72,39 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     bs7671References: ["544 - Protective bonding conductors", "701.415.2 - Supplementary bonding", "411.3.3 - RCD protection"],
     category: "electrical",
     workType: ["installation", "testing", "inspection"],
-    environment: ["bathroom", "kitchen", "outdoor"]
+    environment: ["bathroom", "kitchen", "outdoor"],
+    guidanceNotes: [
+      "Main bonding must be sized according to earth conductor size (minimum 6mm² copper)",
+      "Supplementary bonding connects all exposed and extraneous conductive parts in special locations",
+      "RCD protection is mandatory for all socket outlets rated 20A or less in domestic installations",
+      "Bonding conductors must be continuous - no joints except at junction points"
+    ],
+    emergencyProcedures: [
+      "If metalwork becomes live, do not touch - isolate at main switch immediately",
+      "Evacuate area and prevent others from touching affected metalwork",
+      "Call qualified electrician - do not attempt to repair without proper equipment",
+      "Test all exposed metalwork with voltage tester before allowing re-entry"
+    ],
+    inspectionChecks: [
+      "Visual check bonding clamps are tight and labelled correctly",
+      "Earth continuity test between main earth terminal and bonded metalwork (should be <0.05Ω)",
+      "RCD test using dedicated RCD tester - should trip within 40ms at 30mA",
+      "Check bonding conductors haven't been painted over or damaged"
+    ],
+    trainingRequired: [
+      "Electrical Installation Testing & Inspection (2391)",
+      "BS7671:2018+A2:2022 18th Edition",
+      "Special Locations (Bathrooms/Kitchens)"
+    ],
+    realWorldScenarios: [
+      "Homeowner touches metal bath tap while using hairdryer. Gets 230V shock because main bonding disconnected during bathroom refurb. LESSON: Check bonding before any alteration work.",
+      "Kitchen extension built without supplementary bonding. Customer gets shock from sink while unplugging kettle. LESSON: Special locations require extra protection measures.",
+      "Plumber removes bonding clamp to fit new pipe. Doesn't reconnect. Next person to touch exposed pipework gets shocked. LESSON: Never remove bonding without immediately replacing."
+    ],
+    relatedHazards: ["elec-shock-001", "consumer-unit-001"],
+    costOfFailure: "Serious injury risk: £100k+ fine. Death: £1M+ fine, manslaughter charges. Insurance invalidation on properties without proper earthing.",
+    hseGuidanceRef: ["HSG85 - Electricity at work: Safe working practices"],
+    lastUpdated: "2025-01-15"
   },
   {
     id: "cable-strike-001",
@@ -53,7 +122,44 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     bs7671References: ["Part 5 - Selection and erection", "522.8.10 - Underground cables"],
     category: "excavation",
     workType: ["installation", "maintenance"],
-    environment: ["outdoor", "construction-site"]
+    environment: ["outdoor", "construction-site"],
+    guidanceNotes: [
+      "Over 60% of cable strikes occur because detection equipment wasn't used or was used incorrectly",
+      "Underground cables can be anywhere - don't assume they follow logical routes",
+      "Hand digging ('soft dig') is mandatory within 1m of known/suspected underground services",
+      "Mark cable positions on ground with spray paint before any mechanical excavation starts",
+      "Armoured cables can still be lethal even if outer sheath appears intact"
+    ],
+    emergencyProcedures: [
+      "STOP ALL WORK IMMEDIATELY if cable struck - do not pull back equipment",
+      "Evacuate all personnel to 10m safety distance minimum",
+      "Call 999 and report electrical incident - stay on line for guidance",
+      "Contact DNO emergency hotline immediately (105 for all UK networks)",
+      "Do not allow anyone to approach equipment or excavation - establish exclusion zone",
+      "Wait for DNO engineer to arrive before resuming any work - they must make safe"
+    ],
+    inspectionChecks: [
+      "Check CAT & Genny equipment is calibrated and functioning before use each day",
+      "Verify you have current utility plans from all providers (electric, gas, water, telecoms)",
+      "Mark all detected services with paint and stakes before digging commences",
+      "Conduct toolbox talk with all digger operators about cable strike risks",
+      "Ensure emergency contact numbers are displayed on site and in mobile phones"
+    ],
+    trainingRequired: [
+      "Cable Avoidance Tools (CAT & Genny) Training Certificate",
+      "Safe Digging Practices",
+      "Permit to Work Systems",
+      "Emergency Response Procedures"
+    ],
+    realWorldScenarios: [
+      "Digger operator strikes 11kV cable during sewer work. Massive explosion, equipment destroyed, operator hospitalised with burns. Cost: £2M+, 18-month HSE investigation. LESSON: Always use detection equipment.",
+      "Contractor uses CAT scanner but doesn't understand how it works. Strikes cable 30cm from marked position. LESSON: Training on equipment is essential, not just owning it.",
+      "Weekend DIY project - homeowner digs post holes, strikes incoming mains cable. Lucky to survive. £50k fine for unauthorized works. LESSON: Always get plans and detection done professionally."
+    ],
+    relatedHazards: ["elec-shock-001", "gas-leak-001", "explosion-001"],
+    costOfFailure: "Fatality: £3M+ fine, imprisonment up to 2 years. Cable damage alone: £50k-500k repair + compensation. DNO claims can reach £10M for major outages.",
+    hseGuidanceRef: ["HSG47 - Avoiding danger from underground services", "HSE Guidance on Cable Strikes"],
+    lastUpdated: "2025-01-15"
   },
   {
     id: "arc-fault-001",
@@ -627,7 +733,44 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     bs7671References: ["Part 6 - Inspection and testing", "514.11 - Isolation"],
     category: "testing",
     workType: ["testing", "fault-finding", "commissioning"],
-    environment: ["all-environments"]
+    environment: ["all-environments"],
+    guidanceNotes: [
+      "Live testing should only be done when absolutely necessary for fault diagnosis or functional testing",
+      "All test equipment must comply with GS38 - fused leads, insulated probes with maximum 4mm exposed tip",
+      "Barriers should be erected around the test area to prevent accidental contact by others",
+      "Person conducting live testing must be competent - minimum City & Guilds 2391 or equivalent",
+      "Keep one hand in pocket when probing live circuits to prevent current path through heart"
+    ],
+    emergencyProcedures: [
+      "If arc flash occurs, turn away immediately to protect face and eyes",
+      "Sound alarm and evacuate immediate area",
+      "Only attempt rescue after power is isolated - do not touch casualty while energized",
+      "Cool burns with running water for at least 10 minutes",
+      "Call 999 for any electrical burns - internal tissue damage may not be visible",
+      "Preserve test equipment and scene for HSE investigation if serious injury occurs"
+    ],
+    inspectionChecks: [
+      "Check test leads for damage, fraying, or exposed conductors before each use",
+      "Verify voltage rating of test equipment exceeds expected voltage",
+      "Test proving unit is functioning - test meter on known live source before dead circuit",
+      "Ensure adequate lighting - can see colours and markings clearly",
+      "Check emergency stop/isolation is accessible and clearly marked"
+    ],
+    trainingRequired: [
+      "Electrical Testing & Inspection Qualification (City & Guilds 2391 or equivalent)",
+      "Live Working Safety Awareness",
+      "Arc Flash Hazard Training",
+      "First Aid for Electrical Injuries"
+    ],
+    realWorldScenarios: [
+      "Electrician testing live 3-phase panel uses standard screwdriver instead of insulated probe. Arc flash, second-degree burns to face and hands. Six months recovery. LESSON: Always use GS38 compliant equipment.",
+      "Apprentice watches qualified electrician test live board. Stands too close, leans on metalwork. Gets shock through contact voltage. LESSON: Maintain safe distance, establish barriers.",
+      "Emergency call-out at 2am. Tired electrician testing live circuit, hand slips, probe touches busbar. Massive arc flash, destroyed test meter, burns to hand. LESSON: Never test live when fatigued."
+    ],
+    relatedHazards: ["elec-shock-001", "arc-fault-001", "time-pressure-001"],
+    costOfFailure: "Death or serious injury: £500k-2M fine. Loss of insurance cover for live work without proper training and procedures. Professional qualification revoked.",
+    hseGuidanceRef: ["GS38 - Electrical test equipment for use on low voltage electrical systems", "HSG85 - Electricity at work: Safe working practices"],
+    lastUpdated: "2025-01-15"
   },
   {
     id: "fault-finding-001",
