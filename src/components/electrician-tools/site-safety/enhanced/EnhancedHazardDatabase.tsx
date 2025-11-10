@@ -136,8 +136,8 @@ export const EnhancedHazardDatabase = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* STICKY HEADER */}
-      <div className="sticky top-0 z-20 bg-background/98 backdrop-blur-md border-b border-border/30">
+      {/* HEADER */}
+      <div className="bg-background border-b border-border/30">
         <div className="max-w-7xl mx-auto px-4 py-3">
           {/* Row 1: Title + Actions */}
           <div className="flex items-center justify-between mb-3">
