@@ -86,7 +86,7 @@ export const EnhancedHazardDatabase = () => {
 
         // Work type filter
         const matchesWorkType = selectedWorkType === 'all' || 
-          hazard.workTypes?.includes(selectedWorkType);
+          hazard.workType?.includes(selectedWorkType);
 
         // Regulation filter
         const matchesRegulation = selectedRegulation === 'all' ||
@@ -515,13 +515,13 @@ export const EnhancedHazardDatabase = () => {
                     )}
 
                     {/* Work Types */}
-                    {hazard.workTypes && hazard.workTypes.length > 0 && (
+                    {hazard.workType && hazard.workType.length > 0 && (
                       <div>
                         <div className="text-xs font-semibold uppercase tracking-wide mb-2">
                           Work Types
                         </div>
                         <div className="flex flex-wrap gap-2">
-                          {hazard.workTypes.map((type: string, idx: number) => (
+                          {hazard.workType.map((type: string, idx: number) => (
                             <Badge key={idx} variant="outline" className="text-xs">
                               {type}
                             </Badge>
@@ -531,13 +531,13 @@ export const EnhancedHazardDatabase = () => {
                     )}
 
                     {/* Environments */}
-                    {hazard.environments && hazard.environments.length > 0 && (
+                    {hazard.environment && hazard.environment.length > 0 && (
                       <div>
                         <div className="text-xs font-semibold uppercase tracking-wide mb-2">
                           Environments
                         </div>
                         <div className="flex flex-wrap gap-2">
-                          {hazard.environments.map((env: string, idx: number) => (
+                          {hazard.environment.map((env: string, idx: number) => (
                             <Badge key={idx} variant="outline" className="text-xs">
                               {env}
                             </Badge>
@@ -547,13 +547,13 @@ export const EnhancedHazardDatabase = () => {
                     )}
 
                     {/* Related Hazards */}
-                    {hazard.relatedHazards && hazard.relatedHazards.length > 0 && (
+                    {(hazard as any).relatedHazards && Array.isArray((hazard as any).relatedHazards) && (hazard as any).relatedHazards.length > 0 && (
                       <div>
                         <div className="text-xs font-semibold uppercase tracking-wide mb-2">
                           Related Hazards
                         </div>
                         <div className="space-y-1">
-                          {hazard.relatedHazards.map((relatedId: string, idx: number) => {
+                          {(hazard as any).relatedHazards.map((relatedId: string, idx: number) => {
                             const related = filteredHazards.find(h => h.id === relatedId);
                             if (!related) return null;
                             const relatedScore = related.likelihood * related.severity;
