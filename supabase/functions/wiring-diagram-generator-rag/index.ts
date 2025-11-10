@@ -64,16 +64,42 @@ serve(async (req) => {
     
     // Fetch and convert image to base64
     let imageBase64: string;
+    let mimeType = 'image/jpeg'; // default
+    let imageSize = 0;
+    
     if (component_image_url.startsWith('data:')) {
       // Already base64
-      imageBase64 = component_image_url.split(',')[1];
+      const parts = component_image_url.split(',');
+      if (parts.length === 2) {
+        const mimeMatch = parts[0].match(/data:(.*?);base64/);
+        if (mimeMatch) mimeType = mimeMatch[1];
+        imageBase64 = parts[1];
+      } else {
+        throw new Error('Invalid data URL format');
+      }
     } else {
       // Fetch from URL and convert to base64
       const imageResponse = await fetch(component_image_url);
       if (!imageResponse.ok) {
         throw new Error(`Failed to fetch image: ${imageResponse.status}`);
       }
+      
+      // Detect content type
+      const contentType = imageResponse.headers.get('content-type');
+      if (contentType) {
+        mimeType = contentType;
+      }
+      
       const imageBuffer = await imageResponse.arrayBuffer();
+      imageSize = imageBuffer.byteLength;
+      
+      // Validate image size (20MB limit)
+      const maxSize = 20 * 1024 * 1024; // 20MB
+      if (imageSize > maxSize) {
+        throw new Error(`Image too large: ${(imageSize / 1024 / 1024).toFixed(2)}MB (max 20MB)`);
+      }
+      
+      logger.info('Image fetched', { size: `${(imageSize / 1024).toFixed(2)}KB`, mimeType });
       
       // Convert to base64 in chunks to avoid stack overflow
       const bytes = new Uint8Array(imageBuffer);
@@ -109,7 +135,7 @@ Be concise and technical.`
                 },
                 {
                   inlineData: {
-                    mimeType: 'image/jpeg',
+                    mimeType: mimeType,
                     data: imageBase64
                   }
                 }
@@ -122,6 +148,8 @@ Be concise and technical.`
           }),
         }).then(async (res) => {
           if (!res.ok) {
+            const errorText = await res.text();
+            logger.error('Gemini API error', { status: res.status, error: errorText });
             throw new Error(`Image analysis failed: ${res.status}`);
           }
           return res.json();
@@ -132,7 +160,40 @@ Be concise and technical.`
       RetryPresets.STANDARD
     );
     
-    const componentDetails = imageAnalysisData.candidates[0].content.parts[0].text;
+    // Log full response for debugging
+    logger.info('Gemini API response', { 
+      hasError: !!imageAnalysisData.error,
+      hasCandidates: !!imageAnalysisData.candidates,
+      candidatesLength: imageAnalysisData.candidates?.length,
+      responseKeys: Object.keys(imageAnalysisData)
+    });
+    
+    // Validate response structure
+    if (imageAnalysisData.error) {
+      logger.error('Gemini API returned error', { error: imageAnalysisData.error });
+      throw new Error(`Image analysis error: ${imageAnalysisData.error.message || 'Unknown error'}`);
+    }
+    
+    if (!imageAnalysisData.candidates || imageAnalysisData.candidates.length === 0) {
+      logger.error('No candidates in response', { 
+        response: JSON.stringify(imageAnalysisData).substring(0, 500),
+        promptBlockReason: imageAnalysisData.promptFeedback?.blockReason
+      });
+      
+      if (imageAnalysisData.promptFeedback?.blockReason) {
+        throw new Error(`Image analysis blocked: ${imageAnalysisData.promptFeedback.blockReason}. The image may contain unsafe content or the request was filtered.`);
+      }
+      
+      throw new Error('No analysis results returned. The image may not contain recognizable electrical components or may be invalid.');
+    }
+    
+    const firstCandidate = imageAnalysisData.candidates[0];
+    if (!firstCandidate?.content?.parts || firstCandidate.content.parts.length === 0) {
+      logger.error('Invalid candidate structure', { candidate: JSON.stringify(firstCandidate).substring(0, 300) });
+      throw new Error('Invalid response structure from image analysis');
+    }
+    
+    const componentDetails = firstCandidate.content.parts[0].text;
     logger.info('Component identified', { componentDetails: componentDetails.substring(0, 100) });
 
     // Step 2: Intelligent component-specific RAG retrieval
