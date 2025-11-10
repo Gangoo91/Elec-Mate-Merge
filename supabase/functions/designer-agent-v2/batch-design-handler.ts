@@ -521,6 +521,30 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
   const timings: any = {};
   
   try {
+    // Track context sources
+    const { previousAgentOutputs, sharedRegulations, projectDetails, currentDesign } = body;
+    
+    const contextSources = {
+      sharedRegulations: !!(sharedRegulations && sharedRegulations.length > 0),
+      sharedRegulationsCount: sharedRegulations?.length || 0,
+      previousAgentOutputs: previousAgentOutputs?.map((o: any) => o.agent) || [],
+      projectDetails: !!projectDetails,
+      hasCurrentDesign: !!currentDesign
+    };
+
+    logger.info('📦 Context received from agent-router:', contextSources);
+    
+    // Log what's being USED from context (if any)
+    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
+      previousAgentOutputs.forEach((output: any) => {
+        logger.info(`📥 Using context from ${output.agent}:`, {
+          hasStructuredData: !!output.response?.structuredData,
+          hasCitations: !!output.citations,
+          structuredDataKeys: Object.keys(output.response?.structuredData || {})
+        });
+      });
+    }
+    
     // 1. Input validation
     logger.info(`Starting batch design ${VERSION}`);
     

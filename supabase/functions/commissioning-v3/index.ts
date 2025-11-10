@@ -43,12 +43,24 @@ serve(async (req) => {
     // Track context sources
     const contextSources = {
       sharedRegulations: !!(sharedRegulations && sharedRegulations.length > 0),
+      sharedRegulationsCount: sharedRegulations?.length || 0,
       previousAgentOutputs: previousAgentOutputs?.map((o: any) => o.agent) || [],
       projectDetails: !!projectDetails,
       circuitDesign: !!(currentDesign?.circuits || previousAgentOutputs?.find((o: any) => o.agent === 'designer'))
     };
 
-    logger.info('📦 Context received:', contextSources);
+    logger.info('📦 Context received from agent-router:', contextSources);
+    
+    // Log what's being USED from context
+    if (previousAgentOutputs && previousAgentOutputs.length > 0) {
+      previousAgentOutputs.forEach((output: any) => {
+        logger.info(`📥 Using context from ${output.agent}:`, {
+          hasStructuredData: !!output.response?.structuredData,
+          hasCitations: !!output.citations,
+          structuredDataKeys: Object.keys(output.response?.structuredData || {})
+        });
+      });
+    }
 
     // PHASE 1: Query Enhancement
     const { enhanceQuery, logEnhancement } = await import('../_shared/query-enhancer.ts');

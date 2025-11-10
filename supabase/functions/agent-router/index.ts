@@ -163,31 +163,24 @@ serve(async (req) => {
     
     logger.info('📋 Project metadata extracted:', projectMeta);
 
-    // NEW: For method-statement mode, run all agents in PARALLEL
+    // NEW: For method-statement mode, run all agents in STAGED PARALLEL EXECUTION
     let agentResponses: Array<{ agent: string; response: AgentResponse }> = [];
     let totalRAGCalls = 0;
     
     if (mode === 'method-statement') {
-      logger.info('🚀 Method Statement Mode: Running all agents in PARALLEL');
+      logger.info('🚀 Method Statement Mode: STAGED PARALLEL execution');
       
-      // PHASE 2 FIX: Accumulate responses as they complete
       const completedResponses: Array<{ agent: string; response: AgentResponse }> = [];
       
-      // Run all agents in parallel with progressive context
-      const parallelCalls = selectedAgents.map((agentType, index) => {
-        const endpoint = AGENT_ENDPOINTS[agentType];
-        if (!endpoint) {
-          logger.warn('Unknown agent type', { agentType });
-          return Promise.resolve({ agent: agentType, response: null, hadError: true });
-        }
-
-        logger.info(`Starting ${agentType} agent (parallel)`);
+      // STAGE 1: Designer runs FIRST (provides circuit specs for other agents)
+      const designerAgent = selectedAgents.find(a => a === 'designer' || a === 'designer-multi');
+      if (designerAgent) {
+        logger.info(`📐 STAGE 1: Running ${designerAgent} first to establish circuit context`);
         
-        const shouldUseSharedRegs = agentType !== 'designer' && agentType !== 'designer-multi' && sharedRegulations.length > 0;
-        
-        return invokeAgentWithRetry(
-          agentType,
-          endpoint,
+        const designerEndpoint = AGENT_ENDPOINTS[designerAgent];
+        const designerResponse = await invokeAgentWithRetry(
+          designerAgent,
+          designerEndpoint,
           {
             query: contextFromPreviousAgent ? `${contextFromPreviousAgent}\n\n${userMessage}` : userMessage,
             messages: [
@@ -196,36 +189,100 @@ serve(async (req) => {
             ],
             conversationId,
             currentDesign,
-            // PHASE 2: Pass completed agents' outputs (accumulating)
-            previousAgentOutputs: completedResponses,
             requestSuggestions: true,
-            sharedRegulations: shouldUseSharedRegs ? sharedRegulations : undefined,
             contextFromPreviousAgent,
-            // PHASE 3: Pass job details
             projectDetails: { ...currentDesign, ...projectMeta }
           },
           supabase,
           logger
-        ).then(response => {
-          const result = { agent: agentType, response, hadError: response.hadError };
-          // Accumulate successful responses
-          if (!response.hadError && response.data) {
-            completedResponses.push({ 
-              agent: agentType, 
-              response: response.data 
+        );
+        
+        if (!designerResponse.hadError && designerResponse.data) {
+          completedResponses.push({ 
+            agent: designerAgent, 
+            response: designerResponse.data 
+          });
+          
+          // Cache designer regulations for other agents
+          if (designerResponse.data?.citations && conversationId) {
+            const regulations = designerResponse.data.citations.map((c: any) => ({
+              regulation_number: c.section || c.regulation_number,
+              section: c.title || c.section,
+              content: c.content || c.excerpt,
+              relevance: c.relevance || 0.8
+            }));
+            
+            conversationRAGCache.set(conversationId, {
+              regulations,
+              timestamp: Date.now()
             });
-            logger.info(`✅ ${agentType} completed - now ${completedResponses.length} outputs available to other agents`);
+            
+            sharedRegulations = regulations;
+            totalRAGCalls++;
+            logger.info(`🚀 Cached ${regulations.length} regulations from ${designerAgent}`);
           }
-          return result;
+          
+          logger.info(`✅ STAGE 1 complete: ${designerAgent} output available to other agents`);
+        }
+      }
+      
+      // STAGE 2: All other agents run IN PARALLEL with designer context
+      const remainingAgents = selectedAgents.filter(a => a !== designerAgent);
+      
+      if (remainingAgents.length > 0) {
+        logger.info(`🔀 STAGE 2: Running ${remainingAgents.length} agents in parallel with designer context`);
+        
+        const parallelCalls = remainingAgents.map((agentType) => {
+          const endpoint = AGENT_ENDPOINTS[agentType];
+          if (!endpoint) {
+            logger.warn('Unknown agent type', { agentType });
+            return Promise.resolve({ agent: agentType, response: null, hadError: true });
+          }
+
+          logger.info(`Starting ${agentType} agent (parallel with designer context)`);
+          
+          const shouldUseSharedRegs = sharedRegulations.length > 0;
+          
+          return invokeAgentWithRetry(
+            agentType,
+            endpoint,
+            {
+              query: contextFromPreviousAgent ? `${contextFromPreviousAgent}\n\n${userMessage}` : userMessage,
+              messages: [
+                ...messages,
+                { role: 'user', content: userMessage }
+              ],
+              conversationId,
+              currentDesign,
+              // Pass designer output to all agents
+              previousAgentOutputs: completedResponses,
+              requestSuggestions: true,
+              sharedRegulations: shouldUseSharedRegs ? sharedRegulations : undefined,
+              contextFromPreviousAgent,
+              projectDetails: { ...currentDesign, ...projectMeta }
+            },
+            supabase,
+            logger
+          ).then(response => ({ agent: agentType, response, hadError: response.hadError }));
         });
-      });
+        
+        const results = await Promise.all(parallelCalls);
+        
+        // Add successful results to completedResponses
+        results.forEach(r => {
+          if (!r.hadError && r.response && r.response.data) {
+            completedResponses.push({ 
+              agent: r.agent, 
+              response: r.response.data 
+            });
+          }
+        });
+        
+        logger.info(`✅ STAGE 2 complete: ${completedResponses.length - (designerAgent ? 1 : 0)}/${remainingAgents.length} agents succeeded`);
+      }
       
-      const results = await Promise.all(parallelCalls);
-      agentResponses = results
-        .filter(r => r.response && !r.hadError)
-        .map(r => ({ agent: r.agent, response: r.response.data || r.response.partialResponse }));
-      
-      logger.info(`✅ Parallel execution complete: ${agentResponses.length}/${selectedAgents.length} agents succeeded`);
+      agentResponses = completedResponses;
+      logger.info(`✅ Staged parallel execution complete: ${agentResponses.length}/${selectedAgents.length} total agents succeeded`);
       
     } else {
       // Original sequential execution for other modes
