@@ -451,7 +451,10 @@ Format:
               }]
             },
           ],
-          max_tokens: 3000
+          generationConfig: {
+            maxOutputTokens: 3000,
+            temperature: 0.3
+          }
           }),
         }).then(async (res) => {
           if (!res.ok) {
