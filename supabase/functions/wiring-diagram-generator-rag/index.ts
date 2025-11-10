@@ -142,7 +142,7 @@ Be concise and technical.`
               ]
             }],
             generationConfig: {
-              maxOutputTokens: 300,
+              maxOutputTokens: 1024,
               temperature: 0.2
             }
           }),
@@ -188,8 +188,21 @@ Be concise and technical.`
     }
     
     const firstCandidate = imageAnalysisData.candidates[0];
+    
+    // Check if response was truncated due to token limits
+    if (firstCandidate?.finishReason === 'MAX_TOKENS') {
+      logger.error('Response truncated - token limit exceeded', { 
+        finishReason: firstCandidate.finishReason,
+        candidate: JSON.stringify(firstCandidate).substring(0, 300)
+      });
+      throw new Error('Image analysis response was too long. Please try with a simpler image or contact support.');
+    }
+    
     if (!firstCandidate?.content?.parts || firstCandidate.content.parts.length === 0) {
-      logger.error('Invalid candidate structure', { candidate: JSON.stringify(firstCandidate).substring(0, 300) });
+      logger.error('Invalid candidate structure', { 
+        candidate: JSON.stringify(firstCandidate).substring(0, 300),
+        finishReason: firstCandidate?.finishReason
+      });
       throw new Error('Invalid response structure from image analysis');
     }
     
