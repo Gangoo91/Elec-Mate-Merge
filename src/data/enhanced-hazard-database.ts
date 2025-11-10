@@ -164,18 +164,429 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
   {
     id: "arc-fault-001",
     hazard: "Arc fault in aging electrical installation",
-    consequence: "Fire, property damage, injury from molten metal, toxic fumes",
+    consequence: "Fire, property damage, injury from molten metal, toxic fumes, explosion",
     likelihood: 3,
     severity: 4,
     riskRating: 12,
     controlMeasures: {
-      engineering: ["Installation of Arc Fault Detection Devices (AFDDs) - 421.1.7", "Fire suppression systems in electrical rooms"],
-      administrative: ["Regular thermal imaging inspections", "Torque checking of connections annually", "Replacement of aging switchgear and cables", "Emergency isolation procedures"]
+      engineering: [
+        "Installation of Arc Fault Detection Devices (AFDDs) per BS 7671 421.1.7",
+        "Fire suppression systems in electrical rooms",
+        "Thermal imaging cameras for preventive inspections",
+        "Replacement of aging switchgear (>25 years old)",
+        "Arc-resistant switchgear for critical installations"
+      ],
+      administrative: [
+        "Regular thermal imaging inspections (quarterly for critical systems)",
+        "Torque checking of connections annually using calibrated torque wrench",
+        "Infrared surveys under load conditions (minimum 40% load)",
+        "Condition-based maintenance programmes",
+        "Emergency isolation procedures documented and practised",
+        "Planned replacement schedules for aging equipment"
+      ],
+      ppe: [
+        "Arc flash PPE (Category 2 minimum: 8 cal/cm²)",
+        "Arc-rated face shield",
+        "Flame-resistant clothing to NFPA 70E",
+        "Insulated gloves BS EN 60903",
+        "Safety glasses with side shields"
+      ]
     },
-    bs7671References: ["421.1.7 - Arc fault detection devices", "Part 7 - Special installations"],
+    bs7671References: [
+      "421.1.7 - Arc fault detection devices",
+      "Part 7 - Special installations",
+      "422.3.13 - Measures against spread of fire"
+    ],
     category: "electrical",
     workType: ["maintenance", "inspection", "upgrade"],
-    environment: ["commercial", "industrial"]
+    environment: ["commercial", "industrial"],
+    guidanceNotes: [
+      "Arc faults are the leading cause of electrical fires, responsible for over 28,000 fires annually in the UK",
+      "Loose connections generate heat (I²R losses) which accelerates oxidation and further loosening - a vicious cycle",
+      "Thermal imaging must be done under load - idle equipment won't show faults. Aim for 40-80% load during inspection",
+      "Aluminium connections are particularly prone to oxidation and loosening - require torque checking every 6 months",
+      "Series arc faults (loose connections) are harder to detect than parallel arc faults (phase-to-earth) - AFDDs essential",
+      "Harmonic-rich loads (LED lighting, VFDs) can accelerate conductor heating and arcing - monitor closely"
+    ],
+    emergencyProcedures: [
+      "IF ARC FLASH OCCURS: Turn face away immediately, close eyes to protect retinas",
+      "Sound building fire alarm if safe to do so",
+      "Evacuate area immediately - do not attempt to fight electrical fires with water",
+      "Use CO2 or dry powder extinguishers ONLY if fire is small and you're trained",
+      "Call 999 - inform them it's an ELECTRICAL FIRE so they bring appropriate equipment",
+      "Do not re-energise equipment until fault is identified and repaired by qualified electrician",
+      "If personnel injured: Cool burns with running water for 20 minutes, treat for shock, monitor breathing",
+      "Preserve evidence for investigation - take photos, keep failed components"
+    ],
+    inspectionChecks: [
+      "Visual inspection: Look for discolouration, melted insulation, carbon tracking, pitting on contacts",
+      "Thermal imaging: Hot spots >10°C above ambient or uneven phase temperatures indicate problems",
+      "Torque check: Use calibrated torque wrench to verify all connections meet manufacturer specs (typically 20-50 Nm)",
+      "Infrared temperature differences: Phase imbalance >5°C indicates loose connection or load imbalance",
+      "Unusual smells: Burning plastic, ozone smell (sweet electrical smell) indicates arcing",
+      "Listen for buzzing, crackling, or humming sounds - indicates loose connections or tracking",
+      "Check for carbon deposits around terminals, busbars, circuit breakers"
+    ],
+    trainingRequired: [
+      "BS 7671:2018+A2:2022 18th Edition Wiring Regulations",
+      "Arc Flash Hazard Awareness and Safety (NFPA 70E or equivalent)",
+      "Thermal Imaging Level 1 Certification (minimum)",
+      "Electrical Maintenance and Inspection (City & Guilds 2391 or equivalent)",
+      "Fire Safety and Emergency Response",
+      "First Aid for Electrical Burns"
+    ],
+    realWorldScenarios: [
+      "CASE 1 - Distribution Board Fire: 15-year-old commercial building. Janitor smells burning plastic. Main distribution board ablaze. Fire brigade isolates supply. Investigation reveals loose busbar connections - never torque checked since installation. £250k damage, business closed 6 weeks. LESSON: Annual torque checking is essential, not optional.",
+      "CASE 2 - Fatal Arc Flash: Electrician opening aging 400A panel for inspection. Unseen loose connection arcs as door opens. Massive explosion, 2nd degree burns to face and hands, 3 months off work. LESSON: Infrared inspection before opening panels, proper arc flash PPE.",
+      "CASE 3 - Industrial Fire: Factory production halted by electrical fire in motor control centre. 30-year-old equipment, connections oxidised. Fire destroys £2M of product inventory. HSE prosecution, £500k fine. LESSON: Aging equipment requires increased inspection frequency and proactive replacement."
+    ],
+    relatedHazards: [
+      "elec-shock-001",
+      "live-testing-001",
+      "thermal-camera-001",
+      "aging-equipment-001"
+    ],
+    costOfFailure: "Electrical fire: £50k-5M+ property damage. Fatality from arc flash: £1-3M fine, imprisonment, business closure. Production downtime: £10k-100k per day. Insurance premiums increase 200-500% after electrical fire. HSE prosecution for inadequate maintenance: £500k+ fine.",
+    hseGuidanceRef: [
+      "HSG85 - Electricity at work: Safe working practices",
+      "HSE Guidance on Electrical Safety",
+      "NFPA 70E - Electrical Safety in the Workplace",
+      "IET Guidance Note 3 - Inspection & Testing"
+    ],
+    lastUpdated: "2025-01-15",
+    sources: [
+      "BS 7671:2018+A2:2022 - 18th Edition Wiring Regulations",
+      "NFPA 70E - Standard for Electrical Safety in the Workplace",
+      "HSE Electrical Safety Statistics",
+      "Electrical Safety First - Arc Fault Research"
+    ]
+  },
+  {
+    id: "working-height-001",
+    hazard: "Working at height during electrical installation and maintenance",
+    consequence: "Fatal falls, serious injury, broken bones, head trauma, permanent disability",
+    likelihood: 4,
+    severity: 5,
+    riskRating: 20,
+    controlMeasures: {
+      elimination: [
+        "Use elevated work platforms instead of ladders where possible",
+        "Install lighting/equipment at accessible heights during design phase",
+        "Remote monitoring systems to eliminate height access for routine checks"
+      ],
+      engineering: [
+        "Mobile elevated work platforms (MEWPs) with fall arrest systems",
+        "Scaffolding with edge protection and toe boards",
+        "Fixed anchor points and running line systems for harness attachment",
+        "Roof edge protection barriers",
+        "Safety netting or airbags for high-risk work"
+      ],
+      administrative: [
+        "Working at Height Regulations 2005 compliance",
+        "Risk assessment and method statement (RAMS) for all work >2m",
+        "Rescue plan in place before starting work",
+        "IPAF certification for MEWP operators",
+        "Weather monitoring - no work in wind >20mph or during rain/ice",
+        "Two-person working rule for high-risk height work",
+        "Daily pre-use inspection of equipment"
+      ],
+      ppe: [
+        "Full-body harness to BS EN 361 with shock-absorbing lanyard",
+        "Hard hat with chin strap to BS EN 397",
+        "Safety boots with ankle support to BS EN ISO 20345",
+        "High-visibility clothing to BS EN ISO 20471",
+        "Tool lanyards to prevent dropped objects"
+      ]
+    },
+    bs7671References: [
+      "Health and Safety at Work Act 1974",
+      "Work at Height Regulations 2005",
+      "LOLER 1998 - Lifting equipment"
+    ],
+    category: "height",
+    workType: ["installation", "maintenance", "inspection"],
+    environment: ["outdoor", "commercial", "industrial", "rooftop"],
+    guidanceNotes: [
+      "Falls from height are the biggest cause of workplace fatalities in the UK - 40+ deaths annually",
+      "Any work above 2 metres legally requires risk assessment and control measures",
+      "Ladders should be LAST RESORT - only for light work of short duration (<30 minutes)",
+      "3:1 rule for ladder angle - 1 unit out for every 3 units up. Secure at top and bottom",
+      "Harnesses must be worn whenever there's risk of falling >2m - even for 'quick jobs'",
+      "Fall arrest systems MUST be inspected by competent person every 6 months - not negotiable",
+      "Never work at height alone - buddy system essential for rescue if fall occurs"
+    ],
+    emergencyProcedures: [
+      "IF FALL OCCURS: Do not move casualty unless immediate danger (fire, traffic)",
+      "Call 999 immediately - state 'fall from height' for specialist paramedic response",
+      "If casualty suspended in harness: Rescue within 10 minutes to prevent suspension trauma (blood pooling)",
+      "Keep casualty warm, monitor breathing, check for spinal injury signs",
+      "Do not remove helmet if head injury suspected",
+      "If breathing stops: Begin CPR immediately, use AED if available",
+      "Preserve scene for HSE investigation - take photos, secure equipment",
+      "Report to RIDDOR within 10 days (serious injury) or immediately (fatality)"
+    ],
+    inspectionChecks: [
+      "Harness: Check stitching, webbing for cuts/abrasion, buckles function correctly, date label not expired (5-year max life)",
+      "Lanyards: Inspect shock absorber pack (should be sealed), check for damage, verify connection points",
+      "Anchor points: Load-rated to minimum 15kN per person, inspected by competent person within 6 months",
+      "Ladders: Stiles not bent/cracked, rungs secure, feet intact with good grip, extension locks working",
+      "MEWP: Daily checklist completed, LOLER inspection in-date (6-12 months), emergency lowering system tested",
+      "Weather: Wind speed <20mph, no rain/ice, good visibility, lightning risk checked"
+    ],
+    trainingRequired: [
+      "Working at Height Awareness Training",
+      "IPAF (International Powered Access Federation) for MEWP operation",
+      "Fall Arrest and Harness Use Training",
+      "Scaffold Inspection (if erecting/inspecting scaffolds)",
+      "Emergency Rescue from Height",
+      "First Aid at Work"
+    ],
+    realWorldScenarios: [
+      "CASE 1 - Ladder Fall Fatality: Electrician using extension ladder to replace external light fitting. Ladder slips on wet paving. Falls 4 metres onto concrete. Fatal head injury. No one secured ladder. LESSON: Always secure ladders top and bottom, use stabiliser bars, have someone foot the ladder.",
+      "CASE 2 - MEWP Overturn: Scissor lift being used on uneven ground to install cables. Platform tips over, operator thrown out (wasn't wearing harness). Crushed by falling platform. Fatal. LESSON: Ground conditions must be assessed, harness mandatory in MEWPs, never exceed safe working load.",
+      "CASE 3 - Fragile Roof Fall: Contractor walks on warehouse roof to install conduit. Steps through asbestos cement roof panel. Falls 6 metres through roof. Multiple fractures, permanent disability. £1.2M fine. LESSON: Never assume roofs are safe to walk on, always use crawling boards, test for fragility."
+    ],
+    relatedHazards: [
+      "elec-shock-001",
+      "overhead-contact-001",
+      "solar-battery-001",
+      "wind-turbine-001"
+    ],
+    costOfFailure: "Fatality: £1-3M fine, imprisonment up to 2 years, business closure. Serious injury: £500k-1M fine, lifelong disability compensation £2-5M, HSE prosecution, reputational damage.",
+    hseGuidanceRef: [
+      "Work at Height Regulations 2005",
+      "HSE INDG401 - Working at height",
+      "HSE GEIS2 - Electrical work at height",
+      "IPAF Guidance on MEWP safety"
+    ],
+    lastUpdated: "2025-01-15",
+    sources: [
+      "HSE Fatal Injury Statistics 2023",
+      "Work at Height Regulations 2005",
+      "BS EN 361:2002 - Full body harnesses",
+      "HSE Height Safety Guidance"
+    ]
+  },
+  {
+    id: "confined-space-001",
+    hazard: "Electrical work in confined spaces (vaults, chambers, tanks, roof spaces)",
+    consequence: "Asphyxiation, toxic gas exposure, drowning, entrapment, electric shock, fire/explosion",
+    likelihood: 2,
+    severity: 5,
+    riskRating: 10,
+    controlMeasures: {
+      elimination: [
+        "Eliminate need to enter - remote monitoring, external access points",
+        "Redesign systems to avoid confined space work"
+      ],
+      engineering: [
+        "Forced ventilation systems (positive pressure) minimum 30 mins before entry",
+        "Atmospheric monitoring equipment (O2, CO, H2S, LEL)",
+        "Emergency extraction equipment (tripod and winch)",
+        "Communication systems (2-way radio or signal lines)",
+        "Emergency lighting (minimum 2 sources per person)",
+        "Rescue harness and retrieval system"
+      ],
+      administrative: [
+        "Confined Spaces Regulations 1997 compliance",
+        "Permit to work system MANDATORY",
+        "Gas monitoring before AND during work (continuous)",
+        "Designated supervisor (top-man) outside space at all times",
+        "Emergency rescue plan practised annually",
+        "Maximum entry time limits (typically 30-60 mins)",
+        "Roll call every 10 minutes",
+        "No lone working - minimum 2 in space, 1 outside",
+        "Medical fitness assessment for entrants"
+      ],
+      ppe: [
+        "Full-body harness with D-ring for vertical extraction",
+        "Self-rescue breathing apparatus (escape sets) or BA",
+        "Gas detection meter (4-gas minimum: O2, CO, H2S, LEL)",
+        "Intrinsically safe torch and communications",
+        "Hard hat with chin strap",
+        "Chemical-resistant gloves if contamination risk"
+      ]
+    },
+    bs7671References: [
+      "Confined Spaces Regulations 1997",
+      "Electricity at Work Regulations 1989",
+      "Part 7 - Special installations"
+    ],
+    category: "confined-space",
+    workType: ["installation", "maintenance", "inspection", "emergency-repair"],
+    environment: ["underground", "vault", "tank", "roofspace"],
+    guidanceNotes: [
+      "Confined space = any space with restricted entry/exit AND risk of serious injury from hazardous substances or lack of oxygen",
+      "Oxygen depletion is SILENT and INVISIBLE - you won't know until you collapse. Gas monitoring is mandatory",
+      "Normal oxygen level = 20.9%. Below 19.5% = unsafe. Below 16% = loss of consciousness in seconds",
+      "Carbon dioxide (CO2) is heavier than air and collects at bottom of spaces - test at multiple levels",
+      "Hydrogen sulphide (H2S) is IMMEDIATELY FATAL at 500ppm - toxic sewer gas, rotten egg smell",
+      "60% of confined space deaths are would-be rescuers - NEVER enter without BA and training",
+      "Permit to work must be displayed at entry point and reviewed every shift"
+    ],
+    emergencyProcedures: [
+      "IF EMERGENCY IN CONFINED SPACE: DO NOT RUSH IN TO RESCUE - 60% of deaths are rescuers",
+      "Sound alarm, call 999, state 'confined space emergency'",
+      "If entrant becomes distressed/unresponsive: Use retrieval system from OUTSIDE",
+      "Only enter with self-contained breathing apparatus (SCBA) and rescue training",
+      "Emergency services may need specialist confined space teams - warn 999 operator",
+      "If casualty extracted: Move to fresh air, monitor breathing, begin CPR if needed",
+      "Even if person seems OK, hospital assessment essential - delayed effects of gas exposure common",
+      "Seal entry point, preserve scene for investigation"
+    ],
+    inspectionChecks: [
+      "Atmosphere test BEFORE entry: O2 19.5-23%, CO <35ppm, H2S <10ppm, LEL <10%",
+      "Continuous monitoring during work - alarm set to trigger at unsafe levels",
+      "Ventilation system running and verified effective (air changes every 5 mins minimum)",
+      "Communication system tested - can speak to entrant clearly",
+      "Rescue equipment available: Tripod, winch, harness, BA sets, stretcher",
+      "Emergency services notified of high-risk confined space work",
+      "Supervisor (top-man) constantly monitoring entrants, maintaining log",
+      "Weather check - no rain forecast (flooding risk in underground chambers)"
+    ],
+    trainingRequired: [
+      "Confined Space Entry and Rescue Training (Accredited course)",
+      "Gas Detection Equipment Operation",
+      "Breathing Apparatus (BA) Use and Maintenance",
+      "First Aid for Confined Space Emergencies",
+      "Permit to Work Systems",
+      "Emergency Rescue Drills (practised quarterly)"
+    ],
+    realWorldScenarios: [
+      "CASE 1 - Oxygen Depletion Death: Two electricians enter underground cable vault to repair fault. No gas testing. Both collapse within 2 minutes from oxygen depletion (12% O2). Colleague enters to rescue - also collapses. 2 fatalities, 1 serious injury. £1.5M fine. LESSON: ALWAYS test atmosphere before entry.",
+      "CASE 2 - Sewer Gas Fatality: Contractor entering pump chamber to install electrical panel. H2S (sewer gas) at 800ppm. Collapsed immediately. Died before emergency services arrived. Monitoring would have detected lethal gas. LESSON: Confined space permits and gas monitoring are life-or-death requirements.",
+      "CASE 3 - Roof Space Collapse: Electrician working in low-headroom roof void for 2 hours. Became disoriented from CO2 buildup and heat exhaustion. Passed out, rolled through ceiling onto floor below. Fractured spine, paralysed. LESSON: Time limits, ventilation, and monitoring essential even in 'simple' confined spaces."
+    ],
+    relatedHazards: [
+      "elec-shock-001",
+      "asbestos-001",
+      "manual-handling-001",
+      "heat-stress-001"
+    ],
+    costOfFailure: "Fatality: £1-3M fine, up to 2 years imprisonment, corporate manslaughter charges. Serious injury: £500k+ fine. Prosecutions have 90%+ conviction rate for confined space fatalities. Business closure common.",
+    hseGuidanceRef: [
+      "Confined Spaces Regulations 1997",
+      "HSE Safe work in confined spaces (INDG258)",
+      "Confined Spaces: A brief guide to working safely (C18)",
+      "Electricity at Work Regulations 1989"
+    ],
+    lastUpdated: "2025-01-15",
+    sources: [
+      "Confined Spaces Regulations 1997",
+      "HSE Confined Space Statistics",
+      "UK Confined Space Association Guidance",
+      "International Safety Guide for Oil Tankers and Terminals (ISGOTT)"
+    ]
+  },
+  {
+    id: "asbestos-001",
+    hazard: "Asbestos exposure during electrical work in buildings constructed pre-2000",
+    consequence: "Mesothelioma (fatal lung cancer), asbestosis, lung cancer, pleural disease - 20-50 year latency",
+    likelihood: 4,
+    severity: 5,
+    riskRating: 20,
+    controlMeasures: {
+      elimination: [
+        "Asbestos survey before ANY invasive work in buildings built before 2000",
+        "Remove asbestos before electrical work where feasible",
+        "Use non-invasive cable routes (surface trunking) to avoid disturbing fabric"
+      ],
+      engineering: [
+        "Encapsulation of asbestos materials where removal not possible",
+        "Sealed work areas with negative pressure extraction",
+        "HEPA-filtered vacuum equipment for any dust",
+        "Wet methods to suppress dust generation",
+        "Designated decontamination units with showers"
+      ],
+      administrative: [
+        "Control of Asbestos Regulations 2012 compliance",
+        "Asbestos awareness training for ALL electricians (mandatory)",
+        "Licensed asbestos contractor for removal work (categories vary)",
+        "Asbestos management plan review before starting work",
+        "Stop work if suspected ACMs (Asbestos Containing Materials) found",
+        "Notification to HSE minimum 14 days before licensed work",
+        "Air monitoring during and after work",
+        "Health surveillance for regular asbestos workers (annual medical)"
+      ],
+      ppe: [
+        "RPE (Respiratory Protective Equipment): FFP3 disposable masks minimum, full-face BA for licensed work",
+        "Disposable coveralls (Category III Type 5/6)",
+        "Disposable gloves (latex or nitrile)",
+        "Disposable overshoes",
+        "All PPE disposed as asbestos waste"
+      ]
+    },
+    bs7671References: [
+      "Control of Asbestos Regulations 2012",
+      "HSE L143 - Managing asbestos in buildings",
+      "CAR 2012 - Asbestos management"
+    ],
+    category: "hazardous-material",
+    workType: ["installation", "maintenance", "upgrade", "demolition"],
+    environment: ["domestic", "commercial", "industrial", "heritage"],
+    guidanceNotes: [
+      "Asbestos used extensively in UK buildings until 1999 ban - present in 80%+ of pre-2000 buildings",
+      "Common electrical risks: Asbestos Insulating Board (AIB) behind consumer units, lagging on cables, textured ceilings, floor tiles, soffits",
+      "AIB is HIGHLY FRIABLE - extremely dangerous when drilled/cut. Often grey board behind meter cupboards",
+      "Just ONE fibre can cause fatal mesothelioma 20-50 years later - no safe exposure level",
+      "White asbestos (chrysotile) is just as deadly as brown/blue despite common myth",
+      "Asbestos fibres are 1/50th width of human hair - invisible to naked eye, stay airborne for hours",
+      "Pre-2000 consumer units often screwed to AIB backing boards - removing these releases huge fibre counts"
+    ],
+    emergencyProcedures: [
+      "IF ASBESTOS DISTURBED ACCIDENTALLY:",
+      "STOP WORK IMMEDIATELY - do not continue",
+      "Evacuate area, seal off with plastic sheeting if available",
+      "Do not use vacuum cleaner (except HEPA-filtered asbestos type)",
+      "Do not brush or sweep - this spreads fibres",
+      "Remove contaminated clothing carefully (place in sealed bag), shower thoroughly",
+      "Contact HSE-licensed asbestos removal contractor for cleanup",
+      "Notify HSE immediately on 0300 003 1647",
+      "Air monitoring required before area can be reoccupied",
+      "Seek occupational health advice - exposure must be recorded in health surveillance records",
+      "Inform building owner/duty holder - incident must be in asbestos management plan"
+    ],
+    inspectionChecks: [
+      "Check asbestos register/management plan BEFORE starting any work in pre-2000 buildings",
+      "Visual inspection: Look for grey board, textured surfaces, old lagging, corrugated panels",
+      "If unsure: STOP and get sample analysed (24-hour lab results available)",
+      "Never drill, cut, sand, or break suspected asbestos - even 'small' amounts",
+      "Check behind electrical accessories before removal - AIB often used as backing",
+      "Look for labels: 'Contains asbestos' or 'A' markings on boards/panels",
+      "Domestic properties: Special risk in Artex ceilings, floor tiles, airing cupboards"
+    ],
+    trainingRequired: [
+      "Asbestos Awareness Training (CAT A) - MANDATORY for all electricians (half-day course)",
+      "Non-Licensed Asbestos Work Training (CAT B) - for work with low-risk asbestos",
+      "Licensed Asbestos Removal Training - for high-risk work (AIB, sprayed coatings)",
+      "Medical Surveillance - annual for regular asbestos workers",
+      "Face Fit Testing - for RPE users (every 2 years minimum)"
+    ],
+    realWorldScenarios: [
+      "CASE 1 - Consumer Unit Replacement Death: Electrician removed old consumer unit from wall. Drilled AIB backing board to install new unit. No asbestos survey. Died 23 years later from mesothelioma aged 49. Family awarded £300k compensation. Company prosecuted. LESSON: ALWAYS check asbestos register before drilling ANY surface.",
+      "CASE 2 - Multiple Exposure Incident: Electrical firm rewired 1970s office block. Cut hundreds of holes through AIB ceiling tiles, no protection. 5 electricians, 2 labourers, and building occupants exposed. £2.1M fine, company director jailed 18 months. LESSON: Pre-work asbestos survey is not optional - it's the law.",
+      "CASE 3 - Ignorance No Defence: Young apprentice told to 'just crack on' installing cables in loft. Disturbed asbestos lagging on old wiring. Developed asbestosis 15 years later, unable to work. Company fined £750k. LESSON: Employers have absolute duty to protect workers - 'didn't know' is no defence."
+    ],
+    relatedHazards: [
+      "historic-wiring-001",
+      "confined-space-001",
+      "consumer-unit-001",
+      "heritage-building-001"
+    ],
+    costOfFailure: "Fatal mesothelioma: £1-3M fine, unlimited compensation (£200k-500k typical), imprisonment up to 2 years, corporate manslaughter charges. HSE prosecutions have 95%+ conviction rate. Lifetime business prohibition for directors. Victim compensation: £200k-500k per person. Investigation costs: £50k-200k.",
+    hseGuidanceRef: [
+      "Control of Asbestos Regulations 2012",
+      "HSE L143 - Managing and working with asbestos",
+      "HSE INDG223 - Introduction to asbestos essentials",
+      "HSE Asbestos essentials task sheets (EM series for electrical work)"
+    ],
+    lastUpdated: "2025-01-15",
+    sources: [
+      "Control of Asbestos Regulations 2012",
+      "HSE Asbestos Statistics 2023 (5,000+ deaths per year in UK)",
+      "Health and Safety Executive L143 Guidance",
+      "Mesothelioma UK Research"
+    ]
   },
   {
     id: "consumer-unit-001",
@@ -2002,5 +2413,17 @@ export const hazardDatabase = [
     icon: "⛏️",
     color: "bg-amber-500/20 text-amber-400 border-amber-500/30",
     hazards: enhancedRiskDatabase.filter(h => h.category === "excavation")
+  },
+  {
+    category: "Confined Spaces",
+    icon: "🚪",
+    color: "bg-red-500/20 text-red-400 border-red-500/30",
+    hazards: enhancedRiskDatabase.filter(h => h.category === "confined-space")
+  },
+  {
+    category: "Hazardous Materials",
+    icon: "☣️",
+    color: "bg-pink-500/20 text-pink-400 border-pink-500/30",
+    hazards: enhancedRiskDatabase.filter(h => h.category === "hazardous-material")
   }
 ];
