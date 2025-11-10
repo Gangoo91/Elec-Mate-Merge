@@ -174,23 +174,18 @@ export const HazardCard = memo(({
                     if (!measures || measures.length === 0) return null;
                     
                     return (
-                      <div key={type} className={cn("rounded border p-2", getControlHierarchyColor(type))}>
-                        <div className="text-xs font-semibold uppercase tracking-wide mb-1 flex items-center gap-1">
+                      <div key={type} className={cn("rounded border p-3", getControlHierarchyColor(type))}>
+                        <div className="text-xs font-semibold uppercase tracking-wide mb-2 flex items-center gap-1 text-left">
                           {getControlHierarchyIcon(type)}
                           <span>{getControlHierarchyLabel(type)}</span>
                         </div>
-                        <ul className="space-y-1 text-xs">
-                          {measures.slice(0, 3).map((measure: string, idx: number) => (
-                            <li key={idx} className="flex gap-1">
-                              <span className="text-muted-foreground">•</span>
-                              <span>{measure}</span>
+                        <ul className="space-y-1.5 text-xs text-left">
+                          {measures.map((measure: string, idx: number) => (
+                            <li key={idx} className="flex items-start gap-2 text-left">
+                              <span className="text-muted-foreground flex-shrink-0 mt-0.5">•</span>
+                              <span className="flex-1">{measure}</span>
                             </li>
                           ))}
-                          {measures.length > 3 && (
-                            <li className="text-muted-foreground italic">
-                              +{measures.length - 3} more controls
-                            </li>
-                          )}
                         </ul>
                       </div>
                     );
@@ -198,46 +193,138 @@ export const HazardCard = memo(({
                 </div>
               )}
 
-              {/* Emergency Procedures - First 3 */}
+              {/* Emergency Procedures - ALL */}
               {hazard.emergencyProcedures && hazard.emergencyProcedures.length > 0 && (
                 <div>
-                  <div className="text-xs font-semibold uppercase mb-2 flex items-center gap-1">
+                  <div className="text-xs font-semibold uppercase mb-2 flex items-center gap-1 text-left">
                     <AlertTriangle className="w-3 h-3 text-red-400" />
                     Emergency Procedures
                   </div>
-                  <div className="space-y-1">
-                    {hazard.emergencyProcedures.slice(0, 3).map((proc: string, idx: number) => (
-                      <div key={idx} className="text-xs bg-red-500/5 p-2 rounded border border-red-500/20">
-                        {idx + 1}. {proc}
+                  <div className="space-y-1.5">
+                    {hazard.emergencyProcedures.map((proc: string, idx: number) => (
+                      <div key={idx} className="text-xs bg-red-500/5 p-2 rounded border border-red-500/20 flex items-start gap-2 text-left">
+                        <span className="font-semibold text-red-400 flex-shrink-0">{idx + 1}.</span>
+                        <span className="flex-1">{proc}</span>
                       </div>
                     ))}
-                    {hazard.emergencyProcedures.length > 3 && (
-                      <div className="text-xs text-muted-foreground text-center">
-                        +{hazard.emergencyProcedures.length - 3} more steps
-                      </div>
-                    )}
                   </div>
                 </div>
               )}
 
-              {/* Guidance Notes - First 2 */}
+              {/* Guidance Notes - ALL */}
               {hazard.guidanceNotes && hazard.guidanceNotes.length > 0 && (
                 <div>
-                  <div className="text-xs font-semibold uppercase mb-2 flex items-center gap-1">
+                  <div className="text-xs font-semibold uppercase mb-2 flex items-center gap-1 text-left">
                     <Lightbulb className="w-3 h-3 text-indigo-400" />
                     Guidance Notes
                   </div>
-                  <div className="space-y-1">
-                    {hazard.guidanceNotes.slice(0, 2).map((note: string, idx: number) => (
-                      <div key={idx} className="text-xs bg-indigo-500/5 p-2 rounded border border-indigo-500/20">
-                        • {note}
+                  <div className="space-y-1.5">
+                    {hazard.guidanceNotes.map((note: string, idx: number) => (
+                      <div key={idx} className="text-xs bg-indigo-500/5 p-2 rounded border border-indigo-500/20 flex items-start gap-2 text-left">
+                        <span className="text-indigo-400 flex-shrink-0 mt-0.5">•</span>
+                        <span className="flex-1">{note}</span>
                       </div>
                     ))}
-                    {hazard.guidanceNotes.length > 2 && (
-                      <div className="text-xs text-muted-foreground text-center">
-                        +{hazard.guidanceNotes.length - 2} more notes
+                  </div>
+                </div>
+              )}
+
+              {/* Inspection Checks - NEW */}
+              {hazard.inspectionChecks && hazard.inspectionChecks.length > 0 && (
+                <div>
+                  <div className="text-xs font-semibold uppercase mb-2 flex items-center gap-1 text-left">
+                    <Search className="w-3 h-3 text-cyan-400" />
+                    Inspection Checks
+                  </div>
+                  <div className="space-y-1.5">
+                    {hazard.inspectionChecks.map((check: string, idx: number) => (
+                      <div key={idx} className="text-xs bg-cyan-500/5 p-2 rounded border border-cyan-500/20 flex items-start gap-2 text-left">
+                        <Check className="w-3 h-3 text-cyan-400 flex-shrink-0 mt-0.5" />
+                        <span className="flex-1">{check}</span>
                       </div>
-                    )}
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Training Required - NEW */}
+              {hazard.trainingRequired && hazard.trainingRequired.length > 0 && (
+                <div>
+                  <div className="text-xs font-semibold uppercase mb-2 flex items-center gap-1 text-left">
+                    <GraduationCap className="w-3 h-3 text-purple-400" />
+                    Training Required
+                  </div>
+                  <div className="space-y-1.5">
+                    {hazard.trainingRequired.map((training: string, idx: number) => (
+                      <div key={idx} className="text-xs bg-purple-500/5 p-2 rounded border border-purple-500/20 flex items-start gap-2 text-left">
+                        <span className="text-purple-400 flex-shrink-0 mt-0.5">•</span>
+                        <span className="flex-1">{training}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Real World Scenarios - NEW */}
+              {hazard.realWorldScenarios && hazard.realWorldScenarios.length > 0 && (
+                <div>
+                  <div className="text-xs font-semibold uppercase mb-2 flex items-center gap-1 text-left">
+                    <BookOpen className="w-3 h-3 text-amber-400" />
+                    Real World Lessons
+                  </div>
+                  <div className="space-y-2">
+                    {hazard.realWorldScenarios.map((scenario: string, idx: number) => (
+                      <div key={idx} className="text-xs bg-amber-500/5 p-3 rounded border border-amber-500/20 text-left">
+                        <div className="flex items-start gap-2">
+                          <AlertTriangle className="w-3 h-3 text-amber-400 flex-shrink-0 mt-0.5" />
+                          <span className="flex-1 leading-relaxed">{scenario}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* HSE Guidance - NEW */}
+              {hazard.hseGuidanceRef && hazard.hseGuidanceRef.length > 0 && (
+                <div>
+                  <div className="text-xs font-semibold uppercase mb-2 text-left">
+                    HSE Guidance References
+                  </div>
+                  <div className="space-y-1.5">
+                    {hazard.hseGuidanceRef.map((ref: string, idx: number) => (
+                      <div key={idx} className="text-xs bg-blue-500/5 p-2 rounded border border-blue-500/20 font-mono text-left">
+                        {ref}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Cost of Failure - NEW */}
+              {hazard.costOfFailure && (
+                <div className="bg-red-500/10 border-2 border-red-500/30 rounded-lg p-3">
+                  <div className="text-xs font-semibold uppercase mb-2 text-red-400 text-left">
+                    Cost of Failure
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed text-left">
+                    {hazard.costOfFailure}
+                  </p>
+                </div>
+              )}
+
+              {/* BS7671 References */}
+              {hazard.bs7671References && hazard.bs7671References.length > 0 && (
+                <div>
+                  <div className="text-xs font-semibold uppercase mb-2 text-left">
+                    BS7671 Regulations
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {hazard.bs7671References.map((reg: string, idx: number) => (
+                      <Badge key={idx} variant="outline" className="font-mono text-[10px]">
+                        {reg}
+                      </Badge>
+                    ))}
                   </div>
                 </div>
               )}
