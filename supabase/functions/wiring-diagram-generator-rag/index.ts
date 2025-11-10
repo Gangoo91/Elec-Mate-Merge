@@ -451,7 +451,7 @@ Format:
             },
           ],
           generationConfig: {
-            maxOutputTokens: 8192,
+            maxOutputTokens: 16384,
             temperature: 0.3
           }
           }),
@@ -499,7 +499,7 @@ Format:
     if (guidanceCandidate?.finishReason === 'MAX_TOKENS') {
       logger.error('Guidance response truncated - token limit exceeded', { 
         finishReason: guidanceCandidate.finishReason,
-        maxTokens: 8192
+        maxTokens: 16384
       });
       throw new Error('Guidance response was too long. The component may be too complex. Please try again or contact support.');
     }
