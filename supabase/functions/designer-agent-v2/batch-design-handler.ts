@@ -15,6 +15,7 @@ import { seedDesignKnowledge } from '../_shared/seed-design-knowledge.ts';
 import { checkCircuitDesignCache, storeCircuitDesign } from '../_shared/circuit-design-cache.ts';
 import { findMatchingTemplate, applyTemplate } from '../_shared/circuit-templates.ts';
 import { checkCircuitCache, storeCircuitCache } from '../_shared/circuit-level-cache.ts';
+import { extractCircuitsWithAI } from './ai-circuit-extractor.ts';
 
 const VERSION = 'v4.0.0-best-in-class'; // PHASE 1-7 optimizations implemented
 
@@ -558,7 +559,7 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     }
     
     const { projectInfo, supply, circuits: inputCircuits, additionalPrompt, specialRequirements, installationConstraints, installationType } = body;
-    const circuits = inputCircuits || [];
+    let circuits = inputCircuits || [];
     
     // ============= PHASE 3: CHECK SEMANTIC CACHE FIRST =============
     // For common designs (e.g., "10A shower, 32A ring final"), return cached design in <2s
@@ -616,6 +617,47 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     
     // Extract installation type from multiple sources
     const type = installationType || projectInfo?.installationType || 'domestic';
+    
+    // ============= PHASE 0: EXTRACT CIRCUITS FROM NATURAL LANGUAGE =============
+    // If no circuits provided but we have a prompt, extract circuits using AI
+    if (circuits.length === 0 && additionalPrompt?.trim()) {
+      const openAiKey = Deno.env.get('OPENAI_API_KEY');
+      if (!openAiKey) {
+        throw new CircuitDesignError(
+          'INVALID_INPUT',
+          'OpenAI API key not configured',
+          {},
+          ['Add OPENAI_API_KEY in Supabase secrets']
+        );
+      }
+
+      logger.info('🧠 No circuits provided. Extracting from natural language prompt...');
+      const extraction = await extractCircuitsWithAI(
+        additionalPrompt,
+        type,
+        openAiKey,
+        logger
+      );
+
+      // Use extracted circuits
+      circuits = extraction.inferredCircuits || [];
+      
+      logger.info(`✅ Circuit extraction complete: ${circuits.length} circuits found`);
+
+      // Enrich context with any special requirements/constraints the extractor identified
+      if ((extraction.specialRequirements?.length || 0) > 0) {
+        logger.info(`Adding ${extraction.specialRequirements.length} special requirements from extraction`);
+      }
+      if ((extraction.installationConstraints?.length || 0) > 0) {
+        logger.info(`Adding ${extraction.installationConstraints.length} constraints from extraction`);
+      }
+    }
+    
+    // If still no circuits after extraction, return friendly error
+    if (circuits.length === 0) {
+      logger.warn('No circuits to design after extraction attempt');
+      return ERROR_TEMPLATES.NO_CIRCUITS(0, !!additionalPrompt).toResponse(VERSION);
+    }
     
     // 2. Build query and search terms
     const query = buildDesignQuery(projectInfo, supply, circuits, specialRequirements || [], installationConstraints || []);
