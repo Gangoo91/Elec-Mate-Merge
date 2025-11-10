@@ -451,7 +451,7 @@ Format:
             },
           ],
           generationConfig: {
-            maxOutputTokens: 3000,
+            maxOutputTokens: 4000,
             temperature: 0.3
           }
           }),
@@ -467,7 +467,52 @@ Format:
       RetryPresets.STANDARD
     );
 
-    const guidanceText = guidanceData.candidates[0].content.parts[0].text;
+    // Validate guidance generation response structure
+    logger.info('Guidance generation response', { 
+      hasError: !!guidanceData.error,
+      hasCandidates: !!guidanceData.candidates,
+      candidatesLength: guidanceData.candidates?.length,
+      responseKeys: Object.keys(guidanceData)
+    });
+
+    if (guidanceData.error) {
+      logger.error('Gemini API returned error for guidance', { error: guidanceData.error });
+      throw new Error(`Guidance generation error: ${guidanceData.error.message || 'Unknown error'}`);
+    }
+
+    if (!guidanceData.candidates || guidanceData.candidates.length === 0) {
+      logger.error('No candidates in guidance response', { 
+        response: JSON.stringify(guidanceData).substring(0, 500),
+        promptBlockReason: guidanceData.promptFeedback?.blockReason
+      });
+      
+      if (guidanceData.promptFeedback?.blockReason) {
+        throw new Error(`Guidance generation blocked: ${guidanceData.promptFeedback.blockReason}`);
+      }
+      
+      throw new Error('No guidance results returned from AI');
+    }
+
+    const guidanceCandidate = guidanceData.candidates[0];
+
+    // Check if response was truncated
+    if (guidanceCandidate?.finishReason === 'MAX_TOKENS') {
+      logger.error('Guidance response truncated - token limit exceeded', { 
+        finishReason: guidanceCandidate.finishReason,
+        maxTokens: 4000
+      });
+      throw new Error('Guidance response was too long. The component may be too complex. Please try again or contact support.');
+    }
+
+    if (!guidanceCandidate?.content?.parts || guidanceCandidate.content.parts.length === 0) {
+      logger.error('Invalid guidance candidate structure', { 
+        candidate: JSON.stringify(guidanceCandidate).substring(0, 300),
+        finishReason: guidanceCandidate?.finishReason
+      });
+      throw new Error('Invalid response structure from guidance generation');
+    }
+
+    const guidanceText = guidanceCandidate.content.parts[0].text;
     
     // Extract and repair JSON
     let jsonMatch = guidanceText.match(/\{[\s\S]*\}/);
