@@ -4,10 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { 
-  Shield, Search, AlertTriangle, Star, Clock, Plus, 
+  Shield, Search, AlertTriangle, Star, Clock, 
   Filter, BookmarkPlus, Eye, ChevronDown, ChevronUp,
-  Zap, HardHat, Building2, FlameKindling, Wind, Users, Hammer, Check,
-  TrendingUp, Target, ArrowRight, Sparkles, CheckCircle2
+  Zap, HardHat, Building2, FlameKindling, Wind, Users, Hammer,
+  TrendingUp, Target, ArrowRight, Sparkles, CheckCircle2, Printer,
+  Download, Ban, Repeat, Wrench, ClipboardList, HardHatIcon
 } from 'lucide-react';
 import { 
   MobileAccordion, 
@@ -18,8 +19,6 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { hazardCategories, enhancedRiskConsequences } from '@/data/hazards';
 import { MobileGestureHandler } from '@/components/ui/mobile-gesture-handler';
-import { useRAMS } from '../rams/RAMSContext';
-import { toast } from '@/hooks/use-toast';
 
 interface HazardItem {
   id: string;
@@ -39,15 +38,14 @@ interface HazardItem {
 }
 
 const EnhancedHazardDatabase: React.FC = () => {
-  const { addRiskFromTemplate } = useRAMS();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedRiskLevel, setSelectedRiskLevel] = useState<string>('all');
+  const [selectedWorkType, setSelectedWorkType] = useState<string>('all');
   const [activeTab, setActiveTab] = useState('browse');
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
   const [expandedHazards, setExpandedHazards] = useState<Set<string>>(new Set());
-  const [addedHazards, setAddedHazards] = useState<Set<string>>(new Set());
 
   // Load favorites and recent items from localStorage on mount
   useEffect(() => {
@@ -142,10 +140,12 @@ const EnhancedHazardDatabase: React.FC = () => {
 
       const matchesCategory = selectedCategory === 'all' || hazard.category === selectedCategory;
       const matchesRiskLevel = selectedRiskLevel === 'all' || hazard.riskLevel === selectedRiskLevel;
+      const matchesWorkType = selectedWorkType === 'all' || 
+        (enhancedRiskConsequences.find(h => h.id === hazard.id)?.workType?.includes(selectedWorkType as any));
 
-      return matchesSearch && matchesCategory && matchesRiskLevel;
+      return matchesSearch && matchesCategory && matchesRiskLevel && matchesWorkType;
     });
-  }, [transformedHazards, searchTerm, selectedCategory, selectedRiskLevel]);
+  }, [transformedHazards, searchTerm, selectedCategory, selectedRiskLevel, selectedWorkType]);
 
   // Tab-specific data
   const favoriteHazards = transformedHazards.filter(h => favorites.has(h.id));
@@ -187,41 +187,37 @@ const EnhancedHazardDatabase: React.FC = () => {
     setExpandedHazards(newExpanded);
   };
 
-  const handleAddToRAMS = (hazard: HazardItem) => {
-    // Convert hazard to RAMS template format
-    const ramsTemplate = {
-      id: hazard.id,
-      specificActivity: hazard.name,
-      hazard: hazard.description,
-      category: hazard.category,
-      likelihood: hazard.likelihood,
-      severity: hazard.severity,
-      riskLevel: hazard.likelihood * hazard.severity,
-      detailedControls: hazard.controlMeasures || [],
-      ppe: ['Safety helmet', 'Safety gloves', 'High-vis vest'], // Default PPE
-      regulations: hazard.regulations || [],
-      icon: 'AlertTriangle'
-    };
+  const getControlHierarchyIcon = (type: string) => {
+    switch (type) {
+      case 'elimination': return Ban;
+      case 'substitution': return Repeat;
+      case 'engineering': return Wrench;
+      case 'administrative': return ClipboardList;
+      case 'ppe': return HardHatIcon;
+      default: return Shield;
+    }
+  };
 
-    addRiskFromTemplate(ramsTemplate);
-    
-    // Add to added hazards set for visual feedback
-    setAddedHazards(prev => new Set([...prev, hazard.id]));
-    
-    // Remove from added state after 3 seconds
-    setTimeout(() => {
-      setAddedHazards(prev => {
-        const newSet = new Set(prev);
-        newSet.delete(hazard.id);
-        return newSet;
-      });
-    }, 3000);
+  const getControlHierarchyColor = (type: string) => {
+    switch (type) {
+      case 'elimination': return 'bg-red-500/10 border-red-500/30 text-red-400';
+      case 'substitution': return 'bg-orange-500/10 border-orange-500/30 text-orange-400';
+      case 'engineering': return 'bg-blue-500/10 border-blue-500/30 text-blue-400';
+      case 'administrative': return 'bg-purple-500/10 border-purple-500/30 text-purple-400';
+      case 'ppe': return 'bg-green-500/10 border-green-500/30 text-green-400';
+      default: return 'bg-muted/10 border-muted/30 text-muted-foreground';
+    }
+  };
 
-    toast({
-      title: 'Added to RAMS',
-      description: `${hazard.name} has been added to your Risk Assessment.`,
-      variant: 'success'
-    });
+  const getControlHierarchyLabel = (type: string) => {
+    switch (type) {
+      case 'elimination': return 'ELIMINATION (Priority 1)';
+      case 'substitution': return 'SUBSTITUTION (Priority 2)';
+      case 'engineering': return 'ENGINEERING CONTROLS (Priority 3)';
+      case 'administrative': return 'ADMINISTRATIVE CONTROLS (Priority 4)';
+      case 'ppe': return 'PPE (Last Line of Defence)';
+      default: return type.toUpperCase();
+    }
   };
 
   const HazardCard: React.FC<{ hazard: HazardItem; showQuickActions?: boolean }> = ({ 
@@ -230,139 +226,228 @@ const EnhancedHazardDatabase: React.FC = () => {
   }) => {
     const IconComponent = hazard.icon;
     const isExpanded = expandedHazards.has(hazard.id);
+    
+    // Get original data to access control measure hierarchy
+    const originalHazard = enhancedRiskConsequences.find(h => h.id === hazard.id);
+    const controlMeasures = originalHazard?.controlMeasures || {};
 
     return (
-      <Card className="border-elec-yellow/20 bg-card backdrop-blur-sm transition-all duration-200">
-        <CardContent className="p-3 md:p-4">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 md:gap-3 flex-1 min-w-0">
-                <div className="p-1.5 md:p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 shrink-0">
-                  <IconComponent className="h-3.5 w-3.5 md:h-4 md:w-4 text-elec-yellow" />
+      <Card className="border-elec-yellow/20 bg-card backdrop-blur-sm transition-all duration-200 hover:border-elec-yellow/40">
+        <CardContent className="p-4 md:p-5">
+          <div className="space-y-4">
+            {/* Header */}
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-start gap-3 flex-1 min-w-0">
+                <div className="p-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 shrink-0">
+                  <IconComponent className="h-5 w-5 md:h-6 md:w-6 text-elec-yellow" />
                 </div>
                 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-xs md:text-sm text-foreground line-clamp-2">
+                  <h3 className="font-semibold text-base md:text-lg text-foreground mb-2 leading-tight">
                     {hazard.name}
                   </h3>
+                  <div className="flex flex-wrap items-center gap-1.5 mb-3">
+                    <Badge variant="outline" className="text-xs px-2 py-0.5 bg-muted/30">
+                      {hazard.category}
+                    </Badge>
+                    <Badge className={`${getRiskColor(hazard.riskLevel)} text-xs px-2 py-0.5`}>
+                      {hazard.riskLevel}
+                    </Badge>
+                    <Badge variant="outline" className="text-xs px-2 py-0.5">
+                      Risk Score: {hazard.riskRating}
+                    </Badge>
+                  </div>
                 </div>
               </div>
 
               {showQuickActions && (
-                <div className="flex items-center gap-0.5 md:gap-1 shrink-0">
+                <div className="flex items-center gap-1 shrink-0">
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-8 w-8 p-0"
+                    className="h-9 w-9 p-0"
                     onClick={(e) => {
                       e.stopPropagation();
                       toggleFavorite(hazard.id);
                     }}
                   >
                     <Star 
-                      className={`h-3.5 w-3.5 ${
-                        favorites.has(hazard.id) ? 'fill-primary text-primary' : 'text-muted-foreground'
+                      className={`h-4 w-4 ${
+                        favorites.has(hazard.id) ? 'fill-elec-yellow text-elec-yellow' : 'text-muted-foreground'
                       }`} 
                     />
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-8 w-8 p-0"
+                    className="h-9 w-9 p-0"
                     onClick={() => {
                       viewHazardDetails(hazard.id);
                       toggleHazardExpansion(hazard.id);
                     }}
                   >
                     {isExpanded ? (
-                      <ChevronUp className="h-3.5 w-3.5 text-elec-yellow" />
+                      <ChevronUp className="h-4 w-4 text-elec-yellow" />
                     ) : (
-                      <ChevronDown className="h-3.5 w-3.5 text-elec-yellow" />
+                      <ChevronDown className="h-4 w-4 text-elec-yellow" />
                     )}
                   </Button>
                 </div>
               )}
             </div>
-            
-            <div className="flex flex-wrap items-center gap-1 md:gap-1.5 pb-2 text-[10px]">
-              <Badge variant="outline" className="text-[10px] px-2 py-1 mx-0.5 bg-muted/50 border-muted">
-                {hazard.category}
-              </Badge>
-              <Badge className={`${getRiskColor(hazard.riskLevel)} text-[10px] px-2 py-1 mx-0.5 bg-muted/50 border-muted`}>
-                {hazard.riskLevel}
-              </Badge>
-              <span className="text-[10px] text-muted-foreground hidden sm:inline ml-1">
-                Risk: {hazard.riskRating}
-              </span>
+
+            {/* Consequence */}
+            <div className="bg-muted/20 border border-border/50 rounded-lg p-3">
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                <span className="font-medium text-foreground">Consequence:</span> {hazard.description}
+              </p>
             </div>
-          </div>
 
-
-          <p className="text-xs text-muted-foreground leading-relaxed mb-3 line-clamp-2">
-            {hazard.description}
-          </p>
-
-          {isExpanded && (
-            <div className="space-y-3 pt-3 border-t border-border/50">
-              <div>
-                <h4 className="font-medium text-xs text-foreground mb-2">Control Measures</h4>
-                <div className="space-y-1">
-                  {hazard.controlMeasures.slice(0, 4).map((control, index) => (
-                    <div key={index} className="flex items-start gap-2 text-xs text-muted-foreground">
-                      <span className="text-primary mt-0.5 text-xs">•</span>
-                      <span className="leading-relaxed">{control}</span>
+            {/* Control Measures Hierarchy */}
+            {isExpanded && (
+              <div className="space-y-3 pt-3 border-t border-border/50">
+                {/* Elimination */}
+                {controlMeasures.elimination && controlMeasures.elimination.length > 0 && (
+                  <div className={`border rounded-lg p-3 ${getControlHierarchyColor('elimination')}`}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Ban className="h-4 w-4" />
+                      <h4 className="font-semibold text-sm">{getControlHierarchyLabel('elimination')}</h4>
                     </div>
-                  ))}
-                  {hazard.controlMeasures.length > 4 && (
-                    <p className="text-xs text-muted-foreground italic">
-                      +{hazard.controlMeasures.length - 4} more controls...
-                    </p>
-                  )}
-                </div>
-              </div>
-              
-              <div>
-                <h4 className="font-medium text-xs text-foreground mb-2">Regulations</h4>
-                <div className="flex flex-wrap gap-1">
-                  {hazard.regulations.map((regulation, index) => (
-                    <Badge key={index} variant="outline" className="text-xs px-1.5 py-0.5">
-                      {regulation}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
+                    <div className="space-y-1.5 ml-6">
+                      {controlMeasures.elimination.map((control, index) => (
+                        <div key={index} className="flex items-start gap-2 text-sm">
+                          <span className="mt-1">•</span>
+                          <span className="leading-relaxed">{control}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-              <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-border/50">
-                <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                  <span>Severity: {hazard.severity}/5</span>
-                  <span>Likelihood: {hazard.likelihood}/5</span>
+                {/* Substitution */}
+                {controlMeasures.substitution && controlMeasures.substitution.length > 0 && (
+                  <div className={`border rounded-lg p-3 ${getControlHierarchyColor('substitution')}`}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Repeat className="h-4 w-4" />
+                      <h4 className="font-semibold text-sm">{getControlHierarchyLabel('substitution')}</h4>
+                    </div>
+                    <div className="space-y-1.5 ml-6">
+                      {controlMeasures.substitution.map((control, index) => (
+                        <div key={index} className="flex items-start gap-2 text-sm">
+                          <span className="mt-1">•</span>
+                          <span className="leading-relaxed">{control}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Engineering */}
+                {controlMeasures.engineering && controlMeasures.engineering.length > 0 && (
+                  <div className={`border rounded-lg p-3 ${getControlHierarchyColor('engineering')}`}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Wrench className="h-4 w-4" />
+                      <h4 className="font-semibold text-sm">{getControlHierarchyLabel('engineering')}</h4>
+                    </div>
+                    <div className="space-y-1.5 ml-6">
+                      {controlMeasures.engineering.map((control, index) => (
+                        <div key={index} className="flex items-start gap-2 text-sm">
+                          <span className="mt-1">•</span>
+                          <span className="leading-relaxed">{control}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Administrative */}
+                {controlMeasures.administrative && controlMeasures.administrative.length > 0 && (
+                  <div className={`border rounded-lg p-3 ${getControlHierarchyColor('administrative')}`}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <ClipboardList className="h-4 w-4" />
+                      <h4 className="font-semibold text-sm">{getControlHierarchyLabel('administrative')}</h4>
+                    </div>
+                    <div className="space-y-1.5 ml-6">
+                      {controlMeasures.administrative.map((control, index) => (
+                        <div key={index} className="flex items-start gap-2 text-sm">
+                          <span className="mt-1">•</span>
+                          <span className="leading-relaxed">{control}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* PPE */}
+                {controlMeasures.ppe && controlMeasures.ppe.length > 0 && (
+                  <div className={`border rounded-lg p-3 ${getControlHierarchyColor('ppe')}`}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <HardHatIcon className="h-4 w-4" />
+                      <h4 className="font-semibold text-sm">{getControlHierarchyLabel('ppe')}</h4>
+                    </div>
+                    <div className="space-y-1.5 ml-6">
+                      {controlMeasures.ppe.map((control, index) => (
+                        <div key={index} className="flex items-start gap-2 text-sm">
+                          <span className="mt-1">•</span>
+                          <span className="leading-relaxed">{control}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Regulations & Additional Info */}
+                <div className="space-y-3 pt-3 border-t border-border/50">
+                  <div>
+                    <h4 className="font-medium text-sm text-foreground mb-2 flex items-center gap-2">
+                      <Shield className="h-4 w-4 text-elec-yellow" />
+                      Relevant Regulations
+                    </h4>
+                    <div className="flex flex-wrap gap-1.5">
+                      {hazard.regulations.map((regulation, index) => (
+                        <Badge key={index} variant="outline" className="text-xs px-2 py-1">
+                          {regulation}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs bg-muted/20 rounded-lg p-3">
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-2">
+                        <span className="text-muted-foreground">Severity:</span>
+                        <div className="flex gap-1">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <div
+                              key={i}
+                              className={`h-2 w-2 rounded-full ${
+                                i < hazard.severity ? 'bg-orange-500' : 'bg-muted'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                        <span className="font-medium">{hazard.severity}/5</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-muted-foreground">Likelihood:</span>
+                        <div className="flex gap-1">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <div
+                              key={i}
+                              className={`h-2 w-2 rounded-full ${
+                                i < hazard.likelihood ? 'bg-blue-500' : 'bg-muted'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                        <span className="font-medium">{hazard.likelihood}/5</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <Button 
-                  variant={addedHazards.has(hazard.id) ? "default" : "outline"}
-                  size="sm" 
-                  className={`h-6 text-xs px-3 py-1.5 transition-all duration-300 hover-scale ${
-                    addedHazards.has(hazard.id) 
-                      ? 'bg-elec-yellow text-elec-dark border-elec-yellow animate-scale-in' 
-                      : 'border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow hover:text-elec-dark hover:border-elec-yellow'
-                  }`}
-                  onClick={() => handleAddToRAMS(hazard)}
-                  disabled={addedHazards.has(hazard.id)}
-                >
-                  {addedHazards.has(hazard.id) ? (
-                    <>
-                      <Check className="h-3 w-3 mr-1 animate-scale-in" />
-                      Added
-                    </>
-                  ) : (
-                    <>
-                      <Plus className="h-3 w-3 mr-1" />
-                      Add to RAMS
-                    </>
-                  )}
-                </Button>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </CardContent>
       </Card>
     );
@@ -427,11 +512,13 @@ const EnhancedHazardDatabase: React.FC = () => {
               className="text-sm px-4 py-2 rounded-lg border border-elec-yellow/30 bg-background hover:border-elec-yellow focus:border-elec-yellow focus:outline-none transition-all duration-200 cursor-pointer"
             >
               <option value="all">All Categories</option>
-              <option value="electrical">Electrical</option>
-              <option value="height">Height</option>
-              <option value="fire">Fire</option>
-              <option value="tools">Tools</option>
-              <option value="environmental">Environmental</option>
+              <option value="electrical">⚡ Electrical</option>
+              <option value="ev-infrastructure">🔌 EV Charging</option>
+              <option value="renewable-energy">🌞 Renewable Energy</option>
+              <option value="healthcare">🏥 Healthcare</option>
+              <option value="industrial">🏭 Industrial</option>
+              <option value="marine">⚓ Marine</option>
+              <option value="height">📏 Working at Height</option>
             </select>
 
             <select
@@ -440,10 +527,24 @@ const EnhancedHazardDatabase: React.FC = () => {
               className="text-sm px-4 py-2 rounded-lg border border-elec-yellow/30 bg-background hover:border-elec-yellow focus:border-elec-yellow focus:outline-none transition-all duration-200 cursor-pointer"
             >
               <option value="all">All Risk Levels</option>
-              <option value="Very High">Very High Risk</option>
-              <option value="High">High Risk</option>
-              <option value="Medium">Medium Risk</option>
-              <option value="Low">Low Risk</option>
+              <option value="Very High">⚠️ Very High Risk</option>
+              <option value="High">🔴 High Risk</option>
+              <option value="Medium">🟡 Medium Risk</option>
+              <option value="Low">🟢 Low Risk</option>
+            </select>
+
+            <select
+              value={selectedWorkType}
+              onChange={(e) => setSelectedWorkType(e.target.value)}
+              className="text-sm px-4 py-2 rounded-lg border border-elec-yellow/30 bg-background hover:border-elec-yellow focus:border-elec-yellow focus:outline-none transition-all duration-200 cursor-pointer"
+            >
+              <option value="all">All Work Types</option>
+              <option value="installation">🔧 Installation</option>
+              <option value="maintenance">🛠️ Maintenance</option>
+              <option value="testing">📋 Testing</option>
+              <option value="commissioning">✅ Commissioning</option>
+              <option value="fault-finding">🔍 Fault Finding</option>
+              <option value="emergency-repair">🚨 Emergency Repair</option>
             </select>
           </div>
 
