@@ -1,5 +1,5 @@
-import { useState, useMemo, useRef } from 'react';
-import { Search, Filter, Printer, Copy, Check, ChevronDown, AlertTriangle, Shield, FileText } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Search, Copy, Check, ChevronDown, AlertTriangle, Shield, FileText, Share2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -9,9 +9,8 @@ import { getRiskLevel } from '@/utils/risk-level-helpers';
 import { HazardStatsDashboard } from './HazardStatsDashboard';
 import { RiskMatrixVisual } from './RiskMatrixVisual';
 import { RegulationQuickReference } from './RegulationQuickReference';
-import { HazardPrintSheet } from './HazardPrintSheet';
 import { useToast } from '@/hooks/use-toast';
-import { useReactToPrint } from 'react-to-print';
+import { MobileGestureHandler } from '@/components/ui/mobile-gesture-handler';
 
 export const EnhancedHazardDatabase = () => {
   const { toast } = useToast();
@@ -23,8 +22,7 @@ export const EnhancedHazardDatabase = () => {
   const [riskScoreFilter, setRiskScoreFilter] = useState<{ min: number; max: number } | null>(null);
   const [expandedHazards, setExpandedHazards] = useState<Set<string>>(new Set());
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const printRef = useRef<HTMLDivElement>(null);
-  const [printHazard, setPrintHazard] = useState<any>(null);
+  const [bookmarkedHazards, setBookmarkedHazards] = useState<Set<string>>(new Set());
 
   // Calculate statistics
   const stats = useMemo(() => {
@@ -146,15 +144,53 @@ export const EnhancedHazardDatabase = () => {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  const handlePrint = useReactToPrint({
-    contentRef: printRef,
-  });
+  const shareHazard = async (hazard: any) => {
+    const riskScore = hazard.likelihood * hazard.severity;
+    const text = `⚠️ ${hazard.hazard}\n\nRisk Score: ${riskScore}/25\n\n${hazard.consequence}\n\nControl Measures Available`;
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: hazard.hazard,
+          text: text,
+        });
+        toast({
+          title: "Shared successfully",
+          description: "Hazard information shared",
+        });
+      } catch (err) {
+        // User cancelled or error
+      }
+    } else {
+      await navigator.clipboard.writeText(text);
+      toast({
+        title: "Copied to clipboard",
+        description: "Hazard information copied",
+      });
+    }
+  };
 
-  const printHazardSheet = (hazard: any) => {
-    setPrintHazard(hazard);
-    setTimeout(() => {
-      handlePrint();
-    }, 100);
+  const toggleBookmark = (hazardId: string) => {
+    setBookmarkedHazards(prev => {
+      const next = new Set(prev);
+      if (next.has(hazardId)) {
+        next.delete(hazardId);
+        toast({
+          title: "Bookmark removed",
+          description: "Hazard removed from bookmarks",
+        });
+      } else {
+        next.add(hazardId);
+        if ('vibrate' in navigator) {
+          navigator.vibrate(50);
+        }
+        toast({
+          title: "Bookmarked",
+          description: "Hazard saved for quick access",
+        });
+      }
+      return next;
+    });
   };
 
   const handleRiskMatrixClick = (minScore: number, maxScore: number) => {
@@ -578,11 +614,11 @@ export const EnhancedHazardDatabase = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => printHazardSheet(hazard)}
+                    onClick={() => shareHazard(hazard)}
                     className="text-xs"
                   >
-                    <Printer className="w-3 h-3 mr-1" />
-                    Print Sheet
+                    <Share2 className="w-3 h-3 mr-1" />
+                    Share
                   </Button>
                   <Button
                     variant="outline"
@@ -626,12 +662,6 @@ export const EnhancedHazardDatabase = () => {
         </div>
       )}
 
-      {/* Hidden Print Component */}
-      <div className="hidden">
-        {printHazard && (
-          <HazardPrintSheet ref={printRef} hazard={printHazard} />
-        )}
-      </div>
     </div>
   );
 };
