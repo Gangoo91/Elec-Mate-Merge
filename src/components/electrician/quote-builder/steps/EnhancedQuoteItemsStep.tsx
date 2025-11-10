@@ -446,10 +446,15 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                               <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Quick Results</h4>
                               {filteredMaterials.slice(0, 5).map(material => {
                                 const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(material.defaultPrice) : material.defaultPrice;
+                                const isSelected = newItem.materialCode === material.id;
                                 return (
                                   <Card 
                                     key={material.id} 
-                                    className="p-3 hover:bg-accent/50 transition-colors cursor-pointer border-l-4 border-l-primary/50"
+                                    className={`p-3 transition-colors cursor-pointer border-l-4 ${
+                                      isSelected 
+                                        ? 'bg-primary/20 border-l-primary shadow-lg ring-2 ring-primary/50' 
+                                        : 'hover:bg-accent/50 border-l-primary/50'
+                                    }`}
                                     onClick={() => handleMaterialSelect(material.id)}
                                   >
                                     <div className="flex justify-between items-start gap-2">
@@ -487,18 +492,24 @@ export const EnhancedQuoteItemsStep = ({ items, onAdd, onUpdate, onRemove, price
                                 const priceMatch = material.price?.match(/£?(\d+\.?\d*)/);
                                 const basePrice = priceMatch ? parseFloat(priceMatch[1]) : 0;
                                 const adjustedPrice = calculateAdjustedPrice ? calculateAdjustedPrice(basePrice) : basePrice;
+                                const ragMaterialCode = `rag-${material.id}`;
+                                const isSelected = newItem.materialCode === ragMaterialCode;
                                 
                                 return (
                                   <Card 
                                     key={`rag-${material.id}-${idx}`} 
-                                    className="p-3 hover:bg-accent/50 transition-colors cursor-pointer"
+                                    className={`p-3 transition-colors cursor-pointer ${
+                                      isSelected 
+                                        ? 'bg-primary/20 border-l-4 border-l-primary shadow-lg ring-2 ring-primary/50' 
+                                        : 'hover:bg-accent/50'
+                                    }`}
                                     onClick={() => {
                                       setNewItem(prev => ({
                                         ...prev,
                                         description: material.name,
                                         unitPrice: adjustedPrice,
                                         unit: "each",
-                                        materialCode: `rag-${material.id}`,
+                                        materialCode: ragMaterialCode,
                                         notes: `Supplier: ${material.supplier} | Stock: ${material.stockStatus}${material.productUrl ? ` | URL: ${material.productUrl}` : ''}`
                                       }));
                                       toast({
