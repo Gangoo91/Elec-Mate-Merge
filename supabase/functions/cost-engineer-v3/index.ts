@@ -417,48 +417,11 @@ ${practicalWorkContext ? `PRACTICAL INSTALLATION METHODS (PRIORITY):\n${practica
 ${regulationsContext ? `REGULATORY REQUIREMENTS:\n${regulationsContext}\n` : ''}
 ${labourTimeContext ? `${labourTimeContext}\n` : ''}
 
-=== AUTOMATIC REGIONAL PRICING ===
-Location: ${region || 'UK General'}
-Detected Region: ${detectedRegion} (${Math.round((regionalMultiplier - 1) * 100)}% ${regionalMultiplier >= 1 ? 'premium' : 'discount'})
-Base Labour Rate: £${COST_ENGINEER_PRICING.ELECTRICIAN_RATE_PER_HOUR}/hr
-Regional Adjusted Rate: £${adjustedLabourRate.toFixed(2)}/hr
-**USE £${adjustedLabourRate.toFixed(2)}/hr for all electrician labour calculations**
-
-=== AUTOMATIC OVERHEAD CALCULATION (UK Industry Averages 2025) ===
-Daily Business Overheads: £${AUTO_OVERHEADS_2025.perJobDay}/day
-Monthly Breakdown:
-- Van (insurance, fuel, maintenance): £${AUTO_OVERHEADS_2025.monthly.van}
-- Tools & equipment: £${AUTO_OVERHEADS_2025.monthly.tools}
-- Insurance (PL + PI): £${AUTO_OVERHEADS_2025.monthly.insurance}
-- Admin (software, phone): £${AUTO_OVERHEADS_2025.monthly.admin}
-- Marketing: £${AUTO_OVERHEADS_2025.monthly.marketing}
-Total Monthly: £${AUTO_OVERHEADS_2025.monthly.total} (£${AUTO_OVERHEADS_2025.perJobDay}/day)
-
-**You MUST include overhead allocation in every response based on job duration**
-
-=== AUTOMATIC COMPLIANCE COSTS ===
-${parsedEntities.jobType === 'rewire' || parsedEntities.jobType === 'board_change' || /rewire|consumer unit|new circuit/.test(query) ? `
-Notifiable Work Detected:
-- Building Control notification: £${AUTO_OVERHEADS_2025.certification.buildingControl} (required for rewires/new CUs)
-- NICEIC notification: £${AUTO_OVERHEADS_2025.certification.niceicPerCircuit} per circuit
-- EICR Certificate: Included in testing time
-**Include these in compliance costs section**
-` : `Standard installation - no Building Control notification required`}
-
-=== MANDATORY RISK & COMPLEXITY ASSESSMENT ===
-Detected Complexity: ${complexityLabel} (${complexityRating}/5)
-${complexityRating >= 3 ? `
-HIGH COMPLEXITY FACTORS DETECTED:
-${/heritage|listed|victorian|edwardian/.test(query) ? '- Heritage property - asbestos risk, careful chasing required\n' : ''}${/asbestos/.test(query) ? '- Asbestos present - survey and safe removal essential\n' : ''}${/occupied|live/.test(query) ? '- Occupied property - dustsheets, daily cleanup, extended timescales\n' : ''}${/restricted access|narrow/.test(query) ? '- Restricted access - slower progress, equipment limitations\n' : ''}
-Recommended Margin: ${complexityRating >= 4 ? '25-30%' : '20-25%'} (vs 15% standard)
-Additional Time Buffer: +${complexityRating * 10}%
-` : 'Standard complexity - 15% margin recommended'}
-
-=== WASTE & CONTINGENCY (MANDATORY) ===
-Cable Waste Allowance: ${WASTE_FACTORS.cable * 100}% (offcuts, damage,測量 errors)
-Materials Contingency: ${WASTE_FACTORS.materials * 100}% (stock availability, spec changes)
-${complexityRating >= 3 ? `Complex Job Buffer: +${WASTE_FACTORS.complexJob * 100}% additional\n` : ''}
-**Add separate line items for waste and contingency in materials breakdown**
+REGIONAL PRICING: ${detectedRegion} rate £${adjustedLabourRate.toFixed(2)}/hr (base £${COST_ENGINEER_PRICING.ELECTRICIAN_RATE_PER_HOUR}/hr)
+OVERHEADS: £${AUTO_OVERHEADS_2025.perJobDay}/day (van, tools, insurance, admin)
+${parsedEntities.jobType === 'rewire' || /rewire|consumer unit/.test(query) ? `COMPLIANCE: Building Control £${AUTO_OVERHEADS_2025.certification.buildingControl}, NICEIC £${AUTO_OVERHEADS_2025.certification.niceicPerCircuit}/circuit` : ''}
+COMPLEXITY: ${complexityLabel} (${complexityRating}/5) - ${complexityRating >= 3 ? `High risk: +${complexityRating >= 4 ? '25%' : '20%'} margin, +${complexityRating * 10}% time` : '15% standard margin'}
+WASTE: Cable ${WASTE_FACTORS.cable * 100}%, Materials ${WASTE_FACTORS.materials * 100}%${complexityRating >= 3 ? `, Complex +${WASTE_FACTORS.complexJob * 100}%` : ''}
 
 LABOUR CALCULATION RULES:
 ${labourTimeResults.length > 0 ? `**PRIORITY: Use labour time standards from PROJECT-AND-COST-ENGINEERS-HANDBOOK above**
@@ -579,7 +542,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
     logger.debug('Calling AI for core cost estimate', { provider: 'OpenAI' });
     logger.info('🤖 Calling OpenAI GPT-5-Mini for core estimate', {
       model: 'gpt-5-mini-2025-08-07',
-      maxTokens: 8000,
+      maxTokens: 12000,
       timeoutMs: 280000, // Extended to 280s for complex multi-circuit designs
       hasTools: true,
       splitMode: 'core-estimate'
@@ -594,7 +557,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
         model: 'gpt-5-mini-2025-08-07',
         systemPrompt,
         userPrompt,
-        maxTokens: 8000, // Reduced from 12000
+        maxTokens: 12000, // Increased for enhanced intelligence features
         timeoutMs: 280000, // Extended to 280s for complex designs
         jsonMode: true,
         tools: [{
@@ -906,7 +869,7 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                 }
               }
             },
-            required: ['response', 'materials', 'summary', 'timescales', 'alternatives', 'orderList', 'complexity', 'compliance', 'siteChecklist', 'valueEngineering', 'upsells', 'conversations', 'pipeline'],
+            required: ['response', 'materials', 'summary', 'timescales', 'alternatives', 'orderList'],
             additionalProperties: false
           }
         }
@@ -932,7 +895,79 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       throw new Error(`AI generation failed: ${aiError instanceof Error ? aiError.message : 'Unknown error'}`);
     }
 
-    // Deterministic fallback if core AI fails
+    // Add graceful degradation for missing intelligence fields
+    if (coreResult && (!coreResult.compliance || !coreResult.complexity)) {
+      logger.info('Intelligence features missing, adding defaults');
+      
+      if (!coreResult.compliance) {
+        coreResult.compliance = {
+          items: [],
+          subtotal: 0
+        };
+        
+        if (parsedEntities.jobType === 'rewire' || parsedEntities.jobType === 'board_change' || /rewire|consumer unit/.test(query)) {
+          coreResult.compliance.items.push({
+            description: 'Building Control notification (rewire/new CU)',
+            total: AUTO_OVERHEADS_2025.certification.buildingControl,
+            required: true,
+            note: 'Required for notifiable work'
+          });
+          coreResult.compliance.subtotal = AUTO_OVERHEADS_2025.certification.buildingControl;
+        }
+      }
+      
+      if (!coreResult.complexity) {
+        coreResult.complexity = {
+          rating: complexityRating,
+          label: complexityLabel,
+          factors: [],
+          recommendedMargin: complexityRating >= 4 ? 25 : complexityRating >= 3 ? 20 : 15,
+          explanation: `${complexityLabel} complexity job requires ${complexityRating >= 3 ? 'higher' : 'standard'} margin.`
+        };
+        
+        if (/heritage|listed|victorian|edwardian/.test(query)) {
+          coreResult.complexity.factors.push('Heritage property - asbestos risk, careful chasing required');
+        }
+        if (/asbestos/.test(query)) {
+          coreResult.complexity.factors.push('Asbestos present - survey and safe removal essential');
+        }
+        if (/occupied|live/.test(query)) {
+          coreResult.complexity.factors.push('Occupied property - dustsheets, daily cleanup required');
+        }
+        if (/restricted access|narrow/.test(query)) {
+          coreResult.complexity.factors.push('Restricted access - slower progress, equipment limitations');
+        }
+      }
+      
+      if (!coreResult.siteChecklist) {
+        coreResult.siteChecklist = {
+          critical: ['Confirm main fuse can be isolated', 'Check access to cable routes'],
+          important: ['Parking arrangements', 'Client availability for access']
+        };
+      }
+      
+      if (!coreResult.valueEngineering || coreResult.valueEngineering.length === 0) {
+        coreResult.valueEngineering = [];
+      }
+      
+      if (!coreResult.upsells) {
+        coreResult.upsells = [];
+      }
+      
+      if (!coreResult.conversations) {
+        coreResult.conversations = {
+          opening: "I've prepared a detailed quote based on current market rates and BS 7671 compliance.",
+          tooExpensive: "The quote reflects current material costs and proper installation time to BS 7671 standards.",
+          discountRequest: "The quote is competitive using trade pricing and realistic labour times."
+        };
+      }
+      
+      if (!coreResult.pipeline) {
+        coreResult.pipeline = [];
+      }
+    }
+
+    // Deterministic fallback if core AI fails completely
     if (!coreResult) {
       logger.info('Building deterministic quick estimate from RAG + heuristics');
       
