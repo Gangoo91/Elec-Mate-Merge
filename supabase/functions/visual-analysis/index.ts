@@ -531,9 +531,10 @@ RESPONSE REQUIREMENTS:
       ? (analysis_settings.fast_mode ? 24000 : 30000)  // 24s fast, 30s full for component ID
       : (analysis_settings.fast_mode ? 12000 : 20000); // 12s fast, 20s full for other modes
     // Component identification needs more tokens due to comprehensive structured response
+    // Gemini 2.5 Flash uses internal reasoning (thoughts) that count against token limit
     const maxTokens = analysis_settings.mode === 'component_identify' 
-      ? (analysis_settings.fast_mode ? 2500 : 4000)  // INCREASED: 2500 fast, 4000 full
-      : (analysis_settings.fast_mode ? 800 : 2000);   // Other modes unchanged
+      ? (analysis_settings.fast_mode ? 2500 : 4000)  // 2500 fast, 4000 full
+      : (analysis_settings.fast_mode ? 2500 : 4000);   // INCREASED: fault_diagnosis needs more tokens for reasoning
 
     // Convert images to Gemini inlineData format (camelCase for REST API)
     const parts: any[] = [{ text: systemPrompt + '\n\n' + userPrompt }];
@@ -615,6 +616,22 @@ RESPONSE REQUIREMENTS:
 
     if (!text) {
       console.error('❌ No text in response:', JSON.stringify(data).substring(0, 500));
+      
+      // Check for MAX_TOKENS finish reason
+      if (candidate?.finishReason === 'MAX_TOKENS') {
+        console.error('❌ Response truncated due to token limit', {
+          finishReason: candidate.finishReason,
+          usageMetadata: data.usageMetadata
+        });
+        return new Response(JSON.stringify({
+          error: 'Response too long',
+          code: 502,
+          message: 'Analysis response was truncated. Please try Quick mode or reduce image complexity.'
+        }), {
+          status: 502,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
       
       // Check for safety blocks
       if (data.promptFeedback?.blockReason || candidate?.finishReason === 'SAFETY') {
