@@ -79,7 +79,7 @@ export const BS7671ReferenceTooltip = ({ reference }: BS7671ReferenceTooltipProp
             <p className="text-xs text-muted-foreground leading-relaxed">{info.description}</p>
           ) : (
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Regulation {reference} - refer to BS 7671:2018+A2:2022 for full details.
+              Regulation {reference} - refer to BS7671:2018+A3:2024 for full details.
             </p>
           )}
           <div className="pt-2 border-t border-border/40">

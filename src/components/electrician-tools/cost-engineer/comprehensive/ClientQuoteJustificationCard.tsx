@@ -88,7 +88,7 @@ I'm a qualified electrician with 18th Edition certification and full NICEIC/NAPI
 What's Included:
 ✓ Quality materials: ${formatCurrency(materialsTotal)}
 ✓ Professional labour: ${formatCurrency(labourTotal)} (${Math.round(labourHours)} hours)
-✓ Full compliance with BS 7671:2018+A2:2022
+✓ Full compliance with BS7671:2018+A3:2024
 ✓ Electrical Installation Certificate
 ✓ £2M public liability insurance
 ✓ 12-month workmanship guarantee
@@ -561,7 +561,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                 <div>
                   <p className="font-medium text-foreground">Legal Compliance:</p>
                   <ul className="space-y-0.5">
-                    <li>• BS 7671:2018+A2:2022</li>
+                    <li>• BS7671:2018+A3:2024</li>
                     <li>• Building Control notification</li>
                     <li>• EIC certification</li>
                   </ul>
@@ -602,7 +602,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
           <Button
             size="sm"
             variant="ghost"
-            onClick={() => copyToClipboard(`Why Choose This Quote:\n\n✅ What You Get:\n\nProfessional Standards:\n• 18th Edition qualified electrician\n• NICEIC/NAPIT registered\n• £2M public liability insurance\n\nQuality Materials:\n• Trade supplier materials (CEF, TLC)\n• Manufacturer warranties\n• BS/EU standard compliance\n\nLegal Compliance:\n• BS 7671:2018+A2:2022 compliant\n• Building Control notification\n• Electrical Installation Certificate\n\nGuarantees:\n• 12-month workmanship guarantee\n• Material manufacturer warranties\n• Insurance-backed work\n\nFair Pricing:\n• Materials at trade + ${materialsMarkup.toFixed(0)}% (industry standard)\n• Labour ${formatCurrency(labourRate)}/hr (UK market rate)\n• ${margin.toFixed(1)}% margin (competitive)\n\n⚠️ Budget Quotes Often Cut:\n❌ Qualified labour\n❌ Quality materials\n❌ Insurance\n❌ Certification\n❌ Testing\n❌ Guarantees\n\nInvestment: ${formatCurrency(recommendedPrice)} for professional work lasting 20+ years.`, "Why choose summary")}
+            onClick={() => copyToClipboard(`Why Choose This Quote:\n\n✅ What You Get:\n\nProfessional Standards:\n• 18th Edition qualified electrician\n• NICEIC/NAPIT registered\n• £2M public liability insurance\n\nQuality Materials:\n• Trade supplier materials (CEF, TLC)\n• Manufacturer warranties\n• BS/EU standard compliance\n\nLegal Compliance:\n• BS7671:2018+A3:2024 compliant\n• Building Control notification\n• Electrical Installation Certificate\n\nGuarantees:\n• 12-month workmanship guarantee\n• Material manufacturer warranties\n• Insurance-backed work\n\nFair Pricing:\n• Materials at trade + ${materialsMarkup.toFixed(0)}% (industry standard)\n• Labour ${formatCurrency(labourRate)}/hr (UK market rate)\n• ${margin.toFixed(1)}% margin (competitive)\n\n⚠️ Budget Quotes Often Cut:\n❌ Qualified labour\n❌ Quality materials\n❌ Insurance\n❌ Certification\n❌ Testing\n❌ Guarantees\n\nInvestment: ${formatCurrency(recommendedPrice)} for professional work lasting 20+ years.`, "Why choose summary")}
             className="w-full"
           >
             <Copy className="h-3 w-3 mr-2" />

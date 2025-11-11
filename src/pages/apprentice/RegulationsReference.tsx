@@ -15,42 +15,42 @@ const RegulationsReference = () => {
       title: "Scope, Object and Fundamental Principles",
       description: "Basic requirements and fundamental principles for electrical installations",
       keyPoints: ["Scope of BS 7671", "Protection against electric shock", "Protection against thermal effects"],
-      reference: "BS 7671:2018+A2:2022"
+      reference: "BS7671:2018+A3:2024"
     },
     {
       section: "Part 2", 
       title: "Definitions",
       description: "Technical definitions used throughout the regulations",
       keyPoints: ["Circuit definitions", "Equipment classifications", "Installation types"],
-      reference: "BS 7671:2018+A2:2022"
+      reference: "BS7671:2018+A3:2024"
     },
     {
       section: "Part 4",
       title: "Protection for Safety", 
       description: "Requirements for protection against electric shock and thermal effects",
       keyPoints: ["Basic protection", "Fault protection", "Additional protection"],
-      reference: "BS 7671:2018+A2:2022"
+      reference: "BS7671:2018+A3:2024"
     },
     {
       section: "Part 5",
       title: "Selection and Erection of Equipment",
       description: "Requirements for selecting and installing electrical equipment",
       keyPoints: ["Cable selection", "Switchgear requirements", "Earthing arrangements"],
-      reference: "BS 7671:2018+A2:2022"
+      reference: "BS7671:2018+A3:2024"
     },
     {
       section: "Part 6",
       title: "Inspection and Testing",
       description: "Requirements for initial verification and periodic inspection",
       keyPoints: ["Visual inspection", "Testing procedures", "Certification requirements"],
-      reference: "BS 7671:2018+A2:2022"
+      reference: "BS7671:2018+A3:2024"
     },
     {
       section: "Part 7",
       title: "Special Installations or Locations",
       description: "Additional requirements for specific locations",
       keyPoints: ["Bathrooms", "Swimming pools", "Agricultural locations", "Caravan parks"],
-      reference: "BS 7671:2018+A2:2022"
+      reference: "BS7671:2018+A3:2024"
     }
   ];
 
@@ -88,7 +88,7 @@ const RegulationsReference = () => {
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">BS 7671 Regulations Quick Reference</h1>
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
-          Quick access to key sections of BS 7671:2018+A2:2022 (18th Edition) wiring regulations
+          Quick access to key sections of BS7671:2018+A3:2024 (18th Edition) wiring regulations
         </p>
         <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
       </div>
@@ -153,7 +153,7 @@ const RegulationsReference = () => {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground text-sm">
-            This is a quick reference guide only. Always consult the full BS 7671:2018+A2:2022 regulations 
+            This is a quick reference guide only. Always consult the full BS7671:2018+A3:2024 regulations 
             and relevant guidance notes for complete requirements. Ensure you have the latest version of the 
             regulations as they are updated periodically.
           </p>

@@ -33,7 +33,7 @@ const DomesticInstallations = () => {
   ];
 
   const keyStandards = [
-    "BS 7671:2018+A2:2022 (18th Edition Wiring Regulations) - fundamental requirements",
+    "BS7671:2018+A3:2024 (18th Edition Wiring Regulations) - fundamental requirements",
     "Part P Building Regulations compliance for domestic electrical installations",
     "RCD protection required for all socket outlets and bathroom circuits",
     "Electrical Installation Certificate (EIC) required for new installations",
@@ -73,7 +73,7 @@ const DomesticInstallations = () => {
             },
             {
               title: "RCD Protection Requirements",
-              content: "All domestic socket outlets must have 30mA RCD protection as per BS 7671:2018+A2:2022. Bathroom circuits require additional protection measures and appropriate IP ratings."
+              content: "All domestic socket outlets must have 30mA RCD protection as per BS7671:2018+A3:2024. Bathroom circuits require additional protection measures and appropriate IP ratings."
             },
             {
               title: "Testing and Certification Mandatory",

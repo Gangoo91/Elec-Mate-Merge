@@ -44,7 +44,7 @@ const CostEngineerInterface = () => {
     setLocation("Manchester, M15 4AA");
     setAdditionalInfo("Limited parking on street. Access to loft required. Working hours: 8am-5pm weekdays only.");
     setProjectType("domestic");
-    setPrompt("Complete rewire of a 3-bedroom semi-detached house built in 1970s. Property requires:\n\n- New 18th Edition consumer unit with RCBO protection\n- Complete rewire including new cables and back boxes\n- 12x LED downlights in kitchen (dimmable)\n- 8x LED downlights in living room\n- New sockets throughout (minimum 2 double sockets per bedroom)\n- Outdoor double socket with RCD protection\n- Garden lighting circuit with 4x spike lights\n- Smoke and heat detector system linked to consumer unit\n- All work to comply with BS 7671:2018+A2:2022\n\nProperty is occupied, dustsheets and daily cleanup required.");
+    setPrompt("Complete rewire of a 3-bedroom semi-detached house built in 1970s. Property requires:\n\n- New 18th Edition consumer unit with RCBO protection\n- Complete rewire including new cables and back boxes\n- 12x LED downlights in kitchen (dimmable)\n- 8x LED downlights in living room\n- New sockets throughout (minimum 2 double sockets per bedroom)\n- Outdoor double socket with RCD protection\n- Garden lighting circuit with 4x spike lights\n- Smoke and heat detector system linked to consumer unit\n- All work to comply with BS7671:2018+A3:2024\n\nProperty is occupied, dustsheets and daily cleanup required.");
     
     toast({
       title: "Test data loaded",
