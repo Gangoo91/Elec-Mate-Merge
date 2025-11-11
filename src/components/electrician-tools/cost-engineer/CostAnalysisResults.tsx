@@ -425,6 +425,61 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
         milestones: [] // Deprecated, kept for backward compatibility
       } : null,
       
+      // 6.5. Client Quote Justification
+      clientJustification: {
+        valueProposition: `Professional Electrical Quote - ${formatCurrency(selectedAmount)}\n\nI'm a qualified electrician with 18th Edition certification and full NICEIC/NAPIT registration. This quote covers ${Math.round(totalLabourHours)} hours of professional work using quality materials from trusted UK suppliers.\n\nWhat's Included:\n✓ Quality materials: ${formatCurrency(materialsSubtotal * (1 + (materialsMarkup / 100)))}\n✓ Professional labour: ${formatCurrency(labourSubtotal)} (${Math.round(totalLabourHours)} hours)\n✓ Full BS 7671:2018+A2:2022 compliance\n✓ Electrical Installation Certificate\n✓ £2M public liability insurance\n✓ 12-month workmanship guarantee\n\nThis is transparent, competitive pricing ensuring safety, compliance, and quality workmanship lasting 20+ years.`,
+        keyNumbers: {
+          materialsNet: round2dp(materialsSubtotal),
+          materialsMarkup: round2dp(materialsMarkup),
+          materialsTotal: round2dp(materialsSubtotal * (1 + (materialsMarkup / 100))),
+          labourHours: round2dp(totalLabourHours),
+          labourRate: round2dp(totalLabourHours > 0 ? labourSubtotal / totalLabourHours : 0),
+          labourTotal: round2dp(labourSubtotal),
+          overheads: round2dp(overheadsTotal),
+          contingency: round2dp(contingencyAmount),
+          breakEven: round2dp(breakEven),
+          recommendedPrice: round2dp(selectedAmount),
+          profit: round2dp(profit),
+          margin: round2dp(margin),
+          region: projectContext?.location || 'other'
+        },
+        objectionResponses: [
+          {
+            objection: "This seems expensive / too high",
+            response: "I understand. Let me break down what's included:",
+            details: `Materials: ${formatCurrency(materialsSubtotal * (1 + (materialsMarkup / 100)))}\n• Net cost ${formatCurrency(materialsSubtotal)} + ${materialsMarkup.toFixed(0)}% markup\n• Industry standard: 15-25%\n\nLabour: ${formatCurrency(labourSubtotal)} (${Math.round(totalLabourHours)} hours)\n• Rate: ${formatCurrency(totalLabourHours > 0 ? labourSubtotal / totalLabourHours : 0)}/hour\n• UK qualified rate: £24-35/hour\n\nBusiness Costs: ${formatCurrency(overheadsTotal)}\n• Van, tools, insurance, certifications\n\nThis reflects professional work lasting 20+ years.`
+          },
+          {
+            objection: "I got a cheaper quote",
+            response: "Lower quotes often cut corners. Questions to ask:",
+            details: "⚠️ Are they:\n• 18th Edition qualified?\n• Fully insured (£2M)?\n• Providing certification?\n• Using quality materials?\n\n✓ Our quote includes all professional standards, warranties, and guarantees.\n\n❌ Budget quotes may:\n• Use unqualified labour\n• Skip testing\n• Add hidden extras\n\nYour safety isn't worth the risk."
+          },
+          {
+            objection: "Can you discount?",
+            response: "This price is already fair:",
+            details: `Break-even: ${formatCurrency(breakEven)}\nQuote: ${formatCurrency(selectedAmount)}\nProfit: ${formatCurrency(profit)} (${margin.toFixed(1)}% margin)\n\nIndustry margins:\n• Budget: 10-15%\n• Professional: 20-30%\n• Specialist: 30-40%\n\nWhat I CAN do:\n• Phase the work\n• Adjust scope\n• Payment terms\n\nWhat I can't do:\n• Work below break-even\n• Cut safety corners`
+          }
+        ],
+        comparisonChecklist: [
+          "□ 18th Edition certified?",
+          "□ NICEIC/NAPIT registered?",
+          "□ £2M public liability insurance?",
+          "□ Materials from trusted suppliers?",
+          "□ Full EIC certification?",
+          "□ Itemized quote breakdown?",
+          "□ 12-month workmanship guarantee?",
+          "□ Transparent pricing (no hidden extras)?"
+        ],
+        whyChoosePoints: [
+          "✓ Qualified, insured electrician",
+          "✓ Quality materials with warranties",
+          "✓ Full compliance & certification",
+          "✓ Professional standards throughout",
+          "✓ Fair, transparent pricing",
+          "✓ 12-month guarantee"
+        ]
+      },
+      
       // 7. Project Execution
       siteChecklist: structuredData?.siteChecklist || null,
       valueEngineering: structuredData?.valueEngineering || [],

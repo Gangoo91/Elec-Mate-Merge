@@ -4,6 +4,7 @@ import KeyActionItems from "./KeyActionItems";
 import ClientQuoteSummary from "./ClientQuoteSummary";
 import PricingOptionsTiers from "./PricingOptionsTiers";
 import CostBreakdownCard from "./CostBreakdownCard";
+import ClientQuoteJustificationCard from "./ClientQuoteJustificationCard";
 import MaterialsTable from "./MaterialsTable";
 import LabourPlanTable from "./LabourPlanTable";
 import JobComplexityCard from "./JobComplexityCard";
@@ -112,6 +113,25 @@ const ComprehensiveResultsView = ({
         region={projectContext?.region || 'other'}
         experienceLevel={projectContext?.experienceLevel || 'qualified'}
         jobDuration={totalLabourHours > 0 ? totalLabourHours / 8 : 0}
+      />
+
+      {/* 5.5. Client Quote Justification */}
+      <ClientQuoteJustificationCard
+        materialsNet={analysis.materialsTotal}
+        materialsMarkup={structuredData?.materials?.markup || 15}
+        materialsTotal={analysis.materialsTotal * (1 + ((structuredData?.materials?.markup || 15) / 100))}
+        labourHours={totalLabourHours}
+        labourRate={totalLabourHours > 0 ? analysis.labourTotal / totalLabourHours : 0}
+        labourTotal={analysis.labourTotal}
+        overheads={profitability?.jobOverheads?.total || 0}
+        contingency={profitability?.contingency?.amount || 0}
+        breakEven={breakEven}
+        recommendedPrice={selectedAmount}
+        profit={profit}
+        margin={margin}
+        region={projectContext?.location}
+        experienceLevel="qualified"
+        jobDescription={structuredData?.response}
       />
 
       {/* 6. Materials Breakdown Table */}
