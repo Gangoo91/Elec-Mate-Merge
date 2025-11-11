@@ -38,13 +38,13 @@ const LabourPlanTable = ({ tasks }: LabourPlanTableProps) => {
                     {task.description}
                     {(task.electricianHours || task.apprenticeHours) && (
                       <div className="text-xs text-muted-foreground">
-                        {task.electricianHours && `Electrician: ${task.electricianHours}h `}
-                        {task.apprenticeHours && `Apprentice: ${task.apprenticeHours}h`}
+                        {task.electricianHours && `Electrician: ${task.electricianHours.toFixed(2)}h `}
+                        {task.apprenticeHours && `Apprentice: ${task.apprenticeHours.toFixed(2)}h`}
                       </div>
                     )}
                   </TableCell>
                   <TableCell className="text-right font-mono">
-                    {task.hours}h
+                    {task.hours.toFixed(2)}h
                   </TableCell>
                   <TableCell className="text-right font-mono">
                     £{task.rate?.toFixed(0)}/hr
