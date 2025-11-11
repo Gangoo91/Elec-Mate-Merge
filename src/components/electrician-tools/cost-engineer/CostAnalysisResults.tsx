@@ -55,6 +55,30 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
     const margin = breakEven > 0 ? ((selectedAmount - breakEven) / selectedAmount) * 100 : 0;
     const profitPerHour = totalLabourHours > 0 ? profit / totalLabourHours : 0;
 
+    // Calculate tier prices (matching PricingOptionsTiers.tsx logic)
+    const sparsePrice = structuredData?.profitabilityAnalysis?.quoteTiers?.minimum?.price || breakEven * 1.2;
+    const normalPrice = structuredData?.profitabilityAnalysis?.quoteTiers?.target?.price || breakEven * 1.3;
+    const busyPrice = structuredData?.profitabilityAnalysis?.quoteTiers?.premium?.price || breakEven * 1.4;
+
+    // Helper function to calculate tier metrics
+    const calculateTierMetrics = (price: number) => {
+      const profit = price - breakEven;
+      const margin = price > 0 ? ((profit / price) * 100) : 0;
+      const profitPerHour = totalLabourHours > 0 ? profit / totalLabourHours : 0;
+      
+      return { 
+        price: Math.max(0, price),
+        margin: Math.max(0, margin),
+        profit: Math.max(0, profit),
+        profitPerHour: Math.max(0, profitPerHour)
+      };
+    };
+
+    // Calculate all three tiers
+    const sparseTier = calculateTierMetrics(sparsePrice);
+    const normalTier = calculateTierMetrics(normalPrice);
+    const busyTier = calculateTierMetrics(busyPrice);
+
     return {
       // 1. Project Context
       projectContext: {
@@ -101,6 +125,41 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
       // 4. Pricing & Profitability
       recommendedQuote: structuredData?.recommendedQuote || null,
       profitabilityAnalysis: structuredData?.profitabilityAnalysis || null,
+      
+      // 4.5 Pricing Options (Calculated Tiers)
+      pricingOptions: {
+        explanation: structuredData?.recommendedQuote?.reasoning || null,
+        tiers: {
+          workSparse: {
+            name: 'Work Sparse',
+            description: 'Low margin pricing for when work is scarce',
+            price: sparseTier.price,
+            margin: sparseTier.margin,
+            profit: sparseTier.profit,
+            profitPerHour: sparseTier.profitPerHour
+          },
+          normal: {
+            name: 'Normal',
+            description: 'Target pricing - recommended',
+            price: normalTier.price,
+            margin: normalTier.margin,
+            profit: normalTier.profit,
+            profitPerHour: normalTier.profitPerHour,
+            recommended: true
+          },
+          busyPeriod: {
+            name: 'Busy Period',
+            description: 'High margin pricing when demand is high',
+            price: busyTier.price,
+            margin: busyTier.margin,
+            profit: busyTier.profit,
+            profitPerHour: busyTier.profitPerHour
+          }
+        },
+        selectedTier: selectedTier,
+        breakEven: breakEven,
+        totalLabourHours: totalLabourHours
+      },
       
       // 5. Calculated Metrics (for easy PDF access)
       calculatedMetrics: {
