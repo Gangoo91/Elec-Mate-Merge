@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -107,13 +108,17 @@ export function BusinessSettingsDialog({ onSettingsChange, currentSettings }: Bu
         <Button 
           variant={hasConfigured ? "outline" : "default"}
           size="lg"
-          className={hasConfigured 
-            ? "border-green-500/30 bg-green-500/10 hover:bg-green-500/20 h-12 sm:h-14 touch-manipulation" 
-            : "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12 sm:h-14 touch-manipulation animate-pulse"
-          }
+          className={cn(
+            "w-full h-12 sm:h-14 touch-manipulation text-base sm:text-lg font-semibold",
+            hasConfigured 
+              ? "border-green-500/30 bg-green-500/10 hover:bg-green-500/20" 
+              : "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 animate-pulse"
+          )}
         >
-          <Settings className="h-5 w-5 mr-2" />
-          {hasConfigured ? "Business Settings ✓" : "Configure Business Settings"}
+          <Settings className="h-5 w-5 mr-2 flex-shrink-0" />
+          <span className="truncate">
+            {hasConfigured ? "Business Settings ✓" : "Configure Business Settings"}
+          </span>
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">

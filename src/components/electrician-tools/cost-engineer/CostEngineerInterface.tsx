@@ -242,15 +242,16 @@ const CostEngineerInterface = () => {
     <div className="mobile-section-spacing">
       {/* Business Settings - Top Priority */}
       <Card className="mobile-card border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-elec-dark/50">
-        <CardHeader className="space-y-2">
-          <CardTitle className="mobile-heading flex items-center gap-2">
-            💰 Business Profitability Settings
+        <CardHeader className="space-y-2 px-4 sm:px-6">
+          <CardTitle className="text-xl sm:text-2xl font-bold flex items-center gap-2 flex-wrap">
+            <span className="text-2xl">💰</span>
+            <span>Business Profitability Settings</span>
           </CardTitle>
-          <CardDescription className="mobile-text">
+          <CardDescription className="text-sm sm:text-base leading-relaxed">
             Configure your overheads and profit targets to get accurate break-even and quote recommendations
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-4 sm:px-6 pb-6">
           <BusinessSettingsDialog 
             onSettingsChange={setBusinessSettings}
             currentSettings={businessSettings}
