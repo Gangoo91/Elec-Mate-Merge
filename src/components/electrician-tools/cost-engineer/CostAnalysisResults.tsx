@@ -325,7 +325,34 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
       siteChecklist: structuredData?.siteChecklist || null,
       valueEngineering: structuredData?.valueEngineering || [],
       
-      // 8. Metadata
+      // 8. Job Notes (User Input)
+      jobNotes: (() => {
+        const projectNameKey = projectContext?.projectName || projectName;
+        if (!projectNameKey) return null;
+        
+        const stored = localStorage.getItem(`job-notes-${projectNameKey}`);
+        if (!stored) return null;
+        
+        try {
+          const notes = JSON.parse(stored);
+          return {
+            siteObservations: notes.siteObservations || '',
+            pipelineNotes: notes.pipelineNotes || '',
+            updatedAt: notes.updatedAt || null
+          };
+        } catch {
+          return null;
+        }
+      })(),
+      
+      // 9. Post-Job Review (Tracking)
+      postJobReview: {
+        estimatedCost: round2dp(analysis.totalCost || 0),
+        estimatedHours: round2dp(totalLabourHours),
+        estimatedProfit: round2dp(profit)
+      },
+      
+      // 10. Metadata
       generatedAt: new Date().toISOString(),
       version: '3.0'
     };
