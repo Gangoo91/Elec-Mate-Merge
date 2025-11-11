@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Settings, Save, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -131,282 +130,232 @@ export function BusinessSettingsDialog({ onSettingsChange, currentSettings }: Bu
         <div className="space-y-6">
           {/* Summary Card */}
           <Card className="border-elec-yellow/30 bg-elec-yellow/5">
-            <CardHeader>
-              <CardTitle className="text-base">Monthly Summary</CardTitle>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg">Monthly Summary</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Total Overheads:</span>
-                <span className="font-semibold">£{totalMonthlyOverheads.toFixed(2)}/month</span>
+            <CardContent className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-muted-foreground">Total Overheads:</span>
+                <span className="text-base font-semibold">£{totalMonthlyOverheads.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}/month</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Per Working Day (22 days):</span>
-                <span className="font-semibold">£{(totalMonthlyOverheads / 22).toFixed(2)}/day</span>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-muted-foreground">Per Working Day (22 days):</span>
+                <span className="text-base font-semibold">£{(totalMonthlyOverheads / 22).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}/day</span>
               </div>
-              <div className="flex justify-between border-t border-border pt-2 mt-2">
-                <span className="text-muted-foreground">Monthly Break-even Target:</span>
-                <span className="font-bold text-elec-yellow">£{monthlyBreakeven.toFixed(2)}</span>
+              <div className="flex justify-between items-center border-t border-elec-yellow/20 pt-3 mt-1">
+                <span className="text-sm font-medium text-muted-foreground">Monthly Break-even Target:</span>
+                <span className="text-lg font-bold text-elec-yellow">£{monthlyBreakeven.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
             </CardContent>
           </Card>
 
           {/* Monthly Overheads */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <h3 className="font-semibold text-lg flex items-center gap-2">
               Monthly Business Overheads
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Van Costs (lease, fuel, insurance)</Label>
-                <div className="flex items-center gap-2">
-                  <span className="text-muted-foreground">£</span>
-                  <Input
-                    type="number"
-                    value={settings.monthlyOverheads.vanCosts}
-                    onChange={(e) => setSettings({
-                      ...settings,
-                      monthlyOverheads: { ...settings.monthlyOverheads, vanCosts: Number(e.target.value) }
-                    })}
-                    className="flex-1"
-                  />
-                </div>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 items-start">
+              <MobileInput
+                label="Van Costs"
+                hint="Lease, fuel, insurance"
+                type="number"
+                inputMode="decimal"
+                unit="£"
+                value={settings.monthlyOverheads.vanCosts.toString()}
+                onChange={(e) => setSettings({
+                  ...settings,
+                  monthlyOverheads: { ...settings.monthlyOverheads, vanCosts: Number(e.target.value) || 0 }
+                })}
+              />
 
-              <div className="space-y-2">
-                <Label>Tool Depreciation/Replacement</Label>
-                <div className="flex items-center gap-2">
-                  <span className="text-muted-foreground">£</span>
-                  <Input
-                    type="number"
-                    value={settings.monthlyOverheads.toolDepreciation}
-                    onChange={(e) => setSettings({
-                      ...settings,
-                      monthlyOverheads: { ...settings.monthlyOverheads, toolDepreciation: Number(e.target.value) }
-                    })}
-                    className="flex-1"
-                  />
-                </div>
-              </div>
+              <MobileInput
+                label="Tool Depreciation"
+                hint="Monthly replacement budget"
+                type="number"
+                inputMode="decimal"
+                unit="£"
+                value={settings.monthlyOverheads.toolDepreciation.toString()}
+                onChange={(e) => setSettings({
+                  ...settings,
+                  monthlyOverheads: { ...settings.monthlyOverheads, toolDepreciation: Number(e.target.value) || 0 }
+                })}
+              />
 
-              <div className="space-y-2">
-                <Label>Business Insurance</Label>
-                <div className="flex items-center gap-2">
-                  <span className="text-muted-foreground">£</span>
-                  <Input
-                    type="number"
-                    value={settings.monthlyOverheads.insurance}
-                    onChange={(e) => setSettings({
-                      ...settings,
-                      monthlyOverheads: { ...settings.monthlyOverheads, insurance: Number(e.target.value) }
-                    })}
-                    className="flex-1"
-                  />
-                </div>
-              </div>
+              <MobileInput
+                label="Business Insurance"
+                hint="Liability & equipment cover"
+                type="number"
+                inputMode="decimal"
+                unit="£"
+                value={settings.monthlyOverheads.insurance.toString()}
+                onChange={(e) => setSettings({
+                  ...settings,
+                  monthlyOverheads: { ...settings.monthlyOverheads, insurance: Number(e.target.value) || 0 }
+                })}
+              />
 
-              <div className="space-y-2">
-                <Label>Office/Admin Costs</Label>
-                <div className="flex items-center gap-2">
-                  <span className="text-muted-foreground">£</span>
-                  <Input
-                    type="number"
-                    value={settings.monthlyOverheads.adminCosts}
-                    onChange={(e) => setSettings({
-                      ...settings,
-                      monthlyOverheads: { ...settings.monthlyOverheads, adminCosts: Number(e.target.value) }
-                    })}
-                    className="flex-1"
-                  />
-                </div>
-              </div>
+              <MobileInput
+                label="Admin Costs"
+                hint="Office, software, phone"
+                type="number"
+                inputMode="decimal"
+                unit="£"
+                value={settings.monthlyOverheads.adminCosts.toString()}
+                onChange={(e) => setSettings({
+                  ...settings,
+                  monthlyOverheads: { ...settings.monthlyOverheads, adminCosts: Number(e.target.value) || 0 }
+                })}
+              />
 
-              <div className="space-y-2">
-                <Label>Marketing/Advertising</Label>
-                <div className="flex items-center gap-2">
-                  <span className="text-muted-foreground">£</span>
-                  <Input
-                    type="number"
-                    value={settings.monthlyOverheads.marketing}
-                    onChange={(e) => setSettings({
-                      ...settings,
-                      monthlyOverheads: { ...settings.monthlyOverheads, marketing: Number(e.target.value) }
-                    })}
-                    className="flex-1"
-                  />
-                </div>
-              </div>
+              <MobileInput
+                label="Marketing"
+                hint="Advertising & promotion"
+                type="number"
+                inputMode="decimal"
+                unit="£"
+                value={settings.monthlyOverheads.marketing.toString()}
+                onChange={(e) => setSettings({
+                  ...settings,
+                  monthlyOverheads: { ...settings.monthlyOverheads, marketing: Number(e.target.value) || 0 }
+                })}
+              />
             </div>
           </div>
 
           {/* Labour Rates */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <h3 className="font-semibold text-lg">Labour Costs & Income</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Qualified Electrician Rate (per hour)</Label>
-                <div className="flex items-center gap-2">
-                  <span className="text-muted-foreground">£</span>
-                  <Input
-                    type="number"
-                    value={settings.labourRates.electrician}
-                    onChange={(e) => setSettings({
-                      ...settings,
-                      labourRates: { ...settings.labourRates, electrician: Number(e.target.value) }
-                    })}
-                    className="flex-1"
-                  />
-                </div>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 items-start">
+              <MobileInput
+                label="Electrician Rate"
+                hint="Qualified rate per hour"
+                type="number"
+                inputMode="decimal"
+                unit="£/hr"
+                value={settings.labourRates.electrician.toString()}
+                onChange={(e) => setSettings({
+                  ...settings,
+                  labourRates: { ...settings.labourRates, electrician: Number(e.target.value) || 0 }
+                })}
+              />
 
-              <div className="space-y-2">
-                <Label>Apprentice Rate (per hour)</Label>
-                <div className="flex items-center gap-2">
-                  <span className="text-muted-foreground">£</span>
-                  <Input
-                    type="number"
-                    value={settings.labourRates.apprentice}
-                    onChange={(e) => setSettings({
-                      ...settings,
-                      labourRates: { ...settings.labourRates, apprentice: Number(e.target.value) }
-                    })}
-                    className="flex-1"
-                  />
-                </div>
-              </div>
+              <MobileInput
+                label="Apprentice Rate"
+                hint="Apprentice rate per hour"
+                type="number"
+                inputMode="decimal"
+                unit="£/hr"
+                value={settings.labourRates.apprentice.toString()}
+                onChange={(e) => setSettings({
+                  ...settings,
+                  labourRates: { ...settings.labourRates, apprentice: Number(e.target.value) || 0 }
+                })}
+              />
 
-              <div className="space-y-2 sm:col-span-2">
-                <Label>Target Personal Income (monthly)</Label>
-                <div className="flex items-center gap-2">
-                  <span className="text-muted-foreground">£</span>
-                  <Input
-                    type="number"
-                    value={settings.labourRates.targetIncome}
-                    onChange={(e) => setSettings({
-                      ...settings,
-                      labourRates: { ...settings.labourRates, targetIncome: Number(e.target.value) }
-                    })}
-                    className="flex-1"
-                  />
-                </div>
-                <p className="text-xs text-muted-foreground">This is what you need to earn after all overheads to pay yourself</p>
+              <div className="sm:col-span-2">
+                <MobileInput
+                  label="Target Personal Income"
+                  hint="What you need to earn monthly after all overheads"
+                  type="number"
+                  inputMode="decimal"
+                  unit="£/mo"
+                  value={settings.labourRates.targetIncome.toString()}
+                  onChange={(e) => setSettings({
+                    ...settings,
+                    labourRates: { ...settings.labourRates, targetIncome: Number(e.target.value) || 0 }
+                  })}
+                />
               </div>
             </div>
           </div>
 
           {/* Profit Targets */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-lg">Profit Margin Targets (%)</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label className="flex items-center gap-2">
-                  Minimum Margin
-                  <span className="text-xs text-yellow-500">🟡</span>
-                </Label>
-                <div className="flex items-center gap-2">
-                  <Input
-                    type="number"
-                    value={settings.profitTargets.minimum}
-                    onChange={(e) => setSettings({
-                      ...settings,
-                      profitTargets: { ...settings.profitTargets, minimum: Number(e.target.value) }
-                    })}
-                    className="flex-1"
-                  />
-                  <span className="text-muted-foreground">%</span>
-                </div>
-              </div>
+          <div className="space-y-3">
+            <h3 className="font-semibold text-lg">Profit Margin Targets</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 items-start">
+              <MobileInput
+                label="Minimum 🟡"
+                hint="Conservative margin"
+                type="number"
+                inputMode="decimal"
+                unit="%"
+                value={settings.profitTargets.minimum.toString()}
+                onChange={(e) => setSettings({
+                  ...settings,
+                  profitTargets: { ...settings.profitTargets, minimum: Number(e.target.value) || 0 }
+                })}
+              />
 
-              <div className="space-y-2">
-                <Label className="flex items-center gap-2">
-                  Target Margin
-                  <span className="text-xs text-green-500">🟢</span>
-                </Label>
-                <div className="flex items-center gap-2">
-                  <Input
-                    type="number"
-                    value={settings.profitTargets.target}
-                    onChange={(e) => setSettings({
-                      ...settings,
-                      profitTargets: { ...settings.profitTargets, target: Number(e.target.value) }
-                    })}
-                    className="flex-1"
-                  />
-                  <span className="text-muted-foreground">%</span>
-                </div>
-              </div>
+              <MobileInput
+                label="Target 🟢"
+                hint="Standard margin"
+                type="number"
+                inputMode="decimal"
+                unit="%"
+                value={settings.profitTargets.target.toString()}
+                onChange={(e) => setSettings({
+                  ...settings,
+                  profitTargets: { ...settings.profitTargets, target: Number(e.target.value) || 0 }
+                })}
+              />
 
-              <div className="space-y-2">
-                <Label className="flex items-center gap-2">
-                  Premium Margin
-                  <span className="text-xs text-purple-500">🟣</span>
-                </Label>
-                <div className="flex items-center gap-2">
-                  <Input
-                    type="number"
-                    value={settings.profitTargets.premium}
-                    onChange={(e) => setSettings({
-                      ...settings,
-                      profitTargets: { ...settings.profitTargets, premium: Number(e.target.value) }
-                    })}
-                    className="flex-1"
-                  />
-                  <span className="text-muted-foreground">%</span>
-                </div>
-              </div>
+              <MobileInput
+                label="Premium 🟣"
+                hint="High-value margin"
+                type="number"
+                inputMode="decimal"
+                unit="%"
+                value={settings.profitTargets.premium.toString()}
+                onChange={(e) => setSettings({
+                  ...settings,
+                  profitTargets: { ...settings.profitTargets, premium: Number(e.target.value) || 0 }
+                })}
+              />
             </div>
           </div>
 
           {/* Job-Specific Costs */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <h3 className="font-semibold text-lg">Average Job Costs</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label>Travel per Job</Label>
-                <div className="flex items-center gap-2">
-                  <span className="text-muted-foreground">£</span>
-                  <Input
-                    type="number"
-                    value={settings.jobCosts.travel}
-                    onChange={(e) => setSettings({
-                      ...settings,
-                      jobCosts: { ...settings.jobCosts, travel: Number(e.target.value) }
-                    })}
-                    className="flex-1"
-                  />
-                </div>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 items-start">
+              <MobileInput
+                label="Travel per Job"
+                hint="Fuel & mileage"
+                type="number"
+                inputMode="decimal"
+                unit="£"
+                value={settings.jobCosts.travel.toString()}
+                onChange={(e) => setSettings({
+                  ...settings,
+                  jobCosts: { ...settings.jobCosts, travel: Number(e.target.value) || 0 }
+                })}
+              />
 
-              <div className="space-y-2">
-                <Label>Permits/Parking</Label>
-                <div className="flex items-center gap-2">
-                  <span className="text-muted-foreground">£</span>
-                  <Input
-                    type="number"
-                    value={settings.jobCosts.permits}
-                    onChange={(e) => setSettings({
-                      ...settings,
-                      jobCosts: { ...settings.jobCosts, permits: Number(e.target.value) }
-                    })}
-                    className="flex-1"
-                  />
-                </div>
-              </div>
+              <MobileInput
+                label="Permits/Parking"
+                hint="Parking & permit costs"
+                type="number"
+                inputMode="decimal"
+                unit="£"
+                value={settings.jobCosts.permits.toString()}
+                onChange={(e) => setSettings({
+                  ...settings,
+                  jobCosts: { ...settings.jobCosts, permits: Number(e.target.value) || 0 }
+                })}
+              />
 
-              <div className="space-y-2">
-                <Label>Waste Disposal</Label>
-                <div className="flex items-center gap-2">
-                  <span className="text-muted-foreground">£</span>
-                  <Input
-                    type="number"
-                    value={settings.jobCosts.waste}
-                    onChange={(e) => setSettings({
-                      ...settings,
-                      jobCosts: { ...settings.jobCosts, waste: Number(e.target.value) }
-                    })}
-                    className="flex-1"
-                  />
-                </div>
-              </div>
+              <MobileInput
+                label="Waste Disposal"
+                hint="Skip hire & disposal"
+                type="number"
+                inputMode="decimal"
+                unit="£"
+                value={settings.jobCosts.waste.toString()}
+                onChange={(e) => setSettings({
+                  ...settings,
+                  jobCosts: { ...settings.jobCosts, waste: Number(e.target.value) || 0 }
+                })}
+              />
             </div>
           </div>
 
@@ -426,11 +375,11 @@ export function BusinessSettingsDialog({ onSettingsChange, currentSettings }: Bu
           </Card>
 
           {/* Actions */}
-          <div className="flex gap-3 pt-4">
-            <Button variant="outline" onClick={() => setOpen(false)} className="flex-1">
+          <div className="flex gap-3 pt-6 sticky bottom-0 bg-background pb-2">
+            <Button variant="outline" onClick={() => setOpen(false)} className="flex-1 h-12 touch-manipulation">
               Cancel
             </Button>
-            <Button onClick={handleSave} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+            <Button onClick={handleSave} className="flex-1 h-12 touch-manipulation bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
               <Save className="h-4 w-4 mr-2" />
               Save Settings
             </Button>
