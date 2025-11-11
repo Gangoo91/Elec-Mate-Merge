@@ -1,7 +1,7 @@
 import { serve, corsHeaders } from '../_shared/deps.ts';
 
 const PDF_MONKEY_API_KEY = Deno.env.get('PDF_MONKEY_API_KEY');
-const COST_ENGINEER_TEMPLATE_ID = '2712CFF0-FA41-4792-AF5E-0FE7ED16B4EE';
+const COST_ENGINEER_TEMPLATE_ID = '112482FE-B6A4-4255-BAC6-468CAFB8D8E3';
 
 serve(async (req) => {
   // Handle CORS preflight requests
