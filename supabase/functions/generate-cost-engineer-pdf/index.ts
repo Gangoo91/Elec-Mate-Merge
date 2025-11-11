@@ -115,6 +115,7 @@ serve(async (req) => {
             documentId: statusData.document.id,
             downloadUrl: statusData.document.download_url,
             previewUrl: statusData.document.preview_url,
+            filename: filename,
             status: 'success'
           }),
           { 

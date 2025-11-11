@@ -504,12 +504,22 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
       if (error) throw error;
       
       if (data.success && data.downloadUrl) {
-        // Open PDF in new tab
-        window.open(data.downloadUrl, '_blank');
+        // Download PDF with custom filename
+        const response = await fetch(data.downloadUrl);
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = data.filename || 'AI Cost Engineer.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
         
         toast({
-          title: "PDF Generated Successfully",
-          description: "Your cost estimate PDF is ready",
+          title: "PDF Downloaded Successfully",
+          description: "Your cost estimate PDF has been downloaded",
         });
       } else {
         throw new Error(data.error || 'PDF generation failed');
