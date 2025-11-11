@@ -109,6 +109,52 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
     const contingencyAmount = round2dp((materialsSubtotal + labourSubtotal) * (contingencyPercentage / 100));
 
     return {
+      // 0. AI Analysis Header
+      aiAnalysisHeader: {
+        jobDescription: structuredData?.response || '',
+        complexity: structuredData?.complexity ? {
+          rating: structuredData.complexity.rating || 0,
+          label: structuredData.complexity.label || 'Unknown',
+          score: round2dp(structuredData.complexity.score || 0)
+        } : null,
+        confidence: (() => {
+          if (!structuredData?.confidence) return null;
+          const materialsLevel = structuredData.confidence.materials?.level || 0;
+          const labourLevel = structuredData.confidence.labour?.level || 0;
+          const avgConfidence = Math.round((materialsLevel + labourLevel) / 2);
+          
+          return {
+            averagePercentage: avgConfidence,
+            materials: {
+              level: materialsLevel,
+              reasoning: structuredData.confidence.materials?.reasoning || ''
+            },
+            labour: {
+              level: labourLevel,
+              reasoning: structuredData.confidence.labour?.reasoning || ''
+            }
+          };
+        })(),
+        riskAssessment: (() => {
+          if (!structuredData?.riskAssessment?.risks) return null;
+          const highRisks = structuredData.riskAssessment.risks.filter((r: any) => 
+            r.severity === 'critical' || r.severity === 'high'
+          );
+          
+          return {
+            highRiskCount: highRisks.length,
+            totalRiskCount: structuredData.riskAssessment.risks.length,
+            level: highRisks.length > 0 ? 'high' : 'low',
+            highRisks: highRisks.map((r: any) => ({
+              title: r.title || r.risk,
+              severity: r.severity,
+              mitigation: r.mitigation || ''
+            }))
+          };
+        })(),
+        recommendedTier: structuredData?.recommendedQuote?.tier?.toUpperCase() || 'NORMAL'
+      },
+      
       // 1. Project Context
       projectContext: {
         projectName: projectContext?.projectName || projectName || 'Electrical Project',
