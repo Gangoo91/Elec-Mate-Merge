@@ -120,7 +120,11 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
       
       // 2. Cost Breakdown Summary
       costBreakdown: {
-        materials: materialsSubtotal,
+        materials: {
+          percentage: materialsMarkup,
+          amount: materialsSubtotal,
+          total: round2dp(materialsSubtotal * (1 + materialsMarkup / 100))
+        },
         materialsMarkup: materialsMarkup,
         labour: labourSubtotal,
         overheads: overheadsTotal,
