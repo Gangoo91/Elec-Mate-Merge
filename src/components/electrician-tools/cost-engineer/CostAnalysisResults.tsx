@@ -42,6 +42,22 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
   };
 
   const buildPdfPayload = () => {
+    // Debug logging: Check what data we have
+    console.log('📦 Building PDF payload from structuredData:', {
+      hasStructuredData: !!structuredData,
+      hasResponse: !!structuredData?.response,
+      hasComplexity: !!structuredData?.complexity,
+      hasConfidence: !!structuredData?.confidence,
+      confidenceFields: structuredData?.confidence ? Object.keys(structuredData.confidence) : [],
+      materialsConfidence: structuredData?.confidence?.materials,
+      labourConfidence: structuredData?.confidence?.labour,
+      hasRiskAssessment: !!structuredData?.riskAssessment,
+      hasMaterials: !!structuredData?.materials,
+      hasLabour: !!structuredData?.labour,
+      hasUpsells: !!structuredData?.upsells,
+      hasProfitability: !!structuredData?.profitabilityAnalysis
+    });
+
     // Helper to round to 2 decimal places
     const round2dp = (value: number) => Math.round((value || 0) * 100) / 100;
 
@@ -108,7 +124,7 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
     const contingencyPercentage = round2dp(structuredData?.confidence?.contingency?.percentage || 5);
     const contingencyAmount = round2dp((materialsSubtotal + labourSubtotal) * (contingencyPercentage / 100));
 
-    return {
+    const payload = {
       // 0. AI Analysis Header
       aiAnalysisHeader: {
         jobDescription: structuredData?.response || '',
@@ -127,11 +143,11 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
             averagePercentage: avgConfidence,
             materials: {
               level: materialsLevel,
-              reasoning: structuredData.confidence.materials?.reasoning || ''
+              reasoning: structuredData.confidence.materials?.reason || ''
             },
             labour: {
               level: labourLevel,
-              reasoning: structuredData.confidence.labour?.reasoning || ''
+              reasoning: structuredData.confidence.labour?.reason || ''
             }
           };
         })(),
@@ -438,6 +454,34 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
       generatedAt: new Date().toISOString(),
       version: '3.0'
     };
+    
+    // Debug logging: Verify payload completeness
+    console.log('📦 Generated PDF payload:', {
+      hasAiAnalysisHeader: !!payload.aiAnalysisHeader,
+      aiAnalysisHeaderFields: payload.aiAnalysisHeader ? Object.keys(payload.aiAnalysisHeader) : [],
+      hasJobDescription: !!payload.aiAnalysisHeader?.jobDescription,
+      jobDescriptionLength: payload.aiAnalysisHeader?.jobDescription?.length || 0,
+      hasComplexity: !!payload.aiAnalysisHeader?.complexity,
+      complexityRating: payload.aiAnalysisHeader?.complexity?.rating,
+      hasConfidence: !!payload.aiAnalysisHeader?.confidence,
+      confidenceAvg: payload.aiAnalysisHeader?.confidence?.averagePercentage,
+      materialsReasoning: payload.aiAnalysisHeader?.confidence?.materials?.reasoning?.substring(0, 50),
+      labourReasoning: payload.aiAnalysisHeader?.confidence?.labour?.reasoning?.substring(0, 50),
+      hasRiskAssessment: !!payload.aiAnalysisHeader?.riskAssessment,
+      keyActionItemsCount: payload.aiAnalysisHeader?.keyActionItems?.length || 0,
+      hasCostBreakdown: !!payload.costBreakdown,
+      hasPricingOptions: !!payload.pricingOptions,
+      hasMaterials: !!(payload.costAnalysis?.materials?.items?.length),
+      materialsCount: payload.costAnalysis?.materials?.items?.length || 0,
+      hasLabour: !!(payload.costAnalysis?.labour?.tasks?.length),
+      labourCount: payload.costAnalysis?.labour?.tasks?.length || 0,
+      hasUpsells: !!(payload.upsells?.length),
+      upsellsCount: payload.upsells?.length || 0,
+      hasPipeline: !!(payload.pipeline?.length),
+      pipelineCount: payload.pipeline?.length || 0
+    });
+    
+    return payload;
   };
 
   const handleExportPDF = async () => {
