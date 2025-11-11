@@ -221,7 +221,8 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
         materials: {
           percentage: materialsMarkup,
           amount: round2dp(materialsSubtotal * (materialsMarkup / 100)),
-          material: materialsSubtotal
+          material: materialsSubtotal,
+          total: round2dp(materialsSubtotal + (materialsSubtotal * (materialsMarkup / 100)))
         },
         labour: labourSubtotal,
         overheads: overheadsTotal,
@@ -411,12 +412,17 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
       })),
       conversations: structuredData?.conversations || null,
       paymentTerms: structuredData?.paymentTerms ? {
-        ...structuredData.paymentTerms,
-        milestones: (structuredData.paymentTerms.milestones || []).map((milestone: any) => ({
-          ...milestone,
+        depositPercent: round2dp(structuredData.paymentTerms.depositPercent || 0),
+        depositAmount: round2dp(structuredData.paymentTerms.depositAmount || 0),
+        balanceAmount: round2dp(structuredData.paymentTerms.balanceAmount || 0),
+        paymentMilestones: (structuredData.paymentTerms.paymentMilestones || []).map((milestone: any) => ({
+          stage: milestone.stage || '',
           percentage: round2dp(milestone.percentage || 0),
-          amount: round2dp(milestone.amount || 0)
-        }))
+          amount: round2dp(milestone.amount || 0),
+          trigger: milestone.trigger || ''
+        })),
+        terms: structuredData.paymentTerms.terms || '',
+        milestones: [] // Deprecated, kept for backward compatibility
       } : null,
       
       // 7. Project Execution
