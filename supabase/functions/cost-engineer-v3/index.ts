@@ -459,6 +459,17 @@ serve(async (req) => {
       loadType: parsedEntities.loadType
     });
 
+    // Decompose job into material queries for multi-query RAG
+    const materialQueries = decomposeJobIntoMaterialQueries(
+      parsedEntities.jobType || query,
+      parsedEntities,
+      query
+    );
+    logger.debug('Material queries decomposed', { 
+      queryCount: materialQueries.length,
+      queries: materialQueries 
+    });
+
     // Step 2: Initialize Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -536,7 +547,6 @@ serve(async (req) => {
     
     logger.info('RAG search complete with Cost Engineer priorities (MULTI-QUERY)', {
       materialQueries: materialQueries.length,
-      totalMaterialResults: allMaterials.length,
       uniquePricingItems: finalPricingResults.length,
       pricingCategories: [...new Set(finalPricingResults.map(m => m.category))].join(', '),
       practicalWorkGuides: ragResults?.practicalWorkDocs?.length || 0,
