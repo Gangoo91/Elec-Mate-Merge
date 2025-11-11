@@ -31,7 +31,6 @@ import KnowledgeUploader from "@/pages/Admin/KnowledgeUploader";
 import LearningReview from "@/pages/admin/LearningReview";
 import CircuitDesigner from "@/pages/electrician-tools/CircuitDesigner";
 import EnrichmentMonitor from "@/pages/Admin/EnrichmentMonitor";
-import TrueRateCalculatorPage from "@/pages/electrician-tools/TrueRateCalculatorPage";
 
 const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
   const location = useLocation();
@@ -81,7 +80,6 @@ const AppRouter = () => {
         <Route path="electrician-tools" element={<Navigate to="/electrician" replace />} />
         <Route path="electrician-tools/*" element={<ElectricianRoutes />} />
         <Route path="electrician/circuit-designer" element={<CircuitDesigner />} />
-        <Route path="electrician/true-rate-calculator" element={<TrueRateCalculatorPage />} />
         <Route path="install-planner/results/:conversationId" element={<ConsultationResults />} />
         
         {/* Legacy Materials Routes -> Redirect to canonical electrician paths */}
