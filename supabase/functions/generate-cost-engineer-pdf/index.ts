@@ -40,9 +40,10 @@ serve(async (req) => {
     
     console.log('[COST-PDF] Full payload (first 500 chars):', JSON.stringify(payload).substring(0, 500));
 
-    // Generate unique filename
-    const uniqueId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    const filename = `AI Cost Engineer - ${uniqueId}.pdf`;
+    // Generate unique filename with project name
+    const projectName = payload.projectContext?.projectName || 'Job';
+    const uniqueId = crypto.randomUUID().split('-')[0].toUpperCase();
+    const filename = `AI Cost Engineer - ${projectName} - ${uniqueId}.pdf`;
     
     console.log('[COST-PDF] Generated filename:', filename);
 
