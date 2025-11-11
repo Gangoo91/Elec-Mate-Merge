@@ -126,11 +126,11 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
               AI Cost Analysis In Progress
             </CardTitle>
             
-            <p className="text-sm sm:text-base text-muted-foreground font-medium">
+            <p className="text-sm sm:text-base text-white font-medium">
               ⏱️ Typically takes: {estimatedTime}
             </p>
             
-            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+            <p className="text-xs sm:text-sm text-white leading-relaxed">
               AI is searching 45,000+ pricing items and generating detailed cost breakdown...
             </p>
             
@@ -147,7 +147,7 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
 
           <div className="space-y-4 mt-6 px-2">
             <div className="flex justify-between items-baseline gap-4">
-              <span className="text-sm sm:text-base text-muted-foreground font-medium">
+              <span className="text-sm sm:text-base text-white font-medium">
                 Overall Progress
               </span>
               <span className="text-3xl sm:text-4xl font-bold text-elec-yellow tabular-nums">
@@ -159,8 +159,8 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
             
             <div className="flex flex-col xs:flex-row xs:justify-between xs:items-center gap-2 xs:gap-4">
               <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-muted-foreground shrink-0" />
-                <span className="text-xs sm:text-sm text-muted-foreground font-medium tabular-nums">
+                <Clock className="h-4 w-4 text-white shrink-0" />
+                <span className="text-xs sm:text-sm text-white font-medium tabular-nums">
                   Elapsed: {formatTime(elapsedTime)}
                 </span>
               </div>
@@ -169,13 +169,13 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
                   Still processing...
                 </span>
               ) : (
-                <span className="text-xs sm:text-sm text-muted-foreground font-medium tabular-nums">
+                <span className="text-xs sm:text-sm text-white font-medium tabular-nums">
                   ~{formatTime(Math.max(0, totalDuration - elapsedTime))} remaining
                 </span>
               )}
             </div>
             
-            <p className="text-xs text-muted-foreground/60 text-center leading-relaxed">
+            <p className="text-xs text-white/80 text-center leading-relaxed">
               ⏱️ Progress estimate based on typical request duration
             </p>
           </div>
@@ -226,7 +226,7 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
                         </div>
                       ) : (
                         <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-elec-grey/50 flex items-center justify-center">
-                          <Icon className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground" />
+                          <Icon className="h-7 w-7 sm:h-8 sm:w-8 text-white/60" />
                         </div>
                       )}
                     </div>
@@ -237,7 +237,7 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
                       <h3 className={`text-base sm:text-lg font-bold ${
                         isActive ? 'text-elec-yellow' : 
                         isComplete ? 'text-green-500' : 
-                        'text-muted-foreground'
+                        'text-white/60'
                       }`}>
                         {stage.title}
                       </h3>
@@ -260,7 +260,7 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
 
                       {/* Description - Full width, better spacing */}
                       {isActive && (
-                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed pt-1">
+                        <p className="text-sm sm:text-base text-white leading-relaxed pt-1">
                           {stage.substeps[currentSubstep]}
                         </p>
                       )}
