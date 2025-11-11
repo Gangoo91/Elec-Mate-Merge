@@ -61,27 +61,27 @@ const KeyActionItems = ({ structuredData }: KeyActionItemsProps) => {
   };
 
   return (
-    <Card className="border-elec-yellow/20">
-      <CardHeader>
-        <CardTitle className="text-lg flex items-center gap-2">
+    <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
+      <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
+        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
           <CheckSquare className="h-5 w-5 text-elec-yellow" />
           Key Action Items
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6 space-y-3">
         {actions.map((action, idx) => {
           const Icon = action.icon;
           return (
             <div 
               key={idx}
-              className={`p-3 rounded-lg border ${getPriorityColor(action.priority)}`}
+              className={`p-4 sm:p-3 rounded-lg border ${getPriorityColor(action.priority)}`}
             >
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0 mt-0.5">
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="flex-1">
-                  <span className="text-sm font-medium leading-relaxed">{action.text}</span>
+                  <span className="text-base sm:text-sm font-medium text-white leading-relaxed">{action.text}</span>
                 </div>
               </div>
             </div>

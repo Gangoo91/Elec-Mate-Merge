@@ -62,32 +62,32 @@ const PostJobReviewCard = ({
   };
 
   return (
-    <Card className="border-elec-yellow/20">
-      <CardHeader>
-        <CardTitle className="text-lg flex items-center gap-2">
+    <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
+      <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
+        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
           <ClipboardCheck className="h-5 w-5 text-elec-yellow" />
           Post-Job Review
         </CardTitle>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-base sm:text-sm text-white/80">
           Track actual vs estimate to improve future quotes
         </p>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6 space-y-4">
         {/* Win/Loss */}
         <div className="space-y-2">
-          <Label className="text-sm font-medium">Job Outcome</Label>
+          <Label className="text-base sm:text-sm font-medium text-white">Job Outcome</Label>
           <RadioGroup value={winLoss} onValueChange={(v: any) => setWinLoss(v)}>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="won" id="won" />
-              <Label htmlFor="won" className="cursor-pointer">Won - Job completed</Label>
+            <div className="flex items-center space-x-2 py-1">
+              <RadioGroupItem value="won" id="won" className="h-5 w-5 sm:h-4 sm:w-4" />
+              <Label htmlFor="won" className="cursor-pointer text-base sm:text-sm text-white">Won - Job completed</Label>
             </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="lost" id="lost" />
-              <Label htmlFor="lost" className="cursor-pointer">Lost - Client chose competitor</Label>
+            <div className="flex items-center space-x-2 py-1">
+              <RadioGroupItem value="lost" id="lost" className="h-5 w-5 sm:h-4 sm:w-4" />
+              <Label htmlFor="lost" className="cursor-pointer text-base sm:text-sm text-white">Lost - Client chose competitor</Label>
             </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="pending" id="pending" />
-              <Label htmlFor="pending" className="cursor-pointer">Pending - Awaiting decision</Label>
+            <div className="flex items-center space-x-2 py-1">
+              <RadioGroupItem value="pending" id="pending" className="h-5 w-5 sm:h-4 sm:w-4" />
+              <Label htmlFor="pending" className="cursor-pointer text-base sm:text-sm text-white">Pending - Awaiting decision</Label>
             </div>
           </RadioGroup>
         </div>
@@ -97,7 +97,7 @@ const PostJobReviewCard = ({
             {/* Actual vs Estimate */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="actual-cost" className="text-sm">Actual Cost (excl. VAT)</Label>
+                <Label htmlFor="actual-cost" className="text-base sm:text-sm text-white">Actual Cost (excl. VAT)</Label>
                 <Input
                   id="actual-cost"
                   type="number"
@@ -116,7 +116,7 @@ const PostJobReviewCard = ({
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="actual-hours" className="text-sm">Actual Hours</Label>
+                <Label htmlFor="actual-hours" className="text-base sm:text-sm text-white">Actual Hours</Label>
                 <Input
                   id="actual-hours"
                   type="number"
@@ -137,17 +137,17 @@ const PostJobReviewCard = ({
 
             {/* Profit Comparison */}
             {actualProfit > 0 && (
-              <div className="p-3 rounded-lg bg-background/50 border border-border/30">
+              <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm text-muted-foreground">Actual Profit</span>
-                  <span className={`text-lg font-bold ${
+                  <span className="text-base sm:text-sm text-white/80">Actual Profit</span>
+                  <span className={`text-xl sm:text-lg font-bold ${
                     actualProfit >= estimatedProfit ? 'text-green-500' : 'text-red-500'
                   }`}>
                     £{actualProfit.toFixed(0)}
                   </span>
                 </div>
                 {profitVariance !== null && (
-                  <div className={`text-xs ${
+                  <div className={`text-sm ${
                     profitVariance >= 0 ? 'text-green-500' : 'text-red-500'
                   }`}>
                     {profitVariance >= 0 ? '+' : ''}{profitVariance.toFixed(1)}% vs estimate (£{estimatedProfit.toFixed(0)})
@@ -160,7 +160,7 @@ const PostJobReviewCard = ({
 
         {/* Review Notes */}
         <div className="space-y-2">
-          <Label htmlFor="review-notes" className="text-sm font-medium">
+          <Label htmlFor="review-notes" className="text-base sm:text-sm font-medium text-white">
             Review Notes
           </Label>
           <Textarea

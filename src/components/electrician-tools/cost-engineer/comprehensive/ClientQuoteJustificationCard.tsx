@@ -96,27 +96,27 @@ What's Included:
 This is transparent, competitive pricing that covers all costs while ensuring safety, compliance, and quality workmanship that will last 20+ years.`;
 
   return (
-    <Card className="mobile-card-spacing">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 mobile-text-lg sm:text-xl">
-          <MessageSquare className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400" />
+    <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
+      <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
+        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
+          <MessageSquare className="h-5 w-5 text-blue-400" />
           How to Present & Defend This Quote
         </CardTitle>
-        <CardDescription className="mobile-text-sm">
+        <CardDescription className="text-base sm:text-sm text-white/80">
           Ready-to-use responses for client conversations and pricing objections
         </CardDescription>
       </CardHeader>
       
-      <CardContent className="space-y-4">
+      <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6 space-y-4">
         {/* Value Proposition Header */}
         <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
           <div className="flex items-start justify-between gap-3 mb-3">
             <div>
-              <h3 className="font-semibold text-base flex items-center gap-2">
+              <h3 className="font-semibold text-base text-white flex items-center gap-2">
                 <TrendingUp className="h-4 w-4 text-blue-400" />
                 30-Second Value Proposition
               </h3>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-white/80 mt-1">
                 Your elevator pitch for this quote
               </p>
             </div>
@@ -129,14 +129,14 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
               <Copy className="h-3 w-3" />
             </Button>
           </div>
-          <pre className="text-sm whitespace-pre-wrap font-sans text-foreground leading-relaxed">
+          <pre className="text-base sm:text-sm whitespace-pre-wrap font-sans text-white leading-relaxed">
             {valueProposition}
           </pre>
         </div>
 
         {/* Common Objections */}
         <div className="space-y-3">
-          <h3 className="font-semibold text-base flex items-center gap-2">
+          <h3 className="font-semibold text-base text-white flex items-center gap-2">
             <Shield className="h-4 w-4 text-amber-400" />
             Common Objections & Evidence-Based Responses
           </h3>
@@ -144,40 +144,40 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
           {/* Objection 1: Too Expensive */}
           <Collapsible open={expandedSections.has('objection1')} onOpenChange={() => toggleSection('objection1')}>
             <div className="border border-border rounded-lg">
-              <CollapsibleTrigger className="w-full p-3 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
+              <CollapsibleTrigger className="w-full p-4 sm:p-3 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
                 <div className="flex items-center gap-2 text-left">
                   <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
-                  <span className="font-medium text-sm">"This seems expensive / too high"</span>
+                  <span className="font-medium text-base sm:text-sm text-white">"This seems expensive / too high"</span>
                 </div>
                 <ChevronDown className={`h-4 w-4 transition-transform shrink-0 ${expandedSections.has('objection1') ? 'rotate-180' : ''}`} />
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
                   <div className="space-y-2">
-                    <h4 className="font-medium text-sm flex items-center gap-2">
+                    <h4 className="font-medium text-base sm:text-sm text-white flex items-center gap-2">
                       <MessageSquare className="h-3 w-3 text-blue-400" />
                       Your Response:
                     </h4>
-                    <div className="bg-accent/30 p-3 rounded text-sm space-y-2">
+                    <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-white space-y-2">
                       <p>"I understand it might seem high at first glance. Let me break down exactly what's included:"</p>
                       
-                      <div className="pl-3 space-y-1 text-xs">
+                      <div className="pl-3 space-y-1 text-sm">
                         <p><strong>Materials: {formatCurrency(materialsTotal)}</strong></p>
-                        <p className="text-muted-foreground">
+                        <p className="text-white/80">
                           • Trade supplier materials at net cost {formatCurrency(materialsNet)}<br/>
                           • Plus {materialsMarkup.toFixed(0)}% markup ({formatCurrency(markupAmount)}) to cover waste, collection time, warranty support<br/>
                           • Industry standard markup: 15-25% (we're at {materialsMarkup.toFixed(0)}%)
                         </p>
                         
                         <p className="pt-2"><strong>Labour: {formatCurrency(labourTotal)} ({Math.round(labourHours)} hours)</strong></p>
-                        <p className="text-muted-foreground">
+                        <p className="text-white/80">
                           • Qualified electrician rate: {formatCurrency(labourRate)}/hour<br/>
                           • UK market rate for qualified: £{marketRate.min}-{marketRate.max}/hour (we're competitive)<br/>
                           • {region} regional adjustment: {regionalMultiplier}x
                         </p>
                         
                         <p className="pt-2"><strong>Business Costs: {formatCurrency(overheads)}</strong></p>
-                        <p className="text-muted-foreground">
+                        <p className="text-white/80">
                           • Van, tools, insurance, certifications<br/>
                           • Every electrician must cover these costs<br/>
                           • Allocated fairly: {formatCurrency(dailyOverheadRate)}/day × {jobDays} days
@@ -204,21 +204,21 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
           {/* Objection 2: Cheaper Quote */}
           <Collapsible open={expandedSections.has('objection2')} onOpenChange={() => toggleSection('objection2')}>
             <div className="border border-border rounded-lg">
-              <CollapsibleTrigger className="w-full p-3 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
+              <CollapsibleTrigger className="w-full p-4 sm:p-3 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
                 <div className="flex items-center gap-2 text-left">
                   <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
-                  <span className="font-medium text-sm">"I got a cheaper quote from someone else"</span>
+                  <span className="font-medium text-base sm:text-sm text-white">"I got a cheaper quote from someone else"</span>
                 </div>
                 <ChevronDown className={`h-4 w-4 transition-transform shrink-0 ${expandedSections.has('objection2') ? 'rotate-180' : ''}`} />
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
-                  <div className="bg-accent/30 p-3 rounded text-sm space-y-3">
+                  <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-white space-y-3">
                     <p>"That's a valid concern. Lower quotes often cut corners in these areas:"</p>
                     
                     <div>
                       <p className="font-medium text-amber-400 mb-1">⚠️ Questions to ask the cheaper quote:</p>
-                      <ul className="text-xs space-y-1 pl-4 text-muted-foreground">
+                      <ul className="text-sm space-y-1 pl-4 text-white/80">
                         <li>• Are they 18th Edition qualified and registered?</li>
                         <li>• Do they have £2M public liability insurance?</li>
                         <li>• Will they provide BS 7671 certification?</li>
@@ -230,7 +230,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     
                     <div>
                       <p className="font-medium text-green-400 mb-1">✓ Our quote includes:</p>
-                      <ul className="text-xs space-y-1 pl-4">
+                      <ul className="text-sm space-y-1 pl-4 text-white">
                         <li>• Qualified, insured electrician</li>
                         <li>• Quality materials with warranties</li>
                         <li>• Full compliance and certification</li>
@@ -241,7 +241,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     
                     <div>
                       <p className="font-medium text-destructive mb-1">❌ Lower quotes may:</p>
-                      <ul className="text-xs space-y-1 pl-4 text-muted-foreground">
+                      <ul className="text-sm space-y-1 pl-4 text-white/80">
                         <li>• Use unqualified labour</li>
                         <li>• Source cheap materials</li>
                         <li>• Skip proper testing</li>
@@ -269,16 +269,16 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
           {/* Objection 3: Discount Request */}
           <Collapsible open={expandedSections.has('objection3')} onOpenChange={() => toggleSection('objection3')}>
             <div className="border border-border rounded-lg">
-              <CollapsibleTrigger className="w-full p-3 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
+              <CollapsibleTrigger className="w-full p-4 sm:p-3 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
                 <div className="flex items-center gap-2 text-left">
                   <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
-                  <span className="font-medium text-sm">"Can you do it for less / Give me a discount?"</span>
+                  <span className="font-medium text-base sm:text-sm text-white">"Can you do it for less / Give me a discount?"</span>
                 </div>
                 <ChevronDown className={`h-4 w-4 transition-transform shrink-0 ${expandedSections.has('objection3') ? 'rotate-180' : ''}`} />
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
-                  <div className="bg-accent/30 p-3 rounded text-sm space-y-3">
+                  <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-white space-y-3">
                     <p>"I appreciate you asking, but let me explain why this price is already fair:"</p>
                     
                     <div className="bg-destructive/10 border border-destructive/20 p-2 rounded">

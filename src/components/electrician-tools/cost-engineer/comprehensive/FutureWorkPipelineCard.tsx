@@ -19,10 +19,10 @@ const FutureWorkPipelineCard = ({ pipeline }: FutureWorkPipelineCardProps) => {
   };
 
   return (
-    <Card className="border-elec-yellow/20">
-      <CardHeader>
+    <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
+      <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-lg flex items-center gap-2">
+          <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
             <Target className="h-5 w-5 text-elec-yellow" />
             Future Work Pipeline
           </CardTitle>
@@ -31,14 +31,14 @@ const FutureWorkPipelineCard = ({ pipeline }: FutureWorkPipelineCardProps) => {
           </Badge>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6">
         <div className="space-y-3">
           {pipeline.map((item, idx) => (
-            <div key={idx} className="p-3 rounded-lg bg-background/30 border border-border/30">
+            <div key={idx} className="p-4 sm:p-3 rounded-lg bg-background/30 border border-border/30">
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div className="flex-1">
-                  <div className="font-medium">{item.opportunity}</div>
-                  <div className="text-sm text-muted-foreground mt-1">
+                  <div className="font-medium text-white text-base sm:text-sm">{item.opportunity}</div>
+                  <div className="text-base sm:text-sm text-white/80 mt-1">
                     {item.description}
                   </div>
                 </div>
@@ -47,7 +47,7 @@ const FutureWorkPipelineCard = ({ pipeline }: FutureWorkPipelineCardProps) => {
                 </Badge>
               </div>
               
-              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+              <div className="flex items-center gap-4 text-sm text-white/80">
                 <div className="flex items-center gap-1">
                   <Calendar className="h-3 w-3" />
                   <span>{item.timing}</span>

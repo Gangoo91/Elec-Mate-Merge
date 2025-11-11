@@ -28,14 +28,14 @@ const RiskAssessmentTable = ({ risks }: RiskAssessmentTableProps) => {
   };
 
   return (
-    <Card className="border-elec-yellow/20">
-      <CardHeader>
-        <CardTitle className="text-lg flex items-center gap-2">
+    <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
+      <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
+        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
           <AlertTriangle className="h-5 w-5 text-elec-yellow" />
           Risk Assessment
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
@@ -52,9 +52,9 @@ const RiskAssessmentTable = ({ risks }: RiskAssessmentTableProps) => {
                   <TableCell className="text-center text-xl">
                     {getRiskDot(risk.severity)}
                   </TableCell>
-                  <TableCell className="font-medium">
-                    {risk.risk}
-                    <div className="text-xs text-muted-foreground mt-1">
+                  <TableCell className="font-medium text-white">
+                    <span className="text-base sm:text-sm">{risk.risk}</span>
+                    <div className="text-sm text-white/80 mt-1">
                       {risk.likelihood} likelihood
                       {risk.contingency && risk.contingency > 0 && (
                         <span> • +£{risk.contingency} if occurs</span>
@@ -62,11 +62,11 @@ const RiskAssessmentTable = ({ risks }: RiskAssessmentTableProps) => {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <span className={`px-2 py-1 rounded text-xs ${getCategoryBadge(risk.category)}`}>
+                    <span className={`px-2 py-1 rounded text-sm sm:text-xs ${getCategoryBadge(risk.category)}`}>
                       {risk.category}
                     </span>
                   </TableCell>
-                  <TableCell className="text-sm text-muted-foreground">
+                  <TableCell className="text-base sm:text-sm text-white/80">
                     {risk.mitigation}
                   </TableCell>
                 </TableRow>

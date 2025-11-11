@@ -36,17 +36,17 @@ const JobNotesCard = ({ projectName }: JobNotesCardProps) => {
   };
 
   return (
-    <Card className="border-elec-yellow/20">
-      <CardHeader>
-        <CardTitle className="text-lg flex items-center gap-2">
+    <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
+      <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
+        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
           <FileText className="h-5 w-5 text-elec-yellow" />
           Job Notes
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6 space-y-4">
         {/* Site Observations */}
         <div className="space-y-2">
-          <Label htmlFor="site-observations" className="text-sm font-medium">
+          <Label htmlFor="site-observations" className="text-base sm:text-sm font-medium text-white">
             Site Observations
           </Label>
           <Textarea
@@ -62,7 +62,7 @@ const JobNotesCard = ({ projectName }: JobNotesCardProps) => {
 
         {/* Pipeline Discussions */}
         <div className="space-y-2">
-          <Label htmlFor="pipeline-notes" className="text-sm font-medium">
+          <Label htmlFor="pipeline-notes" className="text-base sm:text-sm font-medium text-white">
             Future Work Discussions
           </Label>
           <Textarea
@@ -76,7 +76,7 @@ const JobNotesCard = ({ projectName }: JobNotesCardProps) => {
           />
         </div>
 
-        <p className="text-xs text-muted-foreground">
+        <p className="text-sm text-white/70">
           💡 Notes are saved automatically to this device
         </p>
       </CardContent>
