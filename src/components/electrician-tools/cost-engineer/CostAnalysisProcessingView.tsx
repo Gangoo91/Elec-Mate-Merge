@@ -112,9 +112,9 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
   };
 
   return (
-    <div className="mobile-safe-area min-h-[600px] flex items-center justify-center p-3 sm:p-4 animate-fade-in">
+    <div className="mobile-safe-area min-h-[600px] flex items-center justify-center p-4 sm:p-6 animate-fade-in">
       <Card className="w-full max-w-2xl border-2 border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/50 shadow-xl">
-        <CardHeader className="text-center space-y-4 pb-6">
+        <CardHeader className="text-center space-y-5 pb-6 px-4 sm:px-6">
           <div className="flex justify-center mb-4">
             <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-elec-yellow/20 to-green-500/20 flex items-center justify-center">
               <Calculator className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
@@ -126,63 +126,65 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
               AI Cost Analysis In Progress
             </CardTitle>
             
-            <p className="mobile-text text-muted-foreground font-medium">
+            <p className="text-sm sm:text-base text-muted-foreground font-medium">
               ⏱️ Typically takes: {estimatedTime}
             </p>
             
-            <p className="mobile-small-text text-muted-foreground leading-relaxed">
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
               AI is searching 45,000+ pricing items and generating detailed cost breakdown...
             </p>
             
-            <p className="mobile-text text-elec-yellow font-semibold">
+            <p className="text-base sm:text-lg text-elec-yellow font-semibold">
               This typically takes 2-3 minutes for accurate results
             </p>
             
             {progressMessage && (
-              <p className="mobile-text text-elec-yellow font-medium mt-3 animate-fade-in">
+              <p className="text-sm sm:text-base text-elec-yellow font-medium mt-3 animate-fade-in">
                 {progressMessage}
               </p>
             )}
           </div>
 
-          <div className="space-y-3 mobile-card-spacing">
-            <div className="flex justify-between items-baseline">
-              <span className="mobile-text text-muted-foreground font-medium">Overall Progress</span>
-              <span className="text-2xl sm:text-3xl font-bold text-elec-yellow tabular-nums">
+          <div className="space-y-4 mt-6 px-2">
+            <div className="flex justify-between items-baseline gap-4">
+              <span className="text-sm sm:text-base text-muted-foreground font-medium">
+                Overall Progress
+              </span>
+              <span className="text-3xl sm:text-4xl font-bold text-elec-yellow tabular-nums">
                 {Math.round(progress)}%
               </span>
             </div>
             
-            <Progress value={progress} className="h-4 sm:h-3" />
+            <Progress value={progress} className="h-3 sm:h-2.5" />
             
-            <div className="flex justify-between items-center gap-2">
+            <div className="flex flex-col xs:flex-row xs:justify-between xs:items-center gap-2 xs:gap-4">
               <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-muted-foreground" />
-                <span className="mobile-small-text text-muted-foreground font-medium tabular-nums">
+                <Clock className="h-4 w-4 text-muted-foreground shrink-0" />
+                <span className="text-xs sm:text-sm text-muted-foreground font-medium tabular-nums">
                   Elapsed: {formatTime(elapsedTime)}
                 </span>
               </div>
               {isOverdue ? (
-                <span className="mobile-small-text text-orange-400 font-medium">
+                <span className="text-xs sm:text-sm text-orange-400 font-medium">
                   Still processing...
                 </span>
               ) : (
-                <span className="mobile-small-text text-muted-foreground font-medium tabular-nums">
+                <span className="text-xs sm:text-sm text-muted-foreground font-medium tabular-nums">
                   ~{formatTime(Math.max(0, totalDuration - elapsedTime))} remaining
                 </span>
               )}
             </div>
             
-            <p className="mobile-small-text text-muted-foreground/60 text-center">
+            <p className="text-xs text-muted-foreground/60 text-center leading-relaxed">
               ⏱️ Progress estimate based on typical request duration
             </p>
           </div>
 
           {elapsedTime > 120 && (
-            <div className="mt-4 p-4 bg-orange-500/10 border-2 border-orange-500/30 rounded-xl shadow-sm">
+            <div className="mt-6 mx-2 p-4 bg-orange-500/10 border-2 border-orange-500/30 rounded-xl">
               <div className="flex items-start gap-3">
                 <Clock className="h-5 w-5 text-orange-400 shrink-0 mt-0.5" />
-                <p className="mobile-small-text text-orange-400 leading-relaxed">
+                <p className="text-xs sm:text-sm text-orange-400 leading-relaxed">
                   Still processing... Generating alternative quotes and order lists takes time for accuracy.
                 </p>
               </div>
@@ -190,7 +192,7 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
           )}
         </CardHeader>
 
-        <CardContent className="space-y-6 pb-8">
+        <CardContent className="space-y-6 pb-8 px-4 sm:px-6">
           {/* Timeline */}
           <div className="space-y-3 sm:space-y-4">
             {ANALYSIS_STAGES.map((stage, idx) => {
@@ -203,32 +205,32 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
                 <div
                   key={stage.id}
                   className={`
-                    flex gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl transition-all duration-300
-                    ${isActive ? 'bg-elec-yellow/10 border-2 border-elec-yellow/40 shadow-lg shadow-elec-yellow/5 scale-[1.01] sm:scale-[1.02]' : ''}
+                    flex gap-4 p-4 rounded-xl transition-all duration-300
+                    ${isActive ? 'bg-elec-yellow/10 border-2 border-elec-yellow/40 shadow-lg' : ''}
                     ${isComplete ? 'bg-green-500/5 border-2 border-green-500/30' : ''}
                     ${isPending ? 'bg-elec-dark/30 border border-elec-yellow/10 opacity-60' : ''}
                   `}
                 >
                   <div className="shrink-0">
                     {isComplete ? (
-                      <div className="w-12 h-12 sm:w-10 sm:h-10 rounded-full bg-green-500/20 flex items-center justify-center">
-                        <CheckCircle2 className="h-7 w-7 sm:h-6 sm:w-6 text-green-500" />
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-500/20 flex items-center justify-center">
+                        <CheckCircle2 className="h-6 w-6 sm:h-7 sm:w-7 text-green-500" />
                       </div>
                     ) : isActive ? (
-                      <div className="w-12 h-12 sm:w-10 sm:h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center relative">
-                        <Icon className="h-7 w-7 sm:h-6 sm:w-6 text-elec-yellow" />
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-elec-yellow/20 flex items-center justify-center relative">
+                        <Icon className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
                         <div className="absolute inset-0 rounded-full bg-elec-yellow/20 animate-ping" />
                       </div>
                     ) : (
-                      <div className="w-12 h-12 sm:w-10 sm:h-10 rounded-full bg-elec-grey/50 flex items-center justify-center">
-                        <Icon className="h-7 w-7 sm:h-6 sm:w-6 text-muted-foreground" />
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-elec-grey/50 flex items-center justify-center">
+                        <Icon className="h-6 w-6 sm:h-7 sm:w-7 text-muted-foreground" />
                       </div>
                     )}
                   </div>
 
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2 mb-2">
-                      <h3 className={`mobile-text font-bold ${
+                  <div className="flex-1 min-w-0 space-y-2">
+                    <div className="flex items-start gap-3 flex-wrap">
+                      <h3 className={`text-base sm:text-lg font-bold flex-1 min-w-0 ${
                         isActive ? 'text-elec-yellow' : 
                         isComplete ? 'text-green-500' : 
                         'text-muted-foreground'
@@ -236,25 +238,26 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
                         {stage.title}
                       </h3>
                       {isComplete && (
-                        <span className="mobile-small-text text-green-500 font-semibold shrink-0">
+                        <span className="text-xs sm:text-sm text-green-500 font-semibold shrink-0 px-2 py-1 rounded-md bg-green-500/20 whitespace-nowrap">
                           Complete ✓
                         </span>
                       )}
                       {isActive && (
-                        <span className="mobile-small-text text-elec-yellow font-semibold shrink-0 flex items-center gap-1">
-                          <Loader2 className="h-3 w-3 animate-spin" />
-                          In Progress...
+                        <span className="text-xs sm:text-sm text-elec-yellow font-semibold shrink-0 flex items-center gap-1.5 px-2 py-1 rounded-md bg-elec-yellow/20 whitespace-nowrap">
+                          <Loader2 className="h-3 w-3 sm:h-3.5 sm:w-3.5 animate-spin" />
+                          <span className="hidden xs:inline">In Progress...</span>
+                          <span className="xs:hidden">Active</span>
                         </span>
                       )}
                     </div>
 
                     {isActive && (
-                      <p className="mobile-small-text text-muted-foreground leading-relaxed animate-fade-in">
+                      <p className="text-sm text-muted-foreground leading-relaxed animate-fade-in pr-2">
                         {stage.substeps[currentSubstep]}
                       </p>
                     )}
                     {isComplete && (
-                      <p className="mobile-small-text text-green-500/70">
+                      <p className="text-xs sm:text-sm text-green-500/70">
                         Analysis complete
                       </p>
                     )}
