@@ -42,7 +42,21 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
   };
 
   const buildPdfPayload = () => {
+    // Calculate derived metrics (matching ComprehensiveResultsView.tsx)
+    const totalLabourHours = structuredData?.labour?.tasks?.reduce(
+      (sum: number, t: any) => sum + (t.hours || 0), 0
+    ) || 0;
+    
+    const breakEven = structuredData?.profitabilityAnalysis?.breakEvenPoint || analysis.subtotal;
+    const selectedTier = structuredData?.recommendedQuote?.tier || 'normal';
+    const selectedAmount = structuredData?.recommendedQuote?.amount || analysis.totalCost;
+    
+    const profit = selectedAmount - breakEven;
+    const margin = breakEven > 0 ? ((selectedAmount - breakEven) / selectedAmount) * 100 : 0;
+    const profitPerHour = totalLabourHours > 0 ? profit / totalLabourHours : 0;
+
     return {
+      // 1. Project Context
       projectContext: {
         projectName: projectContext?.projectName || projectName || 'Electrical Project',
         clientInfo: projectContext?.clientInfo || '',
@@ -50,13 +64,16 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
         additionalInfo: projectContext?.additionalInfo || '',
         projectType: projectContext?.projectType || 'domestic'
       },
-      costAnalysis: structuredData || {
-        response: analysis.rawText,
-        materials: {
+      
+      // 2. Core Cost Analysis (enhanced with all V3 data)
+      costAnalysis: {
+        response: structuredData?.response || analysis.rawText,
+        materials: structuredData?.materials || {
           items: analysis.materials,
-          subtotal: analysis.materialsTotal
+          subtotal: analysis.materialsTotal,
+          markup: 0
         },
-        labour: {
+        labour: structuredData?.labour || {
           tasks: [{
             description: analysis.labour.description,
             hours: analysis.labour.hours,
@@ -65,12 +82,52 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
           }],
           subtotal: analysis.labourTotal
         },
-        summary: {
+        summary: structuredData?.summary || {
           subtotal: analysis.subtotal,
           vat: analysis.vatAmount,
           grandTotal: analysis.totalCost
-        }
-      }
+        },
+        timescales: structuredData?.timescales || null,
+        alternatives: structuredData?.alternatives || null,
+        orderList: structuredData?.orderList || null,
+        compliance: structuredData?.compliance || null
+      },
+      
+      // 3. Job Assessment
+      complexity: structuredData?.complexity || null,
+      confidence: structuredData?.confidence || null,
+      riskAssessment: structuredData?.riskAssessment || null,
+      
+      // 4. Pricing & Profitability
+      recommendedQuote: structuredData?.recommendedQuote || null,
+      profitabilityAnalysis: structuredData?.profitabilityAnalysis || null,
+      
+      // 5. Calculated Metrics (for easy PDF access)
+      calculatedMetrics: {
+        totalLabourHours,
+        breakEven,
+        selectedTier,
+        selectedAmount,
+        profit,
+        margin,
+        profitPerHour,
+        vatAmount: analysis.vatAmount,
+        totalIncVat: analysis.totalCost
+      },
+      
+      // 6. Client-facing Elements
+      upsells: structuredData?.upsells || [],
+      pipeline: structuredData?.pipeline || [],
+      conversations: structuredData?.conversations || null,
+      paymentTerms: structuredData?.paymentTerms || null,
+      
+      // 7. Project Execution
+      siteChecklist: structuredData?.siteChecklist || null,
+      valueEngineering: structuredData?.valueEngineering || [],
+      
+      // 8. Metadata
+      generatedAt: new Date().toISOString(),
+      version: '3.0'
     };
   };
 
