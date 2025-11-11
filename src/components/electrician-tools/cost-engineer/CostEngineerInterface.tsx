@@ -2,9 +2,10 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Calculator, Lightbulb, Sparkles } from "lucide-react";
+import { Calculator, Lightbulb, Sparkles, AlertTriangle } from "lucide-react";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { MobileButton } from "@/components/ui/mobile-button";
+import { Link } from "react-router-dom";
 
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -240,6 +241,32 @@ const CostEngineerInterface = () => {
 
   return (
     <div className="mobile-section-spacing">
+      {/* True Rate Calculator CTA */}
+      <Card className="mobile-card border-orange-500/30 bg-gradient-to-br from-orange-500/20 via-red-500/10 to-elec-dark">
+        <CardHeader className="space-y-2 px-4 sm:px-6">
+          <CardTitle className="text-xl sm:text-2xl font-bold flex items-center gap-2 flex-wrap">
+            <AlertTriangle className="text-2xl text-orange-400" />
+            <span>Stop Underselling Yourself</span>
+          </CardTitle>
+          <CardDescription className="text-sm sm:text-base leading-relaxed text-white/90">
+            Think £45/hr sounds good? Find out why you're probably earning less than minimum wage after costs.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="px-4 sm:px-6 pb-6">
+          <MobileButton
+            variant="outline"
+            size="lg"
+            className="w-full border-orange-400/50 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 font-semibold"
+            asChild
+          >
+            <Link to="/electrician/true-rate-calculator">
+              <Calculator className="h-5 w-5 mr-2" />
+              Calculate Your TRUE Hourly Rate
+            </Link>
+          </MobileButton>
+        </CardContent>
+      </Card>
+
       {/* Business Settings - Top Priority */}
       <Card className="mobile-card border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-elec-dark/50">
         <CardHeader className="space-y-2 px-4 sm:px-6">
