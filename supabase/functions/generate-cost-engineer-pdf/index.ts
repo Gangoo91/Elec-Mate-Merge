@@ -24,160 +24,140 @@ serve(async (req) => {
       );
     }
 
-    // Parse request body (comprehensive structure)
+    // Parse request body
     const data = await req.json();
-    const aiHeader = data.aiAnalysisHeader || {};
     const projectContext = data.projectContext || {};
-    const costBreakdown = data.costBreakdown || {};
     const costAnalysis = data.costAnalysis || {};
-    const pricingOptions = data.pricingOptions || {};
-    const calculatedMetrics = data.calculatedMetrics || {};
-    const upsells = data.upsells || [];
-    const pipeline = data.pipeline || [];
-    const paymentTerms = data.paymentTerms || {};
-    const complexity = data.complexity || aiHeader.complexity || {};
-    const confidence = data.confidence || aiHeader.confidence || {};
-    const riskAssessment = data.riskAssessment || aiHeader.riskAssessment || {};
     
-    console.log('[COST-PDF] Received comprehensive payload:', {
-      hasAiAnalysisHeader: !!aiHeader,
-      hasCostBreakdown: !!costBreakdown,
-      hasPricingOptions: !!pricingOptions,
+    console.log('[COST-PDF] Received complete cost analysis data:', {
+      projectName: projectContext.projectName,
       materialsCount: costAnalysis.materials?.items?.length || 0,
       labourTasksCount: costAnalysis.labour?.tasks?.length || 0,
-      upsellsCount: upsells.length,
-      pipelineCount: pipeline.length
+      hasTimescales: !!costAnalysis.timescales,
+      hasProfitability: !!costAnalysis.profitabilityAnalysis,
+      hasPdfEnrichment: !!costAnalysis.pdfEnrichment,
+      hasAiEnhancement: !!costAnalysis.aiEnhancement
     });
+
+    // ==== TIER 3: COMPREHENSIVE PDF PAYLOAD MAPPING ====
+    const prof = costAnalysis.profitabilityAnalysis || {};
+    const enrich = costAnalysis.pdfEnrichment || {};
+    const ai = costAnalysis.aiEnhancement || {};
     
     // Calculate pipeline totals
-    const pipeline12mo = pipeline.reduce((sum: number, opp: any) => {
+    const pipeline12mo = (ai.pipeline || []).reduce((sum: number, opp: any) => {
       const timing = opp.timing?.toLowerCase() || '';
-      return sum + (timing.includes('6-12') || timing.includes('months') ? (opp.estimatedValue || 0) : 0);
+      return sum + (timing.includes('6-12') || timing.includes('months') ? (opp.estimated_value || 0) : 0);
     }, 0);
     
-    const pipeline24mo = pipeline.reduce((sum: number, opp: any) => sum + (opp.estimatedValue || 0), 0);
+    const pipeline24mo = (ai.pipeline || []).reduce((sum: number, opp: any) => sum + (opp.estimated_value || 0), 0);
 
-    // Get selected pricing tier
-    const selectedTier = pricingOptions.selectedTier || 'normal';
-    const selectedPricingData = pricingOptions.tiers?.[selectedTier] || pricingOptions.tiers?.normal || {};
+    // Map risk factors with dots
+    const riskFactorsWithDots = (ai.risk?.factors || []).map((factor: any) => ({
+      ...factor,
+      dots: factor.risk_level === 'high' ? '●●●○○' : factor.risk_level === 'medium' ? '●●○○○' : '●○○○○'
+    }));
 
     const payload = {
       // Project Context
       projectContext: {
         projectName: projectContext.projectName || 'Electrical Job',
         clientInfo: projectContext.clientInfo || 'Client',
-        location: projectContext.location || '',
-        date: new Date().toLocaleDateString('en-GB')
+        date: enrich.dates?.displayDate || new Date().toLocaleDateString('en-GB')
       },
       
-      // AI Analysis Header
-      job_description: aiHeader.jobDescription || costAnalysis.response || 'Electrical Installation',
-      complexity_rating: complexity.label || 'Medium',
-      complexity_dots: '●'.repeat(complexity.rating || 3) + '○'.repeat(5 - (complexity.rating || 3)),
-      confidence_percent: confidence.averagePercentage || 75,
-      materials_confidence: confidence.materials?.level || 80,
-      labour_confidence: confidence.labour?.level || 75,
-      materials_confidence_reason: confidence.materials?.reasoning || '',
-      labour_confidence_reason: confidence.labour?.reasoning || '',
-      risk_level: riskAssessment.level || 'Medium',
-      risk_high_count: riskAssessment.highRiskCount || 0,
-      risk_total_count: riskAssessment.totalRiskCount || 0,
-      recommended_tier: aiHeader.recommendedTier || 'NORMAL',
+      // AI Hero Section
+      job_description: data.query || projectContext.projectName || 'Electrical Installation',
+      complexity_rating: ai.complexity?.label || 'Medium',
+      complexity_dots: '●'.repeat(ai.complexity?.rating || 3) + '○'.repeat(5 - (ai.complexity?.rating || 3)),
+      confidence_percent: ai.confidence?.overall || 75,
+      risk_level: ai.risk?.overallLevel || 'Medium',
+      recommended_price: prof.quotingGuidance?.target?.total || 0,
+      recommended_tier: 'Target',
+      ai_reasoning: ai.reasoning || 'Price based on materials and labour analysis',
+      action_1: ai.actions?.[0] || 'Confirm site details',
+      action_2: ai.actions?.[1] || 'Order materials',
+      action_3: ai.actions?.[2] || 'Schedule installation',
       
-      // Key Action Items
-      action_items: aiHeader.keyActionItems || [],
-      action_1: aiHeader.keyActionItems?.[0]?.text || 'Review materials list',
-      action_2: aiHeader.keyActionItems?.[1]?.text || 'Confirm schedule with client',
-      action_3: aiHeader.keyActionItems?.[2]?.text || 'Prepare site access',
+      // Quote Hero
+      selected_price: prof.quotingGuidance?.target?.subtotal || 0,
+      selected_price_inc_vat: prof.quotingGuidance?.target?.total || 0,
+      selected_tier_name: 'Normal',
+      date_sent: new Date().toLocaleDateString('en-GB'),
+      break_even: prof.breakEven?.subtotal || 0,
+      selected_margin: prof.quotingGuidance?.target?.margin || 0,
+      selected_profit: prof.quotingGuidance?.target?.profit || 0,
+      profit_per_hour: enrich.profitPerHour?.target || 0,
       
-      // Pricing (from pricingOptions and calculatedMetrics)
-      selected_price: selectedPricingData.price || calculatedMetrics.selectedAmount || 0,
-      selected_tier_name: selectedTier === 'workSparse' ? 'Work Sparse' : 
-                          selectedTier === 'busyPeriod' ? 'Busy Period' : 'Normal',
-      break_even: pricingOptions.breakEven || calculatedMetrics.breakEven || 0,
-      selected_margin: selectedPricingData.margin || calculatedMetrics.margin || 0,
-      selected_profit: selectedPricingData.profit || calculatedMetrics.profit || 0,
-      profit_per_hour: selectedPricingData.profitPerHour || calculatedMetrics.profitPerHour || 0,
+      // Pricing Cards
+      price_sparse: prof.quotingGuidance?.minimum?.subtotal || 0,
+      margin_sparse: prof.quotingGuidance?.minimum?.margin || 0,
+      profit_sparse: prof.quotingGuidance?.minimum?.profit || 0,
+      profit_hour_sparse: enrich.profitPerHour?.minimum || 0,
+      selection_reason: prof.quotingGuidance?.target?.explanation || 'Balanced pricing strategy',
       
-      // Pricing Tiers
-      price_sparse: pricingOptions.tiers?.workSparse?.price || pricingOptions.rawTierPrices?.sparse || 0,
-      margin_sparse: pricingOptions.tiers?.workSparse?.margin || 0,
-      profit_sparse: pricingOptions.tiers?.workSparse?.profit || 0,
-      profit_hour_sparse: pricingOptions.tiers?.workSparse?.profitPerHour || 0,
+      price_normal: prof.quotingGuidance?.target?.subtotal || 0,
+      margin_normal: prof.quotingGuidance?.target?.margin || 0,
+      profit_normal: prof.quotingGuidance?.target?.profit || 0,
+      profit_hour_normal: enrich.profitPerHour?.target || 0,
       
-      price_normal: pricingOptions.tiers?.normal?.price || pricingOptions.rawTierPrices?.normal || 0,
-      margin_normal: pricingOptions.tiers?.normal?.margin || 0,
-      profit_normal: pricingOptions.tiers?.normal?.profit || 0,
-      profit_hour_normal: pricingOptions.tiers?.normal?.profitPerHour || 0,
-      
-      price_busy: pricingOptions.tiers?.busyPeriod?.price || pricingOptions.rawTierPrices?.busy || 0,
-      margin_busy: pricingOptions.tiers?.busyPeriod?.margin || 0,
-      profit_busy: pricingOptions.tiers?.busyPeriod?.profit || 0,
-      profit_hour_busy: pricingOptions.tiers?.busyPeriod?.profitPerHour || 0,
+      price_busy: prof.quotingGuidance?.premium?.subtotal || 0,
+      margin_busy: prof.quotingGuidance?.premium?.margin || 0,
+      profit_busy: prof.quotingGuidance?.premium?.profit || 0,
+      profit_hour_busy: enrich.profitPerHour?.premium || 0,
       
       // Cost Breakdown
-      materials_net: costBreakdown.materials?.material || 0,
-      materials_markup_percent: costBreakdown.materials?.percentage || 15,
-      materials_markup_amount: costBreakdown.materials?.amount || 0,
-      materials_total: costBreakdown.materials?.total || 0,
-      labour_total: costBreakdown.labour || 0,
-      labour_hours: calculatedMetrics.totalLabourHours || pricingOptions.totalLabourHours || 0,
-      overhead: costBreakdown.overheads || 0,
-      contingency_percent: costBreakdown.contingency?.percentage || 10,
-      contingency_amount: costBreakdown.contingency?.amount || 0,
-      subtotal: costBreakdown.subtotal || 0,
+      materials_net: enrich.materialsNet || 0,
+      markup_percent: enrich.markupPercent || 15,
+      materials_markup: enrich.materialsMarkup || 0,
+      labour_hours: enrich.labourHours || 0,
+      labour_rate: enrich.labourRate || 45,
+      labour_total: costAnalysis.summary?.labourSubtotal || 0,
+      overhead: prof.jobOverheads?.total || 0,
+      contingency_percent: enrich.contingency?.percent || 10,
+      contingency: enrich.contingency?.amount || 0,
       
-      // Complexity Details
-      complexity_explanation: complexity.explanation || '',
-      complexity_factors: complexity.factors || [],
+      // Complexity & Risk
+      complexity_explanation: ai.complexity?.explanation || '',
+      complexity_factors: ai.complexity?.factors || [],
+      risk_factors: riskFactorsWithDots,
       
-      // Risk Details
-      risk_factors: riskAssessment.risks || [],
-      high_risks: aiHeader.riskAssessment?.highRisks || [],
+      // Confidence
+      materials_confidence: ai.confidence?.materials || 80,
+      labour_confidence: ai.confidence?.labour || 75,
+      contingency_confidence: ai.confidence?.contingency || 70,
+      confidence_recommendation: ai.confidence?.recommendation || 'Estimate based on standard rates',
       
       // Upsells & Pipeline
-      upsell_opportunities: upsells,
-      future_opportunities: pipeline,
+      upsell_opportunities: ai.upsells || [],
+      future_opportunities: ai.pipeline || [],
+      property_age: ai.propertyContext?.age || 'Unknown',
+      installation_age: ai.propertyContext?.installationAge || 'Unknown',
       pipeline_total_12mo: pipeline12mo,
       pipeline_total_24mo: pipeline24mo,
       
       // Conversations
-      conversation_opening: data.conversations?.opening || 'Here is your detailed quote for the electrical work.',
-      conversation_high: data.conversations?.tooExpensive || 'This price reflects current material costs and proper installation standards.',
-      conversation_discount: data.conversations?.discountRequest || 'The quote is competitive for the quality of work provided.',
+      conversation_opening: ai.conversations?.opening || 'Here is your detailed quote for the electrical work.',
+      conversation_high: ai.conversations?.tooExpensive || 'This price reflects current material costs and proper installation standards.',
+      conversation_discount: ai.conversations?.discountRequest || 'The quote is competitive for the quality of work provided.',
       
       // Site Checklist
-      critical_checks: data.siteChecklist?.critical || [],
-      important_checks: data.siteChecklist?.important || [],
+      critical_checks: ai.siteChecklist?.critical || [],
+      important_checks: ai.siteChecklist?.important || [],
       
-      // Payment Terms
-      deposit_percent: paymentTerms.depositPercent || 30,
-      deposit_amount: paymentTerms.depositAmount || 0,
-      balance_amount: paymentTerms.balanceAmount || 0,
-      payment_milestones: paymentTerms.paymentMilestones || [],
-      payment_terms: paymentTerms.terms || 'Net 14 days',
+      // Payment Terms (defaults)
+      deposit_percent: 30,
+      deposit_amount: ((prof.quotingGuidance?.target?.total || 0) * 0.30).toFixed(2),
+      balance_amount: ((prof.quotingGuidance?.target?.total || 0) * 0.70).toFixed(2),
+      balance_terms: 'Due within 7 days of completion',
+      payment_method: 'Bank transfer or cash',
+      late_fee: '£25 + 2% per month after 14 days',
       
-      // Material & Labour Tables (pass through for loops in template)
-      materials_items: costAnalysis.materials?.items || [],
-      labour_tasks: costAnalysis.labour?.tasks || [],
-      materials_subtotal: costAnalysis.materials?.subtotal || 0,
-      materials_vat: costAnalysis.materials?.vat || 0,
-      materials_total_with_vat: costAnalysis.materials?.total || 0,
-      labour_subtotal: costAnalysis.labour?.subtotal || 0,
-      labour_vat: costAnalysis.labour?.vat || 0,
-      labour_total_with_vat: costAnalysis.labour?.total || 0,
-      
-      // Summary
-      grand_total_ex_vat: costAnalysis.summary?.subtotal || 0,
-      grand_total_vat: costAnalysis.summary?.vat || 0,
-      grand_total_inc_vat: costAnalysis.summary?.grandTotal || 0,
-      
-      // Value Engineering
-      value_engineering: data.valueEngineering || [],
-      
-      // Metadata
-      generated_at: data.generatedAt || new Date().toISOString(),
-      version: data.version || '3.0'
+      // Direct pass-through for tables
+      costAnalysis: {
+        materials: costAnalysis.materials || { items: [], subtotal: 0 },
+        labour: costAnalysis.labour || { tasks: [], subtotal: 0 }
+      }
     };
 
     console.log('[COST-PDF] Payload structure being sent to PDF Monkey:', {
