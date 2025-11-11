@@ -67,10 +67,10 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
       const profitPerHour = totalLabourHours > 0 ? profit / totalLabourHours : 0;
       
       return { 
-        price: Math.max(0, price),
-        margin: Math.max(0, margin),
-        profit: Math.max(0, profit),
-        profitPerHour: Math.max(0, profitPerHour)
+        price: parseFloat(Math.max(0, price).toFixed(2)),
+        margin: parseFloat(Math.max(0, margin).toFixed(2)),
+        profit: parseFloat(Math.max(0, profit).toFixed(2)),
+        profitPerHour: parseFloat(Math.max(0, profitPerHour).toFixed(2))
       };
     };
 
