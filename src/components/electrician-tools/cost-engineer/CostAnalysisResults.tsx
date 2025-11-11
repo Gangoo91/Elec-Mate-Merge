@@ -152,7 +152,43 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
             }))
           };
         })(),
-        recommendedTier: structuredData?.recommendedQuote?.tier?.toUpperCase() || 'NORMAL'
+        recommendedTier: structuredData?.recommendedQuote?.tier?.toUpperCase() || 'NORMAL',
+        keyActionItems: (() => {
+          const actions: Array<{text: string, priority: string}> = [];
+          
+          // Action 1: Critical site checks
+          if (structuredData?.siteChecklist?.critical?.[0]) {
+            actions.push({
+              text: structuredData.siteChecklist.critical[0],
+              priority: 'critical'
+            });
+          }
+          
+          // Action 2: Payment terms
+          if (structuredData?.paymentTerms) {
+            actions.push({
+              text: `Secure ${structuredData.paymentTerms.depositPercent}% deposit (£${round2dp(structuredData.paymentTerms.depositAmount || 0)}) before starting`,
+              priority: 'high'
+            });
+          }
+          
+          // Action 3: High-value upsell or risk mitigation
+          const hotUpsell = structuredData?.upsells?.find((u: any) => u.isHot);
+          if (hotUpsell) {
+            actions.push({
+              text: `Offer ${hotUpsell.opportunity} (+£${round2dp(hotUpsell.price || 0)}) - ${hotUpsell.winRate}% win rate`,
+              priority: 'medium'
+            });
+          } else if (structuredData?.riskAssessment?.risks?.[0]) {
+            const topRisk = structuredData.riskAssessment.risks[0];
+            actions.push({
+              text: topRisk.mitigation,
+              priority: 'high'
+            });
+          }
+          
+          return actions.slice(0, 3);
+        })()
       },
       
       // 1. Project Context
