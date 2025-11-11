@@ -545,6 +545,13 @@ serve(async (req) => {
     const installationResults = ragResults?.installationDocs || [];
     const pmResults = ragResults?.designDocs || [];
     
+    // Extract materials_needed arrays from practical work for completeness (MUST BE BEFORE LOGGING)
+    const practicalMaterials = practicalWorkResults
+      ?.filter((pw: any) => pw.materials_needed?.length > 0)
+      .flatMap((pw: any) => pw.materials_needed)
+      .filter((m: string) => m && m.length > 5) // Filter out empty/short entries
+      || [];
+    
     logger.info('RAG search complete with Cost Engineer priorities (MULTI-QUERY)', {
       materialQueries: materialQueries.length,
       uniquePricingItems: finalPricingResults.length,
@@ -594,13 +601,7 @@ serve(async (req) => {
 
     const practicalWorkIntelligence = formatPracticalWorkContext(practicalWorkResults);
     
-    // Extract materials_needed arrays from practical work for completeness
-    const practicalMaterials = practicalWorkResults
-      ?.filter((pw: any) => pw.materials_needed?.length > 0)
-      .flatMap((pw: any) => pw.materials_needed)
-      .filter((m: string) => m && m.length > 5) // Filter out empty/short entries
-      || [];
-    
+    // practicalMaterials already extracted above (before logging)
     const practicalMaterialsContext = practicalMaterials.length > 0
       ? `\nPRACTICAL MATERIALS CHECKLIST (from field experience):\n` +
         `Must include: ${[...new Set(practicalMaterials)].slice(0, 25).join(', ')}`
