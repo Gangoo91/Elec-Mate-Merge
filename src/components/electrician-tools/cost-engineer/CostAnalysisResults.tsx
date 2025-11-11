@@ -42,18 +42,21 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
   };
 
   const buildPdfPayload = () => {
+    // Helper to round to 2 decimal places
+    const round2dp = (value: number) => Math.round((value || 0) * 100) / 100;
+
     // Calculate derived metrics (matching ComprehensiveResultsView.tsx)
-    const totalLabourHours = parseFloat((structuredData?.labour?.tasks?.reduce(
+    const totalLabourHours = round2dp(structuredData?.labour?.tasks?.reduce(
       (sum: number, t: any) => sum + (t.hours || 0), 0
-    ) || 0).toFixed(2));
+    ) || 0);
     
-    const breakEven = parseFloat((structuredData?.profitabilityAnalysis?.breakEvenPoint || analysis.subtotal || 0).toFixed(2));
+    const breakEven = round2dp(structuredData?.profitabilityAnalysis?.breakEvenPoint || analysis.subtotal || 0);
     const selectedTier = structuredData?.recommendedQuote?.tier || 'normal';
-    const selectedAmount = parseFloat((structuredData?.recommendedQuote?.amount || analysis.totalCost || 0).toFixed(2));
+    const selectedAmount = round2dp(structuredData?.recommendedQuote?.amount || analysis.totalCost || 0);
     
-    const profit = parseFloat((selectedAmount - breakEven).toFixed(2));
-    const margin = parseFloat((breakEven > 0 ? ((selectedAmount - breakEven) / selectedAmount) * 100 : 0).toFixed(2));
-    const profitPerHour = parseFloat((totalLabourHours > 0 ? profit / totalLabourHours : 0).toFixed(2));
+    const profit = round2dp(selectedAmount - breakEven);
+    const margin = round2dp(breakEven > 0 ? ((selectedAmount - breakEven) / selectedAmount) * 100 : 0);
+    const profitPerHour = round2dp(totalLabourHours > 0 ? profit / totalLabourHours : 0);
 
     // Calculate tier prices (matching PricingOptionsTiers.tsx logic)
     const sparsePrice = structuredData?.profitabilityAnalysis?.quoteTiers?.minimum?.price || breakEven * 1.2;
@@ -67,10 +70,10 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
       const profitPerHour = totalLabourHours > 0 ? profit / totalLabourHours : 0;
       
       return { 
-        price: parseFloat(Math.max(0, price).toFixed(2)),
-        margin: parseFloat(Math.max(0, margin).toFixed(2)),
-        profit: parseFloat(Math.max(0, profit).toFixed(2)),
-        profitPerHour: parseFloat(Math.max(0, profitPerHour).toFixed(2))
+        price: round2dp(Math.max(0, price)),
+        margin: round2dp(Math.max(0, margin)),
+        profit: round2dp(Math.max(0, profit)),
+        profitPerHour: round2dp(Math.max(0, profitPerHour))
       };
     };
 
@@ -94,22 +97,22 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
         response: structuredData?.response || analysis.rawText,
         materials: structuredData?.materials || {
           items: analysis.materials,
-          subtotal: parseFloat((analysis.materialsTotal || 0).toFixed(2)),
-          markup: parseFloat((0).toFixed(2))
+          subtotal: round2dp(analysis.materialsTotal || 0),
+          markup: round2dp(0)
         },
         labour: structuredData?.labour || {
           tasks: [{
             description: analysis.labour.description,
-            hours: parseFloat((analysis.labour.hours || 0).toFixed(2)),
-            rate: parseFloat((analysis.labour.rate || 0).toFixed(2)),
-            total: parseFloat((analysis.labour.total || 0).toFixed(2))
+            hours: round2dp(analysis.labour.hours || 0),
+            rate: round2dp(analysis.labour.rate || 0),
+            total: round2dp(analysis.labour.total || 0)
           }],
-          subtotal: parseFloat((analysis.labourTotal || 0).toFixed(2))
+          subtotal: round2dp(analysis.labourTotal || 0)
         },
         summary: structuredData?.summary || {
-          subtotal: parseFloat((analysis.subtotal || 0).toFixed(2)),
-          vat: parseFloat((analysis.vatAmount || 0).toFixed(2)),
-          grandTotal: parseFloat((analysis.totalCost || 0).toFixed(2))
+          subtotal: round2dp(analysis.subtotal || 0),
+          vat: round2dp(analysis.vatAmount || 0),
+          grandTotal: round2dp(analysis.totalCost || 0)
         },
         timescales: structuredData?.timescales || null,
         alternatives: structuredData?.alternatives || null,
@@ -157,21 +160,21 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
           }
         },
         selectedTier: selectedTier,
-        breakEven: parseFloat(breakEven.toFixed(2)),
-        totalLabourHours: parseFloat(totalLabourHours.toFixed(2))
+        breakEven: round2dp(breakEven),
+        totalLabourHours: round2dp(totalLabourHours)
       },
       
       // 5. Calculated Metrics (for easy PDF access)
       calculatedMetrics: {
-        totalLabourHours: parseFloat(totalLabourHours.toFixed(2)),
-        breakEven: parseFloat(breakEven.toFixed(2)),
+        totalLabourHours: round2dp(totalLabourHours),
+        breakEven: round2dp(breakEven),
         selectedTier,
-        selectedAmount: parseFloat(selectedAmount.toFixed(2)),
-        profit: parseFloat(profit.toFixed(2)),
-        margin: parseFloat(margin.toFixed(2)),
-        profitPerHour: parseFloat(profitPerHour.toFixed(2)),
-        vatAmount: parseFloat((analysis.vatAmount || 0).toFixed(2)),
-        totalIncVat: parseFloat((analysis.totalCost || 0).toFixed(2))
+        selectedAmount: round2dp(selectedAmount),
+        profit: round2dp(profit),
+        margin: round2dp(margin),
+        profitPerHour: round2dp(profitPerHour),
+        vatAmount: round2dp(analysis.vatAmount || 0),
+        totalIncVat: round2dp(analysis.totalCost || 0)
       },
       
       // 6. Client-facing Elements
