@@ -45,6 +45,24 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
     // Helper to round to 2 decimal places
     const round2dp = (value: number) => Math.round((value || 0) * 100) / 100;
 
+    // Recursive helper to round all numbers in nested objects/arrays
+    const roundNumbers = (obj: any): any => {
+      if (typeof obj === 'number') {
+        return round2dp(obj);
+      }
+      if (Array.isArray(obj)) {
+        return obj.map(item => roundNumbers(item));
+      }
+      if (obj !== null && typeof obj === 'object') {
+        const rounded: any = {};
+        for (const key in obj) {
+          rounded[key] = roundNumbers(obj[key]);
+        }
+        return rounded;
+      }
+      return obj;
+    };
+
     // Calculate derived metrics (matching ComprehensiveResultsView.tsx)
     const totalLabourHours = round2dp(structuredData?.labour?.tasks?.reduce(
       (sum: number, t: any) => sum + (t.hours || 0), 0
@@ -95,12 +113,38 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
       // 2. Core Cost Analysis (enhanced with all V3 data)
       costAnalysis: {
         response: structuredData?.response || analysis.rawText,
-        materials: structuredData?.materials || {
-          items: analysis.materials,
+        materials: structuredData?.materials ? {
+          ...structuredData.materials,
+          items: (structuredData.materials.items || []).map((item: any) => ({
+            ...item,
+            quantity: round2dp(item.quantity || 0),
+            unitPrice: round2dp(item.unitPrice || 0),
+            total: round2dp(item.total || 0)
+          })),
+          subtotal: round2dp(structuredData.materials.subtotal || 0),
+          markup: round2dp(structuredData.materials.markup || 0)
+        } : {
+          items: analysis.materials.map((item: any) => ({
+            ...item,
+            quantity: round2dp(item.quantity || 0),
+            unitPrice: round2dp(item.unitPrice || 0),
+            total: round2dp(item.total || 0)
+          })),
           subtotal: round2dp(analysis.materialsTotal || 0),
           markup: round2dp(0)
         },
-        labour: structuredData?.labour || {
+        labour: structuredData?.labour ? {
+          ...structuredData.labour,
+          tasks: (structuredData.labour.tasks || []).map((task: any) => ({
+            ...task,
+            hours: round2dp(task.hours || 0),
+            rate: round2dp(task.rate || 0),
+            total: round2dp(task.total || 0),
+            electricianHours: task.electricianHours ? round2dp(task.electricianHours) : undefined,
+            apprenticeHours: task.apprenticeHours ? round2dp(task.apprenticeHours) : undefined
+          })),
+          subtotal: round2dp(structuredData.labour.subtotal || 0)
+        } : {
           tasks: [{
             description: analysis.labour.description,
             hours: round2dp(analysis.labour.hours || 0),
@@ -114,6 +158,11 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
           vat: round2dp(analysis.vatAmount || 0),
           grandTotal: round2dp(analysis.totalCost || 0)
         },
+        contingency: {
+          percentage: round2dp(structuredData?.confidence?.contingency?.percentage || 5),
+          amount: round2dp((analysis.materialsTotal + analysis.labourTotal) * ((structuredData?.confidence?.contingency?.percentage || 5) / 100)),
+          reasoning: structuredData?.confidence?.contingency?.reasoning || 'Standard contingency buffer for unforeseen issues'
+        },
         timescales: structuredData?.timescales || null,
         alternatives: structuredData?.alternatives || null,
         orderList: structuredData?.orderList || null,
@@ -121,17 +170,66 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
       },
       
       // 3. Job Assessment
-      complexity: structuredData?.complexity || null,
-      confidence: structuredData?.confidence || null,
-      riskAssessment: structuredData?.riskAssessment || null,
+      complexity: structuredData?.complexity ? {
+        ...structuredData.complexity,
+        score: round2dp(structuredData.complexity.score || 0),
+        estimatedHours: round2dp(structuredData.complexity.estimatedHours || 0)
+      } : null,
+      confidence: structuredData?.confidence ? {
+        ...structuredData.confidence,
+        score: round2dp(structuredData.confidence.score || 0),
+        contingency: structuredData.confidence.contingency ? {
+          percentage: round2dp(structuredData.confidence.contingency.percentage || 0),
+          reasoning: structuredData.confidence.contingency.reasoning
+        } : undefined
+      } : null,
+      riskAssessment: roundNumbers(structuredData?.riskAssessment || null),
       
       // 4. Pricing & Profitability
       recommendedQuote: structuredData?.recommendedQuote || null,
-      profitabilityAnalysis: structuredData?.profitabilityAnalysis || null,
+      profitabilityAnalysis: structuredData?.profitabilityAnalysis ? {
+        ...structuredData.profitabilityAnalysis,
+        breakEvenPoint: round2dp(structuredData.profitabilityAnalysis.breakEvenPoint || 0),
+        directCosts: structuredData.profitabilityAnalysis.directCosts ? {
+          materials: round2dp(structuredData.profitabilityAnalysis.directCosts.materials || 0),
+          labour: round2dp(structuredData.profitabilityAnalysis.directCosts.labour || 0),
+          total: round2dp(structuredData.profitabilityAnalysis.directCosts.total || 0)
+        } : undefined,
+        jobOverheads: structuredData.profitabilityAnalysis.jobOverheads ? {
+          allocatedBusinessOverheads: round2dp(structuredData.profitabilityAnalysis.jobOverheads.allocatedBusinessOverheads || 0),
+          travel: round2dp(structuredData.profitabilityAnalysis.jobOverheads.travel || 0),
+          permitsAndFees: round2dp(structuredData.profitabilityAnalysis.jobOverheads.permitsAndFees || 0),
+          wasteDisposal: round2dp(structuredData.profitabilityAnalysis.jobOverheads.wasteDisposal || 0),
+          total: round2dp(structuredData.profitabilityAnalysis.jobOverheads.total || 0)
+        } : undefined,
+        quoteTiers: structuredData.profitabilityAnalysis.quoteTiers ? {
+          minimum: {
+            price: round2dp(structuredData.profitabilityAnalysis.quoteTiers.minimum.price || 0),
+            margin: round2dp(structuredData.profitabilityAnalysis.quoteTiers.minimum.margin || 0),
+            marginPercent: round2dp(structuredData.profitabilityAnalysis.quoteTiers.minimum.marginPercent || 0)
+          },
+          target: {
+            price: round2dp(structuredData.profitabilityAnalysis.quoteTiers.target.price || 0),
+            margin: round2dp(structuredData.profitabilityAnalysis.quoteTiers.target.margin || 0),
+            marginPercent: round2dp(structuredData.profitabilityAnalysis.quoteTiers.target.marginPercent || 0)
+          },
+          premium: {
+            price: round2dp(structuredData.profitabilityAnalysis.quoteTiers.premium.price || 0),
+            margin: round2dp(structuredData.profitabilityAnalysis.quoteTiers.premium.margin || 0),
+            marginPercent: round2dp(structuredData.profitabilityAnalysis.quoteTiers.premium.marginPercent || 0)
+          }
+        } : undefined,
+        recommendations: structuredData.profitabilityAnalysis.recommendations || []
+      } : null,
       
       // 4.5 Pricing Options (Calculated Tiers)
       pricingOptions: {
         explanation: structuredData?.recommendedQuote?.reasoning || null,
+        rawTierPrices: {
+          sparse: round2dp(sparsePrice),
+          normal: round2dp(normalPrice),
+          busy: round2dp(busyPrice)
+        },
         tiers: {
           workSparse: {
             name: 'Work Sparse',
@@ -178,10 +276,25 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
       },
       
       // 6. Client-facing Elements
-      upsells: structuredData?.upsells || [],
-      pipeline: structuredData?.pipeline || [],
+      upsells: (structuredData?.upsells || []).map((upsell: any) => ({
+        ...upsell,
+        price: round2dp(upsell.price || 0),
+        winRate: round2dp(upsell.winRate || 0)
+      })),
+      pipeline: (structuredData?.pipeline || []).map((item: any) => ({
+        ...item,
+        estimatedValue: round2dp(item.estimatedValue || 0),
+        probability: round2dp(item.probability || 0)
+      })),
       conversations: structuredData?.conversations || null,
-      paymentTerms: structuredData?.paymentTerms || null,
+      paymentTerms: structuredData?.paymentTerms ? {
+        ...structuredData.paymentTerms,
+        milestones: (structuredData.paymentTerms.milestones || []).map((milestone: any) => ({
+          ...milestone,
+          percentage: round2dp(milestone.percentage || 0),
+          amount: round2dp(milestone.amount || 0)
+        }))
+      } : null,
       
       // 7. Project Execution
       siteChecklist: structuredData?.siteChecklist || null,
