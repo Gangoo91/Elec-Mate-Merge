@@ -43,17 +43,17 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
 
   const buildPdfPayload = () => {
     // Calculate derived metrics (matching ComprehensiveResultsView.tsx)
-    const totalLabourHours = structuredData?.labour?.tasks?.reduce(
+    const totalLabourHours = parseFloat((structuredData?.labour?.tasks?.reduce(
       (sum: number, t: any) => sum + (t.hours || 0), 0
-    ) || 0;
+    ) || 0).toFixed(2));
     
-    const breakEven = structuredData?.profitabilityAnalysis?.breakEvenPoint || analysis.subtotal;
+    const breakEven = parseFloat((structuredData?.profitabilityAnalysis?.breakEvenPoint || analysis.subtotal || 0).toFixed(2));
     const selectedTier = structuredData?.recommendedQuote?.tier || 'normal';
-    const selectedAmount = structuredData?.recommendedQuote?.amount || analysis.totalCost;
+    const selectedAmount = parseFloat((structuredData?.recommendedQuote?.amount || analysis.totalCost || 0).toFixed(2));
     
-    const profit = selectedAmount - breakEven;
-    const margin = breakEven > 0 ? ((selectedAmount - breakEven) / selectedAmount) * 100 : 0;
-    const profitPerHour = totalLabourHours > 0 ? profit / totalLabourHours : 0;
+    const profit = parseFloat((selectedAmount - breakEven).toFixed(2));
+    const margin = parseFloat((breakEven > 0 ? ((selectedAmount - breakEven) / selectedAmount) * 100 : 0).toFixed(2));
+    const profitPerHour = parseFloat((totalLabourHours > 0 ? profit / totalLabourHours : 0).toFixed(2));
 
     // Calculate tier prices (matching PricingOptionsTiers.tsx logic)
     const sparsePrice = structuredData?.profitabilityAnalysis?.quoteTiers?.minimum?.price || breakEven * 1.2;
@@ -94,22 +94,22 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
         response: structuredData?.response || analysis.rawText,
         materials: structuredData?.materials || {
           items: analysis.materials,
-          subtotal: analysis.materialsTotal,
-          markup: 0
+          subtotal: parseFloat((analysis.materialsTotal || 0).toFixed(2)),
+          markup: parseFloat((0).toFixed(2))
         },
         labour: structuredData?.labour || {
           tasks: [{
             description: analysis.labour.description,
-            hours: analysis.labour.hours,
-            rate: analysis.labour.rate,
-            total: analysis.labour.total
+            hours: parseFloat((analysis.labour.hours || 0).toFixed(2)),
+            rate: parseFloat((analysis.labour.rate || 0).toFixed(2)),
+            total: parseFloat((analysis.labour.total || 0).toFixed(2))
           }],
-          subtotal: analysis.labourTotal
+          subtotal: parseFloat((analysis.labourTotal || 0).toFixed(2))
         },
         summary: structuredData?.summary || {
-          subtotal: analysis.subtotal,
-          vat: analysis.vatAmount,
-          grandTotal: analysis.totalCost
+          subtotal: parseFloat((analysis.subtotal || 0).toFixed(2)),
+          vat: parseFloat((analysis.vatAmount || 0).toFixed(2)),
+          grandTotal: parseFloat((analysis.totalCost || 0).toFixed(2))
         },
         timescales: structuredData?.timescales || null,
         alternatives: structuredData?.alternatives || null,
@@ -157,21 +157,21 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
           }
         },
         selectedTier: selectedTier,
-        breakEven: breakEven,
-        totalLabourHours: totalLabourHours
+        breakEven: parseFloat(breakEven.toFixed(2)),
+        totalLabourHours: parseFloat(totalLabourHours.toFixed(2))
       },
       
       // 5. Calculated Metrics (for easy PDF access)
       calculatedMetrics: {
-        totalLabourHours,
-        breakEven,
+        totalLabourHours: parseFloat(totalLabourHours.toFixed(2)),
+        breakEven: parseFloat(breakEven.toFixed(2)),
         selectedTier,
-        selectedAmount,
-        profit,
-        margin,
-        profitPerHour,
-        vatAmount: analysis.vatAmount,
-        totalIncVat: analysis.totalCost
+        selectedAmount: parseFloat(selectedAmount.toFixed(2)),
+        profit: parseFloat(profit.toFixed(2)),
+        margin: parseFloat(margin.toFixed(2)),
+        profitPerHour: parseFloat(profitPerHour.toFixed(2)),
+        vatAmount: parseFloat((analysis.vatAmount || 0).toFixed(2)),
+        totalIncVat: parseFloat((analysis.totalCost || 0).toFixed(2))
       },
       
       // 6. Client-facing Elements
