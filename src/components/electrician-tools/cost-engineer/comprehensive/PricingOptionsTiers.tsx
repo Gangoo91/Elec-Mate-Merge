@@ -47,6 +47,38 @@ const PricingOptionsTiers = ({
         )}
       </CardHeader>
       <CardContent>
+        {/* Price Sanity Check */}
+        <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
+          <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2 flex items-center gap-2">
+            <TrendingUp className="h-4 w-4" />
+            Industry Benchmark Check
+          </h4>
+          <div className="space-y-1 text-sm">
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">3-bed rewire typical range:</span>
+              <span className="font-medium">£4,000-6,500</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">This quote (Normal tier):</span>
+              <span className={`font-bold ${
+                normalPrice < 4000 ? 'text-red-500' : 
+                normalPrice > 6500 ? 'text-red-500' : 
+                'text-green-600'
+              }`}>
+                £{normalPrice.toFixed(0)}
+                {normalPrice < 4000 && ' ⚠️ Below market rate'}
+                {normalPrice > 6500 && ' ⚠️ Above market rate'}
+                {normalPrice >= 4000 && normalPrice <= 6500 && ' ✅ Within range'}
+              </span>
+            </div>
+            <div className="text-xs text-muted-foreground mt-2">
+              {normalPrice < 4000 && 'Consider if materials or labour are underestimated'}
+              {normalPrice > 6500 && 'Review for over-specification or excessive margins'}
+              {normalPrice >= 4000 && normalPrice <= 6500 && 'Competitive pricing for your region'}
+            </div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Work Sparse */}
           <div className={`p-4 rounded-lg border-2 ${

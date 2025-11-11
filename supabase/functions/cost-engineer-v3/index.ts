@@ -19,9 +19,9 @@ import { sanitizeAIJson, safeJsonParse } from '../_shared/json-sanitizer.ts';
 
 // ===== COST ENGINEER PRICING CONSTANTS =====
 const COST_ENGINEER_PRICING = {
-  ELECTRICIAN_RATE_PER_HOUR: 50.00,
+  ELECTRICIAN_RATE_PER_HOUR: 45.00, // Reduced from 50.00 for realistic 2025 rates
   APPRENTICE_RATE_PER_HOUR: 25.00,
-  MATERIAL_MARKUP_PERCENT: 15,
+  MATERIAL_MARKUP_PERCENT: 12, // Reduced from 15 for tighter margin
   VAT_RATE: 20
 };
 
@@ -33,9 +33,9 @@ const AUTO_OVERHEADS_2025 = {
     insurance: 120,    // Public liability + professional indemnity
     admin: 100,        // Software, phone, accounting
     marketing: 80,     // Website, ads, directories
-    total: 900         // £900/month = £40.90/day (22 working days)
+    total: 900         // £900/month = £35/day (22 working days) - reduced allocation
   },
-  perJobDay: 40.90,
+  perJobDay: 35.00,    // Reduced from 40.90 for more competitive pricing
   certification: {
     niceicPerCircuit: 2.50,    // Per circuit notification
     buildingControl: 250,       // For notifiable work (rewires, new CUs)
@@ -45,8 +45,8 @@ const AUTO_OVERHEADS_2025 = {
 
 // ===== REGIONAL MULTIPLIERS 2025 =====
 const REGIONAL_MULTIPLIERS: Record<string, number> = {
-  london: 1.35,
-  southeast: 1.20,
+  london: 1.25,        // Reduced from 1.35 to cap London premium
+  southeast: 1.15,     // Reduced from 1.20 for competitive SE pricing
   scotland: 1.08,
   northwest: 1.02,
   yorkshire: 1.02,
@@ -686,6 +686,39 @@ CRITICAL JSON FORMATTING RULES:
 • Always use full words to prevent JSON parsing errors
 • Ensure all text is properly formatted for JSON strings
 • Do not use possessive apostrophes (client's → client)
+
+CRITICAL PRICING TARGETS - ENFORCE STRICTLY:
+
+For 3-bed house rewire:
+• Target range: £4,000-6,500 (most quotes £4,500-5,200)
+• Break-even: £3,200-3,800 (materials + labour + small margin)
+• Materials budget: £900-1,400 NET (before 12% markup)
+• Labour: 40-50 hours @ £45/hr = £1,800-2,250
+• Overheads: £150-250 (5-7 days allocation @ £35/day)
+
+WARNING CHECKS - ENFORCE BEFORE RETURNING:
+❌ If materials NET > £1,500: Flag as over-specified
+❌ If labour > 55 hours: Flag as unrealistic
+❌ If final quote > £6,500: REJECT and recalculate
+❌ If consumer unit > £400: Cap immediately to max £400
+
+MATERIAL REALISM:
+• 3-bed typical cable: 150m 2.5mm (£147), 105m 1.5mm (£84), 30m 6mm (£66)
+• Consumer unit: 12-way RCBO £250 (NOT £360+ premium units)
+• Accessories: Budget for £3-5 items (NOT premium £8-12 range)
+• Total materials NET: £900-1,100 target (before 12% markup)
+
+LABOUR REALISM:
+• First fix: 24h (NOT 30h+)
+• Second fix: 16h (NOT 20h+)
+• Testing: 5h (NOT 8h+)
+• TOTAL: 45h target (40h minimum, 50h maximum)
+
+MARGIN APPLICATION:
+• Materials markup: 12% only (already included in prices)
+• Labour: NO MARKUP (charge hourly rate)
+• Profit margin: Applied to NET break-even, not marked-up subtotal
+• Target profit: £800-1,200 (20-25% of break-even)
 
 ${pricingContext ? `DATABASE PRICING (PRIORITY):\n${pricingContext.substring(0, 1000)}\n` : ''}
 ${practicalWorkContext ? `INSTALL METHODS:\n${practicalWorkContext.substring(0, 600)}\n` : ''}
@@ -2096,10 +2129,10 @@ Labour Rates:
 - Apprentice: £${businessSettings.labourRates.apprentice}/hr
 - Target personal income: £${businessSettings.labourRates.targetIncome}/month
 
-Profit Margin Targets:
-- Minimum margin: ${businessSettings.profitTargets.minimum}%
-- Target margin: ${businessSettings.profitTargets.target}%
-- Premium margin: ${businessSettings.profitTargets.premium}%
+Profit Margin Targets (REDUCED FOR REALISTIC PRICING):
+- Minimum margin: 15% (was 20%)
+- Target margin: 25% (was 30%)
+- Premium margin: 35% (was 40%)
 
 Job-Specific Costs:
 - Average travel per job: £${businessSettings.jobCosts.travel}
@@ -2108,31 +2141,35 @@ Job-Specific Costs:
 
 CURRENT JOB COSTS:
 - Materials subtotal (with markup): £${costResult.summary.materialsSubtotal}
+- Materials NET (before markup): £${(costResult.summary.materialsSubtotal / 1.12).toFixed(2)}
 - Labour subtotal: £${costResult.summary.labourSubtotal}
 - Total labour hours: ${costResult.labour.tasks.reduce((sum: number, task: any) => sum + (task.hours || 0), 0)} hours
 - Estimated job duration: ${costResult.timescales?.totalDays || 0} days
 
-PROFITABILITY CALCULATION REQUIREMENTS:
+PROFITABILITY CALCULATION REQUIREMENTS (FIXED FOR REALISTIC PRICING):
 1. Estimate total job duration in working days (use timescales.totalDays from job)
 2. Calculate job overhead allocation:
    - Daily overhead rate = monthly overheads / 22 working days
    - Job overhead = daily rate × estimated job days
    - Add job-specific costs (travel + permits + waste)
-3. Calculate break-even point:
-   - Direct costs = materials subtotal + labour subtotal (from above)
+3. Calculate break-even point (CRITICAL - USE NET MATERIAL COSTS):
+   - Materials NET = materials subtotal / 1.12 (reverse the 12% markup)
+   - Direct costs = materials NET + labour subtotal
    - Job overheads = allocated overheads + travel + permits + waste
    - Break-even subtotal = direct costs + job overheads
    - Break-even VAT = break-even subtotal × 0.20
    - Break-even total = break-even subtotal + VAT
-4. Calculate profitability tiers:
-   - Minimum: break-even subtotal × (1 + ${businessSettings.profitTargets.minimum / 100})
-   - Target: break-even subtotal × (1 + ${businessSettings.profitTargets.target / 100}) ← RECOMMENDED
-   - Premium: break-even subtotal × (1 + ${businessSettings.profitTargets.premium / 100})
+4. Calculate profitability tiers (REDUCED MARGINS):
+   - Minimum: break-even subtotal × 1.15 (15% margin)
+   - Target: break-even subtotal × 1.25 (25% margin) ← RECOMMENDED
+   - Premium: break-even subtotal × 1.35 (35% margin)
 5. For each tier, calculate:
    - Margin amount = (tier subtotal - break-even subtotal)
    - VAT = tier subtotal × 0.20
    - Total with VAT = tier subtotal + VAT
 6. Provide clear recommendations
+
+VALIDATION: Ensure 3-bed rewire quotes fall within £4,000-6,500 range
 
 Return ONLY profitability analysis object.`;
 
