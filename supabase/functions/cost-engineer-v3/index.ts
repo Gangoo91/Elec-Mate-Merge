@@ -281,6 +281,81 @@ function buildEnhancedRAGQuery(userQuery: string, entities: ParsedEntities): str
   return contextTerms.join(' ');
 }
 
+// ===== JOB-TYPE QUERY DECOMPOSITION FOR MULTI-QUERY RAG =====
+function decomposeJobIntoMaterialQueries(jobType: string, entities: ParsedEntities, userQuery: string): string[] {
+  const queries: string[] = [];
+  
+  // Always include the main job query
+  queries.push(userQuery);
+  
+  const jobTypeLower = jobType.toLowerCase();
+  
+  // Job-type specific decomposition
+  if (jobTypeLower.includes('rewire') || jobTypeLower.includes('full house')) {
+    queries.push('twin and earth cable 1.5mm 2.5mm lighting socket circuits');
+    queries.push('back boxes flush mounting 25mm 16mm socket switch');
+    queries.push('consumer unit RCBO protection 12-way 16-way');
+    queries.push('cable clips grommets fixings accessories installation');
+    queries.push('cooker circuit 10mm cable shower 6mm feed');
+    queries.push('earth sleeving fire barriers cable identification labels');
+    queries.push('electrical installation certificate testing equipment');
+  }
+  
+  if (jobTypeLower.includes('consumer unit') || jobTypeLower.includes('board') || jobTypeLower.includes('cu')) {
+    queries.push('consumer unit RCBO 8-way 12-way 16-way protection');
+    queries.push('main switch isolator 100A earth bar neutral bar');
+    queries.push('16mm tails meter consumer unit connection');
+    queries.push('circuit labels schedule mounting kit adapter plate');
+    queries.push('surge protection device SPD type 2');
+  }
+  
+  if (entities.location === 'outdoor' || entities.location === 'garden' || jobTypeLower.includes('outdoor')) {
+    queries.push('SWA steel wire armoured cable 2.5mm 3-core outdoor');
+    queries.push('SWA gland 20mm earthing kit lock nut IP66');
+    queries.push('weatherproof socket outdoor IP rated enclosure');
+    queries.push('yellow warning tape underground cable marker');
+    queries.push('RCD protection outdoor circuit 30mA');
+  }
+  
+  if (jobTypeLower.includes('kitchen')) {
+    queries.push('kitchen socket circuit 2.5mm cable double socket');
+    queries.push('cooker control unit 6mm cable 45A protection');
+    queries.push('fused spur appliance connection 13A');
+    queries.push('plastic trunking cable management kitchen installation');
+  }
+  
+  if (jobTypeLower.includes('bathroom')) {
+    queries.push('bathroom zones IP rating shaver socket');
+    queries.push('extractor fan shower circuit RCD protection');
+    queries.push('downlights IP65 bathroom lighting');
+  }
+  
+  return queries;
+}
+
+// ===== EXPECTED MATERIAL CATEGORIES BY JOB TYPE =====
+function generateExpectedCategories(jobType: string): string[] {
+  const jobTypeLower = jobType.toLowerCase();
+  
+  if (jobTypeLower.includes('rewire') || jobTypeLower.includes('full house')) {
+    return ['Cables', 'Accessories', 'Components', 'Consumer Unit', 'Fixings & Consumables', 'Testing Equipment'];
+  }
+  
+  if (jobTypeLower.includes('consumer unit') || jobTypeLower.includes('board')) {
+    return ['Components', 'Protection Equipment', 'Fixings & Consumables'];
+  }
+  
+  if (jobTypeLower.includes('outdoor') || jobTypeLower.includes('garden')) {
+    return ['Cables', 'Accessories', 'Cable Management', 'Protection Equipment'];
+  }
+  
+  if (jobTypeLower.includes('kitchen')) {
+    return ['Cables', 'Accessories', 'Cable Management', 'Consumer Unit'];
+  }
+  
+  return ['Cables', 'Accessories', 'Components'];
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -459,19 +534,22 @@ serve(async (req) => {
     const installationResults = ragResults?.installationDocs || [];
     const pmResults = ragResults?.designDocs || [];
     
-    logger.info('RAG search complete with Cost Engineer priorities (CONTEXT REDUCED)', {
-      pricingItems: finalPricingResults?.length || 0,
+    logger.info('RAG search complete with Cost Engineer priorities (MULTI-QUERY)', {
+      materialQueries: materialQueries.length,
+      totalMaterialResults: allMaterials.length,
+      uniquePricingItems: finalPricingResults.length,
+      pricingCategories: [...new Set(finalPricingResults.map(m => m.category))].join(', '),
       practicalWorkGuides: ragResults?.practicalWorkDocs?.length || 0,
+      practicalMaterials: practicalMaterials.length,
+      practicalMaterialsUnique: new Set(practicalMaterials).size,
       regulations: ragResults?.regulations?.length || 0,
       labourTimeEntries: labourTimeResults.length,
-      practicalWorkIntelligence: practicalWorkResults?.length || 0,
-      skippedSources: ['design', 'health_safety', 'installation'],
-      priorities: { practicalWork: 85, regulations: 80, pricing: 95 },
-      limits: { pricing: 30, practicalWork: 5, regulations: 3 }
+      priorities: { practicalWork: 85, regulations: 80, pricing: 95 }
     });
 
-    // Step 5: Build pricing context using RAG module formatter
-    const pricingContext = formatPricingContext(finalPricingResults) +
+    // Step 5: Build comprehensive pricing context using RAG module formatter
+    const pricingContext = `DATABASE PRICING (${finalPricingResults.length} UNIQUE ITEMS FROM MULTI-QUERY SEARCH):\n` +
+      formatPricingContext(finalPricingResults) +
       `\n\nFALLBACK MARKET RATES (use if not in database, 15% markup applied):\n- 2.5mm² T&E cable: £1.13/metre\n- 1.5mm² T&E cable: £0.92/metre\n- 6mm² T&E cable: £2.53/metre\n- 10mm² T&E cable: £4.49/metre\n- 2.5mm² SWA: £4.03/m, 4mm² SWA: £5.52/m, 6mm² SWA: £8.21/m, 10mm² SWA: £10.93/m\n- SWA gland 20mm: £11.50 (x2)\n- Consumer units: 8-way £156.40, 10-way £179.40, 12-way £212.75, 16-way £281.75\n- 40A RCBO: £32.78`;
 
     // Build PRACTICAL WORK context (from Practical Work Intelligence - PRIORITY) - LIMIT TO TOP 5
@@ -505,6 +583,24 @@ serve(async (req) => {
     }
 
     const practicalWorkIntelligence = formatPracticalWorkContext(practicalWorkResults);
+    
+    // Extract materials_needed arrays from practical work for completeness
+    const practicalMaterials = practicalWorkResults
+      ?.filter((pw: any) => pw.materials_needed?.length > 0)
+      .flatMap((pw: any) => pw.materials_needed)
+      .filter((m: string) => m && m.length > 5) // Filter out empty/short entries
+      || [];
+    
+    const practicalMaterialsContext = practicalMaterials.length > 0
+      ? `\nPRACTICAL MATERIALS CHECKLIST (from field experience):\n` +
+        `Must include: ${[...new Set(practicalMaterials)].slice(0, 25).join(', ')}`
+      : '';
+    
+    logger.info('📋 Practical materials checklist', {
+      count: practicalMaterials.length,
+      unique: new Set(practicalMaterials).size,
+      examples: [...new Set(practicalMaterials)].slice(0, 5)
+    });
 
     // Build regulations context (trimmed for compliance checks) - LIMIT TO TOP 3
     const regulationsContext = ragResults?.regulations && ragResults.regulations.length > 0
@@ -588,6 +684,12 @@ ${labourTimeContext ? `${labourTimeContext.substring(0, 500)}\n` : ''}
 
 CRITICAL PRICING RULES - FOLLOW EXACTLY:
 
+0. PRICE FORMATTING - MANDATORY:
+   • ALL prices MUST be formatted to exactly 2 decimal places
+   • Examples: £0.98 (correct), £1.00 (correct), £10.5 (WRONG - must be £10.50)
+   • Apply to: unitPrice, total, subtotal, vat, grandTotal
+   • Never use £1.234 or £10.5 - always £1.23 or £10.50
+
 1. CABLE PRICING - ALWAYS per metre:
    - 2.5mm² T&E: £0.98/metre (NOT per 100m roll price)
    - 1.5mm² T&E: £0.80/metre
@@ -597,14 +699,38 @@ CRITICAL PRICING RULES - FOLLOW EXACTLY:
    - NEVER write "500m at £0.21" - ALWAYS write quantity × unit price = total
    - Unit price MUST be per metre, NOT total divided by quantity
 
-2. CONSUMER UNITS - UK 2025 typical trade prices (NEVER exceed these):
-   - 8-way RCBO: £150-180 (typical £165)
-   - 10-way RCBO: £180-220 (typical £200)
-   - 12-way RCBO: £220-280 (typical £250)
-   - 16-way RCBO: £280-350 (typical £320)
-   - 18-way RCBO: £320-400 (typical £360)
-   - NEVER exceed £400 unless it is a 24-way or special high-integrity unit
-   - If you calculate higher, use the typical value above instead
+2. CONSUMER UNITS - UK 2025 TRADE PRICES (STRICT):
+   
+   NEVER exceed these prices. If you calculate higher, you have made an error.
+   
+   Standard RCBO Consumer Units:
+   • 6-way:  £130-150 (typical £140)  [Small flat]
+   • 8-way:  £150-180 (typical £165)  [1-bed, small 2-bed]
+   • 10-way: £180-220 (typical £200)  [2-bed, small 3-bed]
+   • 12-way: £220-280 (typical £250)  [3-bed typical]
+   • 16-way: £280-350 (typical £320)  [Large 3-bed, 4-bed]
+   • 18-way: £320-400 (typical £360)  [4-5 bed, complex]
+   
+   MAXIMUM EVER: £400 (18-way high-integrity)
+   Anything above £400 is WRONG unless it is a 24-way commercial board.
+   
+   How to Size CU:
+   1. Count circuits: Lighting (2), Sockets (2-3), Cooker (1), Shower (1), etc.
+   2. Add 20% spare ways for future
+   3. Example: 10 circuits + 20% = 12-way CU
+   4. Use "typical" price from table above
+   
+   RCBO Pricing (per unit):
+   • 6A-20A: £24-28 (typical £27.50)
+   • 32A: £27-32 (typical £28.50)
+   • 40A: £28-35 (typical £30)
+   
+   Common Error to Avoid:
+   ❌ WRONG: "18-way CU with RCBOs = £1,100" (this adds individual RCBOs to CU price!)
+   ✅ CORRECT: "18-way RCBO CU £360 (includes RCBOs fitted)"
+   
+   RCBO consumer units come with RCBOs included in the price.
+   Do NOT add separate RCBO costs unless adding extras later.
 
 3. QUANTITY × UNIT PRICE = TOTAL (show this calculation)
    - Materials table: unitPrice is per metre/each, NOT total price
@@ -689,6 +815,24 @@ Provide specific feedback for each category with actionable recommendations.
 PRACTICAL TRADE KNOWLEDGE - APPLY THROUGHOUT:
 
 1. MATERIALS COMPLETENESS (Think Like a Sparky):
+   
+   EXPECTED CATEGORIES FOR THIS JOB TYPE:
+   ${generateExpectedCategories(parsedEntities.jobType || query).join(', ')}
+   
+   DATABASE SEARCH RETURNED:
+   ${[...new Set(finalPricingResults.map(m => m.category))].join(', ')}
+   
+   ${practicalMaterialsContext}
+   
+   IF ANY CATEGORY IS MISSING:
+   1. Flag it: "⚠️ Database search incomplete for [category]"
+   2. Estimate items for missing category using trade knowledge and fallback prices
+   3. Mark items: inDatabase: false, priceSource: 'estimated'
+   4. Note: "Some prices estimated - verify with supplier"
+   
+   CRITICAL: Generate a COMPLETE materials list even if database is incomplete.
+   Use your knowledge to fill gaps. Mark which items are database-sourced vs estimated.
+   
    When you see:
    • Outdoor work → Auto-include: SWA glands, earthing kit, junction boxes, weatherproof enclosures
    • Cable runs → Include: Cable clips (every 300mm), fixings, grommets, identification labels
@@ -703,6 +847,27 @@ PRACTICAL TRADE KNOWLEDGE - APPLY THROUGHOUT:
    ✓ Cable identification sleeves
    ✓ Mounting boxes and back boxes
    ✓ Fixings appropriate to wall type (masonry/plasterboard)
+   
+   Fallback Prices (when database incomplete):
+   • 1.0mm² T&E: £0.65/m
+   • 1.5mm² T&E: £0.80/m
+   • 2.5mm² T&E: £0.98/m
+   • 4mm² T&E: £1.45/m
+   • 6mm² T&E: £2.20/m
+   • 10mm² T&E: £3.90/m
+   • 16mm² T&E: £6.50/m
+   • Double socket: £3.20
+   • Single socket: £2.80
+   • 1-gang switch: £3.50
+   • 2-gang switch: £4.50
+   • Back box 25mm: £0.85
+   • Back box 16mm: £0.65
+   • Grommet: £0.15
+   • Cable clip: £0.05
+   • Cable tie: £0.08
+   • Fire barrier: £8.50
+   • Cable labels: £6 (pack)
+   • Earth sleeving 10m: £2.50
 
 2. LABOUR REALISM (Real-World Adjustments):
    Standard times are for NEW BUILD. Adjust for:
@@ -774,12 +939,33 @@ Return JSON with: response, materials, labour, summary, timescales, alternatives
     const userPrompt = `Cost estimate for: ${query}
 ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `\nLabour: ${labourHours}hrs` : ''}
 
+MATERIAL SOURCING INSTRUCTIONS:
+Database items available: ${finalPricingResults?.length || 0} unique items from ${materialQueries.length} parallel searches
+Expected categories: ${generateExpectedCategories(parsedEntities.jobType || query).join(', ')}
+Database returned: ${[...new Set(finalPricingResults.map(m => m.category))].join(', ')}
+${practicalMaterials.length > 0 ? `\nPractical field checklist: ${[...new Set(practicalMaterials)].slice(0, 15).join(', ')}` : ''}
+
+For EACH material item in your response:
+1. If from DATABASE PRICING above: inDatabase=true, priceSource='database'
+2. If from PRACTICAL MATERIALS CHECKLIST: inDatabase=false, priceSource='practical_work'
+3. If estimated using fallback prices: inDatabase=false, priceSource='trade_average'
+4. If your AI estimation: inDatabase=false, priceSource='estimated'
+
+TASKS:
 1. Match materials to database (${finalPricingResults?.length || 0} items above)
-2. Extract exact prices + suppliers
-3. Calculate labour tasks realistically
-4. Add value engineering suggestions
-5. Include VAT (20%)
-6. Provide timescale breakdown and alternative quotes`;
+2. Extract exact prices + suppliers where available
+3. Fill gaps with fallback/estimated prices (mark source clearly)
+4. Include ALL practical checklist items from field experience
+5. Calculate labour tasks realistically
+6. Add value engineering suggestions
+7. Include VAT (20%)
+8. Provide timescale breakdown and alternative quotes
+
+COMPLETENESS CHECK:
+✓ All expected categories covered? (${generateExpectedCategories(parsedEntities.jobType || query).join(', ')})
+✓ Practical checklist items included?
+✓ Small fixings/consumables not forgotten?
+If ANY category missing, estimate it and flag in response.`;
 
     // ==== CALL 1: CORE COST ESTIMATE (Faster, no profitability) ====
     logger.debug('Calling AI for core cost estimate', { provider: 'OpenAI' });
@@ -819,20 +1005,28 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                 type: 'object',
                 properties: {
                   items: {
-                    type: 'array',
-                    items: {
-                      type: 'object',
-                      properties: {
-                        description: { type: 'string' },
-                        quantity: { type: 'number' },
-                        unit: { type: 'string' },
-                        unitPrice: { type: 'number' },
-                        total: { type: 'number' },
-                        supplier: { type: 'string' },
-                        inDatabase: { type: 'boolean' }
-                      },
-                      required: ['description', 'quantity', 'unitPrice', 'total', 'supplier']
-                    }
+                     type: 'array',
+                     items: {
+                       type: 'object',
+                       properties: {
+                         description: { type: 'string' },
+                         quantity: { type: 'number' },
+                         unit: { type: 'string' },
+                         unitPrice: { type: 'number' },
+                         total: { type: 'number' },
+                         supplier: { type: 'string' },
+                         inDatabase: { 
+                           type: 'boolean',
+                           description: 'True if price from database, false if estimated using trade knowledge'
+                         },
+                         priceSource: {
+                           type: 'string',
+                           enum: ['database', 'practical_work', 'estimated', 'trade_average'],
+                           description: 'Source of the price: database=pricing DB, practical_work=from field guidance, estimated=AI estimation, trade_average=fallback prices'
+                         }
+                       },
+                       required: ['description', 'quantity', 'unitPrice', 'total', 'supplier', 'inDatabase', 'priceSource']
+                     }
                   },
                   subtotal: { type: 'number' },
                   vat: { type: 'number' },
