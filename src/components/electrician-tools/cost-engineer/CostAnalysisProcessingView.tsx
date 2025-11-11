@@ -205,62 +205,71 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
                 <div
                   key={stage.id}
                   className={`
-                    flex gap-4 p-4 rounded-xl transition-all duration-300
-                    ${isActive ? 'bg-elec-yellow/10 border-2 border-elec-yellow/40 shadow-lg' : ''}
+                    rounded-xl transition-all duration-300 p-4 sm:p-5
+                    ${isActive ? 'bg-elec-yellow/10 border-2 border-elec-yellow/40 shadow-lg border-l-4' : ''}
                     ${isComplete ? 'bg-green-500/5 border-2 border-green-500/30' : ''}
                     ${isPending ? 'bg-elec-dark/30 border border-elec-yellow/10 opacity-60' : ''}
                   `}
                 >
-                  <div className="shrink-0">
-                    {isComplete ? (
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-500/20 flex items-center justify-center">
-                        <CheckCircle2 className="h-6 w-6 sm:h-7 sm:w-7 text-green-500" />
-                      </div>
-                    ) : isActive ? (
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-elec-yellow/20 flex items-center justify-center relative">
-                        <Icon className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
-                        <div className="absolute inset-0 rounded-full bg-elec-yellow/20 animate-ping" />
-                      </div>
-                    ) : (
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-elec-grey/50 flex items-center justify-center">
-                        <Icon className="h-6 w-6 sm:h-7 sm:w-7 text-muted-foreground" />
-                      </div>
-                    )}
-                  </div>
+                  <div className="flex flex-col xs:flex-row gap-4">
+                    {/* Icon - Centered on mobile, left-aligned on desktop */}
+                    <div className="shrink-0 self-center xs:self-start">
+                      {isComplete ? (
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-green-500/20 flex items-center justify-center">
+                          <CheckCircle2 className="h-7 w-7 sm:h-8 sm:w-8 text-green-500" />
+                        </div>
+                      ) : isActive ? (
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-elec-yellow/20 flex items-center justify-center relative">
+                          <Icon className="h-7 w-7 sm:h-8 sm:w-8 text-elec-yellow" />
+                          {/* Subtle static glow instead of animation */}
+                          <div className="absolute inset-0 rounded-full bg-elec-yellow/10 blur-sm" />
+                        </div>
+                      ) : (
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-elec-grey/50 flex items-center justify-center">
+                          <Icon className="h-7 w-7 sm:h-8 sm:w-8 text-muted-foreground" />
+                        </div>
+                      )}
+                    </div>
 
-                  <div className="flex-1 min-w-0 space-y-2">
-                    <div className="flex items-start gap-3 flex-wrap">
-                      <h3 className={`text-base sm:text-lg font-bold flex-1 min-w-0 ${
+                    {/* Content area - Full width on mobile */}
+                    <div className="flex-1 space-y-3 text-center xs:text-left">
+                      {/* Title - Full width on mobile */}
+                      <h3 className={`text-base sm:text-lg font-bold ${
                         isActive ? 'text-elec-yellow' : 
                         isComplete ? 'text-green-500' : 
                         'text-muted-foreground'
                       }`}>
                         {stage.title}
                       </h3>
-                      {isComplete && (
-                        <span className="text-xs sm:text-sm text-green-500 font-semibold shrink-0 px-2 py-1 rounded-md bg-green-500/20 whitespace-nowrap">
-                          Complete ✓
-                        </span>
-                      )}
+
+                      {/* Status Badge - Full width on mobile, fits content on desktop */}
+                      <div className="flex justify-center xs:justify-start">
+                        {isComplete && (
+                          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-green-500/20 text-green-500 font-semibold text-xs sm:text-sm">
+                            <CheckCircle2 className="h-4 w-4" />
+                            <span>Complete</span>
+                          </div>
+                        )}
+                        {isActive && (
+                          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-elec-yellow/20 text-elec-yellow font-semibold text-xs sm:text-sm">
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                            <span>In Progress</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Description - Full width, better spacing */}
                       {isActive && (
-                        <span className="text-xs sm:text-sm text-elec-yellow font-semibold shrink-0 flex items-center gap-1.5 px-2 py-1 rounded-md bg-elec-yellow/20 whitespace-nowrap">
-                          <Loader2 className="h-3 w-3 sm:h-3.5 sm:w-3.5 animate-spin" />
-                          <span className="hidden xs:inline">In Progress...</span>
-                          <span className="xs:hidden">Active</span>
-                        </span>
+                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed pt-1">
+                          {stage.substeps[currentSubstep]}
+                        </p>
+                      )}
+                      {isComplete && (
+                        <p className="text-xs sm:text-sm text-green-500/70">
+                          Analysis complete
+                        </p>
                       )}
                     </div>
-
-                    {isActive && (
-                      <p className="text-sm text-muted-foreground leading-relaxed animate-fade-in pr-2">
-                        {stage.substeps[currentSubstep]}
-                      </p>
-                    )}
-                    {isComplete && (
-                      <p className="text-xs sm:text-sm text-green-500/70">
-                        Analysis complete
-                      </p>
-                    )}
                   </div>
                 </div>
               );
