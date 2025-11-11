@@ -40,6 +40,12 @@ serve(async (req) => {
     
     console.log('[COST-PDF] Full payload (first 500 chars):', JSON.stringify(payload).substring(0, 500));
 
+    // Generate unique filename
+    const uniqueId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const filename = `AI Cost Engineer - ${uniqueId}.pdf`;
+    
+    console.log('[COST-PDF] Generated filename:', filename);
+
     // Create PDF document via PDF Monkey
     const createResponse = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
       method: 'POST',
@@ -51,6 +57,7 @@ serve(async (req) => {
         document: {
           document_template_id: COST_ENGINEER_TEMPLATE_ID,
           payload: payload,
+          filename: filename,
           status: 'pending'
         }
       })
