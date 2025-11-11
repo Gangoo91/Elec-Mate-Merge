@@ -112,9 +112,9 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
   };
 
   return (
-    <div className="mobile-safe-area min-h-[600px] flex items-center justify-center p-4 sm:p-6 animate-fade-in">
-      <Card className="w-full max-w-2xl border-2 border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/50 shadow-xl">
-        <CardHeader className="text-center space-y-5 pb-6 px-4 sm:px-6">
+    <div className="mobile-safe-area min-h-[600px] flex items-center justify-center px-0 sm:p-6 animate-fade-in">
+      <Card className="w-full max-w-7xl border-0 sm:border-2 border-elec-yellow/20 rounded-none sm:rounded-xl bg-gradient-to-br from-elec-card to-elec-dark/50 shadow-xl">
+        <CardHeader className="text-center space-y-5 pb-6 px-4 py-6 sm:px-6 sm:py-6">
           <div className="flex justify-center mb-4">
             <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-elec-yellow/20 to-green-500/20 flex items-center justify-center">
               <Calculator className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
