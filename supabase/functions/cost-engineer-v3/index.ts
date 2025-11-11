@@ -96,6 +96,136 @@ const MATERIAL_TAKEOFF = {
   }
 };
 
+// ===== PRACTICAL MATERIALS ASSOCIATIONS =====
+const MATERIALS_ASSOCIATIONS: Record<string, Array<{ item: string; qty?: number; qtyPer?: number; unit?: string; reason: string; condition?: string }>> = {
+  outdoor_socket: [
+    { item: 'SWA gland 20mm', qty: 1, reason: 'Cable termination' },
+    { item: 'SWA gland lock nut', qty: 2, reason: 'Secure gland' },
+    { item: 'SWA earthing kit', qty: 1, reason: 'Armour earthing' },
+    { item: 'IP66 weatherproof enclosure', qty: 1, reason: 'Weather protection' }
+  ],
+  consumer_unit: [
+    { item: 'CU fixing screws', qty: 4, reason: 'Wall mounting' },
+    { item: 'CU adapter plate', qty: 1, reason: 'Old fixing holes', condition: 'if replacement' },
+    { item: 'Circuit labels', qty: 1, reason: 'BS 7671 requirement' },
+    { item: 'Schedule of test results', qty: 1, reason: 'Documentation' }
+  ],
+  cable_run: [
+    { item: 'Cable clips', qtyPer: 3.33, unit: 'per metre', reason: '300mm spacing' },
+    { item: 'Plastic grommets', qtyPer: 2, unit: 'per box', reason: 'Box entries' },
+    { item: 'Cable ties', qtyPer: 1, unit: 'per 2 metres', reason: 'Bundling' }
+  ],
+  underground: [
+    { item: 'Yellow warning tape', qtyPer: 1, unit: 'per metre', reason: 'Cable route marking' },
+    { item: 'Sand bedding', qtyPer: 0.1, unit: 'bags per metre', reason: 'Cable protection' },
+    { item: 'Marker posts', qty: 2, reason: 'Route identification' }
+  ]
+};
+
+// ===== LABOUR ADJUSTMENT FACTORS =====
+const LABOUR_ADJUSTMENTS = {
+  property_age: {
+    pre_1950: { factor: 1.4, reason: 'Non-standard construction, difficult access' },
+    pre_1970: { factor: 1.25, reason: 'No cable routes, old fixings' },
+    pre_2000: { factor: 1.15, reason: 'Some modern methods' },
+    modern: { factor: 1.0, reason: 'Standard build' }
+  },
+  property_type: {
+    flat: { factor: 0.9, reason: 'Compact layout' },
+    terraced: { factor: 1.0, reason: 'Standard' },
+    semi_detached: { factor: 1.1, reason: 'Longer cable runs' },
+    detached: { factor: 1.3, reason: 'Large footprint, cable distances' },
+    bungalow: { factor: 1.2, reason: 'Roof void access issues' }
+  },
+  occupancy: {
+    vacant: { factor: 1.0, reason: 'Unrestricted access' },
+    occupied: { factor: 1.15, reason: 'Work around furniture, limited hours' },
+    business: { factor: 1.2, reason: 'Out of hours working' }
+  },
+  wall_type: {
+    plasterboard: { factor: 1.0, reason: 'Easy cable routing' },
+    brick: { factor: 1.2, reason: 'Chase and make good' },
+    stone: { factor: 1.5, reason: 'Hand chasing, difficult drilling' },
+    concrete: { factor: 1.6, reason: 'Very difficult to chase' }
+  }
+};
+
+// ===== CONTEXTUAL UPSELL INTELLIGENCE =====
+const CONTEXTUAL_UPSELLS: Record<string, Array<{ trigger: string; upsell: string; price_delta: number; win_rate: number; timing: string; script: string }>> = {
+  kitchen_rewire: [
+    { 
+      trigger: 'walls_open',
+      upsell: 'USB sockets in 50% of outlets',
+      price_delta: 8,
+      win_rate: 75,
+      timing: 'During installation',
+      script: 'While walls are open, upgrade to USB sockets for £8 each - no extra labour'
+    },
+    {
+      trigger: 'new_circuits',
+      upsell: 'EV charger prep (32A circuit + cable to garage)',
+      price_delta: 450,
+      win_rate: 40,
+      timing: 'Now or never (walls closing)',
+      script: 'Future-proof for EV charging - run 6mm cable now for £450, £1500+ later'
+    }
+  ],
+  consumer_unit_upgrade: [
+    {
+      trigger: 'new_cu',
+      upsell: 'Type 2 SPD (surge protection device)',
+      price_delta: 120,
+      win_rate: 85,
+      timing: 'During CU installation',
+      script: 'Protect expensive electronics with surge protection for £120 - required in new builds'
+    },
+    {
+      trigger: 'new_cu',
+      upsell: 'EV-ready 32A MCB and tails',
+      price_delta: 40,
+      win_rate: 60,
+      timing: 'During CU installation',
+      script: 'Add EV-ready circuit breaker now for £40 - ready when you need it'
+    }
+  ],
+  outdoor_work: [
+    {
+      trigger: 'trench_open',
+      upsell: 'Additional outdoor sockets while trench open',
+      price_delta: 80,
+      win_rate: 70,
+      timing: 'Before backfilling',
+      script: 'Add sockets front/rear for £80 each - only £20 extra while trench is open'
+    },
+    {
+      trigger: 'outdoor_power',
+      upsell: 'Garden lighting circuit',
+      price_delta: 350,
+      win_rate: 55,
+      timing: 'During groundwork',
+      script: 'Add lighting circuit for £350 while digging - £800+ as separate job'
+    }
+  ],
+  bathroom_work: [
+    {
+      trigger: 'bathroom_circuits',
+      upsell: 'Heated towel rail circuit',
+      price_delta: 180,
+      win_rate: 65,
+      timing: 'During installation',
+      script: 'Add dedicated circuit for heated towel rail - £180 now vs £400+ later'
+    },
+    {
+      trigger: 'bathroom_lighting',
+      upsell: 'LED mirror with integrated lighting',
+      price_delta: 120,
+      win_rate: 70,
+      timing: 'During first fix',
+      script: 'Upgrade to illuminated mirror for £120 - wiring already exposed'
+    }
+  ]
+};
+
 // ===== FALLBACK PRICES (when database search fails) =====
 const FALLBACK_PRICES = {
   '2.5mm_t&e_per_m': { price: 0.98, supplier: 'CEF/TLC average', inStock: true },  // £95-£100 per 100m
@@ -268,7 +398,7 @@ serve(async (req) => {
     // Build labour-specific query
     const labourQuery = `labour time standards installation time ${parsedEntities.jobType || 'circuit'} ${parsedEntities.circuitCount ? parsedEntities.circuitCount + ' circuits' : ''}`;
     
-    const [queryEmbedding, finalPricingResults, ragResults, labourTimeResults] = await Promise.all([
+    const [queryEmbedding, finalPricingResults, ragResults, labourTimeResults, practicalWorkResults] = await Promise.all([
       // Generate embedding
       generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY),
       
@@ -307,8 +437,21 @@ serve(async (req) => {
         logger
       ),
       
-      // NEW: Search project_mgmt_knowledge for labour time standards
-      searchLabourTimeKnowledge(labourQuery, await generateEmbeddingWithRetry(labourQuery, OPENAI_API_KEY), supabase, logger, parsedEntities.jobType)
+      // Search project_mgmt_knowledge for labour time standards
+      searchLabourTimeKnowledge(labourQuery, await generateEmbeddingWithRetry(labourQuery, OPENAI_API_KEY), supabase, logger, parsedEntities.jobType),
+      
+      // NEW: Search practical_work_intelligence for installation guidance
+      supabase.rpc('search_practical_work_intelligence_hybrid', {
+        query_text: enhancedQuery,
+        query_embedding: await generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY),
+        match_count: 10
+      }).then(result => {
+        if (result.error) {
+          logger.warn('Practical work search failed', { error: result.error.message });
+          return [];
+        }
+        return result.data || [];
+      })
     ]);
     
     logger.debug('Intelligent RAG complete', { duration: Date.now() - ragStart });
@@ -321,6 +464,7 @@ serve(async (req) => {
       practicalWorkGuides: ragResults?.practicalWorkDocs?.length || 0,
       regulations: ragResults?.regulations?.length || 0,
       labourTimeEntries: labourTimeResults.length,
+      practicalWorkIntelligence: practicalWorkResults?.length || 0,
       skippedSources: ['design', 'health_safety', 'installation'],
       priorities: { practicalWork: 85, regulations: 80, pricing: 95 },
       limits: { pricing: 30, practicalWork: 5, regulations: 3 }
@@ -336,6 +480,31 @@ serve(async (req) => {
           `- ${pw.activity}: ${pw.step_description?.substring(0, 120)}... (${pw.time_estimate || 'time varies'})`
         ).join('\n')
       : '';
+
+    // Format practical work intelligence from database
+    function formatPracticalWorkContext(results: any[]): string {
+      if (!results?.length) return '';
+      
+      return `\nPRACTICAL INSTALLATION GUIDANCE (field experience):\n` +
+        results.slice(0, 10).map(pw => {
+          let formatted = `• ${pw.primary_topic || pw.topic}`;
+          if (pw.tools_required?.length) {
+            formatted += `\n  Tools: ${pw.tools_required.join(', ')}`;
+          }
+          if (pw.cable_sizes?.length) {
+            formatted += `\n  Cables: ${pw.cable_sizes.join(', ')}`;
+          }
+          if (pw.location_types?.length) {
+            formatted += `\n  Locations: ${pw.location_types.join(', ')}`;
+          }
+          if (pw.step_description) {
+            formatted += `\n  Guidance: ${pw.step_description.substring(0, 150)}`;
+          }
+          return formatted;
+        }).join('\n');
+    }
+
+    const practicalWorkIntelligence = formatPracticalWorkContext(practicalWorkResults);
 
     // Build regulations context (trimmed for compliance checks) - LIMIT TO TOP 3
     const regulationsContext = ragResults?.regulations && ragResults.regulations.length > 0
@@ -412,7 +581,8 @@ CRITICAL JSON FORMATTING RULES:
 • Do not use possessive apostrophes (client's → client)
 
 ${pricingContext ? `DATABASE PRICING (PRIORITY):\n${pricingContext.substring(0, 1000)}\n` : ''}
-${practicalWorkContext ? `INSTALL METHODS:\n${practicalWorkContext.substring(0, 800)}\n` : ''}
+${practicalWorkContext ? `INSTALL METHODS:\n${practicalWorkContext.substring(0, 600)}\n` : ''}
+${practicalWorkIntelligence ? `${practicalWorkIntelligence.substring(0, 800)}\n` : ''}
 ${regulationsContext ? `REGULATIONS:\n${regulationsContext.substring(0, 600)}\n` : ''}
 ${labourTimeContext ? `${labourTimeContext.substring(0, 500)}\n` : ''}
 
@@ -515,6 +685,81 @@ You must evaluate your own outputs for completeness and realism using a Red/Ambe
    Flag: Any suggestions that do not match the property type or client needs
 
 Provide specific feedback for each category with actionable recommendations.
+
+PRACTICAL TRADE KNOWLEDGE - APPLY THROUGHOUT:
+
+1. MATERIALS COMPLETENESS (Think Like a Sparky):
+   When you see:
+   • Outdoor work → Auto-include: SWA glands, earthing kit, junction boxes, weatherproof enclosures
+   • Cable runs → Include: Cable clips (every 300mm), fixings, grommets, identification labels
+   • Consumer unit → Include: Fixing screws, adapter plates (for old CUs), labels, schedules
+   • Socket circuits → Include: Mounting boxes, screws, grommets, cable ties
+   • Underground → Include: Yellow warning tape, sand, marker posts
+   
+   Common forgotten items:
+   ✓ Cable glands for SWA (20mm/25mm)
+   ✓ Earth straps and clamps
+   ✓ Fire barriers for containment penetrations
+   ✓ Cable identification sleeves
+   ✓ Mounting boxes and back boxes
+   ✓ Fixings appropriate to wall type (masonry/plasterboard)
+
+2. LABOUR REALISM (Real-World Adjustments):
+   Standard times are for NEW BUILD. Adjust for:
+   • Old properties (+25%): Non-standard fixings, no cable routes, poor access
+   • Occupied homes (+15%): Work around furniture, protect flooring, limited hours
+   • Heritage buildings (+40%): Listed building consent, special methods, supervision
+   • First fix in stone walls (+50%): Hand chasing, SDS drilling limitations
+   
+   Hidden time consumers:
+   ✓ Testing always takes longer than planned (add 20%)
+   ✓ Commissioning includes paperwork (1-2 hours)
+   ✓ Client questions/discussions (0.5hr per day)
+   ✓ Material collection trips (1-2 hours if not pre-ordered)
+   ✓ Building Control visits (0.5hr coordination)
+
+3. CONTEXTUAL UPSELLS (Spot the Opportunity):
+   IF job involves:
+   • Kitchen rewire → Suggest: USB sockets, under-cabinet lighting, EV charger prep
+   • Bathroom work → Suggest: Heated towel rail circuit, mirror lighting, extractor upgrade
+   • Garden power → Suggest: Multiple outdoor sockets, lighting circuit, water feature supply
+   • Consumer unit upgrade → Suggest: Surge protection, EV charger MCB, solar-ready tails
+   • Loft conversion → Suggest: Network/AV wiring, smart home prep, future heating circuits
+   
+   Only suggest upsells that:
+   ✓ Make sense for THIS property (no EV charger for flat with no parking)
+   ✓ Are easier NOW than later (use open walls, shared groundwork)
+   ✓ Have realistic win rates (60-75% for good upsells)
+   ✓ Provide clear client benefit (convenience, future-proofing, cost savings)
+
+4. RISK AWARENESS (What Could Go Wrong):
+   Red flags in quotes:
+   ⚠️ "While walls are open" → Scope creep risk (contingency +10%)
+   ⚠️ "Old wiring" → Unknown condition (survey recommended, contingency +15%)
+   ⚠️ "Listed building" → Special approvals needed (add consent time/cost)
+   ⚠️ "Live working" → Safety protocols, may need isolations (add time)
+   ⚠️ "Asbestos suspected" → Stop work, specialist required
+   
+   Always flag:
+   ✓ Need for Building Control notification (+£250-300)
+   ✓ DNO work for supply upgrades (£££ and 8-12 week lead time)
+   ✓ Scaffolding needs for high-level work
+   ✓ Access restrictions (narrow stairs, no parking)
+
+5. VALUE ENGINEERING (Smart Alternatives):
+   Cost-saving suggestions with trade logic:
+   • "Run 4mm² instead of 6mm² if load allows" (save £1.10/m, check volt drop)
+   • "Use metal clad instead of fancy finish in garage" (save £40-60)
+   • "T&E in conduit instead of SWA for protected runs" (save £2.50/m labour)
+   • "Phased installation if budget tight" (deposit → first fix → complete)
+   
+   But NEVER compromise:
+   ❌ Cable sizing (safety first)
+   ❌ Required RCD protection
+   ❌ Earth bonding
+   ❌ Testing and certification
+
+Apply this practical knowledge to EVERY estimate. Think "What would a 20-year electrician spot that AI might miss?"
 
 CRITICAL MATH:
 • materials.subtotal = Σ(item totals with markup)
