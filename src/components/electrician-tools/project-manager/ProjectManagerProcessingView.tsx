@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { CheckCircle2, Search, Clipboard, Calendar } from "lucide-react";
+import { CheckCircle2, Search, Clipboard, Calendar, Check, Clock } from "lucide-react";
 
 interface ProjectManagerProcessingViewProps {
   progress: {
@@ -73,102 +73,142 @@ const ProjectManagerProcessingView = ({ progress, startTime }: ProjectManagerPro
           </p>
         </div>
 
-        {/* Generation Timeline */}
-        <div className="grid grid-cols-3 gap-4 p-4 bg-elec-gray/50 rounded-lg border border-pink-500/10">
-          <div className="text-center">
-            <div className="text-xs text-muted-foreground mb-1">Elapsed Time</div>
-            <div className="text-lg font-semibold text-pink-400">{formatTime(elapsedTime)}</div>
+        {/* Generation Timeline - Mobile Optimized */}
+        <div className="flex flex-col sm:grid sm:grid-cols-2 gap-3 sm:gap-4 p-4 bg-elec-gray/50 rounded-lg border border-pink-500/10">
+          <div className="flex items-center gap-3">
+            <Clock className="h-5 w-5 text-pink-400 flex-shrink-0" />
+            <div className="flex-1">
+              <div className="text-xs text-muted-foreground">Elapsed Time</div>
+              <div className="text-2xl font-bold text-pink-400">{formatTime(elapsedTime)}</div>
+            </div>
           </div>
-          <div className="text-center border-x border-pink-500/10">
-            <div className="text-xs text-muted-foreground mb-1">Estimated Remaining</div>
-            <div className="text-lg font-semibold text-foreground">{formatTime(remaining)}</div>
-          </div>
-          <div className="text-center">
-            <div className="text-xs text-muted-foreground mb-1">Total Estimate</div>
-            <div className="text-lg font-semibold text-muted-foreground">{formatTime(estimatedTotal)}</div>
+          <div className="flex items-center gap-3">
+            <Clock className="h-5 w-5 text-foreground flex-shrink-0" />
+            <div className="flex-1">
+              <div className="text-xs text-muted-foreground">Remaining</div>
+              <div className="text-2xl font-bold text-foreground">{formatTime(remaining)}</div>
+            </div>
           </div>
         </div>
       </Card>
 
-      {/* What's Happening Section */}
-      <Card className="p-6">
-        <h4 className="font-semibold mb-4 flex items-center gap-2">
+      {/* What's Happening Section - Compact Timeline */}
+      <Card className="p-4 sm:p-6">
+        <h4 className="text-base font-semibold mb-4 flex items-center gap-2 text-left">
           <Clipboard className="h-5 w-5 text-pink-400" />
           What's Happening?
         </h4>
-        <div className="space-y-3">
-          <div className={`flex items-start gap-3 p-3 rounded-lg transition-all ${
+        <ol className="space-y-0 relative">
+          {/* Step 1 */}
+          <li className={`flex items-start gap-3 py-3 border-b border-border/40 transition-all ${
             progress?.stage === 'parsing' || progress?.stage === 'rag' || progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete'
-              ? 'bg-pink-500/10 border border-pink-500/20'
-              : 'bg-elec-gray/30 border border-transparent'
+              ? 'border-l-4 border-l-green-500 pl-3 bg-green-500/5'
+              : 'pl-3'
           }`}>
-            <Search className={`h-4 w-4 mt-0.5 ${
-              progress?.stage === 'parsing' || progress?.stage === 'rag' || progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete'
-                ? 'text-pink-400'
-                : 'text-muted-foreground'
-            }`} />
-            <div>
-              <div className="font-medium text-sm">Searching BS 7671 project requirements</div>
-              <div className="text-xs text-muted-foreground mt-1">
-                Finding relevant regulations, planning constraints, and compliance needs
+            <div className="flex-shrink-0 mt-0.5">
+              {(progress?.stage === 'parsing' || progress?.stage === 'rag' || progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete') ? (
+                <div className="h-5 w-5 rounded-full bg-green-500 flex items-center justify-center animate-scale-in">
+                  <Check className="h-3 w-3 text-white" />
+                </div>
+              ) : (
+                <div className="h-5 w-5 rounded-full border-2 border-muted-foreground/40" />
+              )}
+            </div>
+            <div className="flex-1 min-w-0 text-left">
+              <div className="font-medium text-sm">Searching BS 7671...</div>
+              <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                Finding regulations & compliance needs
               </div>
             </div>
-          </div>
+          </li>
 
-          <div className={`flex items-start gap-3 p-3 rounded-lg transition-all ${
+          {/* Step 2 */}
+          <li className={`flex items-start gap-3 py-3 border-b border-border/40 transition-all ${
             progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete'
-              ? 'bg-pink-500/10 border border-pink-500/20'
-              : 'bg-elec-gray/30 border border-transparent'
+              ? 'border-l-4 border-l-green-500 pl-3 bg-green-500/5'
+              : progress?.stage === 'rag'
+              ? 'border-l-4 border-l-pink-500 pl-3 bg-pink-500/10 animate-pulse'
+              : 'pl-3'
           }`}>
-            <Clipboard className={`h-4 w-4 mt-0.5 ${
-              progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete'
-                ? 'text-pink-400'
-                : 'text-muted-foreground'
-            }`} />
-            <div>
-              <div className="font-medium text-sm">Analysing project scope and dependencies</div>
-              <div className="text-xs text-muted-foreground mt-1">
-                Identifying critical path, resource requirements, and risk factors
+            <div className="flex-shrink-0 mt-0.5">
+              {(progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete') ? (
+                <div className="h-5 w-5 rounded-full bg-green-500 flex items-center justify-center animate-scale-in">
+                  <Check className="h-3 w-3 text-white" />
+                </div>
+              ) : progress?.stage === 'rag' ? (
+                <div className="h-5 w-5 rounded-full bg-pink-500 flex items-center justify-center animate-pulse">
+                  <Search className="h-3 w-3 text-elec-dark" />
+                </div>
+              ) : (
+                <div className="h-5 w-5 rounded-full border-2 border-muted-foreground/40" />
+              )}
+            </div>
+            <div className="flex-1 min-w-0 text-left">
+              <div className="font-medium text-sm">Analysing scope...</div>
+              <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                Identifying critical path & risk factors
               </div>
             </div>
-          </div>
+          </li>
 
-          <div className={`flex items-start gap-3 p-3 rounded-lg transition-all ${
+          {/* Step 3 */}
+          <li className={`flex items-start gap-3 py-3 border-b border-border/40 transition-all ${
             progress?.stage === 'validation' || progress?.stage === 'complete'
-              ? 'bg-pink-500/10 border border-pink-500/20'
-              : 'bg-elec-gray/30 border border-transparent'
+              ? 'border-l-4 border-l-green-500 pl-3 bg-green-500/5'
+              : progress?.stage === 'ai'
+              ? 'border-l-4 border-l-pink-500 pl-3 bg-pink-500/10 animate-pulse'
+              : 'pl-3'
           }`}>
-            <Calendar className={`h-4 w-4 mt-0.5 ${
-              progress?.stage === 'validation' || progress?.stage === 'complete'
-                ? 'text-pink-400'
-                : 'text-muted-foreground'
-            }`} />
-            <div>
-              <div className="font-medium text-sm">Generating detailed execution plan</div>
-              <div className="text-xs text-muted-foreground mt-1">
-                Creating phase breakdown, task sequences, and coordination strategies
+            <div className="flex-shrink-0 mt-0.5">
+              {(progress?.stage === 'validation' || progress?.stage === 'complete') ? (
+                <div className="h-5 w-5 rounded-full bg-green-500 flex items-center justify-center animate-scale-in">
+                  <Check className="h-3 w-3 text-white" />
+                </div>
+              ) : progress?.stage === 'ai' ? (
+                <div className="h-5 w-5 rounded-full bg-pink-500 flex items-center justify-center animate-pulse">
+                  <Clipboard className="h-3 w-3 text-elec-dark" />
+                </div>
+              ) : (
+                <div className="h-5 w-5 rounded-full border-2 border-muted-foreground/40" />
+              )}
+            </div>
+            <div className="flex-1 min-w-0 text-left">
+              <div className="font-medium text-sm">Generating plan...</div>
+              <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                Creating phase breakdown & task sequences
               </div>
             </div>
-          </div>
+          </li>
 
-          <div className={`flex items-start gap-3 p-3 rounded-lg transition-all ${
+          {/* Step 4 */}
+          <li className={`flex items-start gap-3 py-3 transition-all ${
             progress?.stage === 'complete'
-              ? 'bg-pink-500/10 border border-pink-500/20'
-              : 'bg-elec-gray/30 border border-transparent'
+              ? 'border-l-4 border-l-green-500 pl-3 bg-green-500/5'
+              : progress?.stage === 'validation'
+              ? 'border-l-4 border-l-pink-500 pl-3 bg-pink-500/10 animate-pulse'
+              : 'pl-3'
           }`}>
-            <CheckCircle2 className={`h-4 w-4 mt-0.5 ${
-              progress?.stage === 'complete'
-                ? 'text-pink-400'
-                : 'text-muted-foreground'
-            }`} />
-            <div>
-              <div className="font-medium text-sm">Creating resource schedules and milestones</div>
-              <div className="text-xs text-muted-foreground mt-1">
-                Allocating labour, materials, and defining key project milestones
+            <div className="flex-shrink-0 mt-0.5">
+              {progress?.stage === 'complete' ? (
+                <div className="h-5 w-5 rounded-full bg-green-500 flex items-center justify-center animate-scale-in">
+                  <Check className="h-3 w-3 text-white" />
+                </div>
+              ) : progress?.stage === 'validation' ? (
+                <div className="h-5 w-5 rounded-full bg-pink-500 flex items-center justify-center animate-pulse">
+                  <Calendar className="h-3 w-3 text-elec-dark" />
+                </div>
+              ) : (
+                <div className="h-5 w-5 rounded-full border-2 border-muted-foreground/40" />
+              )}
+            </div>
+            <div className="flex-1 min-w-0 text-left">
+              <div className="font-medium text-sm">Creating schedules...</div>
+              <div className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                Allocating resources & defining milestones
               </div>
             </div>
-          </div>
-        </div>
+          </li>
+        </ol>
       </Card>
     </div>
   );
