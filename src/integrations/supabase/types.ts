@@ -8257,10 +8257,23 @@ export type Database = {
           query_text: string
         }
         Returns: {
+          applies_to: string[]
+          bs7671_regulations: string[]
+          cable_sizes: string[]
+          confidence_score: number
           content: string
+          equipment_category: string
+          expected_results: string
           hybrid_score: number
           id: string
+          keywords: string[]
+          location_types: string[]
+          maintenance_interval: string
+          power_ratings: string[]
+          practical_work_id: string
+          primary_topic: string
           source: string
+          tools_required: string[]
           topic: string
         }[]
       }
