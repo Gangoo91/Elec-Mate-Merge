@@ -108,6 +108,10 @@ const ComprehensiveResultsView = ({
         overheads={profitability?.jobOverheads}
         contingencyPercent={structuredData?.confidence?.contingency?.percentage || 5}
         breakEven={breakEven}
+        labourRate={totalLabourHours > 0 ? analysis.labourTotal / totalLabourHours : 0}
+        region={projectContext?.region || 'other'}
+        experienceLevel={projectContext?.experienceLevel || 'qualified'}
+        jobDuration={totalLabourHours > 0 ? totalLabourHours / 8 : 0}
       />
 
       {/* 6. Materials Breakdown Table */}
