@@ -456,7 +456,39 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
         estimatedProfit: round2dp(profit)
       },
       
-      // 10. Metadata
+      // 10. Trade Intelligence (RAG Self-Validation)
+      tradeIntelligence: structuredData?.tradeIntelligence ? {
+        materialsCompleteness: {
+          status: structuredData.tradeIntelligence.materialsCompleteness.status,
+          score: round2dp(structuredData.tradeIntelligence.materialsCompleteness.score || 0),
+          commentary: structuredData.tradeIntelligence.materialsCompleteness.commentary,
+          missingItems: structuredData.tradeIntelligence.materialsCompleteness.missingItems || [],
+          recommendations: structuredData.tradeIntelligence.materialsCompleteness.recommendations || []
+        },
+        labourRealism: {
+          status: structuredData.tradeIntelligence.labourRealism.status,
+          score: round2dp(structuredData.tradeIntelligence.labourRealism.score || 0),
+          commentary: structuredData.tradeIntelligence.labourRealism.commentary,
+          benchmarkComparison: structuredData.tradeIntelligence.labourRealism.benchmarkComparison || '',
+          concerns: structuredData.tradeIntelligence.labourRealism.concerns || [],
+          recommendations: structuredData.tradeIntelligence.labourRealism.recommendations || []
+        },
+        futureWorkLogic: {
+          status: structuredData.tradeIntelligence.futureWorkLogic.status,
+          score: round2dp(structuredData.tradeIntelligence.futureWorkLogic.score || 0),
+          commentary: structuredData.tradeIntelligence.futureWorkLogic.commentary,
+          relevanceCheck: structuredData.tradeIntelligence.futureWorkLogic.relevanceCheck || '',
+          concerns: structuredData.tradeIntelligence.futureWorkLogic.concerns || [],
+          recommendations: structuredData.tradeIntelligence.futureWorkLogic.recommendations || []
+        },
+        overallAssessment: {
+          readyToQuote: structuredData.tradeIntelligence.overallAssessment.readyToQuote,
+          summary: structuredData.tradeIntelligence.overallAssessment.summary,
+          criticalIssues: structuredData.tradeIntelligence.overallAssessment.criticalIssues || []
+        }
+      } : null,
+      
+      // 11. Metadata
       generatedAt: new Date().toISOString(),
       version: '3.0'
     };

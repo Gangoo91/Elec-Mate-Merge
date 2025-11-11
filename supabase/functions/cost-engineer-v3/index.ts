@@ -487,6 +487,35 @@ QUOTE TIER SELECTION:
 • busy (40% margin): Premium pricing when calendar is full
 • Selection factors: Diary availability, client relationship, job appeal, competition
 
+TRADE INTELLIGENCE - RAG SELF-VALIDATION:
+You must evaluate your own outputs for completeness and realism using a Red/Amber/Green scoring system:
+
+1. MATERIALS COMPLETENESS (score 0-100):
+   🟢 GREEN (90-100): All materials present including fixings, glands, cable feeds, containment
+   🟡 AMBER (70-89): Minor items missing but acceptable (e.g., cable clips, screws)
+   🔴 RED (<70): Critical items missing (e.g., SWA glands for outdoor, main feeds, consumer unit breaker)
+   
+   Check for: Cable glands, fixings, containment, terminations, earthing components, cable feeds
+   Missing items flagged: List specific items not included but likely needed
+
+2. LABOUR REALISM (score 0-100):
+   🟢 GREEN (90-110% of industry benchmark): Realistic, achievable hours
+   🟡 AMBER (80-90% or 110-120%): Slightly tight or generous, may need adjustment
+   🔴 RED (<80% or >130%): Severely under or overestimated
+   
+   Benchmarks: 3-bed rewire 45h, socket 30min, light 20min, CU change 8h, shower 4h
+   Compare your estimate to benchmark and explain deviations
+
+3. FUTURE WORK LOGIC (score 0-100):
+   🟢 GREEN (90-100): All upsells/pipeline contextually relevant to current job
+   🟡 AMBER (70-89): Some tangential but acceptable suggestions
+   🔴 RED (<70): Irrelevant or inappropriate suggestions
+   
+   Check: Do upsells make sense for THIS property? Are pipeline items logical follow-ons?
+   Flag: Any suggestions that do not match the property type or client needs
+
+Provide specific feedback for each category with actionable recommendations.
+
 CRITICAL MATH:
 • materials.subtotal = Σ(item totals with markup)
 • labour.subtotal = Σ(task totals)
@@ -928,9 +957,88 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
                   },
                   required: ['agent', 'reason', 'priority']
                 }
+              },
+              tradeIntelligence: {
+                type: 'object',
+                description: 'RAG self-validation of AI outputs for quality assurance',
+                properties: {
+                  materialsCompleteness: {
+                    type: 'object',
+                    properties: {
+                      status: { type: 'string', enum: ['green', 'amber', 'red'] },
+                      score: { type: 'number', minimum: 0, maximum: 100 },
+                      commentary: { type: 'string', description: 'Brief assessment of materials completeness' },
+                      missingItems: { 
+                        type: 'array', 
+                        items: { type: 'string' },
+                        description: 'Specific items not included but likely needed (if any)'
+                      },
+                      recommendations: {
+                        type: 'array',
+                        items: { type: 'string' },
+                        description: 'Suggested additions to improve completeness'
+                      }
+                    },
+                    required: ['status', 'score', 'commentary']
+                  },
+                  labourRealism: {
+                    type: 'object',
+                    properties: {
+                      status: { type: 'string', enum: ['green', 'amber', 'red'] },
+                      score: { type: 'number', minimum: 0, maximum: 100 },
+                      commentary: { type: 'string', description: 'Comparison to industry benchmarks' },
+                      benchmarkComparison: { type: 'string', description: 'e.g., "95% of benchmark for 3-bed rewire (45h)"' },
+                      concerns: {
+                        type: 'array',
+                        items: { type: 'string' },
+                        description: 'Specific areas where hours may be tight or excessive'
+                      },
+                      recommendations: {
+                        type: 'array',
+                        items: { type: 'string' },
+                        description: 'Suggestions to improve realism'
+                      }
+                    },
+                    required: ['status', 'score', 'commentary']
+                  },
+                  futureWorkLogic: {
+                    type: 'object',
+                    properties: {
+                      status: { type: 'string', enum: ['green', 'amber', 'red'] },
+                      score: { type: 'number', minimum: 0, maximum: 100 },
+                      commentary: { type: 'string', description: 'Assessment of upsell/pipeline relevance' },
+                      relevanceCheck: { type: 'string', description: 'How well suggestions match the property and client' },
+                      concerns: {
+                        type: 'array',
+                        items: { type: 'string' },
+                        description: 'Any irrelevant or inappropriate suggestions flagged'
+                      },
+                      recommendations: {
+                        type: 'array',
+                        items: { type: 'string' },
+                        description: 'Better-aligned opportunities if applicable'
+                      }
+                    },
+                    required: ['status', 'score', 'commentary']
+                  },
+                  overallAssessment: {
+                    type: 'object',
+                    properties: {
+                      readyToQuote: { type: 'boolean', description: 'true if all areas are green or amber' },
+                      summary: { type: 'string', description: 'Overall quality assessment' },
+                      criticalIssues: {
+                        type: 'array',
+                        items: { type: 'string' },
+                        description: 'Must-fix issues before quoting (if any red flags)'
+                      }
+                    },
+                    required: ['readyToQuote', 'summary']
+                  }
+                },
+                required: ['materialsCompleteness', 'labourRealism', 'futureWorkLogic', 'overallAssessment']
               }
             },
-            required: ['response', 'materials', 'summary', 'timescales', 'alternatives', 'orderList', 'confidence', 'recommendedQuote'],
+            required: ['response', 'materials', 'summary', 'timescales', 'alternatives', 'orderList', 'confidence', 'recommendedQuote', 'tradeIntelligence'],
             additionalProperties: false
           }
         }

@@ -16,6 +16,7 @@ import SiteArrivalChecklist from "./SiteArrivalChecklist";
 import PaymentTermsCard from "./PaymentTermsCard";
 import JobNotesCard from "./JobNotesCard";
 import PostJobReviewCard from "./PostJobReviewCard";
+import TradeIntelligenceCard from "./TradeIntelligenceCard";
 
 interface ComprehensiveResultsViewProps {
   analysis: ParsedCostAnalysis;
@@ -71,6 +72,11 @@ const ComprehensiveResultsView = ({
 
       {/* 2. Key Action Items (Top 3) */}
       <KeyActionItems structuredData={structuredData} />
+
+      {/* 2.5. Trade Intelligence (RAG Self-Validation) */}
+      {structuredData?.tradeIntelligence && (
+        <TradeIntelligenceCard tradeIntelligence={structuredData.tradeIntelligence} />
+      )}
 
       {/* 3. Client Quote Summary */}
       <ClientQuoteSummary
