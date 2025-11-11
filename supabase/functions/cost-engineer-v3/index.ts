@@ -2721,6 +2721,7 @@ Provide:
     return new Response(
       JSON.stringify({
         success: true,
+        originalQuery: query,                          // Store user's original prompt
         response: costResult.response,                 // Narrative text from AI
         structuredData: costResult,                    // Full structured breakdown
         citations: [],                                 // Cost Engineer doesn't cite regulations

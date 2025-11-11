@@ -20,6 +20,7 @@ const CostEngineerInterface = () => {
   const [viewState, setViewState] = useState<ViewState>('input');
   const [projectType, setProjectType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
   const [prompt, setPrompt] = useState("");
+  const [originalQueryFromResponse, setOriginalQueryFromResponse] = useState<string>("");
   const [parsedResults, setParsedResults] = useState<ParsedCostAnalysis | null>(null);
   const [structuredData, setStructuredData] = useState<any>(null);
   const [projectName, setProjectName] = useState("");
@@ -87,6 +88,11 @@ const CostEngineerInterface = () => {
 
       if (!data || !data.success) {
         throw new Error(data?.error || 'Cost Engineer returned unsuccessful response');
+      }
+
+      // Store original query from response
+      if (data.originalQuery) {
+        setOriginalQueryFromResponse(data.originalQuery);
       }
 
       // Store core estimate data
@@ -218,6 +224,7 @@ const CostEngineerInterface = () => {
       <CostAnalysisResults 
         analysis={parsedResults}
         projectName={projectName}
+        originalQuery={originalQueryFromResponse || prompt}
         onNewAnalysis={handleNewAnalysis}
         structuredData={structuredData}
         projectContext={{

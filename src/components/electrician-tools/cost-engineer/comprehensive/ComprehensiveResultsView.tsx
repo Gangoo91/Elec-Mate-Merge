@@ -1,4 +1,5 @@
 import { ParsedCostAnalysis } from "@/utils/cost-analysis-parser";
+import OriginalRequestCard from "./OriginalRequestCard";
 import AIAnalysisHeader from "./AIAnalysisHeader";
 import KeyActionItems from "./KeyActionItems";
 import ClientQuoteSummary from "./ClientQuoteSummary";
@@ -23,6 +24,7 @@ interface ComprehensiveResultsViewProps {
   analysis: ParsedCostAnalysis;
   structuredData: any;
   projectContext: any;
+  originalQuery?: string;
   onNewAnalysis: () => void;
 }
 
@@ -30,6 +32,7 @@ const ComprehensiveResultsView = ({
   analysis, 
   structuredData, 
   projectContext,
+  originalQuery,
   onNewAnalysis 
 }: ComprehensiveResultsViewProps) => {
   
@@ -62,8 +65,17 @@ const ComprehensiveResultsView = ({
 
   return (
     <div className="space-y-6 pb-8">
+      {/* 0. Original User Request */}
+      {originalQuery && (
+        <OriginalRequestCard 
+          query={originalQuery}
+          projectContext={projectContext}
+          timestamp={new Date().toISOString()}
+        />
+      )}
+
       {/* 1. AI Cost Engineer Analysis Header */}
-      <AIAnalysisHeader 
+      <AIAnalysisHeader
         jobDescription={structuredData?.response}
         complexity={structuredData?.complexity}
         confidence={structuredData?.confidence}

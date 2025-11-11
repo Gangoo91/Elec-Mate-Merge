@@ -11,6 +11,7 @@ import ComprehensiveResultsView from "./comprehensive/ComprehensiveResultsView";
 interface CostAnalysisResultsProps {
   analysis: ParsedCostAnalysis;
   projectName?: string;
+  originalQuery?: string;
   onNewAnalysis: () => void;
   structuredData?: any; // V3 structured response
   projectContext?: {
@@ -22,7 +23,7 @@ interface CostAnalysisResultsProps {
   };
 }
 
-const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredData, projectContext }: CostAnalysisResultsProps) => {
+const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalysis, structuredData, projectContext }: CostAnalysisResultsProps) => {
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [showPayloadPreview, setShowPayloadPreview] = useState(false);
 
@@ -125,7 +126,19 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
     const contingencyAmount = round2dp((materialsSubtotal + labourSubtotal) * (contingencyPercentage / 100));
 
     const payload = {
-      // 0. AI Analysis Header
+      // 0. Original User Request
+      originalRequest: {
+        query: originalQuery || '',
+        timestamp: new Date().toISOString(),
+        projectContext: {
+          projectName: projectContext?.projectName || '',
+          clientInfo: projectContext?.clientInfo || '',
+          location: projectContext?.location || '',
+          additionalInfo: projectContext?.additionalInfo || ''
+        }
+      },
+      
+      // 1. AI Analysis Header
       aiAnalysisHeader: {
         jobDescription: structuredData?.response || '',
         complexity: structuredData?.complexity ? {
@@ -638,6 +651,7 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
         analysis={analysis}
         structuredData={structuredData}
         projectContext={projectContext}
+        originalQuery={originalQuery}
         onNewAnalysis={onNewAnalysis}
       />
 
