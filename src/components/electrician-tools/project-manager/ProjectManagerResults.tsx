@@ -139,50 +139,62 @@ const ProjectManagerResults = ({
     <div className="space-y-4 pb-6">
       {/* Header Actions */}
       <Card className="p-3 sm:p-4">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
-          <div>
-            <h4 className="font-semibold text-lg">Project Plan Results</h4>
-            <div className="flex items-center gap-2 mt-1">
-              <div className="text-sm text-muted-foreground">Progress: {calculateProgress()}%</div>
-              <div className="flex-1 bg-muted rounded-full h-2 max-w-[120px]">
-                <div 
-                  className="bg-gradient-to-r from-pink-400 to-pink-600 h-2 rounded-full transition-all duration-300"
-                  style={{ width: `${calculateProgress()}%` }}
-                />
-              </div>
-            </div>
+        <h4 className="font-semibold text-lg mb-3">Project Plan Results</h4>
+        
+        {/* Progress Bar - Full Width Mobile */}
+        <div className="mb-3 pb-3 border-b border-border/30">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-medium text-muted-foreground">
+              Overall Progress
+            </span>
+            <span className="text-sm font-bold text-pink-400">
+              {calculateProgress()}%
+            </span>
           </div>
-          <div className="flex items-center gap-2 flex-wrap">
-            <Button 
-              type="button"
-              size="sm" 
-              variant="outline"
-              onClick={handleCopy}
-              className="touch-manipulation"
-            >
-              <Copy className="h-4 w-4 mr-2" />
-              Copy
-            </Button>
-            <Button 
-              type="button"
-              size="sm" 
-              variant="outline"
-              onClick={handleExportCalendar}
-              className="touch-manipulation"
-            >
-              <CalendarIcon className="h-4 w-4 mr-2" />
-              Export iCal
-            </Button>
-            <Button 
-              type="button"
-              size="sm" 
-              variant="outline"
-              onClick={handleExportPDF}
-              className="touch-manipulation"
-            >
-              <Download className="h-4 w-4 mr-2" />
-              Export PDF
-            </Button>
+          <div className="w-full bg-muted rounded-full h-2.5">
+            <div 
+              className="bg-gradient-to-r from-pink-400 to-pink-600 h-2.5 rounded-full transition-all duration-300"
+              style={{ width: `${calculateProgress()}%` }}
+            />
+          </div>
+        </div>
+        
+        {/* Action Buttons - Grid Layout Mobile */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <Button 
+            type="button"
+            size="sm" 
+            variant="outline"
+            onClick={handleCopy}
+            className="touch-manipulation h-10 text-xs"
+          >
+            <Copy className="h-3.5 w-3.5 mr-1.5" />
+            Copy
+          </Button>
+          
+          <Button 
+            type="button"
+            size="sm" 
+            variant="outline"
+            onClick={handleExportCalendar}
+            className="touch-manipulation h-10 text-xs"
+          >
+            <CalendarIcon className="h-3.5 w-3.5 mr-1.5" />
+            Export iCal
+          </Button>
+          
+          <Button 
+            type="button"
+            size="sm" 
+            variant="outline"
+            onClick={handleExportPDF}
+            className="touch-manipulation h-10 text-xs"
+          >
+            <Download className="h-3.5 w-3.5 mr-1.5" />
+            Export PDF
+          </Button>
+          
+          <div className="col-span-2 sm:col-span-1">
             <SendToAgentDropdown 
               currentAgent="project-manager" 
               currentOutput={{ prompt, selectedType, projectName, results }} 
