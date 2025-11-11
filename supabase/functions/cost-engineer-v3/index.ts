@@ -416,6 +416,32 @@ ${practicalWorkContext ? `INSTALL METHODS:\n${practicalWorkContext.substring(0, 
 ${regulationsContext ? `REGULATIONS:\n${regulationsContext.substring(0, 600)}\n` : ''}
 ${labourTimeContext ? `${labourTimeContext.substring(0, 500)}\n` : ''}
 
+CRITICAL PRICING RULES - FOLLOW EXACTLY:
+
+1. CABLE PRICING - ALWAYS per metre:
+   - 2.5mm² T&E: £0.98/metre (NOT per 100m roll price)
+   - 1.5mm² T&E: £0.80/metre
+   - 6mm² T&E: £2.20/metre
+   - 10mm² T&E: £3.90/metre
+   - Example: 500m cable = 500 × £0.98 = £490.00
+   - NEVER write "500m at £0.21" - ALWAYS write quantity × unit price = total
+   - Unit price MUST be per metre, NOT total divided by quantity
+
+2. CONSUMER UNITS - UK 2025 typical trade prices (NEVER exceed these):
+   - 8-way RCBO: £150-180 (typical £165)
+   - 10-way RCBO: £180-220 (typical £200)
+   - 12-way RCBO: £220-280 (typical £250)
+   - 16-way RCBO: £280-350 (typical £320)
+   - 18-way RCBO: £320-400 (typical £360)
+   - NEVER exceed £400 unless it is a 24-way or special high-integrity unit
+   - If you calculate higher, use the typical value above instead
+
+3. QUANTITY × UNIT PRICE = TOTAL (show this calculation)
+   - Materials table: unitPrice is per metre/each, NOT total price
+   - Example: { quantity: 500, unit: "m", unitPrice: 0.98, total: 490.00 }
+
+4. USE DATABASE PRICES when available, otherwise use these fallbacks
+
 CORE RULES:
 • Indoor: T&E cable | Outdoor: SWA cable | Underground: SWA @ 600mm
 • Regional rate: ${detectedRegion} £${adjustedLabourRate.toFixed(2)}/hr
@@ -847,16 +873,16 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
               },
               upsells: {
                 type: 'array',
-                description: 'Automatic upsell opportunities based on job type',
+                description: 'IMMEDIATE ADD-ONS to this job (3-5 items): upgrades, premium options, additional features the client can add NOW',
                 items: {
                   type: 'object',
                   properties: {
-                    opportunity: { type: 'string' },
-                    price: { type: 'number' },
-                    winRate: { type: 'number', description: 'Percentage likelihood of acceptance' },
-                    timing: { type: 'string' },
-                    script: { type: 'string', description: 'Word-for-word conversation script' },
-                    isHot: { type: 'boolean', description: 'High-priority upsell' }
+                    opportunity: { type: 'string', description: 'Specific upgrade for THIS job (e.g., "Upgrade to smart dimmers in living room")' },
+                    price: { type: 'number', description: 'Exact additional cost in £' },
+                    winRate: { type: 'number', description: 'Realistic win rate % (typical: 60-75% for good upsells)' },
+                    timing: { type: 'string', description: 'When to add it (e.g., "During installation" or "Adds 15 minutes")' },
+                    script: { type: 'string', description: 'Exact words to say to client (e.g., "For an extra £80 I can install smart dimmers so you can control them from your phone")' },
+                    isHot: { type: 'boolean', description: 'true if win rate >75% OR value >£200' }
                   },
                   required: ['opportunity', 'price', 'winRate', 'timing', 'script', 'isHot']
                 }
@@ -873,16 +899,16 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
               },
               pipeline: {
                 type: 'array',
-                description: 'Future revenue opportunities',
+                description: 'FUTURE WORK OPPORTUNITIES (3-5 items): long-term revenue based on property and client discussions (NOT immediate add-ons)',
                 items: {
                   type: 'object',
                   properties: {
-                    opportunity: { type: 'string' },
-                    timing: { type: 'string' },
-                    estimatedValue: { type: 'number' },
-                    priority: { type: 'string', enum: ['high', 'medium', 'low'] },
-                    trigger: { type: 'string' },
-                    description: { type: 'string' }
+                    opportunity: { type: 'string', description: 'Future job (e.g., "Loft conversion electrics", "Kitchen extension wiring")' },
+                    timing: { type: 'string', description: 'When likely (e.g., "6-12 months", "When they renovate kitchen")' },
+                    estimatedValue: { type: 'number', description: 'Estimated revenue in £' },
+                    priority: { type: 'string', enum: ['high', 'medium', 'low'], description: 'Likelihood of happening' },
+                    trigger: { type: 'string', description: 'What triggers this work (e.g., "Planning permission approved", "Client mentioned plans")' },
+                    description: { type: 'string', description: 'Brief description of the work' }
                   },
                   required: ['opportunity', 'timing', 'estimatedValue', 'priority', 'description']
                 }
@@ -928,6 +954,51 @@ ${materials ? `\nMaterials: ${JSON.stringify(materials)}` : ''}${labourHours ? `
       
       logger.warn('Falling back to deterministic estimate due to AI failure');
       throw new Error(`AI generation failed: ${aiError instanceof Error ? aiError.message : 'Unknown error'}`);
+    }
+
+    // VALIDATE AND FIX MATERIAL PRICING (prevent AI errors)
+    if (coreResult?.materials?.items) {
+      logger.info('🔍 Validating material pricing for accuracy');
+      
+      coreResult.materials.items = coreResult.materials.items.map((item: any) => {
+        const itemLower = item.description.toLowerCase();
+        
+        // Fix consumer unit pricing (cap at £400)
+        if (itemLower.includes('consumer unit') || itemLower.includes('cu ') || itemLower.includes('board')) {
+          if (item.unitPrice > 400) {
+            logger.warn(`⚠️ Consumer unit price ${item.unitPrice} exceeds £400, capping at £360`);
+            item.unitPrice = 360;
+            item.total = item.quantity * 360;
+          }
+        }
+        
+        // Fix cable pricing (ensure per-metre, not total)
+        if ((itemLower.includes('cable') || itemLower.includes('t&e') || itemLower.includes('twin')) && 
+            item.unit === 'm' && item.quantity > 10) {
+          // If unit price is suspiciously low (like £0.21 for 500m), it's likely total ÷ quantity error
+          if (item.unitPrice < 0.50) {
+            logger.warn(`⚠️ Cable unit price ${item.unitPrice}/m too low, using £0.98/m`);
+            item.unitPrice = 0.98;
+            item.total = item.quantity * 0.98;
+          }
+          // If total seems wrong, recalculate
+          if (Math.abs(item.total - (item.quantity * item.unitPrice)) > 1) {
+            logger.warn(`⚠️ Cable total mismatch, recalculating: ${item.quantity} × £${item.unitPrice}`);
+            item.total = Number((item.quantity * item.unitPrice).toFixed(2));
+          }
+        }
+        
+        return item;
+      });
+      
+      // Recalculate materials subtotal after validation
+      const validatedSubtotal = coreResult.materials.items.reduce((sum: number, item: any) => sum + item.total, 0);
+      if (Math.abs(validatedSubtotal - coreResult.materials.subtotal) > 1) {
+        logger.info(`📊 Recalculating materials subtotal: £${coreResult.materials.subtotal} → £${validatedSubtotal}`);
+        coreResult.materials.subtotal = Number(validatedSubtotal.toFixed(2));
+        coreResult.materials.vat = Number((validatedSubtotal * 0.2).toFixed(2));
+        coreResult.materials.total = Number((validatedSubtotal + coreResult.materials.vat).toFixed(2));
+      }
     }
 
     // Add graceful degradation for missing intelligence fields

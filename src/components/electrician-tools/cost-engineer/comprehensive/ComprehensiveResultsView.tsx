@@ -125,14 +125,26 @@ const ComprehensiveResultsView = ({
         <PricingConfidenceCard confidence={structuredData.confidence} />
       )}
 
-      {/* 11. Upsell Opportunities */}
+      {/* 11. Immediate Upsells (Add to Current Job) */}
       {structuredData?.upsells?.length > 0 && (
-        <UpsellOpportunitiesCard upsells={structuredData.upsells} />
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-green-400">💰 Immediate Upsells - Add to This Job</h3>
+          </div>
+          <p className="text-xs text-muted-foreground">Premium add-ons and upgrades the client is likely to accept</p>
+          <UpsellOpportunitiesCard upsells={structuredData.upsells} />
+        </div>
       )}
 
-      {/* 12. Future Work Pipeline */}
+      {/* 12. Future Work Pipeline (Long-term Opportunities) */}
       {structuredData?.pipeline?.length > 0 && (
-        <FutureWorkPipelineCard pipeline={structuredData.pipeline} />
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-blue-400">🎯 Future Work Pipeline</h3>
+          </div>
+          <p className="text-xs text-muted-foreground">Potential future jobs based on property and client discussions</p>
+          <FutureWorkPipelineCard pipeline={structuredData.pipeline} />
+        </div>
       )}
 
       {/* 13. Client Conversations */}
