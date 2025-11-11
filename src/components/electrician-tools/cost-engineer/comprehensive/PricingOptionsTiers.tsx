@@ -18,21 +18,25 @@ const PricingOptionsTiers = ({
   totalLabourHours
 }: PricingOptionsTiersProps) => {
   
-  const calculateTierMetrics = (tierData: any) => {
-    const margin = tierData?.margin || 0;
-    const profit = tierData?.margin || 0;
-    const profitPerHour = totalLabourHours > 0 ? profit / totalLabourHours : 0;
-    
-    return { margin: tierData?.marginPercent || 0, profit, profitPerHour };
-  };
-
-  const sparse = calculateTierMetrics(profitability?.quoteTiers?.minimum);
-  const normal = calculateTierMetrics(profitability?.quoteTiers?.target);
-  const busy = calculateTierMetrics(profitability?.quoteTiers?.premium);
-
   const sparsePrice = profitability?.quoteTiers?.minimum?.price || breakEven * 1.2;
   const normalPrice = profitability?.quoteTiers?.target?.price || breakEven * 1.3;
   const busyPrice = profitability?.quoteTiers?.premium?.price || breakEven * 1.4;
+
+  const calculateTierMetrics = (price: number) => {
+    const profit = price - breakEven;
+    const margin = price > 0 ? ((profit / price) * 100) : 0;
+    const profitPerHour = totalLabourHours > 0 ? profit / totalLabourHours : 0;
+    
+    return { 
+      margin: Math.max(0, margin),
+      profit: Math.max(0, profit),
+      profitPerHour: Math.max(0, profitPerHour)
+    };
+  };
+
+  const sparse = calculateTierMetrics(sparsePrice);
+  const normal = calculateTierMetrics(normalPrice);
+  const busy = calculateTierMetrics(busyPrice);
 
   return (
     <Card className="border-elec-yellow/20">
