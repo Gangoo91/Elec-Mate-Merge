@@ -1,6 +1,8 @@
 import { ParsedCostAnalysis } from "@/utils/cost-analysis-parser";
 import OriginalRequestCard from "./OriginalRequestCard";
-import AIAnalysisHeader from "./AIAnalysisHeader";
+import QuoteHeroCard from "./QuoteHeroCard";
+import AIAnalysisSummary from "./AIAnalysisSummary";
+import QuickMetricsCard from "./QuickMetricsCard";
 import KeyActionItems from "./KeyActionItems";
 import ClientQuoteSummary from "./ClientQuoteSummary";
 import PricingOptionsTiers from "./PricingOptionsTiers";
@@ -62,6 +64,10 @@ const ComprehensiveResultsView = ({
   const margin = calculateMargin(selectedAmount, breakEven);
   const profit = calculateProfit(selectedAmount, breakEven);
   const profitPerHour = calculateProfitPerHour(profit, totalLabourHours);
+  
+  const avgConfidence = structuredData?.confidence 
+    ? Math.round((structuredData.confidence.materials?.level + structuredData.confidence.labour?.level) / 2)
+    : 75;
 
   return (
     <div className="space-y-4 pb-6 sm:space-y-6 sm:pb-8">
@@ -74,36 +80,36 @@ const ComprehensiveResultsView = ({
         />
       )}
 
-      {/* 1. AI Cost Engineer Analysis Header */}
-      <AIAnalysisHeader
-        jobDescription={structuredData?.response}
+      {/* 1. 💰 HERO: Recommended Quote (BIG & PROMINENT) */}
+      <QuoteHeroCard
+        amount={selectedAmount}
+        tier={selectedTier}
+        profit={profit}
+        margin={margin}
+        profitPerHour={profitPerHour}
+        confidence={avgConfidence}
+        totalLabourHours={totalLabourHours}
+      />
+
+      {/* 2. AI Analysis Summary (Formatted with Paragraphs) */}
+      <AIAnalysisSummary jobDescription={structuredData?.response} />
+
+      {/* 3. Job Snapshot (Quick Metrics) */}
+      <QuickMetricsCard
         complexity={structuredData?.complexity}
         confidence={structuredData?.confidence}
         riskAssessment={structuredData?.riskAssessment}
-        recommendedQuote={structuredData?.recommendedQuote}
       />
 
-      {/* 2. Key Action Items (Top 3) */}
+      {/* 4. Key Action Items (Top 3) */}
       <KeyActionItems structuredData={structuredData} />
 
-      {/* 2.5. Trade Intelligence (RAG Self-Validation) */}
+      {/* 5. Trade Intelligence (RAG Self-Validation) */}
       {structuredData?.tradeIntelligence && (
         <TradeIntelligenceCard tradeIntelligence={structuredData.tradeIntelligence} />
       )}
 
-      {/* 3. Client Quote Summary */}
-      <ClientQuoteSummary
-        selectedTier={selectedTier}
-        amount={selectedAmount}
-        vatAmount={analysis.vatAmount}
-        totalIncVat={analysis.totalCost}
-        breakEven={breakEven}
-        margin={margin}
-        profit={profit}
-        profitPerHour={profitPerHour}
-      />
-
-      {/* 4. Pricing Options (3 Tiers) */}
+      {/* 6. Pricing Options (3 Tiers) */}
       <PricingOptionsTiers
         profitability={profitability}
         selectedTier={selectedTier}
@@ -112,7 +118,7 @@ const ComprehensiveResultsView = ({
         totalLabourHours={totalLabourHours}
       />
 
-      {/* 5. Cost Breakdown */}
+      {/* 7. Cost Breakdown */}
       <CostBreakdownCard
         materialsNet={analysis.materialsTotal}
         materialsMarkup={structuredData?.materials?.markup || 0}
@@ -127,7 +133,7 @@ const ComprehensiveResultsView = ({
         jobDuration={totalLabourHours > 0 ? totalLabourHours / 8 : 0}
       />
 
-      {/* 5.5. Client Quote Justification */}
+      {/* 8. Client Quote Justification */}
       <ClientQuoteJustificationCard
         materialsNet={analysis.materialsTotal}
         materialsMarkup={structuredData?.materials?.markup || 15}
@@ -146,28 +152,28 @@ const ComprehensiveResultsView = ({
         jobDescription={structuredData?.response}
       />
 
-      {/* 6. Materials Breakdown Table */}
+      {/* 9. Materials Breakdown Table */}
       <MaterialsTable items={analysis.materials} />
 
-      {/* 7. Labour Plan Table */}
+      {/* 10. Labour Plan Table */}
       <LabourPlanTable tasks={structuredData?.labour?.tasks || []} />
 
-      {/* 8. Job Complexity Card */}
+      {/* 11. Job Complexity Card */}
       {structuredData?.complexity && (
         <JobComplexityCard complexity={structuredData.complexity} />
       )}
 
-      {/* 9. Risk Assessment */}
+      {/* 12. Risk Assessment */}
       {structuredData?.riskAssessment?.risks?.length > 0 && (
         <RiskAssessmentTable risks={structuredData.riskAssessment.risks} />
       )}
 
-      {/* 10. Pricing Confidence */}
+      {/* 13. Pricing Confidence */}
       {structuredData?.confidence && (
         <PricingConfidenceCard confidence={structuredData.confidence} />
       )}
 
-      {/* 11. Immediate Upsells (Add to Current Job) */}
+      {/* 14. Immediate Upsells (Add to Current Job) */}
       {structuredData?.upsells?.length > 0 && (
         <div className="space-y-2">
           <div className="flex items-center gap-2">
@@ -178,7 +184,7 @@ const ComprehensiveResultsView = ({
         </div>
       )}
 
-      {/* 12. Future Work Pipeline (Long-term Opportunities) */}
+      {/* 15. Future Work Pipeline (Long-term Opportunities) */}
       {structuredData?.pipeline?.length > 0 && (
         <div className="space-y-2">
           <div className="flex items-center gap-2">
@@ -189,17 +195,17 @@ const ComprehensiveResultsView = ({
         </div>
       )}
 
-      {/* 13. Client Conversations */}
+      {/* 16. Client Conversations */}
       {structuredData?.conversations && (
         <ClientConversationsCard conversations={structuredData.conversations} />
       )}
 
-      {/* 14. Site Arrival Checklist */}
+      {/* 17. Site Arrival Checklist */}
       {structuredData?.siteChecklist && (
         <SiteArrivalChecklist checklist={structuredData.siteChecklist} />
       )}
 
-      {/* 15. Payment Terms */}
+      {/* 18. Payment Terms */}
       {structuredData?.paymentTerms && (
         <PaymentTermsCard 
           paymentTerms={structuredData.paymentTerms}
@@ -207,12 +213,12 @@ const ComprehensiveResultsView = ({
         />
       )}
 
-      {/* 16. Job Notes (User Input) */}
+      {/* 19. Job Notes (User Input) */}
       <JobNotesCard 
         projectName={projectContext?.projectName}
       />
 
-      {/* 17. Post-Job Review (Tracking) */}
+      {/* 20. Post-Job Review (Tracking) */}
       <PostJobReviewCard
         estimatedCost={analysis.totalCost}
         estimatedHours={totalLabourHours}
