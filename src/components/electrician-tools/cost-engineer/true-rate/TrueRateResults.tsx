@@ -39,12 +39,12 @@ const TrueRateResults = ({ calculated, inputs }: TrueRateResultsProps) => {
             <div className="p-5 rounded-xl bg-red-500/10 border border-red-500/30">
               <div className="flex items-center gap-2 mb-2">
                 <AlertCircle className="h-5 w-5 text-red-400" />
-                <p className="text-sm text-white/70 font-medium">ABSOLUTE MINIMUM</p>
+                <p className="text-base sm:text-sm text-white/70 font-medium">ABSOLUTE MINIMUM</p>
               </div>
               <p className="text-3xl sm:text-4xl font-bold text-red-400 mb-1">
                 {formatCurrency(calculated.minimumHourlyRate, 0)}/hr
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-base sm:text-sm text-white/80">
                 Break-even rate (no buffer)
               </p>
             </div>
@@ -53,12 +53,12 @@ const TrueRateResults = ({ calculated, inputs }: TrueRateResultsProps) => {
             <div className="p-5 rounded-xl bg-orange-500/10 border border-orange-500/30">
               <div className="flex items-center gap-2 mb-2">
                 <Target className="h-5 w-5 text-orange-400" />
-                <p className="text-sm text-white/70 font-medium">RECOMMENDED</p>
+                <p className="text-base sm:text-sm text-white/70 font-medium">RECOMMENDED</p>
               </div>
               <p className="text-3xl sm:text-4xl font-bold text-orange-400 mb-1">
                 {formatCurrency(calculated.recommendedHourlyRate, 0)}/hr
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-base sm:text-sm text-white/80">
                 Safe rate with 15% buffer
               </p>
             </div>
@@ -67,12 +67,12 @@ const TrueRateResults = ({ calculated, inputs }: TrueRateResultsProps) => {
             <div className="p-5 rounded-xl bg-green-500/10 border border-green-500/30">
               <div className="flex items-center gap-2 mb-2">
                 <CheckCircle className="h-5 w-5 text-green-400" />
-                <p className="text-sm text-white/70 font-medium">TARGET RATE</p>
+                <p className="text-base sm:text-sm text-white/70 font-medium">TARGET RATE</p>
               </div>
               <p className="text-3xl sm:text-4xl font-bold text-green-400 mb-1">
                 {formatCurrency(calculated.targetHourlyRate, 0)}/hr
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-base sm:text-sm text-white/80">
                 For growth & reinvestment
               </p>
             </div>
@@ -104,28 +104,28 @@ const TrueRateResults = ({ calculated, inputs }: TrueRateResultsProps) => {
         <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6 space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-4 rounded-lg bg-card/50 border border-primary/20">
-              <p className="text-sm text-white/70 mb-1">Total Working Hours</p>
+              <p className="text-base sm:text-sm text-white/70 mb-1">Total Working Hours</p>
               <p className="text-2xl font-bold text-white">
                 {formatNumber(calculated.totalWorkingHours, 0)} hrs/year
               </p>
             </div>
 
             <div className="p-4 rounded-lg bg-card/50 border border-primary/20">
-              <p className="text-sm text-white/70 mb-1">Chargeable Hours</p>
+              <p className="text-base sm:text-sm text-white/70 mb-1">Chargeable Hours</p>
               <p className="text-2xl font-bold text-green-400">
                 {formatNumber(calculated.chargeableHours, 0)} hrs/year
               </p>
             </div>
 
             <div className="p-4 rounded-lg bg-card/50 border border-primary/20">
-              <p className="text-sm text-white/70 mb-1">Non-Chargeable Hours</p>
+              <p className="text-base sm:text-sm text-white/70 mb-1">Non-Chargeable Hours</p>
               <p className="text-2xl font-bold text-red-400">
                 {formatNumber(calculated.nonChargeableHours, 0)} hrs/year
               </p>
             </div>
 
             <div className="p-4 rounded-lg bg-card/50 border border-primary/20">
-              <p className="text-sm text-white/70 mb-1">Chargeable Percentage</p>
+              <p className="text-base sm:text-sm text-white/70 mb-1">Chargeable Percentage</p>
               <p className="text-2xl font-bold text-orange-400">
                 {formatNumber(calculated.chargeablePercentage, 1)}%
               </p>
@@ -154,28 +154,28 @@ const TrueRateResults = ({ calculated, inputs }: TrueRateResultsProps) => {
         </CardHeader>
         <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6 space-y-3">
           <div className="flex justify-between items-center py-3 border-b border-primary/20">
-            <span className="text-base sm:text-sm text-white/80">Desired Take-Home Income</span>
+            <span className="text-base text-white/90">Desired Take-Home Income</span>
             <span className="text-lg font-bold text-green-400">
               {formatCurrency(inputs.desiredAnnualIncome, 0)}
             </span>
           </div>
 
           <div className="flex justify-between items-center py-3 border-b border-primary/20">
-            <span className="text-base sm:text-sm text-white/80">Total Business Costs</span>
+            <span className="text-base text-white/90">Total Business Costs</span>
             <span className="text-lg font-bold text-red-400">
               {formatCurrency(calculated.totalAnnualCosts, 0)}
             </span>
           </div>
 
           <div className="flex justify-between items-center py-4 bg-elec-yellow/10 rounded-lg px-4">
-            <span className="text-base sm:text-sm font-bold text-white">Required Annual Revenue</span>
+            <span className="text-base font-bold text-white">Required Annual Revenue</span>
             <span className="text-xl font-bold text-elec-yellow">
               {formatCurrency(calculated.requiredAnnualRevenue, 0)}
             </span>
           </div>
 
           <div className="flex justify-between items-center py-3 border-t border-primary/20">
-            <span className="text-base sm:text-sm text-white/80">Chargeable Hours per Year</span>
+            <span className="text-base text-white/90">Chargeable Hours per Year</span>
             <span className="text-lg font-bold text-white">
               {formatNumber(calculated.chargeableHours, 0)} hrs
             </span>

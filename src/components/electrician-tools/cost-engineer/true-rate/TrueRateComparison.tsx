@@ -110,7 +110,7 @@ const TrueRateComparison = ({ calculated }: TrueRateComparisonProps) => {
                   <h4 className={`text-lg font-bold ${comparison.color} mb-1`}>
                     {comparison.label}
                   </h4>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-base sm:text-sm text-white/90 mb-3">
                     {comparison.description}
                   </p>
                 </div>
@@ -118,21 +118,21 @@ const TrueRateComparison = ({ calculated }: TrueRateComparisonProps) => {
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4 pt-4 border-t border-white/10">
                 <div>
-                  <p className="text-xs text-white/60 mb-1">Chargeable Rate</p>
+                  <p className="text-sm sm:text-xs text-white/70 mb-1">Chargeable Rate</p>
                   <p className={`text-xl font-bold ${comparison.color}`}>
                     {formatCurrency(comparison.rate, 0)}/hr
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-xs text-white/60 mb-1">Annual Take-Home</p>
+                  <p className="text-sm sm:text-xs text-white/70 mb-1">Annual Take-Home</p>
                   <p className={`text-xl font-bold ${takeHome > 0 ? 'text-white' : 'text-red-400'}`}>
                     {formatCurrency(takeHome, 0)}
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-xs text-white/60 mb-1">TRUE Hourly Rate</p>
+                  <p className="text-sm sm:text-xs text-white/70 mb-1">TRUE Hourly Rate</p>
                   <p className={`text-xl font-bold ${effectiveRate > 15 ? 'text-white' : 'text-red-400'}`}>
                     {formatCurrency(effectiveRate, 2)}/hr
                   </p>
@@ -141,7 +141,7 @@ const TrueRateComparison = ({ calculated }: TrueRateComparisonProps) => {
 
               {takeHome < 25000 && (
                 <div className="mt-4 p-3 rounded-lg bg-red-500/20 border border-red-500/30">
-                  <p className="text-sm text-red-300">
+                  <p className="text-base sm:text-sm text-red-300">
                     ⚠️ Below minimum wage after all working hours. This rate will destroy your business.
                   </p>
                 </div>
@@ -149,7 +149,7 @@ const TrueRateComparison = ({ calculated }: TrueRateComparisonProps) => {
 
               {effectiveRate < 12.21 && (
                 <div className="mt-4 p-3 rounded-lg bg-red-500/20 border border-red-500/30">
-                  <p className="text-sm text-red-300">
+                  <p className="text-base sm:text-sm text-red-300">
                     ⚠️ Your TRUE rate is below National Living Wage (£12.21/hr). You're working for less than minimum wage!
                   </p>
                 </div>

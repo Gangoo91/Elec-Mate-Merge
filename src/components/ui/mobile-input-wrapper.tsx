@@ -41,7 +41,7 @@ export function MobileInputWrapper({
   return (
     <div className={cn("space-y-3", className)}>
       {label && (
-        <Label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+        <Label className="text-sm font-semibold text-white flex items-center gap-2">
           <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
           {label}
         </Label>
@@ -67,9 +67,9 @@ export function MobileInputWrapper({
             disabled={disabled}
             autoComplete="off"
             className={cn(
-              "h-14 bg-card border border-primary/30 rounded-xl text-elec-light",
+              "h-14 bg-card border border-primary/30 rounded-xl text-white",
               "hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200",
-              "placeholder:text-elec-light/60 text-base font-medium",
+              "placeholder:text-white/60 text-base font-medium",
               icon ? "pl-12" : "pl-4",
               unit ? "pr-16" : "pr-4",
               error ? "border-destructive focus:border-destructive" : ""
@@ -78,7 +78,7 @@ export function MobileInputWrapper({
           />
           
           {unit && (
-            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-elec-yellow/70 font-medium text-sm">
+            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/70 font-medium text-sm">
               {unit}
             </div>
           )}
@@ -87,7 +87,7 @@ export function MobileInputWrapper({
       </div>
       
       {hint && !error && (
-        <p className="text-xs text-elec-light/70 flex items-center gap-1">
+        <p className="text-xs text-white/80 flex items-center gap-1">
           <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
           {hint}
         </p>

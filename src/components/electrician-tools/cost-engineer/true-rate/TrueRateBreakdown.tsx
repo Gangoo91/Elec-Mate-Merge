@@ -102,7 +102,7 @@ const TrueRateBreakdown = ({ calculated, inputs }: TrueRateBreakdownProps) => {
               className={`p-4 rounded-lg ${item.bg} border ${item.border}`}
             >
               <div className="flex justify-between items-center mb-2">
-                <span className={`text-base sm:text-sm font-semibold ${item.color}`}>
+                <span className={`text-base font-semibold ${item.color}`}>
                   {item.label}
                 </span>
                 <span className={`text-lg font-bold ${item.color}`}>
@@ -141,7 +141,7 @@ const TrueRateBreakdown = ({ calculated, inputs }: TrueRateBreakdownProps) => {
         <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6 space-y-5">
           {costBreakdown.map((category, idx) => (
             <div key={idx} className="space-y-2">
-              <h4 className={`text-base sm:text-sm font-bold ${category.color} mb-3`}>
+              <h4 className={`text-lg sm:text-base font-bold ${category.color} mb-3`}>
                 {category.category}
               </h4>
               {category.items.map((item, itemIdx) => (
@@ -149,14 +149,14 @@ const TrueRateBreakdown = ({ calculated, inputs }: TrueRateBreakdownProps) => {
                   key={itemIdx}
                   className="flex justify-between items-center py-2 px-3 rounded bg-card/30 border border-primary/10"
                 >
-                  <span className="text-sm text-white/80">{item.label}</span>
-                  <span className="text-sm font-semibold text-white">
+                  <span className="text-base sm:text-sm text-white/90">{item.label}</span>
+                  <span className="text-base sm:text-sm font-semibold text-white">
                     {formatCurrency(item.cost, 0)}
                   </span>
                 </div>
               ))}
               <div className="flex justify-between items-center py-2 px-3 rounded bg-card/50 border border-primary/20 font-semibold">
-                <span className="text-sm text-white/90">Subtotal</span>
+                <span className="text-base sm:text-sm text-white">Subtotal</span>
                 <span className={`text-base ${category.color}`}>
                   {formatCurrency(
                     category.items.reduce((sum, item) => sum + item.cost, 0),
