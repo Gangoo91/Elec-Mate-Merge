@@ -39,27 +39,27 @@ const PricingOptionsTiers = ({
   const busy = calculateTierMetrics(busyPrice);
 
   return (
-    <Card className="border-elec-yellow/20">
-      <CardHeader>
-        <CardTitle className="text-lg">Pricing Options</CardTitle>
+    <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
+      <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
+        <CardTitle className="text-xl sm:text-lg font-bold text-white">Pricing Options</CardTitle>
         {explanation && (
-          <p className="text-sm text-muted-foreground mt-2">{explanation}</p>
+          <p className="text-base sm:text-sm text-white/80 mt-2">{explanation}</p>
         )}
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6">
         {/* Price Sanity Check */}
-        <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
-          <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2 flex items-center gap-2">
-            <TrendingUp className="h-4 w-4" />
+        <div className="bg-blue-500/10 border-2 border-blue-500/30 rounded-xl p-5 sm:p-4 mb-6">
+          <h4 className="font-bold text-white text-lg sm:text-base mb-3 sm:mb-2 flex items-center gap-2">
+            <TrendingUp className="h-5 w-5 sm:h-4 sm:w-4 text-blue-400" />
             Industry Benchmark Check
           </h4>
-          <div className="space-y-1 text-sm">
+          <div className="space-y-2 sm:space-y-1 text-base sm:text-sm">
             <div className="flex justify-between">
-              <span className="text-muted-foreground">3-bed rewire typical range:</span>
-              <span className="font-medium">£4,000-6,500</span>
+              <span className="text-white/90">3-bed rewire typical range:</span>
+              <span className="font-medium text-white">£4,000-6,500</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">This quote (Normal tier):</span>
+              <span className="text-white/90">This quote (Normal tier):</span>
               <span className={`font-bold ${
                 normalPrice < 4000 ? 'text-red-500' : 
                 normalPrice > 6500 ? 'text-red-500' : 
@@ -71,7 +71,7 @@ const PricingOptionsTiers = ({
                 {normalPrice >= 4000 && normalPrice <= 6500 && ' ✅ Within range'}
               </span>
             </div>
-            <div className="text-xs text-muted-foreground mt-2">
+            <div className="text-sm sm:text-xs text-white/70 mt-3 sm:mt-2">
               {normalPrice < 4000 && 'Consider if materials or labour are underestimated'}
               {normalPrice > 6500 && 'Review for over-specification or excessive margins'}
               {normalPrice >= 4000 && normalPrice <= 6500 && 'Competitive pricing for your region'}
@@ -79,93 +79,93 @@ const PricingOptionsTiers = ({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {/* Work Sparse */}
-          <div className={`p-4 rounded-lg border-2 ${
+          <div className={`p-5 sm:p-4 rounded-xl border-2 ${
             selectedTier === 'sparse' 
               ? 'border-elec-yellow bg-elec-yellow/10' 
               : 'border-border/50 bg-background/30'
           }`}>
-            <div className="text-center mb-3">
+            <div className="text-center mb-4 sm:mb-3">
               <Badge className="bg-blue-500/20 text-blue-500 border-blue-500/30 mb-2">
                 Work Sparse
               </Badge>
-              <div className="text-3xl font-bold">£{sparsePrice.toFixed(0)}</div>
-              <div className="text-xs text-muted-foreground">Low margin</div>
+              <div className="text-4xl sm:text-3xl font-bold text-white">£{sparsePrice.toFixed(0)}</div>
+              <div className="text-sm sm:text-xs text-white/70 mt-1">Low margin</div>
             </div>
             
-            <div className="space-y-2 text-sm">
+            <div className="space-y-2 text-base sm:text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Margin:</span>
-                <span className="font-medium">{sparse.margin.toFixed(0)}%</span>
+                <span className="text-white/90">Margin:</span>
+                <span className="font-medium text-white">{sparse.margin.toFixed(0)}%</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Profit:</span>
+                <span className="text-white/90">Profit:</span>
                 <span className="font-medium text-green-500">£{sparse.profit.toFixed(0)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Per hour:</span>
-                <span className="font-medium">£{sparse.profitPerHour.toFixed(0)}</span>
+                <span className="text-white/90">Per hour:</span>
+                <span className="font-medium text-white">£{sparse.profitPerHour.toFixed(0)}</span>
               </div>
             </div>
           </div>
 
           {/* Normal */}
-          <div className={`p-4 rounded-lg border-2 ${
+          <div className={`p-5 sm:p-4 rounded-xl border-2 ${
             selectedTier === 'normal' 
               ? 'border-elec-yellow bg-elec-yellow/10' 
               : 'border-border/50 bg-background/30'
           }`}>
-            <div className="text-center mb-3">
+            <div className="text-center mb-4 sm:mb-3">
               <Badge className="bg-elec-yellow/30 text-elec-yellow border-elec-yellow/50 mb-2">
                 Normal ⭐
               </Badge>
-              <div className="text-3xl font-bold text-elec-yellow">£{normalPrice.toFixed(0)}</div>
-              <div className="text-xs text-muted-foreground">Target pricing</div>
+              <div className="text-4xl sm:text-3xl font-bold text-elec-yellow">£{normalPrice.toFixed(0)}</div>
+              <div className="text-sm sm:text-xs text-white/70 mt-1">Target pricing</div>
             </div>
             
-            <div className="space-y-2 text-sm">
+            <div className="space-y-2 text-base sm:text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Margin:</span>
-                <span className="font-medium">{normal.margin.toFixed(0)}%</span>
+                <span className="text-white/90">Margin:</span>
+                <span className="font-medium text-white">{normal.margin.toFixed(0)}%</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Profit:</span>
+                <span className="text-white/90">Profit:</span>
                 <span className="font-medium text-green-500">£{normal.profit.toFixed(0)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Per hour:</span>
-                <span className="font-medium">£{normal.profitPerHour.toFixed(0)}</span>
+                <span className="text-white/90">Per hour:</span>
+                <span className="font-medium text-white">£{normal.profitPerHour.toFixed(0)}</span>
               </div>
             </div>
           </div>
 
           {/* Busy */}
-          <div className={`p-4 rounded-lg border-2 ${
+          <div className={`p-5 sm:p-4 rounded-xl border-2 ${
             selectedTier === 'busy' 
               ? 'border-elec-yellow bg-elec-yellow/10' 
               : 'border-border/50 bg-background/30'
           }`}>
-            <div className="text-center mb-3">
+            <div className="text-center mb-4 sm:mb-3">
               <Badge className="bg-green-500/20 text-green-500 border-green-500/30 mb-2">
                 Busy Period
               </Badge>
-              <div className="text-3xl font-bold">£{busyPrice.toFixed(0)}</div>
-              <div className="text-xs text-muted-foreground">High margin</div>
+              <div className="text-4xl sm:text-3xl font-bold text-white">£{busyPrice.toFixed(0)}</div>
+              <div className="text-sm sm:text-xs text-white/70 mt-1">High margin</div>
             </div>
             
-            <div className="space-y-2 text-sm">
+            <div className="space-y-2 text-base sm:text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Margin:</span>
-                <span className="font-medium">{busy.margin.toFixed(0)}%</span>
+                <span className="text-white/90">Margin:</span>
+                <span className="font-medium text-white">{busy.margin.toFixed(0)}%</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Profit:</span>
+                <span className="text-white/90">Profit:</span>
                 <span className="font-medium text-green-500">£{busy.profit.toFixed(0)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Per hour:</span>
-                <span className="font-medium">£{busy.profitPerHour.toFixed(0)}</span>
+                <span className="text-white/90">Per hour:</span>
+                <span className="font-medium text-white">£{busy.profitPerHour.toFixed(0)}</span>
               </div>
             </div>
           </div>

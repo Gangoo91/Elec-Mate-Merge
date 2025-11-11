@@ -63,12 +63,12 @@ const CostBreakdownCard = ({
   const marketRate = MARKET_RATES_2025.hourlyRates[expLevel] || MARKET_RATES_2025.hourlyRates.qualified;
 
   return (
-    <Card className="border-elec-yellow/20">
-      <CardHeader>
-        <CardTitle className="text-lg">Cost Breakdown</CardTitle>
-        <p className="text-xs text-muted-foreground mt-1">Tap any section to see detailed justification</p>
+    <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
+      <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
+        <CardTitle className="text-xl sm:text-lg font-bold text-white">Cost Breakdown</CardTitle>
+        <p className="text-sm text-white/80 mt-1">Tap any section to see detailed justification</p>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6">
         <div className="space-y-3">
           {/* Materials */}
           <div className="rounded-lg bg-background/30 border border-border/30">
@@ -76,14 +76,14 @@ const CostBreakdownCard = ({
               <div className="flex items-center gap-2">
                 <Package className="h-4 w-4 text-blue-500" />
                 <div>
-                  <div className="font-medium">Materials</div>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="font-medium text-white">Materials</div>
+                  <div className="text-sm text-white/80">
                     Net: £{materialsNet.toFixed(2)} + {markupPercentage}% markup
                   </div>
                 </div>
               </div>
               <div className="text-right">
-                <div className="font-bold">£{materialsWithMarkup.toFixed(2)}</div>
+                <div className="font-bold text-white">£{materialsWithMarkup.toFixed(2)}</div>
               </div>
             </div>
             
@@ -151,14 +151,14 @@ const CostBreakdownCard = ({
               <div className="flex items-center gap-2">
                 <Wrench className="h-4 w-4 text-orange-500" />
                 <div>
-                  <div className="font-medium">Labour</div>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="font-medium text-white">Labour</div>
+                  <div className="text-sm text-white/80">
                     {labourHours.toFixed(1)} hours @ £{calculatedLabourRate.toFixed(2)}/hr
                   </div>
                 </div>
               </div>
               <div className="text-right">
-                <div className="font-bold">£{labourTotal.toFixed(2)}</div>
+                <div className="font-bold text-white">£{labourTotal.toFixed(2)}</div>
               </div>
             </div>
             
@@ -247,14 +247,14 @@ const CostBreakdownCard = ({
                 <div className="flex items-center gap-2">
                   <Building className="h-4 w-4 text-purple-500" />
                   <div>
-                    <div className="font-medium">Business Overheads</div>
-                    <div className="text-xs text-muted-foreground">
+                    <div className="font-medium text-white">Business Overheads</div>
+                    <div className="text-sm text-white/80">
                       {calculatedJobDuration.toFixed(1)} days @ £{(overheadTotal / calculatedJobDuration).toFixed(2)}/day
                     </div>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-bold">£{overheadTotal.toFixed(2)}</div>
+                  <div className="font-bold text-white">£{overheadTotal.toFixed(2)}</div>
                 </div>
               </div>
               

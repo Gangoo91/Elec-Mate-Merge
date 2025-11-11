@@ -17,20 +17,20 @@ const OriginalRequestCard = ({ query, projectContext, timestamp }: OriginalReque
   if (!query) return null;
 
   return (
-    <Card className="mobile-card border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-elec-dark/50">
-      <CardHeader className="space-y-2 pb-3">
-        <CardTitle className="mobile-heading flex items-center gap-2 text-blue-400">
-          <MessageSquare className="h-5 w-5" />
+    <Card className="border-0 sm:border border-blue-500/30 rounded-none sm:rounded-xl bg-gradient-to-br from-blue-500/10 to-elec-dark/50">
+      <CardHeader className="px-4 py-4 sm:px-6 sm:py-5 space-y-2 pb-3">
+        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
+          <MessageSquare className="h-5 w-5 text-blue-400" />
           Original Request
         </CardTitle>
-        <CardDescription className="mobile-text">
-          Your project description analyzed by AI Cost Engineer
+        <CardDescription className="text-base sm:text-sm text-white/80">
+          Your project description analysed by AI Cost Engineer
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6 space-y-4">
         {/* Project Context Meta */}
         {(projectContext?.projectName || projectContext?.clientInfo || projectContext?.location) && (
-          <div className="flex flex-wrap gap-3 text-xs text-muted-foreground pb-2 border-b border-border/50">
+          <div className="flex flex-wrap gap-3 text-sm text-white/90 pb-2 border-b border-border/50">
             {projectContext.projectName && (
               <div className="flex items-center gap-1.5">
                 <User className="h-3.5 w-3.5 text-blue-400" />
@@ -54,7 +54,7 @@ const OriginalRequestCard = ({ query, projectContext, timestamp }: OriginalReque
 
         {/* Original Query */}
         <div className="bg-elec-dark/80 p-4 rounded-lg border border-blue-500/20">
-          <p className="mobile-text text-foreground/90 whitespace-pre-wrap leading-relaxed">
+          <p className="text-base sm:text-sm text-white whitespace-pre-wrap leading-relaxed">
             {query}
           </p>
         </div>
@@ -62,10 +62,10 @@ const OriginalRequestCard = ({ query, projectContext, timestamp }: OriginalReque
         {/* Additional Info if present */}
         {projectContext?.additionalInfo && (
           <div className="pt-2 border-t border-border/50">
-            <p className="mobile-small-text font-semibold text-muted-foreground mb-2">
+            <p className="text-sm font-semibold text-white mb-2">
               Additional Requirements:
             </p>
-            <p className="mobile-small-text text-foreground/80 whitespace-pre-wrap">
+            <p className="text-sm text-white/80 whitespace-pre-wrap">
               {projectContext.additionalInfo}
             </p>
           </div>

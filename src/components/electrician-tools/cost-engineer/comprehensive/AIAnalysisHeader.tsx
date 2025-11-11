@@ -48,14 +48,14 @@ const AIAnalysisHeader = ({
   ).length || 0;
 
   return (
-    <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-elec-dark/50">
-      <CardHeader>
+    <Card className="border-0 sm:border border-elec-yellow/30 rounded-none sm:rounded-xl bg-gradient-to-br from-elec-yellow/10 to-elec-dark/50">
+      <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-3">
             <Brain className="h-7 w-7 text-elec-yellow" />
             <div>
-              <CardTitle className="text-xl sm:text-2xl">AI Cost Engineer Analysis</CardTitle>
-              <p className="text-sm text-muted-foreground mt-1">
+              <CardTitle className="text-xl sm:text-2xl font-bold text-white">AI Cost Engineer Analysis</CardTitle>
+              <p className="text-base sm:text-sm text-white/80 mt-1">
                 Comprehensive pricing and profitability assessment
               </p>
             </div>
@@ -69,11 +69,11 @@ const AIAnalysisHeader = ({
         </div>
       </CardHeader>
       
-      <CardContent className="space-y-4">
+      <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6 space-y-4">
         {/* Job Description */}
         {jobDescription && (
           <div className="p-4 rounded-lg bg-background/50 border border-border/50">
-            <p className="text-sm leading-relaxed">{jobDescription}</p>
+            <p className="text-base sm:text-sm text-white leading-relaxed">{jobDescription}</p>
           </div>
         )}
 
@@ -83,14 +83,14 @@ const AIAnalysisHeader = ({
           {complexity && (
             <div className="p-3 rounded-lg bg-background/30 border border-border/30">
               <div className="flex items-center gap-2 mb-1">
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                <span className="text-xs text-muted-foreground">Complexity</span>
+                <TrendingUp className="h-4 w-4 text-white/70" />
+                <span className="text-sm sm:text-xs text-white/90">Complexity</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className={`text-lg font-bold px-2 py-0.5 rounded border ${getComplexityColor(complexity.rating)}`}>
                   {complexity.rating}/5
                 </span>
-                <span className="text-sm font-medium">{complexity.label}</span>
+                <span className="text-base sm:text-sm font-medium text-white">{complexity.label}</span>
               </div>
             </div>
           )}
@@ -99,14 +99,14 @@ const AIAnalysisHeader = ({
           {confidence && (
             <div className="p-3 rounded-lg bg-background/30 border border-border/30">
               <div className="flex items-center gap-2 mb-1">
-                <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
-                <span className="text-xs text-muted-foreground">Confidence</span>
+                <CheckCircle2 className="h-4 w-4 text-white/70" />
+                <span className="text-sm sm:text-xs text-white/90">Confidence</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className={`text-lg font-bold ${getConfidenceColor(avgConfidence)}`}>
                   {avgConfidence}%
                 </span>
-                <span className="text-sm text-muted-foreground">accuracy</span>
+                <span className="text-base sm:text-sm text-white/90">accuracy</span>
               </div>
             </div>
           )}
@@ -115,14 +115,14 @@ const AIAnalysisHeader = ({
           {riskAssessment && (
             <div className="p-3 rounded-lg bg-background/30 border border-border/30">
               <div className="flex items-center gap-2 mb-1">
-                <AlertTriangle className="h-4 w-4 text-muted-foreground" />
-                <span className="text-xs text-muted-foreground">Risk Level</span>
+                <AlertTriangle className="h-4 w-4 text-white/70" />
+                <span className="text-sm sm:text-xs text-white/90">Risk Level</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-lg font-bold">
                   {highRisks > 0 ? '🔴' : '🟢'}
                 </span>
-                <span className="text-sm font-medium">
+                <span className="text-base sm:text-sm font-medium text-white">
                   {highRisks > 0 ? `${highRisks} high risk${highRisks > 1 ? 's' : ''}` : 'Low risk'}
                 </span>
               </div>

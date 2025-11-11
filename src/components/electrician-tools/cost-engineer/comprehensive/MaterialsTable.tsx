@@ -46,10 +46,10 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
   };
 
   return (
-    <Card className="border-elec-yellow/20">
-      <CardHeader>
+    <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
+      <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-lg flex items-center gap-2">
+          <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
             <Package className="h-5 w-5 text-elec-yellow" />
             Materials Breakdown
           </CardTitle>
@@ -90,35 +90,35 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
           )}
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6">
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Description</TableHead>
-                <TableHead className="text-right">Qty</TableHead>
-                <TableHead className="text-right">Unit Price</TableHead>
-                <TableHead className="text-right">Total</TableHead>
+                <TableHead className="text-white font-semibold text-sm">Description</TableHead>
+                <TableHead className="text-right text-white font-semibold text-sm">Qty</TableHead>
+                <TableHead className="text-right text-white font-semibold text-sm">Unit Price</TableHead>
+                <TableHead className="text-right text-white font-semibold text-sm">Total</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {currentItems.map((item, idx) => (
                 <TableRow key={idx}>
-                  <TableCell className="font-medium">
+                  <TableCell className="font-medium text-base sm:text-sm text-white">
                     {item.item || item.description}
                     {item.supplier && (
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-sm text-white/80">
                         {item.supplier}
                       </div>
                     )}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-right text-base sm:text-sm text-white">
                     {item.quantity} {item.unit}
                   </TableCell>
-                  <TableCell className="text-right font-mono">
+                  <TableCell className="text-right font-mono text-base sm:text-sm text-white">
                     {isEditMode ? (
                       <div className="flex items-center justify-end gap-1">
-                        <span className="text-muted-foreground">£</span>
+                        <span className="text-white/80">£</span>
                         <Input
                           type="number"
                           step="0.01"
@@ -132,14 +132,14 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
                       `£${item.unitPrice?.toFixed(2)}`
                     )}
                   </TableCell>
-                  <TableCell className="text-right font-mono font-medium">
+                  <TableCell className="text-right font-mono font-medium text-base sm:text-sm text-white">
                     £{item.total?.toFixed(2)}
                   </TableCell>
                 </TableRow>
               ))}
-              <TableRow className="bg-muted/50 font-bold">
-                <TableCell colSpan={3} className="text-right">Total Materials:</TableCell>
-                <TableCell className="text-right font-mono">£{total.toFixed(2)}</TableCell>
+              <TableRow className="bg-elec-yellow/10 font-bold border-t-2 border-elec-yellow/30">
+                <TableCell colSpan={3} className="text-right text-white">Total Materials:</TableCell>
+                <TableCell className="text-right font-mono text-white text-lg sm:text-base">£{total.toFixed(2)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
