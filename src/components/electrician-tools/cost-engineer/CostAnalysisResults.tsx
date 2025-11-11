@@ -102,6 +102,7 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
 
     // Calculate cost breakdown components
     const materialsSubtotal = round2dp(structuredData?.materials?.subtotal || analysis.materialsTotal || 0);
+    const materialsMarkup = round2dp(structuredData?.materials?.markup || 15);
     const labourSubtotal = round2dp(structuredData?.labour?.subtotal || analysis.labourTotal || 0);
     const overheadsTotal = round2dp(structuredData?.profitabilityAnalysis?.jobOverheads?.total || 0);
     const contingencyPercentage = round2dp(structuredData?.confidence?.contingency?.percentage || 5);
@@ -120,6 +121,7 @@ const CostAnalysisResults = ({ analysis, projectName, onNewAnalysis, structuredD
       // 2. Cost Breakdown Summary
       costBreakdown: {
         materials: materialsSubtotal,
+        materialsMarkup: materialsMarkup,
         labour: labourSubtotal,
         overheads: overheadsTotal,
         contingency: {
