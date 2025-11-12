@@ -69,33 +69,15 @@ serve(async (req) => {
     const keywords = extractKeywords(query);
     console.log('🔍 Extracted keywords:', keywords);
     
-    // Use single primary keyword for simple OR query to avoid PostgreSQL syntax errors
-    const primaryKeyword = keywords[0] || 'installation';
-    
-    // RAG 1: Practical Work Intelligence (real installation data) - with timeout protection
-    const pwPromise = supabase
-      .from('practical_work_intelligence')
-      .select('*')
-      .or(`primary_topic.ilike.%${primaryKeyword}%,installation_method.ilike.%${primaryKeyword}%,equipment_category.ilike.%${primaryKeyword}%`)
-      .limit(50); // Reduced from 95 to prevent timeout
+    // RAG 1: Practical Work Intelligence - using optimized RPC function
+    const { data: pwData, error: pwError } = await supabase
+      .rpc('search_practical_work_intelligence_hybrid', {
+        query_text: description, // Use full user query for better context matching
+        match_count: 50,
+        filter_trade: 'installer' // Focus on installation-specific knowledge
+      });
 
-    // Add 8 second timeout for practical work query
-    const pwTimeout = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Practical work query timeout')), 8000)
-    );
-
-    let pwData = null;
-    let pwError = null;
-    try {
-      const result = await Promise.race([pwPromise, pwTimeout]) as any;
-      pwData = result.data;
-      pwError = result.error;
-    } catch (timeoutError) {
-      console.warn('⚠️ Practical work query timed out, using fallback');
-      pwError = timeoutError;
-    }
-
-    if (pwError) console.error('PW query error:', pwError);
+    if (pwError) console.error('PW RPC error:', pwError);
 
     // Handle regulations - reuse shared or query
     let regulations = [];
@@ -154,16 +136,19 @@ serve(async (req) => {
       }
     }
 
-    // Transform to RAGResult format (same as shared module)
+    // Transform to RAGResult format with enhanced RPC fields
     const practicalWork = (pwData || []).map((row: any) => ({
-      content: row.primary_topic || row.installation_method || '',
+      content: row.content || row.primary_topic || '', // RPC returns 'content' field
       primary_topic: row.primary_topic,
       keywords: row.keywords,
       equipment_category: row.equipment_category,
       tools_required: row.tools_required,
+      materials_needed: row.materials_needed, // Critical for AI method statements
       bs7671_regulations: row.bs7671_regulations,
+      practical_work_id: row.practical_work_id,
       source_table: 'practical_work_intelligence',
-      similarity: 0.85 // Default similarity for direct query
+      hybrid_score: row.hybrid_score || 0.85, // Actual relevance score from RPC
+      confidence_score: row.confidence_score || 0.85
     }));
 
     const ragTime = Date.now() - ragStartTime;
