@@ -264,7 +264,7 @@ export const InstallationResults = ({
       {originalQuery && (
         <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-background">
           <CardContent className="p-4 sm:p-6">
-            <div className="flex items-start gap-3">
+            <div className="flex flex-col sm:flex-row items-start gap-3">
               <div className="p-2 rounded-lg bg-blue-500/10">
                 <FileText className="h-5 w-5 text-blue-400" />
               </div>
