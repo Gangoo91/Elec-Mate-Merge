@@ -291,7 +291,7 @@ ${specificGuidance || `- Follow BS 7671:2018+A2:2022 (18th Edition) requirements
                     riskLevel: { type: "string", enum: ["low", "medium", "high"] },
                     linkedHazards: { type: "array", items: { type: "string" } }
                   },
-                  required: ["stepNumber", "title", "description", "safetyRequirements", "equipmentNeeded", "estimatedDuration", "riskLevel"],
+                  required: ["stepNumber", "title", "description", "safetyRequirements", "equipmentNeeded", "qualifications", "estimatedDuration", "riskLevel", "linkedHazards"],
                   additionalProperties: false
           }
         },
