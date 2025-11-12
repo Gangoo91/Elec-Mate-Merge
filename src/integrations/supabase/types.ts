@@ -8029,14 +8029,19 @@ export type Database = {
         }[]
       }
       search_bs7671_intelligence_hybrid: {
-        Args: { match_count?: number; search_keywords: string }
+        Args: { match_count?: number; query_text: string }
         Returns: {
+          applies_to: string[]
           category: string
+          content: string
+          hybrid_score: number
+          id: string
           keywords: string[]
           primary_topic: string
           regulation_id: string
           regulation_number: string
-          relevance_score: number
+          section: string
+          subcategory: string
         }[]
       }
       search_design_hybrid:
