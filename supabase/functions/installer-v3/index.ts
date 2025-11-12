@@ -178,7 +178,7 @@ serve(async (req) => {
   const executionPromise = (async (): Promise<Response> => {
   try {
     const body = await req.json();
-    const { query, cableType, installationMethod, location, messages, previousAgentOutputs, sharedRegulations, currentDesign, projectDetails } = body;
+    const { query, cableType, installationMethod, location, workType, messages, previousAgentOutputs, sharedRegulations, currentDesign, projectDetails } = body;
 
     // Track context sources
     const contextSources = {
@@ -415,14 +415,26 @@ serve(async (req) => {
       
       const { retrieveStructuredProcedures } = await import('../_shared/installation-procedure-retriever.ts');
       
-      const structuredProcedures = await retrieveStructuredProcedures({
+      // Resolve workType with fallbacks
+      const resolvedWorkType = (typeof workType === 'string' ? workType : undefined)
+        || (typeof projectDetails?.workType === 'string' ? projectDetails.workType : undefined)
+        || (typeof currentDesign?.installationType === 'string' ? currentDesign.installationType : undefined)
+        || 'domestic';
+      
+      // Assign to outer variable (not const - avoids shadowing)
+      structuredProcedures = await retrieveStructuredProcedures({
         jobDescription: effectiveQuery,
-        workType: workType as 'domestic' | 'commercial' | 'industrial' || 'domestic',
+        workType: resolvedWorkType as 'domestic' | 'commercial' | 'industrial',
         location: location,
         equipment: undefined // Auto-detected from query
       }, supabase);
       
-      logger.info(`✅ [V3] Retrieved ${structuredProcedures.length} pre-structured installation steps`);
+      // Runtime guard: verify we got structured procedures
+      if (!structuredProcedures || structuredProcedures.length === 0) {
+        logger.warn('⚠️ No structured procedures retrieved; AI will have to generate more content from raw docs.');
+      } else {
+        logger.info(`✅ [V3] Retrieved ${structuredProcedures.length} pre-structured installation steps from RAG`);
+      }
       
       logger.info('📊 RAG Effectiveness Check - Installation', {
         totalStructuredSteps: structuredProcedures.length,
@@ -1248,7 +1260,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
           { role: 'user', content: userPrompt }
         ],
         model: 'gpt-5-mini-2025-08-07',  // Fast mini model for quick generation
-        max_completion_tokens: 32000,  // GPT-5 uses max_completion_tokens
+        max_completion_tokens: 14000,  // Reduced to stay under 110s completion time
         tools: [{
         type: 'function',
         function: {
