@@ -51,18 +51,33 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // DIRECT TABLE QUERIES - Bypassing broken RPC
+    // DIRECT TABLE QUERIES - With proper keyword extraction
     console.log('📚 Starting direct table RAG retrieval...');
     ragStartTime = Date.now();
 
-    const keywords = query.split(' ').filter(w => w.length > 3);
-    const searchQuery = keywords.join(' | '); // OR search
+    // Extract meaningful keywords from query
+    const extractKeywords = (query: string): string[] => {
+      const stopWords = ['a', 'an', 'the', 'for', 'to', 'in', 'on', 'at', 'from', 'with', 'create', 'comprehensive', 'method', 'statement'];
+      return query
+        .toLowerCase()
+        .split(/\s+/)
+        .filter(word => word.length > 3 && !stopWords.includes(word))
+        .slice(0, 10); // Limit to top 10 keywords
+    };
+
+    const keywords = extractKeywords(query);
+    console.log('🔍 Extracted keywords:', keywords);
+
+    // Build separate search conditions for each keyword
+    const pwSearchConditions = keywords
+      .map(kw => `primary_topic.ilike.%${kw}%,installation_method.ilike.%${kw}%,equipment_category.ilike.%${kw}%`)
+      .join(',');
     
     // Query practical_work_intelligence table directly
     const { data: pwData, error: pwError } = await supabase
       .from('practical_work_intelligence')
       .select('*')
-      .or(`primary_topic.ilike.%${query}%,installation_method.ilike.%${query}%`)
+      .or(pwSearchConditions)
       .limit(95);
 
     if (pwError) console.error('PW query error:', pwError);
@@ -79,11 +94,15 @@ serve(async (req) => {
         similarity: 0.95 // High confidence - came from designer
       }));
     } else {
-      // Query bs7671_intelligence table directly
+      // Query bs7671_intelligence table directly with keyword search
+      const regSearchConditions = keywords
+        .map(kw => `regulation_text.ilike.%${kw}%,regulation_number.ilike.%${kw}%`)
+        .join(',');
+      
       const { data: regData, error: regError } = await supabase
         .from('bs7671_intelligence')
         .select('*')
-        .or(`regulation_text.ilike.%${query}%,regulation_number.ilike.%${query}%`)
+        .or(regSearchConditions)
         .limit(85);
 
       if (regError) console.error('Regs query error:', regError);
@@ -162,17 +181,77 @@ DO NOT recalculate cable sizes or protection devices. Use these exact specificat
       });
     }
 
-    // Smart fallback if RAG fails
+    // Smart fallback if RAG fails - with job-specific guidance
     let ragContext = '';
     if (practicalWork.length === 0 && regulations.length === 0) {
-      console.warn('⚠️ RAG returned no results - using general UK electrical guidance');
-      ragContext = `[FALLBACK MODE - General UK Electrical Installation Guidance]
-- Follow BS 7671:2018+A2:2022 (18th Edition) requirements throughout
+      console.warn('⚠️ RAG returned no results - generating job-specific fallback');
+      
+      // Extract job type from query
+      const isShower = /shower/i.test(query);
+      const isSockets = /socket|ring/i.test(query);
+      const isLighting = /light|lamp/i.test(query);
+      const isSWA = /swa|armoured/i.test(query);
+      const isCooker = /cooker|oven/i.test(query);
+      const isEV = /ev|electric vehicle|charger/i.test(query);
+      
+      let specificGuidance = '';
+      if (isShower) {
+        specificGuidance = `
+SHOWER CIRCUIT INSTALLATION:
+- Run cable from consumer unit to bathroom location via safe zones
+- Use 10mm² T&E or 6mm² if short run with RCD
+- Install 45A DP isolator pull-cord outside bathroom zones
+- Bond supplementary earthing in bathroom (Section 701)
+- Test Ze, R1+R2, and RCD trip time`;
+      } else if (isSWA) {
+        specificGuidance = `
+SWA CABLE INSTALLATION:
+- Trench depth minimum 600mm under paths, 450mm under gardens
+- Install warning tape 150mm above cable
+- Use 50mm sand bedding below and above cable
+- SWA glands both ends with banjo earth connections
+- Test armour continuity and insulation resistance`;
+      } else if (isSockets) {
+        specificGuidance = `
+SOCKET CIRCUIT INSTALLATION:
+- 2.5mm² T&E for ring finals, max 100m²
+- Install 32A Type B MCB with 30mA RCD
+- Connect in ring at consumer unit (both ends to same MCB)
+- Test ring continuity (R1, R2, Rn) before energizing
+- IR test at 500V DC, minimum 1MΩ`;
+      } else if (isLighting) {
+        specificGuidance = `
+LIGHTING CIRCUIT INSTALLATION:
+- 1.5mm² T&E for lighting circuits, max 8 points per circuit
+- Install 6A Type B MCB
+- Use correct loop-in or junction box wiring
+- Earth all metal fittings and switches
+- Test polarity and IR at each light point`;
+      } else if (isCooker) {
+        specificGuidance = `
+COOKER CIRCUIT INSTALLATION:
+- Cable size based on load (typically 6mm² for <10kW)
+- Install 32A-45A DP control unit within 2m of cooker
+- Run cable in safe zones or use mechanical protection
+- Connect earth to cooker chassis
+- Test Zs and polarity`;
+      } else if (isEV) {
+        specificGuidance = `
+EV CHARGER INSTALLATION:
+- Dedicated 32A radial from consumer unit
+- 6mm² SWA if outdoor run, 6mm² T&E if indoor
+- Install Type A RCD or integral RCD in charger
+- Earth electrode may be required for TT systems
+- OpenTherm/Wi-Fi setup and commissioning`;
+      }
+      
+      ragContext = `[FALLBACK MODE - ${specificGuidance ? 'Job-Specific' : 'General'} UK Electrical Guidance]
+${specificGuidance || `- Follow BS 7671:2018+A2:2022 (18th Edition) requirements throughout
 - Select cable sizes using Appendix 4 current-carrying capacity tables
 - Install appropriate protective devices (MCBs Type B/C, RCDs 30mA for sockets)
 - Ensure proper earthing and bonding per Sections 411 and 544
 - Test and certify per GN3 (Inspection & Testing)
-- Use safe isolation procedures (lock-off/tag-out)`;
+- Use safe isolation procedures (lock-off/tag-out)`}`;
     }
 
     // Build compact RAG context - take top results, no filtering
@@ -192,7 +271,7 @@ DO NOT recalculate cable sizes or protection devices. Use these exact specificat
       })
       .join('\n\n');
 
-    // Construct strict JSON schema for OpenAI
+    // Construct strict JSON schema for OpenAI - matching MethodStep interface
     const jsonSchema = {
       type: "object",
       properties: {
@@ -202,12 +281,17 @@ DO NOT recalculate cable sizes or protection devices. Use these exact specificat
           items: {
                   type: "object",
                   properties: {
+                    stepNumber: { type: "number" },
                     title: { type: "string" },
-                    detail: { type: "string" },
-                    tools: { type: "array", items: { type: "string" } },
-                    materials: { type: "array", items: { type: "string" } }
+                    description: { type: "string" },
+                    safetyRequirements: { type: "array", items: { type: "string" } },
+                    equipmentNeeded: { type: "array", items: { type: "string" } },
+                    qualifications: { type: "array", items: { type: "string" } },
+                    estimatedDuration: { type: "string" },
+                    riskLevel: { type: "string", enum: ["low", "medium", "high"] },
+                    linkedHazards: { type: "array", items: { type: "string" } }
                   },
-                  required: ["title", "detail", "tools", "materials"],
+                  required: ["stepNumber", "title", "description", "safetyRequirements", "equipmentNeeded", "estimatedDuration", "riskLevel"],
                   additionalProperties: false
           }
         },
@@ -268,17 +352,28 @@ DO NOT recalculate cable sizes or protection devices. Use these exact specificat
 ${designerContextPrompt}
 
 **CRITICAL RULES:**
+- You MUST generate at least 8-12 detailed installation steps - this is MANDATORY
+- Each step must include: stepNumber, title, description, safetyRequirements, equipmentNeeded, estimatedDuration, riskLevel, qualifications, linkedHazards
+- Steps should follow logical installation sequence: planning → isolation → installation → testing → commissioning
+- Include specific tools (e.g., "SDS drill", "Cable avoidance tool", "Insulation resistance tester")
+- Include specific materials (e.g., "10mm² T&E cable", "32A Type B MCB", "20mm oval conduit")
 - Use ONLY UK English spelling and terminology
-- Be concise and practical - this is for electricians on-site
-- Generate at least 6 detailed installation steps
-- Include specific tools, materials, and BS 7671 regulation references
 - ONLY cite regulations provided in the context - NEVER hallucinate regulation numbers
 - Return ONLY valid JSON matching the exact schema provided
+
+**STEP GENERATION REQUIREMENTS:**
+1. Pre-work steps: Survey, permits, isolation, testing dead
+2. Installation steps: Route selection, fixing, termination
+3. Post-work steps: Testing (continuity, IR, Ze, RCD), certification
+4. Each step must have realistic duration (e.g., "45 minutes", "2 hours")
+5. Each step must have appropriate risk level (low/medium/high)
+6. Include qualifications needed (e.g., "18th Edition qualified", "Approved Electrician")
+7. Link hazards to specific steps where they occur
 
 **AVAILABLE CONTEXT:**
 
 PRACTICAL WORK INTELLIGENCE:
-${pwContext || 'No practical work data available'}
+${pwContext || ragContext || 'No practical work data available'}
 
 BS 7671 REGULATIONS:
 ${regsContext || 'No regulations data available'}
@@ -286,20 +381,23 @@ ${regsContext || 'No regulations data available'}
 **PROJECT DETAILS:**
 ${projectDetails ? JSON.stringify(projectDetails, null, 2) : 'No project details provided'}
 
-Generate a comprehensive Method Statement in the exact JSON format specified.`;
+Generate a comprehensive Method Statement in the exact JSON format specified. MINIMUM 8 STEPS REQUIRED.`;
 
     const userPrompt = `Create a detailed Method Statement for: ${query}
 
 Include:
-- 6+ step-by-step installation procedures
-- Required tools and materials for each step
-- Testing procedures
+- 8-12 step-by-step installation procedures (MANDATORY MINIMUM 8 STEPS)
+- Each step MUST have: stepNumber, title, description, safetyRequirements, equipmentNeeded, qualifications, estimatedDuration, riskLevel, linkedHazards
+- Required tools and materials for each step (be specific: "10mm² T&E", "32A MCB", "Fluke 1653B tester")
+- Testing procedures (IR, continuity, polarity, RCD, earth loop impedance)
 - Equipment schedule with specifications
 - Site logistics (access, isolation, permits)
 - Competency requirements (roles and training needed)
 - Citations to the practical work and BS 7671 regulations provided above
 
-Use the RAG context above to ensure accuracy. Return ONLY the JSON object.`;
+Use the RAG context above to ensure accuracy. Return ONLY the JSON object.
+
+CRITICAL: Generate AT LEAST 8 detailed steps. More is better (target 10-12 steps).`;
 
     console.log('🤖 Calling OpenAI ChatGPT Mini 5.0 with strict JSON schema...');
     aiStartTime = Date.now();
@@ -375,6 +473,30 @@ Use the RAG context above to ensure accuracy. Return ONLY the JSON object.`;
     let parsedResult;
     try {
       parsedResult = JSON.parse(content);
+      
+      // VALIDATION: Check step count
+      if (!parsedResult.steps || parsedResult.steps.length < 6) {
+        console.error('❌ INSUFFICIENT STEPS GENERATED:', parsedResult.steps?.length || 0);
+        console.error('Query was:', query.substring(0, 200));
+        console.error('RAG context length:', (pwContext + regsContext).length);
+        
+        return new Response(JSON.stringify({
+          success: false,
+          error: `Insufficient steps generated (${parsedResult.steps?.length || 0}). Minimum 6 required.`,
+          diagnostics: {
+            query: query.substring(0, 200),
+            ragContextLength: (pwContext + regsContext).length,
+            pwCount: practicalWork.length,
+            regsCount: regulations.length,
+            keywords: keywords
+          }
+        }), {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+      
+      console.log('✅ Step count validation passed:', parsedResult.steps.length);
       
       // Validate designer specs were referenced
       if (designerContextPrompt && parsedResult.steps) {
