@@ -21,6 +21,7 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
   const [methodData, setMethodData] = useState<any>(null);
   const [generationStartTime, setGenerationStartTime] = useState(0);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [originalQuery, setOriginalQuery] = useState<string>('');
   const [projectInfo, setProjectInfo] = useState<ProjectDetailsType>({
     projectName: '',
     location: '',
@@ -39,6 +40,7 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
     setShowResults(true);
     setCelebrationShown(false);
     setIsGenerating(true);
+    setOriginalQuery(description);
     setProjectInfo(projectDetails);
     lastProjectRef.current = { details: projectDetails, description };
 
@@ -342,6 +344,8 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
   if (isLoading || isGenerating) {
     return (
       <InstallationProcessingView 
+        originalQuery={originalQuery}
+        projectDetails={projectInfo}
         progress={fullModeProgress || progress}
         startTime={generationStartTime}
         onCancel={() => {
@@ -366,6 +370,7 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
     return (
       <>
         <InstallationResults
+          originalQuery={originalQuery}
           jobTitle={methodData.jobTitle}
           installationType={methodData.installationType}
           installationGuide=""

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, RotateCcw, Download, AlertCircle, Wrench, CheckCircle2 } from "lucide-react";
+import { Plus, RotateCcw, Download, AlertCircle, Wrench, CheckCircle2, FileText } from "lucide-react";
 import { InstallationStepCard } from "./InstallationStepCard";
 import { InstallationStep, InstallationMethodSummary, InstallationProjectDetails } from "@/types/installation-method";
 import { toast } from "@/hooks/use-toast";
@@ -42,6 +42,7 @@ interface ProjectMetadata {
 }
 
 interface InstallationResultsProps {
+  originalQuery?: string;
   jobTitle?: string;
   installationType?: string;
   installationGuide: string;
@@ -54,6 +55,7 @@ interface InstallationResultsProps {
 }
 
 export const InstallationResults = ({
+  originalQuery,
   jobTitle,
   installationType,
   installationGuide,
@@ -256,6 +258,47 @@ export const InstallationResults = ({
             </div>
           </div>
         </div>
+      )}
+
+      {/* Original Request Display */}
+      {originalQuery && (
+        <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-background">
+          <CardContent className="p-4 sm:p-6">
+            <div className="flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-blue-500/10">
+                <FileText className="h-5 w-5 text-blue-400" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-semibold text-sm text-muted-foreground mb-2">
+                  Original Request
+                </h4>
+                <p className="text-base text-foreground font-medium leading-relaxed mb-3">
+                  {originalQuery}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                  {projectDetails?.projectName && (
+                    <div className="flex items-center gap-2 bg-muted/50 rounded px-3 py-2">
+                      <span className="text-muted-foreground">Project:</span>
+                      <span className="font-semibold text-foreground">{projectDetails.projectName}</span>
+                    </div>
+                  )}
+                  {projectDetails?.location && (
+                    <div className="flex items-center gap-2 bg-muted/50 rounded px-3 py-2">
+                      <span className="text-muted-foreground">Location:</span>
+                      <span className="font-semibold text-foreground">{projectDetails.location}</span>
+                    </div>
+                  )}
+                  {projectDetails?.installationType && (
+                    <div className="flex items-center gap-2 bg-muted/50 rounded px-3 py-2">
+                      <span className="text-muted-foreground">Type:</span>
+                      <span className="font-semibold text-foreground">{projectDetails.installationType}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       )}
 
       {/* Summary Stats */}

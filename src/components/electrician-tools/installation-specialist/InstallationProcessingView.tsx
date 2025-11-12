@@ -1,10 +1,13 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { Wrench, X, CheckCircle2, Circle, Loader2, Search, Zap, Clock, ShieldCheck } from 'lucide-react';
+import { Wrench, X, CheckCircle2, Circle, Loader2, Search, Zap, Clock, ShieldCheck, FileText } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { InstallationProjectDetails } from "@/types/installation-method";
 
 interface InstallationProcessingViewProps {
+  originalQuery?: string;
+  projectDetails?: InstallationProjectDetails;
   progress: {
     stage: 'initializing' | 'rag' | 'ai' | 'generation' | 'validation' | 'complete';
     message: string;
@@ -14,7 +17,7 @@ interface InstallationProcessingViewProps {
   onQuickMode?: () => void;
 }
 
-export const InstallationProcessingView = ({ progress, startTime, onCancel, onQuickMode }: InstallationProcessingViewProps) => {
+export const InstallationProcessingView = ({ originalQuery, projectDetails, progress, startTime, onCancel, onQuickMode }: InstallationProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [simulatedProgress, setSimulatedProgress] = useState<{
     stage: 'initializing' | 'rag' | 'ai' | 'generation' | 'validation' | 'complete';
@@ -87,6 +90,34 @@ export const InstallationProcessingView = ({ progress, startTime, onCancel, onQu
 
   return (
     <div className="space-y-6 animate-fade-in">
+      {/* Original Request Display */}
+      {originalQuery && (
+        <Card className="border-blue-500/20 bg-muted/30">
+          <CardContent className="p-4 sm:p-6">
+            <h4 className="font-semibold text-sm text-muted-foreground mb-2 flex items-center gap-2">
+              <FileText className="h-4 w-4" />
+              What You Asked For
+            </h4>
+            <p className="text-base text-foreground font-medium leading-relaxed">
+              {originalQuery}
+            </p>
+            {projectDetails && (
+              <div className="mt-3 pt-3 border-t border-border text-xs text-muted-foreground space-y-1">
+                {projectDetails.projectName && (
+                  <p>Project: <span className="text-foreground">{projectDetails.projectName}</span></p>
+                )}
+                {projectDetails.location && (
+                  <p>Location: <span className="text-foreground">{projectDetails.location}</span></p>
+                )}
+                {projectDetails.installationType && (
+                  <p>Type: <span className="text-foreground">{projectDetails.installationType}</span></p>
+                )}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
       {/* Agent Card */}
       <Card className="overflow-hidden border-blue-500/20 bg-gradient-to-br from-blue-500/10 via-background to-background">
         <CardContent className="p-6">
