@@ -425,13 +425,22 @@ serve(async (req) => {
             const allPracticalResults = await Promise.all(
               searchQueries.map(async (q, idx) => {
                 try {
-                  const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
+                  // Add 90s timeout wrapper for RPC call
+                  const rpcPromise = supabase.rpc('search_practical_work_intelligence_hybrid', {
                     query_text: q,
                     match_count: 10
                   });
                   
+                  const timeoutPromise = new Promise((_, reject) => 
+                    setTimeout(() => reject(new Error('RPC timeout after 90s')), 90000)
+                  );
+                  
+                  const { data, error } = await Promise.race([rpcPromise, timeoutPromise]) as any;
+                  
                   if (error) {
                     logger.error(`❌ Practical work RPC error for query ${idx + 1}:`, { query: q, error });
+                    // Fallback: Use core regulations cache instead
+                    logger.info('⚡ Falling back to core regulations cache');
                     return [];
                   }
                   
@@ -439,6 +448,7 @@ serve(async (req) => {
                   return data || [];
                 } catch (err) {
                   logger.error(`❌ Practical work RPC exception for query ${idx + 1}:`, { query: q, error: err.message });
+                  // Fallback: Return empty, will use core regulations
                   return [];
                 }
               })

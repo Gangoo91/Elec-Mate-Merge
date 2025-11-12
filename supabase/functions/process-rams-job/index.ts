@@ -331,13 +331,14 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Extract H&S data
-    let hsData, hsError;
+    // Extract H&S data with detailed error logging
+    let hsData, hsError, hsSuccess = false;
     if (hsResult.status === 'fulfilled') {
       const result = hsResult.value as any;
       hsData = result.data;
       hsError = result.error;
-      console.log(`✅ Health-safety completed for job: ${jobId}`);
+      hsSuccess = !!hsData && !hsError;
+      console.log(`✅ Health-safety completed for job: ${jobId}`, { success: hsSuccess, hasData: !!hsData });
       
       // PHASE 1: Detailed diagnostic logging
       console.log('🔍 [PHASE 1 DIAGNOSTIC] Health-safety raw response structure:', {
@@ -362,16 +363,21 @@ Deno.serve(async (req) => {
         .eq('id', jobId);
     } else {
       hsError = hsResult.reason;
-      console.error(`❌ Health-safety failed for job: ${jobId}`, hsError);
+      console.error(`❌ Health-safety failed for job: ${jobId}`, { 
+        error: hsError?.message || hsError, 
+        errorCode: hsError?.code,
+        errorType: hsError instanceof Error ? hsError.constructor.name : typeof hsError
+      });
     }
 
-    // Extract Installer data
-    let installerData, installerError;
+    // Extract Installer data with detailed error logging
+    let installerData, installerError, installerSuccess = false;
     if (installerResult.status === 'fulfilled') {
       const result = installerResult.value as any;
       installerData = result.data;
       installerError = result.error;
-      console.log(`✅ Installer completed for job: ${jobId}`);
+      installerSuccess = !!installerData && !installerError;
+      console.log(`✅ Installer completed for job: ${jobId}`, { success: installerSuccess, hasData: !!installerData });
 
       // Update progress for Installer completion
       await supabase
@@ -384,30 +390,43 @@ Deno.serve(async (req) => {
         .eq('id', jobId);
     } else {
       installerError = installerResult.reason;
-      console.error(`❌ Installer failed for job: ${jobId}`, installerError);
+      console.error(`❌ Installer failed for job: ${jobId}`, { 
+        error: installerError?.message || installerError,
+        errorCode: installerError?.code,
+        errorType: installerError instanceof Error ? installerError.constructor.name : typeof installerError
+      });
     }
 
-    // Handle partial or complete failure
-    if ((hsError || !hsData) && (installerError || !installerData)) {
-      throw new Error(`Both agents failed. H&S: ${hsError?.message ?? 'Unknown error'}. Installer: ${installerError?.message ?? 'Unknown error'}`);
+    // Handle partial or complete failure with better error messages
+    const hsHasData = hsData && !hsError && hsData.data;
+    const installerHasData = installerData && !installerError && installerData.data;
+    
+    if (!hsHasData && !installerHasData) {
+      const hsMsg = hsError?.message || (hsError instanceof Error ? hsError.toString() : JSON.stringify(hsError));
+      const installerMsg = installerError?.message || (installerError instanceof Error ? installerError.toString() : JSON.stringify(installerError));
+      throw new Error(`Both agents failed. H&S: ${hsMsg}. Installer: ${installerMsg}`);
     }
     
-    if (hsError || !hsData) {
+    if (!hsHasData) {
       console.warn('⚠️ Health-safety failed but Installer succeeded - returning partial result');
       await supabase
         .from('rams_generation_jobs')
         .update({ 
-          current_step: '⚠️ Partial result: Health & Safety analysis failed, but installation steps generated successfully.',
+          current_step: '⚠️ Partial: Risk assessment failed, but installation steps generated.',
+          has_rams_data: false,
+          has_method_data: true
         })
         .eq('id', jobId);
     }
 
-    if (installerError || !installerData) {
+    if (!installerHasData) {
       console.warn('⚠️ Installer failed but Health-safety succeeded - returning partial result');
       await supabase
         .from('rams_generation_jobs')
         .update({ 
-          current_step: '⚠️ Partial result: Installation method failed, but safety analysis completed successfully.',
+          current_step: '⚠️ Partial: Method statement failed, but risk assessment completed.',
+          has_rams_data: true,
+          has_method_data: false
         })
         .eq('id', jobId);
     }
@@ -764,14 +783,16 @@ Deno.serve(async (req) => {
       .eq('id', jobId);
 
     // ✅ PHASE 5: Job summary logging
-    console.log('📊 RAMS Job Summary:', {
-      jobId,
-      hsStatus: hsData ? 'success' : 'failed',
-      installerStatus: installerData ? 'success' : 'failed',
-      hazardsGenerated: combinedRAMSData?.risks?.length || 0,
-      stepsGenerated: installerData?.data?.steps?.length || 0,
-      cacheWritten: hasMethods && hasHazards
-    });
+    console.log('📊 =============== RAMS JOB SUMMARY ===============');
+    console.log('📊 Job ID:', jobId);
+    console.log('📊 Duration:', `${((Date.now() - Date.parse(job.created_at)) / 1000).toFixed(1)}s`);
+    console.log('📊 Health & Safety Agent:', hsHasData ? '✅ SUCCESS' : '❌ FAILED');
+    console.log('📊 Installer Agent:', installerHasData ? '✅ SUCCESS' : '❌ FAILED');
+    console.log('📊 Hazards Generated:', combinedRAMSData?.risks?.length || 0);
+    console.log('📊 Method Steps Generated:', installerData?.data?.steps?.length || 0);
+    console.log('📊 Cache Write:', (hsHasData && installerHasData) ? '✅ YES' : '⚠️ SKIPPED (partial)');
+    console.log('📊 Final Status:', (hsHasData && installerHasData) ? 'COMPLETE' : 'PARTIAL');
+    console.log('📊 ================================================');
 
     console.log(`🎉 Job complete: ${jobId}`);
 

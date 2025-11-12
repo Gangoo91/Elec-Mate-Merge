@@ -30,20 +30,9 @@ export async function trackHazardUsage(params: {
         
         console.log(`✅ Hazard ${hazardId} was used - boosting confidence`);
       } else {
-        // Slight confidence penalty (not relevant for this job)
-        const { error } = await params.supabase
-          .from('regulation_hazards_extracted')
-          .update({
-            confidence_score: params.supabase.raw('confidence_score * 0.99'),
-            updated_at: new Date().toISOString()
-          })
-          .eq('id', hazardId);
-        
-        if (error) {
-          console.error(`⚠️ Failed to penalize hazard ${hazardId}:`, error);
-        } else {
-          console.log(`➖ Hazard ${hazardId} not used - slight penalty`);
-        }
+        // Skip penalty - regulation_hazards_extracted table doesn't exist
+        // Using regulations_intelligence which doesn't support this feature yet
+        console.log(`➖ Hazard ${hazardId} not used (tracking skipped)`);
       }
     }
     
