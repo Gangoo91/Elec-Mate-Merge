@@ -252,7 +252,13 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
             stage: 'complete'
           });
           
-          console.log('📊 Quality Metrics:', qm);  // Debug log
+          console.log('📊 Quality Metrics:', qm);
+          console.log('🔍 RAG Data Used:', {
+            regulations: qm.ragDataUsed?.regulations,
+            practicalProcedures: qm.ragDataUsed?.practicalProcedures,
+            fullRagData: qm.ragDataUsed,
+            extractionBreakdown: qm.extractionBreakdown
+          });
         }
 
         if (!response?.success) throw new Error(response?.error || 'Failed to generate installation method');

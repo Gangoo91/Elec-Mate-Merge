@@ -396,7 +396,8 @@ serve(async (req) => {
               bs7671_regulations: row.bs7671_regulations || [],  // ✅ FIXED: Top-level field
               hybrid_score: (row.hybrid_score || 0.75) * 0.95,
               confidence_score: row.hybrid_score || 0.75,
-              source: 'practical_work_intelligence'
+              source: 'practical_work_intelligence',  // ✅ EXPLICIT
+              _rawSource: row.source || 'not_provided'  // 🔍 DEBUG: Verify row structure
             }));
           } catch (error) {
             console.error('Practical work multi-query search failed:', error);
@@ -421,7 +422,8 @@ serve(async (req) => {
               keywords: row.keywords,
               category: row.category,
               hybrid_score: (row.hybrid_score || 0.75) * 0.85,
-              source: 'bs7671_intelligence'
+              source: 'bs7671_intelligence',  // ✅ EXPLICIT
+              _rawSource: row.source || 'not_provided'  // 🔍 DEBUG: Verify row structure
             }));
             
             logger.info('📊 BS 7671 RAG Retrieved:', {
@@ -442,6 +444,18 @@ serve(async (req) => {
 
       // Merge and prioritize (Practical Work first)
       installKnowledge = [...practicalWorkDocs, ...bs7671Docs];
+
+      // 🔍 DEBUG: Log installKnowledge composition
+      logger.info('🔍 InstallKnowledge Array Analysis:', {
+        totalDocs: installKnowledge.length,
+        practicalWorkCount: installKnowledge.filter(k => k.source === 'practical_work_intelligence').length,
+        bs7671Count: installKnowledge.filter(k => k.source === 'bs7671_intelligence').length,
+        sampleSources: installKnowledge.slice(0, 5).map(k => ({
+          source: k.source,
+          topic: k.primary_topic || k.regulation_number
+        })),
+        uniqueSources: [...new Set(installKnowledge.map(k => k.source))]
+      });
 
       logger.info('✅ Direct RAG hybrid search complete', {
         practicalWork: practicalWorkDocs.length,
@@ -1700,12 +1714,27 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
           ragExtractionRate: Math.round((qualityMetrics.stepsWithTools / qualityMetrics.totalSteps) * 100),
           stepsWithCompleteData: qualityMetrics.stepsWithTools,
           ragDataUsed: {
-            practicalProcedures: installKnowledge.filter((k: any) => k.source === 'practical_work_intelligence').length,
-            regulations: installKnowledge.filter((k: any) => k.source === 'bs7671_intelligence').length,
+            practicalProcedures: installKnowledge.filter((k: any) => 
+              k.source === 'practical_work_intelligence' || 
+              k.source === 'practical_work'  // Fallback for alternate naming
+            ).length,
+            regulations: installKnowledge.filter((k: any) => 
+              k.source === 'bs7671_intelligence' || 
+              k.source === 'bs7671' ||
+              k.source === 'regulations_intelligence'  // Alternative source names
+            ).length,
             avgRelevance: Math.round(installKnowledge.length > 0 
               ? (installKnowledge.reduce((s: number, k: any) => s + (k.hybrid_score || 0), 0) / installKnowledge.length * 100)
               : 0
-            )
+            ),
+            // 🔍 DEBUG: Log what we're actually counting
+            _debug: {
+              totalKnowledge: installKnowledge.length,
+              sourceBreakdown: installKnowledge.reduce((acc: any, k: any) => {
+                acc[k.source] = (acc[k.source] || 0) + 1;
+                return acc;
+              }, {})
+            }
           },
           // 📊 Detailed extraction breakdown by source
           extractionBreakdown: {
