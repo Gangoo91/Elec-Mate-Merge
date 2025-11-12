@@ -243,28 +243,41 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
         if (response?.metadata?.qualityMetrics) {
           const qm = response.metadata.qualityMetrics;
           setQualityMetrics({
-            overallConfidence: qm.overallQualityScore || 70,
-            ragDataQuality: qm.overallQualityScore >= 85 ? 'excellent' : 
-                           qm.overallQualityScore >= 70 ? 'good' : 
-                           qm.overallQualityScore >= 50 ? 'fair' : 'poor',
-            bs7671Coverage: qm.knowledgeBaseUsage?.bs7671Count || 0,
-            practicalWorkCoverage: qm.knowledgeBaseUsage?.practicalWorkCount || 0,
+            overallConfidence: qm.overallScore || 70,  // ✅ Use overallScore
+            ragDataQuality: qm.overallScore >= 85 ? 'excellent' : 
+                           qm.overallScore >= 70 ? 'good' : 
+                           qm.overallScore >= 50 ? 'fair' : 'poor',
+            bs7671Coverage: qm.ragDataUsed?.regulations || 0,  // ✅ Fix path
+            practicalWorkCoverage: qm.ragDataUsed?.practicalProcedures || 0,  // ✅ Fix path
             stage: 'complete'
           });
+          
+          console.log('📊 Quality Metrics:', qm);  // Debug log
         }
 
         if (!response?.success) throw new Error(response?.error || 'Failed to generate installation method');
 
         const steps = response.data?.steps || [];
 
+        // 🔍 DEBUG: Log first step to verify field names
+        if (steps.length > 0) {
+          console.log('📊 First step structure:', {
+            hasEquipmentNeeded: !!steps[0].equipmentNeeded,
+            hasTools: !!steps[0].tools,
+            equipmentCount: (steps[0].equipmentNeeded || []).length,
+            toolsCount: (steps[0].tools || []).length,
+            materialCount: (steps[0].materialsNeeded || []).length
+          });
+        }
+
         const installationSteps = steps.map((step: any, index: number) => ({
           stepNumber: step.stepNumber || index + 1,
           title: step.title || `Step ${index + 1}`,
           content: step.description || '',
           safety: step.safetyRequirements || [],
-          toolsRequired: step.tools || [],
-          materialsNeeded: step.materials || [],
-          estimatedDuration: step.estimatedTime || step.estimatedDuration || 'Not specified',
+          toolsRequired: step.equipmentNeeded || step.tools || [],  // ✅ Primary: equipmentNeeded
+          materialsNeeded: step.materialsNeeded || step.materials || [],  // ✅ Primary: materialsNeeded
+          estimatedDuration: step.estimatedDuration || step.estimatedTime || 'Not specified',  // ✅ Swap order
           riskLevel: (step.riskLevel || 'medium') as 'low' | 'medium' | 'high',
           qualifications: step.qualifications || [],
           linkedHazards: step.linkedHazards || [],
