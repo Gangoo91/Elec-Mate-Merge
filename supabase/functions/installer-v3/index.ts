@@ -818,6 +818,72 @@ serve(async (req) => {
    - Specific routes (e.g., "Route vertically down, maintain 50mm from services")
    - Regulatory references (e.g., "BS 7671 Section 522 IP rating")
 
+**CRITICAL: STEP CONTENT MUST BE COMPREHENSIVE (150-300 WORDS MINIMUM)**
+
+Each step description MUST follow this structure:
+
+1️⃣ **Opening Overview** (1-2 sentences): What work is being done and context
+   Example: "Install the consumer unit enclosure at the designated location. This step establishes the central distribution point for all circuits."
+
+2️⃣ **Detailed Sub-Steps** (numbered or bulleted list, 4-8 sub-tasks):
+   Use markdown formatting:
+   • "1. Mark Fixing Positions"
+   • "2. Drill and Secure Unit"
+   • "3. Prepare Cable Entries"
+   
+   Each sub-step must include:
+   - Specific action verb (Mark, Drill, Measure, Connect, Test)
+   - Tool usage (e.g., "using 5.5mm masonry bit")
+   - Measurements (e.g., "1800mm from FFL")
+   - Technique (e.g., "maintain 400mm clip spacing")
+
+3️⃣ **Measurements & Specifications** (extract from RAG data):
+   - Cable sizes: "10mm² T&E cable"
+   - Heights: "1800mm centre height from finished floor level"
+   - Spacing: "400mm maximum clip spacing for horizontal runs"
+   - Ratings: "40A Type B MCB to BS EN 60898"
+
+4️⃣ **Quality Checkpoints** (2-3 verification steps):
+   - "Verify unit is plumb using spirit level"
+   - "Check all fixings are secure and unit cannot move"
+   - "Confirm IP rating suitable for location (IP4X minimum)"
+
+5️⃣ **BS 7671 References** (where applicable):
+   Format: "Per BS 7671 [Section/Reg] - [Brief summary]"
+   Example: "Per BS 7671 Section 522.6 - Cables must be supported at prescribed intervals"
+
+❌ UNACCEPTABLE (too brief):
+"Install the consumer unit on the wall at the correct height"
+
+✅ ACCEPTABLE (comprehensive):
+"Install the consumer unit enclosure at the designated location:
+
+1. Mark Fixing Positions
+• Position unit at 1800mm from finished floor level (standard height per BS 7671 Section 537)
+• Use a spirit level to ensure perfectly horizontal installation
+• Mark all four fixing holes using a pencil through mounting slots on the back of the unit
+
+2. Drill and Fix Securely
+• Use 5.5mm masonry bit for brick/block walls (upgrade to 16mm for dense concrete)
+• Drill 50mm deep holes for standard wall plugs
+• Insert red wall plugs (50mm length) and tap flush with wall surface
+• Secure unit using corrosion-resistant screws (M6 x 50mm minimum)
+
+3. Prepare Cable Entries
+• Remove knockout blanks for incoming supply and outgoing circuit cables
+• Fit rubber grommets (20mm for main tails, 25mm for submains) to prevent cable chafing
+• Route cables with minimum 150mm service loop inside unit for future maintenance
+
+4. Quality Checks
+• Verify unit is plumb in all directions using spirit level
+• Check all fixing screws are tight and unit cannot be moved by hand
+• Ensure adequate clearance above unit (450mm minimum) for future circuit additions
+• Confirm IP rating suitable for installation location (IP4X minimum for indoor dry locations)
+
+Per BS 7671 Section 537 - Isolation and Switching"
+
+**THIS LEVEL OF DETAIL IS MANDATORY FOR EVERY STEP.**
+
 4. **TOOLS & MATERIALS - MANDATORY EXTRACTION**:
    - Find "TOOLS_FOR_THIS_TASK:" in knowledge base and extract ALL listed tools
    - Find "MATERIALS_FOR_THIS_TASK:" and extract ALL materials
@@ -1234,7 +1300,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
                     title: { type: 'string' },
                     description: { 
                       type: 'string', 
-                      description: 'COMPREHENSIVE step description in UK English (authorised, realise, organise, metres, whilst). MUST include: 1) Overview sentence, 2) Detailed sub-tasks as bullet points or numbered list, 3) Specific measurements/values from knowledge base where applicable (e.g., "400mm clip spacing", "1.8m height", "16mm² cable"), 4) Quality checks. Minimum 3-5 sentences or 80-150 words per step. Example format: "Install the consumer unit enclosure at 1.8m height from finished floor level:\n• Mark fixing positions using a spirit level to ensure level installation\n• Drill fixing holes using 5.5mm masonry bit for 50mm screws\n• Insert wall plugs and secure unit with corrosion-resistant fixings\n• Verify unit is plumb and secure before proceeding with cable entry"'
+                      description: 'COMPREHENSIVE, FIELD-READY step description (MINIMUM 150-300 words, 8-15 sentences). Structure with numbered sub-steps or bullet points. MANDATORY FORMAT:\n\n1️⃣ **Overview Sentence**: What is being done and why\n\n2️⃣ **Detailed Sub-Steps** (3-6 sub-tasks):\n   • Sub-step 1 with specific action and measurement\n   • Sub-step 2 with tool usage and technique\n   • Sub-step 3 with quality checkpoint\n\n3️⃣ **Measurements & Specifications**: Include ALL specific values from knowledge base:\n   - Heights (e.g., "1800mm from FFL")\n   - Spacing (e.g., "400mm clip intervals")\n   - Cable sizes (e.g., "10mm² T&E")\n   - Ratings (e.g., "40A Type B MCB")\n\n4️⃣ **Quality Checks**: 2-3 verification steps\n\n5️⃣ **BS 7671 Reference** (if applicable): e.g., "Per BS 7671 Section 522.6 - Cable installation"\n\nExample:\n"Install consumer unit at designated location:\n\n1. Mark Fixing Positions\n• Position unit 1800mm from finished floor level\n• Use spirit level to ensure level installation\n• Mark fixing holes through mounting slots\n\n2. Drill and Secure\n• Drill 5.5mm holes for brick walls (16mm for concrete)\n• Insert 50mm red wall plugs\n• Secure with M6 x 50mm corrosion-resistant screws\n\n3. Prepare Cable Entries\n• Remove knockout blanks for cables\n• Fit 20mm rubber grommets for main tails\n• Leave 150mm service loop inside unit\n\n4. Quality Checks\n• Verify unit is plumb (spirit level check)\n• Confirm 450mm clearance above for future work\n• Check IP4X rating suitable for location\n\nPer BS 7671 Section 537 (Isolation and Switching)"'
                     },
                      tools: { 
                       type: 'array', 
@@ -1883,6 +1949,12 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         } else {
           // If RAG has no tools, log this as an AI failure (should not happen with new schema)
           logger.warn(`⚠️ AI failed to provide tools for step "${step.title}" and no RAG match found - this should not happen with minItems constraint`);
+        }
+      }
+      
+      // Validate step description length
+      if (enriched.description && enriched.description.split(' ').length < 80) {
+        logger.warn(`⚠️ Step ${step.step} description too brief (${enriched.description.split(' ').length} words). Minimum 150 words required.`);
           enriched.tools = []; // Keep empty to expose the problem
         }
       }

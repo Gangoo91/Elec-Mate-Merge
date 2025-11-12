@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Edit2, Save, X, Trash2, ChevronUp, ChevronDown, AlertTriangle, AlertCircle, Clock, Wrench, CheckCircle2, ShieldAlert } from "lucide-react";
 import { InstallationStep } from "@/types/installation-method";
 import { cn } from "@/lib/utils";
+import { EnhancedStepContent } from "./EnhancedStepContent";
+
 
 interface InstallationStepCardProps {
   step: InstallationStep;
@@ -168,9 +170,7 @@ export const InstallationStepCard = ({
                 </div>
 
                 {/* Always visible: Description */}
-                <div className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">
-                  {step.content}
-                </div>
+                <EnhancedStepContent content={step.content} />
 
                 {/* Expandable section with slide-down animation */}
                 {isExpanded && (
