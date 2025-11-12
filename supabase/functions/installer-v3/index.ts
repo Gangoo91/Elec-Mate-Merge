@@ -1,5 +1,5 @@
 // Deployed: 2025-10-28 - v4.3.0 AI Call Timeout & Zero Steps Detection
-const EDGE_FUNCTION_TIMEOUT_MS = 240000; // 240s - increased for complex schema generation
+const EDGE_FUNCTION_TIMEOUT_MS = 350000; // 350s (5min 50sec) - near Supabase 6min limit for complex method statements
 
 import { serve } from '../_shared/deps.ts';
 import {
@@ -1301,7 +1301,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
     const aiCallStart = Date.now();
     const progressInterval = setInterval(() => {
       const elapsed = Math.floor((Date.now() - aiCallStart) / 1000);
-      logger.info(`⏱️ AI call in progress: ${elapsed}s elapsed (timeout: 240s)`);
+      logger.info(`⏱️ AI call in progress: ${elapsed}s elapsed (timeout: 300s)`);
     }, 30000); // Log every 30 seconds
 
     let aiResult;
@@ -1330,26 +1330,10 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         }
       }, 10000);
       
-      // Start heartbeat to prevent "stuck job" false positives
-      const heartbeatInterval = setInterval(async () => {
-        try {
-          const jobId = body.jobId;
-          if (jobId) {
-            await supabase
-              .from('rams_generation_jobs')
-              .update({ 
-                current_step: `AI processing installation steps... (${Math.floor((Date.now() - aiCallStart) / 1000)}s)`,
-                progress: Math.min((body.currentProgress || 0) + 1, 95)
-              })
-              .eq('id', jobId);
-          }
-        } catch (err) {
-          console.warn('Heartbeat update failed (non-critical):', err);
-        }
-      }, 30000);
+      // Heartbeat removed - proper timeout handling now in place
       
       // 🚀 ACTION 1.1: Upgrade to GPT-5 Flagship Model
-      logger.info('🚀 Calling OpenAI GPT-5 FLAGSHIP - 32k tokens, 240s timeout');
+      logger.info('🚀 Calling OpenAI GPT-5 FLAGSHIP - 32k tokens, 300s timeout');
       
       aiResult = await callOpenAI({
         messages: [
@@ -1536,14 +1520,34 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         }
       }],
         tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } }
-      }, OPENAI_API_KEY, 230000); // 230s timeout - increased for complex installations
+      }, OPENAI_API_KEY, 300000); // 300s timeout - matches new extended timeout for complex installations
       
-      clearInterval(heartbeatInterval);
       clearInterval(progressInterval);
-      logger.info(`✅ OpenAI call completed in ${Math.round((Date.now() - aiCallStart) / 1000)}s`);
+      const aiCallDuration = Math.round((Date.now() - aiCallStart) / 1000);
+      logger.info(`✅ OpenAI call completed in ${aiCallDuration}s`);
+      
+      // 📊 Log token usage to monitor if we're hitting limits
+      if (aiResult.toolCalls && aiResult.toolCalls.length > 0) {
+        const usage = (aiResult as any).usage;
+        if (usage) {
+          const percentOfLimit = usage.completion_tokens ? 
+            ((usage.completion_tokens / 32000) * 100).toFixed(1) : 'unknown';
+          
+          logger.info('📊 Token Usage', {
+            promptTokens: usage.prompt_tokens || 'unknown',
+            completionTokens: usage.completion_tokens || 'unknown',
+            totalTokens: usage.total_tokens || 'unknown',
+            percentOfLimit: `${percentOfLimit}%`
+          });
+          
+          // Warn if approaching token limit
+          if (usage.completion_tokens > 28000) {
+            logger.warn('⚠️ High token usage - approaching 32k limit, consider increasing to 48k');
+          }
+        }
+      }
       
     } catch (error) {
-      clearInterval(heartbeatInterval);
       clearInterval(progressInterval);
       const elapsed = Math.round((Date.now() - aiCallStart) / 1000);
       logger.error(`❌ OpenAI call failed after ${elapsed}s`);
