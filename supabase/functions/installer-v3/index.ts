@@ -1364,15 +1364,15 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         }
       }, 30000);
       
-      // 🚀 ACTION 1.1: Upgrade to GPT-5 Flagship Model
-      logger.info('🚀 Calling OpenAI GPT-5 FLAGSHIP - 32k tokens, 240s timeout');
+      // Call GPT-5 Mini for fast, quality reasoning
+      logger.info('🚀 Calling OpenAI GPT-5 MINI - 32k tokens, 240s timeout');
       
       aiResult = await callOpenAI({
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ],
-        model: 'gpt-5-2025-08-07',  // Flagship model with superior reasoning
+        model: 'gpt-5-mini-2025-08-07',  // Fast mini model for quick generation
         max_completion_tokens: 32000,  // GPT-5 uses max_completion_tokens
         tools: [{
         type: 'function',
