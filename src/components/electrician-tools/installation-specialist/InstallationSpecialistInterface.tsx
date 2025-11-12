@@ -33,6 +33,13 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
     stage: 'initializing' | 'rag' | 'ai' | 'generation' | 'validation' | 'complete';
     message: string;
   } | null>(null);
+  const [qualityMetrics, setQualityMetrics] = useState<{
+    overallConfidence: number;
+    ragDataQuality: 'excellent' | 'good' | 'fair' | 'poor';
+    bs7671Coverage: number;
+    practicalWorkCoverage: number;
+    stage: 'initializing' | 'rag' | 'ai' | 'generation' | 'validation' | 'complete';
+  } | null>(null);
   const lastProjectRef = useRef<{details: ProjectDetailsType, description: string} | null>(null);
 
   const handleGenerate = async (projectDetails: ProjectDetailsType, description: string, useFullMode: boolean) => {
@@ -56,6 +63,15 @@ Project Context:
 ${projectDetails.clientName ? `- Client: ${projectDetails.clientName}` : ''}
 ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianName}` : ''}`;
 
+        // Initialize quality metrics
+        setQualityMetrics({
+          overallConfidence: 30,
+          ragDataQuality: 'fair',
+          bs7671Coverage: 0,
+          practicalWorkCoverage: 0,
+          stage: 'initializing'
+        });
+
         const mergedResult = await generateMethodStatement(
           query,
           projectDetails,
@@ -65,16 +81,39 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
             // Map stage markers to progress stages
             if (message === 'STAGE_1_START') {
               setFullModeProgress({ stage: 'initializing', message: 'Starting up...' });
+              setQualityMetrics(prev => prev ? { ...prev, stage: 'initializing', overallConfidence: 10 } : null);
             } else if (message === 'STAGE_2_START') {
               setFullModeProgress({ stage: 'rag', message: 'Searching BS 7671 regulations...' });
+              setQualityMetrics(prev => prev ? { ...prev, stage: 'rag', overallConfidence: 30 } : null);
+            } else if (message.startsWith('RAG_METRICS:')) {
+              // Parse RAG metrics from edge function
+              try {
+                const metricsStr = message.replace('RAG_METRICS:', '');
+                const parsedMetrics = JSON.parse(metricsStr);
+                setQualityMetrics(prev => prev ? {
+                  ...prev,
+                  bs7671Coverage: parsedMetrics.bs7671Count || 0,
+                  practicalWorkCoverage: parsedMetrics.practicalWorkCount || 0,
+                  ragDataQuality: parsedMetrics.bs7671Count >= 20 && parsedMetrics.practicalWorkCount >= 30 ? 'excellent' :
+                                  parsedMetrics.bs7671Count >= 15 && parsedMetrics.practicalWorkCount >= 20 ? 'good' :
+                                  parsedMetrics.bs7671Count >= 10 && parsedMetrics.practicalWorkCount >= 10 ? 'fair' : 'poor',
+                  overallConfidence: Math.min(95, 40 + (parsedMetrics.bs7671Count * 1.5) + (parsedMetrics.practicalWorkCount * 0.8))
+                } : null);
+              } catch (e) {
+                console.warn('Failed to parse RAG metrics:', e);
+              }
             } else if (message === 'STAGE_3_START') {
               setFullModeProgress({ stage: 'ai', message: 'Calculating cable sizes...' });
+              setQualityMetrics(prev => prev ? { ...prev, stage: 'ai', overallConfidence: Math.max(prev.overallConfidence, 50) } : null);
             } else if (message === 'STAGE_3_5_START') {
               setFullModeProgress({ stage: 'generation', message: 'Generating step-by-step procedures...' });
+              setQualityMetrics(prev => prev ? { ...prev, stage: 'generation', overallConfidence: Math.max(prev.overallConfidence, 70) } : null);
             } else if (message === 'STAGE_4_START') {
               setFullModeProgress({ stage: 'validation', message: 'Validating compliance...' });
+              setQualityMetrics(prev => prev ? { ...prev, stage: 'validation', overallConfidence: Math.max(prev.overallConfidence, 85) } : null);
             } else if (message === 'STAGE_5_COMPLETE') {
               setFullModeProgress({ stage: 'complete', message: 'Method statement ready!' });
+              setQualityMetrics(prev => prev ? { ...prev, stage: 'complete', overallConfidence: Math.max(prev.overallConfidence, 90) } : null);
             } else if (message.startsWith('🔍') || message.startsWith('⚡') || message.startsWith('🤖') || message.startsWith('✅')) {
               // Preserve current stage but update message
               setFullModeProgress(prev => prev ? { ...prev, message } : null);
@@ -177,6 +216,17 @@ Project Context:
 ${projectDetails.clientName ? `- Client: ${projectDetails.clientName}` : ''}
 ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianName}` : ''}`;
 
+        // Initialize quality metrics for quick mode
+        setQualityMetrics({
+          overallConfidence: 40,
+          ragDataQuality: 'fair',
+          bs7671Coverage: 0,
+          practicalWorkCoverage: 0,
+          stage: 'initializing'
+        });
+
+        setQualityMetrics(prev => prev ? { ...prev, stage: 'rag' } : null);
+        
         const response = await callAgent('installer', {
           query,
           projectContext: {
@@ -188,6 +238,20 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           currentDesign: designerContext?.design || null,
           sharedRegulations: designerContext?.regulations || []
         });
+
+        // Update quality metrics based on response
+        if (response?.metadata?.qualityMetrics) {
+          const qm = response.metadata.qualityMetrics;
+          setQualityMetrics({
+            overallConfidence: qm.overallQualityScore || 70,
+            ragDataQuality: qm.overallQualityScore >= 85 ? 'excellent' : 
+                           qm.overallQualityScore >= 70 ? 'good' : 
+                           qm.overallQualityScore >= 50 ? 'fair' : 'poor',
+            bs7671Coverage: qm.knowledgeBaseUsage?.bs7671Count || 0,
+            practicalWorkCoverage: qm.knowledgeBaseUsage?.practicalWorkCount || 0,
+            stage: 'complete'
+          });
+        }
 
         if (!response?.success) throw new Error(response?.error || 'Failed to generate installation method');
 
@@ -352,10 +416,12 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
         projectDetails={projectInfo}
         progress={fullModeProgress || progress}
         startTime={generationStartTime}
+        qualityMetrics={qualityMetrics || undefined}
         onCancel={() => {
           setShowResults(false);
           setIsGenerating(false);
           setFullModeProgress(null);
+          setQualityMetrics(null);
         }}
         onQuickMode={() => {
           if (lastProjectRef.current) {

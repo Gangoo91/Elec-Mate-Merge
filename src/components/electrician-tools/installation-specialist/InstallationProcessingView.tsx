@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Wrench, X, CheckCircle2, Circle, Loader2, Search, Zap, Clock, ShieldCheck, FileText } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { InstallationProjectDetails } from "@/types/installation-method";
+import { AIQualityConfidenceBadge } from "./AIQualityConfidenceBadge";
 
 interface InstallationProcessingViewProps {
   originalQuery?: string;
@@ -15,9 +16,16 @@ interface InstallationProcessingViewProps {
   startTime: number;
   onCancel?: () => void;
   onQuickMode?: () => void;
+  qualityMetrics?: {
+    overallConfidence: number;
+    ragDataQuality: 'excellent' | 'good' | 'fair' | 'poor';
+    bs7671Coverage: number;
+    practicalWorkCoverage: number;
+    stage: 'initializing' | 'rag' | 'ai' | 'generation' | 'validation' | 'complete';
+  };
 }
 
-export const InstallationProcessingView = ({ originalQuery, projectDetails, progress, startTime, onCancel, onQuickMode }: InstallationProcessingViewProps) => {
+export const InstallationProcessingView = ({ originalQuery, projectDetails, progress, startTime, onCancel, onQuickMode, qualityMetrics }: InstallationProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [simulatedProgress, setSimulatedProgress] = useState<{
     stage: 'initializing' | 'rag' | 'ai' | 'generation' | 'validation' | 'complete';
@@ -117,6 +125,12 @@ export const InstallationProcessingView = ({ originalQuery, projectDetails, prog
           </CardContent>
         </Card>
       )}
+
+      {/* AI Quality Confidence Badge */}
+      <AIQualityConfidenceBadge 
+        metrics={qualityMetrics}
+        isGenerating={progressValue < 100}
+      />
 
       {/* Agent Card */}
       <Card className="overflow-hidden border-blue-500/20 bg-gradient-to-br from-blue-500/10 via-background to-background">
