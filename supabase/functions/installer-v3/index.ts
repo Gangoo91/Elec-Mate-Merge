@@ -283,6 +283,7 @@ serve(async (req) => {
 
     // PHASE 2: Check for shared knowledge from Designer
     let installKnowledge: any[] = [];
+    let structuredProcedures: any[] = [];
     
     if (body.agentContext?.sharedKnowledge?.installationDocs?.length >= 5) {
       installKnowledge = body.agentContext.sharedKnowledge.installationDocs;
@@ -408,160 +409,49 @@ serve(async (req) => {
         }
       }
       
-      // ✅ SIMPLIFIED RAG: 2-query parallel like Health-Safety (fast & reliable)
+      // 🚀 WORLD-CLASS RAG V3: Retrieve PRE-STRUCTURED installation procedures
       const ragStart = Date.now();
-      logger.info('🔍 Starting SIMPLIFIED RAG (2-query parallel)');
+      logger.info('🎯 [V3] Retrieving pre-structured installation procedures from knowledge base...');
       
-      const [practicalWorkResult, bs7671Result] = await Promise.all([
-        // TIER 1: Practical Work Intelligence - Single hybrid search
-        (async () => {
-          try {
-            logger.info('🔍 Executing practical work hybrid search', { query: effectiveQuery.substring(0, 100) });
-            
-            const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
-              query_text: effectiveQuery,
-              match_count: 40  // Increased from 25 to get more practical procedures
-            });
-            
-            if (error) {
-              logger.error('❌ Practical work RPC error:', error);
-              return [];
-            }
-            
-            logger.info(`✅ Practical work RPC returned ${(data || []).length} results`);
-            
-            // 🔍 DEBUG: Enhanced RAG data availability logging
-            if (data && data.length > 0) {
-              logger.info('🔍 Tool extraction sample:', {
-                firstDoc: {
-                  topic: data[0].topic || data[0].primary_topic,
-                  hasToolsRequired: !!data[0].tools_required,
-                  toolsCount: (data[0].tools_required || []).length,
-                  toolsSample: (data[0].tools_required || []).slice(0, 5),
-                  hasMaterialsNeeded: !!data[0].materials_needed,
-                  materialsCount: (data[0].materials_needed || []).length
-                }
-              });
-              
-              const sampleTools = data.slice(0, 3).map(doc => ({
-                topic: doc.topic || doc.primary_topic,
-                toolsCount: (doc.tools_required || []).length,
-                sampleTools: (doc.tools_required || []).slice(0, 3)
-              }));
-              logger.info('📊 RAG Tools Sample:', sampleTools);
-            }
-            
-            return (data || []).map((row: any) => ({
-              primary_topic: row.topic || row.primary_topic,
-              content: row.content,
-              equipment_category: row.equipment_category || 'General',
-              tools_required: row.tools_required || [],
-              materials_needed: [],
-              bs7671_regulations: row.bs7671_regulations || [],
-              hybrid_score: (row.hybrid_score || 0.75) * 0.95,
-              confidence_score: row.hybrid_score || 0.75,
-              source: 'practical_work_intelligence',
-              _rawSource: row.source || 'not_provided'
-            }));
-          } catch (error) {
-            logger.error('❌ CRITICAL: Practical work search failed:', { 
-              error: error.message, 
-              stack: error.stack
-            });
-            return [];
-          }
-        })(),
-        
-        // TIER 2: BS 7671 Regulations
-        (async () => {
-          try {
-            logger.info('🔍 Executing Regulations Intelligence hybrid search', { query: effectiveQuery.substring(0, 100) });
-            
-            const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
-              query_text: effectiveQuery,
-              match_count: 25,
-              filter_categories: null
-            });
-            
-            if (error) {
-              logger.error('❌ Regulations Intelligence RPC error:', error);
-              return [];
-            }
-            
-            logger.info(`✅ Regulations Intelligence RPC returned ${(data || []).length} results`);
-            
-            const results = (data || []).map((row: any) => ({
-              regulation_id: row.regulation_id,
-              regulation_number: row.regulation_number,
-              content: row.primary_topic,
-              primary_topic: row.primary_topic,
-              keywords: row.keywords,
-              category: row.category,
-              subcategory: row.subcategory,
-              applies_to: row.applies_to,
-              related_regulations: row.related_regulations,
-              confidence_score: row.confidence_score,
-              hybrid_score: (row.hybrid_score || 0.75) * 0.90,
-              source: 'regulations_intelligence',
-              _rawSource: row.source || 'not_provided'
-            }));
-            
-            logger.info('📊 Regulations Intelligence RAG Retrieved:', {
-              totalEntries: results.length,
-              sampleTopics: results.slice(0, 2).map((r: any) => r.primary_topic)
-            });
-            
-            return results;
-          } catch (error) {
-            logger.error('❌ CRITICAL: BS 7671 search failed:', { 
-              error: error.message, 
-              stack: error.stack 
-            });
-            return [];
-          }
-        })()
-      ]);
-
-      const practicalWorkDocs = practicalWorkResult || [];
-      const bs7671Docs = bs7671Result || [];
-
-      // Merge and prioritize (Practical Work first)
-      installKnowledge = [...practicalWorkDocs, ...bs7671Docs];
+      const { retrieveStructuredProcedures } = await import('../_shared/installation-procedure-retriever.ts');
       
-      // 🛡️ FALLBACK: Load core regulations cache if RAG returned nothing
-      if (installKnowledge.length === 0) {
-        logger.warn('⚠️ RAG returned ZERO results - loading core regulations fallback cache');
-        const coreRegs = await loadCoreRegulationsCache(supabase);
-        installKnowledge = coreRegs.map((reg: any) => ({
-          regulation_number: reg.regulation_number,
-          content: reg.content,
-          primary_topic: reg.regulation_number,
-          section: reg.section,
-          hybrid_score: 0.8,
-          source: 'core_regulations_fallback'
-        }));
-        logger.info(`📚 Fallback loaded ${installKnowledge.length} core BS 7671 regulations`);
-      }
-
-      // 🔍 DEBUG: Log installKnowledge composition
-      logger.info('🔍 InstallKnowledge Array Analysis:', {
-        totalDocs: installKnowledge.length,
-        practicalWorkCount: installKnowledge.filter(k => k.source === 'practical_work_intelligence').length,
-        regulationsCount: installKnowledge.filter(k => k.source === 'regulations_intelligence').length,
-        sampleSources: installKnowledge.slice(0, 5).map(k => ({
-          source: k.source,
-          topic: k.primary_topic || k.regulation_number
-        })),
-        uniqueSources: [...new Set(installKnowledge.map(k => k.source))]
+      const structuredProcedures = await retrieveStructuredProcedures({
+        jobDescription: effectiveQuery,
+        workType: workType as 'domestic' | 'commercial' | 'industrial' || 'domestic',
+        location: location,
+        equipment: undefined // Auto-detected from query
+      }, supabase);
+      
+      logger.info(`✅ [V3] Retrieved ${structuredProcedures.length} pre-structured installation steps`);
+      
+      logger.info('📊 RAG Effectiveness Check - Installation', {
+        totalStructuredSteps: structuredProcedures.length,
+        highConfidence: structuredProcedures.filter(s => s.confidence_score > 0.7).length,
+        avgConfidence: structuredProcedures.length > 0 
+          ? (structuredProcedures.reduce((s, p) => s + p.confidence_score, 0) / structuredProcedures.length).toFixed(3)
+          : 'N/A',
+        phases: [...new Set(structuredProcedures.map(s => s.phase))].join(', '),
+        hasRichContext: structuredProcedures.length >= 5,
+        retrievalTime: Date.now() - ragStart,
+        warningIfPoor: structuredProcedures.length < 3 ? '⚠️ INSUFFICIENT RAG DATA - AI will generate generic steps!' : null
       });
-
-      logger.info('✅ Direct RAG hybrid search complete', {
-        practicalWork: practicalWorkDocs.length,
-        bs7671: bs7671Docs.length,
-        totalDuration: Date.now() - ragStart,
-        avgPracticalScore: practicalWorkDocs.length > 0
-          ? (practicalWorkDocs.reduce((s, d) => s + d.hybrid_score, 0) / practicalWorkDocs.length).toFixed(2)
-          : 'N/A'
+      
+      // Map structuredProcedures to installKnowledge format for backward compatibility
+      installKnowledge = structuredProcedures.map(step => ({
+        primary_topic: step.step_title,
+        content: step.step_description,
+        phase: step.phase,
+        tools_required: step.tools_required,
+        materials_needed: step.materials_needed,
+        safety_considerations: step.safety_notes,
+        bs7671_regulations: step.regulation_references,
+        confidence_score: step.confidence_score,
+        hybrid_score: step.confidence_score * 10, // Convert 0-1 to 0-10 scale
+        source: 'installation_procedure_retriever'
+      }));
+      
+      logger.info('✅ [V3] Mapped to installKnowledge format', {
+        knowledgeCount: installKnowledge.length
       });
 
       timings.ragRetrieval = Date.now() - ragStart;
@@ -569,80 +459,95 @@ serve(async (req) => {
 
     // Close the else block from PHASE 2
 
-    // PHASE 3: Build installation context - format based on source
+    // PHASE 3: Build installation context from pre-structured procedures
     let installContext = '';
+    let structuredStepsText = '';
     
-    // 🚀 ACTION 6.1: Improved RAG Formatting with Clear Extraction Markers
-    const formatRagForAI = (doc: any, index: number): string => {
-      let formatted = `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-      formatted += `PROCEDURE ${index + 1}: ${doc.primary_topic || 'Installation Procedure'}\n`;
-      
-      if (doc.equipment_category) {
-        formatted += `CATEGORY: ${doc.equipment_category}\n`;
-      }
-      
-      formatted += `\nINSTALLATION STEPS:\n${doc.content}\n`;
-      
-      if (doc.tools_required?.length > 0) {
-        formatted += `\n🔧 TOOLS_FOR_THIS_TASK:\n`;
-        doc.tools_required.forEach((tool: string, i: number) => {
-          formatted += `   ${i + 1}. ${tool}\n`;
-        });
-      }
-      
-      if (doc.materials_needed?.length > 0) {
-        formatted += `\n📦 MATERIALS_FOR_THIS_TASK:\n`;
-        doc.materials_needed.forEach((material: string, i: number) => {
-          formatted += `   ${i + 1}. ${material}\n`;
-        });
-      }
-      
-      if (doc.bs7671_regulations?.length > 0) {
-        formatted += `\n📜 BS_7671_REFERENCES:\n`;
-        doc.bs7671_regulations.forEach((reg: string) => {
-          formatted += `   • ${reg}\n`;
-        });
-      }
-      
-      formatted += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-      return formatted;
-    };
-
-    if (installKnowledge && installKnowledge.length > 0) {
-      installContext = installKnowledge
-        .map((doc, idx) => {
-          if (doc.source === 'practical_work_intelligence' || doc.source === 'regulations_intelligence') {
-            return formatRagForAI(doc, idx);
-          } else {
-            return `${doc.topic}:\n${doc.content}`;
+    try {
+      if (structuredProcedures && structuredProcedures.length > 0) {
+        // Build AI prompt with pre-structured steps (90% of work already done!)
+        structuredStepsText = '\n\n📋 PRE-STRUCTURED INSTALLATION STEPS FROM KNOWLEDGE BASE:\n\n';
+        structuredStepsText += `You have ${structuredProcedures.length} pre-structured installation steps.\n`;
+        structuredStepsText += 'Your task is to FORMAT these into the JSON structure. DO NOT invent new steps.\n\n';
+        
+        structuredProcedures.forEach((step, i) => {
+          structuredStepsText += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+          structuredStepsText += `STEP ${step.step_number}: ${step.step_title} (${step.phase})\n`;
+          structuredStepsText += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+          
+          structuredStepsText += `Description:\n${step.step_description}\n\n`;
+          
+          if (step.tools_required.length > 0) {
+            structuredStepsText += `🔧 Tools Required:\n`;
+            step.tools_required.forEach(tool => {
+              structuredStepsText += `   • ${tool}\n`;
+            });
+            structuredStepsText += `\n`;
           }
-        })
-        .join('\n');
-    } else {
-      installContext = 'Apply general BS 7671 installation methods and best practices.';
+          
+          if (step.materials_needed.length > 0) {
+            structuredStepsText += `📦 Materials:\n`;
+            step.materials_needed.forEach(mat => {
+              structuredStepsText += `   • ${mat}\n`;
+            });
+            structuredStepsText += `\n`;
+          }
+          
+          if (step.safety_notes.length > 0) {
+            structuredStepsText += `⚠️ Safety Notes:\n`;
+            step.safety_notes.forEach(note => {
+              structuredStepsText += `   • ${note}\n`;
+            });
+            structuredStepsText += `\n`;
+          }
+          
+          if (step.regulation_references.length > 0) {
+            structuredStepsText += `📜 BS 7671 References:\n`;
+            step.regulation_references.forEach(reg => {
+              structuredStepsText += `   • ${reg}\n`;
+            });
+            structuredStepsText += `\n`;
+          }
+          
+          if (step.quality_checks.length > 0) {
+            structuredStepsText += `✅ Quality Checks:\n`;
+            step.quality_checks.forEach(check => {
+              structuredStepsText += `   • ${check}\n`;
+            });
+            structuredStepsText += `\n`;
+          }
+          
+          if (step.common_mistakes.length > 0) {
+            structuredStepsText += `❌ Common Mistakes to Avoid:\n`;
+            step.common_mistakes.forEach(mistake => {
+              structuredStepsText += `   • ${mistake}\n`;
+            });
+            structuredStepsText += `\n`;
+          }
+          
+          structuredStepsText += `Duration: ~${step.expected_duration_mins} minutes\n`;
+          structuredStepsText += `Confidence: ${(step.confidence_score * 100).toFixed(0)}%\n\n`;
+        });
+        
+        installContext = structuredStepsText;
+      } else {
+        installContext = 'Apply general BS 7671 installation methods and best practices.';
+        structuredStepsText = '';
+      }
+      
+      logger.info('✅ [V3] Installation context built successfully:', {
+        structuredStepsCount: structuredProcedures?.length || 0,
+        contextLength: installContext.length
+      });
+      
+    } catch (contextError) {
+      logger.error('Failed to build context - aborting', {
+        error: contextError instanceof Error ? contextError.message : String(contextError),
+        stack: contextError instanceof Error ? contextError.stack : undefined
+      });
+      throw new Error(`Context building failed: ${contextError instanceof Error ? contextError.message : String(contextError)}`);
     }
 
-    logger.info('Installation context prepared', {
-      contextLength: installContext.length,
-      docsIncluded: installKnowledge.length,
-      avgDocLength: installKnowledge.length > 0 
-        ? Math.round(installContext.length / installKnowledge.length)
-        : 0
-    });
-
-    // ✨ Part 3C: RAG Effectiveness Logging (after installContext creation)
-    logger.info('📊 RAG Effectiveness Check', {
-      totalResults: installKnowledge.length,
-      highConfidence: installKnowledge.filter((k: any) => (k.hybrid_score || k.finalScore || 0) > 0.7).length,
-      avgScore: installKnowledge.length > 0
-        ? (installKnowledge.reduce((s: number, k: any) => s + (k.hybrid_score || k.finalScore || 0), 0) / installKnowledge.length).toFixed(3)
-        : 'N/A',
-      practicalWorkCount: installKnowledge.filter((k: any) => k.source === 'practical_work_intelligence').length,
-      regulationsCount: installKnowledge.filter((k: any) => k.source === 'regulations_intelligence').length,
-      hasRichContext: installContext.length > 1000,
-      ragDuration: timings.ragRetrieval,
-      warningIfPoor: installKnowledge.length < 3 ? '⚠️ INSUFFICIENT RAG DATA - AI may hallucinate!' : null
-    });
 
     // ✨ Part 3: Add real-time progress streaming during AI call
     let lastProgressLog = Date.now();
@@ -863,16 +768,20 @@ serve(async (req) => {
       contextSection += '5. If unsure what the user means, reference what was discussed to clarify\n';
     }
 
-    // Simplified system prompt - focus on key instructions only
-    const systemPrompt = `You are a senior UK electrical installation specialist creating detailed, field-ready method statements compliant with BS 7671:2018+A3:2024.
+    // Simplified system prompt - focus on FORMATTING pre-structured steps
+    const systemPrompt = `You are a senior UK electrical installation specialist formatting pre-structured installation procedures into JSON.
 
-**YOUR TASK**: Create PRACTICAL work instructions electricians can follow on-site, NOT high-level overviews.
+**YOUR TASK**: FORMAT the pre-structured installation steps provided in the knowledge base into the JSON schema. The RAG system has already done 90% of the work.
 
 **CRITICAL RULES**:
 
 1. **UK ENGLISH ONLY** - metres (not meters), earthing (not grounding), consumer unit (not breaker panel), colours (not colors)
 
-2. **EXTRACT FROM KNOWLEDGE BASE** - You have access to installation procedures and BS 7671 requirements. USE this data, don't guess.
+2. **FORMAT, DON'T GENERATE** - You have pre-structured steps with descriptions, tools, safety notes, and regulations already provided. Your job is to:
+   - Expand the step descriptions to 150-300 words using the provided content as the foundation
+   - Use the exact tools and materials listed in each step
+   - Include the safety notes and regulations references provided
+   - Add detail and clarity while maintaining the structure
 
 3. **STEP DETAIL REQUIREMENTS** - Each step MUST include:
    - Comprehensive description (30-150 words)
@@ -995,9 +904,9 @@ ${contextSection}
 ${installContext}
 
 **KNOWLEDGE SOURCE QUALITY:**
-- ${installKnowledge.length} procedures retrieved
-- Avg relevance: ${installKnowledge.length > 0 ? (installKnowledge.reduce((s: number, k: any) => s + (k.hybrid_score || 0), 0) / installKnowledge.length * 100).toFixed(0) : 0}%
-- Primary focus: ${installKnowledge.filter((k: any) => k.source === 'practical_work_intelligence').length} practical procedures, ${installKnowledge.filter((k: any) => k.source === 'regulations_intelligence').length} regulations intelligence
+- ${structuredProcedures?.length || 0} pre-structured installation steps retrieved
+- Avg confidence: ${structuredProcedures && structuredProcedures.length > 0 ? (structuredProcedures.reduce((s, p) => s + p.confidence_score, 0) / structuredProcedures.length * 100).toFixed(0) : 0}%
+- Phases covered: ${structuredProcedures ? [...new Set(structuredProcedures.map((s: any) => s.phase))].join(', ') : 'none'}
 
 **CRITICAL: ALL OUTPUT MUST BE IN UK ENGLISH**
 - Use UK spellings: realise (not realize), analyse (not analyze), minimise (not minimize), categorise (not categorize), organise (not organize), authorised (not authorized), recognised (not recognized), whilst (not while)
