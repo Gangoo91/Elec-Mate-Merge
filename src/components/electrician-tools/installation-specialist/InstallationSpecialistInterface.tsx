@@ -351,7 +351,11 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           summary,
           projectDetails,
           projectMetadata: defaultMetadata,
-          qualityMetrics: response.metadata?.qualityMetrics
+          qualityMetrics: response.metadata?.qualityMetrics,
+          testingProcedures: response.data?.testingProcedures || [],
+          competencyRequirements: response.data?.competencyRequirements,
+          siteLogistics: response.data?.siteLogistics,
+          regulatoryCitations: response.data?.regulatoryCitations || []
         });
       }
 
@@ -468,6 +472,11 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           projectDetails={methodData.projectDetails}
           projectMetadata={methodData.projectMetadata}
           fullMethodStatement={methodData._fullMethodStatement}
+          qualityMetrics={methodData.qualityMetrics}
+          testingProcedures={methodData.testingProcedures}
+          competencyRequirements={methodData.competencyRequirements}
+          siteLogistics={methodData.siteLogistics}
+          regulatoryCitations={methodData.regulatoryCitations}
           onStartOver={handleStartOver}
         />
         

@@ -16,6 +16,9 @@ import { ConditionalProceduresSection } from "./ConditionalProceduresSection";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { InstallationSummaryStats } from "./InstallationSummaryStats";
 import { RAGExtractionBreakdown } from "./RAGExtractionBreakdown";
+import { CompetencyRequirementsCard } from "./CompetencyRequirementsCard";
+import { SiteLogisticsCard } from "./SiteLogisticsCard";
+import { RegulatoryCitationsPanel } from "./RegulatoryCitationsPanel";
 
 interface ProjectMetadata {
   documentRef: string;
@@ -76,6 +79,29 @@ interface InstallationResultsProps {
       };
     };
   };
+  testingProcedures?: Array<{
+    testName: string;
+    standard: string;
+    acceptanceCriteria: string;
+    certificateRequired?: string;
+    regulationRef?: string;
+  }>;
+  competencyRequirements?: {
+    minimumQualifications: string[];
+    supervision?: string;
+    additionalTraining?: string[];
+  };
+  siteLogistics?: {
+    isolationPoints: string[];
+    accessRequirements: string;
+    permitsRequired: string[];
+    workingHours?: string;
+  };
+  regulatoryCitations?: Array<{
+    regulation: string;
+    applicableToStep: number;
+    requirement: string;
+  }>;
   onStartOver: () => void;
 }
 
@@ -90,6 +116,10 @@ export const InstallationResults = ({
   projectMetadata: initialMetadata,
   fullMethodStatement,
   qualityMetrics,
+  testingProcedures: propTestingProcedures,
+  competencyRequirements: propCompetencyRequirements,
+  siteLogistics: propSiteLogistics,
+  regulatoryCitations,
   onStartOver
 }: InstallationResultsProps) => {
   const [steps, setSteps] = useState<InstallationStep[]>(initialSteps);
@@ -97,12 +127,12 @@ export const InstallationResults = ({
   const [projectMetadata, setProjectMetadata] = useState<ProjectMetadata | undefined>(initialMetadata);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
-  // Extract comprehensive data
-  const testingProcedures = fullMethodStatement?.testingProcedures || [];
+  // Extract comprehensive data - prioritize props over fullMethodStatement
+  const testingProcedures = propTestingProcedures || fullMethodStatement?.testingProcedures || [];
+  const competencyRequirements = propCompetencyRequirements || fullMethodStatement?.competencyRequirements || {};
+  const siteLogistics = propSiteLogistics || fullMethodStatement?.siteLogistics || {};
   const equipmentSchedule = fullMethodStatement?.equipmentSchedule || [];
-  const siteLogistics = fullMethodStatement?.siteLogistics || {};
   const conditionalFlags = fullMethodStatement?.conditionalFlags || {};
-  const competencyRequirements = fullMethodStatement?.competencyRequirements || {};
   const workAtHeightEquipment = fullMethodStatement?.workAtHeightEquipment || [];
 
   // Count hazards
@@ -483,13 +513,28 @@ export const InstallationResults = ({
         </div>
       </div>
 
+      {/* 🎓 Competency Requirements */}
+      {competencyRequirements && competencyRequirements.minimumQualifications && competencyRequirements.minimumQualifications.length > 0 && (
+        <CompetencyRequirementsCard competencyRequirements={competencyRequirements} />
+      )}
+
+      {/* 🗺️ Site Logistics & Planning */}
+      {siteLogistics && (siteLogistics.isolationPoints?.length > 0 || siteLogistics.accessRequirements) && (
+        <SiteLogisticsCard siteLogistics={siteLogistics} />
+      )}
+
+      {/* 📖 BS 7671 Regulatory Citations */}
+      {regulatoryCitations && regulatoryCitations.length > 0 && (
+        <RegulatoryCitationsPanel regulatoryCitations={regulatoryCitations} />
+      )}
+
       {/* Testing & Commissioning */}
       <TestingProceduresSection procedures={testingProcedures} />
 
       {/* Equipment Schedule */}
       <EquipmentScheduleSection equipment={equipmentSchedule} />
 
-      {/* Site Logistics */}
+      {/* Site Logistics (Old Component - Keep for backward compatibility) */}
       <SiteLogisticsSection
         logistics={siteLogistics}
         competency={competencyRequirements}
