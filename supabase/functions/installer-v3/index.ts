@@ -420,13 +420,28 @@ serve(async (req) => {
         // TIER 1: Practical Work Intelligence - Multi-query search
         (async () => {
           try {
+            logger.info('🔍 Executing practical work RPC calls', { queryCount: searchQueries.length, queries: searchQueries });
+            
             const allPracticalResults = await Promise.all(
-              searchQueries.map(q => 
-                supabase.rpc('search_practical_work_intelligence_hybrid', {
-                  query_text: q,
-                  match_count: 10  // 10 per query
-                }).then(r => r.data || [])
-              )
+              searchQueries.map(async (q, idx) => {
+                try {
+                  const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
+                    query_text: q,
+                    match_count: 10
+                  });
+                  
+                  if (error) {
+                    logger.error(`❌ Practical work RPC error for query ${idx + 1}:`, { query: q, error });
+                    return [];
+                  }
+                  
+                  logger.info(`✅ Practical work RPC ${idx + 1} returned ${(data || []).length} results`, { query: q.substring(0, 50) });
+                  return data || [];
+                } catch (err) {
+                  logger.error(`❌ Practical work RPC exception for query ${idx + 1}:`, { query: q, error: err.message });
+                  return [];
+                }
+              })
             );
             
             // Flatten and deduplicate by ID
@@ -472,7 +487,11 @@ serve(async (req) => {
               _rawSource: row.source || 'not_provided'  // 🔍 DEBUG: Verify row structure
             }));
           } catch (error) {
-            console.error('Practical work multi-query search failed:', error);
+            logger.error('❌ CRITICAL: Practical work multi-query search failed:', { 
+              error: error.message, 
+              stack: error.stack,
+              queriesAttempted: searchQueries.length 
+            });
             return [];
           }
         })(),
@@ -480,12 +499,19 @@ serve(async (req) => {
         // TIER 2: BS 7671 Regulations - Increased volume
         (async () => {
           try {
+            logger.info('🔍 Executing BS 7671 RPC call', { combinedQuery: searchQueries.join(' ').substring(0, 100) });
+            
             const { data, error } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
               query_text: searchQueries.join(' '),
               match_count: 25  // 🚀 3x increase from 8
             });
             
-            if (error) throw error;
+            if (error) {
+              logger.error('❌ BS 7671 RPC error:', error);
+              throw error;
+            }
+            
+            logger.info(`✅ BS 7671 RPC returned ${(data || []).length} results`);
             
             const results = (data || []).map((row: any) => ({
               regulation_number: row.regulation_number,
@@ -505,7 +531,10 @@ serve(async (req) => {
             
             return results;
           } catch (error) {
-            console.error('BS 7671 keyword search failed:', error);
+            logger.error('❌ CRITICAL: BS 7671 keyword search failed:', { 
+              error: error.message, 
+              stack: error.stack 
+            });
             return [];
           }
         })()
