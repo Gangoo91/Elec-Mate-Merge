@@ -372,6 +372,42 @@ serve(async (req) => {
         return [...new Set(queries)];
       };
       
+      /**
+       * Emergency fallback when RAG pipeline fails completely
+       * Loads essential BS 7671 regulations for common installations
+       */
+      async function loadCoreRegulationsCache(supabase: any) {
+        const coreRegNumbers = [
+          '411.3.2', '411.3.3', // Protection & RCD requirements
+          '433.1.1', '433.1.204', // Cable sizing fundamentals
+          '522.6', '522.8.10', // Outdoor & buried cables
+          '525.1', '525.2', // Voltage drop limits
+          '531.3.3', '531.3.4', // Protective device selection
+          '537', // Isolation & switching
+          '543.1.1', '543.1.3', '543.7', // Earth fault loop impedance
+          '559.10.3.1', // Three-phase circuits
+          '701.410.3.5', '701.411.3.3' // Bathroom zones & RCD
+        ];
+        
+        try {
+          const { data, error } = await supabase
+            .from('bs7671_embeddings')
+            .select('*')
+            .in('regulation_number', coreRegNumbers)
+            .limit(50);
+          
+          if (error) {
+            console.error('Failed to load core regulations cache:', error);
+            return [];
+          }
+          
+          return data || [];
+        } catch (error) {
+          console.error('Exception loading core regulations:', error);
+          return [];
+        }
+      }
+      
       const searchQueries = decomposeInstallationQuery(query, installationMethod);
       logger.info(`🔍 Decomposed into ${searchQueries.length} targeted searches`);
 
@@ -480,6 +516,21 @@ serve(async (req) => {
 
       // Merge and prioritize (Practical Work first)
       installKnowledge = [...practicalWorkDocs, ...bs7671Docs];
+      
+      // 🛡️ FALLBACK: Load core regulations cache if RAG returned nothing
+      if (installKnowledge.length === 0) {
+        logger.warn('⚠️ RAG returned ZERO results - loading core regulations fallback cache');
+        const coreRegs = await loadCoreRegulationsCache(supabase);
+        installKnowledge = coreRegs.map((reg: any) => ({
+          regulation_number: reg.regulation_number,
+          content: reg.content,
+          primary_topic: reg.regulation_number,
+          section: reg.section,
+          hybrid_score: 0.8,
+          source: 'core_regulations_fallback'
+        }));
+        logger.info(`📚 Fallback loaded ${installKnowledge.length} core BS 7671 regulations`);
+      }
 
       // 🔍 DEBUG: Log installKnowledge composition
       logger.info('🔍 InstallKnowledge Array Analysis:', {
