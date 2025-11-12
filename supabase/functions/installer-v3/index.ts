@@ -616,111 +616,51 @@ serve(async (req) => {
       contextSection += '5. If unsure what the user means, reference what was discussed to clarify\n';
     }
 
-    // Phase 1: RAG-FIRST System Prompt - Knowledge base intelligence comes FIRST
-    const systemPrompt = `You are a master electrician with 20+ years of installation experience across residential, commercial, and industrial projects. You're chatting with a colleague who needs practical, on-site advice.
+    // Simplified system prompt - focus on key instructions only
+    const systemPrompt = `You are a senior UK electrical installation specialist creating detailed, field-ready method statements compliant with BS 7671:2018+A3:2024.
 
-🎯 **PRIMARY INSTRUCTION: USE THE PROVIDED CIRCUIT DESIGN DATA**
+**YOUR TASK**: Create PRACTICAL work instructions electricians can follow on-site, NOT high-level overviews.
+
+**CRITICAL RULES**:
+
+1. **UK ENGLISH ONLY** - metres (not meters), earthing (not grounding), consumer unit (not breaker panel), colours (not colors)
+
+2. **EXTRACT FROM KNOWLEDGE BASE** - You have access to installation procedures and BS 7671 requirements. USE this data, don't guess.
+
+3. **STEP DETAIL REQUIREMENTS** - Each step MUST include:
+   - Comprehensive description (30-150 words)
+   - Exact measurements (e.g., "1800mm centre height from FFL")
+   - Specific routes (e.g., "Route vertically down, maintain 50mm from services")
+   - Regulatory references (e.g., "BS 7671 Section 522 IP rating")
+
+4. **TOOLS & MATERIALS - MANDATORY EXTRACTION**:
+   - Find "TOOLS_FOR_THIS_TASK:" in knowledge base and extract ALL listed tools
+   - Find "MATERIALS_FOR_THIS_TASK:" and extract ALL materials
+   - Make tools SPECIFIC: "SDS drill with 16mm masonry bit" NOT "drill"
+   - Include quantities: "50mm screws x4", "10mm² T&E - measured length +10%"
+   - If knowledge base lacks data, REASON about what's needed based on the work described
+
+5. **HAZARD IDENTIFICATION - STEP-SPECIFIC**:
+   - Identify 2-5 hazards per step based on work activities
+   - Format: "[Hazard] - [Mitigation]"
+   - Example: "Hidden cables in wall - CAT scan before drilling"
+   - NOT generic: "Electrical shock - be careful" ❌
+   - SPECIFIC: "Shock from existing circuits - isolate, test dead, lock-off" ✅
+
+6. **REASONING FOR TOOLS/HAZARDS** - Ask yourself:
+   - Tools: What physical actions? (drill→drill+bits, connect→screwdrivers, test→tester)
+   - Hazards: What could cause injury? (drilling→hidden cables, heights→falls, electrical→shock)
+
+7. **BS 7671 REFERENCES** - Cite tables when relevant:
+   - Table 54.7 (conductor resistance), Appendix 3 (max Zs), Section 522 (IP ratings), Section 701 (bathrooms)
 
 ${currentDesign?.circuits && currentDesign.circuits.length > 0 ? `
-⚡️ CRITICAL: A complete circuit design has been provided by the Designer Agent in the context section below.
-DO NOT re-calculate cable sizes or protection devices - they are ALREADY CORRECTLY DESIGNED.
-Your job is to create INSTALLATION PROCEDURES for these exact specifications.
-
-Focus on:
-✅ Physical installation steps (cable routing, fixing methods, clip spacing)
-✅ Termination procedures (stripping, crimping, torque settings)
-✅ Testing sequence (continuity, insulation resistance, polarity)
-✅ Safety precautions specific to this installation
-✅ Tool and equipment requirements
-✅ Quality checkpoints at each stage
-
+⚡️ CIRCUIT DESIGN PROVIDED - Use these exact specifications:
 ${contextSection}
 ` : ''}
 
-📚 **PRACTICAL WORK INTELLIGENCE - USE THIS DATA FOR PROCEDURES:**
-The Practical Work Intelligence database contains VERIFIED procedures from 10,000+ real installations. Your job is to:
-1. **SELECT** the most relevant procedures from the knowledge base
-2. **ADAPT** them to this specific job (cable sizes, distances, equipment)
-3. **SEQUENCE** them in logical installation order
-4. **ENHANCE** with specific measurements and quality checks
-
+📚 INSTALLATION KNOWLEDGE DATABASE:
 ${installContext}
-
-⚠️ CRITICAL: EXTRACT TOOLS & MATERIALS FROM RAG KNOWLEDGE BASE
-
-For EVERY installation step, you MUST:
-
-1. **Search the Practical Work Intelligence data above** for matching procedures
-2. **Extract tools_required** from RAG results (marked with 🔧) and populate the "tools" array
-3. **Extract materials_needed** from RAG results (marked with 📦) and populate the "materials" array
-4. **Extract hazards** from safety notes or identify from work activities
-
-Example RAG extraction process:
-
-RAG Result: {
-  "primary_topic": "Installing consumer unit",
-  🔧 **TOOLS REQUIRED**: Spirit level, 5.5mm masonry drill bit, Cordless drill, Screwdriver set
-  📦 **MATERIALS NEEDED**: Metal consumer unit enclosure, 50mm fixing screws x4, Wall plugs x4
-  📜 **BS 7671 REFS**: Section 132.8, Section 530.3.4
-}
-
-Your step output should include:
-{
-  "step": 1,
-  "title": "Install Consumer Unit Enclosure",
-  "description": "Mount the consumer unit at 1.8m height...",
-  "tools": ["Spirit level", "5.5mm masonry drill bit", "Cordless drill", "Screwdriver set"], // ✅ EXTRACTED
-  "materials": ["Metal consumer unit enclosure", "50mm fixing screws x4", "Wall plugs x4"], // ✅ EXTRACTED
-  "safetyNotes": ["Ensure wall can support weight", "Check for hidden cables before drilling"],
-  "linkedHazards": ["Drilling into hidden cables - use CAT scanner", "Manual handling - use correct lifting technique"],
-  "qualifications": ["Qualified Electrician", "18th Edition BS 7671"]
-}
-
-
-**EXTRACTION PRIORITIES:**
-1. **Primary source**: Practical Work Intelligence tools_required and materials_needed fields (marked with 🔧 and 📦)
-2. **Secondary source**: BS 7671 references to required equipment
-3. **Tertiary source**: Infer from step description if RAG data is insufficient (but be specific, not generic)
-
-**HAZARD IDENTIFICATION:**
-For each step, identify hazards from:
-- Work activities (e.g., working at height, confined spaces, manual handling)
-- Electrical risks (e.g., shock, arc flash, isolation required)
-- Environmental (e.g., dust, noise, weather exposure)
-- Equipment use (e.g., power tool risks, lifting equipment)
-
-Format: "[Hazard name] - [Mitigation measure]"
-Example: "Working at height >2m - use scaffold tower to BS EN 1004"
-
-🧠 **STEP-SPECIFIC TOOL & HAZARD REASONING**
-
-For EACH step, you MUST reason about what tools and hazards apply:
-
-**For Tools (ask yourself):**
-- What physical actions are described? (drilling → drill & bits, connecting → screwdrivers, testing → tester)
-- What equipment is being installed? (socket → back box, cables → cable clips, CU → fixings)
-- What measurements are needed? (height/spacing → spirit level, tape measure)
-- What safety equipment is mandatory? (isolation → voltage indicator, live work → insulated tools)
-
-Example reasoning:
-Step: "Install the consumer unit at 1.8m height, drill fixing holes, and secure with screws"
-→ Tools needed: Spirit level (for height), Measuring tape (for 1.8m), Drill & 5.5mm bit (for holes), Screwdriver (for screws), Pencil (for marking)
-
-**For Hazards (ask yourself):**
-- What could cause injury? (drilling → hidden cables, heights → falls, electrical → shock)
-- What environmental risks exist? (dust → respiratory, noise → hearing, confined space → asphyxiation)
-- What regulatory compliance is needed? (RCD protection, earthing, IP ratings)
-
-Example reasoning:
-Step: "Drill holes in bathroom wall for socket installation"
-→ Hazards: "Hidden cables/pipes - CAT scan before drilling", "Bathroom zones - verify IP rating BS 7671", "Dust inhalation - use dust extraction", "Water ingress - waterproof back box required"
-
-⚠️ **YOU MUST PROVIDE TOOLS & HAZARDS FOR EVERY STEP** - even if RAG data is limited, use your knowledge of electrical installation practices.
-
-${installContext.includes('Practical Work') || installContext.includes('Tools:') ? 
-  '✅ Rich practical knowledge available - base your installation steps on this verified data' : 
-  '⚠️ Limited practical knowledge - use general BS 7671 installation practices'
-}
 
 **KNOWLEDGE SOURCE QUALITY:**
 - ${installKnowledge.length} procedures retrieved
@@ -1137,16 +1077,82 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
     // 🚨 CRITICAL: Validate non-zero steps immediately
     const steps = installResult.installationSteps || [];
     
-    // Log AI output quality
-    logger.info('🤖 AI Generated Steps Quality Check:', {
-      totalSteps: steps.length,
-      stepsWithTools: steps.filter((s: any) => s.tools?.length > 0).length,
-      stepsWithMaterials: steps.filter((s: any) => s.materials?.length > 0).length,
-      stepsWithHazards: steps.filter((s: any) => s.linkedHazards?.length > 0).length,
-      poorQualitySteps: steps.filter((s: any) => 
-        !s.tools || s.tools.length === 0 || !s.linkedHazards || s.linkedHazards.length === 0
-      ).map((s: any) => s.title)
+    // Quality validation after AI generation
+    steps.forEach((step: any, index: number) => {
+      const issues: string[] = [];
+      
+      // Check description quality
+      const wordCount = (step.description || '').split(/\s+/).length;
+      if (wordCount < 30) {
+        issues.push(`Description too short (${wordCount} words, need 30+)`);
+      }
+      
+      // Check for specific measurements
+      const hasSpecifics = /\d+mm|\d+m|\d+A|\d+kW|\d+%/i.test(step.description || '');
+      if (!hasSpecifics && !/planning|procurement|preparation/i.test(step.title)) {
+        issues.push('No specific measurements in description');
+      }
+      
+      // Check for vague language
+      const vagueTerms = /appropriate|suitable|regular intervals|as required|as needed/i;
+      if (vagueTerms.test(step.description || '')) {
+        issues.push('Contains vague language');
+      }
+      
+      // Check tools specificity
+      if (step.tools?.some((t: string) => /^(drill|screwdriver|tester|pliers)$/i.test(t.trim()))) {
+        issues.push('Tools too generic (need sizes/types)');
+      }
+      
+      if (issues.length > 0) {
+        logger.warn(`⚠️ Quality issues in step ${index + 1} "${step.title}":`, issues);
+      }
     });
+    
+    // RAG extraction verification
+    const ragToolsAvailable = new Set(installKnowledge.flatMap((k: any) => k.tools_required || []));
+    const ragMaterialsAvailable = new Set(installKnowledge.flatMap((k: any) => k.materials_needed || []));
+    
+    steps.forEach((step: any) => {
+      const aiTools = step.tools || [];
+      const matchedTools = aiTools.filter((t: string) => 
+        Array.from(ragToolsAvailable).some(ragTool => 
+          t.toLowerCase().includes(ragTool.toLowerCase()) || 
+          ragTool.toLowerCase().includes(t.toLowerCase())
+        )
+      );
+      
+      const extractionRate = aiTools.length > 0 ? matchedTools.length / aiTools.length : 0;
+      
+      if (extractionRate < 0.3 && aiTools.length > 0) {
+        logger.warn(`⚠️ Step "${step.title}" tools mostly invented (${(extractionRate*100).toFixed(0)}% from RAG)`);
+      }
+    });
+    
+    // Calculate overall quality score
+    const qualityMetrics = {
+      stepsWithTools: steps.filter((s: any) => s.tools && s.tools.length >= 3).length,
+      stepsWithMaterials: steps.filter((s: any) => s.materials && s.materials.length >= 2).length,
+      stepsWithHazards: steps.filter((s: any) => s.linkedHazards && s.linkedHazards.length >= 2).length,
+      stepsWithRichDescriptions: steps.filter((s: any) => 
+        s.description && s.description.split(/\s+/).length >= 30
+      ).length,
+      totalSteps: steps.length
+    };
+    
+    const qualityScore = qualityMetrics.totalSteps > 0 ? (
+      (qualityMetrics.stepsWithTools / qualityMetrics.totalSteps) * 25 +
+      (qualityMetrics.stepsWithMaterials / qualityMetrics.totalSteps) * 25 +
+      (qualityMetrics.stepsWithHazards / qualityMetrics.totalSteps) * 25 +
+      (qualityMetrics.stepsWithRichDescriptions / qualityMetrics.totalSteps) * 25
+    ) : 0;
+    
+    logger.info(`📊 Generation Quality Score: ${qualityScore.toFixed(0)}/100`, qualityMetrics);
+    
+    if (qualityScore < 60) {
+      logger.error(`❌ POOR QUALITY GENERATION - Score: ${qualityScore.toFixed(0)}/100`);
+      logger.error('Consider increasing RAG match count or using different model');
+    }
     
     if (steps.length === 0) {
       logger.error('🚨 CRITICAL: AI generated ZERO steps', {
@@ -1204,34 +1210,49 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       { installationMethod, cableType, location }
     );
 
-    // Helper: Find RAG entry that matches step semantically
+    // Helper: Find RAG entry that matches step SEMANTICALLY (not just keywords)
     function findRelevantRagForStep(step: any, ragKnowledge: any[]): any {
-      const stepText = `${step.title} ${step.description}`.toLowerCase();
+      const stepText = `${step.title} ${step.description || step.content || ''}`.toLowerCase();
       
-      // Extract key terms from step
-      const keyTerms = [
-        'consumer unit', 'distribution board', 'socket', 'cooker', 'shower', 
-        'lighting', 'cable', 'swa', 'armoured', 'earthing', 'bonding',
-        'rcd', 'mcb', 'rcbo', 'isolation', 'test', 'inspection', 'install',
-        'mount', 'connect', 'wire', 'terminate', 'fix', 'secure'
-      ];
+      // Detect work type and context from step
+      const workType = detectWorkType(step);
+      const location = detectLocation(stepText);
+      const equipment = detectEquipment(stepText);
       
-      // Find RAG entry that has most keyword matches
       let bestMatch: any = null;
       let bestScore = 0;
       
       for (const rag of ragKnowledge) {
-        const ragText = `${rag.primary_topic || ''} ${rag.content || ''} ${rag.equipment_category || ''}`.toLowerCase();
+        let score = 0;
         
-        // Count how many key terms appear in both step AND RAG
-        const score = keyTerms.filter(term => 
-          stepText.includes(term) && ragText.includes(term)
-        ).length;
+        // Exact equipment category match (+50 points)
+        if (equipment && rag.equipment_category?.toLowerCase().includes(equipment)) {
+          score += 50;
+        }
         
-        // Also boost score if primary_topic directly matches part of step title
-        const titleWords = step.title.toLowerCase().split(' ');
-        const topicWords = (rag.primary_topic || '').toLowerCase().split(' ');
-        const titleOverlap = titleWords.filter(w => topicWords.includes(w) && w.length > 3).length;
+        // Work type match (+30 points)
+        const ragWorkType = detectWorkType({ title: rag.primary_topic, content: rag.content });
+        if (workType === ragWorkType) {
+          score += 30;
+        }
+        
+        // Location context match (+20 points)
+        if (location && rag.content?.toLowerCase().includes(location)) {
+          score += 20;
+        }
+        
+        // Exact phrase match in title (+40 points)
+        const titlePhrases = extractPhrases(step.title);
+        const ragTopicPhrases = extractPhrases(rag.primary_topic || '');
+        const phraseMatches = titlePhrases.filter((p: string) => ragTopicPhrases.includes(p));
+        score += phraseMatches.length * 40;
+        
+        // Power rating match if applicable (+15 points)
+        const stepPower = extractPowerRating(step.description || step.content || '');
+        const ragPower = extractPowerRating(rag.content || '');
+        if (stepPower && ragPower && Math.abs(stepPower - ragPower) < 2) {
+          score += 15;
+        }
         
         const finalScore = score + (titleOverlap * 2); // Weight title matches more
         

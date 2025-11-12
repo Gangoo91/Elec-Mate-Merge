@@ -215,15 +215,16 @@ export const InstallationStepCard = ({
                       </div>
                     )}
 
-                    {/* Tools Required with electric yellow theme */}
-                    {toolsRequired.length > 0 && (
-                      <div className="p-4 bg-gradient-to-br from-elec-yellow/10 to-blue-500/5 border border-primary/30 rounded-xl shadow-sm hover:shadow-md transition-all">
-                        <div className="flex items-start gap-2.5 mb-3">
-                          <div className="p-1.5 bg-elec-yellow/20 rounded-lg">
-                            <Wrench className="h-5 w-5 text-elec-yellow" />
-                          </div>
-                          <div className="font-bold text-base text-foreground">Tools Required ({toolsRequired.length})</div>
+                    {/* Tools Required - Always show section with warnings for empty */}
+                    <div className="p-4 bg-gradient-to-br from-elec-yellow/10 to-blue-500/5 border border-primary/30 rounded-xl shadow-sm hover:shadow-md transition-all">
+                      <div className="flex items-start gap-2.5 mb-3">
+                        <div className="p-1.5 bg-elec-yellow/20 rounded-lg">
+                          <Wrench className="h-5 w-5 text-elec-yellow" />
                         </div>
+                        <div className="font-bold text-base text-foreground">Tools Required ({toolsRequired.length})</div>
+                      </div>
+                      
+                      {toolsRequired.length > 0 ? (
                         <ul className="grid grid-cols-2 gap-2 text-sm">
                           {toolsRequired.map((tool: string, i: number) => (
                             <li key={i} className="flex items-start gap-2 p-2 bg-background/50 rounded-lg">
@@ -232,8 +233,18 @@ export const InstallationStepCard = ({
                             </li>
                           ))}
                         </ul>
-                      </div>
-                    )}
+                      ) : (
+                        <div className="p-3 bg-destructive/15 border-2 border-destructive/40 rounded-lg">
+                          <p className="text-sm text-destructive font-semibold flex items-center gap-2">
+                            <AlertTriangle className="h-4 w-4" />
+                            No tools identified for this step
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            AI generation issue - insufficient context or RAG data for this step
+                          </p>
+                        </div>
+                      )}
+                    </div>
 
                     {/* Required Qualifications */}
                     {qualifications.length > 0 && (
