@@ -295,7 +295,7 @@ Deno.serve(async (req) => {
         }
       }),
       new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Health-safety agent timeout after 300s')), 300000)
+        setTimeout(() => reject(new Error('Health-safety agent timeout after 360s')), 360000)
       )
     ]);
 
@@ -308,7 +308,7 @@ Deno.serve(async (req) => {
         }
       }),
       new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Installer agent timeout after 300s')), 300000)
+        setTimeout(() => reject(new Error('Installer agent timeout after 360s')), 360000)
       )
     ]);
 
@@ -623,15 +623,31 @@ Deno.serve(async (req) => {
       });
     }
     
-    await storeRAMSCache({
-      supabase,
-      jobDescription: job.job_description,
-      workType: job.job_scale,
-      jobScale: job.job_scale,
-      ramsData: combinedRAMSData,
-      methodData: installerData?.data ?? null, // ✅ Guard against null installerData
-      openAiKey: OPENAI_API_KEY
-    });
+    // ✅ PHASE 4: Validate result before caching
+    console.log('💾 Checking if result is cacheable...');
+    
+    const hasMethods = installerData?.data?.steps && installerData.data.steps.length > 0;
+    const hasHazards = combinedRAMSData?.risks && combinedRAMSData.risks.length > 0;
+    
+    if (hasMethods && hasHazards) {
+      console.log('✅ Result is complete - storing in cache');
+      await storeRAMSCache({
+        supabase,
+        jobDescription: job.job_description,
+        workType: job.job_scale,
+        jobScale: job.job_scale,
+        ramsData: combinedRAMSData,
+        methodData: installerData.data,
+        openAiKey: OPENAI_API_KEY
+      });
+    } else {
+      console.log('⚠️ Result is partial - skipping cache write', {
+        hasMethods,
+        hasHazards,
+        methodSteps: installerData?.data?.steps?.length || 0,
+        hazards: combinedRAMSData?.risks?.length || 0
+      });
+    }
     
     // Determine final status message
     const currentStepMessage = 
@@ -746,6 +762,16 @@ Deno.serve(async (req) => {
         generation_metadata: generationMetadata
       })
       .eq('id', jobId);
+
+    // ✅ PHASE 5: Job summary logging
+    console.log('📊 RAMS Job Summary:', {
+      jobId,
+      hsStatus: hsData ? 'success' : 'failed',
+      installerStatus: installerData ? 'success' : 'failed',
+      hazardsGenerated: combinedRAMSData?.risks?.length || 0,
+      stepsGenerated: installerData?.data?.steps?.length || 0,
+      cacheWritten: hasMethods && hasHazards
+    });
 
     console.log(`🎉 Job complete: ${jobId}`);
 

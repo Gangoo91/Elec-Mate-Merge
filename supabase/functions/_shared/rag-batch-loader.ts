@@ -3,6 +3,9 @@
  * Reduces RAG API calls by batching similar queries
  */
 
+import { withRetry, RetryPresets } from './retry.ts';
+import { withTimeout, Timeouts } from './timeout.ts';
+
 export interface RAGSearchParams {
   keywords: string[];
   limit?: number;
@@ -46,25 +49,21 @@ export async function searchPracticalWorkBatch(
   const { keywords, limit = 10, activity_filter } = params;
   
   try {
-    // Use hybrid keyword search with 20-second timeout
+    // ✅ PHASE 2: Use hybrid keyword search with retry + 60s timeout
     const queryText = keywords.join(' ');
     
-    // Create timeout promise
-    const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('RPC timeout after 20s')), 20000);
-    });
-    
-    // Race between RPC call and timeout
-    const rpcPromise = supabase.rpc(
-      'search_practical_work_intelligence_hybrid',
-      {
-        query_text: queryText,
-        match_count: limit * 2,
-        filter_trade: activity_filter && activity_filter.length > 0 ? activity_filter[0] : null
-      }
+    const { data, error } = await withRetry(
+      () => withTimeout(
+        supabase.rpc('search_practical_work_intelligence_hybrid', {
+          query_text: queryText,
+          match_count: limit * 2,
+          filter_trade: activity_filter && activity_filter.length > 0 ? activity_filter[0] : null
+        }),
+        Timeouts.LONG, // 60s timeout (was 20s)
+        'Practical Work RPC'
+      ),
+      RetryPresets.STANDARD // 3 retries with exponential backoff
     );
-    
-    const { data, error } = await Promise.race([rpcPromise, timeoutPromise]) as any;
     
     if (error) throw error;
     
@@ -84,34 +83,15 @@ export async function searchPracticalWorkBatch(
     console.log(`✅ Practical Work hybrid search: ${keywords.join(', ')} → ${results.length} facets (avg score: ${(results.reduce((sum, r) => sum + (r.similarity || 0), 0) / results.length).toFixed(2)})`);
     
     return results;
-  } catch (error) {
-    console.error('⚠️ Practical work RPC timeout - using direct keyword search fallback', error);
-    
-    // FALLBACK: Direct keyword search on indexed columns
-    try {
-      const { data: fallbackData } = await supabase
-        .from('practical_work_intelligence')
-        .select('primary_topic, equipment_category, tools_required, materials_needed, bs7671_regulations, practical_work_id')
-        .textSearch('fts', keywords.join(' '), { type: 'websearch' })
-        .limit(limit);
-      
-      const results: RAGResult[] = (fallbackData || []).map((row: any) => ({
-        content: row.primary_topic || '',
-        keywords: [],
-        equipment_category: row.equipment_category,
-        tools_required: row.tools_required,
-        bs7671_regulations: row.bs7671_regulations,
-        practical_work_id: row.practical_work_id,
-        source_table: 'practical_work_intelligence',
-        similarity: 0.75 // Fallback score
-      }));
-      
-      console.log(`✅ Practical Work fallback search: ${keywords.join(', ')} → ${results.length} results`);
-      return results;
-    } catch (fallbackError) {
-      console.error('Practical Work fallback search also failed:', fallbackError);
-      return [];
-    }
+  } catch (error: any) {
+    // ✅ PHASE 2 & 3: Enhanced error logging, removed slow fallback
+    console.error('⚠️ Practical work RPC failed after retries:', {
+      error: error.message,
+      keywords: keywords.join(', '),
+      attemptsExhausted: true,
+      returningEmpty: true
+    });
+    return [];
   }
 }
 
@@ -132,14 +112,18 @@ export async function searchBS7671Batch(
   const { keywords, limit = 10 } = params;
   
   try {
-    // Use BS 7671 intelligence hybrid search RPC
+    // ✅ PHASE 2: Use BS 7671 intelligence hybrid search RPC with retry + timeout
     const queryText = keywords.join(' ');
-    const { data, error } = await supabase.rpc(
-      'search_bs7671_intelligence_hybrid',
-      {
-        query_text: queryText,
-        match_count: limit
-      }
+    const { data, error } = await withRetry(
+      () => withTimeout(
+        supabase.rpc('search_bs7671_intelligence_hybrid', {
+          query_text: queryText,
+          match_count: limit
+        }),
+        Timeouts.LONG, // 60s timeout
+        'BS 7671 RPC'
+      ),
+      RetryPresets.STANDARD // 3 retries
     );
     
     if (error) throw error;
@@ -154,8 +138,14 @@ export async function searchBS7671Batch(
     console.log(`✅ BS 7671 search: ${keywords.join(', ')} → ${results.length} results`);
     
     return results;
-  } catch (error) {
-    console.error('BS 7671 search failed:', error);
+  } catch (error: any) {
+    // ✅ PHASE 2: Enhanced error logging
+    console.error('⚠️ BS 7671 RPC failed after retries:', {
+      error: error.message,
+      keywords: keywords.join(', '),
+      attemptsExhausted: true,
+      returningEmpty: true
+    });
     return [];
   }
 }
