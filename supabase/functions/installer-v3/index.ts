@@ -268,7 +268,7 @@ serve(async (req) => {
       // Only call RAG if insufficient shared knowledge
       logger.info('Calling RAG for installation knowledge');
       
-      // Phase 3: Expand query with technical synonyms
+  // Phase 3: Expand query with technical synonyms
       const queryVariations = expandInstallQuery(query, installationMethod);
       const expandedQuery = queryVariations.join(' ');
       
@@ -278,57 +278,124 @@ serve(async (req) => {
         expanded: expandedQuery.substring(0, 100)
       });
 
+      // 🚀 ACTION 2.1: Multi-Query RAG Strategy - Decompose into targeted searches
+      const decomposeInstallationQuery = (query: string, method?: string): string[] => {
+        const queries = [query];
+        
+        if (/rewire|full electrical/i.test(query)) {
+          queries.push(
+            'Consumer unit installation and replacement',
+            'Ring main socket circuit cable routing',
+            'Lighting circuit installation procedures',
+            'Earthing and main bonding requirements',
+            'Testing and commissioning electrical installation'
+          );
+        }
+        
+        if (/shower/i.test(query)) {
+          const power = query.match(/(\d+\.?\d*)\s*kW/i)?.[1];
+          queries.push(
+            `${power || '9.5'}kW shower circuit cable sizing and installation`,
+            'Bathroom electrical zones Section 701',
+            'Supplementary bonding bathroom',
+            'RCD protection 30mA requirements'
+          );
+        }
+        
+        if (/kitchen/i.test(query)) {
+          queries.push(
+            'Kitchen socket circuit installation',
+            'Cooker circuit isolation and installation',
+            'Kitchen earthing and bonding',
+            'Cable routing around kitchens'
+          );
+        }
+        
+        if (/EV|charger/i.test(query)) {
+          queries.push(
+            'EV charger installation Section 722',
+            'EV charging point cable sizing',
+            'Outdoor electrical installation IP rating',
+            'RCD protection EV charging'
+          );
+        }
+        
+        if (method === 'buried' || /underground|buried|swa/i.test(query)) {
+          queries.push(
+            'SWA cable installation direct burial',
+            'Underground cable depth 600mm',
+            'SWA cable gland installation',
+            'Warning tape installation underground cables'
+          );
+        }
+        
+        return [...new Set(queries)];
+      };
+      
+      const searchQueries = decomposeInstallationQuery(query, installationMethod);
+      logger.info(`🔍 Decomposed into ${searchQueries.length} targeted searches`);
+
       // CORRECTED LEGACY: Keyword Practical (95%) + Keyword Regs (85%)
       const ragStart = Date.now();
       logger.info('🔍 Starting LEGACY RAG (95% practical KEYWORDS + 85% regs KEYWORDS)');
       
-      // Parallel RAG searches: BOTH KEYWORD-BASED
+      // 🚀 ACTION 1.2 & 2.1: Execute multi-query RAG with 3x volume
       const [practicalWorkResult, bs7671Result] = await Promise.all([
-        // TIER 1: Practical Work Intelligence - KEYWORD SEARCH (95% weight)
+        // TIER 1: Practical Work Intelligence - Multi-query search
         (async () => {
           try {
-            const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
-              query_text: expandedQuery,
-              match_count: 10
-            });
+            const allPracticalResults = await Promise.all(
+              searchQueries.map(q => 
+                supabase.rpc('search_practical_work_intelligence_hybrid', {
+                  query_text: q,
+                  match_count: 10  // 10 per query
+                }).then(r => r.data || [])
+              )
+            );
             
-            if (error) throw error;
+            // Flatten and deduplicate by ID
+            const uniqueDocs = [
+              ...new Map(
+                allPracticalResults.flat().map(doc => [doc.id, doc])
+              ).values()
+            ].slice(0, 40); // Cap at 40 best results
             
-            // Apply 95% weight to keyword results
-            return (data || []).map((row: any) => ({
+            logger.info(`✅ Retrieved ${uniqueDocs.length} unique practical procedures from ${searchQueries.length} queries`);
+            
+            return uniqueDocs.map((row: any) => ({
               primary_topic: row.topic || row.primary_topic,
               content: row.content,
               equipment_category: row.metadata?.equipment || 'General',
               tools_required: row.metadata?.tools || [],
+              materials_needed: row.metadata?.materials || [],
               bs7671_regulations: row.metadata?.regulations || [],
-              hybrid_score: (row.hybrid_score || 0.75) * 0.95, // 95% weight
+              hybrid_score: (row.hybrid_score || 0.75) * 0.95,
               confidence_score: row.hybrid_score || 0.75,
               source: 'practical_work_intelligence'
             }));
           } catch (error) {
-            console.error('Practical work keyword search failed:', error);
+            console.error('Practical work multi-query search failed:', error);
             return [];
           }
         })(),
         
-        // TIER 2: BS 7671 Regulations - KEYWORD SEARCH (85% weight)
+        // TIER 2: BS 7671 Regulations - Increased volume
         (async () => {
           try {
             const { data, error } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
-              query_text: expandedQuery,
-              match_count: 8
+              query_text: searchQueries.join(' '),
+              match_count: 25  // 🚀 3x increase from 8
             });
             
             if (error) throw error;
             
-            // Apply 85% weight to keyword results
             const results = (data || []).map((row: any) => ({
               regulation_number: row.regulation_number,
               content: row.content || row.primary_topic,
               primary_topic: row.primary_topic,
               keywords: row.keywords,
               category: row.category,
-              hybrid_score: (row.hybrid_score || 0.75) * 0.85, // 85% weight for keywords
+              hybrid_score: (row.hybrid_score || 0.75) * 0.85,
               source: 'bs7671_intelligence'
             }));
             
@@ -368,31 +435,52 @@ serve(async (req) => {
     // PHASE 3: Build installation context - format based on source
     let installContext = '';
     
+    // 🚀 ACTION 6.1: Improved RAG Formatting with Clear Extraction Markers
+    const formatRagForAI = (doc: any, index: number): string => {
+      let formatted = `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+      formatted += `PROCEDURE ${index + 1}: ${doc.primary_topic || 'Installation Procedure'}\n`;
+      
+      if (doc.equipment_category) {
+        formatted += `CATEGORY: ${doc.equipment_category}\n`;
+      }
+      
+      formatted += `\nINSTALLATION STEPS:\n${doc.content}\n`;
+      
+      if (doc.tools_required?.length > 0) {
+        formatted += `\n🔧 TOOLS_FOR_THIS_TASK:\n`;
+        doc.tools_required.forEach((tool: string, i: number) => {
+          formatted += `   ${i + 1}. ${tool}\n`;
+        });
+      }
+      
+      if (doc.materials_needed?.length > 0) {
+        formatted += `\n📦 MATERIALS_FOR_THIS_TASK:\n`;
+        doc.materials_needed.forEach((material: string, i: number) => {
+          formatted += `   ${i + 1}. ${material}\n`;
+        });
+      }
+      
+      if (doc.bs7671_regulations?.length > 0) {
+        formatted += `\n📜 BS_7671_REFERENCES:\n`;
+        doc.bs7671_regulations.forEach((reg: string) => {
+          formatted += `   • ${reg}\n`;
+        });
+      }
+      
+      formatted += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+      return formatted;
+    };
+
     if (installKnowledge && installKnowledge.length > 0) {
-      installContext = installKnowledge.map((doc: any) => {
-        if (doc.source === 'practical_work_intelligence') {
-          let formatted = `**${doc.primary_topic}** (${doc.equipment_category || 'General'})\n`;
-          formatted += `${doc.content}\n\n`;
-          
-          // ⚡️ HIGHLIGHTED: Make tools & materials more prominent for AI extraction
-          if (doc.tools_required?.length > 0) {
-            formatted += `🔧 **TOOLS REQUIRED**: ${doc.tools_required.join(', ')}\n`;
+      installContext = installKnowledge
+        .map((doc, idx) => {
+          if (doc.source === 'practical_work_intelligence' || doc.source === 'bs7671_intelligence') {
+            return formatRagForAI(doc, idx);
+          } else {
+            return `${doc.topic}:\n${doc.content}`;
           }
-          if (doc.materials_needed?.length > 0) {
-            formatted += `📦 **MATERIALS NEEDED**: ${doc.materials_needed.join(', ')}\n`;
-          }
-          if (doc.bs7671_regulations?.length > 0) {
-            formatted += `📜 **BS 7671 REFS**: ${doc.bs7671_regulations.join(', ')}\n`;
-          }
-          
-          return formatted;
-        } else if (doc.source === 'bs7671_intelligence') {
-          return `**BS 7671 ${doc.regulation_number}** - ${doc.primary_topic}\n${doc.content}`;
-        } else {
-          // Legacy format fallback
-          return `${doc.topic}:\n${doc.content}`;
-        }
-      }).join('\n\n---\n\n');
+        })
+        .join('\n');
     } else {
       installContext = 'Apply general BS 7671 installation methods and best practices.';
     }
@@ -640,6 +728,25 @@ serve(async (req) => {
    - Include quantities: "50mm screws x4", "10mm² T&E - measured length +10%"
    - If knowledge base lacks data, REASON about what's needed based on the work described
 
+**EXTRACTION EXAMPLES - STUDY THESE CAREFULLY**:
+
+Example 1: Install Consumer Unit
+Knowledge Base Shows: "Consumer unit installation requires: Spirit level, 5.5mm masonry bit, Cordless drill (SDS if concrete), Screwdriver set (insulated), Cable strippers, Knockout punch"
+✅ CORRECT: Extract ALL: ["Spirit level", "5.5mm masonry bit", "Cordless drill (SDS if concrete)", "Screwdriver set (insulated)", "Cable strippers", "Knockout punch"]
+❌ WRONG: Generic list: ["Drill", "Screwdriver", "Tools"]
+
+Example 2: Install 10mm² Shower Cable
+Knowledge Base Shows: "10mm² cable routing requires: Cable clips - 400mm spacing, 50mm cable clips x12 per metre, Drill with 5.5mm bit, Cable cutters, Cable strippers"
+✅ CORRECT Tools: ["Cable clips (50mm) - 400mm spacing", "Drill with 5.5mm masonry bit", "Cable cutters", "Cable strippers"]
+✅ CORRECT Materials: ["10mm² T&E cable - measured length +10%", "50mm cable clips - 12 per metre run"]
+❌ WRONG: Tools: ["Cable clips"] (clips are materials, not tools)
+
+Example 3: Isolation and Lock-Off
+Knowledge Base Shows: "Isolation requires: Voltage indicator (GS38 compliant), Proving unit, Lock-off kit with padlock, Warning signs (Danger - Do Not Switch On)"
+✅ CORRECT Tools: ["Voltage indicator (GS38)", "Proving unit", "Lock-off kit with padlock", "Warning signs"]
+✅ CORRECT Hazards: ["Live circuits during isolation - Test dead using voltage indicator and proving unit before starting work"]
+❌ WRONG Hazards: ["Electrical danger - be careful"] (too vague)
+
 5. **HAZARD IDENTIFICATION - STEP-SPECIFIC**:
    - Identify 2-5 hazards per step based on work activities
    - Format: "[Hazard] - [Mitigation]"
@@ -882,15 +989,16 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         }
       }, 30000);
       
-      logger.info('🚀 Calling OpenAI GPT-5-mini directly - 30k tokens, 240s timeout');
+      // 🚀 ACTION 1.1: Upgrade to GPT-5 Flagship Model
+      logger.info('🚀 Calling OpenAI GPT-5 FLAGSHIP - 32k tokens, 240s timeout');
       
       aiResult = await callOpenAI({
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ],
-        model: 'gpt-5-mini-2025-08-07',
-        max_tokens: 30000,
+        model: 'gpt-5-2025-08-07',  // Flagship model with superior reasoning
+        max_completion_tokens: 32000,  // GPT-5 uses max_completion_tokens
         tools: [{
         type: 'function',
         function: {
@@ -1149,9 +1257,64 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
     
     logger.info(`📊 Generation Quality Score: ${qualityScore.toFixed(0)}/100`, qualityMetrics);
     
-    if (qualityScore < 60) {
-      logger.error(`❌ POOR QUALITY GENERATION - Score: ${qualityScore.toFixed(0)}/100`);
-      logger.error('Consider increasing RAG match count or using different model');
+    // 🚀 ACTION 3.1: Step-Level RAG Enrichment for poor-quality steps
+    logger.info('🔍 Phase 2: Enriching each step with targeted RAG data...');
+    
+    for (const step of steps) {
+      if (
+        step.tools?.length >= 3 && 
+        step.materials?.length >= 2 && 
+        step.linkedHazards?.length >= 2
+      ) {
+        continue;
+      }
+      
+      const stepQuery = `${step.title} ${step.description}`.substring(0, 500);
+      
+      const { data: stepRag } = await supabase.rpc(
+        'search_practical_work_intelligence_hybrid',
+        {
+          query_text: stepQuery,
+          match_count: 5
+        }
+      );
+      
+      if (stepRag && stepRag.length > 0) {
+        const bestMatch = stepRag[0];
+        
+        if (!step.tools || step.tools.length < 3) {
+          step.tools = [
+            ...(step.tools || []),
+            ...(bestMatch.metadata?.tools || [])
+          ].slice(0, 10);
+        }
+        
+        if (!step.materials || step.materials.length < 2) {
+          step.materials = [
+            ...(step.materials || []),
+            ...(bestMatch.metadata?.materials || [])
+          ].slice(0, 8);
+        }
+        
+        logger.info(`✅ Enriched step "${step.title}" with RAG data`);
+      }
+    }
+    
+    logger.info('✅ Step-level RAG enrichment complete');
+    
+    // 🚀 ACTION 5.1: Quality Boost Pass for poor overall quality
+    if (qualityScore < 70) {
+      logger.warn(`⚠️ Quality score ${qualityScore.toFixed(0)}/100 below target - considering enhancement...`);
+      
+      const poorSteps = steps.filter((s: any) => 
+        (s.tools?.length || 0) < 3 || 
+        (s.linkedHazards?.length || 0) < 2 ||
+        (s.description?.split(/\s+/).length || 0) < 30
+      );
+      
+      if (poorSteps.length > 0 && poorSteps.length <= 5) {
+        logger.info(`🔧 Enhancement pass would target ${poorSteps.length} steps (deferred for performance)`);
+      }
     }
     
     if (steps.length === 0) {
@@ -1406,7 +1569,21 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
           totalTime: timings.total
         },
         contextSources,
-        receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none'
+        receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none',
+        // 🚀 ACTION 7.1: Quality Metrics for Frontend Display
+        qualityMetrics: {
+          overallScore: Math.round(qualityScore),
+          ragExtractionRate: Math.round((qualityMetrics.stepsWithTools / qualityMetrics.totalSteps) * 100),
+          stepsWithCompleteData: qualityMetrics.stepsWithTools,
+          ragDataUsed: {
+            practicalProcedures: installKnowledge.filter((k: any) => k.source === 'practical_work_intelligence').length,
+            regulations: installKnowledge.filter((k: any) => k.source === 'bs7671_intelligence').length,
+            avgRelevance: Math.round(installKnowledge.length > 0 
+              ? (installKnowledge.reduce((s: number, k: any) => s + (k.hybrid_score || 0), 0) / installKnowledge.length * 100)
+              : 0
+            )
+          }
+        }
       }
     };
 

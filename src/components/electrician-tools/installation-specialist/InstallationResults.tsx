@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, RotateCcw, Download, AlertCircle, Wrench, CheckCircle2, FileText } from "lucide-react";
+import { Plus, RotateCcw, Download, AlertCircle, Wrench, CheckCircle2, FileText, Database, TrendingUp, BookOpen } from "lucide-react";
 import { InstallationStepCard } from "./InstallationStepCard";
 import { InstallationStep, InstallationMethodSummary, InstallationProjectDetails } from "@/types/installation-method";
 import { toast } from "@/hooks/use-toast";
@@ -51,6 +51,16 @@ interface InstallationResultsProps {
   projectDetails?: InstallationProjectDetails;
   projectMetadata?: ProjectMetadata;
   fullMethodStatement?: any;
+  qualityMetrics?: {
+    overallScore: number;
+    ragExtractionRate: number;
+    stepsWithCompleteData: number;
+    ragDataUsed: {
+      practicalProcedures: number;
+      regulations: number;
+      avgRelevance: number;
+    };
+  };
   onStartOver: () => void;
 }
 
@@ -64,6 +74,7 @@ export const InstallationResults = ({
   projectDetails,
   projectMetadata: initialMetadata,
   fullMethodStatement,
+  qualityMetrics,
   onStartOver
 }: InstallationResultsProps) => {
   const [steps, setSteps] = useState<InstallationStep[]>(initialSteps);
@@ -296,6 +307,67 @@ export const InstallationResults = ({
                   )}
                 </div>
               </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* 🚀 AI Quality Metrics Display */}
+      {qualityMetrics && (
+        <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/5 to-background shadow-lg">
+          <CardContent className="p-5">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="p-2 rounded-lg bg-blue-500/10">
+                  <Database className="h-5 w-5 text-blue-400" />
+                </div>
+                <h4 className="font-bold text-base">AI Generation Quality</h4>
+              </div>
+              <Badge 
+                variant={qualityMetrics.overallScore >= 80 ? 'default' : qualityMetrics.overallScore >= 60 ? 'secondary' : 'destructive'}
+                className="text-base px-3 py-1 font-bold"
+              >
+                {qualityMetrics.overallScore}/100
+              </Badge>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="bg-muted/30 rounded-lg p-3 border border-border/50">
+                <div className="flex items-center gap-2 mb-1">
+                  <TrendingUp className="h-4 w-4 text-blue-400" />
+                  <span className="text-xs text-muted-foreground font-medium">RAG Extraction Rate</span>
+                </div>
+                <p className="text-2xl font-bold text-foreground">{qualityMetrics.ragExtractionRate}%</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {qualityMetrics.stepsWithCompleteData}/{steps.length} steps with complete data
+                </p>
+              </div>
+              
+              <div className="bg-muted/30 rounded-lg p-3 border border-border/50">
+                <div className="flex items-center gap-2 mb-1">
+                  <Wrench className="h-4 w-4 text-blue-400" />
+                  <span className="text-xs text-muted-foreground font-medium">Practical Procedures</span>
+                </div>
+                <p className="text-2xl font-bold text-foreground">{qualityMetrics.ragDataUsed.practicalProcedures}</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Real-world installation guides
+                </p>
+              </div>
+              
+              <div className="bg-muted/30 rounded-lg p-3 border border-border/50">
+                <div className="flex items-center gap-2 mb-1">
+                  <BookOpen className="h-4 w-4 text-blue-400" />
+                  <span className="text-xs text-muted-foreground font-medium">BS 7671 Regulations</span>
+                </div>
+                <p className="text-2xl font-bold text-foreground">{qualityMetrics.ragDataUsed.regulations}</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Regulatory references ({qualityMetrics.ragDataUsed.avgRelevance}% avg relevance)
+                </p>
+              </div>
+            </div>
+            
+            <div className="mt-3 text-xs text-muted-foreground bg-blue-500/5 rounded p-2 border border-blue-500/20">
+              <strong>Quality Indicators:</strong> Based on tools specificity, materials completeness, hazard identification, and description richness extracted from {qualityMetrics.ragDataUsed.practicalProcedures + qualityMetrics.ragDataUsed.regulations} knowledge base entries.
             </div>
           </CardContent>
         </Card>

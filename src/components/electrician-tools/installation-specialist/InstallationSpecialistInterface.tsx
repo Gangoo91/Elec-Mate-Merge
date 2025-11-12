@@ -267,7 +267,8 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           steps: installationSteps,
           summary,
           projectDetails,
-          projectMetadata: defaultMetadata
+          projectMetadata: defaultMetadata,
+          qualityMetrics: response.metadata?.qualityMetrics
         });
       }
 
