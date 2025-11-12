@@ -35,6 +35,31 @@ interface InstallerV3Response {
     materialsRequired: string[];
     practicalTips: string[];
     commonMistakes: string[];
+    // ✨ NEW: BS 7671 Compliance Fields
+    testingProcedures: Array<{
+      testName: string;
+      standard: string;
+      procedure: string;
+      acceptanceCriteria: string;
+      certificateRequired?: string;
+      regulationRef?: string;
+    }>;
+    competencyRequirements: {
+      minimumQualifications: string[];
+      supervision?: string;
+      additionalTraining?: string[];
+    };
+    siteLogistics: {
+      isolationPoints: string[];
+      accessRequirements: string;
+      permitsRequired: string[];
+      workingHours?: string;
+    };
+    regulatoryCitations: Array<{
+      regulation: string;
+      applicableToStep: number;
+      requirement: string;
+    }>;
   };
   metadata: {
     generationTimeMs: number;
@@ -995,6 +1020,122 @@ DO extract specific values: "400mm spacing", "1.8m height", "16mm² cable", "50m
 
 ${contextSection}
 
+⚠️ SECTION 8: TESTING & COMMISSIONING PROCEDURES (MANDATORY) ⚠️
+
+You MUST provide MINIMUM 5 comprehensive BS 7671-compliant testing procedures in the "testingProcedures" array:
+
+1️⃣ **Continuity of Protective Conductors (R1+R2)**
+   - Standard: BS 7671 Reg 643.2.1
+   - Procedure: "Using a multifunction tester, connect test leads between line conductor and circuit protective conductor at the furthest point of the circuit. Set tester to continuity mode (200mA test current). Record R1+R2 value and compare against maximum Zs from BS 7671 Appendix 3."
+   - Acceptance: "R1+R2 must not exceed maximum Zs for the protective device. Example: 40A Type B MCB max Zs = 1.09Ω, so R1+R2 must be significantly lower to account for external impedance (Ze)."
+   - Certificate: "Electrical Installation Certificate (EIC) - Test Results Schedule"
+
+2️⃣ **Insulation Resistance Test**
+   - Standard: BS 7671 Reg 643.3.2
+   - Procedure: "Isolate circuit and remove all lamps/sensitive equipment. Using insulation resistance tester, apply 500V DC between live conductors and earth. Test for minimum 1 minute. Record reading."
+   - Acceptance: "≥1.0MΩ for new installations at 500V DC (Reg 643.3.2). Circuits with electronic equipment: ≥0.5MΩ may be acceptable if individual components tested separately."
+   - Certificate: "EIC Test Results Schedule"
+
+3️⃣ **Polarity Verification**
+   - Standard: BS 7671 Reg 643.6
+   - Procedure: "Verify correct polarity at all socket outlets, switches, and accessories. Check phase conductor (brown/red) terminates on correct terminal. For socket outlets: phase on right terminal when viewed from front."
+   - Acceptance: "All single-pole devices connected in phase conductor only. Correct polarity confirmed at all points. No crossed conductors."
+   - Certificate: "EIC Schedule of Test Results"
+
+4️⃣ **Earth Fault Loop Impedance (Zs)**
+   - Standard: BS 7671 Reg 643.7, Appendix 3
+   - Procedure: "Using loop impedance tester, measure Zs at furthest point of each circuit. Ensure test current sufficient (typically 15-25A). Record Zs value. Compare against maximum values from BS 7671 Appendix 3 Tables 3A-3E for the specific protective device."
+   - Acceptance: "Measured Zs must not exceed maximum permitted value for protective device. Examples: 32A Type B MCB = 1.37Ω max, 40A Type B = 1.09Ω max, 6A Type B = 7.28Ω max. Account for temperature correction if tested in cold conditions."
+   - Certificate: "EIC Schedule of Test Results"
+
+5️⃣ **RCD Trip Time Test**
+   - Standard: BS 7671 Reg 643.9.2, BS EN 61008/61009
+   - Procedure: "Using RCD tester, apply half-rated test current (15mA for 30mA RCD) - RCD should NOT trip. Apply rated current (30mA) - RCD must trip within 300ms. Apply 5× rated current (150mA for 30mA RCD) - RCD must trip within 40ms. Test both phase-earth and neutral-earth faults."
+   - Acceptance: "30mA RCD: Trip time ≤40ms at 150mA (5×In), ≤300ms at 30mA (1×In). No trip at 15mA (0.5×In). Ramp test: trip between 15-30mA."
+   - Certificate: "EIC - RCD Test Schedule"
+
+**EXTRACT FROM RAG KNOWLEDGE**: Search BS 7671 Intelligence knowledge base for:
+- Chapter 64 (Inspection & Testing)
+- Appendix 3 (Maximum Zs values)
+- Guidance Note 3 (Inspection & Testing)
+Use exact values from regulations where available.
+
+⚠️ SECTION 9: COMPETENCY REQUIREMENTS (MANDATORY) ⚠️
+
+You MUST specify overall competency requirements in the "competencyRequirements" object:
+
+**minimumQualifications** (array, minimum 2):
+- Domestic rewire: ["18th Edition BS 7671 (City & Guilds 2382-18)", "City & Guilds 2391 Inspection & Testing", "Part P Building Regulations competent"]
+- Commercial installation: ["Level 3 Electrical Installation (C&G 2365)", "18th Edition BS 7671", "City & Guilds 2391", "NICEIC/NAPIT Approved Contractor", "ECS Gold Card"]
+- EV Charger: ["18th Edition BS 7671", "OLEV-approved EV charger installer training", "City & Guilds 2391"]
+- Testing/commissioning: ["18th Edition BS 7671", "City & Guilds 2391 Inspection & Testing Qualification", "Test Equipment Competency Certificate"]
+
+**supervision** (string):
+- "Qualified electrician (18th Edition + 2391) must supervise all trainees"
+- "Competent Person Scheme member to verify and certify work"
+- "No supervision required - work must be performed by qualified electrician only"
+- "Authorised Person (AP) must supervise all isolation and switching activities"
+
+**additionalTraining** (array - only genuinely relevant):
+- Domestic: ["NICEIC Domestic Installer registration", "Part P notification procedures"]
+- Commercial: ["CDM Regulations awareness", "CSCS Card (Construction Skills)", "Safe Isolation Training (prove dead)", "First Aid at Work"]
+- Specific work: ["IPAF (Mobile Elevating Work Platforms) - if working at height >2m", "PASMA (Scaffold Tower) - if using scaffold", "Confined Spaces Entry - if working in cable vaults/ducts", "Asbestos Awareness - if working in pre-2000 buildings"]
+
+⚠️ SECTION 10: SITE LOGISTICS (MANDATORY) ⚠️
+
+You MUST provide detailed site logistics in the "siteLogistics" object:
+
+**isolationPoints** (array, minimum 1 - BE SPECIFIC):
+- ❌ WRONG: ["Main consumer unit", "Local isolator"]
+- ✅ RIGHT: ["Main incoming isolator at consumer unit in hallway cupboard (TNCS earthing, 100A main switch)", "Submain isolator in garage distribution board (63A DP switch-fuse)", "Local isolation switch above shower unit (45A DP pull-cord switch, 2m height)"]
+- Include: Location details, type of isolation device, ratings, earthing system
+
+**accessRequirements** (string - minimum 2-3 sentences):
+Must cover: Hours, affected areas, protection, waste, parking, special access
+Example: "Coordinate access with occupants - bathroom and adjacent landing unavailable for 4-6 hours during installation. Protect finished flooring with dust sheets and hardboard along cable route from consumer unit to bathroom. Arrange skip or heavy-duty bags for demolition waste (old consumer unit, redundant cables, plasterboard). Van access required to front of property for material delivery. Loft access via hatch in landing ceiling - ensure safe working platform and adequate lighting in roof space."
+
+**permitsRequired** (array):
+- DOMESTIC: [] or ["None - domestic installation under homeowner consent"]
+- COMMERCIAL: ["Permit to Work (PTW) - electrical isolation required", "Hot Work Permit - if cutting cables near flammable materials", "Work at Height Permit - if working above 2m", "Confined Space Entry Permit - if cable routing through ducts/vaults"]
+- INDUSTRIAL: Add ["Lock-off/Tag-out authorisation", "Area clearance certificate", "Emergency isolation briefing"]
+
+**workingHours** (string - consider supply interruption):
+- "08:00-16:00 weekdays - coordinate 2-hour power outage window with building manager for consumer unit changeover"
+- "Out-of-hours work preferred (after 18:00 or weekends) to minimize disruption to occupied commercial premises"
+- "Daylight hours only (09:00-17:00) - external cable work requires natural light for safe excavation"
+- "Phased work over 3 days - isolation windows 22:00-06:00 to avoid peak business hours"
+
+⚠️ SECTION 11: REGULATORY CITATIONS (MANDATORY) ⚠️
+
+You MUST provide MINIMUM 3 BS 7671 citations in the "regulatoryCitations" array, linked to specific installation steps.
+
+**Extract from RAG BS 7671 Intelligence** where available. Cover:
+
+1️⃣ **RCD Protection** (link to step installing RCD/consumer unit):
+   - Regulation: "BS 7671 Reg 411.3.2.2"
+   - applicableToStep: 4 (example - consumer unit installation)
+   - Requirement: "Additional protection by 30mA RCD required for all socket outlets rated up to 20A for general use"
+
+2️⃣ **Cable Installation Methods** (link to cable routing step):
+   - Regulation: "BS 7671 Table 4A2"
+   - applicableToStep: 6 (example - cable installation)
+   - Requirement: "Cable support spacing for clipped direct (Method C): 2.5mm² T&E horizontal runs maximum 400mm intervals, vertical runs 550mm"
+
+3️⃣ **Testing Requirements** (link to testing/commissioning steps):
+   - Regulation: "BS 7671 Reg 643.2.1"
+   - applicableToStep: 8 (example - continuity testing)
+   - Requirement: "Continuity of protective conductors (R1+R2) must be verified before energising any circuit"
+
+**Common regulations to include (if applicable to THIS job)**:
+- Section 701 (Bathrooms/showers): Zones, RCD protection, IP ratings
+- Reg 522.6.204 (Notching joists): Maximum depth 0.125× joist depth
+- Reg 537.2.1.1 (Isolation): Means of isolation shall disconnect all live conductors
+- Section 722 (EV charging): Requirements for electric vehicle charging installations
+- Appendix 3 Tables 3A-3E (Maximum Zs values for different protective devices)
+- Reg 521.10.1 (Safe zones): Cables concealed in walls/partitions to run in prescribed zones
+
+**Link citations to actual installation steps** - analyze your step sequence and match regulations to relevant steps.
+
 Respond using the tool schema provided with conversational, practical guidance.`;
 
     const userPrompt = `Provide detailed installation guidance for:
@@ -1134,6 +1275,113 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
               toolsRequired: {
                 type: 'array',
                 items: { type: 'string' }
+              },
+              // ✨ NEW: BS 7671 Compliance Fields
+              testingProcedures: {
+                type: 'array',
+                minItems: 5,
+                description: 'MANDATORY: Provide MINIMUM 5 comprehensive BS 7671-compliant testing procedures. MUST include: 1) Continuity of protective conductors (R1+R2), 2) Insulation Resistance (500V DC), 3) Polarity verification, 4) Earth fault loop impedance (Zs), 5) RCD trip time testing. Extract from BS 7671 Chapter 64 (Inspection & Testing) and RAG knowledge base where available.',
+                items: {
+                  type: 'object',
+                  properties: {
+                    testName: { 
+                      type: 'string',
+                      description: 'Name of test (e.g., "Continuity of Protective Conductors (R1+R2)", "Insulation Resistance Test", "Earth Fault Loop Impedance (Zs)", "RCD Trip Time Test", "Polarity Verification")'
+                    },
+                    standard: { 
+                      type: 'string',
+                      description: 'BS 7671 regulation reference (e.g., "BS 7671 Reg 643.2.1", "BS 7671 Reg 643.3.2", "BS EN 61557-2")'
+                    },
+                    procedure: { 
+                      type: 'string',
+                      description: 'DETAILED test procedure in UK English (3-5 sentences minimum). Include test equipment required, how to connect test leads, what settings to use, and step-by-step execution. Example: "Using a multifunction tester (e.g., Megger MFT1835), connect test leads between line conductor and circuit protective conductor at the furthest point of the circuit. Set tester to continuity mode (200mA test current). Record R1+R2 value and verify it does not exceed maximum permitted value for circuit protection device per BS 7671 Appendix 3."'
+                    },
+                    acceptanceCriteria: { 
+                      type: 'string',
+                      description: 'SPECIFIC acceptance criteria with exact values from BS 7671. Examples: "R1+R2 ≤ maximum Zs from Appendix 3 Table 3A (e.g., 1.09Ω for 40A Type B MCB)", "≥1.0MΩ at 500V DC for new installations (Reg 643.3.2)", "RCD must trip within 40ms at 5× rated current (150mA for 30mA RCD) per Reg 643.9.2", "Correct polarity on all socket outlets - phase on right terminal when viewed from front"'
+                    },
+                    certificateRequired: { 
+                      type: 'string',
+                      description: 'Certificate type where test results are recorded (e.g., "Electrical Installation Certificate (EIC)", "Minor Electrical Installation Works Certificate (MEIWC)", "Periodic Inspection Report", "Test Sheet Schedule")'
+                    },
+                    regulationRef: { 
+                      type: 'string',
+                      description: 'Full BS 7671 regulation reference (e.g., "BS 7671:2018+A2:2022 Regulation 643.2.1", "BS 7671 Section 643", "Appendix 3 Table 3A")'
+                    }
+                  },
+                  required: ['testName', 'standard', 'procedure', 'acceptanceCriteria']
+                }
+              },
+              competencyRequirements: {
+                type: 'object',
+                description: 'MANDATORY: Specify overall competency requirements for the complete installation job. Define minimum qualifications needed, supervision requirements, and additional training/certifications.',
+                properties: {
+                  minimumQualifications: {
+                    type: 'array',
+                    minItems: 2,
+                    items: { type: 'string' },
+                    description: 'MANDATORY: List SPECIFIC minimum qualifications required to perform this work. Examples: ["18th Edition BS 7671 (City & Guilds 2382-18)", "City & Guilds 2391 Inspection & Testing"], ["Level 3 Electrical Installation", "AM2 Assessment", "18th Edition BS 7671"], ["HNC Electrical Engineering", "Approved Electrician status"]. For commercial/industrial work, add: ["NICEIC/NAPIT Approved Contractor", "ECS Gold Card"]. Be job-specific: EV charger = add "OLEV-approved installer training", High-voltage work = add "HV Authorised Person (AP)".'
+                  },
+                  supervision: {
+                    type: 'string',
+                    description: 'Supervision requirements. Examples: "Qualified electrician must supervise trainees at all times", "Competent Person Scheme member to verify work", "No supervision required - qualified electrician only", "Authorised Person (AP) must supervise all isolation activities"'
+                  },
+                  additionalTraining: {
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Additional training/certifications genuinely relevant to THIS job. Examples for domestic: ["NICEIC Domestic Installer", "Part P Building Regulations awareness"]. For commercial: ["CDM Regulations awareness", "CSCS Card (Construction Skills Certification)", "Safe Isolation Training (proven dead)"]. For specific work: ["IPAF (Powered Access)", "PASMA (Scaffold Tower)", "Confined Spaces", "Hot Work Permit trained", "Asbestos Awareness"]. Only include if genuinely needed for THIS job.'
+                  }
+                },
+                required: ['minimumQualifications']
+              },
+              siteLogistics: {
+                type: 'object',
+                description: 'MANDATORY: Provide detailed site logistics covering isolation, access, permits, and working hours. Be SPECIFIC to the installation location and work type.',
+                properties: {
+                  isolationPoints: {
+                    type: 'array',
+                    minItems: 1,
+                    items: { type: 'string' },
+                    description: 'MANDATORY: List SPECIFIC isolation points with detail. Examples: ["Main incoming isolator at consumer unit (TNCS earthing system)", "Submain isolator in garage distribution board", "Local isolation switch above shower (45A DP pull-cord)"], ["Building main switch (400A MCCB in LV switchroom)", "Distribution board DB-02 (Floor 3 electrical cupboard)", "Emergency shutdown button at machine"], ["Street lighting column isolator (DNO fused cutout)"]. Include location details and type of isolation device.'
+                  },
+                  accessRequirements: {
+                    type: 'string',
+                    description: 'MANDATORY: Comprehensive site access information (minimum 2-3 sentences). Cover: hours (occupant coordination), affected areas (which rooms/zones), floor/surface protection (dust sheets, board protection), waste disposal (skip/bags for old cables), parking (van access), and any special access considerations (scaffolding, cherry picker, confined space entry). Example: "Coordinate access with occupants - bathroom unavailable for 4-6 hours during installation. Protect finished flooring with dust sheets and hardboard in cable route areas. Arrange skip for demolition waste (old consumer unit, redundant cables). Van access required to front of property for material delivery. Loft access via hatch in landing - ensure safe working platform."'
+                  },
+                  permitsRequired: {
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'MANDATORY: Permits required. DOMESTIC work: Usually empty array [] or ["None - domestic installation"]. COMMERCIAL/INDUSTRIAL work: ["Permit to Work (PTW) - electrical isolation", "Hot Work Permit (if cable cutting/drilling near flammables)", "Confined Space Entry Permit (if working in vaults/ducts)", "Work at Height Permit (if above 2m)", "Excavation Permit (if buried cable work)", "Road Closure Permit (if street work)"]. Only include genuinely required permits for THIS job.'
+                  },
+                  workingHours: {
+                    type: 'string',
+                    description: 'Recommended working hours considering supply interruption impact and site constraints. Examples: "08:00-16:00 weekdays - coordinate power outage with building manager", "Out-of-hours preferred (after 18:00) to minimize business disruption", "Weekend work required - full building shutdown Saturday 06:00-18:00", "Daylight hours only - external work requires natural light", "Phased work - isolation windows: 22:00-06:00 to avoid peak business hours"'
+                  }
+                },
+                required: ['isolationPoints', 'accessRequirements', 'permitsRequired']
+              },
+              regulatoryCitations: {
+                type: 'array',
+                minItems: 3,
+                description: 'MANDATORY: Provide MINIMUM 3 BS 7671 regulatory citations linked to specific installation steps. Extract from RAG BS 7671 Intelligence knowledge base where available. Cover key regulations for: RCD protection, cable installation methods, earthing/bonding, testing, special locations (bathrooms/outdoor).',
+                items: {
+                  type: 'object',
+                  properties: {
+                    regulation: {
+                      type: 'string',
+                      description: 'Full BS 7671 regulation reference. Examples: "BS 7671 Reg 411.3.2.2", "BS 7671 Section 701.411.3.3", "BS 7671 Table 4A2", "BS 7671 Appendix 3", "BS 7671 Reg 522.6.204", "BS 7671 Reg 643.3.2"'
+                    },
+                    applicableToStep: {
+                      type: 'number',
+                      description: 'Step number this regulation applies to. Examples: Step 2 (Isolation) → Reg 537.2.1.1, Step 4 (RCD installation) → Reg 701.411.3.3, Step 6 (Cable clipping) → Table 4A2, Step 8 (Testing) → Reg 643.2.1'
+                    },
+                    requirement: {
+                      type: 'string',
+                      description: 'Plain English summary of what the regulation requires. Examples: "30mA RCD protection required for all socket outlets (additional protection)", "Cable clips: 2.5mm² T&E horizontal runs = 400mm spacing maximum", "Continuity of protective conductors must be verified before energising", "Notching joists: maximum depth 0.125× joist depth (e.g., 25mm on 200mm joist)", "Bathroom circuits require 30mA RCD protection within zones 0, 1, 2"'
+                    }
+                  },
+                  required: ['regulation', 'applicableToStep', 'requirement']
+                }
               }
             },
             required: ['response'],
@@ -1733,7 +1981,21 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         toolsRequired: installResult.toolsRequired || [],
         materialsRequired: installResult.materialsRequired || [],
         practicalTips: installResult.practicalTips || [],
-        commonMistakes: installResult.commonMistakes || []
+        commonMistakes: installResult.commonMistakes || [],
+        // ✨ NEW: BS 7671 Compliance Data
+        testingProcedures: installResult.testingProcedures || [],
+        competencyRequirements: installResult.competencyRequirements || {
+          minimumQualifications: ['18th Edition BS 7671', 'Qualified Electrician'],
+          supervision: 'Qualified electrician must supervise trainees',
+          additionalTraining: []
+        },
+        siteLogistics: installResult.siteLogistics || {
+          isolationPoints: ['Main consumer unit isolator'],
+          accessRequirements: 'Standard site access required. Coordinate with occupants for supply interruption.',
+          permitsRequired: [],
+          workingHours: '08:00-16:00 weekdays - coordinate power outage with occupants'
+        },
+        regulatoryCitations: installResult.regulatoryCitations || []
       },
       metadata: {
         generationTimeMs: timings.total,
