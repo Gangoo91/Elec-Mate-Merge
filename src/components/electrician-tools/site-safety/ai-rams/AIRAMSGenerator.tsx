@@ -196,17 +196,137 @@ export const AIRAMSGenerator: React.FC = () => {
     setShowCelebration(false);
     setCelebrationShown(false);
     
-    const { data, error } = await supabase.functions.invoke('create-rams-job', {
-      body: { jobDescription, projectInfo, jobScale }
-    });
-    
-    if (error || !data?.jobId) {
-      console.error('Failed to create job:', error);
-      return;
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast({
+          title: "Authentication required",
+          description: "Please log in to generate RAMS",
+          variant: 'destructive'
+        });
+        return;
+      }
+
+      // Create job record in database
+      const { data: jobRecord, error: jobError } = await supabase
+        .from('rams_generation_jobs')
+        .insert({
+          user_id: user.id,
+          job_description: jobDescription,
+          project_info: projectInfo,
+          job_scale: jobScale,
+          status: 'pending',
+          progress: 0,
+          current_step: 'Starting generation...'
+        })
+        .select()
+        .single();
+
+      if (jobError || !jobRecord) {
+        console.error('Failed to create job:', jobError);
+        toast({
+          title: "Failed to start generation",
+          description: jobError?.message || "Could not create job record",
+          variant: 'destructive'
+        });
+        return;
+      }
+      
+      setCurrentJobId(jobRecord.id);
+      startPolling();
+
+      // Call both agents in parallel (no HTTP ceiling, each gets 420s timeout)
+      console.log('🚀 Starting parallel agent calls...');
+      
+      const [hsResult, installerResult] = await Promise.allSettled([
+        supabase.functions.invoke('health-safety-v3', {
+          body: {
+            jobId: jobRecord.id,
+            query: jobDescription,
+            workType: jobScale,
+            projectInfo: projectInfo
+          }
+        }),
+        supabase.functions.invoke('installer-v3', {
+          body: {
+            jobId: jobRecord.id,
+            query: jobDescription,
+            workType: jobScale,
+            projectInfo: projectInfo
+          }
+        })
+      ]);
+
+      console.log('✅ Both agents completed');
+      console.log('H&S Result:', hsResult.status);
+      console.log('Installer Result:', installerResult.status);
+
+      // Merge results
+      const hsData = hsResult.status === 'fulfilled' ? hsResult.value.data?.data : null;
+      const installerData = installerResult.status === 'fulfilled' ? installerResult.value.data?.data : null;
+      
+      const hsError = hsResult.status === 'rejected' ? hsResult.reason : 
+                     (hsResult.status === 'fulfilled' && hsResult.value.error ? hsResult.value.error : null);
+      const installerError = installerResult.status === 'rejected' ? installerResult.reason :
+                            (installerResult.status === 'fulfilled' && installerResult.value.error ? installerResult.value.error : null);
+
+      // Determine final status
+      let finalStatus: 'complete' | 'failed' = 'complete';
+      let errorMessage: string | null = null;
+      
+      if (!hsData && !installerData) {
+        finalStatus = 'failed';
+        errorMessage = `Both agents failed. H&S: ${hsError?.message || 'Unknown error'}. Installer: ${installerError?.message || 'Unknown error'}`;
+      } else if (!hsData) {
+        finalStatus = 'failed';
+        errorMessage = `Health & Safety agent failed: ${hsError?.message || 'Unknown error'}`;
+      }
+      // Note: Installer failure is NOT a complete failure - we'll save partial results
+
+      // Update job with final results
+      const { error: updateError } = await supabase
+        .from('rams_generation_jobs')
+        .update({
+          status: finalStatus,
+          progress: 100,
+          current_step: finalStatus === 'complete' 
+            ? (installerData ? 'Complete' : 'Complete (partial - method statement failed)')
+            : 'Failed',
+          rams_data: hsData || null,
+          method_data: installerData || null,
+          raw_hs_response: hsData || null,
+          raw_installer_response: installerData || null,
+          error_message: errorMessage,
+          completed_at: new Date().toISOString()
+        })
+        .eq('id', jobRecord.id);
+
+      if (updateError) {
+        console.error('Failed to update job with results:', updateError);
+      }
+
+      console.log('📊 Final job status:', finalStatus);
+      
+    } catch (error: any) {
+      console.error('Generation error:', error);
+      
+      if (currentJobId) {
+        await supabase
+          .from('rams_generation_jobs')
+          .update({
+            status: 'failed',
+            error_message: error.message || 'Unknown error occurred',
+            completed_at: new Date().toISOString()
+          })
+          .eq('id', currentJobId);
+      }
+      
+      toast({
+        title: "Generation failed",
+        description: error.message || "An unexpected error occurred",
+        variant: 'destructive'
+      });
     }
-    
-    setCurrentJobId(data.jobId);
-    startPolling();
   };
 
   const handleCancel = async () => {
