@@ -136,13 +136,20 @@ export const AIRAMSGenerator: React.FC = () => {
 
   // Trigger celebration when generation completes WITH REAL DATA
   useEffect(() => {
-    const hasRealData = ramsData && 
+    // Full completion - both datasets present
+    const hasFullData = ramsData && 
                         methodData && 
                         status === 'complete' && 
                         ramsData.risks?.length > 0 && 
                         !currentStep?.includes('partial');
+    
+    // Partial completion - at least RAMS data present
+    const hasPartialData = ramsData &&
+                           !methodData &&
+                           status === 'complete' &&
+                           currentStep?.includes('partial');
                         
-    if (hasRealData && showResults && !celebrationShown) {
+    if (hasFullData && showResults && !celebrationShown) {
       // Clear session flag on completion
       sessionStorage.removeItem('rams-generation-active');
       
@@ -150,6 +157,19 @@ export const AIRAMSGenerator: React.FC = () => {
       setShowCelebration(true);
       setCelebrationShown(true);
       triggerHaptic([100, 50, 100, 50, 200]);
+    }
+    
+    // For partial completion, skip celebration and go straight to results
+    if (hasPartialData && !celebrationShown) {
+      sessionStorage.removeItem('rams-generation-active');
+      setGenerationEndTime(Date.now());
+      setCelebrationShown(true);
+      
+      toast({
+        title: "Partial Generation Complete",
+        description: "Risk assessment succeeded, but method statement timed out. You can retry the method statement.",
+        variant: 'default'
+      });
     }
   }, [ramsData, methodData, status, currentStep, showResults, celebrationShown]);
 
@@ -281,7 +301,7 @@ export const AIRAMSGenerator: React.FC = () => {
   };
   
   const saveToDatabase = async () => {
-    if (!currentJobId || !ramsData || !methodData) {
+    if (!currentJobId || !ramsData) {
       toast({
         title: "Cannot Save",
         description: "No data to save",
@@ -435,8 +455,48 @@ export const AIRAMSGenerator: React.FC = () => {
                 </div>
               )}
 
-              {ramsData && methodData && (
+              {ramsData && (
                 <div id="rams-results" className="px-2">
+                  {/* Partial completion warning banner */}
+                  {!methodData && status === 'complete' && (
+                    <div className="mb-4 p-4 bg-orange-500/10 border border-orange-500/30 rounded-lg">
+                      <div className="flex items-start gap-3">
+                        <AlertCircle className="h-5 w-5 text-orange-400 shrink-0 mt-0.5" />
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-orange-400">
+                            Method Statement Generation Timed Out
+                          </p>
+                          <p className="text-xs text-orange-400/70 mt-1">
+                            Your risk assessment completed successfully, but the method statement generation timed out. 
+                            You can use the risk assessment now and retry method statement generation separately.
+                          </p>
+                          <div className="flex gap-2 mt-3">
+                            <Button
+                              variant="outline"
+                              onClick={() => {
+                                navigate('/electrician/site-safety/method-statement', {
+                                  state: { 
+                                    fromRAMS: true,
+                                    ramsData: ramsData,
+                                    projectInfo: {
+                                      projectName: ramsData.projectName,
+                                      location: ramsData.location,
+                                      assessor: ramsData.assessor
+                                    }
+                                  }
+                                });
+                              }}
+                              className="border-orange-500/40 hover:border-orange-500 hover:bg-orange-500/10 text-orange-400"
+                              size="sm"
+                            >
+                              <Sparkles className="h-4 w-4 mr-2" />
+                              Retry Method Statement
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   {/* Show info banner if risks are empty */}
                   {(!ramsData.risks || ramsData.risks.length === 0) && (
                     <div className="mb-4 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
@@ -465,7 +525,7 @@ export const AIRAMSGenerator: React.FC = () => {
                   
                   <RAMSReviewEditor
                     ramsData={ramsData}
-                    methodData={methodData}
+                    methodData={methodData || undefined}
                     isSaving={isSaving}
                     lastSaved={lastSaved}
                     onSave={() => saveToDatabase()}
