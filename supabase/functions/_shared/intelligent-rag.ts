@@ -485,12 +485,25 @@ async function vectorSearchWithEmbedding(
 
   // PRIORITY 0: GN3 Inspection & Testing (PRIMARY for commissioning)
   if (embedding && (!priority || priority.inspection > 50)) {
+    console.log('✅ GN3 search triggered:', {
+      hasEmbedding: !!embedding,
+      priority: priority?.inspection || 'default',
+      query: `${params.expandedQuery} GN3 testing procedures`.substring(0, 80)
+    });
+    
     searches.push(
       supabase.rpc('search_inspection_testing_hybrid', {
         query_text: `${params.expandedQuery} GN3 testing procedures instrument setup`,
         query_embedding: embedding,
         match_count: 15  // More GN3 results for detailed procedures
       }).then((result: any) => {
+        console.log('🔍 RAW GN3 RPC response:', {
+          hasData: !!result?.data,
+          count: result?.data?.length || 0,
+          hasError: !!result?.error,
+          errorMsg: result?.error?.message || result?.error
+        });
+        
         if (result?.data) {
           return { data: result.data.map((doc: any) => ({
             ...doc,
@@ -502,10 +515,22 @@ async function vectorSearchWithEmbedding(
       })
     );
     searchTypes.push('gn3_inspection');
+  } else {
+    console.warn('⚠️ GN3 search SKIPPED:', {
+      hasEmbedding: !!embedding,
+      priorityInspection: priority?.inspection,
+      reason: !embedding ? 'No embedding' : 'Priority too low'
+    });
   }
 
   // PRACTICAL WORK INTELLIGENCE - PHASE 1.2: Use cached batch search
   if (!priority || priority.practical_work > 50) {
+    console.log('✅ Practical work search triggered:', {
+      priority: priority?.practical_work || 'default',
+      agentType: params.context?.agentType,
+      keywordsCount: params.searchTerms.length
+    });
+    
     // PHASE 1.2: Import batch loader with caching
     const { searchPracticalWorkBatch } = await import('./rag-batch-loader.ts');
     
@@ -514,9 +539,21 @@ async function vectorSearchWithEmbedding(
         keywords: params.searchTerms,
         limit: 15,
         activity_filter: params.context?.agentType ? [params.context.agentType] : undefined
-      }).then(results => ({ data: results, error: null }))
+      }).then(results => {
+        console.log('🔍 RAW Practical Work RPC response:', {
+          count: results?.length || 0,
+          sampleTopic: results?.[0]?.primary_topic || 'N/A',
+          hasHybridScore: !!results?.[0]?.hybrid_score
+        });
+        return { data: results, error: null };
+      })
     );
     searchTypes.push('practical_work');
+  } else {
+    console.warn('⚠️ Practical work search SKIPPED:', {
+      priorityPracticalWork: priority?.practical_work,
+      reason: 'Priority too low'
+    });
   }
 
   // PHASE 3: Installation knowledge search - skip if low priority or no embedding
@@ -580,6 +617,18 @@ async function vectorSearchWithEmbedding(
   searchTypes.forEach((type, idx) => {
     const result = results[idx];
     resultMap[type] = result?.data || [];
+    
+    // 🔍 DEBUG: Log each search result
+    if (type === 'gn3_inspection' || type === 'practical_work') {
+      console.log(`🔍 RAG DEBUG [${type}]:`, {
+        hasData: !!result?.data,
+        count: result?.data?.length || 0,
+        hasError: !!result?.error,
+        error: result?.error,
+        sampleTopic: result?.data?.[0]?.topic || result?.data?.[0]?.primary_topic || 'N/A'
+      });
+    }
+    
     if (result?.error) {
       console.warn(`Search ${type} failed: ${result.error}`);
     }
@@ -749,6 +798,8 @@ export async function intelligentRAGSearch(
       healthSafetyDocs: cachedResult.structured_data?.healthSafetyDocs || [],
       installationDocs: cachedResult.structured_data?.installationDocs || [],
       maintenanceDocs: cachedResult.structured_data?.maintenanceDocs || [],
+      practicalWorkDocs: cachedResult.structured_data?.practicalWorkDocs || [],
+      gn3InspectionDocs: cachedResult.structured_data?.gn3InspectionDocs || [],
       searchMethod: 'cached' as any,
       searchTimeMs: 0,
       embedding: cachedResult.structured_data?.embedding
@@ -776,12 +827,25 @@ export async function intelligentRAGSearch(
   console.log(`🔍 Query expanded: "${params.expandedQuery}" → ${expandedTerms.length} terms`);
 
   // Tier 2: Vector search (if needed)
-  let vectorResults = { regulations: [], designDocs: [], healthSafetyDocs: [], installationDocs: [], maintenanceDocs: [], embedding: [], timeMs: 0 };
+  let vectorResults = { 
+    regulations: [], 
+    designDocs: [], 
+    healthSafetyDocs: [], 
+    installationDocs: [], 
+    maintenanceDocs: [], 
+    practicalWorkDocs: [], 
+    gn3InspectionDocs: [], 
+    embedding: [], 
+    timeMs: 0 
+  };
   if (exactResults.regulations.length < 5) {
     // Use enriched query for better vector matching
     const enrichedParams = { ...params, expandedQuery: enrichedQuery };
     vectorResults = await vectorSearch(supabase, enrichedParams, openAiKey);
-    console.log(`✅ Tier 2 (Vector): ${vectorResults.regulations.length} regs, ${vectorResults.designDocs.length} design, ${vectorResults.installationDocs.length} installation, ${vectorResults.maintenanceDocs.length} maintenance docs in ${vectorResults.timeMs}ms`);
+    
+    // 🔍 DEBUG: Log what vectorSearch returned
+    console.log(`✅ Tier 2 (Vector): ${vectorResults.regulations.length} regs, ${vectorResults.designDocs.length} design, ${vectorResults.installationDocs.length} installation, ${vectorResults.maintenanceDocs.length} maintenance, ${vectorResults.practicalWorkDocs?.length || 0} practical work, ${vectorResults.gn3InspectionDocs?.length || 0} GN3 docs in ${vectorResults.timeMs}ms`);
+    
     searchMethod = exactResults.regulations.length > 0 ? 'hybrid' : 'vector';
     embedding = vectorResults.embedding;
   }
@@ -884,6 +948,12 @@ export async function intelligentRAGSearch(
 
   console.log(`📊 Total RAG Results (DESIGN-FIRST): ${uniqueDesignDocs.length} design (PRIORITY 1), ${uniqueRegulations.length} regs (PRIORITY 2), ${allHealthSafetyDocs.length} H&S, ${uniqueInstallationDocs.length} installation, ${uniqueMaintenanceDocs.length} maintenance in ${totalTime}ms via ${searchMethod}`);
 
+  // 🔍 Extract practical work and GN3 docs from vectorResults
+  const practicalWorkDocs = vectorResults.practicalWorkDocs || [];
+  const gn3InspectionDocs = vectorResults.gn3InspectionDocs || [];
+  
+  console.log(`📦 Final RAG package includes: ${practicalWorkDocs.length} practical work docs, ${gn3InspectionDocs.length} GN3 docs`);
+  
   const finalResult = {
     regulations: uniqueRegulations.map(reg => ({
       regulation_number: reg.regulation_number || 'N/A',
@@ -896,6 +966,8 @@ export async function intelligentRAGSearch(
     healthSafetyDocs: allHealthSafetyDocs,
     installationDocs: uniqueInstallationDocs,
     maintenanceDocs: uniqueMaintenanceDocs,
+    practicalWorkDocs: practicalWorkDocs,
+    gn3InspectionDocs: gn3InspectionDocs,
     searchMethod,
     searchTimeMs: totalTime,
     embedding,
@@ -911,6 +983,8 @@ export async function intelligentRAGSearch(
       healthSafetyDocs: finalResult.healthSafetyDocs,
       installationDocs: finalResult.installationDocs,
       maintenanceDocs: finalResult.maintenanceDocs,
+      practicalWorkDocs: finalResult.practicalWorkDocs,
+      gn3InspectionDocs: finalResult.gn3InspectionDocs,
       embedding: finalResult.embedding
     },
     enrichment: {},
