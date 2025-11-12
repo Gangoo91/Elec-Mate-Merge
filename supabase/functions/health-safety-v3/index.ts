@@ -234,8 +234,8 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
     
-    // CORRECTED LEGACY: Vector H&S (95%) + Keyword Regs (85%)
-    logger.info('🔍 Starting LEGACY RAG (95% health-safety VECTOR + 85% regs KEYWORDS)');
+    // RAG: Vector H&S (95%) + Regulations Intelligence (90%)
+    logger.info('🔍 Starting RAG (95% health-safety VECTOR + 90% regulations intelligence KEYWORDS)');
     
     const [healthSafetyVectorResult, bs7671KeywordResult] = await Promise.all([
       // TIER 1: Health & Safety Knowledge - PURE VECTOR SEARCH (95% weight)
@@ -264,27 +264,28 @@ serve(async (req) => {
         }
       })(),
       
-      // TIER 2: BS 7671 Regulations - KEYWORD SEARCH (85% weight)
+      // TIER 2: Regulations Intelligence - KEYWORD SEARCH (90% weight)
       (async () => {
         try {
-          const { data, error } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
+          const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
             query_text: effectiveQuery,
-            match_count: 10
+            match_count: 15,
+            filter_categories: null
           });
           
           if (error) {
-            console.error('BS 7671 keyword search error:', error);
+            console.error('Regulations intelligence keyword search error:', error);
             return [];
           }
           
-          // Apply 85% weight to keyword results
+          // Apply 90% weight to regulations intelligence
           return (data || []).map((row: any) => ({
             ...row,
-            hybrid_score: (row.hybrid_score || 0.75) * 0.85, // 85% weight for keywords
+            hybrid_score: (row.hybrid_score || 0.75) * 0.90,
             search_method: 'keyword'
           }));
         } catch (error) {
-          console.error('BS 7671 keyword search failed:', error);
+          console.error('Regulations intelligence search failed:', error);
           return [];
         }
       })()
@@ -304,13 +305,18 @@ serve(async (req) => {
         hybrid_score: doc.hybrid_score || doc.similarity
       })),
       regulations: bs7671Data.map((reg: any) => ({
+        regulation_id: reg.regulation_id,
         regulation_number: reg.regulation_number,
-        content: reg.content || reg.regulation_text,
+        content: reg.primary_topic,
         primary_topic: reg.primary_topic,
         keywords: reg.keywords,
         category: reg.category,
+        subcategory: reg.subcategory,
+        applies_to: reg.applies_to,
+        related_regulations: reg.related_regulations,
+        confidence_score: reg.confidence_score,
         hybrid_score: reg.hybrid_score || 0,
-        source: 'bs7671_intelligence'
+        source: 'regulations_intelligence'
       })),
       installationDocs: []
     };
@@ -319,7 +325,7 @@ serve(async (req) => {
 
     logger.info('✅ H&S RAG complete (parallel vector+keyword)', {
       healthSafetyDocs: healthSafetyDocs.length,
-      regulations: bs7671Data.length,
+      regulationsIntelligence: bs7671Data.length,
       duration: performanceMetrics.ragRetrieval
     });
     

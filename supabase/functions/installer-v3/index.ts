@@ -499,32 +499,38 @@ serve(async (req) => {
         // TIER 2: BS 7671 Regulations - Increased volume
         (async () => {
           try {
-            logger.info('🔍 Executing BS 7671 RPC call', { combinedQuery: searchQueries.join(' ').substring(0, 100) });
+            logger.info('🔍 Executing Regulations Intelligence RPC call', { combinedQuery: searchQueries.join(' ').substring(0, 100) });
             
-            const { data, error } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
+            const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
               query_text: searchQueries.join(' '),
-              match_count: 25  // 🚀 3x increase from 8
+              match_count: 25,
+              filter_categories: null
             });
             
             if (error) {
-              logger.error('❌ BS 7671 RPC error:', error);
+              logger.error('❌ Regulations Intelligence RPC error:', error);
               throw error;
             }
             
-            logger.info(`✅ BS 7671 RPC returned ${(data || []).length} results`);
+            logger.info(`✅ Regulations Intelligence RPC returned ${(data || []).length} results`);
             
             const results = (data || []).map((row: any) => ({
+              regulation_id: row.regulation_id,
               regulation_number: row.regulation_number,
-              content: row.content || row.primary_topic,
+              content: row.primary_topic,
               primary_topic: row.primary_topic,
               keywords: row.keywords,
               category: row.category,
-              hybrid_score: (row.hybrid_score || 0.75) * 0.85,
-              source: 'bs7671_intelligence',  // ✅ EXPLICIT
-              _rawSource: row.source || 'not_provided'  // 🔍 DEBUG: Verify row structure
+              subcategory: row.subcategory,
+              applies_to: row.applies_to,
+              related_regulations: row.related_regulations,
+              confidence_score: row.confidence_score,
+              hybrid_score: (row.hybrid_score || 0.75) * 0.90,
+              source: 'regulations_intelligence',
+              _rawSource: row.source || 'not_provided'
             }));
             
-            logger.info('📊 BS 7671 RAG Retrieved:', {
+            logger.info('📊 Regulations Intelligence RAG Retrieved:', {
               totalEntries: results.length,
               sampleTopics: results.slice(0, 2).map((r: any) => r.primary_topic)
             });
@@ -565,7 +571,7 @@ serve(async (req) => {
       logger.info('🔍 InstallKnowledge Array Analysis:', {
         totalDocs: installKnowledge.length,
         practicalWorkCount: installKnowledge.filter(k => k.source === 'practical_work_intelligence').length,
-        bs7671Count: installKnowledge.filter(k => k.source === 'bs7671_intelligence').length,
+        regulationsCount: installKnowledge.filter(k => k.source === 'regulations_intelligence').length,
         sampleSources: installKnowledge.slice(0, 5).map(k => ({
           source: k.source,
           topic: k.primary_topic || k.regulation_number
@@ -629,7 +635,7 @@ serve(async (req) => {
     if (installKnowledge && installKnowledge.length > 0) {
       installContext = installKnowledge
         .map((doc, idx) => {
-          if (doc.source === 'practical_work_intelligence' || doc.source === 'bs7671_intelligence') {
+          if (doc.source === 'practical_work_intelligence' || doc.source === 'regulations_intelligence') {
             return formatRagForAI(doc, idx);
           } else {
             return `${doc.topic}:\n${doc.content}`;
@@ -656,7 +662,7 @@ serve(async (req) => {
         ? (installKnowledge.reduce((s: number, k: any) => s + (k.hybrid_score || k.finalScore || 0), 0) / installKnowledge.length).toFixed(3)
         : 'N/A',
       practicalWorkCount: installKnowledge.filter((k: any) => k.source === 'practical_work_intelligence').length,
-      bs7671Count: installKnowledge.filter((k: any) => k.source === 'bs7671_intelligence').length,
+      regulationsCount: installKnowledge.filter((k: any) => k.source === 'regulations_intelligence').length,
       hasRichContext: installContext.length > 1000,
       ragDuration: timings.ragRetrieval,
       warningIfPoor: installKnowledge.length < 3 ? '⚠️ INSUFFICIENT RAG DATA - AI may hallucinate!' : null
@@ -1015,7 +1021,7 @@ ${installContext}
 **KNOWLEDGE SOURCE QUALITY:**
 - ${installKnowledge.length} procedures retrieved
 - Avg relevance: ${installKnowledge.length > 0 ? (installKnowledge.reduce((s: number, k: any) => s + (k.hybrid_score || 0), 0) / installKnowledge.length * 100).toFixed(0) : 0}%
-- Primary focus: ${installKnowledge.filter((k: any) => k.source === 'practical_work_intelligence').length} practical procedures, ${installKnowledge.filter((k: any) => k.source === 'bs7671_intelligence').length} BS 7671 regulations
+- Primary focus: ${installKnowledge.filter((k: any) => k.source === 'practical_work_intelligence').length} practical procedures, ${installKnowledge.filter((k: any) => k.source === 'regulations_intelligence').length} regulations intelligence
 
 **CRITICAL: ALL OUTPUT MUST BE IN UK ENGLISH**
 - Use UK spellings: realise (not realize), analyse (not analyze), minimise (not minimize), categorise (not categorize), organise (not organize), authorised (not authorized), recognised (not recognized), whilst (not while)
@@ -2209,9 +2215,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
               k.source === 'practical_work'  // Fallback for alternate naming
             ).length,
             regulations: installKnowledge.filter((k: any) => 
-              k.source === 'bs7671_intelligence' || 
-              k.source === 'bs7671' ||
-              k.source === 'regulations_intelligence'  // Alternative source names
+              k.source === 'regulations_intelligence'
             ).length,
             avgRelevance: Math.round(installKnowledge.length > 0 
               ? (installKnowledge.reduce((s: number, k: any) => s + (k.hybrid_score || 0), 0) / installKnowledge.length * 100)
@@ -2248,15 +2252,15 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
                   : 0
               )
             },
-            bs7671: {
-              documentsUsed: installKnowledge.filter((k: any) => k.source === 'bs7671_intelligence').length,
-              regulationsExtracted: installKnowledge.filter((k: any) => k.source === 'bs7671_intelligence').length,
+            regulationsIntelligence: {
+              documentsUsed: installKnowledge.filter((k: any) => k.source === 'regulations_intelligence').length,
+              regulationsExtracted: installKnowledge.filter((k: any) => k.source === 'regulations_intelligence').length,
               avgRelevance: Math.round(
-                installKnowledge.filter((k: any) => k.source === 'bs7671_intelligence').length > 0
+                installKnowledge.filter((k: any) => k.source === 'regulations_intelligence').length > 0
                   ? (installKnowledge
-                      .filter((k: any) => k.source === 'bs7671_intelligence')
+                      .filter((k: any) => k.source === 'regulations_intelligence')
                       .reduce((s: number, k: any) => s + (k.hybrid_score || 0), 0) / 
-                      installKnowledge.filter((k: any) => k.source === 'bs7671_intelligence').length * 100)
+                      installKnowledge.filter((k: any) => k.source === 'regulations_intelligence').length * 100)
                   : 0
               )
             }
