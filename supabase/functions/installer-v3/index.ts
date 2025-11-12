@@ -1955,8 +1955,6 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       // Validate step description length
       if (enriched.description && enriched.description.split(' ').length < 80) {
         logger.warn(`⚠️ Step ${step.step} description too brief (${enriched.description.split(' ').length} words). Minimum 150 words required.`);
-          enriched.tools = []; // Keep empty to expose the problem
-        }
       }
       
       // MATERIALS: Same logic
