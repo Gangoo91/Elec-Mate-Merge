@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, ArrowRight, Zap, Calculator, Wrench, Shield, CheckCircle2, Clipboard, Settings, GraduationCap } from "lucide-react";
+import { ArrowLeft, ArrowRight, Zap, Calculator, Wrench, Shield, CheckCircle2, Clipboard, Settings, GraduationCap, FileText } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 interface Agent {
@@ -70,6 +70,14 @@ const AGENTS: Agent[] = [
     expertise: ['Risk assessments', 'RAMS documents', 'PPE requirements', 'Safety procedures']
   },
   {
+    id: 'method-statement',
+    name: 'Method Statement Generator',
+    icon: FileText,
+    color: 'text-emerald-400',
+    description: 'AI-generated step-by-step method statements with hazard integration',
+    expertise: ['Method statements', 'Step breakdown', 'Hazard linking', 'Safety procedures']
+  },
+  {
     id: 'project-manager',
     name: 'Project Manager',
     icon: Clipboard,
@@ -107,6 +115,7 @@ const AgentSelectorPage = () => {
       'cost-engineer': '/electrician/cost-engineer',
       'installer': '/electrician/installation-specialist',
       'health-safety': '/electrician/health-safety',
+      'method-statement': '/electrician/method-statement',
       'commissioning': '/electrician/commissioning',
       'project-manager': '/electrician/project-manager',
       'maintenance': '/electrician/maintenance',
