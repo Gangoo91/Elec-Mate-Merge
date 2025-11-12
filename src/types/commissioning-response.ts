@@ -73,6 +73,7 @@ export interface CommissioningResponse {
   metadata?: {
     ragQuality?: {
       score: number;
+      gn3ProceduresFound?: number;
       practicalProceduresFound: number;
       regulationsFound: number;
     };

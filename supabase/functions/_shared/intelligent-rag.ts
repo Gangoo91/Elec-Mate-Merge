@@ -245,7 +245,8 @@ export interface HybridSearchResult {
   healthSafetyDocs: any[];
   installationDocs: any[];
   maintenanceDocs: any[];
-  practicalWorkDocs: any[]; // NEW - Practical Work Intelligence
+  practicalWorkDocs: any[]; // Practical Work Intelligence
+  gn3InspectionDocs: any[]; // NEW - GN3 Inspection & Testing knowledge
   searchMethod: 'exact' | 'vector' | 'keyword' | 'hybrid' | 'cached';
   searchTimeMs: number;
   embedding?: number[];
@@ -482,6 +483,27 @@ async function vectorSearchWithEmbedding(
     searchTypes.push('health_safety');
   }
 
+  // PRIORITY 0: GN3 Inspection & Testing (PRIMARY for commissioning)
+  if (embedding && (!priority || priority.inspection > 50)) {
+    searches.push(
+      supabase.rpc('search_inspection_testing_hybrid', {
+        query_text: `${params.expandedQuery} GN3 testing procedures instrument setup`,
+        query_embedding: embedding,
+        match_count: 15  // More GN3 results for detailed procedures
+      }).then((result: any) => {
+        if (result?.data) {
+          return { data: result.data.map((doc: any) => ({
+            ...doc,
+            source_table: 'inspection_testing_knowledge',
+            hybrid_score: doc.hybrid_score || doc.similarity || 0.90
+          })), error: null };
+        }
+        return result;
+      })
+    );
+    searchTypes.push('gn3_inspection');
+  }
+
   // PRACTICAL WORK INTELLIGENCE - PHASE 1.2: Use cached batch search
   if (!priority || priority.practical_work > 50) {
     // PHASE 1.2: Import batch loader with caching
@@ -634,7 +656,8 @@ async function vectorSearchWithEmbedding(
     healthSafetyDocs: resultMap.health_safety || [],
     installationDocs: resultMap.installation || [],
     maintenanceDocs: resultMap.maintenance || [],
-    practicalWorkDocs: resultMap.practical_work || [], // NEW
+    practicalWorkDocs: resultMap.practical_work || [],
+    gn3InspectionDocs: resultMap.gn3_inspection || [], // NEW - GN3 data
     embedding: embedding || undefined,
     timeMs: Date.now() - startTime,
     qualityMetrics: {

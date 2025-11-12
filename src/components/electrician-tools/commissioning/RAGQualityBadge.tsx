@@ -3,12 +3,14 @@ import { Card } from "@/components/ui/card";
 import { AlertTriangle, CheckCircle2, AlertCircle, Database } from "lucide-react";
 
 interface RAGQualityBadgeProps {
+  gn3ProceduresFound?: number;
   practicalProceduresFound: number;
   regulationsFound: number;
   qualityScore: number; // 0-100
 }
 
 export const RAGQualityBadge = ({ 
+  gn3ProceduresFound = 0,
   practicalProceduresFound, 
   regulationsFound, 
   qualityScore 
@@ -51,7 +53,15 @@ export const RAGQualityBadge = ({
                 {getMessage()}
               </span>
             </div>
-            <div className="flex items-center gap-4 text-xs text-muted-foreground mt-2">
+            <div className="flex items-center gap-4 text-xs text-muted-foreground mt-2 flex-wrap">
+              {gn3ProceduresFound > 0 && (
+                <div className="flex items-center gap-1.5">
+                  <Database className="h-3.5 w-3.5 text-purple-400" />
+                  <span className="font-semibold text-purple-400">
+                    {gn3ProceduresFound} GN3 procedures
+                  </span>
+                </div>
+              )}
               <div className="flex items-center gap-1.5">
                 <Database className="h-3.5 w-3.5" />
                 <span>
