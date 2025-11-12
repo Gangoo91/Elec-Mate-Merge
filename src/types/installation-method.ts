@@ -9,6 +9,9 @@ export interface InstallationStep {
   materialsNeeded?: string[];
   estimatedDuration?: string;
   riskLevel?: 'low' | 'medium' | 'high';
+  qualifications?: string[];
+  linkedHazards?: string[];
+  notes?: string;
 }
 
 export interface InstallationMethodSummary {

@@ -43,9 +43,10 @@ export const InstallationStepCard = ({
   };
 
   const [isExpanded, setIsExpanded] = useState(false);
-  const linkedHazards = (step as any).linkedHazards || [];
+  const linkedHazards = step.linkedHazards || [];
+  const qualifications = step.qualifications || [];
   const inspectionCheckpoints = (step as any).inspectionCheckpoints || [];
-  const toolsRequired = (step as any).toolsRequired || [];
+  const toolsRequired = step.toolsRequired || [];
 
   return (
     <Card className={cn(
@@ -231,6 +232,25 @@ export const InstallationStepCard = ({
                             </li>
                           ))}
                         </ul>
+                      </div>
+                    )}
+
+                    {/* Required Qualifications */}
+                    {qualifications.length > 0 && (
+                      <div className="p-4 bg-gradient-to-br from-purple-500/10 to-indigo-500/5 border border-purple-400/30 rounded-xl shadow-sm hover:shadow-md transition-all">
+                        <div className="flex items-start gap-2.5 mb-3">
+                          <div className="p-1.5 bg-purple-500/20 rounded-lg">
+                            <CheckCircle2 className="h-5 w-5 text-purple-400" />
+                          </div>
+                          <div className="font-bold text-base text-foreground">Required Qualifications</div>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {qualifications.map((qual: string, i: number) => (
+                            <Badge key={i} className="bg-purple-500/20 text-purple-100 border-purple-400/30 px-3 py-1">
+                              {qual}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
                     )}
 

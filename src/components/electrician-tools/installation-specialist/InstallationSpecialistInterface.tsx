@@ -199,9 +199,12 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           content: step.description || '',
           safety: step.safetyRequirements || [],
           toolsRequired: step.equipmentNeeded || [],
-          materialsNeeded: [],
+          materialsNeeded: step.materialsNeeded || [],
           estimatedDuration: step.estimatedDuration || 'Not specified',
-          riskLevel: (step.riskLevel || 'medium') as 'low' | 'medium' | 'high'
+          riskLevel: (step.riskLevel || 'medium') as 'low' | 'medium' | 'high',
+          qualifications: step.qualifications || [],
+          linkedHazards: step.linkedHazards || [],
+          notes: step.notes || ''
         }));
 
         const allTools = [...new Set(installationSteps.flatMap((s: any) => s.toolsRequired || []))];
