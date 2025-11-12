@@ -377,8 +377,19 @@ serve(async (req) => {
             
             logger.info(`✅ Retrieved ${uniqueDocs.length} unique practical procedures from ${searchQueries.length} queries`);
             
-            // 🔍 DEBUG: Log sample of tools extraction
+            // 🔍 DEBUG: Enhanced RAG data availability logging
             if (uniqueDocs.length > 0) {
+              logger.info('🔍 Tool extraction sample:', {
+                firstDoc: {
+                  topic: uniqueDocs[0].topic || uniqueDocs[0].primary_topic,
+                  hasToolsRequired: !!uniqueDocs[0].tools_required,
+                  toolsCount: (uniqueDocs[0].tools_required || []).length,
+                  toolsSample: (uniqueDocs[0].tools_required || []).slice(0, 5),
+                  hasMaterialsNeeded: !!uniqueDocs[0].materials_needed,
+                  materialsCount: (uniqueDocs[0].materials_needed || []).length
+                }
+              });
+              
               const sampleTools = uniqueDocs.slice(0, 3).map(doc => ({
                 topic: doc.topic || doc.primary_topic,
                 toolsCount: (doc.tools_required || []).length,
@@ -1246,6 +1257,21 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
     // 🚨 CRITICAL: Validate non-zero steps immediately
     const steps = installResult.installationSteps || [];
     
+    // 🔍 DEBUG: Log what AI actually generated
+    logger.info('🤖 AI Generated Steps Analysis:', {
+      totalSteps: steps.length,
+      stepsWithTools: steps.filter((s: any) => s.tools && s.tools.length > 0).length,
+      stepsWithMaterials: steps.filter((s: any) => s.materials && s.materials.length > 0).length,
+      sampleStep: steps[0] ? {
+        title: steps[0].title,
+        hasTools: !!steps[0].tools,
+        toolsCount: (steps[0].tools || []).length,
+        toolsSample: (steps[0].tools || []).slice(0, 3),
+        hasMaterials: !!steps[0].materials,
+        materialsCount: (steps[0].materials || []).length
+      } : 'no steps'
+    });
+    
     // Quality validation after AI generation
     steps.forEach((step: any, index: number) => {
       const issues: string[] = [];
@@ -1342,6 +1368,13 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       if (!needsEnrichment) {
         continue;
       }
+      
+      // 🔍 DEBUG: Log enrichment attempt
+      logger.info(`🔧 Attempting enrichment for step "${step.title}"`, {
+        currentToolsCount: (step.tools || []).length,
+        currentMaterialsCount: (step.materials || []).length,
+        isSafetyCritical: isSafetyCritical(step.title, step.description)
+      });
       
       const stepQuery = `${step.title} ${step.description}`.substring(0, 500);
       
@@ -1687,7 +1720,14 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
             dependencies: [],
             isCompleted: false,
             linkedHazards: enrichedStep.linkedHazards || [],
-            materialsNeeded: enrichedStep.materials || [] // ✅ NEW: Add materials
+            materialsNeeded: enrichedStep.materials || [], // ✅ NEW: Add materials
+            // 🔍 DEBUG: Log what we're sending to frontend
+            _debug: {
+              hadTools: !!enrichedStep.tools,
+              toolsCount: (enrichedStep.tools || []).length,
+              hadEquipmentNeeded: !!enrichedStep.equipmentNeeded,
+              toolsSample: (enrichedStep.tools || []).slice(0, 3)
+            }
           };
         }),
         toolsRequired: installResult.toolsRequired || [],
