@@ -662,13 +662,75 @@ Deno.serve(async (req) => {
       assemblyPoint: job.project_info.assemblyPoint || ""
     } : {};
 
-    // Merge emergency contacts into method_data
+    // Calculate overall risk level from risk assessment
+    const calculateOverallRiskLevel = (riskAssessment: any): string => {
+      if (!riskAssessment?.hazards || riskAssessment.hazards.length === 0) return 'low';
+      const highRiskCount = riskAssessment.hazards.filter((h: any) => 
+        h.riskLevel?.toLowerCase() === 'high' || h.riskScore >= 12
+      ).length;
+      const mediumRiskCount = riskAssessment.hazards.filter((h: any) => 
+        h.riskLevel?.toLowerCase() === 'medium' || (h.riskScore >= 6 && h.riskScore < 12)
+      ).length;
+      
+      if (highRiskCount > 0) return 'high';
+      if (mediumRiskCount > 2) return 'medium';
+      if (mediumRiskCount > 0) return 'medium';
+      return 'low';
+    };
+
+    // Calculate total estimated time from steps
+    const calculateTotalTime = (steps: any[]): string => {
+      if (!steps || steps.length === 0) return 'Not specified';
+      // If duration is already provided, use it
+      if (installerData?.data?.duration) return installerData.data.duration;
+      
+      // Try to sum up individual step durations if available
+      const hasStepDurations = steps.some(s => s.estimatedDuration);
+      if (hasStepDurations) {
+        const totalMinutes = steps.reduce((sum, step) => {
+          const duration = step.estimatedDuration || '';
+          const match = duration.match(/(\d+)\s*(min|hour|hr)/i);
+          if (match) {
+            const value = parseInt(match[1]);
+            const unit = match[2].toLowerCase();
+            return sum + (unit.includes('hour') || unit.includes('hr') ? value * 60 : value);
+          }
+          return sum;
+        }, 0);
+        
+        if (totalMinutes >= 60) {
+          const hours = Math.floor(totalMinutes / 60);
+          const mins = totalMinutes % 60;
+          return mins > 0 ? `${hours}h ${mins}min` : `${hours}h`;
+        }
+        return `${totalMinutes}min`;
+      }
+      
+      return 'Not specified';
+    };
+
+    // Merge emergency contacts and top-level fields into method_data
     const finalMethodData = installerData?.data ? {
       ...installerData.data,
-      ...emergencyContacts
+      ...emergencyContacts,
+      // Add top-level fields for UI display
+      jobTitle: installerData.data.jobTitle || projectDetails.projectName || 'Electrical Installation',
+      location: installerData.data.location || projectDetails.location,
+      contractor: installerData.data.contractor || projectDetails.contractor,
+      supervisor: installerData.data.supervisor || projectDetails.supervisor,
+      overallRiskLevel: installerData.data.overallRiskLevel || 
+                        calculateOverallRiskLevel(installerData.data.riskAssessment),
+      totalEstimatedTime: installerData.data.totalEstimatedTime || 
+                          calculateTotalTime(installerData.data.steps || [])
     } : null;
 
     console.log('🚨 Emergency contacts extracted:', emergencyContacts);
+    console.log('📊 Method data top-level fields:', {
+      jobTitle: finalMethodData?.jobTitle,
+      overallRiskLevel: finalMethodData?.overallRiskLevel,
+      totalEstimatedTime: finalMethodData?.totalEstimatedTime,
+      stepsCount: finalMethodData?.steps?.length
+    });
 
     // Mark complete with safe property access and merged data
     await supabase
