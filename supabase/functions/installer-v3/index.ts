@@ -377,13 +377,23 @@ serve(async (req) => {
             
             logger.info(`✅ Retrieved ${uniqueDocs.length} unique practical procedures from ${searchQueries.length} queries`);
             
+            // 🔍 DEBUG: Log sample of tools extraction
+            if (uniqueDocs.length > 0) {
+              const sampleTools = uniqueDocs.slice(0, 3).map(doc => ({
+                topic: doc.topic || doc.primary_topic,
+                toolsCount: (doc.tools_required || []).length,
+                sampleTools: (doc.tools_required || []).slice(0, 3)
+              }));
+              logger.info('📊 RAG Tools Sample:', sampleTools);
+            }
+            
             return uniqueDocs.map((row: any) => ({
               primary_topic: row.topic || row.primary_topic,
               content: row.content,
-              equipment_category: row.metadata?.equipment || 'General',
-              tools_required: row.metadata?.tools || [],
-              materials_needed: row.metadata?.materials || [],
-              bs7671_regulations: row.metadata?.regulations || [],
+              equipment_category: row.equipment_category || 'General',
+              tools_required: row.tools_required || [],  // ✅ FIXED: Top-level field
+              materials_needed: [],  // ⚠️ Not in RPC return - enriched later
+              bs7671_regulations: row.bs7671_regulations || [],  // ✅ FIXED: Top-level field
               hybrid_score: (row.hybrid_score || 0.75) * 0.95,
               confidence_score: row.hybrid_score || 0.75,
               source: 'practical_work_intelligence'
