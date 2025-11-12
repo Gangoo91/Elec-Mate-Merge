@@ -198,13 +198,13 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           title: step.title || `Step ${index + 1}`,
           content: step.description || '',
           safety: step.safetyRequirements || [],
-          toolsRequired: step.equipmentNeeded || [],
-          materialsNeeded: step.materialsNeeded || [],
-          estimatedDuration: step.estimatedDuration || 'Not specified',
+          toolsRequired: step.tools || [],
+          materialsNeeded: step.materials || [],
+          estimatedDuration: step.estimatedTime || step.estimatedDuration || 'Not specified',
           riskLevel: (step.riskLevel || 'medium') as 'low' | 'medium' | 'high',
           qualifications: step.qualifications || [],
           linkedHazards: step.linkedHazards || [],
-          notes: step.notes || ''
+          notes: step.notes || step.criticalPoints?.join('; ') || ''
         }));
 
         const allTools = [...new Set(installationSteps.flatMap((s: any) => s.toolsRequired || []))];
