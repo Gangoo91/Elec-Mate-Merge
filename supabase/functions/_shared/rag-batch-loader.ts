@@ -46,9 +46,16 @@ export async function searchPracticalWorkBatch(
   const { keywords, limit = 10, activity_filter } = params;
   
   try {
-    // Use hybrid keyword search (faster and more precise than vector search)
+    // Use hybrid keyword search with 20-second timeout
     const queryText = keywords.join(' ');
-    const { data, error } = await supabase.rpc(
+    
+    // Create timeout promise
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('RPC timeout after 20s')), 20000);
+    });
+    
+    // Race between RPC call and timeout
+    const rpcPromise = supabase.rpc(
       'search_practical_work_intelligence_hybrid',
       {
         query_text: queryText,
@@ -56,6 +63,8 @@ export async function searchPracticalWorkBatch(
         filter_trade: activity_filter && activity_filter.length > 0 ? activity_filter[0] : null
       }
     );
+    
+    const { data, error } = await Promise.race([rpcPromise, timeoutPromise]) as any;
     
     if (error) throw error;
     
@@ -76,8 +85,33 @@ export async function searchPracticalWorkBatch(
     
     return results;
   } catch (error) {
-    console.error('Practical Work search failed:', error);
-    return [];
+    console.error('⚠️ Practical work RPC timeout - using direct keyword search fallback', error);
+    
+    // FALLBACK: Direct keyword search on indexed columns
+    try {
+      const { data: fallbackData } = await supabase
+        .from('practical_work_intelligence')
+        .select('primary_topic, equipment_category, tools_required, materials_needed, bs7671_regulations, practical_work_id')
+        .textSearch('fts', keywords.join(' '), { type: 'websearch' })
+        .limit(limit);
+      
+      const results: RAGResult[] = (fallbackData || []).map((row: any) => ({
+        content: row.primary_topic || '',
+        keywords: [],
+        equipment_category: row.equipment_category,
+        tools_required: row.tools_required,
+        bs7671_regulations: row.bs7671_regulations,
+        practical_work_id: row.practical_work_id,
+        source_table: 'practical_work_intelligence',
+        similarity: 0.75 // Fallback score
+      }));
+      
+      console.log(`✅ Practical Work fallback search: ${keywords.join(', ')} → ${results.length} results`);
+      return results;
+    } catch (fallbackError) {
+      console.error('Practical Work fallback search also failed:', fallbackError);
+      return [];
+    }
   }
 }
 

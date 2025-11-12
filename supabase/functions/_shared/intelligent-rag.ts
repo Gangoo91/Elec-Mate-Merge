@@ -323,7 +323,9 @@ async function vectorSearch(
   const needsEmbedding = !skipEmbedding && (
     (!priority || priority.health_safety > 50) ||  // health_safety needs vector
     (!priority || priority.design > 50) ||         // design needs vector
-    (!priority || priority.installation >= 50)     // installation needs vector
+    (!priority || priority.installation >= 50) ||  // installation needs vector
+    (!priority || priority.inspection > 50) ||     // inspection needs vector (GN3)
+    (!priority || priority.practical_work > 50)    // practical_work may need vector
   );
 
   let embedding: number[] | null = null;
@@ -484,43 +486,61 @@ async function vectorSearchWithEmbedding(
   }
 
   // PRIORITY 0: GN3 Inspection & Testing (PRIMARY for commissioning)
-  if (embedding && (!priority || priority.inspection > 50)) {
-    console.log('✅ GN3 search triggered:', {
-      hasEmbedding: !!embedding,
-      priority: priority?.inspection || 'default',
-      query: `${params.expandedQuery} GN3 testing procedures`.substring(0, 80)
-    });
-    
-    searches.push(
-      supabase.rpc('search_inspection_testing_hybrid', {
-        query_text: `${params.expandedQuery} GN3 testing procedures instrument setup`,
-        query_embedding: embedding,
-        match_count: 15  // More GN3 results for detailed procedures
-      }).then((result: any) => {
-        console.log('🔍 RAW GN3 RPC response:', {
-          hasData: !!result?.data,
-          count: result?.data?.length || 0,
-          hasError: !!result?.error,
-          errorMsg: result?.error?.message || result?.error
-        });
-        
-        if (result?.data) {
-          return { data: result.data.map((doc: any) => ({
-            ...doc,
-            source_table: 'inspection_testing_knowledge',
-            hybrid_score: doc.hybrid_score || doc.similarity || 0.90
-          })), error: null };
-        }
-        return result;
-      })
-    );
-    searchTypes.push('gn3_inspection');
-  } else {
-    console.warn('⚠️ GN3 search SKIPPED:', {
-      hasEmbedding: !!embedding,
-      priorityInspection: priority?.inspection,
-      reason: !embedding ? 'No embedding' : 'Priority too low'
-    });
+  if (!priority || priority.inspection > 50) {
+    if (embedding) {
+      // Vector + Hybrid search (PREFERRED)
+      console.log('✅ GN3 hybrid search (vector + keyword)');
+      searches.push(
+        supabase.rpc('search_inspection_testing_hybrid', {
+          query_text: `${params.expandedQuery} GN3 testing procedures instrument setup`,
+          query_embedding: embedding,
+          match_count: 15
+        }).then((result: any) => {
+          console.log('🔍 RAW GN3 RPC response:', {
+            hasData: !!result?.data,
+            count: result?.data?.length || 0,
+            hasError: !!result?.error,
+            errorMsg: result?.error?.message || result?.error
+          });
+          
+          if (result?.data) {
+            return { data: result.data.map((doc: any) => ({
+              ...doc,
+              source_table: 'inspection_testing_knowledge',
+              hybrid_score: doc.hybrid_score || doc.similarity || 0.90,
+              search_method: 'hybrid'
+            })), error: null };
+          }
+          return result;
+        })
+      );
+      searchTypes.push('gn3_inspection');
+    } else {
+      // Keyword-only fallback (when no embedding)
+      console.log('⚠️ GN3 keyword-only fallback (no embedding)');
+      searches.push(
+        supabase
+          .from('inspection_testing_knowledge')
+          .select('*')
+          .textSearch('fts', `${params.expandedQuery} testing procedure instrument`, {
+            type: 'websearch',
+            config: 'english'
+          })
+          .limit(12)
+          .then((result: any) => {
+            if (result?.data) {
+              return { data: result.data.map((doc: any) => ({
+                ...doc,
+                source_table: 'inspection_testing_knowledge',
+                hybrid_score: 0.80, // 80% score for keyword-only
+                search_method: 'keyword'
+              })), error: null };
+            }
+            return result;
+          })
+      );
+      searchTypes.push('gn3_inspection');
+    }
   }
 
   // PRACTICAL WORK INTELLIGENCE - PHASE 1.2: Use cached batch search

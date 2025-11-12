@@ -122,7 +122,8 @@ serve(async (req) => {
         }
       },
       OPENAI_API_KEY,
-      supabase
+      supabase,
+      logger  // PHASE 4: Add logger parameter
     );
     
     // 🔍 ENHANCED RAG DATA LOGGING
@@ -134,6 +135,28 @@ serve(async (req) => {
       searchMethod: ragResults.searchMethod || 'unknown',
       searchTimeMs: Date.now() - ragStart
     });
+    
+    // PHASE 5: Enhanced RAG quality assessment
+    const totalDocs = (ragResults.gn3InspectionDocs?.length || 0) + 
+                      (ragResults.practicalWorkDocs?.length || 0) + 
+                      (ragResults.regulations?.length || 0);
+
+    logger.info('📊 RAG Quality Assessment', {
+      totalDocuments: totalDocs,
+      gn3Coverage: `${ragResults.gn3InspectionDocs?.length || 0}/15 target`,
+      practicalWorkCoverage: `${ragResults.practicalWorkDocs?.length || 0}/15 target`,
+      regulationsCoverage: `${ragResults.regulations?.length || 0}/18 target`,
+      hasEmbedding: !!ragResults.embedding,
+      qualityScore: totalDocs >= 30 ? 'HIGH' : totalDocs >= 15 ? 'MEDIUM' : 'LOW'
+    });
+
+    // Warn if critical data is missing
+    if ((ragResults.gn3InspectionDocs?.length || 0) < 3) {
+      logger.warn('⚠️ INSUFFICIENT GN3 DATA - AI may lack detailed testing procedures');
+    }
+    if ((ragResults.practicalWorkDocs?.length || 0) < 3) {
+      logger.warn('⚠️ INSUFFICIENT PRACTICAL WORK DATA - AI may lack trade-specific context');
+    }
 
     // Build context with cascade priority - GN3 FIRST
     let testContext = '';
