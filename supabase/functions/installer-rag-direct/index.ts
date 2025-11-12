@@ -72,7 +72,7 @@ serve(async (req) => {
     // RAG 1: Practical Work Intelligence - using optimized RPC function
     const { data: pwData, error: pwError } = await supabase
       .rpc('search_practical_work_intelligence_hybrid', {
-        query_text: description, // Use full user query for better context matching
+        query_text: query, // Use full user query for better context matching
         match_count: 50,
         filter_trade: 'installer' // Focus on installation-specific knowledge
       });
