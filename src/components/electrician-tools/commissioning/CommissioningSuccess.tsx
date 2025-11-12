@@ -1,11 +1,15 @@
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, FileText, Clock, Zap } from "lucide-react";
+import { CheckCircle2, FileText, Clock, Zap, Activity, Timer } from "lucide-react";
 import confetti from "canvas-confetti";
 import type { CommissioningResponse } from "@/types/commissioning-response";
 import {
   Dialog,
   DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
 } from "@/components/ui/dialog";
 
 interface CommissioningSuccessProps {
@@ -72,89 +76,90 @@ const CommissioningSuccess = ({ results, onViewResults, generationTime, open, on
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl p-6 sm:p-8 bg-gradient-to-br from-purple-500/10 via-background to-background border-purple-500/30">
-        <div className="text-center space-y-6">
-          {/* Success Icon */}
-          <div className="flex justify-center">
-            <div className="bg-gradient-to-br from-purple-400 to-purple-600 p-6 rounded-full animate-pulse">
-              <CheckCircle2 className="h-12 w-12 text-white" />
+      <DialogContent className="max-w-xl sm:max-w-2xl p-8 sm:p-10 bg-gradient-to-br from-purple-500/10 via-background to-background border-purple-500/30">
+        <DialogHeader className="text-center pb-4">
+          <div className="flex justify-center mb-4">
+            <div className="bg-gradient-to-br from-purple-400 to-purple-600 p-8 sm:p-6 rounded-full shadow-xl shadow-purple-500/50 animate-bounce-subtle">
+              <CheckCircle2 className="h-16 w-16 sm:h-12 sm:w-12 text-white" />
+            </div>
+          </div>
+          
+          <DialogTitle className="text-3xl sm:text-3xl lg:text-4xl font-bold text-foreground">
+            Test Procedure Complete!
+          </DialogTitle>
+          <DialogDescription className="text-base sm:text-sm text-white/80 mt-2">
+            Your electrical commissioning documentation has been generated successfully
+          </DialogDescription>
+        </DialogHeader>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 py-6">
+          <div className="bg-elec-dark/80 backdrop-blur-sm rounded-lg p-5 sm:p-4 text-center border border-purple-500/30 hover:border-purple-500/50 transition-all">
+            <div className="text-4xl sm:text-3xl font-bold text-purple-400 mb-1">{totalTests}</div>
+            <div className="text-base sm:text-sm text-white/80 flex items-center justify-center gap-1">
+              <Zap className="h-4 w-4" />
+              <span>Tests</span>
             </div>
           </div>
 
-          {/* Success Message */}
-          <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
-              ✅ Testing Procedure Complete!
-            </h2>
-            <p className="text-muted-foreground">
-              Your commissioning procedure has been generated successfully
-            </p>
-          </div>
-
-          {/* Stats Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-6">
-            <div className="bg-elec-gray/50 rounded-lg p-4 border border-purple-500/20">
-              <div className="text-3xl font-bold text-purple-400 mb-1">{totalTests}</div>
-              <div className="text-xs text-muted-foreground flex items-center justify-center gap-1">
-                <CheckCircle2 className="h-3 w-3" />
-                Tests
-              </div>
+          <div className="bg-elec-dark/80 backdrop-blur-sm rounded-lg p-5 sm:p-4 text-center border border-purple-500/30 hover:border-purple-500/50 transition-all">
+            <div className="text-4xl sm:text-3xl font-bold text-purple-400 mb-1">
+              {estimatedDuration.toFixed(1)}<span className="text-xl">h</span>
             </div>
-            <div className="bg-elec-gray/50 rounded-lg p-4 border border-purple-500/20">
-              <div className="text-3xl font-bold text-purple-400 mb-1">
-                {estimatedDuration.toFixed(1)}h
-              </div>
-              <div className="text-xs text-muted-foreground flex items-center justify-center gap-1">
-                <Clock className="h-3 w-3" />
-                Duration
-              </div>
-            </div>
-            <div className="bg-elec-gray/50 rounded-lg p-4 border border-purple-500/20">
-              <div className="text-3xl font-bold text-purple-400 mb-1">
-                {maxZs}Ω
-              </div>
-              <div className="text-xs text-muted-foreground flex items-center justify-center gap-1">
-                <Zap className="h-3 w-3" />
-                Max Zs
-              </div>
-            </div>
-            <div className="bg-elec-gray/50 rounded-lg p-4 border border-purple-500/20">
-              <div className="text-3xl font-bold text-purple-400 mb-1">{certificateType}</div>
-              <div className="text-xs text-muted-foreground flex items-center justify-center gap-1">
-                <FileText className="h-3 w-3" />
-                Certificate
-              </div>
+            <div className="text-base sm:text-sm text-white/80 flex items-center justify-center gap-1">
+              <Clock className="h-4 w-4" />
+              <span>Duration</span>
             </div>
           </div>
 
-          {/* Time Saved */}
-          <div className="bg-gradient-to-r from-purple-500/10 to-purple-600/10 rounded-lg p-4 border border-purple-500/20">
-            <div className="flex items-center justify-center gap-2 text-purple-400">
-              <Clock className="h-5 w-5" />
-              <span className="font-semibold">Time Saved: ~{timeSaved} minutes</span>
+          <div className="bg-elec-dark/80 backdrop-blur-sm rounded-lg p-5 sm:p-4 text-center border border-purple-500/30 hover:border-purple-500/50 transition-all">
+            <div className="text-4xl sm:text-3xl font-bold text-purple-400 mb-1">
+              {maxZs}<span className="text-xl">Ω</span>
             </div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Compared to manual BS 7671 lookup and procedure writing
-            </p>
+            <div className="text-base sm:text-sm text-white/80 flex items-center justify-center gap-1">
+              <Activity className="h-4 w-4" />
+              <span>Max Zs</span>
+            </div>
           </div>
 
-          {/* View Results Button */}
-          <Button 
+          <div className="bg-elec-dark/80 backdrop-blur-sm rounded-lg p-5 sm:p-4 text-center border border-purple-500/30 hover:border-purple-500/50 transition-all">
+            <div className="text-4xl sm:text-3xl font-bold text-purple-400 mb-1 truncate">
+              {certificateType.replace('BS 7671 Electrical Installation Certificate (EIC) and Schedule of Test Results', 'BS 7671 EIC').replace('BS 7671 Electrical Installation Condition Report (EICR)', 'BS 7671 EICR').replace('BS 7671 Minor Electrical Installation Works Certificate (MWC)', 'BS 7671 MWC')}
+            </div>
+            <div className="text-base sm:text-sm text-white/80 flex items-center justify-center gap-1">
+              <FileText className="h-4 w-4" />
+              <span>Certificate</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Time Saved Highlight */}
+        <div className="bg-gradient-to-r from-purple-500/20 to-purple-600/20 rounded-lg p-4 border border-purple-500/30 mb-4">
+          <div className="flex items-center justify-center gap-2 text-purple-400">
+            <Timer className="h-5 w-5" />
+            <span className="text-base sm:text-sm font-semibold">Time Saved: ~{timeSaved} minutes</span>
+          </div>
+          <p className="text-sm sm:text-xs text-white/80 mt-1 text-center">
+            Compared to manual BS 7671 lookup and procedure writing
+          </p>
+        </div>
+
+        <DialogFooter className="flex-col sm:flex-row gap-2">
+          <Button
             onClick={() => {
               onViewResults();
               onOpenChange(false);
             }}
-            size="lg"
-            className="w-full bg-gradient-to-r from-purple-400 to-purple-600 hover:from-purple-500 hover:to-purple-700 text-white h-12 sm:h-14 touch-manipulation text-base sm:text-lg"
+            className="w-full bg-gradient-to-r from-purple-400 to-purple-600 hover:from-purple-500 hover:to-purple-700 text-white h-12 touch-manipulation text-base shadow-lg shadow-purple-500/20"
           >
-            View Results →
+            <FileText className="mr-2 h-4 w-4" />
+            View Results
           </Button>
+        </DialogFooter>
 
-          {/* Generation Time */}
-          <p className="text-xs text-muted-foreground">
-            Generated in {generationTime}s
-          </p>
-        </div>
+        <p className="text-sm sm:text-xs text-white/70 text-center mt-2">
+          Generated in {generationTime}s
+        </p>
       </DialogContent>
     </Dialog>
   );
