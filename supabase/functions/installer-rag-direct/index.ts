@@ -508,78 +508,80 @@ CRITICAL: Generate AT LEAST 8 detailed steps. More is better (target 10-12 steps
       console.error('❌ JSON parse failed, attempting repair pass...', parseError);
 
       // REPAIR PASS - try to fix malformed JSON
-      const repairResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: 'gpt-5-mini-2025-08-07',
-          messages: [
-            {
-              role: 'system',
-              content: 'Convert the following text to valid JSON matching the exact schema. Fix any malformed JSON.'
-            },
-            {
-              role: 'user',
-              content: content
-            }
-          ],
-          response_format: {
-            type: "json_schema",
-            json_schema: {
-              name: "method_statement",
-              strict: true,
-              schema: jsonSchema
-            }
+      try {
+        const repairResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${OPENAI_API_KEY}`,
+            'Content-Type': 'application/json',
           },
-          max_completion_tokens: 16000
-        }),
-      });
+          body: JSON.stringify({
+            model: 'gpt-5-mini-2025-08-07',
+            messages: [
+              {
+                role: 'system',
+                content: 'Convert the following text to valid JSON matching the exact schema. Fix any malformed JSON.'
+              },
+              {
+                role: 'user',
+                content: content
+              }
+            ],
+            response_format: {
+              type: "json_schema",
+              json_schema: {
+                name: "method_statement",
+                strict: true,
+                schema: jsonSchema
+              }
+            },
+            max_completion_tokens: 16000
+          }),
+        });
 
-      if (repairResponse.ok) {
-        const repairData = await repairResponse.json();
-        parsedResult = JSON.parse(repairData.choices[0].message.content);
-        console.log('✅ Repair pass succeeded');
-        
-        // RE-RUN VALIDATION after repair
-        if (!parsedResult.steps || parsedResult.steps.length < 6) {
-          console.error('❌ Repair pass produced insufficient steps:', parsedResult.steps?.length || 0);
-          return new Response(JSON.stringify({
+        if (repairResponse.ok) {
+          const repairData = await repairResponse.json();
+          parsedResult = JSON.parse(repairData.choices[0].message.content);
+          console.log('✅ Repair pass succeeded');
+          
+          // RE-RUN VALIDATION after repair
+          if (!parsedResult.steps || parsedResult.steps.length < 6) {
+            console.error('❌ Repair pass produced insufficient steps:', parsedResult.steps?.length || 0);
+            return new Response(JSON.stringify({
+              success: false,
+              error: `Repair failed: only ${parsedResult.steps?.length || 0} steps generated`,
+              diagnostics: {
+                query: query.substring(0, 200),
+                pwCount: practicalWork.length,
+                regsCount: regulations.length,
+                repairAttempted: true,
+                stepsCount: parsedResult.steps?.length || 0
+              }
+            }), {
+              status: 500,
+              headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+            });
+          }
+        } else {
+          throw new Error('Repair pass also failed');
+        }
+      } catch (repairError) {
+        console.error('❌ Repair pass failed:', repairError);
+        return new Response(
+          JSON.stringify({
             success: false,
-            error: `Repair failed: only ${parsedResult.steps?.length || 0} steps generated`,
+            error: 'Failed to generate valid structured data',
             diagnostics: {
-              query: query.substring(0, 200),
               pwCount: practicalWork.length,
               regsCount: regulations.length,
-              repairAttempted: true,
-              stepsCount: parsedResult.steps?.length || 0
+              ragMs: ragTime,
+              aiMs: aiTime,
+              rawPreview: content.substring(0, 1000)
             }
-          }), {
-            status: 500,
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-          });
-        }
-      } else {
-        throw new Error('Repair pass also failed');
+          }),
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
       }
-    } catch (parseError) {
-      console.error('❌ JSON parse and repair failed:', parseError);
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: 'Failed to generate valid structured data',
-          diagnostics: {
-            pwCount: practicalWork.length,
-            regsCount: regulations.length,
-            ragMs: ragTime,
-            aiMs: aiTime,
-            rawPreview: content.substring(0, 1000)
-          }
-        }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
     }
 
     // Normalize output
