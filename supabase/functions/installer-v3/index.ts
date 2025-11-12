@@ -29,6 +29,7 @@ interface InstallerV3Response {
       dependencies?: string[];
       isCompleted?: boolean;
       linkedHazards?: string[];
+      materialsNeeded?: string[];
     }>;
     toolsRequired: string[];
     materialsRequired: string[];
@@ -363,10 +364,21 @@ serve(async (req) => {
     if (installKnowledge && installKnowledge.length > 0) {
       installContext = installKnowledge.map((doc: any) => {
         if (doc.source === 'practical_work_intelligence') {
-          return `**${doc.primary_topic}** (${doc.equipment_category || 'General'})\n` +
-            `${doc.content}\n` +
-            `${doc.tools_required?.length > 0 ? `Tools: ${doc.tools_required.join(', ')}\n` : ''}` +
-            `${doc.bs7671_regulations?.length > 0 ? `Regulations: ${doc.bs7671_regulations.join(', ')}` : ''}`;
+          let formatted = `**${doc.primary_topic}** (${doc.equipment_category || 'General'})\n`;
+          formatted += `${doc.content}\n\n`;
+          
+          // ⚡️ HIGHLIGHTED: Make tools & materials more prominent for AI extraction
+          if (doc.tools_required?.length > 0) {
+            formatted += `🔧 **TOOLS REQUIRED**: ${doc.tools_required.join(', ')}\n`;
+          }
+          if (doc.materials_needed?.length > 0) {
+            formatted += `📦 **MATERIALS NEEDED**: ${doc.materials_needed.join(', ')}\n`;
+          }
+          if (doc.bs7671_regulations?.length > 0) {
+            formatted += `📜 **BS 7671 REFS**: ${doc.bs7671_regulations.join(', ')}\n`;
+          }
+          
+          return formatted;
         } else if (doc.source === 'bs7671_intelligence') {
           return `**BS 7671 ${doc.regulation_number}** - ${doc.primary_topic}\n${doc.content}`;
         } else {
@@ -627,6 +639,52 @@ The Practical Work Intelligence database contains VERIFIED procedures from 10,00
 
 ${installContext}
 
+⚠️ CRITICAL: EXTRACT TOOLS & MATERIALS FROM RAG KNOWLEDGE BASE
+
+For EVERY installation step, you MUST:
+
+1. **Search the Practical Work Intelligence data above** for matching procedures
+2. **Extract tools_required** from RAG results (marked with 🔧) and populate the "tools" array
+3. **Extract materials_needed** from RAG results (marked with 📦) and populate the "materials" array
+4. **Extract hazards** from safety notes or identify from work activities
+
+Example RAG extraction process:
+```
+RAG Result: {
+  "primary_topic": "Installing consumer unit",
+  🔧 **TOOLS REQUIRED**: Spirit level, 5.5mm masonry drill bit, Cordless drill, Screwdriver set
+  📦 **MATERIALS NEEDED**: Metal consumer unit enclosure, 50mm fixing screws x4, Wall plugs x4
+  📜 **BS 7671 REFS**: Section 132.8, Section 530.3.4
+}
+
+Your step output should include:
+{
+  "step": 1,
+  "title": "Install Consumer Unit Enclosure",
+  "description": "Mount the consumer unit at 1.8m height...",
+  "tools": ["Spirit level", "5.5mm masonry drill bit", "Cordless drill", "Screwdriver set"], // ✅ EXTRACTED
+  "materials": ["Metal consumer unit enclosure", "50mm fixing screws x4", "Wall plugs x4"], // ✅ EXTRACTED
+  "safetyNotes": ["Ensure wall can support weight", "Check for hidden cables before drilling"],
+  "linkedHazards": ["Drilling into hidden cables - use CAT scanner", "Manual handling - use correct lifting technique"],
+  "qualifications": ["Qualified Electrician", "18th Edition BS 7671"]
+}
+```
+
+**EXTRACTION PRIORITIES:**
+1. **Primary source**: Practical Work Intelligence tools_required and materials_needed fields (marked with 🔧 and 📦)
+2. **Secondary source**: BS 7671 references to required equipment
+3. **Tertiary source**: Infer from step description if RAG data is insufficient (but be specific, not generic)
+
+**HAZARD IDENTIFICATION:**
+For each step, identify hazards from:
+- Work activities (e.g., working at height, confined spaces, manual handling)
+- Electrical risks (e.g., shock, arc flash, isolation required)
+- Environmental (e.g., dust, noise, weather exposure)
+- Equipment use (e.g., power tool risks, lifting equipment)
+
+Format: "[Hazard name] - [Mitigation measure]"
+Example: "Working at height >2m - use scaffold tower to BS EN 1004"
+
 ${installContext.includes('Practical Work') || installContext.includes('Tools:') ? 
   '✅ Rich practical knowledge available - base your installation steps on this verified data' : 
   '⚠️ Limited practical knowledge - use general BS 7671 installation practices'
@@ -885,9 +943,22 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
                       type: 'string', 
                       description: 'COMPREHENSIVE step description in UK English (authorised, realise, organise, metres, whilst). MUST include: 1) Overview sentence, 2) Detailed sub-tasks as bullet points or numbered list, 3) Specific measurements/values from knowledge base where applicable (e.g., "400mm clip spacing", "1.8m height", "16mm² cable"), 4) Quality checks. Minimum 3-5 sentences or 80-150 words per step. Example format: "Install the consumer unit enclosure at 1.8m height from finished floor level:\n• Mark fixing positions using a spirit level to ensure level installation\n• Drill fixing holes using 5.5mm masonry bit for 50mm screws\n• Insert wall plugs and secure unit with corrosion-resistant fixings\n• Verify unit is plumb and secure before proceeding with cable entry"'
                     },
-                     tools: { type: 'array', items: { type: 'string' }, description: 'Equipment needed for this step. CONTEXT-SPECIFIC tools for THIS EXACT PHASE only. Examples: Planning phase = drawings, camera, notepad. Procurement phase = supplier details, order forms (or "No special tools required"). Installation phase = drills, cables, fixings. Testing phase = test equipment. DO NOT list installation tools for planning/procurement phases. This maps to equipmentNeeded in the frontend.' },
-                    materials: { type: 'array', items: { type: 'string' } },
+                     tools: { 
+                      type: 'array', 
+                      items: { type: 'string' }, 
+                      description: 'Equipment needed for THIS STEP ONLY. **EXTRACT from Practical Work Intelligence RAG data** where available (look for 🔧 **TOOLS REQUIRED** field). Context-specific to work phase: Planning phase = drawings, camera, measuring tape, CAT scanner. Procurement = supplier details, order forms (or "No special tools required"). Installation = drills, cables, fixings, power tools. Testing = multifunction tester, voltage indicator, proving unit. Isolation = lock-off kit, voltage detector, warning signs. DO NOT list installation tools for planning/procurement. This maps to equipmentNeeded in frontend.' 
+                    },
+                    materials: { 
+                      type: 'array', 
+                      items: { type: 'string' },
+                      description: '**EXTRACT materials from Practical Work Intelligence RAG data** (look for 📦 **MATERIALS NEEDED** field). List SPECIFIC materials for THIS STEP with quantities where applicable (e.g., "2.5mm² T&E cable - 15m", "50mm cable clips x20", "DIN rail MCB 32A Type B", "3-core SWA 6mm² - 10m", "50mm wall plugs x8", "M6 brass earth bar"). If no specific materials for this step, return empty array. This maps to materialsNeeded in frontend.'
+                    },
                     safetyNotes: { type: 'array', items: { type: 'string', description: 'Safety requirements for this step. STEP-SPECIFIC safety requirements for THIS STEP ONLY (not general project safety). In UK English (authorised, organise, metres). If no specific safety requirements for this step, return empty array. Example: Planning phase should have NO or minimal safety notes. Installation/isolation phases MUST have specific requirements like "Isolation and lock-off required". This maps to safetyRequirements in the frontend.' } },
+                    linkedHazards: { 
+                      type: 'array', 
+                      items: { type: 'string' },
+                      description: 'Specific hazards for THIS STEP extracted from knowledge base or identified from work activities. Include hazard name and mitigation (e.g., "Working at height - use scaffold tower BS 7671:2018", "Electrical shock risk - isolation and lockout required", "Dust inhalation - use dust extraction per COSHH"). Extract from Practical Work Intelligence where available. This maps to linkedHazards in frontend.'
+                    },
                     qualifications: { 
                       type: 'array', 
                       items: { type: 'string' },
@@ -1087,24 +1158,95 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       { installationMethod, cableType, location }
     );
 
+    // Helper: Enrich step with inferred tools/materials if AI didn't provide them
+    function enrichStepWithDefaults(step: any, ragKnowledge: any[]): any {
+      const enriched = { ...step };
+      
+      // If tools array is empty, try to infer from RAG
+      if (!enriched.tools || enriched.tools.length === 0) {
+        const matchingRag = ragKnowledge.find((rag: any) => 
+          rag.primary_topic?.toLowerCase().includes(step.title.toLowerCase().split(' ')[0])
+        );
+        
+        if (matchingRag?.tools_required) {
+          enriched.tools = matchingRag.tools_required;
+          logger.info(`📌 Enriched step "${step.title}" with ${enriched.tools.length} tools from RAG`);
+        }
+      }
+      
+      // If materials array is empty, try to infer from RAG
+      if (!enriched.materials || enriched.materials.length === 0) {
+        const matchingRag = ragKnowledge.find((rag: any) => 
+          rag.primary_topic?.toLowerCase().includes(step.title.toLowerCase().split(' ')[0])
+        );
+        
+        if (matchingRag?.materials_needed) {
+          enriched.materials = matchingRag.materials_needed;
+          logger.info(`📌 Enriched step "${step.title}" with ${enriched.materials.length} materials from RAG`);
+        }
+      }
+      
+      // If no linked hazards, infer basic ones from step type
+      if (!enriched.linkedHazards || enriched.linkedHazards.length === 0) {
+        enriched.linkedHazards = inferHazardsFromStep(step);
+      }
+      
+      return enriched;
+    }
+
+    // Helper: Infer hazards from step activities
+    function inferHazardsFromStep(step: any): string[] {
+      const desc = (step.description || '').toLowerCase();
+      const title = (step.title || '').toLowerCase();
+      const combined = `${title} ${desc}`;
+      const hazards: string[] = [];
+      
+      if (/height|ladder|scaffold|roof|ceiling/i.test(combined)) {
+        hazards.push('Working at height - use appropriate access equipment per Work at Height Regulations 2005');
+      }
+      if (/isolat|energi|live|electrical/i.test(combined)) {
+        hazards.push('Electrical shock risk - isolation and lockout required per BS 7671');
+      }
+      if (/drill|dust|cutting|grinding/i.test(combined)) {
+        hazards.push('Dust inhalation - use dust extraction and RPE per COSHH');
+      }
+      if (/lift|carry|manual handling|heavy/i.test(combined)) {
+        hazards.push('Manual handling injury - assess load and use correct technique per HSE guidance');
+      }
+      if (/confined|tight|restricted space/i.test(combined)) {
+        hazards.push('Confined space entry - permit required per Confined Spaces Regulations 1997');
+      }
+      if (/noise|loud|power tool/i.test(combined)) {
+        hazards.push('Noise exposure - use hearing protection per Control of Noise at Work Regulations');
+      }
+      
+      return hazards;
+    }
+
     // Build standardized response
     const standardizedResponse: InstallerV3Response = {
       success: true,
       data: {
-        steps: (installResult.installationSteps || []).map((step: any, index: number) => ({
-          id: step.id || `step-${index + 1}`,
-          stepNumber: step.step || step.stepNumber || index + 1,
-          title: step.title || `Step ${index + 1}`,
-          description: step.description || '',
-          safetyRequirements: step.safetyNotes || step.safetyRequirements || [],
-          equipmentNeeded: step.tools || step.equipmentNeeded || step.equipmentRequired || [],
-          qualifications: step.qualifications || inferQualificationsFromStep(step),
-          estimatedDuration: step.estimatedTime ? `${step.estimatedTime} minutes` : '15-30 minutes',
-          riskLevel: 'medium' as const,
-          dependencies: [],
-          isCompleted: false,
-          linkedHazards: step.linkedHazards || []
-        })),
+        steps: (installResult.installationSteps || []).map((step: any, index: number) => {
+          // ✨ ENRICH step with RAG data if AI didn't provide it
+          const enrichedStep = enrichStepWithDefaults(step, installKnowledge);
+          
+          return {
+            id: enrichedStep.id || `step-${index + 1}`,
+            stepNumber: enrichedStep.step || enrichedStep.stepNumber || index + 1,
+            title: enrichedStep.title || `Step ${index + 1}`,
+            description: enrichedStep.description || '',
+            safetyRequirements: enrichedStep.safetyNotes || enrichedStep.safetyRequirements || [],
+            equipmentNeeded: enrichedStep.tools || enrichedStep.equipmentNeeded || enrichedStep.equipmentRequired || [],
+            qualifications: enrichedStep.qualifications || inferQualificationsFromStep(enrichedStep),
+            estimatedDuration: enrichedStep.estimatedTime ? `${enrichedStep.estimatedTime} minutes` : '15-30 minutes',
+            riskLevel: 'medium' as const,
+            dependencies: [],
+            isCompleted: false,
+            linkedHazards: enrichedStep.linkedHazards || [],
+            materialsNeeded: enrichedStep.materials || [] // ✅ NEW: Add materials
+          };
+        }),
         toolsRequired: installResult.toolsRequired || [],
         materialsRequired: installResult.materialsRequired || [],
         practicalTips: installResult.practicalTips || [],
