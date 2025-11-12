@@ -65,19 +65,18 @@ serve(async (req) => {
         .slice(0, 10); // Limit to top 10 keywords
     };
 
+    // Extract keywords and build RAG query
     const keywords = extractKeywords(query);
     console.log('🔍 Extracted keywords:', keywords);
-
-    // Build separate search conditions for each keyword
-    const pwSearchConditions = keywords
-      .map(kw => `primary_topic.ilike.%${kw}%,installation_method.ilike.%${kw}%,equipment_category.ilike.%${kw}%`)
-      .join(',');
     
-    // Query practical_work_intelligence table directly
+    // Use single primary keyword for simple OR query to avoid PostgreSQL syntax errors
+    const primaryKeyword = keywords[0] || 'installation';
+    
+    // RAG 1: Practical Work Intelligence (real installation data)
     const { data: pwData, error: pwError } = await supabase
       .from('practical_work_intelligence')
       .select('*')
-      .or(pwSearchConditions)
+      .or(`primary_topic.ilike.%${primaryKeyword}%,installation_method.ilike.%${primaryKeyword}%,equipment_category.ilike.%${primaryKeyword}%`)
       .limit(95);
 
     if (pwError) console.error('PW query error:', pwError);
@@ -94,15 +93,11 @@ serve(async (req) => {
         similarity: 0.95 // High confidence - came from designer
       }));
     } else {
-      // Query bs7671_intelligence table directly with keyword search
-      const regSearchConditions = keywords
-        .map(kw => `regulation_text.ilike.%${kw}%,regulation_number.ilike.%${kw}%`)
-        .join(',');
-      
+      // Query bs7671_intelligence table directly with single keyword search
       const { data: regData, error: regError } = await supabase
         .from('bs7671_intelligence')
         .select('*')
-        .or(regSearchConditions)
+        .or(`regulation_text.ilike.%${primaryKeyword}%,regulation_number.ilike.%${primaryKeyword}%`)
         .limit(85);
 
       if (regError) console.error('Regs query error:', regError);
@@ -291,7 +286,7 @@ ${specificGuidance || `- Follow BS 7671:2018+A2:2022 (18th Edition) requirements
                     riskLevel: { type: "string", enum: ["low", "medium", "high"] },
                     linkedHazards: { type: "array", items: { type: "string" } }
                   },
-                  required: ["stepNumber", "title", "description", "safetyRequirements", "equipmentNeeded", "qualifications", "estimatedDuration", "riskLevel", "linkedHazards"],
+                  required: ["stepNumber", "title", "description", "safetyRequirements", "equipmentNeeded", "estimatedDuration", "riskLevel"],
                   additionalProperties: false
           }
         },
@@ -425,7 +420,7 @@ CRITICAL: Generate AT LEAST 8 detailed steps. More is better (target 10-12 steps
               schema: jsonSchema
             }
           },
-          max_completion_tokens: 4000
+          max_completion_tokens: 16000
         }),
       });
     } catch (fetchError) {
@@ -539,7 +534,7 @@ CRITICAL: Generate AT LEAST 8 detailed steps. More is better (target 10-12 steps
               schema: jsonSchema
             }
           },
-          max_completion_tokens: 4000
+          max_completion_tokens: 16000
         }),
       });
 
@@ -547,8 +542,28 @@ CRITICAL: Generate AT LEAST 8 detailed steps. More is better (target 10-12 steps
         const repairData = await repairResponse.json();
         parsedResult = JSON.parse(repairData.choices[0].message.content);
         console.log('✅ Repair pass succeeded');
+        
+        // RE-RUN VALIDATION after repair
+        if (!parsedResult.steps || parsedResult.steps.length < 6) {
+          console.error('❌ Repair pass produced insufficient steps:', parsedResult.steps?.length || 0);
+          return new Response(JSON.stringify({
+            success: false,
+            error: `Repair failed: only ${parsedResult.steps?.length || 0} steps generated`,
+            diagnostics: {
+              query: query.substring(0, 200),
+              pwCount: practicalWork.length,
+              regsCount: regulations.length,
+              repairAttempted: true,
+              stepsCount: parsedResult.steps?.length || 0
+            }
+          }), {
+            status: 500,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          });
+        }
       } else {
-        console.error('❌ Repair pass failed');
+        throw new Error('Repair pass also failed');
+      }
         return new Response(
           JSON.stringify({
             success: false,
