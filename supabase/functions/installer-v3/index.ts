@@ -2019,6 +2019,44 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       return hazards;
     }
 
+    // Helper: Infer qualifications if AI didn't provide them
+    function inferQualificationsFromStep(step: any): string[] {
+      const desc = (step.description || '').toLowerCase();
+      const safety = (step.safetyNotes || []).join(' ').toLowerCase();
+      const title = (step.title || '').toLowerCase();
+      const combined = `${title} ${desc} ${safety}`;
+      
+      const qualifications: string[] = [];
+      
+      // Isolation work
+      if (/isolat|lock.?off|prove dead|test dead|energi|permit to work/i.test(combined)) {
+        qualifications.push('18th Edition BS 7671', 'Authorised Person (AP)', 'Safe Isolation Trained');
+      }
+      // Installation work
+      else if (/install|terminate|connect|fix|mount|drill|cable run|pulling cable|routing|first fix|second fix/i.test(combined)) {
+        qualifications.push('Qualified Electrician', 'CSCS Card', '18th Edition BS 7671');
+      }
+      // Testing work
+      else if (/test|commission|inspect after|measure|certificate|continuity|insulation resistance/i.test(combined)) {
+        qualifications.push('18th Edition BS 7671', 'Test Equipment Competent', 'Inspection & Testing Qualified');
+      }
+      // Planning/survey
+      else if (/planning|survey|assess|review|site visit|walkthrough|risk assessment/i.test(combined)) {
+        qualifications.push('Site Manager', 'H&S Awareness', 'CDM trained');
+      }
+      // Procurement
+      else if (/procurement|order|purchase|supplier|obtain materials/i.test(combined)) {
+        qualifications.push('Procurement Authorised', 'Material Specification Knowledge');
+      }
+      
+      // Default if nothing matches
+      if (qualifications.length === 0) {
+        qualifications.push('Competent Person', 'Competent supervision if trainee');
+      }
+      
+      return qualifications;
+    }
+
     // Build standardized response
     const standardizedResponse: InstallerV3Response = {
       success: true,
@@ -2148,44 +2186,6 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         }
       }
     };
-
-    // Helper: Infer qualifications if AI didn't provide them
-    function inferQualificationsFromStep(step: any): string[] {
-      const desc = (step.description || '').toLowerCase();
-      const safety = (step.safetyNotes || []).join(' ').toLowerCase();
-      const title = (step.title || '').toLowerCase();
-      const combined = `${title} ${desc} ${safety}`;
-      
-      const qualifications: string[] = [];
-      
-      // Isolation work
-      if (/isolat|lock.?off|prove dead|test dead|energi|permit to work/i.test(combined)) {
-        qualifications.push('18th Edition BS 7671', 'Authorised Person (AP)', 'Safe Isolation Trained');
-      }
-      // Installation work
-      else if (/install|terminate|connect|fix|mount|drill|cable run|pulling cable|routing|first fix|second fix/i.test(combined)) {
-        qualifications.push('Qualified Electrician', 'CSCS Card', '18th Edition BS 7671');
-      }
-      // Testing work
-      else if (/test|commission|inspect after|measure|certificate|continuity|insulation resistance/i.test(combined)) {
-        qualifications.push('18th Edition BS 7671', 'Test Equipment Competent', 'Inspection & Testing Qualified');
-      }
-      // Planning/survey
-      else if (/planning|survey|assess|review|site visit|walkthrough|risk assessment/i.test(combined)) {
-        qualifications.push('Site Manager', 'H&S Awareness', 'CDM trained');
-      }
-      // Procurement
-      else if (/procurement|order|purchase|supplier|obtain materials/i.test(combined)) {
-        qualifications.push('Procurement Authorised', 'Material Specification Knowledge');
-      }
-      
-      // Default if nothing matches
-      if (qualifications.length === 0) {
-        qualifications.push('Competent Person', 'Competent supervision if trainee');
-      }
-      
-      return qualifications;
-    }
 
     // Phase 5: Store in cache for 1 hour
     await supabase
