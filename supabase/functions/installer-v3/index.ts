@@ -178,7 +178,7 @@ serve(async (req) => {
   const executionPromise = (async (): Promise<Response> => {
   try {
     const body = await req.json();
-    const { query, cableType, installationMethod, location, workType, messages, previousAgentOutputs, sharedRegulations, currentDesign, projectDetails } = body;
+    const { jobId, query, cableType, installationMethod, location, workType, messages, previousAgentOutputs, sharedRegulations, currentDesign, projectDetails } = body;
 
     // Track context sources
     const contextSources = {

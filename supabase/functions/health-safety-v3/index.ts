@@ -150,7 +150,7 @@ serve(async (req) => {
     console.log('📥 [DIAGNOSTIC] Parsing request body...');
     const body = await req.json();
     console.log('✅ [DIAGNOSTIC] Request body parsed successfully');
-    const { query, workType, location, hazards, messages, previousAgentOutputs, sharedRegulations, currentDesign, projectDetails } = body;
+    const { jobId, query, workType, location, hazards, messages, previousAgentOutputs, sharedRegulations, currentDesign, projectDetails } = body;
     
     // Track context sources
     const contextSources = {
