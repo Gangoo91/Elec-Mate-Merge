@@ -115,33 +115,6 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
         </Card>
       </Collapsible>
 
-      {/* Generation Mode Toggle */}
-      <Card className="p-4 sm:p-6 border-blue-500/20">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1 space-y-2">
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-blue-400" />
-              <Label htmlFor="full-mode" className="text-base font-semibold cursor-pointer">
-                Full Method Statement Generation
-              </Label>
-            </div>
-            <div className="space-y-1 text-sm text-muted-foreground pl-7">
-              <p>
-                <span className="font-semibold text-foreground">Comprehensive mode:</span> Includes installation steps, testing procedures, step-specific hazards, and site logistics
-              </p>
-              <p className="text-xs">
-                <span className="font-semibold text-foreground">Quick mode:</span> Installation procedure only (faster, 30-60s)
-              </p>
-            </div>
-          </div>
-          <Switch
-            id="full-mode"
-            checked={generateFullMethodStatement}
-            onCheckedChange={setGenerateFullMethodStatement}
-            className="data-[state=checked]:bg-blue-500"
-          />
-        </div>
-      </Card>
 
       {/* Generate Button */}
       <div className="sticky bottom-4 z-10">
