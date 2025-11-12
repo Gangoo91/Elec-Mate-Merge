@@ -72,12 +72,28 @@ serve(async (req) => {
     // Use single primary keyword for simple OR query to avoid PostgreSQL syntax errors
     const primaryKeyword = keywords[0] || 'installation';
     
-    // RAG 1: Practical Work Intelligence (real installation data)
-    const { data: pwData, error: pwError } = await supabase
+    // RAG 1: Practical Work Intelligence (real installation data) - with timeout protection
+    const pwPromise = supabase
       .from('practical_work_intelligence')
       .select('*')
       .or(`primary_topic.ilike.%${primaryKeyword}%,installation_method.ilike.%${primaryKeyword}%,equipment_category.ilike.%${primaryKeyword}%`)
-      .limit(95);
+      .limit(50); // Reduced from 95 to prevent timeout
+
+    // Add 8 second timeout for practical work query
+    const pwTimeout = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Practical work query timeout')), 8000)
+    );
+
+    let pwData = null;
+    let pwError = null;
+    try {
+      const result = await Promise.race([pwPromise, pwTimeout]) as any;
+      pwData = result.data;
+      pwError = result.error;
+    } catch (timeoutError) {
+      console.warn('⚠️ Practical work query timed out, using fallback');
+      pwError = timeoutError;
+    }
 
     if (pwError) console.error('PW query error:', pwError);
 
@@ -89,25 +105,53 @@ serve(async (req) => {
       regulations = sharedRegulations.map((reg: any) => ({
         content: reg.content || reg.regulation_text || '',
         regulation_number: reg.regulation_number || reg.number,
-        source_table: 'bs7671_intelligence',
+        source_table: 'regulations_intelligence',
         similarity: 0.95 // High confidence - came from designer
       }));
     } else {
-      // Query bs7671_intelligence table directly with single keyword search
-      const { data: regData, error: regError } = await supabase
-        .from('bs7671_intelligence')
-        .select('*')
-        .or(`regulation_text.ilike.%${primaryKeyword}%,regulation_number.ilike.%${primaryKeyword}%`)
-        .limit(85);
+      // FIXED: Use regulations_intelligence table (correct name) with RPC function
+      try {
+        const { data: regData, error: regError } = await supabase
+          .rpc('search_bs7671_intelligence_hybrid', {
+            query_text: primaryKeyword,
+            match_count: 50 // Reduced from 85
+          });
 
-      if (regError) console.error('Regs query error:', regError);
-
-      regulations = (regData || []).map((row: any) => ({
-        content: row.regulation_text || '',
-        regulation_number: row.regulation_number,
-        source_table: 'bs7671_intelligence',
-        similarity: 0.85
-      }));
+        if (regError) {
+          console.error('Regs RPC error:', regError);
+          // Fallback: Try direct table query on bs7671_embeddings
+          const { data: fallbackData, error: fallbackError } = await supabase
+            .from('bs7671_embeddings')
+            .select('id, regulation_number, content, section')
+            .or(`content.ilike.%${primaryKeyword}%,regulation_number.ilike.%${primaryKeyword}%`)
+            .limit(50);
+          
+          if (fallbackError) {
+            console.error('Regs fallback error:', fallbackError);
+          } else {
+            regulations = (fallbackData || []).map((row: any) => ({
+              content: row.content || '',
+              regulation_number: row.regulation_number,
+              section: row.section,
+              source_table: 'bs7671_embeddings',
+              similarity: 0.80
+            }));
+            console.log('✅ Using bs7671_embeddings fallback:', regulations.length);
+          }
+        } else {
+          regulations = (regData || []).map((row: any) => ({
+            content: row.content || row.regulation_text || '',
+            regulation_number: row.regulation_number,
+            primary_topic: row.primary_topic,
+            source_table: 'regulations_intelligence',
+            similarity: 0.85
+          }));
+          console.log('✅ Using regulations_intelligence RPC:', regulations.length);
+        }
+      } catch (regException) {
+        console.error('Regs exception:', regException);
+        regulations = [];
+      }
     }
 
     // Transform to RAGResult format (same as shared module)
