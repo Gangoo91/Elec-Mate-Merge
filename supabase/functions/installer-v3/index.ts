@@ -1,5 +1,5 @@
 // Deployed: 2025-10-28 - v4.3.0 AI Call Timeout & Zero Steps Detection
-const EDGE_FUNCTION_TIMEOUT_MS = 240000; // 240s - increased for complex schema generation
+const EDGE_FUNCTION_TIMEOUT_MS = 300000; // 300s (5 min) - gives 70s buffer for AI completion
 
 import { serve } from '../_shared/deps.ts';
 import {
@@ -408,75 +408,42 @@ serve(async (req) => {
         }
       }
       
-      const searchQueries = decomposeInstallationQuery(query, installationMethod);
-      logger.info(`🔍 Decomposed into ${searchQueries.length} targeted searches`);
-
-      // CORRECTED LEGACY: Keyword Practical (95%) + Keyword Regs (85%)
+      // ✅ SIMPLIFIED RAG: 2-query parallel like Health-Safety (fast & reliable)
       const ragStart = Date.now();
-      logger.info('🔍 Starting LEGACY RAG (95% practical KEYWORDS + 85% regs KEYWORDS)');
+      logger.info('🔍 Starting SIMPLIFIED RAG (2-query parallel)');
       
-      // 🚀 ACTION 1.2 & 2.1: Execute multi-query RAG with 3x volume
       const [practicalWorkResult, bs7671Result] = await Promise.all([
-        // TIER 1: Practical Work Intelligence - Multi-query search
+        // TIER 1: Practical Work Intelligence - Single hybrid search
         (async () => {
           try {
-            logger.info('🔍 Executing practical work RPC calls', { queryCount: searchQueries.length, queries: searchQueries });
+            logger.info('🔍 Executing practical work hybrid search', { query: effectiveQuery.substring(0, 100) });
             
-            const allPracticalResults = await Promise.all(
-              searchQueries.map(async (q, idx) => {
-                try {
-                  // Add 90s timeout wrapper for RPC call
-                  const rpcPromise = supabase.rpc('search_practical_work_intelligence_hybrid', {
-                    query_text: q,
-                    match_count: 10
-                  });
-                  
-                  const timeoutPromise = new Promise((_, reject) => 
-                    setTimeout(() => reject(new Error('RPC timeout after 90s')), 90000)
-                  );
-                  
-                  const { data, error } = await Promise.race([rpcPromise, timeoutPromise]) as any;
-                  
-                  if (error) {
-                    logger.error(`❌ Practical work RPC error for query ${idx + 1}:`, { query: q, error });
-                    // Fallback: Use core regulations cache instead
-                    logger.info('⚡ Falling back to core regulations cache');
-                    return [];
-                  }
-                  
-                  logger.info(`✅ Practical work RPC ${idx + 1} returned ${(data || []).length} results`, { query: q.substring(0, 50) });
-                  return data || [];
-                } catch (err) {
-                  logger.error(`❌ Practical work RPC exception for query ${idx + 1}:`, { query: q, error: err.message });
-                  // Fallback: Return empty, will use core regulations
-                  return [];
-                }
-              })
-            );
+            const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
+              query_text: effectiveQuery,
+              match_count: 40  // Increased from 25 to get more practical procedures
+            });
             
-            // Flatten and deduplicate by ID
-            const uniqueDocs = [
-              ...new Map(
-                allPracticalResults.flat().map(doc => [doc.id, doc])
-              ).values()
-            ].slice(0, 40); // Cap at 40 best results
+            if (error) {
+              logger.error('❌ Practical work RPC error:', error);
+              return [];
+            }
             
-            logger.info(`✅ Retrieved ${uniqueDocs.length} unique practical procedures from ${searchQueries.length} queries`);
+            logger.info(`✅ Practical work RPC returned ${(data || []).length} results`);
             
             // 🔍 DEBUG: Enhanced RAG data availability logging
-            if (uniqueDocs.length > 0) {
+            if (data && data.length > 0) {
               logger.info('🔍 Tool extraction sample:', {
                 firstDoc: {
-                  topic: uniqueDocs[0].topic || uniqueDocs[0].primary_topic,
-                  hasToolsRequired: !!uniqueDocs[0].tools_required,
-                  toolsCount: (uniqueDocs[0].tools_required || []).length,
-                  toolsSample: (uniqueDocs[0].tools_required || []).slice(0, 5),
-                  hasMaterialsNeeded: !!uniqueDocs[0].materials_needed,
-                  materialsCount: (uniqueDocs[0].materials_needed || []).length
+                  topic: data[0].topic || data[0].primary_topic,
+                  hasToolsRequired: !!data[0].tools_required,
+                  toolsCount: (data[0].tools_required || []).length,
+                  toolsSample: (data[0].tools_required || []).slice(0, 5),
+                  hasMaterialsNeeded: !!data[0].materials_needed,
+                  materialsCount: (data[0].materials_needed || []).length
                 }
               });
               
-              const sampleTools = uniqueDocs.slice(0, 3).map(doc => ({
+              const sampleTools = data.slice(0, 3).map(doc => ({
                 topic: doc.topic || doc.primary_topic,
                 toolsCount: (doc.tools_required || []).length,
                 sampleTools: (doc.tools_required || []).slice(0, 3)
@@ -484,42 +451,41 @@ serve(async (req) => {
               logger.info('📊 RAG Tools Sample:', sampleTools);
             }
             
-            return uniqueDocs.map((row: any) => ({
+            return (data || []).map((row: any) => ({
               primary_topic: row.topic || row.primary_topic,
               content: row.content,
               equipment_category: row.equipment_category || 'General',
-              tools_required: row.tools_required || [],  // ✅ FIXED: Top-level field
-              materials_needed: [],  // ⚠️ Not in RPC return - enriched later
-              bs7671_regulations: row.bs7671_regulations || [],  // ✅ FIXED: Top-level field
+              tools_required: row.tools_required || [],
+              materials_needed: [],
+              bs7671_regulations: row.bs7671_regulations || [],
               hybrid_score: (row.hybrid_score || 0.75) * 0.95,
               confidence_score: row.hybrid_score || 0.75,
-              source: 'practical_work_intelligence',  // ✅ EXPLICIT
-              _rawSource: row.source || 'not_provided'  // 🔍 DEBUG: Verify row structure
+              source: 'practical_work_intelligence',
+              _rawSource: row.source || 'not_provided'
             }));
           } catch (error) {
-            logger.error('❌ CRITICAL: Practical work multi-query search failed:', { 
+            logger.error('❌ CRITICAL: Practical work search failed:', { 
               error: error.message, 
-              stack: error.stack,
-              queriesAttempted: searchQueries.length 
+              stack: error.stack
             });
             return [];
           }
         })(),
         
-        // TIER 2: BS 7671 Regulations - Increased volume
+        // TIER 2: BS 7671 Regulations
         (async () => {
           try {
-            logger.info('🔍 Executing Regulations Intelligence RPC call', { combinedQuery: searchQueries.join(' ').substring(0, 100) });
+            logger.info('🔍 Executing Regulations Intelligence hybrid search', { query: effectiveQuery.substring(0, 100) });
             
             const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
-              query_text: searchQueries.join(' '),
+              query_text: effectiveQuery,
               match_count: 25,
               filter_categories: null
             });
             
             if (error) {
               logger.error('❌ Regulations Intelligence RPC error:', error);
-              throw error;
+              return [];
             }
             
             logger.info(`✅ Regulations Intelligence RPC returned ${(data || []).length} results`);
@@ -547,7 +513,7 @@ serve(async (req) => {
             
             return results;
           } catch (error) {
-            logger.error('❌ CRITICAL: BS 7671 keyword search failed:', { 
+            logger.error('❌ CRITICAL: BS 7671 search failed:', { 
               error: error.message, 
               stack: error.stack 
             });
@@ -1552,7 +1518,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         }
       }],
         tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } }
-      }, OPENAI_API_KEY, 230000); // 230s timeout - increased for complex installations
+      }, OPENAI_API_KEY, 270000); // 270s timeout - plenty of room in 300s edge timeout
       
       clearInterval(heartbeatInterval);
       clearInterval(progressInterval);
