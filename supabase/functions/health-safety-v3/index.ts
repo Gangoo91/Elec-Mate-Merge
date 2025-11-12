@@ -915,7 +915,7 @@ Include all hazards, risk scores, safety controls, PPE requirements, and emergen
         } catch (err) {
           console.warn('Heartbeat update failed (non-critical):', err);
         }
-      }, 30000); // Every 30 seconds
+      }, 10000); // Every 10 seconds for smoother progress
       
       // Log progress every 30 seconds
       progressInterval = setInterval(() => {

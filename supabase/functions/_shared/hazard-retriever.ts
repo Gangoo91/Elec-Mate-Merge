@@ -66,15 +66,15 @@ export async function retrieveStructuredHazards(
     
     // Step 2: Multi-strategy retrieval (parallel)
     const [semanticResults, contextResults, criticalResults] = await Promise.all([
-      // Strategy A: Semantic search on hazard descriptions
-      semanticHazardSearch(params.jobDescription, supabase),
+      // Strategy A: Semantic search (reduced 15→10 for speed)
+      semanticHazardSearch(params.jobDescription, supabase, 10),
       
-      // Strategy B: Filter by work type + location + equipment
+      // Strategy B: Filter by context (limit to 8 results)
       filterHazardsByContext({
         workType: params.workType,
         location,
         equipment
-      }, supabase),
+      }, supabase, 8),
       
       // Strategy C: Get critical hazards that ALWAYS apply
       getCriticalHazards(params.workType, supabase)
@@ -122,14 +122,15 @@ export async function retrieveStructuredHazards(
  */
 async function semanticHazardSearch(
   query: string,
-  supabase: SupabaseClient
+  supabase: SupabaseClient,
+  matchCount: number = 10
 ): Promise<StructuredHazard[]> {
   
   try {
-    // Use regulations_intelligence with hybrid search
+    // Use regulations_intelligence with hybrid search (optimized match_count)
     const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
       query_text: query,
-      match_count: 15
+      match_count: matchCount
     });
     
     if (error) {
@@ -168,7 +169,8 @@ async function filterHazardsByContext(
     location?: string;
     equipment?: string[];
   },
-  supabase: SupabaseClient
+  supabase: SupabaseClient,
+  limit: number = 8
 ): Promise<StructuredHazard[]> {
   
   try {
@@ -179,7 +181,7 @@ async function filterHazardsByContext(
     
     const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
       query_text: searchTerms.join(' '),
-      match_count: 15
+      match_count: 15 // Still fetch 15, but we'll limit after mapping
     });
     
     if (error) {
@@ -187,8 +189,8 @@ async function filterHazardsByContext(
       return [];
     }
     
-    // Map to StructuredHazard format
-    return (data || []).map((reg: any) => ({
+    // Map to StructuredHazard format and limit results
+    return (data || []).slice(0, limit).map((reg: any) => ({
       id: reg.id || reg.regulation_id,
       hazard_description: reg.hazard_description || reg.primary_topic || '',
       hazard_category: reg.category || 'general',

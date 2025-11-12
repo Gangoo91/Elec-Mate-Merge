@@ -27,9 +27,79 @@ export const AIRAMSGenerator: React.FC = () => {
   const [isCancelling, setIsCancelling] = useState(false);
   const [currentJobDescription, setCurrentJobDescription] = useState<string>('');
   const lastErrorNotifiedJobRef = React.useRef<string | null>(null);
+  const [localProgress, setLocalProgress] = useState(0);
+  const [startTime, setStartTime] = useState<number | null>(null);
   
   const { job, startPolling, stopPolling, progress, status, currentStep, ramsData, methodData, error } = useRAMSJobPolling(currentJobId);
   const { requestPermission, showCompletionNotification, showErrorNotification } = useRAMSNotifications();
+
+  // Warm-up helper - eliminates cold starts
+  const warmUpFunctions = async () => {
+    console.log('🔥 Warming up functions...');
+    
+    const warmUpPromises = [
+      supabase.functions.invoke('health-safety-v3', {
+        body: { mode: 'health-check' }
+      }).catch(() => {}), // Ignore errors
+      
+      supabase.functions.invoke('installer-v3', {
+        body: { mode: 'health-check' }
+      }).catch(() => {}) // Ignore errors
+    ];
+    
+    await Promise.allSettled(warmUpPromises);
+    console.log('✅ Functions warmed');
+  };
+
+  // Retry wrapper with exponential backoff
+  const invokeWithRetry = async (
+    functionName: string,
+    body: any,
+    maxRetries: number = 3
+  ): Promise<any> => {
+    const backoffs = [1000, 2500, 5000]; // 1s, 2.5s, 5s
+    
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`📞 Calling ${functionName} (attempt ${attempt}/${maxRetries})`);
+        
+        const result = await supabase.functions.invoke(functionName, { body });
+        
+        // Check for API errors (429, 503)
+        if (result.error) {
+          const errorMsg = result.error.message || '';
+          
+          if (errorMsg.includes('Failed to send a request') || 
+              errorMsg.includes('429') || 
+              errorMsg.includes('503')) {
+            throw new Error(errorMsg);
+          }
+          
+          // Non-retryable error
+          return result;
+        }
+        
+        console.log(`✅ ${functionName} succeeded on attempt ${attempt}`);
+        return result;
+        
+      } catch (error: any) {
+        const isLastAttempt = attempt === maxRetries;
+        const errorMsg = error.message || String(error);
+        
+        console.warn(`⚠️ ${functionName} attempt ${attempt} failed: ${errorMsg}`);
+        
+        if (isLastAttempt) {
+          console.error(`❌ ${functionName} failed after ${maxRetries} attempts`);
+          throw error;
+        }
+        
+        // Wait before retry
+        const delay = backoffs[attempt - 1] || 5000;
+        console.log(`⏳ Retrying ${functionName} in ${delay}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
+    }
+  };
 
   // Check for in-progress jobs on mount (only if user initiated in this session)
   useEffect(() => {
@@ -235,87 +305,116 @@ export const AIRAMSGenerator: React.FC = () => {
       setCurrentJobId(jobRecord.id);
       startPolling();
 
-      // Call both agents in parallel (no HTTP ceiling, each gets 420s timeout)
-      console.log('🚀 Starting parallel agent calls...');
+      // Start local progress timer
+      setStartTime(Date.now());
+      setLocalProgress(0);
       
-      const [hsResult, installerResult] = await Promise.allSettled([
-        supabase.functions.invoke('health-safety-v3', {
-          body: {
+      const progressTimer = setInterval(() => {
+        const start = startTime || Date.now();
+        const elapsed = Date.now() - start;
+        const expectedDuration = 150000; // 2.5 minutes in ms
+        
+        // Smooth ramp to 95% based on elapsed time
+        const estimatedProgress = Math.min(95, (elapsed / expectedDuration) * 100);
+        setLocalProgress(estimatedProgress);
+      }, 1000);
+
+      try {
+        // Step 1: Warm up functions (eliminates cold start delays)
+        await warmUpFunctions();
+
+        // Step 2: Call both agents in parallel with retries
+        console.log('🚀 Starting parallel agent calls...');
+        
+        const [hsResult, installerResult] = await Promise.allSettled([
+          invokeWithRetry('health-safety-v3', {
             jobId: jobRecord.id,
             query: jobDescription,
             workType: jobScale,
             projectInfo: projectInfo
-          }
-        }),
-        supabase.functions.invoke('installer-v3', {
-          body: {
+          }),
+          
+          invokeWithRetry('installer-v3', {
             jobId: jobRecord.id,
             query: jobDescription,
             workType: jobScale,
             projectInfo: projectInfo
-          }
-        })
-      ]);
+          })
+        ]);
 
-      console.log('✅ Both agents completed');
-      console.log('H&S Result:', hsResult.status);
-      console.log('Installer Result:', installerResult.status);
+        console.log('✅ Both agents completed');
+        console.log('H&S Result:', hsResult.status);
+        console.log('Installer Result:', installerResult.status);
 
-      // Merge results
-      const hsData = hsResult.status === 'fulfilled' ? hsResult.value.data?.data : null;
-      const installerData = installerResult.status === 'fulfilled' ? installerResult.value.data?.data : null;
-      
-      const hsError = hsResult.status === 'rejected' ? hsResult.reason : 
-                     (hsResult.status === 'fulfilled' && hsResult.value.error ? hsResult.value.error : null);
-      const installerError = installerResult.status === 'rejected' ? installerResult.reason :
-                            (installerResult.status === 'fulfilled' && installerResult.value.error ? installerResult.value.error : null);
+        // Merge results
+        const hsData = hsResult.status === 'fulfilled' ? hsResult.value.data?.data : null;
+        const installerData = installerResult.status === 'fulfilled' ? installerResult.value.data?.data : null;
+        
+        const hsError = hsResult.status === 'rejected' ? hsResult.reason : 
+                       (hsResult.status === 'fulfilled' && hsResult.value.error ? hsResult.value.error : null);
+        const installerError = installerResult.status === 'rejected' ? installerResult.reason :
+                              (installerResult.status === 'fulfilled' && installerResult.value.error ? installerResult.value.error : null);
 
-      // Determine final status
-      let finalStatus: 'complete' | 'failed' = 'complete';
-      let errorMessage: string | null = null;
-      
-      if (!hsData && !installerData) {
-        finalStatus = 'failed';
-        errorMessage = `Both agents failed. H&S: ${hsError?.message || 'Unknown error'}. Installer: ${installerError?.message || 'Unknown error'}`;
-      } else if (!hsData) {
-        finalStatus = 'failed';
-        errorMessage = `Health & Safety agent failed: ${hsError?.message || 'Unknown error'}`;
+        // Determine final status
+        let finalStatus: 'complete' | 'failed' = 'complete';
+        let errorMessage: string | null = null;
+        
+        if (!hsData && !installerData) {
+          finalStatus = 'failed';
+          errorMessage = `Both agents failed. H&S: ${hsError?.message || 'Unknown error'}. Installer: ${installerError?.message || 'Unknown error'}`;
+        } else if (!hsData) {
+          finalStatus = 'failed';
+          errorMessage = `Health & Safety agent failed: ${hsError?.message || 'Unknown error'}`;
+        }
+        // Note: Installer failure is NOT a complete failure - we'll save partial results
+
+        // Update job with final results
+        const { error: updateError } = await supabase
+          .from('rams_generation_jobs')
+          .update({
+            status: finalStatus,
+            progress: finalStatus === 'complete' ? 100 : localProgress,
+            current_step: finalStatus === 'complete' 
+              ? (installerData ? 'Complete' : 'Complete (partial - method statement failed)')
+              : 'Failed',
+            rams_data: hsData || null,
+            method_data: installerData || null,
+            raw_hs_response: hsData || null,
+            raw_installer_response: installerData || null,
+            error_message: errorMessage,
+            completed_at: new Date().toISOString()
+          })
+          .eq('id', jobRecord.id);
+
+        if (updateError) {
+          console.error('Failed to update job with results:', updateError);
+        }
+
+        console.log('📊 Final job status:', finalStatus);
+      } finally {
+        clearInterval(progressTimer);
       }
-      // Note: Installer failure is NOT a complete failure - we'll save partial results
-
-      // Update job with final results
-      const { error: updateError } = await supabase
-        .from('rams_generation_jobs')
-        .update({
-          status: finalStatus,
-          progress: 100,
-          current_step: finalStatus === 'complete' 
-            ? (installerData ? 'Complete' : 'Complete (partial - method statement failed)')
-            : 'Failed',
-          rams_data: hsData || null,
-          method_data: installerData || null,
-          raw_hs_response: hsData || null,
-          raw_installer_response: installerData || null,
-          error_message: errorMessage,
-          completed_at: new Date().toISOString()
-        })
-        .eq('id', jobRecord.id);
-
-      if (updateError) {
-        console.error('Failed to update job with results:', updateError);
-      }
-
-      console.log('📊 Final job status:', finalStatus);
       
     } catch (error: any) {
       console.error('Generation error:', error);
+      
+      const errorMessage = error.message || 'Unknown error occurred';
+      const userFriendlyMessage = 
+        errorMessage.includes('Failed to send a request') 
+          ? 'Network connection failed. Please check your internet and try again.'
+          : errorMessage.includes('429')
+          ? 'Rate limit exceeded. Please wait a moment and try again.'
+          : errorMessage.includes('timeout')
+          ? 'Generation took too long. Please try again with a simpler description.'
+          : errorMessage;
       
       if (currentJobId) {
         await supabase
           .from('rams_generation_jobs')
           .update({
             status: 'failed',
-            error_message: error.message || 'Unknown error occurred',
+            error_message: `${errorMessage} (after retries)`,
+            progress: localProgress, // Keep last known progress
             completed_at: new Date().toISOString()
           })
           .eq('id', currentJobId);
@@ -323,7 +422,7 @@ export const AIRAMSGenerator: React.FC = () => {
       
       toast({
         title: "Generation failed",
-        description: error.message || "An unexpected error occurred",
+        description: userFriendlyMessage,
         variant: 'destructive'
       });
     }

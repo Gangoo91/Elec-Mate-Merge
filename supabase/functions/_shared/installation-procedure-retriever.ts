@@ -52,24 +52,24 @@ export async function retrieveStructuredProcedures(
       equipment 
     });
     
-    // Multi-strategy retrieval (3 parallel queries like Health-Safety)
+    // Multi-strategy retrieval (optimized match_counts for speed)
     const [procedureResults, toolsResults, regulationResults] = await Promise.all([
-      // Strategy A: Get installation procedures
+      // Strategy A: Get installation procedures (reduced 15→10)
       supabase.rpc('search_practical_work_intelligence_hybrid', {
         query_text: params.jobDescription,
-        match_count: 15
-      }),
-      
-      // Strategy B: Get tools/materials lists
-      supabase.rpc('search_practical_work_intelligence_hybrid', {
-        query_text: `${params.jobDescription} tools materials equipment`,
         match_count: 10
       }),
       
-      // Strategy C: Get relevant regulations
+      // Strategy B: Get tools/materials lists (reduced 10→6)
+      supabase.rpc('search_practical_work_intelligence_hybrid', {
+        query_text: `${params.jobDescription} tools materials equipment`,
+        match_count: 6
+      }),
+      
+      // Strategy C: Get relevant regulations (reduced 12→8)
       supabase.rpc('search_regulations_intelligence_hybrid', {
         query_text: params.jobDescription,
-        match_count: 12
+        match_count: 8
       })
     ]);
     

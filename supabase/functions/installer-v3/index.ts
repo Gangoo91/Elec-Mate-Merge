@@ -178,6 +178,16 @@ serve(async (req) => {
   const executionPromise = (async (): Promise<Response> => {
   try {
     const body = await req.json();
+    
+    // Health-check endpoint (for warm-up)
+    if (body.mode === 'health-check') {
+      console.log('✅ Health check received');
+      return new Response(JSON.stringify({ status: 'ready' }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200
+      });
+    }
+    
     const { jobId, query, cableType, installationMethod, location, workType, messages, previousAgentOutputs, sharedRegulations, currentDesign, projectDetails } = body;
 
     // Track context sources
@@ -1231,7 +1241,7 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
         } else if (aiCallElapsed > 50 && aiCallElapsed % 20 === 0) {
           logger.info('   → Finalizing comprehensive method statement...');
         }
-      }, 10000);
+      }, 10000); // Every 10 seconds for smoother progress
       
       // Start heartbeat to prevent "stuck job" false positives
       const heartbeatInterval = setInterval(async () => {
