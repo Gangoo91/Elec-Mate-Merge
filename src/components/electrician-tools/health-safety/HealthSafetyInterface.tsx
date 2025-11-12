@@ -166,7 +166,10 @@ const HealthSafetyInterface = () => {
           hazardCount={outputData.hazards?.length || 0}
           ppeCount={outputData.ppe?.length || 0}
           generationTime={generationStartTime ? (Date.now() - generationStartTime) / 1000 : 120}
-          onClose={() => setShowCelebration(false)}
+          onClose={() => {
+            setShowCelebration(false);
+            setShowResults(true);
+          }}
         />
       )}
       
