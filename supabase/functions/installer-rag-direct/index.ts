@@ -93,19 +93,21 @@ serve(async (req) => {
     } else {
       // FIXED: Use regulations_intelligence table (correct name) with RPC function
       try {
+        // Use full query text for better context matching
         const { data: regData, error: regError } = await supabase
           .rpc('search_bs7671_intelligence_hybrid', {
-            query_text: primaryKeyword,
-            match_count: 50 // Reduced from 85
+            query_text: query, // ✅ FIXED: Use full query instead of undefined primaryKeyword
+            match_count: 50
           });
 
         if (regError) {
           console.error('Regs RPC error:', regError);
           // Fallback: Try direct table query on bs7671_embeddings
+          const searchTerm = keywords[0] || 'electrical'; // ✅ FIXED: Use first keyword as fallback
           const { data: fallbackData, error: fallbackError } = await supabase
             .from('bs7671_embeddings')
             .select('id, regulation_number, content, section')
-            .or(`content.ilike.%${primaryKeyword}%,regulation_number.ilike.%${primaryKeyword}%`)
+            .or(`content.ilike.%${searchTerm}%,regulation_number.ilike.%${searchTerm}%`)
             .limit(50);
           
           if (fallbackError) {
