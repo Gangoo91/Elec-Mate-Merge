@@ -26,6 +26,7 @@ export interface TestProcedure {
   testName: string;
   regulation: string;
   instrumentSetup: string;
+  leadPlacement?: string;
   procedure: string[];
   acceptanceCriteria: string;
   expectedResult?: TestResult | string;
@@ -69,4 +70,12 @@ export interface CommissioningResponse {
   circuits?: any[];
   overallResult?: string;
   notes?: string;
+  metadata?: {
+    ragQuality?: {
+      score: number;
+      practicalProceduresFound: number;
+      regulationsFound: number;
+    };
+    [key: string]: any;
+  };
 }
