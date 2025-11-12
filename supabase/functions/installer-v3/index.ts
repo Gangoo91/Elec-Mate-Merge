@@ -322,7 +322,7 @@ serve(async (req) => {
             if (error) throw error;
             
             // Apply 85% weight to keyword results
-            return (data || []).map((row: any) => ({
+            const results = (data || []).map((row: any) => ({
               regulation_number: row.regulation_number,
               content: row.content || row.primary_topic,
               primary_topic: row.primary_topic,
@@ -331,6 +331,13 @@ serve(async (req) => {
               hybrid_score: (row.hybrid_score || 0.75) * 0.85, // 85% weight for keywords
               source: 'bs7671_intelligence'
             }));
+            
+            logger.info('📊 BS 7671 RAG Retrieved:', {
+              totalEntries: results.length,
+              sampleTopics: results.slice(0, 2).map((r: any) => r.primary_topic)
+            });
+            
+            return results;
           } catch (error) {
             console.error('BS 7671 keyword search failed:', error);
             return [];
@@ -685,6 +692,31 @@ For each step, identify hazards from:
 Format: "[Hazard name] - [Mitigation measure]"
 Example: "Working at height >2m - use scaffold tower to BS EN 1004"
 
+🧠 **STEP-SPECIFIC TOOL & HAZARD REASONING**
+
+For EACH step, you MUST reason about what tools and hazards apply:
+
+**For Tools (ask yourself):**
+- What physical actions are described? (drilling → drill & bits, connecting → screwdrivers, testing → tester)
+- What equipment is being installed? (socket → back box, cables → cable clips, CU → fixings)
+- What measurements are needed? (height/spacing → spirit level, tape measure)
+- What safety equipment is mandatory? (isolation → voltage indicator, live work → insulated tools)
+
+Example reasoning:
+Step: "Install the consumer unit at 1.8m height, drill fixing holes, and secure with screws"
+→ Tools needed: Spirit level (for height), Measuring tape (for 1.8m), Drill & 5.5mm bit (for holes), Screwdriver (for screws), Pencil (for marking)
+
+**For Hazards (ask yourself):**
+- What could cause injury? (drilling → hidden cables, heights → falls, electrical → shock)
+- What environmental risks exist? (dust → respiratory, noise → hearing, confined space → asphyxiation)
+- What regulatory compliance is needed? (RCD protection, earthing, IP ratings)
+
+Example reasoning:
+Step: "Drill holes in bathroom wall for socket installation"
+→ Hazards: "Hidden cables/pipes - CAT scan before drilling", "Bathroom zones - verify IP rating BS 7671", "Dust inhalation - use dust extraction", "Water ingress - waterproof back box required"
+
+⚠️ **YOU MUST PROVIDE TOOLS & HAZARDS FOR EVERY STEP** - even if RAG data is limited, use your knowledge of electrical installation practices.
+
 ${installContext.includes('Practical Work') || installContext.includes('Tools:') ? 
   '✅ Rich practical knowledge available - base your installation steps on this verified data' : 
   '⚠️ Limited practical knowledge - use general BS 7671 installation practices'
@@ -945,19 +977,21 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
                     },
                      tools: { 
                       type: 'array', 
-                      items: { type: 'string' }, 
-                      description: 'Equipment needed for THIS STEP ONLY. **EXTRACT from Practical Work Intelligence RAG data** where available (look for 🔧 **TOOLS REQUIRED** field). Context-specific to work phase: Planning phase = drawings, camera, measuring tape, CAT scanner. Procurement = supplier details, order forms (or "No special tools required"). Installation = drills, cables, fixings, power tools. Testing = multifunction tester, voltage indicator, proving unit. Isolation = lock-off kit, voltage detector, warning signs. DO NOT list installation tools for planning/procurement. This maps to equipmentNeeded in frontend.' 
+                      items: { type: 'string' },
+                      minItems: 3,
+                      description: 'MANDATORY: List 3-10 SPECIFIC tools needed for THIS STEP based on the work described. Analyze the step description and identify what physical tools are needed. Examples: "Install socket" = drill, screwdriver, wire strippers, voltage tester, back box. "Test circuit" = multifunction tester, proving unit, test leads. "Isolate supply" = voltage indicator, lock-off kit, warning signs. Extract from RAG data where available (🔧 **TOOLS REQUIRED**), but if not available, REASON about what tools the step activities require. DO NOT leave empty.' 
                     },
                     materials: { 
                       type: 'array', 
                       items: { type: 'string' },
-                      description: '**EXTRACT materials from Practical Work Intelligence RAG data** (look for 📦 **MATERIALS NEEDED** field). List SPECIFIC materials for THIS STEP with quantities where applicable (e.g., "2.5mm² T&E cable - 15m", "50mm cable clips x20", "DIN rail MCB 32A Type B", "3-core SWA 6mm² - 10m", "50mm wall plugs x8", "M6 brass earth bar"). If no specific materials for this step, return empty array. This maps to materialsNeeded in frontend.'
+                      description: 'List SPECIFIC materials for THIS STEP with quantities where applicable (e.g., "2.5mm² T&E cable - 15m", "50mm cable clips x20", "DIN rail MCB 32A Type B"). **EXTRACT from Practical Work Intelligence RAG data** (look for 📦 **MATERIALS NEEDED** field). If no specific materials for this step, return empty array. This maps to materialsNeeded in frontend.'
                     },
                     safetyNotes: { type: 'array', items: { type: 'string', description: 'Safety requirements for this step. STEP-SPECIFIC safety requirements for THIS STEP ONLY (not general project safety). In UK English (authorised, organise, metres). If no specific safety requirements for this step, return empty array. Example: Planning phase should have NO or minimal safety notes. Installation/isolation phases MUST have specific requirements like "Isolation and lock-off required". This maps to safetyRequirements in the frontend.' } },
                     linkedHazards: { 
                       type: 'array', 
                       items: { type: 'string' },
-                      description: 'Specific hazards for THIS STEP extracted from knowledge base or identified from work activities. Include hazard name and mitigation (e.g., "Working at height - use scaffold tower BS 7671:2018", "Electrical shock risk - isolation and lockout required", "Dust inhalation - use dust extraction per COSHH"). Extract from Practical Work Intelligence where available. This maps to linkedHazards in frontend.'
+                      minItems: 2,
+                      description: 'MANDATORY: Identify 2-5 SPECIFIC hazards for THIS STEP based on work activities. Format: "[Hazard] - [Mitigation]". Analyze what could go wrong in this step. Examples: "Drill into wall" = "Hidden cables/pipes - use CAT scanner before drilling". "Connect live terminals" = "Electrical shock - isolation and lock-off required". "Work above head height" = "Working at height - use step ladder to BS EN 131". Extract from RAG where available, but ALWAYS identify at least 2 hazards per step based on step activities. DO NOT leave empty.'
                     },
                     qualifications: { 
                       type: 'array', 
@@ -1102,6 +1136,18 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
 
     // 🚨 CRITICAL: Validate non-zero steps immediately
     const steps = installResult.installationSteps || [];
+    
+    // Log AI output quality
+    logger.info('🤖 AI Generated Steps Quality Check:', {
+      totalSteps: steps.length,
+      stepsWithTools: steps.filter((s: any) => s.tools?.length > 0).length,
+      stepsWithMaterials: steps.filter((s: any) => s.materials?.length > 0).length,
+      stepsWithHazards: steps.filter((s: any) => s.linkedHazards?.length > 0).length,
+      poorQualitySteps: steps.filter((s: any) => 
+        !s.tools || s.tools.length === 0 || !s.linkedHazards || s.linkedHazards.length === 0
+      ).map((s: any) => s.title)
+    });
+    
     if (steps.length === 0) {
       logger.error('🚨 CRITICAL: AI generated ZERO steps', {
         hadToolCall: !!aiResult.toolCalls,
@@ -1158,37 +1204,112 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       { installationMethod, cableType, location }
     );
 
-    // Helper: Enrich step with inferred tools/materials if AI didn't provide them
-    function enrichStepWithDefaults(step: any, ragKnowledge: any[]): any {
-      const enriched = { ...step };
+    // Helper: Find RAG entry that matches step semantically
+    function findRelevantRagForStep(step: any, ragKnowledge: any[]): any {
+      const stepText = `${step.title} ${step.description}`.toLowerCase();
       
-      // If tools array is empty, try to infer from RAG
-      if (!enriched.tools || enriched.tools.length === 0) {
-        const matchingRag = ragKnowledge.find((rag: any) => 
-          rag.primary_topic?.toLowerCase().includes(step.title.toLowerCase().split(' ')[0])
-        );
+      // Extract key terms from step
+      const keyTerms = [
+        'consumer unit', 'distribution board', 'socket', 'cooker', 'shower', 
+        'lighting', 'cable', 'swa', 'armoured', 'earthing', 'bonding',
+        'rcd', 'mcb', 'rcbo', 'isolation', 'test', 'inspection', 'install',
+        'mount', 'connect', 'wire', 'terminate', 'fix', 'secure'
+      ];
+      
+      // Find RAG entry that has most keyword matches
+      let bestMatch: any = null;
+      let bestScore = 0;
+      
+      for (const rag of ragKnowledge) {
+        const ragText = `${rag.primary_topic || ''} ${rag.content || ''} ${rag.equipment_category || ''}`.toLowerCase();
         
-        if (matchingRag?.tools_required) {
-          enriched.tools = matchingRag.tools_required;
-          logger.info(`📌 Enriched step "${step.title}" with ${enriched.tools.length} tools from RAG`);
+        // Count how many key terms appear in both step AND RAG
+        const score = keyTerms.filter(term => 
+          stepText.includes(term) && ragText.includes(term)
+        ).length;
+        
+        // Also boost score if primary_topic directly matches part of step title
+        const titleWords = step.title.toLowerCase().split(' ');
+        const topicWords = (rag.primary_topic || '').toLowerCase().split(' ');
+        const titleOverlap = titleWords.filter(w => topicWords.includes(w) && w.length > 3).length;
+        
+        const finalScore = score + (titleOverlap * 2); // Weight title matches more
+        
+        if (finalScore > bestScore) {
+          bestScore = finalScore;
+          bestMatch = rag;
         }
       }
       
-      // If materials array is empty, try to infer from RAG
-      if (!enriched.materials || enriched.materials.length === 0) {
-        const matchingRag = ragKnowledge.find((rag: any) => 
-          rag.primary_topic?.toLowerCase().includes(step.title.toLowerCase().split(' ')[0])
-        );
+      if (bestMatch && bestScore > 0) {
+        logger.info(`🎯 Found RAG match for "${step.title}": "${bestMatch.primary_topic}" (score: ${bestScore})`);
+      }
+      
+      return bestMatch;
+    }
+
+    // Helper: Extract hazards from RAG content text
+    function extractHazardsFromRagContent(content: string, step: any): string[] {
+      const hazards: string[] = [];
+      
+      // Look for hazard-related sentences in RAG content
+      const sentences = content.split(/[.!?]+/);
+      
+      for (const sentence of sentences) {
+        const lower = sentence.toLowerCase();
+        if (lower.includes('hazard') || lower.includes('risk') || lower.includes('danger') || 
+            lower.includes('shock') || lower.includes('height') || lower.includes('dust')) {
+          hazards.push(sentence.trim());
+        }
+      }
+      
+      return hazards.length > 0 ? hazards : [];
+    }
+
+    // Helper: Enrich step with semantic RAG matching (no generic defaults)
+    function enrichStepWithDefaults(step: any, ragKnowledge: any[]): any {
+      const enriched = { ...step };
+      
+      // TOOLS: Try to find relevant RAG data by analyzing step content
+      if (!enriched.tools || enriched.tools.length === 0) {
+        const relevantRag = findRelevantRagForStep(step, ragKnowledge);
         
-        if (matchingRag?.materials_needed) {
-          enriched.materials = matchingRag.materials_needed;
+        if (relevantRag?.tools_required && relevantRag.tools_required.length > 0) {
+          enriched.tools = relevantRag.tools_required;
+          logger.info(`📌 Enriched step "${step.title}" with ${enriched.tools.length} tools from RAG match: "${relevantRag.primary_topic}"`);
+        } else {
+          // If RAG has no tools, log this as an AI failure (should not happen with new schema)
+          logger.warn(`⚠️ AI failed to provide tools for step "${step.title}" and no RAG match found - this should not happen with minItems constraint`);
+          enriched.tools = []; // Keep empty to expose the problem
+        }
+      }
+      
+      // MATERIALS: Same logic
+      if (!enriched.materials || enriched.materials.length === 0) {
+        const relevantRag = findRelevantRagForStep(step, ragKnowledge);
+        
+        if (relevantRag?.materials_needed && relevantRag.materials_needed.length > 0) {
+          enriched.materials = relevantRag.materials_needed;
           logger.info(`📌 Enriched step "${step.title}" with ${enriched.materials.length} materials from RAG`);
         }
       }
       
-      // If no linked hazards, infer basic ones from step type
+      // HAZARDS: Same logic
       if (!enriched.linkedHazards || enriched.linkedHazards.length === 0) {
-        enriched.linkedHazards = inferHazardsFromStep(step);
+        const relevantRag = findRelevantRagForStep(step, ragKnowledge);
+        
+        if (relevantRag?.content && relevantRag.content.toLowerCase().includes('hazard')) {
+          // Extract hazards from RAG content if available
+          enriched.linkedHazards = extractHazardsFromRagContent(relevantRag.content, step);
+          if (enriched.linkedHazards.length > 0) {
+            logger.info(`📌 Enriched step "${step.title}" with ${enriched.linkedHazards.length} hazards from RAG content`);
+          }
+        }
+        
+        if (!enriched.linkedHazards || enriched.linkedHazards.length === 0) {
+          logger.warn(`⚠️ AI failed to provide hazards for step "${step.title}" - this should not happen with minItems constraint`);
+          enriched.linkedHazards = []; // Keep empty to expose the problem
+        }
       }
       
       return enriched;
