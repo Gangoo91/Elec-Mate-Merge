@@ -165,8 +165,8 @@ export const generateMethodStatement = async (
 };
 
 function mergeAgentOutputs(installer: any, maintenance: any | null, healthSafety: any | null): MergedMethodStatementOutput {
-  // Get installation steps from installer
-  const installerSteps = installer.installationSteps || [];
+  // Get installation steps from installer (edge function returns 'steps', not 'installationSteps')
+  const installerSteps = installer.steps || installer.installationSteps || [];
   
   // Extract H&S data if available
   const allHazards = healthSafety?.riskAssessment?.hazards || [];
