@@ -564,21 +564,22 @@ CRITICAL: Generate AT LEAST 8 detailed steps. More is better (target 10-12 steps
       } else {
         throw new Error('Repair pass also failed');
       }
-        return new Response(
-          JSON.stringify({
-            success: false,
-            error: 'Failed to generate valid structured data',
-            diagnostics: {
-              pwCount: practicalWork.length,
-              regsCount: regulations.length,
-              ragMs: ragTime,
-              aiMs: aiTime,
-              rawPreview: content.substring(0, 1000)
-            }
-          }),
-          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
+    } catch (parseError) {
+      console.error('❌ JSON parse and repair failed:', parseError);
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'Failed to generate valid structured data',
+          diagnostics: {
+            pwCount: practicalWork.length,
+            regsCount: regulations.length,
+            ragMs: ragTime,
+            aiMs: aiTime,
+            rawPreview: content.substring(0, 1000)
+          }
+        }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     // Normalize output
