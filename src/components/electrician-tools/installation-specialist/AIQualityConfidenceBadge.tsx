@@ -55,7 +55,7 @@ export const AIQualityConfidenceBadge = ({ metrics, isGenerating }: AIQualityCon
   return (
     <Card className={`border-2 transition-all duration-300 ${
       showWarning 
-        ? 'border-yellow-500/40 bg-yellow-500/10 animate-pulse' 
+        ? 'border-yellow-500/40 bg-yellow-500/10' 
         : 'border-blue-500/30 bg-blue-500/10'
     }`}>
       <div className="p-4 space-y-3">
