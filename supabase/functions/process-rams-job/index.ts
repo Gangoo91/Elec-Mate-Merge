@@ -241,8 +241,12 @@ Deno.serve(async (req) => {
       );
     }
 
-    // H&S heartbeat: 15% → 45% (updates every 15s while H&S is running)
+    // Track start time for detailed logging
+    const agentStartTime = Date.now();
+    
+    // H&S heartbeat: 15% → 45% (updates every 30s while H&S is running)
     let hsHeartbeatProgress = 15;
+    let hsElapsedSeconds = 0;
     hsHeartbeatInterval = setInterval(async () => {
       // Check for cancellation in heartbeat
       if (await checkIfCancelled(jobId!)) {
@@ -251,20 +255,22 @@ Deno.serve(async (req) => {
         clearInterval(installerHeartbeatInterval);
         return;
       }
+      hsElapsedSeconds += 30;
       if (hsHeartbeatProgress <= 45) {
         await supabase
           .from('rams_generation_jobs')
           .update({ 
             progress: hsHeartbeatProgress,
-            current_step: 'Analysing risks and generating control measures...'
+            current_step: `Analysing risks and generating control measures... (${hsElapsedSeconds}s elapsed)`
           })
           .eq('id', jobId);
         hsHeartbeatProgress += 5;
       }
-    }, 15000); // Every 15 seconds
+    }, 30000); // Every 30 seconds
 
-    // Installer heartbeat: 45% → 80% (updates every 15s while Installer is running)
+    // Installer heartbeat: 45% → 80% (updates every 30s while Installer is running)
     let installerHeartbeatProgress = 45;
+    let installerElapsedSeconds = 0;
     installerHeartbeatInterval = setInterval(async () => {
       // Check for cancellation in heartbeat
       if (await checkIfCancelled(jobId!)) {
@@ -273,19 +279,22 @@ Deno.serve(async (req) => {
         clearInterval(installerHeartbeatInterval);
         return;
       }
+      installerElapsedSeconds += 30;
       if (installerHeartbeatProgress <= 80) {
         await supabase
           .from('rams_generation_jobs')
           .update({ 
             progress: installerHeartbeatProgress,
-            current_step: 'Creating installation steps and technical specifications...'
+            current_step: `Creating installation steps and technical specifications... (${installerElapsedSeconds}s elapsed)`
           })
           .eq('id', jobId);
         installerHeartbeatProgress += 5;
       }
-    }, 15000); // Every 15 seconds
+    }, 30000); // Every 30 seconds
 
-    // Run both agents in parallel
+    // Run both agents in parallel with 7-minute timeout
+    console.log('🚀 Starting agents with 420s (7 min) timeout...');
+    
     const hsPromiseWithTimeout = Promise.race([
       supabase.functions.invoke('health-safety-v3', {
         body: {
@@ -295,7 +304,7 @@ Deno.serve(async (req) => {
         }
       }),
       new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Health-safety agent timeout after 360s')), 360000)
+        setTimeout(() => reject(new Error('Health-safety agent timeout after 420s (7 minutes)')), 420000)
       )
     ]);
 
@@ -308,7 +317,7 @@ Deno.serve(async (req) => {
         }
       }),
       new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Installer agent timeout after 360s')), 360000)
+        setTimeout(() => reject(new Error('Installer agent timeout after 420s (7 minutes)')), 420000)
       )
     ]);
 
@@ -318,6 +327,11 @@ Deno.serve(async (req) => {
       installerPromiseWithTimeout
     ]);
 
+    // Calculate total agent execution time
+    const agentEndTime = Date.now();
+    const totalAgentDuration = ((agentEndTime - agentStartTime) / 1000).toFixed(1);
+    console.log(`⏱️ Both agents completed in ${totalAgentDuration}s`);
+    
     // Clear both heartbeat intervals
     if (hsHeartbeatInterval) clearInterval(hsHeartbeatInterval);
     if (installerHeartbeatInterval) clearInterval(installerHeartbeatInterval);
@@ -333,12 +347,18 @@ Deno.serve(async (req) => {
 
     // Extract H&S data with detailed error logging
     let hsData, hsError, hsSuccess = false;
+    let hsDuration = 'unknown';
     if (hsResult.status === 'fulfilled') {
       const result = hsResult.value as any;
       hsData = result.data;
       hsError = result.error;
       hsSuccess = !!hsData && !hsError;
-      console.log(`✅ Health-safety completed for job: ${jobId}`, { success: hsSuccess, hasData: !!hsData });
+      hsDuration = `${totalAgentDuration}s`;
+      console.log(`✅ Health-safety completed for job: ${jobId}`, { 
+        success: hsSuccess, 
+        hasData: !!hsData,
+        duration: hsDuration
+      });
       
       // PHASE 1: Detailed diagnostic logging
       console.log('🔍 [PHASE 1 DIAGNOSTIC] Health-safety raw response structure:', {
@@ -363,21 +383,31 @@ Deno.serve(async (req) => {
         .eq('id', jobId);
     } else {
       hsError = hsResult.reason;
-      console.error(`❌ Health-safety failed for job: ${jobId}`, { 
+      hsDuration = `timeout at ${totalAgentDuration}s`;
+      const isTimeout = hsError?.message?.includes('timeout');
+      console.error(`❌ Health-safety ${isTimeout ? 'TIMED OUT' : 'FAILED'} for job: ${jobId}`, { 
         error: hsError?.message || hsError, 
         errorCode: hsError?.code,
-        errorType: hsError instanceof Error ? hsError.constructor.name : typeof hsError
+        errorType: hsError instanceof Error ? hsError.constructor.name : typeof hsError,
+        duration: hsDuration,
+        isTimeout
       });
     }
 
     // Extract Installer data with detailed error logging
     let installerData, installerError, installerSuccess = false;
+    let installerDuration = 'unknown';
     if (installerResult.status === 'fulfilled') {
       const result = installerResult.value as any;
       installerData = result.data;
       installerError = result.error;
       installerSuccess = !!installerData && !installerError;
-      console.log(`✅ Installer completed for job: ${jobId}`, { success: installerSuccess, hasData: !!installerData });
+      installerDuration = `${totalAgentDuration}s`;
+      console.log(`✅ Installer completed for job: ${jobId}`, { 
+        success: installerSuccess, 
+        hasData: !!installerData,
+        duration: installerDuration
+      });
 
       // Update progress for Installer completion
       await supabase
@@ -390,10 +420,14 @@ Deno.serve(async (req) => {
         .eq('id', jobId);
     } else {
       installerError = installerResult.reason;
-      console.error(`❌ Installer failed for job: ${jobId}`, { 
+      installerDuration = `timeout at ${totalAgentDuration}s`;
+      const isTimeout = installerError?.message?.includes('timeout');
+      console.error(`❌ Installer ${isTimeout ? 'TIMED OUT' : 'FAILED'} for job: ${jobId}`, { 
         error: installerError?.message || installerError,
         errorCode: installerError?.code,
-        errorType: installerError instanceof Error ? installerError.constructor.name : typeof installerError
+        errorType: installerError instanceof Error ? installerError.constructor.name : typeof installerError,
+        duration: installerDuration,
+        isTimeout
       });
     }
 
