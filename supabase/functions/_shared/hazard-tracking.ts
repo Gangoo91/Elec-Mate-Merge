@@ -24,37 +24,25 @@ export async function trackHazardUsage(params: {
       
       if (wasUsed) {
         // Increment usage count and boost confidence
-        try {
-          await params.supabase.rpc('increment_hazard_usage', { 
-            hazard_id: hazardId 
-          });
-          console.log(`✅ Hazard ${hazardId} was used - boosting confidence`);
-        } catch (rpcError) {
-          console.warn('⚠️ increment_hazard_usage RPC failed (non-critical):', rpcError);
-        }
+        await params.supabase.rpc('increment_hazard_usage', { 
+          hazard_id: hazardId 
+        });
+        
+        console.log(`✅ Hazard ${hazardId} was used - boosting confidence`);
       } else {
         // Slight confidence penalty (not relevant for this job)
-        try {
-          const { error } = await params.supabase
-            .from('regulation_hazards_extracted')
-            .update({
-              confidence_score: params.supabase.raw('confidence_score * 0.99'),
-              updated_at: new Date().toISOString()
-            })
-            .eq('id', hazardId);
-          
-          if (error) {
-            // Check if table doesn't exist (code 42P01)
-            if (error.code === '42P01') {
-              console.warn('⚠️ regulation_hazards_extracted table not found - skipping tracking');
-            } else {
-              console.error(`⚠️ Failed to penalize hazard ${hazardId}:`, error);
-            }
-          } else {
-            console.log(`➖ Hazard ${hazardId} not used - slight penalty`);
-          }
-        } catch (updateError) {
-          console.warn('⚠️ Hazard tracking update failed (non-critical):', updateError);
+        const { error } = await params.supabase
+          .from('regulation_hazards_extracted')
+          .update({
+            confidence_score: params.supabase.raw('confidence_score * 0.99'),
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', hazardId);
+        
+        if (error) {
+          console.error(`⚠️ Failed to penalize hazard ${hazardId}:`, error);
+        } else {
+          console.log(`➖ Hazard ${hazardId} not used - slight penalty`);
         }
       }
     }

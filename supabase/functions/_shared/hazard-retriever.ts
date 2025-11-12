@@ -185,18 +185,13 @@ async function filterHazardsByContext(
       .limit(15);
     
     if (error) {
-      // Check if table doesn't exist (code 42P01)
-      if (error.code === '42P01') {
-        console.warn('⚠️ regulation_hazards_extracted table not found - skipping context-filtered hazards');
-        return [];
-      }
       console.error('Context filter error:', error);
       return [];
     }
     
     return data || [];
   } catch (error) {
-    console.warn('⚠️ Context filtering failed - continuing without structured hazards', error);
+    console.error('Context filtering failed:', error);
     return [];
   }
 }
@@ -220,18 +215,13 @@ async function getCriticalHazards(
       .limit(5);
     
     if (error) {
-      // Check if table doesn't exist (code 42P01)
-      if (error.code === '42P01') {
-        console.warn('⚠️ regulation_hazards_extracted table not found - skipping critical hazards');
-        return [];
-      }
       console.error('Critical hazards error:', error);
       return [];
     }
     
     return data || [];
   } catch (error) {
-    console.warn('⚠️ Critical hazards fetch failed - continuing without structured hazards', error);
+    console.error('Critical hazards fetch failed:', error);
     return [];
   }
 }
