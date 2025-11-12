@@ -15,6 +15,7 @@ import { SiteLogisticsSection } from "./SiteLogisticsSection";
 import { ConditionalProceduresSection } from "./ConditionalProceduresSection";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { InstallationSummaryStats } from "./InstallationSummaryStats";
+import { RAGExtractionBreakdown } from "./RAGExtractionBreakdown";
 
 interface ProjectMetadata {
   documentRef: string;
@@ -59,6 +60,20 @@ interface InstallationResultsProps {
       practicalProcedures: number;
       regulations: number;
       avgRelevance: number;
+    };
+    extractionBreakdown?: {
+      practicalWork: {
+        documentsUsed: number;
+        toolsExtracted: number;
+        materialsExtracted: number;
+        regulationsExtracted: number;
+        avgConfidence: number;
+      };
+      bs7671: {
+        documentsUsed: number;
+        regulationsExtracted: number;
+        avgRelevance: number;
+      };
     };
   };
   onStartOver: () => void;
@@ -371,6 +386,11 @@ export const InstallationResults = ({
             </div>
           </CardContent>
         </Card>
+      )}
+
+      {/* 📊 Detailed RAG Extraction Breakdown */}
+      {qualityMetrics?.extractionBreakdown && (
+        <RAGExtractionBreakdown extractionBreakdown={qualityMetrics.extractionBreakdown} />
       )}
 
       {/* Summary Stats */}

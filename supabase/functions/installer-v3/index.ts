@@ -1706,6 +1706,41 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
               ? (installKnowledge.reduce((s: number, k: any) => s + (k.hybrid_score || 0), 0) / installKnowledge.length * 100)
               : 0
             )
+          },
+          // 📊 Detailed extraction breakdown by source
+          extractionBreakdown: {
+            practicalWork: {
+              documentsUsed: installKnowledge.filter((k: any) => k.source === 'practical_work_intelligence').length,
+              toolsExtracted: installKnowledge
+                .filter((k: any) => k.source === 'practical_work_intelligence')
+                .reduce((sum: number, k: any) => sum + ((k.tools_required || []).length), 0),
+              materialsExtracted: installKnowledge
+                .filter((k: any) => k.source === 'practical_work_intelligence')
+                .reduce((sum: number, k: any) => sum + ((k.materials_needed || []).length), 0),
+              regulationsExtracted: installKnowledge
+                .filter((k: any) => k.source === 'practical_work_intelligence')
+                .reduce((sum: number, k: any) => sum + ((k.bs7671_regulations || []).length), 0),
+              avgConfidence: Math.round(
+                installKnowledge.filter((k: any) => k.source === 'practical_work_intelligence').length > 0
+                  ? (installKnowledge
+                      .filter((k: any) => k.source === 'practical_work_intelligence')
+                      .reduce((s: number, k: any) => s + (k.confidence_score || 0), 0) / 
+                      installKnowledge.filter((k: any) => k.source === 'practical_work_intelligence').length * 100)
+                  : 0
+              )
+            },
+            bs7671: {
+              documentsUsed: installKnowledge.filter((k: any) => k.source === 'bs7671_intelligence').length,
+              regulationsExtracted: installKnowledge.filter((k: any) => k.source === 'bs7671_intelligence').length,
+              avgRelevance: Math.round(
+                installKnowledge.filter((k: any) => k.source === 'bs7671_intelligence').length > 0
+                  ? (installKnowledge
+                      .filter((k: any) => k.source === 'bs7671_intelligence')
+                      .reduce((s: number, k: any) => s + (k.hybrid_score || 0), 0) / 
+                      installKnowledge.filter((k: any) => k.source === 'bs7671_intelligence').length * 100)
+                  : 0
+              )
+            }
           }
         }
       }
