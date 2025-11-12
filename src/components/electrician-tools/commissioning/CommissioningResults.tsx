@@ -101,6 +101,7 @@ const CommissioningResults = ({
       {/* RAG Quality Badge */}
       {results.metadata?.ragQuality && (
         <RAGQualityBadge
+          gn3ProceduresFound={results.metadata.ragQuality.gn3ProceduresFound}
           practicalProceduresFound={results.metadata.ragQuality.practicalProceduresFound}
           regulationsFound={results.metadata.ragQuality.regulationsFound}
           qualityScore={results.metadata.ragQuality.score}

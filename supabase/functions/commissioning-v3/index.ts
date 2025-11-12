@@ -111,9 +111,9 @@ serve(async (req) => {
         context: {
           agentType: 'commissioning', // NEW - for trade filtering
           ragPriority: {
-            practical_work: 95,      // PRIMARY - hands-on testing procedures
+            inspection: 95,          // PRIMARY - GN3 Inspection & Testing knowledge
             bs7671: 85,              // HIGH - Chapter 64 testing requirements
-            inspection: 40,          // FALLBACK
+            practical_work: 70,      // FALLBACK - general trade knowledge
             design: 0,
             installation: 0,
             health_safety: 0,
@@ -127,6 +127,7 @@ serve(async (req) => {
     
     // 🔍 ENHANCED RAG DATA LOGGING
     logger.info('🔍 RAG Search Results', {
+      gn3InspectionCount: ragResults.gn3InspectionDocs?.length || 0,
       practicalWorkCount: ragResults.practicalWorkDocs?.length || 0,
       regulationsCount: ragResults.regulations?.length || 0,
       designDocsCount: ragResults.designDocs?.length || 0,
@@ -134,23 +135,47 @@ serve(async (req) => {
       searchTimeMs: Date.now() - ragStart
     });
 
-    // Build context with cascade priority
+    // Build context with cascade priority - GN3 FIRST
     let testContext = '';
 
-    // TIER 1: Practical Work Intelligence + Regulations Intelligence
+    // Extract all knowledge sources
+    const gn3Docs = ragResults?.gn3InspectionDocs || [];
     let practicalWorkDocs = ragResults?.practicalWorkDocs || [];
     const regulations = ragResults?.regulations || [];
     
-    // 🚨 ENHANCED: Add defensive null checks and logging
-    if (practicalWorkDocs.length === 0) {
-      logger.warn('⚠️ CRITICAL: No practical work intelligence retrieved!', {
-        queryType: circuitType || 'general',
-        query: effectiveQuery.substring(0, 100)
-      });
-    }
+    logger.info('📚 Knowledge Sources Retrieved', {
+      gn3Count: gn3Docs.length,
+      practicalWorkCount: practicalWorkDocs.length,
+      regulationsCount: regulations.length
+    });
 
-    if (practicalWorkDocs.length >= 3) {
-      testContext += '## PRACTICAL TESTING PROCEDURES:\n\n';
+    // TIER 1: GN3 Inspection & Testing Knowledge (PRIMARY SOURCE)
+    if (gn3Docs.length >= 5) {
+      testContext += '## GN3 INSPECTION & TESTING PROCEDURES (PRIMARY SOURCE):\n\n';
+      testContext += gn3Docs.slice(0, 10).map((gn3: any) => 
+        `**${gn3.topic || 'Testing Procedure'}**\n${gn3.content}\n` +
+        `Source: ${gn3.source || 'Guidance Note 3 (IET)'}`
+      ).join('\n\n---\n\n');
+      
+      testContext += '\n\n## RELEVANT BS 7671 REGULATIONS:\n\n';
+      testContext += regulations.slice(0, 10).map((reg: any) => 
+        `**${reg.regulation_number}**\n${reg.content}`
+      ).join('\n\n');
+      
+      logger.info('✅ Using GN3 as PRIMARY source', { 
+        gn3Count: gn3Docs.length,
+        regulationsCount: regulations.length
+      });
+    } 
+    // TIER 2: Practical Work Intelligence (FALLBACK if insufficient GN3)
+    else if (gn3Docs.length < 5 && practicalWorkDocs.length >= 3) {
+      logger.warn('⚠️ Insufficient GN3 data - falling back to practical work', {
+        gn3Count: gn3Docs.length,
+        practicalWorkCount: practicalWorkDocs.length,
+        threshold: 5
+      });
+      
+      testContext += '\n\n## PRACTICAL WORK PROCEDURES (FALLBACK):\n\n';
       testContext += practicalWorkDocs.slice(0, 8).map((pw: any) => 
         `**${pw.primary_topic}**\n${pw.content}\n` +
         `${pw.expected_results ? `Expected Results: ${pw.expected_results}\n` : ''}` +
@@ -162,20 +187,22 @@ serve(async (req) => {
         `**${reg.regulation_number}**\n${reg.content}`
       ).join('\n\n');
       
-      logger.info('✅ Using Practical Work Intelligence + Regulations', {
+      logger.info('✅ Using Practical Work as FALLBACK', { 
         practicalWorkCount: practicalWorkDocs.length,
         regulationsCount: regulations.length
       });
-    } else {
-      // Fallback to regulations only
+    } 
+    // TIER 3: Regulations only (last resort)
+    else {
+      logger.error('🚨 CRITICAL: Insufficient testing data from all sources', {
+        gn3Count: gn3Docs.length,
+        practicalWorkCount: practicalWorkDocs.length,
+        regulationsCount: regulations.length
+      });
+      
       testContext = regulations.slice(0, 10).map((reg: any) => 
         `**${reg.regulation_number || 'Testing Procedure'}**\n${reg.content || reg.section || 'No content available'}`
       ).join('\n\n');
-      
-      logger.info('⚠️ Using Regulations only (insufficient Practical Work data)', {
-        practicalWorkCount: practicalWorkDocs.length,
-        regulationsCount: regulations.length
-      });
     }
     
     // 🚨 PHASE 5: EMERGENCY RPC FALLBACK if insufficient practical work data
@@ -642,11 +669,12 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
     // Return enriched response with RAG quality metrics
     const { response, suggestedNextAgents, testingProcedure, certification } = commResult;
     
-    // Calculate RAG quality score (0-100)
-    const ragQualityScore = Math.min(100, Math.round(
-      (practicalWorkDocs.length * 15) +  // 15 points per practical procedure (up to 7 = 105)
-      (regulations.length * 5)            // 5 points per regulation (up to 10 = 50)
-    ));
+    // Calculate RAG quality score (0-100) - GN3 WEIGHTED HEAVILY
+    const ragQualityScore = Math.round(
+      Math.min(gn3Docs.length / 10, 1) * 50 +      // GN3 weighted 50% (most important)
+      Math.min(practicalWorkDocs.length / 8, 1) * 30 +  // Practical work 30% (fallback)
+      Math.min(regulations.length / 10, 1) * 20     // Regulations 20% (supplement)
+    );
     
     // Log RAG metrics for observability
     const totalTime = Date.now() - ragStart;
@@ -687,6 +715,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
           totalTimeMs: totalTime,
           ragQuality: {
             score: ragQualityScore,
+            gn3ProceduresFound: gn3Docs.length,
             practicalProceduresFound: practicalWorkDocs.length,
             regulationsFound: regulations.length
           }
