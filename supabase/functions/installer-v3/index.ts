@@ -329,6 +329,21 @@ serve(async (req) => {
           );
         }
         
+        // ALWAYS add isolation and safety queries (universal for all electrical work)
+        queries.push(
+          'Safe isolation procedures and proving dead BS 7671',
+          'Voltage indicator proving unit lock-off requirements',
+          'Isolation lock-off and tagging procedures'
+        );
+        
+        if (/test|testing|commission|verify/i.test(query)) {
+          queries.push(
+            'Electrical testing and measurement CAT-rated equipment',
+            'Insulation resistance testing procedures',
+            'Earth loop impedance testing'
+          );
+        }
+        
         return [...new Set(queries)];
       };
       
@@ -688,6 +703,28 @@ serve(async (req) => {
         }
       }
     }
+
+    // Add extraction examples and rules
+    contextSection += `\n
+**CRITICAL EXTRACTION RULES - YOU MUST FOLLOW THESE**:
+
+1. **ALWAYS extract tools from 🔧 TOOLS_FOR_THIS_TASK sections**
+   - If you see "🔧 TOOLS_FOR_THIS_TASK:" in the knowledge base, you MUST include those exact tools in your output
+   - Never respond with empty tools[] for a step that has 🔧 TOOLS_FOR_THIS_TASK in the knowledge
+   
+2. **NEVER invent generic tools when specific ones are provided**
+   - ❌ WRONG: "Drill" when knowledge says "Cordless drill (SDS if concrete)"
+   - ✅ CORRECT: Copy the EXACT tool name from the knowledge base
+   
+3. **Safety-critical steps MUST have specific tools**
+   - Isolation steps MUST include: Voltage indicator (GS38), Proving unit, Lock-off kit
+   - Testing steps MUST include: Insulation resistance tester, Multimeter, etc.
+   - If knowledge base provides tools for these steps, USE THEM ALL
+   
+4. **Extract from numbered lists**
+   - When you see "1. Tool name\\n2. Tool name", extract each numbered item as a separate tool
+   - Don't combine multiple tools into one string
+`;
 
     // EXISTING CODE: Conversation history (keep unchanged)
     if (messages && messages.length > 0) {
@@ -1260,12 +1297,25 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
     // 🚀 ACTION 3.1: Step-Level RAG Enrichment for poor-quality steps
     logger.info('🔍 Phase 2: Enriching each step with targeted RAG data...');
     
+    // 🚨 CRITICAL: Identify safety-critical steps that MUST have tools
+    const safetyCriticalKeywords = [
+      'isolation', 'isolate', 'verify dead', 'prove dead', 'safe to work',
+      'lock off', 'lockoff', 'isolation test', 'voltage test', 'test', 'testing'
+    ];
+
+    const isSafetyCritical = (stepTitle: string, stepDesc: string): boolean => {
+      const combined = `${stepTitle} ${stepDesc}`.toLowerCase();
+      return safetyCriticalKeywords.some(keyword => combined.includes(keyword));
+    };
+    
     for (const step of steps) {
-      if (
-        step.tools?.length >= 3 && 
-        step.materials?.length >= 2 && 
-        step.linkedHazards?.length >= 2
-      ) {
+      const needsEnrichment = 
+        step.tools?.length < 3 || 
+        step.materials?.length < 2 || 
+        step.linkedHazards?.length < 2 ||
+        isSafetyCritical(step.title, step.description);  // Force enrichment for safety steps
+      
+      if (!needsEnrichment) {
         continue;
       }
       
@@ -1282,25 +1332,89 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       if (stepRag && stepRag.length > 0) {
         const bestMatch = stepRag[0];
         
+        // Enrich step with RAG data - CORRECTED FIELD NAMES
         if (!step.tools || step.tools.length < 3) {
+          const ragTools = bestMatch.tools_required || [];  // ✅ CORRECT field name
           step.tools = [
             ...(step.tools || []),
-            ...(bestMatch.metadata?.tools || [])
-          ].slice(0, 10);
+            ...ragTools
+          ].filter((t, i, arr) => arr.indexOf(t) === i)  // Deduplicate
+           .slice(0, 10);
+          
+          logger.info(`✅ Enriched "${step.title}" tools: ${step.tools.length} from RAG (${ragTools.length} added)`);
         }
         
         if (!step.materials || step.materials.length < 2) {
+          const ragMaterials = bestMatch.materials_needed || [];  // ✅ CORRECT field name
           step.materials = [
             ...(step.materials || []),
-            ...(bestMatch.metadata?.materials || [])
-          ].slice(0, 8);
+            ...ragMaterials
+          ].filter((m, i, arr) => arr.indexOf(m) === i)
+           .slice(0, 8);
+           
+          logger.info(`✅ Enriched "${step.title}" materials: ${step.materials.length} from RAG (${ragMaterials.length} added)`);
         }
         
         logger.info(`✅ Enriched step "${step.title}" with RAG data`);
       }
+  }
+  
+  logger.info('✅ Step-level RAG enrichment complete');
+  
+  // 🚨 CRITICAL SAFETY VALIDATION: Detect steps with missing safety tools
+  logger.info('🔐 Performing safety-critical tool validation...');
+
+  steps.forEach((step: any, index: number) => {
+    const isSafety = isSafetyCritical(step.title, step.description);
+    
+    if (isSafety && (!step.tools || step.tools.length === 0)) {
+      logger.error(`🚨 CRITICAL: Safety step "${step.title}" has ZERO tools!`);
+      
+      // Emergency fallback: Add minimum safety tools based on step type
+      if (/isolation|isolate|prove dead|verify dead/i.test(step.title)) {
+        step.tools = [
+          'Voltage indicator (GS38 compliant)',
+          'Proving unit',
+          'Lock-off kit with padlock',
+          'Warning signs (Danger - Do Not Switch On)',
+          'Insulated screwdriver set'
+        ];
+        logger.warn(`⚠️ Added emergency isolation tools to step ${index + 1}`);
+      } else if (/test|testing|measurement/i.test(step.title)) {
+        step.tools = [
+          'Insulation resistance tester (500V DC)',
+          'Multimeter (CAT III rated)',
+          'Earth loop impedance tester',
+          'Proving unit'
+        ];
+        logger.warn(`⚠️ Added emergency testing tools to step ${index + 1}`);
+      }
     }
     
-    logger.info('✅ Step-level RAG enrichment complete');
+    if (isSafety && (!step.tools || step.tools.length === 0)) {
+      logger.error(`🚨 CRITICAL: Safety step "${step.title}" has ZERO tools!`);
+      
+      // Emergency fallback: Add minimum safety tools based on step type
+      if (/isolation|isolate|prove dead|verify dead/i.test(step.title)) {
+        step.tools = [
+          'Voltage indicator (GS38 compliant)',
+          'Proving unit',
+          'Lock-off kit with padlock',
+          'Warning signs (Danger - Do Not Switch On)',
+          'Insulated screwdriver set'
+        ];
+        logger.warn(`⚠️ Added emergency isolation tools to step ${index + 1}`);
+      } else if (/test|testing|measurement/i.test(step.title)) {
+        step.tools = [
+          'Insulation resistance tester (500V DC)',
+          'Multimeter (CAT III rated)',
+          'Earth loop impedance tester',
+          'Proving unit'
+        ];
+        logger.warn(`⚠️ Added emergency testing tools to step ${index + 1}`);
+      }
+    }
+  });
     
     // 🚀 ACTION 5.1: Quality Boost Pass for poor overall quality
     if (qualityScore < 70) {

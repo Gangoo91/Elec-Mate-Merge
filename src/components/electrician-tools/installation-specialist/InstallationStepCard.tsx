@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Edit2, Save, X, Trash2, ChevronUp, ChevronDown, AlertTriangle, Clock, Wrench, CheckCircle2, ShieldAlert } from "lucide-react";
+import { Edit2, Save, X, Trash2, ChevronUp, ChevronDown, AlertTriangle, AlertCircle, Clock, Wrench, CheckCircle2, ShieldAlert } from "lucide-react";
 import { InstallationStep } from "@/types/installation-method";
 import { cn } from "@/lib/utils";
 
@@ -234,14 +234,25 @@ export const InstallationStepCard = ({
                           ))}
                         </ul>
                       ) : (
-                        <div className="p-3 bg-destructive/15 border-2 border-destructive/40 rounded-lg">
-                          <p className="text-sm text-destructive font-semibold flex items-center gap-2">
-                            <AlertTriangle className="h-4 w-4" />
-                            No tools identified for this step
-                          </p>
-                          <p className="text-xs text-muted-foreground mt-1">
-                            AI generation issue - insufficient context or RAG data for this step
-                          </p>
+                        <div className="p-3 bg-red-500/20 border border-red-500/40 rounded-lg">
+                          <div className="flex items-start gap-2">
+                            <AlertCircle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
+                            <div className="flex-1">
+                              <p className="text-sm font-semibold text-red-400">
+                                ⚠️ No Tools Identified - AI Generation Issue
+                              </p>
+                              <p className="text-xs text-red-300 mt-1">
+                                This step appears to be missing tool requirements. This may indicate insufficient RAG context or AI extraction failure.
+                                {(step.title.toLowerCase().includes('isolation') || 
+                                  step.title.toLowerCase().includes('verify dead') ||
+                                  step.title.toLowerCase().includes('test')) && (
+                                  <span className="block mt-1 font-semibold">
+                                    🚨 This is a SAFETY-CRITICAL step and must include specific tools (e.g., voltage indicators, proving units, lock-off kits).
+                                  </span>
+                                )}
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       )}
                     </div>
