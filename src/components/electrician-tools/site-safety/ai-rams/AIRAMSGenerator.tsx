@@ -614,46 +614,55 @@ export const AIRAMSGenerator: React.FC = () => {
             />
           ) : (
             <>
-              {/* Resuming banner */}
-              {resumedJob && status !== 'complete' && (
-                <div className="p-3 sm:p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg flex items-center gap-3">
-                  <Clock className="h-5 w-5 text-blue-400 shrink-0" />
-                  <div>
-                    <p className="text-sm font-semibold text-blue-400">
-                      Resuming generation from earlier...
-                    </p>
-                    <p className="text-xs text-blue-400/70 mt-0.5">
-                      Current progress: {progress}%
-                    </p>
-                  </div>
-                </div>
-              )}
+              {/* Calculate combined progress for smooth UI updates */}
+              {(() => {
+                const displayProgress = Math.max(localProgress, progress);
+                
+                return (
+                  <>
+                    {/* Resuming banner */}
+                    {resumedJob && status !== 'complete' && (
+                      <div className="p-3 sm:p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg flex items-center gap-3">
+                        <Clock className="h-5 w-5 text-blue-400 shrink-0" />
+                        <div>
+                          <p className="text-sm font-semibold text-blue-400">
+                            Resuming generation from earlier...
+                          </p>
+                          <p className="text-xs text-blue-400/70 mt-0.5">
+                            Current progress: {Math.round(displayProgress)}%
+                          </p>
+                        </div>
+                      </div>
+                    )}
 
-              <AgentProcessingView
-                overallProgress={progress}
-                currentStep={currentStep}
-                elapsedTime={generationStartTime > 0 ? Math.floor((Date.now() - generationStartTime) / 1000) : 0}
-                estimatedTimeRemaining={Math.max(0, Math.floor((300 * (100 - progress)) / 100))}
-                onCancel={status === 'processing' || status === 'pending' ? handleCancel : undefined}
-                isCancelling={isCancelling}
-                jobDescription={currentJobDescription}
-                agentSteps={[
-                  {
-                    name: 'health-safety',
-                    status: progress >= 40 ? 'complete' : 'processing',
-                    progress: Math.min(100, (progress / 40) * 100),
-                    currentStep: progress < 40 ? currentStep : undefined,
-                    reasoning: progress < 40 ? currentStep : '✅ Risk assessment complete'
-                  },
-                  {
-                    name: 'installer',
-                    status: status === 'complete' ? 'complete' : progress >= 40 ? 'processing' : 'pending',
-                    progress: progress >= 40 ? Math.min(100, ((progress - 40) / 60) * 100) : 0,
-                    currentStep: progress >= 40 && progress < 100 ? currentStep : undefined,
-                    reasoning: progress >= 40 && progress < 100 ? currentStep : progress === 100 ? '✅ Method statement complete' : 'Waiting for health & safety analysis...'
-                  }
-                ]}
-              />
+                    <AgentProcessingView
+                      overallProgress={displayProgress}
+                      currentStep={currentStep}
+                      elapsedTime={generationStartTime > 0 ? Math.floor((Date.now() - generationStartTime) / 1000) : 0}
+                      estimatedTimeRemaining={Math.max(0, Math.floor((300 * (100 - displayProgress)) / 100))}
+                      onCancel={status === 'processing' || status === 'pending' ? handleCancel : undefined}
+                      isCancelling={isCancelling}
+                      jobDescription={currentJobDescription}
+                      agentSteps={[
+                        {
+                          name: 'health-safety',
+                          status: displayProgress >= 40 ? 'complete' : 'processing',
+                          progress: Math.min(100, (displayProgress / 40) * 100),
+                          currentStep: displayProgress < 40 ? currentStep : undefined,
+                          reasoning: displayProgress < 40 ? currentStep : '✅ Risk assessment complete'
+                        },
+                        {
+                          name: 'installer',
+                          status: status === 'complete' ? 'complete' : displayProgress >= 40 ? 'processing' : 'pending',
+                          progress: displayProgress >= 40 ? Math.min(100, ((displayProgress - 40) / 60) * 100) : 0,
+                          currentStep: displayProgress >= 40 && displayProgress < 100 ? currentStep : undefined,
+                          reasoning: displayProgress >= 40 && displayProgress < 100 ? currentStep : displayProgress === 100 ? '✅ Method statement complete' : 'Waiting for health & safety analysis...'
+                        }
+                      ]}
+                    />
+                  </>
+                );
+              })()}
 
               {(error || status === 'cancelled') && (
                 <div className={`p-4 border rounded-lg ${
