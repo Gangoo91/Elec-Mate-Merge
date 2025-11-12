@@ -649,7 +649,7 @@ For EVERY installation step, you MUST:
 4. **Extract hazards** from safety notes or identify from work activities
 
 Example RAG extraction process:
-```
+
 RAG Result: {
   "primary_topic": "Installing consumer unit",
   🔧 **TOOLS REQUIRED**: Spirit level, 5.5mm masonry drill bit, Cordless drill, Screwdriver set
@@ -668,7 +668,7 @@ Your step output should include:
   "linkedHazards": ["Drilling into hidden cables - use CAT scanner", "Manual handling - use correct lifting technique"],
   "qualifications": ["Qualified Electrician", "18th Edition BS 7671"]
 }
-```
+
 
 **EXTRACTION PRIORITIES:**
 1. **Primary source**: Practical Work Intelligence tools_required and materials_needed fields (marked with 🔧 and 📦)
