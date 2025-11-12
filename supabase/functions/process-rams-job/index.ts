@@ -292,34 +292,101 @@ Deno.serve(async (req) => {
       }
     }, 30000); // Every 30 seconds
 
-    // Run both agents in parallel with 7-minute timeout
-    console.log('🚀 Starting agents with 420s (7 min) timeout...');
+    // Run both agents in parallel with direct fetch (7-minute timeout, bypasses 150s invoke ceiling)
+    console.log('🚀 Starting agents with direct fetch + 420s (7 min) timeout...');
     
-    const hsPromiseWithTimeout = Promise.race([
-      supabase.functions.invoke('health-safety-v3', {
-        body: {
-          query: job.job_description,
-          userContext: { jobScale: job.job_scale },
-          projectContext: job.project_info
+    const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
+    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    
+    // Health-Safety agent with AbortController
+    const hsController = new AbortController();
+    const hsTimeoutId = setTimeout(() => hsController.abort(), 420000);
+    const hsStartTime = Date.now();
+    
+    const hsPromiseWithTimeout = (async () => {
+      try {
+        const response = await fetch(`${SUPABASE_URL}/functions/v1/health-safety-v3`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+            'apikey': SUPABASE_SERVICE_ROLE_KEY
+          },
+          body: JSON.stringify({
+            query: job.job_description,
+            userContext: { jobScale: job.job_scale },
+            projectContext: job.project_info
+          }),
+          signal: hsController.signal
+        });
+        
+        clearTimeout(hsTimeoutId);
+        const hsDuration = ((Date.now() - hsStartTime) / 1000).toFixed(1);
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error(`❌ H&S call → HTTP ${response.status} in ${hsDuration}s:`, errorText.slice(0, 500));
+          throw new Error(`H&S agent returned HTTP ${response.status}: ${errorText.slice(0, 200)}`);
         }
-      }),
-      new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Health-safety agent timeout after 420s (7 minutes)')), 420000)
-      )
-    ]);
+        
+        const data = await response.json();
+        console.log(`✅ H&S call → HTTP ${response.status} in ${hsDuration}s`);
+        return { data, error: null };
+      } catch (error) {
+        clearTimeout(hsTimeoutId);
+        const hsDuration = ((Date.now() - hsStartTime) / 1000).toFixed(1);
+        if (error.name === 'AbortError') {
+          console.error(`⏱️ H&S timeout after ${hsDuration}s`);
+          throw new Error(`Health-safety agent timeout after 420s (7 minutes)`);
+        }
+        throw error;
+      }
+    })();
 
-    const installerPromiseWithTimeout = Promise.race([
-      supabase.functions.invoke('installer-v3', {
-        body: {
-          query: job.job_description,
-          userContext: { jobScale: job.job_scale },
-          projectContext: job.project_info
+    // Installer agent with AbortController
+    const installerController = new AbortController();
+    const installerTimeoutId = setTimeout(() => installerController.abort(), 420000);
+    const installerStartTime = Date.now();
+    
+    const installerPromiseWithTimeout = (async () => {
+      try {
+        const response = await fetch(`${SUPABASE_URL}/functions/v1/installer-v3`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+            'apikey': SUPABASE_SERVICE_ROLE_KEY
+          },
+          body: JSON.stringify({
+            query: job.job_description,
+            userContext: { jobScale: job.job_scale },
+            projectContext: job.project_info
+          }),
+          signal: installerController.signal
+        });
+        
+        clearTimeout(installerTimeoutId);
+        const installerDuration = ((Date.now() - installerStartTime) / 1000).toFixed(1);
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error(`❌ Installer call → HTTP ${response.status} in ${installerDuration}s:`, errorText.slice(0, 500));
+          throw new Error(`Installer agent returned HTTP ${response.status}: ${errorText.slice(0, 200)}`);
         }
-      }),
-      new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Installer agent timeout after 420s (7 minutes)')), 420000)
-      )
-    ]);
+        
+        const data = await response.json();
+        console.log(`✅ Installer call → HTTP ${response.status} in ${installerDuration}s`);
+        return { data, error: null };
+      } catch (error) {
+        clearTimeout(installerTimeoutId);
+        const installerDuration = ((Date.now() - installerStartTime) / 1000).toFixed(1);
+        if (error.name === 'AbortError') {
+          console.error(`⏱️ Installer timeout after ${installerDuration}s`);
+          throw new Error(`Installer agent timeout after 420s (7 minutes)`);
+        }
+        throw error;
+      }
+    })();
 
     // Wait for both to complete (or fail)
     const [hsResult, installerResult] = await Promise.allSettled([
