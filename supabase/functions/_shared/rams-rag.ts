@@ -38,7 +38,7 @@ export async function searchHealthSafetyKnowledge(query: string) {
   const { data, error } = await supabase.rpc('search_health_safety_hybrid', {
     query_embedding: queryEmbedding,
     query_text: query,
-    match_count: 12
+    match_count: 20
   });
   
   if (error) {
@@ -54,7 +54,7 @@ export async function searchRegulationsIntelligence(query: string) {
   
   const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
     query_text: query,
-    match_count: 10
+    match_count: 15
   });
   
   if (error) {
@@ -70,7 +70,7 @@ export async function searchPracticalWorkIntelligence(query: string) {
   
   const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
     query_text: query,
-    match_count: 25,
+    match_count: 35,
     filter_trade: null
   });
   
@@ -87,7 +87,7 @@ export async function searchBS7671Intelligence(query: string) {
   
   const { data, error } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
     search_keywords: query,
-    match_count: 15
+    match_count: 20
   });
   
   if (error) {
