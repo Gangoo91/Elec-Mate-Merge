@@ -171,7 +171,7 @@ async function filterHazardsByContext(
     let query = supabase
       .from('regulations_intelligence')
       .select('*')
-      .or(`primary_topic.ilike.%${context.workType}%,secondary_topics.cs.{${context.workType}}`);
+      .ilike('primary_topic', `%${context.workType}%`);
     
     if (context.location) {
       query = query.ilike('applies_to', `%${context.location}%`);
@@ -213,7 +213,7 @@ async function getCriticalHazards(
     const { data, error } = await supabase
       .from('regulations_intelligence')
       .select('*')
-      .or(`primary_topic.ilike.%${workType}%,regulation_type.eq.electrical`)
+      .or(`primary_topic.ilike.%${workType}%,category.eq.electrical`)
       .gte('confidence_score', 0.8) // High confidence
       .order('confidence_score', { ascending: false })
       .limit(5);

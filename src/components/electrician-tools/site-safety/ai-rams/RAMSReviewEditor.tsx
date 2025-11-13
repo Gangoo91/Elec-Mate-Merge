@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Download, FileText, Edit3, AlertTriangle, CheckCircle, Shield, Save, Sparkles, Plus, X, AlertCircle } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { toast } from '@/hooks/use-toast';
 import { generateRAMSPDF } from '@/utils/rams-pdf-professional';
 import { generateMethodStatementPDF } from '@/utils/method-statement-pdf';
@@ -35,7 +36,7 @@ import { CompetencyMatrixCard } from './results/CompetencyMatrixCard';
 import { RiskAssessmentSummary } from './results/RiskAssessmentSummary';
 
 interface RAMSReviewEditorProps {
-  ramsData: RAMSData;
+  ramsData?: RAMSData;
   methodData?: Partial<MethodStatementData>;
   isSaving?: boolean;
   lastSaved?: Date | null;
@@ -45,6 +46,8 @@ interface RAMSReviewEditorProps {
   rawInstallerResponse?: any;
   mode?: 'embedded' | 'standalone';
   onRegenerate?: () => void;
+  isPartial?: boolean;
+  onRetry?: () => void;
 }
 
 export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
@@ -57,10 +60,36 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   rawHSResponse,
   rawInstallerResponse,
   mode = 'embedded',
-  onRegenerate
+  onRegenerate,
+  isPartial = false,
+  onRetry
 }) => {
+  // PHASE 4: Handle missing data gracefully
+  if (!initialRamsData && !initialMethodData) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <Card className="max-w-md">
+          <CardContent className="pt-6">
+            <div className="flex flex-col items-center text-center space-y-4">
+              <AlertCircle className="h-12 w-12 text-destructive" />
+              <h3 className="text-lg font-semibold">No Data Available</h3>
+              <p className="text-sm text-muted-foreground">
+                Both risk assessment and method statement generation failed. Please try again.
+              </p>
+              {onRetry && (
+                <Button onClick={onRetry} variant="default">
+                  Retry Generation
+                </Button>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+  
   // Normalize data on load to handle old/incomplete structures
-  const normalizedRamsData: RAMSData = {
+  const normalizedRamsData: RAMSData | undefined = initialRamsData ? {
     ...initialRamsData,
     risks: (initialRamsData.risks || []).map(risk => ({
       ...risk,
@@ -68,7 +97,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       controls: risk.controls || '',
       riskRating: risk.riskRating || (risk.likelihood || 3) * (risk.severity || 3),
     }))
-  };
+  } : undefined;
 
   const normalizedMethodData: Partial<MethodStatementData> = initialMethodData ? {
     ...initialMethodData,
@@ -98,7 +127,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       : []
   } : {};
 
-  const [ramsData, setRamsData] = useState<RAMSData>(normalizedRamsData);
+  const [ramsData, setRamsData] = useState<RAMSData | undefined>(normalizedRamsData);
   const [methodData, setMethodData] = useState<Partial<MethodStatementData>>(normalizedMethodData);
   const [isGenerating, setIsGenerating] = useState(false);
   const [currentPDFType, setCurrentPDFType] = useState<'combined' | 'rams' | 'method'>('combined');
@@ -112,8 +141,10 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
   // Notify parent of updates and track unsaved changes
   useEffect(() => {
-    onUpdate(ramsData, methodData);
-    setHasUnsavedChanges(true);
+    if (ramsData && methodData) {
+      onUpdate(ramsData, methodData);
+      setHasUnsavedChanges(true);
+    }
   }, [ramsData, methodData]);
 
   // Auto-save after 30 seconds of inactivity
@@ -139,22 +170,25 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   }, []);
 
   const updateRisk = (riskId: string, updates: Partial<RAMSRisk>) => {
-    setRamsData(prev => ({
+    if (!ramsData) return;
+    setRamsData(prev => prev ? ({
       ...prev,
       risks: (prev.risks || []).map(risk =>
         risk.id === riskId ? { ...risk, ...updates } : risk
       )
-    }));
+    }) : prev);
   };
 
   const removeRisk = (riskId: string) => {
-    setRamsData(prev => ({
+    if (!ramsData) return;
+    setRamsData(prev => prev ? ({
       ...prev,
       risks: (prev.risks || []).filter(risk => risk.id !== riskId)
-    }));
+    }) : prev);
   };
 
   const addRisk = () => {
+    if (!ramsData) return;
     const newRisk: RAMSRisk = {
       id: `risk-${Date.now()}`,
       hazard: '',
@@ -166,10 +200,10 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       residualRisk: 6
     };
     
-    setRamsData(prev => ({
+    setRamsData(prev => prev ? ({
       ...prev,
       risks: [...(prev.risks || []), newRisk]
-    }));
+    }) : prev);
   };
 
   const updateStep = (stepId: string, updates: Partial<MethodStep>) => {
@@ -357,6 +391,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   };
 
   const handleGenerateCombinedRAMS = async () => {
+    if (!ramsData) return;
     // Prevent multiple clicks
     if (isGenerating) return;
     
@@ -530,6 +565,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   };
 
   const handleCopyJSON = () => {
+    if (!ramsData) return;
     const combinedData = {
       ramsData: {
         ...ramsData,
@@ -643,6 +679,30 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
             )}
           </CardTitle>
         </CardHeader>
+        
+        {/* PHASE 4: Partial Completion Warning Banner */}
+        {isPartial && (
+          <div className="p-4 bg-yellow-500/10 border-b border-yellow-500/30">
+            <Alert className="border-yellow-500/40 bg-yellow-500/5">
+              <AlertCircle className="h-5 w-5 text-yellow-500" />
+              <AlertTitle className="text-yellow-500 font-semibold">Partial Generation</AlertTitle>
+              <AlertDescription className="text-sm text-muted-foreground mt-2 space-y-2">
+                <p>
+                  {!ramsData && "⚠️ Risk assessment generation failed. "}
+                  {!methodData && "⚠️ Method statement generation failed. "}
+                  You can proceed with what's available or retry the failed section below.
+                </p>
+                {onRetry && (
+                  <Button onClick={onRetry} variant="outline" size="sm" className="mt-2 border-yellow-500/40 hover:border-yellow-500 hover:bg-yellow-500/10">
+                    <Sparkles className="h-4 w-4 mr-2" />
+                    Retry Failed Section
+                  </Button>
+                )}
+              </AlertDescription>
+            </Alert>
+          </div>
+        )}
+        
         <CardContent className="p-0">
           <Tabs defaultValue="rams" className="w-full">
             <TabsList className="grid w-full grid-cols-2 h-12 lg:h-14 bg-gradient-to-r from-elec-grey to-elec-grey/90 border-b border-elec-yellow/20 rounded-none p-1">
@@ -663,8 +723,10 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
             </TabsList>
 
             <TabsContent value="rams" className="space-y-6 mt-0 p-4 md:p-6">
-              {/* Summary Stats Card */}
-              <SummaryStatsCard risks={ramsData.risks || []} />
+              {ramsData ? (
+                <>
+                  {/* Summary Stats Card */}
+                  <SummaryStatsCard risks={ramsData.risks || []} />
               
               {/* Enhanced Risks Section */}
               <div className="space-y-4">
@@ -732,6 +794,26 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
               {/* Emergency Procedures */}
               <EmergencyProceduresCards procedures={ramsData.emergencyProcedures} />
+                </>
+              ) : (
+                <div className="p-8 text-center">
+                  <Card className="border-dashed border-yellow-500/30">
+                    <CardContent className="pt-6">
+                      <AlertCircle className="h-16 w-16 text-yellow-500/40 mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold mb-2">Risk Assessment Not Available</h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        The risk assessment generation failed. Please retry to generate this section.
+                      </p>
+                      {onRetry && (
+                        <Button onClick={onRetry} variant="outline" size="sm" className="border-yellow-500/40 hover:border-yellow-500 hover:bg-yellow-500/10">
+                          <Sparkles className="h-4 w-4 mr-2" />
+                          Retry Generation
+                        </Button>
+                      )}
+                    </CardContent>
+                  </Card>
+                </div>
+              )}
             </TabsContent>
 
             <TabsContent value="method" className="space-y-0 mt-0 pb-20">
@@ -740,8 +822,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   {/* Project Info Header */}
                   <ProjectInfoHeader 
                     methodData={methodData} 
-                    projectName={ramsData.projectName}
-                    location={ramsData.location}
+                    projectName={ramsData?.projectName}
+                    location={ramsData?.location}
                   />
 
                   {/* Emergency Contacts */}

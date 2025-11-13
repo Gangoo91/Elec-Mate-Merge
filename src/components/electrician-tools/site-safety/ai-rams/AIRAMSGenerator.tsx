@@ -185,17 +185,16 @@ export const AIRAMSGenerator: React.FC = () => {
     }
   }, [status]);
   
-  // Trigger celebration when generation completes WITH REAL DATA
+  // PHASE 4 & 5: Trigger celebration or toast for partial completions
   useEffect(() => {
     const hasFullData = ramsData && 
                         methodData && 
-                        status === 'complete' && 
+                        (status === 'complete') && 
                         ramsData.risks?.length > 0;
                         
-    const hasPartialData = ramsData && 
-                          !methodData && 
-                          status === 'complete' && 
-                          ramsData.risks?.length > 0;
+    const hasPartialData = (ramsData || methodData) && 
+                          (status === 'partial' || status === 'complete') && 
+                          !hasFullData;
                         
     // Show celebration for full data
     if (hasFullData && showResults && !celebrationShown) {
@@ -216,6 +215,7 @@ export const AIRAMSGenerator: React.FC = () => {
       sessionStorage.removeItem('rams-generation-active');
       setGenerationEndTime(Date.now());
       setCelebrationShown(true);
+      setShowResults(true); // Ensure results display
       
       toast({
         title: "Health & Safety Complete",
