@@ -13,7 +13,7 @@ const BOOT_TIME = new Date().toISOString();
 const EDGE_FUNCTION_TIMEOUT_MS = 420000; // INCREASED: 420s (7 minutes, matching installer-v3)
 console.log(`🚀 health-safety-v3 ${VERSION} booting at ${BOOT_TIME}`);
 
-import { serve } from '../_shared/deps.ts';
+import { serve } from '../_shared/minimal-deps.ts';
 import { createClient as createSupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 // Lightweight inline utilities (no v3-core dependency)
