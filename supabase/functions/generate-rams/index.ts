@@ -7,7 +7,6 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { generateHealthSafety } from '../_agents/health-safety-core.ts';
 import { generateMethodStatement } from '../_agents/installer-core.ts';
 import { transformHealthSafetyResponse } from './transformers.ts';
-import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -178,37 +177,27 @@ Deno.serve(async (req) => {
     console.log('🤖 Calling AI agents in parallel...');
     const startTime = Date.now();
 
-    // PHASE 2: Parallel agent execution with timeout protection
-    console.log('🤖 Starting parallel agents with 2.5 min timeout...');
-    
-    const AGENT_TIMEOUT = 150000; // 2.5 minutes
+    // PHASE 2: Simple parallel agent execution
+    console.log('🤖 Calling AI agents in parallel...');
     
     const [hsResult, installerResult] = await Promise.allSettled([
-      withTimeout(
-        generateHealthSafety(
-          job.job_description,
-          projectDetails,
-          async (progress: number, step: string) => {
-            if (await checkCancelled()) throw new Error('Job cancelled');
-            await updateAgentProgress('hs', progress, 'processing', step);
-          },
-          sharedRegulations
-        ),
-        AGENT_TIMEOUT,
-        'Health & Safety Agent'
+      generateHealthSafety(
+        job.job_description,
+        projectDetails,
+        async (progress: number, step: string) => {
+          if (await checkCancelled()) throw new Error('Job cancelled');
+          await updateAgentProgress('hs', progress, 'processing', step);
+        },
+        sharedRegulations
       ),
-      withTimeout(
-        generateMethodStatement(
-          job.job_description,
-          projectDetails,
-          async (progress: number, step: string) => {
-            if (await checkCancelled()) throw new Error('Job cancelled');
-            await updateAgentProgress('installer', progress, 'processing', step);
-          },
-          sharedRegulations
-        ),
-        AGENT_TIMEOUT,
-        'Installer Agent'
+      generateMethodStatement(
+        job.job_description,
+        projectDetails,
+        async (progress: number, step: string) => {
+          if (await checkCancelled()) throw new Error('Job cancelled');
+          await updateAgentProgress('installer', progress, 'processing', step);
+        },
+        sharedRegulations
       )
     ]);
 
