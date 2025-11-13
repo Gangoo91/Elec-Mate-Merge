@@ -102,21 +102,20 @@ Use the RAG context to ensure technical accuracy.`;
 export async function generateMethodStatement(
   query: string,
   projectDetails: any,
-  onProgress?: (progress: number, step: string) => Promise<void>
+  onProgress?: (progress: number, step: string) => Promise<void>,
+  sharedRegulations?: any[]
 ): Promise<any> {
   console.log('🔧 Installer Agent starting...');
   const startTime = Date.now();
   
   if (onProgress) await onProgress(0, 'Installer: Starting method statement...');
   
-  // STEP 1: RAG - Parallel search
+  // STEP 1: RAG - Use shared regulations if provided, otherwise search
   console.log('🔍 Fetching RAG knowledge...');
   if (onProgress) await onProgress(10, 'Installer: Searching installation procedures...');
   
-  const [practicalWork, regulations] = await Promise.all([
-    searchPracticalWorkIntelligence(query),
-    searchBS7671Intelligence(query)
-  ]);
+  const regulations = sharedRegulations || await searchRegulationsIntelligence(query);
+  const practicalWork = await searchPracticalWorkIntelligence(query);
   
   console.log(`✅ RAG complete: ${practicalWork.length} practical docs, ${regulations.length} regulations (${Date.now() - startTime}ms)`);
   if (onProgress) await onProgress(30, 'Installer: Calling AI with 55 knowledge documents...');

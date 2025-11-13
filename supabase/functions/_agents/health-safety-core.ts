@@ -96,21 +96,20 @@ Use the RAG context provided to ensure accuracy and compliance.`;
 export async function generateHealthSafety(
   query: string,
   projectDetails: any,
-  onProgress?: (progress: number, step: string) => Promise<void>
+  onProgress?: (progress: number, step: string) => Promise<void>,
+  sharedRegulations?: any[]
 ): Promise<any> {
   console.log('🩺 Health & Safety Agent starting...');
   const startTime = Date.now();
   
   if (onProgress) await onProgress(0, 'Health & Safety: Starting analysis...');
   
-  // STEP 1: RAG - Parallel search
+  // STEP 1: RAG - Use shared regulations if provided, otherwise search
   console.log('🔍 Fetching RAG knowledge...');
   if (onProgress) await onProgress(10, 'Health & Safety: Searching knowledge base...');
   
-  const [hsKnowledge, regulations] = await Promise.all([
-    searchHealthSafetyKnowledge(query),
-    searchRegulationsIntelligence(query)
-  ]);
+  const regulations = sharedRegulations || await searchRegulationsIntelligence(query);
+  const hsKnowledge = await searchHealthSafetyKnowledge(query);
   
   console.log(`✅ RAG complete: ${hsKnowledge.length} H&S docs, ${regulations.length} regulations (${Date.now() - startTime}ms)`);
   if (onProgress) await onProgress(30, 'Health & Safety: Calling AI with 35 knowledge documents...');
