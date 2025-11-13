@@ -166,17 +166,20 @@ async function filterHazardsByContext(
 ): Promise<StructuredHazard[]> {
   
   try {
+    // NOTE: regulation_hazards_extracted table does not exist
+    // Using regulations_intelligence as alternative
     let query = supabase
-      .from('regulation_hazards_extracted')
+      .from('regulations_intelligence')
       .select('*')
-      .contains('applies_to_work_types', [context.workType]);
+      .or(`primary_topic.ilike.%${context.workType}%,secondary_topics.cs.{${context.workType}}`);
     
     if (context.location) {
-      query = query.contains('applies_to_locations', [context.location]);
+      query = query.ilike('applies_to', `%${context.location}%`);
     }
     
     if (context.equipment && context.equipment.length > 0) {
-      query = query.overlaps('applies_to_equipment', context.equipment);
+      const equipmentFilter = context.equipment.map(eq => `equipment.cs.{${eq}}`).join(',');
+      query = query.or(equipmentFilter);
     }
     
     const { data, error } = await query
@@ -205,13 +208,14 @@ async function getCriticalHazards(
 ): Promise<StructuredHazard[]> {
   
   try {
+    // NOTE: regulation_hazards_extracted table does not exist
+    // Using regulations_intelligence as alternative
     const { data, error } = await supabase
-      .from('regulation_hazards_extracted')
+      .from('regulations_intelligence')
       .select('*')
-      .contains('applies_to_work_types', [workType])
-      .eq('hazard_category', 'electrical') // Electrical hazards always critical
-      .gte('severity', 4) // High severity
-      .order('usage_count', { ascending: false })
+      .or(`primary_topic.ilike.%${workType}%,regulation_type.eq.electrical`)
+      .gte('confidence_score', 0.8) // High confidence
+      .order('confidence_score', { ascending: false })
       .limit(5);
     
     if (error) {

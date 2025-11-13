@@ -237,28 +237,55 @@ serve(async (req) => {
     // CORRECTED LEGACY: Vector H&S (95%) + Keyword Regs (85%)
     logger.info('🔍 Starting LEGACY RAG (95% health-safety VECTOR + 85% regs KEYWORDS)');
     
+    // Generate embedding for vector search
+    console.log('🔍 Generating embedding for H&S vector search...');
+    const queryEmbedding = await generateEmbeddingWithRetry(effectiveQuery, OPENAI_API_KEY);
+    console.log('✅ Embedding generated, starting parallel RAG...');
+    
     const [healthSafetyVectorResult, bs7671KeywordResult] = await Promise.all([
-      // TIER 1: Health & Safety Knowledge - PURE VECTOR SEARCH (95% weight)
+      // TIER 1: Health & Safety Knowledge - HYBRID VECTOR+KEYWORD SEARCH (95% weight)
       (async () => {
         try {
           const { data, error } = await supabase.rpc('search_health_safety_hybrid', {
-            query_text: effectiveQuery,
-            match_count: 12
+            query_embedding: queryEmbedding,  // REQUIRED for vector search
+            query_text: effectiveQuery,        // For keyword search
+            match_count: 12,
+            scale_filter: null                 // Optional: filter by scale
           });
           
           if (error) {
-            console.error('Health-safety vector search error:', error);
+            console.error('Health-safety hybrid search error:', error);
             return [];
           }
           
-          // Apply 95% weight to vector results
+          // Fallback to keyword-only search if no results
+          if (!data || data.length === 0) {
+            console.warn('⚠️ Hybrid search returned 0 results, falling back to keyword search');
+            
+            const { data: fallbackData } = await supabase
+              .from('health_safety_knowledge')
+              .select('id, topic, content, source')
+              .textSearch('content', effectiveQuery, { 
+                type: 'websearch',
+                config: 'english'
+              })
+              .limit(12);
+              
+            return (fallbackData || []).map((row: any) => ({
+              ...row,
+              hybrid_score: 0.6,
+              search_method: 'fallback_keyword'
+            }));
+          }
+          
+          // Apply 95% weight to hybrid results
           return (data || []).map((row: any) => ({
             ...row,
-            hybrid_score: (row.similarity || 0.7) * 0.95, // 95% weight
-            search_method: 'vector'
+            hybrid_score: (row.hybrid_score || row.similarity || 0.7) * 0.95, // 95% weight
+            search_method: 'hybrid'
           }));
         } catch (error) {
-          console.error('Health-safety vector search failed:', error);
+          console.error('Health-safety search failed:', error);
           return [];
         }
       })(),
@@ -321,6 +348,24 @@ serve(async (req) => {
       regulations: bs7671Data.length,
       duration: performanceMetrics.ragRetrieval
     });
+    
+    // RAG Success Validation
+    const totalRagResults = healthSafetyDocs.length + bs7671Data.length;
+    
+    if (totalRagResults === 0) {
+      logger.error('🚨 CRITICAL: ZERO RAG RESULTS - Cannot proceed safely');
+      console.error('🚨 CRITICAL: ZERO RAG RESULTS - AI will hallucinate without knowledge base!');
+      console.error('⚠️ Consider: 1) Check query keywords, 2) Verify database connectivity, 3) Inspect RPC functions');
+      throw new Error('RAG retrieval failed - no knowledge base data available');
+    }
+    
+    if (totalRagResults < 5) {
+      logger.warn('⚠️ LOW RAG RESULTS - AI may generate generic hazards');
+      console.warn(`⚠️ WARNING: Only ${totalRagResults} RAG results - AI may lack detailed context`);
+    } else {
+      logger.info(`✅ RAG Success: ${totalRagResults} documents retrieved`);
+      console.log(`✅ RAG Success: ${totalRagResults} documents retrieved (${healthSafetyDocs.length} H&S + ${bs7671Data.length} regulations)`);
+    }
     
     // PHASE 2A: DIRECT search of regulations_intelligence for pre-structured hazards
     logger.info('🔍 Searching regulations_intelligence for hazards...');

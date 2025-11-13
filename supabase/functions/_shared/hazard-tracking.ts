@@ -30,14 +30,9 @@ export async function trackHazardUsage(params: {
         
         console.log(`✅ Hazard ${hazardId} was used - boosting confidence`);
       } else {
-        // Slight confidence penalty (not relevant for this job)
-        const { error } = await params.supabase
-          .from('regulation_hazards_extracted')
-          .update({
-            confidence_score: params.supabase.raw('confidence_score * 0.99'),
-            updated_at: new Date().toISOString()
-          })
-          .eq('id', hazardId);
+        // NOTE: regulation_hazards_extracted table does not exist
+        // Skipping confidence penalty update
+        console.log(`ℹ️ Skipping confidence penalty for hazard ${hazardId} (table not available)`);
         
         if (error) {
           console.error(`⚠️ Failed to penalize hazard ${hazardId}:`, error);
