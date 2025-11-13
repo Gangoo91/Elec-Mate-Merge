@@ -199,95 +199,67 @@ serve(async (req) => {
       const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
       const supabase = createClient(supabaseUrl, supabaseKey);
 
-      // === PHASE 1: SIMPLIFIED RAG (Direct SQL only, 3-5 queries) ===
+      // === PHASE 1: SOPHISTICATED RPC-BASED RAG (Vector + Keyword Hybrid) ===
       const ragStart = Date.now();
-      logger.info('🔍 RAG: Direct SQL queries (Practical Work 95% + Regulations 90%)');
+      logger.info('🔍 RAG: Using sophisticated hybrid RPC functions (Practical Work + BS 7671)');
 
-      // Extract keywords from query (not full text)
-      const stopWords = ['with', 'from', 'that', 'this', 'will', 'have', 'been', 'into', 'then', 'when'];
-      const keywordArray = query
-        .toLowerCase()
-        .replace(/[^\w\s-]/g, ' ')
-        .split(/\s+/)
-        .filter(w => w.length > 3 && !stopWords.includes(w))
-        .slice(0, 5);
+      // Query 1: Practical Work Intelligence via RPC (uses full query text)
+      const { data: practicalData, error: practicalError } = await supabase.rpc(
+        'search_practical_work_intelligence_hybrid',
+        {
+          query_text: query,  // Use FULL query, not extracted keywords
+          match_count: 25,
+          filter_trade: null
+        }
+      );
 
-      // Use only 2-3 key terms for ILIKE to avoid overly specific matches
-      const keywords = keywordArray.slice(0, 3).join(' ');
+      if (practicalError) {
+        logger.error('Practical work RPC error', { error: practicalError });
+      }
 
-      logger.debug('Keywords extracted', { keywordArray, keywords });
-
-      // Query 1: Practical Work Intelligence (flexible OR query, limit 25)
-      const { data: practicalData } = await supabase
-        .from('practical_work_intelligence')
-        .select('primary_topic, content, tools_required, materials_needed, bs7671_regulations, equipment_category')
-        .or(`primary_topic.ilike.%${keywords}%,installation_method.ilike.%${keywords}%`)
-        .gte('confidence_score', 0.6)
-        .order('confidence_score', { ascending: false })
-        .limit(25);
-
-      let practicalDocs = (practicalData || []).map(row => ({
+      const practicalDocs = (practicalData || []).map(row => ({
         ...row,
-        hybrid_score: 0.95,
+        content: row.primary_topic || row.content,
         source: 'practical_work_intelligence'
       }));
 
       logger.info('🔍 Practical Work RAG Results', { 
-        keywords, 
+        query: query.substring(0, 100),
         resultsCount: practicalDocs.length,
+        avgScore: practicalDocs.length > 0 
+          ? (practicalDocs.reduce((sum, d) => sum + (d.hybrid_score || 0), 0) / practicalDocs.length).toFixed(2)
+          : 0,
         sampleTopics: practicalDocs.slice(0, 3).map(d => d.primary_topic)
       });
 
-      // Fallback if no results
-      if (practicalDocs.length === 0) {
-        logger.info('⚠️ Practical work empty, using fallback');
-        const { data: fallbackData } = await supabase
-          .from('practical_work_intelligence')
-          .select('primary_topic, content, tools_required, materials_needed, bs7671_regulations, equipment_category')
-          .ilike('primary_topic', '%installation%')
-          .gte('confidence_score', 0.7)
-          .limit(15);
-        practicalDocs = (fallbackData || []).map(row => ({
-          ...row,
-          hybrid_score: 0.80,
-          source: 'practical_work_intelligence'
-        }));
+      // Query 2: BS 7671 Regulations Intelligence via RPC (uses full query text)
+      const { data: regulationsData, error: regsError } = await supabase.rpc(
+        'search_bs7671_intelligence_hybrid',
+        {
+          search_keywords: query,  // Use FULL query
+          match_count: 15
+        }
+      );
+
+      if (regsError) {
+        logger.error('Regulations RPC error', { error: regsError });
       }
 
-      // Query 2: Regulations Intelligence (flexible OR query, limit 15)
-      const { data: regulationsData } = await supabase
-        .from('regulations_intelligence')
-        .select('regulation_number, primary_topic, content, keywords, category')
-        .or(`primary_topic.ilike.%${keywords}%,keywords.cs.{installation,cable,protection,wiring}`)
-        .order('primary_topic', { ascending: true })
-        .limit(15);
-
-      let regulationsDocs = (regulationsData || []).map(row => ({
+      const regulationsDocs = (regulationsData || []).map(row => ({
         ...row,
-        hybrid_score: 0.90,
+        content: row.primary_topic || row.content,
+        hybrid_score: row.hybrid_score || row.relevance_score || 0,
         source: 'regulations_intelligence'
       }));
 
       logger.info('🔍 Regulations RAG Results', { 
-        keywords, 
+        query: query.substring(0, 100),
         resultsCount: regulationsDocs.length,
+        avgScore: regulationsDocs.length > 0
+          ? (regulationsDocs.reduce((sum, d) => sum + (d.hybrid_score || 0), 0) / regulationsDocs.length).toFixed(2)
+          : 0,
         sampleRegulations: regulationsDocs.slice(0, 3).map(d => d.regulation_number)
       });
-
-      // Fallback if no results
-      if (regulationsDocs.length === 0) {
-        logger.info('⚠️ Regulations empty, using fallback');
-        const { data: fallbackData } = await supabase
-          .from('regulations_intelligence')
-          .select('regulation_number, primary_topic, content, keywords, category')
-          .in('category', ['Installation', 'Protection', 'Earthing', 'Special Locations'])
-          .limit(10);
-        regulationsDocs = (fallbackData || []).map(row => ({
-          ...row,
-          hybrid_score: 0.75,
-          source: 'regulations_intelligence'
-        }));
-      }
 
       const installKnowledge = [...practicalDocs, ...regulationsDocs];
 
