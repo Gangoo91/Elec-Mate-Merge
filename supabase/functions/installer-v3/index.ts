@@ -2,16 +2,83 @@
 // Optimizations: Removed complex RAG logic, streamlined prompts, direct queries only
 
 import { serve } from '../_shared/deps.ts';
-import {
-  corsHeaders,
-  createLogger,
-  generateRequestId,
-  handleError,
-  ValidationError,
-  createClient
-} from '../_shared/v3-core.ts';
-import { callOpenAI } from '../_shared/ai-providers.ts';
+import { createClient as createSupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+
+// Lightweight inline utilities (no v3-core dependency)
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
+const generateRequestId = () => `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+const createClient = () => createSupabaseClient(
+  Deno.env.get('SUPABASE_URL')!,
+  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+);
+
+const createLogger = (requestId: string) => ({
+  info: (msg: string, meta?: any) => console.info(`[${requestId}] ${msg}`, meta ? JSON.stringify(meta) : ''),
+  error: (msg: string, meta?: any) => console.error(`[${requestId}] ${msg}`, meta ? JSON.stringify(meta) : ''),
+  debug: (msg: string, meta?: any) => console.debug(`[${requestId}] ${msg}`, meta ? JSON.stringify(meta) : '')
+});
+
+class ValidationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'ValidationError';
+  }
+}
+
+const handleError = (error: any, logger: any) => {
+  logger.error('Request failed', { error: error.message });
+  return new Response(
+    JSON.stringify({ success: false, error: error.message }),
+    { status: error instanceof ValidationError ? 400 : 500, headers: corsHeaders }
+  );
+};
 import { installerV3ToolSchema } from '../_shared/installer-v3-schema.ts';
+
+async function callOpenAI(
+  messages: any[],
+  model: string,
+  tools?: any[],
+  tool_choice?: any
+): Promise<any> {
+  const isNewModel = model.includes('gpt-5') || model.includes('gpt-4.1');
+  const body: any = {
+    model,
+    messages,
+    max_completion_tokens: isNewModel ? 30000 : undefined,
+    max_tokens: isNewModel ? undefined : 30000,
+    temperature: isNewModel ? undefined : 0.7
+  };
+  
+  if (tools) {
+    body.tools = tools;
+    if (tool_choice) body.tool_choice = tool_choice;
+  }
+
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`OpenAI error: ${error}`);
+  }
+
+  const data = await response.json();
+  return {
+    content: data.choices[0].message.content,
+    toolCalls: data.choices[0].message.tool_calls
+  };
+}
 
 // Response Interface
 interface InstallerV3Response {

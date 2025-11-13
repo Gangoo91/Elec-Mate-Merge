@@ -14,16 +14,108 @@ const EDGE_FUNCTION_TIMEOUT_MS = 420000; // INCREASED: 420s (7 minutes, matching
 console.log(`🚀 health-safety-v3 ${VERSION} booting at ${BOOT_TIME}`);
 
 import { serve } from '../_shared/deps.ts';
-import {
-  corsHeaders, 
-  createLogger, 
-  generateRequestId, 
-  handleError, 
-  ValidationError,
-  createClient,
-  generateEmbeddingWithRetry,
-  parseJsonWithRepair
-} from '../_shared/v3-core.ts';
+import { createClient as createSupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+
+// Lightweight inline utilities (no v3-core dependency)
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
+const generateRequestId = () => `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+const createClient = () => createSupabaseClient(
+  Deno.env.get('SUPABASE_URL')!,
+  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+);
+
+const createLogger = (requestId: string) => ({
+  info: (msg: string, meta?: any) => console.info(`[${requestId}] ${msg}`, meta ? JSON.stringify(meta) : ''),
+  error: (msg: string, meta?: any) => console.error(`[${requestId}] ${msg}`, meta ? JSON.stringify(meta) : ''),
+  debug: (msg: string, meta?: any) => console.debug(`[${requestId}] ${msg}`, meta ? JSON.stringify(meta) : ''),
+  warn: (msg: string, meta?: any) => console.warn(`[${requestId}] ${msg}`, meta ? JSON.stringify(meta) : '')
+});
+
+class ValidationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'ValidationError';
+  }
+}
+
+const handleError = (error: any, logger: any) => {
+  logger.error('Request failed', { error: error.message });
+  return new Response(
+    JSON.stringify({ success: false, error: error.message }),
+    { status: error instanceof ValidationError ? 400 : 500, headers: corsHeaders }
+  );
+};
+
+const parseJsonWithRepair = (text: string) => {
+  try {
+    return JSON.parse(text);
+  } catch {
+    const cleaned = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    return JSON.parse(cleaned);
+  }
+};
+
+async function generateEmbeddingWithRetry(text: string): Promise<number[]> {
+  const response = await fetch('https://api.openai.com/v1/embeddings', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      input: text.slice(0, 8000),
+      model: 'text-embedding-3-small'
+    })
+  });
+  const data = await response.json();
+  return data.data[0].embedding;
+}
+
+async function callOpenAI(
+  messages: any[],
+  model: string,
+  tools?: any[],
+  tool_choice?: any
+): Promise<any> {
+  const isNewModel = model.includes('gpt-5') || model.includes('gpt-4.1');
+  const body: any = {
+    model,
+    messages,
+    max_completion_tokens: isNewModel ? 30000 : undefined,
+    max_tokens: isNewModel ? undefined : 30000,
+    temperature: isNewModel ? undefined : 0.7
+  };
+  
+  if (tools) {
+    body.tools = tools;
+    if (tool_choice) body.tool_choice = tool_choice;
+  }
+
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`OpenAI error: ${error}`);
+  }
+
+  const data = await response.json();
+  return {
+    content: data.choices[0].message.content,
+    toolCalls: data.choices[0].message.tool_calls
+  };
+}
 
 // Phase 1A: Standardized Response Interface (STRICT SCHEMA)
 // This is the SINGLE SOURCE OF TRUTH for health-safety output structure
@@ -71,9 +163,6 @@ function calculateRiskLevel(riskScore: number): string {
   if (riskScore >= 6) return 'medium';
   return 'low';
 }
-import { callOpenAI } from '../_shared/ai-providers.ts';
-import { enrichResponse } from '../_shared/response-enricher.ts';
-import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -1233,14 +1322,6 @@ Include all hazards, risk scores, safety controls, PPE requirements, and emergen
       number: `H&S-${i + 1}`,
       title: r.topic || 'Safety Guidance'
     }));
-
-    // Step 6: Enrich response with UI metadata
-    const enrichedResponseData = enrichResponse(
-      safetyResult,
-      hsKnowledge?.healthSafetyDocs || [],
-      'health-safety',
-      { workType, location, hazards: extractedHazards }
-    );
 
     // ✅ PHASE 1: Build standardized response structure
     console.log('🏗️ [DIAGNOSTIC] Building standardized response structure...');
