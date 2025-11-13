@@ -70,5 +70,24 @@ export function extractAgentResults(hsResult: any, installerResult: any) {
     installerError = installerResult.reason;
   }
 
+  console.log('🔍 [DEBUG] Agent Results Extraction:', {
+    hsResult: {
+      status: hsResult.status,
+      hasData: !!hsData,
+      hasError: !!hsError,
+      errorMessage: hsError?.message,
+      dataKeys: hsData ? Object.keys(hsData) : [],
+      dataPreview: hsData ? JSON.stringify(hsData).substring(0, 200) : null
+    },
+    installerResult: {
+      status: installerResult.status,
+      hasData: !!installerData,
+      hasError: !!installerError,
+      errorMessage: installerError?.message,
+      dataKeys: installerData ? Object.keys(installerData) : [],
+      dataPreview: installerData ? JSON.stringify(installerData).substring(0, 200) : null
+    }
+  });
+
   return { hsData, hsError, installerData, installerError };
 }

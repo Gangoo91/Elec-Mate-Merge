@@ -25,8 +25,36 @@ export async function handleCompletion(
   installerError: any
 ): Promise<CompletionResult> {
   
+  console.log('🔍 [DEBUG] Completion Handler Input:', {
+    hsData: {
+      exists: !!hsData,
+      keys: hsData ? Object.keys(hsData) : [],
+      hasDataField: !!(hsData?.data),
+      successField: hsData?.success
+    },
+    hsError: {
+      exists: !!hsError,
+      message: hsError?.message
+    },
+    installerData: {
+      exists: !!installerData,
+      keys: installerData ? Object.keys(installerData) : [],
+      hasDataField: !!(installerData?.data),
+      successField: installerData?.success
+    },
+    installerError: {
+      exists: !!installerError,
+      message: installerError?.message
+    }
+  });
+
   const hsSucceeded = hsData && !hsError;
   const installerSucceeded = installerData && !installerError;
+
+  console.log('🔍 [DEBUG] Success Checks:', {
+    hsSucceeded,
+    installerSucceeded
+  });
 
   const projectDetails = {
     projectName: job.project_info.projectName,
