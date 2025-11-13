@@ -1,13 +1,10 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import { 
-  transformHealthSafetyResponse, 
-  extractEmergencyContacts,
-  calculateOverallRiskLevel,
-  calculateTotalTime 
-} from './_helpers/transformers.ts';
 import { callAgentsParallel, extractAgentResults } from './_helpers/agent-caller.ts';
 import { handleCompletion } from './_helpers/completion-handler.ts';
 import { checkCache, storeCacheIfValid } from './_helpers/cache-handler.ts';
+import { startHeartbeats, stopHeartbeats } from './_helpers/heartbeat-manager.ts';
+import { updateJobProgress, updateJobProcessing, updateJobComplete, updateJobError, checkIfCancelled } from './_helpers/job-updates.ts';
+import { buildCombinedData } from './_helpers/response-builder.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -25,18 +22,7 @@ Deno.serve(async (req) => {
   );
 
   let jobId: string | null = null;
-  let hsHeartbeatInterval: number | undefined;
-  let installerHeartbeatInterval: number | undefined;
-  
-  const checkIfCancelled = async (jobId: string): Promise<boolean> => {
-    const { data } = await supabase
-      .from('rams_generation_jobs')
-      .select('status')
-      .eq('id', jobId)
-      .single();
-    
-    return data?.status === 'cancelled';
-  };
+  let heartbeatIntervals: { hsInterval?: number; installerInterval?: number } = {};
   
   try {
     const body = await req.json();
@@ -73,27 +59,12 @@ Deno.serve(async (req) => {
       );
     }
     
-    await supabase
-      .from('rams_generation_jobs')
-      .update({ 
-        status: 'processing', 
-        started_at: new Date().toISOString(),
-        current_step: 'Analysing job description and identifying potential hazards...',
-        progress: 5
-      })
-      .eq('id', jobId);
-
-    await supabase
-      .from('rams_generation_jobs')
-      .update({ 
-        current_step: `Running Health & Safety and Method Planner in parallel for ${job.job_scale} installation...`,
-        progress: 10
-      })
-      .eq('id', jobId);
+    await updateJobProcessing(supabase, jobId);
+    await updateJobProgress(supabase, jobId, 10, `Running Health & Safety and Method Planner in parallel for ${job.job_scale} installation...`);
 
     console.log(`🚀 Starting parallel agent invocation for job: ${jobId}`);
 
-    if (await checkIfCancelled(jobId)) {
+    if (await checkIfCancelled(supabase, jobId)) {
       console.log(`🚫 Job ${jobId} cancelled before agent invocation`);
       return new Response(
         JSON.stringify({ success: false, message: 'Job was cancelled' }),
@@ -101,45 +72,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    let hsHeartbeatProgress = 15;
-    hsHeartbeatInterval = setInterval(async () => {
-      if (await checkIfCancelled(jobId!)) {
-        console.log(`🚫 Job ${jobId} cancelled during H&S heartbeat`);
-        clearInterval(hsHeartbeatInterval);
-        clearInterval(installerHeartbeatInterval);
-        return;
-      }
-      if (hsHeartbeatProgress <= 45) {
-        await supabase
-          .from('rams_generation_jobs')
-          .update({ 
-            progress: hsHeartbeatProgress,
-            current_step: 'Analysing risks and generating control measures...'
-          })
-          .eq('id', jobId);
-        hsHeartbeatProgress += 5;
-      }
-    }, 15000);
-
-    let installerHeartbeatProgress = 45;
-    installerHeartbeatInterval = setInterval(async () => {
-      if (await checkIfCancelled(jobId!)) {
-        console.log(`🚫 Job ${jobId} cancelled during Installer heartbeat`);
-        clearInterval(hsHeartbeatInterval);
-        clearInterval(installerHeartbeatInterval);
-        return;
-      }
-      if (installerHeartbeatProgress <= 80) {
-        await supabase
-          .from('rams_generation_jobs')
-          .update({ 
-            progress: installerHeartbeatProgress,
-            current_step: 'Creating installation steps and technical specifications...'
-          })
-          .eq('id', jobId);
-        installerHeartbeatProgress += 5;
-      }
-    }, 15000);
+    heartbeatIntervals = startHeartbeats(supabase, jobId, (id) => checkIfCancelled(supabase, id));
 
     const { hsResult, installerResult } = await callAgentsParallel(
       supabase,
@@ -154,10 +87,9 @@ Deno.serve(async (req) => {
       job.job_description
     );
 
-    clearInterval(hsHeartbeatInterval);
-    clearInterval(installerHeartbeatInterval);
+    stopHeartbeats(heartbeatIntervals);
 
-    if (await checkIfCancelled(jobId)) {
+    if (await checkIfCancelled(supabase, jobId)) {
       console.log(`🚫 Job ${jobId} cancelled after agent completion`);
       return new Response(
         JSON.stringify({ success: false, message: 'Job was cancelled' }),
@@ -174,24 +106,9 @@ Deno.serve(async (req) => {
       ppeCount: hsData?.data?.ppe?.length || 0
     });
 
-    await supabase
-      .from('rams_generation_jobs')
-      .update({ 
-        progress: 45,
-        current_step: 'Health & Safety analysis complete. Finalizing installation steps...',
-        raw_hs_response: hsData
-      })
-      .eq('id', jobId);
-
+    await updateJobProgress(supabase, jobId, 45, 'Health & Safety analysis complete. Finalizing installation steps...');
     console.log(`✅ Installer completed for job: ${jobId}`);
-
-    await supabase
-      .from('rams_generation_jobs')
-      .update({ 
-        progress: 85,
-        current_step: 'Finalizing installation steps and method statement...'
-      })
-      .eq('id', jobId);
+    await updateJobProgress(supabase, jobId, 85, 'Finalizing installation steps and method statement...');
 
     // PHASE 3: Graceful Degradation - Handle partial completions
     const completionResult = await handleCompletion(
@@ -218,49 +135,9 @@ Deno.serve(async (req) => {
       assessor: job.project_info.assessor
     };
 
-    const transformedRAMSData = transformHealthSafetyResponse(hsData, projectDetails);
-    
-    if (!transformedRAMSData) {
-      throw new Error('Failed to transform Health & Safety data');
-    }
+    const { combinedRAMSData, finalMethodData } = buildCombinedData(hsData, installerData, projectDetails);
 
-    console.log('✅ Transformed RAMS data:', {
-      risksCount: transformedRAMSData.risks?.length || 0,
-      ppeCount: transformedRAMSData.ppeDetails?.length || 0
-    });
-
-    const emergencyContacts = extractEmergencyContacts(installerData);
-    console.log('🚨 Emergency contacts extracted:', emergencyContacts);
-
-    const combinedRAMSData = {
-      ...transformedRAMSData,
-      ...emergencyContacts
-    };
-
-    const finalMethodData = installerData?.data ? {
-      ...installerData.data,
-      ...emergencyContacts,
-      jobTitle: installerData.data.jobTitle || projectDetails.projectName || 'Electrical Installation',
-      location: installerData.data.location || projectDetails.location,
-      contractor: installerData.data.contractor || projectDetails.contractor,
-      supervisor: installerData.data.supervisor || projectDetails.supervisor,
-      overallRiskLevel: installerData.data.overallRiskLevel || calculateOverallRiskLevel(installerData.data.riskAssessment),
-      totalEstimatedTime: installerData.data.totalEstimatedTime || calculateTotalTime(installerData.data.steps || [], installerData)
-    } : null;
-
-    await supabase
-      .from('rams_generation_jobs')
-      .update({
-        status: 'complete',
-        progress: 100,
-        current_step: 'RAMS generation complete!',
-        rams_data: combinedRAMSData,
-        ...(finalMethodData ? { method_data: finalMethodData } : {}),
-        ...(installerData ? { raw_installer_response: installerData } : {}),
-        completed_at: new Date().toISOString(),
-        generation_metadata: { cache_hit: false }
-      })
-      .eq('id', jobId);
+    await updateJobComplete(supabase, jobId, combinedRAMSData, finalMethodData, hsData, installerData);
 
     // Store in cache if both outputs are valid
     await storeCacheIfValid(
@@ -281,27 +158,8 @@ Deno.serve(async (req) => {
   } catch (error: any) {
     console.error('❌ Job processing failed:', error);
     
-    if (hsHeartbeatInterval) clearInterval(hsHeartbeatInterval);
-    if (installerHeartbeatInterval) clearInterval(installerHeartbeatInterval);
-    
-    if (jobId) {
-      let friendlyMessage = 'Generation failed';
-      if (error.message?.includes('timeout') || error.message?.includes('150000ms')) {
-        friendlyMessage = 'Generation timeout - please try a simpler job description';
-      } else if (error.message?.includes('cancelled')) {
-        friendlyMessage = 'Job was cancelled';
-      }
-
-      await supabase
-        .from('rams_generation_jobs')
-        .update({
-          status: 'failed',
-          progress: 0,
-          current_step: friendlyMessage,
-          completed_at: new Date().toISOString()
-        })
-        .eq('id', jobId);
-    }
+    stopHeartbeats(heartbeatIntervals);
+    await updateJobError(supabase, jobId, error.message);
 
     return new Response(
       JSON.stringify({ error: error.message }),
