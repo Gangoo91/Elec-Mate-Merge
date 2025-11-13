@@ -68,8 +68,9 @@ serve(async (req) => {
       console.log('🔍 Phase 1: Searching practical work via RPC...');
       const { data: pwData, error: pwError } = await supabase
         .rpc('search_practical_work_intelligence_hybrid', {
-          search_query: keywords,
-          match_count: 25
+          query_text: keywords,              // ✅ Correct parameter name
+          match_count: 25,
+          filter_trade: 'installer'          // ✅ Filter for installation work
         });
 
       let practicalDocs: any[] = [];
