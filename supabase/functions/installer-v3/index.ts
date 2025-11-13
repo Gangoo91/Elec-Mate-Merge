@@ -204,15 +204,18 @@ serve(async (req) => {
       logger.info('🔍 RAG: Direct SQL queries (Practical Work 95% + Regulations 90%)');
 
       // Extract keywords from query (not full text)
-      const keywords = query
+      const stopWords = ['with', 'from', 'that', 'this', 'will', 'have', 'been', 'into', 'then', 'when'];
+      const keywordArray = query
         .toLowerCase()
         .replace(/[^\w\s-]/g, ' ')
         .split(/\s+/)
-        .filter(w => w.length > 3)
-        .slice(0, 15)
-        .join(' ');
+        .filter(w => w.length > 3 && !stopWords.includes(w))
+        .slice(0, 5);
 
-      logger.debug('Keywords extracted', { keywords });
+      // Use only 2-3 key terms for ILIKE to avoid overly specific matches
+      const keywords = keywordArray.slice(0, 3).join(' ');
+
+      logger.debug('Keywords extracted', { keywordArray, keywords });
 
       // Query 1: Practical Work Intelligence (flexible OR query, limit 25)
       const { data: practicalData } = await supabase
@@ -228,6 +231,12 @@ serve(async (req) => {
         hybrid_score: 0.95,
         source: 'practical_work_intelligence'
       }));
+
+      logger.info('🔍 Practical Work RAG Results', { 
+        keywords, 
+        resultsCount: practicalDocs.length,
+        sampleTopics: practicalDocs.slice(0, 3).map(d => d.primary_topic)
+      });
 
       // Fallback if no results
       if (practicalDocs.length === 0) {
@@ -258,6 +267,12 @@ serve(async (req) => {
         hybrid_score: 0.90,
         source: 'regulations_intelligence'
       }));
+
+      logger.info('🔍 Regulations RAG Results', { 
+        keywords, 
+        resultsCount: regulationsDocs.length,
+        sampleRegulations: regulationsDocs.slice(0, 3).map(d => d.regulation_number)
+      });
 
       // Fallback if no results
       if (regulationsDocs.length === 0) {
