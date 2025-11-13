@@ -3,9 +3,6 @@
  * Reduces RAG API calls by batching similar queries
  */
 
-import { withRetry, RetryPresets } from './retry.ts';
-import { withTimeout, Timeouts } from './timeout.ts';
-
 export interface RAGSearchParams {
   keywords: string[];
   limit?: number;
@@ -49,20 +46,15 @@ export async function searchPracticalWorkBatch(
   const { keywords, limit = 10, activity_filter } = params;
   
   try {
-    // ✅ PHASE 2: Use hybrid keyword search with retry + 60s timeout
+    // Use hybrid keyword search (faster and more precise than vector search)
     const queryText = keywords.join(' ');
-    
-    const { data, error } = await withRetry(
-      () => withTimeout(
-        supabase.rpc('search_practical_work_intelligence_hybrid', {
-          query_text: queryText,
-          match_count: limit * 2,
-          filter_trade: activity_filter && activity_filter.length > 0 ? activity_filter[0] : null
-        }),
-        Timeouts.LONG, // 60s timeout (was 20s)
-        'Practical Work RPC'
-      ),
-      RetryPresets.STANDARD // 3 retries with exponential backoff
+    const { data, error } = await supabase.rpc(
+      'search_practical_work_intelligence_hybrid',
+      {
+        query_text: queryText,
+        match_count: limit * 2,
+        filter_trade: activity_filter && activity_filter.length > 0 ? activity_filter[0] : null
+      }
     );
     
     if (error) throw error;
@@ -83,14 +75,8 @@ export async function searchPracticalWorkBatch(
     console.log(`✅ Practical Work hybrid search: ${keywords.join(', ')} → ${results.length} facets (avg score: ${(results.reduce((sum, r) => sum + (r.similarity || 0), 0) / results.length).toFixed(2)})`);
     
     return results;
-  } catch (error: any) {
-    // ✅ PHASE 2 & 3: Enhanced error logging, removed slow fallback
-    console.error('⚠️ Practical work RPC failed after retries:', {
-      error: error.message,
-      keywords: keywords.join(', '),
-      attemptsExhausted: true,
-      returningEmpty: true
-    });
+  } catch (error) {
+    console.error('Practical Work search failed:', error);
     return [];
   }
 }
@@ -112,18 +98,14 @@ export async function searchBS7671Batch(
   const { keywords, limit = 10 } = params;
   
   try {
-    // ✅ PHASE 2: Use BS 7671 intelligence hybrid search RPC with retry + timeout
+    // Use BS 7671 intelligence hybrid search RPC
     const queryText = keywords.join(' ');
-    const { data, error } = await withRetry(
-      () => withTimeout(
-        supabase.rpc('search_bs7671_intelligence_hybrid', {
-          query_text: queryText,
-          match_count: limit
-        }),
-        Timeouts.LONG, // 60s timeout
-        'BS 7671 RPC'
-      ),
-      RetryPresets.STANDARD // 3 retries
+    const { data, error } = await supabase.rpc(
+      'search_bs7671_intelligence_hybrid',
+      {
+        query_text: queryText,
+        match_count: limit
+      }
     );
     
     if (error) throw error;
@@ -138,14 +120,8 @@ export async function searchBS7671Batch(
     console.log(`✅ BS 7671 search: ${keywords.join(', ')} → ${results.length} results`);
     
     return results;
-  } catch (error: any) {
-    // ✅ PHASE 2: Enhanced error logging
-    console.error('⚠️ BS 7671 RPC failed after retries:', {
-      error: error.message,
-      keywords: keywords.join(', '),
-      attemptsExhausted: true,
-      returningEmpty: true
-    });
+  } catch (error) {
+    console.error('BS 7671 search failed:', error);
     return [];
   }
 }

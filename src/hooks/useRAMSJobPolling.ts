@@ -96,12 +96,28 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
     // Initial poll
     pollJob();
 
-    // Fixed 1s polling - no backoff for smooth progress
-    const pollInterval = 1000; // Always 1s for instant UI updates
+    // Progressive polling backoff
+    let pollInterval = 1000; // Start at 1s for faster initial feedback
+    let pollCount = 0;
     let timeoutId: number;
 
     const poll = () => {
       pollJob();
+      pollCount++;
+      
+      // Progressive backoff:
+      // 0-20 polls (0-20s): 1s interval (super fast initial feedback)
+      // 21-40 polls (20s-1.5min): 5s interval
+      // 41+ polls (1.5min+): 10s interval
+      if (pollCount === 20) {
+        pollInterval = 5000;
+        console.log('📊 Polling: Switching to 5s interval');
+      }
+      if (pollCount === 40) {
+        pollInterval = 10000;
+        console.log('📊 Polling: Switching to 10s interval');
+      }
+      
       timeoutId = window.setTimeout(poll, pollInterval);
     };
 

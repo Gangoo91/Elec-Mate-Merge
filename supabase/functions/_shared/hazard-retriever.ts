@@ -66,15 +66,15 @@ export async function retrieveStructuredHazards(
     
     // Step 2: Multi-strategy retrieval (parallel)
     const [semanticResults, contextResults, criticalResults] = await Promise.all([
-      // Strategy A: Semantic search (reduced 15→10 for speed)
-      semanticHazardSearch(params.jobDescription, supabase, 10),
+      // Strategy A: Semantic search on hazard descriptions
+      semanticHazardSearch(params.jobDescription, supabase),
       
-      // Strategy B: Filter by context (limit to 8 results)
+      // Strategy B: Filter by work type + location + equipment
       filterHazardsByContext({
         workType: params.workType,
         location,
         equipment
-      }, supabase, 8),
+      }, supabase),
       
       // Strategy C: Get critical hazards that ALWAYS apply
       getCriticalHazards(params.workType, supabase)
@@ -118,19 +118,27 @@ export async function retrieveStructuredHazards(
 }
 
 /**
- * Strategy A: Semantic search using regulations_intelligence
+ * Strategy A: Semantic search using embeddings
  */
 async function semanticHazardSearch(
   query: string,
-  supabase: SupabaseClient,
-  matchCount: number = 10
+  supabase: SupabaseClient
 ): Promise<StructuredHazard[]> {
   
   try {
-    // Use regulations_intelligence with hybrid search (optimized match_count)
-    const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
-      query_text: query,
-      match_count: matchCount
+    // Generate embedding for query
+    const embedding = await generateEmbedding(query);
+    
+    if (!embedding) {
+      console.log('⚠️ No embedding generated, skipping semantic search');
+      return [];
+    }
+    
+    // Search using RPC function
+    const { data, error } = await supabase.rpc('match_extracted_hazards', {
+      query_embedding: embedding,
+      match_threshold: 0.70,
+      match_count: 15
     });
     
     if (error) {
@@ -138,22 +146,7 @@ async function semanticHazardSearch(
       return [];
     }
     
-    // Map regulations_intelligence to StructuredHazard format
-    return (data || []).map((reg: any) => ({
-      id: reg.id || reg.regulation_id,
-      hazard_description: reg.hazard_description || reg.primary_topic || '',
-      hazard_category: reg.category || 'general',
-      likelihood: reg.likelihood || 3,
-      severity: reg.severity || 3,
-      risk_score: (reg.likelihood || 3) * (reg.severity || 3),
-      control_measures: reg.control_measures || [],
-      regulation_number: reg.regulation_number || '',
-      regulation_section: reg.section || '',
-      regulation_excerpt: reg.content || '',
-      confidence_score: reg.confidence_score || 0.75,
-      usage_count: 0,
-      similarity: reg.hybrid_score ? reg.hybrid_score / 10 : 0.7
-    }));
+    return data || [];
   } catch (error) {
     console.error('Semantic search failed:', error);
     return [];
@@ -169,40 +162,34 @@ async function filterHazardsByContext(
     location?: string;
     equipment?: string[];
   },
-  supabase: SupabaseClient,
-  limit: number = 8
+  supabase: SupabaseClient
 ): Promise<StructuredHazard[]> {
   
   try {
-    // Use regulations_intelligence with keyword filtering
-    const searchTerms = [context.workType];
-    if (context.location) searchTerms.push(context.location);
-    if (context.equipment) searchTerms.push(...context.equipment);
+    let query = supabase
+      .from('regulation_hazards_extracted')
+      .select('*')
+      .contains('applies_to_work_types', [context.workType]);
     
-    const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
-      query_text: searchTerms.join(' '),
-      match_count: 15 // Still fetch 15, but we'll limit after mapping
-    });
+    if (context.location) {
+      query = query.contains('applies_to_locations', [context.location]);
+    }
+    
+    if (context.equipment && context.equipment.length > 0) {
+      query = query.overlaps('applies_to_equipment', context.equipment);
+    }
+    
+    const { data, error } = await query
+      .order('confidence_score', { ascending: false })
+      .order('usage_count', { ascending: false })
+      .limit(15);
     
     if (error) {
       console.error('Context filter error:', error);
       return [];
     }
     
-    // Map to StructuredHazard format and limit results
-    return (data || []).slice(0, limit).map((reg: any) => ({
-      id: reg.id || reg.regulation_id,
-      hazard_description: reg.hazard_description || reg.primary_topic || '',
-      hazard_category: reg.category || 'general',
-      likelihood: reg.likelihood || 3,
-      severity: reg.severity || 3,
-      risk_score: (reg.likelihood || 3) * (reg.severity || 3),
-      control_measures: reg.control_measures || [],
-      regulation_number: reg.regulation_number || '',
-      regulation_section: reg.section || '',
-      confidence_score: reg.confidence_score || 0.75,
-      usage_count: 0
-    }));
+    return data || [];
   } catch (error) {
     console.error('Context filtering failed:', error);
     return [];
@@ -218,33 +205,21 @@ async function getCriticalHazards(
 ): Promise<StructuredHazard[]> {
   
   try {
-    // Get critical electrical hazards from regulations_intelligence
-    const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
-      query_text: `electrical hazards ${workType} high severity`,
-      match_count: 10
-    });
+    const { data, error } = await supabase
+      .from('regulation_hazards_extracted')
+      .select('*')
+      .contains('applies_to_work_types', [workType])
+      .eq('hazard_category', 'electrical') // Electrical hazards always critical
+      .gte('severity', 4) // High severity
+      .order('usage_count', { ascending: false })
+      .limit(5);
     
     if (error) {
       console.error('Critical hazards error:', error);
       return [];
     }
     
-    // Map to StructuredHazard format with high severity
-    return (data || [])
-      .slice(0, 5)
-      .map((reg: any) => ({
-        id: reg.id || reg.regulation_id,
-        hazard_description: reg.hazard_description || reg.primary_topic || '',
-        hazard_category: 'electrical',
-        likelihood: 4,
-        severity: 4,
-        risk_score: 16,
-        control_measures: reg.control_measures || [],
-        regulation_number: reg.regulation_number || '',
-        regulation_section: reg.section || '',
-        confidence_score: reg.confidence_score || 0.8,
-        usage_count: 0
-      }));
+    return data || [];
   } catch (error) {
     console.error('Critical hazards fetch failed:', error);
     return [];

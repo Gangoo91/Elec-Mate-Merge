@@ -241,12 +241,8 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Track start time for detailed logging
-    const agentStartTime = Date.now();
-    
-    // H&S heartbeat: 15% → 45% (updates every 30s while H&S is running)
+    // H&S heartbeat: 15% → 45% (updates every 15s while H&S is running)
     let hsHeartbeatProgress = 15;
-    let hsElapsedSeconds = 0;
     hsHeartbeatInterval = setInterval(async () => {
       // Check for cancellation in heartbeat
       if (await checkIfCancelled(jobId!)) {
@@ -255,22 +251,20 @@ Deno.serve(async (req) => {
         clearInterval(installerHeartbeatInterval);
         return;
       }
-      hsElapsedSeconds += 30;
       if (hsHeartbeatProgress <= 45) {
         await supabase
           .from('rams_generation_jobs')
           .update({ 
             progress: hsHeartbeatProgress,
-            current_step: `Analysing risks and generating control measures... (${hsElapsedSeconds}s elapsed)`
+            current_step: 'Analysing risks and generating control measures...'
           })
           .eq('id', jobId);
         hsHeartbeatProgress += 5;
       }
-    }, 30000); // Every 30 seconds
+    }, 15000); // Every 15 seconds
 
-    // Installer heartbeat: 45% → 80% (updates every 30s while Installer is running)
+    // Installer heartbeat: 45% → 80% (updates every 15s while Installer is running)
     let installerHeartbeatProgress = 45;
-    let installerElapsedSeconds = 0;
     installerHeartbeatInterval = setInterval(async () => {
       // Check for cancellation in heartbeat
       if (await checkIfCancelled(jobId!)) {
@@ -279,89 +273,51 @@ Deno.serve(async (req) => {
         clearInterval(installerHeartbeatInterval);
         return;
       }
-      installerElapsedSeconds += 30;
       if (installerHeartbeatProgress <= 80) {
         await supabase
           .from('rams_generation_jobs')
           .update({ 
             progress: installerHeartbeatProgress,
-            current_step: `Creating installation steps and technical specifications... (${installerElapsedSeconds}s elapsed)`
+            current_step: 'Creating installation steps and technical specifications...'
           })
           .eq('id', jobId);
         installerHeartbeatProgress += 5;
       }
-    }, 30000); // Every 30 seconds
+    }, 15000); // Every 15 seconds
 
-    // Run both agents in parallel with supabase.functions.invoke (no HTTP ceiling)
-    console.log('🚀 Starting agents with supabase.functions.invoke (no HTTP timeout ceiling)...');
-    
-    const hsStartTime = Date.now();
-    
-    const hsPromise = (async () => {
-      try {
-        const { data, error } = await supabase.functions.invoke('health-safety-v3', {
-          body: {
-            query: job.job_description,
-            userContext: { jobScale: job.job_scale },
-            projectContext: job.project_info
-          }
-        });
-        
-        const hsDuration = ((Date.now() - hsStartTime) / 1000).toFixed(1);
-        
-        if (error) {
-          console.error(`❌ H&S invoke error in ${hsDuration}s:`, error);
-          throw new Error(`H&S agent error: ${error.message || JSON.stringify(error)}`);
+    // Run both agents in parallel
+    const hsPromiseWithTimeout = Promise.race([
+      supabase.functions.invoke('health-safety-v3', {
+        body: {
+          query: job.job_description,
+          userContext: { jobScale: job.job_scale },
+          projectContext: job.project_info
         }
-        
-        console.log(`✅ H&S completed in ${hsDuration}s`);
-        return { data, error: null };
-      } catch (error) {
-        const hsDuration = ((Date.now() - hsStartTime) / 1000).toFixed(1);
-        console.error(`❌ H&S failed after ${hsDuration}s:`, error);
-        throw error;
-      }
-    })();
+      }),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Health-safety agent timeout after 300s')), 300000)
+      )
+    ]);
 
-    const installerStartTime = Date.now();
-    
-    const installerPromise = (async () => {
-      try {
-        const { data, error } = await supabase.functions.invoke('installer-v3', {
-          body: {
-            query: job.job_description,
-            userContext: { jobScale: job.job_scale },
-            projectContext: job.project_info
-          }
-        });
-        
-        const installerDuration = ((Date.now() - installerStartTime) / 1000).toFixed(1);
-        
-        if (error) {
-          console.error(`❌ Installer invoke error in ${installerDuration}s:`, error);
-          throw new Error(`Installer agent error: ${error.message || JSON.stringify(error)}`);
+    const installerPromiseWithTimeout = Promise.race([
+      supabase.functions.invoke('installer-v3', {
+        body: {
+          query: job.job_description,
+          userContext: { jobScale: job.job_scale },
+          projectContext: job.project_info
         }
-        
-        console.log(`✅ Installer completed in ${installerDuration}s`);
-        return { data, error: null };
-      } catch (error) {
-        const installerDuration = ((Date.now() - installerStartTime) / 1000).toFixed(1);
-        console.error(`❌ Installer failed after ${installerDuration}s:`, error);
-        throw error;
-      }
-    })();
+      }),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Installer agent timeout after 300s')), 300000)
+      )
+    ]);
 
     // Wait for both to complete (or fail)
     const [hsResult, installerResult] = await Promise.allSettled([
-      hsPromise,
-      installerPromise
+      hsPromiseWithTimeout,
+      installerPromiseWithTimeout
     ]);
 
-    // Calculate total agent execution time
-    const agentEndTime = Date.now();
-    const totalAgentDuration = ((agentEndTime - agentStartTime) / 1000).toFixed(1);
-    console.log(`⏱️ Both agents completed in ${totalAgentDuration}s`);
-    
     // Clear both heartbeat intervals
     if (hsHeartbeatInterval) clearInterval(hsHeartbeatInterval);
     if (installerHeartbeatInterval) clearInterval(installerHeartbeatInterval);
@@ -375,20 +331,13 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Extract H&S data with detailed error logging
-    let hsData, hsError, hsSuccess = false;
-    let hsDuration = 'unknown';
+    // Extract H&S data
+    let hsData, hsError;
     if (hsResult.status === 'fulfilled') {
       const result = hsResult.value as any;
       hsData = result.data;
       hsError = result.error;
-      hsSuccess = !!hsData && !hsError;
-      hsDuration = `${totalAgentDuration}s`;
-      console.log(`✅ Health-safety completed for job: ${jobId}`, { 
-        success: hsSuccess, 
-        hasData: !!hsData,
-        duration: hsDuration
-      });
+      console.log(`✅ Health-safety completed for job: ${jobId}`);
       
       // PHASE 1: Detailed diagnostic logging
       console.log('🔍 [PHASE 1 DIAGNOSTIC] Health-safety raw response structure:', {
@@ -413,31 +362,16 @@ Deno.serve(async (req) => {
         .eq('id', jobId);
     } else {
       hsError = hsResult.reason;
-      hsDuration = `timeout at ${totalAgentDuration}s`;
-      const isTimeout = hsError?.message?.includes('timeout');
-      console.error(`❌ Health-safety ${isTimeout ? 'TIMED OUT' : 'FAILED'} for job: ${jobId}`, { 
-        error: hsError?.message || hsError, 
-        errorCode: hsError?.code,
-        errorType: hsError instanceof Error ? hsError.constructor.name : typeof hsError,
-        duration: hsDuration,
-        isTimeout
-      });
+      console.error(`❌ Health-safety failed for job: ${jobId}`, hsError);
     }
 
-    // Extract Installer data with detailed error logging
-    let installerData, installerError, installerSuccess = false;
-    let installerDuration = 'unknown';
+    // Extract Installer data
+    let installerData, installerError;
     if (installerResult.status === 'fulfilled') {
       const result = installerResult.value as any;
       installerData = result.data;
       installerError = result.error;
-      installerSuccess = !!installerData && !installerError;
-      installerDuration = `${totalAgentDuration}s`;
-      console.log(`✅ Installer completed for job: ${jobId}`, { 
-        success: installerSuccess, 
-        hasData: !!installerData,
-        duration: installerDuration
-      });
+      console.log(`✅ Installer completed for job: ${jobId}`);
 
       // Update progress for Installer completion
       await supabase
@@ -450,47 +384,30 @@ Deno.serve(async (req) => {
         .eq('id', jobId);
     } else {
       installerError = installerResult.reason;
-      installerDuration = `timeout at ${totalAgentDuration}s`;
-      const isTimeout = installerError?.message?.includes('timeout');
-      console.error(`❌ Installer ${isTimeout ? 'TIMED OUT' : 'FAILED'} for job: ${jobId}`, { 
-        error: installerError?.message || installerError,
-        errorCode: installerError?.code,
-        errorType: installerError instanceof Error ? installerError.constructor.name : typeof installerError,
-        duration: installerDuration,
-        isTimeout
-      });
+      console.error(`❌ Installer failed for job: ${jobId}`, installerError);
     }
 
-    // Handle partial or complete failure with better error messages
-    const hsHasData = hsData && !hsError && hsData.data;
-    const installerHasData = installerData && !installerError && installerData.data;
-    
-    if (!hsHasData && !installerHasData) {
-      const hsMsg = hsError?.message || (hsError instanceof Error ? hsError.toString() : JSON.stringify(hsError));
-      const installerMsg = installerError?.message || (installerError instanceof Error ? installerError.toString() : JSON.stringify(installerError));
-      throw new Error(`Both agents failed. H&S: ${hsMsg}. Installer: ${installerMsg}`);
+    // Handle partial or complete failure
+    if ((hsError || !hsData) && (installerError || !installerData)) {
+      throw new Error(`Both agents failed. H&S: ${hsError?.message ?? 'Unknown error'}. Installer: ${installerError?.message ?? 'Unknown error'}`);
     }
     
-    if (!hsHasData) {
+    if (hsError || !hsData) {
       console.warn('⚠️ Health-safety failed but Installer succeeded - returning partial result');
       await supabase
         .from('rams_generation_jobs')
         .update({ 
-          current_step: '⚠️ Partial: Risk assessment failed, but installation steps generated.',
-          has_rams_data: false,
-          has_method_data: true
+          current_step: '⚠️ Partial result: Health & Safety analysis failed, but installation steps generated successfully.',
         })
         .eq('id', jobId);
     }
 
-    if (!installerHasData) {
+    if (installerError || !installerData) {
       console.warn('⚠️ Installer failed but Health-safety succeeded - returning partial result');
       await supabase
         .from('rams_generation_jobs')
         .update({ 
-          current_step: '⚠️ Partial: Method statement failed, but risk assessment completed.',
-          has_rams_data: true,
-          has_method_data: false
+          current_step: '⚠️ Partial result: Installation method failed, but safety analysis completed successfully.',
         })
         .eq('id', jobId);
     }
@@ -706,31 +623,15 @@ Deno.serve(async (req) => {
       });
     }
     
-    // ✅ PHASE 4: Validate result before caching
-    console.log('💾 Checking if result is cacheable...');
-    
-    const hasMethods = installerData?.data?.steps && installerData.data.steps.length > 0;
-    const hasHazards = combinedRAMSData?.risks && combinedRAMSData.risks.length > 0;
-    
-    if (hasMethods && hasHazards) {
-      console.log('✅ Result is complete - storing in cache');
-      await storeRAMSCache({
-        supabase,
-        jobDescription: job.job_description,
-        workType: job.job_scale,
-        jobScale: job.job_scale,
-        ramsData: combinedRAMSData,
-        methodData: installerData.data,
-        openAiKey: OPENAI_API_KEY
-      });
-    } else {
-      console.log('⚠️ Result is partial - skipping cache write', {
-        hasMethods,
-        hasHazards,
-        methodSteps: installerData?.data?.steps?.length || 0,
-        hazards: combinedRAMSData?.risks?.length || 0
-      });
-    }
+    await storeRAMSCache({
+      supabase,
+      jobDescription: job.job_description,
+      workType: job.job_scale,
+      jobScale: job.job_scale,
+      ramsData: combinedRAMSData,
+      methodData: installerData?.data ?? null, // ✅ Guard against null installerData
+      openAiKey: OPENAI_API_KEY
+    });
     
     // Determine final status message
     const currentStepMessage = 
@@ -845,18 +746,6 @@ Deno.serve(async (req) => {
         generation_metadata: generationMetadata
       })
       .eq('id', jobId);
-
-    // ✅ PHASE 5: Job summary logging
-    console.log('📊 =============== RAMS JOB SUMMARY ===============');
-    console.log('📊 Job ID:', jobId);
-    console.log('📊 Duration:', `${((Date.now() - Date.parse(job.created_at)) / 1000).toFixed(1)}s`);
-    console.log('📊 Health & Safety Agent:', hsHasData ? '✅ SUCCESS' : '❌ FAILED');
-    console.log('📊 Installer Agent:', installerHasData ? '✅ SUCCESS' : '❌ FAILED');
-    console.log('📊 Hazards Generated:', combinedRAMSData?.risks?.length || 0);
-    console.log('📊 Method Steps Generated:', installerData?.data?.steps?.length || 0);
-    console.log('📊 Cache Write:', (hsHasData && installerHasData) ? '✅ YES' : '⚠️ SKIPPED (partial)');
-    console.log('📊 Final Status:', (hsHasData && installerHasData) ? 'COMPLETE' : 'PARTIAL');
-    console.log('📊 ================================================');
 
     console.log(`🎉 Job complete: ${jobId}`);
 

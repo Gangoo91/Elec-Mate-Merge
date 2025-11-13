@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AlertTriangle, CheckCircle2, Zap, Copy, ChevronDown, Cable } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Zap, Copy, ChevronDown } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
@@ -143,28 +143,12 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                     <p className="text-xs text-muted-foreground">{test.instrumentSetup}</p>
                   </div>
 
-                  {/* Lead Placement */}
-                  {test.leadPlacement && (
-                    <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
-                      <div className="flex items-center gap-2 text-purple-300 text-sm font-medium mb-2">
-                        <Cable className="h-4 w-4" />
-                        Test Lead Placement
-                      </div>
-                      <p className="text-xs text-muted-foreground">{test.leadPlacement}</p>
-                    </div>
-                  )}
-
                   {/* Procedure */}
                   <div>
                     <div className="text-sm font-medium text-foreground mb-2">Procedure</div>
-                    <ol className="space-y-2">
+                    <ol className="space-y-1 text-xs text-muted-foreground list-decimal list-inside">
                       {test.procedure.map((step, i) => (
-                        <li key={i} className="flex gap-3 items-start">
-                          <Badge className="shrink-0 h-6 w-6 rounded-full flex items-center justify-center p-0 text-xs">
-                            {i + 1}
-                          </Badge>
-                          <span className="text-xs text-muted-foreground flex-1 pt-0.5">{step}</span>
-                        </li>
+                        <li key={i}>{step}</li>
                       ))}
                     </ol>
                   </div>
@@ -278,66 +262,33 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                     <p className="text-xs text-muted-foreground">{test.instrumentSetup}</p>
                   </div>
 
-                  {/* Lead Placement */}
-                  {test.leadPlacement && (
-                    <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
-                      <div className="flex items-center gap-2 text-purple-300 text-sm font-medium mb-2">
-                        <Cable className="h-4 w-4" />
-                        Test Lead Placement
-                      </div>
-                      <p className="text-xs text-muted-foreground">{test.leadPlacement}</p>
-                    </div>
-                  )}
-
                   {/* Procedure */}
                   <div>
                     <div className="text-sm font-medium text-foreground mb-2">Procedure</div>
-                    <ol className="space-y-2">
+                    <ol className="space-y-1 text-xs text-muted-foreground list-decimal list-inside">
                       {test.procedure.map((step, i) => (
-                        <li key={i} className="flex gap-3 items-start">
-                          <Badge className="shrink-0 h-6 w-6 rounded-full flex items-center justify-center p-0 text-xs">
-                            {i + 1}
-                          </Badge>
-                          <span className="text-xs text-muted-foreground flex-1 pt-0.5">{step}</span>
-                        </li>
+                        <li key={i}>{step}</li>
                       ))}
                     </ol>
                   </div>
 
-                  {/* Calculation Breakdown */}
+                  {/* Calculation */}
                   {test.calculation && (
                     <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
-                      <div className="text-sm font-medium text-purple-300 mb-2 flex items-center gap-2">
-                        <span>📐</span>
-                        Calculation Breakdown
-                      </div>
+                      <div className="text-sm font-medium text-purple-300 mb-1">Calculation</div>
                       {typeof test.calculation === 'object' ? (
-                        <div className="space-y-2">
+                        <div className="space-y-1">
                           {test.calculation.formula && (
-                            <div className="bg-purple-500/5 rounded p-2">
-                              <p className="text-xs font-semibold text-purple-200 mb-1">Formula:</p>
-                              <p className="text-sm text-purple-300 font-mono">{test.calculation.formula}</p>
-                            </div>
+                            <p className="text-xs text-purple-300 font-mono">{test.calculation.formula}</p>
                           )}
                           {test.calculation.Ze && (
-                            <div className="flex items-center justify-between text-xs">
-                              <span className="text-muted-foreground">Ze (external loop):</span>
-                              <Badge variant="outline" className="font-mono">{test.calculation.Ze}</Badge>
-                            </div>
+                            <p className="text-xs text-muted-foreground">Ze = {test.calculation.Ze}</p>
                           )}
                           {test.calculation.R1R2 && (
-                            <div className="flex items-center justify-between text-xs">
-                              <span className="text-muted-foreground">R1+R2 (circuit):</span>
-                              <Badge variant="outline" className="font-mono">{test.calculation.R1R2}</Badge>
-                            </div>
+                            <p className="text-xs text-muted-foreground">R1+R2 = {test.calculation.R1R2}</p>
                           )}
                           {test.calculation.expectedZs && (
-                            <div className="bg-purple-500/10 rounded p-2 mt-2">
-                              <div className="flex items-center justify-between">
-                                <span className="text-xs font-semibold text-purple-200">Expected Zs:</span>
-                                <Badge className="font-mono text-sm">{test.calculation.expectedZs}</Badge>
-                              </div>
-                            </div>
+                            <p className="text-xs text-purple-300 font-semibold">Expected Zs = {test.calculation.expectedZs}</p>
                           )}
                         </div>
                       ) : (

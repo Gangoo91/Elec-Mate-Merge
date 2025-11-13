@@ -27,79 +27,9 @@ export const AIRAMSGenerator: React.FC = () => {
   const [isCancelling, setIsCancelling] = useState(false);
   const [currentJobDescription, setCurrentJobDescription] = useState<string>('');
   const lastErrorNotifiedJobRef = React.useRef<string | null>(null);
-  const [localProgress, setLocalProgress] = useState(0);
-  const [startTime, setStartTime] = useState<number | null>(null);
   
   const { job, startPolling, stopPolling, progress, status, currentStep, ramsData, methodData, error } = useRAMSJobPolling(currentJobId);
   const { requestPermission, showCompletionNotification, showErrorNotification } = useRAMSNotifications();
-
-  // Warm-up helper - eliminates cold starts
-  const warmUpFunctions = async () => {
-    console.log('🔥 Warming up functions...');
-    
-    const warmUpPromises = [
-      supabase.functions.invoke('health-safety-v3', {
-        body: { mode: 'health-check' }
-      }).catch(() => {}), // Ignore errors
-      
-      supabase.functions.invoke('installer-v3', {
-        body: { mode: 'health-check' }
-      }).catch(() => {}) // Ignore errors
-    ];
-    
-    await Promise.allSettled(warmUpPromises);
-    console.log('✅ Functions warmed');
-  };
-
-  // Retry wrapper with exponential backoff
-  const invokeWithRetry = async (
-    functionName: string,
-    body: any,
-    maxRetries: number = 3
-  ): Promise<any> => {
-    const backoffs = [1000, 2500, 5000]; // 1s, 2.5s, 5s
-    
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      try {
-        console.log(`📞 Calling ${functionName} (attempt ${attempt}/${maxRetries})`);
-        
-        const result = await supabase.functions.invoke(functionName, { body });
-        
-        // Check for API errors (429, 503)
-        if (result.error) {
-          const errorMsg = result.error.message || '';
-          
-          if (errorMsg.includes('Failed to send a request') || 
-              errorMsg.includes('429') || 
-              errorMsg.includes('503')) {
-            throw new Error(errorMsg);
-          }
-          
-          // Non-retryable error
-          return result;
-        }
-        
-        console.log(`✅ ${functionName} succeeded on attempt ${attempt}`);
-        return result;
-        
-      } catch (error: any) {
-        const isLastAttempt = attempt === maxRetries;
-        const errorMsg = error.message || String(error);
-        
-        console.warn(`⚠️ ${functionName} attempt ${attempt} failed: ${errorMsg}`);
-        
-        if (isLastAttempt) {
-          console.error(`❌ ${functionName} failed after ${maxRetries} attempts`);
-          throw error;
-        }
-        
-        // Wait before retry
-        const delay = backoffs[attempt - 1] || 5000;
-        console.log(`⏳ Retrying ${functionName} in ${delay}ms...`);
-        await new Promise(resolve => setTimeout(resolve, delay));
-      }
-    }
-  };
 
   // Check for in-progress jobs on mount (only if user initiated in this session)
   useEffect(() => {
@@ -206,20 +136,13 @@ export const AIRAMSGenerator: React.FC = () => {
 
   // Trigger celebration when generation completes WITH REAL DATA
   useEffect(() => {
-    // Full completion - both datasets present
-    const hasFullData = ramsData && 
+    const hasRealData = ramsData && 
                         methodData && 
                         status === 'complete' && 
                         ramsData.risks?.length > 0 && 
                         !currentStep?.includes('partial');
-    
-    // Partial completion - at least RAMS data present
-    const hasPartialData = ramsData &&
-                           !methodData &&
-                           status === 'complete' &&
-                           currentStep?.includes('partial');
                         
-    if (hasFullData && showResults && !celebrationShown) {
+    if (hasRealData && showResults && !celebrationShown) {
       // Clear session flag on completion
       sessionStorage.removeItem('rams-generation-active');
       
@@ -227,19 +150,6 @@ export const AIRAMSGenerator: React.FC = () => {
       setShowCelebration(true);
       setCelebrationShown(true);
       triggerHaptic([100, 50, 100, 50, 200]);
-    }
-    
-    // For partial completion, skip celebration and go straight to results
-    if (hasPartialData && !celebrationShown) {
-      sessionStorage.removeItem('rams-generation-active');
-      setGenerationEndTime(Date.now());
-      setCelebrationShown(true);
-      
-      toast({
-        title: "Partial Generation Complete",
-        description: "Risk assessment succeeded, but method statement timed out. You can retry the method statement.",
-        variant: 'default'
-      });
     }
   }, [ramsData, methodData, status, currentStep, showResults, celebrationShown]);
 
@@ -266,166 +176,17 @@ export const AIRAMSGenerator: React.FC = () => {
     setShowCelebration(false);
     setCelebrationShown(false);
     
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        toast({
-          title: "Authentication required",
-          description: "Please log in to generate RAMS",
-          variant: 'destructive'
-        });
-        return;
-      }
-
-      // Create job record in database
-      const { data: jobRecord, error: jobError } = await supabase
-        .from('rams_generation_jobs')
-        .insert({
-          user_id: user.id,
-          job_description: jobDescription,
-          project_info: projectInfo,
-          job_scale: jobScale,
-          status: 'pending',
-          progress: 0,
-          current_step: 'Starting generation...'
-        })
-        .select()
-        .single();
-
-      if (jobError || !jobRecord) {
-        console.error('Failed to create job:', jobError);
-        toast({
-          title: "Failed to start generation",
-          description: jobError?.message || "Could not create job record",
-          variant: 'destructive'
-        });
-        return;
-      }
-      
-      setCurrentJobId(jobRecord.id);
-      startPolling();
-
-      // Start local progress timer with stable timestamp
-      const localStart = Date.now();
-      setStartTime(localStart);
-      setLocalProgress(0);
-      
-      const progressTimer = setInterval(() => {
-        const elapsed = Date.now() - localStart;
-        const expectedDuration = 150000; // 2.5 minutes in ms
-        
-        // Smooth ramp to 95% based on elapsed time
-        const estimatedProgress = Math.min(95, (elapsed / expectedDuration) * 100);
-        setLocalProgress(prev => Math.max(prev, estimatedProgress));
-      }, 1000);
-
-      try {
-        // Step 1: Warm up functions (eliminates cold start delays)
-        await warmUpFunctions();
-
-        // Step 2: Call both agents in parallel with retries
-        console.log('🚀 Starting parallel agent calls...');
-        
-        const [hsResult, installerResult] = await Promise.allSettled([
-          invokeWithRetry('health-safety-v3', {
-            jobId: jobRecord.id,
-            query: jobDescription,
-            workType: jobScale,
-            projectInfo: projectInfo
-          }),
-          
-          invokeWithRetry('installer-v3', {
-            jobId: jobRecord.id,
-            query: jobDescription,
-            workType: jobScale,
-            projectInfo: projectInfo
-          })
-        ]);
-
-        console.log('✅ Both agents completed');
-        console.log('H&S Result:', hsResult.status);
-        console.log('Installer Result:', installerResult.status);
-
-        // Merge results
-        const hsData = hsResult.status === 'fulfilled' ? hsResult.value.data?.data : null;
-        const installerData = installerResult.status === 'fulfilled' ? installerResult.value.data?.data : null;
-        
-        const hsError = hsResult.status === 'rejected' ? hsResult.reason : 
-                       (hsResult.status === 'fulfilled' && hsResult.value.error ? hsResult.value.error : null);
-        const installerError = installerResult.status === 'rejected' ? installerResult.reason :
-                              (installerResult.status === 'fulfilled' && installerResult.value.error ? installerResult.value.error : null);
-
-        // Determine final status
-        let finalStatus: 'complete' | 'failed' = 'complete';
-        let errorMessage: string | null = null;
-        
-        if (!hsData && !installerData) {
-          finalStatus = 'failed';
-          errorMessage = `Both agents failed. H&S: ${hsError?.message || 'Unknown error'}. Installer: ${installerError?.message || 'Unknown error'}`;
-        } else if (!hsData) {
-          finalStatus = 'failed';
-          errorMessage = `Health & Safety agent failed: ${hsError?.message || 'Unknown error'}`;
-        }
-        // Note: Installer failure is NOT a complete failure - we'll save partial results
-
-        // Update job with final results
-        const { error: updateError } = await supabase
-          .from('rams_generation_jobs')
-          .update({
-            status: finalStatus,
-            progress: finalStatus === 'complete' ? 100 : localProgress,
-            current_step: finalStatus === 'complete' 
-              ? (installerData ? 'Complete' : 'Complete (partial - method statement failed)')
-              : 'Failed',
-            rams_data: hsData || null,
-            method_data: installerData || null,
-            raw_hs_response: hsData || null,
-            raw_installer_response: installerData || null,
-            error_message: errorMessage,
-            completed_at: new Date().toISOString()
-          })
-          .eq('id', jobRecord.id);
-
-        if (updateError) {
-          console.error('Failed to update job with results:', updateError);
-        }
-
-        console.log('📊 Final job status:', finalStatus);
-      } finally {
-        clearInterval(progressTimer);
-      }
-      
-    } catch (error: any) {
-      console.error('Generation error:', error);
-      
-      const errorMessage = error.message || 'Unknown error occurred';
-      const userFriendlyMessage = 
-        errorMessage.includes('Failed to send a request') 
-          ? 'Network connection failed. Please check your internet and try again.'
-          : errorMessage.includes('429')
-          ? 'Rate limit exceeded. Please wait a moment and try again.'
-          : errorMessage.includes('timeout')
-          ? 'Generation took too long. Please try again with a simpler description.'
-          : errorMessage;
-      
-      if (currentJobId) {
-        await supabase
-          .from('rams_generation_jobs')
-          .update({
-            status: 'failed',
-            error_message: `${errorMessage} (after retries)`,
-            progress: localProgress, // Keep last known progress
-            completed_at: new Date().toISOString()
-          })
-          .eq('id', currentJobId);
-      }
-      
-      toast({
-        title: "Generation failed",
-        description: userFriendlyMessage,
-        variant: 'destructive'
-      });
+    const { data, error } = await supabase.functions.invoke('create-rams-job', {
+      body: { jobDescription, projectInfo, jobScale }
+    });
+    
+    if (error || !data?.jobId) {
+      console.error('Failed to create job:', error);
+      return;
     }
+    
+    setCurrentJobId(data.jobId);
+    startPolling();
   };
 
   const handleCancel = async () => {
@@ -520,7 +281,7 @@ export const AIRAMSGenerator: React.FC = () => {
   };
   
   const saveToDatabase = async () => {
-    if (!currentJobId || !ramsData) {
+    if (!currentJobId || !ramsData || !methodData) {
       toast({
         title: "Cannot Save",
         description: "No data to save",
@@ -614,55 +375,46 @@ export const AIRAMSGenerator: React.FC = () => {
             />
           ) : (
             <>
-              {/* Calculate combined progress for smooth UI updates */}
-              {(() => {
-                const displayProgress = Math.max(localProgress, progress);
-                
-                return (
-                  <>
-                    {/* Resuming banner */}
-                    {resumedJob && status !== 'complete' && (
-                      <div className="p-3 sm:p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg flex items-center gap-3">
-                        <Clock className="h-5 w-5 text-blue-400 shrink-0" />
-                        <div>
-                          <p className="text-sm font-semibold text-blue-400">
-                            Resuming generation from earlier...
-                          </p>
-                          <p className="text-xs text-blue-400/70 mt-0.5">
-                            Current progress: {Math.round(displayProgress)}%
-                          </p>
-                        </div>
-                      </div>
-                    )}
+              {/* Resuming banner */}
+              {resumedJob && status !== 'complete' && (
+                <div className="p-3 sm:p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg flex items-center gap-3">
+                  <Clock className="h-5 w-5 text-blue-400 shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-blue-400">
+                      Resuming generation from earlier...
+                    </p>
+                    <p className="text-xs text-blue-400/70 mt-0.5">
+                      Current progress: {progress}%
+                    </p>
+                  </div>
+                </div>
+              )}
 
-                    <AgentProcessingView
-                      overallProgress={displayProgress}
-                      currentStep={currentStep}
-                      elapsedTime={generationStartTime > 0 ? Math.floor((Date.now() - generationStartTime) / 1000) : 0}
-                      estimatedTimeRemaining={Math.max(0, Math.floor((300 * (100 - displayProgress)) / 100))}
-                      onCancel={status === 'processing' || status === 'pending' ? handleCancel : undefined}
-                      isCancelling={isCancelling}
-                      jobDescription={currentJobDescription}
-                      agentSteps={[
-                        {
-                          name: 'health-safety',
-                          status: displayProgress >= 40 ? 'complete' : 'processing',
-                          progress: Math.min(100, (displayProgress / 40) * 100),
-                          currentStep: displayProgress < 40 ? currentStep : undefined,
-                          reasoning: displayProgress < 40 ? currentStep : '✅ Risk assessment complete'
-                        },
-                        {
-                          name: 'installer',
-                          status: status === 'complete' ? 'complete' : displayProgress >= 40 ? 'processing' : 'pending',
-                          progress: displayProgress >= 40 ? Math.min(100, ((displayProgress - 40) / 60) * 100) : 0,
-                          currentStep: displayProgress >= 40 && displayProgress < 100 ? currentStep : undefined,
-                          reasoning: displayProgress >= 40 && displayProgress < 100 ? currentStep : displayProgress === 100 ? '✅ Method statement complete' : 'Waiting for health & safety analysis...'
-                        }
-                      ]}
-                    />
-                  </>
-                );
-              })()}
+              <AgentProcessingView
+                overallProgress={progress}
+                currentStep={currentStep}
+                elapsedTime={generationStartTime > 0 ? Math.floor((Date.now() - generationStartTime) / 1000) : 0}
+                estimatedTimeRemaining={Math.max(0, Math.floor((300 * (100 - progress)) / 100))}
+                onCancel={status === 'processing' || status === 'pending' ? handleCancel : undefined}
+                isCancelling={isCancelling}
+                jobDescription={currentJobDescription}
+                agentSteps={[
+                  {
+                    name: 'health-safety',
+                    status: progress >= 40 ? 'complete' : 'processing',
+                    progress: Math.min(100, (progress / 40) * 100),
+                    currentStep: progress < 40 ? currentStep : undefined,
+                    reasoning: progress < 40 ? currentStep : '✅ Risk assessment complete'
+                  },
+                  {
+                    name: 'installer',
+                    status: status === 'complete' ? 'complete' : progress >= 40 ? 'processing' : 'pending',
+                    progress: progress >= 40 ? Math.min(100, ((progress - 40) / 60) * 100) : 0,
+                    currentStep: progress >= 40 && progress < 100 ? currentStep : undefined,
+                    reasoning: progress >= 40 && progress < 100 ? currentStep : progress === 100 ? '✅ Method statement complete' : 'Waiting for health & safety analysis...'
+                  }
+                ]}
+              />
 
               {(error || status === 'cancelled') && (
                 <div className={`p-4 border rounded-lg ${
@@ -683,48 +435,8 @@ export const AIRAMSGenerator: React.FC = () => {
                 </div>
               )}
 
-              {ramsData && (
+              {ramsData && methodData && (
                 <div id="rams-results" className="px-2">
-                  {/* Partial completion warning banner */}
-                  {!methodData && status === 'complete' && (
-                    <div className="mb-4 p-4 bg-orange-500/10 border border-orange-500/30 rounded-lg">
-                      <div className="flex items-start gap-3">
-                        <AlertCircle className="h-5 w-5 text-orange-400 shrink-0 mt-0.5" />
-                        <div className="flex-1">
-                          <p className="text-sm font-semibold text-orange-400">
-                            Method Statement Generation Timed Out
-                          </p>
-                          <p className="text-xs text-orange-400/70 mt-1">
-                            Your risk assessment completed successfully, but the method statement generation timed out. 
-                            You can use the risk assessment now and retry method statement generation separately.
-                          </p>
-                          <div className="flex gap-2 mt-3">
-                            <Button
-                              variant="outline"
-                              onClick={() => {
-                                navigate('/electrician/site-safety/method-statement', {
-                                  state: { 
-                                    fromRAMS: true,
-                                    ramsData: ramsData,
-                                    projectInfo: {
-                                      projectName: ramsData.projectName,
-                                      location: ramsData.location,
-                                      assessor: ramsData.assessor
-                                    }
-                                  }
-                                });
-                              }}
-                              className="border-orange-500/40 hover:border-orange-500 hover:bg-orange-500/10 text-orange-400"
-                              size="sm"
-                            >
-                              <Sparkles className="h-4 w-4 mr-2" />
-                              Retry Method Statement
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
                   {/* Show info banner if risks are empty */}
                   {(!ramsData.risks || ramsData.risks.length === 0) && (
                     <div className="mb-4 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
@@ -753,7 +465,7 @@ export const AIRAMSGenerator: React.FC = () => {
                   
                   <RAMSReviewEditor
                     ramsData={ramsData}
-                    methodData={methodData || undefined}
+                    methodData={methodData}
                     isSaving={isSaving}
                     lastSaved={lastSaved}
                     onSave={() => saveToDatabase()}

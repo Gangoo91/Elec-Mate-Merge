@@ -111,9 +111,9 @@ serve(async (req) => {
         context: {
           agentType: 'commissioning', // NEW - for trade filtering
           ragPriority: {
-            inspection: 95,          // PRIMARY - GN3 Inspection & Testing knowledge
+            practical_work: 95,      // PRIMARY - hands-on testing procedures
             bs7671: 85,              // HIGH - Chapter 64 testing requirements
-            practical_work: 70,      // FALLBACK - general trade knowledge
+            inspection: 40,          // FALLBACK
             design: 0,
             installation: 0,
             health_safety: 0,
@@ -122,83 +122,22 @@ serve(async (req) => {
         }
       },
       OPENAI_API_KEY,
-      supabase,
-      logger  // PHASE 4: Add logger parameter
+      supabase
     );
     
-    // 🔍 ENHANCED RAG DATA LOGGING
-    logger.info('🔍 RAG Search Results', {
-      gn3InspectionCount: ragResults.gn3InspectionDocs?.length || 0,
-      practicalWorkCount: ragResults.practicalWorkDocs?.length || 0,
-      regulationsCount: ragResults.regulations?.length || 0,
-      designDocsCount: ragResults.designDocs?.length || 0,
-      searchMethod: ragResults.searchMethod || 'unknown',
-      searchTimeMs: Date.now() - ragStart
-    });
-    
-    // PHASE 5: Enhanced RAG quality assessment
-    const totalDocs = (ragResults.gn3InspectionDocs?.length || 0) + 
-                      (ragResults.practicalWorkDocs?.length || 0) + 
-                      (ragResults.regulations?.length || 0);
-
-    logger.info('📊 RAG Quality Assessment', {
-      totalDocuments: totalDocs,
-      gn3Coverage: `${ragResults.gn3InspectionDocs?.length || 0}/15 target`,
-      practicalWorkCoverage: `${ragResults.practicalWorkDocs?.length || 0}/15 target`,
-      regulationsCoverage: `${ragResults.regulations?.length || 0}/18 target`,
-      hasEmbedding: !!ragResults.embedding,
-      qualityScore: totalDocs >= 30 ? 'HIGH' : totalDocs >= 15 ? 'MEDIUM' : 'LOW'
+    logger.debug('Testing knowledge retrieved', { 
+      duration: Date.now() - ragStart
     });
 
-    // Warn if critical data is missing
-    if ((ragResults.gn3InspectionDocs?.length || 0) < 3) {
-      logger.warn('⚠️ INSUFFICIENT GN3 DATA - AI may lack detailed testing procedures');
-    }
-    if ((ragResults.practicalWorkDocs?.length || 0) < 3) {
-      logger.warn('⚠️ INSUFFICIENT PRACTICAL WORK DATA - AI may lack trade-specific context');
-    }
-
-    // Build context with cascade priority - GN3 FIRST
+    // Build context with cascade priority
     let testContext = '';
 
-    // Extract all knowledge sources
-    const gn3Docs = ragResults?.gn3InspectionDocs || [];
-    let practicalWorkDocs = ragResults?.practicalWorkDocs || [];
+    // TIER 1: Practical Work Intelligence + Regulations Intelligence
+    const practicalWorkDocs = ragResults?.practicalWorkDocs || [];
     const regulations = ragResults?.regulations || [];
-    
-    logger.info('📚 Knowledge Sources Retrieved', {
-      gn3Count: gn3Docs.length,
-      practicalWorkCount: practicalWorkDocs.length,
-      regulationsCount: regulations.length
-    });
 
-    // TIER 1: GN3 Inspection & Testing Knowledge (PRIMARY SOURCE)
-    if (gn3Docs.length >= 5) {
-      testContext += '## GN3 INSPECTION & TESTING PROCEDURES (PRIMARY SOURCE):\n\n';
-      testContext += gn3Docs.slice(0, 10).map((gn3: any) => 
-        `**${gn3.topic || 'Testing Procedure'}**\n${gn3.content}\n` +
-        `Source: ${gn3.source || 'Guidance Note 3 (IET)'}`
-      ).join('\n\n---\n\n');
-      
-      testContext += '\n\n## RELEVANT BS 7671 REGULATIONS:\n\n';
-      testContext += regulations.slice(0, 10).map((reg: any) => 
-        `**${reg.regulation_number}**\n${reg.content}`
-      ).join('\n\n');
-      
-      logger.info('✅ Using GN3 as PRIMARY source', { 
-        gn3Count: gn3Docs.length,
-        regulationsCount: regulations.length
-      });
-    } 
-    // TIER 2: Practical Work Intelligence (FALLBACK if insufficient GN3)
-    else if (gn3Docs.length < 5 && practicalWorkDocs.length >= 3) {
-      logger.warn('⚠️ Insufficient GN3 data - falling back to practical work', {
-        gn3Count: gn3Docs.length,
-        practicalWorkCount: practicalWorkDocs.length,
-        threshold: 5
-      });
-      
-      testContext += '\n\n## PRACTICAL WORK PROCEDURES (FALLBACK):\n\n';
+    if (practicalWorkDocs.length >= 3) {
+      testContext += '## PRACTICAL TESTING PROCEDURES:\n\n';
       testContext += practicalWorkDocs.slice(0, 8).map((pw: any) => 
         `**${pw.primary_topic}**\n${pw.content}\n` +
         `${pw.expected_results ? `Expected Results: ${pw.expected_results}\n` : ''}` +
@@ -210,84 +149,20 @@ serve(async (req) => {
         `**${reg.regulation_number}**\n${reg.content}`
       ).join('\n\n');
       
-      logger.info('✅ Using Practical Work as FALLBACK', { 
+      logger.info('✅ Using Practical Work Intelligence + Regulations', {
         practicalWorkCount: practicalWorkDocs.length,
         regulationsCount: regulations.length
       });
-    } 
-    // TIER 3: Regulations only (last resort)
-    else {
-      logger.error('🚨 CRITICAL: Insufficient testing data from all sources', {
-        gn3Count: gn3Docs.length,
-        practicalWorkCount: practicalWorkDocs.length,
-        regulationsCount: regulations.length
-      });
-      
+    } else {
+      // Fallback to regulations only
       testContext = regulations.slice(0, 10).map((reg: any) => 
         `**${reg.regulation_number || 'Testing Procedure'}**\n${reg.content || reg.section || 'No content available'}`
       ).join('\n\n');
-    }
-    
-    // 🚨 PHASE 5: EMERGENCY RPC FALLBACK if insufficient practical work data
-    if (practicalWorkDocs.length < 3) {
-      logger.warn('🚨 INSUFFICIENT PRACTICAL WORK DATA - Triggering emergency RPC fallback');
       
-      const focusedQueries = [
-        `${circuitType || 'electrical'} continuity testing procedure Megger instrument setup`,
-        `${circuitType || 'electrical'} insulation resistance test method GN3`,
-        `earth fault loop impedance testing Zs measurement procedure`,
-        `RCD testing procedure 643.10 trip times`,
-        `polarity test dead testing method`
-      ];
-      
-      try {
-        const emergencyResults = await Promise.all(
-          focusedQueries.map(q => 
-            supabase.rpc('search_practical_work_intelligence_hybrid', {
-              query_text: q,
-              match_count: 5
-            }).then(r => r.data || [])
-          )
-        );
-        
-        const additionalProcedures = emergencyResults
-          .flat()
-          .filter((pw: any) => pw && pw.hybrid_score > 0.3);  // Lower threshold for emergency fallback
-        
-        // Deduplicate by content similarity
-        const uniqueProcedures = additionalProcedures.filter((pw: any, idx: number, arr: any[]) => 
-          arr.findIndex((p: any) => p.primary_topic === pw.primary_topic) === idx
-        );
-        
-        practicalWorkDocs.push(...uniqueProcedures);
-        
-        logger.info('✅ Emergency RPC retrieved', { 
-          additionalCount: uniqueProcedures.length,
-          totalNow: practicalWorkDocs.length 
-        });
-      } catch (error) {
-        logger.error('❌ Emergency RPC failed', { error: error.message });
-      }
-    }
-    
-    // 🚨 PHASE 6: ULTIMATE FALLBACK - Load essential testing templates
-    if (practicalWorkDocs.length < 2) {
-      logger.warn('🚨 ULTIMATE FALLBACK - Loading essential testing templates');
-      const { ESSENTIAL_TESTING_PROCEDURES } = await import('./testing-templates.ts');
-      
-      // Convert templates to same format as RAG results
-      const templateProcedures = Object.values(ESSENTIAL_TESTING_PROCEDURES).map((template: any) => ({
-        primary_topic: template.testName,
-        content: `${template.instrumentSetup}\n\nLead Placement: ${template.leadPlacement}\n\nProcedure:\n${template.procedure.join('\n')}\n\nExpected Result: ${JSON.stringify(template.expectedResult)}`,
-        source: 'emergency_template',
-        expected_results: JSON.stringify(template.expectedResult),
-        tools_required: ['Megger MFT1741', 'GS38 test leads', 'Voltage indicator'],
-        confidence_score: 1.0
-      }));
-      
-      practicalWorkDocs.push(...templateProcedures);
-      
-      logger.info('✅ Essential templates loaded', { count: templateProcedures.length });
+      logger.info('⚠️ Using Regulations only (insufficient Practical Work data)', {
+        practicalWorkCount: practicalWorkDocs.length,
+        regulationsCount: regulations.length
+      });
     }
 
     // Build conversation context with DESIGN DATA
@@ -345,58 +220,21 @@ ${testContext}
 
 🔴 CRITICAL INSTRUCTIONS - FOR EACH TEST PROVIDE:
 
-YOU MUST MATCH THIS LEVEL OF DETAIL (GN3 STANDARD):
-
-❌ BAD (too vague): "Test continuity of protective conductors"
-
-✅ GOOD (GN3 practical detail):
-"Set Megger MFT1741 to Continuity mode (Ω symbol on rotary switch). Zero test leads by shorting red and black probes together (should read ≤0.05Ω). At Consumer Unit: Connect red lead to Line terminal of circuit breaker, black lead to CPC terminal on earth bar. At far end (e.g., shower isolator): Use short test lead (≤300mm) to link Line and CPC terminals together. Press TEST button and hold for 2 seconds until reading stabilizes. Expected: 0.88Ω for 45m of 16mm² T&E (45m × 19.5mΩ/m × 2). Maximum permitted: 1.15Ω per BS 7671 Table 1A. If reading >1.15Ω: Check ALL termination tightness with calibrated torque screwdriver (2.5Nm torque for 16mm² terminals), inspect for damaged conductor strands, verify test lead zero reading is still correct."
-
-MANDATORY FIELD REQUIREMENTS:
-
-instrumentSetup: MINIMUM 30 words
-- Which button/mode to select (e.g., "Ω symbol", "500V DC", "Zs mode")
-- How to zero the instrument (e.g., "short test leads together")
-- Expected zero reading with tolerance (e.g., "should read ≤0.05Ω")
-- Battery/voltage verification steps
-
-leadPlacement: MINIMUM 25 words
-- Exact terminals at origin (consumer unit): "Red lead to Line terminal of MCB, Black lead to CPC on earth bar"
-- Exact terminals at far end: "At socket outlet - link Line and Earth terminals with short test lead"
-- Which color lead goes where: "RED = Line, BLACK = Earth/Neutral, GREEN/YELLOW = Earth"
-- Connection sequence (e.g., "Connect CU end first, then far end")
-
-procedure: MINIMUM 5 steps, each step 15+ words
-- Use action verbs: "Press", "Connect", "Hold", "Read", "Verify", "Record"
-- Specify durations: "Hold for 2 seconds", "Wait until display stabilizes", "Test for 60 seconds minimum"
-- State what to observe: "Display shows stable value", "LED indicates test in progress", "Buzzer confirms continuity"
-- Include safety checks: "Verify circuit isolated", "Test for dead first"
-
-expectedResult.calculated: MUST include units and calculation method
-- Show formula: "45m × (19.5 + 19.5)mΩ/m for 16mm² T&E"
-- Numeric value with units: "0.88Ω", ">1.0 MΩ", "1.18Ω"
-- Calculation breakdown: "Ze 0.35Ω + R1+R2 0.85Ω = Zs 1.20Ω"
-- Tolerance bands: "±10% = 0.79-0.97Ω acceptable"
-
-troubleshooting: MINIMUM 3 items, each 20+ words
-- Specific failure mode: "If reading >expected by 20%" or "If RCD does not trip"
-- Root cause explanation: "Indicates poor termination or damaged conductor"
-- Corrective action with SPECIFICS: "Check terminations with calibrated torque screwdriver at 2.5Nm (16mm²), 1.2Nm (10mm²), 0.8Nm (6mm²)"
-- Tool/measurement specifications where relevant
-
-COMMON TEST INSTRUMENTS (reference these in your responses):
-- Megger MFT1741 (most common multifunction tester)
-- Fluke 1653B
-- Kewtech KT65 / KT66
-- Metrel MI 3102
-- Socket testers for polarity verification
-- Voltage proving units (GS38 compliant)
-
-Always specify:
-- Button labels/rotary switch positions (e.g., "Ω symbol", "500V", "Zs mode")
-- Display readings format (e.g., "0.88", ">999 MΩ", "PASS")
-- Test lead color coding: RED = Live, BLACK = Neutral/Earth, GREEN/YELLOW = Earth
-- GS38 safety requirements for test leads
+1. TEST INSTRUMENT SETUP
+   Example: "Set Megger MFT1741 to 'Continuity' mode (Ω symbol). Zero test leads first by shorting together (should read ≤0.05Ω)."
+   
+2. LEAD PLACEMENT (EXACTLY WHERE)
+   Example: "At Consumer Unit: Connect red lead to Line terminal, black lead to CPC terminal. At far end: Link L-CPC with short test lead."
+   NOT just "test L-CPC" - too vague!
+   
+3. PROCEDURE STEP-BY-STEP
+   Example: "Step 1: Link L and CPC at far end. Step 2: Press TEST button. Step 3: Hold for 2 seconds. Step 4: Read display when stable."
+   
+4. EXPECTED RESULT WITH PASS/FAIL CRITERIA
+   Example: "Expected: 0.88Ω calculated (45m × 19.5mΩ/m × 2). Measured: 0.85Ω. Maximum: 1.15Ω per Table 1A. PASS (within 10% tolerance)."
+   
+5. TROUBLESHOOTING IF FAIL
+   Example: "If >1.15Ω: Check termination tightness (2.5Nm torque for 16mm²). Look for damaged conductor. Verify test lead zero reading."
 
 CHAPTER 64 TEST SEQUENCE (MANDATORY ORDER):
 
@@ -563,13 +401,9 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
                         testName: { type: 'string' },
                         regulation: { type: 'string' },
                         testSequence: { type: 'number' },
-                        instrumentSetup: { type: 'string', description: 'MINIMUM 30 words: Which mode to select, how to zero, expected readings. Example: "Set Megger MFT1741 to Continuity mode. Zero leads (≤0.05Ω)."' },
-                        leadPlacement: { type: 'string', description: 'MINIMUM 25 words: Exact terminals at CU and far end, lead colors. Example: "CU: Red to Line, Black to CPC. Far end: Link L-CPC with short test lead."' },
-                        procedure: { 
-                          type: 'array', 
-                          items: { type: 'string' },
-                          description: 'MINIMUM 5 steps, each 15+ words with action verbs, durations, what to observe. Example: "Step 1: Press TEST button and hold for 2 seconds until display stabilizes."'
-                        },
+                        instrumentSetup: { type: 'string' },
+                        leadPlacement: { type: 'string' },
+                        procedure: { type: 'array', items: { type: 'string' } },
                         expectedResult: { type: 'object' },
                         troubleshooting: { type: 'array', items: { type: 'string' } },
                         safetyNotes: { type: 'array', items: { type: 'string' } }
@@ -586,17 +420,10 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
                         regulation: { type: 'string' },
                         testSequence: { type: 'number' },
                         prerequisite: { type: 'string' },
-                        instrumentSetup: { type: 'string', description: 'MINIMUM 30 words: Instrument mode, settings, verification steps' },
-                        leadPlacement: { type: 'string', description: 'MINIMUM 25 words: Exact connection points, lead colors, sequence' },
-                        calculation: { 
-                          type: 'object',
-                          description: 'Show formula breakdown with units. Example: {formula: "Zs = Ze + (R1+R2)", Ze: "0.35Ω", R1R2: "0.85Ω", expectedZs: "1.20Ω"}'
-                        },
-                        procedure: { 
-                          type: 'array', 
-                          items: { type: 'string' },
-                          description: 'MINIMUM 5 steps, each 15+ words. Include safety, durations, observations'
-                        },
+                        instrumentSetup: { type: 'string' },
+                        leadPlacement: { type: 'string' },
+                        calculation: { type: 'object' },
+                        procedure: { type: 'array', items: { type: 'string' } },
                         expectedResult: { type: 'object' },
                         interpretation: { type: 'string' },
                         safetyNotes: { type: 'array', items: { type: 'string' } }
@@ -689,15 +516,8 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
       { circuitType, testType: query }
     );
 
-    // Return enriched response with RAG quality metrics
+    // Return enriched response
     const { response, suggestedNextAgents, testingProcedure, certification } = commResult;
-    
-    // Calculate RAG quality score (0-100) - GN3 WEIGHTED HEAVILY
-    const ragQualityScore = Math.round(
-      Math.min(gn3Docs.length / 10, 1) * 50 +      // GN3 weighted 50% (most important)
-      Math.min(practicalWorkDocs.length / 8, 1) * 30 +  // Practical work 30% (fallback)
-      Math.min(regulations.length / 10, 1) * 20     // Regulations 20% (supplement)
-    );
     
     // Log RAG metrics for observability
     const totalTime = Date.now() - ragStart;
@@ -735,13 +555,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
           contextSources,
           receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none',
           ragTimeMs: ragStart ? Date.now() - ragStart : null,
-          totalTimeMs: totalTime,
-          ragQuality: {
-            score: ragQualityScore,
-            gn3ProceduresFound: gn3Docs.length,
-            practicalProceduresFound: practicalWorkDocs.length,
-            regulationsFound: regulations.length
-          }
+          totalTimeMs: totalTime
         }
       }),
       { 

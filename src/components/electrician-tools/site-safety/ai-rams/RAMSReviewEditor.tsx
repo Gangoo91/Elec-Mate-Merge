@@ -36,7 +36,7 @@ import { RiskAssessmentSummary } from './results/RiskAssessmentSummary';
 
 interface RAMSReviewEditorProps {
   ramsData: RAMSData;
-  methodData?: Partial<MethodStatementData>;
+  methodData: Partial<MethodStatementData>;
   isSaving?: boolean;
   lastSaved?: Date | null;
   onSave?: () => void;
@@ -70,7 +70,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     }))
   };
 
-  const normalizedMethodData: Partial<MethodStatementData> = initialMethodData ? {
+  const normalizedMethodData: Partial<MethodStatementData> = {
     ...initialMethodData,
     steps: (initialMethodData.steps || []).map((step, idx) => ({
       ...step,
@@ -96,7 +96,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     requiredQualifications: Array.isArray(initialMethodData.requiredQualifications)
       ? initialMethodData.requiredQualifications
       : []
-  } : {};
+  };
 
   const [ramsData, setRamsData] = useState<RAMSData>(normalizedRamsData);
   const [methodData, setMethodData] = useState<Partial<MethodStatementData>>(normalizedMethodData);
@@ -736,27 +736,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
 
             <TabsContent value="method" className="space-y-0 mt-0 pb-20">
               <div className="p-4 md:p-6 space-y-4">
-                {/* Method Statement Missing Warning */}
-                {!methodData && (
-                  <Card className="border-dashed border-orange-500/30 bg-orange-500/5">
-                    <CardContent className="p-6 text-center">
-                      <AlertCircle className="h-12 w-12 text-orange-400 mx-auto mb-3" />
-                      <h3 className="text-lg font-semibold text-orange-400 mb-2">Method Statement Not Available</h3>
-                      <p className="text-sm text-orange-400/70 mb-4">
-                        The method statement generation timed out or failed. You can retry generation or create it manually.
-                      </p>
-                      {onRegenerate && (
-                        <Button onClick={onRegenerate} variant="outline" size="sm" className="border-orange-500/40 text-orange-500 hover:bg-orange-500/10">
-                          <Sparkles className="h-4 w-4 mr-2" />
-                          Retry Generation
-                        </Button>
-                      )}
-                    </CardContent>
-                  </Card>
-                )}
-                
                 {/* Project Info Header */}
-                <ProjectInfoHeader
+                <ProjectInfoHeader 
                   methodData={methodData} 
                   projectName={ramsData.projectName}
                   location={ramsData.location}
