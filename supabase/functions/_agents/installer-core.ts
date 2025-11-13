@@ -19,7 +19,7 @@ const INSTALLER_TOOL = {
       properties: {
         installationSteps: {
           type: 'array',
-          minItems: 5,
+          minItems: 10,
           items: {
             type: 'object',
             properties: {
@@ -38,12 +38,12 @@ const INSTALLER_TOOL = {
         },
         practicalTips: {
           type: 'array',
-          minItems: 3,
+          minItems: 5,
           items: { type: 'string' }
         },
         commonMistakes: {
           type: 'array',
-          minItems: 3,
+          minItems: 5,
           items: { type: 'string' }
         },
         toolsRequired: {
@@ -52,7 +52,7 @@ const INSTALLER_TOOL = {
         },
         testingProcedures: {
           type: 'array',
-          minItems: 3,
+          minItems: 5,
           items: {
             type: 'object',
             properties: {
@@ -82,12 +82,20 @@ CRITICAL REQUIREMENTS:
 7. Reference regulation numbers (e.g., BS 7671 Reg 411.3.2)
 
 OUTPUT FORMAT:
-- Minimum 5 installation steps with sub-steps
-- Each step: 100-200 words, numbered sub-tasks, measurements, quality checks
-- 3+ tools per step (specific models/types)
-- Materials with quantities and specifications
-- 2+ hazards per step with mitigations
-- 3+ BS 7671-compliant testing procedures
+- 10-16 detailed installation steps breaking down the full workflow:
+  * Site preparation & safety setup (isolation, signage, barriers)
+  * Isolation procedures & dead testing
+  * Cable installation & routing (containment, support, protection)
+  * Termination & connections (stripping, crimping, torque settings)
+  * Bonding & earthing verification
+  * Testing & commissioning (continuity, insulation, polarity, RCD, earth fault loop)
+  * Final inspection & snagging
+  * Documentation & handover
+- Each step: 150-250 words with numbered sub-tasks, specific measurements, torque values
+- 4+ tools per step (exact models/types where possible)
+- Materials with exact quantities, cable sizes, and BS/EN standards
+- 3+ hazards per step with specific hierarchy of control mitigations
+- 5+ BS 7671-compliant testing procedures with pass/fail criteria and regulation references
 
 Use the RAG context to ensure technical accuracy.`;
 

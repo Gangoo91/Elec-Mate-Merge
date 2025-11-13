@@ -19,7 +19,7 @@ const HEALTH_SAFETY_TOOL = {
       properties: {
         hazards: {
           type: 'array',
-          minItems: 5,
+          minItems: 12,
           items: {
             type: 'object',
             properties: {
@@ -40,7 +40,7 @@ const HEALTH_SAFETY_TOOL = {
         },
         ppe: {
           type: 'array',
-          minItems: 3,
+          minItems: 5,
           items: {
             type: 'object',
             properties: {
@@ -55,7 +55,7 @@ const HEALTH_SAFETY_TOOL = {
         },
         emergencyProcedures: {
           type: 'array',
-          minItems: 3,
+          minItems: 5,
           items: { type: 'string' }
         },
         complianceRegulations: {
@@ -80,10 +80,16 @@ CRITICAL REQUIREMENTS:
 7. Calculate residual risk after controls applied
 
 OUTPUT FORMAT:
-- Minimum 5 hazards (electrical, physical, environmental, health)
-- Minimum 3 PPE items with EN/BS standards
-- 3+ emergency procedures specific to electrical work
-- Compliance regulations list
+- 12-25 hazards covering ALL categories:
+  * Electrical hazards (arc flash, shock, burns, live work)
+  * Physical hazards (manual handling, confined spaces, working at height, trips/slips)
+  * Environmental hazards (weather, lighting, noise, temperature)
+  * Health hazards (dust, fumes, vibration, repetitive strain)
+  * Fire/explosion risks (flammable materials, hot work)
+- Each hazard MUST have specific control measures and calculated residual risk
+- Minimum 5 PPE items with EN/BS standards and specific purposes
+- 5+ emergency procedures specific to electrical work (shock treatment, fire, first aid)
+- Detailed compliance regulations list with specific regulation numbers
 
 Use the RAG context provided to ensure accuracy and compliance.`;
 
