@@ -244,7 +244,8 @@ Deno.serve(async (req) => {
         stepNumber: s.step,
         title: s.title,
         description: s.description,
-        safetyRequirements: s.safetyNotes || [],
+        safetyRequirements: Array.isArray(s.safetyNotes) ? s.safetyNotes : 
+                           (typeof s.safetyNotes === 'string' ? [s.safetyNotes] : []),
         equipmentNeeded: s.tools || [],
         materialsNeeded: s.materials || [],
         qualifications: s.qualifications || [],

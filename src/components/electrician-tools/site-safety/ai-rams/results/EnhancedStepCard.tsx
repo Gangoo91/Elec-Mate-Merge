@@ -224,7 +224,9 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                   )}
                 </div>
                 <ul className="space-y-2">
-                  {(isEditing ? editedStep : step).safetyRequirements.map((req, idx) => (
+                  {(Array.isArray((isEditing ? editedStep : step).safetyRequirements) ? 
+                    (isEditing ? editedStep : step).safetyRequirements : [])
+                    .map((req, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-sm text-elec-light/90">
                       <span className="text-amber-500 mt-1">•</span>
                       <span className="flex-1">{req}</span>
@@ -258,7 +260,9 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                     )}
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {(isEditing ? editedStep : step).equipmentNeeded.map((equip, idx) => (
+                    {(Array.isArray((isEditing ? editedStep : step).equipmentNeeded) ? 
+                      (isEditing ? editedStep : step).equipmentNeeded : [])
+                      .map((equip, idx) => (
                       <Badge key={idx} className="bg-blue-500/10 text-blue-400 border-blue-500/30 relative group">
                         {equip}
                         {isEditing && (
@@ -290,7 +294,9 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                     )}
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {(isEditing ? editedStep : step).qualifications.map((qual, idx) => (
+                    {(Array.isArray((isEditing ? editedStep : step).qualifications) ? 
+                      (isEditing ? editedStep : step).qualifications : [])
+                      .map((qual, idx) => (
                       <Badge key={idx} className="bg-purple-500/10 text-purple-400 border-purple-500/30">
                         ✓ {qual}
                         {isEditing && (
@@ -322,7 +328,9 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                     )}
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {((isEditing ? editedStep : step).assignedPersonnel || []).map((person, idx) => (
+                    {(Array.isArray((isEditing ? editedStep : step).assignedPersonnel) ? 
+                      (isEditing ? editedStep : step).assignedPersonnel : [])
+                      .map((person, idx) => (
                       <Badge key={idx} className="bg-green-500/10 text-green-400 border-green-500/30">
                         👤 {person}
                         {isEditing && (

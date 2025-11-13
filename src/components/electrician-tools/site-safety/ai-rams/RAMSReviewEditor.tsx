@@ -104,10 +104,15 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     steps: (initialMethodData.steps || []).map((step, idx) => ({
       ...step,
       id: step.id || `step-${idx + 1}`,
-      equipmentNeeded: step.equipmentNeeded || [],
-      qualifications: step.qualifications || [],
+      equipmentNeeded: Array.isArray(step.equipmentNeeded) ? step.equipmentNeeded : 
+                      (typeof step.equipmentNeeded === 'string' ? [step.equipmentNeeded] : []),
+      qualifications: Array.isArray(step.qualifications) ? step.qualifications : 
+                     (typeof step.qualifications === 'string' ? [step.qualifications] : []),
       estimatedDuration: step.estimatedDuration || '15 minutes',
-      safetyRequirements: step.safetyRequirements || []
+      safetyRequirements: Array.isArray(step.safetyRequirements) ? step.safetyRequirements : 
+                         (typeof step.safetyRequirements === 'string' ? [step.safetyRequirements] : []),
+      assignedPersonnel: Array.isArray(step.assignedPersonnel) ? step.assignedPersonnel :
+                        (typeof step.assignedPersonnel === 'string' ? [step.assignedPersonnel] : [])
     })),
     // Normalize document-level array fields to ensure they're always arrays
     toolsRequired: Array.isArray(initialMethodData.toolsRequired) 
