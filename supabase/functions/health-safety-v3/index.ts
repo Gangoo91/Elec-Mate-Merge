@@ -241,9 +241,8 @@ serve(async (req) => {
       // TIER 1: Health & Safety Knowledge - PURE VECTOR SEARCH (95% weight)
       (async () => {
         try {
-          const { data, error } = await supabase.rpc('search_health_safety', {
+          const { data, error } = await supabase.rpc('search_health_safety_hybrid', {
             query_text: effectiveQuery,
-            query_embedding: null, // RPC generates embedding
             match_count: 12
           });
           

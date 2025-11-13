@@ -79,7 +79,7 @@ export const StepEditSheet: React.FC<StepEditSheetProps> = ({
     handleChange({ [field]: currentArray.filter((_, i) => i !== index) } as Partial<MethodStep>);
   };
 
-  const riskColors = getRiskColorsByLevel(editedStep.riskLevel);
+  const riskColors = getRiskColorsByLevel(editedStep.riskLevel || 'low');
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>
