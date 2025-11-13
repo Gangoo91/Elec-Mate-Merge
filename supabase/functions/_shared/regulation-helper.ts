@@ -58,6 +58,12 @@ export function extractHazardsFromRegulation(regulation: RegulationResult): stri
  */
 export function extractControlsFromRegulation(regulation: RegulationResult): string {
   const content = regulation.content;
+  
+  // Handle missing or empty content
+  if (!content || typeof content !== 'string' || content.trim() === '') {
+    return '- Follow BS 7671:2018+A3:2024 requirements';
+  }
+  
   const sentences = content.split(/[.!?]+/);
   
   const controlSentences = sentences.filter(sentence => {
@@ -184,6 +190,9 @@ ${extractControlsFromRegulation(reg)}
 ${determineApplicability(reg, jobDescription)}
 
 **Full Regulation:**
-${reg.content.slice(0, 500)}${reg.content.length > 500 ? '...' : ''}
+${reg.content ? 
+  `${reg.content.slice(0, 500)}${reg.content.length > 500 ? '...' : ''}` : 
+  'Regulation content not available - refer to BS 7671:2018+A3:2024'
+}
 `).join('\n---\n');
 }
