@@ -107,11 +107,11 @@ export async function generateMethodStatement(
   console.log('🔧 Installer Agent starting...');
   const startTime = Date.now();
   
-  if (onProgress) await onProgress(50, 'Preparing installation method statement...');
+  if (onProgress) await onProgress(0, 'Installer: Starting method statement...');
   
   // STEP 1: RAG - Parallel search
   console.log('🔍 Fetching RAG knowledge...');
-  if (onProgress) await onProgress(55, 'Searching installation procedures and BS 7671 standards...');
+  if (onProgress) await onProgress(10, 'Installer: Searching installation procedures...');
   
   const [practicalWork, regulations] = await Promise.all([
     searchPracticalWorkIntelligence(query),
@@ -119,7 +119,7 @@ export async function generateMethodStatement(
   ]);
   
   console.log(`✅ RAG complete: ${practicalWork.length} practical docs, ${regulations.length} regulations (${Date.now() - startTime}ms)`);
-  if (onProgress) await onProgress(65, 'Generating method statement with AI...');
+  if (onProgress) await onProgress(30, 'Installer: Calling AI with 55 knowledge documents...');
   
   // STEP 2: Build context
   const ragContext = `
@@ -137,6 +137,8 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
   
   // STEP 3: Generate with GPT-5 Mini
   console.log('🤖 Calling GPT-5 Mini...');
+  if (onProgress) await onProgress(60, 'Installer: AI generating installation steps...');
+  
   const response = await callOpenAI({
     model: 'gpt-5-mini-2025-08-07',
     messages: [
@@ -154,10 +156,11 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
     throw new Error('No tool call in response');
   }
   
+  if (onProgress) await onProgress(90, 'Installer: Parsing results...');
   const result = JSON.parse(response.toolCalls[0].function.arguments);
   
   console.log(`✅ Installer complete: ${result.installationSteps.length} steps, ${result.testingProcedures.length} tests (${Date.now() - startTime}ms)`);
-  if (onProgress) await onProgress(85, 'Finalizing installation steps and method statement...');
+  if (onProgress) await onProgress(100, 'Installer: Complete!');
   
   return {
     ...result,

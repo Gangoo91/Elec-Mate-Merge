@@ -24,50 +24,29 @@ export const AIRAMSGenerator: React.FC = () => {
   const [generationStartTime, setGenerationStartTime] = useState<number>(0);
   const [generationEndTime, setGenerationEndTime] = useState<number>(0);
   const [isSaving, setIsSaving] = useState(false);
-  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+    const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [resumedJob, setResumedJob] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
   const [currentJobDescription, setCurrentJobDescription] = useState<string>('');
-  const [localProgress, setLocalProgress] = useState(0);
   
   const lastErrorNotifiedJobRef = useRef<string | null>(null);
-  const rafIdRef = useRef<number | null>(null);
-  const localStartRef = useRef<number | null>(null);
-  const baseProgressRef = useRef<number>(0);
   
-  const { job, startPolling, stopPolling, progress, status, currentStep, ramsData, methodData, error } = useRAMSJobPolling(currentJobId);
+  const { 
+    job, 
+    startPolling, 
+    stopPolling, 
+    progress, 
+    hsAgentProgress,
+    installerAgentProgress,
+    hsAgentStatus,
+    installerAgentStatus,
+    status, 
+    currentStep, 
+    ramsData, 
+    methodData, 
+    error 
+  } = useRAMSJobPolling(currentJobId);
   
-  // Helper: Start smooth local countdown
-  const startLocalCountdown = (baseProgress = 0) => {
-    stopLocalCountdown(); // Clear any existing
-    
-    baseProgressRef.current = Math.min(99, Math.max(0, baseProgress));
-    localStartRef.current = performance.now();
-    setLocalProgress(baseProgressRef.current);
-    
-    const tick = () => {
-      if (!localStartRef.current) return;
-      
-      const elapsed = (performance.now() - localStartRef.current) / 1000;
-      const progressRange = 99 - baseProgressRef.current;
-      const increment = (elapsed / EXPECTED_TOTAL_SECONDS) * progressRange;
-      const target = baseProgressRef.current + increment;
-      const clamped = Math.min(99, target);
-      
-      setLocalProgress(clamped);
-      rafIdRef.current = requestAnimationFrame(tick);
-    };
-    
-    rafIdRef.current = requestAnimationFrame(tick);
-  };
-  
-  // Helper: Stop smooth local countdown
-  const stopLocalCountdown = () => {
-    if (rafIdRef.current) {
-      cancelAnimationFrame(rafIdRef.current);
-      rafIdRef.current = null;
-    }
-  };
   const { requestPermission, showCompletionNotification, showErrorNotification } = useRAMSNotifications();
 
   // Check for in-progress jobs on mount (only if user initiated in this session)
@@ -94,7 +73,6 @@ export const AIRAMSGenerator: React.FC = () => {
         setShowResults(true);
         setResumedJob(true);
         startPolling();
-        startLocalCountdown(job.progress || 0);
         
         toast({
           title: "Resuming generation",
@@ -173,17 +151,6 @@ export const AIRAMSGenerator: React.FC = () => {
       });
     }
   }, [status, error, currentJobId]);
-
-  // Stop countdown on terminal states
-  useEffect(() => {
-    if (status === 'complete') {
-      setLocalProgress(100);
-      stopLocalCountdown();
-    }
-    if (status === 'failed' || status === 'cancelled') {
-      stopLocalCountdown();
-    }
-  }, [status]);
   
   // PHASE 4 & 5: Trigger celebration or toast for partial completions
   useEffect(() => {
@@ -259,7 +226,6 @@ export const AIRAMSGenerator: React.FC = () => {
     
     setCurrentJobId(data.jobId);
     startPolling();
-    startLocalCountdown(0);
   };
 
   const handleCancel = async () => {
@@ -343,7 +309,6 @@ export const AIRAMSGenerator: React.FC = () => {
     // Clear session flag
     sessionStorage.removeItem('rams-generation-active');
     
-    stopLocalCountdown();
     setCurrentJobId(null);
     setShowResults(false);
     setShowCelebration(false);
@@ -352,7 +317,6 @@ export const AIRAMSGenerator: React.FC = () => {
     setGenerationEndTime(0);
     setResumedJob(false);
     setCurrentJobDescription('');
-    setLocalProgress(0);
   };
   
   const saveToDatabase = async () => {
@@ -466,27 +430,27 @@ export const AIRAMSGenerator: React.FC = () => {
               )}
 
               <AgentProcessingView
-                overallProgress={progress === 100 ? 100 : localProgress}
+                overallProgress={progress}
                 currentStep={currentStep}
                 elapsedTime={generationStartTime > 0 ? Math.floor((Date.now() - generationStartTime) / 1000) : 0}
-                estimatedTimeRemaining={Math.max(0, EXPECTED_TOTAL_SECONDS - (generationStartTime > 0 ? Math.floor((Date.now() - generationStartTime) / 1000) : 0))}
+                estimatedTimeRemaining={Math.max(0, Math.floor((EXPECTED_TOTAL_SECONDS * (100 - progress)) / 100))}
                 onCancel={status === 'processing' || status === 'pending' ? handleCancel : undefined}
                 isCancelling={isCancelling}
                 jobDescription={currentJobDescription}
                 agentSteps={[
                   {
                     name: 'health-safety',
-                    status: progress >= 40 ? 'complete' : 'processing',
-                    progress: Math.min(100, (progress / 40) * 100),
-                    currentStep: progress < 40 ? currentStep : undefined,
-                    reasoning: progress < 40 ? currentStep : '✅ Risk assessment complete'
+                    status: hsAgentStatus as 'pending' | 'processing' | 'complete',
+                    progress: hsAgentProgress,
+                    currentStep: hsAgentStatus === 'complete' ? 'Risk assessment complete' : currentStep.includes('Health & Safety') ? currentStep : 'Analysing hazards...',
+                    reasoning: hsAgentStatus === 'complete' ? '✅ Risk assessment complete' : currentStep.includes('Health & Safety') ? currentStep : 'Analysing hazards...'
                   },
                   {
                     name: 'installer',
-                    status: status === 'complete' ? 'complete' : progress >= 40 ? 'processing' : 'pending',
-                    progress: progress >= 40 ? Math.min(100, ((progress - 40) / 60) * 100) : 0,
-                    currentStep: progress >= 40 && progress < 100 ? currentStep : undefined,
-                    reasoning: progress >= 40 && progress < 100 ? currentStep : progress === 100 ? '✅ Method statement complete' : 'Waiting for health & safety analysis...'
+                    status: installerAgentStatus as 'pending' | 'processing' | 'complete',
+                    progress: installerAgentProgress,
+                    currentStep: installerAgentStatus === 'complete' ? 'Method statement complete' : currentStep.includes('Installer') ? currentStep : installerAgentStatus === 'pending' ? 'Waiting...' : 'Generating steps...',
+                    reasoning: installerAgentStatus === 'complete' ? '✅ Method statement complete' : currentStep.includes('Installer') ? currentStep : installerAgentStatus === 'pending' ? 'Waiting for health & safety analysis...' : 'Generating steps...'
                   }
                 ]}
               />

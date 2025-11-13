@@ -101,11 +101,11 @@ export async function generateHealthSafety(
   console.log('🩺 Health & Safety Agent starting...');
   const startTime = Date.now();
   
-  if (onProgress) await onProgress(20, 'Analysing health & safety requirements...');
+  if (onProgress) await onProgress(0, 'Health & Safety: Starting analysis...');
   
   // STEP 1: RAG - Parallel search
   console.log('🔍 Fetching RAG knowledge...');
-  if (onProgress) await onProgress(25, 'Searching health & safety knowledge base...');
+  if (onProgress) await onProgress(10, 'Health & Safety: Searching knowledge base...');
   
   const [hsKnowledge, regulations] = await Promise.all([
     searchHealthSafetyKnowledge(query),
@@ -113,7 +113,7 @@ export async function generateHealthSafety(
   ]);
   
   console.log(`✅ RAG complete: ${hsKnowledge.length} H&S docs, ${regulations.length} regulations (${Date.now() - startTime}ms)`);
-  if (onProgress) await onProgress(35, 'Generating risk assessment with AI...');
+  if (onProgress) await onProgress(30, 'Health & Safety: Calling AI with 35 knowledge documents...');
   
   // STEP 2: Build context
   const ragContext = `
@@ -126,6 +126,8 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
   
   // STEP 3: Generate with GPT-5 Mini
   console.log('🤖 Calling GPT-5 Mini...');
+  if (onProgress) await onProgress(60, 'Health & Safety: AI analysing risks & hazards...');
+  
   const response = await callOpenAI({
     model: 'gpt-5-mini-2025-08-07',
     messages: [
@@ -143,10 +145,11 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
     throw new Error('No tool call in response');
   }
   
+  if (onProgress) await onProgress(90, 'Health & Safety: Parsing results...');
   const result = JSON.parse(response.toolCalls[0].function.arguments);
   
   console.log(`✅ Health & Safety complete: ${result.hazards.length} hazards, ${result.ppe.length} PPE (${Date.now() - startTime}ms)`);
-  if (onProgress) await onProgress(45, 'Health & Safety analysis complete!');
+  if (onProgress) await onProgress(100, 'Health & Safety: Complete!');
   
   return {
     ...result,

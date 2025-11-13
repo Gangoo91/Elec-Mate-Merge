@@ -6,6 +6,10 @@ interface RAMSJob {
   status: string;
   progress: number;
   current_step: string | null;
+  hs_agent_progress: number;
+  installer_agent_progress: number;
+  hs_agent_status: string;
+  installer_agent_status: string;
   rams_data: any;
   method_data: any;
   raw_hs_response: any;
@@ -22,6 +26,10 @@ interface UseRAMSJobPollingReturn {
   startPolling: () => void;
   stopPolling: () => void;
   progress: number;
+  hsAgentProgress: number;
+  installerAgentProgress: number;
+  hsAgentStatus: string;
+  installerAgentStatus: string;
   status: 'idle' | 'pending' | 'processing' | 'complete' | 'failed' | 'cancelled' | 'partial';
   currentStep: string;
   ramsData: any;
@@ -144,6 +152,10 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
     startPolling,
     stopPolling,
     progress: job?.progress || 0,
+    hsAgentProgress: job?.hs_agent_progress || 0,
+    installerAgentProgress: job?.installer_agent_progress || 0,
+    hsAgentStatus: job?.hs_agent_status || 'pending',
+    installerAgentStatus: job?.installer_agent_status || 'pending',
     status: jobId ? ((job?.status as 'idle' | 'pending' | 'processing' | 'complete' | 'failed' | 'cancelled') || 'pending') : 'idle',
     currentStep: job?.current_step || '',
     ramsData: job?.rams_data,
