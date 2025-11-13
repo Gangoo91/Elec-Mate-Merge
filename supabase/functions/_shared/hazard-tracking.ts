@@ -9,6 +9,10 @@ import { SupabaseClient } from 'jsr:@supabase/supabase-js@2';
  * Track which retrieved hazards were actually used in final RAMS
  * Updates confidence scores and usage counts for self-optimization
  */
+/**
+ * Track which retrieved hazards were actually used in final RAMS
+ * Updates confidence scores and usage counts for self-optimization
+ */
 export async function trackHazardUsage(params: {
   retrievedHazardIds: string[];
   usedHazardIds: string[];
@@ -30,15 +34,8 @@ export async function trackHazardUsage(params: {
         
         console.log(`✅ Hazard ${hazardId} was used - boosting confidence`);
       } else {
-        // NOTE: regulation_hazards_extracted table does not exist
-        // Skipping confidence penalty update
-        console.log(`ℹ️ Skipping confidence penalty for hazard ${hazardId} (table not available)`);
-        
-        if (error) {
-          console.error(`⚠️ Failed to penalize hazard ${hazardId}:`, error);
-        } else {
-          console.log(`➖ Hazard ${hazardId} not used - slight penalty`);
-        }
+        // Optional: Could penalize unused hazards slightly
+        console.log(`ℹ️ Hazard ${hazardId} not used (no penalty applied)`);
       }
     }
     
