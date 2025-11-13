@@ -243,7 +243,7 @@ ${circuitContext}
             model: 'gpt-5-mini',
             max_tokens: 24000,
             tools: [installerV3ToolSchema],
-            tool_choice: { type: 'function', function: { name: 'installMethod' } }
+            tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } }
           },
           OPENAI_API_KEY,
           300000 // 5 min timeout
