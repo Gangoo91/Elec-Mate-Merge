@@ -187,20 +187,37 @@ export const AIRAMSGenerator: React.FC = () => {
   
   // Trigger celebration when generation completes WITH REAL DATA
   useEffect(() => {
-    const hasRealData = ramsData && 
+    const hasFullData = ramsData && 
                         methodData && 
                         status === 'complete' && 
-                        ramsData.risks?.length > 0 && 
-                        !currentStep?.includes('partial');
+                        ramsData.risks?.length > 0;
                         
-    if (hasRealData && showResults && !celebrationShown) {
-      // Clear session flag on completion
+    const hasPartialData = ramsData && 
+                          !methodData && 
+                          status === 'complete' && 
+                          ramsData.risks?.length > 0;
+                        
+    // Show celebration for full data
+    if (hasFullData && showResults && !celebrationShown) {
       sessionStorage.removeItem('rams-generation-active');
       
       setGenerationEndTime(Date.now());
       setShowCelebration(true);
       setCelebrationShown(true);
       triggerHaptic([100, 50, 100, 50, 200]);
+    }
+    
+    // For partial completion, show toast notification instead
+    if (hasPartialData && showResults && !celebrationShown) {
+      sessionStorage.removeItem('rams-generation-active');
+      setGenerationEndTime(Date.now());
+      setCelebrationShown(true);
+      
+      toast({
+        title: "Health & Safety Complete",
+        description: "Risk assessment generated. Method statement timed out - you can retry or proceed with RAMS only.",
+        variant: 'default'
+      });
     }
   }, [ramsData, methodData, status, currentStep, showResults, celebrationShown]);
 
@@ -489,8 +506,33 @@ export const AIRAMSGenerator: React.FC = () => {
                 </div>
               )}
 
-              {ramsData && methodData && (
+              {ramsData && (
                 <div id="rams-results" className="px-2">
+                  {/* Show warning if method data is missing */}
+                  {!methodData && (
+                    <div className="mb-4 p-4 bg-orange-500/10 border border-orange-500/30 rounded-lg">
+                      <div className="flex items-start gap-3">
+                        <AlertCircle className="h-5 w-5 text-orange-400 shrink-0 mt-0.5" />
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-orange-400">
+                            Method Statement Generation Timed Out
+                          </p>
+                          <p className="text-xs text-orange-400/70 mt-1">
+                            Your risk assessment is complete, but the method statement could not be generated. You can review and export the RAMS, or retry to generate the full document.
+                          </p>
+                          <Button
+                            variant="outline"
+                            onClick={handleStartOver}
+                            className="mt-3 border-orange-500/40 hover:border-orange-500 hover:bg-orange-500/10 text-orange-400"
+                            size="sm"
+                          >
+                            <Sparkles className="h-4 w-4 mr-2" />
+                            Retry Full Generation
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   {/* Show info banner if risks are empty */}
                   {(!ramsData.risks || ramsData.risks.length === 0) && (
                     <div className="mb-4 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">

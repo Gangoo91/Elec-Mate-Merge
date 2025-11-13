@@ -36,7 +36,7 @@ import { RiskAssessmentSummary } from './results/RiskAssessmentSummary';
 
 interface RAMSReviewEditorProps {
   ramsData: RAMSData;
-  methodData: Partial<MethodStatementData>;
+  methodData?: Partial<MethodStatementData>;
   isSaving?: boolean;
   lastSaved?: Date | null;
   onSave?: () => void;
@@ -70,7 +70,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     }))
   };
 
-  const normalizedMethodData: Partial<MethodStatementData> = {
+  const normalizedMethodData: Partial<MethodStatementData> = initialMethodData ? {
     ...initialMethodData,
     steps: (initialMethodData.steps || []).map((step, idx) => ({
       ...step,
@@ -96,7 +96,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     requiredQualifications: Array.isArray(initialMethodData.requiredQualifications)
       ? initialMethodData.requiredQualifications
       : []
-  };
+  } : {};
 
   const [ramsData, setRamsData] = useState<RAMSData>(normalizedRamsData);
   const [methodData, setMethodData] = useState<Partial<MethodStatementData>>(normalizedMethodData);
@@ -735,97 +735,122 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
             </TabsContent>
 
             <TabsContent value="method" className="space-y-0 mt-0 pb-20">
-              <div className="p-4 md:p-6 space-y-4">
-                {/* Project Info Header */}
-                <ProjectInfoHeader 
-                  methodData={methodData} 
-                  projectName={ramsData.projectName}
-                  location={ramsData.location}
-                />
+              {methodData && Object.keys(methodData).length > 0 ? (
+                <div className="p-4 md:p-6 space-y-4">
+                  {/* Project Info Header */}
+                  <ProjectInfoHeader 
+                    methodData={methodData} 
+                    projectName={ramsData.projectName}
+                    location={ramsData.location}
+                  />
 
-                {/* Emergency Contacts */}
-                <EmergencyContactsCard methodData={methodData as MethodStatementData} />
+                  {/* Emergency Contacts */}
+                  <EmergencyContactsCard methodData={methodData as MethodStatementData} />
 
-                {/* Scope of Work */}
-                <ScopeOfWorkCard methodData={methodData as MethodStatementData} />
+                  {/* Scope of Work */}
+                  <ScopeOfWorkCard methodData={methodData as MethodStatementData} />
 
-                {/* Tools, Materials, Tips, Mistakes */}
-                <MethodStatementSummary methodData={methodData as MethodStatementData} />
+                  {/* Tools, Materials, Tips, Mistakes */}
+                  <MethodStatementSummary methodData={methodData as MethodStatementData} />
 
-                {/* Site Logistics */}
-                <SiteLogisticsCard methodData={methodData as MethodStatementData} />
+                  {/* Site Logistics */}
+                  <SiteLogisticsCard methodData={methodData as MethodStatementData} />
 
-                {/* Competency Matrix */}
-                <CompetencyMatrixCard methodData={methodData as MethodStatementData} />
+                  {/* Competency Matrix */}
+                  <CompetencyMatrixCard methodData={methodData as MethodStatementData} />
 
-                {/* PPE Details */}
-                <PPEDetailsGrid methodData={methodData as MethodStatementData} />
+                  {/* PPE Details */}
+                  <PPEDetailsGrid methodData={methodData as MethodStatementData} />
 
-                {/* Progress Summary */}
-                {methodData.steps && methodData.steps.length > 0 && (
-                  <ProgressSummary steps={methodData.steps} />
-                )}
+                  {/* Progress Summary */}
+                  {methodData.steps && methodData.steps.length > 0 && (
+                    <ProgressSummary steps={methodData.steps} />
+                  )}
 
-                {/* Installation Steps */}
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between mb-3">
-                    <h4 className="text-lg font-bold text-elec-light flex items-center gap-2">
-                      <FileText className="h-5 w-5 text-elec-yellow" />
-                      Installation Steps
-                    </h4>
-                    <div className="flex items-center gap-2">
-                      <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-bold">
-                        {methodData.steps?.length || 0} Steps
-                      </Badge>
-                      <Button 
-                        onClick={addStep} 
-                        size="sm" 
-                        className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card"
-                      >
-                        <Plus className="h-4 w-4 mr-1" />
-                        Add Step
-                      </Button>
+                  {/* Installation Steps */}
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="text-lg font-bold text-elec-light flex items-center gap-2">
+                        <FileText className="h-5 w-5 text-elec-yellow" />
+                        Installation Steps
+                      </h4>
+                      <div className="flex items-center gap-2">
+                        <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-bold">
+                          {methodData.steps?.length || 0} Steps
+                        </Badge>
+                        <Button 
+                          onClick={addStep} 
+                          size="sm" 
+                          className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card"
+                        >
+                          <Plus className="h-4 w-4 mr-1" />
+                          Add Step
+                        </Button>
+                      </div>
+                    </div>
+                    
+                    {methodData.steps && methodData.steps.length > 0 ? (
+                      <>
+                        {methodData.steps.map((step, index) => (
+                          <EnhancedStepCard
+                            key={step.id}
+                            step={step}
+                            index={index}
+                            editable={true}
+                            onUpdate={updateStep}
+                            onRemove={removeStep}
+                          />
+                        ))}
+                      </>
+                    ) : (
+                      <Card className="border-dashed border-elec-yellow/30">
+                        <CardContent className="p-8 text-center">
+                          <FileText className="h-16 w-16 text-elec-yellow/40 mx-auto mb-4" />
+                          <h3 className="text-lg font-semibold text-elec-light mb-2">No Installation Steps Yet</h3>
+                          <p className="text-sm text-elec-light/60 mb-4">
+                            Add installation steps manually using the button above or regenerate to create method statement.
+                          </p>
+                          {onRegenerate && (
+                            <Button onClick={onRegenerate} variant="outline" size="sm" className="border-orange-500/40 text-orange-500 hover:bg-orange-500/10">
+                              <Sparkles className="h-4 w-4 mr-2" />
+                              Try Again
+                            </Button>
+                          )}
+                        </CardContent>
+                      </Card>
+                    )}
+                  </div>
+
+                  {/* Risk Assessment Summary */}
+                  <RiskAssessmentSummary methodData={methodData as MethodStatementData} />
+
+                  {/* Compliance References */}
+                  <ComplianceReferencesCard methodData={methodData as MethodStatementData} />
+                </div>
+              ) : (
+                <div className="p-6 bg-muted/30 rounded-lg border border-dashed border-orange-500/30 m-4">
+                  <div className="flex items-start gap-4">
+                    <AlertCircle className="h-8 w-8 text-orange-400 shrink-0 mt-1" />
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-orange-400 mb-2">Method Statement Not Available</h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        The method statement generation timed out or failed. You can still use the risk assessment data, or retry to generate the full document with the method statement included.
+                      </p>
+                      {onRegenerate && (
+                        <Button
+                          onClick={onRegenerate}
+                          variant="outline"
+                          size="sm"
+                          className="border-orange-500/40 hover:border-orange-500 hover:bg-orange-500/10 text-orange-400"
+                        >
+                          <Sparkles className="h-4 w-4 mr-2" />
+                          Regenerate Full Document
+                        </Button>
+                      )}
                     </div>
                   </div>
-                  
-                  {methodData.steps && methodData.steps.length > 0 ? (
-                    <>
-                      {methodData.steps.map((step, index) => (
-                        <EnhancedStepCard
-                          key={step.id}
-                          step={step}
-                          index={index}
-                          editable={true}
-                          onUpdate={updateStep}
-                          onRemove={removeStep}
-                        />
-                      ))}
-                    </>
-                  ) : (
-                    <Card className="border-dashed border-elec-yellow/30">
-                      <CardContent className="p-8 text-center">
-                        <FileText className="h-16 w-16 text-elec-yellow/40 mx-auto mb-4" />
-                        <h3 className="text-lg font-semibold text-elec-light mb-2">No Installation Steps Yet</h3>
-                        <p className="text-sm text-elec-light/60 mb-4">
-                          Add installation steps manually using the button above or regenerate to create method statement.
-                        </p>
-                        {onRegenerate && (
-                          <Button onClick={onRegenerate} variant="outline" size="sm" className="border-orange-500/40 text-orange-500 hover:bg-orange-500/10">
-                            <Sparkles className="h-4 w-4 mr-2" />
-                            Try Again
-                          </Button>
-                        )}
-                      </CardContent>
-                    </Card>
-                  )}
                 </div>
-
-                {/* Risk Assessment Summary */}
-                <RiskAssessmentSummary methodData={methodData as MethodStatementData} />
-
-                {/* Compliance References */}
-                <ComplianceReferencesCard methodData={methodData as MethodStatementData} />
-              </div>
+              )}
             </TabsContent>
           </Tabs>
 
