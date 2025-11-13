@@ -154,6 +154,16 @@ serve(async (req) => {
         duration: `${ragTime}ms`
       });
       
+      // Phase 5: Early Warning System for Zero RAG Results
+      if (practicalDocs.length === 0 && regulationsDocs.length === 0) {
+        console.error('🚨 CRITICAL: ZERO RAG RESULTS - AI will hallucinate without knowledge base!');
+        console.error('⚠️ Consider: 1) Check query keywords, 2) Verify database connectivity, 3) Inspect RPC function');
+      } else if (practicalDocs.length === 0) {
+        console.warn('⚠️ WARNING: No practical work data found - installation steps may lack real-world details');
+      } else if (regulationsDocs.length === 0) {
+        console.warn('⚠️ WARNING: No regulations data found - method statement may lack compliance citations');
+      }
+      
       console.log(`✅ RAG complete in ${ragTime}ms`);
 
       // Build AI context (simplified from installer-v3)
@@ -222,7 +232,7 @@ Extract from knowledge base data provided above. Be practical and field-ready.`;
           ],
           tools: [installerV3ToolSchema],
           tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } },
-          max_completion_tokens: 16000,
+          max_completion_tokens: 10000, // Reduced from 16000 for faster generation
         }),
       });
 
