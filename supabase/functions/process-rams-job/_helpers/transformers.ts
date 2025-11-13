@@ -3,13 +3,6 @@
  * Maps: hazards → risks, ppe → ppeDetails
  */
 export function transformHealthSafetyResponse(hsData: any, projectDetails?: any): any {
-  console.log('🔄 [PHASE 1 DIAGNOSTIC] Starting transformation...', {
-    hasData: !!hsData,
-    hasDataField: !!hsData?.data,
-    dataKeys: hsData?.data ? Object.keys(hsData.data) : [],
-    rawType: typeof hsData
-  });
-
   if (!hsData) {
     console.error('❌ hsData is null/undefined');
     return null;
@@ -19,31 +12,15 @@ export function transformHealthSafetyResponse(hsData: any, projectDetails?: any)
   let sourceData = hsData.data || hsData;
   
   if (sourceData.result) {
-    console.log('📦 Found result wrapper, unwrapping...');
     sourceData = sourceData.result;
   }
   
   if (sourceData.riskAssessment?.hazards) {
-    console.log('📦 Found riskAssessment wrapper, extracting hazards...');
     sourceData.hazards = sourceData.riskAssessment.hazards;
   }
   
-  console.log('🔍 [PHASE 1 DIAGNOSTIC] Source data structure:', {
-    hasHazards: !!sourceData.hazards,
-    hazardsType: sourceData.hazards ? typeof sourceData.hazards : 'missing',
-    hazardsIsArray: Array.isArray(sourceData.hazards),
-    hazardsLength: Array.isArray(sourceData.hazards) ? sourceData.hazards.length : 0,
-    hasPPE: !!sourceData.ppe,
-    ppeType: sourceData.ppe ? typeof sourceData.ppe : 'missing',
-    ppeIsArray: Array.isArray(sourceData.ppe),
-    ppeLength: Array.isArray(sourceData.ppe) ? sourceData.ppe.length : 0,
-    allKeys: Object.keys(sourceData),
-    firstHazard: Array.isArray(sourceData.hazards) && sourceData.hazards[0] ? Object.keys(sourceData.hazards[0]) : 'none'
-  });
-  
   if (!sourceData.hazards || !Array.isArray(sourceData.hazards)) {
-    console.error('❌ No hazards array found in response. Available keys:', Object.keys(sourceData));
-    console.error('Full source data sample:', JSON.stringify(sourceData).slice(0, 500));
+    console.error('❌ No hazards array found');
     return null;
   }
 
@@ -84,13 +61,6 @@ export function transformHealthSafetyResponse(hsData: any, projectDetails?: any)
     supervisor: projectDetails?.supervisor || '',
     activities: []
   };
-
-  console.log('✅ [PHASE 1 DIAGNOSTIC] Transformation complete:', {
-    inputHazards: sourceData.hazards?.length || 0,
-    outputRisks: transformed.risks?.length || 0,
-    inputPPE: sourceData.ppe?.length || 0,
-    outputPPE: transformed.ppeDetails?.length || 0
-  });
 
   return transformed;
 }
