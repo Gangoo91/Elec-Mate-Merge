@@ -2,23 +2,26 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AlertTriangle, Shield, Link2 } from 'lucide-react';
-import { MethodStatementData } from '@/types/method-statement';
+import { RAMSData } from '@/types/rams';
 
 interface RiskAssessmentSummaryProps {
-  methodData: MethodStatementData;
+  ramsData: RAMSData;
 }
 
-export function RiskAssessmentSummary({ methodData }: RiskAssessmentSummaryProps) {
-  const riskAssessment = methodData.riskAssessment;
+export function RiskAssessmentSummary({ ramsData }: RiskAssessmentSummaryProps) {
+  const risks = ramsData.risks || [];
   
-  if (!riskAssessment) {
+  if (risks.length === 0) {
     return null;
   }
 
-  const hazardsCount = riskAssessment.hazards?.length || 0;
-  const controlsCount = riskAssessment.controls?.length || 0;
-  const highRiskHazards = riskAssessment.hazards?.filter(h => h.riskLevel === 'High') || [];
-  const mediumRiskHazards = riskAssessment.hazards?.filter(h => h.riskLevel === 'Medium') || [];
+  const hazardsCount = risks.length;
+  const controlsCount = risks.reduce((sum, r) => {
+    const controls = r.controls?.split('\n').filter(c => c.trim());
+    return sum + (controls?.length || 0);
+  }, 0);
+  const highRiskHazards = risks.filter(r => r.riskRating >= 15); // High risk = score 15+
+  const mediumRiskHazards = risks.filter(r => r.riskRating >= 9 && r.riskRating < 15);
 
   if (hazardsCount === 0) {
     return null;
@@ -64,17 +67,17 @@ export function RiskAssessmentSummary({ methodData }: RiskAssessmentSummaryProps
               High Risk Hazards Requiring Immediate Attention
             </h4>
             <div className="space-y-2">
-              {highRiskHazards.map((hazard, idx) => (
+              {highRiskHazards.map((risk, idx) => (
                 <div key={idx} className="flex items-start gap-2 text-sm">
                   <Badge className="bg-red-500/20 text-red-400 border-red-500/30 text-xs mt-0.5">
-                    {hazard.riskScore}
+                    {risk.riskRating}
                   </Badge>
                   <div className="flex-1">
-                    <p className="text-elec-light/90">{hazard.hazard}</p>
-                    {hazard.linkedToStep > 0 && (
+                    <p className="text-elec-light/90">{risk.hazard}</p>
+                    {risk.linkedToStep && risk.linkedToStep > 0 && (
                       <div className="flex items-center gap-1 mt-1">
                         <Link2 className="h-3 w-3 text-blue-400" />
-                        <span className="text-xs text-blue-400">Linked to Step {hazard.linkedToStep}</span>
+                        <span className="text-xs text-blue-400">Linked to Step {risk.linkedToStep}</span>
                       </div>
                     )}
                   </div>

@@ -822,7 +822,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   </div>
 
                   {/* Risk Assessment Summary */}
-                  <RiskAssessmentSummary methodData={methodData as MethodStatementData} />
+                  <RiskAssessmentSummary ramsData={ramsData} />
 
                   {/* Compliance References */}
                   <ComplianceReferencesCard methodData={methodData as MethodStatementData} />
