@@ -335,11 +335,32 @@ Deno.serve(async (req) => {
     let hsData, hsError;
     if (hsResult.status === 'fulfilled') {
       const result = hsResult.value as any;
-      hsData = result.data;
-      hsError = result.error;
+      
+      // NEW: Comprehensive diagnostic logging BEFORE extraction
+      console.log('🔍 [DIAGNOSTIC] Full H&S result object:', {
+        hasData: !!result.data,
+        hasError: !!result.error,
+        dataType: typeof result.data,
+        errorType: typeof result.error,
+        dataKeys: result.data ? Object.keys(result.data) : [],
+        dataSuccess: result.data?.success,
+        errorMessage: result.error?.message || result.error,
+        rawResultSample: JSON.stringify(result).slice(0, 500)
+      });
+      
+      // Check if the edge function returned an error response as .data
+      if (result.data && result.data.success === false) {
+        console.error('❌ H&S edge function returned error in .data:', result.data.error);
+        hsError = new Error(result.data.error || 'Health & Safety generation failed');
+        hsData = null;
+      } else {
+        hsData = result.data;
+        hsError = result.error;
+      }
+      
       console.log(`✅ Health-safety completed for job: ${jobId}`);
       
-      // PHASE 1: Detailed diagnostic logging
+      // PHASE 1: Detailed diagnostic logging AFTER extraction
       console.log('🔍 [PHASE 1 DIAGNOSTIC] Health-safety raw response structure:', {
         hasData: !!hsData,
         hasDataField: !!hsData?.data,
