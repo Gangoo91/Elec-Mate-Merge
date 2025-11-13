@@ -45,7 +45,7 @@ timeout_sec = 180
 verify_jwt = false
 timeout_sec = 30
 
-[functions.process-rams-job]
+[functions.generate-rams]
 verify_jwt = false
 timeout_sec = 600
 

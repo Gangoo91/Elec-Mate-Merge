@@ -89,19 +89,25 @@ Use the RAG context provided to ensure accuracy and compliance.`;
 
 export async function generateHealthSafety(
   query: string,
-  projectDetails: any
+  projectDetails: any,
+  onProgress?: (progress: number, step: string) => Promise<void>
 ): Promise<any> {
   console.log('🩺 Health & Safety Agent starting...');
   const startTime = Date.now();
   
+  if (onProgress) await onProgress(20, 'Analysing health & safety requirements...');
+  
   // STEP 1: RAG - Parallel search
   console.log('🔍 Fetching RAG knowledge...');
+  if (onProgress) await onProgress(25, 'Searching health & safety knowledge base...');
+  
   const [hsKnowledge, regulations] = await Promise.all([
     searchHealthSafetyKnowledge(query),
     searchRegulationsIntelligence(query)
   ]);
   
   console.log(`✅ RAG complete: ${hsKnowledge.length} H&S docs, ${regulations.length} regulations (${Date.now() - startTime}ms)`);
+  if (onProgress) await onProgress(35, 'Generating risk assessment with AI...');
   
   // STEP 2: Build context
   const ragContext = `
@@ -134,6 +140,7 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
   const result = JSON.parse(response.toolCalls[0].function.arguments);
   
   console.log(`✅ Health & Safety complete: ${result.hazards.length} hazards, ${result.ppe.length} PPE (${Date.now() - startTime}ms)`);
+  if (onProgress) await onProgress(45, 'Health & Safety analysis complete!');
   
   return {
     ...result,
