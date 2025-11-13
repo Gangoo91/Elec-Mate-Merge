@@ -1732,13 +1732,21 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
       
       const stepQuery = `${step.title} ${step.description}`.substring(0, 500);
       
-      const { data: stepRag } = await supabase.rpc(
-        'search_practical_work_intelligence_hybrid',
-        {
-          query_text: stepQuery,
-          match_count: 5
+        const { data: stepRag, error: stepRagError } = await supabase
+          .from('practical_work_intelligence')
+          .select('primary_topic, tools_required, materials_needed, bs7671_regulations, equipment_category, confidence_score')
+          .or(`
+            primary_topic.ilike.%${stepQuery}%,
+            equipment_category.ilike.%${stepQuery}%,
+            activity_types.cs.{installation,wiring,testing,fixing,mounting}
+          `)
+          .order('confidence_score', { ascending: false })
+          .limit(5);
+
+        // Error handling for enrichment query
+        if (stepRagError) {
+          logger.warn(`⚠️ Step enrichment query failed for "${step.title}":`, stepRagError);
         }
-      );
       
       if (stepRag && stepRag.length > 0) {
         const bestMatch = stepRag[0];
