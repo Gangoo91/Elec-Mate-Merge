@@ -168,7 +168,7 @@ serve(async (req) => {
   }
 
   const requestId = generateRequestId();
-  const logger = createLogger(requestId, { function: 'installer-v3' });
+  const logger = createLogger(requestId);
   const startTime = Date.now();
 
   // Timeout protection (350s)
@@ -203,38 +203,76 @@ serve(async (req) => {
       const ragStart = Date.now();
       logger.info('🔍 RAG: Direct SQL queries (Practical Work 95% + Regulations 90%)');
 
-      // Build focused search queries (3-5 max)
-      const searchQueries = [query];
-      if (installationMethod) searchQueries.push(`${installationMethod} installation`);
-      searchQueries.push('safe isolation procedures BS 7671');
-      if (/shower|ev|cooker/i.test(query)) searchQueries.push('high power installation');
-      if (/outdoor|swa/i.test(query)) searchQueries.push('SWA cable glands');
+      // Extract keywords from query (not full text)
+      const keywords = query
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, ' ')
+        .split(/\s+/)
+        .filter(w => w.length > 3)
+        .slice(0, 15)
+        .join(' ');
 
-      // Query 1: Practical Work Intelligence (limit 25)
+      logger.debug('Keywords extracted', { keywords });
+
+      // Query 1: Practical Work Intelligence (flexible OR query, limit 25)
       const { data: practicalData } = await supabase
         .from('practical_work_intelligence')
         .select('primary_topic, content, tools_required, materials_needed, bs7671_regulations, equipment_category')
-        .ilike('primary_topic', `%${query}%`)
+        .or(`primary_topic.ilike.%${keywords}%,installation_method.ilike.%${keywords}%`)
+        .gte('confidence_score', 0.6)
+        .order('confidence_score', { ascending: false })
         .limit(25);
 
-      const practicalDocs = (practicalData || []).map(row => ({
+      let practicalDocs = (practicalData || []).map(row => ({
         ...row,
         hybrid_score: 0.95,
         source: 'practical_work_intelligence'
       }));
 
-      // Query 2: Regulations Intelligence (limit 15)
+      // Fallback if no results
+      if (practicalDocs.length === 0) {
+        logger.info('⚠️ Practical work empty, using fallback');
+        const { data: fallbackData } = await supabase
+          .from('practical_work_intelligence')
+          .select('primary_topic, content, tools_required, materials_needed, bs7671_regulations, equipment_category')
+          .ilike('primary_topic', '%installation%')
+          .gte('confidence_score', 0.7)
+          .limit(15);
+        practicalDocs = (fallbackData || []).map(row => ({
+          ...row,
+          hybrid_score: 0.80,
+          source: 'practical_work_intelligence'
+        }));
+      }
+
+      // Query 2: Regulations Intelligence (flexible OR query, limit 15)
       const { data: regulationsData } = await supabase
         .from('regulations_intelligence')
         .select('regulation_number, primary_topic, content, keywords, category')
-        .contains('keywords', ['installation', 'cable', 'protection', 'wiring'])
+        .or(`primary_topic.ilike.%${keywords}%,keywords.cs.{installation,cable,protection,wiring}`)
+        .order('primary_topic', { ascending: true })
         .limit(15);
 
-      const regulationsDocs = (regulationsData || []).map(row => ({
+      let regulationsDocs = (regulationsData || []).map(row => ({
         ...row,
         hybrid_score: 0.90,
         source: 'regulations_intelligence'
       }));
+
+      // Fallback if no results
+      if (regulationsDocs.length === 0) {
+        logger.info('⚠️ Regulations empty, using fallback');
+        const { data: fallbackData } = await supabase
+          .from('regulations_intelligence')
+          .select('regulation_number, primary_topic, content, keywords, category')
+          .in('category', ['Installation', 'Protection', 'Earthing', 'Special Locations'])
+          .limit(10);
+        regulationsDocs = (fallbackData || []).map(row => ({
+          ...row,
+          hybrid_score: 0.75,
+          source: 'regulations_intelligence'
+        }));
+      }
 
       const installKnowledge = [...practicalDocs, ...regulationsDocs];
 
@@ -404,7 +442,7 @@ ${circuitContext}
 
     } catch (error) {
       logger.error('Installer V3 error', { error });
-      return handleError(error);
+      return handleError(error, logger);
     }
   })();
 
