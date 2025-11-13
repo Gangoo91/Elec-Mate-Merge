@@ -1,0 +1,4 @@
+# Ignore all functions except the ones we want to deploy
+*
+!health-safety-v3
+!installer-v3
