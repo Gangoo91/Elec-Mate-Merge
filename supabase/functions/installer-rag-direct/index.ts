@@ -301,7 +301,7 @@ Extract from knowledge base data provided above. Be practical and field-ready.`;
       }),
       { 
         status: 500, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       }
     );
   }
