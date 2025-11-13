@@ -22,7 +22,7 @@ export async function callAgentsParallel(
         },
         signal: controller.signal
       }),
-      supabase.functions.invoke('installer-v3', {
+      supabase.functions.invoke('installer-rag-direct', {
         body: {
           query: description,
           projectDetails,
