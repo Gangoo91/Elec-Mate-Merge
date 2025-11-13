@@ -1,7 +1,7 @@
 // Simplified v5.0.0 - Reduced from 2,106 to ~850 lines
 // Optimizations: Removed complex RAG logic, streamlined prompts, direct queries only
 
-import { serve } from '../_shared/deps.ts';
+import { serve } from '../_shared/minimal-deps.ts';
 import { createClient as createSupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 // Lightweight inline utilities (no v3-core dependency)

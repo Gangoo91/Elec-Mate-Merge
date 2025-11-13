@@ -1,48 +1,34 @@
 project_id = "jtwygbeceundfgnkirof"
 
-# Only list functions in active use to avoid deploy failures
-# Removed functions with xhr@0.1.0 imports causing deployment failures
+# TEMPORARY: Reduced function set to fix bundle timeout
+# Only deploying critical RAMS and core functions
 
-# Practical Work Unification & Enrichment
-[functions.practical-work-unify]
+# V3 Agent Functions - CRITICAL
+[functions.health-safety-v3]
 verify_jwt = false
-timeout_sec = 600
+timeout_sec = 480
 
-[functions.enrich-practical-work]
+[functions.installer-v3]
 verify_jwt = false
-timeout_sec = 600
+timeout_sec = 360
 
-# OAuth Email Integration
-[functions.oauth-email-init]
+[functions.process-rams-job]
+verify_jwt = false
+timeout_sec = 480
+
+[functions.create-rams-job]
+verify_jwt = false
+timeout_sec = 60
+
+[functions.cancel-rams-job]
 verify_jwt = false
 timeout_sec = 30
 
-[functions.oauth-email-callback]
-verify_jwt = false
-timeout_sec = 60
+# Core Subscription Functions
+[functions.check-subscription]
+verify_jwt = true
 
-[functions.refresh-email-token]
-verify_jwt = false
-timeout_sec = 60
-
-[functions.send-invoice-smart]
-verify_jwt = false
-timeout_sec = 60
-
-[functions.disconnect-email]
-verify_jwt = false
-timeout_sec = 30
-
-[functions.get-email-config]
-verify_jwt = false
-timeout_sec = 30
-
-# Quote Action - One-Click Accept/Reject
-[functions.quote-action]
-verify_jwt = false
-timeout_sec = 60
-
-# PDF Generation Functions
+# PDF Generation - CRITICAL
 [functions.generate-combined-rams-pdf]
 verify_jwt = false
 timeout_sec = 180
@@ -58,118 +44,6 @@ timeout_sec = 180
 [functions.generate-health-safety-pdf]
 verify_jwt = true
 timeout_sec = 180
-
-# V3 Agent Functions - Active
-[functions.designer-agent]
-verify_jwt = false
-timeout_sec = 300
-
-[functions.designer-agent-v2]
-verify_jwt = false
-timeout_sec = 480
-
-# [functions.designer-v3] - REMOVED: Not used in frontend
-
-[functions.cost-engineer-v3]
-verify_jwt = false
-timeout_sec = 360
-
-[functions.health-safety-v3]
-verify_jwt = false
-timeout_sec = 480
-
-[functions.installer-v3]
-verify_jwt = false
-timeout_sec = 360
-
-[functions.installer-rag-direct]
-verify_jwt = false
-timeout_sec = 120
-
-[functions.project-mgmt-v3]
-verify_jwt = false
-timeout_sec = 300
-
-[functions.commissioning-v3]
-verify_jwt = false
-timeout_sec = 300
-
-[functions.inspector-v3]
-verify_jwt = false
-timeout_sec = 300
-
-[functions.maintenance-v3]
-verify_jwt = false
-timeout_sec = 300
-
-[functions.tutor-v3]
-verify_jwt = false
-timeout_sec = 300
-
-# AI Assistant & RAG Search Functions
-[functions.conversational-search]
-verify_jwt = false
-timeout_sec = 180
-
-[functions.electrician-ai-assistant]
-verify_jwt = false
-timeout_sec = 180
-
-[functions.bs7671-rag-search]
-verify_jwt = false
-timeout_sec = 120
-
-[functions.multi-source-rag-search]
-verify_jwt = false
-timeout_sec = 120
-
-# Agent Router - Must be public since it routes to public V3 agents
-[functions.agent-router]
-verify_jwt = false
-timeout_sec = 300
-
-# Document Processing Functions (no xhr imports)
-[functions.parse-maintenance-knowledge]
-verify_jwt = false
-timeout_sec = 600
-
-[functions.parse-tutor-knowledge]
-verify_jwt = false
-timeout_sec = 180
-
-# Subscription & Core Functions - Active
-[functions.check-subscription]
-verify_jwt = true
-
-[functions.materials-weekly-scheduler]
-verify_jwt = false
-
-[functions.market-insights-scheduler]
-verify_jwt = false
-
-[functions.simple-materials-scraper]
-verify_jwt = false
-timeout_sec = 120
-
-[functions.send-invoice]
-verify_jwt = true
-
-[functions.send-payment-reminder]
-verify_jwt = true
-
-# PDF Generation
-[functions.generate-pdf-monkey]
-verify_jwt = true
-timeout_sec = 180
-
-[functions.generate-temporary-pdf-link]
-verify_jwt = true
-timeout_sec = 180
-
-# AI Tooling - Visual Analysis
-[functions.visual-analysis]
-verify_jwt = false
-timeout_sec = 120
 
 [functions.visual-analysis-rag-enhanced]
 verify_jwt = false
