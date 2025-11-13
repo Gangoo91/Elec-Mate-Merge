@@ -1,5 +1,4 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import { checkRAMSCache, storeRAMSCache } from '../_shared/rams-cache.ts';
 import { 
   transformHealthSafetyResponse, 
   extractEmergencyContacts,
@@ -7,6 +6,8 @@ import {
   calculateTotalTime 
 } from './_helpers/transformers.ts';
 import { callAgentsParallel, extractAgentResults } from './_helpers/agent-caller.ts';
+import { handleCompletion } from './_helpers/completion-handler.ts';
+import { checkCache, storeCacheIfValid } from './_helpers/cache-handler.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -60,45 +61,17 @@ Deno.serve(async (req) => {
       );
     }
 
-    console.log('🔍 Checking semantic cache...');
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
     if (!OPENAI_API_KEY) throw new Error('OPENAI_API_KEY not configured');
     
-    const cacheResult = await checkRAMSCache({
-      supabase,
-      jobDescription: job.job_description,
-      workType: job.job_scale,
-      jobScale: job.job_scale,
-      openAiKey: OPENAI_API_KEY
-    });
+    const cacheCheck = await checkCache(supabase, jobId, job, OPENAI_API_KEY);
     
-    if (cacheResult.hit && cacheResult.data) {
-      console.log('🎉 Cache HIT - serving instant result');
-      
-      await supabase
-        .from('rams_generation_jobs')
-        .update({
-          status: 'complete',
-          progress: 100,
-          current_step: 'Completed (served from cache)',
-          rams_data: cacheResult.data.rams_data,
-          method_data: cacheResult.data.method_data,
-          completed_at: new Date().toISOString(),
-          generation_metadata: { 
-            cache_hit: true,
-            similarity: cacheResult.data.similarity,
-            cache_hit_count: cacheResult.data.hit_count
-          }
-        })
-        .eq('id', jobId);
-      
+    if (cacheCheck.hit) {
       return new Response(
-        JSON.stringify({ success: true, jobId, cached: true, similarity: cacheResult.data.similarity }),
+        JSON.stringify({ success: true, jobId, cached: true, similarity: cacheCheck.similarity }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
-    
-    console.log('❌ Cache miss - proceeding with full generation');
     
     await supabase
       .from('rams_generation_jobs')
@@ -221,81 +194,22 @@ Deno.serve(async (req) => {
       .eq('id', jobId);
 
     // PHASE 3: Graceful Degradation - Handle partial completions
-    const hsSucceeded = hsData && !hsError;
-    const installerSucceeded = installerData && !installerError;
+    const completionResult = await handleCompletion(
+      supabase,
+      jobId,
+      job,
+      hsData,
+      hsError,
+      installerData,
+      installerError
+    );
 
-    if (!hsSucceeded && !installerSucceeded) {
-      // Total failure
-      console.error('❌ Both agents failed');
-      await supabase
-        .from('rams_generation_jobs')
-        .update({
-          status: 'failed',
-          progress: 0,
-          current_step: 'Both agents failed to generate content',
-          error_message: `H&S Error: ${hsError?.message || 'Unknown'}, Installer Error: ${installerError?.message || 'Unknown'}`,
-          completed_at: new Date().toISOString()
-        })
-        .eq('id', jobId);
-      
-      throw new Error('Both agents failed');
+    // If partial or failed, return early
+    if (completionResult.response) {
+      return completionResult.response;
     }
 
-    if (hsSucceeded && !installerSucceeded) {
-      // Partial: RAMS only
-      console.warn('⚠️ Installer failed but Health & Safety succeeded');
-      
-      const projectDetails = {
-        projectName: job.project_info.projectName,
-        location: job.project_info.location,
-        contractor: job.project_info.contractor,
-        supervisor: job.project_info.supervisor,
-        assessor: job.project_info.assessor
-      };
-      
-      const transformedRAMSData = transformHealthSafetyResponse(hsData, projectDetails);
-      
-      await supabase
-        .from('rams_generation_jobs')
-        .update({
-          status: 'partial',
-          progress: 100,
-          current_step: 'Risk assessment complete (Method statement failed)',
-          rams_data: transformedRAMSData,
-          method_data: null,
-          error_message: `Method statement generation failed: ${installerError?.message || 'Unknown error'}`,
-          completed_at: new Date().toISOString()
-        })
-        .eq('id', jobId);
-      
-      return new Response(
-        JSON.stringify({ success: true, jobId, partial: true, hasRAMS: true, hasMethod: false }),
-        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    if (!hsSucceeded && installerSucceeded) {
-      // Partial: Method Statement only
-      console.warn('⚠️ Health & Safety failed but Installer succeeded');
-      await supabase
-        .from('rams_generation_jobs')
-        .update({
-          status: 'partial',
-          progress: 100,
-          current_step: 'Method statement complete (Risk assessment failed)',
-          rams_data: null,
-          method_data: installerData?.data,
-          error_message: `Risk assessment generation failed: ${hsError?.message || 'Unknown error'}`,
-          completed_at: new Date().toISOString()
-        })
-        .eq('id', jobId);
-      
-      return new Response(
-        JSON.stringify({ success: true, jobId, partial: true, hasRAMS: false, hasMethod: true }),
-        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
+    // Continue with full success processing
     const projectDetails = {
       projectName: job.project_info.projectName,
       location: job.project_info.location,
@@ -348,18 +262,14 @@ Deno.serve(async (req) => {
       })
       .eq('id', jobId);
 
-    if (combinedRAMSData && finalMethodData) {
-      console.log('💾 Storing result in semantic cache...');
-      await storeRAMSCache({
-        supabase,
-        jobDescription: job.job_description,
-        workType: job.job_scale,
-        jobScale: job.job_scale,
-        ramsData: combinedRAMSData,
-        methodData: finalMethodData,
-        openAiKey: OPENAI_API_KEY
-      });
-    }
+    // Store in cache if both outputs are valid
+    await storeCacheIfValid(
+      supabase,
+      job,
+      combinedRAMSData,
+      finalMethodData,
+      OPENAI_API_KEY
+    );
 
     console.log(`🎉 Job complete: ${jobId}`);
 
