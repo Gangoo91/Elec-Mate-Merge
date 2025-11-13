@@ -411,146 +411,135 @@ serve(async (req) => {
       const searchQueries = decomposeInstallationQuery(query, installationMethod);
       logger.info(`🔍 Decomposed into ${searchQueries.length} targeted searches`);
 
-      // CORRECTED LEGACY: Keyword Practical (95%) + Keyword Regs (85%)
+      // HEALTH & SAFETY PATTERN: Direct SQL Queries (PROVEN WORKING)
       const ragStart = Date.now();
-      logger.info('🔍 Starting LEGACY RAG (95% practical KEYWORDS + 85% regs KEYWORDS)');
+      logger.info('🔍 Starting Direct SQL RAG (95% Practical Work + 90% Regulations Intelligence)');
       
-      // 🚀 ACTION 1.2 & 2.1: Execute multi-query RAG with 3x volume
-      const [practicalWorkResult, bs7671Result] = await Promise.all([
-        // TIER 1: Practical Work Intelligence - Multi-query search
-        (async () => {
-          try {
-            const allPracticalResults = await Promise.all(
-              searchQueries.map(q => 
-                supabase.rpc('search_practical_work_intelligence_hybrid', {
-                  query_text: q,
-                  match_count: 10  // 10 per query
-                }).then(r => r.data || [])
-              )
-            );
-            
-            // Flatten and deduplicate by ID
-            const uniqueDocs = [
-              ...new Map(
-                allPracticalResults.flat().map(doc => [doc.id, doc])
-              ).values()
-            ].slice(0, 40); // Cap at 40 best results
-            
-            logger.info(`✅ Retrieved ${uniqueDocs.length} unique practical procedures from ${searchQueries.length} queries`);
-            
-            // 🔍 DEBUG: Enhanced RAG data availability logging
-            if (uniqueDocs.length > 0) {
-              logger.info('🔍 Tool extraction sample:', {
-                firstDoc: {
-                  topic: uniqueDocs[0].topic || uniqueDocs[0].primary_topic,
-                  hasToolsRequired: !!uniqueDocs[0].tools_required,
-                  toolsCount: (uniqueDocs[0].tools_required || []).length,
-                  toolsSample: (uniqueDocs[0].tools_required || []).slice(0, 5),
-                  hasMaterialsNeeded: !!uniqueDocs[0].materials_needed,
-                  materialsCount: (uniqueDocs[0].materials_needed || []).length
-                }
-              });
-              
-              const sampleTools = uniqueDocs.slice(0, 3).map(doc => ({
-                topic: doc.topic || doc.primary_topic,
-                toolsCount: (doc.tools_required || []).length,
-                sampleTools: (doc.tools_required || []).slice(0, 3)
-              }));
-              logger.info('📊 RAG Tools Sample:', sampleTools);
-            }
-            
-            return uniqueDocs.map((row: any) => ({
-              primary_topic: row.topic || row.primary_topic,
-              content: row.content,
-              equipment_category: row.equipment_category || 'General',
-              tools_required: row.tools_required || [],  // ✅ FIXED: Top-level field
-              materials_needed: [],  // ⚠️ Not in RPC return - enriched later
-              bs7671_regulations: row.bs7671_regulations || [],  // ✅ FIXED: Top-level field
-              hybrid_score: (row.hybrid_score || 0.75) * 0.95,
-              confidence_score: row.hybrid_score || 0.75,
-              source: 'practical_work_intelligence',  // ✅ EXPLICIT
-              _rawSource: row.source || 'not_provided'  // 🔍 DEBUG: Verify row structure
-            }));
-          } catch (error) {
-            console.error('Practical work multi-query search failed:', error);
-            return [];
-          }
-        })(),
-        
-        // TIER 2: BS 7671 Regulations - Increased volume
-        (async () => {
-          try {
-            const { data, error } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
-              query_text: searchQueries.join(' '),
-              match_count: 25  // 🚀 3x increase from 8
+      // TIER 1: Practical Work Intelligence - Direct SQL (95% weight)
+      const practicalWorkDocs = await (async () => {
+        try {
+          const keywordFilters = searchQueries.map(q => q.toLowerCase()).join(',');
+          
+          const { data, error } = await supabase
+            .from('practical_work_intelligence')
+            .select('*')
+            .or(`primary_topic.ilike.%${query}%,keywords.cs.{${keywordFilters}},equipment_category.ilike.%${query}%`)
+            .in('activity_types', ['installation', 'wiring', 'fixing', 'testing'])
+            .limit(40);
+          
+          if (error) throw error;
+          
+          const docs = (data || []).map((row: any) => ({
+            primary_topic: row.primary_topic,
+            content: row.content || row.primary_topic,
+            equipment_category: row.equipment_category || 'General',
+            tools_required: row.tools_required || [],
+            materials_needed: row.materials_needed || [],
+            bs7671_regulations: row.bs7671_regulations || [],
+            hybrid_score: 0.95, // 95% weight for Practical Work
+            source: 'practical_work_intelligence'
+          }));
+          
+          logger.info(`✅ Practical Work Direct SQL: ${docs.length} procedures retrieved`);
+          
+          if (docs.length > 0) {
+            logger.info('📊 Sample Practical Work Data:', {
+              firstTopic: docs[0].primary_topic,
+              toolsCount: docs[0].tools_required.length,
+              sampleTools: docs[0].tools_required.slice(0, 3),
+              materialsCount: docs[0].materials_needed.length
             });
-            
-            if (error) throw error;
-            
-            const results = (data || []).map((row: any) => ({
-              regulation_number: row.regulation_number,
-              content: row.content || row.primary_topic,
-              primary_topic: row.primary_topic,
-              keywords: row.keywords,
-              category: row.category,
-              hybrid_score: (row.hybrid_score || 0.75) * 0.85,
-              source: 'bs7671_intelligence',  // ✅ EXPLICIT
-              _rawSource: row.source || 'not_provided'  // 🔍 DEBUG: Verify row structure
-            }));
-            
-            logger.info('📊 BS 7671 RAG Retrieved:', {
-              totalEntries: results.length,
-              sampleTopics: results.slice(0, 2).map((r: any) => r.primary_topic)
-            });
-            
-            return results;
-          } catch (error) {
-            console.error('BS 7671 keyword search failed:', error);
-            return [];
           }
-        })()
-      ]);
+          
+          return docs;
+        } catch (error) {
+          console.error('❌ Practical Work direct SQL failed:', error);
+          return [];
+        }
+      })();
 
-      const practicalWorkDocs = practicalWorkResult || [];
-      const bs7671Docs = bs7671Result || [];
+      // TIER 2: Regulations Intelligence - Direct SQL (90% weight)
+      const regulationsDocs = await (async () => {
+        try {
+          const { data, error } = await supabase
+            .from('regulations_intelligence')
+            .select('*')
+            .or(`category.in.(Installation,Protection,Selection,Wiring Systems),subcategory.ilike.%cable%,subcategory.ilike.%installation%,subcategory.ilike.%wiring%`)
+            .contains('keywords', ['installation', 'cable', 'protection', 'earthing', 'wiring'])
+            .limit(25);
+          
+          if (error) throw error;
+          
+          const docs = (data || []).map((row: any) => ({
+            regulation_number: row.regulation_number,
+            content: row.primary_topic,
+            primary_topic: row.primary_topic,
+            keywords: row.keywords || [],
+            category: row.category,
+            subcategory: row.subcategory,
+            hybrid_score: 0.90, // 90% weight for Regulations
+            source: 'regulations_intelligence'
+          }));
+          
+          logger.info(`✅ Regulations Intelligence Direct SQL: ${docs.length} regulations retrieved`);
+          
+          if (docs.length > 0) {
+            logger.info('📊 Sample Regulations Data:', {
+              firstReg: docs[0].regulation_number,
+              topic: docs[0].primary_topic,
+              category: docs[0].category
+            });
+          }
+          
+          return docs;
+        } catch (error) {
+          console.error('❌ Regulations Intelligence direct SQL failed:', error);
+          return [];
+        }
+      })();
 
-      // Merge and prioritize (Practical Work first)
-      installKnowledge = [...practicalWorkDocs, ...bs7671Docs];
+      // Merge: Practical Work (95%) first, then Regulations (90%)
+      const practicalWorkResult = practicalWorkDocs;
+      const bs7671Result = regulationsDocs;
+
+      // Merge: Priority order maintained (Practical Work 95% first, Regulations 90% second)
+      installKnowledge = [...practicalWorkDocs, ...regulationsDocs];
       
-      // 🛡️ FALLBACK: Load core regulations cache if RAG returned nothing
+      // 🛡️ FALLBACK: Only if direct SQL also fails
       if (installKnowledge.length === 0) {
-        logger.warn('⚠️ RAG returned ZERO results - loading core regulations fallback cache');
+        logger.warn('⚠️ All RAG methods failed - loading core regulations fallback');
         const coreRegs = await loadCoreRegulationsCache(supabase);
         installKnowledge = coreRegs.map((reg: any) => ({
           regulation_number: reg.regulation_number,
           content: reg.content,
           primary_topic: reg.regulation_number,
           section: reg.section,
-          hybrid_score: 0.8,
+          hybrid_score: 0.80,
           source: 'core_regulations_fallback'
         }));
-        logger.info(`📚 Fallback loaded ${installKnowledge.length} core BS 7671 regulations`);
+        logger.info(`📚 Fallback: ${installKnowledge.length} core regulations loaded`);
       }
 
-      // 🔍 DEBUG: Log installKnowledge composition
-      logger.info('🔍 InstallKnowledge Array Analysis:', {
-        totalDocs: installKnowledge.length,
-        practicalWorkCount: installKnowledge.filter(k => k.source === 'practical_work_intelligence').length,
-        bs7671Count: installKnowledge.filter(k => k.source === 'bs7671_intelligence').length,
-        sampleSources: installKnowledge.slice(0, 5).map(k => ({
-          source: k.source,
-          topic: k.primary_topic || k.regulation_number
-        })),
-        uniqueSources: [...new Set(installKnowledge.map(k => k.source))]
-      });
+      // Quality Metrics
+      const avgPracticalScore = practicalWorkDocs.length > 0
+        ? (practicalWorkDocs.reduce((s, d) => s + d.hybrid_score, 0) / practicalWorkDocs.length).toFixed(2)
+        : '0.00';
 
-      logger.info('✅ Direct RAG hybrid search complete', {
+      const avgRegulationsScore = regulationsDocs.length > 0
+        ? (regulationsDocs.reduce((s, d) => s + d.hybrid_score, 0) / regulationsDocs.length).toFixed(2)
+        : '0.00';
+
+      logger.info('✅ Direct SQL RAG Complete', {
+        method: 'direct_sql_queries',
         practicalWork: practicalWorkDocs.length,
-        bs7671: bs7671Docs.length,
-        totalDuration: Date.now() - ragStart,
-        avgPracticalScore: practicalWorkDocs.length > 0
-          ? (practicalWorkDocs.reduce((s, d) => s + d.hybrid_score, 0) / practicalWorkDocs.length).toFixed(2)
-          : 'N/A'
+        regulations: regulationsDocs.length,
+        totalKnowledge: installKnowledge.length,
+        duration: `${Date.now() - ragStart}ms`,
+        avgScores: {
+          practicalWork: avgPracticalScore,
+          regulations: avgRegulationsScore
+        },
+        uniqueSources: [...new Set(installKnowledge.map(k => k.source))]
       });
 
       timings.ragRetrieval = Date.now() - ragStart;
