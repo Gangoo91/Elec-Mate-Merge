@@ -72,6 +72,7 @@ import { callOpenAI } from '../_shared/ai-providers.ts';
 import { retrieveInstallationKnowledge } from '../_shared/rag-installation.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
+import { installerV3ToolSchema } from '../_shared/installer-v3-schema.ts';
 
 /**
  * Phase 3: Query Expansion - Add technical synonyms and variations
@@ -1315,187 +1316,11 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ],
-        model: 'gpt-5-2025-08-07',  // Flagship model with superior reasoning
-        max_completion_tokens: 32000,  // GPT-5 uses max_completion_tokens
-        tools: [{
-        type: 'function',
-        function: {
-          name: 'provide_installation_guidance',
-          description: 'Return comprehensive installation guidance. MUST extract specific measurements from the installation knowledge database.',
-          // strict: true, // Removed - causes schema validation conflicts with nested optional fields
-          parameters: {
-            type: 'object',
-            properties: {
-              response: {
-                type: 'string',
-                description: 'Natural, conversational response IN UK ENGLISH ONLY (authorised not authorized, realise not realize, organise not organize, metres not meters, whilst not while). Reference previous messages naturally (e.g., "Right, for that 10mm² cable we discussed..."). As long as needed to answer thoroughly.'
-              },
-              installationSteps: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  properties: {
-                    step: { type: 'number' },
-                    title: { type: 'string' },
-                    description: { 
-                      type: 'string', 
-                      description: 'COMPREHENSIVE, FIELD-READY step description (MINIMUM 150-300 words, 8-15 sentences). Structure with numbered sub-steps or bullet points. MANDATORY FORMAT:\n\n1️⃣ **Overview Sentence**: What is being done and why\n\n2️⃣ **Detailed Sub-Steps** (3-6 sub-tasks):\n   • Sub-step 1 with specific action and measurement\n   • Sub-step 2 with tool usage and technique\n   • Sub-step 3 with quality checkpoint\n\n3️⃣ **Measurements & Specifications**: Include ALL specific values from knowledge base:\n   - Heights (e.g., "1800mm from FFL")\n   - Spacing (e.g., "400mm clip intervals")\n   - Cable sizes (e.g., "10mm² T&E")\n   - Ratings (e.g., "40A Type B MCB")\n\n4️⃣ **Quality Checks**: 2-3 verification steps\n\n5️⃣ **BS 7671 Reference** (if applicable): e.g., "Per BS 7671 Section 522.6 - Cable installation"\n\nExample:\n"Install consumer unit at designated location:\n\n1. Mark Fixing Positions\n• Position unit 1800mm from finished floor level\n• Use spirit level to ensure level installation\n• Mark fixing holes through mounting slots\n\n2. Drill and Secure\n• Drill 5.5mm holes for brick walls (16mm for concrete)\n• Insert 50mm red wall plugs\n• Secure with M6 x 50mm corrosion-resistant screws\n\n3. Prepare Cable Entries\n• Remove knockout blanks for cables\n• Fit 20mm rubber grommets for main tails\n• Leave 150mm service loop inside unit\n\n4. Quality Checks\n• Verify unit is plumb (spirit level check)\n• Confirm 450mm clearance above for future work\n• Check IP4X rating suitable for location\n\nPer BS 7671 Section 537 (Isolation and Switching)"'
-                    },
-                     tools: { 
-                      type: 'array', 
-                      items: { type: 'string' },
-                      minItems: 3,
-                      description: 'MANDATORY: List 3-10 SPECIFIC tools needed for THIS STEP based on the work described. Analyze the step description and identify what physical tools are needed. Examples: "Install socket" = drill, screwdriver, wire strippers, voltage tester, back box. "Test circuit" = multifunction tester, proving unit, test leads. "Isolate supply" = voltage indicator, lock-off kit, warning signs. Extract from RAG data where available (🔧 **TOOLS REQUIRED**), but if not available, REASON about what tools the step activities require. DO NOT leave empty.' 
-                    },
-                    materials: { 
-                      type: 'array', 
-                      items: { type: 'string' },
-                      description: 'List SPECIFIC materials for THIS STEP with quantities where applicable (e.g., "2.5mm² T&E cable - 15m", "50mm cable clips x20", "DIN rail MCB 32A Type B"). **EXTRACT from Practical Work Intelligence RAG data** (look for 📦 **MATERIALS NEEDED** field). If no specific materials for this step, return empty array. This maps to materialsNeeded in frontend.'
-                    },
-                    safetyNotes: { type: 'array', items: { type: 'string', description: 'Safety requirements for this step. STEP-SPECIFIC safety requirements for THIS STEP ONLY (not general project safety). In UK English (authorised, organise, metres). If no specific safety requirements for this step, return empty array. Example: Planning phase should have NO or minimal safety notes. Installation/isolation phases MUST have specific requirements like "Isolation and lock-off required". This maps to safetyRequirements in the frontend.' } },
-                    linkedHazards: { 
-                      type: 'array', 
-                      items: { type: 'string' },
-                      minItems: 2,
-                      description: 'MANDATORY: Identify 2-5 SPECIFIC hazards for THIS STEP based on work activities. Format: "[Hazard] - [Mitigation]". Analyze what could go wrong in this step. Examples: "Drill into wall" = "Hidden cables/pipes - use CAT scanner before drilling". "Connect live terminals" = "Electrical shock - isolation and lock-off required". "Work above head height" = "Working at height - use step ladder to BS EN 131". Extract from RAG where available, but ALWAYS identify at least 2 hazards per step based on step activities. DO NOT leave empty.'
-                    },
-                    qualifications: { 
-                      type: 'array', 
-                      items: { type: 'string' },
-                      description: 'Required qualifications/competencies for the person performing THIS STEP. Be specific to step activities. Examples: Planning = ["Site Manager", "H&S Awareness"]. Isolation = ["18th Edition BS 7671", "Authorised Person (AP)", "Safe Isolation Trained"]. Installation = ["Qualified Electrician", "CSCS Card", "18th Edition BS 7671"]. Testing = ["18th Edition BS 7671", "Test Equipment Competent"]. Procurement = ["Procurement Authorised"] or empty if anyone can order. DO NOT leave empty unless truly no qualification needed.'
-                    },
-                    estimatedTime: { type: 'number', description: 'Estimated time in minutes for this step. This maps to estimatedDuration in the frontend.' }
-                  },
-                  required: ['step', 'title', 'description']
-                }
-              },
-              practicalTips: {
-                type: 'array',
-                items: { type: 'string' }
-              },
-              commonMistakes: {
-                type: 'array',
-                items: { type: 'string' }
-              },
-              toolsRequired: {
-                type: 'array',
-                items: { type: 'string' }
-              },
-              // ✨ NEW: BS 7671 Compliance Fields
-              testingProcedures: {
-                type: 'array',
-                minItems: 5,
-                description: 'MANDATORY: Provide MINIMUM 5 comprehensive BS 7671-compliant testing procedures. MUST include: 1) Continuity of protective conductors (R1+R2), 2) Insulation Resistance (500V DC), 3) Polarity verification, 4) Earth fault loop impedance (Zs), 5) RCD trip time testing. Extract from BS 7671 Chapter 64 (Inspection & Testing) and RAG knowledge base where available.',
-                items: {
-                  type: 'object',
-                  properties: {
-                    testName: { 
-                      type: 'string',
-                      description: 'Name of test (e.g., "Continuity of Protective Conductors (R1+R2)", "Insulation Resistance Test", "Earth Fault Loop Impedance (Zs)", "RCD Trip Time Test", "Polarity Verification")'
-                    },
-                    standard: { 
-                      type: 'string',
-                      description: 'BS 7671 regulation reference (e.g., "BS 7671 Reg 643.2.1", "BS 7671 Reg 643.3.2", "BS EN 61557-2")'
-                    },
-                    procedure: { 
-                      type: 'string',
-                      description: 'DETAILED test procedure in UK English (3-5 sentences minimum). Include test equipment required, how to connect test leads, what settings to use, and step-by-step execution. Example: "Using a multifunction tester (e.g., Megger MFT1835), connect test leads between line conductor and circuit protective conductor at the furthest point of the circuit. Set tester to continuity mode (200mA test current). Record R1+R2 value and verify it does not exceed maximum permitted value for circuit protection device per BS 7671 Appendix 3."'
-                    },
-                    acceptanceCriteria: { 
-                      type: 'string',
-                      description: 'SPECIFIC acceptance criteria with exact values from BS 7671. Examples: "R1+R2 ≤ maximum Zs from Appendix 3 Table 3A (e.g., 1.09Ω for 40A Type B MCB)", "≥1.0MΩ at 500V DC for new installations (Reg 643.3.2)", "RCD must trip within 40ms at 5× rated current (150mA for 30mA RCD) per Reg 643.9.2", "Correct polarity on all socket outlets - phase on right terminal when viewed from front"'
-                    },
-                    certificateRequired: { 
-                      type: 'string',
-                      description: 'Certificate type where test results are recorded (e.g., "Electrical Installation Certificate (EIC)", "Minor Electrical Installation Works Certificate (MEIWC)", "Periodic Inspection Report", "Test Sheet Schedule")'
-                    },
-                    regulationRef: { 
-                      type: 'string',
-                      description: 'Full BS 7671 regulation reference (e.g., "BS 7671:2018+A2:2022 Regulation 643.2.1", "BS 7671 Section 643", "Appendix 3 Table 3A")'
-                    }
-                  },
-                  required: ['testName', 'standard', 'procedure', 'acceptanceCriteria']
-                }
-              },
-              competencyRequirements: {
-                type: 'object',
-                description: 'MANDATORY: Specify overall competency requirements for the complete installation job. Define minimum qualifications needed, supervision requirements, and additional training/certifications.',
-                properties: {
-                  minimumQualifications: {
-                    type: 'array',
-                    minItems: 2,
-                    items: { type: 'string' },
-                    description: 'MANDATORY: List SPECIFIC minimum qualifications required to perform this work. Examples: ["18th Edition BS 7671 (City & Guilds 2382-18)", "City & Guilds 2391 Inspection & Testing"], ["Level 3 Electrical Installation", "AM2 Assessment", "18th Edition BS 7671"], ["HNC Electrical Engineering", "Approved Electrician status"]. For commercial/industrial work, add: ["NICEIC/NAPIT Approved Contractor", "ECS Gold Card"]. Be job-specific: EV charger = add "OLEV-approved installer training", High-voltage work = add "HV Authorised Person (AP)".'
-                  },
-                  supervision: {
-                    type: 'string',
-                    description: 'Supervision requirements. Examples: "Qualified electrician must supervise trainees at all times", "Competent Person Scheme member to verify work", "No supervision required - qualified electrician only", "Authorised Person (AP) must supervise all isolation activities"'
-                  },
-                  additionalTraining: {
-                    type: 'array',
-                    items: { type: 'string' },
-                    description: 'Additional training/certifications genuinely relevant to THIS job. Examples for domestic: ["NICEIC Domestic Installer", "Part P Building Regulations awareness"]. For commercial: ["CDM Regulations awareness", "CSCS Card (Construction Skills Certification)", "Safe Isolation Training (proven dead)"]. For specific work: ["IPAF (Powered Access)", "PASMA (Scaffold Tower)", "Confined Spaces", "Hot Work Permit trained", "Asbestos Awareness"]. Only include if genuinely needed for THIS job.'
-                  }
-                },
-                required: ['minimumQualifications']
-              },
-              siteLogistics: {
-                type: 'object',
-                description: 'MANDATORY: Provide detailed site logistics covering isolation, access, permits, and working hours. Be SPECIFIC to the installation location and work type.',
-                properties: {
-                  isolationPoints: {
-                    type: 'array',
-                    minItems: 1,
-                    items: { type: 'string' },
-                    description: 'MANDATORY: List SPECIFIC isolation points with detail. Examples: ["Main incoming isolator at consumer unit (TNCS earthing system)", "Submain isolator in garage distribution board", "Local isolation switch above shower (45A DP pull-cord)"], ["Building main switch (400A MCCB in LV switchroom)", "Distribution board DB-02 (Floor 3 electrical cupboard)", "Emergency shutdown button at machine"], ["Street lighting column isolator (DNO fused cutout)"]. Include location details and type of isolation device.'
-                  },
-                  accessRequirements: {
-                    type: 'string',
-                    description: 'MANDATORY: Comprehensive site access information (minimum 2-3 sentences). Cover: hours (occupant coordination), affected areas (which rooms/zones), floor/surface protection (dust sheets, board protection), waste disposal (skip/bags for old cables), parking (van access), and any special access considerations (scaffolding, cherry picker, confined space entry). Example: "Coordinate access with occupants - bathroom unavailable for 4-6 hours during installation. Protect finished flooring with dust sheets and hardboard in cable route areas. Arrange skip for demolition waste (old consumer unit, redundant cables). Van access required to front of property for material delivery. Loft access via hatch in landing - ensure safe working platform."'
-                  },
-                  permitsRequired: {
-                    type: 'array',
-                    items: { type: 'string' },
-                    description: 'MANDATORY: Permits required. DOMESTIC work: Usually empty array [] or ["None - domestic installation"]. COMMERCIAL/INDUSTRIAL work: ["Permit to Work (PTW) - electrical isolation", "Hot Work Permit (if cable cutting/drilling near flammables)", "Confined Space Entry Permit (if working in vaults/ducts)", "Work at Height Permit (if above 2m)", "Excavation Permit (if buried cable work)", "Road Closure Permit (if street work)"]. Only include genuinely required permits for THIS job.'
-                  },
-                  workingHours: {
-                    type: 'string',
-                    description: 'Recommended working hours considering supply interruption impact and site constraints. Examples: "08:00-16:00 weekdays - coordinate power outage with building manager", "Out-of-hours preferred (after 18:00) to minimize business disruption", "Weekend work required - full building shutdown Saturday 06:00-18:00", "Daylight hours only - external work requires natural light", "Phased work - isolation windows: 22:00-06:00 to avoid peak business hours"'
-                  }
-                },
-                required: ['isolationPoints', 'accessRequirements', 'permitsRequired']
-              },
-              regulatoryCitations: {
-                type: 'array',
-                minItems: 3,
-                description: 'MANDATORY: Provide MINIMUM 3 BS 7671 regulatory citations linked to specific installation steps. Extract from RAG BS 7671 Intelligence knowledge base where available. Cover key regulations for: RCD protection, cable installation methods, earthing/bonding, testing, special locations (bathrooms/outdoor).',
-                items: {
-                  type: 'object',
-                  properties: {
-                    regulation: {
-                      type: 'string',
-                      description: 'Full BS 7671 regulation reference. Examples: "BS 7671 Reg 411.3.2.2", "BS 7671 Section 701.411.3.3", "BS 7671 Table 4A2", "BS 7671 Appendix 3", "BS 7671 Reg 522.6.204", "BS 7671 Reg 643.3.2"'
-                    },
-                    applicableToStep: {
-                      type: 'number',
-                      description: 'Step number this regulation applies to. Examples: Step 2 (Isolation) → Reg 537.2.1.1, Step 4 (RCD installation) → Reg 701.411.3.3, Step 6 (Cable clipping) → Table 4A2, Step 8 (Testing) → Reg 643.2.1'
-                    },
-                    requirement: {
-                      type: 'string',
-                      description: 'Plain English summary of what the regulation requires. Examples: "30mA RCD protection required for all socket outlets (additional protection)", "Cable clips: 2.5mm² T&E horizontal runs = 400mm spacing maximum", "Continuity of protective conductors must be verified before energising", "Notching joists: maximum depth 0.125× joist depth (e.g., 25mm on 200mm joist)", "Bathroom circuits require 30mA RCD protection within zones 0, 1, 2"'
-                    }
-                  },
-                  required: ['regulation', 'applicableToStep', 'requirement']
-                }
-              }
-            },
-            required: ['response'],
-            additionalProperties: false
-          }
-        }
-      }],
+        model: 'gpt-5-2025-08-07',
+        max_completion_tokens: 32000,
+        tools: [installerV3ToolSchema],
         tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } }
-      }, OPENAI_API_KEY, 230000); // 230s timeout - increased for complex installations
+      }, OPENAI_API_KEY, 300000); // 300s timeout
       
       clearInterval(heartbeatInterval);
       clearInterval(progressInterval);
