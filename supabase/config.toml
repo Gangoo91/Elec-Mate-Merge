@@ -1,9 +1,6 @@
 project_id = "jtwygbeceundfgnkirof"
 
-# TEMPORARY: Reduced function set to fix bundle timeout
-# Only deploying critical RAMS and core functions
-
-# V3 Agent Functions - CRITICAL
+# MINIMAL DEPLOY: Only 2 functions to fix bundle timeout
 [functions.health-safety-v3]
 verify_jwt = false
 timeout_sec = 480
@@ -11,39 +8,6 @@ timeout_sec = 480
 [functions.installer-v3]
 verify_jwt = false
 timeout_sec = 360
-
-[functions.process-rams-job]
-verify_jwt = false
-timeout_sec = 480
-
-[functions.create-rams-job]
-verify_jwt = false
-timeout_sec = 60
-
-[functions.cancel-rams-job]
-verify_jwt = false
-timeout_sec = 30
-
-# Core Subscription Functions
-[functions.check-subscription]
-verify_jwt = true
-
-# PDF Generation - CRITICAL
-[functions.generate-combined-rams-pdf]
-verify_jwt = false
-timeout_sec = 180
-
-[functions.generate-rams-pdf]
-verify_jwt = false
-timeout_sec = 180
-
-[functions.generate-method-statement-pdf]
-verify_jwt = false
-timeout_sec = 180
-
-[functions.generate-health-safety-pdf]
-verify_jwt = true
-timeout_sec = 180
 
 [functions.visual-analysis-rag-enhanced]
 verify_jwt = false
