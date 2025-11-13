@@ -6,6 +6,7 @@
 import { 
   searchPracticalWorkIntelligence, 
   searchBS7671Intelligence,
+  searchRegulationsIntelligence,
   callOpenAI
 } from '../_shared/rams-rag.ts';
 
