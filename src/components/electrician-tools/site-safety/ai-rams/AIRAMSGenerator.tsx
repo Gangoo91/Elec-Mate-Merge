@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Sparkles, Clock, AlertCircle } from 'lucide-react';
@@ -11,6 +11,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { useRAMSJobPolling } from '@/hooks/useRAMSJobPolling';
 import { useRAMSNotifications } from '@/hooks/useRAMSNotifications';
 import { toast } from '@/hooks/use-toast';
+
+const EXPECTED_TOTAL_SECONDS = 180; // 3 minutes visual countdown
 
 export const AIRAMSGenerator: React.FC = () => {
   const navigate = useNavigate();
@@ -26,9 +28,46 @@ export const AIRAMSGenerator: React.FC = () => {
   const [resumedJob, setResumedJob] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
   const [currentJobDescription, setCurrentJobDescription] = useState<string>('');
-  const lastErrorNotifiedJobRef = React.useRef<string | null>(null);
+  const [localProgress, setLocalProgress] = useState(0);
+  
+  const lastErrorNotifiedJobRef = useRef<string | null>(null);
+  const rafIdRef = useRef<number | null>(null);
+  const localStartRef = useRef<number | null>(null);
+  const baseProgressRef = useRef<number>(0);
   
   const { job, startPolling, stopPolling, progress, status, currentStep, ramsData, methodData, error } = useRAMSJobPolling(currentJobId);
+  
+  // Helper: Start smooth local countdown
+  const startLocalCountdown = (baseProgress = 0) => {
+    stopLocalCountdown(); // Clear any existing
+    
+    baseProgressRef.current = Math.min(99, Math.max(0, baseProgress));
+    localStartRef.current = performance.now();
+    setLocalProgress(baseProgressRef.current);
+    
+    const tick = () => {
+      if (!localStartRef.current) return;
+      
+      const elapsed = (performance.now() - localStartRef.current) / 1000;
+      const progressRange = 99 - baseProgressRef.current;
+      const increment = (elapsed / EXPECTED_TOTAL_SECONDS) * progressRange;
+      const target = baseProgressRef.current + increment;
+      const clamped = Math.min(99, target);
+      
+      setLocalProgress(clamped);
+      rafIdRef.current = requestAnimationFrame(tick);
+    };
+    
+    rafIdRef.current = requestAnimationFrame(tick);
+  };
+  
+  // Helper: Stop smooth local countdown
+  const stopLocalCountdown = () => {
+    if (rafIdRef.current) {
+      cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+    }
+  };
   const { requestPermission, showCompletionNotification, showErrorNotification } = useRAMSNotifications();
 
   // Check for in-progress jobs on mount (only if user initiated in this session)
@@ -55,6 +94,7 @@ export const AIRAMSGenerator: React.FC = () => {
         setShowResults(true);
         setResumedJob(true);
         startPolling();
+        startLocalCountdown(job.progress || 0);
         
         toast({
           title: "Resuming generation",
@@ -134,6 +174,17 @@ export const AIRAMSGenerator: React.FC = () => {
     }
   }, [status, error, currentJobId]);
 
+  // Stop countdown on terminal states
+  useEffect(() => {
+    if (status === 'complete') {
+      setLocalProgress(100);
+      stopLocalCountdown();
+    }
+    if (status === 'failed' || status === 'cancelled') {
+      stopLocalCountdown();
+    }
+  }, [status]);
+  
   // Trigger celebration when generation completes WITH REAL DATA
   useEffect(() => {
     const hasRealData = ramsData && 
@@ -187,6 +238,7 @@ export const AIRAMSGenerator: React.FC = () => {
     
     setCurrentJobId(data.jobId);
     startPolling();
+    startLocalCountdown(0);
   };
 
   const handleCancel = async () => {
@@ -270,6 +322,7 @@ export const AIRAMSGenerator: React.FC = () => {
     // Clear session flag
     sessionStorage.removeItem('rams-generation-active');
     
+    stopLocalCountdown();
     setCurrentJobId(null);
     setShowResults(false);
     setShowCelebration(false);
@@ -278,6 +331,7 @@ export const AIRAMSGenerator: React.FC = () => {
     setGenerationEndTime(0);
     setResumedJob(false);
     setCurrentJobDescription('');
+    setLocalProgress(0);
   };
   
   const saveToDatabase = async () => {
@@ -391,10 +445,10 @@ export const AIRAMSGenerator: React.FC = () => {
               )}
 
               <AgentProcessingView
-                overallProgress={progress}
+                overallProgress={progress === 100 ? 100 : localProgress}
                 currentStep={currentStep}
                 elapsedTime={generationStartTime > 0 ? Math.floor((Date.now() - generationStartTime) / 1000) : 0}
-                estimatedTimeRemaining={Math.max(0, Math.floor((300 * (100 - progress)) / 100))}
+                estimatedTimeRemaining={Math.max(0, EXPECTED_TOTAL_SECONDS - (generationStartTime > 0 ? Math.floor((Date.now() - generationStartTime) / 1000) : 0))}
                 onCancel={status === 'processing' || status === 'pending' ? handleCancel : undefined}
                 isCancelling={isCancelling}
                 jobDescription={currentJobDescription}
