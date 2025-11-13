@@ -290,27 +290,27 @@ serve(async (req) => {
         }
       })(),
       
-      // TIER 2: BS 7671 Regulations - KEYWORD SEARCH (85% weight)
+      // TIER 2: Regulations Intelligence - HYBRID SEARCH (90% weight)
       (async () => {
         try {
-          const { data, error } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
+          const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
             query_text: effectiveQuery,
             match_count: 10
           });
           
           if (error) {
-            console.error('BS 7671 keyword search error:', error);
+            console.error('Regulations Intelligence search error:', error);
             return [];
           }
           
-          // Apply 85% weight to keyword results
+          // Apply 90% weight to regulations intelligence results
           return (data || []).map((row: any) => ({
             ...row,
-            hybrid_score: (row.hybrid_score || 0.75) * 0.85, // 85% weight for keywords
-            search_method: 'keyword'
+            hybrid_score: (row.hybrid_score || 0.80) * 0.90, // 90% weight
+            search_method: 'regulations_intelligence'
           }));
         } catch (error) {
-          console.error('BS 7671 keyword search failed:', error);
+          console.error('Regulations Intelligence search failed:', error);
           return [];
         }
       })()
@@ -318,7 +318,7 @@ serve(async (req) => {
 
     // Process results
     const healthSafetyDocs = healthSafetyVectorResult || [];
-    const bs7671Data = bs7671KeywordResult || [];
+    const regulationsData = bs7671KeywordResult || [];
 
     // Build knowledge object
     const hsKnowledge = {
@@ -329,14 +329,14 @@ serve(async (req) => {
         scale: doc.scale,
         hybrid_score: doc.hybrid_score || doc.similarity
       })),
-      regulations: bs7671Data.map((reg: any) => ({
+      regulations: regulationsData.map((reg: any) => ({
         regulation_number: reg.regulation_number,
         content: reg.content || reg.regulation_text,
         primary_topic: reg.primary_topic,
         keywords: reg.keywords,
         category: reg.category,
         hybrid_score: reg.hybrid_score || 0,
-        source: 'bs7671_intelligence'
+        source: 'regulations_intelligence'
       })),
       installationDocs: []
     };
@@ -345,7 +345,7 @@ serve(async (req) => {
 
     logger.info('✅ H&S RAG complete (parallel vector+keyword)', {
       healthSafetyDocs: healthSafetyDocs.length,
-      regulations: bs7671Data.length,
+      regulations: regulationsData.length,
       duration: performanceMetrics.ragRetrieval
     });
     
