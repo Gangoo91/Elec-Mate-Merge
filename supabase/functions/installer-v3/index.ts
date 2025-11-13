@@ -303,73 +303,32 @@ serve(async (req) => {
         expanded: expandedQuery.substring(0, 100)
       });
 
-      // 🚀 ACTION 2.1: Multi-Query RAG Strategy - Decompose into targeted searches
+      // 🚀 OPTIMIZED: Reduced query decomposition (3-5 targeted queries)
       const decomposeInstallationQuery = (query: string, method?: string): string[] => {
-        const queries = [query];
+        const queries = [query]; // Always include full query
         
-        if (/rewire|full electrical/i.test(query)) {
-          queries.push(
-            'Consumer unit installation and replacement',
-            'Ring main socket circuit cable routing',
-            'Lighting circuit installation procedures',
-            'Earthing and main bonding requirements',
-            'Testing and commissioning electrical installation'
-          );
+        // TIER 1: Primary installation context (1 query)
+        if (method) {
+          queries.push(`${method} cable installation method`);
         }
         
-        if (/shower/i.test(query)) {
-          const power = query.match(/(\d+\.?\d*)\s*kW/i)?.[1];
-          queries.push(
-            `${power || '9.5'}kW shower circuit cable sizing and installation`,
-            'Bathroom electrical zones Section 701',
-            'Supplementary bonding bathroom',
-            'RCD protection 30mA requirements'
-          );
+        // TIER 2: Safety (always 1 query - universal)
+        queries.push('Safe isolation procedures and proving dead BS 7671');
+        
+        // TIER 3: Specific work type (max 2 queries)
+        if (/shower|ev|cooker|high current/i.test(query)) {
+          queries.push('High power appliance installation earthing protection');
+        }
+        if (/outdoor|external|swa|armoured/i.test(query)) {
+          queries.push('SWA cable installation glands underground');
         }
         
-        if (/kitchen/i.test(query)) {
-          queries.push(
-            'Kitchen socket circuit installation',
-            'Cooker circuit isolation and installation',
-            'Kitchen earthing and bonding',
-            'Cable routing around kitchens'
-          );
-        }
-        
-        if (/EV|charger/i.test(query)) {
-          queries.push(
-            'EV charger installation Section 722',
-            'EV charging point cable sizing',
-            'Outdoor electrical installation IP rating',
-            'RCD protection EV charging'
-          );
-        }
-        
-        if (method === 'buried' || /underground|buried|swa/i.test(query)) {
-          queries.push(
-            'SWA cable installation direct burial',
-            'Underground cable depth 600mm',
-            'SWA cable gland installation',
-            'Warning tape installation underground cables'
-          );
-        }
-        
-        // ALWAYS add isolation and safety queries (universal for all electrical work)
-        queries.push(
-          'Safe isolation procedures and proving dead BS 7671',
-          'Voltage indicator proving unit lock-off requirements',
-          'Isolation lock-off and tagging procedures'
-        );
-        
+        // TIER 4: Testing (only if explicitly mentioned, 1 query)
         if (/test|testing|commission|verify/i.test(query)) {
-          queries.push(
-            'Electrical testing and measurement CAT-rated equipment',
-            'Insulation resistance testing procedures',
-            'Earth loop impedance testing'
-          );
+          queries.push('Electrical testing insulation resistance earth loop');
         }
         
-        return [...new Set(queries)];
+        return [...new Set(queries)]; // Remove duplicates
       };
       
       /**
@@ -425,7 +384,7 @@ serve(async (req) => {
             .select('*')
             .or(`primary_topic.ilike.%${query}%,keywords.cs.{${keywordFilters}},equipment_category.ilike.%${query}%`)
             .in('activity_types', ['installation', 'wiring', 'fixing', 'testing'])
-            .limit(40);
+            .limit(25);
           
           if (error) throw error;
           
@@ -466,7 +425,7 @@ serve(async (req) => {
             .select('*')
             .or(`category.in.(Installation,Protection,Selection,Wiring Systems),subcategory.ilike.%cable%,subcategory.ilike.%installation%,subcategory.ilike.%wiring%`)
             .contains('keywords', ['installation', 'cable', 'protection', 'earthing', 'wiring'])
-            .limit(25);
+            .limit(15);
           
           if (error) throw error;
           
@@ -841,10 +800,10 @@ serve(async (req) => {
       contextSection += '5. If unsure what the user means, reference what was discussed to clarify\n';
     }
 
-    // Simplified system prompt - focus on key instructions only
-    const systemPrompt = `You are a senior UK electrical installation specialist creating detailed, field-ready method statements compliant with BS 7671:2018+A3:2024.
+    // OPTIMIZED system prompt - streamlined for faster AI processing
+    const systemPrompt = `You are a senior UK electrical installation specialist creating field-ready method statements compliant with BS 7671:2018+A3:2024.
 
-**YOUR TASK**: Create PRACTICAL work instructions electricians can follow on-site, NOT high-level overviews.
+**YOUR TASK**: Create PRACTICAL work instructions electricians can follow on-site.
 
 **CRITICAL RULES**:
 
@@ -1054,21 +1013,18 @@ Current date: September 2025.
 ✅ Safety-First: Always highlight critical safety points (e.g., "Isolate and test dead before ANY cable work - this is non-negotiable")
 ❌ Avoid: Robotic lists without context, vague terms like "regular intervals" or "appropriate spacing"
 
-⚠️ CRITICAL: COMPREHENSIVE STEP DESCRIPTIONS REQUIRED
-Each installation step MUST contain:
-✓ Clear overview of what's being done (1 sentence)
-✓ Bulleted or numbered sub-tasks showing the exact sequence (minimum 3-5 sub-tasks per step)
-✓ Specific measurements extracted from knowledge base (e.g., "400mm clip spacing", "1.8m height", "16mm² cable")
-✓ Quality/safety checkpoint at end of step
-✗ Do NOT write single-sentence steps
+⚠️ STEP DESCRIPTIONS (100-200 words each):
+Each step MUST contain:
+✓ Clear overview (1 sentence)
+✓ Numbered sub-tasks (3-5 sub-tasks)
+✓ Specific measurements from knowledge base (e.g., "400mm clip spacing")
+✓ Quality checkpoint
 
-BAD Example: "Install the consumer unit"
-GOOD Example: "Install the consumer unit enclosure at 1.8m height from finished floor level:
-• Mark fixing positions using a spirit level to ensure level installation
-• Drill fixing holes using 5.5mm masonry bit for 50mm screws
-• Insert wall plugs and secure unit with corrosion-resistant fixings
-• Verify unit is plumb and secure before proceeding with cable entry
-• Check clearances comply with BS 7671 Section 132.8 (minimum 300mm from water sources)"
+Example: "Install consumer unit at 1.8m height:
+• Mark positions with spirit level
+• Drill 5.5mm holes for 50mm screws
+• Secure with wall plugs
+• Verify plumb before cable entry"
 
 📋 STRUCTURE YOUR RESPONSE:
 1. **Acknowledge** (1-2 sentences) - Confirm what they're asking and show you understand the job
@@ -1126,9 +1082,9 @@ DO extract specific values: "400mm spacing", "1.8m height", "16mm² cable", "50m
 
 ${contextSection}
 
-⚠️ SECTION 8: TESTING & COMMISSIONING PROCEDURES (MANDATORY) ⚠️
+⚠️ SECTION 8: TESTING PROCEDURES ⚠️
 
-You MUST provide MINIMUM 5 comprehensive BS 7671-compliant testing procedures in the "testingProcedures" array:
+Provide 3-5 essential BS 7671 testing procedures relevant to this installation:
 
 1️⃣ **Continuity of Protective Conductors (R1+R2)**
    - Standard: BS 7671 Reg 643.2.1
@@ -1187,9 +1143,9 @@ You MUST specify overall competency requirements in the "competencyRequirements"
 - Commercial: ["CDM Regulations awareness", "CSCS Card (Construction Skills)", "Safe Isolation Training (prove dead)", "First Aid at Work"]
 - Specific work: ["IPAF (Mobile Elevating Work Platforms) - if working at height >2m", "PASMA (Scaffold Tower) - if using scaffold", "Confined Spaces Entry - if working in cable vaults/ducts", "Asbestos Awareness - if working in pre-2000 buildings"]
 
-⚠️ SECTION 10: SITE LOGISTICS (MANDATORY) ⚠️
+⚠️ SECTION 10: SITE LOGISTICS ⚠️
 
-You MUST provide detailed site logistics in the "siteLogistics" object:
+Provide site logistics if specific requirements exist (omit for standard installations):
 
 **isolationPoints** (array, minimum 1 - BE SPECIFIC):
 - ❌ WRONG: ["Main consumer unit", "Local isolator"]
@@ -1211,9 +1167,9 @@ Example: "Coordinate access with occupants - bathroom and adjacent landing unava
 - "Daylight hours only (09:00-17:00) - external cable work requires natural light for safe excavation"
 - "Phased work over 3 days - isolation windows 22:00-06:00 to avoid peak business hours"
 
-⚠️ SECTION 11: REGULATORY CITATIONS (MANDATORY) ⚠️
+⚠️ SECTION 11: REGULATORY CITATIONS ⚠️
 
-You MUST provide MINIMUM 3 BS 7671 citations in the "regulatoryCitations" array, linked to specific installation steps.
+Provide 2-4 key BS 7671 citations linked to specific installation steps.
 
 **Extract from RAG BS 7671 Intelligence** where available. Cover:
 

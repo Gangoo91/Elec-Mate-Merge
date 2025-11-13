@@ -24,7 +24,7 @@ export const installerV3ToolSchema = {
               title: { type: 'string' },
               description: { 
                 type: 'string', 
-                description: 'COMPREHENSIVE, FIELD-READY step description (MINIMUM 150-300 words, 8-15 sentences). Structure with numbered sub-steps or bullet points. MANDATORY FORMAT: 1️⃣ Overview Sentence 2️⃣ Detailed Sub-Steps (3-6 sub-tasks) 3️⃣ Measurements & Specifications 4️⃣ Quality Checks 5️⃣ BS 7671 Reference'
+                description: 'FIELD-READY step description (100-200 words). Structure with numbered sub-steps or bullet points. INCLUDE: 1️⃣ Overview 2️⃣ Sub-Steps (3-5 sub-tasks) 3️⃣ Key Measurements 4️⃣ Quality Checks 5️⃣ BS 7671 Reference if applicable'
               },
               tools: { 
                 type: 'array', 
@@ -77,8 +77,8 @@ export const installerV3ToolSchema = {
         },
         testingProcedures: {
           type: 'array',
-          minItems: 5,
-          description: 'MANDATORY: Provide MINIMUM 5 comprehensive BS 7671-compliant testing procedures.',
+          minItems: 3,
+          description: 'Provide 3-5 essential BS 7671-compliant testing procedures relevant to this specific installation.',
           items: {
             type: 'object',
             properties: {
@@ -134,34 +134,32 @@ export const installerV3ToolSchema = {
         },
         siteLogistics: {
           type: 'object',
-          description: 'MANDATORY: Provide detailed site logistics.',
+          description: 'Provide site logistics if specific to this installation (e.g., confined space, working at height). Omit for standard installations.',
           properties: {
             isolationPoints: {
               type: 'array',
-              minItems: 1,
               items: { type: 'string' },
-              description: 'MANDATORY: List SPECIFIC isolation points with detail.'
+              description: 'List SPECIFIC isolation points with detail.'
             },
             accessRequirements: {
               type: 'string',
-              description: 'MANDATORY: Comprehensive site access information (minimum 2-3 sentences).'
+              description: 'Site access information (2-3 sentences).'
             },
             permitsRequired: {
               type: 'array',
               items: { type: 'string' },
-              description: 'MANDATORY: Permits required.'
+              description: 'Permits required.'
             },
             workingHours: {
               type: 'string',
               description: 'Recommended working hours considering supply interruption impact.'
             }
-          },
-          required: ['isolationPoints', 'accessRequirements', 'permitsRequired']
+          }
         },
         regulatoryCitations: {
           type: 'array',
-          minItems: 3,
-          description: 'MANDATORY: Provide MINIMUM 3 BS 7671 regulatory citations.',
+          minItems: 2,
+          description: 'Provide 2-4 key BS 7671 regulatory citations most relevant to this installation.',
           items: {
             type: 'object',
             properties: {
