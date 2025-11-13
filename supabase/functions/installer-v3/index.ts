@@ -260,20 +260,20 @@ ${circuitContext}
 
         logger.info('✅ AI Complete', {
           duration: `${aiDuration}ms`,
-          steps: installResult.steps?.length || 0,
+          steps: installResult.installationSteps?.length || 0,
           tests: installResult.testingProcedures?.length || 0
         });
 
         // === PHASE 6: CALCULATE QUALITY METRICS ===
-        const toolsExtracted = installResult.steps?.reduce((sum: number, step: any) => 
-          sum + (step.equipmentNeeded?.length || 0), 0) || 0;
-        const materialsExtracted = installResult.steps?.reduce((sum: number, step: any) => 
-          sum + (step.materialsNeeded?.length || 0), 0) || 0;
+        const toolsExtracted = installResult.installationSteps?.reduce((sum: number, step: any) => 
+          sum + (step.tools?.length || 0), 0) || 0;
+        const materialsExtracted = installResult.installationSteps?.reduce((sum: number, step: any) => 
+          sum + (step.materials?.length || 0), 0) || 0;
         const regulationsReferenced = installResult.regulatoryCitations?.length || 0;
 
         const overallScore = Math.min(100, Math.round(
           (installKnowledge.length / 40 * 40) + // RAG coverage (40%)
-          (toolsExtracted / (installResult.steps?.length * 3) * 30) + // Tool extraction (30%)
+          (toolsExtracted / (installResult.installationSteps?.length * 3) * 30) + // Tool extraction (30%)
           (regulationsReferenced / 5 * 30) // Regulation citation (30%)
         ));
 
@@ -281,9 +281,9 @@ ${circuitContext}
         const response: InstallerV3Response = {
           success: true,
           data: {
-            steps: installResult.steps || [],
-            toolsRequired: [...new Set(installResult.steps?.flatMap((s: any) => s.equipmentNeeded || []) || [])],
-            materialsRequired: [...new Set(installResult.steps?.flatMap((s: any) => s.materialsNeeded || []) || [])],
+            steps: installResult.installationSteps || [],
+            toolsRequired: [...new Set(installResult.installationSteps?.flatMap((s: any) => s.tools || []) || [])],
+            materialsRequired: [...new Set(installResult.installationSteps?.flatMap((s: any) => s.materials || []) || [])],
             practicalTips: installResult.practicalTips || [],
             commonMistakes: installResult.commonMistakes || [],
             testingProcedures: installResult.testingProcedures || [],
