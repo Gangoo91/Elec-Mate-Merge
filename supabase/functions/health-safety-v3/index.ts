@@ -76,18 +76,25 @@ async function generateEmbeddingWithRetry(text: string): Promise<number[]> {
   return data.data[0].embedding;
 }
 
-async function callOpenAI(
-  messages: any[],
-  model: string,
-  tools?: any[],
-  tool_choice?: any
-): Promise<any> {
+async function callOpenAI({
+  messages,
+  model,
+  tools,
+  tool_choice,
+  max_tokens
+}: {
+  messages: any[];
+  model: string;
+  tools?: any[];
+  tool_choice?: any;
+  max_tokens?: number;
+}): Promise<any> {
   const isNewModel = model.includes('gpt-5') || model.includes('gpt-4.1');
   const body: any = {
     model,
     messages,
-    max_completion_tokens: isNewModel ? 30000 : undefined,
-    max_tokens: isNewModel ? undefined : 30000,
+    max_completion_tokens: isNewModel ? (max_tokens || 30000) : undefined,
+    max_tokens: isNewModel ? undefined : (max_tokens || 30000),
     temperature: isNewModel ? undefined : 0.7
   };
   
