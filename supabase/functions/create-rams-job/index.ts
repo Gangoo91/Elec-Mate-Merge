@@ -62,7 +62,7 @@ Deno.serve(async (req) => {
     console.log(`✅ Created RAMS job: ${job.id}`);
 
     // Trigger background processing (fire and forget)
-    const processUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/process-rams-job`;
+    const processUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/generate-rams`;
     fetch(processUrl, {
       method: 'POST',
       headers: {

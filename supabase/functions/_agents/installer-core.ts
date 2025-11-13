@@ -93,19 +93,25 @@ Use the RAG context to ensure technical accuracy.`;
 
 export async function generateMethodStatement(
   query: string,
-  projectDetails: any
+  projectDetails: any,
+  onProgress?: (progress: number, step: string) => Promise<void>
 ): Promise<any> {
   console.log('🔧 Installer Agent starting...');
   const startTime = Date.now();
   
+  if (onProgress) await onProgress(50, 'Preparing installation method statement...');
+  
   // STEP 1: RAG - Parallel search
   console.log('🔍 Fetching RAG knowledge...');
+  if (onProgress) await onProgress(55, 'Searching installation procedures and BS 7671 standards...');
+  
   const [practicalWork, regulations] = await Promise.all([
     searchPracticalWorkIntelligence(query),
     searchBS7671Intelligence(query)
   ]);
   
   console.log(`✅ RAG complete: ${practicalWork.length} practical docs, ${regulations.length} regulations (${Date.now() - startTime}ms)`);
+  if (onProgress) await onProgress(65, 'Generating method statement with AI...');
   
   // STEP 2: Build context
   const ragContext = `
@@ -143,12 +149,17 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
   const result = JSON.parse(response.toolCalls[0].function.arguments);
   
   console.log(`✅ Installer complete: ${result.installationSteps.length} steps, ${result.testingProcedures.length} tests (${Date.now() - startTime}ms)`);
+  if (onProgress) await onProgress(85, 'Finalizing installation steps and method statement...');
   
   return {
     ...result,
     _ragStats: {
       practicalWorkDocs: practicalWork.length,
       regulationsDocs: regulations.length,
+      totalDocs: practicalWork.length + regulations.length
+    }
+  };
+}
       totalDocs: practicalWork.length + regulations.length
     }
   };
