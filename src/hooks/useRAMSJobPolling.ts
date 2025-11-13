@@ -22,7 +22,7 @@ interface UseRAMSJobPollingReturn {
   startPolling: () => void;
   stopPolling: () => void;
   progress: number;
-  status: 'idle' | 'pending' | 'processing' | 'complete' | 'failed' | 'cancelled';
+  status: 'idle' | 'pending' | 'processing' | 'complete' | 'failed' | 'cancelled' | 'partial';
   currentStep: string;
   ramsData: any;
   methodData: any;

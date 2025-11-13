@@ -7,10 +7,10 @@
  * Use the Installer agent for step-by-step installation guidance.
  */
 
-// DEPLOYMENT v4.4.0 - DIAGNOSTIC MODE - 2025-10-29
-const VERSION = 'v4.4.0-diagnostic';
+// DEPLOYMENT v4.5.0 - RELIABILITY FIX - 2025-11-13
+const VERSION = 'v4.5.0-reliability';
 const BOOT_TIME = new Date().toISOString();
-const EDGE_FUNCTION_TIMEOUT_MS = 240000; // INCREASED: 240s (4 minutes)
+const EDGE_FUNCTION_TIMEOUT_MS = 420000; // INCREASED: 420s (7 minutes, matching installer-v3)
 console.log(`🚀 health-safety-v3 ${VERSION} booting at ${BOOT_TIME}`);
 
 import { serve } from '../_shared/deps.ts';
