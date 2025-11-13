@@ -1,5 +1,4 @@
-// Deployed: 2025-10-28 - v4.3.0 AI Call Timeout & Zero Steps Detection
-const EDGE_FUNCTION_TIMEOUT_MS = 350000; // 350s (5m 50s) - increased for detailed AI generation
+// Deployed: 2025-10-28 - v4.4.0 Extended Timeouts for Detailed AI Generation
 
 import { serve } from '../_shared/deps.ts';
 import {
@@ -167,11 +166,11 @@ serve(async (req) => {
   };
   
 
-  // Timeout promise
+  // Timeout promise (350s for detailed AI generation)
   const timeoutPromise = new Promise<Response>((_, reject) => {
     setTimeout(() => {
-      reject(new Error('Edge function timeout after 120s'));
-    }, EDGE_FUNCTION_TIMEOUT_MS);
+      reject(new Error('Edge function timeout after 350s'));
+    }, 350000);
   });
 
   // Main execution promise
@@ -2308,9 +2307,9 @@ Include step-by-step instructions, practical tips, and things to avoid.`;
     return new Response(
       JSON.stringify({
         success: false,
-        error: 'Edge function timeout after 40s',
+        error: 'Edge function timeout after 350s',
         metadata: {
-          generationTimeMs: EDGE_FUNCTION_TIMEOUT_MS,
+          generationTimeMs: 350000,
           stepCount: 0,
           totalEstimatedTime: 'Unknown',
           difficultyLevel: 'Unknown',
