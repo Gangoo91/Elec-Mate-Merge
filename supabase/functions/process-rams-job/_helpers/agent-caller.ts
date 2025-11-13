@@ -16,7 +16,7 @@ export async function callAgentsParallel(
     const [hsResult, installerResult] = await Promise.allSettled([
       supabase.functions.invoke('health-safety-v3', {
         body: {
-          description,
+          query: description,
           projectDetails,
           jobId
         },
@@ -24,7 +24,7 @@ export async function callAgentsParallel(
       }),
       supabase.functions.invoke('installer-v3', {
         body: {
-          description,
+          query: description,
           projectDetails,
           jobId
         },
