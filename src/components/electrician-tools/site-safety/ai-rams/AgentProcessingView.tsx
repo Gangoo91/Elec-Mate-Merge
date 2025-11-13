@@ -110,7 +110,7 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
           <div className="space-y-2.5">
             <div className="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden shadow-inner">
               <div
-                className="h-full bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow transition-all duration-500 ease-out shadow-lg shadow-elec-yellow/30"
+                className="h-full bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow transition-all duration-700 ease-out shadow-lg shadow-elec-yellow/30"
                 style={{ width: `${displayProgress}%` }}
               />
             </div>

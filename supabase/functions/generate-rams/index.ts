@@ -59,11 +59,40 @@ Deno.serve(async (req) => {
       assessor: job.project_info.assessor
     };
 
-    // Helper function to update job progress
-    const updateProgress = async (progress: number, step: string) => {
+    // Helper function to update agent-specific progress
+    const updateAgentProgress = async (
+      agent: 'hs' | 'installer',
+      agentProgress: number,
+      agentStatus: string,
+      step: string
+    ) => {
+      const agentField = agent === 'hs' ? 'hs_agent_progress' : 'installer_agent_progress';
+      const statusField = agent === 'hs' ? 'hs_agent_status' : 'installer_agent_status';
+      
+      // Update agent-specific fields
+      const { data } = await supabase
+        .from('rams_generation_jobs')
+        .update({
+          [agentField]: agentProgress,
+          [statusField]: agentStatus,
+          current_step: step
+        })
+        .eq('id', jobId)
+        .select('hs_agent_progress, installer_agent_progress')
+        .single();
+      
+      if (!data) return;
+      
+      // Calculate combined progress (agents run from 0-100, map to 10-90% range)
+      const hsProgress = data.hs_agent_progress || 0;
+      const installerProgress = data.installer_agent_progress || 0;
+      const avgAgentProgress = (hsProgress + installerProgress) / 2;
+      const overallProgress = Math.round(10 + (avgAgentProgress * 0.8)); // Map 0-100 to 10-90
+      
+      // Update overall progress
       await supabase
         .from('rams_generation_jobs')
-        .update({ progress, current_step: step })
+        .update({ progress: overallProgress })
         .eq('id', jobId);
     };
 
@@ -95,10 +124,17 @@ Deno.serve(async (req) => {
       );
     }
 
-    await updateProgress(10, `Running Health & Safety and Method Planner in parallel for ${job.job_scale} installation...`);
+    await supabase
+      .from('rams_generation_jobs')
+      .update({
+        progress: 10,
+        current_step: `Running Health & Safety and Method Planner in parallel for ${job.job_scale} installation...`,
+        hs_agent_status: 'pending',
+        installer_agent_status: 'pending'
+      })
+      .eq('id', jobId);
 
-    console.log('🔍 Searching knowledge bases...');
-    await updateProgress(15, 'Searching health & safety knowledge and regulations...');
+    console.log('🔍 Starting AI agents in parallel...');
 
     if (await checkCancelled()) {
       return new Response(
@@ -116,18 +152,16 @@ Deno.serve(async (req) => {
         job.job_description,
         projectDetails,
         async (progress: number, step: string) => {
-          if (!(await checkCancelled())) {
-            await updateProgress(progress, step);
-          }
+          if (await checkCancelled()) throw new Error('Job cancelled');
+          await updateAgentProgress('hs', progress, 'processing', step);
         }
       ),
       generateMethodStatement(
         job.job_description,
         projectDetails,
         async (progress: number, step: string) => {
-          if (!(await checkCancelled())) {
-            await updateProgress(progress, step);
-          }
+          if (await checkCancelled()) throw new Error('Job cancelled');
+          await updateAgentProgress('installer', progress, 'processing', step);
         }
       )
     ]);
