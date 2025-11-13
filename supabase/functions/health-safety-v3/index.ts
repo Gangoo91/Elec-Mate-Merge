@@ -383,7 +383,7 @@ serve(async (req) => {
       (async () => {
         try {
           const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
-            query_text: effectiveQuery,
+            query_text: query,
             match_count: 10
           });
           

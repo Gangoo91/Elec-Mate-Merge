@@ -109,3 +109,8 @@ timeout_sec = 600
 verify_jwt = false
 timeout_sec = 120
 
+# One-time Hazard Embeddings Generator
+[functions.generate-hazard-embeddings]
+verify_jwt = false
+timeout_sec = 300
+
