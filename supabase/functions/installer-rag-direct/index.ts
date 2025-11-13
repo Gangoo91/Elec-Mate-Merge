@@ -64,17 +64,51 @@ serve(async (req) => {
 
       // Phase 1: Direct SQL RAG (Fast & Reliable)
       
-      // RAG 1: Practical Work Intelligence - Direct SQL Query
+      // RAG 1: Practical Work Intelligence - Optimized RPC Call
+      console.log('🔍 Phase 1: Searching practical work via RPC...');
       const { data: pwData, error: pwError } = await supabase
-        .from('practical_work_intelligence')
-        .select('primary_topic, installation_method, tools_required, materials_needed, bs7671_regulations, confidence_score')
-        .or(`primary_topic.ilike.%${keywords}%,installation_method.ilike.%${keywords}%,equipment_category.ilike.%${keywords}%`)
-        .order('confidence_score', { ascending: false })
-        .limit(25);
+        .rpc('search_practical_work_intelligence_hybrid', {
+          search_query: keywords,
+          match_count: 25
+        });
 
-      const practicalDocs = pwData?.filter((d: any) => d.primary_topic) || [];
-      if (pwError || practicalDocs.length === 0) {
-        console.warn('⚠️ Limited practical work data:', pwError?.message || 'No results');
+      let practicalDocs: any[] = [];
+
+      // Phase 2: Fallback if RPC fails or returns no data
+      if (pwError || !pwData || pwData.length === 0) {
+        console.warn('⚠️ RPC failed/empty, trying fallback:', pwError?.message);
+        
+        const { data: fallbackData } = await supabase
+          .from('practical_work_intelligence')
+          .select('primary_topic, installation_method, tools_required, materials_needed, bs7671_regulations, confidence_score')
+          .ilike('primary_topic', `%installation%`)
+          .gte('confidence_score', 0.7)
+          .order('confidence_score', { ascending: false })
+          .limit(15);
+        
+        practicalDocs = (fallbackData || []).map((doc: any) => ({
+          type: 'practical_work',
+          primary_topic: doc.primary_topic,
+          installation_method: doc.installation_method || '',
+          tools_required: doc.tools_required || [],
+          materials_needed: doc.materials_needed || [],
+          bs7671_regulations: doc.bs7671_regulations || [],
+          confidence_score: doc.confidence_score || 0.5
+        }));
+        
+        console.log(`⚡ Fallback RAG: ${practicalDocs.length} procedures`);
+      } else {
+        // Phase 3: Map RPC response correctly (handles different field names)
+        practicalDocs = (pwData || []).map((doc: any) => ({
+          type: 'practical_work',
+          primary_topic: doc.primary_topic,
+          installation_method: doc.installation_method || doc.content || '',
+          tools_required: doc.tools_required || [],
+          materials_needed: doc.materials_needed || [],
+          bs7671_regulations: doc.bs7671_regulations || [],
+          confidence_score: doc.confidence_score || doc.hybrid_score || 0.5
+        }));
+        console.log(`✅ RPC Success: ${practicalDocs.length} procedures`);
       }
 
       // RAG 2: Regulations Intelligence - Direct SQL Query
@@ -103,7 +137,24 @@ serve(async (req) => {
       }
 
       const ragTime = Date.now() - ragStartTime;
-      console.log(`⚡ RAG: ${practicalDocs.length} procedures, ${regulationsDocs.length} regs (${ragTime}ms)`);
+      
+      // Phase 4: Comprehensive RAG Quality Metrics
+      console.log(`🔍 RAG Results Summary:`, {
+        practicalWork: {
+          retrieved: practicalDocs.length,
+          withTools: practicalDocs.filter((d: any) => d.tools_required?.length > 0).length,
+          withMaterials: practicalDocs.filter((d: any) => d.materials_needed?.length > 0).length,
+          avgConfidence: practicalDocs.length > 0 
+            ? (practicalDocs.reduce((sum: number, d: any) => sum + (d.confidence_score || 0), 0) / practicalDocs.length).toFixed(2)
+            : '0.00'
+        },
+        regulations: {
+          retrieved: regulationsDocs.length
+        },
+        duration: `${ragTime}ms`
+      });
+      
+      console.log(`✅ RAG complete in ${ragTime}ms`);
 
       // Build AI context (simplified from installer-v3)
       const installContext = [
