@@ -12,6 +12,12 @@ import { RegulationResult } from './rag-retrieval.ts';
  */
 export function extractHazardsFromRegulation(regulation: RegulationResult): string {
   const content = regulation.content;
+  
+  // Handle missing or empty content
+  if (!content || typeof content !== 'string' || content.trim() === '') {
+    return '- General electrical safety requirements';
+  }
+  
   const hazardIndicators = [
     'electric shock',
     'fire',
