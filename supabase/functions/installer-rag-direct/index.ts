@@ -24,7 +24,6 @@ serve(async (req) => {
     const { 
       query, 
       projectDetails, 
-      previousAgentOutputs, 
       currentDesign,
       selectedCircuits,
       sharedRegulations 
@@ -37,7 +36,7 @@ serve(async (req) => {
       );
     }
 
-    console.log('🚀 installer-rag-direct v2.0 started', { query: query.substring(0, 100) });
+    console.log('🚀 v2.0 started:', query.substring(0, 80));
 
     // Phase 7: Timeout Protection
     const timeoutPromise = new Promise<never>((_, reject) => {
@@ -50,8 +49,6 @@ serve(async (req) => {
       const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
       const supabase = createClient(supabaseUrl, supabaseKey);
 
-      // Phase 6: Progress Streaming
-      console.log('📊 Phase 1/4: Retrieving installation knowledge...');
       const ragStartTime = Date.now();
 
       // Phase 1: Direct SQL RAG (Fast & Reliable)
@@ -59,15 +56,15 @@ serve(async (req) => {
       // RAG 1: Practical Work Intelligence - Direct SQL Query
       const { data: pwData, error: pwError } = await supabase
         .from('practical_work_intelligence')
-        .select('primary_topic, content, tools_required, materials_needed, bs7671_regulations, confidence_score')
-        .or(`primary_topic.ilike.%${query}%,content.ilike.%${query}%,tools_required.cs.{installation}`)
+        .select('primary_topic, installation_method, tools_required, materials_needed, bs7671_regulations, confidence_score')
+        .or(`primary_topic.ilike.%${query}%,installation_method.ilike.%${query}%,equipment_category.ilike.%${query}%`)
         .order('confidence_score', { ascending: false })
         .limit(25);
 
-      if (pwError) console.error('❌ PW query error:', pwError);
-
-      const practicalDocs = pwData || [];
-      console.log('✅ Practical work docs retrieved:', practicalDocs.length);
+      const practicalDocs = pwData?.filter((d: any) => d.primary_topic) || [];
+      if (pwError || practicalDocs.length === 0) {
+        console.warn('⚠️ Limited practical work data:', pwError?.message || 'No results');
+      }
 
       // RAG 2: Regulations Intelligence - Direct SQL Query
       let regulationsDocs = [];
@@ -75,7 +72,7 @@ serve(async (req) => {
       if (sharedRegulations && sharedRegulations.length > 0) {
         console.log('📚 Reusing shared regulations from designer:', sharedRegulations.length);
         regulationsDocs = sharedRegulations.map((reg: any) => ({
-          content: reg.content || reg.regulation_text || '',
+          regulation_text: reg.primary_topic || reg.regulation_text || '',
           regulation_number: reg.regulation_number || reg.number,
           primary_topic: reg.primary_topic || '',
           keywords: reg.keywords || []
@@ -83,44 +80,36 @@ serve(async (req) => {
       } else {
         const { data: regData, error: regError } = await supabase
           .from('regulations_intelligence')
-          .select('regulation_number, primary_topic, content, keywords')
+          .select('regulation_number, primary_topic, keywords')
           .or(`primary_topic.ilike.%${query}%,keywords.cs.{installation,cable,protection}`)
           .order('regulation_number', { ascending: true })
           .limit(15);
 
-        if (regError) console.error('❌ Regs query error:', regError);
-
         regulationsDocs = regData || [];
-        console.log('✅ Regulations docs retrieved:', regulationsDocs.length);
+        if (regError || regulationsDocs.length === 0) {
+          console.warn('⚠️ Limited regulations data:', regError?.message || 'No results');
+        }
       }
 
       const ragTime = Date.now() - ragStartTime;
-      console.log(`⚡ RAG retrieval completed in ${ragTime}ms`);
-
-      // Phase 6: Progress Streaming
-      console.log('🔍 Phase 2/4: Building context...');
+      console.log(`⚡ RAG: ${practicalDocs.length} procedures, ${regulationsDocs.length} regs (${ragTime}ms)`);
 
       // Build AI context (simplified from installer-v3)
       const installContext = [
         ...practicalDocs.map((doc: any, i: number) => 
-          `[Procedure ${i + 1}] ${doc.primary_topic}\n${doc.content}\nTools: ${doc.tools_required?.join(', ') || 'N/A'}\nMaterials: ${doc.materials_needed?.join(', ') || 'N/A'}\nRegulations: ${doc.bs7671_regulations?.join(', ') || 'N/A'}`
+          `[Procedure ${i + 1}] ${doc.primary_topic}\n${doc.installation_method || ''}\nTools: ${doc.tools_required?.join(', ') || 'N/A'}\nMaterials: ${doc.materials_needed?.join(', ') || 'N/A'}`
         ),
         ...regulationsDocs.map((doc: any, i: number) => 
-          `[Regulation ${i + 1}] ${doc.regulation_number}: ${doc.primary_topic}\n${doc.content}`
+          `[Regulation ${i + 1}] ${doc.regulation_number}: ${doc.primary_topic}`
         )
       ].join('\n\n');
 
       const installKnowledge = [...practicalDocs, ...regulationsDocs];
 
       // Build circuit context if available
-      let circuitContext = '';
-      if (selectedCircuits && selectedCircuits.length > 0) {
-        circuitContext = `\n**CIRCUIT DETAILS**:\n${selectedCircuits.map((c: any) => 
-          `- ${c.circuitType}: ${c.cable?.size || 'TBD'} cable, ${c.protection?.rating || 'TBD'} MCB`
-        ).join('\n')}`;
-      } else if (currentDesign) {
-        circuitContext = `\n**DESIGN CONTEXT**: Cable: ${currentDesign.cable?.size || 'TBD'}, Protection: ${currentDesign.protection?.rating || 'TBD'}`;
-      }
+      const circuitContext = selectedCircuits?.length > 0 
+        ? `\n**CIRCUITS**: ${selectedCircuits.map((c: any) => `${c.circuitType} (${c.cable?.size || 'TBD'})`).join(', ')}`
+        : currentDesign ? `\n**DESIGN**: ${currentDesign.cable?.size || 'TBD'}, ${currentDesign.protection?.rating || 'TBD'}` : '';
 
       // Phase 5: Simplified System Prompt (150 lines from 400+)
       const systemPrompt = `You are a UK electrical installation specialist creating BS 7671:2018+A3:2024 compliant method statements.
@@ -154,8 +143,6 @@ ${circuitContext}
 
 Extract from knowledge base data provided above. Be practical and field-ready.`;
 
-      // Phase 6: Progress Streaming
-      console.log('🤖 Phase 3/4: Generating installation steps...');
       const aiStartTime = Date.now();
 
       // Phase 2: Tool-Based Schema (from installer-v3-schema.ts)
@@ -185,10 +172,6 @@ Extract from knowledge base data provided above. Be practical and field-ready.`;
 
       const aiData = await response.json();
       const aiTime = Date.now() - aiStartTime;
-      console.log(`🤖 AI generation completed in ${aiTime}ms`);
-
-      // Phase 6: Progress Streaming
-      console.log('✅ Phase 4/4: Validating output...');
 
       // Phase 3: Fix Field Mapping
       const toolCall = aiData.choices[0].message.tool_calls?.[0];
@@ -200,28 +183,18 @@ Extract from knowledge base data provided above. Be practical and field-ready.`;
 
       // Correctly map installationSteps (not 'steps')
       const steps = installResult.installationSteps || [];
-      console.log(`📋 Generated ${steps.length} installation steps`);
+      console.log(`🤖 AI generation: ${steps.length} steps (${aiTime}ms)`);
 
-      // Phase 4: Calculate Quality Metrics
-      const toolsExtracted = steps.reduce((sum: number, step: any) => 
-        sum + (step.tools?.length || 0), 0);
-      const materialsExtracted = steps.reduce((sum: number, step: any) => 
-        sum + (step.materials?.length || 0), 0);
+      // Phase 4: Calculate Quality Metrics (simplified)
+      const toolsExtracted = steps.reduce((sum: number, s: any) => sum + (s.tools?.length || 0), 0);
+      const materialsExtracted = steps.reduce((sum: number, s: any) => sum + (s.materials?.length || 0), 0);
       const regulationsReferenced = installResult.regulatoryCitations?.length || 0;
 
       const overallScore = Math.min(100, Math.round(
-        (installKnowledge.length / 40 * 40) +
-        (toolsExtracted / (steps.length * 3) * 30) +
-        (regulationsReferenced / 5 * 30)
+        (installKnowledge.length / 40 * 40) + (toolsExtracted / (steps.length * 3) * 30) + (regulationsReferenced / 5 * 30)
       ));
 
-      console.log('📊 Quality Metrics:', {
-        overallScore,
-        toolsExtracted,
-        materialsExtracted,
-        regulationsReferenced,
-        ragDocs: installKnowledge.length
-      });
+      console.log(`📊 Quality: ${overallScore}%, Tools: ${toolsExtracted}, Materials: ${materialsExtracted}, Regs: ${regulationsReferenced}`);
 
       // Build response with correct field names
       const responseData = {
@@ -276,7 +249,7 @@ Extract from knowledge base data provided above. Be practical and field-ready.`;
         }
       };
 
-      console.log(`✅ installer-rag-direct completed in ${Date.now() - startTime}ms`);
+      console.log(`✅ Completed in ${Date.now() - startTime}ms`);
       return responseData;
     })();
 
