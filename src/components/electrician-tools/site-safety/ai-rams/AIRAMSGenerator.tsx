@@ -202,9 +202,13 @@ export const AIRAMSGenerator: React.FC = () => {
       sessionStorage.removeItem('rams-generation-active');
       
       setGenerationEndTime(Date.now());
+      setShowResults(true); // Ensure results stay visible
       setShowCelebration(true);
       setCelebrationShown(true);
       triggerHaptic([100, 50, 100, 50, 200]);
+      
+      // Auto-close celebration after 3 seconds
+      setTimeout(() => setShowCelebration(false), 3000);
     }
     
     // For partial completion, show toast notification instead
@@ -598,7 +602,10 @@ export const AIRAMSGenerator: React.FC = () => {
             controlMeasuresCount={controlMeasuresCount}
             methodStepsCount={methodStepsCount}
             generationTimeSeconds={generationTimeSeconds}
-            onClose={() => setShowCelebration(false)}
+            onClose={() => {
+              setShowCelebration(false);
+              setShowResults(true);
+            }}
           />
         )}
       </div>
