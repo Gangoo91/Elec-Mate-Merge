@@ -80,7 +80,7 @@ timeout_sec = 480
 
 [functions.installer-v3]
 verify_jwt = false
-timeout_sec = 300
+timeout_sec = 360
 
 [functions.installer-rag-direct]
 verify_jwt = false

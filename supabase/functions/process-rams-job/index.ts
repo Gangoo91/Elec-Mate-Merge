@@ -308,7 +308,7 @@ Deno.serve(async (req) => {
         }
       }),
       new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Installer agent timeout after 300s')), 300000)
+        setTimeout(() => reject(new Error('Installer agent timeout after 420s')), 420000)
       )
     ]);
 

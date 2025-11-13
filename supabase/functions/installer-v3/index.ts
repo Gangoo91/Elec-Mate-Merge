@@ -1,5 +1,5 @@
 // Deployed: 2025-10-28 - v4.3.0 AI Call Timeout & Zero Steps Detection
-const EDGE_FUNCTION_TIMEOUT_MS = 240000; // 240s - increased for complex schema generation
+const EDGE_FUNCTION_TIMEOUT_MS = 350000; // 350s (5m 50s) - increased for detailed AI generation
 
 import { serve } from '../_shared/deps.ts';
 import {
