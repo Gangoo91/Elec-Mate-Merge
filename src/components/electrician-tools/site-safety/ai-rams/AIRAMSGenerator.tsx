@@ -305,18 +305,18 @@ export const AIRAMSGenerator: React.FC = () => {
       setCurrentJobId(jobRecord.id);
       startPolling();
 
-      // Start local progress timer
-      setStartTime(Date.now());
+      // Start local progress timer with stable timestamp
+      const localStart = Date.now();
+      setStartTime(localStart);
       setLocalProgress(0);
       
       const progressTimer = setInterval(() => {
-        const start = startTime || Date.now();
-        const elapsed = Date.now() - start;
+        const elapsed = Date.now() - localStart;
         const expectedDuration = 150000; // 2.5 minutes in ms
         
         // Smooth ramp to 95% based on elapsed time
         const estimatedProgress = Math.min(95, (elapsed / expectedDuration) * 100);
-        setLocalProgress(estimatedProgress);
+        setLocalProgress(prev => Math.max(prev, estimatedProgress));
       }, 1000);
 
       try {
