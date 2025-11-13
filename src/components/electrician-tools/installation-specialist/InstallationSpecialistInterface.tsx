@@ -239,25 +239,24 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           sharedRegulations: designerContext?.regulations || []
         });
 
-        // Update quality metrics based on response
-        if (response?.metadata?.qualityMetrics) {
-          const qm = response.metadata.qualityMetrics;
+        // Update quality metrics based on response (✅ Fixed path)
+        const qm = (response as any)?.qualityMetrics;
+        if (qm) {
           setQualityMetrics({
-            overallConfidence: qm.overallScore || 70,  // ✅ Use overallScore
+            overallConfidence: qm.overallScore || 70,
             ragDataQuality: qm.overallScore >= 85 ? 'excellent' : 
                            qm.overallScore >= 70 ? 'good' : 
                            qm.overallScore >= 50 ? 'fair' : 'poor',
-            bs7671Coverage: qm.ragDataUsed?.regulations || 0,  // ✅ Fix path
-            practicalWorkCoverage: qm.ragDataUsed?.practicalProcedures || 0,  // ✅ Fix path
+            bs7671Coverage: qm.ragDataUsed?.regulations || 0,
+            practicalWorkCoverage: qm.ragDataUsed?.practicalProcedures || 0,
             stage: 'complete'
           });
           
-          console.log('📊 Quality Metrics:', qm);
-          console.log('🔍 RAG Data Used:', {
-            regulations: qm.ragDataUsed?.regulations,
-            practicalProcedures: qm.ragDataUsed?.practicalProcedures,
-            fullRagData: qm.ragDataUsed,
-            extractionBreakdown: qm.extractionBreakdown
+          console.log('📊 Quality Metrics:', {
+            score: qm.overallScore,
+            ragDocs: qm.ragDataUsed?.totalDocs,
+            toolsExtracted: qm.extractionBreakdown?.toolsExtracted,
+            materialsExtracted: qm.extractionBreakdown?.materialsExtracted
           });
         }
 
