@@ -81,8 +81,8 @@ export const useRAMSJobPolling = (jobId: string | null): UseRAMSJobPollingReturn
         }
       }
 
-      // Stop polling when complete, failed, or cancelled
-      if (data.status === 'complete' || data.status === 'failed' || data.status === 'cancelled') {
+      // Stop polling when complete, partial, failed, or cancelled
+      if (data.status === 'complete' || data.status === 'partial' || data.status === 'failed' || data.status === 'cancelled') {
         setIsPolling(false);
       }
     } catch (error) {
