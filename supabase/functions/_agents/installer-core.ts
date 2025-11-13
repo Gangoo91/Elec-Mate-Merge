@@ -160,7 +160,3 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
     }
   };
 }
-      totalDocs: practicalWork.length + regulations.length
-    }
-  };
-}
