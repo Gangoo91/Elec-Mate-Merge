@@ -1,114 +1,16 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { checkRAMSCache, storeRAMSCache } from '../_shared/rams-cache.ts';
+import { 
+  transformHealthSafetyResponse, 
+  extractEmergencyContacts,
+  calculateOverallRiskLevel,
+  calculateTotalTime 
+} from './_helpers/transformers.ts';
+import { callAgentsParallel, extractAgentResults } from './_helpers/agent-caller.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
-
-/**
- * Transform health-safety-v3 response to match frontend RAMSData structure
- * Maps: hazards → risks, ppe → ppeDetails
- * PHASE 3: Enhanced with fallback logic for various response structures
- */
-function transformHealthSafetyResponse(hsData: any, projectDetails?: any): any {
-  console.log('🔄 [PHASE 1 DIAGNOSTIC] Starting transformation...', {
-    hasData: !!hsData,
-    hasDataField: !!hsData?.data,
-    dataKeys: hsData?.data ? Object.keys(hsData.data) : [],
-    rawType: typeof hsData
-  });
-
-  if (!hsData) {
-    console.error('❌ hsData is null/undefined');
-    return null;
-  }
-
-  // PHASE 3: Handle different response structures
-  let sourceData = hsData.data || hsData;
-  
-  // If data is wrapped in a 'result' field
-  if (sourceData.result) {
-    console.log('📦 Found result wrapper, unwrapping...');
-    sourceData = sourceData.result;
-  }
-  
-  // If hazards are nested in riskAssessment
-  if (sourceData.riskAssessment?.hazards) {
-    console.log('📦 Found riskAssessment wrapper, extracting hazards...');
-    sourceData.hazards = sourceData.riskAssessment.hazards;
-  }
-  
-  console.log('🔍 [PHASE 1 DIAGNOSTIC] Source data structure:', {
-    hasHazards: !!sourceData.hazards,
-    hazardsType: sourceData.hazards ? typeof sourceData.hazards : 'missing',
-    hazardsIsArray: Array.isArray(sourceData.hazards),
-    hazardsLength: Array.isArray(sourceData.hazards) ? sourceData.hazards.length : 0,
-    hasPPE: !!sourceData.ppe,
-    ppeType: sourceData.ppe ? typeof sourceData.ppe : 'missing',
-    ppeIsArray: Array.isArray(sourceData.ppe),
-    ppeLength: Array.isArray(sourceData.ppe) ? sourceData.ppe.length : 0,
-    allKeys: Object.keys(sourceData),
-    firstHazard: Array.isArray(sourceData.hazards) && sourceData.hazards[0] ? Object.keys(sourceData.hazards[0]) : 'none'
-  });
-  
-  if (!sourceData.hazards || !Array.isArray(sourceData.hazards)) {
-    console.error('❌ No hazards array found in response. Available keys:', Object.keys(sourceData));
-    console.error('Full source data sample:', JSON.stringify(sourceData).slice(0, 500));
-    return null;
-  }
-
-  const transformed = {
-    risks: sourceData.hazards.map((h: any) => ({
-      id: h.id || `hazard-${Math.random().toString(36).substr(2, 9)}`,
-      hazard: h.hazard || h.description || 'Unknown hazard',
-      risk: h.hazard || h.description || 'Unknown risk',
-      likelihood: h.likelihood || 3,
-      severity: h.severity || 3,
-      riskRating: h.riskScore || (h.likelihood * h.severity) || 9,
-      controls: h.controlMeasure || h.controls || 'No controls specified',
-      residualRisk: h.residualRisk || Math.ceil((h.riskScore || 9) * 0.3) || 3,
-      linkedToStep: h.linkedToStep || 0,
-      furtherAction: h.regulation || '',
-      responsible: '',
-      actionBy: '',
-      done: false
-    })),
-    
-    ppeDetails: (sourceData.ppe || []).map((p: any, idx: number) => ({
-      id: `ppe-${p.itemNumber || idx + 1}`,
-      itemNumber: p.itemNumber || idx + 1,
-      ppeType: p.ppeType || 'PPE Item',
-      standard: p.standard || 'N/A',
-      mandatory: p.mandatory !== false,
-      purpose: p.purpose || 'Protection'
-    })),
-    
-    emergencyProcedures: sourceData.emergencyProcedures || [],
-    complianceRegulations: sourceData.complianceRegulations || [],
-    
-    projectName: projectDetails?.projectName || '',
-    location: projectDetails?.location || '',
-    date: new Date().toISOString().split('T')[0],
-    assessor: projectDetails?.assessor || '',
-    contractor: projectDetails?.contractor || '',
-    supervisor: projectDetails?.supervisor || '',
-    activities: []
-  };
-
-  console.log('✅ [PHASE 1 DIAGNOSTIC] Transformation complete:', {
-    inputHazards: sourceData.hazards?.length || 0,
-    outputRisks: transformed.risks.length,
-    inputPPE: sourceData.ppe?.length || 0,
-    outputPPEDetails: transformed.ppeDetails.length,
-    sampleRisk: transformed.risks[0] ? {
-      id: transformed.risks[0].id,
-      hazard: transformed.risks[0].hazard.slice(0, 50)
-    } : 'none'
-  });
-
-  return transformed;
-}
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
