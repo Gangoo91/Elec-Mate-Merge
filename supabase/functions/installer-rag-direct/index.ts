@@ -37,6 +37,17 @@ serve(async (req) => {
     }
 
     console.log('🚀 v2.0 started:', query.substring(0, 80));
+    
+    // Extract keywords from query (first 50 words, clean special chars)
+    const keywords = query
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, ' ')
+      .split(/\s+/)
+      .filter(w => w.length > 3)
+      .slice(0, 15)
+      .join(' ');
+    
+    console.log('🔍 Keywords extracted:', keywords.substring(0, 100));
 
     // Phase 7: Timeout Protection
     const timeoutPromise = new Promise<never>((_, reject) => {
@@ -57,7 +68,7 @@ serve(async (req) => {
       const { data: pwData, error: pwError } = await supabase
         .from('practical_work_intelligence')
         .select('primary_topic, installation_method, tools_required, materials_needed, bs7671_regulations, confidence_score')
-        .or(`primary_topic.ilike.%${query}%,installation_method.ilike.%${query}%,equipment_category.ilike.%${query}%`)
+        .or(`primary_topic.ilike.%${keywords}%,installation_method.ilike.%${keywords}%,equipment_category.ilike.%${keywords}%`)
         .order('confidence_score', { ascending: false })
         .limit(25);
 
@@ -81,7 +92,7 @@ serve(async (req) => {
         const { data: regData, error: regError } = await supabase
           .from('regulations_intelligence')
           .select('regulation_number, primary_topic, keywords')
-          .or(`primary_topic.ilike.%${query}%,keywords.cs.{installation,cable,protection}`)
+          .or(`primary_topic.ilike.%${keywords}%,keywords.cs.{installation,cable,protection}`)
           .order('regulation_number', { ascending: true })
           .limit(15);
 
