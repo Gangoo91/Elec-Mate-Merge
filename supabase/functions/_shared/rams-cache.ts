@@ -6,7 +6,31 @@
  */
 
 import { SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import { generateEmbeddingWithRetry } from './v3-core.ts';
+
+/**
+ * Lightweight embedding generator for cache operations
+ * Avoids heavy v3-core.ts imports
+ */
+async function generateEmbedding(text: string, apiKey: string): Promise<number[]> {
+  const response = await fetch('https://api.openai.com/v1/embeddings', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`
+    },
+    body: JSON.stringify({
+      model: 'text-embedding-3-small',
+      input: text.slice(0, 8000)
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenAI embedding failed: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  return data.data[0].embedding;
+}
 
 export interface RAMSCacheResult {
   hit: boolean;
@@ -34,7 +58,7 @@ export async function checkRAMSCache(params: {
   
   try {
     // Generate embedding for query
-    const embedding = await generateEmbeddingWithRetry(params.jobDescription, params.openAiKey);
+    const embedding = await generateEmbedding(params.jobDescription, params.openAiKey);
     
     // Search for similar cached result (lowered threshold for better cache hits)
     const { data, error } = await params.supabase.rpc('match_rams_cache', {
@@ -128,7 +152,7 @@ export async function storeRAMSCache(params: {
   
   try {
     // Generate embedding for query
-    const embedding = await generateEmbeddingWithRetry(params.jobDescription, params.openAiKey);
+    const embedding = await generateEmbedding(params.jobDescription, params.openAiKey);
     
     // Store in cache
     const { error } = await params.supabase
