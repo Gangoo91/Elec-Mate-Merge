@@ -7,6 +7,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { generateHealthSafety } from '../_agents/health-safety-core.ts';
 import { generateMethodStatement } from '../_agents/installer-core.ts';
 import { transformHealthSafetyResponse } from './transformers.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -57,6 +58,22 @@ Deno.serve(async (req) => {
       contractor: job.project_info.contractor,
       supervisor: job.project_info.supervisor,
       assessor: job.project_info.assessor
+    };
+
+    // ⚡ CRITICAL FIX #2: Fail-safe progress updater (never throws)
+    const safeUpdateProgress = async (
+      progress: number,
+      step: string
+    ): Promise<void> => {
+      try {
+        await supabase
+          .from('rams_generation_jobs')
+          .update({ progress, current_step: step })
+          .eq('id', jobId);
+      } catch (error) {
+        console.error('⚠️ Progress update failed (non-fatal):', error);
+        // NEVER throw - progress updates should never kill the job
+      }
     };
 
     // Helper function to update agent-specific progress
@@ -161,24 +178,37 @@ Deno.serve(async (req) => {
     console.log('🤖 Calling AI agents in parallel...');
     const startTime = Date.now();
 
+    // PHASE 2: Parallel agent execution with timeout protection
+    console.log('🤖 Starting parallel agents with 2.5 min timeout...');
+    
+    const AGENT_TIMEOUT = 150000; // 2.5 minutes
+    
     const [hsResult, installerResult] = await Promise.allSettled([
-      generateHealthSafety(
-        job.job_description,
-        projectDetails,
-        async (progress: number, step: string) => {
-          if (await checkCancelled()) throw new Error('Job cancelled');
-          await updateAgentProgress('hs', progress, 'processing', step);
-        },
-        sharedRegulations
+      withTimeout(
+        generateHealthSafety(
+          job.job_description,
+          projectDetails,
+          async (progress: number, step: string) => {
+            if (await checkCancelled()) throw new Error('Job cancelled');
+            await updateAgentProgress('hs', progress, 'processing', step);
+          },
+          sharedRegulations
+        ),
+        AGENT_TIMEOUT,
+        'Health & Safety Agent'
       ),
-      generateMethodStatement(
-        job.job_description,
-        projectDetails,
-        async (progress: number, step: string) => {
-          if (await checkCancelled()) throw new Error('Job cancelled');
-          await updateAgentProgress('installer', progress, 'processing', step);
-        },
-        sharedRegulations
+      withTimeout(
+        generateMethodStatement(
+          job.job_description,
+          projectDetails,
+          async (progress: number, step: string) => {
+            if (await checkCancelled()) throw new Error('Job cancelled');
+            await updateAgentProgress('installer', progress, 'processing', step);
+          },
+          sharedRegulations
+        ),
+        AGENT_TIMEOUT,
+        'Installer Agent'
       )
     ]);
 
@@ -279,7 +309,8 @@ Deno.serve(async (req) => {
     }
 
     // Full success - merge results
-    await updateProgress(90, 'Finalizing risk assessment and method statement...');
+    // ⚡ CRITICAL FIX #1: Replace undefined updateProgress with safeUpdateProgress
+    await safeUpdateProgress(90, 'Finalizing risk assessment and method statement...');
 
     const transformedRAMSData = transformHealthSafetyResponse(hsData, projectDetails);
     
