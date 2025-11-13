@@ -117,6 +117,15 @@ export async function storeRAMSCache(params: {
   
   console.log('💾 Storing RAMS in cache...');
   
+  // ✅ Validate both datasets are present
+  if (!params.ramsData || !params.methodData) {
+    console.warn('⚠️ Cache write skipped - incomplete data:', {
+      hasRAMS: !!params.ramsData,
+      hasMethod: !!params.methodData
+    });
+    return; // Exit early without caching
+  }
+  
   try {
     // Generate embedding for query
     const embedding = await generateEmbeddingWithRetry(params.jobDescription, params.openAiKey);

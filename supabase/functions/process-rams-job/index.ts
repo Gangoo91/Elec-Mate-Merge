@@ -623,15 +623,21 @@ Deno.serve(async (req) => {
       });
     }
     
-    await storeRAMSCache({
-      supabase,
-      jobDescription: job.job_description,
-      workType: job.job_scale,
-      jobScale: job.job_scale,
-      ramsData: combinedRAMSData,
-      methodData: installerData?.data ?? null, // ✅ Guard against null installerData
-      openAiKey: OPENAI_API_KEY
-    });
+    // Only cache if we have complete data from both agents
+    if (hsData && installerData?.data) {
+      console.log('💾 Storing complete result in semantic cache...');
+      await storeRAMSCache({
+        supabase,
+        jobDescription: job.job_description,
+        workType: job.job_scale,
+        jobScale: job.job_scale,
+        ramsData: combinedRAMSData,
+        methodData: installerData.data,
+        openAiKey: OPENAI_API_KEY
+      });
+    } else {
+      console.log('⚠️ Skipping cache write - partial result (missing installer data)');
+    }
     
     // Determine final status message
     const currentStepMessage = 
