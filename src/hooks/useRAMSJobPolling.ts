@@ -6,10 +6,10 @@ interface RAMSJob {
   status: string;
   progress: number;
   current_step: string | null;
-  hs_agent_progress: number;
-  installer_agent_progress: number;
-  hs_agent_status: string;
-  installer_agent_status: string;
+  hs_agent_progress?: number;
+  installer_agent_progress?: number;
+  hs_agent_status?: string;
+  installer_agent_status?: string;
   rams_data: any;
   method_data: any;
   raw_hs_response: any;

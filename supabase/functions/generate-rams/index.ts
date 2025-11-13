@@ -127,6 +127,20 @@ Deno.serve(async (req) => {
     await supabase
       .from('rams_generation_jobs')
       .update({
+        progress: 8,
+        current_step: 'Fetching regulations intelligence (shared for both agents)...'
+      })
+      .eq('id', jobId);
+
+    // Fetch regulations once (shared by both agents)
+    console.log('🔍 Fetching shared regulations intelligence...');
+    const { searchRegulationsIntelligence } = await import('../_shared/rams-rag.ts');
+    const sharedRegulations = await searchRegulationsIntelligence(job.job_description);
+    console.log(`✅ Fetched ${sharedRegulations.length} shared regulations`);
+
+    await supabase
+      .from('rams_generation_jobs')
+      .update({
         progress: 10,
         current_step: `Running Health & Safety and Method Planner in parallel for ${job.job_scale} installation...`,
         hs_agent_status: 'pending',
@@ -154,7 +168,8 @@ Deno.serve(async (req) => {
         async (progress: number, step: string) => {
           if (await checkCancelled()) throw new Error('Job cancelled');
           await updateAgentProgress('hs', progress, 'processing', step);
-        }
+        },
+        sharedRegulations
       ),
       generateMethodStatement(
         job.job_description,
@@ -162,7 +177,8 @@ Deno.serve(async (req) => {
         async (progress: number, step: string) => {
           if (await checkCancelled()) throw new Error('Job cancelled');
           await updateAgentProgress('installer', progress, 'processing', step);
-        }
+        },
+        sharedRegulations
       )
     ]);
 
