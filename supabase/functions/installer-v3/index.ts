@@ -277,6 +277,15 @@ serve(async (req) => {
 7. Competency: specify qualifications (18th Edition, 2391)
 8. Site logistics: isolation points, access, permits (if relevant)
 
+**STEP COUNT REQUIREMENTS** (CRITICAL):
+- **Minimum 8 steps** for any standard installation
+- **Simple jobs** (single socket, light fitting): 8-10 steps
+- **Standard jobs** (circuit installation, consumer unit change): 10-12 steps
+- **Complex jobs** (rewires, multiple circuits, commercial): 12-15+ steps
+- Break down work into logical phases: Planning/Preparation → Isolation → Installation → Testing → Certification
+- Each phase should have multiple detailed steps (not just 1 step per phase)
+- Include specific sub-tasks within each step to ensure thoroughness
+
 **KNOWLEDGE BASE (${installKnowledge.length} procedures)**:
 ${installContext}
 
