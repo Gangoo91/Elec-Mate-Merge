@@ -34,7 +34,7 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
   onRemove
 }) => {
   const { isMobile } = useMobileEnhanced();
-  const riskColors = getRiskColorsByLevel(step.riskLevel);
+  const riskColors = getRiskColorsByLevel(step.riskLevel || 'low');
   const isEvenRow = index % 2 === 0;
   const [isEditing, setIsEditing] = useState(false);
   const [showEditSheet, setShowEditSheet] = useState(false);
