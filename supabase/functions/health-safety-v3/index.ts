@@ -439,7 +439,7 @@ serve(async (req) => {
     });
     
     // RAG Success Validation
-    const totalRagResults = healthSafetyDocs.length + bs7671Data.length;
+    const totalRagResults = healthSafetyDocs.length + regulationsData.length;
     
     if (totalRagResults === 0) {
       logger.error('🚨 CRITICAL: ZERO RAG RESULTS - Cannot proceed safely');
@@ -453,7 +453,7 @@ serve(async (req) => {
       console.warn(`⚠️ WARNING: Only ${totalRagResults} RAG results - AI may lack detailed context`);
     } else {
       logger.info(`✅ RAG Success: ${totalRagResults} documents retrieved`);
-      console.log(`✅ RAG Success: ${totalRagResults} documents retrieved (${healthSafetyDocs.length} H&S + ${bs7671Data.length} regulations)`);
+      console.log(`✅ RAG Success: ${totalRagResults} documents retrieved (${healthSafetyDocs.length} H&S + ${regulationsData.length} regulations)`);
     }
     
     // PHASE 2A: DIRECT search of regulations_intelligence for pre-structured hazards
