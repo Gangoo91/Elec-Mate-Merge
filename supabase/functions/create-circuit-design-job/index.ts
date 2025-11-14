@@ -23,92 +23,73 @@ interface CircuitInput {
 async function extractCircuitsFromPrompt(prompt: string, geminiKey: string): Promise<CircuitInput[]> {
   console.log('🔍 Extracting circuits from prompt:', prompt);
 
-  const systemPrompt = `You are a UK electrical circuit extraction expert. Extract circuit information from descriptions and convert to structured data.
+  const systemPrompt = `You are a UK electrical circuit extraction expert. Extract ALL circuits from descriptions.
 
-CRITICAL RULES:
-1. Extract ALL circuits mentioned in the description
-2. Infer typical UK power ratings for each circuit type
-3. Set reasonable cable lengths (15-25m for most circuits)
-4. Use correct UK load types
+LOAD TYPES: socket, lighting, cooker, shower, ev-charger, immersion, heating, outdoor
 
-LOAD TYPES:
-Domestic: socket, lighting, cooker, shower, ev-charger, immersion, heating, smoke-alarm, garage, outdoor
-Commercial: office-sockets, emergency-lighting, hvac, server-room, kitchen-equipment, signage, fire-alarm, access-control, cctv, data-cabinet
-Industrial: three-phase-motor, machine-tool, welding, conveyor, extraction, control-panel, overhead-lighting, workshop-sockets, compressor, production-line
-
-TYPICAL UK POWER RATINGS:
-- Socket ring: 3000-7360W (32A max)
-- Lighting circuit: 1000-1500W
-- Shower: 7500-10500W
-- EV charger: 3600-7400W
-- Cooker: 7000-11000W
-- Immersion heater: 3000W
+TYPICAL UK POWER:
+- Socket ring: 7360W
+- Lighting: 1200W  
+- Shower: 8500-10500W
+- EV charger: 7400W
+- Cooker: 9200W
 - Outdoor socket: 3000W
 
-Examples:
-"4 socket rings" → 4 circuits with type=socket, power=7360W each
-"6 lighting circuits" → 6 circuits with type=lighting, power=1200W each
-"10.5kW shower" → 1 circuit with type=shower, power=10500W
-"7.4kW EV charger" → 1 circuit with type=ev-charger, power=7400W`;
+Return ONLY valid JSON array of circuits. No markdown, no explanation.
 
-  const tools = [{
-    type: "function",
-    function: {
-      name: "extract_circuits",
-      description: "Extract circuit information from description",
-      parameters: {
-        type: "object",
-        properties: {
-          circuits: {
-            type: "array",
-            items: {
-              type: "object",
-              properties: {
-                name: { type: "string", description: "Circuit name (e.g., 'Socket Ring 1', 'Kitchen Lighting')" },
-                loadType: { type: "string", description: "Load type from the approved list" },
-                loadPower: { type: "number", description: "Power in watts" },
-                cableLength: { type: "number", description: "Cable length in meters (15-25m typical)" },
-                phases: { type: "string", enum: ["single", "three"], description: "Single or three phase" },
-                specialLocation: { type: "string", enum: ["bathroom", "outdoor", "underground", "kitchen", "none"], description: "Special location if applicable" }
-              },
-              required: ["name", "loadType", "loadPower", "phases"]
-            }
-          }
-        },
-        required: ["circuits"]
-      }
-    }
-  }];
+Format:
+[
+  {
+    "name": "Socket Ring 1",
+    "loadType": "socket",
+    "loadPower": 7360,
+    "cableLength": 20,
+    "phases": "single",
+    "specialLocation": "none"
+  }
+]`;
 
   const response = await callGemini({
     messages: [
       { role: "system", content: systemPrompt },
-      { role: "user", content: `Extract all circuits from: "${prompt}"` }
+      { role: "user", content: `Extract circuits from: "${prompt}"` }
     ],
-    tools,
-    tool_choice: { type: "function", function: { name: "extract_circuits" } },
     temperature: 0.1,
     max_tokens: 4000
   }, geminiKey);
 
-  if (!response.toolCalls || response.toolCalls.length === 0) {
-    console.error('❌ No tool calls from Gemini');
+  let content = response.content.trim();
+  
+  // Remove markdown code blocks if present
+  if (content.startsWith('```')) {
+    content = content.replace(/```json?\n?/g, '').replace(/```\n?$/g, '').trim();
+  }
+
+  let parsedCircuits;
+  try {
+    parsedCircuits = JSON.parse(content);
+  } catch (e) {
+    console.error('❌ Failed to parse JSON:', content);
+    throw new Error('Failed to parse circuit extraction response');
+  }
+
+  if (!Array.isArray(parsedCircuits) || parsedCircuits.length === 0) {
+    console.error('❌ No circuits extracted');
     return [];
   }
 
-  const extracted = response.toolCalls[0].function.arguments;
-  const circuits: CircuitInput[] = extracted.circuits.map((c: any, idx: number) => ({
+  const circuits: CircuitInput[] = parsedCircuits.map((c: any, idx: number) => ({
     id: `extracted-${Date.now()}-${idx}`,
     name: c.name,
     loadType: c.loadType,
     loadPower: c.loadPower,
     cableLength: c.cableLength || 20,
     phases: c.phases || 'single',
-    specialLocation: c.specialLocation || 'none',
+    specialLocation: c.specialLocation === 'none' ? undefined : c.specialLocation,
     notes: 'Extracted from AI prompt'
   }));
 
-  console.log(`✅ Extracted ${circuits.length} circuits`);
+  console.log(`✅ Extracted ${circuits.length} circuits from prompt`);
   return circuits;
 }
 
