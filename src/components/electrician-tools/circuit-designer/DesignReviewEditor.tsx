@@ -136,12 +136,12 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       },
       
       consumerUnit: {
-        type: design.consumerUnit.type,
-        typeDescription: design.consumerUnit.type === 'split-load' ? 'Split Load Consumer Unit' : 
-                         design.consumerUnit.type === 'high-integrity' ? 'High Integrity Consumer Unit' :
+        type: design.consumerUnit?.type || 'main-switch',
+        typeDescription: design.consumerUnit?.type === 'split-load' ? 'Split Load Consumer Unit' : 
+                         design.consumerUnit?.type === 'high-integrity' ? 'High Integrity Consumer Unit' :
                          'Main Switch Consumer Unit',
-        mainSwitchRating: design.consumerUnit.mainSwitchRating,
-        mainSwitchString: `${design.consumerUnit.mainSwitchRating}A Main Switch`
+        mainSwitchRating: design.consumerUnit?.mainSwitchRating || 100,
+        mainSwitchString: `${design.consumerUnit?.mainSwitchRating || 100}A Main Switch`
       },
       
       loadAssessment: {
@@ -851,7 +851,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               </div>
               <div className="flex items-center gap-1.5">
                 <Shield className="h-4 w-4 text-primary" />
-                <span className="font-semibold">{design.consumerUnit.mainSwitchRating}A</span>
+                <span className="font-semibold">{design.consumerUnit?.mainSwitchRating || 100}A</span>
               </div>
             </div>
           </div>
