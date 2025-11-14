@@ -1,5 +1,5 @@
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from '../_shared/deps.ts';
 import { corsHeaders } from "../_shared/cors.ts";
 
 // Make sure we're accessing the right environment variable

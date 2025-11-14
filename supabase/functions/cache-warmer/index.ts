@@ -3,7 +3,7 @@
  * Runs periodically to warm cache with common queries
  */
 
-import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { serve } from '../_shared/deps.ts';
 import { createClient } from '../_shared/deps.ts';
 import { corsHeaders } from '../_shared/v3-core.ts';
 
