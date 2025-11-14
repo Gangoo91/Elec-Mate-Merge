@@ -38,7 +38,7 @@ export async function searchHealthSafetyKnowledge(query: string) {
   const { data, error } = await supabase.rpc('search_health_safety_hybrid', {
     query_embedding: queryEmbedding,
     query_text: query,
-    match_count: 20
+    match_count: 10 // ⚡ Reduced from 20 to 10 (Phase 1 optimization)
   });
   
   if (error) {
@@ -70,7 +70,7 @@ export async function searchPracticalWorkIntelligence(query: string) {
   
   const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
     query_text: query,
-    match_count: 35,
+    match_count: 15, // ⚡ Reduced from 35 to 15 (Phase 1 optimization)
     filter_trade: null
   });
   
