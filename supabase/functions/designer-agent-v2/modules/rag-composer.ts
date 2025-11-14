@@ -132,7 +132,7 @@ export async function buildRAGSearches(
     searchTerms,
     priorities: {
       design_knowledge: 95,    // Design docs FIRST: +95% boost, vector search, 15 results
-      bs7671: 85,              // Regulations: +85% boost, keyword search, 10 results
+      bs7671: 90,              // Regulations: +90% boost, keyword search, 10 results
       installation_knowledge: 0,
       practical_work: 0,
       health_safety: 0
