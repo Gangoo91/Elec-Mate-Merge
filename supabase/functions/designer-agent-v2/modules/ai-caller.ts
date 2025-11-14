@@ -37,8 +37,9 @@ export async function callOpenAIWithRetry(
 
     return response;
   }, {
-    maxAttempts: 3,
-    backoff: [2000, 5000, 10000],
+    maxRetries: 3,
+    baseDelayMs: 2000,
+    maxDelayMs: 10000,
     shouldRetry: (error: unknown) => {
       // Only retry on actual timeout/network errors, not validation errors
       if (error instanceof Error) {
