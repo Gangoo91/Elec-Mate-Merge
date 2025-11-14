@@ -29,7 +29,7 @@ export async function updateRAMSDocument(
       return { success: false, error: 'Document not found' };
     }
 
-    // Update database record
+    // Update database record with full data
     const { error: updateError } = await supabase
       .from('rams_documents')
       .update({
@@ -40,8 +40,15 @@ export async function updateRAMSDocument(
         supervisor: ramsData.supervisor || null,
         activities: ramsData.activities as any,
         risks: ramsData.risks as any,
+        required_ppe: ramsData.requiredPPE || [],
+        ppe_details: (ramsData.ppeDetails || null) as any,
         version: (existingDoc.version || 1) + 1,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
+        ai_generation_metadata: {
+          updated_at: new Date().toISOString(),
+          method_steps_count: methodData.steps?.length || 0,
+          risk_count: ramsData.risks?.length || 0
+        } as any
       })
       .eq('id', documentId);
 

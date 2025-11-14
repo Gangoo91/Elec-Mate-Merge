@@ -37,6 +37,27 @@ export const SavedRAMSLibrary = () => {
     fetchDocuments();
   }, []);
 
+  // Auto-refresh every 10 seconds to pick up new saves
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchDocuments();
+    }, 10000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Also refresh when component becomes visible
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        fetchDocuments();
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
+
   const fetchDocuments = async () => {
     try {
       setLoading(true);

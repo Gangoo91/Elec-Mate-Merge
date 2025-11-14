@@ -9,8 +9,8 @@ export { updateRAMSDocument } from './rams-pdf-storage-update';
  */
 export async function saveRAMSPDFToStorage(
   pdfBlob: Blob,
-  projectName: string,
-  location: string,
+  ramsData: RAMSData,
+  methodData: Partial<MethodStatementData>,
   status: string = 'draft'
 ): Promise<{ success: boolean; error?: string; documentId?: string }> {
   try {
@@ -21,6 +21,8 @@ export async function saveRAMSPDFToStorage(
     }
 
     const currentDate = new Date().toISOString().split('T')[0];
+    const projectName = ramsData.projectName || 'Untitled Project';
+    const location = ramsData.location || 'No location specified';
 
     // Check for existing document with same name/location/date to prevent duplicates
     const { data: existingDoc } = await supabase
@@ -59,18 +61,29 @@ export async function saveRAMSPDFToStorage(
 
     console.log('PDF uploaded successfully, saving to database:', uploadData.path);
 
-    // Save reference in database  
+    // Save reference in database with full RAMS data
     const { data: docData, error: dbError } = await supabase
       .from('rams_documents')
       .insert([{
         user_id: user.id,
-        assessor: 'AI Generated',
-        date: currentDate,
-        location: location,
         project_name: projectName,
+        location: location,
+        date: ramsData.date || currentDate,
+        assessor: ramsData.assessor || 'AI Generated',
+        contractor: ramsData.contractor || methodData.contractor || null,
+        supervisor: ramsData.supervisor || methodData.supervisor || null,
+        activities: ramsData.activities || [],
+        risks: (ramsData.risks || []) as any,
+        required_ppe: ramsData.requiredPPE || [],
+        ppe_details: (ramsData.ppeDetails || null) as any,
         status: status,
         pdf_url: uploadData.path,
-        risks: []
+        job_scale: (methodData as any)?.jobScale || null,
+        ai_generation_metadata: {
+          generated_at: new Date().toISOString(),
+          method_steps_count: methodData.steps?.length || 0,
+          risk_count: ramsData.risks?.length || 0
+        } as any
       }])
       .select()
       .single();
