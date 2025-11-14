@@ -6,6 +6,7 @@
  */
 
 import { SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { deriveWorkType } from './derive-work-type.ts';
 
 /**
  * Lightweight embedding generator for cache operations
@@ -57,16 +58,19 @@ export async function checkRAMSCache(params: {
   console.log('🔍 Checking RAMS cache...');
   
   try {
+    // Derive actual work type from job description
+    const derivedWorkType = deriveWorkType(params.jobDescription, params.jobScale);
+    
     // Generate embedding for query
     const embedding = await generateEmbedding(params.jobDescription, params.openAiKey);
     
     // Search for similar cached result (lowered threshold for better cache hits)
     const { data, error } = await params.supabase.rpc('match_rams_cache', {
       query_embedding: embedding,
-      work_type: params.workType,
+      work_type: derivedWorkType,
       job_scale: params.jobScale,
-      similarity_threshold: 0.85, // Lowered from 0.95 to 0.85 (85% similarity)
-      match_count: 3 // Check top 3 matches instead of 1
+      similarity_threshold: 0.85,
+      match_count: 3
     });
     
     if (error) {
@@ -151,6 +155,9 @@ export async function storeRAMSCache(params: {
   }
   
   try {
+    // Derive actual work type from job description
+    const derivedWorkType = deriveWorkType(params.jobDescription, params.jobScale);
+    
     // Generate embedding for query
     const embedding = await generateEmbedding(params.jobDescription, params.openAiKey);
     
@@ -159,7 +166,7 @@ export async function storeRAMSCache(params: {
       .from('rams_semantic_cache')
       .insert({
         job_description_embedding: embedding,
-        work_type: params.workType,
+        work_type: derivedWorkType,
         job_scale: params.jobScale,
         rams_data: params.ramsData,
         method_data: params.methodData,
