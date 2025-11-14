@@ -117,43 +117,48 @@ export const RAMSQuickEditDialog: React.FC<RAMSQuickEditDialogProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="flex items-center justify-between">
-            <span>Quick Edit RAMS Document</span>
-            <Button
-              onClick={handleSave}
-              disabled={isSaving}
-              className="bg-gradient-to-r from-elec-yellow to-yellow-400 hover:from-elec-yellow/90 hover:to-yellow-400/90 text-elec-dark"
-            >
-              {isSaving ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <Save className="mr-2 h-4 w-4" />
-                  Save Changes
-                </>
-              )}
-            </Button>
-          </DialogTitle>
-        </DialogHeader>
+      <DialogContent className="w-full max-w-[95vw] sm:max-w-4xl h-[85vh] sm:h-[90vh] p-0">
+        <div className="flex flex-col h-full overflow-hidden">
+          <DialogHeader className="px-4 py-3 border-b border-border shrink-0">
+            <DialogTitle className="flex items-center justify-between">
+              <span className="text-base sm:text-lg">Quick Edit RAMS Document</span>
+              <Button
+                onClick={handleSave}
+                disabled={isSaving}
+                size="sm"
+                className="bg-gradient-to-r from-elec-yellow to-yellow-400 hover:from-elec-yellow/90 hover:to-yellow-400/90 text-elec-dark"
+              >
+                {isSaving ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="mr-2 h-4 w-4" />
+                    Save
+                  </>
+                )}
+              </Button>
+            </DialogTitle>
+          </DialogHeader>
 
-        {isLoading ? (
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+          <div className="flex-1 overflow-y-auto px-4 py-3">
+            {isLoading ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+              </div>
+            ) : ramsData && methodData ? (
+              <RAMSReviewEditor
+                ramsData={ramsData}
+                methodData={methodData}
+                isSaving={isSaving}
+                onUpdate={handleUpdate}
+                mode="standalone"
+              />
+            ) : null}
           </div>
-        ) : ramsData && methodData ? (
-          <RAMSReviewEditor
-            ramsData={ramsData}
-            methodData={methodData}
-            isSaving={isSaving}
-            onUpdate={handleUpdate}
-            mode="standalone"
-          />
-        ) : null}
+        </div>
       </DialogContent>
     </Dialog>
   );
