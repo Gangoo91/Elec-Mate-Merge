@@ -38,7 +38,7 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
 
     try {
       const { data, error } = await supabase
-        .from('circuit_design_jobs')
+        .from('circuit_design_jobs' as any)
         .select('*')
         .eq('id', jobId)
         .single();
@@ -48,23 +48,23 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
         return;
       }
 
-      setJob(data);
+      setJob(data as any);
 
       // Stuck job detection: 360s timeout (6 minutes) - reset on progress OR step change
-      if (data.status === 'processing') {
-        const hasProgressChanged = data.progress !== lastProgress;
-        const hasStepChanged = data.current_step !== lastCurrentStep;
+      if ((data as any).status === 'processing') {
+        const hasProgressChanged = (data as any).progress !== lastProgress;
+        const hasStepChanged = (data as any).current_step !== lastCurrentStep;
         
         if (hasProgressChanged || hasStepChanged) {
-          setLastProgress(data.progress);
-          setLastCurrentStep(data.current_step || '');
+          setLastProgress((data as any).progress);
+          setLastCurrentStep((data as any).current_step || '');
           setLastActivityUpdate(Date.now());
         } else {
           const stuckDuration = Date.now() - lastActivityUpdate;
           if (stuckDuration > 360000) {
-            console.error('❌ STUCK JOB DETECTED: No activity in 360s at', data.progress + '%');
+            console.error('❌ STUCK JOB DETECTED: No activity in 360s at', (data as any).progress + '%');
             await supabase
-              .from('circuit_design_jobs')
+              .from('circuit_design_jobs' as any)
               .update({
                 status: 'failed',
                 error_message: 'Generation timed out - no activity detected for 6 minutes. Please try again.'
@@ -77,7 +77,7 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
       }
 
       // Stop polling when complete, failed, or cancelled
-      if (data.status === 'complete' || data.status === 'failed' || data.status === 'cancelled') {
+      if ((data as any).status === 'complete' || (data as any).status === 'failed' || (data as any).status === 'cancelled') {
         setIsPolling(false);
       }
     } catch (error) {

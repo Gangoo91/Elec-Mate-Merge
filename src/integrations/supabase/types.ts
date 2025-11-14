@@ -646,6 +646,7 @@ export type Database = {
           notes: string | null
           regulation_reference: string | null
           table_data: Json | null
+          topic: string | null
           worked_example: Json | null
         }
         Insert: {
@@ -657,6 +658,7 @@ export type Database = {
           notes?: string | null
           regulation_reference?: string | null
           table_data?: Json | null
+          topic?: string | null
           worked_example?: Json | null
         }
         Update: {
@@ -668,7 +670,59 @@ export type Database = {
           notes?: string | null
           regulation_reference?: string | null
           table_data?: Json | null
+          topic?: string | null
           worked_example?: Json | null
+        }
+        Relationships: []
+      }
+      circuit_design_jobs: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          current_step: string | null
+          design_data: Json | null
+          error_message: string | null
+          id: string
+          job_inputs: Json
+          progress: number
+          raw_response: Json | null
+          retry_count: number | null
+          started_at: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          current_step?: string | null
+          design_data?: Json | null
+          error_message?: string | null
+          id?: string
+          job_inputs: Json
+          progress?: number
+          raw_response?: Json | null
+          retry_count?: number | null
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          current_step?: string | null
+          design_data?: Json | null
+          error_message?: string | null
+          id?: string
+          job_inputs?: Json
+          progress?: number
+          raw_response?: Json | null
+          retry_count?: number | null
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -5706,12 +5760,17 @@ export type Database = {
       }
       rams_generation_jobs: {
         Row: {
+          cache_hit: boolean | null
           completed_at: string | null
           created_at: string
           current_step: string | null
           error_message: string | null
           generation_metadata: Json | null
+          hs_agent_progress: number | null
+          hs_agent_status: string | null
           id: string
+          installer_agent_progress: number | null
+          installer_agent_status: string | null
           job_description: string
           job_scale: string
           method_data: Json | null
@@ -5726,12 +5785,17 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          cache_hit?: boolean | null
           completed_at?: string | null
           created_at?: string
           current_step?: string | null
           error_message?: string | null
           generation_metadata?: Json | null
+          hs_agent_progress?: number | null
+          hs_agent_status?: string | null
           id?: string
+          installer_agent_progress?: number | null
+          installer_agent_status?: string | null
           job_description: string
           job_scale: string
           method_data?: Json | null
@@ -5746,12 +5810,17 @@ export type Database = {
           user_id: string
         }
         Update: {
+          cache_hit?: boolean | null
           completed_at?: string | null
           created_at?: string
           current_step?: string | null
           error_message?: string | null
           generation_metadata?: Json | null
+          hs_agent_progress?: number | null
+          hs_agent_status?: string | null
           id?: string
+          installer_agent_progress?: number | null
+          installer_agent_status?: string | null
           job_description?: string
           job_scale?: string
           method_data?: Json | null
@@ -5797,6 +5866,81 @@ export type Database = {
           rams_id?: string | null
           task_ids?: string[] | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      rams_partial_cache: {
+        Row: {
+          agent_output: Json
+          agent_type: string
+          created_at: string | null
+          expires_at: string
+          hit_count: number | null
+          id: string
+          job_description_embedding: string | null
+          job_scale: string
+          last_used_at: string | null
+          work_type: string
+        }
+        Insert: {
+          agent_output: Json
+          agent_type: string
+          created_at?: string | null
+          expires_at: string
+          hit_count?: number | null
+          id?: string
+          job_description_embedding?: string | null
+          job_scale: string
+          last_used_at?: string | null
+          work_type: string
+        }
+        Update: {
+          agent_output?: Json
+          agent_type?: string
+          created_at?: string | null
+          expires_at?: string
+          hit_count?: number | null
+          id?: string
+          job_description_embedding?: string | null
+          job_scale?: string
+          last_used_at?: string | null
+          work_type?: string
+        }
+        Relationships: []
+      }
+      rams_rag_cache: {
+        Row: {
+          cache_key: string
+          created_at: string | null
+          expires_at: string
+          hit_count: number | null
+          id: string
+          knowledge_base_type: string
+          last_used_at: string | null
+          query_text: string
+          rag_results: Json
+        }
+        Insert: {
+          cache_key: string
+          created_at?: string | null
+          expires_at: string
+          hit_count?: number | null
+          id?: string
+          knowledge_base_type: string
+          last_used_at?: string | null
+          query_text: string
+          rag_results: Json
+        }
+        Update: {
+          cache_key?: string
+          created_at?: string | null
+          expires_at?: string
+          hit_count?: number | null
+          id?: string
+          knowledge_base_type?: string
+          last_used_at?: string | null
+          query_text?: string
+          rag_results?: Json
         }
         Relationships: []
       }
@@ -5929,6 +6073,92 @@ export type Database = {
         }
         Relationships: []
       }
+      regulation_hazards_extracted: {
+        Row: {
+          applies_to_equipment: string[] | null
+          applies_to_installation_phases: string[] | null
+          applies_to_locations: string[] | null
+          applies_to_work_types: string[] | null
+          confidence_score: number | null
+          control_hierarchy: string | null
+          control_measures: string[]
+          created_at: string | null
+          embedding: string | null
+          hazard_category: string
+          hazard_description: string
+          id: string
+          last_used: string | null
+          likelihood: number
+          regulation_excerpt: string | null
+          regulation_id: string | null
+          regulation_number: string
+          regulation_section: string
+          required_ppe: Json | null
+          risk_score: number | null
+          severity: number
+          updated_at: string | null
+          usage_count: number | null
+        }
+        Insert: {
+          applies_to_equipment?: string[] | null
+          applies_to_installation_phases?: string[] | null
+          applies_to_locations?: string[] | null
+          applies_to_work_types?: string[] | null
+          confidence_score?: number | null
+          control_hierarchy?: string | null
+          control_measures?: string[]
+          created_at?: string | null
+          embedding?: string | null
+          hazard_category: string
+          hazard_description: string
+          id?: string
+          last_used?: string | null
+          likelihood: number
+          regulation_excerpt?: string | null
+          regulation_id?: string | null
+          regulation_number: string
+          regulation_section: string
+          required_ppe?: Json | null
+          risk_score?: number | null
+          severity: number
+          updated_at?: string | null
+          usage_count?: number | null
+        }
+        Update: {
+          applies_to_equipment?: string[] | null
+          applies_to_installation_phases?: string[] | null
+          applies_to_locations?: string[] | null
+          applies_to_work_types?: string[] | null
+          confidence_score?: number | null
+          control_hierarchy?: string | null
+          control_measures?: string[]
+          created_at?: string | null
+          embedding?: string | null
+          hazard_category?: string
+          hazard_description?: string
+          id?: string
+          last_used?: string | null
+          likelihood?: number
+          regulation_excerpt?: string | null
+          regulation_id?: string | null
+          regulation_number?: string
+          regulation_section?: string
+          required_ppe?: Json | null
+          risk_score?: number | null
+          severity?: number
+          updated_at?: string | null
+          usage_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "regulation_hazards_extracted_regulation_id_fkey"
+            columns: ["regulation_id"]
+            isOneToOne: false
+            referencedRelation: "regulations_intelligence"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       regulation_index: {
         Row: {
           bs7671_section: string | null
@@ -5987,7 +6217,9 @@ export type Database = {
           primary_topic: string
           regulation_id: string | null
           regulation_number: string
+          regulation_type: string | null
           related_regulations: string[] | null
+          secondary_topics: string[] | null
           source_hash: string | null
           subcategory: string | null
           technical_level: number | null
@@ -6005,7 +6237,9 @@ export type Database = {
           primary_topic: string
           regulation_id?: string | null
           regulation_number: string
+          regulation_type?: string | null
           related_regulations?: string[] | null
+          secondary_topics?: string[] | null
           source_hash?: string | null
           subcategory?: string | null
           technical_level?: number | null
@@ -6023,7 +6257,9 @@ export type Database = {
           primary_topic?: string
           regulation_id?: string | null
           regulation_number?: string
+          regulation_type?: string | null
           related_regulations?: string[] | null
+          secondary_topics?: string[] | null
           source_hash?: string | null
           subcategory?: string | null
           technical_level?: number | null
@@ -7830,6 +8066,7 @@ export type Database = {
       cleanup_ai_cache: { Args: never; Returns: undefined }
       cleanup_cost_query_cache: { Args: never; Returns: undefined }
       cleanup_expired_cables_cache: { Args: never; Returns: undefined }
+      cleanup_expired_caches: { Args: never; Returns: undefined }
       cleanup_expired_circuit_design_cache: { Args: never; Returns: undefined }
       cleanup_expired_course_cache: { Args: never; Returns: undefined }
       cleanup_expired_course_dates_cache: { Args: never; Returns: undefined }
@@ -7911,8 +8148,8 @@ export type Database = {
       is_owner_of_quote: { Args: { q_id: string }; Returns: boolean }
       match_extracted_hazards: {
         Args: {
-          match_count: number
-          match_threshold: number
+          match_count?: number
+          match_threshold?: number
           query_embedding: string
         }
         Returns: {
@@ -7921,6 +8158,7 @@ export type Database = {
           applies_to_locations: string[]
           applies_to_work_types: string[]
           confidence_score: number
+          control_hierarchy: string
           control_measures: string[]
           hazard_category: string
           hazard_description: string
@@ -7949,6 +8187,23 @@ export type Database = {
           id: string
           method_data: Json
           rams_data: Json
+          similarity: number
+        }[]
+      }
+      match_rams_partial_cache: {
+        Args: {
+          agent_type: string
+          job_scale: string
+          match_count?: number
+          query_embedding: string
+          similarity_threshold?: number
+          work_type: string
+        }
+        Returns: {
+          agent_output: Json
+          created_at: string
+          hit_count: number
+          id: string
           similarity: number
         }[]
       }
