@@ -1,5 +1,5 @@
 // AGENT ROUTER - Self-Contained User-Driven Architecture (No shared deps)
-import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 // Inline CORS headers
