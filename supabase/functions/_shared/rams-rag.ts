@@ -31,10 +31,13 @@ export async function generateEmbedding(text: string): Promise<number[]> {
   return data.data[0].embedding;
 }
 
-export async function searchHealthSafetyKnowledge(query: string) {
+export async function searchHealthSafetyKnowledge(query: string, onProgress?: (msg: string) => void) {
   const supabase = createClient();
+  
+  if (onProgress) onProgress('Generating query embedding...');
   const queryEmbedding = await generateEmbedding(query);
   
+  if (onProgress) onProgress('Searching 10 H&S regulations...');
   const { data, error } = await supabase.rpc('search_health_safety_hybrid', {
     query_embedding: queryEmbedding,
     query_text: query,
@@ -46,12 +49,14 @@ export async function searchHealthSafetyKnowledge(query: string) {
     return [];
   }
   
+  if (onProgress) onProgress(`Found ${data?.length || 0} matching regulations`);
   return data || [];
 }
 
-export async function searchRegulationsIntelligence(query: string) {
+export async function searchRegulationsIntelligence(query: string, onProgress?: (msg: string) => void) {
   const supabase = createClient();
   
+  if (onProgress) onProgress('Searching regulations database...');
   const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
     query_text: query,
     match_count: 15
@@ -62,12 +67,14 @@ export async function searchRegulationsIntelligence(query: string) {
     return [];
   }
   
+  if (onProgress) onProgress(`Found ${data?.length || 0} regulations`);
   return data || [];
 }
 
-export async function searchPracticalWorkIntelligence(query: string) {
+export async function searchPracticalWorkIntelligence(query: string, onProgress?: (msg: string) => void) {
   const supabase = createClient();
   
+  if (onProgress) onProgress('Searching practical installation guides...');
   const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
     query_text: query,
     match_count: 15, // ⚡ Reduced from 35 to 15 (Phase 1 optimization)
@@ -79,6 +86,7 @@ export async function searchPracticalWorkIntelligence(query: string) {
     return [];
   }
   
+  if (onProgress) onProgress(`Found ${data?.length || 0} practical guides`);
   return data || [];
 }
 

@@ -24,6 +24,10 @@ interface AgentProcessingViewProps {
   onCancel?: () => void;
   isCancelling?: boolean;
   jobDescription?: string;
+  hsAgentProgress?: number;
+  installerAgentProgress?: number;
+  hsAgentStatus?: string;
+  installerAgentStatus?: string;
 }
 
 export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
@@ -35,6 +39,10 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
   onCancel,
   isCancelling = false,
   jobDescription,
+  hsAgentProgress = 0,
+  installerAgentProgress = 0,
+  hsAgentStatus = 'pending',
+  installerAgentStatus = 'pending',
 }) => {
   const [displayProgress, setDisplayProgress] = React.useState(0);
   const [showCancelDialog, setShowCancelDialog] = useState(false);
@@ -169,6 +177,9 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
           const isActive = agent.status === 'processing';
           const isComplete = agent.status === 'complete';
           const isPending = agent.status === 'pending';
+          
+          // PHASE 4 FIX: Use real agent progress
+          const realProgress = agent.name === 'health-safety' ? hsAgentProgress : installerAgentProgress;
 
           return (
             <Card
@@ -239,17 +250,17 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
                     </div>
                   </div>
 
-                  {/* Progress Bar for Active Agent */}
+                  {/* Progress Bar for Active Agent - PHASE 4 FIX: Use real progress */}
                   {isActive && (
                     <div className="w-full space-y-2 pt-2">
                       <div className="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
                         <div
                           className="h-full bg-gradient-to-r from-elec-yellow to-amber-400 transition-all duration-500"
-                          style={{ width: `${agent.progress}%` }}
+                          style={{ width: `${realProgress}%` }}
                         />
                       </div>
                       <div className="text-sm text-gray-400 font-medium">
-                        {agent.progress.toFixed(2)}% complete
+                        {realProgress}% complete
                       </div>
                     </div>
                   )}

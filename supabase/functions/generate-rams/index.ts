@@ -106,11 +106,24 @@ Deno.serve(async (req) => {
       
       if (!data) return;
       
-      // Calculate combined progress (agents run from 0-100, map to 10-90% range)
+      // PHASE 1 FIX: Sequential progress zones (no backwards jumps)
+      // Zone 1: 0-10% = Initialization
+      // Zone 2: 10-50% = H&S agent (0-100% mapped to 10-50%)
+      // Zone 3: 50-90% = Installer agent (0-100% mapped to 50-90%)
+      // Zone 4: 90-100% = Finalization
       const hsProgress = data.hs_agent_progress || 0;
       const installerProgress = data.installer_agent_progress || 0;
-      const avgAgentProgress = (hsProgress + installerProgress) / 2;
-      const overallProgress = Math.round(10 + (avgAgentProgress * 0.8)); // Map 0-100 to 10-90
+      
+      let overallProgress = 10; // Start after initialization
+      
+      if (agent === 'hs') {
+        // H&S zone: 10-50%
+        overallProgress = Math.round(10 + (hsProgress * 0.4));
+      } else {
+        // Installer zone: 50-90% (starts at 50 even if H&S not complete)
+        const hsComplete = data.hs_agent_status === 'complete' ? 40 : (hsProgress * 0.4);
+        overallProgress = Math.round(10 + hsComplete + (installerProgress * 0.4));
+      }
       
       // Update overall progress
       await supabase

@@ -154,10 +154,8 @@ export const AIRAMSGenerator: React.FC = () => {
   
   // PHASE 4 & 5: Trigger celebration or toast for partial completions
   useEffect(() => {
-    const hasFullData = ramsData && 
-                        methodData && 
-                        (status === 'complete') && 
-                        ramsData.risks?.length > 0;
+    // PHASE 3 FIX: Celebration trigger (check object presence, not array length)
+    const hasFullData = ramsData && methodData && status === 'complete';
                         
     const hasPartialData = (ramsData || methodData) && 
                           (status === 'partial' || status === 'complete') && 
@@ -175,6 +173,18 @@ export const AIRAMSGenerator: React.FC = () => {
       
       // Auto-close celebration after 3 seconds
       setTimeout(() => setShowCelebration(false), 3000);
+    } else if (status === 'complete' && !celebrationShown) {
+      // Fallback: show toast if celebration doesn't trigger
+      setTimeout(() => {
+        if (!showCelebration) {
+          toast({
+            title: "RAMS Complete! 🎉",
+            description: "Your document is ready for review",
+            variant: 'default'
+          });
+          setCelebrationShown(true);
+        }
+      }, 2000);
     }
     
     // For partial completion, show toast notification instead
@@ -437,6 +447,10 @@ export const AIRAMSGenerator: React.FC = () => {
                 onCancel={status === 'processing' || status === 'pending' ? handleCancel : undefined}
                 isCancelling={isCancelling}
                 jobDescription={currentJobDescription}
+                hsAgentProgress={hsAgentProgress}
+                installerAgentProgress={installerAgentProgress}
+                hsAgentStatus={hsAgentStatus}
+                installerAgentStatus={installerAgentStatus}
                 agentSteps={[
                   {
                     name: 'health-safety',
