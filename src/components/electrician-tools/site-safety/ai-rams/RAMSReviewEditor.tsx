@@ -619,6 +619,96 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
     });
   };
 
+  // Save to Library function
+  const handleSaveToLibrary = async () => {
+    if (!ramsData || !methodData) {
+      toast({
+        title: 'Cannot Save',
+        description: 'No RAMS data available to save',
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    setLocalIsSaving(true);
+    
+    try {
+      // Generate combined PDF blob
+      const { generateCombinedRAMSPDFBlob } = await import('@/utils/rams-combined-pdf');
+      const { saveRAMSPDFToStorage, updateRAMSDocument } = await import('@/utils/rams-pdf-storage');
+      
+      const pdfBlob = await generateCombinedRAMSPDFBlob(ramsData, methodData as MethodStatementData, {
+        companyName: methodData.contractor || 'Professional Electrical Services',
+        documentReference: `RAMS-${Date.now()}`
+      });
+      
+      // Check if document already exists
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('User not authenticated');
+      
+      const currentDate = new Date().toISOString().split('T')[0];
+      const { data: existingDoc } = await supabase
+        .from('rams_documents')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('project_name', ramsData.projectName)
+        .eq('location', ramsData.location)
+        .eq('date', currentDate)
+        .maybeSingle();
+      
+      let saveResult;
+      
+      if (existingDoc) {
+        // Update existing document
+        saveResult = await updateRAMSDocument(existingDoc.id, ramsData, methodData);
+        
+        if (saveResult.success) {
+          setLocalLastSaved(new Date());
+          toast({
+            title: 'Document Updated',
+            description: 'Your RAMS document has been updated in the library',
+          });
+        }
+      } else {
+        // Create new document
+        saveResult = await saveRAMSPDFToStorage(
+          pdfBlob,
+          ramsData,
+          methodData,
+          'draft'
+        );
+        
+        if (saveResult.success) {
+          setLocalLastSaved(new Date());
+          toast({
+            title: 'Saved to Library',
+            description: 'Your RAMS document is now available in Saved RAMS Documents. Tap to view.',
+          });
+        }
+      }
+      
+      if (!saveResult.success) {
+        throw new Error(saveResult.error || 'Failed to save document');
+      }
+      
+      // Also update the job record if onSave callback exists
+      if (onSave) {
+        await onSave();
+      }
+      
+    } catch (error) {
+      console.error('Error saving to library:', error);
+      toast({
+        title: 'Save Failed',
+        description: error instanceof Error ? error.message : 'Could not save to library',
+        variant: 'destructive'
+      });
+    } finally {
+      setLocalIsSaving(false);
+    }
+  };
+
+
   const toggleStepExpansion = (stepId: string) => {
     setExpandedSteps(prev => {
       const newSet = new Set(prev);
@@ -954,24 +1044,63 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
             
             {/* Desktop View - PDF Monkey JSON Preview & Download */}
             <div className="hidden md:flex flex-col gap-4 p-4">
-              <Button
-                onClick={handleGenerateCombinedRAMS}
-                disabled={isGenerating}
-                className="gap-2 w-full md:w-auto"
-                variant="default"
-                size="lg"
-              >
-                <FileText className="h-5 w-5" />
-                Download Combined RAMS
-              </Button>
+              <div className="flex gap-3">
+                <Button
+                  onClick={handleSaveToLibrary}
+                  disabled={isGenerating || localIsSaving}
+                  className="gap-2 flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white hover:from-green-600 hover:to-green-500"
+                  size="lg"
+                >
+                  {localIsSaving ? (
+                    <>
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                      Saving to Library...
+                    </>
+                  ) : (
+                    <>
+                      <FolderOpen className="h-5 w-5" />
+                      Save to Library
+                    </>
+                  )}
+                </Button>
+                <Button
+                  onClick={handleGenerateCombinedRAMS}
+                  disabled={isGenerating}
+                  className="gap-2 flex-1"
+                  variant="outline"
+                  size="lg"
+                >
+                  <FileText className="h-5 w-5" />
+                  Download Combined RAMS
+                </Button>
+              </div>
             </div>
 
             {/* Mobile View - Direct download button */}
-            <div className="md:hidden p-4">
+            <div className="md:hidden p-4 flex flex-col gap-3">
+              <Button
+                onClick={handleSaveToLibrary}
+                disabled={isGenerating || localIsSaving}
+                className="w-full gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white hover:from-green-600 hover:to-green-500"
+                size="lg"
+              >
+                {localIsSaving ? (
+                  <>
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <FolderOpen className="h-5 w-5" />
+                    Save to Library
+                  </>
+                )}
+              </Button>
               <Button
                 onClick={handleGenerateCombinedRAMS}
                 disabled={isGenerating}
                 className="w-full gap-2"
+                variant="outline"
                 size="lg"
               >
                 <Download className="h-5 w-5" />
