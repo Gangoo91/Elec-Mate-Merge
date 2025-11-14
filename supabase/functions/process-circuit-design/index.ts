@@ -122,12 +122,20 @@ Deno.serve(async (req) => {
 
     await safeUpdateProgress(15, 'Calling AI designer...');
 
+    // Fix 4: Dynamic timeout based on circuit count
+    // Calculate timeout: base 120s + 15s per circuit (max 420s = 7 minutes)
+    const circuitCount = transformedBody.circuits.length;
+    const timeoutSeconds = Math.min(420, 120 + (circuitCount * 15));
+    const timeoutMs = timeoutSeconds * 1000;
+
+    console.log(`⏱️ Setting timeout: ${timeoutSeconds}s for ${circuitCount} circuits`);
+
     // Use direct fetch to avoid Supabase client timeout issues
     const abortController = new AbortController();
     const timeoutId = setTimeout(() => {
-      console.error('⏱️ Designer call exceeded 295s timeout');
+      console.error(`⏱️ Designer call exceeded ${timeoutSeconds}s timeout`);
       abortController.abort();
-    }, 295000);
+    }, timeoutMs);
 
     let designResult;
     try {
@@ -158,7 +166,7 @@ Deno.serve(async (req) => {
       clearTimeout(timeoutId);
       
       if (error.name === 'AbortError') {
-        throw new Error('Design generation timed out after 295 seconds. Circuit may be too complex. Try reducing the number of circuits or simplifying the design.');
+        throw new Error(`Design generation timed out after ${timeoutSeconds} seconds. Circuit may be too complex. Try reducing the number of circuits or simplifying the design.`);
       }
       
       throw error;

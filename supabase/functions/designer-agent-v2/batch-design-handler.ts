@@ -950,12 +950,38 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
                 const toolCalls = parseToolCalls(batchResponse);
                 const batchCircuits: any[] = [];
                 
+                // Fix 2: Add defensive logging for batch processing
+                logger.info(`Batch ${globalBatchIndex} raw response:`, {
+                  toolCallsCount: toolCalls.length,
+                  circuitsInEachCall: toolCalls.map(tc => tc?.arguments?.circuits?.length ?? 0)
+                });
+                
                 for (const toolCall of toolCalls) {
                   const circuits = toolCall?.arguments?.circuits || [];
                   batchCircuits.push(...circuits);
                 }
                 
+                // Fix 2: Log empty results
+                if (batchCircuits.length === 0) {
+                  logger.error(`❌ Batch ${globalBatchIndex} returned ZERO circuits despite successful AI call`, {
+                    toolCallsReceived: toolCalls.length,
+                    toolCallStructure: toolCalls.map(tc => ({ 
+                      name: tc.name, 
+                      hasArguments: !!tc.arguments,
+                      hasCircuits: !!tc.arguments?.circuits,
+                      circuitCount: tc.arguments?.circuits?.length ?? 0
+                    }))
+                  });
+                }
+                
                 logger.info(`✅ Batch ${globalBatchIndex}/${circuitBatches.length} completed: ${batchCircuits.length} circuits designed`);
+                
+                // Fix 6: Add granular progress updates
+                const progressPercent = 15 + Math.floor((globalBatchIndex / circuitBatches.length) * 80);
+                if (progressCallback) {
+                  await progressCallback(progressPercent, `Processing batch ${globalBatchIndex}/${circuitBatches.length}...`);
+                }
+                
                 return batchCircuits;
               } catch (error: any) {
                 logger.error(`❌ Batch ${globalBatchIndex}/${circuitBatches.length} failed`, { error: error.message });
@@ -1037,6 +1063,15 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
       }
       
       if (designedCircuits.length === 0) {
+        // Fix 2: Add more context to NO_CIRCUITS error
+        logger.error('❌ NO CIRCUITS DESIGNED', {
+          aiRequiredCount: aiRequiredCircuits.length,
+          designedCount: designedCircuits.length,
+          cachedCount: cachedCircuits.length,
+          templatedCount: templatedCircuits.length,
+          batchesAttempted: circuitBatches.length,
+          lastToolCallDetails: 'Check batch processing logs above'
+        });
         return ERROR_TEMPLATES.NO_CIRCUITS(aiRequiredCircuits.length, !!additionalPrompt).toResponse(VERSION);
       }
     }  // End of if (aiRequiredCircuits.length > 0)
@@ -1061,7 +1096,7 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
         const vd = circuit.calculations.voltageDrop;
         throw new CircuitDesignError(
           'NON_COMPLIANT_DESIGN',
-          `Circuit "${circuitName}" has excessive voltage drop (${(vd.percent ?? 0).toFixed(2)}% exceeds ${vd.limit ?? 3}% limit)`,
+          `Circuit "${circuitName}" has excessive voltage drop (${(vd.percent ?? 0).toFixed(2)}% exceeds ${(vd.limit ?? 3).toFixed(1)}% limit)`,
           { 
             circuit: circuitName,
             cableSize: circuit.cableSize,
