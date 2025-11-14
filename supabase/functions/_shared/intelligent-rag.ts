@@ -426,8 +426,8 @@ async function vectorSearchWithEmbedding(
   }
 
   // ============= PHASE 1: PARALLEL RAG EXECUTION =============
-  // Execute ALL searches in parallel using Promise.all() - 50% faster
-  // Design, BS7671, Health&Safety, Installation all run concurrently
+  // Execute searches in parallel using Promise.all()
+  // Circuit Designer: Design knowledge + BS7671 regulations only
   
   // PRIORITY 1: Design knowledge search (requires embedding) - SEARCH FIRST
   if (embedding && (!priority || priority.design > 50)) {
@@ -468,49 +468,10 @@ async function vectorSearchWithEmbedding(
     searchTypes.push('bs7671');
   }
 
-  // Health & Safety search (requires embedding)
-  if (embedding && (!priority || priority.health_safety > 50)) {
-    searches.push(
-      supabase.rpc('search_health_safety', {
-        query_embedding: embedding,
-        scale_filter: null,
-        source_filter: null,
-        match_threshold: 0.50,
-        match_count: 10, // Kept at 10 (critical for safety)
-      })
-    );
-    searchTypes.push('health_safety');
-  }
-
-  // PRACTICAL WORK INTELLIGENCE - PHASE 1.2: Use cached batch search
-  if (!priority || priority.practical_work > 50) {
-    // PHASE 1.2: Import batch loader with caching
-    const { searchPracticalWorkBatch } = await import('./rag-batch-loader.ts');
-    
-    searches.push(
-      searchPracticalWorkBatch(supabase, {
-        keywords: params.searchTerms,
-        limit: 15,
-        activity_filter: params.context?.agentType ? [params.context.agentType] : undefined
-      }).then(results => ({ data: results, error: null }))
-    );
-    searchTypes.push('practical_work');
-  }
-
-  // PHASE 3: Installation knowledge search - skip if low priority or no embedding
-  if (embedding && (!priority || priority.installation >= 50)) {
-    searches.push(
-      supabase.rpc('search_installation_knowledge', {
-        query_embedding: embedding,
-        method_filter: params.context?.entities?.installMethod || null,
-        match_threshold: 0.50,
-        match_count: 7, // Reduced from 8
-      })
-    );
-    searchTypes.push('installation');
-  } else {
-    console.log('⏭️ Skipping installation search (low priority or no embedding)');
-  }
+  // Circuit Designer uses only 2 RAG searches:
+  // 1. Design knowledge (vector, 95% priority)
+  // 2. BS 7671 regulations (keyword, 90% priority)
+  // Other agents may still use health_safety, practical_work, installation
 
   // PHASE 4: Maintenance knowledge search - skip entirely (not needed for RAMS)
   console.log('⏭️ Skipping maintenance search (not needed for H&S RAMS)');
