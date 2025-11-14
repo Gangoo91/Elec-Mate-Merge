@@ -16,6 +16,7 @@ import { checkCircuitDesignCache, storeCircuitDesign } from '../_shared/circuit-
 import { findMatchingTemplate, applyTemplate } from '../_shared/circuit-templates.ts';
 import { checkCircuitCache, storeCircuitCache } from '../_shared/circuit-level-cache.ts';
 import { extractCircuitsWithAI } from './ai-circuit-extractor.ts';
+import { safeAll, ParallelTask } from '../_shared/safe-parallel.ts';
 
 const VERSION = 'v4.0.0-best-in-class'; // PHASE 1-7 optimizations implemented
 
@@ -870,63 +871,156 @@ Use UK English. Output ONLY via the design_circuits tool - no conversational tex
         }
       ];
       
-      // 5. Call AI model (only for circuits that need it)
+      // 5. Call AI model with parallel batch processing
       const modelStart = Date.now();
-      logger.info(`Calling AI model for ${aiRequiredCircuits.length} circuits...`);
+      logger.info(`Processing ${aiRequiredCircuits.length} circuits in batches...`);
       
-      let aiResponse;
-      try {
-        aiResponse = await callOpenAIWithRetry(
-          messages,
-          [DESIGN_TOOL_SCHEMA],
-          { type: 'function', function: { name: 'design_circuits' } },
-          openAiKey,
-          logger,
-          280000, // 280s timeout for complex designs
-          { current: 1, total: 1 } // NEW: Batch tracking for progress logs
-        );
-        timings.modelCall = Date.now() - modelStart;
-      } catch (error: any) {
-        logger.error('AI model call failed', { error });
-        
-        if (error.message?.includes('402') || error.statusCode === 402) {
-          throw new CircuitDesignError(
-            'AI_TIMEOUT',
-            'AI service requires payment - please add credits to your Lovable workspace',
-            { error: error.message },
-            ['Add credits at Settings > Workspace > Usage']
-          );
-        }
-        
-        if (error.message?.includes('429') || error.statusCode === 429) {
-          throw new CircuitDesignError(
-            'AI_TIMEOUT',
-            'AI service rate limit exceeded - please try again in a few moments',
-            { error: error.message },
-            ['Wait 30-60 seconds before retrying']
-          );
-        }
-        
-        throw error;
-      }
+      // Group circuits into intelligent batches
+      const circuitBatches = groupCircuitsBySimilarity(aiRequiredCircuits);
+      logger.info(`Created ${circuitBatches.length} batches for parallel processing`);
       
-      // 6. Parse tool calls and extract AI-designed circuits
-      try {
-        const toolCalls = parseToolCalls(aiResponse);
+      // Determine parallelism based on load
+      const PARALLEL_LIMIT = aiRequiredCircuits.length > 15 ? 3 : 2;
+      logger.info(`Using parallelism limit: ${PARALLEL_LIMIT}`);
+      
+      // Process batches with controlled parallelism
+      for (let i = 0; i < circuitBatches.length; i += PARALLEL_LIMIT) {
+        const batchSlice = circuitBatches.slice(i, Math.min(i + PARALLEL_LIMIT, circuitBatches.length));
         
-        // Merge circuits from all tool calls (AI might split large designs across multiple calls)
-        for (const toolCall of toolCalls) {
-          const circuits = toolCall?.arguments?.circuits || [];
-          designedCircuits.push(...circuits);
-        }
-        
-        logger.info('AI designed circuits', { 
-          count: designedCircuits.length,
-          toolCallCount: toolCalls.length 
+        // Create parallel tasks for this slice
+        const tasks: ParallelTask<any[]>[] = batchSlice.map((batch, sliceIndex) => {
+          const globalBatchIndex = i + sliceIndex + 1;
+          
+          return {
+            name: `Batch ${globalBatchIndex}/${circuitBatches.length}`,
+            execute: async () => {
+              // Build batch-specific prompt
+              const batchPrompt = `CIRCUIT BATCH ${globalBatchIndex}/${circuitBatches.length}
+
+Design the following ${batch.length} circuit(s):
+
+${batch.map((c: any, idx: number) => `
+Circuit ${idx + 1}: ${c.name || c.loadType}
+- Load Type: ${c.loadType}
+- Load Power: ${c.loadPower}W
+- Cable Length: ${c.cableLength}m
+- Location: ${c.location || 'Normal'}
+- Special Requirements: ${c.specialLocation !== 'none' ? c.specialLocation : 'None'}
+`).join('\n')}
+
+Supply Details:
+- Voltage: ${supply.voltage}V ${supply.phases}-phase
+- Ze: ${supply.ze}Ω
+- Earthing: ${supply.earthingSystem}
+- PSCC: ${supply.pscc}kA
+- Main Switch: ${supply.mainSwitchRating}A
+
+Installation Context:
+- Installation Method: ${supply.installationMethod}
+- Ambient Temperature: ${supply.ambientTemp}°C
+- Grouping Factor: ${supply.groupingFactor}
+
+CRITICAL REGULATIONS:
+${ragContext.slice(0, 5000)} // First 5KB of RAG context
+
+Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
+
+              const batchMessages = [
+                {
+                  role: 'system' as const,
+                  content: messages[0].content
+                },
+                {
+                  role: 'user' as const,
+                  content: batchPrompt
+                }
+              ];
+              
+              try {
+                const batchResponse = await callOpenAIWithRetry(
+                  batchMessages,
+                  [DESIGN_TOOL_SCHEMA],
+                  { type: 'function', function: { name: 'design_circuits' } },
+                  openAiKey,
+                  logger,
+                  280000, // 280s timeout
+                  { current: globalBatchIndex, total: circuitBatches.length }
+                );
+                
+                const toolCalls = parseToolCalls(batchResponse);
+                const batchCircuits: any[] = [];
+                
+                for (const toolCall of toolCalls) {
+                  const circuits = toolCall?.arguments?.circuits || [];
+                  batchCircuits.push(...circuits);
+                }
+                
+                logger.info(`✅ Batch ${globalBatchIndex}/${circuitBatches.length} completed: ${batchCircuits.length} circuits designed`);
+                return batchCircuits;
+              } catch (error: any) {
+                logger.error(`❌ Batch ${globalBatchIndex}/${circuitBatches.length} failed`, { error: error.message });
+                throw error;
+              }
+            }
+          };
         });
         
-        // Store AI-designed circuits in cache for next time
-        for (let i = 0; i < aiRequiredCircuits.length; i++) {
+        // Execute parallel tasks with graceful failure handling
+        const { successes, failures } = await safeAll(tasks);
+        
+        // Handle partial failures with retry
+        if (failures.length > 0) {
+          logger.warn(`⚠️ ${failures.length} batch(es) failed, attempting retry...`);
+          
+          // Retry failed batches sequentially
+          for (const failure of failures) {
+            try {
+              logger.info(`🔄 Retrying ${failure.name}...`);
+              const retryTask = tasks.find(t => t.name === failure.name);
+              if (retryTask) {
+                const retryResult = await retryTask.execute();
+                designedCircuits.push(...retryResult);
+                logger.info(`✅ Retry successful for ${failure.name}`);
+              }
+            } catch (retryError: any) {
+              logger.error(`❌ Retry failed for ${failure.name}`, { error: retryError.message });
+              
+              // Check for specific error types
+              if (retryError.message?.includes('402') || retryError.statusCode === 402) {
+                throw new CircuitDesignError(
+                  'AI_TIMEOUT',
+                  'AI service requires payment - please add credits to your Lovable workspace',
+                  { error: retryError.message },
+                  ['Add credits at Settings > Workspace > Usage']
+                );
+              }
+              
+              if (retryError.message?.includes('429') || retryError.statusCode === 429) {
+                throw new CircuitDesignError(
+                  'AI_TIMEOUT',
+                  'AI service rate limit exceeded - please try again in a few moments',
+                  { error: retryError.message },
+                  ['Wait 30-60 seconds before retrying']
+                );
+              }
+              
+              // Continue with partial results on other errors
+              logger.warn(`Continuing with partial results after ${failure.name} failure`);
+            }
+          }
+        }
+        
+        // Collect successful results
+        for (const success of successes) {
+          designedCircuits.push(...success.result);
+        }
+      }
+      
+      timings.modelCall = Date.now() - modelStart;
+      logger.info(`🎯 Parallel batch processing completed: ${designedCircuits.length} circuits designed in ${Math.round(timings.modelCall / 1000)}s`);
+      
+      // Store AI-designed circuits in cache for next time
+      for (let i = 0; i < aiRequiredCircuits.length; i++) {
           if (designedCircuits[i]) {
             await storeCircuitCache(supabase, aiRequiredCircuits[i], voltage, designedCircuits[i]);
           }
