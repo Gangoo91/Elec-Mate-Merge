@@ -773,13 +773,45 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
       const allDesigns = [...cachedCircuits, ...templatedCircuits];
       logger.info(`🚀 All circuits resolved from cache/templates - no AI call needed! (${allDesigns.length} circuits in ${Date.now() - startTime}ms)`);
       
+      const completeDesign = {
+        projectName: projectInfo?.projectName || 'Untitled Project',
+        location: projectInfo?.location || 'Not specified',
+        clientName: projectInfo?.clientName,
+        electricianName: projectInfo?.electricianName,
+        installationType: projectInfo?.installationType || 'domestic',
+        
+        circuits: allDesigns.map(c => ensurePDFFields(safeCircuit(c))),
+        
+        consumerUnit: {
+          type: supply?.consumerUnitType || 'split-load',
+          mainSwitchRating: supply?.mainSwitchRating || 100,
+          incomingSupply: {
+            voltage: supply?.voltage || 230,
+            phases: supply?.phases || 'single',
+            incomingPFC: supply?.pfc || 16000,
+            Ze: supply?.ze || 0.35,
+            earthingSystem: supply?.earthingSystem || 'TN-C-S'
+          }
+        },
+        
+        totalLoad: allDesigns.reduce((sum: number, c: any) => sum + (c.loadPower || 0), 0),
+        diversityApplied: true,
+        
+        materials: [],
+        practicalGuidance: [],
+        
+        costEstimate: {
+          materials: 0,
+          labour: 0,
+          total: 0
+        }
+      };
+      
       return new Response(JSON.stringify({
         version: VERSION,
         success: true,
-        circuits: allDesigns.map(c => ensurePDFFields(safeCircuit(c))),
+        design: completeDesign,
         regulations: [],
-        projectInfo,
-        supply,
         metadata: {
           version: VERSION,
           model: 'Templates & Cache',
@@ -1356,7 +1388,7 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
       return c;
     });
     
-    // 10. Build response
+    // 10. Build complete InstallationDesign response
     const confidence = calculateOverallConfidence(safeCircuits);
     
     console.log('✅ Batch design complete', {
@@ -1372,17 +1404,50 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
       totalTime: timings.total 
     });
     
+    // Build complete InstallationDesign object
+    const completeDesign = {
+      projectName: projectInfo?.projectName || 'Untitled Project',
+      location: projectInfo?.location || 'Not specified',
+      clientName: projectInfo?.clientName,
+      electricianName: projectInfo?.electricianName,
+      installationType: projectInfo?.installationType || 'domestic',
+      
+      circuits: safeCircuits,
+      
+      consumerUnit: {
+        type: supply?.consumerUnitType || 'split-load',
+        mainSwitchRating: supply?.mainSwitchRating || 100,
+        incomingSupply: {
+          voltage: supply?.voltage || 230,
+          phases: supply?.phases || 'single',
+          incomingPFC: supply?.pfc || 16000,
+          Ze: supply?.ze || 0.35,
+          earthingSystem: supply?.earthingSystem || 'TN-C-S'
+        }
+      },
+      
+      totalLoad: safeCircuits.reduce((sum: number, c: any) => sum + (c.loadPower || 0), 0),
+      diversityApplied: true,
+      
+      materials: [],
+      practicalGuidance: [],
+      
+      costEstimate: {
+        materials: 0,
+        labour: 0,
+        total: 0
+      }
+    };
+    
     return new Response(
       JSON.stringify({
         version: VERSION,
         success: true,
-        circuits: safeCircuits,
+        design: completeDesign,
         regulations: regulations.slice(0, 15).map(r => ({
           number: r.regulation_number || r.topic,
           content: (r.content || '').substring(0, 400)
         })),
-        projectInfo,
-        supply,
         metadata: {
           version: VERSION,
           model: aiRequiredCircuits.length > 0 ? 'gpt-5-mini via Lovable AI' : 'Templates & Cache',
