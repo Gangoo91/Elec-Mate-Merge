@@ -76,11 +76,16 @@ function groupCircuitsBySimilarity(circuits: any[]): any[][] {
     groups.get(key)!.push(circuit);
   });
   
-  // Convert to batches of 3-4 circuits max (prevents AI timeout)
+  // Convert to batches of 2-3 circuits max (prevents AI timeout)
+  // Complex circuits (high power, long runs): batch of 2
+  // Simple circuits: batch of 3
   const batches: any[][] = [];
-  groups.forEach(group => {
-    for (let i = 0; i < group.length; i += 4) {
-      batches.push(group.slice(i, i + 4));
+  groups.forEach((group, key) => {
+    const isComplexGroup = key.includes('_complex');
+    const batchSize = isComplexGroup ? 2 : 3;
+    
+    for (let i = 0; i < group.length; i += batchSize) {
+      batches.push(group.slice(i, i + batchSize));
     }
   });
   
@@ -877,7 +882,8 @@ Use UK English. Output ONLY via the design_circuits tool - no conversational tex
           { type: 'function', function: { name: 'design_circuits' } },
           openAiKey,
           logger,
-          280000 // 280s timeout for complex designs
+          280000, // 280s timeout for complex designs
+          { current: 1, total: 1 } // NEW: Batch tracking for progress logs
         );
         timings.modelCall = Date.now() - modelStart;
       } catch (error: any) {

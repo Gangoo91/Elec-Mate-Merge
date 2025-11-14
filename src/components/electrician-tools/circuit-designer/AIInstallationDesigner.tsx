@@ -30,6 +30,23 @@ export const AIInstallationDesigner = () => {
 
   const handleGenerate = async (inputs: DesignInputs) => {
     try {
+      // Count circuits that require AI processing (complex/non-standard)
+      const aiRequiredCircuits = inputs.circuits.filter(c => {
+        const isComplex = 
+          (c.loadPower || 0) > 7200 || // High power (>32A)
+          (c.cableLength || 0) > 100 || // Long run
+          c.specialLocation !== 'none'; // Special location
+        return isComplex || !['socket', 'lighting'].includes(c.loadType || '');
+      });
+
+      // Warn if job is very large
+      if (aiRequiredCircuits.length > 12) {
+        toast.warning('Large design detected', {
+          description: `${aiRequiredCircuits.length} complex circuits may take 3-5 minutes to process. Consider splitting into smaller designs for faster results.`,
+          duration: 8000
+        });
+      }
+
       setCurrentView('processing');
       
       // Create job
