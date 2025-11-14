@@ -921,7 +921,7 @@ Installation Context:
 - Grouping Factor: ${supply.groupingFactor}
 
 CRITICAL REGULATIONS:
-${ragContext.slice(0, 5000)} // First 5KB of RAG context
+${regulationsText.slice(0, 5000)} // First 5KB of RAG context
 
 Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
 
