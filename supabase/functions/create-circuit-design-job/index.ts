@@ -56,7 +56,7 @@ Format:
     ],
     model: 'gpt-5-mini-2025-08-07',
     max_tokens: 4000
-  }, openAiKey, 30000);
+  }, openAiKey, 120000); // 2 minute timeout for circuit extraction
 
   let content = response.content.trim();
   
