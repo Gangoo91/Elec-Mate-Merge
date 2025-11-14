@@ -17,7 +17,10 @@ export async function callOpenAIWithRetry(
   logger: any,
   timeoutMs: number = 280000
 ): Promise<any> {
-  logger.info('Calling OpenAI GPT-5 Mini (fast model) with retry...');
+  logger.info(`Calling OpenAI GPT-5 Mini with ${timeoutMs}ms timeout and retry...`);
+  
+  // Log the timeout being used
+  console.log(`⏱️ OpenAI timeout configured: ${timeoutMs}ms (${Math.round(timeoutMs/1000)}s)`);
 
   return await withRetry(async () => {
     const response = await callOpenAI(
@@ -29,13 +32,31 @@ export async function callOpenAIWithRetry(
         tool_choice
       },
       openAiKey,
-      timeoutMs
+      timeoutMs // Explicitly pass timeout
     );
 
     return response;
   }, {
     maxAttempts: 3,
-    backoff: [2000, 5000, 10000]
+    backoff: [2000, 5000, 10000],
+    shouldRetry: (error: unknown) => {
+      // Only retry on actual timeout/network errors, not validation errors
+      if (error instanceof Error) {
+        const msg = error.message.toLowerCase();
+        const isRetryable = msg.includes('timeout') || 
+                          msg.includes('network') || 
+                          msg.includes('econnreset') ||
+                          msg.includes('429') ||
+                          msg.includes('503');
+        
+        if (!isRetryable) {
+          console.error('❌ Non-retryable OpenAI error:', error.message);
+        }
+        
+        return isRetryable;
+      }
+      return false;
+    }
   });
 }
 
