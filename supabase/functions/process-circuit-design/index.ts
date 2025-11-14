@@ -76,6 +76,11 @@ Deno.serve(async (req) => {
     console.log('📝 Job inputs:', JSON.stringify(job.job_inputs, null, 2));
 
     await safeUpdateProgress(10, 'Preparing design specification...');
+    
+    // Create progress callback for batch updates
+    const progressCallback = async (progress: number, step: string) => {
+      await safeUpdateProgress(progress, step);
+    };
 
     // Transform flat inputs to nested structure for designer-agent-v2
     const transformedBody = {
