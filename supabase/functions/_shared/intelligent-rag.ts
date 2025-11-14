@@ -441,7 +441,7 @@ async function vectorSearchWithEmbedding(
     searchTypes.push('design');
   }
 
-  // PRIORITY 2: BS 7671 regulations - Keyword search at 85% priority
+  // PRIORITY 2: BS 7671 regulations - Keyword search at 90% priority
   if (!priority || priority.bs7671 > 50) {
     searches.push(
       supabase
@@ -454,10 +454,10 @@ async function vectorSearchWithEmbedding(
         .limit(regulationMatchCount) // PHASE 5: Dynamic based on query complexity
         .then((result: any) => {
           if (result?.data) {
-            // Apply 85% base score to keyword search results
+            // Apply 90% base score to keyword search results
             const withScores = result.data.map((reg: any) => ({
               ...reg,
-              hybrid_score: 0.85, // 85% base score for keyword search
+              hybrid_score: 0.90, // 90% base score for keyword search
               search_method: 'keyword'
             }));
             return { data: withScores, error: null };
