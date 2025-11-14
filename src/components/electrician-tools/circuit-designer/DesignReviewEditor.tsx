@@ -1694,7 +1694,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                           const lengthM = circuit.cableLength;
                           
                           const expectedR1R2 = calculateExpectedR1R2(liveSize, cpcSize, lengthM);
-                          const expectedZs = expectedR1R2 + (design.consumerUnit.incomingSupply.Ze || 0.35);
+                          const expectedZs = expectedR1R2 + (design.consumerUnit?.incomingSupply?.Ze || 0.35);
                           const maxZs = getMaxZsForDevice(
                             circuit.protectionDevice.type, 
                             circuit.protectionDevice.curve, 
@@ -1771,7 +1771,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                             const lengthM = circuit.cableLength;
                             
                             const expectedR1R2 = calculateExpectedR1R2(liveSize, cpcSize, lengthM);
-                            const expectedZs = expectedR1R2 + (design.consumerUnit.incomingSupply.Ze || 0.35);
+                            const expectedZs = expectedR1R2 + (design.consumerUnit?.incomingSupply?.Ze || 0.35);
                             const maxZs = getMaxZsForDevice(
                               circuit.protectionDevice.type, 
                               circuit.protectionDevice.curve, 
