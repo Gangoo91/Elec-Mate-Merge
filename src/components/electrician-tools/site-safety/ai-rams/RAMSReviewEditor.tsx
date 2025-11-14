@@ -6,13 +6,15 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Download, FileText, Edit3, AlertTriangle, CheckCircle, Shield, Save, Sparkles, Plus, X, AlertCircle } from 'lucide-react';
+import { Download, FileText, Edit3, AlertTriangle, CheckCircle, Shield, Save, Sparkles, Plus, X, AlertCircle, FolderOpen, Loader2 } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { toast } from '@/hooks/use-toast';
 import { generateRAMSPDF } from '@/utils/rams-pdf-professional';
 import { generateMethodStatementPDF } from '@/utils/method-statement-pdf';
 import type { RAMSData, RAMSRisk } from '@/types/rams';
 import type { MethodStatementData, MethodStep } from '@/types/method-statement';
+import { supabase } from '@/integrations/supabase/client';
+import { format } from 'date-fns';
 import { PDFGenerationModal } from './PDFGenerationModal';
 import { MobilePDFDownloadSheet } from './MobilePDFDownloadSheet';
 import { MobileBottomActionBar } from './MobileBottomActionBar';
@@ -141,6 +143,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   const [isMobile, setIsMobile] = useState(false);
   const [expandedSteps, setExpandedSteps] = useState<Set<string>>(new Set());
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [localIsSaving, setLocalIsSaving] = useState(false);
+  const [localLastSaved, setLocalLastSaved] = useState<Date | null>(null);
   
   const { isVisible: keyboardVisible } = useMobileKeyboard();
 
@@ -485,8 +489,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         // Save to storage
         const saveResult = await saveRAMSPDFToStorage(
           pdfBlob,
-          ramsData.projectName || 'Untitled Project',
-          ramsData.location || 'No location specified',
+          ramsData,
+          methodData,
           'draft'
         );
         
@@ -536,8 +540,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
         // Save to storage
         await saveRAMSPDFToStorage(
           pdfBlob,
-          ramsData.projectName || 'Untitled Project',
-          ramsData.location || 'No location specified',
+          ramsData,
+          methodData,
           'draft'
         );
         
