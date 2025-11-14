@@ -44,7 +44,7 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
               </h3>
             </div>
             <p className="text-base sm:text-lg font-semibold text-elec-light/90">{circuit.name}</p>
-            <p className="text-sm text-elec-light/60 mt-1 capitalize">
+            <p className="text-sm text-white/90 mt-1 capitalize">
               {circuit.loadType.replace('-', ' ')}
             </p>
           </div>
@@ -70,7 +70,7 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
         <div className="text-3xl sm:text-4xl font-bold text-elec-light mb-2">
           {circuit.protectionDevice.rating}A Type {circuit.protectionDevice.curve}
         </div>
-        <div className="text-base sm:text-lg text-elec-light/60 mb-2">
+        <div className="text-base sm:text-lg text-white/90 mb-2">
           {circuit.protectionDevice.type} · {circuit.protectionDevice.kaRating}kA
           {circuit.phases === 'three' && (
             <span className="text-elec-yellow/70 ml-2">· 3-Phase</span>
@@ -130,7 +130,7 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
             </p>
             <button
               onClick={onViewJustification}
-              className="text-xs text-elec-yellow hover:text-elec-yellow/80 mt-2 underline"
+              className="text-sm py-2 px-3 mt-3 bg-elec-yellow/10 hover:bg-elec-yellow/20 rounded-md text-elec-yellow/90 hover:text-elec-yellow w-full text-center transition-colors touch-manipulation"
             >
               See full justification →
             </button>
@@ -149,7 +149,7 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
             </p>
             <button
               onClick={onViewJustification}
-              className="text-xs text-blue-400 hover:text-blue-400/80 mt-2 underline"
+              className="text-sm py-2 px-3 mt-3 bg-blue-500/10 hover:bg-blue-500/20 rounded-md text-blue-400/90 hover:text-blue-400 w-full text-center transition-colors touch-manipulation"
             >
               See full justification →
             </button>
@@ -157,34 +157,34 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
         )}
 
         {/* Voltage Drop */}
-        <div className="flex items-center justify-between p-4 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
+        <div className="flex items-center justify-between p-5 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
           <div className="flex items-center gap-3">
             <TrendingDown className="h-5 w-5 text-elec-yellow/70" />
-            <span className="text-base sm:text-lg text-elec-light/70">Voltage Drop</span>
+            <span className="text-base sm:text-lg text-white/90">Voltage Drop</span>
           </div>
           <div className="text-right">
             <div className={`text-lg sm:text-xl font-semibold ${vdCompliant ? 'text-green-400' : 'text-red-400'}`}>
               {fmt(circuit.calculations?.voltageDrop?.percent, 2)}%
               {vdCompliant ? ' ✓' : ' ✗'}
             </div>
-            <div className="text-sm text-elec-light/60">
+            <div className="text-sm text-white/90">
               Limit: {circuit.calculations?.voltageDrop?.limit ?? 5}%
             </div>
           </div>
         </div>
 
         {/* Earth Loop Impedance */}
-        <div className="flex items-center justify-between p-4 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
+        <div className="flex items-center justify-between p-5 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
           <div className="flex items-center gap-3">
             <Shield className="h-5 w-5 text-elec-yellow/70" />
-            <span className="text-base sm:text-lg text-elec-light/70">Earth Loop (Zs)</span>
+            <span className="text-base sm:text-lg text-white/90">Earth Loop (Zs)</span>
           </div>
           <div className="text-right">
             <div className={`text-lg sm:text-xl font-semibold ${zsCompliant ? 'text-green-400' : 'text-red-400'}`}>
               {fmt(circuit.calculations?.zs, 2)}Ω
               {zsCompliant ? ' ✓' : ' ✗'}
             </div>
-            <div className="text-sm text-elec-light/60">
+            <div className="text-sm text-white/90">
               Max: {fmt(circuit.calculations?.maxZs, 2)}Ω
             </div>
           </div>
