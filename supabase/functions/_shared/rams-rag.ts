@@ -59,7 +59,7 @@ export async function searchRegulationsIntelligence(query: string, onProgress?: 
   if (onProgress) onProgress('Searching regulations database...');
   const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
     query_text: query,
-    match_count: 15
+    match_count: 10
   });
   
   if (error) {
@@ -77,7 +77,7 @@ export async function searchPracticalWorkIntelligence(query: string, onProgress?
   if (onProgress) onProgress('Searching practical installation guides...');
   const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
     query_text: query,
-    match_count: 15, // ⚡ Reduced from 35 to 15 (Phase 1 optimization)
+    match_count: 10,
     filter_trade: null
   });
   
@@ -95,7 +95,7 @@ export async function searchBS7671Intelligence(query: string) {
   
   const { data, error } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
     search_keywords: query,
-    match_count: 20
+    match_count: 10
   });
   
   if (error) {
