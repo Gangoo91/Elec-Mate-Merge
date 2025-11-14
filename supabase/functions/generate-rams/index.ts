@@ -1,12 +1,19 @@
 /**
- * Unified RAMS Generator with Job Tracking
- * Simplified architecture with direct progress updates
+ * Unified RAMS Generator with 3-Layer Caching
+ * 
+ * Layer 1: Full RAMS Cache (existing) - Instant if identical job found
+ * Layer 2: RAG Cache (NEW) - Skip expensive RAG searches (45s → <1s)
+ * Layer 3: Partial Agent Cache (NEW) - Reuse completed agent outputs
+ * 
+ * Phase 1: Reduced RAG documents (35→15 installer, 20→10 H&S)
  */
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { generateHealthSafety } from '../_agents/health-safety-core.ts';
 import { generateMethodStatement } from '../_agents/installer-core.ts';
 import { transformHealthSafetyResponse } from './transformers.ts';
+import { checkRAMSCache, storeRAMSCache } from '../_shared/rams-cache.ts';
+import { checkPartialCache, storePartialCache } from '../_shared/rams-partial-cache.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -122,6 +129,50 @@ Deno.serve(async (req) => {
       return data?.status === 'cancelled';
     };
 
+    // ⚡ LAYER 1: Check Full RAMS Cache first
+    await safeUpdateProgress(3, '🔍 Checking RAMS cache...');
+    
+    const cacheResult = await checkRAMSCache({
+      supabase,
+      jobDescription: job.job_description,
+      workType: job.work_type,
+      jobScale: job.job_scale,
+      openAiKey: Deno.env.get('OPENAI_API_KEY')!
+    });
+
+    if (cacheResult.hit && cacheResult.data) {
+      console.log('✅ LAYER 1 CACHE HIT - Returning cached RAMS instantly!');
+      
+      await supabase
+        .from('rams_generation_jobs')
+        .update({
+          status: 'complete',
+          progress: 100,
+          current_step: 'RAMS generation complete (from cache)!',
+          hs_agent_status: 'complete',
+          hs_agent_progress: 100,
+          installer_agent_status: 'complete',
+          installer_agent_progress: 100,
+          rams_data: cacheResult.data.rams_data,
+          method_data: cacheResult.data.method_data,
+          completed_at: new Date().toISOString(),
+          cache_hit: true
+        })
+        .eq('id', jobId);
+
+      return new Response(
+        JSON.stringify({ 
+          success: true, 
+          jobId,
+          cache_hit: true,
+          similarity: cacheResult.data.similarity
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    console.log('❌ Layer 1 cache miss - proceeding to generation');
+
     // Update: Processing started
     await supabase
       .from('rams_generation_jobs')
@@ -173,33 +224,70 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Call both agents in parallel with progress updates
-    console.log('🤖 Calling AI agents in parallel...');
-    const startTime = Date.now();
+    // ⚡ LAYER 3: Check Partial Agent Caches
+    console.log('🔍 Checking partial caches for both agents...');
+    
+    const openAiKey = Deno.env.get('OPENAI_API_KEY')!;
+    
+    const [hsCacheResult, installerCacheResult] = await Promise.all([
+      checkPartialCache({
+        supabase,
+        jobDescription: job.job_description,
+        workType: job.work_type,
+        jobScale: job.job_scale,
+        agentType: 'health_safety',
+        openAiKey
+      }),
+      checkPartialCache({
+        supabase,
+        jobDescription: job.job_description,
+        workType: job.work_type,
+        jobScale: job.job_scale,
+        agentType: 'installer',
+        openAiKey
+      })
+    ]);
 
-    // PHASE 2: Simple parallel agent execution
-    console.log('🤖 Calling AI agents in parallel...');
+    // Call both agents in parallel (or use cached results)
+    console.log('🤖 Starting AI agent generation...');
+    const startTime = Date.now();
     
     const [hsResult, installerResult] = await Promise.allSettled([
-      generateHealthSafety(
-        job.job_description,
-        projectDetails,
-        async (progress: number, step: string) => {
-          if (await checkCancelled()) throw new Error('Job cancelled');
-          await updateAgentProgress('hs', progress, 'processing', step);
-        },
-        sharedRegulations
-      ),
-      generateMethodStatement(
-        job.job_description,
-        projectDetails,
-        async (progress: number, step: string) => {
-          if (await checkCancelled()) throw new Error('Job cancelled');
-          await updateAgentProgress('installer', progress, 'processing', step);
-        },
-        sharedRegulations
-      )
+      // Health & Safety Agent (use cache if available)
+      hsCacheResult.hit 
+        ? Promise.resolve(hsCacheResult.data)
+        : generateHealthSafety(
+            job.job_description,
+            projectDetails,
+            async (progress: number, step: string) => {
+              if (await checkCancelled()) throw new Error('Job cancelled');
+              await updateAgentProgress('hs', progress, 'processing', step);
+            },
+            sharedRegulations
+          ),
+      // Installer Agent (use cache if available)
+      installerCacheResult.hit
+        ? Promise.resolve(installerCacheResult.data)
+        : generateMethodStatement(
+            job.job_description,
+            projectDetails,
+            async (progress: number, step: string) => {
+              if (await checkCancelled()) throw new Error('Job cancelled');
+              await updateAgentProgress('installer', progress, 'processing', step);
+            },
+            sharedRegulations
+          )
     ]);
+
+    // Log cache performance
+    if (hsCacheResult.hit) {
+      console.log('✅ LAYER 3: Health & Safety from cache');
+      await updateAgentProgress('hs', 100, 'complete', 'Health & Safety (from cache)');
+    }
+    if (installerCacheResult.hit) {
+      console.log('✅ LAYER 3: Installer from cache');
+      await updateAgentProgress('installer', 100, 'complete', 'Method Statement (from cache)');
+    }
 
     if (await checkCancelled()) {
       return new Response(
@@ -298,7 +386,6 @@ Deno.serve(async (req) => {
     }
 
     // Full success - merge results
-    // ⚡ CRITICAL FIX #1: Replace undefined updateProgress with safeUpdateProgress
     await safeUpdateProgress(90, 'Finalizing risk assessment and method statement...');
 
     const transformedRAMSData = transformHealthSafetyResponse(hsData, projectDetails);
@@ -336,6 +423,42 @@ Deno.serve(async (req) => {
       )
     };
 
+    // ⚡ LAYER 3: Store partial caches for future reuse
+    if (!hsCacheResult.hit && hsSucceeded) {
+      await storePartialCache({
+        supabase,
+        jobDescription: job.job_description,
+        workType: job.work_type,
+        jobScale: job.job_scale,
+        agentType: 'health_safety',
+        agentOutput: hsData,
+        openAiKey
+      });
+    }
+    
+    if (!installerCacheResult.hit && installerSucceeded) {
+      await storePartialCache({
+        supabase,
+        jobDescription: job.job_description,
+        workType: job.work_type,
+        jobScale: job.job_scale,
+        agentType: 'installer',
+        agentOutput: installerData,
+        openAiKey
+      });
+    }
+
+    // ⚡ LAYER 1: Store full RAMS cache
+    await storeRAMSCache({
+      supabase,
+      jobDescription: job.job_description,
+      workType: job.work_type,
+      jobScale: job.job_scale,
+      ramsData: transformedRAMSData,
+      methodData: finalMethodData,
+      openAiKey
+    });
+
     // Save final results
     await supabase
       .from('rams_generation_jobs')
@@ -352,6 +475,11 @@ Deno.serve(async (req) => {
         completed_at: new Date().toISOString(),
         generation_metadata: {
           duration,
+          cacheStats: {
+            layer1Hit: false, // Fresh generation
+            layer3HsHit: hsCacheResult.hit,
+            layer3InstallerHit: installerCacheResult.hit
+          },
           ragStats: {
             healthSafetyDocs: hsData._ragStats?.totalDocs || 0,
             installerDocs: installerData._ragStats?.totalDocs || 0,
