@@ -81,7 +81,7 @@ Extract ALL circuits with their specifications.`;
 
     // Timeout configuration: allow more time for complex circuit extractions
     const RETRY_TIMEOUT = 90000; // 90s total (1.5 minutes)
-    const PER_ATTEMPT_TIMEOUT = 45000; // 45s per OpenAI attempt
+    const PER_ATTEMPT_TIMEOUT = 90000; // 90s per OpenAI attempt (matches total timeout)
     
     // FIX 1: Wrap retry in timeout (NOT the OpenAI call itself)
     const aiExtractionPromise = withTimeout(

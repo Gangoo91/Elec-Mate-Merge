@@ -228,7 +228,7 @@ export async function callOpenAI(
     tool_choice
   } = options;
 
-  console.log(`🤖 Calling OpenAI ${model} (timeout: ${timeoutMs}ms)`);
+  console.log(`🤖 Calling OpenAI ${model} (timeout: ${timeoutMs}ms = ${Math.round(timeoutMs/1000)}s)`);
 
   // GPT-5, GPT-4.1, O3, O4 models require max_completion_tokens and NO temperature
   const isNewModel = model.includes('gpt-5') || model.includes('gpt-4.1') || model.includes('o3') || model.includes('o4');
