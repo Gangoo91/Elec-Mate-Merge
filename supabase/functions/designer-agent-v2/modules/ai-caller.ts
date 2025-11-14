@@ -15,12 +15,17 @@ export async function callOpenAIWithRetry(
   tool_choice: any,
   openAiKey: string,
   logger: any,
-  timeoutMs: number = 280000
+  timeoutMs: number = 280000,
+  batchInfo?: { current: number, total: number } // NEW: For progress tracking
 ): Promise<any> {
+  const batchLabel = batchInfo ? `Batch ${batchInfo.current}/${batchInfo.total}` : 'Processing';
   logger.info(`Calling OpenAI GPT-5 Mini with ${timeoutMs}ms timeout and retry...`);
   
   // Log the timeout being used
-  console.log(`⏱️ OpenAI timeout configured: ${timeoutMs}ms (${Math.round(timeoutMs/1000)}s)`);
+  console.log(`⏱️ ${batchLabel} - OpenAI timeout configured: ${timeoutMs}ms (${Math.round(timeoutMs/1000)}s)`);
+  console.log(`🚀 ${batchLabel} - Starting OpenAI API call at ${new Date().toISOString()}`);
+  
+  const startTime = Date.now();
 
   return await withRetry(async () => {
     const response = await callOpenAI(
@@ -34,6 +39,9 @@ export async function callOpenAIWithRetry(
       openAiKey,
       timeoutMs // Explicitly pass timeout
     );
+
+    const elapsedSeconds = Math.round((Date.now() - startTime) / 1000);
+    console.log(`✅ ${batchLabel} - OpenAI response received in ${elapsedSeconds}s`);
 
     return response;
   }, {
