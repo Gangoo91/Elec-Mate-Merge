@@ -158,6 +158,14 @@ SAFETY MARGINS FOR HIGH-RISK CIRCUITS:
 
 WHY: Real-world conditions (temperature, connections, cable joints) increase resistance beyond theoretical calculations.
 
+⚠️ CRITICAL: RING FINAL CIRCUITS MUST ALWAYS USE 2.5mm² CABLE
+- Ring finals protected by 30A/32A devices: Cable size is FIXED at 2.5mm² per BS 7671 Appendix 15 (Reg 433.1.204)
+- DO NOT upsize ring cable to 4mm², 6mm², etc. - this violates regulations
+- If Zs is too high for 2.5mm² ring: increase CPC size to 2.5mm² or 4mm², NOT live conductor size
+- Ring final circuits are identified by: socket circuits with 30A/32A protection and ring topology
+- Only radial circuits (showers, cookers, individual sockets) can have flexible cable sizing
+- Example: 32A socket ring with high Zs → Use 2.5mm²/2.5mm² T&E (NOT 4mm²/1.5mm²)
+
 EXAMPLE - Outdoor Socket with maxZs = 0.80Ω:
 ❌ WRONG: Design for Zs = 0.79Ω (99% of limit)
 ✅ CORRECT: Design for Zs ≤ 0.60Ω (75% of limit) by using larger CPC
@@ -239,43 +247,67 @@ MANDATORY CALCULATIONS FOR EVERY CIRCUIT:
    - Calculate safetyTarget = maxZs × 0.90 for standard circuits
    - If Zs > safetyTarget, increase CPC size and recalculate
    - Continue increasing CPC until Zs ≤ safetyTarget
+   
+   ⚠️ RING FINAL CIRCUITS: Live conductors MUST remain 2.5mm² - only increase CPC size if needed
    - NEVER return a design where Zs > maxZs (even by 0.01Ω)
    
    Example: "Table 54.7: 10mm²=1.83mΩ/m, 4mm²=4.61mΩ/m. R1+R2=[(1.83+4.61)×250/1000]×1.2=1.93Ω. Zs=Ze(0.35)+1.93=2.28Ω ≤ maxZs(7.28Ω) ✓"
 
-   WORKED EXAMPLE - OUTDOOR SOCKET (30m run, 32A RCBO Type B, Ze=0.35Ω):
+   WORKED EXAMPLE 1 - OUTDOOR SOCKET RADIAL (30m run, 32A RCBO Type B, Ze=0.35Ω):
    
+   Circuit type: RADIAL socket (flexible cable sizing allowed)
    Protection device: 32A Type B MCB
    maxZs from Appendix 3: 0.80Ω
    Safety target (75% for outdoor): 0.80 × 0.75 = 0.60Ω
    
    Iteration 1: Try 4mm² line + 2.5mm² CPC
-     - Table 54.7: 4mm² = 4.61mΩ/m, 2.5mm² = 7.41mΩ/m
-     - R1+R2 = [(4.61 + 7.41) × 30 / 1000] × 1.2 = 0.43Ω
-     - Zs = Ze(0.35) + 0.43 = 0.78Ω
-     - Result: 0.78Ω > target (0.60Ω) ❌ FAIL → Increase CPC
+      - Table 54.7: 4mm² = 4.61mΩ/m, 2.5mm² = 7.41mΩ/m
+      - R1+R2 = [(4.61 + 7.41) × 30 / 1000] × 1.2 = 0.43Ω
+      - Zs = Ze(0.35) + 0.43 = 0.78Ω
+      - Result: 0.78Ω > target (0.60Ω) ❌ FAIL → Increase CPC
    
    Iteration 2: Try 4mm² line + 4mm² CPC
-     - Table 54.7: 4mm² = 4.61mΩ/m, 4mm² = 4.61mΩ/m
-     - R1+R2 = [(4.61 + 4.61) × 30 / 1000] × 1.2 = 0.33Ω
-     - Zs = Ze(0.35) + 0.33 = 0.68Ω
-     - Result: 0.68Ω > target (0.60Ω) ❌ FAIL → Increase CPC
+      - Table 54.7: 4mm² = 4.61mΩ/m, 4mm² = 4.61mΩ/m
+      - R1+R2 = [(4.61 + 4.61) × 30 / 1000] × 1.2 = 0.33Ω
+      - Zs = Ze(0.35) + 0.33 = 0.68Ω
+      - Result: 0.68Ω > target (0.60Ω) ❌ FAIL → Increase CPC
    
    Iteration 3: Try 4mm² line + 6mm² CPC
-     - Table 54.7: 4mm² = 4.61mΩ/m, 6mm² = 3.08mΩ/m
-     - R1+R2 = [(4.61 + 3.08) × 30 / 1000] × 1.2 = 0.28Ω
-     - Zs = Ze(0.35) + 0.28 = 0.63Ω
-     - Result: 0.63Ω > target (0.60Ω) ❌ MARGINAL → Increase once more for safety
+      - Table 54.7: 4mm² = 4.61mΩ/m, 6mm² = 3.08mΩ/m
+      - R1+R2 = [(4.61 + 3.08) × 30 / 1000] × 1.2 = 0.28Ω
+      - Zs = Ze(0.35) + 0.28 = 0.63Ω
+      - Result: 0.63Ω > target (0.60Ω) ❌ MARGINAL → Increase once more for safety
    
    Iteration 4: Try 6mm² line + 6mm² CPC
-     - Table 54.7: 6mm² = 3.08mΩ/m, 6mm² = 3.08mΩ/m
-     - R1+R2 = [(3.08 + 3.08) × 30 / 1000] × 1.2 = 0.22Ω
-     - Zs = Ze(0.35) + 0.22 = 0.57Ω
-     - Result: 0.57Ω ≤ target (0.60Ω) ✅ PASS
-     
-   FINAL DESIGN: 6mm² / 6mm² CPC (not 4mm²/2.5mm²)
-     - Zs = 0.57Ω (71% of maxZs, excellent safety margin)
-     - Suitable for outdoor installation with real-world tolerances
+      - Table 54.7: 6mm² = 3.08mΩ/m, 6mm² = 3.08mΩ/m
+      - R1+R2 = [(3.08 + 3.08) × 30 / 1000] × 1.2 = 0.22Ω
+      - Zs = Ze(0.35) + 0.22 = 0.57Ω
+      - Result: 0.57Ω ≤ target (0.60Ω) ✅ PASS
+      
+   FINAL DESIGN: 6mm² / 6mm² CPC (radial circuit - cable sizing is flexible)
+      - Zs = 0.57Ω (71% of maxZs, excellent safety margin)
+      - Suitable for outdoor installation with real-world tolerances
+
+   WORKED EXAMPLE 2 - SOCKET RING FINAL (20m run, 32A RCBO Type B, Ze=0.35Ω):
+   
+   Circuit type: RING FINAL (BS 7671 Appendix 15 - cable size FIXED at 2.5mm²)
+   Protection device: 32A Type B MCB
+   maxZs from Appendix 3: 1.37Ω
+   Safety target (90% for standard): 1.37 × 0.90 = 1.23Ω
+   
+   CRITICAL: Ring final cable size is NOT flexible - MUST use 2.5mm² per regulations
+   
+   Step 1: Use mandatory 2.5mm²/1.5mm² T&E
+      - Table 54.7: 2.5mm² = 7.41mΩ/m, 1.5mm² = 12.1mΩ/m
+      - For ring: effective length = total length / 2 = 20m / 2 = 10m
+      - R1+R2 = [(7.41 + 12.1) × 10 / 1000] × 1.2 = 0.23Ω
+      - Zs = Ze(0.35) + 0.23 = 0.58Ω
+      - Result: 0.58Ω ≤ target (1.23Ω) ✅ PASS
+      
+   FINAL DESIGN: 2.5mm² / 1.5mm² CPC (ring final - cable size is regulation-mandated)
+      - Zs = 0.58Ω (42% of maxZs, compliant)
+      - ❌ DO NOT change to 4mm² or 6mm² - this violates BS 7671 Appendix 15
+      - ✅ If Zs was too high: increase CPC to 2.5mm² (NOT live conductor)
 
 3. PROTECTION DEVICE SELECTION:
    - Calculate Ib: Single-phase: Ib = P / U, Three-phase: Ib = P / (U × √3 × cosφ)
