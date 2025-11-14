@@ -35,6 +35,23 @@ timeout_sec = 60
 verify_jwt = false
 timeout_sec = 180
 
+# Circuit Designer Job Queue Architecture
+[functions.create-circuit-design-job]
+verify_jwt = false
+timeout_sec = 30
+
+[functions.process-circuit-design]
+verify_jwt = false
+timeout_sec = 60
+
+[functions.designer-agent-v2]
+verify_jwt = false
+timeout_sec = 300
+
+[functions.cancel-circuit-design-job]
+verify_jwt = false
+timeout_sec = 30
+
 # Cost Engineer PDF Generation
 [functions.generate-cost-engineer-pdf]
 verify_jwt = false
