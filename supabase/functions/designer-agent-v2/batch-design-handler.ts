@@ -1021,13 +1021,9 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
       
       // Store AI-designed circuits in cache for next time
       for (let i = 0; i < aiRequiredCircuits.length; i++) {
-          if (designedCircuits[i]) {
-            await storeCircuitCache(supabase, aiRequiredCircuits[i], voltage, designedCircuits[i]);
-          }
+        if (designedCircuits[i]) {
+          await storeCircuitCache(supabase, aiRequiredCircuits[i], voltage, designedCircuits[i]);
         }
-      } catch (error) {
-        logger.error('Failed to parse tool calls', { error });
-        return ERROR_TEMPLATES.NO_CIRCUITS(aiRequiredCircuits.length, !!additionalPrompt).toResponse(VERSION);
       }
       
       if (designedCircuits.length === 0) {
