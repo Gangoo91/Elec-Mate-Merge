@@ -132,44 +132,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Extract circuits from additionalPrompt if provided and circuits array is empty
-    if (inputs.additionalPrompt && (!inputs.circuits || inputs.circuits.length === 0)) {
-      const openAiKey = Deno.env.get('OPENAI_API_KEY');
-      if (!openAiKey) {
-        console.error('❌ OPENAI_API_KEY not configured');
-        return new Response(
-          JSON.stringify({ error: 'AI circuit extraction not configured' }),
-          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
-
-      try {
-        console.log('🤖 Extracting circuits from prompt...');
-        const extractedCircuits = await extractCircuitsFromPrompt(inputs.additionalPrompt, openAiKey);
-        
-        if (extractedCircuits.length === 0) {
-          return new Response(
-            JSON.stringify({ 
-              error: 'Could not extract circuits from description',
-              suggestion: 'Please be more specific or add circuits manually'
-            }),
-            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-          );
-        }
-
-        inputs.circuits = extractedCircuits;
-        console.log(`✅ Added ${extractedCircuits.length} circuits from AI extraction`);
-      } catch (error: any) {
-        console.error('❌ Circuit extraction failed:', error);
-        return new Response(
-          JSON.stringify({ 
-            error: 'Failed to extract circuits from description',
-            details: error.message 
-          }),
-          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
-    }
+    // Fix 5: Remove duplicate circuit extraction - batch-design-handler handles this more comprehensively
 
     // Create job record
     const { data: job, error } = await supabase
@@ -198,7 +161,8 @@ Deno.serve(async (req) => {
     fetch(processUrl, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`,
+        // Fix 3: Replace deprecated SUPABASE_ANON_KEY with SUPABASE_SERVICE_ROLE_KEY
+        'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ jobId: job.id })
