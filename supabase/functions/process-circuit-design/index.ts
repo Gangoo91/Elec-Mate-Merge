@@ -122,13 +122,19 @@ Deno.serve(async (req) => {
 
     await safeUpdateProgress(15, 'Calling AI designer...');
 
-    // Fix 4: Dynamic timeout based on circuit count
-    // Calculate timeout: base 120s + 15s per circuit (max 420s = 7 minutes)
-    const circuitCount = transformedBody.circuits.length;
-    const timeoutSeconds = Math.min(420, 120 + (circuitCount * 15));
+    // Dynamic timeout based on circuit count and prompt complexity
+    const manualCircuits = transformedBody.circuits.length;
+    const promptLength = transformedBody.additionalPrompt?.length || 0;
+    
+    // Estimate circuits from prompt (rough: 50 chars per circuit description)
+    const estimatedPromptCircuits = promptLength > 0 ? Math.ceil(promptLength / 50) : 0;
+    const totalEstimatedCircuits = Math.max(manualCircuits, estimatedPromptCircuits);
+    
+    // Base 120s + 15s per circuit (max 420s = 7 minutes)
+    const timeoutSeconds = Math.min(420, 120 + (totalEstimatedCircuits * 15));
     const timeoutMs = timeoutSeconds * 1000;
 
-    console.log(`⏱️ Setting timeout: ${timeoutSeconds}s for ${circuitCount} circuits`);
+    console.log(`⏱️ Dynamic timeout: ${timeoutSeconds}s (${manualCircuits} manual circuits + ~${estimatedPromptCircuits} from prompt)`);
 
     // Use direct fetch to avoid Supabase client timeout issues
     const abortController = new AbortController();
@@ -138,7 +144,27 @@ Deno.serve(async (req) => {
     }, timeoutMs);
 
     let designResult;
+    let pollInterval: number | undefined;
+    
     try {
+      // Start progress polling to provide visibility
+      console.log(`📊 Starting design for ~${totalEstimatedCircuits} circuits...`);
+      pollInterval = setInterval(async () => {
+        try {
+          const { data: jobStatus } = await supabase
+            .from('circuit_design_jobs')
+            .select('progress, current_step, status')
+            .eq('id', jobId)
+            .single();
+            
+          if (jobStatus && jobStatus.status === 'processing') {
+            console.log(`📊 Progress: ${jobStatus.progress}% - ${jobStatus.current_step || 'Processing...'}`);
+          }
+        } catch (e) {
+          // Ignore polling errors
+        }
+      }, 10000); // Poll every 10 seconds
+      
       const functionUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/designer-agent-v2`;
       const response = await fetch(functionUrl, {
         method: 'POST',
@@ -151,6 +177,7 @@ Deno.serve(async (req) => {
       });
 
       clearTimeout(timeoutId);
+      if (pollInterval) clearInterval(pollInterval);
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -164,6 +191,7 @@ Deno.serve(async (req) => {
       }
     } catch (error: any) {
       clearTimeout(timeoutId);
+      if (pollInterval) clearInterval(pollInterval);
       
       if (error.name === 'AbortError') {
         throw new Error(`Design generation timed out after ${timeoutSeconds} seconds. Circuit may be too complex. Try reducing the number of circuits or simplifying the design.`);
