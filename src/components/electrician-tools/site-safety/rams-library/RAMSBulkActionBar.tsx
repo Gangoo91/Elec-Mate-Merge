@@ -48,31 +48,29 @@ export const RAMSBulkActionBar = ({
       </div>
 
       {/* Mobile Version - Sticky Bottom */}
-      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border p-4 shadow-lg">
-        <div className="flex flex-col gap-3">
-          <div className="text-center text-sm font-medium">
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 backdrop-blur-sm bg-background/95 border-t border-border p-2.5 shadow-md">
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-xs font-medium text-muted-foreground">
             {selectedCount} selected
-          </div>
+          </span>
           <div className="flex gap-2">
-            <MobileButton
-              variant="outline"
-              size="wide"
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={onClearSelection}
-              className="flex-1"
             >
-              <X className="h-5 w-5 mr-2" />
+              <X className="h-4 w-4 mr-1" />
               Clear
-            </MobileButton>
-            <MobileButton
+            </Button>
+            <Button
               variant="destructive"
-              size="wide"
+              size="sm"
               onClick={onBulkDelete}
-              loading={isDeleting}
-              className="flex-1"
+              disabled={isDeleting}
             >
-              <Trash2 className="h-5 w-5 mr-2" />
-              Delete All
-            </MobileButton>
+              <Trash2 className="h-4 w-4 mr-1" />
+              Delete
+            </Button>
           </div>
         </div>
       </div>

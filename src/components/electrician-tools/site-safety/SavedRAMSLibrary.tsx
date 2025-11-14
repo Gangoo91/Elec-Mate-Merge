@@ -27,6 +27,7 @@ interface SavedRAMS {
 export const SavedRAMSLibrary = () => {
   const [documents, setDocuments] = useState<SavedRAMS[]>([]);
   const [loading, setLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
@@ -93,14 +94,14 @@ export const SavedRAMSLibrary = () => {
     dateFilter !== 'all' || locationFilter !== 'all';
 
   useEffect(() => {
-    fetchDocuments();
+    fetchDocuments(false); // Initial load with spinner
   }, []);
 
-  // Auto-refresh every 10 seconds to pick up new saves
+  // Auto-refresh every 30 seconds to pick up new saves
   useEffect(() => {
     const interval = setInterval(() => {
-      fetchDocuments();
-    }, 10000);
+      fetchDocuments(true); // Silent background refresh
+    }, 30000); // Changed from 10s to 30s
     
     return () => clearInterval(interval);
   }, []);
@@ -109,7 +110,7 @@ export const SavedRAMSLibrary = () => {
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (!document.hidden) {
-        fetchDocuments();
+        fetchDocuments(true); // Silent refresh
       }
     };
     
@@ -117,9 +118,11 @@ export const SavedRAMSLibrary = () => {
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
   }, []);
 
-  const fetchDocuments = async () => {
+  const fetchDocuments = async (silent = false) => {
     try {
-      setLoading(true);
+      if (!silent) {
+        setLoading(true);
+      }
       const { data: { user } } = await supabase.auth.getUser();
       
       if (!user) {
@@ -141,13 +144,18 @@ export const SavedRAMSLibrary = () => {
       setDocuments(data || []);
     } catch (error) {
       console.error('Error fetching documents:', error);
-      toast({
-        title: 'Error Loading Documents',
-        description: 'Could not load your saved RAMS documents',
-        variant: 'destructive'
-      });
+      if (!silent) {
+        toast({
+          title: 'Error Loading Documents',
+          description: 'Could not load your saved RAMS documents',
+          variant: 'destructive'
+        });
+      }
     } finally {
-      setLoading(false);
+      if (!silent) {
+        setLoading(false);
+        setInitialLoading(false);
+      }
     }
   };
 
