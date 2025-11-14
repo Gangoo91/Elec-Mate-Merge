@@ -113,11 +113,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         type: "Circuit Design Specification",
         standard: "BS 7671:2018+A3:2024",
         generatedAt: new Date().toISOString(),
-        documentReference: `DS-${design.projectName.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0].replace(/-/g, '')}`
+        documentReference: `DS-${(design.projectName || 'Unknown').replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0].replace(/-/g, '')}`
       },
       
       project: {
-        name: design.projectName,
+        name: design.projectName || 'Unknown Project',
         location: design.location,
         clientName: design.clientName || 'N/A',
         designerName: design.electricianName || 'N/A',
@@ -704,7 +704,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           }
         );
 
-        await downloadEICPDF(schedule, `${design.projectName.replace(/\s+/g, '_')}_Design.pdf`);
+        await downloadEICPDF(schedule, `${(design.projectName || 'Design').replace(/\s+/g, '_')}_Design.pdf`);
         
         toast.success('Professional PDF generated', {
           description: 'BS 7671 compliant circuit design PDF ready'
@@ -715,7 +715,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         
         const link = document.createElement('a');
         link.href = data.downloadUrl;
-        link.download = `${design.projectName.replace(/\s+/g, '_')}_Design.pdf`;
+        link.download = `${(design.projectName || 'Design').replace(/\s+/g, '_')}_Design.pdf`;
         link.click();
         
         toast.success('Professional PDF Generated', {
