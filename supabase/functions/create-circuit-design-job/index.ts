@@ -1,5 +1,5 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import { callGemini } from '../_shared/ai-providers.ts';
+import { callOpenAI } from '../_shared/ai-providers.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -20,7 +20,7 @@ interface CircuitInput {
 /**
  * Extract circuits from natural language prompt using AI
  */
-async function extractCircuitsFromPrompt(prompt: string, geminiKey: string): Promise<CircuitInput[]> {
+async function extractCircuitsFromPrompt(prompt: string, openAiKey: string): Promise<CircuitInput[]> {
   console.log('🔍 Extracting circuits from prompt:', prompt);
 
   const systemPrompt = `You are a UK electrical circuit extraction expert. Extract ALL circuits from descriptions.
@@ -49,14 +49,14 @@ Format:
   }
 ]`;
 
-  const response = await callGemini({
+  const response = await callOpenAI({
     messages: [
       { role: "system", content: systemPrompt },
       { role: "user", content: `Extract circuits from: "${prompt}"` }
     ],
-    temperature: 0.1,
+    model: 'gpt-5-mini-2025-08-07',
     max_tokens: 4000
-  }, geminiKey);
+  }, openAiKey, 30000);
 
   let content = response.content.trim();
   
@@ -134,9 +134,9 @@ Deno.serve(async (req) => {
 
     // Extract circuits from additionalPrompt if provided and circuits array is empty
     if (inputs.additionalPrompt && (!inputs.circuits || inputs.circuits.length === 0)) {
-      const geminiKey = Deno.env.get('GEMINI_API_KEY');
-      if (!geminiKey) {
-        console.error('❌ GEMINI_API_KEY not configured');
+      const openAiKey = Deno.env.get('OPENAI_API_KEY');
+      if (!openAiKey) {
+        console.error('❌ OPENAI_API_KEY not configured');
         return new Response(
           JSON.stringify({ error: 'AI circuit extraction not configured' }),
           { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -145,7 +145,7 @@ Deno.serve(async (req) => {
 
       try {
         console.log('🤖 Extracting circuits from prompt...');
-        const extractedCircuits = await extractCircuitsFromPrompt(inputs.additionalPrompt, geminiKey);
+        const extractedCircuits = await extractCircuitsFromPrompt(inputs.additionalPrompt, openAiKey);
         
         if (extractedCircuits.length === 0) {
           return new Response(
