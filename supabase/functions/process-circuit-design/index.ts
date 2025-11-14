@@ -166,14 +166,22 @@ Deno.serve(async (req) => {
 
     console.log(`✅ Design generated successfully for job ${jobId}`);
 
-    // Store results
+    // Store results - handle both response formats: { design: {...} } and { circuits: [...] }
+    const designData = designResult.design || {
+      circuits: designResult.circuits || [],
+      regulations: designResult.regulations || [],
+      projectInfo: designResult.projectInfo || {},
+      supply: designResult.supply || {},
+      metadata: designResult.metadata || {}
+    };
+
     await supabase
       .from('circuit_design_jobs')
       .update({
         status: 'complete',
         progress: 100,
         current_step: 'Design complete',
-        design_data: designResult.design,
+        design_data: designData,
         raw_response: designResult,
         completed_at: new Date().toISOString()
       })
@@ -183,7 +191,7 @@ Deno.serve(async (req) => {
       JSON.stringify({ 
         success: true,
         jobId,
-        design: designResult.design 
+        design: designData 
       }),
       { 
         status: 200,
