@@ -8,10 +8,16 @@ export function Toaster() {
       {/* Mobile toast - bottom center */}
       <SonnerToaster 
         position="bottom-center" 
-        offset="12px"
+        offset="16px"
         richColors
         closeButton
         className="sm:hidden"
+        toastOptions={{
+          className: "mx-4 max-w-md",
+          style: {
+            borderRadius: "0.5rem",
+          }
+        }}
       />
       
       {/* Desktop toast - top center */}
@@ -21,6 +27,12 @@ export function Toaster() {
         richColors
         closeButton
         className="hidden sm:block"
+        toastOptions={{
+          className: "max-w-md",
+          style: {
+            borderRadius: "0.5rem",
+          }
+        }}
       />
     </>
   )
