@@ -106,12 +106,12 @@ Deno.serve(async (req) => {
         existingInstallation: job.job_inputs.existingInstallation,
         budgetLevel: job.job_inputs.budgetLevel
       },
-    circuits: job.job_inputs.circuits || [],
-    additionalPrompt: job.job_inputs.additionalPrompt,
-    motorStartingFactor: job.job_inputs.motorStartingFactor,
-    faultLevel: job.job_inputs.faultLevel,
-    diversityFactor: job.job_inputs.diversityFactor
-  };
+      circuits: job.job_inputs.circuits || [],
+      additionalPrompt: job.job_inputs.additionalPrompt,
+      motorStartingFactor: job.job_inputs.motorStartingFactor,
+      faultLevel: job.job_inputs.faultLevel,
+      diversityFactor: job.job_inputs.diversityFactor
+    };
 
   // Validate that we have either circuits or a description
   if (transformedBody.circuits.length === 0 && !transformedBody.additionalPrompt?.trim()) {
