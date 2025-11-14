@@ -229,24 +229,37 @@ MANDATORY CALCULATIONS FOR EVERY CIRCUIT:
    Example justification: "Cable sizing: Tried 2.5mm² (7.66% ❌) → 4mm² (4.66% ❌) → 6mm² (3.09% ❌) → 10mm² (1.87% ✓). Selected 10mm² to achieve <3% voltage drop for 250m lighting run."
 
 2. EARTH FAULT LOOP IMPEDANCE Zs:
-   Formula: Zs = Ze + (R1+R2)
    
+   ⚠️ CRITICAL: RING FINALS vs RADIALS have DIFFERENT Zs formulas
+   
+   RADIAL CIRCUIT Zs:
+   Formula: Zs = Ze + (R1+R2)
    Where:
    - Ze = external earth fault loop impedance (from supply data)
    - R1+R2 = [(r1 + r2) × L / 1000] × 1.2
-   - r1, r2 = conductor resistances from Table 54.7 in <regulations>
+   - r1, r2 = conductor resistances from Table 54.7
    - L = cable length in metres
    - 1.2 = temperature correction factor (70°C operation)
    
+   RING FINAL CIRCUIT Zs (BS 7671 Appendix 15):
+   Formula: Zs = Ze + (R1+R2) ÷ 4
+   Where:
+   - R1+R2 is calculated for ONE LEG of the ring
+   - Divide by 4 accounts for PARALLEL PATHS in a ring
+   - Cable size MUST be 2.5mm² for live conductors (BS 7671)
+   - Only CPC size can be increased if Zs too high
+   
    YOU MUST:
+   - Identify if circuit is RING FINAL or RADIAL
    - Find r1 and r2 from Table 54.7
-   - Calculate R1+R2 with temperature correction
-   - Calculate Zs = Ze + (R1+R2)
+   - Calculate R1+R2 for one path with temperature correction
+   - FOR RING FINALS: Divide R1+R2 by 4 before adding to Ze
+   - FOR RADIALS: Use R1+R2 directly
+   - Calculate Zs = Ze + (R1+R2) [÷4 for rings only]
    - Find maxZs from Appendix 3 for selected device
    - Calculate safetyTarget = maxZs × 0.75 for outdoor/high-risk circuits
    - Calculate safetyTarget = maxZs × 0.90 for standard circuits
    - If Zs > safetyTarget, increase CPC size and recalculate
-   - Continue increasing CPC until Zs ≤ safetyTarget
    
    ⚠️ RING FINAL CIRCUITS: Live conductors MUST remain 2.5mm² - only increase CPC size if needed
    - NEVER return a design where Zs > maxZs (even by 0.01Ω)
@@ -291,19 +304,21 @@ MANDATORY CALCULATIONS FOR EVERY CIRCUIT:
    WORKED EXAMPLE 2 - SOCKET RING FINAL (20m run, 32A RCBO Type B, Ze=0.35Ω):
    
    Circuit type: RING FINAL (BS 7671 Appendix 15 - cable size FIXED at 2.5mm²)
+   ⚠️ CRITICAL: Ring finals use (R1+R2) ÷ 4 due to parallel paths
    Protection device: 32A Type B MCB
    maxZs from Appendix 3: 1.37Ω
    Safety target (90% for standard): 1.37 × 0.90 = 1.23Ω
    
    CRITICAL: Ring final cable size is NOT flexible - MUST use 2.5mm² per regulations
    
-   Step 1: Use mandatory 2.5mm²/1.5mm² T&E
+   Iteration 1: Check 2.5mm² line + 1.5mm² CPC (standard ring final cable)
       - Table 54.7: 2.5mm² = 7.41mΩ/m, 1.5mm² = 12.1mΩ/m
-      - For ring: effective length = total length / 2 = 20m / 2 = 10m
-      - R1+R2 = [(7.41 + 12.1) × 10 / 1000] × 1.2 = 0.23Ω
-      - Zs = Ze(0.35) + 0.23 = 0.58Ω
-      - Result: 0.58Ω ≤ target (1.23Ω) ✅ PASS
+      - R1+R2 (ONE LEG) = [(7.41 + 12.1) × 20 / 1000] × 1.2 = 0.47Ω
+      - Zs = Ze(0.35) + (0.47 ÷ 4) = 0.35 + 0.12 = 0.47Ω
+      - Result: 0.47Ω ≤ target (1.23Ω) ✅ PASS (excellent safety margin)
       
+   FINAL DESIGN: 2.5mm² / 1.5mm² CPC (standard ring final cable)
+      - Zs = 0.47Ω (34% of maxZs, excellent safety margin)
    FINAL DESIGN: 2.5mm² / 1.5mm² CPC (ring final - cable size is regulation-mandated)
       - Zs = 0.58Ω (42% of maxZs, compliant)
       - ❌ DO NOT change to 4mm² or 6mm² - this violates BS 7671 Appendix 15
