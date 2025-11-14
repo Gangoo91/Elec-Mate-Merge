@@ -112,9 +112,13 @@ Deno.serve(async (req) => {
 
     await safeUpdateProgress(15, 'Calling AI designer...');
 
-    // Call the existing designer-agent-v2 function
+    // Call the existing designer-agent-v2 function with extended timeout
+    // Designer needs ~40s for RAG + 60-180s for AI processing = up to 280s total
     const { data: designResult, error: designError } = await supabase.functions.invoke('designer-agent-v2', {
-      body: transformedBody
+      body: transformedBody,
+      options: {
+        timeout: 295000 // 295 seconds (leave 5s buffer before config.toml's 300s limit)
+      }
     });
 
     if (designError) {
