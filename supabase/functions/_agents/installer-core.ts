@@ -37,16 +37,6 @@ const INSTALLER_TOOL = {
             required: ['step', 'title', 'description', 'tools', 'estimatedTime']
           }
         },
-        practicalTips: {
-          type: 'array',
-          minItems: 5,
-          items: { type: 'string' }
-        },
-        commonMistakes: {
-          type: 'array',
-          minItems: 5,
-          items: { type: 'string' }
-        },
         toolsRequired: {
           type: 'array',
           items: { type: 'string' }
@@ -66,7 +56,7 @@ const INSTALLER_TOOL = {
           }
         }
       },
-      required: ['installationSteps', 'practicalTips', 'commonMistakes', 'toolsRequired', 'testingProcedures']
+      required: ['installationSteps', 'toolsRequired', 'testingProcedures']
     }
   }
 };
