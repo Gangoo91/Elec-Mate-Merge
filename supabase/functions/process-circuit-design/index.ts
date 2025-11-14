@@ -73,12 +73,48 @@ Deno.serve(async (req) => {
 
     await safeUpdateProgress(5, 'Initializing design process...');
 
+    console.log('📝 Job inputs:', JSON.stringify(job.job_inputs, null, 2));
+
+    await safeUpdateProgress(10, 'Preparing design specification...');
+
+    // Transform flat inputs to nested structure for designer-agent-v2
+    const transformedBody = {
+      mode: 'batch-design',
+      supply: {
+        voltage: job.job_inputs.voltage,
+        phases: job.job_inputs.phases,
+        ze: job.job_inputs.ze,
+        earthingSystem: job.job_inputs.earthingSystem,
+        ambientTemp: job.job_inputs.ambientTemp || 25,
+        installationMethod: job.job_inputs.installationMethod || 'clipped-direct',
+        groupingFactor: job.job_inputs.groupingFactor || 1,
+        pscc: job.job_inputs.pscc,
+        mainSwitchRating: job.job_inputs.mainSwitchRating
+      },
+      projectInfo: {
+        projectName: job.job_inputs.projectName,
+        location: job.job_inputs.location,
+        clientName: job.job_inputs.clientName,
+        electricianName: job.job_inputs.electricianName,
+        installationType: job.job_inputs.propertyType,
+        propertyAge: job.job_inputs.propertyAge,
+        existingInstallation: job.job_inputs.existingInstallation,
+        budgetLevel: job.job_inputs.budgetLevel
+      },
+      circuits: job.job_inputs.circuits || [],
+      additionalPrompt: job.job_inputs.additionalPrompt,
+      motorStartingFactor: job.job_inputs.motorStartingFactor,
+      faultLevel: job.job_inputs.faultLevel,
+      diversityFactor: job.job_inputs.diversityFactor
+    };
+
+    console.log('🔄 Transformed body:', JSON.stringify(transformedBody, null, 2));
+
+    await safeUpdateProgress(15, 'Calling AI designer...');
+
     // Call the existing designer-agent-v2 function
     const { data: designResult, error: designError } = await supabase.functions.invoke('designer-agent-v2', {
-      body: {
-        mode: 'batch-design',
-        inputs: job.job_inputs
-      }
+      body: transformedBody
     });
 
     if (designError) {
