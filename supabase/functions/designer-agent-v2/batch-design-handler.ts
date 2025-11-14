@@ -442,18 +442,18 @@ function ensurePDFFields(circuit: any): any {
   // Add PDF-specific text fields with null safety
   circuit.rcdProtectedText = circuit.rcdProtected ? 'Yes' : 'No';
   circuit.nominalCurrentIn = (circuit.protectionDevice?.rating ?? 6) + 'A';
-  circuit.designCurrentIb = (circuit.calculations?.Ib ?? 4.3).toFixed(1) + 'A';
-  circuit.cableCurrentIz = (circuit.calculations?.Iz ?? 20).toFixed(1) + 'A';
+  circuit.designCurrentIb = ((circuit.calculations?.Ib ?? 4.3) ?? 4.3).toFixed(1) + 'A';
+  circuit.cableCurrentIz = ((circuit.calculations?.Iz ?? 20) ?? 20).toFixed(1) + 'A';
   
-  // Voltage drop formatting with null safety
+  // Voltage drop formatting with deep null safety
   const vd = circuit.calculations?.voltageDrop ?? { volts: 2.0, percent: 0.87, limit: 3, compliant: true };
-  circuit.voltageDropText = vd.volts.toFixed(2) + 'V (' + vd.percent.toFixed(2) + '%)';
+  circuit.voltageDropText = (vd.volts ?? 2.0).toFixed(2) + 'V (' + (vd.percent ?? 0.87).toFixed(2) + '%)';
   circuit.voltageDropCompliant = vd.compliant ? 'Compliant' : 'Non-compliant';
   
-  // Earth fault loop impedance with null safety
+  // Earth fault loop impedance with deep null safety
   const zs = circuit.calculations?.zs ?? 1.5;
   const maxZs = circuit.calculations?.maxZs ?? 7.28;
-  circuit.earthFaultLoopText = zs.toFixed(2) + 'Ω (max ' + maxZs.toFixed(2) + 'Ω)';
+  circuit.earthFaultLoopText = (zs ?? 1.5).toFixed(2) + 'Ω (max ' + (maxZs ?? 7.28).toFixed(2) + 'Ω)';
   circuit.zsCompliant = zs <= maxZs ? 'Compliant' : 'Non-compliant';
   
   // Protection device summary with null safety
@@ -1061,7 +1061,7 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
         const vd = circuit.calculations.voltageDrop;
         throw new CircuitDesignError(
           'NON_COMPLIANT_DESIGN',
-          `Circuit "${circuitName}" has excessive voltage drop (${vd.percent?.toFixed(2)}% exceeds ${vd.limit}% limit)`,
+          `Circuit "${circuitName}" has excessive voltage drop (${(vd.percent ?? 0).toFixed(2)}% exceeds ${vd.limit ?? 3}% limit)`,
           { 
             circuit: circuitName,
             cableSize: circuit.cableSize,
@@ -1080,7 +1080,7 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
       if (circuit.calculations?.zs > circuit.calculations?.maxZs) {
         throw new CircuitDesignError(
           'NON_COMPLIANT_DESIGN',
-          `Circuit "${circuitName}" has excessive earth fault loop impedance (Zs ${circuit.calculations.zs.toFixed(2)}Ω exceeds max ${circuit.calculations.maxZs.toFixed(2)}Ω)`,
+          `Circuit "${circuitName}" has excessive earth fault loop impedance (Zs ${(circuit.calculations.zs ?? 0).toFixed(2)}Ω exceeds max ${(circuit.calculations.maxZs ?? 0).toFixed(2)}Ω)`,
           { 
             circuit: circuitName,
             zs: circuit.calculations.zs,
@@ -1147,22 +1147,29 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
         if (!circuit.justifications || !circuit.justifications.cableSize || circuit.justifications.cableSize === 'No specific justification provided.') {
           circuit.justifications = circuit.justifications || {};
           
-          // Cable Size Justification
+          // Cable Size Justification with deep null safety
+          const safeIb = circuit.calculations?.Ib ?? 4.3;
+          const safeIz = circuit.calculations?.Iz ?? 20;
+          const safeVdPercent = circuit.calculations?.voltageDrop?.percent ?? 0.87;
+          const safeVdLimit = circuit.calculations?.voltageDrop?.limit ?? 3;
+          const safeZs = circuit.calculations?.zs ?? 1.5;
+          const safeMaxZs = circuit.calculations?.maxZs ?? 7.28;
+          
           circuit.justifications.cableSize = 
             `${circuit.cableSize}mm² selected based on:\n` +
-            `• Design current: ${circuit.calculations.Ib.toFixed(1)}A\n` +
-            `• After derating (Ca=${circuit.deratingFactors?.Ca ?? 0.94}): ${circuit.calculations.Iz.toFixed(1)}A capacity\n` +
-            `• Safety margin: ${((circuit.calculations.Iz / circuit.calculations.Ib - 1) * 100).toFixed(0)}%\n` +
-            `• Voltage drop compliance: ${circuit.calculations.voltageDrop.percent.toFixed(2)}% (limit ${circuit.calculations.voltageDrop.limit}%)\n` +
+            `• Design current: ${safeIb.toFixed(1)}A\n` +
+            `• After derating (Ca=${circuit.deratingFactors?.Ca ?? 0.94}): ${safeIz.toFixed(1)}A capacity\n` +
+            `• Safety margin: ${((safeIz / safeIb - 1) * 100).toFixed(0)}%\n` +
+            `• Voltage drop compliance: ${safeVdPercent.toFixed(2)}% (limit ${safeVdLimit}%)\n` +
             `• BS 7671 Table 4D5 reference`;
           
-          // Protection Justification
+          // Protection Justification with deep null safety
           circuit.justifications.protection = 
             `${circuit.protectionDevice.rating}A Type ${circuit.protectionDevice.curve} ${circuit.protectionDevice.type} selected because:\n` +
-            `• Coordinated with circuit design current (${circuit.calculations.Ib.toFixed(1)}A)\n` +
+            `• Coordinated with circuit design current (${safeIb.toFixed(1)}A)\n` +
             `• Type ${circuit.protectionDevice.curve} curve suitable for ${circuit.loadType} loads\n` +
             `• Breaking capacity (${circuit.protectionDevice.kaRating}kA) exceeds prospective fault current\n` +
-            `• Zs (${circuit.calculations.zs.toFixed(2)}Ω) < Max Zs (${circuit.calculations.maxZs.toFixed(2)}Ω) ensures disconnection in <0.4s\n` +
+            `• Zs (${safeZs.toFixed(2)}Ω) < Max Zs (${safeMaxZs.toFixed(2)}Ω) ensures disconnection in <0.4s\n` +
             `• BS 7671 Reg 411.3.2 compliance`;
           
           // RCD Justification
