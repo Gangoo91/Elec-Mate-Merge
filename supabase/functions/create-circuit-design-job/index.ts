@@ -132,14 +132,36 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Fix 5: Remove duplicate circuit extraction - batch-design-handler handles this more comprehensively
+    // Extract circuits from natural language prompt if provided
+    let enrichedInputs = { ...inputs };
+    
+    if (inputs.additionalPrompt?.trim() && (!inputs.circuits || inputs.circuits.length === 0)) {
+      console.log('🔍 Extracting circuits from natural language prompt...');
+      try {
+        const openAiKey = Deno.env.get('OPENAI_API_KEY');
+        if (!openAiKey) {
+          console.warn('⚠️ OpenAI API key not configured, skipping circuit extraction');
+        } else {
+          const extractedCircuits = await extractCircuitsFromPrompt(inputs.additionalPrompt, openAiKey);
+          if (extractedCircuits.length > 0) {
+            enrichedInputs.circuits = extractedCircuits;
+            console.log(`✅ Extracted ${extractedCircuits.length} circuits from prompt`);
+          } else {
+            console.warn('⚠️ No circuits could be extracted from prompt');
+          }
+        }
+      } catch (error) {
+        console.error('❌ Circuit extraction failed:', error);
+        // Continue without extracted circuits - designer will handle the prompt directly
+      }
+    }
 
     // Create job record
     const { data: job, error } = await supabase
       .from('circuit_design_jobs')
       .insert({
         user_id: user.id,
-        job_inputs: inputs,
+        job_inputs: enrichedInputs,
         status: 'pending',
         progress: 0
       })

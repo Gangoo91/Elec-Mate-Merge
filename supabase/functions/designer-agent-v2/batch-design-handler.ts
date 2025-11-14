@@ -976,12 +976,6 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
                 
                 logger.info(`✅ Batch ${globalBatchIndex}/${circuitBatches.length} completed: ${batchCircuits.length} circuits designed`);
                 
-                // Fix 6: Add granular progress updates
-                const progressPercent = 15 + Math.floor((globalBatchIndex / circuitBatches.length) * 80);
-                if (progressCallback) {
-                  await progressCallback(progressPercent, `Processing batch ${globalBatchIndex}/${circuitBatches.length}...`);
-                }
-                
                 return batchCircuits;
               } catch (error: any) {
                 logger.error(`❌ Batch ${globalBatchIndex}/${circuitBatches.length} failed`, { error: error.message });
