@@ -88,19 +88,29 @@ export class CircuitDesignError extends Error {
  */
 export const ERROR_TEMPLATES = {
   NO_CIRCUITS: (inputCount: number, hasPrompt: boolean): CircuitDesignError => {
+    const suggestions = hasPrompt 
+      ? [
+          'Be more specific: "3 socket rings, 2 lighting circuits, 9.5kW shower"',
+          'Mention room types: "kitchen, bathroom, 2 bedrooms"',
+          'Include power ratings: "7.2kW cooker, 7kW EV charger"',
+          'Or use the manual circuit builder to add circuits one by one'
+        ]
+      : [
+          'Add circuits using the circuit builder',
+          'OR describe your installation in the prompt field',
+          'Example: "3-bedroom house with kitchen, bathroom, and outdoor lights"'
+        ];
+        
     return new CircuitDesignError(
       'NO_CIRCUITS',
-      'The AI was unable to design any circuits from your description',
+      hasPrompt 
+        ? 'Could not understand your circuit description'
+        : 'No circuits to design',
       {
         inputCircuitCount: inputCount,
         hasAdditionalPrompt: hasPrompt
       },
-      [
-        'Add specific circuit names (e.g., "Kitchen sockets", "Bathroom lighting")',
-        'Specify power ratings (e.g., "9.5kW shower", "7.2kW cooker")',
-        'Simplify your request - try designing 1-2 circuits first',
-        'Use the manual circuit builder instead of natural language'
-      ]
+      suggestions
     );
   },
 

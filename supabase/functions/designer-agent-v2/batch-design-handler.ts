@@ -1014,6 +1014,16 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
         for (const success of successes) {
           designedCircuits.push(...success.result);
         }
+        
+        // Defensive logging: verify accumulation worked correctly
+        logger.info(`📊 Accumulated ${designedCircuits.length} designed circuits from ${successes.length} successful batches`);
+        
+        if (designedCircuits.length === 0 && successes.length > 0) {
+          logger.error('⚠️ BUG: Had successful batches but designedCircuits is empty!', {
+            successCount: successes.length,
+            successDetails: successes.map(s => ({ name: s.name, resultLength: s.result?.length }))
+          });
+        }
       }
       
       timings.modelCall = Date.now() - modelStart;

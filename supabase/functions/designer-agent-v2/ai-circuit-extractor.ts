@@ -357,6 +357,20 @@ function parseCircuitsWithRegex(prompt: string, logger: any): any[] {
     }
   }
   
+  // Absolute last resort: Generate basic default circuit if nothing found
+  if (circuits.length === 0) {
+    logger.warn('⚠️ No circuits detected from keywords, generating default basic circuit');
+    circuits.push({
+      id: 'default-1',
+      name: 'Socket Circuit',
+      loadType: 'socket',
+      loadPower: 7200,
+      cableLength: 25,
+      phases: 'single',
+      specialLocation: 'none'
+    });
+  }
+  
   logger.info('📝 Regex fallback extracted circuits', { count: circuits.length });
   return circuits;
 }
