@@ -39,13 +39,12 @@ export const RAMSFilterPanel = ({
         {/* Status Filter */}
         <Select value={statusFilter} onValueChange={onStatusChange}>
           <SelectTrigger className="w-full sm:w-[180px] h-11">
-            <SelectValue placeholder="All Statuses" />
+            <SelectValue placeholder="Status" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Statuses</SelectItem>
-            <SelectItem value="draft">Draft Only</SelectItem>
-            <SelectItem value="approved">Approved Only</SelectItem>
-            <SelectItem value="pending">Pending Only</SelectItem>
+            <SelectItem value="draft">Draft</SelectItem>
+            <SelectItem value="approved">Approved</SelectItem>
+            <SelectItem value="pending">Pending</SelectItem>
           </SelectContent>
         </Select>
 
