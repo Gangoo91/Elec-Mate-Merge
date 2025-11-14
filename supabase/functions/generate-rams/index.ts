@@ -135,7 +135,7 @@ Deno.serve(async (req) => {
     const cacheResult = await checkRAMSCache({
       supabase,
       jobDescription: job.job_description,
-      workType: job.work_type,
+      workType: job.job_scale, // Use job_scale as work_type
       jobScale: job.job_scale,
       openAiKey: Deno.env.get('OPENAI_API_KEY')!
     });
@@ -233,7 +233,7 @@ Deno.serve(async (req) => {
       checkPartialCache({
         supabase,
         jobDescription: job.job_description,
-        workType: job.work_type,
+        workType: job.job_scale, // Use job_scale as work_type
         jobScale: job.job_scale,
         agentType: 'health_safety',
         openAiKey
@@ -241,7 +241,7 @@ Deno.serve(async (req) => {
       checkPartialCache({
         supabase,
         jobDescription: job.job_description,
-        workType: job.work_type,
+        workType: job.job_scale, // Use job_scale as work_type
         jobScale: job.job_scale,
         agentType: 'installer',
         openAiKey
@@ -428,7 +428,7 @@ Deno.serve(async (req) => {
       await storePartialCache({
         supabase,
         jobDescription: job.job_description,
-        workType: job.work_type,
+        workType: job.job_scale, // Use job_scale as work_type
         jobScale: job.job_scale,
         agentType: 'health_safety',
         agentOutput: hsData,
@@ -440,7 +440,7 @@ Deno.serve(async (req) => {
       await storePartialCache({
         supabase,
         jobDescription: job.job_description,
-        workType: job.work_type,
+        workType: job.job_scale, // Use job_scale as work_type
         jobScale: job.job_scale,
         agentType: 'installer',
         agentOutput: installerData,
@@ -452,7 +452,7 @@ Deno.serve(async (req) => {
     await storeRAMSCache({
       supabase,
       jobDescription: job.job_description,
-      workType: job.work_type,
+      workType: job.job_scale, // Use job_scale as work_type
       jobScale: job.job_scale,
       ramsData: transformedRAMSData,
       methodData: finalMethodData,
