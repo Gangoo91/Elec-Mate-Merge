@@ -106,13 +106,21 @@ export async function generateHealthSafety(
   
   // STEP 1: RAG - Use shared regulations if provided, otherwise search
   console.log('🔍 Fetching RAG knowledge...');
-  if (onProgress) await onProgress(10, 'Health & Safety: Searching knowledge base...');
+  if (onProgress) await onProgress(5, 'Health & Safety: Searching regulations...');
   
-  const regulations = sharedRegulations || await searchRegulationsIntelligence(query);
-  const hsKnowledge = await searchHealthSafetyKnowledge(query);
+  const ragStart = Date.now();
   
-  console.log(`✅ RAG complete: ${hsKnowledge.length} H&S docs, ${regulations.length} regulations (${Date.now() - startTime}ms)`);
-  if (onProgress) await onProgress(30, 'Health & Safety: Calling AI with 35 knowledge documents...');
+  // PHASE 2 FIX: Add progress heartbeats during RAG
+  const ragProgressCallback = async (msg: string) => {
+    if (onProgress) await onProgress(8, `Health & Safety: ${msg}`);
+  };
+  
+  const regulations = sharedRegulations || await searchRegulationsIntelligence(query, ragProgressCallback);
+  const hsKnowledge = await searchHealthSafetyKnowledge(query, ragProgressCallback);
+  const ragDuration = Date.now() - ragStart;
+  
+  console.log(`✅ RAG complete: ${hsKnowledge.length} H&S docs, ${regulations.length} regulations (${ragDuration}ms)`);
+  if (onProgress) await onProgress(15, 'Health & Safety: Analysing hazards with AI...');
   
   // STEP 2: Build context
   const ragContext = `
@@ -125,7 +133,16 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
   
   // STEP 3: Generate with GPT-5 Mini
   console.log('🤖 Calling GPT-5 Mini...');
-  if (onProgress) await onProgress(60, 'Health & Safety: AI analysing risks & hazards...');
+  if (onProgress) await onProgress(25, 'Health & Safety: Analysing hazards...');
+  
+  // PHASE 5 FIX: Add heartbeat during AI call
+  const aiStart = Date.now();
+  const aiHeartbeat = setInterval(async () => {
+    if (onProgress) {
+      const elapsed = Math.floor((Date.now() - aiStart) / 1000);
+      await onProgress(Math.min(85, 25 + elapsed * 2), `Health & Safety: Deep analysis (${elapsed}s)...`);
+    }
+  }, 10000); // Every 10 seconds
   
   const response = await callOpenAI({
     model: 'gpt-5-mini-2025-08-07',
@@ -139,6 +156,10 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
     tools: [HEALTH_SAFETY_TOOL],
     tool_choice: { type: 'function', function: { name: 'generate_risk_assessment' } }
   });
+  const aiDuration = Date.now() - aiStart;
+  
+  // Clear heartbeat
+  clearInterval(aiHeartbeat);
   
   if (!response.toolCalls?.[0]) {
     throw new Error('No tool call in response');
@@ -147,7 +168,7 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
   if (onProgress) await onProgress(90, 'Health & Safety: Parsing results...');
   const result = JSON.parse(response.toolCalls[0].function.arguments);
   
-  console.log(`✅ Health & Safety complete: ${result.hazards.length} hazards, ${result.ppe.length} PPE (${Date.now() - startTime}ms)`);
+  console.log(`✅ Health & Safety complete: ${result.hazards.length} hazards, ${result.ppe.length} PPE (${aiDuration}ms)`);
   if (onProgress) await onProgress(100, 'Health & Safety: Complete!');
   
   return {
