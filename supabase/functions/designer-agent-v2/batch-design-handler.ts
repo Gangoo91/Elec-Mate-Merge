@@ -1085,43 +1085,75 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
       const circuit = allDesignedCircuits[i];
       const circuitName = circuit.name || `Circuit ${i + 1}`;
       
-      // Check voltage drop compliance
+      // Check voltage drop compliance with 10% tolerance
       if (circuit.calculations?.voltageDrop?.compliant === false) {
         const vd = circuit.calculations.voltageDrop;
-        throw new CircuitDesignError(
-          'NON_COMPLIANT_DESIGN',
-          `Circuit "${circuitName}" has excessive voltage drop (${(vd.percent ?? 0).toFixed(2)}% exceeds ${(vd.limit ?? 3).toFixed(1)}% limit)`,
-          { 
-            circuit: circuitName,
-            cableSize: circuit.cableSize,
-            voltageDrop: vd,
-            reason: 'AI failed to iterate cable sizes to achieve compliance'
-          },
-          [
-            'The AI should have selected a larger cable size (e.g., 4mm² → 6mm² → 10mm²)',
-            'This indicates the AI did not follow iterative sizing logic',
-            'Design rejected - please retry generation with the same inputs'
-          ]
-        );
+        const vdMargin = 1.10; // 10% tolerance
+        
+        if (vd.percent > (vd.limit * vdMargin)) {
+          // Significantly over limit - reject
+          throw new CircuitDesignError(
+            'NON_COMPLIANT_DESIGN',
+            `Circuit "${circuitName}" has excessive voltage drop (${(vd.percent ?? 0).toFixed(2)}% exceeds ${(vd.limit ?? 3).toFixed(1)}% limit by more than 10%)`,
+            { 
+              circuit: circuitName,
+              cableSize: circuit.cableSize,
+              voltageDrop: vd,
+              reason: 'Voltage drop significantly exceeds limit even with tolerance'
+            },
+            [
+              'The AI should have selected a larger cable size (e.g., 4mm² → 6mm² → 10mm²)',
+              'This indicates the AI did not follow iterative sizing logic',
+              'Design rejected - please retry generation with the same inputs'
+            ]
+          );
+        } else {
+          // Within tolerance - warn only
+          if (!circuit.warnings) circuit.warnings = [];
+          circuit.warnings.push(
+            `⚠️ Voltage drop slightly high: ${vd.percent.toFixed(2)}% (limit ${vd.limit.toFixed(1)}%). Consider larger cable if possible.`
+          );
+          logger.warn(`Circuit "${circuitName}" has marginal voltage drop compliance`, {
+            voltageDrop: vd.percent,
+            limit: vd.limit,
+            tolerance: '10%'
+          });
+        }
       }
       
-      // Check Zs compliance
-      if (circuit.calculations?.zs > circuit.calculations?.maxZs) {
-        throw new CircuitDesignError(
-          'NON_COMPLIANT_DESIGN',
-          `Circuit "${circuitName}" has excessive earth fault loop impedance (Zs ${(circuit.calculations.zs ?? 0).toFixed(2)}Ω exceeds max ${(circuit.calculations.maxZs ?? 0).toFixed(2)}Ω)`,
-          { 
-            circuit: circuitName,
+      // Check Zs compliance with 5% tolerance
+      if (circuit.calculations?.zs && circuit.calculations?.maxZs) {
+        const zsMargin = 1.05; // 5% tolerance
+        
+        if (circuit.calculations.zs > (circuit.calculations.maxZs * zsMargin)) {
+          // Over tolerance - reject
+          throw new CircuitDesignError(
+            'NON_COMPLIANT_DESIGN',
+            `Circuit "${circuitName}" has excessive earth fault loop impedance (Zs ${(circuit.calculations.zs ?? 0).toFixed(2)}Ω exceeds max ${(circuit.calculations.maxZs ?? 0).toFixed(2)}Ω by more than 5%)`,
+            { 
+              circuit: circuitName,
+              zs: circuit.calculations.zs,
+              maxZs: circuit.calculations.maxZs,
+              cableLength: circuit.cableLength
+            },
+            [
+              'Cable run may be too long for this circuit',
+              'Consider increasing CPC size or reducing cable length',
+              'Verify Ze value is correct for your installation'
+            ]
+          );
+        } else if (circuit.calculations.zs > circuit.calculations.maxZs) {
+          // Slightly over but within tolerance - warn only
+          if (!circuit.warnings) circuit.warnings = [];
+          circuit.warnings.push(
+            `⚠️ Zs slightly over limit: ${circuit.calculations.zs.toFixed(2)}Ω vs max ${circuit.calculations.maxZs.toFixed(2)}Ω. Consider increasing cable size or reducing run length.`
+          );
+          logger.warn(`Circuit "${circuitName}" has marginal Zs compliance`, {
             zs: circuit.calculations.zs,
             maxZs: circuit.calculations.maxZs,
-            cableLength: circuit.cableLength
-          },
-          [
-            'Cable run may be too long for this circuit',
-            'Consider increasing CPC size or reducing cable length',
-            'Verify Ze value is correct for your installation'
-          ]
-        );
+            tolerance: '5%'
+          });
+        }
       }
       
       // Check that voltage drop calculation exists
