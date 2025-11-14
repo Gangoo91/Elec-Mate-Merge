@@ -150,6 +150,18 @@ CRITICAL DESIGN RULES:
 ✅ For long runs (>100m), expect larger cables (10mm², 16mm², 25mm²)
 ✅ Show your working - include calculation steps in justifications
 
+SAFETY MARGINS FOR HIGH-RISK CIRCUITS:
+⚠️ Outdoor circuits: Target Zs ≤ 75% of maxZs (not 100%)
+⚠️ EV chargers: Target Zs ≤ 80% of maxZs
+⚠️ Showers: Target Zs ≤ 80% of maxZs
+⚠️ Long cable runs (>50m): Add 20% to calculated cable size
+
+WHY: Real-world conditions (temperature, connections, cable joints) increase resistance beyond theoretical calculations.
+
+EXAMPLE - Outdoor Socket with maxZs = 0.80Ω:
+❌ WRONG: Design for Zs = 0.79Ω (99% of limit)
+✅ CORRECT: Design for Zs ≤ 0.60Ω (75% of limit) by using larger CPC
+
 WORKED EXAMPLE - 250m LIGHTING RUN (900W total, Ib = 3.9A):
 
 Iteration 1: Try 1.5mm²
@@ -223,10 +235,47 @@ MANDATORY CALCULATIONS FOR EVERY CIRCUIT:
    - Calculate R1+R2 with temperature correction
    - Calculate Zs = Ze + (R1+R2)
    - Find maxZs from Appendix 3 for selected device
-   - Verify Zs ≤ maxZs
-   - If Zs > maxZs, increase CPC size and recalculate
+   - Calculate safetyTarget = maxZs × 0.75 for outdoor/high-risk circuits
+   - Calculate safetyTarget = maxZs × 0.90 for standard circuits
+   - If Zs > safetyTarget, increase CPC size and recalculate
+   - Continue increasing CPC until Zs ≤ safetyTarget
+   - NEVER return a design where Zs > maxZs (even by 0.01Ω)
    
    Example: "Table 54.7: 10mm²=1.83mΩ/m, 4mm²=4.61mΩ/m. R1+R2=[(1.83+4.61)×250/1000]×1.2=1.93Ω. Zs=Ze(0.35)+1.93=2.28Ω ≤ maxZs(7.28Ω) ✓"
+
+   WORKED EXAMPLE - OUTDOOR SOCKET (30m run, 32A RCBO Type B, Ze=0.35Ω):
+   
+   Protection device: 32A Type B MCB
+   maxZs from Appendix 3: 0.80Ω
+   Safety target (75% for outdoor): 0.80 × 0.75 = 0.60Ω
+   
+   Iteration 1: Try 4mm² line + 2.5mm² CPC
+     - Table 54.7: 4mm² = 4.61mΩ/m, 2.5mm² = 7.41mΩ/m
+     - R1+R2 = [(4.61 + 7.41) × 30 / 1000] × 1.2 = 0.43Ω
+     - Zs = Ze(0.35) + 0.43 = 0.78Ω
+     - Result: 0.78Ω > target (0.60Ω) ❌ FAIL → Increase CPC
+   
+   Iteration 2: Try 4mm² line + 4mm² CPC
+     - Table 54.7: 4mm² = 4.61mΩ/m, 4mm² = 4.61mΩ/m
+     - R1+R2 = [(4.61 + 4.61) × 30 / 1000] × 1.2 = 0.33Ω
+     - Zs = Ze(0.35) + 0.33 = 0.68Ω
+     - Result: 0.68Ω > target (0.60Ω) ❌ FAIL → Increase CPC
+   
+   Iteration 3: Try 4mm² line + 6mm² CPC
+     - Table 54.7: 4mm² = 4.61mΩ/m, 6mm² = 3.08mΩ/m
+     - R1+R2 = [(4.61 + 3.08) × 30 / 1000] × 1.2 = 0.28Ω
+     - Zs = Ze(0.35) + 0.28 = 0.63Ω
+     - Result: 0.63Ω > target (0.60Ω) ❌ MARGINAL → Increase once more for safety
+   
+   Iteration 4: Try 6mm² line + 6mm² CPC
+     - Table 54.7: 6mm² = 3.08mΩ/m, 6mm² = 3.08mΩ/m
+     - R1+R2 = [(3.08 + 3.08) × 30 / 1000] × 1.2 = 0.22Ω
+     - Zs = Ze(0.35) + 0.22 = 0.57Ω
+     - Result: 0.57Ω ≤ target (0.60Ω) ✅ PASS
+     
+   FINAL DESIGN: 6mm² / 6mm² CPC (not 4mm²/2.5mm²)
+     - Zs = 0.57Ω (71% of maxZs, excellent safety margin)
+     - Suitable for outdoor installation with real-world tolerances
 
 3. PROTECTION DEVICE SELECTION:
    - Calculate Ib: Single-phase: Ib = P / U, Three-phase: Ib = P / (U × √3 × cosφ)
