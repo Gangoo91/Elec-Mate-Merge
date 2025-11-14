@@ -13,6 +13,7 @@
 
 import { SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { generateEmbedding } from './rams-rag.ts';
+import { deriveWorkType } from './derive-work-type.ts';
 
 export interface PartialCacheResult {
   hit: boolean;
@@ -36,16 +37,19 @@ export async function checkPartialCache(params: {
   console.log(`🔍 Checking partial cache for ${params.agentType} agent...`);
   
   try {
+    // Derive actual work type from job description
+    const derivedWorkType = deriveWorkType(params.jobDescription, params.jobScale);
+    
     // Generate embedding for semantic matching
     const embedding = await generateEmbedding(params.jobDescription, params.openAiKey);
     
     // Search for cached agent output with semantic similarity
     const { data, error } = await params.supabase.rpc('match_rams_partial_cache', {
       query_embedding: embedding,
-      work_type: params.workType,
+      work_type: derivedWorkType,
       job_scale: params.jobScale,
       agent_type: params.agentType,
-      similarity_threshold: 0.88, // Slightly higher than full RAMS cache
+      similarity_threshold: 0.88,
       match_count: 1
     });
     
@@ -106,6 +110,9 @@ export async function storePartialCache(params: {
   }
   
   try {
+    // Derive actual work type from job description
+    const derivedWorkType = deriveWorkType(params.jobDescription, params.jobScale);
+    
     // Generate embedding
     const embedding = await generateEmbedding(params.jobDescription, params.openAiKey);
     
@@ -113,7 +120,7 @@ export async function storePartialCache(params: {
       .from('rams_partial_cache')
       .insert({
         job_description_embedding: embedding,
-        work_type: params.workType,
+        work_type: derivedWorkType,
         job_scale: params.jobScale,
         agent_type: params.agentType,
         agent_output: params.agentOutput,
