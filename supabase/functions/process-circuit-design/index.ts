@@ -112,21 +112,46 @@ Deno.serve(async (req) => {
 
     await safeUpdateProgress(15, 'Calling AI designer...');
 
-    // Call the existing designer-agent-v2 function with extended timeout
-    // Designer needs ~40s for RAG + 60-180s for AI processing = up to 280s total
-    const { data: designResult, error: designError } = await supabase.functions.invoke('designer-agent-v2', {
-      body: transformedBody,
-      options: {
-        timeout: 295000 // 295 seconds (leave 5s buffer before config.toml's 300s limit)
+    // Use direct fetch to avoid Supabase client timeout issues
+    const abortController = new AbortController();
+    const timeoutId = setTimeout(() => {
+      console.error('⏱️ Designer call exceeded 295s timeout');
+      abortController.abort();
+    }, 295000);
+
+    let designResult;
+    try {
+      const functionUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/designer-agent-v2`;
+      const response = await fetch(functionUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(transformedBody),
+        signal: abortController.signal
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Designer returned ${response.status}: ${errorText}`);
       }
-    });
 
-    if (designError) {
-      throw new Error(`Design generation failed: ${designError.message}`);
-    }
-
-    if (!designResult?.success) {
-      throw new Error(designResult?.error || 'Design generation failed');
+      designResult = await response.json();
+      
+      if (!designResult?.success) {
+        throw new Error(designResult?.error || 'Design generation failed');
+      }
+    } catch (error: any) {
+      clearTimeout(timeoutId);
+      
+      if (error.name === 'AbortError') {
+        throw new Error('Design generation timed out after 295 seconds. Circuit may be too complex. Try reducing the number of circuits or simplifying the design.');
+      }
+      
+      throw error;
     }
 
     console.log(`✅ Design generated successfully for job ${jobId}`);
