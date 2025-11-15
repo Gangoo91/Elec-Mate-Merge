@@ -42,7 +42,14 @@ serve(async (req) => {
   try {
     const body = await req.json();
     
-    // Route to batch design handler
+    // NEW: Direct synchronous design mode (simple, fast, no job tracking)
+    if (body.mode === 'direct-design') {
+      logger.info('🎯 Direct design mode - synchronous processing');
+      const result = await handleBatchDesign(body, logger);
+      return result;
+    }
+    
+    // Legacy: Batch design with async job tracking
     if (body.mode === 'batch-design') {
       const asyncMode = body.asyncMode === true;
       const jobId = body.jobId;
