@@ -866,6 +866,13 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
   const asyncMode = body.asyncMode === true;
   const jobId = body.jobId;
   
+  // PHASE 1: Add error boundary around entire handler
+  logger.info('🚀 Designer agent booted successfully - Version ' + VERSION);
+  logger.info('📋 Input validation starting...');
+  
+  // PHASE 5: Add timeout to background task (10 minutes max)
+  let jobTimeoutHandle: number | null = null;
+  
   // Create Supabase client for async DB updates
   let supabaseForProgress: any = null;
   if (asyncMode && jobId) {
@@ -874,9 +881,27 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
     console.log(`📡 Running in ASYNC mode for job ${jobId}`);
+    
+    // PHASE 5: Set timeout for entire job
+    jobTimeoutHandle = setTimeout(async () => {
+      logger.error(`⏱️ Job ${jobId} timed out after ${MAX_JOB_TIMEOUT_MS / 1000}s`);
+      try {
+        await supabaseForProgress
+          .from('circuit_design_jobs')
+          .update({
+            status: 'failed',
+            error_message: 'Design timed out after 10 minutes. Try reducing circuit count or simplifying requirements.',
+            progress: 0,
+            completed_at: new Date().toISOString()
+          })
+          .eq('id', jobId);
+      } catch (e) {
+        logger.error('Failed to mark job as timed out:', e);
+      }
+    }, MAX_JOB_TIMEOUT_MS);
   }
   
-  // Progress callback for async mode
+  // Progress callback for async mode with PHASE 4: granular updates
   const progressCallback = async (progress: number, step: string) => {
     if (asyncMode && jobId && supabaseForProgress) {
       try {
@@ -896,6 +921,16 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     }
   };
   
+  // PHASE 1: Error boundary wrapper
+  try {
+    // Clear timeout on successful completion
+    const clearJobTimeout = () => {
+      if (jobTimeoutHandle !== null) {
+        clearTimeout(jobTimeoutHandle);
+        jobTimeoutHandle = null;
+      }
+    };
+    
   try {
     // Track context sources
     const { previousAgentOutputs, sharedRegulations, projectDetails, currentDesign } = body;
@@ -1192,11 +1227,17 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
         throw new Error('Missing required OPENAI_API_KEY environment variable');
       }
       try {
+        // PHASE 4: Granular progress update before RAG
+        await progressCallback(22, 'Loading calculation formulas...');
+        
         // ============= EXECUTE IN PARALLEL: RAG Search + Core Regs Pre-load =============
         const [ragResults, coreRegs] = await Promise.all([
           buildRAGSearches(query, searchTerms, openAiKey, supabase, logger, type, aiRequiredCircuits), // PHASE 2: Pass AI-required circuits only
           loadCoreRegulations(supabase) // PHASE 4: Pre-load core regulations
         ]);
+      
+        // PHASE 4: Granular progress after RAG
+        await progressCallback(30, 'Regulations loaded, preparing AI prompts...');
       
         // Merge RAG results with core regulations
         regulations = mergeRegulations(ragResults);
@@ -1772,6 +1813,9 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
     if (asyncMode && jobId && supabaseForProgress) {
       await progressCallback(95, 'Finalizing design...');
       
+      // Clear timeout on successful completion
+      clearJobTimeout();
+      
       await supabaseForProgress
         .from('circuit_design_jobs')
         .update({
@@ -1819,6 +1863,11 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
     );
     
   } catch (error) {
+    // Clear timeout on error
+    if (jobTimeoutHandle !== null) {
+      clearTimeout(jobTimeoutHandle);
+    }
+    
     logger.error('Batch design handler error', { error });
     
     // Update job to failed if in async mode
@@ -1846,5 +1895,45 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
       { error },
       ['Check function logs for details', 'Verify all required fields are provided']
     ).toResponse(VERSION);
+  }
+  
+  // PHASE 1: Outer error boundary catch for boot failures
+  } catch (bootError) {
+    logger.error('❌ BOOT FAILURE - Designer agent crashed during startup:', bootError);
+    
+    // Clear timeout if set
+    if (jobTimeoutHandle !== null) {
+      clearTimeout(jobTimeoutHandle);
+    }
+    
+    // Update job to failed immediately
+    if (asyncMode && jobId && supabaseForProgress) {
+      try {
+        await supabaseForProgress
+          .from('circuit_design_jobs')
+          .update({
+            status: 'failed',
+            error_message: `Designer boot failed: ${bootError instanceof Error ? bootError.message : 'Unknown boot error'}`,
+            progress: 0,
+            completed_at: new Date().toISOString()
+          })
+          .eq('id', jobId);
+      } catch (dbError) {
+        logger.error('Failed to update job after boot failure:', dbError);
+      }
+    }
+    
+    return new Response(
+      JSON.stringify({
+        version: VERSION,
+        success: false,
+        error: bootError instanceof Error ? bootError.message : 'Designer boot failure',
+        code: 'BOOT_FAILURE'
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      }
+    );
   }
 }

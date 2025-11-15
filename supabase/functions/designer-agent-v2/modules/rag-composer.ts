@@ -109,6 +109,34 @@ export async function buildRAGSearches(
     circuitCount: circuits?.length || 0
   });
 
+  // PHASE 6: Fast path for simple jobs (<=3 circuits, no special locations)
+  const isSimpleJob = circuits && circuits.length <= 3 && 
+                      circuits.every((c: any) => 
+                        c.specialLocation === 'none' && 
+                        (c.loadPower || 0) < 7200
+                      );
+
+  if (isSimpleJob) {
+    logger.info('🚀 FAST PATH: Simple job detected (≤3 circuits, no special locations), using core regulations only');
+    
+    // Get pre-structured calculations for circuit types
+    const circuitTypes = new Set<string>();
+    circuits.forEach((c: any) => { if (c.loadType) circuitTypes.add(c.loadType); });
+    
+    const calculations = await retrieveStructuredCalculations(supabase, Array.from(circuitTypes));
+    
+    return {
+      regulations: [],
+      designDocs: [],
+      practicalWorkDocs: [],
+      calculations,
+      searchMethod: 'fast-path-core-only',
+      searchTimeMs: 0
+    };
+  }
+
+  // Otherwise, do full RAG search for complex jobs
+
   // ============= PHASE 2: RETRIEVE PRE-STRUCTURED CALCULATIONS FIRST =============
   // Extract circuit types from circuits or search terms
   const circuitTypes = new Set<string>();
