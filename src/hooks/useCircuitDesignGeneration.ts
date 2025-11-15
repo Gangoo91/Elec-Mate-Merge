@@ -28,7 +28,11 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
   const [stuckCheckTimeout, setStuckCheckTimeout] = useState<number | null>(null);
 
   useEffect(() => {
-    if (!jobId) return;
+    // CRITICAL: Reset state when jobId is null to ensure fresh start
+    if (!jobId) {
+      setJob(null);
+      return;
+    }
 
     console.log('🔌 Setting up Realtime subscription for job:', jobId);
 
