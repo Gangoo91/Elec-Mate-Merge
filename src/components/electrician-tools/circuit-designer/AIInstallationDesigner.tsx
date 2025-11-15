@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { DesignInputForm } from "./DesignInputForm";
 import { DesignProcessingView } from "./DesignProcessingView";
+import { DesignProcessingViewDesktop } from "./DesignProcessingViewDesktop";
 import { DesignReviewEditor } from "./DesignReviewEditor";
 import { DesignInputs } from "@/types/installation-design";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
@@ -16,6 +17,9 @@ export const AIInstallationDesigner = () => {
   const [currentView, setCurrentView] = useState<'input' | 'processing' | 'results' | 'validation-error'>('input');
   const [currentJobId, setCurrentJobId] = useState<string | null>(null);
   const [isCancelling, setIsCancelling] = useState(false);
+  const [userRequest, setUserRequest] = useState<string>('');
+  const [totalCircuits, setTotalCircuits] = useState<number>(0);
+  const [retryMessage, setRetryMessage] = useState<string | null>(null);
   
   const { 
     job, 
@@ -46,6 +50,8 @@ export const AIInstallationDesigner = () => {
         `${inputs.projectName} - ${inputs.circuits.length} circuit${inputs.circuits.length !== 1 ? 's' : ''}`;
       sessionStorage.setItem('design-user-request', userDescription);
       sessionStorage.setItem('design-total-circuits', String(inputs.circuits.length));
+      setUserRequest(userDescription);
+      setTotalCircuits(inputs.circuits.length);
 
       // Count circuits that require AI processing (complex/non-standard)
       const aiRequiredCircuits = inputs.circuits.filter(c => {
@@ -192,24 +198,44 @@ export const AIInstallationDesigner = () => {
       )}
 
       {currentView === 'processing' && (
-        <div className="space-y-4">
-          <DesignProcessingView 
-            progress={{ 
-              stage: getStageFromProgress(progress), 
-              message: currentStep || 'Processing...', 
-              percent: progress 
-            }} 
-          />
-          <div className="flex justify-center">
-            <Button
-              variant="outline"
-              onClick={handleCancel}
-              disabled={isCancelling}
-            >
-              {isCancelling ? 'Cancelling...' : 'Cancel Generation'}
-            </Button>
+        <>
+          {/* Desktop/Tablet View - Full redesign */}
+          <div className="hidden lg:block">
+            <DesignProcessingViewDesktop 
+              progress={{ 
+                message: currentStep || status, 
+                stage: getStageFromProgress(progress), 
+                percent: progress 
+              }}
+              userRequest={userRequest || ''}
+              totalCircuits={totalCircuits}
+              onCancel={handleCancel}
+              retryMessage={retryMessage}
+            />
           </div>
-        </div>
+          
+          {/* Mobile View - Simplified for performance */}
+          <div className="block lg:hidden">
+            <div className="space-y-4">
+              <DesignProcessingView 
+                progress={{ 
+                  stage: getStageFromProgress(progress), 
+                  message: currentStep || 'Processing...', 
+                  percent: progress 
+                }} 
+              />
+              <div className="flex justify-center">
+                <Button
+                  variant="outline"
+                  onClick={handleCancel}
+                  disabled={isCancelling}
+                >
+                  {isCancelling ? 'Cancelling...' : 'Cancel Generation'}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </>
       )}
 
       {currentView === 'validation-error' && (
