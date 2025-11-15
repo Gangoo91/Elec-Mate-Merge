@@ -1,13 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { LiveCircuitPreview } from "./LiveCircuitPreview";
-import { ProcessingStatsPanel } from "./ProcessingStatsPanel";
-import { AnimatedProgressRing } from "./AnimatedProgressRing";
-import { StageIndicator } from "./StageIndicator";
 import { DesignProgress } from "@/hooks/useAIDesigner";
 import { useState, useEffect } from "react";
-import { Zap, Clock } from "lucide-react";
+import { Zap, Clock, AlertCircle } from "lucide-react";
 
 interface DesignProcessingViewDesktopProps {
   progress: DesignProgress | null;
