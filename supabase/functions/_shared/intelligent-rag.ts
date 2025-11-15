@@ -8,6 +8,16 @@ import { createClient } from './deps.ts';
 import type { ContextEnvelope, FoundRegulation } from './agent-context.ts';
 
 /**
+ * Search weight configuration for weighted hybrid RAG
+ */
+export interface SearchWeights {
+  designKnowledge: number;          // Default: 0.95 (vector search)
+  regulationsIntelligence: number;  // Default: 0.90 (keyword search)
+  practicalWorkIntelligence: number; // Default: 0.90 (keyword search)
+  healthSafety: number;             // Default: 0.85 (hybrid)
+}
+
+/**
  * PHASE 1: Build context-enriched query using conversation state
  */
 function buildContextEnrichedQuery(
@@ -724,12 +734,12 @@ export async function intelligentRAGSearch(
     embedding = vectorResults.embedding;
   }
 
-  // PHASE 2: Merge and fuse ALL results for unified re-ranking
+  // PHASE 2: Merge and fuse ALL results for unified re-ranking with WEIGHTED SCORES
   const allResults = [
-    ...exactResults.regulations.map(r => ({ ...r, source: 'regulation', sourceType: 'exact', baseScore: r.relevance || 100 })),
-    ...vectorResults.regulations.map(r => ({ ...r, source: 'regulation', sourceType: 'vector', baseScore: r.similarity || 0.7 })),
-    ...vectorResults.designDocs.map(d => ({ ...d, source: 'design', sourceType: 'vector', baseScore: (d.similarity || 0.7) * 1.95 })), // +95% for design knowledge (PRIORITY 1)
-    ...vectorResults.healthSafetyDocs.map(h => ({ ...h, source: 'health_safety', sourceType: 'vector', baseScore: h.similarity || 0.7 })),
+    ...exactResults.regulations.map(r => ({ ...r, source: 'regulation', sourceType: 'exact', baseScore: (r.relevance || 100) * (searchWeights?.regulationsIntelligence || 0.90) })),
+    ...vectorResults.regulations.map(r => ({ ...r, source: 'regulation', sourceType: 'vector', baseScore: (r.similarity || 0.7) * (searchWeights?.regulationsIntelligence || 0.90) })),
+    ...vectorResults.designDocs.map(d => ({ ...d, source: 'design', sourceType: 'vector', baseScore: (d.similarity || 0.7) * (searchWeights?.designKnowledge || 0.95) })), // 95% WEIGHTED for design knowledge
+    ...vectorResults.healthSafetyDocs.map(h => ({ ...h, source: 'health_safety', sourceType: 'vector', baseScore: (h.similarity || 0.7) * (searchWeights?.healthSafety || 0.85) })),
     ...vectorResults.installationDocs.map(i => ({ ...i, source: 'installation', sourceType: 'vector', baseScore: i.similarity || 0.7 })),
     ...vectorResults.maintenanceDocs.map(m => ({ ...m, source: 'maintenance', sourceType: 'vector', baseScore: m.similarity || 0.7 })),
   ];

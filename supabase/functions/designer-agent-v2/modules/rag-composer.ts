@@ -112,25 +112,59 @@ export async function buildRAGSearches(
   // Extract circuit types from circuits or search terms
   const circuitTypes = new Set<string>();
   
+  // ============= SELF-CORRECTION KNOWLEDGE INJECTION =============
   if (circuits && circuits.length > 0) {
     circuits.forEach(c => {
       if (c.loadType) circuitTypes.add(c.loadType);
       
-      // Add special location-specific searches
+      // Add RCD-specific searches for circuits that need RCD
+      if (c.loadType?.includes('socket') || c.specialLocation === 'bathroom') {
+        searchTerms.push('RCBO 30mA Type A selection');
+        searchTerms.push('Reg 411.3.3 RCD protection requirements');
+        searchTerms.push('socket circuit RCD mandatory');
+      }
+      
+      // Add ring final specific searches
+      if (c.loadType?.includes('ring') || c.loadType?.includes('socket')) {
+        searchTerms.push('Appendix 15 ring final circuit design');
+        searchTerms.push('Ring final 2.5mm cable sizing mandatory');
+        searchTerms.push('Ring circuit R1+R2 divide by 4');
+        searchTerms.push('ring final cpc calculation');
+      }
+      
+      // Add special location searches
       if (c.specialLocation === 'bathroom') {
         searchTerms.push('Section 701 bathroom special location');
         searchTerms.push('bathroom RCD 30mA protection');
+        searchTerms.push('Section 701 bathroom IP ratings');
+        searchTerms.push('Bathroom zone RCD supplementary bonding');
+        searchTerms.push('IP44 bathroom zones');
       }
+      
       if (c.specialLocation === 'outdoor') {
-        searchTerms.push('Section 522 outdoor external influences');
-        searchTerms.push('outdoor circuit IP rating');
+        searchTerms.push('Outdoor IP65 weatherproof requirements');
+        searchTerms.push('Buried cable mechanical protection');
+        searchTerms.push('outdoor socket RCD protection');
       }
-      if (c.loadType === 'ev-charger') {
-        searchTerms.push('Section 722 electric vehicle charging');
-        searchTerms.push('EV charger Mode 3 requirements');
+      
+      // Add voltage drop self-correction searches
+      if ((c.cableLength || 0) > 30) {
+        searchTerms.push('voltage drop calculation mV/A/m');
+        searchTerms.push('Appendix 4 voltage drop tables');
+        searchTerms.push('cable size voltage drop compliance');
+      }
+      
+      // Add Zs self-correction searches
+      if (c.loadType?.includes('shower') || c.loadType?.includes('cooker')) {
+        searchTerms.push('high power circuit Zs requirements');
+        searchTerms.push('CPC sizing earth fault loop');
+        searchTerms.push('Table 41.3 maximum Zs values');
       }
     });
   }
+  
+  // Add critical topics for installation type
+  const criticalTopics = getCriticalTopicsForType(type);
   
   // Add circuit types from search terms
   searchTerms.forEach(term => {
@@ -158,19 +192,30 @@ export async function buildRAGSearches(
 
   logger.info('✅ Pre-loaded calculation formulas', { count: calculationFormulas?.length || 0 });
 
+  // ============= WEIGHTED RAG SEARCH =============
+  // Apply custom search weights: 95% design knowledge (vector), 90% regulations/practical (keyword)
   const ragResults = await intelligentRAGSearch({
     expandedQuery: query,
     searchTerms,
     priorities: {
-      design_knowledge: 95,    // Design docs FIRST: +95% boost, vector search, 15 results
-      bs7671: 90,              // Regulations: +90% boost, keyword search, 15 results (increased from 10)
+      design_knowledge: 95,    // Design docs FIRST: +95% boost, vector search (HIGHEST PRIORITY)
+      bs7671: 90,              // Regulations: +90% boost, keyword search
+      practical_work: 90,      // Practical work: +90% boost, keyword search (NEW - was 0)
       installation_knowledge: 0,
-      practical_work: 0,
-      health_safety: 0
+      health_safety: 85        // Health & Safety: +85% boost, hybrid search (NEW - was 0)
     },
-    limit: 40, // Increased from 30 for more comprehensive coverage
-    installationType: type     // Pass context for boost prioritization
+    limit: 40,
+    installationType: type
   }, openAiKey, supabase, logger);
+  
+  logger.info('✅ Weighted RAG search complete', { 
+    regulations: ragResults.regulations.length,
+    designDocs: ragResults.designDocs.length,
+    practicalWorkDocs: ragResults.practicalWorkDocs?.length || 0,
+    healthSafetyDocs: ragResults.healthSafetyDocs.length,
+    searchMethod: ragResults.searchMethod,
+    searchTimeMs: ragResults.searchTimeMs
+  });
   
   // Inject calculation formulas at the top (PHASE 2: Pre-structured calculations)
   ragResults.calculationFormulas = calculationFormulas;

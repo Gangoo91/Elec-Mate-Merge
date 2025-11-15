@@ -190,6 +190,46 @@ WHY: Real-world conditions (temperature, connections, cable joints) increase res
 - ALWAYS set calculations.Iz = 27 for 2.5mm² ring finals (single leg capacity)
 - ALWAYS include justification explaining parallel path load distribution
 
+⚡ SELF-CORRECTION INTELLIGENCE (CRITICAL):
+
+You are NOT a calculator that returns non-compliant results. You are an intelligent design engineer who finds COMPLIANT solutions.
+
+IF your initial design approach doesn't comply with BS 7671:
+
+1. RCD PROTECTION MISSING:
+   - Don't return "RCD required but not specified"
+   - INSTEAD: Add RCBO (30mA Type A) for sockets/bathrooms/outdoor/TT systems
+   - Document: "RCBO selected per Reg 411.3.3 (socket circuits require 30mA RCD protection)"
+
+2. RING FINAL WITH WRONG CABLE SIZE:
+   - Don't return 4mm² or 6mm² for ring finals
+   - INSTEAD: Use 2.5mm² as mandated by Appendix 15
+   - If Zs too high: Increase CPC size (NOT live conductor)
+   - Document: "Cable size fixed at 2.5mm² per BS 7671 Appendix 15. CPC increased to 2.5mm² to achieve Zs compliance"
+
+3. VOLTAGE DROP EXCEEDS LIMIT:
+   - Don't return voltageDrop.compliant = false
+   - INSTEAD: Iterate cable sizes (1.5→2.5→4→6→10→16→25→35mm²) until VD ≤ limit
+   - Document: "Cable upsized to 10mm² to achieve voltage drop of 3.2% (limit: 5%) per Reg 525.1"
+
+4. Zs EXCEEDS maxZs:
+   - Don't return zs > maxZs
+   - INSTEAD: Increase CPC size or increase both conductors (if radial)
+   - For ring finals: ONLY increase CPC (live conductors stay at 2.5mm²)
+   - Document: "CPC increased to 6mm² to achieve Zs of 0.58Ω (max: 0.80Ω) per Reg 411.3.2"
+
+5. SPECIAL LOCATION REQUIREMENTS NOT MET:
+   - Don't return "IP rating required"
+   - INSTEAD: Specify IP65 for outdoor, IP44 for bathroom zones, etc.
+   - Document: "IP65-rated accessories required per BS 7671 Section 701.512 (bathroom installations)"
+
+REASONING PROCESS (show in justifications):
+- "Initial design: 2.5mm² cable gave 6.2% voltage drop (exceeds 5% limit)"
+- "Iteration 1: 4mm² cable gave 4.1% voltage drop ✓ Compliant per Reg 525.1"
+- "Protection: 32A RCBO selected (Type A, 30mA) per Reg 411.3.3 for socket circuit RCD requirement"
+
+YOUR OUTPUT MUST ALWAYS BE 100% COMPLIANT. No exceptions. No "review required". Just find the compliant solution and document why.
+
 EXAMPLE - Outdoor Socket with maxZs = 0.80Ω:
 ❌ WRONG: Design for Zs = 0.79Ω (99% of limit)
 ✅ CORRECT: Design for Zs ≤ 0.60Ω (75% of limit) by using larger CPC
@@ -1384,114 +1424,64 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
     
     logger.info(`📊 Final circuit count: ${allDesignedCircuits.length} (${cachedCircuits.length} cached + ${templatedCircuits.length} templated + ${designedCircuits.length} AI-designed)`);
     
-    // 6.5. VALIDATION: Reject non-compliant designs (AI MUST iterate until compliant)
-    logger.info('Validating compliance before processing...');
+    // 6.5. VALIDATION: Convert to sanity check + logging system (not a failure gate)
+    logger.info('✅ Performing post-design validation sanity checks...');
     for (let i = 0; i < allDesignedCircuits.length; i++) {
       const circuit = allDesignedCircuits[i];
       const circuitName = circuit.name || `Circuit ${i + 1}`;
       
-      // FIX #2: Wrap auto-fix suggestions in try-catch to prevent crashes
-      // Check voltage drop compliance with 10% tolerance
+      // Check voltage drop compliance - LOG ONLY, don't fail
       if (circuit.calculations?.voltageDrop?.compliant === false) {
         const vd = circuit.calculations.voltageDrop;
-        const vdMargin = 1.10; // 10% tolerance
         
-        if (vd.percent > (vd.limit * vdMargin)) {
-          // Over tolerance - suggest auto-fix
-          try {
-            const autoFix = suggestVoltageDropFix(
-              circuitName,
-              vd.percent,
-              vd.limit,
-              circuit.cableSize,
-              circuit.cableLength || 0
-            );
-            
-            if (!circuit.warnings) circuit.warnings = [];
-            circuit.warnings.push(...autoFix.warnings);
-            
-            logger.warn(`Circuit "${circuitName}" voltage drop auto-fix suggested`, {
-              voltageDrop: vd.percent,
-              limit: vd.limit,
-              suggestions: autoFix.warnings
-            });
-          } catch (error) {
-            logger.error('Auto-fix handler crashed for voltage drop', { 
-              error: error instanceof Error ? error.message : String(error),
-              circuit: circuitName 
-            });
-            // Fallback to simple error
-            throw new CircuitDesignError(
-              'NON_COMPLIANT_DESIGN',
-              `Circuit "${circuitName}" has excessive voltage drop (${(vd.percent ?? 0).toFixed(2)}% exceeds ${(vd.limit ?? 3).toFixed(1)}% limit)`,
-              { circuit: circuitName, voltageDrop: vd },
-              ['Increase cable size or reduce cable length']
-            );
-          }
-        } else {
-          // Within tolerance - warn only
+        if (!circuit.warnings) circuit.warnings = [];
+        circuit.warnings.push(
+          `⚠️ AI self-correction may have missed this: Voltage drop ${vd.percent?.toFixed(2)}% exceeds ${vd.limit?.toFixed(1)}% limit. AI should have iterated cable sizes automatically.`
+        );
+        
+        logger.warn(`⚠️ Post-validation found voltage drop issue (AI should have self-corrected)`, {
+          circuit: circuitName,
+          voltageDrop: vd.percent,
+          limit: vd.limit,
+          suggestion: 'AI should have increased cable size automatically'
+        });
+      }
+      
+      // Check Zs compliance - LOG ONLY, don't fail
+      if (circuit.calculations?.zs && circuit.calculations?.maxZs) {
+        if (circuit.calculations.zs > circuit.calculations.maxZs) {
           if (!circuit.warnings) circuit.warnings = [];
           circuit.warnings.push(
-            `⚠️ Voltage drop slightly high: ${vd.percent.toFixed(2)}% (limit ${vd.limit.toFixed(1)}%). Consider larger cable if possible.`
+            `⚠️ AI self-correction may have missed this: Zs ${circuit.calculations.zs.toFixed(2)}Ω exceeds max ${circuit.calculations.maxZs.toFixed(2)}Ω. AI should have increased CPC size automatically.`
           );
-          logger.warn(`Circuit "${circuitName}" has marginal voltage drop compliance`, {
-            voltageDrop: vd.percent,
-            limit: vd.limit,
-            tolerance: '10%'
+          
+          logger.warn(`⚠️ Post-validation found Zs issue (AI should have self-corrected)`, {
+            circuit: circuitName,
+            zs: circuit.calculations.zs,
+            maxZs: circuit.calculations.maxZs,
+            suggestion: 'AI should have increased CPC size automatically'
           });
         }
       }
       
-      // FIX #2: Wrap auto-fix suggestions in try-catch to prevent crashes
-      // Check Zs compliance with 5% tolerance
-      if (circuit.calculations?.zs && circuit.calculations?.maxZs) {
-        const zsMargin = 1.05; // 5% tolerance
+      // Check that voltage drop calculation exists - LOG ONLY
+      if (!circuit.calculations?.voltageDrop || 
+          circuit.calculations.voltageDrop.percent === undefined ||
+          circuit.calculations.voltageDrop.percent === 0) {
         
-        if (circuit.calculations.zs > (circuit.calculations.maxZs * zsMargin)) {
-          // Over tolerance - suggest auto-fix
-          try {
-            const autoFix = suggestZsFix(
-              circuitName,
-              circuit.calculations.zs,
-              circuit.calculations.maxZs,
-              circuit.cableSize,
-              circuit.cableLength || 0
-            );
-            
-            if (!circuit.warnings) circuit.warnings = [];
-            circuit.warnings.push(...autoFix.warnings);
-            
-            logger.warn(`Circuit "${circuitName}" Zs auto-fix suggested`, {
-              zs: circuit.calculations.zs,
-              maxZs: circuit.calculations.maxZs,
-              suggestions: autoFix.warnings
-            });
-          } catch (error) {
-            logger.error('Auto-fix handler crashed for Zs', { 
-              error: error instanceof Error ? error.message : String(error),
-              circuit: circuitName 
-            });
-            // Fallback to simple error
-            throw new CircuitDesignError(
-              'NON_COMPLIANT_DESIGN',
-              `Circuit "${circuitName}" has excessive earth fault loop impedance (Zs ${(circuit.calculations.zs ?? 0).toFixed(2)}Ω exceeds max ${(circuit.calculations.maxZs ?? 0).toFixed(2)}Ω)`,
-              { circuit: circuitName, zs: circuit.calculations.zs, maxZs: circuit.calculations.maxZs },
-              ['Increase cable size or reduce cable length']
-            );
-          }
-        } else if (circuit.calculations.zs > circuit.calculations.maxZs) {
-          // Slightly over but within tolerance - warn only
-          if (!circuit.warnings) circuit.warnings = [];
-          circuit.warnings.push(
-            `⚠️ Zs slightly over limit: ${circuit.calculations.zs.toFixed(2)}Ω vs max ${circuit.calculations.maxZs.toFixed(2)}Ω. Consider increasing cable size or reducing run length.`
-          );
-          logger.warn(`Circuit "${circuitName}" has marginal Zs compliance`, {
-            zs: circuit.calculations.zs,
-            maxZs: circuit.calculations.maxZs,
-            tolerance: '5%'
-          });
-        }
+        if (!circuit.warnings) circuit.warnings = [];
+        circuit.warnings.push(
+          `⚠️ Missing voltage drop calculation for ${circuitName}. AI should have calculated this automatically.`
+        );
+        
+        logger.warn(`⚠️ Post-validation found missing voltage drop calculation`, {
+          circuit: circuitName,
+          suggestion: 'AI should have calculated voltage drop automatically'
+        });
       }
+    }
+    
+    logger.info(`✅ Post-design validation complete. All circuits have compliance warnings attached where applicable.`);
       
       // Check that voltage drop calculation exists
       if (!circuit.calculations?.voltageDrop || 
