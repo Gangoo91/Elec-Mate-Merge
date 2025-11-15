@@ -4,6 +4,30 @@
  * This validation only checks regulatory requirements that cannot be calculated
  */
 
+/**
+ * Detect if circuit is a ring final
+ */
+function isRingFinalCircuit(circuit: any): boolean {
+  const loadType = circuit.loadType?.toLowerCase() || '';
+  const circuitName = circuit.name?.toLowerCase() || '';
+  const rating = circuit.protectionDevice?.rating || 0;
+  const cableSize = circuit.cableSize || 0;
+  
+  // Explicit ring circuit indicators
+  if (circuitName.includes('ring') || loadType.includes('ring')) {
+    return true;
+  }
+  
+  // Socket circuits with 30A/32A protection and 2.5mm² cable
+  if ((loadType.includes('socket') || loadType === 'sockets') && 
+      (rating === 30 || rating === 32) && 
+      cableSize === 2.5) {
+    return true;
+  }
+  
+  return false;
+}
+
 export interface ValidationError {
   circuitIndex: number;
   circuitName: string;
@@ -186,10 +210,7 @@ export function validateDesign(circuits: any[], incomingSupply: any, projectInfo
                                 loadType.includes('radial') ||
                                 circuit.circuitType?.toLowerCase().includes('radial');
     
-    const isRingCircuit = (circuit.circuitType?.toLowerCase().includes('ring') || 
-                           loadType.includes('ring') ||
-                           (loadType.includes('socket') && circuit.protectionDevice?.rating === 32)) && 
-                          !isExplicitlyRadial;
+    const isRingCircuit = isRingFinalCircuit(circuit) && !isExplicitlyRadial;
     
     if (isRingCircuit && (circuit.cableSize ?? 2.5) > 2.5) {
       errors.push({
@@ -202,6 +223,26 @@ export function validateDesign(circuits: any[], incomingSupply: any, projectInfo
         suggestedFix: 'Change to 2.5mm² cable for ring finals or convert to radial circuit'
       });
     }
+
+    // Ring final current capacity validation (special case for parallel conductors)
+    if (isRingCircuit && circuit.calculations) {
+      const { Ib, Iz } = circuit.calculations;
+      if (Ib && Iz) {
+        const loadPerLeg = Ib / 2;
+        if (loadPerLeg > Iz * 1.1) { // Allow 10% margin
+          warnings.push({
+            circuitIndex: index,
+            circuitName: circuit.name,
+            severity: 'warning',
+            category: 'compliance',
+            message: `Ring final load (${Ib}A total, ${loadPerLeg.toFixed(1)}A per leg) may exceed single leg capacity (${Iz}A) if load is unbalanced`,
+            regulation: 'BS 7671 Appendix 15',
+            suggestedFix: 'Ensure socket outlets distributed evenly to balance load across ring'
+          });
+        }
+      }
+    }
+
 
     // Industrial breaking capacity
     if (installationType === 'industrial') {
