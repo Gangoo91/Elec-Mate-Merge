@@ -17,6 +17,7 @@ import { findMatchingTemplate, applyTemplate } from '../_shared/circuit-template
 import { checkCircuitCache, storeCircuitCache } from '../_shared/circuit-level-cache.ts';
 import { extractCircuitsWithAI } from './ai-circuit-extractor.ts';
 import { safeAll, ParallelTask } from '../_shared/safe-parallel.ts';
+import { suggestVoltageDropFix, suggestZsFix } from './auto-fix-handler.ts';
 
 const VERSION = 'v4.0.0-best-in-class'; // PHASE 1-7 optimizations implemented
 
