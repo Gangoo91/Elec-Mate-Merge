@@ -11,13 +11,15 @@ export async function generateCircuitHash(
   loadType: string,
   loadPower: number,
   cableLength: number,
-  voltage: number
+  voltage: number,
+  ze: number
 ): Promise<string> {
   // Normalize to reduce cache misses
   const normalizedPower = Math.round(loadPower / 100) * 100; // Round to nearest 100W
   const normalizedLength = Math.round(cableLength / 5) * 5; // Round to nearest 5m
+  const normalizedZe = Math.round(ze * 100) / 100; // Round to nearest 0.01Ω
   
-  const key = `${loadType.toLowerCase()}_${normalizedPower}W_${normalizedLength}m_${voltage}V`;
+  const key = `${loadType.toLowerCase()}_${normalizedPower}W_${normalizedLength}m_${voltage}V_ze${normalizedZe}`;
   
   // Simple hash (not cryptographic - just for cache key)
   const encoder = new TextEncoder();
@@ -34,14 +36,16 @@ export async function generateCircuitHash(
 export async function checkCircuitCache(
   supabase: any,
   circuit: any,
-  voltage: number
+  voltage: number,
+  ze: number
 ): Promise<any | null> {
   try {
     const hash = await generateCircuitHash(
       circuit.loadType || 'other',
       circuit.loadPower || 1000,
       circuit.cableLength || 10,
-      voltage
+      voltage,
+      ze
     );
     
     console.log('🔍 Checking circuit cache:', { hash, type: circuit.loadType });
@@ -85,6 +89,7 @@ export async function storeCircuitCache(
   supabase: any,
   circuit: any,
   voltage: number,
+  ze: number,
   design: any
 ): Promise<void> {
   try {
@@ -92,7 +97,8 @@ export async function storeCircuitCache(
       circuit.loadType || 'other',
       circuit.loadPower || 1000,
       circuit.cableLength || 10,
-      voltage
+      voltage,
+      ze
     );
     
     console.log('💾 Storing circuit in cache');

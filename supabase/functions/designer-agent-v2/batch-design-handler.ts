@@ -882,7 +882,7 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     
     for (const circuit of circuits) {
       // PHASE 4: Check circuit-level cache first (30-day TTL, ~60% hit rate)
-      const cachedDesign = await checkCircuitCache(supabase, circuit, voltage);
+      const cachedDesign = await checkCircuitCache(supabase, circuit, voltage, supply.ze || 0.35);
       
       if (cachedDesign) {
         logger.info(`💾 Cache hit for "${circuit.name}" (${circuit.loadType})`);
@@ -903,7 +903,7 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
         templatedCircuits.push(design);
         
         // Store in circuit cache for next time
-        await storeCircuitCache(supabase, circuit, voltage, design);
+        await storeCircuitCache(supabase, circuit, voltage, supply.ze || 0.35, design);
         continue;
       }
       
@@ -1279,7 +1279,7 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
       // Store AI-designed circuits in cache for next time
       for (let i = 0; i < aiRequiredCircuits.length; i++) {
         if (designedCircuits[i]) {
-          await storeCircuitCache(supabase, aiRequiredCircuits[i], voltage, designedCircuits[i]);
+          await storeCircuitCache(supabase, aiRequiredCircuits[i], voltage, supply.ze || 0.35, designedCircuits[i]);
         }
       }
       
