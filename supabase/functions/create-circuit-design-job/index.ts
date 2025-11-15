@@ -23,29 +23,75 @@ interface CircuitInput {
 async function extractCircuitsFromPrompt(prompt: string, openAiKey: string): Promise<CircuitInput[]> {
   console.log('🔍 Extracting circuits from prompt:', prompt);
 
-  const systemPrompt = `You are a UK electrical circuit extraction expert. Extract ALL circuits from descriptions.
+  const propertyType = (prompt.match(/\b(domestic|commercial|industrial)\b/i)?.[1] || 'domestic').toLowerCase();
+  
+  const systemPrompt = `You are a UK electrical circuit extraction expert for ${propertyType} installations.
 
-LOAD TYPES: socket, lighting, cooker, shower, ev-charger, immersion, heating, outdoor
+CRITICAL: Generate COMPREHENSIVE circuit lists. For a ${propertyType} installation, you typically need:
+- Domestic: 8-15 circuits (lighting, sockets, dedicated appliances)
+- Commercial: 12-25 circuits (lighting zones, power circuits, IT, emergency systems)
+- Industrial: 15-40 circuits (motors, control panels, distribution, emergency systems)
 
-TYPICAL UK POWER:
+EXTRACT ALL CIRCUITS from the description. If unclear, INFER standard circuits for ${propertyType}.
+
+LOAD TYPES: socket, lighting, cooker, shower, ev-charger, immersion, heating, outdoor, motor, control-panel, emergency-light, fire-alarm, data, hvac, compressor, conveyor
+
+TYPICAL UK POWER VALUES:
 - Socket ring: 7360W
-- Lighting: 1200W  
+- Lighting circuit: 1200W
+- Motor (small): 2200W, (medium): 5500W, (large): 11000W
+- Control panel: 3000W
+- Emergency lighting: 500W
+- Fire alarm: 300W
+- HVAC: 3000-7500W
 - Shower: 8500-10500W
 - EV charger: 7400W
 - Cooker: 9200W
-- Outdoor socket: 3000W
+- Compressor: 7500W
+- Conveyor: 3000-5500W
 
-Return ONLY valid JSON array of circuits. No markdown, no explanation.
+FOR COMMERCIAL/INDUSTRIAL:
+- Create separate zones (e.g., "Front Area Lighting", "Back Area Lighting")
+- Include emergency lighting (BS 5266)
+- Include fire alarm circuits if applicable (BS 5839)
+- Separate circuits for IT/comms equipment
+- Dedicated circuits for high-power equipment
+
+EXAMPLES:
+
+"Retail shop": Generate 8-12 circuits:
+- Display Lighting (front)
+- Display Lighting (back)
+- Socket Ring 1 (till area)
+- Socket Ring 2 (office)
+- Emergency Lighting
+- Security System
+- External Signage
+- Server/IT Equipment
+
+"Production line": Generate 12-20 circuits:
+- Conveyor Motor 1
+- Conveyor Motor 2
+- Control Panel 1
+- Control Panel 2
+- Lighting Zone 1
+- Lighting Zone 2
+- Emergency Lighting
+- Socket Ring (office)
+- Compressor
+- Extraction System
+
+Return ONLY valid JSON array. No markdown.
 
 Format:
 [
   {
-    "name": "Socket Ring 1",
-    "loadType": "socket",
+    "name": "Circuit name",
+    "loadType": "socket|lighting|motor|etc",
     "loadPower": 7360,
     "cableLength": 20,
-    "phases": "single",
-    "specialLocation": "none"
+    "phases": "single"|"three",
+    "specialLocation": "none"|"bathroom"|"outdoor"
   }
 ]`;
 
@@ -74,7 +120,7 @@ Format:
   }
 
   if (!Array.isArray(parsedCircuits) || parsedCircuits.length === 0) {
-    console.error('❌ No circuits extracted');
+    console.warn('⚠️ No circuits extracted from AI, returning empty array');
     return [];
   }
 
@@ -91,6 +137,48 @@ Format:
 
   console.log(`✅ Extracted ${circuits.length} circuits from prompt`);
   return circuits;
+}
+
+/**
+ * Generate intelligent fallback circuits based on property type
+ */
+function generateFallbackCircuits(propertyType: string): CircuitInput[] {
+  const templates: Record<string, CircuitInput[]> = {
+    domestic: [
+      { id: 'fb-1', name: 'Downstairs Lighting', loadType: 'lighting', loadPower: 1000, cableLength: 25, phases: 'single' },
+      { id: 'fb-2', name: 'Upstairs Lighting', loadType: 'lighting', loadPower: 800, cableLength: 30, phases: 'single' },
+      { id: 'fb-3', name: 'Socket Ring 1 (Ground)', loadType: 'socket', loadPower: 7360, cableLength: 35, phases: 'single' },
+      { id: 'fb-4', name: 'Socket Ring 2 (First Floor)', loadType: 'socket', loadPower: 7360, cableLength: 40, phases: 'single' },
+      { id: 'fb-5', name: 'Cooker Circuit', loadType: 'cooker', loadPower: 9200, cableLength: 15, phases: 'single' },
+      { id: 'fb-6', name: 'Shower Circuit', loadType: 'shower', loadPower: 8500, cableLength: 20, phases: 'single' }
+    ],
+    commercial: [
+      { id: 'fb-1', name: 'Front Area Lighting', loadType: 'lighting', loadPower: 1500, cableLength: 30, phases: 'single' },
+      { id: 'fb-2', name: 'Back Area Lighting', loadType: 'lighting', loadPower: 1200, cableLength: 25, phases: 'single' },
+      { id: 'fb-3', name: 'Emergency Lighting', loadType: 'emergency-light', loadPower: 500, cableLength: 35, phases: 'single' },
+      { id: 'fb-4', name: 'Socket Ring 1 (Front)', loadType: 'socket', loadPower: 7360, cableLength: 30, phases: 'single' },
+      { id: 'fb-5', name: 'Socket Ring 2 (Office)', loadType: 'socket', loadPower: 7360, cableLength: 25, phases: 'single' },
+      { id: 'fb-6', name: 'IT Equipment Circuit', loadType: 'data', loadPower: 3000, cableLength: 20, phases: 'single' },
+      { id: 'fb-7', name: 'Fire Alarm System', loadType: 'fire-alarm', loadPower: 300, cableLength: 40, phases: 'single' },
+      { id: 'fb-8', name: 'Security System', loadType: 'socket', loadPower: 500, cableLength: 35, phases: 'single' }
+    ],
+    industrial: [
+      { id: 'fb-1', name: 'Production Lighting Zone 1', loadType: 'lighting', loadPower: 2000, cableLength: 40, phases: 'single' },
+      { id: 'fb-2', name: 'Production Lighting Zone 2', loadType: 'lighting', loadPower: 2000, cableLength: 40, phases: 'single' },
+      { id: 'fb-3', name: 'Office Lighting', loadType: 'lighting', loadPower: 800, cableLength: 25, phases: 'single' },
+      { id: 'fb-4', name: 'Emergency Lighting', loadType: 'emergency-light', loadPower: 600, cableLength: 50, phases: 'single' },
+      { id: 'fb-5', name: 'Motor Circuit 1', loadType: 'motor', loadPower: 5500, cableLength: 30, phases: 'three' },
+      { id: 'fb-6', name: 'Motor Circuit 2', loadType: 'motor', loadPower: 5500, cableLength: 35, phases: 'three' },
+      { id: 'fb-7', name: 'Control Panel 1', loadType: 'control-panel', loadPower: 3000, cableLength: 25, phases: 'single' },
+      { id: 'fb-8', name: 'Socket Ring (Office)', loadType: 'socket', loadPower: 7360, cableLength: 30, phases: 'single' },
+      { id: 'fb-9', name: 'Compressor Circuit', loadType: 'compressor', loadPower: 7500, cableLength: 40, phases: 'three' },
+      { id: 'fb-10', name: 'HVAC System', loadType: 'hvac', loadPower: 5000, cableLength: 35, phases: 'three' }
+    ]
+  };
+  
+  const fallback = templates[propertyType] || templates.domestic;
+  console.log(`📋 Generated ${fallback.length} fallback circuits for ${propertyType} installation`);
+  return fallback;
 }
 
 Deno.serve(async (req) => {
@@ -147,7 +235,11 @@ Deno.serve(async (req) => {
             enrichedInputs.circuits = extractedCircuits;
             console.log(`✅ Extracted ${extractedCircuits.length} circuits from prompt`);
           } else {
-            console.warn('⚠️ No circuits could be extracted from prompt');
+            // Use intelligent fallback based on property type
+            const propertyType = inputs.propertyType || 'domestic';
+            const fallbackCircuits = generateFallbackCircuits(propertyType);
+            enrichedInputs.circuits = fallbackCircuits;
+            console.log(`📋 Using ${fallbackCircuits.length} fallback circuits for ${propertyType} installation`);
           }
         }
       } catch (error) {
