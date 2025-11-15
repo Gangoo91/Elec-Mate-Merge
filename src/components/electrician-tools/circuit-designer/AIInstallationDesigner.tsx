@@ -19,8 +19,6 @@ export const AIInstallationDesigner = () => {
   
   const { 
     job, 
-    startPolling, 
-    stopPolling, 
     progress, 
     status, 
     currentStep, 
@@ -64,7 +62,6 @@ export const AIInstallationDesigner = () => {
 
       console.log('✅ Circuit design job created:', data.jobId);
       setCurrentJobId(data.jobId);
-      startPolling();
 
       // Mark session as active
       sessionStorage.setItem('circuit-design-active', 'true');
@@ -81,7 +78,6 @@ export const AIInstallationDesigner = () => {
   const handleReset = () => {
     setCurrentView('input');
     setCurrentJobId(null);
-    stopPolling();
     sessionStorage.removeItem('circuit-design-active');
   };
 
@@ -103,7 +99,6 @@ export const AIInstallationDesigner = () => {
 
       if (data?.success) {
         toast.success('Design generation cancelled');
-        stopPolling();
         setCurrentView('input');
         setCurrentJobId(null);
         sessionStorage.removeItem('circuit-design-active');
@@ -155,7 +150,6 @@ export const AIInstallationDesigner = () => {
         const job = jobs[0] as any;
         setCurrentJobId(job.id);
         setCurrentView('processing');
-        startPolling();
         
         toast.info("Resuming design generation", {
           description: `Your circuit design is ${job.progress || 0}% complete`
@@ -164,7 +158,7 @@ export const AIInstallationDesigner = () => {
     };
 
     checkForInProgressJobs();
-  }, [startPolling]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background space-y-6">
