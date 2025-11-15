@@ -45,20 +45,20 @@ export const SupplyDetailsStep = ({
   installationType
 }: SupplyDetailsStepProps) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
-        <h2 className="text-2xl font-bold text-foreground mb-2">Supply Details</h2>
-        <p className="text-muted-foreground">Configure the electrical supply characteristics</p>
+        <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-2">Supply Details</h2>
+        <p className="text-sm sm:text-base text-muted-foreground">Configure the electrical supply characteristics</p>
       </div>
 
       <Alert className="bg-blue-500/10 border-blue-500/30">
         <Info className="h-4 w-4 text-blue-400" />
-        <AlertDescription className="text-sm">
+        <AlertDescription className="text-xs sm:text-sm">
           Smart defaults are pre-filled based on your installation type. Adjust only if you have specific requirements.
         </AlertDescription>
       </Alert>
 
-      <div className="grid gap-6">
+      <div className="grid gap-4">
         {/* Primary Supply Settings */}
         <Card className="p-5 border-primary/20">
           <div className="flex items-center gap-2 mb-4">
@@ -133,17 +133,28 @@ export const SupplyDetailsStep = ({
             </div>
 
             {/* PSCC */}
-            <div className="space-y-2">
-              <Label htmlFor="pscc" className="text-base">Prospective Short Circuit Current (kA)</Label>
+            <div className="space-y-3">
+              <Label htmlFor="pscc" className="text-base font-semibold">
+                Prospective Short Circuit Current (PSCC)
+              </Label>
               <MobileInput
                 id="pscc"
                 type="number"
                 step="0.1"
                 value={pscc || ''}
                 onChange={(e) => setPscc(e.target.value ? Number(e.target.value) : undefined)}
-                placeholder="Optional - AI will estimate"
+                placeholder="Leave blank to auto-calculate"
+                hint="AI will calculate based on Ze if not provided"
                 className="text-base"
               />
+              <Alert className="bg-muted/50">
+                <Info className="h-3 w-3" />
+                <AlertDescription className="text-xs space-y-1">
+                  <div><strong>TN-S (0.35Ω):</strong> ~657A typical</div>
+                  <div><strong>TN-C-S (0.35Ω):</strong> ~657A typical</div>
+                  <div><strong>TT (200Ω):</strong> ~1.15A typical</div>
+                </AlertDescription>
+              </Alert>
             </div>
           </div>
         </Card>
