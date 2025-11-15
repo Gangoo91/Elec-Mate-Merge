@@ -208,6 +208,76 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
         )}
       </div>
 
+      {/* Installation Guidance Section */}
+      {circuit.installationGuidance && (
+        <div className="p-4 sm:p-6 border-t border-elec-yellow/10 bg-gradient-to-b from-blue-500/5 to-transparent">
+          <h4 className="text-sm font-semibold text-elec-light mb-3 flex items-center gap-2">
+            <Cable className="h-4 w-4 text-blue-400" />
+            Installation Guidance
+          </h4>
+          <div className="space-y-2 text-sm">
+            <div>
+              <span className="text-white/60">Reference Method:</span>{' '}
+              <span className="text-elec-light font-medium">{circuit.installationGuidance.referenceMethod}</span>
+            </div>
+            {circuit.installationGuidance.clipSpacing && (
+              <div>
+                <span className="text-white/60">Clip Spacing:</span>{' '}
+                <span className="text-elec-light">{circuit.installationGuidance.clipSpacing}</span>
+              </div>
+            )}
+            {circuit.installationGuidance.practicalTips && circuit.installationGuidance.practicalTips.length > 0 && (
+              <div className="mt-3">
+                <div className="text-white/60 mb-1">Practical Tips:</div>
+                <ul className="list-disc list-inside space-y-1 text-white/80">
+                  {circuit.installationGuidance.practicalTips.map((tip, idx) => (
+                    <li key={idx} className="text-xs">{tip}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Expected Test Results Section */}
+      {circuit.expectedTestResults && (
+        <div className="p-4 sm:p-6 border-t border-elec-yellow/10 bg-gradient-to-b from-green-500/5 to-transparent">
+          <h4 className="text-sm font-semibold text-elec-light mb-3 flex items-center gap-2">
+            <CheckCircle2 className="h-4 w-4 text-green-400" />
+            Expected Test Results
+          </h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            {circuit.expectedTestResults.r1r2 && (
+              <div>
+                <div className="text-white/60 mb-1">R1+R2:</div>
+                <div className="text-elec-light">
+                  {circuit.expectedTestResults.r1r2.at20C} (20°C)<br />
+                  {circuit.expectedTestResults.r1r2.at70C} (70°C)
+                </div>
+              </div>
+            )}
+            {circuit.expectedTestResults.insulationResistance && (
+              <div>
+                <div className="text-white/60 mb-1">Insulation:</div>
+                <div className="text-elec-light">
+                  {circuit.expectedTestResults.insulationResistance.minResistance}<br />
+                  <span className="text-white/60 text-xs">@ {circuit.expectedTestResults.insulationResistance.testVoltage}</span>
+                </div>
+              </div>
+            )}
+            {circuit.expectedTestResults.rcdTest && (
+              <div className="col-span-1 sm:col-span-2">
+                <div className="text-white/60 mb-1">RCD Test:</div>
+                <div className="text-elec-light">
+                  1× IΔn: {circuit.expectedTestResults.rcdTest.at1x} | 5× IΔn: {circuit.expectedTestResults.rcdTest.at5x}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Single Action - More Details (optional for desktop) */}
       {onViewWorkings && (
         <div className="p-4 pt-2 border-t border-elec-yellow/10">
