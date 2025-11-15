@@ -682,6 +682,8 @@ export async function intelligentRAGSearch(
     regulationsIntelligence: (params.priorities?.bs7671 ?? 90) / 100,
     practicalWorkIntelligence: (params.priorities?.practical_work ?? 90) / 100
   };
+  
+  console.log('✅ RAG weights configured:', searchWeights);
 
   // 🆕 PHASE 7C: Check RAG cache FIRST
   const { getCachedQuery, cacheQuery, hashQuery } = await import('./query-cache.ts');

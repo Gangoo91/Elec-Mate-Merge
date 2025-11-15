@@ -126,6 +126,27 @@ Deno.serve(async (req) => {
 
     const functionUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/designer-agent-v2`;
 
+    // PHASE 2: Health check designer-agent-v2 before calling
+    console.log('🏥 Health checking designer agent...');
+    try {
+      const healthCheck = await fetch(functionUrl, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`
+        }
+      });
+
+      if (!healthCheck.ok) {
+        throw new Error(`Designer agent is down: ${healthCheck.status}`);
+      }
+
+      const healthData = await healthCheck.json();
+      console.log('✅ Designer agent healthy:', healthData.version);
+    } catch (healthError) {
+      console.error('❌ Designer agent health check failed:', healthError);
+      throw new Error(`Designer agent unavailable: ${healthError.message}`);
+    }
+
     console.log('🚀 Starting designer-agent-v2 in background mode...');
 
     // Fire-and-forget with error handling and timeout: Start the designer without waiting
