@@ -53,6 +53,22 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
 
     fetchInitialJob();
 
+    // Poll as fallback every 10s in case Realtime drops
+    const pollInterval = setInterval(async () => {
+      if (!jobId) return;
+      
+      const { data, error } = await supabase
+        .from('circuit_design_jobs' as any)
+        .select('*')
+        .eq('id', jobId)
+        .single();
+      
+      if (!error && data) {
+        console.log('📊 Polling update:', (data as any).status, (data as any).progress + '%');
+        setJob(data as any as CircuitDesignJob);
+      }
+    }, 10000);
+
     // Subscribe to realtime updates
     const channel = supabase
       .channel(`circuit-design-job-${jobId}`)
@@ -97,12 +113,31 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
           }
         }
       )
-      .subscribe((status) => {
+      .subscribe((status, err) => {
         console.log('📡 Subscription status:', status);
+        
+        if (status === 'CHANNEL_ERROR') {
+          console.error('❌ Realtime channel error, polling will continue');
+        }
+        
+        if (status === 'TIMED_OUT') {
+          console.warn('⏱️ Realtime timed out, polling will continue');
+        }
       });
+
+    // Refetch when user returns to tab
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && jobId) {
+        fetchInitialJob();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
       console.log('🔌 Cleaning up Realtime subscription');
+      clearInterval(pollInterval);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       supabase.removeChannel(channel);
       if (stuckCheckTimeout) {
         clearTimeout(stuckCheckTimeout);
