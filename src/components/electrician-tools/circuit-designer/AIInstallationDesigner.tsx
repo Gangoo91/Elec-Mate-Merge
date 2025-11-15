@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { StructuredDesignWizard } from "./structured-input/StructuredDesignWizard";
 import { DesignReviewEditor } from "./DesignReviewEditor";
+import { CircuitDesignProcessing } from "./CircuitDesignProcessing";
 import { DesignInputs } from "@/types/installation-design";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 import { supabase } from "@/integrations/supabase/client";
@@ -43,17 +44,34 @@ export const AIInstallationDesigner = () => {
       setCurrentView('processing');
       setIsProcessing(true);
       
-      // Direct synchronous call to designer-agent-v2
+      // Direct synchronous call to designer-agent-v2 with properly formatted data
       const { data, error } = await supabase.functions.invoke('designer-agent-v2', {
         body: { 
           mode: 'direct-design',
-          inputs,
+          projectInfo: {
+            projectName: inputs.projectName || 'Untitled Project',
+            location: inputs.location || 'Not specified',
+            clientName: inputs.clientName,
+            electricianName: inputs.electricianName,
+            installationType: inputs.propertyType || 'domestic'
+          },
           supply: {
             voltage: inputs.voltage || 230,
             phases: inputs.phases || 'single',
-            incomingPFC: inputs.pscc || 16000,
-            Ze: inputs.ze || 0.35,
-            earthingSystem: inputs.earthingSystem || 'TN-C-S'
+            pfc: inputs.pscc || 16000,
+            ze: inputs.ze || 0.35,
+            earthingSystem: inputs.earthingSystem || 'TN-C-S',
+            consumerUnitType: 'split-load',
+            mainSwitchRating: 100
+          },
+          circuits: inputs.circuits || [],
+          additionalPrompt: inputs.additionalPrompt || '',
+          specialRequirements: [],
+          installationConstraints: {
+            ambientTemp: inputs.ambientTemp || 30,
+            installationMethod: inputs.installationMethod || 'clipped-direct',
+            groupingFactor: inputs.groupingFactor || 1,
+            budget: inputs.budgetLevel || 'standard'
           }
         }
       });
@@ -133,13 +151,14 @@ export const AIInstallationDesigner = () => {
       )}
 
       {currentView === 'processing' && (
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="text-center space-y-4">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-            <p className="text-muted-foreground">Generating circuit design...</p>
-            <p className="text-sm text-muted-foreground">{userRequest}</p>
-          </div>
-        </div>
+        <CircuitDesignProcessing 
+          circuitCount={totalCircuits || 0}
+          estimatedTime={
+            // Estimate based on circuit count
+            totalCircuits <= 3 ? 20 :
+            totalCircuits <= 10 ? 40 : 60
+          }
+        />
       )}
 
       {currentView === 'results' && designData && (
