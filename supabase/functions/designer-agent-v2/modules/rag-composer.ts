@@ -1,9 +1,9 @@
 /**
  * RAG Composer Module
- * Orchestrates intelligent RAG searches and merges results
+ * Direct RAG searches for Designer Agent V2
+ * Eliminates shared intelligent-rag.ts complexity
  */
 
-import { intelligentRAGSearch } from '../../_shared/intelligent-rag.ts';
 import { searchPracticalWorkIntelligence, formatForAIContext } from '../../_shared/rag-practical-work.ts';
 import { filterRegulationsForCircuit } from '../../_shared/circuit-regulation-mapper.ts';
 
@@ -89,8 +89,74 @@ function getCriticalTopicsForType(type: 'domestic' | 'commercial' | 'industrial'
 }
 
 /**
+ * Helper: Search Design Knowledge (vector)
+ */
+async function searchDesignKnowledge(supabase: any, query: string, keywords: string[], limit: number) {
+  const { data, error } = await supabase.rpc('search_design_knowledge', {
+    query_text: query,
+    match_count: limit
+  });
+  
+  if (error) {
+    console.error('Design knowledge search error:', error);
+    return [];
+  }
+  
+  return data || [];
+}
+
+/**
+ * Helper: Search Regulations Intelligence (keyword)
+ */
+async function searchRegulationsIntelligence(supabase: any, keywords: string[], limit: number) {
+  const queryText = keywords.join(' ');
+  const { data, error } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
+    query_text: queryText,
+    match_count: limit
+  });
+  
+  if (error) {
+    console.error('Regulations intelligence search error:', error);
+    return [];
+  }
+  
+  return (data || []).map((row: any) => ({
+    regulation_number: row.regulation_number,
+    content: row.content || row.regulation_text || '',
+    section: row.section,
+    similarity: row.hybrid_score ? row.hybrid_score / 10 : 0.5 // Normalize
+  }));
+}
+
+/**
+ * Helper: Search Practical Work Intelligence (keyword)
+ */
+async function searchPracticalWorkIntelligenceDirect(supabase: any, params: any) {
+  const { keywords, limit } = params;
+  const queryText = keywords.join(' ');
+  const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
+    query_text: queryText,
+    match_count: limit,
+    filter_trade: null // All trades
+  });
+  
+  if (error) {
+    console.error('Practical work intelligence search error:', error);
+    return [];
+  }
+  
+  return (data || []).map((row: any) => ({
+    content: row.primary_topic || row.content || '',
+    keywords: row.keywords,
+    equipment_category: row.equipment_category,
+    tools_required: row.tools_required,
+    bs7671_regulations: row.bs7671_regulations
+  }));
+}
+
+/**
  * Build RAG searches for circuit design
- * Enhanced with PHASE 2: Pre-structured calculation retrieval
+ * REFACTORED: Direct searches, no shared intelligent-rag.ts
  */
 export async function buildRAGSearches(
   query: string,
@@ -99,11 +165,11 @@ export async function buildRAGSearches(
   supabase: any,
   logger: any,
   installationType?: 'domestic' | 'commercial' | 'industrial',
-  circuits?: any[] // PHASE 2: Pass circuits for targeted calculation lookup
+  circuits?: any[]
 ): Promise<any> {
   const type = installationType || 'domestic';
   
-  logger.info('Performing intelligent RAG search with calculation formula lookup...', { 
+  logger.info('🎯 Designer Agent V2: Direct RAG searches (Design + Regulations + Practical Work)', { 
     searchTerms, 
     installationType: type,
     circuitCount: circuits?.length || 0
@@ -120,32 +186,58 @@ export async function buildRAGSearches(
     logger.info('🚀 FAST PATH: Simple job detected (≤3 circuits, no special locations), using core regulations only');
     
     // Get pre-structured calculations for circuit types
-    const circuitTypes = new Set<string>();
-    circuits.forEach((c: any) => { if (c.loadType) circuitTypes.add(c.loadType); });
+    const circuitTypes = circuits?.map((c: any) => c.circuitType).filter(Boolean) || [];
+    const calculations = await retrieveStructuredCalculations(supabase, circuitTypes);
     
-    const calculations = await retrieveStructuredCalculations(supabase, Array.from(circuitTypes));
-    
+    // Core regulations for simple domestic circuits (hardcoded for speed)
+    const coreRegulations = [
+      {
+        regulation_number: '433.1.1',
+        content: 'Every circuit shall be designed so that a protective device is provided to break any overload current flowing in the circuit conductors before such a current could cause a temperature rise detrimental to insulation, joints, terminations or surroundings.',
+        section: 'Protection against overload current',
+        similarity: 1.0,
+        source: 'fast-path-core'
+      },
+      {
+        regulation_number: '525.1',
+        content: 'The voltage drop between the origin of the installation and any load point shall not exceed 3% of the nominal voltage for lighting circuits and 5% for other uses.',
+        section: 'Voltage drop in consumers installations',
+        similarity: 1.0,
+        source: 'fast-path-core'
+      },
+      {
+        regulation_number: '411.3.2',
+        content: 'RCD protection required for socket-outlets rated up to 20A for use by ordinary persons and intended for general use.',
+        section: 'RCD protection requirements',
+        similarity: 1.0,
+        source: 'fast-path-core'
+      }
+    ];
+
+    logger.info('✅ FAST PATH: Using core regulations', { 
+      regulations: coreRegulations.length,
+      calculations: calculations.length 
+    });
+
     return {
-      regulations: [],
+      regulations: coreRegulations,
       designDocs: [],
       practicalWorkDocs: [],
-      calculations,
-      searchMethod: 'fast-path-core-only',
-      searchTimeMs: 0
+      healthSafetyDocs: [],
+      installationDocs: [],
+      maintenanceDocs: [],
+      structuredCalculations: calculations,
+      searchMethod: 'fast-path-core',
+      totalDocs: coreRegulations.length + calculations.length
     };
   }
 
-  // Otherwise, do full RAG search for complex jobs
-
-  // ============= PHASE 2: RETRIEVE PRE-STRUCTURED CALCULATIONS FIRST =============
-  // Extract circuit types from circuits or search terms
-  const circuitTypes = new Set<string>();
+  // NORMAL PATH: Full RAG searches
+  const startTime = Date.now();
   
   // ============= SELF-CORRECTION KNOWLEDGE INJECTION =============
   if (circuits && circuits.length > 0) {
     circuits.forEach(c => {
-      if (c.loadType) circuitTypes.add(c.loadType);
-      
       // Add RCD-specific searches for circuits that need RCD
       if (c.loadType?.includes('socket') || c.specialLocation === 'bathroom') {
         searchTerms.push('RCBO 30mA Type A selection');
@@ -192,81 +284,45 @@ export async function buildRAGSearches(
     });
   }
   
-  // Add critical topics for installation type
-  const criticalTopics = getCriticalTopicsForType(type);
+  // ===== SEARCH 1: Design Knowledge (Vector) =====
+  const designDocs = await searchDesignKnowledge(supabase, query, searchTerms, 10);
   
-  // Add circuit types from search terms
-  searchTerms.forEach(term => {
-    const lowerTerm = term.toLowerCase();
-    if (lowerTerm.includes('shower')) circuitTypes.add('shower');
-    if (lowerTerm.includes('socket')) circuitTypes.add('socket');
-    if (lowerTerm.includes('lighting')) circuitTypes.add('lighting');
-    if (lowerTerm.includes('cooker')) circuitTypes.add('cooker');
-    if (lowerTerm.includes('ev') || lowerTerm.includes('charger')) circuitTypes.add('ev_charger');
-    if (lowerTerm.includes('motor')) circuitTypes.add('motor');
-    if (lowerTerm.includes('control') || lowerTerm.includes('panel')) circuitTypes.add('control_panel');
-    if (lowerTerm.includes('emergency')) circuitTypes.add('emergency_light');
-    if (lowerTerm.includes('fire') || lowerTerm.includes('alarm')) circuitTypes.add('fire_alarm');
-    if (lowerTerm.includes('data') || lowerTerm.includes('comms')) circuitTypes.add('data');
-    if (lowerTerm.includes('hvac') || lowerTerm.includes('air')) circuitTypes.add('hvac');
-    if (lowerTerm.includes('compressor')) circuitTypes.add('compressor');
-    if (lowerTerm.includes('conveyor')) circuitTypes.add('conveyor');
+  // ===== SEARCH 2: Regulations Intelligence (Keyword) =====
+  const regulations = await searchRegulationsIntelligence(supabase, searchTerms, 15);
+  
+  // ===== SEARCH 3: Practical Work Intelligence (Keyword) =====
+  const practicalWork = await searchPracticalWorkIntelligenceDirect(supabase, {
+    keywords: searchTerms,
+    limit: 12,
+    activity_filter: []
   });
   
-  // Retrieve calculation formulas (FAST: <50ms, no embedding)
-  const calculationFormulas = await retrieveStructuredCalculations(
-    supabase,
-    Array.from(circuitTypes)
-  );
-
-  logger.info('✅ Pre-loaded calculation formulas', { count: calculationFormulas?.length || 0 });
-
-  // ============= WEIGHTED RAG SEARCH =============
-  // Apply custom search weights: 95% design knowledge (vector), 90% regulations/practical (keyword)
-  const ragResults = await intelligentRAGSearch({
-    expandedQuery: query,
-    searchTerms,
-    priorities: {
-      design_knowledge: 95,    // Design docs FIRST: +95% boost, vector search (HIGHEST PRIORITY)
-      bs7671: 90,              // Regulations: +90% boost, keyword search
-      practical_work: 90,      // Practical work: +90% boost, keyword search
-      installation_knowledge: 0,
-      health_safety: 0         // Disabled for designer (focused on design + regs + practical)
-    },
-    limit: 40,
-    installationType: type
-  }, openAiKey, supabase, logger);
+  // PHASE 2: Get pre-structured calculations
+  const circuitTypes = circuits?.map((c: any) => c.circuitType).filter(Boolean) || [];
+  const calculations = await retrieveStructuredCalculations(supabase, circuitTypes);
   
-  logger.info('✅ Weighted RAG search complete', { 
-    regulations: ragResults.regulations.length,
-    designDocs: ragResults.designDocs.length,
-    practicalWorkDocs: ragResults.practicalWorkDocs?.length || 0,
-    searchMethod: ragResults.searchMethod,
-    searchTimeMs: ragResults.searchTimeMs
+  const totalTime = Date.now() - startTime;
+  
+  logger.info('✅ RAG Complete', {
+    designDocs: designDocs.length,
+    regulations: regulations.length,
+    practicalWork: practicalWork.length,
+    calculations: calculations.length,
+    totalTime: `${totalTime}ms`
   });
   
-  // NEW: Add dedicated practical work intelligence search
-  logger.info('🔧 Searching practical work intelligence for installation guidance...');
-  const practicalQuery = `${type} installation practical guidance cable installation methods clip spacing testing commissioning expected results earthing bonding ${circuits?.map(c => c.loadType).join(' ')}`;
-  const practicalWorkResults = await searchPracticalWorkIntelligence(supabase, {
-    query: practicalQuery,
-    matchCount: 15
-  });
+  const ragResults = {
+    regulations,
+    designDocs,
+    practicalWorkDocs: practicalWork,
+    healthSafetyDocs: [],
+    installationDocs: [],
+    maintenanceDocs: [],
+    structuredCalculations: calculations,
+    searchMethod: 'direct-search',
+    totalDocs: designDocs.length + regulations.length + practicalWork.length + calculations.length
+  };
   
-  logger.info(`✅ Found ${practicalWorkResults.results.length} practical work docs (quality: ${practicalWorkResults.qualityScore.toFixed(1)}/100)`);
-  
-  // Merge practical work results into RAG results
-  if (practicalWorkResults.results.length > 0) {
-    ragResults.practicalWorkDocs = [
-      ...(ragResults.practicalWorkDocs || []),
-      ...practicalWorkResults.results
-    ];
-  }
-  
-  // Inject calculation formulas at the top (PHASE 2: Pre-structured calculations)
-  ragResults.calculationFormulas = calculationFormulas;
-  ragResults.designDocs = ragResults.designDocs || [];
-
   // ============= PHASE 2: CIRCUIT-SPECIFIC RAG FILTERING =============
   // Extract unique circuit types from batch
   const circuitTypesSet = new Set(
@@ -305,38 +361,8 @@ export async function buildRAGSearches(
     logger.info(`🔀 ${reason}, keeping all regulations to avoid missing requirements`);
   }
 
-  // PHASE 4: Force-include critical design knowledge based on installation type
-  // Reuse the criticalTopics from earlier (line 167)
-
-  const foundTopics = (ragResults.designDocs || []).map((d: any) => (d.topic || '').toLowerCase());
-  const missingCritical = criticalTopics.filter(topic =>
-    !foundTopics.some(found => found.includes(topic.replace(/ /g, '')))
-  );
-
-  if (missingCritical.length > 0) {
-    logger.warn('Missing critical design knowledge, attempting direct lookup', {
-      missing: missingCritical
-    });
-    
-    const { data: criticalDocs } = await supabase
-      .from('design_knowledge')
-      .select('*')
-      .or(missingCritical.map(topic => 
-        `topic.ilike.%${topic}%`
-      ).join(','))
-      .limit(5);
-      
-    if (criticalDocs && criticalDocs.length > 0) {
-      ragResults.designDocs = ragResults.designDocs || [];
-      ragResults.designDocs.unshift(...criticalDocs);
-      logger.info('✅ Added critical design knowledge', {
-        count: criticalDocs.length,
-        topics: criticalDocs.map((d: any) => d.topic)
-      });
-    }
-  }
-
   return ragResults;
+}
 }
 
 /**
