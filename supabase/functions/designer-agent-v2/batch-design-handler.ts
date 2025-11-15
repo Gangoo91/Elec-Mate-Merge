@@ -1482,24 +1482,6 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
     }
     
     logger.info(`✅ Post-design validation complete. All circuits have compliance warnings attached where applicable.`);
-      
-      // Check that voltage drop calculation exists
-      if (!circuit.calculations?.voltageDrop || 
-          circuit.calculations.voltageDrop.percent === undefined ||
-          circuit.calculations.voltageDrop.percent === 0) {
-        throw new CircuitDesignError(
-          'INCOMPLETE_DESIGN',
-          `Circuit "${circuitName}" is missing voltage drop calculations`,
-          { circuit: circuitName },
-          [
-            'AI did not complete mandatory voltage drop calculations',
-            'This is a critical design requirement',
-            'Please retry generation'
-          ]
-        );
-      }
-    }
-    logger.info('✅ All circuits passed compliance validation');
     
     // 7. Normalise and add PDF fields (using merged circuits)
     const validationStart = Date.now();
