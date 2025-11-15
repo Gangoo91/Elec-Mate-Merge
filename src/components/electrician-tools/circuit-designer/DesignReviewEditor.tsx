@@ -43,6 +43,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   const [selectedCircuitsForInstall, setSelectedCircuitsForInstall] = useState<number[]>([0]);
   const [showCircuitSelector, setShowCircuitSelector] = useState(false);
   const [regeneratingCircuits, setRegeneratingCircuits] = useState<Set<number>>(new Set());
+  const [justificationsPatchVersion, setJustificationsPatchVersion] = useState(0);
 
   // Responsive breakpoint detection
   useEffect(() => {
@@ -129,18 +130,23 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       
       if (needsPatch) {
         console.log('🔧 Patched missing justifications for', 
-          patchedCircuits.filter((c, i) => !design.circuits![i].justifications).length, 
+          patchedCircuits.filter((c, i) => !design.circuits![i].justifications || Object.keys(design.circuits![i].justifications).length === 0).length, 
           'circuits'
         );
+        // Update the design object AND trigger re-render
         design.circuits = patchedCircuits;
+        setJustificationsPatchVersion(prev => prev + 1);
       }
     }
-  }, [design]);
+  }, [design, justificationsPatchVersion]);
 
   // Check if a circuit has placeholder justifications
   const isPlaceholderJustification = (circuit: CircuitDesign): boolean => {
-    if (!circuit.justifications) return false;
+    if (!circuit.justifications || Object.keys(circuit.justifications).length === 0) {
+      return false; // No justifications at all - shouldn't happen after patch
+    }
     const cableJust = circuit.justifications.cableSize || '';
+    // Check for our specific placeholder pattern
     return cableJust.includes('selected for') && cableJust.includes('design current');
   };
 
