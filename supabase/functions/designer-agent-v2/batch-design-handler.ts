@@ -722,6 +722,40 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
   const startTime = Date.now();
   const timings: any = {};
   
+  // Check if running in async mode with job ID
+  const asyncMode = body.asyncMode === true;
+  const jobId = body.jobId;
+  
+  // Create Supabase client for async DB updates
+  let supabaseForProgress: any = null;
+  if (asyncMode && jobId) {
+    supabaseForProgress = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    );
+    console.log(`📡 Running in ASYNC mode for job ${jobId}`);
+  }
+  
+  // Progress callback for async mode
+  const progressCallback = async (progress: number, step: string) => {
+    if (asyncMode && jobId && supabaseForProgress) {
+      try {
+        await supabaseForProgress
+          .from('circuit_design_jobs')
+          .update({ 
+            progress, 
+            current_step: step,
+            status: 'processing',
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', jobId);
+        console.log(`📊 Progress updated: ${progress}% - ${step}`);
+      } catch (error) {
+        console.error('Failed to update progress:', error);
+      }
+    }
+  };
+  
   try {
     // Track context sources
     const { previousAgentOutputs, sharedRegulations, projectDetails, currentDesign } = body;
@@ -1203,6 +1237,10 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
                 
                 logger.info(`✅ Batch ${globalBatchIndex}/${circuitBatches.length} completed: ${batchCircuits.length} circuits designed`);
                 
+                // Update progress for async mode
+                const batchProgress = 20 + Math.floor((globalBatchIndex / circuitBatches.length) * 65);
+                await progressCallback(batchProgress, `Designed batch ${globalBatchIndex}/${circuitBatches.length}...`);
+                
                 return batchCircuits;
               } catch (error: any) {
                 logger.error(`❌ Batch ${globalBatchIndex}/${circuitBatches.length} failed`, { error: error.message });
@@ -1585,6 +1623,25 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
       }
     };
     
+    // Update job to complete if in async mode
+    if (asyncMode && jobId && supabaseForProgress) {
+      await progressCallback(95, 'Finalizing design...');
+      
+      await supabaseForProgress
+        .from('circuit_design_jobs')
+        .update({
+          status: 'complete',
+          progress: 100,
+          current_step: 'Complete',
+          design_data: completeDesign,
+          completed_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', jobId);
+      
+      console.log(`✅ Job ${jobId} marked as complete with ${safeCircuits.length} circuits`);
+    }
+    
     return new Response(
       JSON.stringify({
         version: VERSION,
@@ -1618,6 +1675,21 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
     
   } catch (error) {
     logger.error('Batch design handler error', { error });
+    
+    // Update job to failed if in async mode
+    if (asyncMode && jobId && supabaseForProgress) {
+      await supabaseForProgress
+        .from('circuit_design_jobs')
+        .update({
+          status: 'failed',
+          error_message: error instanceof Error ? error.message : 'Unknown error occurred',
+          progress: 0,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', jobId);
+      
+      console.log(`❌ Job ${jobId} marked as failed`);
+    }
     
     if (error instanceof CircuitDesignError) {
       return error.toResponse(VERSION);
