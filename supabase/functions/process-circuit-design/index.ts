@@ -128,14 +128,34 @@ Deno.serve(async (req) => {
 
     console.log('🚀 Starting designer-agent-v2 in background mode...');
 
-    // Fire-and-forget: Start the designer without waiting
-    fetch(functionUrl, {
+    // Fire-and-forget with error handling: Start the designer without waiting
+    const designerTask = fetch(functionUrl, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(transformedBody)
+    }).then(async (response) => {
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`❌ Designer agent returned error: ${response.status} - ${errorText}`);
+        
+        // Update job to failed with error details
+        await supabase
+          .from('circuit_design_jobs')
+          .update({
+            status: 'failed',
+            error_message: `Designer agent failed: ${response.status} - ${errorText.substring(0, 500)}`,
+            progress: 0,
+            completed_at: new Date().toISOString()
+          })
+          .eq('id', jobId);
+        
+        console.log(`Job ${jobId} marked as failed due to agent error ${response.status}`);
+      } else {
+        console.log(`✅ Designer agent started successfully for job ${jobId}`);
+      }
     }).catch(async (error) => {
       console.error('❌ Failed to start designer agent:', error);
       // Update job status to failed
@@ -144,11 +164,15 @@ Deno.serve(async (req) => {
         .update({
           status: 'failed',
           error_message: `Failed to start design process: ${error.message}`,
-          progress: 0
+          progress: 0,
+          completed_at: new Date().toISOString()
         })
         .eq('id', jobId);
       console.log(`Job ${jobId} marked as failed due to startup error`);
     });
+    
+    // Keep function alive to complete error handling
+    EdgeRuntime.waitUntil(designerTask);
 
     // Update progress to show designer started
     await safeUpdateProgress(20, 'AI circuit designer running in background...');
