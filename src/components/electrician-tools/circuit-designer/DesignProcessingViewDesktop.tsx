@@ -61,7 +61,7 @@ export const DesignProcessingViewDesktop = ({
 
   return (
     <div className="min-h-screen bg-elec-grey">
-      <div className="max-w-7xl mx-auto p-6 space-y-6">
+      <div className="max-w-6xl mx-auto p-6 space-y-6">
         {/* Overall Progress Card */}
         <Card className="border-elec-yellow/20 shadow-lg">
           <CardContent className="pt-6 pb-5 space-y-4">
@@ -98,54 +98,92 @@ export const DesignProcessingViewDesktop = ({
                 </div>
               </div>
 
-              {/* Step Indicator - Centered */}
-              <div className="text-center text-sm text-gray-400 pt-1">
-                Stage {currentStage + 1} of 8
-              </div>
             </div>
+
+            {/* Integrated Stage Indicator */}
+            <div className="flex items-center justify-center gap-2 pt-2 pb-1">
+              {stageDetails.map((_, idx) => (
+                <div
+                  key={idx}
+                  className={`h-1.5 rounded-full transition-all duration-500 ${
+                    idx <= currentStage ? 'w-8 bg-elec-yellow' : 'w-6 bg-gray-700'
+                  }`}
+                />
+              ))}
+              <span className="ml-2 text-xs text-gray-400">
+                Stage {currentStage + 1} of {stageDetails.length}
+              </span>
+            </div>
+
+            {/* User Request - Integrated */}
+            {userRequest && (
+              <div className="mt-4 pt-4 border-t border-elec-yellow/10">
+                <p className="text-xs text-gray-500 mb-1">Your Request:</p>
+                <p className="text-sm text-gray-300 leading-relaxed">{userRequest}</p>
+              </div>
+            )}
           </CardContent>
         </Card>
 
-        {/* Stage Indicator Dots */}
-        <div className="flex justify-center">
-          <StageIndicator currentStage={currentStage} totalStages={8} />
-        </div>
-        {userRequest && (
-          <Card className="p-4 border border-elec-yellow/20 bg-elec-gray">
-            <div className="flex items-start gap-3">
-              <div className="text-2xl">🤖</div>
-              <div className="flex-1">
-                <div className="text-xs font-medium text-muted-foreground mb-1">
-                  Your Request
-                </div>
-                <p className="text-sm">{userRequest}</p>
-              </div>
-            </div>
-          </Card>
-        )}
-        
+        {/* Retry Message */}
         {retryMessage && (
-          <Card className="p-4 bg-amber-500/10 border border-amber-500/30">
-            <p className="text-sm text-amber-600 dark:text-amber-400">{retryMessage}</p>
+          <Card className="border-amber-500/50 bg-amber-500/5">
+            <CardContent className="p-4">
+              <div className="flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-amber-500 mt-0.5 flex-shrink-0" />
+                <div className="flex-1">
+                  <p className="text-sm text-amber-100">{retryMessage}</p>
+                </div>
+              </div>
+            </CardContent>
           </Card>
         )}
 
-        <div className="grid lg:grid-cols-[1fr_400px] gap-6">
-          <div className="space-y-6">
-            <div className="space-y-4">
-              <h3 className="text-xl font-semibold">Live Circuit Generation</h3>
-              <LiveCircuitPreview totalCircuits={totalCircuits} completedCircuits={estimatedCompleted} currentCircuitName={`Circuit ${estimatedCompleted + 1}`} recentlyCompleted={recentlyCompleted} />
-            </div>
-            {onCancel && (
-              <div className="flex justify-center pt-4">
-                <Button variant="outline" onClick={onCancel} className="border-elec-yellow/20 hover:bg-elec-yellow/10 hover:border-elec-yellow/50 transition-colors">Cancel Generation</Button>
-              </div>
-            )}
-          </div>
-          <div className="hidden lg:block">
-            <ProcessingStatsPanel currentStage={currentStage + 1} currentPercent={currentPercent} totalCircuits={totalCircuits} completedCircuits={estimatedCompleted} currentStepName={progress?.message || stageDetails[currentStage]?.name || 'Processing...'} startTime={startTime} />
-          </div>
+        {/* Horizontal Stats Cards */}
+        <div className="grid grid-cols-3 gap-4">
+          <Card className="border-elec-yellow/20">
+            <CardContent className="p-4 text-center">
+              <div className="text-3xl font-bold text-elec-yellow">{currentPercent}%</div>
+              <div className="text-xs text-gray-400 mt-1">Complete</div>
+            </CardContent>
+          </Card>
+          <Card className="border-elec-yellow/20">
+            <CardContent className="p-4 text-center">
+              <div className="text-3xl font-bold text-white">{estimatedCompleted}/{totalCircuits}</div>
+              <div className="text-xs text-gray-400 mt-1">Circuits Designed</div>
+            </CardContent>
+          </Card>
+          <Card className="border-elec-yellow/20">
+            <CardContent className="p-4 text-center">
+              <div className="text-3xl font-bold text-white">{formatTime(elapsedTime)}</div>
+              <div className="text-xs text-gray-400 mt-1">Time Elapsed</div>
+            </CardContent>
+          </Card>
         </div>
+
+        {/* Live Circuit Preview - Full Width */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-white">Live Circuit Generation</h3>
+          <LiveCircuitPreview 
+            totalCircuits={totalCircuits} 
+            completedCircuits={estimatedCompleted} 
+            currentCircuitName={`Circuit ${estimatedCompleted + 1}`} 
+            recentlyCompleted={recentlyCompleted} 
+          />
+        </div>
+
+        {/* Cancel Button - Bottom Right */}
+        {onCancel && (
+          <div className="flex justify-end pt-2">
+            <Button 
+              variant="outline" 
+              onClick={onCancel} 
+              className="border-elec-yellow/20 hover:bg-elec-yellow/10 hover:border-elec-yellow/50 transition-colors"
+            >
+              Cancel Generation
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
