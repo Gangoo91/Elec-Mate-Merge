@@ -17,31 +17,15 @@ import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 interface CircuitBuilderCardProps {
   circuit: CircuitInput;
-  circuitNumber?: number;
-  installationType?: 'domestic' | 'commercial' | 'industrial';
-  onUpdate?: (circuit: CircuitInput) => void;
-  onDelete?: () => void;
-  onRemove?: () => void;
+  circuitNumber: number;
+  installationType: 'domestic' | 'commercial' | 'industrial';
+  onUpdate: (circuit: CircuitInput) => void;
+  onDelete: () => void;
 }
 
-export const CircuitBuilderCard = ({ 
-  circuit, 
-  circuitNumber = 1, 
-  installationType = 'domestic', 
-  onUpdate = () => {}, 
-  onDelete = () => {},
-  onRemove
-}: CircuitBuilderCardProps) => {
+export const CircuitBuilderCard = ({ circuit, circuitNumber, installationType, onUpdate, onDelete }: CircuitBuilderCardProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const isMobile = useMediaQuery('(max-width: 768px)');
-  
-  const handleDelete = () => {
-    if (onRemove) {
-      onRemove();
-    } else {
-      onDelete();
-    }
-  };
 
   const getLoadTypeOptions = () => {
     switch (installationType) {
@@ -209,7 +193,7 @@ export const CircuitBuilderCard = ({
             <Button
               variant="ghost"
               size="sm"
-              onClick={handleDelete}
+              onClick={onDelete}
               className="h-12 w-12 sm:h-10 sm:w-10 md:h-9 md:w-9 touch-manipulation active:scale-95 transition-transform"
             >
               <Trash2 className="h-5 w-5 sm:h-4 sm:w-4" />

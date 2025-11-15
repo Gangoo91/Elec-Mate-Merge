@@ -1,11 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { DesignProgress } from '@/hooks/useAIDesigner';
-import { Clock, XCircle } from 'lucide-react';
+import { CheckCircle2, Loader2, Clock, XCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { DesignProcessingTimeline } from './DesignProcessingTimeline';
-import { CircuitQueueViewer } from './CircuitQueueViewer';
 
 interface DesignProcessingViewProps {
   progress: DesignProgress | null;
@@ -25,150 +23,204 @@ export const DesignProcessingView = ({ progress, retryMessage, onCancel }: Desig
     return () => clearInterval(interval);
   }, [startTime]);
 
-  // Stage definitions
+  // Enhanced stage definitions with detailed descriptions
   const stageDetails = [
-    { name: 'Initialising', description: 'Preparing design service' },
-    { name: 'Understanding Requirements', description: 'Analysing project specifications' },
-    { name: 'Extracting Circuits', description: 'AI parsing circuit descriptions' },
-    { name: 'Searching Regulations', description: 'Querying BS 7671 18th Edition' },
-    { name: 'AI Circuit Design', description: 'Calculating cable sizes & protection' },
-    { name: 'Compliance Validation', description: 'Verifying BS 7671 compliance' },
-    { name: 'Finalising Documentation', description: 'Generating design documentation' },
-    { name: 'Downloading Data', description: 'Transferring design to browser' }
+    { 
+      name: 'Initialising', 
+      description: 'Preparing design service',
+      icon: '🔧',
+      estimatedSeconds: 5
+    },
+    { 
+      name: 'Understanding Requirements', 
+      description: 'Analysing your project specifications',
+      icon: '📋',
+      estimatedSeconds: 5
+    },
+    { 
+      name: 'Extracting Circuits', 
+      description: 'AI parsing circuit descriptions',
+      icon: '⚡',
+      estimatedSeconds: 25
+    },
+    { 
+      name: 'Searching Regulations', 
+      description: 'Querying BS 7671 18th Edition',
+      icon: '📚',
+      estimatedSeconds: 10
+    },
+    { 
+      name: 'AI Circuit Design', 
+      description: 'Calculating cable sizes, protection',
+      icon: '🤖',
+      estimatedSeconds: 125
+    },
+    { 
+      name: 'Compliance Validation', 
+      description: 'Verifying BS 7671 compliance',
+      icon: '✓',
+      estimatedSeconds: 10
+    },
+    { 
+      name: 'Finalising Documentation', 
+      description: 'Generating design documentation',
+      icon: '📄',
+      estimatedSeconds: 3
+    },
+    { 
+      name: 'Downloading Data', 
+      description: 'Transferring design to browser',
+      icon: '⬇️',
+      estimatedSeconds: 5
+    }
   ];
 
-  const currentStage = progress?.stage || 0;
-  const currentPercent = progress?.percent || 0;
-
-  // Create stage status list
-  const stages = stageDetails.map((stage, index) => ({
-    ...stage,
-    status: index < currentStage ? 'complete' : index === currentStage ? 'active' : 'pending'
-  })) as Array<{
-    name: string;
-    description: string;
-    status: 'pending' | 'active' | 'complete';
-  }>;
-
-  // Mock circuit queue for demonstration
-  const mockCircuits = [
-    { name: 'Socket Ring 1', loadType: 'socket', status: currentStage > 3 ? 'complete' : currentStage === 3 ? 'processing' : 'pending' },
-    { name: 'Lighting Circuit 1', loadType: 'lighting', status: currentStage > 4 ? 'complete' : currentStage === 4 ? 'processing' : 'pending' },
-    { name: 'Cooker Circuit', loadType: 'cooker', status: currentStage > 4 ? 'complete' : 'pending' },
-    { name: 'Shower Circuit', loadType: 'shower', status: currentStage > 5 ? 'complete' : 'pending' },
-  ] as Array<{ name: string; loadType: string; status: 'pending' | 'processing' | 'complete' }>;
-
-  const totalEstimatedSeconds = 180;
+  // Calculate estimated completion time
+  const totalEstimatedSeconds = stageDetails.reduce((sum, stage) => sum + stage.estimatedSeconds, 0);
   const remainingSeconds = Math.max(0, totalEstimatedSeconds - elapsedTime);
-
+  
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
   };
 
-  return (
-    <div className="min-h-[60vh] flex items-center justify-center px-4 py-8">
-      <Card className="max-w-6xl w-full">
-        {/* Header */}
-        <CardHeader className="border-b">
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="text-2xl">Generating Your Design</CardTitle>
-              <p className="text-sm text-muted-foreground mt-1">
-                AI is analysing circuits and checking BS 7671:2018+A3:2024 compliance
-              </p>
-            </div>
-            {onCancel && (
-              <Button variant="ghost" size="sm" onClick={onCancel}>
-                <XCircle className="h-4 w-4 mr-2" />
-                Cancel
-              </Button>
-            )}
-          </div>
+  // Determine current stage based on progress
+  const currentStage = progress?.stage || 0;
+  const currentPercent = progress?.percent || 0;
 
-          {/* Progress Bar */}
-          <div className="w-full bg-muted rounded-full h-2 mt-4">
-            <div
-              className="bg-primary h-2 rounded-full transition-all duration-500"
-              style={{ width: `${currentPercent}%` }}
-            />
-          </div>
-          
-          <div className="flex items-center justify-between text-sm mt-2">
-            <span className="text-muted-foreground">Progress: {currentPercent}%</span>
-            <Badge variant="secondary">
-              Stage {currentStage + 1} of {stageDetails.length}
-            </Badge>
-          </div>
-        </CardHeader>
+  return (
+    <div className="min-h-[60vh] flex items-center justify-center px-4">
+      <Card className="p-4 sm:p-6 lg:p-8 max-w-2xl w-full">
+        {/* Header - Mobile optimized */}
+        <div className="text-center mb-4 sm:mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">Generating Your Design</h2>
+          <p className="text-muted-foreground text-xs sm:text-sm">
+            AI is analysing circuits and checking BS 7671 compliance
+          </p>
+        </div>
 
         {/* Retry Message */}
         {retryMessage && (
-          <div className="px-6 pt-4">
-            <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-              <p className="text-sm text-amber-600 dark:text-amber-400">
-                {retryMessage}
-              </p>
-            </div>
+          <div className="mb-4 p-2.5 sm:p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+            <p className="text-xs sm:text-sm text-amber-600 dark:text-amber-400 flex items-center gap-2">
+              <Loader2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 animate-spin flex-shrink-0" />
+              <span className="line-clamp-2">{retryMessage}</span>
+            </p>
           </div>
         )}
 
-        {/* Body - 2 Column Layout */}
-        <CardContent className="p-6">
-          <div className="grid md:grid-cols-[1fr_400px] gap-6">
-            {/* Left Column - Timeline & Activity */}
-            <div className="space-y-6">
-              <div>
-                <h3 className="font-semibold text-lg mb-4">Processing Stages</h3>
-                <DesignProcessingTimeline stages={stages} />
-              </div>
+        {/* Time Statistics - Fixed width, monospace */}
+        <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-4 p-3 bg-muted/50 rounded-lg">
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-1 text-[10px] sm:text-xs text-muted-foreground mb-1">
+              <Clock className="h-3 w-3 flex-shrink-0" />
+              <span>Elapsed</span>
             </div>
-
-            {/* Right Column - Stats & Queue */}
-            <div className="space-y-4">
-              {/* Time Stats */}
-              <Card className="bg-muted/50">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-base flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-primary" />
-                    Time Statistics
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Elapsed</span>
-                    <span className="font-mono font-medium">{formatTime(elapsedTime)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Remaining</span>
-                    <span className="font-mono font-medium">{formatTime(remainingSeconds)}</span>
-                  </div>
-                  <div className="flex justify-between pt-2 border-t">
-                    <span className="text-muted-foreground">Total Estimate</span>
-                    <span className="font-mono font-medium">{formatTime(totalEstimatedSeconds)}</span>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Circuit Queue */}
-              <CircuitQueueViewer circuits={mockCircuits} />
-
-              {/* What's Happening */}
-              <Card className="bg-primary/5 border-primary/20">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-base">What's Happening</CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm text-muted-foreground">
-                  <p>{stages[currentStage]?.description || 'Processing...'}</p>
-                  <p className="mt-2 text-xs">
-                    Referencing BS 7671:2018+A3:2024, Appendices 4 & 15
-                  </p>
-                </CardContent>
-              </Card>
+            <div className="text-base sm:text-lg font-mono font-bold min-w-[70px] sm:min-w-[80px] mx-auto tabular-nums">
+              {formatTime(elapsedTime)}
             </div>
           </div>
-        </CardContent>
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-1 text-[10px] sm:text-xs text-muted-foreground mb-1">
+              <Clock className="h-3 w-3 flex-shrink-0" />
+              <span>Remaining</span>
+            </div>
+            <div className="text-base sm:text-lg font-mono font-bold text-primary min-w-[70px] sm:min-w-[80px] mx-auto tabular-nums">
+              {formatTime(remainingSeconds)}
+            </div>
+          </div>
+        </div>
+
+        {/* Current Stage - Fixed height */}
+        <div className="mb-4 p-3 sm:p-4 bg-elec-yellow/10 border-2 border-elec-yellow/40 rounded-lg min-h-[80px] sm:min-h-[90px] flex items-center shadow-lg">
+          <div className="flex items-center gap-2 sm:gap-3 w-full">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center flex-shrink-0 text-2xl sm:text-3xl">
+              {stageDetails[currentStage]?.icon || '⏳'}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-sm sm:text-base font-bold truncate text-white">
+                {progress?.message || 'Initialising...'}
+              </div>
+              <div className="text-xs sm:text-sm text-elec-light/90 line-clamp-1 mt-0.5">
+                {stageDetails[currentStage]?.description || 'Please wait...'}
+              </div>
+            </div>
+            <div className="text-base sm:text-lg font-mono font-bold text-primary flex-shrink-0 min-w-[40px] sm:min-w-[45px] text-right tabular-nums">
+              {currentPercent}%
+            </div>
+          </div>
+        </div>
+
+        {/* Progress Bar - Larger touch target */}
+        <div className="mb-4">
+          <Progress value={currentPercent} className="h-2.5 sm:h-3" />
+        </div>
+
+        {/* Stage Timeline - Properly aligned with fixed icon column */}
+        <div className="space-y-1 sm:space-y-1.5 mb-4">
+          {stageDetails.map((stage, index) => {
+            const isComplete = currentStage > index;
+            const isCurrent = currentStage === index;
+
+            return (
+              <div
+                key={index}
+                className={`flex items-start gap-0 transition-all ${
+                  isCurrent ? 'bg-primary/10 border-2 border-primary/30 rounded-lg -mx-1 px-3 py-3' : 'px-2 py-2.5'
+                }`}
+              >
+                {/* Fixed-width icon column - 32px */}
+                <div className="w-8 flex items-center justify-center flex-shrink-0 pt-0.5">
+                  {isComplete ? (
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                  ) : isCurrent ? (
+                    <Loader2 className="h-5 w-5 text-primary animate-spin" />
+                  ) : (
+                    <div className="h-5 w-5 rounded-full border-2 border-muted" />
+                  )}
+                </div>
+                
+                {/* Content - flex-grow to fill space */}
+                <div className="flex-1 min-w-0 pl-3 text-left">
+                  <div className={`text-base sm:text-lg font-semibold leading-tight text-left ${
+                    isComplete ? 'text-elec-light/50 line-through' : 
+                    isCurrent ? 'font-bold text-white' : 'text-elec-light/70'
+                  }`}>
+                    {stage.name}
+                  </div>
+                  <div className="text-sm sm:text-base text-elec-light/90 mt-1 leading-relaxed text-left">
+                    {stage.description}
+                  </div>
+                </div>
+                
+                {/* Time estimate - fixed-width right column */}
+                {!isComplete && !isCurrent && (
+                  <div className="w-14 text-right flex-shrink-0 pt-0.5">
+                    <span className="text-sm text-elec-yellow/90 font-mono font-semibold tabular-nums">
+                      ~{stage.estimatedSeconds}s
+                    </span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Cancel Button - Mobile optimized */}
+        {onCancel && (
+          <div className="flex justify-center pt-3 sm:pt-4 border-t">
+            <Button 
+              variant="outline" 
+              onClick={onCancel}
+              className="gap-2 min-h-[44px] touch-manipulation"
+              size="sm"
+            >
+              <XCircle className="h-4 w-4" />
+              <span className="text-xs sm:text-sm">Cancel Generation</span>
+            </Button>
+          </div>
+        )}
       </Card>
     </div>
   );
