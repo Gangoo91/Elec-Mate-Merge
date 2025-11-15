@@ -774,6 +774,7 @@ export async function intelligentRAGSearch(
   let allDesignDocs = reranked.filter(r => r.source === 'design');
   let allInstallationDocs = reranked.filter(r => r.source === 'installation');
   let allMaintenanceDocs = reranked.filter(r => r.source === 'maintenance');
+  let allHealthSafetyDocs = reranked.filter(r => r.source === 'health-safety');
   
   // PRIORITY FUSION: Ensure design docs dominate top results
   const topDesignDocs = allDesignDocs.slice(0, 10);
@@ -838,7 +839,7 @@ export async function intelligentRAGSearch(
 
   const totalTime = Date.now() - totalStartTime;
 
-  console.log(`📊 Total RAG Results (DESIGN-FIRST): ${uniqueDesignDocs.length} design (PRIORITY 1), ${uniqueRegulations.length} regs (PRIORITY 2), ${allHealthSafetyDocs.length} H&S, ${uniqueInstallationDocs.length} installation, ${uniqueMaintenanceDocs.length} maintenance in ${totalTime}ms via ${searchMethod}`);
+  console.log(`📊 Total RAG Results (DESIGN-FIRST): ${uniqueDesignDocs.length} design (95%), ${uniqueRegulations.length} regs (90%), ${uniqueInstallationDocs.length} practical work (90%) in ${totalTime}ms via ${searchMethod}`);
 
   const finalResult = {
     regulations: uniqueRegulations.map(reg => ({
@@ -849,7 +850,7 @@ export async function intelligentRAGSearch(
       source: reg.source || 'vector',
     })),
     designDocs: uniqueDesignDocs,
-    healthSafetyDocs: allHealthSafetyDocs,
+    healthSafetyDocs: [], // Circuit designer doesn't use H&S
     installationDocs: uniqueInstallationDocs,
     maintenanceDocs: uniqueMaintenanceDocs,
     searchMethod,
