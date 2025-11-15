@@ -198,7 +198,91 @@ export function applyTemplate(
   design.cableLength = circuitInput.cableLength || 10;
   design.calculations.Ib = circuitInput.loadPower / (supplyDetails.voltage || 230);
   
-  // Recalculate voltage drop with actual length/power
+  // ===== AUTO-UPGRADE CABLE SIZE FOR HIGH Ze =====
+  const ze = supplyDetails.ze || 0.35;
+  const maxZs = design.calculations.maxZs;
+  const originalCableSize = design.cableSize;
+  const originalCpcSize = design.cpcSize;
+  
+  // Cable upgrade path: 1.5→2.5→4→6→10→16mm²
+  const upgradeOptions = [
+    { live: 1.5, cpc: 1.0 },
+    { live: 2.5, cpc: 1.5 },
+    { live: 4, cpc: 2.5 },
+    { live: 6, cpc: 2.5 },
+    { live: 10, cpc: 4 },
+    { live: 16, cpc: 6 }
+  ];
+  
+  let upgraded = false;
+  let calculatedZs = 0;
+  
+  // Find current cable in upgrade path
+  let currentIndex = upgradeOptions.findIndex(
+    opt => opt.live === originalCableSize && opt.cpc === originalCpcSize
+  );
+  
+  if (currentIndex === -1) {
+    // Custom size not in upgrade path, find closest match
+    currentIndex = upgradeOptions.findIndex(opt => opt.live >= originalCableSize);
+    if (currentIndex === -1) currentIndex = upgradeOptions.length - 1;
+  }
+  
+  // Try current size and larger sizes until compliant
+  for (let i = currentIndex; i < upgradeOptions.length; i++) {
+    const testCable = upgradeOptions[i];
+    design.cableSize = testCable.live;
+    design.cpcSize = testCable.cpc;
+    
+    // Calculate Zs for this cable size
+    const r1PlusR2 = getR1PlusR2(testCable.live, testCable.cpc);
+    calculatedZs = ze + ((r1PlusR2 * circuitInput.cableLength / 1000) * 1.2);
+    
+    console.log(`🔧 Testing ${testCable.live}mm²+${testCable.cpc}mm: Zs=${calculatedZs.toFixed(3)}Ω vs max ${maxZs}Ω`);
+    
+    if (calculatedZs <= maxZs) {
+      // Compliant! Use this size
+      if (i > currentIndex) {
+        upgraded = true;
+        console.log(`✅ Upgraded from ${originalCableSize}mm² to ${testCable.live}mm² for Ze=${ze}Ω compliance`);
+      }
+      break;
+    }
+  }
+  
+  // Store final Zs calculation
+  design.calculations.zs = calculatedZs;
+  
+  // Add upgrade warning if cable was increased
+  if (upgraded) {
+    if (!design.warnings) design.warnings = [];
+    design.warnings.push(
+      `⚠️ Cable upgraded from ${originalCableSize}mm² to ${design.cableSize}mm² due to high Ze (${ze}Ω). ` +
+      `Larger cable reduces earth fault loop impedance to ${calculatedZs.toFixed(3)}Ω (max ${maxZs}Ω).`
+    );
+    
+    // Update justification
+    design.justifications.cableSize = 
+      `${design.cableSize}mm² + ${design.cpcSize}mm CPC selected to meet earth fault loop impedance requirements. ` +
+      `High Ze (${ze}Ω) requires larger cable to ensure Zs ≤ ${maxZs}Ω (calculated: ${calculatedZs.toFixed(3)}Ω). ` +
+      `BS 7671 Regulation 411.4.4.`;
+  }
+  
+  // If still non-compliant after largest cable, mark as needing AI design
+  if (calculatedZs > maxZs) {
+    if (!design.warnings) design.warnings = [];
+    design.warnings.push(
+      `❌ COMPLIANCE FAILURE: Zs (${calculatedZs.toFixed(3)}Ω) exceeds maximum (${maxZs}Ω) even with ${design.cableSize}mm² cable. ` +
+      `Consider: (1) Reducing cable length, (2) Improving Ze, or (3) Using lower-rated protection device.`
+    );
+    
+    // Mark for AI review
+    design.requiresAIReview = true;
+  }
+  
+  // ===== END AUTO-UPGRADE LOGIC =====
+  
+  // Recalculate voltage drop with final cable size
   const mvPerAM = getVoltageDrop(design.cableSize, design.loadType);
   const effectiveLength = design.loadType === 'sockets' 
     ? circuitInput.cableLength / 4 // Ring final divide-by-4 rule
@@ -210,11 +294,6 @@ export function applyTemplate(
     (design.calculations.voltageDrop.volts / (supplyDetails.voltage || 230)) * 100;
   design.calculations.voltageDrop.compliant = 
     design.calculations.voltageDrop.percent <= design.calculations.voltageDrop.limit;
-  
-  // Recalculate Zs with actual length
-  const r1PlusR2 = getR1PlusR2(design.cableSize, design.cpcSize);
-  design.calculations.zs = (supplyDetails.ze || 0.35) + 
-    ((r1PlusR2 * circuitInput.cableLength / 1000) * 1.2); // 1.2 = temperature correction
   
   return design;
 }
