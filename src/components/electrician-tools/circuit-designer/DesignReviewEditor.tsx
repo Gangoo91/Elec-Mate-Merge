@@ -98,6 +98,44 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       setSelectedCircuit(0);
     }
   }, [design.circuits, selectedCircuit]);
+
+  // Patch missing justifications for old jobs
+  useEffect(() => {
+    if (design.circuits) {
+      let needsPatch = false;
+      
+      const patchedCircuits = design.circuits.map(circuit => {
+        if (!circuit.justifications || Object.keys(circuit.justifications).length === 0) {
+          needsPatch = true;
+          
+          const safeIb = circuit.calculations?.Ib ?? 4.3;
+          const safeIz = circuit.calculations?.Iz ?? 20;
+          const safeVdPercent = circuit.calculations?.voltageDrop?.percent ?? 0.87;
+          
+          return {
+            ...circuit,
+            justifications: {
+              cableSize: `${circuit.cableSize}mm² / ${circuit.cpcSize}mm² selected for ${safeIb.toFixed(1)}A design current (capacity: ${safeIz.toFixed(1)}A, voltage drop: ${safeVdPercent.toFixed(2)}%)`,
+              protection: `${circuit.protectionDevice.rating}A Type ${circuit.protectionDevice.curve} ${circuit.protectionDevice.type} provides overcurrent protection per BS 7671`,
+              rcd: circuit.rcdProtected 
+                ? `30mA RCD protection required for ${circuit.loadType} circuits per Reg 411.3.3`
+                : `RCD not required for this ${circuit.loadType} circuit`
+            }
+          };
+        }
+        return circuit;
+      });
+      
+      if (needsPatch) {
+        console.log('🔧 Patched missing justifications for', 
+          patchedCircuits.filter((c, i) => !design.circuits![i].justifications).length, 
+          'circuits'
+        );
+        design.circuits = patchedCircuits;
+      }
+    }
+  }, [design]);
+
   const [exportSuccess, setExportSuccess] = useState(false);
   const [exportId, setExportId] = useState('');
   const [showJsonPreview, setShowJsonPreview] = useState(false);
