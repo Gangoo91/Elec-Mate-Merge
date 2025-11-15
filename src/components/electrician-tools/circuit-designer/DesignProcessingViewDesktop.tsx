@@ -43,25 +43,29 @@ export const DesignProcessingViewDesktop = ({
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="relative overflow-hidden bg-gradient-to-br from-purple-600/10 via-pink-600/10 to-orange-500/10 border-b border-border/50 backdrop-blur-xl">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 via-pink-600/5 to-orange-500/5 animate-gradient-flow bg-[length:200%_200%]" />
-        <div className="relative max-w-7xl mx-auto px-6 py-12">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div className="flex flex-col items-center lg:items-start gap-4">
-              <AnimatedProgressRing progress={currentPercent} size={180} />
-            </div>
-            <div className="flex-1 text-center lg:text-left space-y-4">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background/50 backdrop-blur-sm border border-border/50">
-                <span className="text-sm text-muted-foreground">Stage {currentStage + 1} of 8</span>
+      <div className="border-b bg-card">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          <div className="flex items-center justify-between gap-8">
+            <div className="flex-1 space-y-3">
+              <div className="flex items-center gap-3">
+                <Zap className="w-5 h-5 text-primary" />
+                <h2 className="text-xl font-semibold">AI Circuit Design</h2>
               </div>
-              <div className="space-y-2">
-                <div className="flex items-center gap-3 justify-center lg:justify-start">
-                  <Zap className="w-8 h-8 text-elec-yellow animate-pulse-glow" />
-                  <h2 className="text-3xl font-bold tracking-tight">AI Circuit Design</h2>
-                </div>
-                <p className="text-lg text-muted-foreground">{stageDetails[currentStage]?.description || 'Processing...'}</p>
+              <p className="text-sm text-muted-foreground">
+                Stage {currentStage + 1} of 8 • {stageDetails[currentStage]?.description}
+              </p>
+              <div className="h-2 bg-muted rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-primary transition-all duration-300"
+                  style={{ width: `${currentPercent}%` }}
+                />
               </div>
               <StageIndicator currentStage={currentStage} totalStages={8} />
+            </div>
+            
+            <div className="text-right">
+              <div className="text-3xl font-bold">{currentPercent}%</div>
+              <div className="text-xs text-muted-foreground">Complete</div>
             </div>
           </div>
         </div>
@@ -71,12 +75,14 @@ export const DesignProcessingViewDesktop = ({
         <div className="grid lg:grid-cols-[1fr_400px] gap-6">
           <div className="space-y-6">
             {userRequest && (
-              <Card className="p-6 bg-gradient-to-br from-background/95 to-background/80 backdrop-blur-xl border-border/50 shadow-lg animate-fade-in">
-                <div className="flex items-start gap-4">
-                  <div className="text-4xl animate-pulse-glow">🤖</div>
-                  <div className="space-y-2 flex-1">
-                    <div className="text-sm font-semibold text-elec-yellow">Your Request</div>
-                    <p className="text-lg leading-relaxed font-medium">{userRequest}</p>
+              <Card className="p-4 border">
+                <div className="flex items-start gap-3">
+                  <div className="text-2xl">🤖</div>
+                  <div className="flex-1">
+                    <div className="text-xs font-medium text-muted-foreground mb-1">
+                      Your Request
+                    </div>
+                    <p className="text-sm">{userRequest}</p>
                   </div>
                 </div>
               </Card>
