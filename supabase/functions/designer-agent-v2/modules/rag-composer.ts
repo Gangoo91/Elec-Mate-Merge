@@ -200,9 +200,9 @@ export async function buildRAGSearches(
     priorities: {
       design_knowledge: 95,    // Design docs FIRST: +95% boost, vector search (HIGHEST PRIORITY)
       bs7671: 90,              // Regulations: +90% boost, keyword search
-      practical_work: 90,      // Practical work: +90% boost, keyword search (NEW - was 0)
+      practical_work: 90,      // Practical work: +90% boost, keyword search
       installation_knowledge: 0,
-      health_safety: 85        // Health & Safety: +85% boost, hybrid search (NEW - was 0)
+      health_safety: 0         // Disabled for designer (focused on design + regs + practical)
     },
     limit: 40,
     installationType: type
@@ -212,7 +212,6 @@ export async function buildRAGSearches(
     regulations: ragResults.regulations.length,
     designDocs: ragResults.designDocs.length,
     practicalWorkDocs: ragResults.practicalWorkDocs?.length || 0,
-    healthSafetyDocs: ragResults.healthSafetyDocs.length,
     searchMethod: ragResults.searchMethod,
     searchTimeMs: ragResults.searchTimeMs
   });
@@ -260,7 +259,7 @@ export async function buildRAGSearches(
   }
 
   // PHASE 4: Force-include critical design knowledge based on installation type
-  const criticalTopics = getCriticalTopicsForType(type);
+  // Reuse the criticalTopics from earlier (line 167)
 
   const foundTopics = (ragResults.designDocs || []).map((d: any) => (d.topic || '').toLowerCase());
   const missingCritical = criticalTopics.filter(topic =>
