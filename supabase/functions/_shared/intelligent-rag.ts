@@ -839,8 +839,14 @@ export async function intelligentRAGSearch(
 
   const totalTime = Date.now() - totalStartTime;
 
-  console.log(`📊 Total RAG Results (DESIGN-FIRST): ${uniqueDesignDocs.length} design (95%), ${uniqueRegulations.length} regs (90%), ${uniqueInstallationDocs.length} practical work (90%) in ${totalTime}ms via ${searchMethod}`);
+  // Conditional H&S count based on priority (0 = not needed by this agent)
+  const hsCount = (!priority?.health_safety || priority.health_safety === 0) ? 0 : allHealthSafetyDocs.length;
+  
+  console.log(`📊 Total RAG Results (DESIGN-FIRST): ${uniqueDesignDocs.length} design, ${uniqueRegulations.length} regs, ${hsCount} H&S, ${uniqueInstallationDocs.length} installation, ${uniqueMaintenanceDocs.length} maintenance in ${totalTime}ms via ${searchMethod}`);
 
+  // Return results - respecting each agent's priority settings
+  // Agents with health_safety: 0 get empty array (no search performed)
+  // Agents with health_safety: 50+ get deduplicated H&S docs
   const finalResult = {
     regulations: uniqueRegulations.map(reg => ({
       regulation_number: reg.regulation_number || 'N/A',
@@ -850,7 +856,9 @@ export async function intelligentRAGSearch(
       source: reg.source || 'vector',
     })),
     designDocs: uniqueDesignDocs,
-    healthSafetyDocs: [], // Circuit designer doesn't use H&S
+    healthSafetyDocs: (!priority?.health_safety || priority.health_safety === 0) 
+      ? [] 
+      : Array.from(new Map(allHealthSafetyDocs.map(d => [d.id, d])).values()).slice(0, 5),
     installationDocs: uniqueInstallationDocs,
     maintenanceDocs: uniqueMaintenanceDocs,
     searchMethod,
