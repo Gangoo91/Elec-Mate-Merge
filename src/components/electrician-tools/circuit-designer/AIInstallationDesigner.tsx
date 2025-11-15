@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { DesignInputForm } from "./DesignInputForm";
+import { StructuredDesignWizard } from "./structured-input/StructuredDesignWizard";
 import { DesignProcessingView } from "./DesignProcessingView";
 import { DesignProcessingViewDesktop } from "./DesignProcessingViewDesktop";
 import { DesignReviewEditor } from "./DesignReviewEditor";
@@ -212,7 +212,7 @@ export const AIInstallationDesigner = () => {
       {currentView === 'input' && (
         <>
           <OptimizationTestPanel />
-          <DesignInputForm onGenerate={handleGenerate} isProcessing={status === 'processing'} />
+          <StructuredDesignWizard onGenerate={handleGenerate} isProcessing={status === 'processing'} />
         </>
       )}
 
