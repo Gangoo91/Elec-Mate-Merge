@@ -246,6 +246,8 @@ export interface HybridSearchParams {
   expandedQuery: string;
   context?: ContextEnvelope;
   installationType?: 'domestic' | 'commercial' | 'industrial';
+  priorities?: { design_knowledge?: number; bs7671?: number; practical_work?: number; installation_knowledge?: number; health_safety?: number }; // FIXED: Add priorities
+  limit?: number;
 }
 
 export interface HybridSearchResult {
@@ -673,6 +675,13 @@ export async function intelligentRAGSearch(
   logger: any
 ): Promise<HybridSearchResult> {
   // Supabase and logger are now passed as parameters
+
+  // FIXED: Map priorities to weights
+  const searchWeights = {
+    designKnowledge: (params.priorities?.design_knowledge ?? 95) / 100,
+    regulationsIntelligence: (params.priorities?.bs7671 ?? 90) / 100,
+    practicalWorkIntelligence: (params.priorities?.practical_work ?? 90) / 100
+  };
 
   // 🆕 PHASE 7C: Check RAG cache FIRST
   const { getCachedQuery, cacheQuery, hashQuery } = await import('./query-cache.ts');
