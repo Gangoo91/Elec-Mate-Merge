@@ -22,7 +22,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
   // Mobile view
   if (isMobile) {
-    return <MobileCircuitResults design={design} onReset={onReset} />;
+    return <MobileCircuitResults design={design} onReset={onReset} onExport={() => {}} />;
   }
 
   // Desktop 3-panel layout

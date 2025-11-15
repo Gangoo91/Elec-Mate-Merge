@@ -74,6 +74,12 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
 
   // Circuits
   const [circuits, setCircuits] = useState<CircuitInput[]>([]);
+  const [circuitsOpen, setCircuitsOpen] = useState(false);
+  
+  // Emergency contact (for commercial/industrial)
+  const [emergencyOpen, setEmergencyOpen] = useState(false);
+  const [emergencyContact, setEmergencyContact] = useState('');
+  const [emergencyPhone, setEmergencyPhone] = useState('');
 
   // Auto-detect installation type from prompt
   useEffect(() => {
