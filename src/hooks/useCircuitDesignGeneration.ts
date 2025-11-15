@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface CircuitDesignJob {
@@ -16,9 +16,6 @@ interface CircuitDesignJob {
 
 interface UseCircuitDesignGenerationReturn {
   job: CircuitDesignJob | null;
-  isPolling: boolean;
-  startPolling: () => void;
-  stopPolling: () => void;
   progress: number;
   status: 'idle' | 'pending' | 'processing' | 'complete' | 'failed' | 'cancelled';
   currentStep: string;
@@ -28,15 +25,15 @@ interface UseCircuitDesignGenerationReturn {
 
 export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesignGenerationReturn => {
   const [job, setJob] = useState<CircuitDesignJob | null>(null);
-  const [isPolling, setIsPolling] = useState(false);
-  const [lastProgress, setLastProgress] = useState(0);
-  const [lastCurrentStep, setLastCurrentStep] = useState<string>('');
-  const [lastActivityUpdate, setLastActivityUpdate] = useState(Date.now());
+  const [stuckCheckTimeout, setStuckCheckTimeout] = useState<number | null>(null);
 
-  const pollJob = useCallback(async () => {
+  useEffect(() => {
     if (!jobId) return;
 
-    try {
+    console.log('🔌 Setting up Realtime subscription for job:', jobId);
+
+    // Initial fetch
+    const fetchInitialJob = async () => {
       const { data, error } = await supabase
         .from('circuit_design_jobs' as any)
         .select('*')
@@ -44,97 +41,79 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
         .single();
 
       if (error) {
-        console.error('Polling error:', error);
+        console.error('Error fetching initial job:', error);
         return;
       }
 
-      setJob(data as any);
+      if (data) {
+        console.log('📊 Initial job state:', (data as any).status, (data as any).progress + '%');
+        setJob(data as any as CircuitDesignJob);
+      }
+    };
 
-      // Stuck job detection: 360s timeout (6 minutes) - reset on progress OR step change
-      if ((data as any).status === 'processing') {
-        const hasProgressChanged = (data as any).progress !== lastProgress;
-        const hasStepChanged = (data as any).current_step !== lastCurrentStep;
-        
-        if (hasProgressChanged || hasStepChanged) {
-          setLastProgress((data as any).progress);
-          setLastCurrentStep((data as any).current_step || '');
-          setLastActivityUpdate(Date.now());
-        } else {
-          const stuckDuration = Date.now() - lastActivityUpdate;
-          if (stuckDuration > 360000) {
-            console.error('❌ STUCK JOB DETECTED: No activity in 360s at', (data as any).progress + '%');
-            await supabase
-              .from('circuit_design_jobs' as any)
-              .update({
-                status: 'failed',
-                error_message: 'Generation timed out - no activity detected for 6 minutes. Please try again.'
-              })
-              .eq('id', jobId);
-            setIsPolling(false);
-            return;
+    fetchInitialJob();
+
+    // Subscribe to realtime updates
+    const channel = supabase
+      .channel(`circuit-design-job-${jobId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'circuit_design_jobs',
+          filter: `id=eq.${jobId}`
+        },
+        (payload) => {
+          const updatedJob = payload.new as CircuitDesignJob;
+          console.log('🔄 Realtime update:', {
+            status: updatedJob.status,
+            progress: updatedJob.progress + '%',
+            step: updatedJob.current_step
+          });
+          
+          setJob(updatedJob);
+          
+          // Clear existing stuck check
+          if (stuckCheckTimeout) {
+            clearTimeout(stuckCheckTimeout);
+            setStuckCheckTimeout(null);
+          }
+          
+          // Set new stuck check if processing (6 min timeout)
+          if (updatedJob.status === 'processing') {
+            const timeout = window.setTimeout(async () => {
+              console.error('❌ STUCK JOB: No activity in 6 minutes');
+              await supabase
+                .from('circuit_design_jobs' as any)
+                .update({
+                  status: 'failed',
+                  error_message: 'Generation timed out - no activity for 6 minutes.'
+                })
+                .eq('id', jobId);
+            }, 360000);
+            
+            setStuckCheckTimeout(timeout);
           }
         }
-      }
-
-      // Stop polling when complete, failed, or cancelled
-      if ((data as any).status === 'complete' || (data as any).status === 'failed' || (data as any).status === 'cancelled') {
-        setIsPolling(false);
-      }
-    } catch (error) {
-      console.error('Error polling job:', error);
-    }
-  }, [jobId, lastProgress, lastCurrentStep, lastActivityUpdate]);
-
-  useEffect(() => {
-    if (!jobId || !isPolling) return;
-
-    pollJob();
-
-    // Progressive polling backoff
-    let pollInterval = 1000; // Start at 1s
-    let pollCount = 0;
-    let timeoutId: number;
-
-    const poll = () => {
-      pollJob();
-      pollCount++;
-      
-      if (pollCount === 20) {
-        pollInterval = 5000;
-        console.log('📊 Polling: Switching to 5s interval');
-      }
-      if (pollCount === 40) {
-        pollInterval = 10000;
-        console.log('📊 Polling: Switching to 10s interval');
-      }
-      
-      timeoutId = window.setTimeout(poll, pollInterval);
-    };
-
-    poll();
+      )
+      .subscribe((status) => {
+        console.log('📡 Subscription status:', status);
+      });
 
     return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
+      console.log('🔌 Cleaning up Realtime subscription');
+      supabase.removeChannel(channel);
+      if (stuckCheckTimeout) {
+        clearTimeout(stuckCheckTimeout);
       }
     };
-  }, [jobId, isPolling, pollJob]);
-
-  const startPolling = useCallback(() => {
-    setIsPolling(true);
-  }, []);
-
-  const stopPolling = useCallback(() => {
-    setIsPolling(false);
-  }, []);
+  }, [jobId]);
 
   return {
     job,
-    isPolling,
-    startPolling,
-    stopPolling,
     progress: job?.progress || 0,
-    status: jobId ? ((job?.status as 'idle' | 'pending' | 'processing' | 'complete' | 'failed' | 'cancelled') || 'pending') : 'idle',
+    status: jobId ? ((job?.status as any) || 'pending') : 'idle',
     currentStep: job?.current_step || '',
     designData: job?.design_data,
     error: job?.error_message
