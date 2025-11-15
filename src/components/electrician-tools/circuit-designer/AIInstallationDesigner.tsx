@@ -41,6 +41,12 @@ export const AIInstallationDesigner = () => {
 
   const handleGenerate = async (inputs: DesignInputs) => {
     try {
+      // Store user request and circuit count for processing view
+      const userDescription = inputs.additionalPrompt || 
+        `${inputs.projectName} - ${inputs.circuits.length} circuit${inputs.circuits.length !== 1 ? 's' : ''}`;
+      sessionStorage.setItem('design-user-request', userDescription);
+      sessionStorage.setItem('design-total-circuits', String(inputs.circuits.length));
+
       // Count circuits that require AI processing (complex/non-standard)
       const aiRequiredCircuits = inputs.circuits.filter(c => {
         const isComplex = 
