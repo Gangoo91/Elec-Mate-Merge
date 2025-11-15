@@ -42,6 +42,8 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
   const [ambientTemp, setAmbientTemp] = useState(25);
   const [installationMethod, setInstallationMethod] = useState('clipped-direct');
   const [groupingFactor, setGroupingFactor] = useState(1);
+  const [mainSwitchRating, setMainSwitchRating] = useState<number | undefined>(undefined);
+  const [propertyAge, setPropertyAge] = useState<'new-build' | 'modern' | 'older' | 'very-old' | undefined>(undefined);
 
   // Circuits
   const [circuits, setCircuits] = useState<CircuitInput[]>([]);
@@ -105,10 +107,11 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
       ze,
       earthingSystem,
       pscc,
-      mainSwitchRating: undefined,
+      mainSwitchRating,
       ambientTemp,
       installationMethod: installationMethod as any,
       groupingFactor,
+      propertyAge,
       circuits,
       additionalPrompt: `Structured input design with ${circuits.length} circuits`
     };
@@ -202,6 +205,10 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
             groupingFactor={groupingFactor}
             setGroupingFactor={setGroupingFactor}
             installationType={installationType}
+            mainSwitchRating={mainSwitchRating}
+            setMainSwitchRating={setMainSwitchRating}
+            propertyAge={propertyAge}
+            setPropertyAge={setPropertyAge}
           />
         )}
 
