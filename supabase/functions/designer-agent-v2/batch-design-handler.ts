@@ -987,7 +987,7 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
         }
       };
       
-      return new Response(JSON.stringify({
+      const responsePayload = {
         version: VERSION,
         success: true,
         design: completeDesign,
@@ -1004,7 +1004,36 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
           source: 'cache-and-templates',
           timestamp: new Date().toISOString()
         }
-      }), {
+      };
+      
+      // CRITICAL FIX: Update job status in database when running in async mode
+      if (body.asyncMode && body.jobId) {
+        logger.info(`💾 Async mode - updating job ${body.jobId} in database with cached design`);
+        
+        try {
+          const { error: updateError } = await supabase
+            .from('circuit_design_jobs')
+            .update({
+              status: 'complete',
+              progress: 100,
+              design_data: completeDesign,
+              raw_response: responsePayload,
+              completed_at: new Date().toISOString(),
+              current_step: 'Design complete (from cache)'
+            })
+            .eq('id', body.jobId);
+          
+          if (updateError) {
+            logger.error('Failed to update job in database', { error: updateError });
+          } else {
+            logger.info(`✅ Job ${body.jobId} marked as complete in database`);
+          }
+        } catch (dbError) {
+          logger.error('Database update error in cache path', { error: dbError });
+        }
+      }
+      
+      return new Response(JSON.stringify(responsePayload), {
         status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       });
