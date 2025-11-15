@@ -36,10 +36,10 @@ export const ProjectInfoStep = ({
   setInstallationType
 }: ProjectInfoStepProps) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
-        <h2 className="text-2xl font-bold text-foreground mb-2">Project Information</h2>
-        <p className="text-muted-foreground">Start by telling us about your installation project</p>
+        <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-2">Project Information</h2>
+        <p className="text-sm sm:text-base text-muted-foreground">Start by telling us about your installation project</p>
       </div>
 
       <div className="grid gap-4">
@@ -53,7 +53,7 @@ export const ProjectInfoStep = ({
               return (
                 <Card
                   key={type.value}
-                  className={`p-4 cursor-pointer transition-all touch-manipulation ${
+                  className={`p-5 cursor-pointer transition-all touch-manipulation active:scale-98 ${
                     isSelected
                       ? 'border-primary bg-primary/5 shadow-md'
                       : 'border-border hover:border-primary/50 hover:bg-accent/50'

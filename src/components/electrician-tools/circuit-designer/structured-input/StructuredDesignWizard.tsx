@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { DesignInputs, CircuitInput } from "@/types/installation-design";
 import { ProjectInfoStep } from "./ProjectInfoStep";
@@ -120,38 +121,48 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
   return (
     <div className="space-y-6">
       {/* Progress Header */}
-      <Card className="p-4 sm:p-6">
-        <div className="flex items-center justify-between mb-3">
-          <div>
-            <h3 className="font-semibold text-lg">{STEPS[currentStep].label}</h3>
-            <p className="text-sm text-muted-foreground">{STEPS[currentStep].description}</p>
+      <Card className="p-4 sm:p-6 bg-gradient-to-br from-primary/5 to-accent/5">
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-base sm:text-lg font-semibold text-foreground">Design Your Installation</h3>
+            <Badge variant="secondary" className="text-xs sm:text-sm">
+              {currentStep + 1} / {STEPS.length}
+            </Badge>
           </div>
-          <div className="text-right">
-            <span className="text-sm font-medium text-muted-foreground">
-              Step {currentStep + 1} of {STEPS.length}
-            </span>
+          
+          <Progress value={progressPercentage} className="h-2" />
+          
+          <div className="hidden sm:grid grid-cols-4 gap-2">
+            {STEPS.map((step, index) => (
+              <div
+                key={step.id}
+                className={`text-center transition-all ${
+                  index === currentStep
+                    ? 'text-primary'
+                    : index < currentStep
+                    ? 'text-muted-foreground'
+                    : 'text-muted-foreground/50'
+                }`}
+              >
+                <div
+                  className={`text-xs sm:text-sm font-medium mb-1 ${
+                    index === currentStep ? 'font-bold' : ''
+                  }`}
+                >
+                  {step.label}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  {step.description}
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
-        <Progress value={progressPercentage} className="h-2" />
-
-        {/* Step Pills */}
-        <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
-          {STEPS.map((step, index) => (
-            <button
-              key={step.id}
-              onClick={() => index < currentStep && setCurrentStep(index)}
-              disabled={index > currentStep}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${
-                index === currentStep
-                  ? 'bg-primary text-primary-foreground'
-                  : index < currentStep
-                  ? 'bg-primary/20 text-primary hover:bg-primary/30'
-                  : 'bg-muted text-muted-foreground cursor-not-allowed'
-              }`}
-            >
-              {step.label}
-            </button>
-          ))}
+          
+          {/* Mobile: Current Step Only */}
+          <div className="sm:hidden text-center">
+            <div className="text-sm font-bold text-primary">{STEPS[currentStep].label}</div>
+            <div className="text-xs text-muted-foreground">{STEPS[currentStep].description}</div>
+          </div>
         </div>
       </Card>
 
@@ -225,49 +236,58 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
       </Card>
 
       {/* Navigation */}
-      <Card className="p-4 sticky bottom-4 z-10 shadow-lg">
-        <div className="flex items-center justify-between gap-4">
-          <Button
-            variant="outline"
-            onClick={handleBack}
-            disabled={currentStep === 0 || isProcessing}
-            className="gap-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back
-          </Button>
+      <div className="mt-6 mb-safe">
+        <Card className="p-4 shadow-sm border-t-2 border-primary/20">
+          <div className="flex items-center justify-between gap-4">
+            <Button
+              variant="outline"
+              onClick={handleBack}
+              disabled={currentStep === 0 || isProcessing}
+              className="gap-2 touch-manipulation"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span className="hidden sm:inline">Back</span>
+            </Button>
+            
+            <div className="flex-1 text-center">
+              <p className="text-xs sm:text-sm text-muted-foreground">
+                Step {currentStep + 1} of {STEPS.length}
+              </p>
+            </div>
 
-          {currentStep < STEPS.length - 1 ? (
-            <Button
-              onClick={handleNext}
-              disabled={!canProceed() || isProcessing}
-              className="gap-2"
-            >
-              Next
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          ) : (
-            <Button
-              onClick={handleGenerate}
-              disabled={!canProceed() || isProcessing}
-              size="lg"
-              className="gap-2 bg-gradient-to-r from-primary to-primary/80"
-            >
-              {isProcessing ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
-                  Generating Design...
-                </>
-              ) : (
-                <>
-                  <Sparkles className="h-5 w-5" />
-                  Generate Circuit Design
-                </>
-              )}
-            </Button>
-          )}
-        </div>
-      </Card>
+            {currentStep < STEPS.length - 1 ? (
+              <Button
+                onClick={handleNext}
+                disabled={!canProceed() || isProcessing}
+                className="gap-2 touch-manipulation"
+              >
+                <span className="hidden sm:inline">Next</span>
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            ) : (
+              <Button
+                onClick={handleGenerate}
+                disabled={!canProceed() || isProcessing}
+                size="lg"
+                className="gap-2 bg-gradient-to-r from-primary to-primary/80 touch-manipulation"
+              >
+                {isProcessing ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+                    <span className="hidden sm:inline">Generating Design...</span>
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="h-5 w-5" />
+                    <span className="hidden sm:inline">Generate Circuit Design</span>
+                    <span className="sm:hidden">Generate</span>
+                  </>
+                )}
+              </Button>
+            )}
+          </div>
+        </Card>
+      </div>
     </div>
   );
 };

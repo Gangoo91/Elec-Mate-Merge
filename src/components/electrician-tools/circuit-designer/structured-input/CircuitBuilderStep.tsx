@@ -56,15 +56,15 @@ export const CircuitBuilderStep = ({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
         <div className="flex items-center justify-between mb-2">
-          <h2 className="text-2xl font-bold text-foreground">Build Your Circuits</h2>
-          <Badge variant="secondary" className="text-sm">
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground">Build Your Circuits</h2>
+          <Badge variant="secondary" className="text-xs sm:text-sm">
             {circuits.length} Circuit{circuits.length !== 1 ? 's' : ''}
           </Badge>
         </div>
-        <p className="text-muted-foreground">
+        <p className="text-sm sm:text-base text-muted-foreground">
           Add circuits to your design - be specific about loads and cable runs for accurate calculations
         </p>
       </div>
@@ -87,15 +87,16 @@ export const CircuitBuilderStep = ({
       {circuits.length > 0 && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold">Your Circuits</h3>
+            <h3 className="text-base sm:text-lg font-semibold">Your Circuits</h3>
             <Button
               variant="outline"
               size="sm"
               onClick={addBlankCircuit}
-              className="gap-2"
+              className="gap-2 touch-manipulation"
             >
               <Plus className="h-4 w-4" />
-              Add Custom Circuit
+              <span className="hidden sm:inline">Add Custom Circuit</span>
+              <span className="sm:hidden">Add</span>
             </Button>
           </div>
 
