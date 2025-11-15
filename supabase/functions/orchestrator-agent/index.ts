@@ -9,7 +9,7 @@ import { detectIntents, type IntentAnalysis } from '../_shared/intent-detection.
 import { planAgentSequence, type AgentContext, type AgentOutput, type AgentPlan } from '../_shared/agent-orchestration.ts';
 import { validateResponse } from '../_shared/response-validation.ts';
 import { ResponseCache, isCacheable } from '../_shared/response-cache.ts';
-import { extractCircuitContext } from './extract-circuit-context.ts';
+import { extractCircuitContext } from '../_shared/extract-circuit-context.ts';
 import { validateAgentOutputs, formatValidationReport } from '../_shared/validation-layer.ts';
 
 const corsHeaders = {
