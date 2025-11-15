@@ -110,7 +110,9 @@ Deno.serve(async (req) => {
       additionalPrompt: job.job_inputs.additionalPrompt,
       motorStartingFactor: job.job_inputs.motorStartingFactor,
       faultLevel: job.job_inputs.faultLevel,
-      diversityFactor: job.job_inputs.diversityFactor
+      diversityFactor: job.job_inputs.diversityFactor,
+      asyncMode: true,
+      jobId: jobId
     };
 
   // Validate that we have either circuits or a description
@@ -122,140 +124,46 @@ Deno.serve(async (req) => {
 
     await safeUpdateProgress(15, 'Calling AI designer...');
 
-    // Dynamic timeout based on circuit count and prompt complexity
-    const manualCircuits = transformedBody.circuits.length;
-    const promptLength = transformedBody.additionalPrompt?.length || 0;
-    
-    // Estimate circuits from prompt (rough: 50 chars per circuit description)
-    const estimatedPromptCircuits = promptLength > 0 ? Math.ceil(promptLength / 50) : 0;
-    const totalEstimatedCircuits = Math.max(manualCircuits, estimatedPromptCircuits);
-    
-    // Base 120s + 15s per circuit (max 420s = 7 minutes)
-    const timeoutSeconds = Math.min(420, 120 + (totalEstimatedCircuits * 15));
-    const timeoutMs = timeoutSeconds * 1000;
+    const functionUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/designer-agent-v2`;
 
-    console.log(`⏱️ Dynamic timeout: ${timeoutSeconds}s (${manualCircuits} manual circuits + ~${estimatedPromptCircuits} from prompt)`);
+    console.log('🚀 Starting designer-agent-v2 in background mode...');
 
-    // Use direct fetch to avoid Supabase client timeout issues
-    const abortController = new AbortController();
-    const timeoutId = setTimeout(() => {
-      console.error(`⏱️ Designer call exceeded ${timeoutSeconds}s timeout`);
-      abortController.abort();
-    }, timeoutMs);
+    // Fire-and-forget: Start the designer without waiting
+    fetch(functionUrl, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(transformedBody)
+    }).catch(async (error) => {
+      console.error('❌ Failed to start designer agent:', error);
+      // Update job status to failed
+      await supabase
+        .from('circuit_design_jobs')
+        .update({
+          status: 'failed',
+          error_message: `Failed to start design process: ${error.message}`,
+          progress: 0
+        })
+        .eq('id', jobId);
+      console.log(`Job ${jobId} marked as failed due to startup error`);
+    });
 
-    let designResult;
-    let pollInterval: number | undefined;
-    
-    try {
-      // Start progress polling to provide visibility
-      console.log(`📊 Starting design for ~${totalEstimatedCircuits} circuits...`);
-      pollInterval = setInterval(async () => {
-        try {
-          const { data: jobStatus } = await supabase
-            .from('circuit_design_jobs')
-            .select('progress, current_step, status')
-            .eq('id', jobId)
-            .single();
-            
-          if (jobStatus && jobStatus.status === 'processing') {
-            console.log(`📊 Progress: ${jobStatus.progress}% - ${jobStatus.current_step || 'Processing...'}`);
-          }
-        } catch (e) {
-          // Ignore polling errors
-        }
-      }, 10000); // Poll every 10 seconds
-      
-      const functionUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/designer-agent-v2`;
-      const response = await fetch(functionUrl, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(transformedBody),
-        signal: abortController.signal
-      });
+    // Update progress to show designer started
+    await safeUpdateProgress(20, 'AI circuit designer running in background...');
 
-      clearTimeout(timeoutId);
-      if (pollInterval) clearInterval(pollInterval);
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        
-        // Try to parse JSON error response for structured compliance errors
-        let structuredError = null;
-        try {
-          structuredError = JSON.parse(errorText);
-        } catch {
-          // Not JSON, use raw text
-        }
-
-        // Format compliance errors with suggestions
-        if (structuredError?.error === 'NON_COMPLIANT_DESIGN') {
-          const userMessage = structuredError.message || 'Design does not meet BS 7671 requirements';
-          const suggestions = structuredError.suggestions || [];
-          const formattedError = `${userMessage}\n\nSuggestions:\n${suggestions.map((s: string) => `• ${s}`).join('\n')}`;
-          throw new Error(formattedError);
-        }
-
-        throw new Error(`Designer returned ${response.status}: ${errorText}`);
-      }
-
-      designResult = await response.json();
-      
-      if (!designResult?.success) {
-        // Check if this is a compliance error
-        if (designResult?.error === 'NON_COMPLIANT_DESIGN') {
-          const userMessage = designResult.message || 'Design does not meet BS 7671 requirements';
-          const suggestions = designResult.suggestions || [];
-          const formattedError = `${userMessage}\n\nSuggestions:\n${suggestions.map((s: string) => `• ${s}`).join('\n')}`;
-          throw new Error(formattedError);
-        }
-        throw new Error(designResult?.error || 'Design generation failed');
-      }
-    } catch (error: any) {
-      clearTimeout(timeoutId);
-      if (pollInterval) clearInterval(pollInterval);
-      
-      if (error.name === 'AbortError') {
-        throw new Error(`Design generation timed out after ${timeoutSeconds} seconds. Circuit may be too complex. Try reducing the number of circuits or simplifying the design.`);
-      }
-      
-      throw error;
-    }
-
-    console.log(`✅ Design generated successfully for job ${jobId}`);
-
-    // Store results - handle both response formats: { design: {...} } and { circuits: [...] }
-    const designData = designResult.design || {
-      circuits: designResult.circuits || [],
-      regulations: designResult.regulations || [],
-      projectInfo: designResult.projectInfo || {},
-      supply: designResult.supply || {},
-      metadata: designResult.metadata || {}
-    };
-
-    await supabase
-      .from('circuit_design_jobs')
-      .update({
-        status: 'complete',
-        progress: 100,
-        current_step: 'Design complete',
-        design_data: designData,
-        raw_response: designResult,
-        completed_at: new Date().toISOString()
-      })
-      .eq('id', jobId);
+    console.log(`✅ Designer agent started for job ${jobId} - will update database directly`);
 
     return new Response(
       JSON.stringify({ 
-        success: true,
-        jobId,
-        design: designData 
+        success: true, 
+        message: 'Circuit design started - check job status for real-time updates',
+        jobId: jobId
       }),
       { 
-        status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        status: 202, // 202 Accepted (processing started)
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
       }
     );
 
