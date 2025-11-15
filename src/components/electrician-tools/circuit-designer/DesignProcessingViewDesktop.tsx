@@ -98,7 +98,7 @@ export const DesignProcessingViewDesktop = ({
 
             </div>
 
-            {/* Stage Timeline - Card Based Like Mobile */}
+            {/* Stage Timeline - Clean Card-Based Design */}
             <div className="mt-6 space-y-2">
               {stageDetails.map((stage, idx) => {
                 const isActive = idx === currentStage;
@@ -108,43 +108,40 @@ export const DesignProcessingViewDesktop = ({
                 return (
                   <div
                     key={idx}
-                    className={`p-3 rounded-lg border transition-all duration-300 ${
-                      isActive
-                        ? 'bg-elec-yellow/10 border-elec-yellow/50 shadow-md'
-                        : isComplete
-                        ? 'bg-emerald-500/10 border-emerald-500/30'
-                        : 'bg-gray-800/30 border-gray-700/30'
+                    className={`flex items-center gap-4 p-3 rounded-lg border transition-all ${
+                      isActive ? 'border-elec-yellow bg-elec-yellow/10' : 
+                      isComplete ? 'border-green-500/30 bg-green-500/5' : 
+                      'border-gray-700/30 bg-gray-800/20'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                          isActive
-                            ? 'bg-elec-yellow text-elec-dark'
-                            : isComplete
-                            ? 'bg-emerald-500 text-white'
-                            : 'bg-gray-700 text-gray-400'
-                        }`}
-                      >
-                        {isComplete ? '✓' : stage.icon}
+                    {/* Stage Icon */}
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg ${
+                      isActive ? 'bg-elec-yellow/20 animate-pulse' : 
+                      isComplete ? 'bg-green-500/20' : 
+                      'bg-gray-700/30'
+                    }`}>
+                      {isComplete ? '✓' : stage.icon}
+                    </div>
+                    
+                    {/* Stage Info */}
+                    <div className="flex-1">
+                      <div className={`font-semibold text-sm ${
+                        isActive ? 'text-elec-yellow' : 
+                        isComplete ? 'text-green-400' : 
+                        'text-gray-400'
+                      }`}>
+                        {stage.name}
                       </div>
-                      <div className="flex-1">
-                        <div className={`font-medium text-sm ${
-                          isActive ? 'text-white' : isComplete ? 'text-emerald-300' : 'text-gray-400'
-                        }`}>
-                          {stage.name}
-                        </div>
-                        <div className={`text-xs mt-0.5 ${
-                          isActive ? 'text-gray-200' : 'text-gray-500'
-                        }`}>
-                          {stage.description}
-                        </div>
+                      <div className="text-xs text-gray-200 mt-0.5">
+                        {stage.description}
                       </div>
-                      {isActive && (
-                        <div className="flex-shrink-0">
-                          <div className="w-5 h-5 border-2 border-elec-yellow border-t-transparent rounded-full animate-spin" />
-                        </div>
-                      )}
+                    </div>
+                    
+                    {/* Status Indicator */}
+                    <div className="text-xs">
+                      {isComplete && <span className="text-green-400">✓ Done</span>}
+                      {isActive && <span className="text-elec-yellow animate-pulse">In Progress</span>}
+                      {isPending && <span className="text-gray-500">Pending</span>}
                     </div>
                   </div>
                 );

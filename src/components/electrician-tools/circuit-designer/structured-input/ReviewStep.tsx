@@ -119,7 +119,7 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
       {/* Expected Output */}
       <Card className="p-5 bg-blue-500/5 border-blue-500/20">
         <h3 className="font-semibold mb-3">What You'll Get:</h3>
-        <ul className="space-y-2 text-sm text-muted-foreground">
+        <ul className="space-y-2 text-sm text-gray-100">
           <li className="flex items-start gap-2">
             <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
             <span>BS 7671 compliant cable sizing for each circuit</span>
