@@ -103,7 +103,12 @@ export const AIInstallationDesigner = () => {
   const handleReset = () => {
     setCurrentView('input');
     setCurrentJobId(null);
+    setUserRequest('');
+    setTotalCircuits(0);
+    setRetryMessage(null);
     sessionStorage.removeItem('circuit-design-active');
+    sessionStorage.removeItem('design-user-request');
+    sessionStorage.removeItem('design-total-circuits');
   };
 
   const handleCancel = async () => {
@@ -215,7 +220,8 @@ export const AIInstallationDesigner = () => {
         <>
           {/* Desktop/Tablet View - Full redesign */}
           <div className="hidden lg:block">
-            <DesignProcessingViewDesktop 
+            <DesignProcessingViewDesktop
+              key={currentJobId}
               progress={{ 
                 message: currentStep || status, 
                 stage: getStageFromProgress(progress), 
@@ -231,7 +237,8 @@ export const AIInstallationDesigner = () => {
           {/* Mobile View - Simplified for performance */}
           <div className="block lg:hidden">
             <div className="space-y-4">
-              <DesignProcessingView 
+              <DesignProcessingView
+                key={currentJobId}
                 progress={{ 
                   stage: getStageFromProgress(progress), 
                   message: currentStep || 'Processing...', 
