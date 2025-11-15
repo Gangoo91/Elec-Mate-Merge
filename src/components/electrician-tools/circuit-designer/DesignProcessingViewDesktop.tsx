@@ -54,13 +54,13 @@ export const DesignProcessingViewDesktop = ({
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="border-b bg-card">
+    <div className="min-h-screen bg-elec-grey">
+      <div className="border-b border-elec-yellow/10 bg-elec-gray">
         <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="flex items-center justify-between gap-8">
             <div className="flex-1 space-y-3">
               <div className="flex items-center gap-3">
-                <Zap className="w-5 h-5 text-primary" />
+                <Zap className="w-5 h-5 text-elec-yellow" />
                 <h2 className="text-xl font-semibold">AI Circuit Design</h2>
                 {getStatusBadge()}
               </div>
@@ -69,7 +69,7 @@ export const DesignProcessingViewDesktop = ({
               </p>
               <div className="h-2 bg-muted rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-primary transition-all duration-300"
+                  className="h-full bg-elec-yellow transition-all duration-300"
                   style={{ width: `${currentPercent}%` }}
                 />
               </div>
@@ -88,7 +88,7 @@ export const DesignProcessingViewDesktop = ({
         <div className="grid lg:grid-cols-[1fr_400px] gap-6">
           <div className="space-y-6">
             {userRequest && (
-              <Card className="p-4 border">
+              <Card className="p-4 border border-elec-yellow/20 bg-elec-gray">
                 <div className="flex items-start gap-3">
                   <div className="text-2xl">🤖</div>
                   <div className="flex-1">
@@ -101,17 +101,17 @@ export const DesignProcessingViewDesktop = ({
               </Card>
             )}
             {retryMessage && (
-              <Card className="p-4 bg-amber-500/10 border-amber-500/30">
+              <Card className="p-4 bg-amber-500/10 border border-amber-500/30">
                 <p className="text-sm text-amber-600 dark:text-amber-400">{retryMessage}</p>
               </Card>
             )}
             <div className="space-y-4">
-              <h3 className="text-xl font-bold tracking-tight">Live Circuit Generation</h3>
+              <h3 className="text-xl font-semibold">Live Circuit Generation</h3>
               <LiveCircuitPreview totalCircuits={totalCircuits} completedCircuits={estimatedCompleted} currentCircuitName={`Circuit ${estimatedCompleted + 1}`} recentlyCompleted={recentlyCompleted} />
             </div>
             {onCancel && (
               <div className="flex justify-center pt-4">
-                <Button variant="outline" onClick={onCancel} className="hover:bg-destructive/10 hover:border-destructive/50 hover:text-destructive transition-colors">Cancel Generation</Button>
+                <Button variant="outline" onClick={onCancel} className="border-elec-yellow/20 hover:bg-elec-yellow/10 hover:border-elec-yellow/50 transition-colors">Cancel Generation</Button>
               </div>
             )}
           </div>
