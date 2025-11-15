@@ -147,7 +147,7 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
 
   return {
     job,
-    progress: job?.progress || 0,
+    progress: job?.status === 'failed' ? 0 : (job?.progress || 0), // Show 0% on failure
     status: jobId ? ((job?.status as any) || 'pending') : 'idle',
     currentStep: job?.current_step || '',
     designData: job?.design_data,

@@ -147,10 +147,24 @@ export const AIInstallationDesigner = () => {
       setCurrentView('results');
       toast.success('Circuit design complete!');
     } else if (status === 'failed' && currentView === 'processing') {
-      toast.error('Design generation failed', {
-        description: error || 'Please try again'
-      });
-      setCurrentView('input');
+      // Check if this is a compliance/validation error
+      const isComplianceError = error?.includes('BS 7671') || 
+                                error?.includes('Suggestions:') ||
+                                error?.includes('NON_COMPLIANT');
+      
+      if (isComplianceError) {
+        // Show validation error view for compliance issues
+        setCurrentView('validation-error');
+        toast.error('Design validation failed', {
+          description: 'Please review the compliance issues and adjust your design'
+        });
+      } else {
+        // Show input view for other errors
+        toast.error('Design generation failed', {
+          description: error || 'Please try again'
+        });
+        setCurrentView('input');
+      }
     }
   }, [status, currentView, error]);
 
@@ -239,23 +253,54 @@ export const AIInstallationDesigner = () => {
       )}
 
       {currentView === 'validation-error' && (
-        <div className="space-y-4">
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription className="space-y-2">
-              <p className="font-semibold">Regulation Compliance Issues Detected</p>
-              <p>{error}</p>
-              <p className="text-sm mt-2">
-                The design does not meet BS 7671:2018+A2:2022 requirements. Please review the highlighted regulations and adjust your specifications.
-              </p>
+        <div className="max-w-4xl mx-auto space-y-6">
+          <Alert variant="destructive" className="border-2">
+            <AlertCircle className="h-5 w-5" />
+            <AlertDescription className="space-y-4">
+              <div>
+                <p className="font-bold text-lg mb-2">BS 7671 Compliance Issues Detected</p>
+                <p className="text-sm opacity-90 mb-3">
+                  The design does not meet BS 7671:2018+A2:2022 requirements. Review the issues below and adjust your design parameters.
+                </p>
+              </div>
+              
+              {error && (
+                <div className="bg-background/10 rounded-md p-4 space-y-2 border border-destructive/20">
+                  {error.split('\n').map((line, idx) => (
+                    <p key={idx} className="text-sm font-mono leading-relaxed">
+                      {line}
+                    </p>
+                  ))}
+                </div>
+              )}
+
+              <div className="pt-2 border-t border-destructive/20">
+                <p className="text-xs opacity-75">
+                  Common fixes: Reduce cable length, increase cable size, lower load power, or change installation method.
+                </p>
+              </div>
             </AlertDescription>
           </Alert>
-          <button
-            onClick={handleReset}
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
-          >
-            Revise Design Parameters
-          </button>
+          
+          <div className="flex gap-3 justify-center">
+            <Button
+              onClick={handleReset}
+              variant="default"
+              size="lg"
+            >
+              Adjust Design Parameters
+            </Button>
+            <Button
+              onClick={() => {
+                setCurrentView('input');
+                setCurrentJobId(null);
+              }}
+              variant="outline"
+              size="lg"
+            >
+              Start New Design
+            </Button>
+          </div>
         </div>
       )}
 

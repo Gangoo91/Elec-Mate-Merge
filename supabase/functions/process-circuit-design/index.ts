@@ -181,12 +181,36 @@ Deno.serve(async (req) => {
 
       if (!response.ok) {
         const errorText = await response.text();
+        
+        // Try to parse JSON error response for structured compliance errors
+        let structuredError = null;
+        try {
+          structuredError = JSON.parse(errorText);
+        } catch {
+          // Not JSON, use raw text
+        }
+
+        // Format compliance errors with suggestions
+        if (structuredError?.error === 'NON_COMPLIANT_DESIGN') {
+          const userMessage = structuredError.message || 'Design does not meet BS 7671 requirements';
+          const suggestions = structuredError.suggestions || [];
+          const formattedError = `${userMessage}\n\nSuggestions:\n${suggestions.map((s: string) => `• ${s}`).join('\n')}`;
+          throw new Error(formattedError);
+        }
+
         throw new Error(`Designer returned ${response.status}: ${errorText}`);
       }
 
       designResult = await response.json();
       
       if (!designResult?.success) {
+        // Check if this is a compliance error
+        if (designResult?.error === 'NON_COMPLIANT_DESIGN') {
+          const userMessage = designResult.message || 'Design does not meet BS 7671 requirements';
+          const suggestions = designResult.suggestions || [];
+          const formattedError = `${userMessage}\n\nSuggestions:\n${suggestions.map((s: string) => `• ${s}`).join('\n')}`;
+          throw new Error(formattedError);
+        }
         throw new Error(designResult?.error || 'Design generation failed');
       }
     } catch (error: any) {
@@ -243,6 +267,7 @@ Deno.serve(async (req) => {
         .from('circuit_design_jobs')
         .update({
           status: 'failed',
+          progress: 0, // Reset progress on failure
           error_message: error.message,
           completed_at: new Date().toISOString()
         })
