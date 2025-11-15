@@ -62,7 +62,7 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
   const [electricianName, setElectricianName] = useState('');
   const [installationType, setInstallationType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
 
-  // Supply details (collapsible)
+  // Supply details
   const [supplyOpen, setSupplyOpen] = useState(false);
   const [voltage, setVoltage] = useState(230);
   const [phases, setPhases] = useState<'single' | 'three'>('single');
@@ -72,13 +72,7 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
   const [installationMethod, setInstallationMethod] = useState<'clipped-direct' | 'in-conduit' | 'in-trunking'>('clipped-direct');
   const [groupingFactor, setGroupingFactor] = useState(1);
 
-  // Emergency contacts (collapsible)
-  const [emergencyOpen, setEmergencyOpen] = useState(false);
-  const [emergencyContact, setEmergencyContact] = useState('');
-  const [emergencyPhone, setEmergencyPhone] = useState('');
-
-  // Circuits (collapsible)
-  const [circuitsOpen, setCircuitsOpen] = useState(false);
+  // Circuits
   const [circuits, setCircuits] = useState<CircuitInput[]>([]);
 
   // Auto-detect installation type from prompt
