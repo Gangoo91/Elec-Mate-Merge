@@ -46,32 +46,26 @@ export const DesignProcessingView = ({
       estimatedSeconds: 5
     },
     { 
-      name: 'Extracting Circuits', 
-      description: 'AI parsing circuit descriptions',
-      icon: '⚡',
-      estimatedSeconds: 25
-    },
-    { 
       name: 'Searching Regulations', 
-      description: 'Querying BS 7671 18th Edition',
+      description: 'Querying BS 7671 intelligence database',
       icon: '📚',
-      estimatedSeconds: 10
+      estimatedSeconds: 8
     },
     { 
       name: 'AI Circuit Design', 
-      description: 'Calculating cable sizes, protection',
+      description: 'Calculating cable sizes, protection devices',
       icon: '🤖',
-      estimatedSeconds: 125
+      estimatedSeconds: 40
     },
     { 
       name: 'Compliance Validation', 
       description: 'Verifying BS 7671 compliance',
       icon: '✓',
-      estimatedSeconds: 10
+      estimatedSeconds: 5
     },
     { 
       name: 'Finalising Documentation', 
-      description: 'Generating design documentation',
+      description: 'Generating materials list and guidance',
       icon: '📄',
       estimatedSeconds: 3
     },
@@ -79,7 +73,7 @@ export const DesignProcessingView = ({
       name: 'Downloading Data', 
       description: 'Transferring design to browser',
       icon: '⬇️',
-      estimatedSeconds: 5
+      estimatedSeconds: 2
     }
   ];
 
@@ -98,7 +92,7 @@ export const DesignProcessingView = ({
     ? Math.floor((currentPercent / 100) * totalCircuits)
     : 0;
 
-  const EXPECTED_TOTAL_SECONDS = 180;
+  const EXPECTED_TOTAL_SECONDS = 70;
   const estimatedTimeRemaining = Math.max(0, EXPECTED_TOTAL_SECONDS - elapsedTime);
 
   return (
@@ -115,8 +109,8 @@ export const DesignProcessingView = ({
 
               {/* Title */}
               <div className="text-center">
-                <h2 className="text-xl sm:text-2xl font-bold mb-2">AI Circuit Designer</h2>
-                <p className="text-muted-foreground text-sm">
+              <h2 className="text-xl sm:text-2xl font-bold mb-2">AI Circuit Designer</h2>
+                <p className="text-gray-100 text-sm">
                   Designing your installation with BS 7671 compliance...
                 </p>
               </div>
