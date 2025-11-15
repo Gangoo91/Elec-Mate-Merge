@@ -25,6 +25,7 @@ import { useNavigate } from 'react-router-dom';
 import { calculateExpectedR1R2, getMaxZsForDevice, mapLoadTypeToCircuitDescription } from '@/utils/eic-transformer';
 import { MobileCircuitResults } from './MobileCircuitResults';
 import { CircuitCard } from './CircuitCard';
+import { RequestSummaryHeader } from './RequestSummaryHeader';
 
 interface DesignReviewEditorProps {
   design: InstallationDesign;
@@ -938,6 +939,9 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   // Desktop view
   return (
     <div className="space-y-6">
+      {/* Request Summary Header */}
+      <RequestSummaryHeader design={design} />
+
       {/* Agent Flow Diagram */}
       <AgentFlowDiagram currentAgent="designer" onQuickForward={handleQuickForward} />
 

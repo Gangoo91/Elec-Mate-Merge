@@ -12,6 +12,7 @@ import { CircuitBuilderCard } from './CircuitBuilderCard';
 import { SmartSuggestionPanel } from './SmartSuggestionPanel';
 import { InstallationTypeDetection } from './InstallationTypeDetection';
 import { PromptExamples } from './PromptExamples';
+import { DesignInputSummary } from './DesignInputSummary';
 import { DesignInputs, CircuitInput } from '@/types/installation-design';
 import { DOMESTIC_TEMPLATES, COMMERCIAL_TEMPLATES, INDUSTRIAL_TEMPLATES, SMART_DEFAULTS } from '@/lib/circuit-templates';
 import { Sparkles, Zap, ChevronDown, Plus, Info, Lightbulb, Building2, House, Building, Factory, FlaskConical } from 'lucide-react';
@@ -62,7 +63,7 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
   const [electricianName, setElectricianName] = useState('');
   const [installationType, setInstallationType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
 
-  // Supply details (collapsible)
+  // Supply details (collapsible) - Default closed
   const [supplyOpen, setSupplyOpen] = useState(false);
   const [voltage, setVoltage] = useState(230);
   const [phases, setPhases] = useState<'single' | 'three'>('single');
@@ -72,12 +73,12 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
   const [installationMethod, setInstallationMethod] = useState<'clipped-direct' | 'in-conduit' | 'in-trunking'>('clipped-direct');
   const [groupingFactor, setGroupingFactor] = useState(1);
 
-  // Emergency contacts (collapsible)
+  // Emergency contacts (collapsible) - Default closed
   const [emergencyOpen, setEmergencyOpen] = useState(false);
   const [emergencyContact, setEmergencyContact] = useState('');
   const [emergencyPhone, setEmergencyPhone] = useState('');
 
-  // Circuits (collapsible)
+  // Circuits (collapsible) - Default closed
   const [circuitsOpen, setCircuitsOpen] = useState(false);
   const [circuits, setCircuits] = useState<CircuitInput[]>([]);
 
@@ -302,6 +303,14 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
           />
         </div>
       </Card>
+
+      {/* Design Preview Summary */}
+      <DesignInputSummary
+        promptDescription={promptDescription}
+        installationType={installationType}
+        circuits={circuits}
+        detectionConfidence={detectionConfidence}
+      />
 
       {/* 2. PROJECT INFORMATION */}
       <Card className="p-4 sm:p-6">

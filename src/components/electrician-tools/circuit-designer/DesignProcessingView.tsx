@@ -4,16 +4,26 @@ import { Button } from '@/components/ui/button';
 import { DesignProgress } from '@/hooks/useAIDesigner';
 import { CheckCircle2, Loader2, Clock, XCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { LiveCircuitPreview } from './LiveCircuitPreview';
 
 interface DesignProcessingViewProps {
   progress: DesignProgress | null;
   retryMessage?: string | null;
   onCancel?: () => void;
+  userRequest?: string;
+  totalCircuits?: number;
 }
 
-export const DesignProcessingView = ({ progress, retryMessage, onCancel }: DesignProcessingViewProps) => {
+export const DesignProcessingView = ({ 
+  progress, 
+  retryMessage, 
+  onCancel, 
+  userRequest,
+  totalCircuits = 0 
+}: DesignProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [startTime] = useState(Date.now());
+  const [recentlyCompleted, setRecentlyCompleted] = useState<string[]>([]);
 
   // Track elapsed time
   useEffect(() => {
@@ -89,16 +99,33 @@ export const DesignProcessingView = ({ progress, retryMessage, onCancel }: Desig
   const currentStage = progress?.stage || 0;
   const currentPercent = progress?.percent || 0;
 
+  // Estimate completed circuits based on progress
+  const estimatedCompleted = totalCircuits > 0 
+    ? Math.floor((currentPercent / 100) * totalCircuits)
+    : 0;
+
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-4">
       <Card className="p-4 sm:p-6 lg:p-8 max-w-2xl w-full">
         {/* Header - Mobile optimized */}
         <div className="text-center mb-4 sm:mb-6">
-          <h2 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">Generating Your Design</h2>
+          <h2 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">🤖 AI Circuit Designer</h2>
           <p className="text-muted-foreground text-xs sm:text-sm">
-            AI is analysing circuits and checking BS 7671 compliance
+            Designing your installation with BS 7671 compliance...
           </p>
         </div>
+
+        {/* User Request Recap */}
+        {userRequest && (
+          <Card className="mb-4 sm:mb-6 bg-primary/5 border-primary/20">
+            <div className="p-3 sm:p-4">
+              <h3 className="text-xs sm:text-sm font-medium text-muted-foreground mb-1">Your Request:</h3>
+              <p className="text-sm sm:text-base text-foreground line-clamp-2">
+                {userRequest}
+              </p>
+            </div>
+          </Card>
+        )}
 
         {/* Retry Message */}
         {retryMessage && (
@@ -153,9 +180,21 @@ export const DesignProcessingView = ({ progress, retryMessage, onCancel }: Desig
         </div>
 
         {/* Progress Bar - Larger touch target */}
-        <div className="mb-4">
+        <div className="mb-4 sm:mb-6">
           <Progress value={currentPercent} className="h-2.5 sm:h-3" />
         </div>
+
+        {/* Live Circuit Preview */}
+        {totalCircuits > 0 && (
+          <div className="mb-4 sm:mb-6">
+            <LiveCircuitPreview
+              totalCircuits={totalCircuits}
+              completedCircuits={estimatedCompleted}
+              currentCircuitName={progress?.message}
+              recentlyCompleted={recentlyCompleted}
+            />
+          </div>
+        )}
 
         {/* Stage Timeline - Properly aligned with fixed icon column */}
         <div className="space-y-1 sm:space-y-1.5 mb-4">
