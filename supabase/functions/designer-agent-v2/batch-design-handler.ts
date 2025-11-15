@@ -508,7 +508,12 @@ function extractSearchTerms(query: string, circuits: any[]): string[] {
  * Ensure all PDF-required fields are present on circuit
  * PRESERVED FROM ORIGINAL - Maps AI output to PDF template requirements
  */
-function ensurePDFFields(circuit: any): any {
+function ensurePDFFields(circuit: any, index?: number): any {
+  // CRITICAL: Add circuit number FIRST (required for EIC and validation)
+  if (index !== undefined) {
+    circuit.circuitNumber = index + 1;
+  }
+  
   // CRITICAL: Add cableSize/cpcSize defaults FIRST before any property access
   if (circuit.cableSize === undefined || circuit.cableSize === null) circuit.cableSize = 2.5;
   if (circuit.cpcSize === undefined || circuit.cpcSize === null) circuit.cpcSize = 1.5;
@@ -827,7 +832,7 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
         electricianName: projectInfo?.electricianName,
         installationType: projectInfo?.installationType || 'domestic',
         
-        circuits: allDesigns.map(c => ensurePDFFields(safeCircuit(c))),
+        circuits: allDesigns.map((c, idx) => ensurePDFFields(safeCircuit(c), idx)),
         
         consumerUnit: {
           type: supply?.consumerUnitType || 'split-load',
@@ -1304,9 +1309,9 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
     
     // 7. Normalise and add PDF fields (using merged circuits)
     const validationStart = Date.now();
-    const processedCircuits = allDesignedCircuits.map(c => {
+    const processedCircuits = allDesignedCircuits.map((c, idx) => {
       const safe = safeCircuit(c);
-      return ensurePDFFields(safe);
+      return ensurePDFFields(safe, idx);
     });
     
     // 8. Validate design
