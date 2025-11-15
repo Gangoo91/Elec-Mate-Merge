@@ -5,7 +5,6 @@ import { DesignProcessingViewDesktop } from "./DesignProcessingViewDesktop";
 import { DesignReviewEditor } from "./DesignReviewEditor";
 import { DesignInputs } from "@/types/installation-design";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
-import { OptimizationTestPanel } from "./OptimizationTestPanel";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -30,17 +29,15 @@ export const AIInstallationDesigner = () => {
     error 
   } = useCircuitDesignGeneration(currentJobId);
 
-  // Map progress percentage to stage numbers for visual feedback
+  // Map progress percentage to stage numbers for visual feedback (simplified stages)
   const getStageFromProgress = (percent: number): number => {
     if (percent === 0) return 0;
-    if (percent <= 5) return 1;   // Initializing
-    if (percent <= 10) return 2;  // Understanding Requirements
-    if (percent <= 35) return 3;  // Extracting Circuits / AI Design
-    if (percent <= 45) return 4;  // Searching Regulations
-    if (percent <= 85) return 5;  // AI Circuit Design (main phase)
-    if (percent <= 90) return 6;  // Compliance Validation
-    if (percent <= 95) return 7;  // Finalizing Documentation
-    return 8; // Downloading Data
+    if (percent <= 10) return 1;  // Initializing
+    if (percent <= 30) return 2;  // RAG Search (improved with structured data)
+    if (percent <= 85) return 3;  // AI Circuit Design (main phase)
+    if (percent <= 92) return 4;  // Compliance Validation
+    if (percent <= 98) return 5;  // Finalizing Documentation
+    return 6; // Complete
   };
 
   const handleGenerate = async (inputs: DesignInputs) => {
@@ -210,10 +207,7 @@ export const AIInstallationDesigner = () => {
       <AgentInbox currentAgent="designer" onTaskAccept={handleTaskAccept} />
 
       {currentView === 'input' && (
-        <>
-          <OptimizationTestPanel />
-          <StructuredDesignWizard onGenerate={handleGenerate} isProcessing={status === 'processing'} />
-        </>
+        <StructuredDesignWizard onGenerate={handleGenerate} isProcessing={status === 'processing'} />
       )}
 
       {currentView === 'processing' && (

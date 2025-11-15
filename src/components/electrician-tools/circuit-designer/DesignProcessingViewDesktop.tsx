@@ -1,6 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { LiveCircuitPreview } from "./LiveCircuitPreview";
 import { DesignProgress } from "@/hooks/useAIDesigner";
 import { useState, useEffect } from "react";
 import { Zap, Clock, AlertCircle } from "lucide-react";
@@ -159,17 +158,6 @@ export const DesignProcessingViewDesktop = ({
               <div className="text-xs text-gray-400 mt-1">Time Elapsed</div>
             </CardContent>
           </Card>
-        </div>
-
-        {/* Live Circuit Preview - Full Width */}
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-white">Live Circuit Generation</h3>
-          <LiveCircuitPreview 
-            totalCircuits={totalCircuits} 
-            completedCircuits={estimatedCompleted} 
-            currentCircuitName={`Circuit ${estimatedCompleted + 1}`} 
-            recentlyCompleted={recentlyCompleted} 
-          />
         </div>
 
         {/* Cancel Button - Bottom Right */}

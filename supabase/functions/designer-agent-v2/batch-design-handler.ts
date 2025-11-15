@@ -15,7 +15,6 @@ import { seedDesignKnowledge } from '../_shared/seed-design-knowledge.ts';
 import { checkCircuitDesignCache, storeCircuitDesign } from '../_shared/circuit-design-cache.ts';
 import { findMatchingTemplate, applyTemplate } from '../_shared/circuit-templates.ts';
 import { checkCircuitCache, storeCircuitCache } from '../_shared/circuit-level-cache.ts';
-import { extractCircuitsWithAI } from './ai-circuit-extractor.ts';
 import { safeAll, ParallelTask } from '../_shared/safe-parallel.ts';
 import { suggestVoltageDropFix, suggestZsFix } from './auto-fix-handler.ts';
 
