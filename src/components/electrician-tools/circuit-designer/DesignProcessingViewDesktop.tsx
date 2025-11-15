@@ -1,9 +1,12 @@
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { LiveCircuitPreview } from './LiveCircuitPreview';
-import { ProcessingStatsPanel } from './ProcessingStatsPanel';
-import { DesignProgress } from '@/hooks/useAIDesigner';
-import { useState, useEffect } from 'react';
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { LiveCircuitPreview } from "./LiveCircuitPreview";
+import { ProcessingStatsPanel } from "./ProcessingStatsPanel";
+import { AnimatedProgressRing } from "./AnimatedProgressRing";
+import { StageIndicator } from "./StageIndicator";
+import { DesignProgress } from "@/hooks/useAIDesigner";
+import { useState } from "react";
+import { Zap } from "lucide-react";
 
 interface DesignProcessingViewDesktopProps {
   progress: DesignProgress | null;
@@ -20,14 +23,12 @@ export const DesignProcessingViewDesktop = ({
   onCancel,
   retryMessage
 }: DesignProcessingViewDesktopProps) => {
-  const [startTime] = useState(Date.now());
-  const [recentlyCompleted, setRecentlyCompleted] = useState<string[]>([]);
+  const [startTime] = useState(new Date());
+  const [recentlyCompleted] = useState<string[]>([]);
 
   const currentStage = progress?.stage || 0;
   const currentPercent = progress?.percent || 0;
-  const estimatedCompleted = totalCircuits > 0 
-    ? Math.floor((currentPercent / 100) * totalCircuits)
-    : 0;
+  const estimatedCompleted = totalCircuits > 0 ? Math.floor((currentPercent / 100) * totalCircuits) : 0;
 
   const stageDetails = [
     { name: 'Initialising', description: 'Preparing design service' },
@@ -41,104 +42,64 @@ export const DesignProcessingViewDesktop = ({
   ];
 
   return (
-    <div className="grid lg:grid-cols-[1fr_360px] xl:grid-cols-[1fr_400px] gap-6">
-      {/* Left Column - Live Preview Grid (65%) */}
-      <div className="space-y-4">
-        {/* User Request Recap */}
-        {userRequest && (
-          <Card className="bg-primary/5 border-primary/20">
-            <div className="p-4">
-              <h3 className="text-sm font-medium text-muted-foreground mb-1">Your Request:</h3>
-              <p className="text-base text-foreground">{userRequest}</p>
+    <div className="min-h-screen bg-background">
+      <div className="relative overflow-hidden bg-gradient-to-br from-purple-600/10 via-pink-600/10 to-orange-500/10 border-b border-border/50 backdrop-blur-xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 via-pink-600/5 to-orange-500/5 animate-gradient-flow bg-[length:200%_200%]" />
+        <div className="relative max-w-7xl mx-auto px-6 py-12">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div className="flex flex-col items-center lg:items-start gap-4">
+              <AnimatedProgressRing progress={currentPercent} size={180} />
             </div>
-          </Card>
-        )}
-
-        {/* Retry Message */}
-        {retryMessage && (
-          <Card className="bg-amber-500/10 border-amber-500/20">
-            <div className="p-4">
-              <p className="text-sm text-amber-600 dark:text-amber-400">{retryMessage}</p>
-            </div>
-          </Card>
-        )}
-
-        {/* Current Stage Card */}
-        <Card className="bg-primary/10 border-primary/30">
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h3 className="text-lg font-bold text-foreground">
-                  {progress?.message || 'Processing...'}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {stageDetails[currentStage]?.description || 'Please wait...'}
-                </p>
+            <div className="flex-1 text-center lg:text-left space-y-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background/50 backdrop-blur-sm border border-border/50">
+                <span className="text-sm text-muted-foreground">Stage {currentStage + 1} of 8</span>
               </div>
-              <div className="text-4xl font-bold text-primary">
-                {currentPercent}%
+              <div className="space-y-2">
+                <div className="flex items-center gap-3 justify-center lg:justify-start">
+                  <Zap className="w-8 h-8 text-elec-yellow animate-pulse-glow" />
+                  <h2 className="text-3xl font-bold tracking-tight">AI Circuit Design</h2>
+                </div>
+                <p className="text-lg text-muted-foreground">{stageDetails[currentStage]?.description || 'Processing...'}</p>
               </div>
-            </div>
-            <div className="text-xs text-muted-foreground">
-              Stage {currentStage + 1} of {stageDetails.length}
+              <StageIndicator currentStage={currentStage} totalStages={8} />
             </div>
           </div>
-        </Card>
-
-        {/* Live Circuit Cards Grid */}
-        {totalCircuits > 0 && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-            {Array.from({ length: Math.min(totalCircuits, 12) }, (_, i) => {
-              const isCompleted = i < estimatedCompleted;
-              const isCurrent = i === estimatedCompleted;
-              
-              return (
-                <Card 
-                  key={i}
-                  className={
-                    isCompleted 
-                      ? "bg-primary/5 border-primary/20" 
-                      : isCurrent 
-                      ? "bg-primary/10 border-primary/30 animate-pulse" 
-                      : "bg-muted/30 opacity-60"
-                  }
-                >
-                  <div className="p-3 flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold bg-primary/20 text-primary">
-                      {i + 1}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-medium truncate">
-                        {isCompleted ? '✓ Complete' : isCurrent ? 'Designing...' : 'Pending'}
-                      </p>
-                    </div>
-                  </div>
-                </Card>
-              );
-            })}
-          </div>
-        )}
-
-        {/* Cancel Button */}
-        {onCancel && (
-          <div className="flex justify-center pt-4">
-            <Button variant="outline" onClick={onCancel} size="sm">
-              Cancel Generation
-            </Button>
-          </div>
-        )}
+        </div>
       </div>
 
-      {/* Right Column - Stats Panel (35%) */}
-      <div className="hidden lg:block">
-        <ProcessingStatsPanel
-          currentStage={currentStage}
-          currentPercent={currentPercent}
-          totalCircuits={totalCircuits}
-          completedCircuits={estimatedCompleted}
-          currentStepName={progress?.message}
-          startTime={startTime}
-        />
+      <div className="max-w-7xl mx-auto p-6 space-y-6">
+        <div className="grid lg:grid-cols-[1fr_400px] gap-6">
+          <div className="space-y-6">
+            {userRequest && (
+              <Card className="p-6 bg-gradient-to-br from-background/95 to-background/80 backdrop-blur-xl border-border/50 shadow-lg animate-fade-in">
+                <div className="flex items-start gap-4">
+                  <div className="text-4xl animate-pulse-glow">🤖</div>
+                  <div className="space-y-2 flex-1">
+                    <div className="text-sm font-semibold text-elec-yellow">Your Request</div>
+                    <p className="text-lg leading-relaxed font-medium">{userRequest}</p>
+                  </div>
+                </div>
+              </Card>
+            )}
+            {retryMessage && (
+              <Card className="p-4 bg-amber-500/10 border-amber-500/30">
+                <p className="text-sm text-amber-600 dark:text-amber-400">{retryMessage}</p>
+              </Card>
+            )}
+            <div className="space-y-4">
+              <h3 className="text-xl font-bold tracking-tight">Live Circuit Generation</h3>
+              <LiveCircuitPreview totalCircuits={totalCircuits} completedCircuits={estimatedCompleted} currentCircuitName={`Circuit ${estimatedCompleted + 1}`} recentlyCompleted={recentlyCompleted} />
+            </div>
+            {onCancel && (
+              <div className="flex justify-center pt-4">
+                <Button variant="outline" onClick={onCancel} className="hover:bg-destructive/10 hover:border-destructive/50 hover:text-destructive transition-colors">Cancel Generation</Button>
+              </div>
+            )}
+          </div>
+          <div className="hidden lg:block">
+            <ProcessingStatsPanel currentStage={currentStage + 1} currentPercent={currentPercent} totalCircuits={totalCircuits} completedCircuits={estimatedCompleted} currentStepName={progress?.message || stageDetails[currentStage]?.name || 'Processing...'} startTime={startTime} />
+          </div>
+        </div>
       </div>
     </div>
   );
