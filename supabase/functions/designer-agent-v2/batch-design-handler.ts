@@ -77,13 +77,13 @@ function groupCircuitsBySimilarity(circuits: any[]): any[][] {
     groups.get(key)!.push(circuit);
   });
   
-  // Convert to batches of 2-3 circuits max (prevents AI timeout)
-  // Complex circuits (high power, long runs): batch of 2
-  // Simple circuits: batch of 3
+  // Convert to batches of 4-6 circuits max
+  // Complex circuits (high power, long runs): batch of 4
+  // Simple circuits: batch of 6
   const batches: any[][] = [];
   groups.forEach((group, key) => {
     const isComplexGroup = key.includes('_complex');
-    const batchSize = isComplexGroup ? 2 : 3;
+    const batchSize = isComplexGroup ? 4 : 6;
     
     for (let i = 0; i < group.length; i += batchSize) {
       batches.push(group.slice(i, i + batchSize));
