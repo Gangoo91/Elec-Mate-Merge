@@ -94,26 +94,11 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
           
           setJob(updatedJob);
           
-          // Clear existing stuck check
+          // FIX #3: Remove frontend stuck-job cleanup - backend handles timeouts
+          // Clear any existing timeout when job updates
           if (stuckCheckTimeout) {
             clearTimeout(stuckCheckTimeout);
             setStuckCheckTimeout(null);
-          }
-          
-          // Set new stuck check if processing (6 min timeout)
-          if (updatedJob.status === 'processing') {
-            const timeout = window.setTimeout(async () => {
-              console.error('❌ STUCK JOB: No activity in 6 minutes');
-              await supabase
-                .from('circuit_design_jobs' as any)
-                .update({
-                  status: 'failed',
-                  error_message: 'Generation timed out - no activity for 6 minutes.'
-                })
-                .eq('id', jobId);
-            }, 360000);
-            
-            setStuckCheckTimeout(timeout);
           }
         }
       )

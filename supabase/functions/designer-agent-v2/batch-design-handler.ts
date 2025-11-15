@@ -27,6 +27,9 @@ const MAX_PARALLEL_BATCHES = {
   LARGE_JOB: 4   // For >15 circuits (was 3)
 };
 
+// FIX #4: Maximum job timeout to prevent stuck jobs
+const MAX_JOB_TIMEOUT_MS = 600000; // 10 minutes
+
 // ============= PHASE 4: PRE-LOAD CORE REGULATIONS =============
 // Global cache persists across warm container invocations
 let CORE_REGULATIONS_CACHE: any[] | null = null;
@@ -1388,28 +1391,44 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
       const circuit = allDesignedCircuits[i];
       const circuitName = circuit.name || `Circuit ${i + 1}`;
       
+      // FIX #2: Wrap auto-fix suggestions in try-catch to prevent crashes
       // Check voltage drop compliance with 10% tolerance
       if (circuit.calculations?.voltageDrop?.compliant === false) {
         const vd = circuit.calculations.voltageDrop;
         const vdMargin = 1.10; // 10% tolerance
         
         if (vd.percent > (vd.limit * vdMargin)) {
-          // Significantly over limit - reject
-          throw new CircuitDesignError(
-            'NON_COMPLIANT_DESIGN',
-            `Circuit "${circuitName}" has excessive voltage drop (${(vd.percent ?? 0).toFixed(2)}% exceeds ${(vd.limit ?? 3).toFixed(1)}% limit by more than 10%)`,
-            { 
-              circuit: circuitName,
-              cableSize: circuit.cableSize,
-              voltageDrop: vd,
-              reason: 'Voltage drop significantly exceeds limit even with tolerance'
-            },
-            [
-              'The AI should have selected a larger cable size (e.g., 4mm² → 6mm² → 10mm²)',
-              'This indicates the AI did not follow iterative sizing logic',
-              'Design rejected - please retry generation with the same inputs'
-            ]
-          );
+          // Over tolerance - suggest auto-fix
+          try {
+            const autoFix = suggestVoltageDropFix(
+              circuitName,
+              vd.percent,
+              vd.limit,
+              circuit.cableSize,
+              circuit.cableLength || 0
+            );
+            
+            if (!circuit.warnings) circuit.warnings = [];
+            circuit.warnings.push(...autoFix.warnings);
+            
+            logger.warn(`Circuit "${circuitName}" voltage drop auto-fix suggested`, {
+              voltageDrop: vd.percent,
+              limit: vd.limit,
+              suggestions: autoFix.warnings
+            });
+          } catch (error) {
+            logger.error('Auto-fix handler crashed for voltage drop', { 
+              error: error instanceof Error ? error.message : String(error),
+              circuit: circuitName 
+            });
+            // Fallback to simple error
+            throw new CircuitDesignError(
+              'NON_COMPLIANT_DESIGN',
+              `Circuit "${circuitName}" has excessive voltage drop (${(vd.percent ?? 0).toFixed(2)}% exceeds ${(vd.limit ?? 3).toFixed(1)}% limit)`,
+              { circuit: circuitName, voltageDrop: vd },
+              ['Increase cable size or reduce cable length']
+            );
+          }
         } else {
           // Within tolerance - warn only
           if (!circuit.warnings) circuit.warnings = [];
@@ -1424,27 +1443,43 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
         }
       }
       
+      // FIX #2: Wrap auto-fix suggestions in try-catch to prevent crashes
       // Check Zs compliance with 5% tolerance
       if (circuit.calculations?.zs && circuit.calculations?.maxZs) {
         const zsMargin = 1.05; // 5% tolerance
         
         if (circuit.calculations.zs > (circuit.calculations.maxZs * zsMargin)) {
-          // Over tolerance - reject
-          throw new CircuitDesignError(
-            'NON_COMPLIANT_DESIGN',
-            `Circuit "${circuitName}" has excessive earth fault loop impedance (Zs ${(circuit.calculations.zs ?? 0).toFixed(2)}Ω exceeds max ${(circuit.calculations.maxZs ?? 0).toFixed(2)}Ω by more than 5%)`,
-            { 
-              circuit: circuitName,
+          // Over tolerance - suggest auto-fix
+          try {
+            const autoFix = suggestZsFix(
+              circuitName,
+              circuit.calculations.zs,
+              circuit.calculations.maxZs,
+              circuit.cableSize,
+              circuit.cableLength || 0
+            );
+            
+            if (!circuit.warnings) circuit.warnings = [];
+            circuit.warnings.push(...autoFix.warnings);
+            
+            logger.warn(`Circuit "${circuitName}" Zs auto-fix suggested`, {
               zs: circuit.calculations.zs,
               maxZs: circuit.calculations.maxZs,
-              cableLength: circuit.cableLength
-            },
-            [
-              'Cable run may be too long for this circuit',
-              'Consider increasing CPC size or reducing cable length',
-              'Verify Ze value is correct for your installation'
-            ]
-          );
+              suggestions: autoFix.warnings
+            });
+          } catch (error) {
+            logger.error('Auto-fix handler crashed for Zs', { 
+              error: error instanceof Error ? error.message : String(error),
+              circuit: circuitName 
+            });
+            // Fallback to simple error
+            throw new CircuitDesignError(
+              'NON_COMPLIANT_DESIGN',
+              `Circuit "${circuitName}" has excessive earth fault loop impedance (Zs ${(circuit.calculations.zs ?? 0).toFixed(2)}Ω exceeds max ${(circuit.calculations.maxZs ?? 0).toFixed(2)}Ω)`,
+              { circuit: circuitName, zs: circuit.calculations.zs, maxZs: circuit.calculations.maxZs },
+              ['Increase cable size or reduce cable length']
+            );
+          }
         } else if (circuit.calculations.zs > circuit.calculations.maxZs) {
           // Slightly over but within tolerance - warn only
           if (!circuit.warnings) circuit.warnings = [];
