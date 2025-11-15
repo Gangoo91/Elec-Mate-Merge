@@ -106,31 +106,23 @@ serve(async (req) => {
 
     let searchMethod = 'intelligence_hybrid';
     
-    // Enrich intelligence results with full regulation content
-    const enrichedResults = await Promise.all(
-      (intelligenceResults || []).map(async (intel: any) => {
-        const { data: fullReg } = await supabase
-          .from('bs7671_embeddings')
-          .select('content, section, amendment, metadata')
-          .eq('id', intel.regulation_id)
-          .single();
-        
-        return {
-          id: intel.regulation_id,
-          regulation_number: intel.regulation_number,
-          section: fullReg?.section || intel.section,
-          content: fullReg?.content || intel.content,
-          amendment: fullReg?.amendment,
-          metadata: fullReg?.metadata || {},
-          similarity: intel.hybrid_score || 0.8,
-          // Intelligence-specific enrichments
-          primary_topic: intel.primary_topic,
-          keywords: intel.keywords,
-          category: intel.category,
-          practical_application: intel.practical_application
-        };
-      })
-    );
+    // Intelligence results already include content from the database function's LEFT JOIN
+    const enrichedResults = (intelligenceResults || []).map((intel: any) => ({
+      id: intel.id,
+      regulation_number: intel.regulation_number,
+      section: intel.section || '',
+      content: intel.content || intel.primary_topic,
+      amendment: intel.amendment || '',
+      metadata: {},
+      similarity: intel.hybrid_score || 0.8,
+      // Intelligence-specific enrichments
+      primary_topic: intel.primary_topic,
+      keywords: intel.keywords,
+      category: intel.category,
+      subcategory: intel.subcategory,
+      applies_to: intel.applies_to,
+      practical_application: intel.practical_application
+    }));
 
     const regulations = enrichedResults;
 
