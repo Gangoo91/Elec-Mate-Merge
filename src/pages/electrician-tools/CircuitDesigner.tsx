@@ -1,7 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Zap } from "lucide-react";
+import { ArrowLeft, Zap, Home, ChevronRight } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { AIInstallationDesigner } from "@/components/electrician-tools/circuit-designer/AIInstallationDesigner";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 const CircuitDesigner = () => {
   const location = useLocation();
@@ -9,14 +17,37 @@ const CircuitDesigner = () => {
 
   return (
     <div className="min-h-screen bg-elec-dark">
-      <div className="container mx-auto px-3 sm:px-4 lg:px-12 xl:px-20 py-4 sm:py-6 pb-safe">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-8 xl:px-12 py-4 sm:py-6 pb-safe">
         <div className="space-y-3 sm:space-y-4 animate-fade-in">
-          {/* Back Button - Mobile optimized */}
-          <Link to={fromAgentSelector ? "/electrician/agent-selector" : "/electrician"}>
-            <Button variant="outline" size="sm" className="gap-2 touch-manipulation h-10">
-              <ArrowLeft className="h-4 w-4" /> {fromAgentSelector ? "Back to Agent Selector" : "Back to Dashboard"}
-            </Button>
-          </Link>
+          {/* Desktop Breadcrumb + Mobile Back Button */}
+          <div className="flex items-center justify-between">
+            {/* Breadcrumb - Hidden on mobile */}
+            <Breadcrumb className="hidden lg:block">
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/electrician" className="flex items-center gap-1">
+                      <Home className="h-3.5 w-3.5" />
+                      Dashboard
+                    </Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator>
+                  <ChevronRight className="h-4 w-4" />
+                </BreadcrumbSeparator>
+                <BreadcrumbItem>
+                  <BreadcrumbPage>AI Circuit Designer</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+
+            {/* Back Button - Mobile only */}
+            <Link to={fromAgentSelector ? "/electrician/agent-selector" : "/electrician"} className="lg:hidden">
+              <Button variant="outline" size="sm" className="gap-2 touch-manipulation h-10">
+                <ArrowLeft className="h-4 w-4" /> {fromAgentSelector ? "Back to Agent Selector" : "Back to Dashboard"}
+              </Button>
+            </Link>
+          </div>
 
           {/* Header */}
           <div className="text-center sm:text-left">
