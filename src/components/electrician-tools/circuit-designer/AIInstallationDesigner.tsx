@@ -26,6 +26,19 @@ export const AIInstallationDesigner = () => {
     error 
   } = useCircuitDesignGeneration(currentJobId);
 
+  // Map progress percentage to stage numbers for visual feedback
+  const getStageFromProgress = (percent: number): number => {
+    if (percent === 0) return 0;
+    if (percent <= 5) return 1;   // Initializing
+    if (percent <= 10) return 2;  // Understanding Requirements
+    if (percent <= 35) return 3;  // Extracting Circuits / AI Design
+    if (percent <= 45) return 4;  // Searching Regulations
+    if (percent <= 85) return 5;  // AI Circuit Design (main phase)
+    if (percent <= 90) return 6;  // Compliance Validation
+    if (percent <= 95) return 7;  // Finalizing Documentation
+    return 8; // Downloading Data
+  };
+
   const handleGenerate = async (inputs: DesignInputs) => {
     try {
       // Count circuits that require AI processing (complex/non-standard)
@@ -176,7 +189,7 @@ export const AIInstallationDesigner = () => {
         <div className="space-y-4">
           <DesignProcessingView 
             progress={{ 
-              stage: 1, 
+              stage: getStageFromProgress(progress), 
               message: currentStep || 'Processing...', 
               percent: progress 
             }} 
