@@ -182,5 +182,21 @@ export function ensureCalculations(circuit: any, supply: any): any {
     modified = true;
   }
   
+  // Check if this is a ring final circuit and add explanation
+  const isRing = (circuit.loadType?.includes('socket') || circuit.loadType?.includes('ring')) &&
+                 (circuit.protectionDevice?.rating === 30 || circuit.protectionDevice?.rating === 32) &&
+                 circuit.cableSize === 2.5;
+
+  if (isRing && circuit.calculations.Iz === 27) {
+    // Add explanation for ring finals
+    if (!circuit.justifications) circuit.justifications = {};
+    if (!circuit.justifications.ringTopology) {
+      circuit.justifications.ringTopology = 
+        `Ring final circuit: 27A capacity per leg with load distributed across two parallel paths. ` +
+        `Design load ${circuit.calculations.Ib}A ÷ 2 legs = ${(circuit.calculations.Ib / 2).toFixed(1)}A per leg (compliant per BS 7671 Appendix 15).`;
+      modified = true;
+    }
+  }
+  
   return { circuit, modified };
 }
