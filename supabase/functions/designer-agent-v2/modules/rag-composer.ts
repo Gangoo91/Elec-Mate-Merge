@@ -117,6 +117,14 @@ export async function buildRAGSearches(
     if (lowerTerm.includes('lighting')) circuitTypes.add('lighting');
     if (lowerTerm.includes('cooker')) circuitTypes.add('cooker');
     if (lowerTerm.includes('ev') || lowerTerm.includes('charger')) circuitTypes.add('ev_charger');
+    if (lowerTerm.includes('motor')) circuitTypes.add('motor');
+    if (lowerTerm.includes('control') || lowerTerm.includes('panel')) circuitTypes.add('control_panel');
+    if (lowerTerm.includes('emergency')) circuitTypes.add('emergency_light');
+    if (lowerTerm.includes('fire') || lowerTerm.includes('alarm')) circuitTypes.add('fire_alarm');
+    if (lowerTerm.includes('data') || lowerTerm.includes('comms')) circuitTypes.add('data');
+    if (lowerTerm.includes('hvac') || lowerTerm.includes('air')) circuitTypes.add('hvac');
+    if (lowerTerm.includes('compressor')) circuitTypes.add('compressor');
+    if (lowerTerm.includes('conveyor')) circuitTypes.add('conveyor');
   });
   
   // Retrieve calculation formulas (FAST: <50ms, no embedding)
@@ -152,10 +160,11 @@ export async function buildRAGSearches(
   );
   
   // If batch has multiple circuit types, keep all regulations
-  // If batch is homogeneous (all same type), filter aggressively to reduce tokens
-  if (circuitTypesSet.size === 1) {
+  // If batch is homogeneous (all same type) AND has 4+ circuits, filter aggressively to reduce tokens
+  // Smaller batches retain all context to avoid losing critical regulations
+  if (circuitTypesSet.size === 1 && circuits && circuits.length >= 4) {
     const singleType = Array.from(circuitTypesSet)[0];
-    logger.info(`🔍 Homogeneous batch detected: ${singleType}, applying aggressive RAG filtering`);
+    logger.info(`🔍 Homogeneous batch detected: ${circuits.length} ${singleType} circuits, applying aggressive RAG filtering`);
     
     const originalRegCount = ragResults.regulations?.length || 0;
     const originalDocCount = ragResults.designDocs?.length || 0;
@@ -176,7 +185,10 @@ export async function buildRAGSearches(
     
     logger.info(`📉 RAG filtered: regulations ${originalRegCount}→${newRegCount}, docs ${originalDocCount}→${newDocCount} (${Math.round((1 - (newRegCount + newDocCount) / (originalRegCount + originalDocCount)) * 100)}% reduction)`);
   } else {
-    logger.info(`🔀 Mixed batch with ${circuitTypesSet.size} types, keeping all regulations to avoid missing requirements`);
+    const reason = circuitTypesSet.size > 1 
+      ? `Mixed batch with ${circuitTypesSet.size} types`
+      : `Small homogeneous batch (${circuits?.length || 0} circuits)`;
+    logger.info(`🔀 ${reason}, keeping all regulations to avoid missing requirements`);
   }
 
   // PHASE 4: Force-include critical design knowledge based on installation type
