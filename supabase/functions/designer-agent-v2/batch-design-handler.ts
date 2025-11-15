@@ -21,6 +21,12 @@ import { suggestVoltageDropFix, suggestZsFix } from './auto-fix-handler.ts';
 
 const VERSION = 'v4.0.0-best-in-class'; // PHASE 1-7 optimizations implemented
 
+// ============= PERFORMANCE TUNING =============
+const MAX_PARALLEL_BATCHES = {
+  SMALL_JOB: 3,  // For ≤15 circuits (was 2)
+  LARGE_JOB: 4   // For >15 circuits (was 3)
+};
+
 // ============= PHASE 4: PRE-LOAD CORE REGULATIONS =============
 // Global cache persists across warm container invocations
 let CORE_REGULATIONS_CACHE: any[] | null = null;
@@ -1171,8 +1177,10 @@ Use UK English. Output ONLY via the design_circuits tool - no conversational tex
       logger.info(`Created ${circuitBatches.length} batches for parallel processing`);
       
       // Determine parallelism based on load
-      const PARALLEL_LIMIT = aiRequiredCircuits.length > 15 ? 3 : 2;
-      logger.info(`Using parallelism limit: ${PARALLEL_LIMIT}`);
+      const PARALLEL_LIMIT = aiRequiredCircuits.length > 15 
+        ? MAX_PARALLEL_BATCHES.LARGE_JOB 
+        : MAX_PARALLEL_BATCHES.SMALL_JOB;
+      logger.info(`Using parallelism limit: ${PARALLEL_LIMIT} (${aiRequiredCircuits.length} circuits)`);
       
       // Process batches with controlled parallelism
       for (let i = 0; i < circuitBatches.length; i += PARALLEL_LIMIT) {
