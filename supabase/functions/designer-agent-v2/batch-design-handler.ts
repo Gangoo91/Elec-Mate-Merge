@@ -529,6 +529,97 @@ const DESIGN_TOOL_SCHEMA = {
                 type: 'array',
                 items: { type: 'string' },
                 description: 'Design warnings or considerations'
+              },
+              installationGuidance: {
+                type: 'object',
+                description: 'Practical installation guidance',
+                properties: {
+                  referenceMethod: { type: 'string', description: 'BS 7671 reference method (e.g., "Method C - Clipped Direct")' },
+                  description: { type: 'string', description: 'Installation method description' },
+                  clipSpacing: { type: 'string', description: 'Cable clip spacing requirements (e.g., "300mm horizontal, 400mm vertical")' },
+                  practicalTips: { 
+                    type: 'array', 
+                    items: { type: 'string' },
+                    description: 'Practical installation tips from real-world guidance'
+                  },
+                  regulation: { type: 'string', description: 'BS 7671 regulation reference' }
+                }
+              },
+              expectedTestResults: {
+                type: 'object',
+                description: 'Expected commissioning test results',
+                properties: {
+                  r1r2: {
+                    type: 'object',
+                    properties: {
+                      at20C: { type: 'string', description: 'R1+R2 at 20°C in ohms' },
+                      at70C: { type: 'string', description: 'R1+R2 at 70°C in ohms' },
+                      calculation: { type: 'string', description: 'Calculation workings' }
+                    }
+                  },
+                  zs: {
+                    type: 'object',
+                    properties: {
+                      calculated: { type: 'string', description: 'Calculated Zs' },
+                      maxPermitted: { type: 'string', description: 'Maximum permitted Zs' },
+                      compliant: { type: 'boolean' }
+                    }
+                  },
+                  insulationResistance: {
+                    type: 'object',
+                    properties: {
+                      testVoltage: { type: 'string', description: 'Test voltage (e.g., "500V DC")' },
+                      minResistance: { type: 'string', description: 'Minimum resistance (e.g., ">1MΩ")' }
+                    }
+                  },
+                  polarity: { type: 'string', description: 'Polarity test requirements' },
+                  rcdTest: {
+                    type: 'object',
+                    properties: {
+                      at1x: { type: 'string', description: 'Trip time at 1× IΔn' },
+                      at5x: { type: 'string', description: 'Trip time at 5× IΔn' },
+                      regulation: { type: 'string' }
+                    }
+                  }
+                }
+              },
+              deratingFactors: {
+                type: 'object',
+                description: 'Cable derating factors applied',
+                properties: {
+                  Ca: { type: 'number', description: 'Ambient temperature correction factor' },
+                  Cg: { type: 'number', description: 'Grouping factor' },
+                  Ci: { type: 'number', description: 'Insulation/thermal factor' },
+                  overall: { type: 'number', description: 'Combined correction factor' },
+                  explanation: { type: 'string', description: 'Why these factors were applied' },
+                  tableReferences: { type: 'string', description: 'BS 7671 table references' }
+                }
+              },
+              faultCurrentAnalysis: {
+                type: 'object',
+                description: 'Fault current calculations and device compliance',
+                properties: {
+                  psccAtCircuit: { type: 'number', description: 'Prospective short circuit current at circuit in kA' },
+                  deviceBreakingCapacity: { type: 'number', description: 'Device breaking capacity in kA' },
+                  compliant: { type: 'boolean' },
+                  marginOfSafety: { type: 'string', description: 'Safety margin explanation' },
+                  regulation: { type: 'string' }
+                }
+              },
+              specialLocationCompliance: {
+                type: 'object',
+                description: 'Special location requirements if applicable',
+                properties: {
+                  isSpecialLocation: { type: 'boolean' },
+                  locationType: { type: 'string', description: 'Type of special location (bathroom, outdoor, etc.)' },
+                  requirements: { 
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Specific requirements for this location'
+                  },
+                  zonesApplicable: { type: 'string', description: 'Zone classification if applicable' },
+                  regulation: { type: 'string' }
+                }
               }
             },
             required: ['name', 'loadType', 'loadPower', 'cableLength', 'cableSize', 'cpcSize', 'phases', 'protectionDevice', 'rcdProtected', 'calculations']
@@ -1201,6 +1292,16 @@ You produce designs that:
 - Reference specific regulation numbers for all decisions
 - Highlight critical safety warnings
 - Suggest best practices beyond minimum compliance
+
+**INSTALLATION GUIDANCE (MANDATORY):**
+For EVERY circuit, you MUST provide:
+- installationGuidance: Reference method, clip spacing, practical tips from the practical installation guidance provided
+- expectedTestResults: R1+R2 (at 20°C and 70°C), Zs, insulation resistance, polarity, RCD test (if applicable)
+- deratingFactors: Ca, Cg, Ci factors with explanation and table references
+- faultCurrentAnalysis: PSCC at circuit, device capacity, compliance check
+- specialLocationCompliance: If bathroom/outdoor/special location, include zone requirements and specific regulations
+
+Use the **PRACTICAL INSTALLATION GUIDANCE** section provided in the context to populate these fields accurately.
 
 Use UK English. Output ONLY via the design_circuits tool - no conversational text.`
         },

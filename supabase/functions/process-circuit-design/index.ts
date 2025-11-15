@@ -128,15 +128,22 @@ Deno.serve(async (req) => {
 
     console.log('🚀 Starting designer-agent-v2 in background mode...');
 
-    // Fire-and-forget with error handling: Start the designer without waiting
-    const designerTask = fetch(functionUrl, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(transformedBody)
-    }).then(async (response) => {
+    // Fire-and-forget with error handling and timeout: Start the designer without waiting
+    const DESIGNER_TIMEOUT_MS = 600000; // 10 minutes max
+    
+    const designerTask = Promise.race([
+      fetch(functionUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(transformedBody)
+      }),
+      new Promise<Response>((_, reject) => 
+        setTimeout(() => reject(new Error('Designer agent timeout after 10 minutes')), DESIGNER_TIMEOUT_MS)
+      )
+    ]).then(async (response) => {
       if (!response.ok) {
         const errorText = await response.text();
         console.error(`❌ Designer agent returned error: ${response.status} - ${errorText}`);

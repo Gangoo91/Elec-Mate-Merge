@@ -4,6 +4,7 @@
  */
 
 import { intelligentRAGSearch } from '../../_shared/intelligent-rag.ts';
+import { searchPracticalWorkIntelligence, formatForAIContext } from '../../_shared/rag-practical-work.ts';
 import { filterRegulationsForCircuit } from '../../_shared/circuit-regulation-mapper.ts';
 
 /**
@@ -215,6 +216,24 @@ export async function buildRAGSearches(
     searchMethod: ragResults.searchMethod,
     searchTimeMs: ragResults.searchTimeMs
   });
+  
+  // NEW: Add dedicated practical work intelligence search
+  logger.info('🔧 Searching practical work intelligence for installation guidance...');
+  const practicalQuery = `${type} installation practical guidance cable installation methods clip spacing testing commissioning expected results earthing bonding ${circuits?.map(c => c.loadType).join(' ')}`;
+  const practicalWorkResults = await searchPracticalWorkIntelligence(supabase, {
+    query: practicalQuery,
+    matchCount: 15
+  });
+  
+  logger.info(`✅ Found ${practicalWorkResults.results.length} practical work docs (quality: ${practicalWorkResults.qualityScore.toFixed(1)}/100)`);
+  
+  // Merge practical work results into RAG results
+  if (practicalWorkResults.results.length > 0) {
+    ragResults.practicalWorkDocs = [
+      ...(ragResults.practicalWorkDocs || []),
+      ...practicalWorkResults.results
+    ];
+  }
   
   // Inject calculation formulas at the top (PHASE 2: Pre-structured calculations)
   ragResults.calculationFormulas = calculationFormulas;
