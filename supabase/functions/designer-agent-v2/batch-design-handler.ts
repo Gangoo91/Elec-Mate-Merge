@@ -518,6 +518,10 @@ function ensurePDFFields(circuit: any, index?: number): any {
   if (circuit.cableSize === undefined || circuit.cableSize === null) circuit.cableSize = 2.5;
   if (circuit.cpcSize === undefined || circuit.cpcSize === null) circuit.cpcSize = 1.5;
   
+  // Force type coercion to ensure numbers (fixes frontend validation)
+  circuit.cableSize = Number(circuit.cableSize);
+  circuit.cpcSize = Number(circuit.cpcSize);
+  
   // Ensure protection device exists
   if (!circuit.protectionDevice) {
     circuit.protectionDevice = {
@@ -526,6 +530,12 @@ function ensurePDFFields(circuit: any, index?: number): any {
       curve: 'B',
       kaRating: 6
     };
+  }
+  
+  // Force type coercion for protection device ratings
+  if (circuit.protectionDevice) {
+    circuit.protectionDevice.rating = Number(circuit.protectionDevice.rating);
+    circuit.protectionDevice.kaRating = Number(circuit.protectionDevice.kaRating);
   }
   
   // Ensure calculations exist

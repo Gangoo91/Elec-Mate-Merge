@@ -56,21 +56,40 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   // Debug: Log on mount and validate circuits
   useEffect(() => {
     const currentCircuit = design.circuits?.[selectedCircuit];
-    const hasValidCircuits = design.circuits?.every(c => 
-      typeof c.cableSize === 'number' && 
-      typeof c.cpcSize === 'number' &&
-      c.protectionDevice &&
-      c.calculations &&
-      c.justifications
-    );
+    const hasValidCircuits = design.circuits?.every((c, idx) => {
+      const valid = 
+        typeof c.cableSize === 'number' && 
+        typeof c.cpcSize === 'number' &&
+        c.protectionDevice &&
+        c.calculations &&
+        c.justifications;
+      
+      if (!valid) {
+        console.error(`❌ Circuit ${idx + 1} validation failed:`, {
+          name: c.name,
+          cableSizeType: typeof c.cableSize,
+          cableSizeValue: c.cableSize,
+          cpcSizeType: typeof c.cpcSize,
+          hasProtectionDevice: !!c.protectionDevice,
+          hasCalculations: !!c.calculations,
+          hasJustifications: !!c.justifications,
+          justificationKeys: c.justifications ? Object.keys(c.justifications) : []
+        });
+      }
+      
+      return valid;
+    });
     
-    console.log('📊 DesignReviewEditor mounted:', {
+    console.log('📊 DesignReviewEditor validation:', {
       circuitCount: design.circuits?.length,
-      circuits: design.circuits,
+      hasValidCircuits,
       selectedCircuit,
       currentCircuit,
-      hasDesign: !!design,
-      hasValidCircuits
+      firstCircuitSample: design.circuits?.[0] ? {
+        cableSize: design.circuits[0].cableSize,
+        cableSizeType: typeof design.circuits[0].cableSize,
+        hasJustifications: !!design.circuits[0].justifications
+      } : null
     });
     
     // Auto-reset to first circuit if current selection is invalid
