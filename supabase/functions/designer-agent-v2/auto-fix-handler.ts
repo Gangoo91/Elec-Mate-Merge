@@ -20,7 +20,15 @@ export function suggestVoltageDropFix(
   currentCableSize: string | undefined,
   cableLength: number
 ): AutoFixSuggestion {
-  const currentSize = parseFloat(currentCableSize || '0');
+  // FIX #1: Add null/undefined checks to prevent .toFixed() crashes
+  if (currentVD == null || limit == null || currentCableSize == null || cableLength == null) {
+    return {
+      warnings: [`⚠️ AUTO-FIX REQUIRED: Voltage drop validation failed - missing calculation data for ${circuitName}`],
+      status: 'needs_review'
+    };
+  }
+  
+  const currentSize = parseFloat(currentCableSize);
   const nextSize = CABLE_SIZES.find(s => s > currentSize);
   
   const warning = `⚠️ AUTO-FIX REQUIRED: Voltage drop ${currentVD.toFixed(2)}% exceeds ${limit.toFixed(1)}% limit. ` +
@@ -42,7 +50,15 @@ export function suggestZsFix(
   currentCableSize: string | undefined,
   cableLength: number
 ): AutoFixSuggestion {
-  const currentSize = parseFloat(currentCableSize || '0');
+  // FIX #1: Add null/undefined checks to prevent .toFixed() crashes
+  if (currentZs == null || maxZs == null || currentCableSize == null || cableLength == null) {
+    return {
+      warnings: [`⚠️ AUTO-FIX REQUIRED: Zs validation failed - missing calculation data for ${circuitName}`],
+      status: 'needs_review'
+    };
+  }
+  
+  const currentSize = parseFloat(currentCableSize);
   const nextSize = CABLE_SIZES.find(s => s > currentSize);
   
   const warning = `⚠️ AUTO-FIX REQUIRED: Zs ${currentZs.toFixed(2)}Ω exceeds max ${maxZs.toFixed(2)}Ω. ` +
