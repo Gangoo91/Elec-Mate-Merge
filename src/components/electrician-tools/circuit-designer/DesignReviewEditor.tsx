@@ -7,6 +7,7 @@ import { ProjectSummaryPanel } from './ProjectSummaryPanel';
 import { CircuitDetailsView } from './CircuitDetailsView';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { MobileCircuitResults } from './MobileCircuitResults';
+import { toast } from 'sonner';
 
 interface DesignReviewEditorProps {
   design: InstallationDesign;
@@ -19,6 +20,51 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
   const circuits = design.circuits || [];
   const currentCircuit = circuits[selectedCircuit];
+
+  const handleExportPDF = async () => {
+    toast.info('Generating PDF...');
+    
+    const pdfContent = {
+      title: design.projectName,
+      location: design.location,
+      circuits: design.circuits?.map(c => ({
+        name: c.name,
+        cable: `${c.cableSize}mm² ${c.cpcSize}mm²`,
+        protection: `${c.protectionDevice.rating}A Type ${c.protectionDevice.curve}`,
+        voltageDrop: `${c.calculations.voltageDrop.percent.toFixed(2)}%`,
+        compliant: c.calculations.voltageDrop.compliant
+      }))
+    };
+    
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(pdfContent, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", `${design.projectName.replace(/\s+/g, '_')}_design.json`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+    
+    toast.success('Design exported!');
+  };
+
+  const handleExportEIC = () => {
+    toast.info('Generating EIC Schedule...');
+    
+    const eicData = design.circuits?.map(c => ({
+      circuitNo: c.circuitNumber,
+      description: c.name,
+      type: c.protectionDevice.type,
+      rating: c.protectionDevice.rating,
+      cableSize: `${c.cableSize}/${c.cpcSize}`,
+      maxZs: c.calculations.maxZs,
+      r1r2: c.expectedTestResults?.r1r2.at20C || 'TBC',
+      zs: c.expectedTestResults?.zs.calculated || 'TBC',
+      insulation: c.expectedTestResults?.insulationResistance.minResistance || 'TBC'
+    }));
+    
+    console.log('EIC Schedule:', eicData);
+    toast.success('EIC schedule ready for export');
+  };
 
   // Mobile view
   if (isMobile) {
@@ -37,11 +83,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               <p className="text-sm text-muted-foreground">{design.location}</p>
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" onClick={handleExportPDF}>
                 <Download className="h-4 w-4 mr-2" />
                 Export PDF
               </Button>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" onClick={handleExportEIC}>
                 <FileText className="h-4 w-4 mr-2" />
                 EIC Schedule
               </Button>

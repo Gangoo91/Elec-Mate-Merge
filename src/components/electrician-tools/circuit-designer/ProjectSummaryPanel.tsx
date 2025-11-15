@@ -154,6 +154,55 @@ export function ProjectSummaryPanel({ design }: ProjectSummaryPanelProps) {
           )}
         </CardContent>
       </Card>
+
+      {/* Diversity Analysis */}
+      {design.diversityBreakdown && (
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg font-semibold">Diversity Analysis</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="space-y-1 text-sm">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Total Connected</span>
+                <span className="font-medium">{design.diversityBreakdown.totalConnectedLoad}W</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Diversified Load</span>
+                <span className="font-medium">{design.diversityBreakdown.diversifiedLoad}W</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Diversity Factor</span>
+                <span className="font-medium">{design.diversityBreakdown.overallDiversityFactor.toFixed(2)}</span>
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground mt-2">{design.diversityBreakdown.reasoning}</p>
+            <p className="text-xs text-muted-foreground italic">{design.diversityBreakdown.bs7671Reference}</p>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Practical Guidance */}
+      {design.practicalGuidance && design.practicalGuidance.length > 0 && (
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg font-semibold flex items-center gap-2">
+              <Info className="h-5 w-5 text-primary" />
+              Practical Guidance
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-2 text-xs">
+              {design.practicalGuidance.map((tip, idx) => (
+                <li key={idx} className="flex gap-2">
+                  <span className="text-primary shrink-0">•</span>
+                  <span>{tip}</span>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }
