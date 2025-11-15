@@ -42,6 +42,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
   const [selectedCircuitsForInstall, setSelectedCircuitsForInstall] = useState<number[]>([0]);
   const [showCircuitSelector, setShowCircuitSelector] = useState(false);
+  const [regeneratingCircuits, setRegeneratingCircuits] = useState<Set<number>>(new Set());
 
   // Responsive breakpoint detection
   useEffect(() => {
@@ -135,6 +136,55 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       }
     }
   }, [design]);
+
+  // Check if a circuit has placeholder justifications
+  const isPlaceholderJustification = (circuit: CircuitDesign): boolean => {
+    if (!circuit.justifications) return false;
+    const cableJust = circuit.justifications.cableSize || '';
+    return cableJust.includes('selected for') && cableJust.includes('design current');
+  };
+
+  // Regenerate justifications for a specific circuit
+  const handleRegenerateJustifications = async (circuitIndex: number) => {
+    const circuit = design.circuits?.[circuitIndex];
+    if (!circuit) return;
+
+    setRegeneratingCircuits(prev => new Set(prev).add(circuitIndex));
+    
+    try {
+      const { data, error } = await supabase.functions.invoke('regenerate-circuit-justifications', {
+        body: { circuit }
+      });
+
+      if (error) throw error;
+      
+      if (data.success && data.justifications) {
+        // Update circuit with new justifications
+        const updatedCircuits = [...(design.circuits || [])];
+        updatedCircuits[circuitIndex] = {
+          ...updatedCircuits[circuitIndex],
+          justifications: data.justifications
+        };
+        
+        design.circuits = updatedCircuits;
+        
+        toast.success('Justifications regenerated', {
+          description: `Circuit ${circuitIndex + 1} justifications updated with AI analysis`
+        });
+      }
+    } catch (error) {
+      console.error('Failed to regenerate justifications:', error);
+      toast.error('Failed to regenerate justifications', {
+        description: error instanceof Error ? error.message : 'Unknown error'
+      });
+    } finally {
+      setRegeneratingCircuits(prev => {
+        const next = new Set(prev);
+        next.delete(circuitIndex);
+        return next;
+      });
+    }
+  };
 
   const [exportSuccess, setExportSuccess] = useState(false);
   const [exportId, setExportId] = useState('');
@@ -1369,7 +1419,27 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
             {/* Justifications */}
             <div className="space-y-3 bg-card/50 p-4 rounded-lg border border-primary/10">
-              <h4 className="font-semibold text-white">Design Justification</h4>
+              <div className="flex items-center justify-between">
+                <h4 className="font-semibold text-white">Design Justification</h4>
+                {isPlaceholderJustification(currentCircuit) && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleRegenerateJustifications(selectedCircuit)}
+                    disabled={regeneratingCircuits.has(selectedCircuit)}
+                    className="h-7 text-xs"
+                  >
+                    {regeneratingCircuits.has(selectedCircuit) ? (
+                      <>
+                        <Loader2 className="h-3 w-3 animate-spin" />
+                        Regenerating...
+                      </>
+                    ) : (
+                      'Regenerate AI'
+                    )}
+                  </Button>
+                )}
+              </div>
               <div className="space-y-2 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Cable Sizing:</p>
