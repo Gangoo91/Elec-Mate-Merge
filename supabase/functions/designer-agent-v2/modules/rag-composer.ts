@@ -363,7 +363,6 @@ export async function buildRAGSearches(
 
   return ragResults;
 }
-}
 
 /**
  * Merge regulation results from multiple sources
