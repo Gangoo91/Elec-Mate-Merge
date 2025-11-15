@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { DesignProgress } from '@/hooks/useAIDesigner';
 import { CheckCircle2, Loader2, Clock, XCircle, Zap } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { LiveCircuitPreview } from './LiveCircuitPreview';
 import { StageIndicator } from './StageIndicator';
 
 interface DesignProcessingViewProps {
@@ -181,21 +180,16 @@ export const DesignProcessingView = ({
           </Card>
         )}
 
-        {/* Live Circuit Preview */}
+        {/* Circuit Progress */}
         {totalCircuits > 0 && (
           <Card className="bg-green-500/5 border-green-500/20">
             <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-green-400">Circuits Completed</span>
                 <span className="text-lg font-bold text-green-400">
                   {estimatedCompleted}/{totalCircuits}
                 </span>
               </div>
-              <LiveCircuitPreview 
-                totalCircuits={totalCircuits} 
-                completedCircuits={estimatedCompleted}
-                currentCircuitName={progress?.message}
-              />
             </CardContent>
           </Card>
         )}
