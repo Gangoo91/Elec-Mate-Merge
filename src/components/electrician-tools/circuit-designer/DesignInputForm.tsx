@@ -13,6 +13,12 @@ import { DesignInputs, CircuitInput } from '@/types/installation-design';
 import { Sparkles, ChevronDown } from 'lucide-react';
 import { toast } from 'sonner';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Separator } from '@/components/ui/separator';
+import { SmartSuggestionPanel } from './SmartSuggestionPanel';
+import { MobileInputWrapper } from '@/components/ui/mobile-input-wrapper';
 
 interface DesignInputFormProps {
   onGenerate: (inputs: DesignInputs) => Promise<void>;
@@ -40,6 +46,21 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
 
   // Circuits
   const [circuits, setCircuits] = useState<CircuitInput[]>([]);
+
+  // Advanced electrical parameters
+  const [pscc, setPscc] = useState<number>();
+  const [mainSwitchRating, setMainSwitchRating] = useState<number>();
+  const [ambientTemp, setAmbientTemp] = useState<number>(30);
+  const [installationMethod, setInstallationMethod] = useState<string>();
+  const [groupingFactor, setGroupingFactor] = useState<number>(1.0);
+  const [propertyAge, setPropertyAge] = useState<'new-build' | 'modern' | 'older' | 'very-old'>();
+  const [existingInstallation, setExistingInstallation] = useState<boolean>(false);
+  const [budgetLevel, setBudgetLevel] = useState<'basic' | 'standard' | 'premium'>('standard');
+  const [motorStartingFactor, setMotorStartingFactor] = useState<number>();
+  const [faultLevel, setFaultLevel] = useState<number>();
+  const [diversityFactor, setDiversityFactor] = useState<number>();
+  const [supplyParamsExpanded, setSupplyParamsExpanded] = useState(false);
+  const [advancedOpen, setAdvancedOpen] = useState(false);
 
   // Auto-detect installation type from prompt
   useEffect(() => {
@@ -93,7 +114,20 @@ export const DesignInputForm = ({ onGenerate, isProcessing }: DesignInputFormPro
       ze,
       earthingSystem,
       circuits,
-      additionalPrompt: promptDescription
+      additionalPrompt: promptDescription,
+      
+      // Advanced fields (only include if set)
+      ...(pscc && { pscc }),
+      ...(mainSwitchRating && { mainSwitchRating }),
+      ...(ambientTemp !== 30 && { ambientTemp }),
+      ...(installationMethod && { installationMethod }),
+      ...(groupingFactor !== 1.0 && { groupingFactor }),
+      ...(propertyAge && { propertyAge }),
+      ...(existingInstallation && { existingInstallation }),
+      ...(budgetLevel !== 'standard' && { budgetLevel }),
+      ...(motorStartingFactor && { motorStartingFactor }),
+      ...(faultLevel && { faultLevel }),
+      ...(diversityFactor && { diversityFactor })
     };
 
     await onGenerate(inputs);

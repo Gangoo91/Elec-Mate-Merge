@@ -90,7 +90,7 @@ export function CircuitDetailsView({ circuit, circuitNumber }: CircuitDetailsVie
 
       {/* Tabbed Content */}
       <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="overview" className="gap-2">
             <Info className="h-4 w-4" />
             Overview
@@ -102,6 +102,9 @@ export function CircuitDetailsView({ circuit, circuitNumber }: CircuitDetailsVie
           <TabsTrigger value="justifications" className="gap-2">
             <FileText className="h-4 w-4" />
             Justifications
+          </TabsTrigger>
+          <TabsTrigger value="materials" className="gap-2">
+            Materials
           </TabsTrigger>
           <TabsTrigger value="warnings" className="gap-2">
             <AlertTriangle className="h-4 w-4" />
@@ -344,6 +347,42 @@ export function CircuitDetailsView({ circuit, circuitNumber }: CircuitDetailsVie
               </CardContent>
             </Card>
           )}
+        </TabsContent>
+
+        {/* Materials & Costs Tab */}
+        <TabsContent value="materials" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Materials for This Circuit</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm p-2 bg-muted/30 rounded">
+                  <span>{circuit.cableType || `${circuit.cableSize}mm² / ${circuit.cpcSize}mm² T&E`}</span>
+                  <span>{circuit.cableLength}m</span>
+                </div>
+                <div className="flex justify-between text-sm p-2 bg-muted/30 rounded">
+                  <span>{circuit.protectionDevice.type} {circuit.protectionDevice.rating}A Type {circuit.protectionDevice.curve}</span>
+                  <span>1 unit</span>
+                </div>
+                {circuit.rcdProtected && (
+                  <div className="flex justify-between text-sm p-2 bg-muted/30 rounded">
+                    <span>30mA RCD Protection</span>
+                    <span>Included</span>
+                  </div>
+                )}
+                {circuit.afddRequired && (
+                  <div className="flex justify-between text-sm p-2 bg-muted/30 rounded">
+                    <span>AFDD Device</span>
+                    <span>1 unit</span>
+                  </div>
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground mt-4">
+                Full material list available in project summary.
+              </p>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         {/* Warnings Tab */}
