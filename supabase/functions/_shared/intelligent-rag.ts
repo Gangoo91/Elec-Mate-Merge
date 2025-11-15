@@ -13,8 +13,7 @@ import type { ContextEnvelope, FoundRegulation } from './agent-context.ts';
 export interface SearchWeights {
   designKnowledge: number;          // Default: 0.95 (vector search)
   regulationsIntelligence: number;  // Default: 0.90 (keyword search)
-  practicalWorkIntelligence: number; // Default: 0.90 (keyword search)
-  healthSafety: number;             // Default: 0.85 (hybrid)
+  practicalWorkIntelligence: number; // Default: 0.90 (keyword search for installation + maintenance)
 }
 
 /**
@@ -738,10 +737,9 @@ export async function intelligentRAGSearch(
   const allResults = [
     ...exactResults.regulations.map(r => ({ ...r, source: 'regulation', sourceType: 'exact', baseScore: (r.relevance || 100) * (searchWeights?.regulationsIntelligence || 0.90) })),
     ...vectorResults.regulations.map(r => ({ ...r, source: 'regulation', sourceType: 'vector', baseScore: (r.similarity || 0.7) * (searchWeights?.regulationsIntelligence || 0.90) })),
-    ...vectorResults.designDocs.map(d => ({ ...d, source: 'design', sourceType: 'vector', baseScore: (d.similarity || 0.7) * (searchWeights?.designKnowledge || 0.95) })), // 95% WEIGHTED for design knowledge
-    ...vectorResults.healthSafetyDocs.map(h => ({ ...h, source: 'health_safety', sourceType: 'vector', baseScore: (h.similarity || 0.7) * (searchWeights?.healthSafety || 0.85) })),
-    ...vectorResults.installationDocs.map(i => ({ ...i, source: 'installation', sourceType: 'vector', baseScore: i.similarity || 0.7 })),
-    ...vectorResults.maintenanceDocs.map(m => ({ ...m, source: 'maintenance', sourceType: 'vector', baseScore: m.similarity || 0.7 })),
+    ...vectorResults.designDocs.map(d => ({ ...d, source: 'design', sourceType: 'vector', baseScore: (d.similarity || 0.7) * (searchWeights?.designKnowledge || 0.95) })), // 95% WEIGHTED for design knowledge (vector)
+    ...vectorResults.installationDocs.map(i => ({ ...i, source: 'installation', sourceType: 'keyword', baseScore: (i.similarity || 0.7) * (searchWeights?.practicalWorkIntelligence || 0.90) })), // 90% WEIGHTED for practical work (keyword)
+    ...vectorResults.maintenanceDocs.map(m => ({ ...m, source: 'maintenance', sourceType: 'keyword', baseScore: (m.similarity || 0.7) * (searchWeights?.practicalWorkIntelligence || 0.90) })), // 90% WEIGHTED for practical work (keyword)
   ];
   
   // PHASE 2: Apply content-based boosts across ALL sources
@@ -763,7 +761,6 @@ export async function intelligentRAGSearch(
   // Separate back into typed arrays - DESIGN DOCS DOMINATE TOP 10
   let allRegulations = reranked.filter(r => r.source === 'regulation');
   let allDesignDocs = reranked.filter(r => r.source === 'design');
-  let allHealthSafetyDocs = reranked.filter(r => r.source === 'health_safety');
   let allInstallationDocs = reranked.filter(r => r.source === 'installation');
   let allMaintenanceDocs = reranked.filter(r => r.source === 'maintenance');
   
