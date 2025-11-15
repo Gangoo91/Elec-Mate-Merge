@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 interface CircuitCardProps {
   circuit: CircuitInput;
   index: number;
+  installationType: 'domestic' | 'commercial' | 'industrial';
   onUpdate: (updates: Partial<CircuitInput>) => void;
   onDelete: () => void;
   onDuplicate: () => void;
@@ -55,13 +56,18 @@ const INDUSTRIAL_LOADS: { value: IndustrialLoadType; label: string }[] = [
   { value: 'production-line', label: 'Production Line' }
 ];
 
-export const CircuitCard = ({ circuit, index, onUpdate, onDelete, onDuplicate }: CircuitCardProps) => {
+export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDelete, onDuplicate }: CircuitCardProps) => {
   const getLoadOptions = () => {
-    // Determine installation type from load type
-    if (DOMESTIC_LOADS.some(l => l.value === circuit.loadType)) return DOMESTIC_LOADS;
-    if (COMMERCIAL_LOADS.some(l => l.value === circuit.loadType)) return COMMERCIAL_LOADS;
-    if (INDUSTRIAL_LOADS.some(l => l.value === circuit.loadType)) return INDUSTRIAL_LOADS;
-    return DOMESTIC_LOADS; // default
+    switch (installationType) {
+      case 'domestic':
+        return DOMESTIC_LOADS;
+      case 'commercial':
+        return COMMERCIAL_LOADS;
+      case 'industrial':
+        return INDUSTRIAL_LOADS;
+      default:
+        return DOMESTIC_LOADS;
+    }
   };
 
   const loadOptions = getLoadOptions();

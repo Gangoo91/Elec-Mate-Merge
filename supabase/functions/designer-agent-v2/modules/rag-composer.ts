@@ -59,19 +59,28 @@ function getCriticalTopicsForType(type: 'domestic' | 'commercial' | 'industrial'
       'ring final calculation',
       'cpc sizing table',
       'socket rcd protection',
-      'voltage drop mV/A/m'
+      'voltage drop mV/A/m',
+      'shower circuit design',
+      'Part P requirements'
     ],
     commercial: [
       'emergency lighting design',
       'fire alarm circuits',
-      'diversity factors',
-      'discrimination selectivity'
+      'diversity factors commercial',
+      'discrimination selectivity',
+      'BS 5266 emergency',
+      'fire alarm segregation',
+      'non-maintained lighting'
     ],
     industrial: [
       'motor circuit design',
       'three-phase distribution',
       'harmonics power factor',
-      'industrial socket requirements'
+      'industrial socket requirements',
+      'DOL starter sizing',
+      'star delta motor',
+      'Section 552 rotating machines',
+      'motor derating factors'
     ]
   };
   
@@ -106,6 +115,20 @@ export async function buildRAGSearches(
   if (circuits && circuits.length > 0) {
     circuits.forEach(c => {
       if (c.loadType) circuitTypes.add(c.loadType);
+      
+      // Add special location-specific searches
+      if (c.specialLocation === 'bathroom') {
+        searchTerms.push('Section 701 bathroom special location');
+        searchTerms.push('bathroom RCD 30mA protection');
+      }
+      if (c.specialLocation === 'outdoor') {
+        searchTerms.push('Section 522 outdoor external influences');
+        searchTerms.push('outdoor circuit IP rating');
+      }
+      if (c.loadType === 'ev-charger') {
+        searchTerms.push('Section 722 electric vehicle charging');
+        searchTerms.push('EV charger Mode 3 requirements');
+      }
     });
   }
   
@@ -140,12 +163,12 @@ export async function buildRAGSearches(
     searchTerms,
     priorities: {
       design_knowledge: 95,    // Design docs FIRST: +95% boost, vector search, 15 results
-      bs7671: 90,              // Regulations: +90% boost, keyword search, 10 results
+      bs7671: 90,              // Regulations: +90% boost, keyword search, 15 results (increased from 10)
       installation_knowledge: 0,
       practical_work: 0,
       health_safety: 0
     },
-    limit: 30,
+    limit: 40, // Increased from 30 for more comprehensive coverage
     installationType: type     // Pass context for boost prioritization
   }, openAiKey, supabase, logger);
   

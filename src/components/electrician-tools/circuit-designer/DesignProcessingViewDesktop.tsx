@@ -37,8 +37,8 @@ export const DesignProcessingViewDesktop = ({
     return () => clearInterval(interval);
   }, [startTime]);
 
-  // Estimate remaining time (assuming 3 minutes total for circuit design)
-  const EXPECTED_TOTAL_SECONDS = 180;
+  // Estimate remaining time
+  const EXPECTED_TOTAL_SECONDS = 70;
   const estimatedTimeRemaining = Math.max(0, Math.floor((EXPECTED_TOTAL_SECONDS * (100 - currentPercent)) / 100));
 
   const formatTime = (seconds: number): string => {
@@ -48,14 +48,13 @@ export const DesignProcessingViewDesktop = ({
   };
 
   const stageDetails = [
-    { name: 'Initialising', description: 'Preparing design service' },
-    { name: 'Understanding Requirements', description: 'Analysing specifications' },
-    { name: 'Extracting Circuits', description: 'AI parsing descriptions' },
-    { name: 'Searching Regulations', description: 'Querying BS 7671' },
-    { name: 'AI Circuit Design', description: 'Calculating cables & protection' },
-    { name: 'Compliance Validation', description: 'Verifying compliance' },
-    { name: 'Finalising Documentation', description: 'Generating docs' },
-    { name: 'Downloading Data', description: 'Transferring to browser' }
+    { name: 'Initialising', description: 'Preparing design service', icon: '🔧' },
+    { name: 'Understanding Requirements', description: 'Analysing specifications', icon: '📋' },
+    { name: 'Searching Regulations', description: 'Querying BS 7671 database', icon: '📚' },
+    { name: 'AI Circuit Design', description: 'Calculating cables & protection', icon: '🤖' },
+    { name: 'Compliance Validation', description: 'Verifying compliance', icon: '✓' },
+    { name: 'Finalising Documentation', description: 'Generating docs', icon: '📄' },
+    { name: 'Downloading Data', description: 'Transferring to browser', icon: '⬇️' }
   ];
 
   return (
@@ -71,7 +70,7 @@ export const DesignProcessingViewDesktop = ({
               </div>
               <div className="flex-1">
                 <h2 className="text-xl font-semibold text-white">AI Circuit Design</h2>
-                <p className="text-sm text-gray-400 mt-0.5">{stageDetails[currentStage]?.description}</p>
+                <p className="text-sm text-gray-200 mt-0.5">{stageDetails[currentStage]?.description}</p>
               </div>
             </div>
 
@@ -87,7 +86,7 @@ export const DesignProcessingViewDesktop = ({
               {/* Stats Row */}
               <div className="flex items-center justify-between text-sm">
                 <span className="font-semibold text-elec-yellow text-base">{currentPercent}%</span>
-                <div className="flex items-center gap-3 text-gray-400">
+                <div className="flex items-center gap-3 text-gray-200">
                   <span className="flex items-center gap-1.5">
                     <Clock className="w-4 h-4" />
                     {formatTime(elapsedTime)}
@@ -99,26 +98,64 @@ export const DesignProcessingViewDesktop = ({
 
             </div>
 
-            {/* Integrated Stage Indicator */}
-            <div className="flex items-center justify-center gap-2 pt-2 pb-1">
-              {stageDetails.map((_, idx) => (
-                <div
-                  key={idx}
-                  className={`h-1.5 rounded-full transition-all duration-500 ${
-                    idx <= currentStage ? 'w-8 bg-elec-yellow' : 'w-6 bg-gray-700'
-                  }`}
-                />
-              ))}
-              <span className="ml-2 text-xs text-gray-400">
-                Stage {currentStage + 1} of {stageDetails.length}
-              </span>
+            {/* Stage Timeline - Card Based Like Mobile */}
+            <div className="mt-6 space-y-2">
+              {stageDetails.map((stage, idx) => {
+                const isActive = idx === currentStage;
+                const isComplete = idx < currentStage;
+                const isPending = idx > currentStage;
+
+                return (
+                  <div
+                    key={idx}
+                    className={`p-3 rounded-lg border transition-all duration-300 ${
+                      isActive
+                        ? 'bg-elec-yellow/10 border-elec-yellow/50 shadow-md'
+                        : isComplete
+                        ? 'bg-emerald-500/10 border-emerald-500/30'
+                        : 'bg-gray-800/30 border-gray-700/30'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                          isActive
+                            ? 'bg-elec-yellow text-elec-dark'
+                            : isComplete
+                            ? 'bg-emerald-500 text-white'
+                            : 'bg-gray-700 text-gray-400'
+                        }`}
+                      >
+                        {isComplete ? '✓' : stage.icon}
+                      </div>
+                      <div className="flex-1">
+                        <div className={`font-medium text-sm ${
+                          isActive ? 'text-white' : isComplete ? 'text-emerald-300' : 'text-gray-400'
+                        }`}>
+                          {stage.name}
+                        </div>
+                        <div className={`text-xs mt-0.5 ${
+                          isActive ? 'text-gray-200' : 'text-gray-500'
+                        }`}>
+                          {stage.description}
+                        </div>
+                      </div>
+                      {isActive && (
+                        <div className="flex-shrink-0">
+                          <div className="w-5 h-5 border-2 border-elec-yellow border-t-transparent rounded-full animate-spin" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
-            {/* User Request - Integrated */}
+            {/* User Request */}
             {userRequest && (
               <div className="mt-4 pt-4 border-t border-elec-yellow/10">
                 <p className="text-xs text-gray-500 mb-1">Your Request:</p>
-                <p className="text-sm text-gray-300 leading-relaxed">{userRequest}</p>
+                <p className="text-sm text-gray-200 leading-relaxed">{userRequest}</p>
               </div>
             )}
           </CardContent>
@@ -143,19 +180,19 @@ export const DesignProcessingViewDesktop = ({
           <Card className="border-elec-yellow/20">
             <CardContent className="p-4 text-center">
               <div className="text-3xl font-bold text-elec-yellow">{currentPercent}%</div>
-              <div className="text-xs text-gray-400 mt-1">Complete</div>
+              <div className="text-xs text-gray-200 mt-1">Complete</div>
             </CardContent>
           </Card>
           <Card className="border-elec-yellow/20">
             <CardContent className="p-4 text-center">
               <div className="text-3xl font-bold text-white">{estimatedCompleted}/{totalCircuits}</div>
-              <div className="text-xs text-gray-400 mt-1">Circuits Designed</div>
+              <div className="text-xs text-gray-200 mt-1">Circuits Designed</div>
             </CardContent>
           </Card>
           <Card className="border-elec-yellow/20">
             <CardContent className="p-4 text-center">
               <div className="text-3xl font-bold text-white">{formatTime(elapsedTime)}</div>
-              <div className="text-xs text-gray-400 mt-1">Time Elapsed</div>
+              <div className="text-xs text-gray-200 mt-1">Time Elapsed</div>
             </CardContent>
           </Card>
         </div>

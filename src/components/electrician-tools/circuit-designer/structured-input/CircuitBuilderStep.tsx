@@ -106,6 +106,7 @@ export const CircuitBuilderStep = ({
                 key={circuit.id}
                 circuit={circuit}
                 index={index}
+                installationType={installationType}
                 onUpdate={(updates) => updateCircuit(circuit.id, updates)}
                 onDelete={() => deleteCircuit(circuit.id)}
                 onDuplicate={() => duplicateCircuit(circuit.id)}
