@@ -34,14 +34,14 @@ export const LiveCircuitPreview = ({ totalCircuits, completedCircuits, currentCi
           <Card 
             key={index} 
             className={`p-4 border transition-all duration-200 ${
-              item.status === 'completed' ? 'border-green-500/30 bg-green-500/5' :
-              item.status === 'current' ? 'border-primary' :
-              'border-dashed opacity-40'
+              item.status === 'completed' ? 'border-green-500/40 bg-elec-gray' :
+              item.status === 'current' ? 'border-elec-yellow bg-elec-gray shadow-lg shadow-elec-yellow/10' :
+              'border-elec-yellow/10 bg-elec-gray border-dashed opacity-40'
             }`}
           >
             <div className="flex items-start gap-3">
               {item.status === 'completed' && <CheckCircle2 className="w-5 h-5 text-green-500" />}
-              {item.status === 'current' && <Loader2 className="w-5 h-5 text-primary animate-spin" />}
+              {item.status === 'current' && <Loader2 className="w-5 h-5 text-elec-yellow animate-spin" />}
               {item.status === 'pending' && <Circle className="w-5 h-5 text-muted-foreground" />}
               
               <div className="flex-1 min-w-0">
@@ -51,7 +51,7 @@ export const LiveCircuitPreview = ({ totalCircuits, completedCircuits, currentCi
                   <div className="mt-2 space-y-1.5">
                     <div className="text-xs text-muted-foreground">Processing...</div>
                     <div className="h-1 bg-muted rounded-full overflow-hidden">
-                      <div className="h-full bg-primary w-3/4 transition-all" />
+                      <div className="h-full bg-elec-yellow w-3/4 transition-all" />
                     </div>
                   </div>
                 )}

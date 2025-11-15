@@ -29,29 +29,29 @@ export const ProcessingStatsPanel = ({ currentStage, currentPercent, totalCircui
 
   return (
     <div className="space-y-4 lg:sticky lg:top-6">
-      <Card className="p-4">
+      <Card className="p-4 border-elec-yellow/20 bg-elec-gray">
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">Overall Progress</span>
-            <span className="font-semibold">{currentPercent}%</span>
+            <span className="font-semibold text-elec-yellow">{currentPercent}%</span>
           </div>
           <div className="h-2 bg-muted rounded-full overflow-hidden">
-            <div className="h-full bg-primary transition-all duration-300" style={{ width: `${currentPercent}%` }} />
+            <div className="h-full bg-elec-yellow transition-all duration-300" style={{ width: `${currentPercent}%` }} />
           </div>
         </div>
       </Card>
       
-      <Card className="p-4">
+      <Card className="p-4 border-elec-yellow/20 bg-elec-gray">
         <div className="space-y-2">
           <div className="text-sm text-muted-foreground">Circuits</div>
-          <div className="text-2xl font-bold">{completedCircuits}/{totalCircuits}</div>
+          <div className="text-2xl font-bold text-elec-yellow">{completedCircuits}<span className="text-muted-foreground">/{totalCircuits}</span></div>
           <div className="h-2 bg-muted rounded-full overflow-hidden">
             <div className="h-full bg-green-500 transition-all duration-300" style={{ width: `${(completedCircuits / totalCircuits) * 100}%` }} />
           </div>
         </div>
       </Card>
       
-      <Card className="p-4">
+      <Card className="p-4 border-elec-yellow/20 bg-elec-gray">
         <div className="space-y-1">
           <div className="text-sm text-muted-foreground">Current Step</div>
           <div className="text-sm font-medium">{currentStepName}</div>
@@ -59,7 +59,7 @@ export const ProcessingStatsPanel = ({ currentStage, currentPercent, totalCircui
         </div>
       </Card>
 
-      <Card className="p-4">
+      <Card className="p-4 border-elec-yellow/20 bg-elec-gray">
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div className="space-y-1">
             <div className="text-muted-foreground flex items-center gap-1.5">

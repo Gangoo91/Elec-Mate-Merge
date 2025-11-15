@@ -16,7 +16,7 @@ export const StageIndicator = ({
           key={index}
           className={`h-1.5 rounded-full transition-all ${
             index < currentStage ? 'w-6 bg-green-500' :
-            index === currentStage ? 'w-8 bg-primary' :
+            index === currentStage ? 'w-8 bg-elec-yellow' :
             'w-1.5 bg-muted'
           }`}
         />
