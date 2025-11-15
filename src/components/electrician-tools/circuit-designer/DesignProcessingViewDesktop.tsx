@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { LiveCircuitPreview } from "./LiveCircuitPreview";
 import { ProcessingStatsPanel } from "./ProcessingStatsPanel";
 import { AnimatedProgressRing } from "./AnimatedProgressRing";
@@ -41,6 +42,17 @@ export const DesignProcessingViewDesktop = ({
     { name: 'Downloading Data', description: 'Transferring to browser' }
   ];
 
+  // Get status badge based on progress
+  const getStatusBadge = () => {
+    if (currentPercent === 0) {
+      return <Badge variant="outline" className="text-xs">Starting...</Badge>;
+    }
+    if (currentPercent < 100) {
+      return <Badge variant="secondary" className="text-xs">Processing</Badge>;
+    }
+    return <Badge variant="default" className="text-xs">Complete</Badge>;
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <div className="border-b bg-card">
@@ -50,6 +62,7 @@ export const DesignProcessingViewDesktop = ({
               <div className="flex items-center gap-3">
                 <Zap className="w-5 h-5 text-primary" />
                 <h2 className="text-xl font-semibold">AI Circuit Design</h2>
+                {getStatusBadge()}
               </div>
               <p className="text-sm text-muted-foreground">
                 Stage {currentStage + 1} of 8 • {stageDetails[currentStage]?.description}
