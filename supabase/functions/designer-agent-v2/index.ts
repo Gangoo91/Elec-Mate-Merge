@@ -44,9 +44,38 @@ serve(async (req) => {
     
     // Route to batch design handler
     if (body.mode === 'batch-design') {
-      const result = await handleBatchDesign(body, logger);
-      logger.info(`✅ Batch design complete - Version: ${VERSION}`);
-      return result;
+      const asyncMode = body.asyncMode === true;
+      const jobId = body.jobId;
+      
+      if (asyncMode && jobId) {
+        // Use background task for long-running AI design
+        logger.info(`🚀 Starting BACKGROUND task for job ${jobId}`);
+        
+        // Start the design process in the background
+        const designTask = handleBatchDesign(body, logger);
+        
+        // Keep the function alive until design completes
+        EdgeRuntime.waitUntil(designTask);
+        
+        // Return immediately to avoid timeout
+        return new Response(
+          JSON.stringify({
+            success: true,
+            message: 'Design started in background',
+            jobId: jobId,
+            version: VERSION
+          }),
+          {
+            status: 202, // Accepted
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          }
+        );
+      } else {
+        // Synchronous mode (legacy)
+        const result = await handleBatchDesign(body, logger);
+        logger.info(`✅ Batch design complete - Version: ${VERSION}`);
+        return result;
+      }
     }
 
     // Legacy single-circuit mode (not used anymore)
