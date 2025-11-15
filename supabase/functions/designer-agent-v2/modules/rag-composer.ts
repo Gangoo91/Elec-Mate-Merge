@@ -1,11 +1,98 @@
 /**
- * RAG Composer Module
- * Direct RAG searches for Designer Agent V2
- * Eliminates shared intelligent-rag.ts complexity
+ * RAG Composer Module - 3-5 Second Optimization
+ * Parallel RAG searches with circuit-specific keywords
+ * Direct keyword extraction from user inputs
  */
 
 import { searchPracticalWorkIntelligence, formatForAIContext } from '../../_shared/rag-practical-work.ts';
 import { filterRegulationsForCircuit } from '../../_shared/circuit-regulation-mapper.ts';
+import { withTimeout, Timeouts } from '../../_shared/timeout.ts';
+
+/**
+ * Extract Circuit-Specific Keywords from User Input
+ * Builds high-signal keywords from actual circuit data fields
+ */
+function extractCircuitKeywords(circuits: any[]): string[] {
+  const keywords = new Set<string>();
+  
+  circuits.forEach(circuit => {
+    // Load type keywords (primary signal)
+    if (circuit.loadType) {
+      keywords.add(circuit.loadType.toLowerCase());
+    }
+    
+    // Power-based keywords
+    if (circuit.loadPower) {
+      if (circuit.loadPower > 7000) keywords.add('high power circuit');
+      if (circuit.loadPower > 3000) keywords.add('dedicated circuit');
+    }
+    
+    // Cable length keywords
+    if (circuit.cableLength) {
+      if (circuit.cableLength > 30) keywords.add('voltage drop calculation');
+      if (circuit.cableLength > 50) keywords.add('long cable run');
+    }
+    
+    // Phase keywords
+    if (circuit.phases === 'three') {
+      keywords.add('three phase installation');
+      keywords.add('balanced loading');
+    }
+    
+    // Special location keywords (high priority)
+    if (circuit.specialLocation && circuit.specialLocation !== 'none') {
+      keywords.add(`${circuit.specialLocation} regulations`);
+      
+      if (circuit.specialLocation === 'bathroom') {
+        keywords.add('Section 701');
+        keywords.add('RCD 30mA protection');
+        keywords.add('IP ratings bathroom zones');
+      }
+      if (circuit.specialLocation === 'outdoor') {
+        keywords.add('IP65 weatherproof');
+        keywords.add('outdoor installation');
+      }
+      if (circuit.specialLocation === 'underground') {
+        keywords.add('buried cable');
+        keywords.add('mechanical protection');
+      }
+    }
+    
+    // Load-specific regulations
+    if (circuit.loadType?.includes('socket')) {
+      keywords.add('ring final circuit');
+      keywords.add('socket outlet RCD');
+      keywords.add('Reg 411.3.3');
+    }
+    
+    if (circuit.loadType?.includes('shower')) {
+      keywords.add('shower circuit sizing');
+      keywords.add('dedicated shower circuit');
+      keywords.add('high current CPC');
+    }
+    
+    if (circuit.loadType?.includes('cooker')) {
+      keywords.add('cooker circuit diversity');
+      keywords.add('cooker control unit');
+    }
+    
+    if (circuit.loadType?.includes('lighting')) {
+      keywords.add('lighting circuit design');
+      keywords.add('radial lighting');
+    }
+    
+    // Parse notes for additional keywords (longer tokens only)
+    if (circuit.notes) {
+      const noteWords = circuit.notes.toLowerCase().split(/\W+/);
+      noteWords.forEach(word => {
+        if (word.length > 4) keywords.add(word);
+      });
+    }
+  });
+  
+  // Return top 18 keywords (keeps RPC fast)
+  return Array.from(keywords).slice(0, 18);
+}
 
 /**
  * PHASE 2: Pre-Structured Calculation Formulas Retrieval
@@ -106,12 +193,13 @@ async function searchDesignKnowledge(supabase: any, query: string, keywords: str
 }
 
 /**
- * Helper: Search Regulations Intelligence (keyword)
+ * Helper: Search Regulations Intelligence (keyword-based hybrid)
+ * FIX: Use search_keywords parameter for lightning-fast keyword search
  */
 async function searchRegulationsIntelligence(supabase: any, keywords: string[], limit: number) {
   const queryText = keywords.join(' ');
   const { data, error } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
-    query_text: queryText,
+    search_keywords: queryText, // ← FIX: was query_text, now search_keywords
     match_count: limit
   });
   
@@ -169,70 +257,28 @@ export async function buildRAGSearches(
 ): Promise<any> {
   const type = installationType || 'domestic';
   
-  logger.info('🎯 Designer Agent V2: Direct RAG searches (Design + Regulations + Practical Work)', { 
-    searchTerms, 
+  logger.info('🎯 3-5s RAG: Parallel searches with circuit-specific keywords', { 
+    searchTerms: searchTerms.length, 
     installationType: type,
     circuitCount: circuits?.length || 0
   });
 
-  // PHASE 6: Fast path for simple jobs (<=3 circuits, no special locations)
-  const isSimpleJob = circuits && circuits.length <= 3 && 
-                      circuits.every((c: any) => 
-                        c.specialLocation === 'none' && 
-                        (c.loadPower || 0) < 7200
-                      );
+  // Extract circuit-specific keywords from user input
+  const circuitKeywords = circuits ? extractCircuitKeywords(circuits) : [];
+  
+  // Merge with existing search terms (deduplicate)
+  const allKeywords = [...new Set([
+    ...searchTerms.map(t => t.toLowerCase()),
+    ...circuitKeywords
+  ])].slice(0, 20); // Cap at 20 keywords for optimal performance
+  
+  logger.info('🔍 Combined keywords', { 
+    generic: searchTerms.length,
+    circuitSpecific: circuitKeywords.length,
+    total: allKeywords.length,
+    examples: allKeywords.slice(0, 10)
+  });
 
-  if (isSimpleJob) {
-    logger.info('🚀 FAST PATH: Simple job detected (≤3 circuits, no special locations), using core regulations only');
-    
-    // Get pre-structured calculations for circuit types
-    const circuitTypes = circuits?.map((c: any) => c.circuitType).filter(Boolean) || [];
-    const calculations = await retrieveStructuredCalculations(supabase, circuitTypes);
-    
-    // Core regulations for simple domestic circuits (hardcoded for speed)
-    const coreRegulations = [
-      {
-        regulation_number: '433.1.1',
-        content: 'Every circuit shall be designed so that a protective device is provided to break any overload current flowing in the circuit conductors before such a current could cause a temperature rise detrimental to insulation, joints, terminations or surroundings.',
-        section: 'Protection against overload current',
-        similarity: 1.0,
-        source: 'fast-path-core'
-      },
-      {
-        regulation_number: '525.1',
-        content: 'The voltage drop between the origin of the installation and any load point shall not exceed 3% of the nominal voltage for lighting circuits and 5% for other uses.',
-        section: 'Voltage drop in consumers installations',
-        similarity: 1.0,
-        source: 'fast-path-core'
-      },
-      {
-        regulation_number: '411.3.2',
-        content: 'RCD protection required for socket-outlets rated up to 20A for use by ordinary persons and intended for general use.',
-        section: 'RCD protection requirements',
-        similarity: 1.0,
-        source: 'fast-path-core'
-      }
-    ];
-
-    logger.info('✅ FAST PATH: Using core regulations', { 
-      regulations: coreRegulations.length,
-      calculations: calculations.length 
-    });
-
-    return {
-      regulations: coreRegulations,
-      designDocs: [],
-      practicalWorkDocs: [],
-      healthSafetyDocs: [],
-      installationDocs: [],
-      maintenanceDocs: [],
-      structuredCalculations: calculations,
-      searchMethod: 'fast-path-core',
-      totalDocs: coreRegulations.length + calculations.length
-    };
-  }
-
-  // NORMAL PATH: Full RAG searches
   const startTime = Date.now();
   
   // ============= SELF-CORRECTION KNOWLEDGE INJECTION =============
@@ -284,30 +330,113 @@ export async function buildRAGSearches(
     });
   }
   
-  // ===== SEARCH 1: Design Knowledge (Vector) =====
-  const designDocs = await searchDesignKnowledge(supabase, query, searchTerms, 10);
-  
-  // ===== SEARCH 2: Regulations Intelligence (Keyword) =====
-  const regulations = await searchRegulationsIntelligence(supabase, searchTerms, 15);
-  
-  // ===== SEARCH 3: Practical Work Intelligence (Keyword) =====
-  const practicalWork = await searchPracticalWorkIntelligenceDirect(supabase, {
-    keywords: searchTerms,
-    limit: 12,
-    activity_filter: []
-  });
-  
-  // PHASE 2: Get pre-structured calculations
+  // Get circuit types for structured calculations
   const circuitTypes = circuits?.map((c: any) => c.circuitType).filter(Boolean) || [];
-  const calculations = await retrieveStructuredCalculations(supabase, circuitTypes);
+  
+  // ===== PARALLEL RAG SEARCHES WITH TIGHT TIMEOUTS (3-5s total) =====
+  const searchStart = Date.now();
+  
+  const [designDocs, regulations, practicalWork, calculations] = await Promise.all([
+    // Design knowledge (vector search): 4500ms timeout, 8 results
+    withTimeout(
+      searchDesignKnowledge(supabase, query, allKeywords, 8),
+      4500,
+      []
+    ).then(data => {
+      const duration = Date.now() - searchStart;
+      logger.info(`✅ Design vector: ${duration}ms (${data.length} docs)`);
+      return data;
+    }),
+    
+    // BS 7671 intelligence (keyword hybrid): 3500ms timeout, 6 results
+    withTimeout(
+      searchRegulationsIntelligence(supabase, allKeywords, 6),
+      3500,
+      []
+    ).then(data => {
+      const duration = Date.now() - searchStart;
+      logger.info(`✅ BS 7671 keyword: ${duration}ms (${data.length} regs)`);
+      return data;
+    }),
+    
+    // Practical work intelligence (keyword hybrid): 3500ms timeout, 6 results
+    withTimeout(
+      searchPracticalWorkIntelligenceDirect(supabase, {
+        keywords: allKeywords,
+        limit: 6,
+        activity_filter: []
+      }),
+      3500,
+      []
+    ).then(data => {
+      const duration = Date.now() - searchStart;
+      logger.info(`✅ Practical work keyword: ${duration}ms (${data.length} docs)`);
+      return data;
+    }),
+    
+    // Structured calculations (DB select): 3000ms timeout
+    withTimeout(
+      retrieveStructuredCalculations(supabase, circuitTypes),
+      3000,
+      []
+    ).then(data => {
+      const duration = Date.now() - searchStart;
+      logger.info(`✅ Calculations: ${duration}ms (${data.length} formulas)`);
+      return data;
+    })
+  ]);
   
   const totalTime = Date.now() - startTime;
+  const ragTime = Date.now() - searchStart;
   
-  logger.info('✅ RAG Complete', {
+  // Fallback: if ALL searches timed out, provide essential regulations
+  const hasAnyResults = designDocs.length + regulations.length + practicalWork.length > 0;
+  
+  if (!hasAnyResults) {
+    logger.warn('⚠️ All RAG searches timed out, using essential fallback regulations');
+    const fallbackRegulations = [
+      {
+        regulation_number: '433.1.1',
+        content: 'Every circuit shall be designed so that a protective device is provided to break any overload current flowing in the circuit conductors before such a current could cause a temperature rise detrimental to insulation, joints, terminations or surroundings.',
+        section: 'Protection against overload current',
+        similarity: 1.0,
+        source: 'timeout-fallback'
+      },
+      {
+        regulation_number: '525.1',
+        content: 'The voltage drop between the origin of the installation and any load point shall not exceed 3% of the nominal voltage for lighting circuits and 5% for other uses.',
+        section: 'Voltage drop in consumers installations',
+        similarity: 1.0,
+        source: 'timeout-fallback'
+      },
+      {
+        regulation_number: '411.3.2',
+        content: 'RCD protection required for socket-outlets rated up to 20A for use by ordinary persons and intended for general use.',
+        section: 'RCD protection requirements',
+        similarity: 1.0,
+        source: 'timeout-fallback'
+      }
+    ];
+    
+    return {
+      regulations: fallbackRegulations,
+      designDocs: [],
+      practicalWorkDocs: [],
+      healthSafetyDocs: [],
+      installationDocs: [],
+      maintenanceDocs: [],
+      structuredCalculations: calculations,
+      searchMethod: 'timeout-fallback',
+      totalDocs: fallbackRegulations.length + calculations.length
+    };
+  }
+  
+  logger.info('🎯 RAG Complete (3-5s optimization)', {
     designDocs: designDocs.length,
     regulations: regulations.length,
     practicalWork: practicalWork.length,
     calculations: calculations.length,
+    ragTime: `${ragTime}ms`,
     totalTime: `${totalTime}ms`
   });
   
