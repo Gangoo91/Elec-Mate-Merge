@@ -46,7 +46,7 @@ export const AIInstallationDesigner = () => {
       
       // Direct synchronous call to designer-agent-v3 with properly formatted data
       const { data, error } = await supabase.functions.invoke('designer-agent-v3', {
-        body: { 
+        body: {
           mode: 'direct-design',
           projectInfo: {
             projectName: inputs.projectName || 'Untitled Project',
@@ -73,6 +73,9 @@ export const AIInstallationDesigner = () => {
             groupingFactor: inputs.groupingFactor || 1,
             budget: inputs.budgetLevel || 'standard'
           }
+        },
+        headers: {
+          'x-supabase-timeout': '300' // 5-minute timeout for complex designs
         }
       });
 
