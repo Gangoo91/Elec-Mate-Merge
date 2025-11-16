@@ -58,6 +58,16 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
   // Debug: Log on mount and validate circuits
   useEffect(() => {
+    console.log('📊 Circuit data structure:', {
+      circuitCount: design.circuits?.length,
+      firstCircuit: design.circuits?.[0],
+      hasInstallationGuidance: !!design.circuits?.[0]?.installationGuidance,
+      loadPower: design.circuits?.[0]?.loadPower,
+      phases: design.circuits?.[0]?.phases,
+      cableLength: design.circuits?.[0]?.cableLength,
+      installationMethod: design.circuits?.[0]?.installationMethod
+    });
+
     const currentCircuit = design.circuits?.[selectedCircuit];
     const hasValidCircuits = design.circuits?.every((c, idx) => {
       const valid = 
@@ -1733,6 +1743,48 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     </li>
                   ))}
                 </ul>
+              </div>
+            )}
+
+            {/* Installation Guidance */}
+            {currentCircuit.installationGuidance && (
+              <div className="space-y-3 bg-card/50 p-4 rounded-lg border border-primary/10">
+                <div className="flex items-center gap-2">
+                  <Wrench className="h-5 w-5 text-primary" />
+                  <h4 className="font-semibold text-white">Installation Guidance</h4>
+                </div>
+                
+                <div className="space-y-3 text-sm">
+                  <div className="space-y-1">
+                    <p className="font-medium text-white/90">Reference Method</p>
+                    <p className="text-white/70">{currentCircuit.installationGuidance.referenceMethod}</p>
+                  </div>
+                  
+                  <div className="space-y-1">
+                    <p className="font-medium text-white/90">Description</p>
+                    <p className="text-white/70">{currentCircuit.installationGuidance.description}</p>
+                  </div>
+                  
+                  <div className="space-y-1">
+                    <p className="font-medium text-white/90">Clip Spacing</p>
+                    <p className="text-white/70">{currentCircuit.installationGuidance.clipSpacing}</p>
+                  </div>
+                  
+                  {currentCircuit.installationGuidance.practicalTips?.length > 0 && (
+                    <div className="space-y-2">
+                      <p className="font-medium text-white/90">Practical Tips</p>
+                      <ul className="space-y-1 list-disc list-inside text-white/70">
+                        {currentCircuit.installationGuidance.practicalTips.map((tip, i) => (
+                          <li key={i}>{tip}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  <div className="pt-2 border-t border-white/10">
+                    <p className="text-xs text-white/50">{currentCircuit.installationGuidance.regulation}</p>
+                  </div>
+                </div>
               </div>
             )}
           </div>
