@@ -222,11 +222,6 @@ export interface DesignResult {
   version?: string;
   error?: string;
   requestId?: string;
-  // PHASE 2: Correction tracking
-  correctionApplied?: boolean;
-  correctionAttempts?: number;
-  originalIssues?: ValidationIssue[];
-  correctedIssues?: ValidationIssue[];
   // PHASE 4: Reasoning
   reasoning?: DesignReasoning;
 }

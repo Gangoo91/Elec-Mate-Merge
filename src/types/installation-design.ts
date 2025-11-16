@@ -201,9 +201,6 @@ export interface InstallationDesign {
     complianceChecks: string;
     correctionsApplied?: string;
   };
-  // PHASE 2: Self-Correction Tracking
-  correctionApplied?: boolean;
-  correctionAttempts?: number;
 }
 
 export interface DesignInputs {
