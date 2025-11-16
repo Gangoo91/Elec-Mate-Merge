@@ -113,7 +113,7 @@ export class ValidationEngine {
     }
 
     // RULE 5: RCD protection for sockets
-    if (circuit.loadType.includes('socket') && circuit.protectionDevice.type !== 'RCBO') {
+    if (circuit.loadType?.includes('socket') && circuit.protectionDevice.type !== 'RCBO') {
       issues.push({
         circuitIndex: index,
         circuitName: circuit.name,
