@@ -146,46 +146,22 @@ export class AIDesigner {
   }
 
   /**
-   * PHASE 2: Build correction-mode system prompt
+   * OPTIMIZED: Generate correction with reduced tokens and optimized prompt
+   * Only sends validation errors + essential context (no full RAG re-injection)
    */
-  buildCorrectionPrompt(
-    basePrompt: string,
-    correctionContext: string
-  ): string {
-    const parts: string[] = [];
-    
-    parts.push('=== CORRECTION MODE ACTIVATED ===');
-    parts.push('The previous design failed validation. Review the errors below and re-design.');
-    parts.push('');
-    parts.push(correctionContext);
-    parts.push('');
-    parts.push('=== ORIGINAL DESIGN CONTEXT ===');
-    parts.push(basePrompt);
-    
-    return parts.join('\n');
-  }
-
-  /**
-   * PHASE 2: Generate design with optional correction mode
-   */
-  async generateWithCorrection(
+  async generateCorrection(
     inputs: NormalizedInputs,
-    context: RAGContext,
-    correctionContext?: string
+    originalDesign: Design,
+    validationErrors: string
   ): Promise<Design> {
-    this.logger.info('AI Designer starting', {
-      circuits: inputs.circuits.length,
-      ragResults: context.totalResults,
-      correctionMode: !!correctionContext
+    this.logger.info('AI Correction starting (optimized)', {
+      circuits: inputs.circuits.length
     });
 
     const startTime = Date.now();
 
-    // Build system prompt
-    const basePrompt = this.buildSystemPrompt(context);
-    const systemPrompt = correctionContext 
-      ? this.buildCorrectionPrompt(basePrompt, correctionContext)
-      : basePrompt;
+    // Lightweight correction prompt (no RAG context)
+    const correctionPrompt = this.buildCorrectionPrompt(validationErrors, originalDesign);
     
     // Convert form to structured JSON
     const structuredInput = this.buildStructuredInput(inputs);
@@ -194,32 +170,31 @@ export class AIDesigner {
     const tools = [this.buildDesignTool()];
     const tool_choice = { type: 'function', function: { name: 'design_circuits' } };
 
-    // Call OpenAI with timeout
+    // Call OpenAI with REDUCED tokens for correction (8000 vs 16000)
     const response = await callOpenAI(
       {
         messages: [
-          { role: 'system', content: systemPrompt },
+          { role: 'system', content: correctionPrompt },
           { role: 'user', content: JSON.stringify(structuredInput, null, 2) }
         ],
         model: 'gpt-5-mini-2025-08-07',
-        max_completion_tokens: 16000,
+        max_completion_tokens: 8000, // OPTIMIZATION: 50% reduction
         tools,
         tool_choice
       },
       this.openAiKey,
-      280000 // 280s timeout
+      180000 // 180s timeout (reduced from 280s)
     );
 
     const duration = Date.now() - startTime;
-    this.logger.info('AI Designer complete', { 
+    this.logger.info('AI Correction complete', { 
       duration,
-      hasToolCalls: !!response.toolCalls,
-      correctionMode: !!correctionContext
+      hasToolCalls: !!response.toolCalls
     });
 
     // Parse tool call
     if (!response.toolCalls || response.toolCalls.length === 0) {
-      throw new Error('No tool calls in AI response');
+      throw new Error('No tool calls in AI correction response');
     }
 
     const toolCall = response.toolCalls[0];
@@ -228,11 +203,43 @@ export class AIDesigner {
     // Validate circuit count matches input
     if (design.circuits.length !== inputs.circuits.length) {
       throw new Error(
-        `Circuit count mismatch: expected ${inputs.circuits.length}, got ${design.circuits.length}`
+        `Circuit count mismatch in correction: expected ${inputs.circuits.length}, got ${design.circuits.length}`
       );
     }
 
     return design;
+  }
+
+  /**
+   * Build optimized correction prompt (no RAG re-injection)
+   */
+  private buildCorrectionPrompt(validationErrors: string, originalDesign: Design): string {
+    const parts: string[] = [];
+    
+    parts.push('You are a BS 7671:2018+A2:2022 electrical circuit design expert.');
+    parts.push('');
+    parts.push('=== CORRECTION MODE ===');
+    parts.push('The previous design failed validation. Fix ONLY the errors listed below.');
+    parts.push('Keep all compliant aspects of the design unchanged.');
+    parts.push('');
+    parts.push('=== VALIDATION ERRORS ===');
+    parts.push(validationErrors);
+    parts.push('');
+    parts.push('=== ORIGINAL DESIGN (for reference) ===');
+    parts.push(JSON.stringify(originalDesign.circuits.map(c => ({
+      name: c.name,
+      cableSize: c.cableSize,
+      protectionRating: c.protectionDevice.rating,
+      calculations: c.calculations
+    })), null, 2));
+    parts.push('');
+    parts.push('=== FIX INSTRUCTIONS ===');
+    parts.push('1. If In > Iz: Increase cable size or reduce MCB rating');
+    parts.push('2. If voltage drop fails: Increase cable size');
+    parts.push('3. If Zs too high: Increase CPC size');
+    parts.push('4. Preserve all regulation citations and installation guidance');
+    
+    return parts.join('\n');
   }
 
   /**
