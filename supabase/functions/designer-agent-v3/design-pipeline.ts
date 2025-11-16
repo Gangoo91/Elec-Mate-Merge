@@ -8,6 +8,7 @@ import { FormNormalizer } from './form-normalizer.ts';
 import { CacheManager } from './cache-manager.ts';
 import { RAGEngine } from './rag-engine.ts';
 import { AIDesigner } from './ai-designer.ts';
+import { ValidationEngine } from './validation-engine.ts';
 import type { NormalizedInputs, DesignResult } from './types.ts';
 
 export class DesignPipeline {
@@ -15,12 +16,14 @@ export class DesignPipeline {
   private cache: CacheManager;
   private rag: RAGEngine;
   private ai: AIDesigner;
+  private validator: ValidationEngine;
 
   constructor(private logger: any, private requestId: string) {
     this.normalizer = new FormNormalizer();
     this.cache = new CacheManager(logger);
     this.rag = new RAGEngine(logger);
     this.ai = new AIDesigner(logger);
+    this.validator = new ValidationEngine(logger);
   }
 
   async execute(rawInput: any): Promise<DesignResult> {
@@ -83,10 +86,28 @@ export class DesignPipeline {
     });
 
     // ========================================
-    // PHASE 5-6: Validation → Cache
-    // (DEFERRED - Will be implemented in Phase 4-5)
+    // PHASE 5: Validation
     // ========================================
+    const validationResult = this.validator.validate(design);
     
-    throw new Error('Validation module not yet implemented - Phase 3 complete');
+    if (!validationResult.isValid) {
+      this.logger.error('Design validation failed', {
+        errorCount: validationResult.issues.filter(i => i.severity === 'error').length,
+        warningCount: validationResult.issues.filter(i => i.severity === 'warning').length
+      });
+      
+      throw new Error(
+        `Design validation failed:\n\n${validationResult.autoFixSuggestions.join('\n\n')}\n\nPlease review the design inputs and try again.`
+      );
+    }
+
+    this.logger.info('Design validated successfully', {
+      warningCount: validationResult.issues.filter(i => i.severity === 'warning').length
+    });
+
+    // ========================================
+    // PHASE 6: Cache Storage & Return (not yet implemented)
+    // ========================================
+    throw new Error('Cache storage not yet implemented - Phase 4 complete');
   }
 }
