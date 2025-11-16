@@ -8330,37 +8330,21 @@ export type Database = {
           subcategory: string
         }[]
       }
-      search_design_hybrid:
-        | {
-            Args: {
-              match_count?: number
-              query_embedding: string
-              query_text: string
-            }
-            Returns: {
-              content: string
-              hybrid_score: number
-              id: string
-              metadata: Json
-              source: string
-              topic: string
-            }[]
-          }
-        | {
-            Args: {
-              match_count?: number
-              match_threshold?: number
-              query_embedding: string
-            }
-            Returns: {
-              category: string
-              content: string
-              design_id: string
-              hybrid_score: number
-              keywords: string[]
-              primary_topic: string
-            }[]
-          }
+      search_design_hybrid: {
+        Args: {
+          match_count?: number
+          query_embedding: string
+          query_text: string
+        }
+        Returns: {
+          content: string
+          hybrid_score: number
+          id: string
+          metadata: Json
+          source: string
+          topic: string
+        }[]
+      }
       search_design_knowledge: {
         Args: {
           circuit_filter?: string
