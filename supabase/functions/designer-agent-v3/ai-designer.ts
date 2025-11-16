@@ -99,14 +99,7 @@ export class AIDesigner {
       parts.push('');
     }
 
-    // Inject top design patterns (weight 95, top 3)
-    if (context.designPatterns.length > 0) {
-      parts.push('=== DESIGN PATTERNS ===');
-      context.designPatterns.slice(0, 3).forEach(pattern => {
-        parts.push(`${pattern.topic}: ${pattern.content}`);
-      });
-      parts.push('');
-    }
+    // Design patterns removed - not part of RAG context anymore
 
     // Inject top practical guides (weight 95, top 3)
     if (context.practicalGuides.length > 0) {
