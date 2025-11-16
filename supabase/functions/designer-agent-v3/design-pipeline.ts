@@ -7,17 +7,20 @@
 import { FormNormalizer } from './form-normalizer.ts';
 import { CacheManager } from './cache-manager.ts';
 import { RAGEngine } from './rag-engine.ts';
+import { AIDesigner } from './ai-designer.ts';
 import type { NormalizedInputs, DesignResult } from './types.ts';
 
 export class DesignPipeline {
   private normalizer: FormNormalizer;
   private cache: CacheManager;
   private rag: RAGEngine;
+  private ai: AIDesigner;
 
   constructor(private logger: any, private requestId: string) {
     this.normalizer = new FormNormalizer();
     this.cache = new CacheManager(logger);
     this.rag = new RAGEngine(logger);
+    this.ai = new AIDesigner(logger);
   }
 
   async execute(rawInput: any): Promise<DesignResult> {
@@ -72,11 +75,18 @@ export class DesignPipeline {
     });
 
     // ========================================
-    // PHASE 4-6: AI → Validation → Cache
-    // (DEFERRED - Will be implemented in Phase 3-5)
+    // PHASE 4: AI Design Generation
+    // ========================================
+    const design = await this.ai.generate(normalized, ragContext);
+    this.logger.info('AI design complete', {
+      circuits: design.circuits.length
+    });
+
+    // ========================================
+    // PHASE 5-6: Validation → Cache
+    // (DEFERRED - Will be implemented in Phase 4-5)
     // ========================================
     
-    // For now, return RAG context to verify Phase 2 is working
-    throw new Error('AI/Validation modules not yet implemented - Phase 2 complete');
+    throw new Error('Validation module not yet implemented - Phase 3 complete');
   }
 }
