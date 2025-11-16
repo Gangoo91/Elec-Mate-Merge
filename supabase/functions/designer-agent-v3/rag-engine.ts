@@ -38,22 +38,52 @@ export class RAGEngine {
       practicalKeywords: queries.practicalKeywords.split(' ').length
     });
 
-    // Parallel search with 10s timeout per source
+    // Parallel search with 15s timeout per source (increased from 10s)
     const [designPatterns, regulations, practicalGuides] = await Promise.all([
-      this.searchDesignKnowledge(queries.semantic),
-      this.searchRegulations(queries.regulationKeywords),
-      this.searchPracticalWork(queries.practicalKeywords)
+      this.withTimeout(this.searchDesignKnowledge(queries.semantic), 15000),
+      this.withTimeout(this.searchRegulations(queries.regulationKeywords), 15000),
+      this.withTimeout(this.searchPracticalWork(queries.practicalKeywords), 15000)
     ]);
 
     const searchTime = Date.now() - startTime;
 
+    // Fallback: If all sources failed, use core regulations cache
+    if (designPatterns.length === 0 && regulations.length === 0 && practicalGuides.length === 0) {
+      this.logger.warn('All RAG sources failed, using core regulations fallback');
+      const coreRegs = this.getCoreRegulations();
+      return {
+        designPatterns: [],
+        regulations: this.weightResults(coreRegs, 90),
+        practicalGuides: [],
+        totalResults: coreRegs.length,
+        searchTime
+      };
+    }
+
     return {
       designPatterns: this.weightResults(designPatterns, 95),
       regulations: this.weightResults(regulations, 90),
-      practicalGuides: this.weightResults(practicalGuides, 95), // PHASE 3: Increased from 90 to 95
+      practicalGuides: this.weightResults(practicalGuides, 95),
       totalResults: designPatterns.length + regulations.length + practicalGuides.length,
       searchTime
     };
+  }
+
+  /**
+   * Timeout wrapper for RAG searches
+   */
+  private async withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
+    return Promise.race([
+      promise,
+      new Promise<T>((_, reject) => 
+        setTimeout(() => reject(new Error('Timeout')), timeoutMs)
+      )
+    ]).catch(err => {
+      if (err.message === 'Timeout') {
+        this.logger.warn('RAG search timeout', { timeoutMs });
+      }
+      return [] as T; // Return empty array on timeout
+    });
   }
 
   /**
@@ -202,10 +232,9 @@ export class RAGEngine {
       const { data, error } = await this.supabase
         .rpc<HybridSearchResult[]>('search_design_hybrid', {
           query_text: semanticQuery,
-          query_embedding: embedding,  // Required parameter for hybrid search
+          query_embedding: embedding,
           match_count: 8
-        })
-        .abortSignal(AbortSignal.timeout(10000));
+        });
 
       if (error) {
         this.logger.warn('Design knowledge search failed', { error: error.message });
@@ -218,11 +247,7 @@ export class RAGEngine {
 
       return data || [];
     } catch (error) {
-      if (error.name === 'AbortError' || error.message?.includes('timeout')) {
-        this.logger.warn('Design knowledge search timeout (10s)', { query: semanticQuery.slice(0, 50) });
-      } else {
-        this.logger.error('Design knowledge search exception', { error: error.message });
-      }
+      this.logger.warn('Design knowledge search exception', { error: error.message });
       return [];
     }
   }
@@ -257,8 +282,8 @@ export class RAGEngine {
   }
 
   /**
-   * Search Practical Work Intelligence (keyword search, weight 90)
-   * OPTIMIZATION: Better timeout handling
+   * Search Practical Work Intelligence (keyword search, weight 95)
+   * OPTIMIZATION: Reduced match_count for faster queries
    */
   private async searchPracticalWork(keywords: string): Promise<any[]> {
     try {
@@ -266,10 +291,10 @@ export class RAGEngine {
         'search_practical_work_intelligence_hybrid',
         {
           query_text: keywords,
-          match_count: 10,
+          match_count: 5, // Reduced from 10 for faster queries
           filter_trade: 'installer'
         }
-      ).abortSignal(AbortSignal.timeout(10000));
+      );
 
       if (error) {
         this.logger.warn('Practical work search failed', { error: error.message });
@@ -282,12 +307,7 @@ export class RAGEngine {
 
       return data || [];
     } catch (error) {
-      // OPTIMIZATION: Better timeout handling
-      if (error.name === 'AbortError' || error.message?.includes('timeout')) {
-        this.logger.warn('Practical work search timeout (10s) - using fallback', { keywords: keywords.slice(0, 50) });
-      } else {
-        this.logger.error('Practical work search exception', { error: error.message });
-      }
+      this.logger.warn('Practical work search exception', { error: error.message });
       return [];
     }
   }
