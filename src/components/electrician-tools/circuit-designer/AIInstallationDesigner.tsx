@@ -44,8 +44,8 @@ export const AIInstallationDesigner = () => {
       setCurrentView('processing');
       setIsProcessing(true);
       
-      // Direct synchronous call to designer-agent-v2 with properly formatted data
-      const { data, error } = await supabase.functions.invoke('designer-agent-v2', {
+      // Direct synchronous call to designer-agent-v3 with properly formatted data
+      const { data, error } = await supabase.functions.invoke('designer-agent-v3', {
         body: { 
           mode: 'direct-design',
           projectInfo: {
@@ -85,7 +85,7 @@ export const AIInstallationDesigner = () => {
         return;
       }
 
-      if (!data?.success || !data?.design) {
+      if (!data?.success || !data?.circuits) {
         toast.error('Design generation failed', {
           description: data?.error || 'No design data received'
         });
@@ -96,11 +96,38 @@ export const AIInstallationDesigner = () => {
 
       console.log('✅ Circuit design completed:', data.design);
       
-      // Store design data
-      setDesignData(data.design);
-      sessionStorage.setItem('circuit-design-data', JSON.stringify(data.design));
+      // Success! Store design and show results
+      const designWithMetadata = {
+        circuits: data.circuits,
+        projectInfo: {
+          projectName: inputs.projectName || 'Untitled Project',
+          location: inputs.location || 'Not specified',
+          clientName: inputs.clientName,
+          electricianName: inputs.electricianName,
+          installationType: inputs.propertyType || 'domestic'
+        },
+        supply: {
+          voltage: inputs.voltage || 230,
+          phases: inputs.phases || 'single',
+          pfc: inputs.pscc || 16000,
+          ze: inputs.ze || 0.35,
+          earthingSystem: inputs.earthingSystem || 'TN-C-S',
+          consumerUnitType: 'split-load',
+          mainSwitchRating: 100
+        }
+      };
+
+      setDesignData(designWithMetadata);
+      sessionStorage.setItem('circuit-design-data', JSON.stringify(designWithMetadata));
       setCurrentView('results');
       setIsProcessing(false);
+
+      // Success toast with cache and auto-fix info
+      const cacheInfo = data.fromCache ? ' (from cache)' : '';
+      const autoFixInfo = data.autoFixApplied ? ' (auto-fixed)' : '';
+      toast.success('Design generated successfully' + cacheInfo + autoFixInfo, {
+        description: `${data.circuits?.length || 0} circuit${(data.circuits?.length || 0) !== 1 ? 's' : ''} designed in ${(data.processingTime / 1000).toFixed(1)}s`
+      });
       
     } catch (error: any) {
       console.error('Design generation error:', error);
