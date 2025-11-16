@@ -636,6 +636,33 @@ export type Database = {
         }
         Relationships: []
       }
+      circuit_design_cache_v3: {
+        Row: {
+          cache_key: string
+          created_at: string | null
+          design: Json
+          hit_count: number | null
+          id: string
+          last_hit_at: string | null
+        }
+        Insert: {
+          cache_key: string
+          created_at?: string | null
+          design: Json
+          hit_count?: number | null
+          id?: string
+          last_hit_at?: string | null
+        }
+        Update: {
+          cache_key?: string
+          created_at?: string | null
+          design?: Json
+          hit_count?: number | null
+          id?: string
+          last_hit_at?: string | null
+        }
+        Relationships: []
+      }
       circuit_design_calculations: {
         Row: {
           calculation_name: string
@@ -8140,6 +8167,10 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      increment_cache_hit: {
+        Args: { p_cache_key: string; p_last_hit_at: string }
+        Returns: undefined
       }
       increment_hazard_usage: {
         Args: { hazard_id: string }
