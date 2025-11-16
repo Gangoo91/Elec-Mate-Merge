@@ -141,6 +141,16 @@ export class AIDesigner {
     parts.push('- Use frontend pre-calculated values as starting hints');
     parts.push('- Ensure voltageDrop.compliant = true');
     parts.push('- Match circuit count exactly');
+    parts.push('');
+    parts.push('=== CRITICAL FIELD REQUIREMENTS ===');
+    parts.push('- ALWAYS include circuitNumber (sequential from 1)');
+    parts.push('- ALWAYS copy loadPower from input');
+    parts.push('- ALWAYS copy phases from input (single or three)');
+    parts.push('- ALWAYS set voltage (230V single-phase, 400V three-phase)');
+    parts.push('- ALWAYS copy cableLength from input');
+    parts.push('- ALWAYS provide installationMethod (e.g., "Method C - clipped direct")');
+    parts.push('- ALWAYS set rcdProtected (true if RCBO or special location requires RCD)');
+    parts.push('- ALWAYS generate full cableType description');
 
     return parts.join('\n');
   }
@@ -308,6 +318,40 @@ export class AIDesigner {
                     type: 'string',
                     description: 'Special location from input (bathroom, outdoor, none, etc.)'
                   },
+                  circuitNumber: {
+                    type: 'number',
+                    description: 'Circuit number (sequential from 1)'
+                  },
+                  loadPower: {
+                    type: 'number',
+                    description: 'Load power in Watts (use from input or calculate from Ib * voltage)'
+                  },
+                  phases: {
+                    type: 'string',
+                    enum: ['single', 'three'],
+                    description: 'Phase configuration from input (single or three)'
+                  },
+                  voltage: {
+                    type: 'number',
+                    enum: [110, 230, 400],
+                    description: 'Operating voltage (230V single-phase, 400V three-phase, 110V site supply)'
+                  },
+                  cableLength: {
+                    type: 'number',
+                    description: 'Cable length in meters (use from input)'
+                  },
+                  installationMethod: {
+                    type: 'string',
+                    description: 'Installation method reference (e.g., "Method C - clipped direct", "Method B - enclosed in conduit")'
+                  },
+                  cableType: {
+                    type: 'string',
+                    description: 'Full cable description (e.g., "6mm² twin and earth with 2.5mm² CPC, 70°C thermoplastic insulation")'
+                  },
+                  rcdProtected: {
+                    type: 'boolean',
+                    description: 'Whether circuit requires RCD protection (true if RCBO or special location)'
+                  },
                   cableSize: {
                     type: 'number',
                     enum: [1.0, 1.5, 2.5, 4.0, 6.0, 10.0, 16.0, 25.0, 35.0, 50.0, 70.0, 95.0],
@@ -450,7 +494,25 @@ export class AIDesigner {
                     required: ['cableRouting', 'terminationAdvice', 'testingRequirements', 'safetyNotes']
                   }
                 },
-                required: ['name', 'loadType', 'specialLocation', 'cableSize', 'cpcSize', 'protectionDevice', 'calculations', 'justifications', 'installationGuidance']
+                required: [
+                  'circuitNumber',
+                  'name', 
+                  'loadType', 
+                  'loadPower',
+                  'phases',
+                  'voltage',
+                  'cableLength',
+                  'installationMethod',
+                  'specialLocation', 
+                  'cableSize', 
+                  'cpcSize',
+                  'cableType',
+                  'protectionDevice',
+                  'rcdProtected',
+                  'calculations', 
+                  'justifications', 
+                  'installationGuidance'
+                ]
               }
             },
             reasoning: {
