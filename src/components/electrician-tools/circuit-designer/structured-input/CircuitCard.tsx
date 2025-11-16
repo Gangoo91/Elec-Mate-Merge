@@ -167,6 +167,8 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
             </Label>
             <MobileInput
               type="number"
+              min="1"
+              step="1"
               value={circuit.loadPower || ''}
               onChange={(e) => onUpdate({ loadPower: e.target.value ? Number(e.target.value) : undefined })}
               placeholder="e.g., 7360 for 32A ring"
@@ -184,6 +186,8 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
             </Label>
             <MobileInput
               type="number"
+              min="1"
+              step="0.5"
               value={circuit.cableLength || ''}
               onChange={(e) => onUpdate({ cableLength: e.target.value ? Number(e.target.value) : undefined })}
               placeholder="e.g., 25"
