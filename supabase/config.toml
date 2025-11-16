@@ -40,6 +40,11 @@ timeout_sec = 180
 verify_jwt = false
 timeout_sec = 300
 
+# Circuit Designer V3 - Clean Rebuild (Single-Pipeline)
+[functions.designer-agent-v3]
+verify_jwt = false
+timeout_sec = 300
+
 [functions.cancel-circuit-design-job]
 verify_jwt = false
 timeout_sec = 30
