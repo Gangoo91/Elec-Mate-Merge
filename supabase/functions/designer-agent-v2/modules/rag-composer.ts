@@ -7,8 +7,38 @@
 import { searchPracticalWorkIntelligence, formatForAIContext } from '../../_shared/rag-practical-work.ts';
 import { filterRegulationsForCircuit } from '../../_shared/circuit-regulation-mapper.ts';
 import { withTimeout, Timeouts } from '../../_shared/timeout.ts';
+import { withRetry } from '../../_shared/retry.ts';
 import { generateEmbedding } from '../../_shared/rams-rag.ts';
 import { safeAll } from '../../_shared/safe-parallel.ts';
+
+/**
+ * Core Regulations Cache Loader
+ * Emergency fallback when RAG pipeline fails
+ */
+async function loadCoreRegulations(supabase: any) {
+  const coreRegNumbers = [
+    '433.1.1', '433.1.204', // Cable sizing fundamentals
+    '525', '525.1', '525.2', // Voltage drop
+    '411.3.2', '411.3.3', // Protection & RCD
+    '543.1.1', '543.1.3', '543.7', // Earth fault loop
+    '701.410.3.5', '701.411.3.3', // Bathroom RCD & bonding
+    '522.8.10', '522.6', // Outdoor/buried cables
+    '531.3.3', '531.3.4', // Protection device selection
+    '559.10.3.1' // Three-phase circuits
+  ];
+  
+  const { data, error } = await supabase
+    .from('bs7671_embeddings')
+    .select('*')
+    .in('regulation_number', coreRegNumbers);
+  
+  if (error) {
+    console.error('Failed to load core regulations cache:', error);
+    return [];
+  }
+  
+  return data || [];
+}
 
 /**
  * Extract Circuit-Specific Keywords from User Input
@@ -185,9 +215,12 @@ async function searchDesignKnowledge(supabase: any, query: string, keywords: str
   console.log(`📚 Design Knowledge Search: ${query}`);
   
   try {
-    // Generate embedding from text (~200-400ms)
+    // Generate embedding from text with timeout & retry (~200-400ms)
     console.log('🔄 Generating embedding for design knowledge query...');
-    const queryEmbedding = await generateEmbedding(query);
+    const queryEmbedding = await withRetry(
+      () => withTimeout(generateEmbedding(query), 5000, 'Embedding Generation'),
+      { maxRetries: 2, baseDelayMs: 500, maxDelayMs: 2000 }
+    );
     console.log(`✅ Embedding generated (${queryEmbedding.length} dimensions)`);
     
     // Call RPC with vector embedding and correct parameters
@@ -301,6 +334,20 @@ export async function buildRAGSearches(
 
   const startTime = Date.now();
   
+  // ============= EARLY VALIDATION =============
+  // Validate circuits before wasting RAG calls
+  if (circuits && circuits.length > 0) {
+    for (const circuit of circuits) {
+      if (!circuit.loadType) {
+        throw new Error(`Circuit "${circuit.name || 'unnamed'}" missing loadType`);
+      }
+      if (!circuit.installMethod) {
+        throw new Error(`Circuit "${circuit.name || 'unnamed'}" missing installMethod`);
+      }
+    }
+    logger.info(`✅ Pre-validated ${circuits.length} circuits before RAG`);
+  }
+  
   // ============= SELF-CORRECTION KNOWLEDGE INJECTION =============
   if (circuits && circuits.length > 0) {
     circuits.forEach(c => {
@@ -396,15 +443,24 @@ export async function buildRAGSearches(
   ]);
   
   // Extract results, defaulting to [] for failed branches
-  const designDocs = successes.find(s => s.name === 'Design Knowledge')?.result || [];
-  const regulations = successes.find(s => s.name === 'BS 7671 Regulations')?.result || [];
-  const practicalWork = successes.find(s => s.name === 'Practical Work')?.result || [];
-  const calculations = successes.find(s => s.name === 'Structured Calculations')?.result || [];
+  let designDocs = successes.find(s => s.name === 'Design Knowledge')?.result || [];
+  let regulations = successes.find(s => s.name === 'BS 7671 Regulations')?.result || [];
+  let practicalWork = successes.find(s => s.name === 'Practical Work')?.result || [];
+  let calculations = successes.find(s => s.name === 'Structured Calculations')?.result || [];
   
   // Log any failures (but don't crash)
   failures.forEach(f => {
     logger.warn(`⚠️ RAG branch failed: ${f.name}`, f.error);
   });
+  
+  // Fallback to core regulations if ALL RAG branches failed
+  if (designDocs.length === 0 && regulations.length === 0 && 
+      practicalWork.length === 0 && calculations.length === 0) {
+    logger.warn('⚠️ ALL RAG branches failed - loading core regulations fallback');
+    const coreRegs = await loadCoreRegulations(supabase);
+    regulations = coreRegs;
+    logger.info(`✅ Loaded ${coreRegs.length} core regulations as fallback`);
+  }
   
   // Log completion
   const ragTime = Date.now() - searchStart;
@@ -414,8 +470,15 @@ export async function buildRAGSearches(
   logger.info(`✅ Calculations: ${calculations.length} formulas`);
   logger.info(`⏱️ RAG completed in ${ragTime}ms with ${successes.length}/4 branches`);
   
+  // Monitor RAG health
+  const successRate = (successes.length / 4) * 100;
+  logger.info(`📊 RAG Health: ${successRate.toFixed(0)}% (${successes.length}/4 branches)`);
+  
+  if (successRate < 50) {
+    logger.error(`🚨 CRITICAL: Only ${successes.length}/4 RAG branches succeeded`);
+  }
+  
   const totalTime = Date.now() - startTime;
-  const ragTime = Date.now() - searchStart;
   
   // Fallback: if ALL searches timed out, provide essential regulations
   const hasAnyResults = designDocs.length + regulations.length + practicalWork.length > 0;
