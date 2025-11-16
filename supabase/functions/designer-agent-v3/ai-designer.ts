@@ -51,7 +51,7 @@ export class AIDesigner {
         tool_choice
       },
       this.openAiKey,
-      280000 // 280s timeout
+      180000 // 180s timeout (3 minutes max for initial generation)
     );
 
     const duration = Date.now() - startTime;
@@ -183,12 +183,13 @@ export class AIDesigner {
         tool_choice
       },
       this.openAiKey,
-      180000 // 180s timeout (reduced from 280s)
+      90000 // 90s timeout (1.5 minutes - prevents edge function timeout)
     );
 
     const duration = Date.now() - startTime;
     this.logger.info('AI Correction complete', { 
       duration,
+      circuits: response.toolCalls?.[0] ? JSON.parse(response.toolCalls[0].function.arguments).circuits.length : 0,
       hasToolCalls: !!response.toolCalls
     });
 
