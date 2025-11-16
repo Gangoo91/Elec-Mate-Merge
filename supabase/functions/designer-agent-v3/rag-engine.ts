@@ -36,10 +36,10 @@ export class RAGEngine {
       practicalKeywords: queries.practicalKeywords.split(' ').length
     });
 
-    // Parallel search with 20s timeout per source
+    // Parallel search with timeouts (30s for practical work, 20s for regulations)
     const [regulations, practicalGuides] = await Promise.all([
       this.withTimeout(this.searchRegulations(queries.regulationKeywords), 20000),
-      this.withTimeout(this.searchPracticalWork(queries.practicalKeywords), 20000)
+      this.withTimeout(this.searchPracticalWork(queries.practicalKeywords), 30000)
     ]);
 
     const searchTime = Date.now() - startTime;
@@ -67,17 +67,22 @@ export class RAGEngine {
   /**
    * Timeout wrapper for RAG searches
    */
-  private async withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
+  private async withTimeout<T extends any[]>(
+    promise: Promise<T>, 
+    timeoutMs: number
+  ): Promise<T> {
     return Promise.race([
       promise,
       new Promise<T>((_, reject) => 
         setTimeout(() => reject(new Error('Timeout')), timeoutMs)
       )
-    ]).catch(err => {
+    ]).catch((err) => {
       if (err.message === 'Timeout') {
         this.logger.warn('RAG search timeout', { timeoutMs });
+      } else {
+        this.logger.error('RAG search failed', { error: err.message });
       }
-      return [] as T; // Return empty array on timeout
+      return [] as T; // Explicitly typed empty array
     });
   }
 
