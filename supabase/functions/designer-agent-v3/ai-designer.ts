@@ -90,10 +90,10 @@ export class AIDesigner {
     parts.push('Supply voltage and phases vary by installation - use the exact values provided in each request.');
     parts.push('');
 
-    // Inject top regulations (weight 90, top 2)
+    // Inject top regulations (weight 90, top 3 - increased from 2)
     if (context.regulations.length > 0) {
       parts.push('=== KEY REGULATIONS ===');
-      context.regulations.slice(0, 2).forEach(reg => {
+      context.regulations.slice(0, 3).forEach(reg => {
         parts.push(`${reg.regulation_number}: ${reg.content}`);
       });
       parts.push('');
@@ -108,7 +108,7 @@ export class AIDesigner {
       parts.push('');
     }
 
-    // Inject top practical guides (weight 90, top 3)
+    // Inject top practical guides (weight 95, top 3)
     if (context.practicalGuides.length > 0) {
       parts.push('=== PRACTICAL GUIDANCE ===');
       context.practicalGuides.slice(0, 3).forEach(guide => {
