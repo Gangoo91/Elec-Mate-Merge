@@ -182,21 +182,17 @@ export class RAGEngine {
   }
 
   /**
-   * Search Design Knowledge (semantic search, weight 95)
-   * OPTIMIZATION: Fixed schema and better error handling
+   * Search Design Knowledge using hybrid search RPC (weight 95)
    */
   private async searchDesignKnowledge(semanticQuery: string): Promise<any[]> {
     try {
-      // Generate embedding from form entities
-      const embedding = await this.embedder.generateEmbedding(semanticQuery);
-
-      // FIXED: Query design_knowledge directly (not design_patterns_structured)
-      const { data, error } = await this.supabase
-        .from('design_knowledge')
-        .select('id, topic, content, source, metadata')
-        .textSearch('content', semanticQuery)
-        .limit(5)
-        .abortSignal(AbortSignal.timeout(10000));
+      const { data, error } = await this.supabase.rpc(
+        'search_design_hybrid',
+        {
+          query_text: semanticQuery,
+          match_count: 8
+        }
+      ).abortSignal(AbortSignal.timeout(10000));
 
       if (error) {
         this.logger.warn('Design knowledge search failed', { error: error.message });
@@ -209,7 +205,6 @@ export class RAGEngine {
 
       return data || [];
     } catch (error) {
-      // OPTIMIZATION: Better timeout handling
       if (error.name === 'AbortError' || error.message?.includes('timeout')) {
         this.logger.warn('Design knowledge search timeout (10s)', { query: semanticQuery.slice(0, 50) });
       } else {
