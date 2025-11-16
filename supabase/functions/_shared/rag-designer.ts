@@ -191,7 +191,7 @@ export async function retrieveDesignKnowledge(
     // Parallel searches: Regulations Intelligence + Design Knowledge (no embeddings!)
     const [bs7671Results, designResults] = await Promise.all([
       // Regulations Intelligence hybrid search
-      supabase.rpc('search_bs7671_intelligence_hybrid', {
+      supabase.rpc('search_regulations_intelligence_hybrid', {
         query_text: expandedQuery,
         match_count: 15
       }),

@@ -234,9 +234,9 @@ serve(async (req) => {
 
       // Query 2: BS 7671 Regulations Intelligence via RPC (uses full query text)
       const { data: regulationsData, error: regsError } = await supabase.rpc(
-        'search_bs7671_intelligence_hybrid',
+        'search_regulations_intelligence_hybrid',
         {
-          search_keywords: query,  // Use FULL query
+          query_text: query,  // Use FULL query
           match_count: 15
         }
       );

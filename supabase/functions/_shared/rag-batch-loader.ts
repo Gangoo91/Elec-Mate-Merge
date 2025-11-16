@@ -101,7 +101,7 @@ export async function searchBS7671Batch(
     // Use BS 7671 intelligence hybrid search RPC
     const queryText = keywords.join(' ');
     const { data, error } = await supabase.rpc(
-      'search_bs7671_intelligence_hybrid',
+      'search_regulations_intelligence_hybrid',
       {
         query_text: queryText,
         match_count: limit

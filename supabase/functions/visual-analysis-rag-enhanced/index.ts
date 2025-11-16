@@ -43,7 +43,7 @@ serve(async (req) => {
 
     // Search Regulations Intelligence (keyword-optimized)
     const { data: bs7671Results, error: bs7671Error } = await supabase.rpc(
-      'search_bs7671_intelligence_hybrid',
+      'search_regulations_intelligence_hybrid',
       {
         query_text: userContext,
         match_count: 6

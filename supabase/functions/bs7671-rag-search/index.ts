@@ -88,7 +88,7 @@ serve(async (req) => {
     const { data: intelligenceResults, error: searchError } = await logger.time(
       'Intelligence hybrid search',
       () => withTimeout(
-        supabase.rpc('search_bs7671_intelligence_hybrid', {
+        supabase.rpc('search_regulations_intelligence_hybrid', {
           query_text: query,
           match_count: matchCount
         }),

@@ -150,8 +150,8 @@ serve(async (req) => {
     // STEP 2: Parallel RAG Search (simplified - matches RAMS pattern)
     const ragPromises: Array<Promise<any>> = [
       // BS7671 Intelligence (keyword hybrid)
-      supabase.rpc('search_bs7671_intelligence_hybrid', {
-        search_keywords: queryText,
+      supabase.rpc('search_regulations_intelligence_hybrid', {
+        query_text: queryText,
         match_count: 8
       }),
       

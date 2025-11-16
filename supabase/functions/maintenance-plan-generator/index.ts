@@ -223,7 +223,7 @@ serve(async (req) => {
         equipment_filter: equipmentType,
         match_count: detailLevel === 'quick' ? 6 : 12
       }),
-      supabase.rpc('search_bs7671_intelligence_hybrid', {
+      supabase.rpc('search_regulations_intelligence_hybrid', {
         query_text: `${equipmentType} periodic inspection testing maintenance requirements`,
         match_count: detailLevel === 'quick' ? 6 : 12
       }),

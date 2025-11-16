@@ -425,7 +425,7 @@ Deno.serve(async (req) => {
       }),
       
       // TIER 2: BS 7671 Regulations Intelligence - KEYWORD-ONLY (testing requirements)
-      supabase.rpc('search_bs7671_intelligence_hybrid', {
+      supabase.rpc('search_regulations_intelligence_hybrid', {
         query_text: `${maintenanceEnhancedQuery} inspection testing verification certification`, // Testing-focused
         match_count: 8
       })
