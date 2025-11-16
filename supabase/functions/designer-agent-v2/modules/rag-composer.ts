@@ -7,6 +7,7 @@
 import { searchPracticalWorkIntelligence, formatForAIContext } from '../../_shared/rag-practical-work.ts';
 import { filterRegulationsForCircuit } from '../../_shared/circuit-regulation-mapper.ts';
 import { withTimeout, Timeouts } from '../../_shared/timeout.ts';
+import { generateEmbedding } from '../../_shared/rams-rag.ts';
 
 /**
  * Extract Circuit-Specific Keywords from User Input
@@ -176,20 +177,38 @@ function getCriticalTopicsForType(type: 'domestic' | 'commercial' | 'industrial'
 }
 
 /**
- * Helper: Search Design Knowledge (vector)
+ * Helper: Search Design Knowledge (vector-based semantic search)
+ * Generates embedding from query text and uses vector similarity search
  */
 async function searchDesignKnowledge(supabase: any, query: string, keywords: string[], limit: number) {
-  const { data, error } = await supabase.rpc('search_design_knowledge', {
-    query_text: query,
-    match_count: limit
-  });
+  console.log(`📚 Design Knowledge Search: ${query}`);
   
-  if (error) {
-    console.error('Design knowledge search error:', error);
+  try {
+    // Generate embedding from text (~200-400ms)
+    console.log('🔄 Generating embedding for design knowledge query...');
+    const queryEmbedding = await generateEmbedding(query);
+    console.log(`✅ Embedding generated (${queryEmbedding.length} dimensions)`);
+    
+    // Call RPC with vector embedding and correct parameters
+    const { data, error } = await supabase.rpc('search_design_knowledge', {
+      query_embedding: queryEmbedding,
+      circuit_filter: null,
+      source_filter: null,
+      match_threshold: 0.7,
+      match_count: limit
+    });
+    
+    if (error) {
+      console.error('Design knowledge search error:', error);
+      return [];
+    }
+    
+    console.log(`✅ Found ${data?.length || 0} design knowledge results`);
+    return data || [];
+  } catch (error) {
+    console.error('Design knowledge search failed:', error);
     return [];
   }
-  
-  return data || [];
 }
 
 /**
