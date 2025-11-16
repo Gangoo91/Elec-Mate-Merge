@@ -97,7 +97,7 @@ export class DesignPipeline {
 
       // Generate design (with correction context on retry)
       const correctionContext = attempts > 1 
-        ? this.feedback.buildCorrectionPrompt(validationResult.issues, inputs, design)
+        ? this.feedback.buildCorrectionPrompt(validationResult.issues, normalized, design)
         : undefined;
 
       design = await this.ai.generateWithCorrection(normalized, ragContext, correctionContext);
@@ -108,9 +108,9 @@ export class DesignPipeline {
       });
 
       // ========================================
-      // PHASE 5: Validation
+      // PHASE 5: Validation (with voltage context)
       // ========================================
-      validationResult = this.validator.validate(design);
+      validationResult = this.validator.validate(design, normalized.supply.voltage);
       
       if (attempts === 1 && !validationResult.isValid) {
         // Store original issues for reporting

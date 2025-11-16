@@ -193,6 +193,17 @@ export interface InstallationDesign {
     }>;
   };
   practicalGuidance: string[];
+  // PHASE 4: Design Reasoning
+  reasoning?: {
+    voltageContext: string;
+    cableSelectionLogic: string;
+    protectionLogic: string;
+    complianceChecks: string;
+    correctionsApplied?: string;
+  };
+  // PHASE 2: Self-Correction Tracking
+  correctionApplied?: boolean;
+  correctionAttempts?: number;
 }
 
 export interface DesignInputs {

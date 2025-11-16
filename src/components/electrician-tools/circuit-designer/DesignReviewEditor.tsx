@@ -26,6 +26,7 @@ import { calculateExpectedR1R2, getMaxZsForDevice, mapLoadTypeToCircuitDescripti
 import { MobileCircuitResults } from './MobileCircuitResults';
 import { CircuitCard } from './CircuitCard';
 import { RequestSummaryHeader } from './RequestSummaryHeader';
+import { DesignReasoningDisplay } from './results/DesignReasoningDisplay';
 
 interface DesignReviewEditorProps {
   design: InstallationDesign;
@@ -941,6 +942,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
     <div className="space-y-6">
       {/* Request Summary Header */}
       <RequestSummaryHeader design={design} />
+
+      {/* Design Reasoning Display (Phase 4) */}
+      {design.reasoning && (
+        <DesignReasoningDisplay 
+          reasoning={design.reasoning}
+          correctionApplied={design.correctionApplied}
+          correctionAttempts={design.correctionAttempts}
+        />
+      )}
 
       {/* Agent Flow Diagram */}
       <AgentFlowDiagram currentAgent="designer" onQuickForward={handleQuickForward} />
