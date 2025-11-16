@@ -84,9 +84,10 @@ export class AIDesigner {
   private buildSystemPrompt(context: RAGContext): string {
     const parts: string[] = [];
 
-    // Core identity
+    // Core identity with dynamic voltage support (PHASE 1)
     parts.push('You are a BS 7671:2018+A2:2022 electrical circuit design expert.');
     parts.push('Design COMPLIANT circuits using the knowledge base provided.');
+    parts.push('Supply voltage and phases vary by installation - use the exact values provided in each request.');
     parts.push('');
 
     // Inject top regulations (weight 90, top 5)
@@ -131,15 +132,107 @@ export class AIDesigner {
     parts.push('8. CPC sizing per Reg 543.1.1');
     parts.push('');
 
-    // Output requirements
+    // Output requirements (PHASE 3 & 4: Add installation guidance and reasoning)
     parts.push('=== OUTPUT REQUIREMENTS ===');
     parts.push('- Provide ALL calculations (Ib, In, Iz, VD, Zs)');
     parts.push('- Justify EVERY selection with regulation numbers');
+    parts.push('- Include comprehensive installation guidance (routing, termination, testing)');
+    parts.push('- Explain your design reasoning and compliance checks');
     parts.push('- Use frontend pre-calculated values as starting hints');
     parts.push('- Ensure voltageDrop.compliant = true');
     parts.push('- Match circuit count exactly');
 
     return parts.join('\n');
+  }
+
+  /**
+   * PHASE 2: Build correction-mode system prompt
+   */
+  buildCorrectionPrompt(
+    basePrompt: string,
+    correctionContext: string
+  ): string {
+    const parts: string[] = [];
+    
+    parts.push('=== CORRECTION MODE ACTIVATED ===');
+    parts.push('The previous design failed validation. Review the errors below and re-design.');
+    parts.push('');
+    parts.push(correctionContext);
+    parts.push('');
+    parts.push('=== ORIGINAL DESIGN CONTEXT ===');
+    parts.push(basePrompt);
+    
+    return parts.join('\n');
+  }
+
+  /**
+   * PHASE 2: Generate design with optional correction mode
+   */
+  async generateWithCorrection(
+    inputs: NormalizedInputs,
+    context: RAGContext,
+    correctionContext?: string
+  ): Promise<Design> {
+    this.logger.info('AI Designer starting', {
+      circuits: inputs.circuits.length,
+      ragResults: context.totalResults,
+      correctionMode: !!correctionContext
+    });
+
+    const startTime = Date.now();
+
+    // Build system prompt
+    const basePrompt = this.buildSystemPrompt(context);
+    const systemPrompt = correctionContext 
+      ? this.buildCorrectionPrompt(basePrompt, correctionContext)
+      : basePrompt;
+    
+    // Convert form to structured JSON
+    const structuredInput = this.buildStructuredInput(inputs);
+    
+    // Define tool schema
+    const tools = [this.buildDesignTool()];
+    const tool_choice = { type: 'function', function: { name: 'design_circuits' } };
+
+    // Call OpenAI with timeout
+    const response = await callOpenAI(
+      {
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: JSON.stringify(structuredInput, null, 2) }
+        ],
+        model: 'gpt-5-mini-2025-08-07',
+        max_completion_tokens: 16000,
+        tools,
+        tool_choice
+      },
+      this.openAiKey,
+      280000 // 280s timeout
+    );
+
+    const duration = Date.now() - startTime;
+    this.logger.info('AI Designer complete', { 
+      duration,
+      hasToolCalls: !!response.toolCalls,
+      correctionMode: !!correctionContext
+    });
+
+    // Parse tool call
+    if (!response.toolCalls || response.toolCalls.length === 0) {
+      throw new Error('No tool calls in AI response');
+    }
+
+    const toolCall = response.toolCalls[0];
+    const design = JSON.parse(toolCall.function.arguments) as Design;
+
+    // Validate circuit count matches input
+    if (design.circuits.length !== inputs.circuits.length) {
+      throw new Error(
+        `Circuit count mismatch: expected ${inputs.circuits.length}, got ${design.circuits.length}`
+      );
+    }
+
+    return design;
   }
 
   /**
@@ -307,16 +400,80 @@ export class AIDesigner {
                       rcd: { 
                         type: 'string',
                         description: 'If RCBO used, justify why RCD is required (location, load type)'
+                      },
+                      corrections: {
+                        type: 'string',
+                        description: 'PHASE 2: If in correction mode, explain what was changed and why'
                       }
                     },
                     required: ['cableSize', 'protection']
+                  },
+                  installationGuidance: {
+                    type: 'object',
+                    description: 'PHASE 3: Practical installation guidance for electricians',
+                    properties: {
+                      cableRouting: {
+                        type: 'string',
+                        description: 'How to route the cable (clip spacing, conduit size, tray spacing)'
+                      },
+                      terminationAdvice: {
+                        type: 'string',
+                        description: 'Termination best practices (ferrules, torque settings, connection method)'
+                      },
+                      testingRequirements: {
+                        type: 'string',
+                        description: 'Required tests (R1+R2, Zs, insulation, polarity, RCD trip time)'
+                      },
+                      safetyNotes: {
+                        type: 'array',
+                        items: { type: 'string' },
+                        description: 'Safety warnings and precautions'
+                      },
+                      toolsRequired: {
+                        type: 'array',
+                        items: { type: 'string' },
+                        description: 'Specific tools needed for this circuit'
+                      },
+                      estimatedInstallTime: {
+                        type: 'string',
+                        description: 'Estimated installation time (e.g., "2-3 hours")'
+                      }
+                    },
+                    required: ['cableRouting', 'terminationAdvice', 'testingRequirements', 'safetyNotes']
                   }
                 },
-                required: ['name', 'loadType', 'specialLocation', 'cableSize', 'cpcSize', 'protectionDevice', 'calculations', 'justifications']
+                required: ['name', 'loadType', 'specialLocation', 'cableSize', 'cpcSize', 'protectionDevice', 'calculations', 'justifications', 'installationGuidance']
               }
+            },
+            reasoning: {
+              type: 'object',
+              description: 'PHASE 4: Overall design reasoning and compliance verification',
+              properties: {
+                voltageContext: {
+                  type: 'string',
+                  description: 'Explain voltage selection implications (110V/230V/400V, single/three-phase)'
+                },
+                cableSelectionLogic: {
+                  type: 'string',
+                  description: 'Overall strategy for cable sizing across all circuits'
+                },
+                protectionLogic: {
+                  type: 'string',
+                  description: 'Protection device selection strategy and coordination'
+                },
+                complianceChecks: {
+                  type: 'string',
+                  description: 'Summary of BS 7671 compliance verification performed'
+                },
+                correctionsApplied: {
+                  type: 'string',
+                  description: 'If in correction mode, explain all corrections made'
+                }
+              },
+              required: ['voltageContext', 'cableSelectionLogic', 'protectionLogic', 'complianceChecks']
             }
           },
-          required: ['circuits'],
+          required: ['circuits', 'reasoning'],
           additionalProperties: false
         }
       }

@@ -136,6 +136,26 @@ export interface CircuitJustifications {
   cableSize: string;
   protection: string;
   rcd?: string;
+  corrections?: string; // PHASE 2: Track what was corrected
+}
+
+// PHASE 3: Installation Guidance
+export interface InstallationGuidance {
+  cableRouting: string;
+  terminationAdvice: string;
+  testingRequirements: string;
+  safetyNotes: string[];
+  toolsRequired?: string[];
+  estimatedInstallTime?: string;
+}
+
+// PHASE 4: Design Reasoning
+export interface DesignReasoning {
+  voltageContext: string;
+  cableSelectionLogic: string;
+  protectionLogic: string;
+  complianceChecks: string;
+  correctionsApplied?: string;
 }
 
 export interface DesignedCircuit {
@@ -147,10 +167,12 @@ export interface DesignedCircuit {
   protectionDevice: ProtectionDevice;
   calculations: CircuitCalculations;
   justifications: CircuitJustifications;
+  installationGuidance?: InstallationGuidance; // PHASE 3
 }
 
 export interface Design {
   circuits: DesignedCircuit[];
+  reasoning?: DesignReasoning; // PHASE 4
 }
 
 // ========================================
@@ -200,4 +222,11 @@ export interface DesignResult {
   version?: string;
   error?: string;
   requestId?: string;
+  // PHASE 2: Correction tracking
+  correctionApplied?: boolean;
+  correctionAttempts?: number;
+  originalIssues?: ValidationIssue[];
+  correctedIssues?: ValidationIssue[];
+  // PHASE 4: Reasoning
+  reasoning?: DesignReasoning;
 }

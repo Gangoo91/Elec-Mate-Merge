@@ -50,7 +50,7 @@ export class RAGEngine {
     return {
       designPatterns: this.weightResults(designPatterns, 95),
       regulations: this.weightResults(regulations, 90),
-      practicalGuides: this.weightResults(practicalGuides, 90),
+      practicalGuides: this.weightResults(practicalGuides, 95), // PHASE 3: Increased from 90 to 95
       totalResults: designPatterns.length + regulations.length + practicalGuides.length,
       searchTime
     };
@@ -122,9 +122,17 @@ export class RAGEngine {
 
   /**
    * Build practical work keywords from installation details
+   * PHASE 3: Enhanced with installation-specific terms
    */
   private buildPracticalKeywords(inputs: NormalizedInputs): string {
     const keywords: string[] = [];
+
+    // PHASE 3: Add installation guidance keywords
+    keywords.push('installation');
+    keywords.push('termination');
+    keywords.push('testing');
+    keywords.push('cable routing');
+    keywords.push('tools required');
 
     inputs.circuits.forEach(c => {
       // Installation method
@@ -132,6 +140,7 @@ export class RAGEngine {
         const methodNum = c.installMethod.replace('method_', '');
         keywords.push(`reference method ${methodNum}`);
         keywords.push('cable installation');
+        keywords.push('clip spacing'); // PHASE 3
       }
 
       // Load-specific practical guidance
@@ -140,28 +149,34 @@ export class RAGEngine {
       if (c.loadType === 'shower') {
         keywords.push('shower circuit installation');
         keywords.push('isolator switch');
+        keywords.push('pull cord'); // PHASE 3
       }
       
       if (c.loadType === 'cooker') {
         keywords.push('cooker circuit installation');
         keywords.push('control unit');
+        keywords.push('diversity factor'); // PHASE 3
       }
 
       // Outdoor installation specifics
       if (c.specialLocation === 'outdoor' && c.outdoorInstall) {
         keywords.push(`${c.outdoorInstall} cable`);
         keywords.push('outdoor wiring');
+        keywords.push('SWA termination'); // PHASE 3
+        keywords.push('gland sizing'); // PHASE 3
       }
 
       // Protection installation
       if (c.protectionType && c.protectionType !== 'auto') {
         keywords.push(`${c.protectionType} installation`);
+        keywords.push('RCD testing'); // PHASE 3
       }
     });
 
     // Trade filter
     keywords.push('electrical installation');
     keywords.push('commissioning');
+    keywords.push('safe isolation'); // PHASE 3
 
     return keywords.join(' ');
   }

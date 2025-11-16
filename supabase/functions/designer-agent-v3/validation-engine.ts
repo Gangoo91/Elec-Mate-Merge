@@ -14,18 +14,19 @@ export class ValidationEngine {
 
   /**
    * Validate entire design against BS 7671 rules
-   * Returns validated design or throws error with auto-fix suggestions
+   * PHASE 5: Enhanced with voltage-specific validation
    */
-  validate(design: Design): ValidationResult {
+  validate(design: Design, voltage?: number): ValidationResult {
     this.logger.info('Validation starting', {
-      circuits: design.circuits.length
+      circuits: design.circuits.length,
+      voltage: voltage || 'unknown'
     });
 
     const issues: ValidationIssue[] = [];
     
-    // Validate each circuit
+    // Validate each circuit (PHASE 5: Pass voltage for context-aware validation)
     design.circuits.forEach((circuit, idx) => {
-      const circuitIssues = this.validateCircuit(circuit, idx);
+      const circuitIssues = this.validateCircuit(circuit, idx, voltage);
       issues.push(...circuitIssues);
     });
 
@@ -48,8 +49,9 @@ export class ValidationEngine {
 
   /**
    * Validate individual circuit against all BS 7671 rules
+   * PHASE 5: Enhanced with voltage-aware validation
    */
-  private validateCircuit(circuit: DesignedCircuit, index: number): ValidationIssue[] {
+  private validateCircuit(circuit: DesignedCircuit, index: number, voltage?: number): ValidationIssue[] {
     const issues: ValidationIssue[] = [];
 
     // RULE 1: Ib ≤ In (Design current must not exceed protection device rating)
@@ -202,6 +204,57 @@ export class ValidationEngine {
         expectedValue: 10,
         fieldAffected: 'cableSize'
       });
+    }
+
+    // PHASE 5: RULE 11 - Voltage-specific validation
+    if (voltage) {
+      // 110V circuits should have higher current for same power
+      if (voltage === 110 && circuit.calculations.Ib > 0) {
+        const expectedHigherCurrent = circuit.calculations.Ib * 2; // Rough check
+        if (circuit.calculations.Ib < expectedHigherCurrent * 0.8) {
+          issues.push({
+            circuitIndex: index,
+            circuitName: circuit.name,
+            rule: 'voltage_current_relationship',
+            regulation: 'Ohm's Law',
+            severity: 'warning',
+            message: `110V circuits typically require higher current ratings. Review Ib calculation.`,
+            currentValue: circuit.calculations.Ib,
+            expectedValue: expectedHigherCurrent,
+            fieldAffected: 'calculations.Ib'
+          });
+        }
+      }
+
+      // 400V three-phase should have lower current per phase
+      if (voltage === 400 && circuit.calculations.Ib > 100) {
+        issues.push({
+          circuitIndex: index,
+          circuitName: circuit.name,
+          rule: 'high_current_three_phase',
+          regulation: 'Best Practice',
+          severity: 'warning',
+          message: `Very high current (${circuit.calculations.Ib.toFixed(1)}A) on 400V. Verify load calculations and phase distribution.`,
+          currentValue: circuit.calculations.Ib,
+          expectedValue: 100,
+          fieldAffected: 'calculations.Ib'
+        });
+      }
+
+      // Unusual voltage warning
+      if (voltage === 110) {
+        issues.push({
+          circuitIndex: index,
+          circuitName: circuit.name,
+          rule: 'unusual_voltage',
+          regulation: 'Context Warning',
+          severity: 'warning',
+          message: `110V is uncommon in UK installations. Verify transformer/supply requirements and ensure proper labeling.`,
+          currentValue: 110,
+          expectedValue: 230,
+          fieldAffected: 'supply.voltage'
+        });
+      }
     }
 
     return issues;
