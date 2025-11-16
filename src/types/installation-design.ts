@@ -19,6 +19,20 @@ export interface CircuitInput {
   phases: 'single' | 'three';
   specialLocation?: 'bathroom' | 'outdoor' | 'underground' | 'kitchen' | 'none';
   notes?: string;
+  
+  // NEW: Step 4 - Installation Details (per circuit)
+  installMethod?: 'method_a' | 'method_b' | 'method_c' | 'method_d' | 'method_e' | 'method_f' | 'auto';
+  protectionType?: 'auto' | 'MCB' | 'RCBO' | 'RCBO-TypeA' | 'RCBO-TypeB';
+  rcdProtection?: boolean;
+  bathroomZone?: 'zone_0' | 'zone_1' | 'zone_2' | 'outside_zones';
+  outdoorInstall?: 'buried' | 'overhead' | 'wall_mounted' | 'other';
+  diversityOverride?: number; // Manual override for experienced users
+  
+  // NEW: Step 5 - Pre-calculated values (frontend calculations)
+  calculatedIb?: number; // Design current
+  suggestedMCB?: number; // Suggested MCB rating
+  calculatedDiversity?: number; // Auto-calculated diversity factor
+  estimatedCableSize?: number; // Rough cable size estimate
 }
 
 export interface CircuitDesign {
