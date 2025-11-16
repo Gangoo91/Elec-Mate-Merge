@@ -46,7 +46,7 @@ export class AIDesigner {
           { role: 'user', content: JSON.stringify(structuredInput, null, 2) }
         ],
         model: 'gpt-5-mini-2025-08-07',
-        max_completion_tokens: 16000,
+        max_completion_tokens: 12000,
         tools,
         tool_choice
       },
@@ -90,10 +90,10 @@ export class AIDesigner {
     parts.push('Supply voltage and phases vary by installation - use the exact values provided in each request.');
     parts.push('');
 
-    // Inject top regulations (weight 90, top 3)
+    // Inject top regulations (weight 90, top 2)
     if (context.regulations.length > 0) {
       parts.push('=== KEY REGULATIONS ===');
-      context.regulations.slice(0, 3).forEach(reg => {
+      context.regulations.slice(0, 2).forEach(reg => {
         parts.push(`${reg.regulation_number}: ${reg.content}`);
       });
       parts.push('');
