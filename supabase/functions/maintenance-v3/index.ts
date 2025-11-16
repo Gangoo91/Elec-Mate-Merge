@@ -1,5 +1,5 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { createClient } from '../_shared/deps.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 
 const corsHeaders = {

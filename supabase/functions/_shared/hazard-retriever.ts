@@ -5,7 +5,7 @@
  * This is the game-changer: RAG does 90% of the work, AI just formats.
  */
 
-import { createClient, SupabaseClient } from 'jsr:@supabase/supabase-js@2';
+import { createClient, SupabaseClient } from './deps.ts';
 
 // Types
 interface StructuredHazard {
