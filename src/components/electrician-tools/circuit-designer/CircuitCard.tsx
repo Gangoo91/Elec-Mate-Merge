@@ -215,25 +215,33 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
             <Cable className="h-4 w-4 text-blue-400" />
             Installation Guidance
           </h4>
-          <div className="space-y-2 text-sm">
+          <div className="space-y-3 text-sm">
             <div>
-              <span className="text-white/60">Reference Method:</span>{' '}
-              <span className="text-elec-light font-medium">{circuit.installationGuidance.referenceMethod}</span>
+              <span className="text-white/60 block mb-1">Cable Routing:</span>
+              <span className="text-elec-light/90">{circuit.installationGuidance.cableRouting}</span>
             </div>
-            {circuit.installationGuidance.clipSpacing && (
-              <div>
-                <span className="text-white/60">Clip Spacing:</span>{' '}
-                <span className="text-elec-light">{circuit.installationGuidance.clipSpacing}</span>
-              </div>
-            )}
-            {circuit.installationGuidance.practicalTips && circuit.installationGuidance.practicalTips.length > 0 && (
+            <div>
+              <span className="text-white/60 block mb-1">Termination Advice:</span>
+              <span className="text-elec-light/90">{circuit.installationGuidance.terminationAdvice}</span>
+            </div>
+            <div>
+              <span className="text-white/60 block mb-1">Testing Requirements:</span>
+              <span className="text-elec-light/90">{circuit.installationGuidance.testingRequirements}</span>
+            </div>
+            {circuit.installationGuidance.safetyNotes && circuit.installationGuidance.safetyNotes.length > 0 && (
               <div className="mt-3">
-                <div className="text-white/60 mb-1">Practical Tips:</div>
+                <div className="text-white/60 mb-1">Safety Notes:</div>
                 <ul className="list-disc list-inside space-y-1 text-white/80">
-                  {circuit.installationGuidance.practicalTips.map((tip, idx) => (
-                    <li key={idx} className="text-xs">{tip}</li>
+                  {circuit.installationGuidance.safetyNotes.map((note, idx) => (
+                    <li key={idx} className="text-xs">{note}</li>
                   ))}
                 </ul>
+              </div>
+            )}
+            {circuit.installationGuidance.estimatedInstallTime && (
+              <div>
+                <span className="text-white/60">Install Time:</span>{' '}
+                <span className="text-elec-light font-medium">{circuit.installationGuidance.estimatedInstallTime}</span>
               </div>
             )}
           </div>
