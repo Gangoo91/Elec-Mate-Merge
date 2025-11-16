@@ -1,6 +1,6 @@
 /**
- * RAG Engine - 3-Source Parallel Search
- * Fixed weights: Design Knowledge (95), Regulations Intelligence (90), Practical Work (90)
+ * RAG Engine - 2-Source Parallel Search
+ * Searches regulations_intelligence (90) and practical_work_intelligence (95)
  */
 
 import { createClient } from '../_shared/deps.ts';
@@ -20,39 +20,35 @@ export class RAGEngine {
   }
 
   /**
-   * Execute parallel RAG search across 3 knowledge bases
+   * Execute parallel RAG search across 2 intelligence tables
    */
   async search(normalized: NormalizedInputs): Promise<RAGContext> {
     const startTime = Date.now();
 
     // Build search queries from form fields (NOT text prompts)
     const queries = {
-      semantic: this.embedder.buildEmbeddingText(normalized),
       regulationKeywords: this.buildRegulationKeywords(normalized),
       practicalKeywords: this.buildPracticalKeywords(normalized)
     };
 
     this.logger.info('RAG queries built', {
-      semanticLength: queries.semantic.length,
       regulationKeywords: queries.regulationKeywords.split(' ').length,
       practicalKeywords: queries.practicalKeywords.split(' ').length
     });
 
-    // Parallel search with 15s timeout per source (increased from 10s)
-    const [designPatterns, regulations, practicalGuides] = await Promise.all([
-      this.withTimeout(this.searchDesignKnowledge(queries.semantic), 15000),
-      this.withTimeout(this.searchRegulations(queries.regulationKeywords), 15000),
-      this.withTimeout(this.searchPracticalWork(queries.practicalKeywords), 15000)
+    // Parallel search with 20s timeout per source
+    const [regulations, practicalGuides] = await Promise.all([
+      this.withTimeout(this.searchRegulations(queries.regulationKeywords), 20000),
+      this.withTimeout(this.searchPracticalWork(queries.practicalKeywords), 20000)
     ]);
 
     const searchTime = Date.now() - startTime;
 
     // Fallback: If all sources failed, use core regulations cache
-    if (designPatterns.length === 0 && regulations.length === 0 && practicalGuides.length === 0) {
+    if (regulations.length === 0 && practicalGuides.length === 0) {
       this.logger.warn('All RAG sources failed, using core regulations fallback');
       const coreRegs = this.getCoreRegulations();
       return {
-        designPatterns: [],
         regulations: this.weightResults(coreRegs, 90),
         practicalGuides: [],
         totalResults: coreRegs.length,
@@ -61,10 +57,9 @@ export class RAGEngine {
     }
 
     return {
-      designPatterns: this.weightResults(designPatterns, 95),
       regulations: this.weightResults(regulations, 90),
       practicalGuides: this.weightResults(practicalGuides, 95),
-      totalResults: designPatterns.length + regulations.length + practicalGuides.length,
+      totalResults: regulations.length + practicalGuides.length,
       searchTime
     };
   }
@@ -212,47 +207,6 @@ export class RAGEngine {
   }
 
   /**
-   * Search Design Knowledge using hybrid search RPC (weight 95)
-   */
-  private async searchDesignKnowledge(semanticQuery: string): Promise<any[]> {
-    try {
-      // Generate embedding for hybrid search
-      const embedding = await this.embedder.generateEmbedding(semanticQuery);
-      
-      // Define expected return type from search_design_hybrid RPC
-      interface HybridSearchResult {
-        id: string;
-        topic: string;
-        content: string;
-        source: string;
-        metadata: any;
-        hybrid_score: number;
-      }
-      
-      const { data, error } = await this.supabase
-        .rpc<HybridSearchResult[]>('search_design_hybrid', {
-          query_text: semanticQuery,
-          query_embedding: embedding,
-          match_count: 8
-        });
-
-      if (error) {
-        this.logger.warn('Design knowledge search failed', { error: error.message });
-        return [];
-      }
-
-      this.logger.info('Design knowledge search complete', { 
-        results: data?.length || 0 
-      });
-
-      return data || [];
-    } catch (error) {
-      this.logger.warn('Design knowledge search exception', { error: error.message });
-      return [];
-    }
-  }
-
-  /**
    * Search Regulations Intelligence (keyword search, weight 90)
    */
   private async searchRegulations(keywords: string): Promise<any[]> {
@@ -263,7 +217,7 @@ export class RAGEngine {
           query_text: keywords,
           match_count: 10
         }
-      ).abortSignal(AbortSignal.timeout(10000));
+      ).abortSignal(AbortSignal.timeout(15000));
 
       if (error) {
         this.logger.warn('Regulations search failed, using fallback', { error: error.message });

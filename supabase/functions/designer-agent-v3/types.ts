@@ -99,7 +99,6 @@ export interface PracticalGuideResult {
 
 export interface RAGContext {
   regulations: RegulationResult[];
-  designPatterns: DesignPatternResult[];
   practicalGuides: PracticalGuideResult[];
   totalResults: number;
   searchTime: number;

@@ -70,11 +70,10 @@ export class DesignPipeline {
     const ragContext = await this.rag.search(normalized);
     this.logger.info('RAG complete', {
       regulations: ragContext.regulations.length,
-      designPatterns: ragContext.designPatterns.length,
       practicalGuides: ragContext.practicalGuides.length,
       totalResults: ragContext.totalResults,
       searchTime: ragContext.searchTime,
-      voltage: normalized.supply.voltage // PHASE 1: Log voltage context
+      voltage: normalized.supply.voltage
     });
 
     // ========================================
