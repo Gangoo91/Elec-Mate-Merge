@@ -772,10 +772,35 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       // Get current user
       const { data: { user } } = await supabase.auth.getUser();
       
+      // Transform design data to match PDF edge function's expected format
+      const transformedDesign = {
+        projectName: design.projectName || 'Untitled Project',
+        location: design.location || 'Not Specified',
+        clientName: design.clientName || 'Not Specified',
+        electricianName: design.electricianName || 'Not Specified',
+        installationType: design.installationType || 'domestic',
+        consumerUnit: design.consumerUnit || {
+          type: 'split-load',
+          mainSwitchRating: 100,
+          incomingSupply: {
+            voltage: 230,
+            phases: 'single',
+            incomingPFC: 6000,
+            Ze: 0.35,
+            earthingSystem: 'TN-S'
+          }
+        },
+        circuits: design.circuits || [],
+        totalLoad: design.totalLoad || 0,
+        diversityBreakdown: design.diversityBreakdown,
+        materials: design.materials || [],
+        practicalGuidance: design.practicalGuidance || []
+      };
+      
       // Try PDF Monkey first
       const { data, error } = await supabase.functions.invoke('generate-circuit-design-pdf', {
         body: {
-          design: design,
+          design: transformedDesign,
           userId: user?.id
         }
       });
