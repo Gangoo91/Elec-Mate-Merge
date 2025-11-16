@@ -219,40 +219,67 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
             {circuit.installationGuidance && (
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
-                  <Cable className="h-4 w-4 text-elec-yellow" />
+                  <FileText className="h-4 w-4 text-elec-yellow" />
                   <h3 className="text-sm font-semibold text-elec-light">Installation Guidance</h3>
                 </div>
-                <div className="bg-elec-dark/60 rounded-lg p-4 border border-elec-yellow/20 space-y-3">
+                <div className="bg-elec-dark/60 rounded-lg p-4 border border-elec-yellow/20 space-y-4">
                   <div>
-                    <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 mb-2">
-                      {circuit.installationGuidance.referenceMethod}
-                    </Badge>
-                    <p className="text-sm text-elec-light/90">
-                      {circuit.installationGuidance.description}
+                    <p className="text-xs text-elec-light/60 mb-1.5">Cable Routing</p>
+                    <p className="text-sm text-elec-light/90 leading-relaxed">
+                      {circuit.installationGuidance.cableRouting}
                     </p>
                   </div>
-                  <div className="pt-2 border-t border-elec-yellow/10">
-                    <p className="text-xs text-elec-light/60 mb-2">Clip Spacing</p>
-                    <p className="text-sm text-elec-light/90">
-                      {circuit.installationGuidance.clipSpacing}
+                  
+                  <div>
+                    <p className="text-xs text-elec-light/60 mb-1.5">Termination Advice</p>
+                    <p className="text-sm text-elec-light/90 leading-relaxed">
+                      {circuit.installationGuidance.terminationAdvice}
                     </p>
                   </div>
-                  {circuit.installationGuidance.practicalTips && circuit.installationGuidance.practicalTips.length > 0 && (
-                    <div className="pt-2 border-t border-elec-yellow/10">
-                      <p className="text-xs text-elec-light/60 mb-2">Practical Tips</p>
-                      <ul className="space-y-1">
-                        {circuit.installationGuidance.practicalTips.map((tip, idx) => (
-                          <li key={idx} className="text-xs text-elec-light/80 flex items-start gap-2">
+                  
+                  <div>
+                    <p className="text-xs text-elec-light/60 mb-1.5">Testing Requirements</p>
+                    <p className="text-sm text-elec-light/90 leading-relaxed">
+                      {circuit.installationGuidance.testingRequirements}
+                    </p>
+                  </div>
+                  
+                  {circuit.installationGuidance.safetyNotes && circuit.installationGuidance.safetyNotes.length > 0 && (
+                    <div>
+                      <p className="text-xs text-elec-light/60 mb-2">Safety Notes</p>
+                      <ul className="space-y-1.5">
+                        {circuit.installationGuidance.safetyNotes.map((note, idx) => (
+                          <li key={idx} className="text-sm text-elec-light/90 flex items-start gap-2">
                             <span className="text-elec-yellow mt-0.5">•</span>
-                            <span className="flex-1">{tip}</span>
+                            <span>{note}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                   )}
-                  <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-light/70">
-                    {circuit.installationGuidance.regulation}
-                  </Badge>
+                  
+                  {circuit.installationGuidance.toolsRequired && circuit.installationGuidance.toolsRequired.length > 0 && (
+                    <div>
+                      <p className="text-xs text-elec-light/60 mb-2">Tools Required</p>
+                      <ul className="space-y-1.5">
+                        {circuit.installationGuidance.toolsRequired.map((tool, idx) => (
+                          <li key={idx} className="text-sm text-elec-light/90 flex items-start gap-2">
+                            <span className="text-elec-yellow mt-0.5">•</span>
+                            <span>{tool}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  {circuit.installationGuidance.estimatedInstallTime && (
+                    <div>
+                      <p className="text-xs text-elec-light/60 mb-1">Estimated Install Time</p>
+                      <p className="text-sm text-elec-light font-medium">
+                        {circuit.installationGuidance.estimatedInstallTime}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

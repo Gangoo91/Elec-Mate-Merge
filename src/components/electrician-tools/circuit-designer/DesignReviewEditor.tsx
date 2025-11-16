@@ -411,11 +411,12 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         } : null,
         
         installationGuidance: circuit.installationGuidance ? {
-          referenceMethod: circuit.installationGuidance.referenceMethod,
-          description: circuit.installationGuidance.description,
-          clipSpacing: circuit.installationGuidance.clipSpacing,
-          practicalTips: circuit.installationGuidance.practicalTips || [],
-          regulation: circuit.installationGuidance.regulation
+          cableRouting: circuit.installationGuidance.cableRouting,
+          terminationAdvice: circuit.installationGuidance.terminationAdvice,
+          testingRequirements: circuit.installationGuidance.testingRequirements,
+          safetyNotes: circuit.installationGuidance.safetyNotes || [],
+          toolsRequired: circuit.installationGuidance.toolsRequired || [],
+          estimatedInstallTime: circuit.installationGuidance.estimatedInstallTime
         } : null,
         
         specialLocationCompliance: circuit.specialLocationCompliance ? {
@@ -1320,30 +1321,18 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
                       <span className="text-sm text-white/80 min-w-[120px]">Method:</span>
                       <span className="font-medium text-white">
-                        {(() => {
-                          const method = currentCircuit.installationGuidance?.referenceMethod || currentCircuit.installationMethod || '';
-                          // Clean up installation method formatting
-                          return method
-                            .replace(/\s*-\s*/g, ' - ') // Normalize dashes
-                            .replace(/\s+/g, ' ') // Normalize spaces
-                            .trim();
-                        })()}
+                        {currentCircuit.installationMethod || 'Not specified'}
                       </span>
                     </div>
                   </div>
                   
-                  {/* Installation Method Description */}
-                  {currentCircuit.installationGuidance?.description && (
+                  {/* Installation Guidance - Cable Routing */}
+                  {currentCircuit.installationGuidance?.cableRouting && (
                     <div className="py-2 px-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                      <p className="text-xs text-blue-400 font-medium mb-1">Installation Method</p>
+                      <p className="text-xs text-blue-400 font-medium mb-1">Cable Routing</p>
                       <p className="text-sm text-white/80 leading-relaxed">
-                        {currentCircuit.installationGuidance.description}
+                        {currentCircuit.installationGuidance.cableRouting}
                       </p>
-                      {currentCircuit.installationGuidance.regulation && (
-                        <Badge variant="outline" className="mt-2 text-xs text-blue-400 border-blue-400/30">
-                          {currentCircuit.installationGuidance.regulation}
-                        </Badge>
-                      )}
                     </div>
                   )}
                 </div>
@@ -1582,29 +1571,38 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   <Wrench className="h-4 w-4 text-primary" />
                   <h4 className="font-semibold text-white">Installation Guidance</h4>
                 </div>
-                <div className="space-y-2">
-                  <div>
-                    <Badge variant="secondary" className="mb-2">{currentCircuit.installationGuidance.referenceMethod}</Badge>
-                    <p className="text-sm text-white/70">{currentCircuit.installationGuidance.description}</p>
+                <div className="space-y-3">
+                  <div className="bg-primary/5 p-3 rounded">
+                    <p className="text-xs text-white/60 mb-1">Cable Routing</p>
+                    <p className="text-sm text-white/90">{currentCircuit.installationGuidance.cableRouting}</p>
                   </div>
                   <div className="bg-primary/5 p-3 rounded">
-                    <p className="text-xs text-white/60 mb-1">Clip Spacing</p>
-                    <p className="text-sm font-medium text-white">{currentCircuit.installationGuidance.clipSpacing}</p>
+                    <p className="text-xs text-white/60 mb-1">Termination Advice</p>
+                    <p className="text-sm text-white/90">{currentCircuit.installationGuidance.terminationAdvice}</p>
                   </div>
-                  {currentCircuit.installationGuidance?.practicalTips?.length > 0 && (
+                  <div className="bg-primary/5 p-3 rounded">
+                    <p className="text-xs text-white/60 mb-1">Testing Requirements</p>
+                    <p className="text-sm text-white/90">{currentCircuit.installationGuidance.testingRequirements}</p>
+                  </div>
+                  {currentCircuit.installationGuidance?.safetyNotes?.length > 0 && (
                     <div>
-                      <p className="text-sm font-medium text-white mb-2">Practical Tips:</p>
+                      <p className="text-sm font-medium text-white mb-2">Safety Notes:</p>
                       <ul className="space-y-1">
-                        {currentCircuit.installationGuidance.practicalTips.map((tip, idx) => (
+                        {currentCircuit.installationGuidance.safetyNotes.map((note, idx) => (
                           <li key={idx} className="text-sm text-white/70 flex items-start gap-2">
                             <span className="text-primary">•</span>
-                            <span>{tip}</span>
+                            <span>{note}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                   )}
-                  <Badge variant="outline" className="text-xs">{currentCircuit.installationGuidance.regulation}</Badge>
+                  {currentCircuit.installationGuidance.estimatedInstallTime && (
+                    <div className="bg-primary/5 p-3 rounded">
+                      <p className="text-xs text-white/60 mb-1">Estimated Install Time</p>
+                      <p className="text-sm font-medium text-white">{currentCircuit.installationGuidance.estimatedInstallTime}</p>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -1756,34 +1754,37 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 
                 <div className="space-y-3 text-sm">
                   <div className="space-y-1">
-                    <p className="font-medium text-white/90">Reference Method</p>
-                    <p className="text-white/70">{currentCircuit.installationGuidance.referenceMethod}</p>
+                    <p className="font-medium text-white/90">Cable Routing</p>
+                    <p className="text-white/70">{currentCircuit.installationGuidance.cableRouting}</p>
                   </div>
                   
                   <div className="space-y-1">
-                    <p className="font-medium text-white/90">Description</p>
-                    <p className="text-white/70">{currentCircuit.installationGuidance.description}</p>
+                    <p className="font-medium text-white/90">Termination Advice</p>
+                    <p className="text-white/70">{currentCircuit.installationGuidance.terminationAdvice}</p>
                   </div>
                   
                   <div className="space-y-1">
-                    <p className="font-medium text-white/90">Clip Spacing</p>
-                    <p className="text-white/70">{currentCircuit.installationGuidance.clipSpacing}</p>
+                    <p className="font-medium text-white/90">Testing Requirements</p>
+                    <p className="text-white/70">{currentCircuit.installationGuidance.testingRequirements}</p>
                   </div>
                   
-                  {currentCircuit.installationGuidance.practicalTips?.length > 0 && (
+                  {currentCircuit.installationGuidance.safetyNotes?.length > 0 && (
                     <div className="space-y-2">
-                      <p className="font-medium text-white/90">Practical Tips</p>
+                      <p className="font-medium text-white/90">Safety Notes</p>
                       <ul className="space-y-1 list-disc list-inside text-white/70">
-                        {currentCircuit.installationGuidance.practicalTips.map((tip, i) => (
-                          <li key={i}>{tip}</li>
+                        {currentCircuit.installationGuidance.safetyNotes.map((note, i) => (
+                          <li key={i}>{note}</li>
                         ))}
                       </ul>
                     </div>
                   )}
                   
-                  <div className="pt-2 border-t border-white/10">
-                    <p className="text-xs text-white/50">{currentCircuit.installationGuidance.regulation}</p>
-                  </div>
+                  {currentCircuit.installationGuidance.estimatedInstallTime && (
+                    <div className="pt-2 border-t border-white/10">
+                      <p className="font-medium text-white/90">Estimated Install Time</p>
+                      <p className="text-white/70">{currentCircuit.installationGuidance.estimatedInstallTime}</p>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

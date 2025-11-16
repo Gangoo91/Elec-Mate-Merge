@@ -102,11 +102,12 @@ export interface CircuitDesign {
     tableReferences: string;
   };
   installationGuidance?: {
-    referenceMethod: string;
-    description: string;
-    clipSpacing: string;
-    practicalTips: string[];
-    regulation: string;
+    cableRouting: string;
+    terminationAdvice: string;
+    testingRequirements: string;
+    safetyNotes: string[];
+    toolsRequired?: string[];
+    estimatedInstallTime?: string;
   };
   specialLocationCompliance?: {
     isSpecialLocation: boolean;
