@@ -287,7 +287,7 @@ export class AIDesigner {
     batchNumber: number,
     totalBatches: number
   ): Promise<Design> {
-    this.logger.info('AI Designer Batch starting', {
+    this.logger.info('AI Designer Batch starting (parallel)', {
       batch: `${batchNumber}/${totalBatches}`,
       circuits: inputs.circuits.length,
       ragResults: context.totalResults
@@ -324,7 +324,7 @@ export class AIDesigner {
     );
 
     const duration = Date.now() - startTime;
-    this.logger.info('AI Designer Batch complete', {
+    this.logger.info('AI Designer Batch complete (parallel)', {
       batch: `${batchNumber}/${totalBatches}`,
       duration,
       circuits: response.toolCalls?.[0] ? JSON.parse(response.toolCalls[0].function.arguments).circuits.length : 0

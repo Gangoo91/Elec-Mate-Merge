@@ -8,6 +8,7 @@ import { CacheManager } from './cache-manager.ts';
 import { RAGEngine } from './rag-engine.ts';
 import { AIDesigner } from './ai-designer.ts';
 import { ValidationEngine } from './validation-engine.ts';
+import { safeAll, type ParallelTask } from '../_shared/safe-parallel.ts';
 import type { NormalizedInputs, DesignResult } from './types.ts';
 
 export class DesignPipeline {
@@ -75,42 +76,104 @@ export class DesignPipeline {
         estimatedTime: `${batches.length * 90}s`
       });
 
-      let allDesignedCircuits: any[] = [];
-      let lastReasoning = '';
+      // PARALLEL PROCESSING: Run all batches concurrently
+      const parallelStartTime = Date.now();
+      
+      this.logger.info('Starting parallel batch execution', {
+        batches: batches.length,
+        estimatedTime: '90s (parallel)'
+      });
 
-      for (let i = 0; i < batches.length; i++) {
-        const batchStartTime = Date.now();
-        
-        this.logger.info(`Batch ${i + 1}/${batches.length} starting`, {
-          circuits: batches[i].map(c => c.name),
-          circuitCount: batches[i].length
+      // Create parallel tasks for each batch
+      const batchTasks: ParallelTask<any>[] = batches.map((batch, i) => ({
+        name: `Batch ${i + 1}/${batches.length}`,
+        execute: async () => {
+          const batchStartTime = Date.now();
+          
+          this.logger.info(`Batch ${i + 1}/${batches.length} starting`, {
+            circuits: batch.map(c => c.name),
+            circuitCount: batch.length
+          });
+
+          // Create temporary normalized inputs for this batch
+          const batchInputs = {
+            supply: normalized.supply,
+            circuits: batch
+          };
+
+          // Generate design for this batch (reuse RAG context)
+          const batchDesign = await this.ai.generateBatch(
+            batchInputs,
+            ragContext,
+            i + 1,
+            batches.length
+          );
+
+          this.logger.info(`Batch ${i + 1}/${batches.length} complete`, {
+            duration: Date.now() - batchStartTime,
+            circuits: batchDesign.circuits.length
+          });
+
+          return batchDesign;
+        }
+      }));
+
+      // Execute all batches in parallel
+      const { successes, failures } = await safeAll(batchTasks);
+
+      const parallelDuration = Date.now() - parallelStartTime;
+      this.logger.info('Parallel batch execution complete', {
+        duration: parallelDuration,
+        successful: successes.length,
+        failed: failures.length
+      });
+
+      // Handle failures: retry failed batches sequentially as fallback
+      if (failures.length > 0) {
+        this.logger.warn('Some batches failed, retrying sequentially', {
+          failedBatches: failures.map(f => f.name)
         });
 
-        // Create temporary normalized inputs for this batch
-        const batchInputs = {
-          supply: normalized.supply,
-          circuits: batches[i]
-        };
+        // If too many failures (>50%), fail the entire design
+        if (failures.length > batches.length / 2) {
+          const errorMessages = failures.map(f => `${f.name}: ${f.error}`).join('\n');
+          throw new Error(`Too many batch failures (${failures.length}/${batches.length}):\n${errorMessages}`);
+        }
 
-        // Generate design for this batch (reuse RAG context)
-        const batchDesign = await this.ai.generateBatch(
-          batchInputs,
-          ragContext,
-          i + 1,
-          batches.length
-        );
+        // Retry failed batches sequentially
+        for (const failure of failures) {
+          const batchIndex = parseInt(failure.name.split(' ')[1].split('/')[0]) - 1;
+          const batch = batches[batchIndex];
 
-        allDesignedCircuits.push(...batchDesign.circuits);
-        lastReasoning = batchDesign.reasoning;
+          this.logger.info(`Retrying failed ${failure.name}`, {
+            circuits: batch.map(c => c.name)
+          });
 
-        this.logger.info(`Batch ${i + 1}/${batches.length} complete`, {
-          duration: Date.now() - batchStartTime,
-          totalProgress: `${i + 1}/${batches.length}`,
-          circuitsDesigned: batchDesign.circuits.length
-        });
+          const batchInputs = {
+            supply: normalized.supply,
+            circuits: batch
+          };
+
+          const batchDesign = await this.ai.generateBatch(
+            batchInputs,
+            ragContext,
+            batchIndex + 1,
+            batches.length
+          );
+
+          successes.push({ name: failure.name, result: batchDesign });
+        }
       }
 
       // Merge all batch results into single design
+      let allDesignedCircuits: any[] = [];
+      let lastReasoning = '';
+
+      successes.forEach(({ result }) => {
+        allDesignedCircuits.push(...result.circuits);
+        lastReasoning = result.reasoning;
+      });
+
       design = {
         circuits: allDesignedCircuits,
         reasoning: lastReasoning
@@ -118,7 +181,8 @@ export class DesignPipeline {
 
       this.logger.info('All batches complete', {
         totalCircuits: design.circuits.length,
-        batches: batches.length
+        batches: batches.length,
+        parallelDuration
       });
     } else {
       // SINGLE CALL for 1-5 circuits (existing flow)
@@ -241,13 +305,12 @@ export class DesignPipeline {
   }
 
   /**
-   * Determine optimal batch size based on total circuit count
+   * Determine optimal batch size based on circuit count
+   * PARALLEL PROCESSING: Always use 2 circuits per batch for 6+ circuits
    */
-  private determineBatchSize(totalCircuits: number): number {
-    if (totalCircuits <= 5) return totalCircuits; // No batching
-    if (totalCircuits <= 12) return 4; // 2-3 batches
-    if (totalCircuits <= 20) return 5; // 3-4 batches
-    return 6; // 4+ batches for 21+ circuits
+  private determineBatchSize(circuitCount: number): number {
+    if (circuitCount <= 5) return circuitCount;
+    return 2; // Always 2 circuits per batch for parallel processing
   }
 
   /**
