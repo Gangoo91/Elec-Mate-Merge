@@ -186,10 +186,14 @@ export class RAGEngine {
    */
   private async searchDesignKnowledge(semanticQuery: string): Promise<any[]> {
     try {
+      // Generate embedding for hybrid search
+      const embedding = await this.embedder.generateEmbedding(semanticQuery);
+      
       const { data, error } = await this.supabase.rpc(
         'search_design_hybrid',
         {
           query_text: semanticQuery,
+          query_embedding: embedding,  // Required parameter for hybrid search
           match_count: 8
         }
       ).abortSignal(AbortSignal.timeout(10000));
