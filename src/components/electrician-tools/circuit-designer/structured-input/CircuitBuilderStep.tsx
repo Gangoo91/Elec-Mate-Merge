@@ -7,6 +7,7 @@ import { Plus, Zap, Trash2, Copy } from "lucide-react";
 import { CircuitCard } from "./CircuitCard";
 import { CircuitPresetSelector } from "./CircuitPresetSelector";
 import { QuickAddButtons } from "./QuickAddButtons";
+import { toast } from "sonner";
 
 interface CircuitBuilderStepProps {
   circuits: CircuitInput[];
@@ -73,7 +74,14 @@ export const CircuitBuilderStep = ({
       <CircuitPresetSelector 
         installationType={installationType} 
         onSelectPreset={(preset) => {
-          preset.circuits.forEach(c => addCircuit(c));
+          const newCircuits = preset.circuits.map(c => ({
+            id: `circuit-${Date.now()}-${Math.random()}`,
+            ...c
+          }));
+          setCircuits([...circuits, ...newCircuits]);
+          toast.success(`Added ${preset.circuits.length} circuits from template`, {
+            description: preset.name
+          });
         }}
       />
 
