@@ -8,6 +8,7 @@ import { searchPracticalWorkIntelligence, formatForAIContext } from '../../_shar
 import { filterRegulationsForCircuit } from '../../_shared/circuit-regulation-mapper.ts';
 import { withTimeout, Timeouts } from '../../_shared/timeout.ts';
 import { generateEmbedding } from '../../_shared/rams-rag.ts';
+import { safeAll } from '../../_shared/safe-parallel.ts';
 
 /**
  * Extract Circuit-Specific Keywords from User Input
@@ -352,58 +353,66 @@ export async function buildRAGSearches(
   // Get circuit types for structured calculations
   const circuitTypes = circuits?.map((c: any) => c.circuitType).filter(Boolean) || [];
   
-  // ===== PARALLEL RAG SEARCHES WITH TIGHT TIMEOUTS (3-5s total) =====
+  // ===== PARALLEL RAG SEARCHES WITH INCREASED TIMEOUTS =====
   const searchStart = Date.now();
   
-  const [designDocs, regulations, practicalWork, calculations] = await Promise.all([
-    // Design knowledge (vector search): 4500ms timeout, 8 results
-    withTimeout(
-      searchDesignKnowledge(supabase, query, allKeywords, 8),
-      4500,
-      []
-    ).then(data => {
-      const duration = Date.now() - searchStart;
-      logger.info(`✅ Design vector: ${duration}ms (${data.length} docs)`);
-      return data;
-    }),
-    
-    // BS 7671 intelligence (keyword hybrid): 3500ms timeout, 6 results
-    withTimeout(
-      searchRegulationsIntelligence(supabase, allKeywords, 6),
-      3500,
-      []
-    ).then(data => {
-      const duration = Date.now() - searchStart;
-      logger.info(`✅ BS 7671 keyword: ${duration}ms (${data.length} regs)`);
-      return data;
-    }),
-    
-    // Practical work intelligence (keyword hybrid): 3500ms timeout, 6 results
-    withTimeout(
-      searchPracticalWorkIntelligenceDirect(supabase, {
-        keywords: allKeywords,
-        limit: 6,
-        activity_filter: []
-      }),
-      3500,
-      []
-    ).then(data => {
-      const duration = Date.now() - searchStart;
-      logger.info(`✅ Practical work keyword: ${duration}ms (${data.length} docs)`);
-      return data;
-    }),
-    
-    // Structured calculations (DB select): 3000ms timeout
-    withTimeout(
-      retrieveStructuredCalculations(supabase, circuitTypes),
-      3000,
-      []
-    ).then(data => {
-      const duration = Date.now() - searchStart;
-      logger.info(`✅ Calculations: ${duration}ms (${data.length} formulas)`);
-      return data;
-    })
+  const { successes, failures } = await safeAll([
+    {
+      name: 'Design Knowledge',
+      execute: () => withTimeout(
+        searchDesignKnowledge(supabase, query, allKeywords, 8),
+        10000,
+        'Design Knowledge RAG'
+      )
+    },
+    {
+      name: 'BS 7671 Regulations',
+      execute: () => withTimeout(
+        searchRegulationsIntelligence(supabase, allKeywords, 6),
+        8000,
+        'BS 7671 RAG'
+      )
+    },
+    {
+      name: 'Practical Work',
+      execute: () => withTimeout(
+        searchPracticalWorkIntelligenceDirect(supabase, {
+          keywords: allKeywords,
+          limit: 6,
+          activity_filter: []
+        }),
+        8000,
+        'Practical Work RAG'
+      )
+    },
+    {
+      name: 'Structured Calculations',
+      execute: () => withTimeout(
+        retrieveStructuredCalculations(supabase, circuitTypes),
+        6000,
+        'Structured Calculations DB'
+      )
+    }
   ]);
+  
+  // Extract results, defaulting to [] for failed branches
+  const designDocs = successes.find(s => s.name === 'Design Knowledge')?.result || [];
+  const regulations = successes.find(s => s.name === 'BS 7671 Regulations')?.result || [];
+  const practicalWork = successes.find(s => s.name === 'Practical Work')?.result || [];
+  const calculations = successes.find(s => s.name === 'Structured Calculations')?.result || [];
+  
+  // Log any failures (but don't crash)
+  failures.forEach(f => {
+    logger.warn(`⚠️ RAG branch failed: ${f.name}`, f.error);
+  });
+  
+  // Log completion
+  const ragTime = Date.now() - searchStart;
+  logger.info(`✅ Design: ${designDocs.length} docs`);
+  logger.info(`✅ BS 7671: ${regulations.length} regs`);
+  logger.info(`✅ Practical: ${practicalWork.length} docs`);
+  logger.info(`✅ Calculations: ${calculations.length} formulas`);
+  logger.info(`⏱️ RAG completed in ${ragTime}ms with ${successes.length}/4 branches`);
   
   const totalTime = Date.now() - startTime;
   const ragTime = Date.now() - searchStart;

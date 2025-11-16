@@ -32,7 +32,7 @@ export async function callOpenAIWithRetry(
       {
         messages,
         model: 'gpt-5-mini-2025-08-07', // FAST & EFFICIENT: GPT-5 Mini for 45-60s response time
-        max_tokens: 24000,
+        max_completion_tokens: 32000, // GPT-5 uses max_completion_tokens, increased for complex multi-circuit designs
         tools,
         tool_choice
       },
