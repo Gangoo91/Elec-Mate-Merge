@@ -206,56 +206,9 @@ export class ValidationEngine {
       });
     }
 
-    // PHASE 5: RULE 11 - Voltage-specific validation
-    if (voltage) {
-      // 110V circuits should have higher current for same power
-      if (voltage === 110 && circuit.calculations.Ib > 0) {
-        const expectedHigherCurrent = circuit.calculations.Ib * 2; // Rough check
-        if (circuit.calculations.Ib < expectedHigherCurrent * 0.8) {
-          issues.push({
-            circuitIndex: index,
-            circuitName: circuit.name,
-            rule: 'voltage_current_relationship',
-            regulation: 'Ohm's Law',
-            severity: 'warning',
-            message: `110V circuits typically require higher current ratings. Review Ib calculation.`,
-            currentValue: circuit.calculations.Ib,
-            expectedValue: expectedHigherCurrent,
-            fieldAffected: 'calculations.Ib'
-          });
-        }
-      }
-
-      // 400V three-phase should have lower current per phase
-      if (voltage === 400 && circuit.calculations.Ib > 100) {
-        issues.push({
-          circuitIndex: index,
-          circuitName: circuit.name,
-          rule: 'high_current_three_phase',
-          regulation: 'Best Practice',
-          severity: 'warning',
-          message: `Very high current (${circuit.calculations.Ib.toFixed(1)}A) on 400V. Verify load calculations and phase distribution.`,
-          currentValue: circuit.calculations.Ib,
-          expectedValue: 100,
-          fieldAffected: 'calculations.Ib'
-        });
-      }
-
-      // Unusual voltage warning
-      if (voltage === 110) {
-        issues.push({
-          circuitIndex: index,
-          circuitName: circuit.name,
-          rule: 'unusual_voltage',
-          regulation: 'Context Warning',
-          severity: 'warning',
-          message: `110V is uncommon in UK installations. Verify transformer/supply requirements and ensure proper labeling.`,
-          currentValue: 110,
-          expectedValue: 230,
-          fieldAffected: 'supply.voltage'
-        });
-      }
-    }
+    // PHASE 5: Voltage-specific validation removed
+    // AI designer handles all electrical calculations (Ohm's Law, power calculations, etc.) via RAG
+    // Validation should only check BS7671 regulation compliance, not perform electrical engineering calculations
 
     return issues;
   }
