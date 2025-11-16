@@ -150,6 +150,69 @@ export class AIDesigner {
   }
 
   /**
+   * Build optimized system prompt for batch processing
+   */
+  private buildBatchSystemPrompt(
+    context: RAGContext,
+    circuitCount: number,
+    batchNumber: number,
+    totalBatches: number
+  ): string {
+    const parts: string[] = [];
+
+    parts.push('You are a BS 7671:2018+A2:2022 electrical circuit design expert.');
+    parts.push(`Designing batch ${batchNumber}/${totalBatches} with ${circuitCount} circuits.`);
+    parts.push('');
+
+    // OPTIMIZATION: Reduce RAG context for batches with 6+ circuits
+    const ragLimit = circuitCount >= 6 ? 2 : 3; // Top 2 vs top 3
+
+    if (context.regulations.length > 0) {
+      parts.push('=== KEY REGULATIONS ===');
+      context.regulations.slice(0, ragLimit).forEach(reg => {
+        parts.push(`${reg.regulation_number}: ${reg.content}`);
+      });
+      parts.push('');
+    }
+
+    if (context.practicalGuides.length > 0) {
+      parts.push('=== PRACTICAL GUIDANCE ===');
+      context.practicalGuides.slice(0, ragLimit).forEach(guide => {
+        parts.push(`${guide.primary_topic}: ${guide.content || 'See keywords'}`);
+        if (guide.bs7671_regulations?.length > 0) {
+          parts.push(`  Regulations: ${guide.bs7671_regulations.join(', ')}`);
+        }
+      });
+      parts.push('');
+    }
+
+    // Design rules (same as standard prompt)
+    parts.push('=== DESIGN RULES ===');
+    parts.push('1. Cable sizing: Ib ≤ In ≤ Iz (Reg 433.1.1)');
+    parts.push('2. Voltage drop: ≤3% lighting, ≤5% power (Reg 525.1)');
+    parts.push('3. Earth fault protection: Zs ≤ max Zs (Reg 411.3.2)');
+    parts.push('4. Socket circuits require RCBO protection for 30mA RCD (Reg 411.3.3)');
+    parts.push('5. Bathroom circuits require RCBO protection for RCD (Reg 701.411.3.3)');
+    parts.push('6. Use reference method tables for Iz calculation');
+    parts.push('7. Calculate voltage drop per Appendix 4 tables');
+    parts.push('8. CPC sizing per Reg 543.1.1');
+    parts.push('');
+
+    parts.push('=== OUTPUT REQUIREMENTS ===');
+    parts.push('- Design ALL circuits in this batch');
+    parts.push('- ALWAYS copy loadPower from input');
+    parts.push('- ALWAYS copy phases from input (single or three)');
+    parts.push('- ALWAYS set voltage (230V single-phase, 400V three-phase)');
+    parts.push('- ALWAYS copy cableLength from input');
+    parts.push('- ALWAYS provide installationMethod (e.g., "Method C - clipped direct")');
+    parts.push('- ALWAYS set rcdProtected (true if RCBO or special location requires RCD)');
+    parts.push('- ALWAYS generate full cableType description');
+    parts.push('- ALWAYS use RCBO for socket outlets and bathroom circuits (not plain MCB)');
+
+    return parts.join('\n');
+  }
+
+  /**
    * OPTIMIZED: Generate correction with reduced tokens and optimized prompt
    * Only sends validation errors + essential context (no full RAG re-injection)
    */
@@ -209,6 +272,75 @@ export class AIDesigner {
     if (design.circuits.length !== inputs.circuits.length) {
       throw new Error(
         `Circuit count mismatch in correction: expected ${inputs.circuits.length}, got ${design.circuits.length}`
+      );
+    }
+
+    return design;
+  }
+
+  /**
+   * Generate design for a batch of circuits (batch processing mode)
+   */
+  async generateBatch(
+    inputs: NormalizedInputs,
+    context: RAGContext,
+    batchNumber: number,
+    totalBatches: number
+  ): Promise<Design> {
+    this.logger.info('AI Designer Batch starting', {
+      batch: `${batchNumber}/${totalBatches}`,
+      circuits: inputs.circuits.length,
+      ragResults: context.totalResults
+    });
+
+    const startTime = Date.now();
+
+    // Build system prompt with REDUCED RAG context for large batches
+    const systemPrompt = this.buildBatchSystemPrompt(
+      context,
+      inputs.circuits.length,
+      batchNumber,
+      totalBatches
+    );
+
+    const structuredInput = this.buildStructuredInput(inputs);
+    const tools = [this.buildDesignTool()];
+    const tool_choice = { type: 'function', function: { name: 'design_circuits' } };
+
+    // REDUCED timeout for batch processing (90s per batch vs 240s for full)
+    const response = await callOpenAI(
+      {
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: JSON.stringify(structuredInput, null, 2) }
+        ],
+        model: 'gpt-5-mini-2025-08-07',
+        max_completion_tokens: 10000, // Slightly reduced from 12000
+        tools,
+        tool_choice
+      },
+      this.openAiKey,
+      90000 // 90s timeout per batch
+    );
+
+    const duration = Date.now() - startTime;
+    this.logger.info('AI Designer Batch complete', {
+      batch: `${batchNumber}/${totalBatches}`,
+      duration,
+      circuits: response.toolCalls?.[0] ? JSON.parse(response.toolCalls[0].function.arguments).circuits.length : 0
+    });
+
+    // Parse and validate
+    if (!response.toolCalls || response.toolCalls.length === 0) {
+      throw new Error(`No tool calls in AI batch ${batchNumber} response`);
+    }
+
+    const toolCall = response.toolCalls[0];
+    const design = JSON.parse(toolCall.function.arguments) as Design;
+
+    if (design.circuits.length !== inputs.circuits.length) {
+      throw new Error(
+        `Batch ${batchNumber}: Circuit count mismatch: expected ${inputs.circuits.length}, got ${design.circuits.length}`
       );
     }
 
