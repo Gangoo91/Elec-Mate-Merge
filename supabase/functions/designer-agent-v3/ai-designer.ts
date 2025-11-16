@@ -51,7 +51,7 @@ export class AIDesigner {
         tool_choice
       },
       this.openAiKey,
-      180000 // 180s timeout (3 minutes max for initial generation)
+      240000 // 240s timeout (4 minutes max for initial generation)
     );
 
     const duration = Date.now() - startTime;
@@ -90,10 +90,10 @@ export class AIDesigner {
     parts.push('Supply voltage and phases vary by installation - use the exact values provided in each request.');
     parts.push('');
 
-    // Inject top regulations (weight 90, top 5)
+    // Inject top regulations (weight 90, top 3)
     if (context.regulations.length > 0) {
       parts.push('=== KEY REGULATIONS ===');
-      context.regulations.slice(0, 5).forEach(reg => {
+      context.regulations.slice(0, 3).forEach(reg => {
         parts.push(`${reg.regulation_number}: ${reg.content}`);
       });
       parts.push('');
