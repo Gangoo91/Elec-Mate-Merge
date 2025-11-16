@@ -6,6 +6,9 @@ import { DesignInputs } from "@/types/installation-design";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Trash2 } from "lucide-react";
+import { clearDesignCache } from "@/utils/clearDesignCache";
 
 export const AIInstallationDesigner = () => {
   const [currentView, setCurrentView] = useState<'input' | 'processing' | 'results'>('input');
@@ -13,6 +16,24 @@ export const AIInstallationDesigner = () => {
   const [totalCircuits, setTotalCircuits] = useState<number>(0);
   const [isProcessing, setIsProcessing] = useState(false);
   const [designData, setDesignData] = useState<any>(null);
+  const [isClearingCache, setIsClearingCache] = useState(false);
+
+  const handleClearCache = async () => {
+    setIsClearingCache(true);
+    const result = await clearDesignCache();
+    
+    if (result.success) {
+      toast.success('Cache cleared', {
+        description: 'All cached designs removed. Next design will use fresh RAG data.'
+      });
+    } else {
+      toast.error('Cache clear failed', {
+        description: result.error || 'Please try again'
+      });
+    }
+    
+    setIsClearingCache(false);
+  };
 
   const handleGenerate = async (inputs: DesignInputs) => {
     try {
@@ -183,6 +204,20 @@ export const AIInstallationDesigner = () => {
     <div className="min-h-screen bg-background space-y-6">
       {/* Agent Inbox */}
       <AgentInbox currentAgent="designer" onTaskAccept={handleTaskAccept} />
+
+      {/* Clear Cache Button - Development Tool */}
+      <div className="flex justify-end">
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={handleClearCache}
+          disabled={isClearingCache}
+          className="gap-2"
+        >
+          <Trash2 className="h-4 w-4" />
+          {isClearingCache ? 'Clearing...' : 'Clear Design Cache'}
+        </Button>
+      </div>
 
       {currentView === 'input' && (
         <StructuredDesignWizard onGenerate={handleGenerate} isProcessing={isProcessing} />
