@@ -140,6 +140,8 @@ export interface CircuitJustifications {
 
 export interface DesignedCircuit {
   name: string;
+  loadType?: string;
+  specialLocation?: string;
   cableSize: number;
   cpcSize: number;
   protectionDevice: ProtectionDevice;
@@ -157,21 +159,20 @@ export interface Design {
 
 export interface ValidationIssue {
   circuitIndex: number;
+  circuitName: string;
   rule: string;
-  message: string;
+  regulation: string;
   severity: 'error' | 'warning';
-  fixStrategy: 'increase_cable' | 'increase_mcb' | null;
+  message: string;
+  currentValue: any;
+  expectedValue: any;
+  fieldAffected: string;
 }
 
 export interface ValidationResult {
-  compliant: boolean;
+  isValid: boolean;
   issues: ValidationIssue[];
-}
-
-export interface FixResult {
-  success: boolean;
-  appliedFixes: string[];
-  fixedCircuits: DesignedCircuit[];
+  autoFixSuggestions: string[];
 }
 
 // ========================================
