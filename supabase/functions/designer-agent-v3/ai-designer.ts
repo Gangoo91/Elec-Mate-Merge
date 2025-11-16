@@ -199,7 +199,15 @@ export class AIDesigner {
                     type: 'string',
                     description: 'Circuit name from input'
                   },
-                  cableSize: { 
+                  loadType: {
+                    type: 'string',
+                    description: 'Load type from input (e.g., socket_outlet, lighting, cooker, shower)'
+                  },
+                  specialLocation: {
+                    type: 'string',
+                    description: 'Special location from input (bathroom, outdoor, none, etc.)'
+                  },
+                  cableSize: {
                     type: 'number',
                     enum: [1.0, 1.5, 2.5, 4.0, 6.0, 10.0, 16.0, 25.0, 35.0, 50.0, 70.0, 95.0],
                     description: 'Live conductor CSA in mm²'
@@ -304,7 +312,7 @@ export class AIDesigner {
                     required: ['cableSize', 'protection']
                   }
                 },
-                required: ['name', 'cableSize', 'cpcSize', 'protectionDevice', 'calculations', 'justifications']
+                required: ['name', 'loadType', 'specialLocation', 'cableSize', 'cpcSize', 'protectionDevice', 'calculations', 'justifications']
               }
             }
           },
