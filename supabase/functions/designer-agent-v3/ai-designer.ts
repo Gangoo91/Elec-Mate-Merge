@@ -106,7 +106,7 @@ export class AIDesigner {
       parts.push('=== PRACTICAL GUIDANCE ===');
       context.practicalGuides.slice(0, 3).forEach(guide => {
         parts.push(`${guide.primary_topic}: ${guide.content || 'See keywords'}`);
-        if (guide.bs7671_regulations && guide.bs7671_regulations.length > 0) {
+        if (guide.bs7671_regulations?.length > 0) {
           parts.push(`  Regulations: ${guide.bs7671_regulations.join(', ')}`);
         }
       });
