@@ -78,11 +78,11 @@ export class DesignPipeline {
     });
 
     // ========================================
-    // PHASE 4: AI Design Generation (single-pass)
+    // PHASE 4: AI Design Generation (with auto-correction)
     // ========================================
     this.logger.info('AI design generation starting');
 
-    const design = await this.ai.generate(normalized, ragContext);
+    let design = await this.ai.generate(normalized, ragContext);
     
     this.logger.info('AI design complete', {
       circuits: design.circuits.length
@@ -91,16 +91,38 @@ export class DesignPipeline {
     // ========================================
     // PHASE 5: Validation (with voltage context)
     // ========================================
-    const validationResult = this.validator.validate(design, normalized.supply.voltage);
+    let validationResult = this.validator.validate(design, normalized.supply.voltage);
     
+    // OPTIMIZATION: Auto-correction loop (1 retry max)
     if (!validationResult.isValid) {
       const errorCount = validationResult.issues.filter((i: any) => i.severity === 'error').length;
       
-      this.logger.error('Design validation failed', { errorCount });
+      this.logger.warn('Design validation failed, attempting correction', { errorCount });
       
-      throw new Error(
-        `Design validation failed:\n\n${validationResult.autoFixSuggestions.join('\n\n')}\n\nPlease review the design inputs and try again.`
-      );
+      // Format validation errors for correction
+      const errorSummary = validationResult.autoFixSuggestions.join('\n\n');
+      
+      try {
+        // OPTIMIZED: Use lightweight correction (no RAG re-search, 8000 tokens)
+        design = await this.ai.generateCorrection(normalized, design, errorSummary);
+        
+        // Re-validate corrected design
+        validationResult = this.validator.validate(design, normalized.supply.voltage);
+        
+        if (!validationResult.isValid) {
+          this.logger.error('Correction failed, still has errors');
+          throw new Error(
+            `Design validation failed after correction:\n\n${validationResult.autoFixSuggestions.join('\n\n')}\n\nPlease review the design inputs and try again.`
+          );
+        }
+        
+        this.logger.info('Correction successful!');
+      } catch (correctionError) {
+        this.logger.error('Correction attempt failed', { error: correctionError.message });
+        throw new Error(
+          `Design validation failed:\n\n${errorSummary}\n\nCorrection attempt failed: ${correctionError.message}`
+        );
+      }
     }
 
     this.logger.info('Design validated successfully', {
