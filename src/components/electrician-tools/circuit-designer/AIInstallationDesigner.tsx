@@ -99,9 +99,17 @@ export const AIInstallationDesigner = () => {
 
       console.log('✅ Circuit design completed:', data.circuits);
       
-      // Success! Store design and show results
+      // Success! Store design and show results - ensure all backend fields are preserved
       const designWithMetadata = {
-        circuits: data.circuits,
+        circuits: data.circuits.map(circuit => ({
+          ...circuit,
+          // Ensure critical fields are present and properly typed
+          loadPower: circuit.loadPower,
+          phases: circuit.phases,
+          cableLength: circuit.cableLength,
+          installationMethod: circuit.installationMethod || circuit.installMethod,
+          installationGuidance: circuit.installationGuidance
+        })),
         projectInfo: {
           projectName: inputs.projectName || 'Untitled Project',
           location: inputs.location || 'Not specified',
