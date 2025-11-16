@@ -128,7 +128,7 @@ export class ValidationEngine {
     }
 
     // RULE 6: RCD protection for bathrooms
-    if (circuit.specialLocation === 'bathroom' && circuit.protectionDevice.type !== 'RCBO') {
+    if (circuit.specialLocation?.includes('bathroom') && circuit.protectionDevice.type !== 'RCBO') {
       issues.push({
         circuitIndex: index,
         circuitName: circuit.name,

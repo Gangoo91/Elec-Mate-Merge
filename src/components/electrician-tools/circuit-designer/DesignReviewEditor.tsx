@@ -1581,7 +1581,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     <p className="text-xs text-white/60 mb-1">Clip Spacing</p>
                     <p className="text-sm font-medium text-white">{currentCircuit.installationGuidance.clipSpacing}</p>
                   </div>
-                  {currentCircuit.installationGuidance.practicalTips.length > 0 && (
+                  {currentCircuit.installationGuidance?.practicalTips?.length > 0 && (
                     <div>
                       <p className="text-sm font-medium text-white mb-2">Practical Tips:</p>
                       <ul className="space-y-1">
@@ -1719,7 +1719,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             )}
 
             {/* Warnings */}
-            {currentCircuit.warnings.length > 0 && (
+            {currentCircuit.warnings?.length > 0 && (
               <div className="space-y-2 bg-amber-500/10 border border-amber-500/20 p-4 rounded-lg">
                 <h4 className="font-semibold flex items-center gap-2">
                   <AlertTriangle className="h-4 w-4" />

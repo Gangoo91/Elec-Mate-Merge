@@ -140,8 +140,8 @@ export interface CircuitJustifications {
 
 export interface DesignedCircuit {
   name: string;
-  loadType?: string;
-  specialLocation?: string;
+  loadType: string;
+  specialLocation: string;
   cableSize: number;
   cpcSize: number;
   protectionDevice: ProtectionDevice;
