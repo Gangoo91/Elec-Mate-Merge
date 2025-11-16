@@ -279,7 +279,7 @@ serve(async (req) => {
       const supabase = createClient(supabaseUrl, supabaseKey);
       
       try {
-        const { data: regulationData, error: regError } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
+        const { data: regulationData, error: regError } = await supabase.rpc('search_regulations_intelligence_hybrid', {
           query_text: formData.technicalNotes,
           match_count: 5
         });

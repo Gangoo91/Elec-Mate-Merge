@@ -39,7 +39,7 @@ export async function multiVectorSearch(
   
   // INTELLIGENCE: Direct keyword search (no embedding generation!)
   searches.push(
-    supabase.rpc('search_bs7671_intelligence_hybrid', {
+    supabase.rpc('search_regulations_intelligence_hybrid', {
       query_text: primaryQuery,
       match_count: 10
     })
@@ -49,7 +49,7 @@ export async function multiVectorSearch(
   for (const concern of components.secondary.slice(0, 2)) { // Top 2 concerns
     const concernQuery = concern.keywords.join(' ');
     searches.push(
-      supabase.rpc('search_bs7671_intelligence_hybrid', {
+      supabase.rpc('search_regulations_intelligence_hybrid', {
         query_text: concernQuery,
         match_count: 5
       })

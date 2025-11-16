@@ -93,8 +93,8 @@ export async function searchPracticalWorkIntelligence(query: string, onProgress?
 export async function searchBS7671Intelligence(query: string) {
   const supabase = createClient();
   
-  const { data, error } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
-    search_keywords: query,
+  const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
+    query_text: query,
     match_count: 10
   });
   

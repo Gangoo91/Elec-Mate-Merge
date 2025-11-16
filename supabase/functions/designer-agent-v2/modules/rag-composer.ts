@@ -198,8 +198,8 @@ async function searchDesignKnowledge(supabase: any, query: string, keywords: str
  */
 async function searchRegulationsIntelligence(supabase: any, keywords: string[], limit: number) {
   const queryText = keywords.join(' ');
-  const { data, error } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
-    search_keywords: queryText, // ← FIX: was query_text, now search_keywords
+  const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
+    query_text: queryText,
     match_count: limit
   });
   

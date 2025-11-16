@@ -51,7 +51,7 @@ export async function retrieveRegulations(
   }
   
   // 3. Intelligence hybrid search (no embedding needed!)
-  const { data: intelligenceResults } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
+  const { data: intelligenceResults } = await supabase.rpc('search_regulations_intelligence_hybrid', {
     query_text: query,
     match_count: limit
   });

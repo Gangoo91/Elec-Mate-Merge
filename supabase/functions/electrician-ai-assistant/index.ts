@@ -182,7 +182,7 @@ serve(async (req) => {
         console.log('🔍 Starting intelligence search for:', prompt?.substring(0, 50));
         
         // Direct RPC call to regulations intelligence (simplified architecture)
-        const intelligencePromise = supabase.rpc('search_bs7671_intelligence_hybrid', {
+        const intelligencePromise = supabase.rpc('search_regulations_intelligence_hybrid', {
           query_text: prompt,
           match_count: 8
         });

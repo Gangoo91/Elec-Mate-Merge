@@ -212,7 +212,7 @@ serve(async (req) => {
         execute: () => logger.time(
           'BS7671 intelligence search',
           () => withTimeout(
-            supabase.rpc('search_bs7671_intelligence_hybrid', {
+            supabase.rpc('search_regulations_intelligence_hybrid', {
               query_text: expandedQuery,
               match_count: matchCount
             }),
