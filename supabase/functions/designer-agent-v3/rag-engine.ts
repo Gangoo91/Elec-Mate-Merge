@@ -36,10 +36,16 @@ export class RAGEngine {
       practicalKeywords: queries.practicalKeywords.split(' ').length
     });
 
-    // Parallel search with timeouts (30s for practical work, 20s for regulations)
+    // Parallel search without artificial timeouts - let queries complete naturally
     const [regulations, practicalGuides] = await Promise.all([
-      this.withTimeout(this.searchRegulations(queries.regulationKeywords), 20000),
-      this.withTimeout(this.searchPracticalWork(queries.practicalKeywords), 30000)
+      this.searchRegulations(queries.regulationKeywords).catch(err => {
+        this.logger.error('Regulations search failed', { error: err.message });
+        return [];
+      }),
+      this.searchPracticalWork(queries.practicalKeywords).catch(err => {
+        this.logger.error('Practical work search failed', { error: err.message });
+        return [];
+      })
     ]);
 
     const searchTime = Date.now() - startTime;
@@ -64,27 +70,6 @@ export class RAGEngine {
     };
   }
 
-  /**
-   * Timeout wrapper for RAG searches
-   */
-  private async withTimeout<T extends any[]>(
-    promise: Promise<T>, 
-    timeoutMs: number
-  ): Promise<T> {
-    return Promise.race([
-      promise,
-      new Promise<T>((_, reject) => 
-        setTimeout(() => reject(new Error('Timeout')), timeoutMs)
-      )
-    ]).catch((err) => {
-      if (err.message === 'Timeout') {
-        this.logger.warn('RAG search timeout', { timeoutMs });
-      } else {
-        this.logger.error('RAG search failed', { error: err.message });
-      }
-      return [] as T; // Explicitly typed empty array
-    });
-  }
 
   /**
    * Build regulation-specific keywords from form fields
