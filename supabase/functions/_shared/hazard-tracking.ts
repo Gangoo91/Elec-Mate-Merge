@@ -3,7 +3,7 @@
  * Self-optimization: Learn from which hazards are actually used
  */
 
-import { SupabaseClient } from 'jsr:@supabase/supabase-js@2';
+import { SupabaseClient } from './deps.ts';
 
 /**
  * Track which retrieved hazards were actually used in final RAMS
