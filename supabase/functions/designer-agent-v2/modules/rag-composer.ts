@@ -306,7 +306,8 @@ export async function buildRAGSearches(
   supabase: any,
   logger: any,
   installationType?: 'domestic' | 'commercial' | 'industrial',
-  circuits?: any[]
+  circuits?: any[],
+  strictValidation: boolean = false
 ): Promise<any> {
   const type = installationType || 'domestic';
   
@@ -334,18 +335,46 @@ export async function buildRAGSearches(
 
   const startTime = Date.now();
   
-  // ============= EARLY VALIDATION =============
-  // Validate circuits before wasting RAG calls
+  // ============= SOFT VALIDATION WITH ASSUMPTIONS =============
+  const assumptions: string[] = [];
+  
   if (circuits && circuits.length > 0) {
     for (const circuit of circuits) {
+      const circuitId = circuit.name || 'unnamed';
+      
+      // Validate loadType
       if (!circuit.loadType) {
-        throw new Error(`Circuit "${circuit.name || 'unnamed'}" missing loadType`);
+        if (strictValidation) {
+          throw new Error(`Circuit "${circuitId}" missing loadType`);
+        }
+        assumptions.push(`Circuit "${circuitId}": load type details missing - proceeding with generic design guidance`);
+        logger.warn(`⚠️ Assumption: Circuit "${circuitId}" missing loadType, using generic approach`, { circuitId });
       }
+      
+      // Validate installMethod with intelligent defaults
       if (!circuit.installMethod) {
-        throw new Error(`Circuit "${circuit.name || 'unnamed'}" missing installMethod`);
+        if (strictValidation) {
+          throw new Error(`Circuit "${circuitId}" missing installMethod`);
+        }
+        
+        // Apply safe defaults based on context
+        if (circuit.specialLocation === 'outdoor') {
+          assumptions.push(`Circuit "${circuitId}": install method assumed - outdoor typical installation (SWA buried/clipped)`);
+          logger.warn(`⚠️ Assumption: Circuit "${circuitId}" outdoor installation method assumed`, { circuitId });
+        } else {
+          // Default to Reference Method C (clipped direct) for domestic
+          circuit.installMethod = 'method_c';
+          assumptions.push(`Circuit "${circuitId}": install method assumed - Reference Method C (clipped direct)`);
+          logger.warn(`⚠️ Assumption: Circuit "${circuitId}" using Reference Method C as default`, { circuitId, method: 'method_c' });
+        }
       }
     }
-    logger.info(`✅ Pre-validated ${circuits.length} circuits before RAG`);
+    
+    if (assumptions.length > 0) {
+      logger.info(`📋 Applied ${assumptions.length} assumption(s) across ${circuits.length} circuit(s)`);
+    } else {
+      logger.info(`✅ Pre-validated ${circuits.length} circuits before RAG`);
+    }
   }
   
   // ============= SELF-CORRECTION KNOWLEDGE INJECTION =============
@@ -480,6 +509,15 @@ export async function buildRAGSearches(
   
   const totalTime = Date.now() - startTime;
   
+  // Build suggestions array for UI
+  const suggestions: string[] = [];
+  if (assumptions.length > 0) {
+    suggestions.push("Specify install method (e.g., Method C clipped direct, Method E in conduit) to improve accuracy");
+  }
+  if (circuits && circuits.some(c => !c.loadType)) {
+    suggestions.push("Provide detailed load type information for more precise design calculations");
+  }
+  
   // Fallback: if ALL searches timed out, provide essential regulations
   const hasAnyResults = designDocs.length + regulations.length + practicalWork.length > 0;
   
@@ -540,7 +578,9 @@ export async function buildRAGSearches(
     maintenanceDocs: [],
     structuredCalculations: calculations,
     searchMethod: 'direct-search',
-    totalDocs: designDocs.length + regulations.length + practicalWork.length + calculations.length
+    totalDocs: designDocs.length + regulations.length + practicalWork.length + calculations.length,
+    assumptions, // Thread assumptions through
+    suggestions // Thread suggestions through
   };
   
   // ============= PHASE 2: CIRCUIT-SPECIFIC RAG FILTERING =============

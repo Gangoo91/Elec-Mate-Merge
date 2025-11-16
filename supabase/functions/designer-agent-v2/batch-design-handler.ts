@@ -1232,7 +1232,7 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
         
         // ============= EXECUTE IN PARALLEL: RAG Search + Core Regs Pre-load =============
         const [ragResults, coreRegs] = await Promise.all([
-          buildRAGSearches(query, searchTerms, openAiKey, supabase, logger, type, aiRequiredCircuits), // PHASE 2: Pass AI-required circuits only
+          buildRAGSearches(query, searchTerms, openAiKey, supabase, logger, type, aiRequiredCircuits, body.strict_validation || false), // Pass strict mode
           loadCoreRegulations(supabase) // PHASE 4: Pre-load core regulations
         ]);
       
@@ -1241,6 +1241,10 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
       
         // Merge RAG results with core regulations
         regulations = mergeRegulations(ragResults);
+        
+        // Extract assumptions and suggestions from RAG results
+        const assumptions = ragResults.assumptions || [];
+        const suggestions = ragResults.suggestions || [];
         
         // Inject core regulations at the top (they're always needed)
         const coreRegNumbers = new Set(coreRegs.map(r => r.regulation_number));
@@ -1840,6 +1844,8 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
           number: r.regulation_number || r.topic,
           content: (r.content || '').substring(0, 400)
         })),
+        assumptions: (body.mode === 'direct-design' && ragResults?.assumptions) ? ragResults.assumptions : undefined,
+        suggestions: (body.mode === 'direct-design' && ragResults?.suggestions) ? ragResults.suggestions : undefined,
         metadata: {
           version: VERSION,
           model: aiRequiredCircuits.length > 0 ? 'gpt-5-mini via Lovable AI' : 'Templates & Cache',
