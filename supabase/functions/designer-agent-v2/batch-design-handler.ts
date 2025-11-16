@@ -1219,6 +1219,7 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     
     let regulations: any[] = [];
     let designedCircuits: any[] = [];
+    let ragResults: any = null; // Define ragResults at function scope
     
     // Only do RAG/AI if there are circuits that need it
     if (aiRequiredCircuits.length > 0) {
