@@ -189,14 +189,23 @@ export class RAGEngine {
       // Generate embedding for hybrid search
       const embedding = await this.embedder.generateEmbedding(semanticQuery);
       
-      const { data, error } = await this.supabase.rpc(
-        'search_design_hybrid',
-        {
+      // Define expected return type from search_design_hybrid RPC
+      interface HybridSearchResult {
+        id: string;
+        topic: string;
+        content: string;
+        source: string;
+        metadata: any;
+        hybrid_score: number;
+      }
+      
+      const { data, error } = await this.supabase
+        .rpc<HybridSearchResult[]>('search_design_hybrid', {
           query_text: semanticQuery,
           query_embedding: embedding,  // Required parameter for hybrid search
           match_count: 8
-        }
-      ).abortSignal(AbortSignal.timeout(10000));
+        })
+        .abortSignal(AbortSignal.timeout(10000));
 
       if (error) {
         this.logger.warn('Design knowledge search failed', { error: error.message });
