@@ -94,7 +94,7 @@ export const AIInstallationDesigner = () => {
         return;
       }
 
-      console.log('✅ Circuit design completed:', data.design);
+      console.log('✅ Circuit design completed:', data.circuits);
       
       // Success! Store design and show results
       const designWithMetadata = {
