@@ -118,8 +118,8 @@ export class AIDesigner {
     parts.push('1. Cable sizing: Ib ≤ In ≤ Iz (Reg 433.1.1)');
     parts.push('2. Voltage drop: ≤3% lighting, ≤5% power (Reg 525.1)');
     parts.push('3. Earth fault protection: Zs ≤ max Zs (Reg 411.3.2)');
-    parts.push('4. Sockets require 30mA RCD protection (Reg 411.3.3)');
-    parts.push('5. Bathrooms require RCD protection (Reg 701.411.3.3)');
+    parts.push('4. Socket circuits require RCBO protection for 30mA RCD (Reg 411.3.3)');
+    parts.push('5. Bathroom circuits require RCBO protection for RCD (Reg 701.411.3.3)');
     parts.push('6. Use reference method tables for Iz calculation');
     parts.push('7. Calculate voltage drop per Appendix 4 tables');
     parts.push('8. CPC sizing per Reg 543.1.1');
@@ -144,6 +144,7 @@ export class AIDesigner {
     parts.push('- ALWAYS provide installationMethod (e.g., "Method C - clipped direct")');
     parts.push('- ALWAYS set rcdProtected (true if RCBO or special location requires RCD)');
     parts.push('- ALWAYS generate full cableType description');
+    parts.push('- ALWAYS use RCBO for socket outlets and bathroom circuits (not plain MCB)');
 
     return parts.join('\n');
   }
@@ -241,7 +242,8 @@ export class AIDesigner {
     parts.push('1. If In > Iz: Increase cable size or reduce MCB rating');
     parts.push('2. If voltage drop fails: Increase cable size');
     parts.push('3. If Zs too high: Increase CPC size');
-    parts.push('4. Preserve all regulation citations and installation guidance');
+    parts.push('4. If RCD protection required: Change MCB to RCBO (sockets and bathrooms need RCD per 411.3.3)');
+    parts.push('5. Preserve all regulation citations and installation guidance');
     
     return parts.join('\n');
   }
