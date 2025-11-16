@@ -150,6 +150,24 @@ export const SupplyDetailsStep = ({
                   <SelectItem value="400-three">400V Three Phase (Commercial/Industrial)</SelectItem>
                 </SelectContent>
               </Select>
+              
+              {supplyType === '110-single' && (
+                <Alert className="mt-2 bg-amber-500/10 border-amber-500/30">
+                  <Info className="h-4 w-4 text-amber-400" />
+                  <AlertDescription className="text-xs">
+                    110V requires transformers. Ensure proper labelling and verify supply source.
+                  </AlertDescription>
+                </Alert>
+              )}
+              
+              {supplyType === '400-three' && (
+                <Alert className="mt-2 bg-blue-500/10 border-blue-500/30">
+                  <Info className="h-4 w-4 text-blue-400" />
+                  <AlertDescription className="text-xs">
+                    400V three-phase provides higher capacity. Phase balance is critical for compliance.
+                  </AlertDescription>
+                </Alert>
+              )}
             </div>
           </div>
         </Card>
