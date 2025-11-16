@@ -40,29 +40,10 @@ export class DesignPipeline {
     });
 
     // ========================================
-    // PHASE 2: Check Cache (deterministic key)
+    // PHASE 2: Cache Check (DISABLED FOR TESTING)
     // ========================================
-    const cacheKey = this.cache.generateKey(normalized);
-    const cached = await this.cache.get(cacheKey);
-    
-    if (cached) {
-      this.logger.info('Cache HIT', { 
-        key: cacheKey.slice(0, 12),
-        age: cached.ageSeconds,
-        hitCount: cached.hitCount 
-      });
-      
-      return {
-        success: true,
-        circuits: cached.design,
-        fromCache: true,
-        cacheAge: cached.ageSeconds,
-        cacheHitCount: cached.hitCount,
-        autoFixApplied: false
-      };
-    }
-
-    this.logger.info('Cache MISS', { key: cacheKey.slice(0, 12) });
+    // CACHE DISABLED - Always perform fresh design generation
+    this.logger.info('Cache DISABLED - skipping cache check');
 
     // ========================================
     // PHASE 3: RAG Search (enhanced for installation guidance)
@@ -129,13 +110,10 @@ export class DesignPipeline {
     });
 
     // ========================================
-    // PHASE 6: Cache Storage & Return
+    // PHASE 6: Cache Storage & Return (DISABLED FOR TESTING)
     // ========================================
-    await this.cache.set(cacheKey, design.circuits);
-    this.logger.info('Design cached successfully', {
-      key: cacheKey.slice(0, 12),
-      circuits: design.circuits.length
-    });
+    // CACHE DISABLED - Not storing design in cache
+    this.logger.info('Cache DISABLED - skipping cache storage');
 
     const duration = Date.now() - startTime;
     this.logger.info('Pipeline complete', {
