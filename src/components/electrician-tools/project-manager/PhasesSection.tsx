@@ -60,7 +60,7 @@ const PhasesSection = ({
           )}
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-4">
         {phases.map((phase, idx) => {
           const phaseId = `phase-${idx}`;
           const isComplete = phaseProgress[phaseId] || false;
@@ -82,7 +82,7 @@ const PhasesSection = ({
                     : 'border-border/40'
                 }`}
               >
-                <div className="p-3 sm:p-4">
+                <div className="p-4 sm:p-5">
                   <div className="flex items-start gap-3">
                     <Checkbox
                       checked={isComplete}
@@ -106,7 +106,7 @@ const PhasesSection = ({
                               <CheckCircle2 className="h-4 w-4 text-success" />
                             )}
                           </div>
-                          <div className="text-xs text-muted-foreground mt-1 flex items-center gap-2 flex-wrap">
+                          <div className="text-sm text-gray-400 mt-1 flex items-center gap-2 flex-wrap">
                             <span>Duration: {phase.duration} {phase.durationUnit || 'days'}</span>
                             {calculatedDate && (
                               <>
@@ -126,30 +126,58 @@ const PhasesSection = ({
 
                       {/* Description */}
                       {phase.description && (
-                        <p className={`text-sm ${isComplete ? 'text-muted-foreground' : ''}`}>
+                        <p className={`text-base leading-relaxed ${isComplete ? 'text-muted-foreground' : 'text-gray-300'}`}>
                           {phase.description}
                         </p>
                       )}
 
                       {/* Practical Notes */}
                       {phase.practicalNotes && (
-                        <div className="p-2 bg-elec-yellow/10 border border-elec-yellow/30 rounded text-xs">
-                          <span className="font-semibold">WHY THIS ORDER: </span>
-                          {phase.practicalNotes}
+                        <div className="p-3 sm:p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
+                          <div className="flex items-start gap-2">
+                            <span className="text-lg">💡</span>
+                            <div className="text-sm text-gray-900 leading-relaxed">
+                              <span className="font-semibold">WHY THIS ORDER: </span>
+                              {phase.practicalNotes}
+                            </div>
+                          </div>
                         </div>
                       )}
 
-                      {/* Tasks (Collapsible) */}
+                      {/* Key Actions - Show First 3 Tasks */}
                       {phase.tasks && phase.tasks.length > 0 && (
-                        <CollapsibleTrigger className="flex items-center gap-2 text-sm text-pink-400 hover:text-pink-500 transition-colors w-full">
-                          <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-                          {phase.tasks.length} tasks
-                        </CollapsibleTrigger>
+                        <div className="bg-card/50 rounded-lg p-3 sm:p-4 border border-border/40">
+                          <h5 className="text-sm font-semibold text-gray-100 mb-2">Key Actions:</h5>
+                          <ul className="space-y-2">
+                            {phase.tasks.slice(0, 3).map((task, idx) => {
+                              const taskText = typeof task === 'string' ? task : task.task || task.name || '';
+                              const taskDuration = typeof task !== 'string' ? task.duration : null;
+                              return (
+                                <li key={idx} className="text-sm text-gray-300 leading-relaxed flex items-start gap-2">
+                                  <span className="text-pink-400 mt-0.5 flex-shrink-0">→</span>
+                                  <div className="flex-1 flex items-center justify-between gap-2">
+                                    <span>{taskText}</span>
+                                    {taskDuration && (
+                                      <span className="text-xs text-muted-foreground whitespace-nowrap">({taskDuration})</span>
+                                    )}
+                                  </div>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                          {phase.tasks.length > 3 && (
+                            <CollapsibleTrigger className="flex items-center gap-2 text-sm text-pink-400 hover:text-pink-500 transition-colors mt-3">
+                              <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                              +{phase.tasks.length - 3} more actions
+                            </CollapsibleTrigger>
+                          )}
+                        </div>
                       )}
+
 
                       {/* Dependencies & Milestones */}
                       {(phase.dependencies && phase.dependencies.length > 0) || (phase.milestones && phase.milestones.length > 0) ? (
-                        <div className="flex items-center gap-3 flex-wrap text-xs">
+                        <div className="flex items-center gap-3 flex-wrap text-sm">
                           {phase.dependencies && phase.dependencies.length > 0 && (
                             <div>
                               <span className="text-muted-foreground">Dependencies: </span>
@@ -167,23 +195,23 @@ const PhasesSection = ({
                     </div>
                   </div>
 
-                  {/* Collapsible Tasks List */}
-                  {phase.tasks && phase.tasks.length > 0 && (
+                  {/* Collapsible Tasks List - Additional Tasks */}
+                  {phase.tasks && phase.tasks.length > 3 && (
                     <CollapsibleContent className="mt-3">
-                      <div className="space-y-1 pl-9">
-                        <div className="text-xs font-medium text-muted-foreground mb-2">Task List:</div>
-                        {phase.tasks.map((task, taskIdx) => {
+                      <div className="space-y-2 pl-6 sm:pl-9">
+                        <div className="text-sm font-medium text-muted-foreground mb-2">Additional Tasks:</div>
+                        {phase.tasks.slice(3).map((task, taskIdx) => {
                           const taskText = typeof task === 'string' ? task : task.task || task.name || '';
                           const taskDuration = typeof task !== 'string' ? task.duration : null;
                           
                           return (
                             <div 
                               key={taskIdx} 
-                              className="text-xs pl-3 border-l-2 border-pink-400/30 py-1 flex items-center justify-between gap-2"
+                              className="text-sm pl-3 border-l-2 border-pink-400/30 py-1 flex items-start justify-between gap-2"
                             >
-                              <span>• {taskText}</span>
+                              <span className="leading-relaxed">• {taskText}</span>
                               {taskDuration && (
-                                <span className="text-muted-foreground">({taskDuration})</span>
+                                <span className="text-xs text-muted-foreground whitespace-nowrap">({taskDuration})</span>
                               )}
                             </div>
                           );
