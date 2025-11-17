@@ -113,6 +113,37 @@ export class AIDesigner {
       parts.push('');
     }
 
+    // MANDATORY OUTPUT FORMAT
+    parts.push('=== MANDATORY OUTPUT FORMAT ===');
+    parts.push('For EVERY circuit, you MUST provide:');
+    parts.push('');
+    parts.push('1. AT A GLANCE SUMMARY CARD');
+    parts.push('   - Load (kW, Ib)');
+    parts.push('   - Cable (size, type)');
+    parts.push('   - Protective Device (type, rating, curve)');
+    parts.push('   - Voltage Drop (value + "✓ Compliant" or "✗ Non-compliant")');
+    parts.push('   - Zs (value + compliance statement)');
+    parts.push('   - Compliance Tick (boolean)');
+    parts.push('   - Notes (future-proofing, special conditions)');
+    parts.push('');
+    parts.push('2. EXACTLY 9 SECTIONS (in order, no repeats):');
+    parts.push('   1. Circuit Summary');
+    parts.push('   2. Load Details');
+    parts.push('   3. Cable Selection & Calculation Breakdown');
+    parts.push('   4. Protective Device Selection');
+    parts.push('   5. Compliance Confirmation');
+    parts.push('   6. Design Justification');
+    parts.push('   7. Installation Guidance');
+    parts.push('   8. Safety Notes');
+    parts.push('   9. Testing & Commissioning Guidance');
+    parts.push('');
+    parts.push('CRITICAL RULES:');
+    parts.push('- Never repeat Installation Guidance or any other section');
+    parts.push('- Each section must be unique and information-rich');
+    parts.push('- Use professional engineering language');
+    parts.push('- Include regulation numbers where applicable');
+    parts.push('');
+    
     // Design rules
     parts.push('=== DESIGN RULES ===');
     parts.push('1. Cable sizing: Ib ≤ In ≤ Iz (Reg 433.1.1)');
@@ -619,6 +650,81 @@ export class AIDesigner {
                       }
                     },
                     required: ['cableRouting', 'terminationAdvice', 'testingRequirements', 'safetyNotes']
+                  },
+                  structuredOutput: {
+                    type: 'object',
+                    description: 'PHASE 5: MANDATORY structured output for professional engineering format',
+                    properties: {
+                      atAGlanceSummary: {
+                        type: 'object',
+                        description: 'Summary card with key design parameters',
+                        properties: {
+                          loadKw: { type: 'number', description: 'Load in kW (e.g., 7.36)' },
+                          loadIb: { type: 'string', description: 'Design current (e.g., "32A")' },
+                          cable: { type: 'string', description: 'Cable specification (e.g., "6mm² twin & earth with 2.5mm² CPC")' },
+                          protectiveDevice: { type: 'string', description: 'Protection (e.g., "40A Type B MCB (6kA)")' },
+                          voltageDrop: { type: 'string', description: 'VD result with compliance (e.g., "6.2V (2.7%) ✓ Compliant")' },
+                          zs: { type: 'string', description: 'Zs with compliance (e.g., "0.68Ω ✓ Well within 1.37Ω limit")' },
+                          complianceTick: { type: 'boolean', description: 'Overall compliance (true if all checks pass)' },
+                          notes: { type: 'string', description: 'Future-proofing or special conditions (e.g., "Designed with 20% safety margin for future EV charger upgrade")' }
+                        },
+                        required: ['loadKw', 'loadIb', 'cable', 'protectiveDevice', 'voltageDrop', 'zs', 'complianceTick', 'notes']
+                      },
+                      sections: {
+                        type: 'object',
+                        description: 'EXACTLY 9 sections in strict order - NO REPETITION',
+                        properties: {
+                          circuitSummary: { 
+                            type: 'string', 
+                            description: '1. Circuit Summary: Overview of the circuit purpose, load served, and installation context (100-150 words)' 
+                          },
+                          loadDetails: { 
+                            type: 'string', 
+                            description: '2. Load Details: Detailed load analysis including power factor, diversity, and current calculations (100-150 words)' 
+                          },
+                          cableSelectionBreakdown: { 
+                            type: 'string', 
+                            description: '3. Cable Selection & Calculation Breakdown: Full cable sizing logic with Iz tables, derating factors, and voltage drop calculations (150-200 words)' 
+                          },
+                          protectiveDeviceSelection: { 
+                            type: 'string', 
+                            description: '4. Protective Device Selection: MCB/RCBO selection with curve justification, Zs compliance, and fault current analysis (100-150 words)' 
+                          },
+                          complianceConfirmation: { 
+                            type: 'string', 
+                            description: '5. Compliance Confirmation: BS 7671 regulation verification with specific regulation numbers (411.3.2, 433.1, etc.) (100-150 words)' 
+                          },
+                          designJustification: { 
+                            type: 'string', 
+                            description: '6. Design Justification: Professional engineering rationale for design choices and safety margins (100-150 words)' 
+                          },
+                          installationGuidance: { 
+                            type: 'string', 
+                            description: '7. Installation Guidance: Practical step-by-step installation instructions ONLY HERE - cable routing, fixing, terminations (150-200 words)' 
+                          },
+                          safetyNotes: { 
+                            type: 'string', 
+                            description: '8. Safety Notes: Critical safety warnings, isolation requirements, and safe working practices (100-150 words)' 
+                          },
+                          testingCommissioningGuidance: { 
+                            type: 'string', 
+                            description: '9. Testing & Commissioning Guidance: Required tests (R1+R2, Zs, insulation, RCD), expected results, and acceptance criteria (150-200 words)' 
+                          }
+                        },
+                        required: [
+                          'circuitSummary', 
+                          'loadDetails', 
+                          'cableSelectionBreakdown', 
+                          'protectiveDeviceSelection', 
+                          'complianceConfirmation', 
+                          'designJustification', 
+                          'installationGuidance', 
+                          'safetyNotes', 
+                          'testingCommissioningGuidance'
+                        ]
+                      }
+                    },
+                    required: ['atAGlanceSummary', 'sections']
                   }
                 },
                 required: [
@@ -638,7 +744,8 @@ export class AIDesigner {
                   'rcdProtected',
                   'calculations', 
                   'justifications', 
-                  'installationGuidance'
+                  'installationGuidance',
+                  'structuredOutput'
                 ]
               }
             },

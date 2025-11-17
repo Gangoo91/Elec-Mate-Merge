@@ -1,0 +1,55 @@
+import { Card } from '@/components/ui/card';
+import { Zap, CheckCircle2 } from 'lucide-react';
+
+interface AtAGlanceSummaryProps {
+  summary: {
+    loadKw: number;
+    loadIb: string;
+    cable: string;
+    protectiveDevice: string;
+    voltageDrop: string;
+    zs: string;
+    complianceTick: boolean;
+    notes: string;
+  };
+}
+
+const SummaryField = ({ label, value }: { label: string; value: string }) => (
+  <div className="p-3 bg-elec-dark/40 rounded border border-elec-yellow/20">
+    <p className="text-xs text-white/60 mb-1">{label}</p>
+    <p className="text-sm sm:text-base font-semibold text-elec-light">{value}</p>
+  </div>
+);
+
+export const AtAGlanceSummary = ({ summary }: AtAGlanceSummaryProps) => {
+  return (
+    <Card className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border-elec-yellow/40 mb-6">
+      <div className="p-5 sm:p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg sm:text-xl font-bold text-elec-light flex items-center gap-2">
+            <Zap className="h-5 w-5 text-elec-yellow" />
+            At a Glance
+          </h3>
+          {summary.complianceTick && (
+            <CheckCircle2 className="h-6 w-6 text-green-400 animate-pulse-subtle" />
+          )}
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+          <SummaryField label="Load" value={`${summary.loadKw}kW (${summary.loadIb})`} />
+          <SummaryField label="Cable" value={summary.cable} />
+          <SummaryField label="Protective Device" value={summary.protectiveDevice} />
+          <SummaryField label="Voltage Drop" value={summary.voltageDrop} />
+          <SummaryField label="Zs" value={summary.zs} />
+        </div>
+        
+        {summary.notes && (
+          <div className="mt-4 p-3 sm:p-4 bg-elec-dark/40 rounded border border-elec-yellow/20">
+            <p className="text-xs text-white/60 mb-1">Notes</p>
+            <p className="text-sm text-white/90">{summary.notes}</p>
+          </div>
+        )}
+      </div>
+    </Card>
+  );
+};
