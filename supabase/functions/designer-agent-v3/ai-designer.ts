@@ -250,7 +250,7 @@ export class AIDesigner {
         tool_choice
       },
       this.openAiKey,
-      90000 // 90s timeout (1.5 minutes - prevents edge function timeout)
+      120000 // 120s timeout (2 minutes - correction buffer)
     );
 
     const duration = Date.now() - startTime;
@@ -320,7 +320,7 @@ export class AIDesigner {
         tool_choice
       },
       this.openAiKey,
-      90000 // 90s timeout per batch
+      180000 // 180s timeout per batch (3 minutes)
     );
 
     const duration = Date.now() - startTime;
