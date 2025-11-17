@@ -63,9 +63,15 @@ export class DesignPipeline {
     // ========================================
     let design: any;
     
+    // Log batch evaluation for debugging
+    this.logger.info('Evaluating batch processing need', {
+      circuitCount: normalized.circuits.length,
+      willBatch: normalized.circuits.length > 2
+    });
+    
     // Determine if batching is needed
-    if (normalized.circuits.length > 5) {
-      // BATCH PROCESSING for 6+ circuits
+    if (normalized.circuits.length > 2) {
+      // BATCH PROCESSING for 3+ circuits
       const batchSize = this.determineBatchSize(normalized.circuits.length);
       const batches = this.splitIntoBatches(normalized.circuits, batchSize);
       
@@ -306,11 +312,11 @@ export class DesignPipeline {
 
   /**
    * Determine optimal batch size based on circuit count
-   * PARALLEL PROCESSING: Always use 2 circuits per batch for 6+ circuits
+   * PARALLEL PROCESSING: Always use 2 circuits per batch for 3+ circuits
    */
   private determineBatchSize(circuitCount: number): number {
-    if (circuitCount <= 5) return circuitCount;
-    return 2; // Always 2 circuits per batch for parallel processing
+    if (circuitCount <= 2) return circuitCount; // Process 1-2 circuits in one call
+    return 2; // Batch everything else into groups of 2
   }
 
   /**
