@@ -94,7 +94,7 @@ export const generateMethodStatement = async (
       aiMs: diag.aiMs,
       pwCount: diag.pwCount,
       regsCount: diag.regsCount,
-      stepsCount: directData.steps?.length || 0
+      stepsCount: directData.data?.steps?.length || 0
     });
     
     if (onProgress) {
@@ -110,7 +110,7 @@ export const generateMethodStatement = async (
     
     // Transform direct RAG output to expected format
     const installerOutput = {
-      installationSteps: (directData.steps || []).map((step: any, index: number) => ({
+      installationSteps: (directData.data?.steps || []).map((step: any, index: number) => ({
         step: index + 1,
         stepNumber: index + 1,
         title: step.title,
@@ -132,17 +132,17 @@ export const generateMethodStatement = async (
       jobTitle: userQuery,
       description: userQuery,
       estimatedDuration: 'Not specified',
-      requiredQualifications: directData.competencyRequirements?.roles || [],
-      toolsRequired: directData.materials || [],
-      materialsRequired: directData.materials || [],
+      requiredQualifications: directData.data?.competencyRequirements?.roles || [],
+      toolsRequired: directData.data?.toolsRequired || [],
+      materialsRequired: directData.data?.materialsRequired || [],
       detectedHazards: [],
       conditionalFlags: {},
-      testingProcedures: directData.testingProcedures || [],
-      equipmentSchedule: directData.equipmentSchedule || [],
-      siteLogistics: directData.siteLogistics || {},
-      competencyRequirements: directData.competencyRequirements || { roles: [], trainingRequired: [] },
-      tips: directData.tips || [],
-      citations: directData.citations || []
+      testingProcedures: directData.data?.testingProcedures || [],
+      equipmentSchedule: directData.data?.equipmentSchedule || [],
+      siteLogistics: directData.data?.siteLogistics || {},
+      competencyRequirements: directData.data?.competencyRequirements || { roles: [], trainingRequired: [] },
+      tips: directData.data?.practicalTips || [],
+      citations: directData.data?.regulatoryCitations || []
     };
     
     if (onProgress) {
