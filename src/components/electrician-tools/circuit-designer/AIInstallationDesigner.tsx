@@ -130,7 +130,8 @@ export const AIInstallationDesigner = () => {
           phases: circuit.phases,
           cableLength: circuit.cableLength,
           installationMethod: circuit.installationMethod || circuit.installMethod,
-          installationGuidance: circuit.installationGuidance
+          installationGuidance: circuit.installationGuidance,
+          structuredOutput: circuit.structuredOutput  // PRESERVE structured output from backend
         })),
         projectInfo: {
           projectName: inputs.projectName || 'Untitled Project',
