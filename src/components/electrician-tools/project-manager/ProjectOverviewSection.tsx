@@ -11,7 +11,13 @@ interface Section {
   icon: LucideIcon;
   content: string | string[];
   color: 'blue' | 'purple' | 'red' | 'amber' | 'green';
-  type?: 'list' | 'checklist' | 'text';
+  type?: 'list' | 'checklist' | 'text' | 'critical-path';
+}
+
+interface CriticalPathBlock {
+  type: 'phase-header' | 'list' | 'paragraph';
+  content?: string;
+  items?: string[];
 }
 
 const colorClasses = {
@@ -40,6 +46,34 @@ const colorClasses = {
     bg: 'bg-green-500/10',
     icon: 'text-green-400',
   },
+};
+
+const parseStructuredCriticalPath = (text: string): CriticalPathBlock[] => {
+  if (!text) return [];
+  
+  // Split by double newlines for paragraphs
+  const paragraphs = text.split(/\n\n+/).filter(p => p.trim());
+  
+  return paragraphs.map(para => {
+    const trimmed = para.trim();
+    
+    // Detect phase headers: "Day X-Y:" or "Phase X:"
+    if (/(?:Day \d+-\d+|Phase \d+):/i.test(trimmed)) {
+      return { type: 'phase-header' as const, content: trimmed };
+    }
+    
+    // Detect list items (multiple lines starting with -, *, or •)
+    const lines = trimmed.split('\n');
+    if (lines.length > 1 && lines.some(l => /^[-*•]\s/.test(l.trim()))) {
+      const items = lines
+        .filter(l => /^[-*•]\s/.test(l.trim()))
+        .map(l => l.replace(/^[-*•]\s+/, '').trim());
+      return { type: 'list' as const, items };
+    }
+    
+    // Regular paragraph
+    return { type: 'paragraph' as const, content: trimmed };
+  });
 };
 
 const parseProjectOverview = (text: string): Section[] => {
@@ -80,7 +114,7 @@ const parseProjectOverview = (text: string): Section[] => {
       icon: AlertCircle,
       content: criticalText,
       color: 'red',
-      type: 'text'
+      type: 'critical-path'
     });
   }
 
@@ -139,7 +173,7 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
           Project Overview
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-4 p-4 sm:p-6">
         {sections.length > 0 ? (
           sections.map((section, idx) => {
             const Icon = section.icon;
@@ -148,43 +182,76 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
             return (
               <div 
                 key={idx}
-                className={`${colors.border} ${colors.bg} rounded-lg p-3`}
+                className={`${colors.border} ${colors.bg} rounded-lg p-4 sm:p-5`}
               >
                 {/* Header */}
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex items-center gap-2 mb-3">
                   <Icon className={`h-4 w-4 ${colors.icon}`} />
-                  <span className="text-xs font-semibold uppercase tracking-wide">
+                  <span className="text-sm font-semibold uppercase tracking-wide text-gray-100">
                     {section.title}
                   </span>
                 </div>
                 
                 {/* Content */}
-                {section.type === 'list' ? (
-                  <ul className="space-y-1.5">
+                {section.type === 'critical-path' ? (
+                  <div className="space-y-4">
+                    {parseStructuredCriticalPath(section.content as string).map((block, i) => {
+                      if (block.type === 'phase-header') {
+                        return (
+                          <div key={i} className="bg-red-500/5 rounded-md p-3 border border-red-500/20">
+                            <h4 className="font-semibold text-sm text-red-100 leading-relaxed">
+                              {block.content}
+                            </h4>
+                          </div>
+                        );
+                      }
+                      
+                      if (block.type === 'list' && block.items) {
+                        return (
+                          <ul key={i} className="space-y-2 ml-4">
+                            {block.items.map((item, itemIdx) => (
+                              <li key={itemIdx} className="text-sm text-gray-300 leading-relaxed flex items-start gap-2">
+                                <span className="text-red-400 text-lg leading-none mt-0.5">•</span>
+                                <span className="flex-1">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        );
+                      }
+                      
+                      return (
+                        <p key={i} className="text-sm text-gray-300 leading-relaxed">
+                          {block.content}
+                        </p>
+                      );
+                    })}
+                  </div>
+                ) : section.type === 'list' ? (
+                  <ul className="space-y-2">
                     {(section.content as string[]).map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-xs leading-relaxed">
-                        <span className={`${colors.icon} text-lg leading-none`}>•</span>
-                        <span className="flex-1">{item}</span>
+                      <li key={i} className="flex items-start gap-2 text-sm leading-relaxed">
+                        <span className={`${colors.icon} text-lg leading-none mt-0.5`}>•</span>
+                        <span className="flex-1 text-gray-300">{item}</span>
                       </li>
                     ))}
                   </ul>
                 ) : section.type === 'checklist' ? (
-                  <div className="space-y-1.5">
+                  <div className="space-y-2">
                     {(section.content as string[]).map((item, i) => (
                       <div key={i} className="flex items-start gap-2">
                         <CheckSquare className={`h-3.5 w-3.5 ${colors.icon} mt-0.5 flex-shrink-0`} />
-                        <span className="text-xs leading-relaxed flex-1">{item}</span>
+                        <span className="text-sm leading-relaxed flex-1 text-gray-300">{item}</span>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-xs leading-relaxed">{section.content as string}</p>
+                  <p className="text-sm leading-relaxed text-gray-300">{section.content as string}</p>
                 )}
               </div>
             );
           })
         ) : (
-          <p className="text-sm whitespace-pre-wrap leading-relaxed">{response}</p>
+          <p className="text-sm whitespace-pre-wrap leading-relaxed text-gray-300">{response}</p>
         )}
       </CardContent>
     </Card>
