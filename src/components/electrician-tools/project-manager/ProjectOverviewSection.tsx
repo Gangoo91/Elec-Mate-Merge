@@ -164,16 +164,44 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
   if (!response) return null;
 
   const sections = parseProjectOverview(response);
+  const businessCase = useMemo(() => {
+    const match = response.match(/(?:business case|project overview|scope)[:\s]*(.+?)(?=\n\n[A-Z][a-z]+:|$)/is);
+    if (match) {
+      return match[1].trim();
+    }
+    const paragraphs = response.split('\n\n').filter(p => p.trim().length > 50);
+    return paragraphs[0] || response.substring(0, 300);
+  }, [response]);
 
   return (
-    <Card className="bg-muted/30">
-      <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <FileText className="h-5 w-5 text-pink-400" />
-          Project Overview
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4 p-4 sm:p-6">
+    <div className="space-y-4">
+      {/* Business Case - FULL CONTENT */}
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <FileText className="h-5 w-5 text-pink-400" />
+            Business Case & Overview
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-sm sm:text-base text-gray-300 leading-relaxed space-y-3 whitespace-pre-wrap">
+            {businessCase.split('\n').map((paragraph, idx) => (
+              paragraph.trim() && <p key={idx}>{paragraph.trim()}</p>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Structured Sections */}
+      {sections.length > 0 && (
+        <Card className="bg-muted/30">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <FileText className="h-5 w-5 text-pink-400" />
+              Project Details
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4 p-4 sm:p-6">
         {sections.length > 0 ? (
           sections.map((section, idx) => {
             const Icon = section.icon;
@@ -253,8 +281,27 @@ const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
         ) : (
           <p className="text-sm whitespace-pre-wrap leading-relaxed text-gray-300">{response}</p>
         )}
-      </CardContent>
-    </Card>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Full AI Response */}
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+            <FileText className="h-5 w-5 text-pink-400" />
+            Complete Project Analysis
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-sm sm:text-base text-gray-300 leading-relaxed space-y-4 whitespace-pre-wrap">
+            {response.split('\n\n').map((paragraph, idx) => (
+              paragraph.trim() && <p key={idx}>{paragraph.trim()}</p>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
