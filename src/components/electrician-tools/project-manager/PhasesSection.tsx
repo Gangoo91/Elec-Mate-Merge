@@ -1,11 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Calendar, CheckCircle2 } from "lucide-react";
+import { Calendar, CheckCircle2, Lightbulb } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { addDays, format } from "date-fns";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface Phase {
   phase: string;
@@ -198,53 +199,67 @@ const PhasesSection = ({
                       </div>
                     )}
 
-
-                      {/* Dependencies & Milestones */}
-                      {(phase.dependencies && phase.dependencies.length > 0) || (phase.milestones && phase.milestones.length > 0) ? (
-                        <div className="flex items-center gap-3 flex-wrap text-sm">
-                          {phase.dependencies && phase.dependencies.length > 0 && (
-                            <div>
-                              <span className="text-muted-foreground">Dependencies: </span>
-                              <span>{phase.dependencies.join(', ')}</span>
-                            </div>
-                          )}
-                          {phase.milestones && phase.milestones.length > 0 && (
-                            <div>
-                              <span className="text-muted-foreground">Milestones: </span>
-                              <span>{phase.milestones.join(', ')}</span>
-                            </div>
-                          )}
-                        </div>
-                      ) : null}
-                    </div>
-                  </div>
-
-                  {/* Collapsible Tasks List - Additional Tasks */}
-                  {phase.tasks && phase.tasks.length > 3 && (
-                    <CollapsibleContent className="mt-3">
-                      <div className="space-y-2 pl-6 sm:pl-9">
-                        <div className="text-sm font-medium text-muted-foreground mb-2">Additional Tasks:</div>
-                        {phase.tasks.slice(3).map((task, taskIdx) => {
-                          const taskText = typeof task === 'string' ? task : task.task || task.name || '';
-                          const taskDuration = typeof task !== 'string' ? task.duration : null;
-                          
-                          return (
-                            <div 
-                              key={taskIdx} 
-                              className="text-sm pl-3 border-l-2 border-pink-400/30 py-1 flex items-start justify-between gap-2"
-                            >
-                              <span className="leading-relaxed">• {taskText}</span>
-                              {taskDuration && (
-                                <span className="text-xs text-muted-foreground whitespace-nowrap">({taskDuration})</span>
-                              )}
-                            </div>
-                          );
-                        })}
+                    {/* Dependencies & Milestones */}
+                    {(phase.dependencies && phase.dependencies.length > 0) || (phase.milestones && phase.milestones.length > 0) ? (
+                      <div className="flex items-center gap-3 flex-wrap text-sm text-gray-400">
+                        {phase.dependencies && phase.dependencies.length > 0 && (
+                          <div>
+                            <span className="font-medium">Dependencies: </span>
+                            {phase.dependencies.join(', ')}
+                          </div>
+                        )}
+                        {phase.milestones && phase.milestones.length > 0 && (
+                          <div>
+                            <span className="font-medium">Milestones: </span>
+                            {phase.milestones.join(', ')}
+                          </div>
+                        )}
                       </div>
-                    </CollapsibleContent>
-                  )}
+                    ) : null}
+                  </div>
                 </div>
               </div>
+
+              {/* Collapsible Additional Tasks - Outside main card */}
+              {phase.tasks && phase.tasks.length > 3 && (
+                <CollapsibleContent>
+                  <div className="bg-card/50 rounded-lg p-4 sm:p-5 border border-border/40 mt-3 ml-11">
+                    <ul className="space-y-3">
+                      {phase.tasks.slice(3).map((task, idx) => {
+                        const taskText = typeof task === 'string' ? task : task.task || task.name || '';
+                        const taskDuration = typeof task !== 'string' ? task.duration : null;
+                        const hasSupplier = /CEF|TLC|Screwfix|Toolstation|wholesaler/i.test(taskText);
+                        const hasWarning = /asap|urgent|critical|before|must/i.test(taskText);
+
+                        return (
+                          <li key={idx} className="flex gap-3 text-sm sm:text-base text-gray-300 leading-relaxed items-start">
+                            <span className="text-pink-400 mt-1 flex-shrink-0">•</span>
+                            <div className="flex-1">
+                              <span className={hasWarning ? 'font-medium text-elec-yellow' : ''}>
+                                {taskText}
+                              </span>
+                              {(taskDuration || hasSupplier) && (
+                                <div className="flex flex-wrap gap-2 mt-1">
+                                  {taskDuration && (
+                                    <span className="px-2 py-0.5 bg-muted/50 text-xs text-muted-foreground rounded">
+                                      {taskDuration}
+                                    </span>
+                                  )}
+                                  {hasSupplier && (
+                                    <span className="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded">
+                                      Supplier
+                                    </span>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </CollapsibleContent>
+              )}
             </Collapsible>
           );
         })}

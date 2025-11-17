@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, Target, ListChecks, AlertCircle, Zap, Shield, AlertTriangle, CheckSquare } from "lucide-react";
 import { LucideIcon } from "lucide-react";
+import { useMemo } from "react";
 
 interface ProjectOverviewSectionProps {
   response?: string;
