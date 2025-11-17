@@ -1816,7 +1816,7 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
     
     // Update job to complete if in async mode
     if (asyncMode && jobId && supabaseForProgress) {
-      await progressCallback(95, 'Finalizing design...');
+      await progressCallback(95, 'Finalising design...');
       
       // Clear timeout on successful completion
       clearJobTimeout();

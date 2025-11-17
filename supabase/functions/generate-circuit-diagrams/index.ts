@@ -252,7 +252,7 @@ DRAWING REQUIREMENTS:
 8. Add cable length indication: ${circuitInfo.cableLength}m run
 9. Show CPC connection with correct ${circuitInfo.cpcSize}mm² size labeling
 
-⚠️ VALIDATION CHECK: Before finalizing, verify cable shows ${circuitInfo.cableSize}mm² and CPC shows ${circuitInfo.cpcSize}mm².
+⚠️ VALIDATION CHECK: Before finalising, verify cable shows ${circuitInfo.cableSize}mm² and CPC shows ${circuitInfo.cpcSize}mm².
 
 STYLE: Technical drawing, professional engineering documentation, high contrast black & white, crisp lines, suitable for Building Control submission.`;
 }

@@ -399,7 +399,7 @@ Deno.serve(async (req) => {
     }
 
     // Full success - merge results
-    await safeUpdateProgress(90, 'Finalizing risk assessment and method statement...');
+    await safeUpdateProgress(90, 'Finalising risk assessment and method statement...');
 
     const transformedRAMSData = transformHealthSafetyResponse(hsData, projectDetails);
     
