@@ -117,7 +117,7 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
 
 
       {/* Generate Button */}
-      <div className="sticky bottom-4 z-10">
+      <div className="mt-6">
         <Button
           onClick={handleSubmit}
           disabled={!isValid || isProcessing}
