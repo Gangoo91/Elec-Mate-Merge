@@ -1,7 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, ArrowRight } from "lucide-react";
+import { Calendar, ChevronDown } from "lucide-react";
 import { addDays, format } from "date-fns";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 interface Phase {
   phase: string;
@@ -9,7 +11,7 @@ interface Phase {
   durationUnit?: string;
   startDay?: string;
   criticalPath?: boolean;
-  tasks?: Array<string | { task?: string; name?: string }>;
+  tasks?: Array<string | { task?: string; name?: string; duration?: string }>;
 }
 
 interface PhaseTimelineProps {
@@ -19,6 +21,8 @@ interface PhaseTimelineProps {
 }
 
 const PhaseTimeline = ({ phases, startDate, criticalPath = [] }: PhaseTimelineProps) => {
+  const [expandedPhases, setExpandedPhases] = useState<Record<number, boolean>>({});
+
   if (!phases || phases.length === 0) return null;
 
   const timelineData = useMemo(() => {
@@ -56,78 +60,102 @@ const PhaseTimeline = ({ phases, startDate, criticalPath = [] }: PhaseTimelinePr
           </div>
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        {/* Mobile-optimized timeline */}
-        <div className="space-y-3">
-          {timelineData.map((phase, idx) => {
-            const progress = (phase.actualStartDay / maxDay) * 100;
-            const width = (phase.duration / maxDay) * 100;
-            
-            return (
-              <div key={idx} className="relative">
-                {/* Phase header */}
-                <div className="flex items-start justify-between gap-2 mb-2">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <div className={`font-semibold text-sm ${phase.isCritical ? 'text-pink-400' : ''}`}>
-                        {phase.phase}
-                      </div>
-                      {phase.isCritical && (
-                        <ArrowRight className="h-3 w-3 text-pink-400" />
-                      )}
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-0.5">
-                      {format(phase.startDate, 'EEE d MMM')} - {format(phase.endDate, 'EEE d MMM')}
-                    </div>
-                  </div>
-                  <div className="text-xs text-muted-foreground whitespace-nowrap">
-                    {phase.duration} {phase.durationUnit || 'days'}
-                  </div>
-                </div>
-                
-                {/* Timeline bar */}
-                <div className="relative h-8 bg-muted/30 rounded-lg overflow-hidden">
-                  <div 
-                    className={`absolute h-full ${
-                      phase.isCritical 
-                        ? 'bg-gradient-to-r from-pink-400 to-pink-500' 
-                        : 'bg-gradient-to-r from-elec-yellow to-elec-yellow/80'
-                    } rounded-lg transition-all duration-300`}
-                    style={{ 
-                      left: `${progress}%`,
-                      width: `${width}%`
-                    }}
-                  >
-                    <div className="absolute inset-0 bg-white/10 animate-pulse" />
-                  </div>
-                  
-                  {/* Task count indicator */}
-                  {phase.tasks && phase.tasks.length > 0 && (
-                    <div className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-white/80 font-medium z-10">
-                      {phase.tasks.length} tasks
-                    </div>
-                  )}
-                </div>
-                
-                {/* Day markers */}
-                <div className="flex justify-between text-xs text-muted-foreground mt-1 px-1">
-                  <span>Day {phase.actualStartDay + 1}</span>
-                  <span>Day {phase.actualStartDay + phase.duration}</span>
-                </div>
-              </div>
-            );
-          })}
+      <CardContent className="space-y-4 sm:space-y-3">
+        {/* Day ruler - visible on larger screens */}
+        <div className="hidden sm:flex justify-between text-xs text-muted-foreground mb-2 px-1">
+          {Array.from({ length: Math.ceil(maxDay / 5) + 1 }).map((_, i) => (
+            <div key={i}>Day {i * 5}</div>
+          ))}
         </div>
 
+        {timelineData.map((phase, idx) => {
+          const isExpanded = expandedPhases[idx];
+          const progress = (phase.actualStartDay / maxDay) * 100;
+          const width = (phase.duration / maxDay) * 100;
+          
+          return (
+            <div key={idx} className="space-y-2">
+              {/* Phase Header - Stack on mobile */}
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-base sm:text-sm">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className={`font-medium ${phase.isCritical ? 'text-pink-400' : 'text-gray-100'}`}>
+                    {phase.phase}
+                  </span>
+                  {phase.isCritical && (
+                    <Badge variant="outline" className="text-xs bg-pink-400/20 border-pink-400/40">
+                      Critical
+                    </Badge>
+                  )}
+                  <span className="text-sm text-gray-400">
+                    ({phase.duration} {phase.durationUnit || 'days'})
+                  </span>
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  {format(phase.startDate, 'dd MMM')} → {format(phase.endDate, 'dd MMM')}
+                </div>
+              </div>
+
+              {/* Timeline bar - TALLER on mobile, info inside */}
+              <div className="relative h-16 sm:h-12 bg-muted/30 rounded-lg overflow-hidden">
+                <div 
+                  className={`absolute h-full ${
+                    phase.isCritical 
+                      ? 'bg-gradient-to-r from-pink-400 to-pink-500' 
+                      : 'bg-gradient-to-r from-elec-yellow to-elec-yellow/80'
+                  } rounded-lg transition-all duration-300 flex items-center px-3 sm:px-4`}
+                  style={{ 
+                    left: `${progress}%`,
+                    width: `${width}%`
+                  }}
+                >
+                  {/* Show info INSIDE the bar */}
+                  <div className="flex items-center justify-between w-full text-xs sm:text-[11px] font-medium text-gray-900">
+                    <span className="truncate flex-1">{phase.phase.substring(0, 30)}</span>
+                    <span className="ml-2 whitespace-nowrap">{phase.duration}{phase.durationUnit?.[0] || 'd'}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Task breakdown - expandable */}
+              {phase.tasks && phase.tasks.length > 0 && (
+                <Collapsible
+                  open={isExpanded}
+                  onOpenChange={(open) => setExpandedPhases(prev => ({ ...prev, [idx]: open }))}
+                >
+                  <CollapsibleTrigger className="text-xs sm:text-sm text-pink-400 hover:text-pink-500 mt-2 flex items-center gap-1 touch-manipulation min-h-[44px] sm:min-h-0">
+                    <ChevronDown className={`h-3 w-3 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                    View {phase.tasks.length} task{phase.tasks.length !== 1 ? 's' : ''}
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="mt-2 space-y-1">
+                    {phase.tasks.slice(0, 5).map((task, taskIdx) => {
+                      const taskText = typeof task === 'string' ? task : task.task || task.name || '';
+                      return (
+                        <div key={taskIdx} className="text-xs sm:text-sm text-gray-400 pl-4 border-l-2 border-pink-400/30 py-1 leading-relaxed">
+                          • {taskText}
+                        </div>
+                      );
+                    })}
+                    {phase.tasks.length > 5 && (
+                      <div className="text-xs text-muted-foreground pl-4 italic">
+                        +{phase.tasks.length - 5} more tasks...
+                      </div>
+                    )}
+                  </CollapsibleContent>
+                </Collapsible>
+              )}
+            </div>
+          );
+        })}
+
         {/* Legend */}
-        <div className="flex items-center gap-4 mt-6 pt-4 border-t border-border/40 flex-wrap">
-          <div className="flex items-center gap-2 text-xs">
-            <div className="w-6 h-3 bg-gradient-to-r from-pink-400 to-pink-500 rounded" />
-            <span className="text-muted-foreground">Critical Path</span>
+        <div className="flex items-center gap-4 pt-3 border-t border-border/30 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded bg-gradient-to-r from-pink-400 to-pink-500" />
+            <span>Critical Path</span>
           </div>
-          <div className="flex items-center gap-2 text-xs">
-            <div className="w-6 h-3 bg-gradient-to-r from-elec-yellow to-elec-yellow/80 rounded" />
-            <span className="text-muted-foreground">Standard Phase</span>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded bg-gradient-to-r from-elec-yellow to-elec-yellow/80" />
+            <span>Standard Phase</span>
           </div>
         </div>
       </CardContent>

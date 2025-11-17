@@ -160,13 +160,13 @@ const ProjectManagerResults = ({
         </div>
         
         {/* Action Buttons - Grid Layout Mobile */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <Button 
             type="button"
             size="sm" 
             variant="outline"
             onClick={handleCopy}
-            className="touch-manipulation h-10 text-xs"
+            className="touch-manipulation h-11 text-xs"
           >
             <Copy className="h-3.5 w-3.5 mr-1.5" />
             Copy
@@ -177,7 +177,7 @@ const ProjectManagerResults = ({
             size="sm" 
             variant="outline"
             onClick={handleExportCalendar}
-            className="touch-manipulation h-10 text-xs"
+            className="touch-manipulation h-11 text-xs"
           >
             <CalendarIcon className="h-3.5 w-3.5 mr-1.5" />
             Export iCal
@@ -188,7 +188,7 @@ const ProjectManagerResults = ({
             size="sm" 
             variant="outline"
             onClick={handleExportPDF}
-            className="touch-manipulation h-10 text-xs"
+            className="touch-manipulation h-11 text-xs"
           >
             <Download className="h-3.5 w-3.5 mr-1.5" />
             Export PDF
