@@ -122,7 +122,7 @@ export class ValidationEngine {
         rule: 'rcd_sockets',
         regulation: '411.3.3',
         severity: 'error',
-        message: `Socket circuits require RCD protection (RCBO), but ${circuit.protectionDevice.type} was specified`,
+        message: `Socket circuits MUST use RCBO protection per Reg 411.3.3. Current: ${circuit.protectionDevice.type}. Auto-correct to RCBO required.`,
         currentValue: circuit.protectionDevice.type,
         expectedValue: 'RCBO',
         fieldAffected: 'protectionDevice.type'
@@ -137,7 +137,7 @@ export class ValidationEngine {
         rule: 'rcd_bathroom',
         regulation: '701.411.3.3',
         severity: 'error',
-        message: `Bathroom circuits require RCD protection (RCBO), but ${circuit.protectionDevice.type} was specified`,
+        message: `Bathroom circuits MUST use RCBO protection per Reg 701.411.3.3. Current: ${circuit.protectionDevice.type}. Auto-correct to RCBO required.`,
         currentValue: circuit.protectionDevice.type,
         expectedValue: 'RCBO',
         fieldAffected: 'protectionDevice.type'
