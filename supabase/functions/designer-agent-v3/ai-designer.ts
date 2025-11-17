@@ -167,11 +167,70 @@ export class AIDesigner {
     parts.push('- Ensure voltageDrop.compliant = true');
     parts.push('- Match circuit count exactly');
     parts.push('');
+    
+    // CRITICAL ENGINEERING VALIDATION
+    parts.push('=== CRITICAL ENGINEERING VALIDATION (AUTO-CORRECT SILENTLY) ===');
+    parts.push('');
+    parts.push('1. THREE-PHASE VOLTAGE ENFORCEMENT:');
+    parts.push('   - 3-phase circuits MUST use 400V or 415V ONLY (never 230V)');
+    parts.push('   - Auto-correct: If phases="three" and voltage ≠ 400/415, SET voltage=400V');
+    parts.push('   - Single-phase circuits use 230V');
+    parts.push('');
+    parts.push('2. MOTOR FULL LOAD CURRENT (FLC) CALCULATION:');
+    parts.push('   - Motors: Calculate FLC = (Power_kW × 1000) / (√3 × Voltage × PF × Efficiency)');
+    parts.push('   - PF (power factor) = 0.85 typical for motors');
+    parts.push('   - Efficiency = 0.90 typical');
+    parts.push('   - Example: 5.5kW motor at 400V → FLC = (5500) / (1.732 × 400 × 0.85 × 0.90) = 10.4A');
+    parts.push('   - Design current Ib = FLC × 1.25 (motor starting allowance)');
+    parts.push('   - Protection device: Use Type D MCB rated at Ib (to handle 10-14x FLC starting surge)');
+    parts.push('');
+    parts.push('3. CABLE CSA RESTRICTED TO REAL SIZES:');
+    parts.push('   - T&E (Twin & Earth) valid sizes: 1.5, 2.5, 4, 6, 10, 16mm²');
+    parts.push('   - SWA (Steel Wire Armoured) valid sizes: 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95mm²');
+    parts.push('   - Auto-correct: Round UP to nearest valid size if calculated size is non-standard');
+    parts.push('   - Example: 3.2mm² calculated → use 4mm²');
+    parts.push('');
+    parts.push('4. CPC SIZING PER BS 7671 TABLE 54.7:');
+    parts.push('   - CPC must maintain correct ratio to live conductor per Table 54.7');
+    parts.push('   - Standard ratios (live → CPC):');
+    parts.push('     * 1.5mm² → 1.0mm² CPC');
+    parts.push('     * 2.5mm² → 1.5mm² CPC');
+    parts.push('     * 4mm² → 2.5mm² CPC (or 4mm² for outdoor/high-risk)');
+    parts.push('     * 6mm² → 2.5mm² CPC (or 4mm² for outdoor)');
+    parts.push('     * 10mm² → 4mm² CPC (or 6mm² for outdoor)');
+    parts.push('     * 16mm² → 6mm² CPC');
+    parts.push('     * 25mm²+ → use same size or calculate per adiabatic equation');
+    parts.push('   - Auto-correct: If CPC undersized, increase to Table 54.7 minimum');
+    parts.push('   - Outdoor/buried circuits: Use 75% safety margin on Zs, may need larger CPC');
+    parts.push('');
+    parts.push('5. SWA ARMOUR SIZING VALIDATION:');
+    parts.push('   - SWA armour acts as CPC - must meet Table 54.7 requirements');
+    parts.push('   - 2-core SWA: Armour CSA typically 16-95mm² depending on cable size');
+    parts.push('   - 3-core SWA: Armour CSA typically 16-120mm² depending on cable size');
+    parts.push('   - 4-core SWA: Armour CSA typically 25-150mm² depending on cable size');
+    parts.push('   - Auto-correct: For SWA, if armour CSA < required CPC, add separate CPC or upsize cable');
+    parts.push('');
+    parts.push('6. INSTALLATION METHOD MATCHES CABLE TYPE:');
+    parts.push('   - T&E cable → Methods A, B, C (clipped direct, conduit, trunking) - NOT buried');
+    parts.push('   - SWA cable → Methods B, C, D (conduit, clipped, buried/ducting)');
+    parts.push('   - Outdoor/buried → MUST use SWA (never T&E)');
+    parts.push('   - Auto-correct examples:');
+    parts.push('     * Input: "outdoor socket with T&E" → Change to "SWA cable"');
+    parts.push('     * Input: "buried T&E" → Change to "SWA cable, Method D - buried"');
+    parts.push('     * Input: "SWA Method A" → Change to "SWA Method C - clipped direct"');
+    parts.push('');
+    parts.push('7. SILENT AUTO-CORRECTION POLICY:');
+    parts.push('   - NEVER output warnings, amber states, or "non-compliant" flags to user');
+    parts.push('   - Auto-correct ALL violations before final output');
+    parts.push('   - Document corrections in justifications.corrections field');
+    parts.push('   - Example: "Voltage corrected from 230V to 400V for 3-phase motor circuit per BS 7671 requirements"');
+    parts.push('');
+    
     parts.push('=== CRITICAL FIELD REQUIREMENTS ===');
     parts.push('- ALWAYS include circuitNumber (sequential from 1)');
     parts.push('- ALWAYS copy loadPower from input');
     parts.push('- ALWAYS copy phases from input (single or three)');
-    parts.push('- ALWAYS set voltage (230V single-phase, 400V three-phase)');
+    parts.push('- ALWAYS set voltage (230V single-phase, 400V/415V three-phase)');
     parts.push('- ALWAYS copy cableLength from input');
     parts.push('- ALWAYS provide installationMethod (e.g., "Method C - clipped direct")');
     parts.push('- ALWAYS set rcdProtected (true if RCBO or special location requires RCD)');
@@ -261,12 +320,24 @@ export class AIDesigner {
     parts.push('7. Calculate voltage drop per Appendix 4 tables');
     parts.push('8. CPC sizing per Reg 543.1.1');
     parts.push('');
+    
+    // CRITICAL ENGINEERING VALIDATION (SAME AS SINGLE MODE)
+    parts.push('=== CRITICAL ENGINEERING VALIDATION (AUTO-CORRECT SILENTLY) ===');
+    parts.push('');
+    parts.push('1. THREE-PHASE VOLTAGE: 3-phase MUST use 400V or 415V ONLY');
+    parts.push('2. MOTOR FLC: Calculate FLC = (kW×1000)/(√3×V×0.85×0.90), Ib = FLC×1.25, Type D MCB');
+    parts.push('3. CABLE CSA: T&E: 1.5-16mm², SWA: 1.5-95mm², round UP to nearest valid size');
+    parts.push('4. CPC SIZING: Per Table 54.7, outdoor circuits need larger CPC for Zs');
+    parts.push('5. SWA ARMOUR: Verify armour CSA meets CPC requirements');
+    parts.push('6. CABLE TYPE: Outdoor/buried MUST use SWA (never T&E)');
+    parts.push('7. AUTO-CORRECT: Silently fix all violations, document in justifications.corrections');
+    parts.push('');
 
     parts.push('=== OUTPUT REQUIREMENTS ===');
     parts.push('- Design ALL circuits in this batch');
     parts.push('- ALWAYS copy loadPower from input');
     parts.push('- ALWAYS copy phases from input (single or three)');
-    parts.push('- ALWAYS set voltage (230V single-phase, 400V three-phase)');
+    parts.push('- ALWAYS set voltage (230V single-phase, 400V/415V three-phase)');
     parts.push('- ALWAYS copy cableLength from input');
     parts.push('- ALWAYS provide installationMethod (e.g., "Method C - clipped direct")');
     parts.push('- ALWAYS set rcdProtected (true if RCBO or special location requires RCD)');
@@ -487,7 +558,7 @@ export class AIDesigner {
       type: 'function',
       function: {
         name: 'design_circuits',
-        description: 'Design BS 7671 compliant electrical circuits with complete calculations and justifications',
+        description: 'Design BS 7671 compliant electrical circuits. CRITICAL: Auto-correct all validation errors silently before output. Validate: 3-phase voltage (400/415V only), motor FLC calculations, cable sizes (T&E: 1.5-16mm², SWA: 1.5-95mm²), CPC sizing per Table 54.7, SWA for outdoor/buried only, installation method matches cable type.',
         parameters: {
           type: 'object',
           properties: {
@@ -524,8 +595,8 @@ export class AIDesigner {
                   },
                   voltage: {
                     type: 'number',
-                    enum: [110, 230, 400],
-                    description: 'Operating voltage (230V single-phase, 400V three-phase, 110V site supply)'
+                    enum: [110, 230, 400, 415],
+                    description: 'Operating voltage: 230V single-phase, 400V or 415V three-phase, 110V site supply. THREE-PHASE MUST USE 400V OR 415V ONLY.'
                   },
                   cableLength: {
                     type: 'number',
@@ -546,12 +617,12 @@ export class AIDesigner {
                   cableSize: {
                     type: 'number',
                     enum: [1.0, 1.5, 2.5, 4.0, 6.0, 10.0, 16.0, 25.0, 35.0, 50.0, 70.0, 95.0],
-                    description: 'Live conductor CSA in mm²'
+                    description: 'Live conductor CSA in mm². T&E: 1.5-16mm². SWA: 1.5-95mm². Must be standard size per BS 7671 Appendix 4.'
                   },
                   cpcSize: { 
                     type: 'number',
-                    enum: [1.0, 1.5, 2.5, 4.0, 6.0, 10.0, 16.0, 25.0, 35.0, 50.0],
-                    description: 'CPC conductor CSA in mm² (Reg 543.1.1)'
+                    enum: [1.0, 1.5, 2.5, 4.0, 6.0, 10.0, 16.0, 25.0, 35.0, 50.0, 70.0, 95.0],
+                    description: 'CPC conductor CSA in mm² per BS 7671 Table 54.7. Must maintain correct ratio to live conductor. Outdoor circuits may need larger CPC for Zs compliance.'
                   },
                   protectionDevice: {
                     type: 'object',
