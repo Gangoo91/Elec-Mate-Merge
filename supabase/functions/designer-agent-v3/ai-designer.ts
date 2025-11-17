@@ -222,7 +222,8 @@ export class AIDesigner {
     parts.push('For EVERY circuit, you MUST provide:');
     parts.push('');
     parts.push('1. AT A GLANCE SUMMARY CARD');
-    parts.push('   - Load (kW, Ib)');
+    parts.push('   - loadKw: MUST calculate from circuit loadPower: loadPower/1000 (e.g., 7360W → 7.36)');
+    parts.push('   - loadIb: Design current Ib as string with A unit (e.g., "32A")');
     parts.push('   - Cable (size, type)');
     parts.push('   - Protective Device (type, rating, curve)');
     parts.push('   - Voltage Drop (value + "✓ Compliant" or "✗ Non-compliant")');
@@ -690,8 +691,8 @@ export class AIDesigner {
                         type: 'object',
                         description: 'Summary card with key design parameters',
                         properties: {
-                          loadKw: { type: 'number', description: 'Load in kW (e.g., 7.36)' },
-                          loadIb: { type: 'string', description: 'Design current (e.g., "32A")' },
+                          loadKw: { type: 'number', description: 'Load in kW - CALCULATE from loadPower: loadPower/1000 (e.g., 7360W → 7.36)' },
+                          loadIb: { type: 'string', description: 'Design current Ib with unit (e.g., "32A")' },
                           cable: { type: 'string', description: 'Cable specification (e.g., "6mm² twin & earth with 2.5mm² CPC")' },
                           protectiveDevice: { type: 'string', description: 'Protection (e.g., "40A Type B MCB (6kA)")' },
                           voltageDrop: { type: 'string', description: 'VD result with compliance (e.g., "6.2V (2.7%) ✓ Compliant")' },
