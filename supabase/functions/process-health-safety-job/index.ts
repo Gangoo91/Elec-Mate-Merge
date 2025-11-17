@@ -130,7 +130,7 @@ Deno.serve(async (req) => {
       .from('health_safety_jobs')
       .update({
         progress: 75,
-        current_step: 'Finalizing safety documentation...'
+        current_step: 'Finalising safety documentation...'
       })
       .eq('id', jobId);
 
