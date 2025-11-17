@@ -55,7 +55,7 @@ export const AIInstallationDesigner = () => {
       });
 
       // Warn if job is very large
-      if (aiRequiredCircuits.length > 12) {
+      if (aiRequiredCircuits.length > 16) {
         toast.warning('Large design detected', {
           description: `${aiRequiredCircuits.length} complex circuits may take 3-5 minutes to process. Consider splitting into smaller designs for faster results.`,
           duration: 8000
