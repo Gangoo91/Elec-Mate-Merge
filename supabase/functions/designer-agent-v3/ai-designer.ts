@@ -184,6 +184,32 @@ export class AIDesigner {
     parts.push('   - Design current Ib = FLC × 1.25 (motor starting allowance)');
     parts.push('   - Protection device: Use Type D MCB rated at Ib (to handle 10-14x FLC starting surge)');
     parts.push('');
+    parts.push('=== MOTOR CIRCUIT SPECIAL RULES ===');
+    parts.push('- If loadType contains "motor" or "pump" or "compressor":');
+    parts.push('  1. Calculate motor FLC = (Power_kW × 1000) / (√3 × 400 × 0.85 × 0.90) for 3-phase');
+    parts.push('  2. Calculate motor FLC = (Power_kW × 1000) / (230 × 0.95) for single-phase');
+    parts.push('  3. Design current Ib = FLC × 1.25 (starting allowance per Reg 552.1.1)');
+    parts.push('  4. Protection device: Type D MCB to handle 10-14x FLC starting surge');
+    parts.push('  5. Cable sizing: Use Ib for current-carrying capacity check');
+    parts.push('  6. Voltage drop: Check at FLC (running), must be ≤5%');
+    parts.push('  7. Document in justifications: "Motor circuit designed for FLC=XA, starting current ~10x FLC"');
+    parts.push('');
+    parts.push('=== RCBO PROTECTION MANDATORY RULES ===');
+    parts.push('1. ALL socket circuits MUST use RCBO protection (never MCB)');
+    parts.push('   - Includes: wall sockets, power outlets, socket rings, radial sockets');
+    parts.push('   - Regulation: 411.3.3 - Additional protection by RCD');
+    parts.push('');
+    parts.push('2. ALL bathroom circuits MUST use RCBO protection');
+    parts.push('   - Includes: lights, extractors, shaver sockets, heated towel rails');
+    parts.push('   - Regulation: 701.411.3.3 - Special locations');
+    parts.push('');
+    parts.push('3. Auto-correct rule:');
+    parts.push('   - If loadType contains "socket" OR specialLocation contains "bathroom"');
+    parts.push('   - SET protectionDevice.type = "RCBO"');
+    parts.push('   - Document in justifications: "RCBO required per BS 7671:2018+A3 Reg 411.3.3/701.411.3.3"');
+    parts.push('');
+    parts.push('EXCEPTION: Lighting circuits in NON-bathroom locations may use MCB');
+    parts.push('');
     parts.push('3. CABLE CSA RESTRICTED TO REAL SIZES:');
     parts.push('   - T&E (Twin & Earth) valid sizes: 1.5, 2.5, 4, 6, 10, 16mm²');
     parts.push('   - SWA (Steel Wire Armoured) valid sizes: 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95mm²');
@@ -328,6 +354,8 @@ export class AIDesigner {
     parts.push('2. MOTOR FLC: Calculate FLC = (kW×1000)/(√3×V×0.85×0.90), Ib = FLC×1.25, Type D MCB');
     parts.push('3. CABLE CSA: T&E: 1.5-16mm², SWA: 1.5-95mm², round UP to nearest valid size');
     parts.push('4. CPC SIZING: Per Table 54.7, outdoor circuits need larger CPC for Zs');
+    parts.push('5. RCBO MANDATORY: ALL socket circuits = RCBO (never MCB), ALL bathroom circuits = RCBO');
+    parts.push('6. AUTO-CORRECT: If loadType contains "socket" OR specialLocation contains "bathroom", SET type="RCBO"');
     parts.push('5. SWA ARMOUR: Verify armour CSA meets CPC requirements');
     parts.push('6. CABLE TYPE: Outdoor/buried MUST use SWA (never T&E)');
     parts.push('7. AUTO-CORRECT: Silently fix all violations, document in justifications.corrections');
@@ -558,7 +586,7 @@ export class AIDesigner {
       type: 'function',
       function: {
         name: 'design_circuits',
-        description: 'Design BS 7671 compliant electrical circuits. CRITICAL: Auto-correct all validation errors silently before output. Validate: 3-phase voltage (400/415V only), motor FLC calculations, cable sizes (T&E: 1.5-16mm², SWA: 1.5-95mm²), CPC sizing per Table 54.7, SWA for outdoor/buried only, installation method matches cable type.',
+        description: 'Design BS 7671 compliant electrical circuits. CRITICAL AUTO-CORRECTIONS: (1) 3-phase = 400/415V only, (2) ALL socket circuits = RCBO (never MCB), (3) Bathroom circuits = RCBO, (4) Motor FLC calculations mandatory, (5) Cable sizes must be standard T&E/SWA, (6) CPC per Table 54.7.',
         parameters: {
           type: 'object',
           properties: {
@@ -630,7 +658,7 @@ export class AIDesigner {
                       type: { 
                         type: 'string',
                         enum: ['MCB', 'RCBO'],
-                        description: 'MCB for general, RCBO for RCD-required locations'
+                        description: 'Protection device type. IMPORTANT: Use RCBO for ALL socket circuits (Reg 411.3.3) and bathroom circuits (Reg 701.411.3.3). Use MCB only for lighting and fixed equipment.'
                       },
                       rating: { 
                         type: 'number',
