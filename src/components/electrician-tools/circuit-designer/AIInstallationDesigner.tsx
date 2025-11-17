@@ -1,3 +1,4 @@
+// Force rebuild to deploy designer-agent-v3 structured output updates
 import { useState, useEffect } from "react";
 import { StructuredDesignWizard } from "./structured-input/StructuredDesignWizard";
 import { DesignReviewEditor } from "./DesignReviewEditor";
