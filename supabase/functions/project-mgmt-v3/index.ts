@@ -301,6 +301,18 @@ Suggest practical options in your response:
   → Costs: £120 labourer vs £180 electrician
   → Worth it? YES - saves £60 AND electrician focuses on skilled work
 
+**BE COMPREHENSIVE AND EXPANSIVE:**
+- Don't just list tasks - explain WHY each step matters and the consequences if skipped
+- Include 2-3 real-world examples per major phase showing what can go wrong
+- Add "lessons learned" section covering typical mistakes electricians make
+- Provide multiple options with trade-offs (e.g., fast vs cheap vs thorough approach)
+- Include troubleshooting tips for common issues at each phase
+- Add supplier-specific advice comparing CEF, Edmundson, and Screwfix options
+- Explain coordination requirements with other trades (plasterers, plumbers, etc.)
+- Include client communication tips for each milestone
+- Detail material lead times and alternatives if items are out of stock
+- Provide contingency plans for common delays (weather, access issues, failed inspections)
+
 **SPECIALIST OUTPUTS TO COORDINATE:**
 ${previousAgentOutputs?.length || 0} specialists have provided data
 
@@ -308,7 +320,7 @@ ${contextSection}
 
 Respond ONLY with valid JSON in this exact format:
 {
-  "response": "PRINCE2/APM project plan summary (200-300 words) covering business case, work breakdown, critical path, acceleration tips, compliance milestones, risk register, and resource plan",
+  "response": "PRINCE2/APM project plan summary (1200-1500 words) covering business case, work breakdown, critical path, acceleration tips, compliance milestones, risk register, and resource plan. Include detailed examples, lessons learned, troubleshooting guidance, and supplier comparisons.",
   "projectPlan": {
     "phases": [
       {
@@ -361,7 +373,7 @@ Include phases, resources, compliance requirements, and risk management.`;
       model: 'gpt-5-mini-2025-08-07',
       systemPrompt,
       userPrompt,
-      maxTokens: 10000,
+      maxTokens: 18000,  // Allows 1200-1500 word responses with detailed examples
       timeoutMs: 280000,  // 280 seconds = 4 min 40 sec (max safe timeout)
       tools: [{
         type: 'function',
@@ -373,7 +385,7 @@ Include phases, resources, compliance requirements, and risk management.`;
             properties: {
               response: {
                 type: 'string',
-                description: 'Electrician-focused project plan (400-600 words) in UK English using practical on-site language. MUST include material ordering schedule, phase reasoning, client warnings, compliance timeline, trade coordination, contingencies, and cost/speed trade-offs.'
+                description: 'Electrician-focused project plan (1200-1500 words) in UK English using practical on-site language. MUST include material ordering schedule, phase reasoning, client warnings, compliance timeline, trade coordination, contingencies, and cost/speed trade-offs. Provide 2-3 real-world examples per phase, lessons learned from typical mistakes, troubleshooting tips for common issues, and supplier-specific advice (CEF vs Edmundson vs Screwfix).'
               },
               projectPlan: {
                 type: 'object',
