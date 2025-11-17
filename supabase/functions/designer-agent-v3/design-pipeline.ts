@@ -205,82 +205,99 @@ export class DesignPipeline {
     // ========================================
     let validationResult = this.validator.validate(design, normalized.supply.voltage);
     
-    // OPTIMIZATION: Auto-correction loop (1 retry max)
+    // OPTIMIZATION: Auto-correction loop (up to 2 retries for cascading fixes)
     if (!validationResult.isValid) {
-      const errorCount = validationResult.issues.filter((i: any) => i.severity === 'error').length;
+      const maxRetries = 2;
+      let correctionAttempt = 0;
       
-      this.logger.warn('Design validation failed, attempting correction', { 
-        errorCount,
-        failedCircuits: validationResult.issues
-          .filter((i: any) => i.severity === 'error')
-          .map((i: any) => i.circuitNumber || 'unknown')
-      });
-      
-      // OPTIMIZATION: Only correct failed circuits (not all circuits)
-      const failedCircuitNumbers = new Set(
-        validationResult.issues
-          .filter((i: any) => i.severity === 'error' && i.circuitNumber)
-          .map((i: any) => i.circuitNumber)
-      );
-      
-      const errorSummary = validationResult.autoFixSuggestions.join('\n\n');
-      
-      try {
-        if (failedCircuitNumbers.size > 0 && failedCircuitNumbers.size < design.circuits.length) {
-          // Partial correction: Only correct failed circuits
-          this.logger.info('Partial correction mode', {
-            failedCircuits: Array.from(failedCircuitNumbers),
-            totalCircuits: design.circuits.length
-          });
-
-          const failedCircuits = design.circuits.filter((c: any) => 
-            failedCircuitNumbers.has(c.circuitNumber)
-          );
-          
-          const correctionInputs = {
-            supply: normalized.supply,
-            circuits: normalized.circuits.filter((_, idx) => 
-              failedCircuitNumbers.has(idx + 1)
-            )
-          };
-          
-          const correctedDesign = await this.ai.generateCorrection(
-            correctionInputs,
-            { circuits: failedCircuits, reasoning: design.reasoning },
-            errorSummary
-          );
-          
-          // Merge corrected circuits back into full design
-          correctedDesign.circuits.forEach((correctedCircuit: any) => {
-            const index = design.circuits.findIndex((c: any) => 
-              c.circuitNumber === correctedCircuit.circuitNumber
-            );
-            if (index !== -1) {
-              design.circuits[index] = correctedCircuit;
-            }
-          });
-        } else {
-          // Full correction: Re-process all circuits
-          this.logger.info('Full correction mode');
-          design = await this.ai.generateCorrection(normalized, design, errorSummary);
-        }
+      while (!validationResult.isValid && correctionAttempt < maxRetries) {
+        correctionAttempt++;
         
-        // Re-validate corrected design
-        validationResult = this.validator.validate(design, normalized.supply.voltage);
+        const errorCount = validationResult.issues.filter((i: any) => i.severity === 'error').length;
         
-        if (!validationResult.isValid) {
-          this.logger.error('Correction failed, still has errors');
-          throw new Error(
-            `Design validation failed after correction:\n\n${validationResult.autoFixSuggestions.join('\n\n')}\n\nPlease review the design inputs and try again.`
-          );
-        }
+        this.logger.warn(`Design validation failed, attempting correction (${correctionAttempt}/${maxRetries})`, { 
+          errorCount,
+          failedCircuits: validationResult.issues
+            .filter((i: any) => i.severity === 'error')
+            .map((i: any) => i.circuitNumber || 'unknown')
+        });
         
-        this.logger.info('Correction successful!');
-      } catch (correctionError) {
-        this.logger.error('Correction attempt failed', { error: correctionError.message });
-        throw new Error(
-          `Design validation failed:\n\n${errorSummary}\n\nCorrection attempt failed: ${correctionError.message}`
+        // OPTIMIZATION: Only correct failed circuits (not all circuits)
+        const failedCircuitNumbers = new Set(
+          validationResult.issues
+            .filter((i: any) => i.severity === 'error' && i.circuitNumber)
+            .map((i: any) => i.circuitNumber)
         );
+        
+        const errorSummary = validationResult.autoFixSuggestions.join('\n\n');
+        
+        try {
+          if (failedCircuitNumbers.size > 0 && failedCircuitNumbers.size < design.circuits.length) {
+            // Partial correction: Only correct failed circuits
+            this.logger.info('Partial correction mode', {
+              failedCircuits: Array.from(failedCircuitNumbers),
+              totalCircuits: design.circuits.length,
+              attempt: correctionAttempt
+            });
+
+            const failedCircuits = design.circuits.filter((c: any) => 
+              failedCircuitNumbers.has(c.circuitNumber)
+            );
+            
+            const correctionInputs = {
+              supply: normalized.supply,
+              circuits: normalized.circuits.filter((_, idx) => 
+                failedCircuitNumbers.has(idx + 1)
+              )
+            };
+            
+            const correctedDesign = await this.ai.generateCorrection(
+              correctionInputs,
+              { circuits: failedCircuits, reasoning: design.reasoning },
+              errorSummary
+            );
+            
+            // Merge corrected circuits back into full design
+            correctedDesign.circuits.forEach((correctedCircuit: any) => {
+              const index = design.circuits.findIndex((c: any) => 
+                c.circuitNumber === correctedCircuit.circuitNumber
+              );
+              if (index !== -1) {
+                design.circuits[index] = correctedCircuit;
+              }
+            });
+          } else {
+            // Full correction: Re-process all circuits
+            this.logger.info('Full correction mode', { attempt: correctionAttempt });
+            design = await this.ai.generateCorrection(normalized, design, errorSummary);
+          }
+          
+          // Re-validate corrected design
+          validationResult = this.validator.validate(design, normalized.supply.voltage);
+          
+          if (!validationResult.isValid) {
+            this.logger.warn(`Correction attempt ${correctionAttempt} still has errors`, {
+              remainingErrors: validationResult.issues.filter((i: any) => i.severity === 'error').length
+            });
+            
+            // If max retries reached, throw error
+            if (correctionAttempt >= maxRetries) {
+              throw new Error(
+                `Design validation failed after ${maxRetries} correction attempts:\n\n${validationResult.autoFixSuggestions.join('\n\n')}\n\nPlease review the design inputs and try again.`
+              );
+            }
+          } else {
+            this.logger.info(`Correction successful on attempt ${correctionAttempt}!`);
+          }
+        } catch (correctionError) {
+          this.logger.error('Correction attempt failed', { 
+            error: correctionError.message,
+            attempt: correctionAttempt
+          });
+          throw new Error(
+            `Design validation failed:\n\n${errorSummary}\n\nCorrection attempt ${correctionAttempt} failed: ${correctionError.message}`
+          );
+        }
       }
     }
 
