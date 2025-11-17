@@ -35,6 +35,35 @@ export interface CircuitInput {
   estimatedCableSize?: number; // Rough cable size estimate
 }
 
+// PHASE 5: Structured Output Interfaces
+export interface AtAGlanceSummary {
+  loadKw: number;
+  loadIb: string;
+  cable: string;
+  protectiveDevice: string;
+  voltageDrop: string;
+  zs: string;
+  complianceTick: boolean;
+  notes: string;
+}
+
+export interface DesignSections {
+  circuitSummary: string;
+  loadDetails: string;
+  cableSelectionBreakdown: string;
+  protectiveDeviceSelection: string;
+  complianceConfirmation: string;
+  designJustification: string;
+  installationGuidance: string;
+  safetyNotes: string;
+  testingCommissioningGuidance: string;
+}
+
+export interface StructuredOutput {
+  atAGlanceSummary: AtAGlanceSummary;
+  sections: DesignSections;
+}
+
 export interface CircuitDesign {
   circuitNumber: number;
   name: string;
@@ -77,6 +106,7 @@ export interface CircuitDesign {
     protection: string;
     rcd?: string;
   };
+  structuredOutput?: StructuredOutput; // PHASE 5
   diversityFactor?: number;
   diversityJustification?: string;
   faultCurrentAnalysis?: {

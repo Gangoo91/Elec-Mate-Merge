@@ -157,6 +157,35 @@ export interface DesignReasoning {
   correctionsApplied?: string;
 }
 
+// PHASE 5: Structured Output
+export interface AtAGlanceSummary {
+  loadKw: number;
+  loadIb: string;
+  cable: string;
+  protectiveDevice: string;
+  voltageDrop: string;
+  zs: string;
+  complianceTick: boolean;
+  notes: string;
+}
+
+export interface DesignSections {
+  circuitSummary: string;
+  loadDetails: string;
+  cableSelectionBreakdown: string;
+  protectiveDeviceSelection: string;
+  complianceConfirmation: string;
+  designJustification: string;
+  installationGuidance: string;
+  safetyNotes: string;
+  testingCommissioningGuidance: string;
+}
+
+export interface StructuredOutput {
+  atAGlanceSummary: AtAGlanceSummary;
+  sections: DesignSections;
+}
+
 export interface DesignedCircuit {
   name: string;
   loadType: string;
@@ -167,6 +196,7 @@ export interface DesignedCircuit {
   calculations: CircuitCalculations;
   justifications: CircuitJustifications;
   installationGuidance?: InstallationGuidance; // PHASE 3
+  structuredOutput?: StructuredOutput; // PHASE 5
 }
 
 export interface Design {

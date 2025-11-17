@@ -2,9 +2,10 @@ import { CircuitDesign } from '@/types/installation-design';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MobileButton } from '@/components/ui/mobile-button';
+import { AtAGlanceSummary } from './AtAGlanceSummary';
+import { StructuredDesignSections } from './StructuredDesignSections';
 import { 
-  CheckCircle2, AlertTriangle, AlertCircle, Zap, Cable, 
-  Shield, TrendingDown, FileText, Calculator
+  CheckCircle2, AlertTriangle, AlertCircle, Zap, Calculator
 } from 'lucide-react';
 
 interface CircuitCardProps {
@@ -13,9 +14,6 @@ interface CircuitCardProps {
   onViewJustification?: () => void;
   className?: string;
 }
-
-const fmt = (n: unknown, dp = 1, fallback = '—') => 
-  (typeof n === 'number' && !isNaN(n) ? n.toFixed(dp) : fallback);
 
 export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, className = '' }: CircuitCardProps) => {
   // Calculate compliance status
@@ -64,231 +62,28 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
         </div>
       </div>
 
-      {/* Protection Device - Hero Display */}
-      <div className="bg-gradient-to-b from-elec-dark/40 to-transparent p-6 sm:p-8 text-center border-b border-elec-yellow/10">
-        <Shield className="h-14 w-14 sm:h-16 sm:w-16 text-elec-yellow/70 mx-auto mb-4" />
-        <div className="text-3xl sm:text-4xl font-bold text-elec-light mb-2">
-          {circuit.protectionDevice.rating}A Type {circuit.protectionDevice.curve}
-        </div>
-        <div className="text-base sm:text-lg text-white/90 mb-2">
-          {circuit.protectionDevice.type} · {circuit.protectionDevice.kaRating}kA
-          {circuit.phases === 'three' && (
-            <span className="text-elec-yellow/70 ml-2">· 3-Phase</span>
-          )}
-        </div>
-        {circuit.rcdProtected && (
-          <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 mt-3 px-4 py-1.5">
-            <Shield className="h-3.5 w-3.5 mr-1.5" />
-            30mA RCD
-          </Badge>
-        )}
-      </div>
-
-      {/* Key Specifications */}
-      <div className="p-4 sm:p-6 space-y-3">
-        {/* Load */}
-        <div className="flex items-center justify-between p-4 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
-          <div className="flex items-center gap-3">
-            <Zap className="h-5 w-5 text-elec-yellow/70" />
-            <span className="text-base sm:text-lg text-elec-light/70">Load</span>
-          </div>
-          <div className="text-right">
-            <div className="text-lg sm:text-xl font-semibold text-elec-light">
-              {(circuit.loadPower / 1000).toFixed(1)}kW
-            </div>
-            <div className="text-sm text-elec-light/60">
-              {fmt(circuit.designCurrent, 1)}A
-            </div>
-          </div>
-        </div>
-
-        {/* Cable */}
-        <div className="flex items-center justify-between p-4 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
-          <div className="flex items-center gap-3">
-            <Cable className="h-5 w-5 text-elec-yellow/70" />
-            <span className="text-base sm:text-lg text-elec-light/70">Cable</span>
-          </div>
-          <div className="text-right">
-            <div className="text-lg sm:text-xl font-semibold text-elec-light">
-              {circuit.cableSize}mm² / {circuit.cpcSize}mm²
-            </div>
-            <div className="text-sm text-elec-light/60">
-              {circuit.cableLength}m length
-            </div>
-          </div>
-        </div>
-
-        {/* Inline Justification Preview - Cable */}
-        {circuit.justifications?.cableSize && circuit.justifications.cableSize !== 'No specific justification provided.' && (
-          <div className="p-3 bg-elec-yellow/5 rounded-lg border border-elec-yellow/20">
-            <div className="flex items-center gap-2 mb-2">
-              <FileText className="h-3.5 w-3.5 text-elec-yellow/80" />
-              <span className="text-xs font-semibold text-elec-light/70">Why this cable size?</span>
-            </div>
-            <p className="text-xs text-elec-light/70 leading-relaxed line-clamp-3">
-              {circuit.justifications.cableSize}
-            </p>
-            <button
-              onClick={onViewJustification}
-              className="text-sm py-2 px-3 mt-3 bg-elec-yellow/10 hover:bg-elec-yellow/20 rounded-md text-elec-yellow/90 hover:text-elec-yellow w-full text-center transition-colors touch-manipulation"
-            >
-              See full justification →
-            </button>
-          </div>
-        )}
-
-        {/* Inline Justification Preview - Protection */}
-        {circuit.justifications?.protection && circuit.justifications.protection !== 'No specific justification provided.' && (
-          <div className="p-3 bg-blue-500/5 rounded-lg border border-blue-500/20">
-            <div className="flex items-center gap-2 mb-2">
-              <Shield className="h-3.5 w-3.5 text-blue-400/80" />
-              <span className="text-xs font-semibold text-blue-100/70">Why this protection device?</span>
-            </div>
-            <p className="text-xs text-blue-100/70 leading-relaxed line-clamp-3">
-              {circuit.justifications.protection}
-            </p>
-            <button
-              onClick={onViewJustification}
-              className="text-sm py-2 px-3 mt-3 bg-blue-500/10 hover:bg-blue-500/20 rounded-md text-blue-400/90 hover:text-blue-400 w-full text-center transition-colors touch-manipulation"
-            >
-              See full justification →
-            </button>
-          </div>
-        )}
-
-        {/* Voltage Drop */}
-        <div className="flex items-center justify-between p-5 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
-          <div className="flex items-center gap-3">
-            <TrendingDown className="h-5 w-5 text-elec-yellow/70" />
-            <span className="text-base sm:text-lg text-white/90">Voltage Drop</span>
-          </div>
-          <div className="text-right">
-            <div className={`text-lg sm:text-xl font-semibold ${vdCompliant ? 'text-green-400' : 'text-red-400'}`}>
-              {fmt(circuit.calculations?.voltageDrop?.percent, 2)}%
-              {vdCompliant ? ' ✓' : ' ✗'}
-            </div>
-            <div className="text-sm text-white/90">
-              Limit: {circuit.calculations?.voltageDrop?.limit ?? 5}%
-            </div>
-          </div>
-        </div>
-
-        {/* Earth Loop Impedance */}
-        <div className="flex items-center justify-between p-5 bg-elec-dark/40 rounded-lg border border-elec-yellow/10">
-          <div className="flex items-center gap-3">
-            <Shield className="h-5 w-5 text-elec-yellow/70" />
-            <span className="text-base sm:text-lg text-white/90">Earth Loop (Zs)</span>
-          </div>
-          <div className="text-right">
-            <div className={`text-lg sm:text-xl font-semibold ${zsCompliant ? 'text-green-400' : 'text-red-400'}`}>
-              {fmt(circuit.calculations?.zs, 2)}Ω
-              {zsCompliant ? ' ✓' : ' ✗'}
-            </div>
-            <div className="text-sm text-white/90">
-              Max: {fmt(circuit.calculations?.maxZs, 2)}Ω
-            </div>
-          </div>
-        </div>
-
-        {/* Warnings */}
-        {hasWarnings && (
-          <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-            <div className="flex items-start gap-2">
-              <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="text-xs font-semibold text-amber-400 mb-1">Warnings</p>
-                {circuit.warnings.map((warning, idx) => (
-                  <p key={idx} className="text-xs text-amber-400/90 leading-relaxed">
-                    • {warning}
-                  </p>
-                ))}
-              </div>
-            </div>
+      {/* Content Area */}
+      <div className="p-5 sm:p-6">
+        {/* PHASE 5: Structured Output Display */}
+        {circuit.structuredOutput ? (
+          <>
+            {/* At a Glance Summary */}
+            <AtAGlanceSummary summary={circuit.structuredOutput.atAGlanceSummary} />
+            
+            {/* 9 Structured Sections */}
+            <StructuredDesignSections sections={circuit.structuredOutput.sections} />
+          </>
+        ) : (
+          <div className="text-center py-12 text-white/60">
+            <p className="text-sm mb-2">Legacy design format detected</p>
+            <p className="text-xs text-white/40">Regenerate this circuit to see the new structured output format</p>
           </div>
         )}
       </div>
 
-      {/* Installation Guidance Section */}
-      {circuit.installationGuidance && (
-        <div className="p-4 sm:p-6 border-t border-elec-yellow/10 bg-gradient-to-b from-blue-500/5 to-transparent">
-          <h4 className="text-sm font-semibold text-elec-light mb-3 flex items-center gap-2">
-            <Cable className="h-4 w-4 text-blue-400" />
-            Installation Guidance
-          </h4>
-          <div className="space-y-3 text-sm">
-            <div>
-              <span className="text-white/60 block mb-1">Cable Routing:</span>
-              <span className="text-elec-light/90">{circuit.installationGuidance.cableRouting}</span>
-            </div>
-            <div>
-              <span className="text-white/60 block mb-1">Termination Advice:</span>
-              <span className="text-elec-light/90">{circuit.installationGuidance.terminationAdvice}</span>
-            </div>
-            <div>
-              <span className="text-white/60 block mb-1">Testing Requirements:</span>
-              <span className="text-elec-light/90">{circuit.installationGuidance.testingRequirements}</span>
-            </div>
-            {circuit.installationGuidance.safetyNotes && circuit.installationGuidance.safetyNotes.length > 0 && (
-              <div className="mt-3">
-                <div className="text-white/60 mb-1">Safety Notes:</div>
-                <ul className="list-disc list-inside space-y-1 text-white/80">
-                  {circuit.installationGuidance.safetyNotes.map((note, idx) => (
-                    <li key={idx} className="text-xs">{note}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {circuit.installationGuidance.estimatedInstallTime && (
-              <div>
-                <span className="text-white/60">Install Time:</span>{' '}
-                <span className="text-elec-light font-medium">{circuit.installationGuidance.estimatedInstallTime}</span>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Expected Test Results Section */}
-      {circuit.expectedTestResults && (
-        <div className="p-4 sm:p-6 border-t border-elec-yellow/10 bg-gradient-to-b from-green-500/5 to-transparent">
-          <h4 className="text-sm font-semibold text-elec-light mb-3 flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-green-400" />
-            Expected Test Results
-          </h4>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-            {circuit.expectedTestResults.r1r2 && (
-              <div>
-                <div className="text-white/60 mb-1">R1+R2:</div>
-                <div className="text-elec-light">
-                  {circuit.expectedTestResults.r1r2.at20C} (20°C)<br />
-                  {circuit.expectedTestResults.r1r2.at70C} (70°C)
-                </div>
-              </div>
-            )}
-            {circuit.expectedTestResults.insulationResistance && (
-              <div>
-                <div className="text-white/60 mb-1">Insulation:</div>
-                <div className="text-elec-light">
-                  {circuit.expectedTestResults.insulationResistance.minResistance}<br />
-                  <span className="text-white/60 text-xs">@ {circuit.expectedTestResults.insulationResistance.testVoltage}</span>
-                </div>
-              </div>
-            )}
-            {circuit.expectedTestResults.rcdTest && (
-              <div className="col-span-1 sm:col-span-2">
-                <div className="text-white/60 mb-1">RCD Test:</div>
-                <div className="text-elec-light">
-                  1× IΔn: {circuit.expectedTestResults.rcdTest.at1x} | 5× IΔn: {circuit.expectedTestResults.rcdTest.at5x}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Single Action - More Details (optional for desktop) */}
-      {onViewWorkings && (
-        <div className="p-4 pt-2 border-t border-elec-yellow/10">
+      {/* Action Buttons */}
+      <div className="border-t border-elec-yellow/20 p-4 sm:p-5 bg-gradient-to-br from-elec-dark/40 to-transparent">
+        {onViewWorkings && (
           <MobileButton
             variant="elec-outline"
             size="default"
@@ -298,8 +93,8 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
           >
             View Detailed Calculations
           </MobileButton>
-        </div>
-      )}
+        )}
+      </div>
     </Card>
   );
 };
