@@ -74,105 +74,129 @@ const PhasesSection = ({
               onOpenChange={(open) => setOpenPhases(prev => ({ ...prev, [idx]: open }))}
             >
               <div 
-                className={`rounded-lg border transition-all ${
+                className={`rounded-lg border p-5 sm:p-6 transition-all duration-200 ${
                   isComplete 
                     ? 'bg-success/10 border-success/30' 
                     : phase.criticalPath 
-                    ? 'border-pink-400/40 bg-pink-400/5' 
-                    : 'border-border/40'
+                    ? 'border-l-4 border-l-pink-400 border-border/20 bg-transparent' 
+                    : 'border-border/20 bg-transparent'
                 }`}
               >
-                <div className="p-4 sm:p-5">
-                  <div className="flex items-start gap-3">
-                    <Checkbox
-                      checked={isComplete}
-                      onCheckedChange={() => onTogglePhase(phaseId)}
-                      className="mt-1"
-                    />
-                    <div className="flex-1 space-y-2">
-                      {/* Phase Header */}
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="flex-1">
-                          <div className={`font-semibold flex items-center gap-2 flex-wrap ${
-                            isComplete ? 'line-through text-muted-foreground' : ''
-                          }`}>
-                            {phase.phase}
-                            {phase.criticalPath && !isComplete && (
-                              <Badge variant="outline" className="text-xs bg-pink-400/20 border-pink-400/40">
-                                Critical Path
-                              </Badge>
-                            )}
-                            {isComplete && (
-                              <CheckCircle2 className="h-4 w-4 text-success" />
-                            )}
-                          </div>
-                          <div className="text-sm text-gray-400 mt-1 flex items-center gap-2 flex-wrap">
-                            <span>Duration: {phase.duration} {phase.durationUnit || 'days'}</span>
-                            {calculatedDate && (
-                              <>
-                                <span>•</span>
-                                <span>Start: {calculatedDate}</span>
-                              </>
-                            )}
-                            {!calculatedDate && phase.startDay && (
-                              <>
-                                <span>•</span>
-                                <span>Start: {phase.startDay}</span>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Description */}
-                      {phase.description && (
-                        <p className={`text-base leading-relaxed ${isComplete ? 'text-muted-foreground' : 'text-gray-300'}`}>
-                          {phase.description}
-                        </p>
-                      )}
-
-                      {/* Practical Notes */}
-                      {phase.practicalNotes && (
-                        <div className="p-3 sm:p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
-                          <div className="flex items-start gap-2">
-                            <span className="text-lg">💡</span>
-                            <div className="text-sm text-gray-900 leading-relaxed">
-                              <span className="font-semibold">WHY THIS ORDER: </span>
-                              {phase.practicalNotes}
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Key Actions - Show First 3 Tasks */}
-                      {phase.tasks && phase.tasks.length > 0 && (
-                        <div className="bg-card/50 rounded-lg p-3 sm:p-4 border border-border/40">
-                          <h5 className="text-sm font-semibold text-gray-100 mb-2">Key Actions:</h5>
-                          <ul className="space-y-2">
-                            {phase.tasks.slice(0, 3).map((task, idx) => {
-                              const taskText = typeof task === 'string' ? task : task.task || task.name || '';
-                              const taskDuration = typeof task !== 'string' ? task.duration : null;
-                              return (
-                                <li key={idx} className="text-sm text-gray-300 leading-relaxed flex items-start gap-2">
-                                  <span className="text-pink-400 mt-0.5 flex-shrink-0">→</span>
-                                  <div className="flex-1 flex items-center justify-between gap-2">
-                                    <span>{taskText}</span>
-                                    {taskDuration && (
-                                      <span className="text-xs text-muted-foreground whitespace-nowrap">({taskDuration})</span>
-                                    )}
-                                  </div>
-                                </li>
-                              );
-                            })}
-                          </ul>
-                          {phase.tasks.length > 3 && (
-                            <CollapsibleTrigger className="flex items-center gap-2 text-sm text-pink-400 hover:text-pink-500 transition-colors mt-3">
-                              <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-                              +{phase.tasks.length - 3} more actions
-                            </CollapsibleTrigger>
+                <div className="flex items-start gap-3">
+                  <Checkbox
+                    checked={isComplete}
+                    onCheckedChange={() => onTogglePhase(phaseId)}
+                    className="mt-1"
+                  />
+                  <div className="flex-1 space-y-4">
+                    {/* Phase Header */}
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1">
+                        <div className={`font-semibold flex items-center gap-2 flex-wrap ${
+                          isComplete ? 'line-through text-muted-foreground' : ''
+                        }`}>
+                          <span className="text-base sm:text-lg">{phase.phase}</span>
+                          {phase.criticalPath && !isComplete && (
+                            <Badge variant="outline" className="text-xs bg-pink-400/20 border-pink-400/40 text-pink-400">
+                              Critical Path
+                            </Badge>
+                          )}
+                          {isComplete && (
+                            <CheckCircle2 className="h-4 w-4 text-success" />
                           )}
                         </div>
-                      )}
+                        <div className="flex items-center gap-3 mt-1 text-sm text-gray-400">
+                          <span>{phase.duration} {phase.durationUnit || 'days'}</span>
+                          {calculatedDate && (
+                            <>
+                              <span>•</span>
+                              <span>Starts {calculatedDate}</span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    {phase.description && (
+                      <p className="text-base leading-relaxed text-gray-300">
+                        {phase.description}
+                      </p>
+                    )}
+
+                    {/* Practical Notes - NO DUPLICATE TEXT */}
+                    {phase.practicalNotes && (
+                      <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-4 sm:p-5 flex gap-3">
+                        <Lightbulb className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+                        <p className="text-sm sm:text-base text-gray-100 leading-relaxed">
+                          {phase.practicalNotes.replace(/^WHY THIS ORDER[:\s]*/i, '')}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Key Actions - ENHANCED WITH MORE INFO */}
+                    {phase.tasks && phase.tasks.length > 0 && (
+                      <div className="bg-card/50 rounded-lg p-4 sm:p-5 border border-border/40">
+                        <h5 className="text-sm sm:text-base font-semibold text-gray-100 mb-4 flex items-center gap-2">
+                          <CheckCircle2 className="h-5 w-5 text-pink-400" />
+                          Key Actions
+                        </h5>
+                        <ul className="space-y-4">
+                          {phase.tasks.slice(0, 3).map((task, idx) => {
+                            const taskText = typeof task === 'string' ? task : task.task || task.name || '';
+                            const taskDuration = typeof task !== 'string' ? task.duration : null;
+                            
+                            // Extract valuable information
+                            const hasSupplier = /CEF|TLC|Screwfix|Toolstation|wholesaler/i.test(taskText);
+                            const hasOrder = /order|purchase|buy/i.test(taskText);
+                            const hasInstall = /install|fit|mount/i.test(taskText);
+                            const hasTest = /test|inspect|verify/i.test(taskText);
+                            const hasWarning = /asap|urgent|critical|before|must/i.test(taskText);
+
+                            return (
+                              <li key={idx} className="flex gap-3 text-sm sm:text-base text-gray-300 leading-relaxed items-start border-l-2 border-pink-400/30 pl-4">
+                                <span className="flex-shrink-0 mt-1">
+                                  {hasOrder && '📦'}
+                                  {hasInstall && '🔧'}
+                                  {hasTest && '✓'}
+                                  {!hasOrder && !hasInstall && !hasTest && '→'}
+                                </span>
+                                <div className="flex-1">
+                                  <span className={hasWarning ? 'font-medium text-elec-yellow' : ''}>
+                                    {taskText}
+                                  </span>
+                                  {(taskDuration || hasSupplier || hasWarning) && (
+                                    <div className="flex flex-wrap gap-2 mt-2">
+                                      {taskDuration && (
+                                        <span className="px-2 py-1 bg-muted/50 text-xs text-muted-foreground rounded">
+                                          {taskDuration}
+                                        </span>
+                                      )}
+                                      {hasSupplier && (
+                                        <span className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">
+                                          Supplier order
+                                        </span>
+                                      )}
+                                      {hasWarning && (
+                                        <span className="px-2 py-1 bg-elec-yellow/20 text-elec-yellow text-xs rounded flex items-center gap-1">
+                                          <span>⚠️</span> Priority
+                                        </span>
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                        {phase.tasks.length > 3 && (
+                          <CollapsibleTrigger className="w-full mt-4 text-sm text-pink-400 hover:text-pink-300 transition-colors flex items-center gap-2 justify-center touch-manipulation min-h-[48px] sm:min-h-[44px] rounded-lg hover:bg-pink-400/10">
+                            <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                            {isOpen ? 'Show less' : `Show ${phase.tasks.length - 3} more actions`}
+                          </CollapsibleTrigger>
+                        )}
+                      </div>
+                    )}
 
 
                       {/* Dependencies & Milestones */}

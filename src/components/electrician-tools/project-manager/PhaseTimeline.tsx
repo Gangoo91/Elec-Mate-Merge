@@ -74,45 +74,73 @@ const PhaseTimeline = ({ phases, startDate, criticalPath = [] }: PhaseTimelinePr
           const width = (phase.duration / maxDay) * 100;
           
           return (
-            <div key={idx} className="space-y-2">
-              {/* Phase Header - Stack on mobile */}
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-base sm:text-sm">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className={`font-medium ${phase.isCritical ? 'text-pink-400' : 'text-gray-100'}`}>
+            <div key={idx} className="space-y-3">
+              {/* Phase header - redesigned */}
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+                <div className="flex items-center gap-3">
+                  {/* Phase number badge */}
+                  <div className={`flex items-center justify-center w-10 h-10 sm:w-8 sm:h-8 rounded-full text-sm sm:text-xs font-bold shadow-lg ${
+                    phase.isCritical 
+                      ? 'bg-gradient-to-br from-pink-500 to-pink-600 text-white' 
+                      : 'bg-gradient-to-br from-elec-yellow to-yellow-400 text-gray-900'
+                  }`}>
+                    {idx + 1}
+                  </div>
+                  <span className={`font-semibold text-base sm:text-sm ${
+                    phase.isCritical ? 'text-pink-400' : 'text-gray-100'
+                  }`}>
                     {phase.phase}
                   </span>
                   {phase.isCritical && (
-                    <Badge variant="outline" className="text-xs bg-pink-400/20 border-pink-400/40">
+                    <Badge variant="outline" className="px-2 py-1 bg-pink-400/20 text-pink-400 border-pink-400/40 text-xs sm:text-[10px] font-medium">
                       Critical
                     </Badge>
                   )}
-                  <span className="text-sm text-gray-400">
-                    ({phase.duration} {phase.durationUnit || 'days'})
-                  </span>
                 </div>
-                <div className="text-sm text-muted-foreground">
-                  {format(phase.startDate, 'dd MMM')} → {format(phase.endDate, 'dd MMM')}
+                <div className="flex items-center gap-3 text-sm text-gray-400">
+                  <span className="font-semibold text-base sm:text-sm">{phase.duration}{phase.durationUnit?.[0] || 'd'}</span>
+                  <span className="hidden sm:inline text-xs">
+                    {format(phase.startDate, 'dd MMM')} → {format(phase.endDate, 'dd MMM')}
+                  </span>
                 </div>
               </div>
 
-              {/* Timeline bar - TALLER on mobile, info inside */}
-              <div className="relative h-16 sm:h-12 bg-muted/30 rounded-lg overflow-hidden">
+              {/* Timeline bar - ENHANCED */}
+              <div className="relative h-20 sm:h-14 bg-muted/20 rounded-lg overflow-hidden border border-border/30">
                 <div 
                   className={`absolute h-full ${
                     phase.isCritical 
-                      ? 'bg-gradient-to-r from-pink-400 to-pink-500' 
-                      : 'bg-gradient-to-r from-elec-yellow to-elec-yellow/80'
-                  } rounded-lg transition-all duration-300 flex items-center px-3 sm:px-4`}
+                      ? 'bg-gradient-to-r from-pink-500 via-pink-400 to-pink-500' 
+                      : 'bg-gradient-to-r from-elec-yellow via-yellow-400 to-elec-yellow'
+                  } rounded-lg transition-all duration-300 flex items-center justify-between px-4 shadow-lg`}
                   style={{ 
                     left: `${progress}%`,
                     width: `${width}%`
                   }}
                 >
-                  {/* Show info INSIDE the bar */}
-                  <div className="flex items-center justify-between w-full text-xs sm:text-[11px] font-medium text-gray-900">
-                    <span className="truncate flex-1">{phase.phase.substring(0, 30)}</span>
-                    <span className="ml-2 whitespace-nowrap">{phase.duration}{phase.durationUnit?.[0] || 'd'}</span>
+                  {/* Phase info inside bar */}
+                  <span className="text-sm sm:text-xs font-bold text-gray-900 truncate flex-1">
+                    {phase.phase.split(' ').slice(0, 3).join(' ')}
+                  </span>
+                  
+                  <div className="flex items-center gap-2 ml-2">
+                    {/* Duration badge */}
+                    <span className="px-2 py-1 bg-gray-900/20 rounded text-xs sm:text-[10px] font-bold text-gray-900 whitespace-nowrap">
+                      {phase.duration}d
+                    </span>
+                    
+                    {/* Task count badge */}
+                    {phase.tasks && phase.tasks.length > 0 && (
+                      <span className="px-2 py-1 bg-gray-900/20 rounded text-xs sm:text-[10px] font-bold text-gray-900 whitespace-nowrap">
+                        {phase.tasks.length}
+                      </span>
+                    )}
                   </div>
+                </div>
+                
+                {/* Progress percentage indicator */}
+                <div className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-muted-foreground font-medium">
+                  {Math.round(progress + width)}%
                 </div>
               </div>
 
@@ -122,9 +150,9 @@ const PhaseTimeline = ({ phases, startDate, criticalPath = [] }: PhaseTimelinePr
                   open={isExpanded}
                   onOpenChange={(open) => setExpandedPhases(prev => ({ ...prev, [idx]: open }))}
                 >
-                  <CollapsibleTrigger className="text-xs sm:text-sm text-pink-400 hover:text-pink-500 mt-2 flex items-center gap-1 touch-manipulation min-h-[44px] sm:min-h-0">
-                    <ChevronDown className={`h-3 w-3 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-                    View {phase.tasks.length} task{phase.tasks.length !== 1 ? 's' : ''}
+                  <CollapsibleTrigger className="w-full text-xs sm:text-sm text-pink-400 hover:text-pink-300 transition-colors flex items-center gap-2 justify-center touch-manipulation min-h-[48px] sm:min-h-[44px] rounded-lg hover:bg-pink-400/10">
+                    <ChevronDown className={`h-4 w-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                    {isExpanded ? 'Hide tasks' : `View ${phase.tasks.length} tasks`}
                   </CollapsibleTrigger>
                   <CollapsibleContent className="mt-2 space-y-1">
                     {phase.tasks.slice(0, 5).map((task, taskIdx) => {
