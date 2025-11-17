@@ -217,6 +217,37 @@ export class AIDesigner {
       parts.push('');
     }
 
+    // MANDATORY OUTPUT FORMAT
+    parts.push('=== MANDATORY OUTPUT FORMAT ===');
+    parts.push('For EVERY circuit, you MUST provide:');
+    parts.push('');
+    parts.push('1. AT A GLANCE SUMMARY CARD');
+    parts.push('   - Load (kW, Ib)');
+    parts.push('   - Cable (size, type)');
+    parts.push('   - Protective Device (type, rating, curve)');
+    parts.push('   - Voltage Drop (value + "✓ Compliant" or "✗ Non-compliant")');
+    parts.push('   - Zs (value + compliance statement)');
+    parts.push('   - Compliance Tick (boolean)');
+    parts.push('   - Notes (future-proofing, special conditions)');
+    parts.push('');
+    parts.push('2. EXACTLY 9 SECTIONS (in order, no repeats):');
+    parts.push('   1. Circuit Summary');
+    parts.push('   2. Load Details');
+    parts.push('   3. Cable Selection & Calculation Breakdown');
+    parts.push('   4. Protective Device Selection');
+    parts.push('   5. Compliance Confirmation');
+    parts.push('   6. Design Justification');
+    parts.push('   7. Installation Guidance');
+    parts.push('   8. Safety Notes');
+    parts.push('   9. Testing & Commissioning Guidance');
+    parts.push('');
+    parts.push('CRITICAL RULES:');
+    parts.push('- Never repeat Installation Guidance or any other section');
+    parts.push('- Each section must be unique and information-rich');
+    parts.push('- Use professional engineering language');
+    parts.push('- Include regulation numbers where applicable');
+    parts.push('');
+
     // Design rules (same as standard prompt)
     parts.push('=== DESIGN RULES ===');
     parts.push('1. Cable sizing: Ib ≤ In ≤ Iz (Reg 433.1.1)');
