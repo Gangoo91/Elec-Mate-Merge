@@ -76,11 +76,6 @@ timeout_sec = 600
 verify_jwt = false
 timeout_sec = 30
 
-# Simplified RAMS Generator (4-file architecture)
-[functions.generate-rams]
-verify_jwt = false
-timeout_sec = 180
-
 # RAG V3: Offline Enrichment Pipeline
 [functions.enrich-regulations]
 verify_jwt = false
