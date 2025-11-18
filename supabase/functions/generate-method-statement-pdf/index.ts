@@ -106,6 +106,42 @@ serve(async (req) => {
     // Build payload in the SAME nested structure as combined RAMS
     const payload = {
       methodStatementData: {
+        // Executive Summary (NEW)
+        executiveSummary: methodData.executiveSummary || {
+          cableType: '',
+          cableSize: '',
+          runLength: '',
+          installationMethod: '',
+          supplyType: '',
+          protectiveDevice: '',
+          voltageDrop: '',
+          zsRequirement: '',
+          purpose: ''
+        },
+        
+        // Materials List with Units (NEW)
+        materialsList: (methodData.materialsList || []).map((material: any) => ({
+          description: material.description || '',
+          specification: material.specification || '',
+          quantity: material.quantity || '',
+          unit: material.unit || '',
+          notes: material.notes || ''
+        })),
+        
+        // Testing Requirements (NEW)
+        testingRequirements: (methodData.testingRequirements || []).map((test: any) => ({
+          description: test.description || '',
+          regulation: test.regulation || '',
+          expectedReading: test.expectedReading || '',
+          passRange: test.passRange || ''
+        })),
+        
+        // Regulatory References (NEW)
+        regulatoryReferences: (methodData.regulatoryReferences || []).map((ref: any) => ({
+          number: ref.number || '',
+          description: ref.description || ''
+        })),
+        
         projectName: methodData.projectName || '',
         jobTitle: methodData.jobTitle || 'Installation Method Statement',
         location: methodData.location || 'Site location',
@@ -171,6 +207,7 @@ serve(async (req) => {
           safetyRequirements: step.safetyRequirements || [],
           equipmentNeeded: step.equipmentNeeded || [],
           qualifications: step.qualifications || [],
+          bsReferences: step.bsReferences || [], // NEW: BS 7671 references
           isCompleted: step.isCompleted || false,
           dependencies: step.dependencies || [],
           notes: step.notes || '',

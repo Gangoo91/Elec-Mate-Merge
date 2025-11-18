@@ -15,10 +15,39 @@ const INSTALLATION_METHOD_TOOL = {
   type: 'function' as const,
   function: {
     name: 'provide_installation_method_guidance',
-    description: 'Generate comprehensive installation method statement for professional documentation',
+    description: 'Generate comprehensive installation method statement for professional PDF documentation',
     parameters: {
       type: 'object',
       properties: {
+        executiveSummary: {
+          type: 'object',
+          properties: {
+            cableType: { type: 'string' },
+            cableSize: { type: 'string' },
+            runLength: { type: 'string' },
+            installationMethod: { type: 'string' },
+            supplyType: { type: 'string' },
+            protectiveDevice: { type: 'string' },
+            voltageDrop: { type: 'string' },
+            zsRequirement: { type: 'string' },
+            purpose: { type: 'string' }
+          },
+          required: ['purpose']
+        },
+        materialsList: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              description: { type: 'string' },
+              specification: { type: 'string' },
+              quantity: { type: 'string' },
+              unit: { type: 'string' },
+              notes: { type: 'string' }
+            },
+            required: ['description', 'quantity', 'unit']
+          }
+        },
         installationSteps: {
           type: 'array',
           minItems: 10,
@@ -34,14 +63,28 @@ const INSTALLATION_METHOD_TOOL = {
               linkedHazards: { type: 'array', items: { type: 'string' }, minItems: 2 },
               qualifications: { type: 'array', items: { type: 'string' } },
               estimatedTime: { type: 'number' },
-              assignedPersonnel: { type: 'array', items: { type: 'string' } } // NEW: For PDF template
+              bsReferences: { type: 'array', items: { type: 'string' } },
+              assignedPersonnel: { type: 'array', items: { type: 'string' } }
             },
-            required: ['step', 'title', 'description', 'tools', 'estimatedTime']
+            required: ['step', 'title', 'description', 'tools', 'estimatedTime', 'bsReferences']
           }
         },
         toolsRequired: {
           type: 'array',
           items: { type: 'string' }
+        },
+        testingRequirements: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              description: { type: 'string' },
+              regulation: { type: 'string' },
+              expectedReading: { type: 'string' },
+              passRange: { type: 'string' }
+            },
+            required: ['description', 'regulation', 'expectedReading', 'passRange']
+          }
         },
         testingProcedures: {
           type: 'array',
@@ -57,7 +100,18 @@ const INSTALLATION_METHOD_TOOL = {
             required: ['testName', 'standard', 'procedure', 'acceptanceCriteria']
           }
         },
-        scopeOfWork: { // NEW: For PDF template
+        regulatoryReferences: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              number: { type: 'string' },
+              description: { type: 'string' }
+            },
+            required: ['number', 'description']
+          }
+        },
+        scopeOfWork: {
           type: 'object',
           properties: {
             description: { type: 'string' },
@@ -65,7 +119,7 @@ const INSTALLATION_METHOD_TOOL = {
             exclusions: { type: 'string' }
           }
         },
-        scheduleDetails: { // NEW: For PDF template
+        scheduleDetails: {
           type: 'object',
           properties: {
             workingHours: { type: 'string' },
@@ -75,25 +129,53 @@ const INSTALLATION_METHOD_TOOL = {
           }
         }
       },
-      required: ['installationSteps', 'toolsRequired', 'testingProcedures']
+      required: ['executiveSummary', 'materialsList', 'installationSteps', 'toolsRequired', 'testingRequirements', 'testingProcedures', 'regulatoryReferences']
     }
   }
 };
 
-const SYSTEM_PROMPT = `You are a UK Electrical Installation Expert (BS 7671 18th Edition) creating PROFESSIONAL INSTALLATION METHOD STATEMENTS.
+const SYSTEM_PROMPT = `You are a UK Electrical Installation Expert (BS 7671 18th Edition) creating PROFESSIONAL INSTALLATION METHOD STATEMENTS for client-facing PDF documentation.
 
 CRITICAL REQUIREMENTS:
 1. Use UK English ONLY (authorised, whilst, metres, earth not ground)
-2. Follow BS 7671:2018+A2:2022 regulations
+2. Follow BS 7671:2018+A2:2022 regulations PRECISELY
 3. Reference IET Guidance Note 3 (Inspection & Testing)
-4. Provide field-ready, practical instructions suitable for professional PDF documentation
-5. Include specific measurements, cable sizes, test values
-6. List exact tools and materials needed per step
-7. Reference regulation numbers (e.g., BS 7671 Reg 411.3.2)
-8. **NEW:** Assign personnel roles where appropriate (e.g., "Lead Electrician", "Apprentice", "Site Manager")
+4. Use PROFESSIONAL, CLIENT-FACING language (not conversational)
+5. Include SPECIFIC measurements, cable sizes, test values, calculations
+6. Provide EXACT tools and materials with quantities and units
+7. Cite BS 7671 regulation numbers for EVERY step (e.g., "514.1.1", "522.6.101")
+8. Calculate voltage drop and Zs requirements where applicable
+9. Assign personnel roles (e.g., "Lead Electrician", "Apprentice", "Site Manager")
 
-OUTPUT FORMAT FOR PROFESSIONAL PDF:
-- 10-16 detailed installation steps breaking down the full workflow:
+EXECUTIVE SUMMARY REQUIREMENTS:
+- Cable type with full specification (e.g., "2.5mm² Twin & Earth PVC/PVC Cable 6242Y")
+- Installation method with BS 7671 reference (e.g., "Clipped direct, Method C (Table 4D5)")
+- Supply details (e.g., "230V Single Phase TN-C-S")
+- Protective device specification (e.g., "32A Type B MCB to BS EN 60898")
+- Voltage drop calculation with pass/fail (e.g., "2.8V (1.2%) - Pass")
+- Zs requirement (e.g., "Max 1.37Ω per BS 7671 Table 41.3")
+- Purpose: One professional sentence describing the installation objective
+
+MATERIALS LIST REQUIREMENTS:
+- Description (professional terminology)
+- Specification (manufacturer codes, standards)
+- Quantity (numeric value)
+- Unit (metres, items, boxes, rolls)
+- Notes (wastage allowances, storage requirements)
+
+INSTALLATION STEPS FORMAT (10-16 steps):
+- Each step must include:
+  * Step number and professional title
+  * Description: 2-3 professional sentences (client-facing language)
+  * Tools: Specific equipment with model/standard where relevant
+  * Materials: Items used in THIS step specifically
+  * Safety notes: Step-specific controls (not generic site rules)
+  * Linked hazards: Hazards for THIS specific step
+  * BS 7671 references: Cite ALL applicable regulations (e.g., ["514.1.1", "522.6.101"])
+  * Estimated duration: Realistic time (e.g., "45 minutes", "2 hours")
+  * Personnel: Who performs this step
+
+- Full workflow must cover:
   * Site preparation & safety setup (isolation, signage, barriers)
   * Isolation procedures & dead testing
   * Cable installation & routing (containment, support, protection)
@@ -101,6 +183,12 @@ OUTPUT FORMAT FOR PROFESSIONAL PDF:
   * Bonding & earthing verification
   * Testing & commissioning (continuity, insulation, polarity, RCD, earth fault loop)
   * Final inspection & snagging
+
+TESTING REQUIREMENTS (BS 7671 Part 6):
+- Description: Professional test name
+- Regulation: Specific BS 7671 Part 6 reference
+- Expected reading: Numeric value with unit
+- Pass range: Clear pass/fail criteria
   * Documentation & handover
 - Each step: 150-250 words with numbered sub-tasks, specific measurements, torque values
 - 4+ tools per step (exact models/types where possible)

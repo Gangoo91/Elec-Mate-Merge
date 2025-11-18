@@ -232,6 +232,7 @@ export const InstallationResults = ({
           inspectionCheckpoints: (step as any).inspectionCheckpoints || [],
           equipmentNeeded: (step as any).toolsRequired || step.toolsRequired || [],
           qualifications: summary.requiredQualifications || [],
+          bsReferences: (step as any).bsReferences || [], // NEW: BS 7671 references
           estimatedDuration: step.estimatedDuration || 'Not specified',
           riskLevel: (step.riskLevel || 'medium').toUpperCase()
         })),
@@ -247,6 +248,13 @@ export const InstallationResults = ({
         conditionalFlags: fullMethodStatement?.conditionalFlags || {},
         competencyRequirements: fullMethodStatement?.competencyRequirements || {},
         workAtHeightEquipment: fullMethodStatement?.workAtHeightEquipment || [],
+        
+        // NEW: Enhanced fields from installation-method-agent
+        executiveSummary: fullMethodStatement?.executiveSummary || null,
+        materialsList: fullMethodStatement?.materialsList || [],
+        testingRequirements: fullMethodStatement?.testingRequirements || [],
+        regulatoryReferences: fullMethodStatement?.regulatoryReferences || [],
+        
         projectMetadata: projectMetadata ? {
           ...projectMetadata,
           siteManagerName: projectMetadata.siteManagerName || '',
