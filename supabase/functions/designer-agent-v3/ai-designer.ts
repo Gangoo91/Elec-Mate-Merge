@@ -120,29 +120,30 @@ export class AIDesigner {
     parts.push('1. AT A GLANCE SUMMARY CARD');
     parts.push('   - loadKw: MUST calculate from circuit loadPower: loadPower/1000 (e.g., 7360W → 7.36)');
     parts.push('   - loadIb: Design current Ib as string with A unit (e.g., "32A")');
-    parts.push('   - Cable (size, type)');
-    parts.push('   - Protective Device (type, rating, curve)');
-    parts.push('   - Voltage Drop (value + "✓ Compliant" or "✗ Non-compliant")');
-    parts.push('   - Zs (value + compliance statement)');
-    parts.push('   - Compliance Tick (boolean)');
+    parts.push('   - Cable (size, type) - MUST cite BS 7671 Table reference (e.g., "per Table 4D5")');
+    parts.push('   - Protective Device (type, rating, curve) - MUST cite regulation (e.g., "per Regulation 411.3.2")');
+    parts.push('   - Voltage Drop (value + MUST include BS 7671 limit reference: "✓ Compliant per Reg 525.1 (3% limit)")');
+    parts.push('   - Zs (value + MUST cite maxZs table: "✓ Well within Table 41.3 limit of X.XXΩ")');
+    parts.push('   - Compliance Tick (ALWAYS true - auto-correct before output)');
     parts.push('   - Notes (future-proofing, special conditions)');
     parts.push('');
     parts.push('2. EXACTLY 9 SECTIONS (in order, no repeats):');
     parts.push('   1. Circuit Summary');
     parts.push('   2. Load Details');
-    parts.push('   3. Cable Selection & Calculation Breakdown');
-    parts.push('   4. Protective Device Selection');
-    parts.push('   5. Compliance Confirmation');
+    parts.push('   3. Cable Selection & Calculation Breakdown - MUST cite Table 4D5/4E2A and derating factors');
+    parts.push('   4. Protective Device Selection - MUST cite Regulation 411.3.2 and Table 41.3');
+    parts.push('   5. Compliance Confirmation - MUST cite specific regulations (433.1.1, 525.1, 543.1.1)');
     parts.push('   6. Design Justification');
-    parts.push('   7. Installation Guidance');
+    parts.push('   7. Installation Guidance - ONLY HERE (not repeated elsewhere)');
     parts.push('   8. Safety Notes');
     parts.push('   9. Testing & Commissioning Guidance');
     parts.push('');
     parts.push('CRITICAL RULES:');
-    parts.push('- Never repeat Installation Guidance or any other section');
+    parts.push('- NEVER generate duplicate Installation Guidance - it belongs ONLY in Section 7');
+    parts.push('- EVERY compliance statement MUST cite a specific BS 7671 regulation or table number');
+    parts.push('- ALL designs MUST be compliant - auto-correct voltage drop, Zs, and cable sizes internally');
     parts.push('- Each section must be unique and information-rich');
-    parts.push('- Use professional engineering language');
-    parts.push('- Include regulation numbers where applicable');
+    parts.push('- Use professional engineering language with mandatory regulation citations');
     parts.push('');
     
     // Design rules
@@ -886,8 +887,7 @@ export class AIDesigner {
                   'protectionDevice',
                   'rcdProtected',
                   'calculations', 
-                  'justifications', 
-                  'installationGuidance',
+                  'justifications',
                   'structuredOutput'
                 ]
               }
