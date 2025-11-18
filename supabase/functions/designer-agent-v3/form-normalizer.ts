@@ -60,9 +60,11 @@ export class FormNormalizer {
     if (typeof circuit.loadPower !== 'number' || circuit.loadPower <= 0) {
       throw new Error(`Circuit ${index + 1}: Invalid loadPower`);
     }
-    if (typeof circuit.cableLength !== 'number' || circuit.cableLength <= 0) {
-      throw new Error(`Circuit ${index + 1}: Invalid cableLength`);
-    }
+    
+    // Make cableLength optional - use sensible default if missing
+    const cableLength = (typeof circuit.cableLength === 'number' && circuit.cableLength > 0) 
+      ? circuit.cableLength 
+      : 25; // Default 25m for voltage drop estimation
 
     // Phase 3.4: Motor circuit pre-calculation (improves accuracy from 60% to 85%)
     let calculatedIb = circuit.calculatedIb;
@@ -80,7 +82,7 @@ export class FormNormalizer {
       name: circuit.name.trim(),
       loadType: circuit.loadType.toLowerCase().trim(),
       loadPower: Math.round(circuit.loadPower), // Round to integer
-      cableLength: Math.round(circuit.cableLength), // Round to integer
+      cableLength: Math.round(cableLength), // Round to integer (uses default if missing)
       phases: (circuit.phases || 'single').toLowerCase(),
       specialLocation: (circuit.specialLocation || 'none').toLowerCase(),
       installMethod: circuit.installMethod || 'auto',

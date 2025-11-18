@@ -78,7 +78,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
   useEffect(() => {
     if (circuits.length > 0) {
       const updated = circuits.map(circuit => {
-        if (!circuit.loadPower || !circuit.cableLength) return circuit;
+        if (!circuit.loadPower) return circuit; // Allow calculations even without cable length
         
         // Calculate Ib (design current)
         const Ib = calculateDesignCurrent(circuit.loadPower, voltage, circuit.phases);
@@ -89,8 +89,10 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
         // Calculate diversity factor
         const diversity = circuit.diversityOverride || calculateDiversityFactor(circuit.loadType);
         
-        // Estimate cable size
-        const cableSize = estimateCableSize(Ib, circuit.cableLength);
+        // Estimate cable size (use default 25m if not specified)
+        const cableSize = circuit.cableLength 
+          ? estimateCableSize(Ib, circuit.cableLength)
+          : estimateCableSize(Ib, 25); // Default assumption for estimation
         
         return {
           ...circuit,
@@ -112,7 +114,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
       case 1: // Supply Details
         return voltage > 0 && ze > 0;
       case 2: // Circuits
-        return circuits.length > 0 && circuits.every(c => c.name && c.loadPower && c.cableLength);
+        return circuits.length > 0 && circuits.every(c => c.name && c.loadPower); // cableLength is optional
       case 3: // Installation Details
         return true; // Optional step - can skip
       case 4: // Pre-Calculation
