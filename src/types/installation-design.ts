@@ -83,6 +83,7 @@ export interface CircuitDesign {
     rating: number;
     curve: 'B' | 'C' | 'D';
     kaRating: number;
+    rcdRating?: number; // RCD sensitivity in mA (e.g., 30, 100, 300)
   };
   rcdProtected: boolean;
   afddRequired?: boolean;

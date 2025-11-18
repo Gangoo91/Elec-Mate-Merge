@@ -171,7 +171,9 @@ export function generateDesignSpecificationPDF(design: InstallationDesign): jsPD
       ["Load Type", circuit.loadType],
       ["Load Power", `${circuit.loadPower}W`],
       ["Design Current (Ib)", `${circuit.calculations.Ib.toFixed(2)}A`],
-      ["Voltage", `${circuit.voltage}V ${circuit.phases === 'single' ? 'Single Phase' : 'Three Phase'}`],
+      ["Voltage", circuit.phases === 'single' 
+        ? `${circuit.voltage}V Single Phase` 
+        : `400V 3Φ (230V P-N)`],
       ["Cable Length", `${circuit.cableLength}m`],
       ["Installation Method", circuit.installationMethod]
     ];
@@ -201,7 +203,9 @@ export function generateDesignSpecificationPDF(design: InstallationDesign): jsPD
       ["Rating (In)", `${circuit.protectionDevice?.rating ?? 'N/A'}A`],
       ["Type Curve", `Type ${circuit.protectionDevice?.curve ?? 'B'}`],
       ["Breaking Capacity", `${circuit.protectionDevice?.kaRating ?? 6}kA`],
-      ["RCD Protected", circuit.rcdProtected ? "Yes (30mA)" : "No"],
+      ["RCD Protected", circuit.rcdProtected 
+        ? `Yes (${circuit.protectionDevice?.rcdRating || 30}mA)` 
+        : "No"],
       ["AFDD Required", circuit.afddRequired ? "Yes" : "No"]
     ];
     

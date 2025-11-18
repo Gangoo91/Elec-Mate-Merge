@@ -119,7 +119,8 @@ export class AIDesigner {
     parts.push('- Ib <= In <= Iz (433.1.1) | VD: <=3% lighting, <=5% power (525.1) | Zs <= max (411.3.2)');
     parts.push('- RCBO mandatory: ALL sockets (411.3.3), ALL bathroom circuits (701.411.3.3)');
     parts.push('- Cable sizes: T&E (1.5-16mm2), SWA (1.5-95mm2) - round UP to nearest valid');
-    parts.push('- CPC per Table 54.7: 1.5->1.0, 2.5->1.5, 4->2.5, 6->2.5, 10->4, 16->6mm2');
+    parts.push('- CPC sizing: Twin & Earth per Table 54.7 (1.5->1.0, 2.5->1.5, 4->2.5, 6->2.5, 10->4, 16->6mm2)');
+    parts.push('- SWA cables: CPC MUST equal live conductor size per BS 7671:543.1.1 (e.g., 6mm² SWA = 6mm² CPC)');
     parts.push('');
 
     // Auto-correction rules
@@ -183,7 +184,7 @@ export class AIDesigner {
     parts.push('=== CORE RULES ===');
     parts.push('- Ib <= In <= Iz (433.1.1) | VD: <=3% light, <=5% power (525.1) | Zs <= max (411.3.2)');
     parts.push('- RCBO: sockets (411.3.3), bathrooms (701.411.3.3) | Cables: T&E 1.5-16mm2, SWA 1.5-95mm2');
-    parts.push('- CPC Table 54.7 | 3-phase=400V/415V | Motors: FLC calc, Type D | Outdoor=SWA only');
+    parts.push('- CPC: T&E per Table 54.7, SWA=live size (543.1.1) | 3-phase=400V/415V | Motors: FLC calc, Type D | Outdoor=SWA');
     parts.push('');
 
     parts.push('=== AUTO-CORRECT ===');
