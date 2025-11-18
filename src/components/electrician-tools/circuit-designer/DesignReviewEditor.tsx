@@ -2051,9 +2051,18 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
       {/* Actions */}
       <div className="flex gap-3 flex-wrap">
-        <Button size="lg" onClick={handleExportPDF} className="flex-1">
-          <Download className="h-5 w-5 mr-2" />
-          Export PDF
+        <Button size="lg" onClick={handleExportPDF} className="flex-1" disabled={isExporting}>
+          {isExporting ? (
+            <>
+              <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+              Generating PDF...
+            </>
+          ) : (
+            <>
+              <Download className="h-5 w-5 mr-2" />
+              Export PDF
+            </>
+          )}
         </Button>
         <Button size="lg" variant="secondary" onClick={handleCreateInstallationMethod} className="flex-1">
           <Wrench className="h-5 w-5 mr-2" />
