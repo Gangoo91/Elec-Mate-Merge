@@ -21,9 +21,13 @@ export class RAGEngine {
 
   /**
    * Execute parallel RAG search across 2 intelligence tables
+   * Phase 3: Added batch-aware match count for faster processing
    */
-  async search(normalized: NormalizedInputs): Promise<RAGContext> {
+  async search(normalized: NormalizedInputs, isBatch = false): Promise<RAGContext> {
     const startTime = Date.now();
+
+    // Phase 3: Reduce match count for batch processing (3+ circuits)
+    const matchCount = isBatch ? 4 : 6;
 
     // Build search queries from form fields (NOT text prompts)
     const queries = {
@@ -33,16 +37,18 @@ export class RAGEngine {
 
     this.logger.info('RAG queries built', {
       regulationKeywords: queries.regulationKeywords.split(' ').length,
-      practicalKeywords: queries.practicalKeywords.split(' ').length
+      practicalKeywords: queries.practicalKeywords.split(' ').length,
+      isBatch,
+      matchCount
     });
 
-    // Parallel search without artificial timeouts - let queries complete naturally
+    // Parallel search with dynamic match count
     const [regulations, practicalGuides] = await Promise.all([
-      this.searchRegulations(queries.regulationKeywords).catch(err => {
+      this.searchRegulations(queries.regulationKeywords, matchCount).catch(err => {
         this.logger.error('Regulations search failed', { error: err.message });
         return [];
       }),
-      this.searchPracticalWork(queries.practicalKeywords).catch(err => {
+      this.searchPracticalWork(queries.practicalKeywords, matchCount).catch(err => {
         this.logger.error('Practical work search failed', { error: err.message });
         return [];
       })
@@ -73,78 +79,44 @@ export class RAGEngine {
 
   /**
    * Build regulation-specific keywords from form fields
+   * Phase 1: Optimized to reduce keyword density and eliminate redundancy
    */
   private buildRegulationKeywords(inputs: NormalizedInputs): string {
     const keywords: string[] = [];
 
-    // Supply keywords
+    // Supply keywords - simplified (Phase 1)
     keywords.push(`${inputs.supply.voltage}V`);
     keywords.push(inputs.supply.phases === 'three' ? 'three phase' : 'single phase');
     keywords.push(inputs.supply.earthing);
 
-    // Circuit-specific keywords
+    // Circuit-specific keywords - only core terms (Phase 1)
     inputs.circuits.forEach(c => {
       keywords.push(c.loadType);
       
-      // Voltage-specific pre-filter (Phase 1.4: saves 8-12s)
-      if (inputs.supply.voltage === 110) {
-        keywords.push('110V systems');
-        keywords.push('reduced voltage');
-      } else if (inputs.supply.voltage === 230) {
-        keywords.push('230V domestic');
-        keywords.push('single phase');
-      } else if (inputs.supply.voltage === 400) {
-        keywords.push('400V three-phase');
-        keywords.push('industrial');
-      }
-      
-      // Special location regulations
+      // Special location regulations - simplified
       if (c.specialLocation !== 'none') {
         keywords.push(c.specialLocation);
         
         if (c.specialLocation === 'bathroom' && c.bathroomZone) {
           const zoneNum = c.bathroomZone.replace('zone_', '');
           keywords.push(`Zone ${zoneNum}`);
-          keywords.push('Section 701'); // Bathroom-specific regulation
-        }
-        
-        if (c.specialLocation === 'outdoor') {
-          keywords.push('outdoor installation');
-          keywords.push('Section 522'); // External influences
         }
       }
-
-      // Power-based keywords
-      if (c.loadPower > 7200) {
-        keywords.push('high power circuit');
-        keywords.push('cable sizing');
-      }
-
-      // Length-based keywords
-      if (c.cableLength > 50) {
-        keywords.push('voltage drop');
-        keywords.push('Section 525');
-      }
-
-      // Phase-specific
-      if (c.phases === 'three') {
-        keywords.push('three phase circuit');
-        keywords.push('Section 559');
-      }
-
-      // Protection keywords
-      if (c.protectionType === 'rcbo') {
-        keywords.push('RCBO');
-        keywords.push('Section 531');
+      
+      // Protection type - only if specified
+      if (c.protectionType && c.protectionType !== 'auto') {
+        keywords.push(c.protectionType);
       }
     });
 
-    // Core regulations always included
-    keywords.push('433.1.1'); // Cable sizing
-    keywords.push('525.1');   // Voltage drop
-    keywords.push('411.3.2'); // ADS
+    // Core regulation sections - essential only (Phase 1)
+    keywords.push('Section 433'); // Overcurrent protection
+    keywords.push('Section 522'); // Cable selection
+    keywords.push('Table 4A2'); // Voltage drop
 
-    return keywords.join(' ');
+    // Phase 1: Deduplicate and limit to top 8 keywords
+    const uniqueKeywords = [...new Set(keywords)].slice(0, 8);
+    return uniqueKeywords.join(' ');
   }
 
   /**
@@ -210,16 +182,18 @@ export class RAGEngine {
 
   /**
    * Search Regulations Intelligence (keyword search, weight 90)
+   * Phase 2: Increased timeout and improved fallback handling
+   * Phase 3: Dynamic match count based on batch size
    */
-  private async searchRegulations(keywords: string): Promise<any[]> {
+  private async searchRegulations(keywords: string, matchCount = 6): Promise<any[]> {
     try {
       const { data, error } = await this.supabase.rpc(
         'search_regulations_intelligence_hybrid',
         {
           query_text: keywords,
-          match_count: 6 // Reduced from 10 (Phase 1.3: saves 3-5s)
+          match_count: matchCount
         }
-      ).abortSignal(AbortSignal.timeout(15000));
+      ).abortSignal(AbortSignal.timeout(30000)); // Phase 2: Increased to 30s
 
       if (error) {
         this.logger.warn('Regulations search failed, using fallback', { error: error.message });
@@ -227,11 +201,17 @@ export class RAGEngine {
       }
 
       this.logger.info('Regulations search complete', { 
-        results: data?.length || 0 
+        results: data?.length || 0,
+        matchCount
       });
 
       return data || this.getCoreRegulations();
     } catch (error) {
+      // Phase 2: Timeout-specific fallback
+      if (error.name === 'AbortError' || error.message.includes('timeout')) {
+        this.logger.warn('Regulations search timed out, using core regulations');
+        return this.getCoreRegulations();
+      }
       this.logger.error('Regulations search exception, using fallback', { error: error.message });
       return this.getCoreRegulations();
     }
@@ -239,18 +219,19 @@ export class RAGEngine {
 
   /**
    * Search Practical Work Intelligence (keyword search, weight 95)
-   * OPTIMIZATION: Reduced match_count for faster queries
+   * Phase 2: Added timeout protection
+   * Phase 3: Dynamic match count based on batch size
    */
-  private async searchPracticalWork(keywords: string): Promise<any[]> {
+  private async searchPracticalWork(keywords: string, matchCount = 6): Promise<any[]> {
     try {
       const { data, error } = await this.supabase.rpc(
         'search_practical_work_intelligence_hybrid',
         {
           query_text: keywords,
-          match_count: 6, // Reduced from 10 (Phase 1.3: saves 3-5s)
+          match_count: matchCount,
           filter_trade: 'installer'
         }
-      );
+      ).abortSignal(AbortSignal.timeout(30000)); // Phase 2: Added 30s timeout
 
       if (error) {
         this.logger.warn('Practical work search failed', { error: error.message });
@@ -258,12 +239,18 @@ export class RAGEngine {
       }
 
       this.logger.info('Practical work search complete', { 
-        results: data?.length || 0 
+        results: data?.length || 0,
+        matchCount
       });
 
       return data || [];
     } catch (error) {
-      this.logger.warn('Practical work search exception', { error: error.message });
+      // Phase 2: Timeout-specific handling
+      if (error.name === 'AbortError' || error.message.includes('timeout')) {
+        this.logger.warn('Practical work search timed out, returning empty results');
+        return [];
+      }
+      this.logger.error('Practical work search exception', { error: error.message });
       return [];
     }
   }

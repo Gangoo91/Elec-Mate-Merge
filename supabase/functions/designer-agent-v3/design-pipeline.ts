@@ -74,14 +74,17 @@ export class DesignPipeline {
 
     // ========================================
     // PHASE 3: RAG Search (enhanced for installation guidance)
+    // Phase 3 Optimization: Pass batch flag for dynamic match count
     // ========================================
-    const ragContext = await this.rag.search(normalized);
+    const isBatch = normalized.circuits.length > 2;
+    const ragContext = await this.rag.search(normalized, isBatch);
     this.logger.info('RAG complete', {
       regulations: ragContext.regulations.length,
       practicalGuides: ragContext.practicalGuides.length,
       totalResults: ragContext.totalResults,
       searchTime: ragContext.searchTime,
-      voltage: normalized.supply.voltage
+      voltage: normalized.supply.voltage,
+      isBatch
     });
 
     // ========================================
