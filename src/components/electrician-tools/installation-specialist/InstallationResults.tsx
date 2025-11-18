@@ -19,6 +19,9 @@ import { RAGExtractionBreakdown } from "./RAGExtractionBreakdown";
 import { CompetencyRequirementsCard } from "./CompetencyRequirementsCard";
 import { SiteLogisticsCard } from "./SiteLogisticsCard";
 import { RegulatoryCitationsPanel } from "./RegulatoryCitationsPanel";
+import { ExecutiveSummaryCard } from "./ExecutiveSummaryCard";
+import { MaterialsListTable } from "./MaterialsListTable";
+import { TestingRequirementsTable } from "./TestingRequirementsTable";
 
 interface ProjectMetadata {
   documentRef: string;
@@ -431,6 +434,11 @@ export const InstallationResults = ({
         <RAGExtractionBreakdown extractionBreakdown={qualityMetrics.extractionBreakdown} />
       )}
 
+      {/* 🎯 NEW: Executive Summary - AI Generated Installation At-A-Glance */}
+      {fullMethodStatement?.executiveSummary && (
+        <ExecutiveSummaryCard executiveSummary={fullMethodStatement.executiveSummary} />
+      )}
+
       {/* Summary Stats */}
       <InstallationSummaryStats
         totalSteps={steps.length}
@@ -521,6 +529,11 @@ export const InstallationResults = ({
         </div>
       </div>
 
+      {/* 📦 NEW: Enhanced Materials List with Quantities */}
+      {fullMethodStatement?.materialsList && fullMethodStatement.materialsList.length > 0 && (
+        <MaterialsListTable materialsList={fullMethodStatement.materialsList} />
+      )}
+
       {/* 🎓 Competency Requirements */}
       {competencyRequirements && competencyRequirements.minimumQualifications && competencyRequirements.minimumQualifications.length > 0 && (
         <CompetencyRequirementsCard competencyRequirements={competencyRequirements} />
@@ -531,13 +544,23 @@ export const InstallationResults = ({
         <SiteLogisticsCard siteLogistics={siteLogistics} />
       )}
 
-      {/* 📖 BS 7671 Regulatory Citations */}
-      {regulatoryCitations && regulatoryCitations.length > 0 && (
+      {/* ✅ NEW: AI-Generated Testing Requirements */}
+      {fullMethodStatement?.testingRequirements && fullMethodStatement.testingRequirements.length > 0 && (
+        <TestingRequirementsTable testingRequirements={fullMethodStatement.testingRequirements} />
+      )}
+
+      {/* 📖 BS 7671 Regulatory References - Enhanced for both formats */}
+      {fullMethodStatement?.regulatoryReferences && fullMethodStatement.regulatoryReferences.length > 0 && (
+        <RegulatoryCitationsPanel regulatoryCitations={fullMethodStatement.regulatoryReferences} />
+      )}
+      {regulatoryCitations && regulatoryCitations.length > 0 && !fullMethodStatement?.regulatoryReferences && (
         <RegulatoryCitationsPanel regulatoryCitations={regulatoryCitations} />
       )}
 
-      {/* Testing & Commissioning */}
-      <TestingProceduresSection procedures={testingProcedures} />
+      {/* Testing & Commissioning (Fallback for legacy data) */}
+      {!fullMethodStatement?.testingRequirements && testingProcedures && testingProcedures.length > 0 && (
+        <TestingProceduresSection procedures={testingProcedures} />
+      )}
 
       {/* Equipment Schedule */}
       <EquipmentScheduleSection equipment={equipmentSchedule} />

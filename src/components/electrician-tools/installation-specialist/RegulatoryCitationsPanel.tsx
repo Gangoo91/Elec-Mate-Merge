@@ -4,10 +4,12 @@ import { BookOpen, Link2 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 interface RegulatoryCitationsPanelProps {
-  regulatoryCitations: Array<{
-    regulation: string;
-    applicableToStep: number;
-    requirement: string;
+  regulatoryCitations?: Array<{
+    regulation?: string;
+    applicableToStep?: number;
+    requirement?: string;
+    number?: string;
+    description?: string;
   }>;
 }
 
@@ -16,9 +18,64 @@ export const RegulatoryCitationsPanel = ({ regulatoryCitations }: RegulatoryCita
     return null;
   }
 
-  // Group citations by step
+  // Support both formats: old (regulation/applicableToStep) and new (number/description)
+  const isNewFormat = regulatoryCitations.some(c => 'number' in c && 'description' in c);
+  
+  if (isNewFormat) {
+    // New format: Display all regulations in a single list (no step grouping)
+    const referencesWithNumbers = regulatoryCitations.filter(c => c.number && c.description);
+    
+    return (
+      <Card className="border-green-500/20 bg-gradient-to-br from-green-500/5 to-background shadow-lg">
+        <CardContent className="p-5 sm:p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 rounded-lg bg-green-500/10">
+              <BookOpen className="h-5 w-5 text-green-400" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-bold text-lg">BS 7671:2018+A3:2024 Regulatory References</h3>
+              <p className="text-sm text-muted-foreground mt-0.5">
+                {referencesWithNumbers.length} regulation{referencesWithNumbers.length !== 1 ? 's' : ''} referenced
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            {referencesWithNumbers.map((citation, index) => (
+              <div 
+                key={index}
+                className="bg-card border border-green-500/20 rounded-lg p-4 hover:border-green-500/40 transition-colors"
+              >
+                <div className="flex items-start gap-2">
+                  <Link2 className="h-4 w-4 text-green-400 mt-1 flex-shrink-0" />
+                  <div className="flex-1">
+                    <Badge className="bg-gradient-to-r from-green-500/20 to-green-600/20 text-foreground border-green-500/40 text-xs font-mono mb-2">
+                      {citation.number}
+                    </Badge>
+                    <p className="text-sm text-foreground leading-relaxed">
+                      {citation.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Footer Note */}
+          <div className="mt-4 pt-3 border-t border-border/50">
+            <p className="text-xs text-muted-foreground">
+              <strong>Reference:</strong> All regulations cited from BS 7671:2018+A3:2024 (18th Edition IET Wiring Regulations). 
+              Verify against latest published version before commencing work.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+  
+  // Old format: Group citations by step
   const citationsByStep = regulatoryCitations.reduce((acc, citation) => {
-    const stepNum = citation.applicableToStep;
+    const stepNum = citation.applicableToStep!;
     if (!acc[stepNum]) {
       acc[stepNum] = [];
     }
