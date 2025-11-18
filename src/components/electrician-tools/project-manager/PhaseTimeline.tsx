@@ -23,10 +23,9 @@ interface PhaseTimelineProps {
 const PhaseTimeline = ({ phases, startDate, criticalPath = [] }: PhaseTimelineProps) => {
   const [expandedPhases, setExpandedPhases] = useState<Record<number, boolean>>({});
 
-  // Always call useMemo - handle empty phases inside
+  if (!phases || phases.length === 0) return null;
+
   const timelineData = useMemo(() => {
-    if (!phases || phases.length === 0) return [];
-    
     const baseDate = startDate ? new Date(startDate) : new Date();
     let currentDay = 0;
     
@@ -43,18 +42,12 @@ const PhaseTimeline = ({ phases, startDate, criticalPath = [] }: PhaseTimelinePr
         actualStartDay: phaseStartDay,
         startDate: phaseStart,
         endDate: phaseEnd,
-        isCritical: phase.criticalPath || criticalPath.some(cp => phase.phase?.includes(cp))
+        isCritical: phase.criticalPath || criticalPath.some(cp => phase.phase.includes(cp))
       };
     });
   }, [phases, startDate, criticalPath]);
 
-  // Guard against empty timeline
-  const maxDay = timelineData.length > 0 
-    ? Math.max(...timelineData.map(p => p.actualStartDay + p.duration))
-    : 0;
-
-  // Return null after all hooks have run
-  if (timelineData.length === 0) return null;
+  const maxDay = Math.max(...timelineData.map(p => p.actualStartDay + p.duration));
 
   return (
     <Card>

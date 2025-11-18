@@ -162,23 +162,17 @@ const parseProjectOverview = (text: string): Section[] => {
 };
 
 const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
-  // Always call hooks with safe fallback
-  const safeResponse = response ?? '';
+  if (!response) return null;
 
-  const sections = useMemo(() => parseProjectOverview(safeResponse), [safeResponse]);
-  
+  const sections = parseProjectOverview(response);
   const businessCase = useMemo(() => {
-    if (!safeResponse) return '';
-    const match = safeResponse.match(/(?:business case|project overview|scope)[:\s]*(.+?)(?=\n\n[A-Z][a-z]+:|$)/is);
+    const match = response.match(/(?:business case|project overview|scope)[:\s]*(.+?)(?=\n\n[A-Z][a-z]+:|$)/is);
     if (match) {
       return match[1].trim();
     }
-    const paragraphs = safeResponse.split('\n\n').filter(p => p.trim().length > 50);
-    return paragraphs[0] || safeResponse.substring(0, 300);
-  }, [safeResponse]);
-
-  // Return null after all hooks
-  if (!response) return null;
+    const paragraphs = response.split('\n\n').filter(p => p.trim().length > 50);
+    return paragraphs[0] || response.substring(0, 300);
+  }, [response]);
 
   return (
     <div className="space-y-4">
