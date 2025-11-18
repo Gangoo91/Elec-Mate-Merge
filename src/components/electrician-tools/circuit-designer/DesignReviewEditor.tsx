@@ -762,10 +762,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
     }
   };
 
-  const allCompliant = design.circuits.every(c => 
-    c.calculations.voltageDrop.compliant && 
-    c.calculations.zs < c.calculations.maxZs
-  );
+  const allCompliant = design.circuits?.every(c => 
+    c.calculations?.voltageDrop?.compliant && 
+    c.calculations?.zs < c.calculations?.maxZs
+  ) ?? false;
 
   const handleExportPDF = async () => {
     setIsExporting(true);
