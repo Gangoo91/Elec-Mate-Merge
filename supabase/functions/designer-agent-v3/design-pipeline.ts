@@ -43,8 +43,34 @@ export class DesignPipeline {
     // ========================================
     // PHASE 2: Cache Check (DISABLED FOR TESTING)
     // ========================================
-    // CACHE DISABLED - Always perform fresh design generation
-    this.logger.info('Cache DISABLED - skipping cache check');
+    // ========================================
+    // PHASE 2: Cache Check (Phase 2.1: Re-enabled for 60% faster cache hits)
+    // ========================================
+    const cacheKey = this.cache.generateKey(normalized);
+    const cached = await this.cache.get(cacheKey);
+    
+    if (cached) {
+      this.logger.info('Cache HIT', {
+        key: cacheKey.slice(0, 12),
+        age: cached.ageSeconds,
+        hits: cached.hitCount
+      });
+      
+      return {
+        success: true,
+        circuits: cached.design.circuits,
+        supply: normalized.supply,
+        fromCache: true,
+        cacheAge: cached.ageSeconds,
+        processingTime: Date.now() - startTime,
+        validationPassed: true,
+        autoFixApplied: false
+      };
+    }
+    
+    this.logger.info('Cache MISS - proceeding with fresh generation', {
+      key: cacheKey.slice(0, 12)
+    });
 
     // ========================================
     // PHASE 3: RAG Search (enhanced for installation guidance)
@@ -280,7 +306,8 @@ export class DesignPipeline {
               remainingErrors: validationResult.issues.filter((i: any) => i.severity === 'error').length
             });
             
-            // If max retries reached, throw error
+            // Phase 1.2: Reduced retries from 2 to 1 (saves 1-2s)
+            const maxRetries = 1;
             if (correctionAttempt >= maxRetries) {
               throw new Error(
                 `Design validation failed after ${maxRetries} correction attempts:\n\n${validationResult.autoFixSuggestions.join('\n\n')}\n\nPlease review the design inputs and try again.`
@@ -306,10 +333,18 @@ export class DesignPipeline {
     });
 
     // ========================================
-    // PHASE 6: Cache Storage & Return (DISABLED FOR TESTING)
+    // PHASE 6: Cache Storage (Phase 2.1: Re-enabled)
     // ========================================
-    // CACHE DISABLED - Not storing design in cache
-    this.logger.info('Cache DISABLED - skipping cache storage');
+    try {
+      await this.cache.set(cacheKey, design);
+      this.logger.info('Design cached successfully', {
+        key: cacheKey.slice(0, 12)
+      });
+    } catch (error) {
+      this.logger.warn('Cache storage failed (non-critical)', {
+        error: error instanceof Error ? error.message : 'Unknown error'
+      });
+    }
 
     const duration = Date.now() - startTime;
     this.logger.info('Pipeline complete', {
@@ -321,7 +356,10 @@ export class DesignPipeline {
     return {
       success: true,
       circuits: design.circuits,
+      supply: normalized.supply,
       fromCache: false,
+      processingTime: duration,
+      validationPassed: true,
       autoFixApplied: false,
       reasoning: design.reasoning
     };
