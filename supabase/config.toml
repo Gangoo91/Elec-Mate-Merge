@@ -43,7 +43,16 @@ timeout_sec = 300
 # Circuit Designer V3 - Clean Rebuild (Single-Pipeline)
 [functions.designer-agent-v3]
 verify_jwt = false
-timeout_sec = 360
+timeout_sec = 600
+
+# Circuit Design Job Queue
+[functions.create-circuit-design-job]
+verify_jwt = true
+timeout_sec = 30
+
+[functions.process-circuit-design-job]
+verify_jwt = false
+timeout_sec = 600
 
 [functions.cancel-circuit-design-job]
 verify_jwt = false
