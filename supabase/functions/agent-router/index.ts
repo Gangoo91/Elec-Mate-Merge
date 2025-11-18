@@ -1,6 +1,5 @@
-// AGENT ROUTER - Self-Contained User-Driven Architecture (No shared deps)
-import { serve } from '../_shared/deps.ts';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+// AGENT ROUTER - Self-Contained User-Driven Architecture
+import { serve, createClient } from '../_shared/deps.ts';
 
 // Inline CORS headers
 const corsHeaders = {
