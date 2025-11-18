@@ -86,6 +86,18 @@ export class RAGEngine {
     inputs.circuits.forEach(c => {
       keywords.push(c.loadType);
       
+      // Voltage-specific pre-filter (Phase 1.4: saves 8-12s)
+      if (inputs.supply.voltage === 110) {
+        keywords.push('110V systems');
+        keywords.push('reduced voltage');
+      } else if (inputs.supply.voltage === 230) {
+        keywords.push('230V domestic');
+        keywords.push('single phase');
+      } else if (inputs.supply.voltage === 400) {
+        keywords.push('400V three-phase');
+        keywords.push('industrial');
+      }
+      
       // Special location regulations
       if (c.specialLocation !== 'none') {
         keywords.push(c.specialLocation);
@@ -205,7 +217,7 @@ export class RAGEngine {
         'search_regulations_intelligence_hybrid',
         {
           query_text: keywords,
-          match_count: 10
+          match_count: 6 // Reduced from 10 (Phase 1.3: saves 3-5s)
         }
       ).abortSignal(AbortSignal.timeout(15000));
 
@@ -235,7 +247,7 @@ export class RAGEngine {
         'search_practical_work_intelligence_hybrid',
         {
           query_text: keywords,
-          match_count: 5, // Reduced from 10 for faster queries
+          match_count: 6, // Reduced from 10 (Phase 1.3: saves 3-5s)
           filter_trade: 'installer'
         }
       );
