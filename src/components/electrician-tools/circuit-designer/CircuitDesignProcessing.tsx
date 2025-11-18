@@ -4,9 +4,7 @@ import { Card } from '@/components/ui/card';
 
 interface CircuitDesignProcessingProps {
   circuitCount: number;
-  estimatedTime?: number; // in seconds
-  progress?: number;
-  currentStep?: string;
+  estimatedTime: number; // in seconds
 }
 
 const PROCESSING_STAGES = [
@@ -16,12 +14,7 @@ const PROCESSING_STAGES = [
   { label: 'Finalizing calculations...', duration: 2000, icon: '✅' }
 ];
 
-export const CircuitDesignProcessing = ({ 
-  circuitCount, 
-  estimatedTime = 30,
-  progress: externalProgress,
-  currentStep: externalStep
-}: CircuitDesignProcessingProps) => {
+export const CircuitDesignProcessing = ({ circuitCount, estimatedTime }: CircuitDesignProcessingProps) => {
   const [currentStageIndex, setCurrentStageIndex] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
 
@@ -53,8 +46,6 @@ export const CircuitDesignProcessing = ({
   };
 
   const statusMessage = getStatusMessage();
-  const displayProgress = externalProgress !== undefined ? externalProgress : Math.min((elapsedTime / estimatedTime) * 100, 95);
-  const displayStep = externalStep || statusMessage.text;
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4 py-8 animate-fade-in">
@@ -71,19 +62,11 @@ export const CircuitDesignProcessing = ({
         <div className="text-center mb-6">
           <div className="text-4xl mb-3 animate-pulse">{statusMessage.icon}</div>
           <h2 className="text-2xl font-bold text-foreground mb-2">
-            {displayStep}
+            {statusMessage.text}
           </h2>
           <p className="text-muted-foreground">
             Designing {circuitCount} circuit{circuitCount !== 1 ? 's' : ''}
           </p>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="w-full bg-muted rounded-full h-3 mb-4 overflow-hidden">
-          <div 
-            className="bg-primary h-full rounded-full transition-all duration-1000 ease-out"
-            style={{ width: `${displayProgress}%` }}
-          />
         </div>
 
         {/* Elapsed Time Display */}

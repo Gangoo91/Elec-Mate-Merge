@@ -10,7 +10,6 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import { clearDesignCache } from "@/utils/clearDesignCache";
-import { useCircuitDesignGeneration } from "@/hooks/useCircuitDesignGeneration";
 
 export const AIInstallationDesigner = () => {
   const [currentView, setCurrentView] = useState<'input' | 'processing' | 'results'>('input');
@@ -19,28 +18,6 @@ export const AIInstallationDesigner = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [designData, setDesignData] = useState<any>(null);
   const [isClearingCache, setIsClearingCache] = useState(false);
-  const [jobId, setJobId] = useState<string | null>(null);
-
-  // Use the job polling hook
-  const { job, progress, status, currentStep, designData: jobDesignData, error: jobError } = useCircuitDesignGeneration(jobId);
-
-  // Monitor job completion
-  useEffect(() => {
-    if (!job) return;
-
-    if (status === 'complete' && jobDesignData) {
-      console.log("✅ Design job completed:", jobDesignData);
-      setDesignData(jobDesignData);
-      setCurrentView('results');
-      setIsProcessing(false);
-      toast.success("Circuit design completed successfully!");
-    } else if (status === 'failed') {
-      console.error("❌ Design job failed:", jobError);
-      setCurrentView('input');
-      setIsProcessing(false);
-      toast.error(jobError || "Design generation failed");
-    }
-  }, [job, status, jobDesignData, jobError]);
 
   const handleClearCache = async () => {
     setIsClearingCache(true);
@@ -256,8 +233,6 @@ export const AIInstallationDesigner = () => {
             totalCircuits <= 3 ? 20 :
             totalCircuits <= 10 ? 40 : 60
           }
-          progress={progress}
-          currentStep={currentStep}
         />
       )}
 
