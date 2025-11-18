@@ -79,18 +79,16 @@ export class AIDesigner {
   }
 
   /**
-   * Build system prompt with RAG context injection
+   * Build system prompt with RAG context injection (OPTIMIZED - 50% reduction)
    */
   private buildSystemPrompt(context: RAGContext): string {
     const parts: string[] = [];
 
-    // Core identity with dynamic voltage support (PHASE 1)
-    parts.push('You are a BS 7671:2018+A2:2022 electrical circuit design expert.');
-    parts.push('Design COMPLIANT circuits using the knowledge base provided.');
-    parts.push('Supply voltage and phases vary by installation - use the exact values provided in each request.');
+    // Core identity
+    parts.push('You are a BS 7671:2018+A2:2022 electrical circuit design expert. Design COMPLIANT circuits using the provided knowledge base. Use exact voltage/phase values from each request.');
     parts.push('');
 
-    // Inject top regulations (weight 90, top 3 - increased from 2)
+    // Inject RAG context
     if (context.regulations.length > 0) {
       parts.push('=== KEY REGULATIONS ===');
       context.regulations.slice(0, 3).forEach(reg => {
@@ -99,95 +97,46 @@ export class AIDesigner {
       parts.push('');
     }
 
-    // Design patterns removed - not part of RAG context anymore
-
-    // Inject top practical guides (weight 95, top 3)
     if (context.practicalGuides.length > 0) {
       parts.push('=== PRACTICAL GUIDANCE ===');
       context.practicalGuides.slice(0, 3).forEach(guide => {
         parts.push(`${guide.primary_topic}: ${guide.content || 'See keywords'}`);
         if (guide.bs7671_regulations?.length > 0) {
-          parts.push(`  Regulations: ${guide.bs7671_regulations.join(', ')}`);
+          parts.push(`  Regs: ${guide.bs7671_regulations.join(', ')}`);
         }
       });
       parts.push('');
     }
 
-    // MANDATORY OUTPUT FORMAT
-    parts.push('=== MANDATORY OUTPUT FORMAT ===');
-    parts.push('For EVERY circuit, you MUST provide:');
-    parts.push('');
-    parts.push('1. AT A GLANCE SUMMARY CARD');
-    parts.push('   - loadKw: MUST calculate from circuit loadPower: loadPower/1000 (e.g., 7360W → 7.36)');
-    parts.push('   - loadIb: Design current Ib as string with A unit (e.g., "32A")');
-    parts.push('   - Cable (size, type)');
-    parts.push('   - Protective Device (type, rating, curve)');
-    parts.push('   - Voltage Drop (value + "✓ Compliant" or "✗ Non-compliant")');
-    parts.push('   - Zs (value + compliance statement)');
-    parts.push('   - Compliance Tick (boolean)');
-    parts.push('   - Notes (future-proofing, special conditions)');
-    parts.push('');
-    parts.push('2. EXACTLY 9 SECTIONS (in order, no repeats):');
-    parts.push('   1. Circuit Summary');
-    parts.push('   2. Load Details');
-    parts.push('   3. Cable Selection & Calculation Breakdown');
-    parts.push('   4. Protective Device Selection');
-    parts.push('   5. Compliance Confirmation');
-    parts.push('   6. Design Justification');
-    parts.push('   7. Installation Guidance');
-    parts.push('   8. Safety Notes');
-    parts.push('   9. Testing & Commissioning Guidance');
-    parts.push('');
-    parts.push('CRITICAL RULES:');
-    parts.push('- Never repeat Installation Guidance or any other section');
-    parts.push('- Each section must be unique and information-rich');
-    parts.push('- Use professional engineering language');
-    parts.push('- Include regulation numbers where applicable');
+    // Output format
+    parts.push('=== OUTPUT FORMAT ===');
+    parts.push('1. AT A GLANCE CARD: loadKw (loadPower/1000), loadIb (Ib with unit), Cable, Device, VD (✓/✗), Zs, Compliance, Notes');
+    parts.push('2. 9 SECTIONS: Circuit Summary, Load Details, Cable Selection & Calc, Device Selection, Compliance, Justification, Installation, Safety, Testing');
     parts.push('');
     
-    // Design rules
-    parts.push('=== DESIGN RULES ===');
-    parts.push('1. Cable sizing: Ib ≤ In ≤ Iz (Reg 433.1.1)');
-    parts.push('2. Voltage drop: ≤3% lighting, ≤5% power (Reg 525.1)');
-    parts.push('3. Earth fault protection: Zs ≤ max Zs (Reg 411.3.2)');
-    parts.push('4. Socket circuits require RCBO protection for 30mA RCD (Reg 411.3.3)');
-    parts.push('5. Bathroom circuits require RCBO protection for RCD (Reg 701.411.3.3)');
-    parts.push('6. Use reference method tables for Iz calculation');
-    parts.push('7. Calculate voltage drop per Appendix 4 tables');
-    parts.push('8. CPC sizing per Reg 543.1.1');
+    // Core design rules
+    parts.push('=== CORE RULES ===');
+    parts.push('• Ib ≤ In ≤ Iz (433.1.1) | VD: ≤3% lighting, ≤5% power (525.1) | Zs ≤ max (411.3.2)');
+    parts.push('• RCBO mandatory: ALL sockets (411.3.3), ALL bathroom circuits (701.411.3.3)');
+    parts.push('• Cable sizes: T&E (1.5-16mm²), SWA (1.5-95mm²) - round UP to nearest valid');
+    parts.push('• CPC per Table 54.7: 1.5→1.0, 2.5→1.5, 4→2.5, 6→2.5, 10→4, 16→6mm²');
     parts.push('');
 
-    // Output requirements (PHASE 3 & 4: Add installation guidance and reasoning)
-    parts.push('=== OUTPUT REQUIREMENTS ===');
-    parts.push('- Provide ALL calculations (Ib, In, Iz, VD, Zs)');
-    parts.push('- Justify EVERY selection with regulation numbers');
-    parts.push('- Include comprehensive installation guidance (routing, termination, testing)');
-    parts.push('- Explain your design reasoning and compliance checks');
-    parts.push('- Use frontend pre-calculated values as starting hints');
-    parts.push('- Ensure voltageDrop.compliant = true');
-    parts.push('- Match circuit count exactly');
+    // Auto-correction rules
+    parts.push('=== AUTO-CORRECT (SILENT) ===');
+    parts.push('1. 3-phase MUST use 400V/415V (never 230V)');
+    parts.push('2. Motors: FLC=(kW×1000)/(√3×V×0.85×0.9), Ib=FLC×1.25, Type D MCB');
+    parts.push('3. Socket/bathroom circuits: SET type="RCBO" (never MCB)');
+    parts.push('4. Outdoor/buried: MUST use SWA (never T&E)');
+    parts.push('5. Document all corrections in justifications.corrections');
     parts.push('');
     
-    // CRITICAL ENGINEERING VALIDATION
-    parts.push('=== CRITICAL ENGINEERING VALIDATION (AUTO-CORRECT SILENTLY) ===');
-    parts.push('');
-    parts.push('1. THREE-PHASE VOLTAGE ENFORCEMENT:');
-    parts.push('   - 3-phase circuits MUST use 400V or 415V ONLY (never 230V)');
-    parts.push('   - Auto-correct: If phases="three" and voltage ≠ 400/415, SET voltage=400V');
-    parts.push('   - Single-phase circuits use 230V');
-    parts.push('');
-    parts.push('2. MOTOR FULL LOAD CURRENT (FLC) CALCULATION:');
-    parts.push('   - Motors: Calculate FLC = (Power_kW × 1000) / (√3 × Voltage × PF × Efficiency)');
-    parts.push('   - PF (power factor) = 0.85 typical for motors');
-    parts.push('   - Efficiency = 0.90 typical');
-    parts.push('   - Example: 5.5kW motor at 400V → FLC = (5500) / (1.732 × 400 × 0.85 × 0.90) = 10.4A');
-    parts.push('   - Design current Ib = FLC × 1.25 (motor starting allowance)');
-    parts.push('   - Protection device: Use Type D MCB rated at Ib (to handle 10-14x FLC starting surge)');
-    parts.push('');
-    parts.push('=== MOTOR CIRCUIT SPECIAL RULES ===');
-    parts.push('- If loadType contains "motor" or "pump" or "compressor":');
-    parts.push('  1. Calculate motor FLC = (Power_kW × 1000) / (√3 × 400 × 0.85 × 0.90) for 3-phase');
-    parts.push('  2. Calculate motor FLC = (Power_kW × 1000) / (230 × 0.95) for single-phase');
+    // Field requirements
+    parts.push('=== REQUIRED FIELDS ===');
+    parts.push('Copy from input: loadPower, phases, cableLength. Set: voltage (230V single/400V three), installationMethod, rcdProtected, circuitNumber (1+), full cableType description.');
+
+    return parts.join('\n');
+  }
     parts.push('  3. Design current Ib = FLC × 1.25 (starting allowance per Reg 552.1.1)');
     parts.push('  4. Protection device: Type D MCB to handle 10-14x FLC starting surge');
     parts.push('  5. Cable sizing: Use Ib for current-carrying capacity check');
@@ -267,7 +216,7 @@ export class AIDesigner {
   }
 
   /**
-   * Build optimized system prompt for batch processing
+   * Build optimized system prompt for batch processing (OPTIMIZED - 50% reduction)
    */
   private buildBatchSystemPrompt(
     context: RAGContext,
@@ -277,12 +226,11 @@ export class AIDesigner {
   ): string {
     const parts: string[] = [];
 
-    parts.push('You are a BS 7671:2018+A2:2022 electrical circuit design expert.');
-    parts.push(`Designing batch ${batchNumber}/${totalBatches} with ${circuitCount} circuits.`);
+    parts.push(`BS 7671:2018+A2:2022 expert. Batch ${batchNumber}/${totalBatches}, ${circuitCount} circuits. Design COMPLIANT circuits.`);
     parts.push('');
 
-    // OPTIMIZATION: Reduce RAG context for batches with 6+ circuits
-    const ragLimit = circuitCount >= 6 ? 2 : 3; // Top 2 vs top 3
+    // Reduce RAG for large batches
+    const ragLimit = circuitCount >= 6 ? 2 : 3;
 
     if (context.regulations.length > 0) {
       parts.push('=== KEY REGULATIONS ===');
@@ -297,80 +245,30 @@ export class AIDesigner {
       context.practicalGuides.slice(0, ragLimit).forEach(guide => {
         parts.push(`${guide.primary_topic}: ${guide.content || 'See keywords'}`);
         if (guide.bs7671_regulations?.length > 0) {
-          parts.push(`  Regulations: ${guide.bs7671_regulations.join(', ')}`);
+          parts.push(`  Regs: ${guide.bs7671_regulations.join(', ')}`);
         }
       });
       parts.push('');
     }
 
-    // MANDATORY OUTPUT FORMAT
-    parts.push('=== MANDATORY OUTPUT FORMAT ===');
-    parts.push('For EVERY circuit, you MUST provide:');
-    parts.push('');
-    parts.push('1. AT A GLANCE SUMMARY CARD');
-    parts.push('   - loadKw: MUST calculate from circuit loadPower: loadPower/1000 (e.g., 7360W → 7.36)');
-    parts.push('   - loadIb: Design current Ib as string with A unit (e.g., "32A")');
-    parts.push('   - Cable (size, type)');
-    parts.push('   - Protective Device (type, rating, curve)');
-    parts.push('   - Voltage Drop (value + "✓ Compliant" or "✗ Non-compliant")');
-    parts.push('   - Zs (value + compliance statement)');
-    parts.push('   - Compliance Tick (boolean)');
-    parts.push('   - Notes (future-proofing, special conditions)');
-    parts.push('');
-    parts.push('2. EXACTLY 9 SECTIONS (in order, no repeats):');
-    parts.push('   1. Circuit Summary');
-    parts.push('   2. Load Details');
-    parts.push('   3. Cable Selection & Calculation Breakdown');
-    parts.push('   4. Protective Device Selection');
-    parts.push('   5. Compliance Confirmation');
-    parts.push('   6. Design Justification');
-    parts.push('   7. Installation Guidance');
-    parts.push('   8. Safety Notes');
-    parts.push('   9. Testing & Commissioning Guidance');
-    parts.push('');
-    parts.push('CRITICAL RULES:');
-    parts.push('- Never repeat Installation Guidance or any other section');
-    parts.push('- Each section must be unique and information-rich');
-    parts.push('- Use professional engineering language');
-    parts.push('- Include regulation numbers where applicable');
-    parts.push('');
-
-    // Design rules (same as standard prompt)
-    parts.push('=== DESIGN RULES ===');
-    parts.push('1. Cable sizing: Ib ≤ In ≤ Iz (Reg 433.1.1)');
-    parts.push('2. Voltage drop: ≤3% lighting, ≤5% power (Reg 525.1)');
-    parts.push('3. Earth fault protection: Zs ≤ max Zs (Reg 411.3.2)');
-    parts.push('4. Socket circuits require RCBO protection for 30mA RCD (Reg 411.3.3)');
-    parts.push('5. Bathroom circuits require RCBO protection for RCD (Reg 701.411.3.3)');
-    parts.push('6. Use reference method tables for Iz calculation');
-    parts.push('7. Calculate voltage drop per Appendix 4 tables');
-    parts.push('8. CPC sizing per Reg 543.1.1');
+    // Consolidated format and rules
+    parts.push('=== OUTPUT FORMAT ===');
+    parts.push('1. AT A GLANCE: loadKw (loadPower/1000), loadIb, Cable, Device, VD, Zs, Compliance, Notes');
+    parts.push('2. 9 SECTIONS: Circuit Summary, Load Details, Cable Selection & Calc, Device Selection, Compliance, Justification, Installation, Safety, Testing');
     parts.push('');
     
-    // CRITICAL ENGINEERING VALIDATION (SAME AS SINGLE MODE)
-    parts.push('=== CRITICAL ENGINEERING VALIDATION (AUTO-CORRECT SILENTLY) ===');
-    parts.push('');
-    parts.push('1. THREE-PHASE VOLTAGE: 3-phase MUST use 400V or 415V ONLY');
-    parts.push('2. MOTOR FLC: Calculate FLC = (kW×1000)/(√3×V×0.85×0.90), Ib = FLC×1.25, Type D MCB');
-    parts.push('3. CABLE CSA: T&E: 1.5-16mm², SWA: 1.5-95mm², round UP to nearest valid size');
-    parts.push('4. CPC SIZING: Per Table 54.7, outdoor circuits need larger CPC for Zs');
-    parts.push('5. RCBO MANDATORY: ALL socket circuits = RCBO (never MCB), ALL bathroom circuits = RCBO');
-    parts.push('6. AUTO-CORRECT: If loadType contains "socket" OR specialLocation contains "bathroom", SET type="RCBO"');
-    parts.push('5. SWA ARMOUR: Verify armour CSA meets CPC requirements');
-    parts.push('6. CABLE TYPE: Outdoor/buried MUST use SWA (never T&E)');
-    parts.push('7. AUTO-CORRECT: Silently fix all violations, document in justifications.corrections');
+    parts.push('=== CORE RULES ===');
+    parts.push('• Ib ≤ In ≤ Iz (433.1.1) | VD: ≤3% light, ≤5% power (525.1) | Zs ≤ max (411.3.2)');
+    parts.push('• RCBO: sockets (411.3.3), bathrooms (701.411.3.3) | Cables: T&E 1.5-16mm², SWA 1.5-95mm²');
+    parts.push('• CPC Table 54.7 | 3-phase=400V/415V | Motors: FLC calc, Type D | Outdoor=SWA only');
     parts.push('');
 
-    parts.push('=== OUTPUT REQUIREMENTS ===');
-    parts.push('- Design ALL circuits in this batch');
-    parts.push('- ALWAYS copy loadPower from input');
-    parts.push('- ALWAYS copy phases from input (single or three)');
-    parts.push('- ALWAYS set voltage (230V single-phase, 400V/415V three-phase)');
-    parts.push('- ALWAYS copy cableLength from input');
-    parts.push('- ALWAYS provide installationMethod (e.g., "Method C - clipped direct")');
-    parts.push('- ALWAYS set rcdProtected (true if RCBO or special location requires RCD)');
-    parts.push('- ALWAYS generate full cableType description');
-    parts.push('- ALWAYS use RCBO for socket outlets and bathroom circuits (not plain MCB)');
+    parts.push('=== AUTO-CORRECT ===');
+    parts.push('Silently fix: 3-phase voltage, socket/bathroom RCBO, motor FLC, cable types, outdoor SWA. Document in justifications.corrections.');
+    parts.push('');
+    
+    parts.push('=== REQUIRED ===');
+    parts.push('Copy: loadPower, phases, cableLength. Set: voltage, installationMethod, rcdProtected, circuitNumber, cableType. Design ALL circuits in batch.');
 
     return parts.join('\n');
   }
