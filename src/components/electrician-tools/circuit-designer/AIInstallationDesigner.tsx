@@ -97,7 +97,7 @@ export const AIInstallationDesigner = () => {
           }
         },
         headers: {
-          'x-supabase-timeout': '300' // 5-minute timeout for complex designs
+          'x-supabase-timeout': '360' // 6-minute timeout to match edge function limit
         }
       });
 
