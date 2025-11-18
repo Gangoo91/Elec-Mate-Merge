@@ -127,14 +127,6 @@ const ProjectManagerInterface = () => {
     const response = await callAgent('project-manager', request);
     
     if (response?.success && response.data) {
-      // Diagnostic logging
-      console.log('🔍 Project Manager Response:', {
-        hasResponse: !!response.data.response,
-        hasProjectPlan: !!response.data.projectPlan,
-        phasesCount: response.data.projectPlan?.phases?.length,
-        keys: Object.keys(response.data)
-      });
-      
       setResults(response.data);
       toast.success("Project Plan Generated", {
         description: "Your comprehensive project plan is ready"

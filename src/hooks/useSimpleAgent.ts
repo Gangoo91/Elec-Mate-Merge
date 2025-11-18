@@ -61,7 +61,10 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
 
     console.log(`🤖 Calling ${agentName} (${functionName})`, request);
 
-    // Client-side progress simulation
+    // Identify long-running agents
+    const isLongRunningAgent = agent === 'project-manager' || agent === 'health-safety';
+
+    // Client-side progress simulation with better feedback
     const progressTimer = setInterval(() => {
       const elapsed = Date.now() - startTime;
       
@@ -69,14 +72,30 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
         setProgress({ stage: 'initializing', message: 'Starting up...' });
       } else if (elapsed < 30000) {
         setProgress({ stage: 'rag', message: 'Searching BS 7671 regulations...' });
-      } else if (elapsed < 60000) {
-        setProgress({ stage: 'ai', message: 'Generating detailed procedures...' });
+      } else if (elapsed < 90000) {
+        setProgress({ 
+          stage: 'ai', 
+          message: isLongRunningAgent 
+            ? 'Generating comprehensive plan (this may take 2-3 minutes)...' 
+            : 'Generating detailed procedures...'
+        });
+      } else if (elapsed < 150000) {
+        setProgress({ 
+          stage: 'validation', 
+          message: 'Almost there - finalising details...' 
+        });
       } else {
-        setProgress({ stage: 'validation', message: 'Verifying regulation compliance...' });
+        setProgress({ 
+          stage: 'validation', 
+          message: 'Completing final checks...' 
+        });
       }
     }, 1000);
 
     try {
+      // Supabase client doesn't support custom timeouts/signals directly
+      // The function timeout is already set to 280s on the backend
+      // We just need to wait longer than that
       const { data, error: invokeError } = await supabase.functions.invoke(functionName, {
         body: request
       });
@@ -102,13 +121,19 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
 
     } catch (err) {
       clearInterval(progressTimer);
-      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
-      console.error(`❌ ${agentName} error:`, errorMessage);
+      let errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
       
+      // Detect timeout errors and provide helpful message
+      if (errorMessage.includes('timeout') || errorMessage.includes('FunctionsHttpError')) {
+        errorMessage = `${agentName} is taking longer than expected. This sometimes happens with complex projects. Please try again or simplify your request.`;
+      }
+      
+      console.error(`❌ ${agentName} error:`, errorMessage);
       setError(errorMessage);
       
       toast.error(`${agentName} failed`, {
-        description: errorMessage
+        description: errorMessage,
+        duration: 5000
       });
 
       return null;
