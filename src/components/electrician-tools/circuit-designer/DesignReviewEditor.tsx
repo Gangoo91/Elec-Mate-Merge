@@ -1170,33 +1170,33 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       className={`border-b border-border/50 hover:bg-muted/50 cursor-pointer transition-colors ${selectedCircuit === idx ? 'bg-primary/10' : ''}`}
                       onClick={() => setSelectedCircuit(idx)}
                     >
-                      <td className="py-3 px-2">
+                      <td className="py-3 px-2 text-left">
                         <span className="font-mono font-semibold text-primary">C{circuit.circuitNumber}</span>
                       </td>
-                      <td className="py-3 px-2">
+                      <td className="py-3 px-2 text-left">
                         <div>
                           <div className="font-medium">{circuit.name}</div>
                           <div className="text-xs text-muted-foreground capitalize">{circuit.loadType}</div>
                         </div>
                       </td>
-                      <td className="py-3 px-2">
+                      <td className="py-3 px-2 text-left">
                         <div>
                           <div className="font-medium">{(circuit.loadPower / 1000).toFixed(1)}kW</div>
                           <div className="text-xs text-muted-foreground">{circuit.calculations?.Ib?.toFixed(1)}A</div>
                         </div>
                       </td>
-                      <td className="py-3 px-2">
+                      <td className="py-3 px-2 text-left">
                         <div className="text-xs">
                           <div className="font-medium">{circuit.cableSize ?? 'N/A'}mm²</div>
                           <div className="text-muted-foreground">{circuit.cableLength ?? 0}m</div>
                         </div>
                       </td>
-                      <td className="py-3 px-2">
+                      <td className="py-3 px-2 text-left">
                         <Badge variant="outline" className="text-xs">
                           {circuit.protectionDevice?.rating}A {circuit.protectionDevice?.curve}
                         </Badge>
                       </td>
-                      <td className="py-3 px-2">
+                      <td className="py-3 px-2 text-left">
                         {hasCompliance ? (
                           <Badge variant="success" className="text-xs gap-1">
                             <CheckCircle2 className="h-3 w-3" />
