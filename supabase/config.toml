@@ -13,6 +13,11 @@ timeout_sec = 360
 verify_jwt = false
 timeout_sec = 360
 
+# Installation Method Statement Agent (ISOLATED from AI RAMS)
+[functions.installation-method-agent]
+verify_jwt = false
+timeout_sec = 360
+
 [functions.visual-analysis-rag-enhanced]
 verify_jwt = false
 timeout_sec = 180
