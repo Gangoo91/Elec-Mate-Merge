@@ -529,8 +529,19 @@ export class AIDesigner {
     parts.push(JSON.stringify(originalDesign.circuits.map(c => ({
       name: c.name,
       cableSize: c.cableSize,
-      protectionRating: c.protectionDevice.rating,
-      calculations: c.calculations
+      protectionRating: c.protectionDevice?.rating || 'unknown',
+      calculations: {
+        ...c.calculations,
+        // Ensure these objects always exist for correction logic
+        voltageDrop: c.calculations.voltageDrop || { 
+          percent: 0, 
+          compliant: false, 
+          limit: 5,
+          warning: 'Missing from AI response - using defaults'
+        },
+        zs: c.calculations.zs !== undefined ? c.calculations.zs : 0,
+        maxZs: c.calculations.maxZs !== undefined ? c.calculations.maxZs : 0
+      }
     })), null, 2));
     parts.push('');
     parts.push('=== FIX INSTRUCTIONS ===');

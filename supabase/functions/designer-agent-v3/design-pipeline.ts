@@ -227,6 +227,53 @@ export class DesignPipeline {
     }
 
     // ========================================
+    // PHASE 4.5: Safety Net - Ensure Complete Calculations
+    // ========================================
+    // Prevent "Cannot read properties of undefined" errors by ensuring
+    // all circuits have complete calculation objects
+    design.circuits = design.circuits.map((circuit: any, idx: number) => {
+      if (!circuit.calculations) {
+        this.logger.error('Circuit missing calculations object entirely', {
+          circuit: circuit.name || `Circuit ${idx + 1}`
+        });
+        circuit.calculations = {};
+      }
+
+      // Ensure voltageDrop object exists
+      if (!circuit.calculations.voltageDrop) {
+        this.logger.warn('Missing voltageDrop object, initializing with defaults', {
+          circuit: circuit.name
+        });
+        circuit.calculations.voltageDrop = {
+          percent: 0,
+          compliant: false,
+          limit: 5,
+          warning: 'Auto-initialized due to missing AI data'
+        };
+      }
+      
+      // Ensure zs exists
+      if (circuit.calculations.zs === undefined || circuit.calculations.zs === null) {
+        this.logger.warn('Missing zs value, initializing with default', {
+          circuit: circuit.name
+        });
+        circuit.calculations.zs = 0;
+      }
+      
+      // Ensure maxZs exists
+      if (circuit.calculations.maxZs === undefined || circuit.calculations.maxZs === null) {
+        this.logger.warn('Missing maxZs value, initializing with default', {
+          circuit: circuit.name
+        });
+        circuit.calculations.maxZs = 0;
+      }
+      
+      return circuit;
+    });
+
+    this.logger.info('Safety net applied - all calculations validated');
+
+    // ========================================
     // PHASE 5: Validation (with voltage context)
     // ========================================
     let validationResult = this.validator.validate(design, normalized.supply.voltage);

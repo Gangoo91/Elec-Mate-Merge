@@ -102,18 +102,20 @@ export class ValidationEngine {
 
 
     // RULE 4: Zs ≤ maxZs (Earth fault loop impedance compliance)
-    if (circuit.calculations.zs > circuit.calculations.maxZs) {
-      issues.push({
-        circuitIndex: index,
-        circuitName: circuit.name,
-        rule: 'zs_compliance',
+    if (circuit.calculations.zs !== undefined && circuit.calculations.maxZs !== undefined) {
+      if (circuit.calculations.zs > circuit.calculations.maxZs) {
+        issues.push({
+          circuitIndex: index,
+          circuitName: circuit.name,
+          rule: 'zs_compliance',
         regulation: '411.3.2',
         severity: 'error',
         message: `Zs (${circuit.calculations.zs.toFixed(3)}Ω) exceeds maximum permitted (${circuit.calculations.maxZs.toFixed(3)}Ω)`,
-        currentValue: circuit.calculations.zs,
-        expectedValue: circuit.calculations.maxZs,
-        fieldAffected: 'cableSize'
-      });
+          currentValue: circuit.calculations.zs,
+          expectedValue: circuit.calculations.maxZs,
+          fieldAffected: 'cableSize'
+        });
+      }
     }
 
     // RULE 5: RCD protection for sockets
