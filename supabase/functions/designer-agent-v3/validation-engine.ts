@@ -84,8 +84,9 @@ export class ValidationEngine {
       });
     }
 
+
     // RULE 3: Voltage drop compliance
-    if (!circuit.calculations.voltageDrop.compliant) {
+    if (circuit.calculations.voltageDrop && !circuit.calculations.voltageDrop.compliant) {
       issues.push({
         circuitIndex: index,
         circuitName: circuit.name,
@@ -98,6 +99,7 @@ export class ValidationEngine {
         fieldAffected: 'cableSize'
       });
     }
+
 
     // RULE 4: Zs ≤ maxZs (Earth fault loop impedance compliance)
     if (circuit.calculations.zs > circuit.calculations.maxZs) {
