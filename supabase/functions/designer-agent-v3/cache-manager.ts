@@ -68,6 +68,7 @@ export class CacheManager {
   /**
    * Get cached design by key
    * Returns null if not found or expired (>7 days)
+   * Validates that cached design has valid circuits
    */
   async get(key: string): Promise<CachedDesign | null> {
     const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
@@ -81,6 +82,24 @@ export class CacheManager {
 
     if (error || !data) {
       return null;
+    }
+
+    // Validate cached design has circuits
+    if (!data.design || 
+        !data.design.circuits || 
+        !Array.isArray(data.design.circuits) || 
+        data.design.circuits.length === 0) {
+      this.logger.warn('Invalid cached design - circuits missing or empty', { 
+        key: key.slice(0, 12),
+        hasDesign: !!data.design,
+        hasCircuits: !!data.design?.circuits,
+        circuitCount: data.design?.circuits?.length || 0
+      });
+      
+      // Delete corrupt cache entry (fire-and-forget)
+      this.delete(key).catch(() => {});
+      
+      return null; // Force fresh generation
     }
 
     // Increment hit counter (fire-and-forget)
@@ -101,8 +120,23 @@ export class CacheManager {
 
   /**
    * Store design in cache
+   * Validates design before storing to prevent corrupt cache entries
    */
   async set(key: string, design: any): Promise<void> {
+    // Validate design before caching
+    if (!design || 
+        !design.circuits || 
+        !Array.isArray(design.circuits) || 
+        design.circuits.length === 0) {
+      this.logger.warn('Refusing to cache invalid design', { 
+        key: key.slice(0, 12),
+        hasDesign: !!design,
+        hasCircuits: !!design?.circuits,
+        circuitCount: design?.circuits?.length || 0
+      });
+      return; // Skip caching
+    }
+
     const now = new Date().toISOString();
     
     await this.supabase
@@ -117,7 +151,23 @@ export class CacheManager {
         onConflict: 'cache_key' 
       });
 
-    this.logger.info('Cache stored', { key: key.slice(0, 12) });
+    this.logger.info('Cache stored', { 
+      key: key.slice(0, 12),
+      circuits: design.circuits.length 
+    });
+  }
+
+  /**
+   * Delete cache entry by key
+   * Used to clean up corrupt or invalid cache entries
+   */
+  async delete(key: string): Promise<void> {
+    await this.supabase
+      .from('circuit_design_cache_v3')
+      .delete()
+      .eq('cache_key', key);
+    
+    this.logger.info('Cache entry deleted', { key: key.slice(0, 12) });
   }
 
   /**
