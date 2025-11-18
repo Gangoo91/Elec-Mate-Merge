@@ -6,7 +6,7 @@ import { DesignInputs } from "@/types/installation-design";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
+import { Trash2, Loader2 } from "lucide-react";
 import { clearDesignCache } from "@/utils/clearDesignCache";
 import { useCircuitDesignGeneration } from "@/hooks/useCircuitDesignGeneration";
 
@@ -22,16 +22,26 @@ export const AIInstallationDesigner = () => {
   // Use the job polling hook
   const { job, progress, status, currentStep, designData: jobDesignData, error: jobError } = useCircuitDesignGeneration(jobId);
 
-  // Monitor job completion
+  // Monitor job completion with race condition fix
   useEffect(() => {
     if (!job) return;
 
     if (status === 'complete' && jobDesignData) {
       console.log("✅ Design job completed:", jobDesignData);
-      setDesignData(jobDesignData);
-      setCurrentView('results');
-      setIsProcessing(false);
-      toast.success("Circuit design completed successfully!");
+      
+      // FIX: Use functional update to guarantee sequential state updates
+      setDesignData(prevData => {
+        const newData = jobDesignData;
+        
+        // Only change view after data is guaranteed to be set
+        setTimeout(() => {
+          setCurrentView('results');
+          setIsProcessing(false);
+          toast.success("Circuit design completed successfully!");
+        }, 0);
+        
+        return newData;
+      });
     } else if (status === 'failed') {
       console.error("❌ Design job failed:", jobError);
       setCurrentView('input');
@@ -174,11 +184,23 @@ export const AIInstallationDesigner = () => {
         />
       )}
 
-      {currentView === 'results' && designData && (
-        <DesignReviewEditor 
-          design={designData}
-          onReset={handleNewDesign}
-        />
+      {currentView === 'results' && (
+        <>
+          {/* DEFENSIVE: Only render if we have valid circuit data */}
+          {designData?.circuits?.length > 0 ? (
+            <DesignReviewEditor 
+              design={designData}
+              onReset={handleNewDesign}
+            />
+          ) : (
+            <div className="flex items-center justify-center min-h-[400px]">
+              <div className="text-center">
+                <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
+                <p className="text-muted-foreground">Loading design data...</p>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

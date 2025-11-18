@@ -37,6 +37,25 @@ const fmt = (n: unknown, dp = 1, fallback = '—') =>
   (typeof n === 'number' && !isNaN(n) ? n.toFixed(dp) : fallback);
 
 export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps) => {
+  // DEFENSIVE: Early return if circuits are missing or invalid
+  if (!design.circuits || design.circuits.length === 0) {
+    return (
+      <div className="container mx-auto p-4 sm:p-6">
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>No Circuit Data</AlertTitle>
+          <AlertDescription>
+            The design data is incomplete or missing circuits. Please try generating the design again.
+          </AlertDescription>
+        </Alert>
+        <Button onClick={onReset} className="mt-4">
+          <Zap className="mr-2 h-4 w-4" />
+          Start New Design
+        </Button>
+      </div>
+    );
+  }
+
   const navigate = useNavigate();
   const [selectedCircuit, setSelectedCircuit] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
@@ -760,10 +779,13 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
     }
   };
 
-  const allCompliant = design.circuits.every(c => 
-    c.calculations.voltageDrop.compliant && 
+  // DEFENSIVE: Safe compliance check with optional chaining and fallbacks
+  const allCompliant = design.circuits?.every(c => 
+    c.calculations?.voltageDrop?.compliant && 
+    c.calculations?.zs !== undefined &&
+    c.calculations?.maxZs !== undefined &&
     c.calculations.zs < c.calculations.maxZs
-  );
+  ) ?? false;
 
   const handleExportPDF = async () => {
     setIsExporting(true);
