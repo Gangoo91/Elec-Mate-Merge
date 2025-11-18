@@ -7,6 +7,8 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 
 interface Phase {
   phase: string;
+  phaseName?: string;
+  phaseNumber?: number;
   duration: number;
   durationUnit?: string;
   startDay?: string;
@@ -42,7 +44,9 @@ const PhaseTimeline = ({ phases, startDate, criticalPath = [] }: PhaseTimelinePr
         actualStartDay: phaseStartDay,
         startDate: phaseStart,
         endDate: phaseEnd,
-        isCritical: phase.criticalPath || criticalPath.some(cp => phase.phase.includes(cp))
+        isCritical: phase.criticalPath || criticalPath.some(cp => 
+          (phase.phaseName || phase.phase || '').toString().includes(cp)
+        )
       };
     });
   }, [phases, startDate, criticalPath]);
@@ -89,7 +93,7 @@ const PhaseTimeline = ({ phases, startDate, criticalPath = [] }: PhaseTimelinePr
                   <span className={`font-semibold text-base sm:text-sm ${
                     phase.isCritical ? 'text-pink-400' : 'text-gray-100'
                   }`}>
-                    {phase.phase}
+                    {phase.phaseName || phase.phase || `Phase ${idx + 1}`}
                   </span>
                   {phase.isCritical && (
                     <Badge variant="outline" className="px-2 py-1 bg-pink-400/20 text-pink-400 border-pink-400/40 text-xs sm:text-[10px] font-medium">
@@ -120,7 +124,7 @@ const PhaseTimeline = ({ phases, startDate, criticalPath = [] }: PhaseTimelinePr
                 >
                   {/* Phase info inside bar */}
                   <span className="text-sm sm:text-xs font-bold text-gray-900 truncate flex-1">
-                    {phase.phase.split(' ').slice(0, 3).join(' ')}
+                    {(phase.phaseName || phase.phase || '').toString().split(' ').slice(0, 3).join(' ')}
                   </span>
                   
                   <div className="flex items-center gap-2 ml-2">

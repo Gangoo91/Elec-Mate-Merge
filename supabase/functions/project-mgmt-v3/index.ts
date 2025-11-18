@@ -713,13 +713,30 @@ Include phases, resources, compliance requirements, and risk management.`;
         ...(risks || [])
       ],
       recommendations: recommendations || [],
-      phases: (projectPlan?.phases || []).map((phase: any, idx: number) => ({
-        ...phase,
-        phase: idx + 1,
-        tasks: phase.tasks || [],
-        resources: phase.resources || [],
-        duration: phase.duration || '1 day'
-      })),
+      phases: (projectPlan?.phases || []).map((phase: any, idx: number) => {
+        // Validate phase has required fields
+        if (!phase.phase || typeof phase.phase !== 'string') {
+          logger.warn(`Phase ${idx} missing name, using default`, { phase });
+          phase.phase = `Phase ${idx + 1}`;
+        }
+        if (!phase.tasks || !Array.isArray(phase.tasks)) {
+          logger.warn(`Phase ${idx} missing tasks array`, { phase });
+          phase.tasks = [];
+        }
+        if (typeof phase.duration !== 'number') {
+          logger.warn(`Phase ${idx} has invalid duration`, { phase });
+          phase.duration = 1;
+        }
+        
+        return {
+          ...phase,
+          phaseNumber: idx + 1,
+          phaseName: phase.phase,
+          tasks: phase.tasks || [],
+          resources: phase.resources || [],
+          duration: phase.duration || 1
+        };
+      }),
       milestones: (projectPlan?.phases || []).flatMap((p: any) => 
         (p.milestones || []).map((m: string) => ({
           milestone: m,
