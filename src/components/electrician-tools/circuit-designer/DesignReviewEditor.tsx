@@ -1768,51 +1768,6 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 </ul>
               </div>
             )}
-
-            {/* Installation Guidance */}
-            {currentCircuit.installationGuidance && (
-              <div className="space-y-3 bg-card/50 p-4 rounded-lg border border-primary/10">
-                <div className="flex items-center gap-2">
-                  <Wrench className="h-5 w-5 text-primary" />
-                  <h4 className="font-semibold text-white">Installation Guidance</h4>
-                </div>
-                
-                <div className="space-y-3 text-sm">
-                  <div className="space-y-1">
-                    <p className="font-medium text-white/90">Cable Routing</p>
-                    <p className="text-white/70">{currentCircuit.installationGuidance.cableRouting}</p>
-                  </div>
-                  
-                  <div className="space-y-1">
-                    <p className="font-medium text-white/90">Termination Advice</p>
-                    <p className="text-white/70">{currentCircuit.installationGuidance.terminationAdvice}</p>
-                  </div>
-                  
-                  <div className="space-y-1">
-                    <p className="font-medium text-white/90">Testing Requirements</p>
-                    <p className="text-white/70">{currentCircuit.installationGuidance.testingRequirements}</p>
-                  </div>
-                  
-                  {currentCircuit.installationGuidance.safetyNotes?.length > 0 && (
-                    <div className="space-y-2">
-                      <p className="font-medium text-white/90">Safety Notes</p>
-                      <ul className="space-y-1 list-disc list-inside text-white/70">
-                        {currentCircuit.installationGuidance.safetyNotes.map((note, i) => (
-                          <li key={i}>{note}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  
-                  {currentCircuit.installationGuidance.estimatedInstallTime && (
-                    <div className="pt-2 border-t border-white/10">
-                      <p className="font-medium text-white/90">Estimated Install Time</p>
-                      <p className="text-white/70">{currentCircuit.installationGuidance.estimatedInstallTime}</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
           </div>
         </Card>
       ) : (
