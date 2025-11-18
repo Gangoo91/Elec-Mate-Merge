@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Edit2, Save, X, Trash2, ChevronUp, ChevronDown, AlertTriangle, AlertCircle, Clock, Wrench, CheckCircle2, ShieldAlert } from "lucide-react";
+import { Edit2, Save, X, Trash2, ChevronUp, ChevronDown, AlertTriangle, AlertCircle, Clock, Wrench, CheckCircle2, ShieldAlert, BookOpen } from "lucide-react";
 import { InstallationStep } from "@/types/installation-method";
 import { cn } from "@/lib/utils";
 import { EnhancedStepContent } from "./EnhancedStepContent";
@@ -49,6 +49,7 @@ export const InstallationStepCard = ({
   const qualifications = step.qualifications || [];
   const inspectionCheckpoints = (step as any).inspectionCheckpoints || [];
   const toolsRequired = step.toolsRequired || [];
+  const bsReferences = (step as any).bsReferences || [];
 
   return (
     <Card className={cn(
@@ -293,6 +294,29 @@ export const InstallationStepCard = ({
                             </li>
                           ))}
                         </ul>
+                      </div>
+                    )}
+
+                    {/* BS 7671 References - NEW */}
+                    {bsReferences.length > 0 && (
+                      <div className="p-4 bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/30 rounded-xl shadow-sm hover:shadow-md transition-all">
+                        <div className="flex items-start gap-2.5 mb-3">
+                          <div className="p-1.5 bg-blue-500/20 rounded-lg">
+                            <BookOpen className="h-5 w-5 text-blue-400" />
+                          </div>
+                          <div className="font-bold text-base text-foreground">BS 7671 Regulations</div>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {bsReferences.map((ref: string, i: number) => (
+                            <Badge 
+                              key={i} 
+                              variant="outline"
+                              className="bg-blue-500/10 border-blue-500/30 text-blue-400 font-mono text-xs px-3 py-1"
+                            >
+                              {ref}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
                     )}
                   </div>
