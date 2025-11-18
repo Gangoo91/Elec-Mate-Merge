@@ -61,7 +61,7 @@ export const generateMethodStatement = async (
       await delay(800);
     }
     
-    const { data: directData, error: directError } = await supabase.functions.invoke('installer-rag-direct', {
+    const { data: directData, error: directError } = await supabase.functions.invoke('installation-method-agent', {
       body: {
         query: userQuery,
         projectDetails,
@@ -108,19 +108,24 @@ export const generateMethodStatement = async (
       await delay(500);
     }
     
-    // Transform direct RAG output to expected format
+    // Transform installation-method-agent output to expected format
     const installerOutput = {
-      installationSteps: (directData.data?.steps || []).map((step: any, index: number) => ({
-        step: index + 1,
-        stepNumber: index + 1,
+      executiveSummary: directData.data?.executiveSummary || null,
+      materialsList: directData.data?.materialsList || [],
+      testingRequirements: directData.data?.testingRequirements || [],
+      regulatoryReferences: directData.data?.regulatoryReferences || [],
+      installationSteps: (directData.data?.steps || directData.data?.installationSteps || []).map((step: any, index: number) => ({
+        step: step.step || index + 1,
+        stepNumber: step.step || index + 1,
         title: step.title,
-        description: step.detail,
-        content: step.detail,
+        description: step.description || step.detail,
+        content: step.description || step.detail,
         tools: step.tools || [],
         equipmentNeeded: step.tools || [],
         materials: step.materials || [],
-        safetyRequirements: [],
-        qualifications: [],
+        safetyRequirements: step.safetyNotes || [],
+        qualifications: step.qualifications || [],
+        bsReferences: step.bsReferences || [],
         estimatedDuration: 'Not specified',
         riskLevel: 'medium' as const,
         linkedHazards: [],
