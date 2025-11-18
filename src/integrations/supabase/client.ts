@@ -13,5 +13,14 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABL
     storage: localStorage,
     persistSession: true,
     autoRefreshToken: true,
-  }
+  },
+  global: {
+    fetch: (url, options = {}) => {
+      // Set 6-minute timeout for edge functions to prevent premature client timeouts
+      return fetch(url, {
+        ...options,
+        signal: AbortSignal.timeout(360000), // 360 seconds = 6 minutes
+      });
+    },
+  },
 });
