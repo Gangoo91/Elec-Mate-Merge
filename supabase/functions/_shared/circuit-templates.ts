@@ -204,14 +204,30 @@ export function applyTemplate(
   const originalCableSize = design.cableSize;
   const originalCpcSize = design.cpcSize;
   
+  // Helper function to get CPC size based on cable type
+  const getCPCSize = (liveSize: number, cableType: string): number => {
+    const isSWA = cableType.toLowerCase().includes('swa');
+    
+    if (isSWA) {
+      // SWA cables: CPC must equal live conductor size (BS 7671:543.1.1)
+      return liveSize;
+    }
+    
+    // Twin & Earth: reduced CPC per Table 54.7
+    const table54_7: Record<number, number> = {
+      1.5: 1.0, 2.5: 1.5, 4: 2.5, 6: 2.5, 10: 4, 16: 6
+    };
+    return table54_7[liveSize] || liveSize;
+  };
+  
   // Cable upgrade path: 1.5→2.5→4→6→10→16mm²
   const upgradeOptions = [
-    { live: 1.5, cpc: 1.0 },
-    { live: 2.5, cpc: 1.5 },
-    { live: 4, cpc: 2.5 },
-    { live: 6, cpc: 2.5 },
-    { live: 10, cpc: 4 },
-    { live: 16, cpc: 6 }
+    { live: 1.5, cpc: getCPCSize(1.5, design.cableType || 'T&E') },
+    { live: 2.5, cpc: getCPCSize(2.5, design.cableType || 'T&E') },
+    { live: 4, cpc: getCPCSize(4, design.cableType || 'T&E') },
+    { live: 6, cpc: getCPCSize(6, design.cableType || 'T&E') },
+    { live: 10, cpc: getCPCSize(10, design.cableType || 'T&E') },
+    { live: 16, cpc: getCPCSize(16, design.cableType || 'T&E') }
   ];
   
   let upgraded = false;
