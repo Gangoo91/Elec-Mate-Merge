@@ -139,8 +139,7 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
     progress: job?.status === 'failed' ? 0 : (job?.progress || 0), // Show 0% on failure
     status: jobId ? ((job?.status as any) || 'pending') : 'idle',
     currentStep: job?.current_step || '',
-    // DEFENSIVE: Only return designData if it has valid circuits array
-    designData: (job?.design_data?.circuits?.length > 0) ? job?.design_data : null,
+    designData: job?.design_data,
     error: job?.error_message
   };
 };

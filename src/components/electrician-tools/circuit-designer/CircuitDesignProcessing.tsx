@@ -52,13 +52,9 @@ export const CircuitDesignProcessing = ({
     return { icon: '✅', text: 'Finalizing calculations... (complex designs take longer)' };
   };
 
-  // Use external progress/step if available, otherwise use simulated
-  const displayProgress = externalProgress !== undefined && externalProgress > 0 
-    ? externalProgress 
-    : Math.min((elapsedTime / estimatedTime) * 100, 95);
-  
-  const displayStep = externalStep || getStatusMessage().text;
-  const displayIcon = externalStep ? '🤖' : getStatusMessage().icon;
+  const statusMessage = getStatusMessage();
+  const displayProgress = externalProgress !== undefined ? externalProgress : Math.min((elapsedTime / estimatedTime) * 100, 95);
+  const displayStep = externalStep || statusMessage.text;
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4 py-8 animate-fade-in">
@@ -73,18 +69,13 @@ export const CircuitDesignProcessing = ({
 
         {/* Current Stage */}
         <div className="text-center mb-6">
-          <div className="text-4xl mb-3 animate-pulse">{displayIcon}</div>
+          <div className="text-4xl mb-3 animate-pulse">{statusMessage.icon}</div>
           <h2 className="text-2xl font-bold text-foreground mb-2">
             {displayStep}
           </h2>
           <p className="text-muted-foreground">
             Designing {circuitCount} circuit{circuitCount !== 1 ? 's' : ''}
           </p>
-          {externalProgress !== undefined && externalProgress > 0 && (
-            <p className="text-sm text-primary mt-2">
-              {externalProgress}% complete
-            </p>
-          )}
         </div>
 
         {/* Progress Bar */}

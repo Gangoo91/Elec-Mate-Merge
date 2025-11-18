@@ -37,25 +37,6 @@ const fmt = (n: unknown, dp = 1, fallback = '—') =>
   (typeof n === 'number' && !isNaN(n) ? n.toFixed(dp) : fallback);
 
 export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps) => {
-  // DEFENSIVE: Early return if circuits are missing or invalid
-  if (!design.circuits || design.circuits.length === 0) {
-    return (
-      <div className="container mx-auto p-4 sm:p-6">
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>No Circuit Data</AlertTitle>
-          <AlertDescription>
-            The design data is incomplete or missing circuits. Please try generating the design again.
-          </AlertDescription>
-        </Alert>
-        <Button onClick={onReset} className="mt-4">
-          <Zap className="mr-2 h-4 w-4" />
-          Start New Design
-        </Button>
-      </div>
-    );
-  }
-
   const navigate = useNavigate();
   const [selectedCircuit, setSelectedCircuit] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
@@ -779,13 +760,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
     }
   };
 
-  // DEFENSIVE: Safe compliance check with optional chaining and fallbacks
-  const allCompliant = design.circuits?.every(c => 
-    c.calculations?.voltageDrop?.compliant && 
-    c.calculations?.zs !== undefined &&
-    c.calculations?.maxZs !== undefined &&
+  const allCompliant = design.circuits.every(c => 
+    c.calculations.voltageDrop.compliant && 
     c.calculations.zs < c.calculations.maxZs
-  ) ?? false;
+  );
 
   const handleExportPDF = async () => {
     setIsExporting(true);
@@ -1791,6 +1769,50 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               </div>
             )}
 
+            {/* Installation Guidance */}
+            {currentCircuit.installationGuidance && (
+              <div className="space-y-3 bg-card/50 p-4 rounded-lg border border-primary/10">
+                <div className="flex items-center gap-2">
+                  <Wrench className="h-5 w-5 text-primary" />
+                  <h4 className="font-semibold text-white">Installation Guidance</h4>
+                </div>
+                
+                <div className="space-y-3 text-sm">
+                  <div className="space-y-1">
+                    <p className="font-medium text-white/90">Cable Routing</p>
+                    <p className="text-white/70">{currentCircuit.installationGuidance.cableRouting}</p>
+                  </div>
+                  
+                  <div className="space-y-1">
+                    <p className="font-medium text-white/90">Termination Advice</p>
+                    <p className="text-white/70">{currentCircuit.installationGuidance.terminationAdvice}</p>
+                  </div>
+                  
+                  <div className="space-y-1">
+                    <p className="font-medium text-white/90">Testing Requirements</p>
+                    <p className="text-white/70">{currentCircuit.installationGuidance.testingRequirements}</p>
+                  </div>
+                  
+                  {currentCircuit.installationGuidance.safetyNotes?.length > 0 && (
+                    <div className="space-y-2">
+                      <p className="font-medium text-white/90">Safety Notes</p>
+                      <ul className="space-y-1 list-disc list-inside text-white/70">
+                        {currentCircuit.installationGuidance.safetyNotes.map((note, i) => (
+                          <li key={i}>{note}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  {currentCircuit.installationGuidance.estimatedInstallTime && (
+                    <div className="pt-2 border-t border-white/10">
+                      <p className="font-medium text-white/90">Estimated Install Time</p>
+                      <p className="text-white/70">{currentCircuit.installationGuidance.estimatedInstallTime}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </Card>
       ) : (

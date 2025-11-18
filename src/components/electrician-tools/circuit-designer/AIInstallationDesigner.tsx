@@ -1,12 +1,14 @@
+// Force rebuild to deploy designer-agent-v3 structured output updates
 import { useState, useEffect } from "react";
 import { StructuredDesignWizard } from "./structured-input/StructuredDesignWizard";
 import { DesignReviewEditor } from "./DesignReviewEditor";
 import { CircuitDesignProcessing } from "./CircuitDesignProcessing";
 import { DesignInputs } from "@/types/installation-design";
+import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Trash2, Loader2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { clearDesignCache } from "@/utils/clearDesignCache";
 import { useCircuitDesignGeneration } from "@/hooks/useCircuitDesignGeneration";
 
@@ -22,26 +24,16 @@ export const AIInstallationDesigner = () => {
   // Use the job polling hook
   const { job, progress, status, currentStep, designData: jobDesignData, error: jobError } = useCircuitDesignGeneration(jobId);
 
-  // Monitor job completion with race condition fix
+  // Monitor job completion
   useEffect(() => {
     if (!job) return;
 
     if (status === 'complete' && jobDesignData) {
       console.log("✅ Design job completed:", jobDesignData);
-      
-      // FIX: Use functional update to guarantee sequential state updates
-      setDesignData(prevData => {
-        const newData = jobDesignData;
-        
-        // Only change view after data is guaranteed to be set
-        setTimeout(() => {
-          setCurrentView('results');
-          setIsProcessing(false);
-          toast.success("Circuit design completed successfully!");
-        }, 0);
-        
-        return newData;
-      });
+      setDesignData(jobDesignData);
+      setCurrentView('results');
+      setIsProcessing(false);
+      toast.success("Circuit design completed successfully!");
     } else if (status === 'failed') {
       console.error("❌ Design job failed:", jobError);
       setCurrentView('input');
@@ -97,110 +89,183 @@ export const AIInstallationDesigner = () => {
       setCurrentView('processing');
       setIsProcessing(true);
       
-      // Create async job for circuit design
-      const { data: jobData, error: jobError } = await supabase.functions.invoke('create-circuit-design-job', {
+      // Direct synchronous call to designer-agent-v3 with properly formatted data
+      const { data, error } = await supabase.functions.invoke('designer-agent-v3', {
         body: {
-          circuits: inputs.circuits,
+          mode: 'direct-design',
+          projectInfo: {
+            projectName: inputs.projectName || 'Untitled Project',
+            location: inputs.location || 'Not specified',
+            clientName: inputs.clientName,
+            electricianName: inputs.electricianName,
+            installationType: inputs.propertyType || 'domestic'
+          },
           supply: {
-            voltage: inputs.voltage,
-            phases: inputs.phases,
+            voltage: inputs.voltage || 230,
+            phases: inputs.phases || 'single',
+            pfc: inputs.pscc || 16000,
             ze: inputs.ze || 0.35,
-            installationMethod: inputs.installationMethod || 'Method C'
+            earthingSystem: inputs.earthingSystem || 'TN-C-S',
+            consumerUnitType: 'split-load',
+            mainSwitchRating: 100
+          },
+          circuits: inputs.circuits || [],
+          additionalPrompt: inputs.additionalPrompt || '',
+          specialRequirements: [],
+          installationConstraints: {
+            ambientTemp: inputs.ambientTemp || 30,
+            installationMethod: inputs.installationMethod || 'clipped-direct',
+            groupingFactor: inputs.groupingFactor || 1,
+            budget: inputs.budgetLevel || 'standard'
           }
+        },
+        headers: {
+          'x-supabase-timeout': '300' // 5-minute timeout for complex designs
         }
       });
-      
-      if (jobError || !jobData?.jobId) {
-        console.error('Failed to create design job:', jobError);
+
+      if (error) {
+        toast.error('Design generation failed', {
+          description: error.message || 'Please try again'
+        });
         setCurrentView('input');
         setIsProcessing(false);
-        toast.error('Failed to start design generation', {
-          description: jobError?.message || 'Please try again'
-        });
         return;
       }
 
-      console.log('✅ Design job created:', jobData.jobId);
-      setJobId(jobData.jobId);
+      if (!data?.success || !data?.circuits) {
+        toast.error('Design generation failed', {
+          description: data?.error || 'No design data received'
+        });
+        setCurrentView('input');
+        setIsProcessing(false);
+        return;
+      }
+
+      console.log('✅ Circuit design completed:', data.circuits);
       
-      toast.success('Design generation started', {
-        description: 'Processing in background...'
+      // Success! Store design and show results - ensure all backend fields are preserved
+      const designWithMetadata = {
+        circuits: data.circuits.map(circuit => ({
+          ...circuit,
+          // Ensure critical fields are present and properly typed
+          loadPower: circuit.loadPower,
+          phases: circuit.phases,
+          cableLength: circuit.cableLength,
+          installationMethod: circuit.installationMethod || circuit.installMethod,
+          installationGuidance: circuit.installationGuidance,
+          structuredOutput: circuit.structuredOutput  // PRESERVE structured output from backend
+        })),
+        projectInfo: {
+          projectName: inputs.projectName || 'Untitled Project',
+          location: inputs.location || 'Not specified',
+          clientName: inputs.clientName,
+          electricianName: inputs.electricianName,
+          installationType: inputs.propertyType || 'domestic'
+        },
+        supply: {
+          voltage: inputs.voltage || 230,
+          phases: inputs.phases || 'single',
+          pfc: inputs.pscc || 16000,
+          ze: inputs.ze || 0.35,
+          earthingSystem: inputs.earthingSystem || 'TN-C-S',
+          consumerUnitType: 'split-load',
+          mainSwitchRating: 100
+        }
+      };
+
+      setDesignData(designWithMetadata);
+      sessionStorage.setItem('circuit-design-data', JSON.stringify(designWithMetadata));
+      setCurrentView('results');
+      setIsProcessing(false);
+
+      // Success toast with cache and auto-fix info
+      const cacheInfo = data.fromCache ? ' (from cache)' : '';
+      const autoFixInfo = data.autoFixApplied ? ' (auto-fixed)' : '';
+      toast.success('Design generated successfully' + cacheInfo + autoFixInfo, {
+        description: `${data.circuits?.length || 0} circuit${(data.circuits?.length || 0) !== 1 ? 's' : ''} designed in ${(data.processingTime / 1000).toFixed(1)}s`
       });
-    } catch (error) {
-      console.error('Error starting design:', error);
+      
+    } catch (error: any) {
+      console.error('Design generation error:', error);
+      toast.error('Design generation failed', {
+        description: error.message || 'Please try again'
+      });
       setCurrentView('input');
       setIsProcessing(false);
-      toast.error('Failed to start design generation', {
-        description: error instanceof Error ? error.message : 'Please try again'
-      });
     }
   };
 
-  const handleNewDesign = () => {
-    setCurrentView('input');
-    setDesignData(null);
-    setJobId(null);
-    sessionStorage.removeItem('design-user-request');
-    sessionStorage.removeItem('design-total-circuits');
-  };
-
-  // Restore state from sessionStorage on mount
+  // Load design data from session on mount
   useEffect(() => {
-    const savedRequest = sessionStorage.getItem('design-user-request');
-    const savedCircuits = sessionStorage.getItem('design-total-circuits');
-    if (savedRequest) setUserRequest(savedRequest);
-    if (savedCircuits) setTotalCircuits(Number(savedCircuits));
+    const savedData = sessionStorage.getItem('circuit-design-data');
+    if (savedData) {
+      try {
+        setDesignData(JSON.parse(savedData));
+      } catch (e) {
+        console.error('Failed to parse saved design data:', e);
+      }
+    }
   }, []);
 
+  const handleCancel = () => {
+    setCurrentView('input');
+    setIsProcessing(false);
+    sessionStorage.removeItem('circuit-design-data');
+    toast.info('Design generation cancelled');
+  };
+
+  const handleRetry = () => {
+    setCurrentView('input');
+    sessionStorage.removeItem('circuit-design-data');
+  };
+
+  const handleTaskAccept = (contextData: any, instruction: string | null) => {
+    console.log('Task accepted from agent:', contextData, instruction);
+    // TODO: Pre-fill form with data from other agents
+  };
+
   return (
-    <div className="space-y-4 animate-fade-in">
-      {/* Cache Clear Button - Always visible in top right */}
-      <div className="flex justify-end mb-2">
-        <Button
-          variant="outline"
-          size="sm"
+    <div className="min-h-screen bg-background space-y-6">
+      {/* Agent Inbox */}
+      <AgentInbox currentAgent="designer" onTaskAccept={handleTaskAccept} />
+
+      {/* Clear Cache Button - Development Tool */}
+      <div className="flex justify-end">
+        <Button 
+          variant="outline" 
+          size="sm" 
           onClick={handleClearCache}
           disabled={isClearingCache}
           className="gap-2"
         >
           <Trash2 className="h-4 w-4" />
-          {isClearingCache ? 'Clearing...' : 'Clear Cache'}
+          {isClearingCache ? 'Clearing...' : 'Clear Design Cache'}
         </Button>
       </div>
 
       {currentView === 'input' && (
-        <StructuredDesignWizard 
-          onGenerate={handleGenerate}
-          isProcessing={isProcessing}
-        />
+        <StructuredDesignWizard onGenerate={handleGenerate} isProcessing={isProcessing} />
       )}
 
       {currentView === 'processing' && (
         <CircuitDesignProcessing 
-          circuitCount={totalCircuits}
-          estimatedTime={totalCircuits * 8}
+          circuitCount={totalCircuits || 0}
+          estimatedTime={
+            // Estimate based on circuit count
+            totalCircuits <= 3 ? 20 :
+            totalCircuits <= 10 ? 40 : 60
+          }
           progress={progress}
           currentStep={currentStep}
         />
       )}
 
-      {currentView === 'results' && (
-        <>
-          {/* DEFENSIVE: Only render if we have valid circuit data */}
-          {designData?.circuits?.length > 0 ? (
-            <DesignReviewEditor 
-              design={designData}
-              onReset={handleNewDesign}
-            />
-          ) : (
-            <div className="flex items-center justify-center min-h-[400px]">
-              <div className="text-center">
-                <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
-                <p className="text-muted-foreground">Loading design data...</p>
-              </div>
-            </div>
-          )}
-        </>
+      {currentView === 'results' && designData && (
+        <DesignReviewEditor 
+          design={designData}
+          onReset={handleRetry}
+        />
       )}
     </div>
   );

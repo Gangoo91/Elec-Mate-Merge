@@ -3,10 +3,11 @@
  * All edge functions MUST import from this file to ensure version consistency
  */
 
-// Supabase Client - Using npm: specifier (more reliable than esm.sh)
-export { createClient } from 'npm:@supabase/supabase-js@2.49.4';
+// Supabase Client - Locked to v2.49.4
+export { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
-// HTTP Server - Modern Deno built-in
+// HTTP Server - Locked to std@0.168.0
+// Modern Deno uses built-in Deno.serve instead of importing from std/http
 export const serve = Deno.serve;
 
 // CORS Headers

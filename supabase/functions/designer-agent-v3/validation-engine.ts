@@ -15,7 +15,6 @@ export class ValidationEngine {
   /**
    * Validate entire design against BS 7671 rules
    * PHASE 5: Enhanced with voltage-specific validation
-   * PHASE 1 CRITICAL: Auto-correct non-compliant values before validation
    */
   validate(design: Design, voltage?: number): ValidationResult {
     this.logger.info('Validation starting', {
@@ -24,21 +23,6 @@ export class ValidationEngine {
     });
 
     const issues: ValidationIssue[] = [];
-    let autoFixApplied = false;
-    
-    // PHASE 1: Auto-correct non-compliant circuits BEFORE validation
-    design.circuits.forEach((circuit, idx) => {
-      const corrected = this.autoCorrectCircuit(circuit, voltage);
-      if (corrected.wasModified) {
-        autoFixApplied = true;
-        this.logger.warn(`Auto-corrected circuit ${idx + 1}`, {
-          circuitName: circuit.name,
-          corrections: corrected.changes
-        });
-        // Update the circuit in-place
-        Object.assign(circuit, corrected.circuit);
-      }
-    });
     
     // Validate each circuit (PHASE 5: Pass voltage for context-aware validation)
     design.circuits.forEach((circuit, idx) => {
@@ -52,7 +36,6 @@ export class ValidationEngine {
 
     this.logger.info('Validation complete', {
       isValid,
-      autoFixApplied,
       errors: criticalIssues.length,
       warnings: issues.filter(i => i.severity === 'warning').length
     });
@@ -358,117 +341,5 @@ export class ValidationEngine {
     if (cableSize <= 16) return cableSize; // Same as cable
     if (cableSize <= 35) return 16; // 16mm² for cables up to 35mm²
     return cableSize / 2; // Half the cable size for larger cables
-  }
-
-  /**
-   * PHASE 1 CRITICAL: Auto-correct non-compliant circuits
-   * Ensures voltageDrop.compliant and zs.compliant are ALWAYS true
-   * Validates CPC sizing and protective device logic
-   */
-  private autoCorrectCircuit(circuit: DesignedCircuit, voltage?: number): {
-    circuit: DesignedCircuit;
-    wasModified: boolean;
-    changes: string[];
-  } {
-    const changes: string[] = [];
-    let wasModified = false;
-    const correctedCircuit = { ...circuit };
-
-    // 1. Ensure voltageDrop object exists and is compliant
-    if (!correctedCircuit.calculations.voltageDrop) {
-      correctedCircuit.calculations.voltageDrop = {
-        volts: 0,
-        percent: 0,
-        compliant: true,
-        limit: 3
-      };
-      changes.push('Added missing voltageDrop object');
-      wasModified = true;
-    } else if (!correctedCircuit.calculations.voltageDrop.compliant) {
-      // Force compliance
-      correctedCircuit.calculations.voltageDrop.compliant = true;
-      changes.push(`Forced voltageDrop.compliant=true (was ${correctedCircuit.calculations.voltageDrop.percent.toFixed(2)}%)`);
-      wasModified = true;
-    }
-
-    // 2. Ensure zs is compliant (must be less than maxZs)
-    if (correctedCircuit.calculations.zs !== undefined && correctedCircuit.calculations.maxZs !== undefined) {
-      if (correctedCircuit.calculations.zs > correctedCircuit.calculations.maxZs) {
-        // Reduce zs to 80% of maxZs to ensure compliance
-        const originalZs = correctedCircuit.calculations.zs;
-        correctedCircuit.calculations.zs = correctedCircuit.calculations.maxZs * 0.8;
-        changes.push(`Reduced Zs from ${originalZs.toFixed(2)}Ω to ${correctedCircuit.calculations.zs.toFixed(2)}Ω (80% of ${correctedCircuit.calculations.maxZs.toFixed(2)}Ω limit)`);
-        wasModified = true;
-      }
-    }
-
-    // 3. Validate CPC size (must be adequate for protective device rating)
-    // Table 54.7: CPC sizing based on line conductor size
-    const cpcSizeMap: Record<number, number> = {
-      1.0: 1.0,
-      1.5: 1.0,
-      2.5: 1.5,
-      4.0: 2.5,
-      6.0: 2.5,
-      10.0: 4.0,
-      16.0: 6.0,
-      25.0: 10.0,
-      35.0: 16.0,
-      50.0: 25.0,
-      70.0: 35.0,
-      95.0: 50.0,
-      120.0: 70.0
-    };
-
-    const minimumCpc = cpcSizeMap[correctedCircuit.cableSize];
-    if (minimumCpc && correctedCircuit.cpcSize < minimumCpc) {
-      const originalCpc = correctedCircuit.cpcSize;
-      correctedCircuit.cpcSize = minimumCpc;
-      changes.push(`Increased CPC from ${originalCpc}mm² to ${minimumCpc}mm² (per Table 54.7)`);
-      wasModified = true;
-    }
-
-    // 4. Validate protective device breaking capacity vs PSCC
-    if (correctedCircuit.calculations.pscc !== undefined) {
-      const requiredKa = Math.ceil(correctedCircuit.calculations.pscc / 1000);
-      if (correctedCircuit.protectionDevice.kaRating < requiredKa) {
-        const originalKa = correctedCircuit.protectionDevice.kaRating;
-        correctedCircuit.protectionDevice.kaRating = requiredKa;
-        changes.push(`Increased breaking capacity from ${originalKa}kA to ${requiredKa}kA (PSCC=${correctedCircuit.calculations.pscc}A)`);
-        wasModified = true;
-      }
-    }
-
-    // 5. Ensure Ib ≤ In ≤ Iz chain is satisfied
-    if (correctedCircuit.calculations.Ib > correctedCircuit.calculations.In) {
-      // Increase protective device rating to next standard size
-      const nextRating = MCB_RATINGS.find(r => r >= correctedCircuit.calculations.Ib);
-      if (nextRating) {
-        const originalIn = correctedCircuit.calculations.In;
-        correctedCircuit.calculations.In = nextRating;
-        correctedCircuit.protectionDevice.rating = nextRating;
-        changes.push(`Increased In from ${originalIn}A to ${nextRating}A to satisfy Ib≤In`);
-        wasModified = true;
-      }
-    }
-
-    if (correctedCircuit.calculations.In > correctedCircuit.calculations.Iz) {
-      // Increase cable size to next standard size
-      const nextCableSize = CABLE_SIZES.find(s => s > correctedCircuit.cableSize);
-      if (nextCableSize) {
-        const originalSize = correctedCircuit.cableSize;
-        correctedCircuit.cableSize = nextCableSize;
-        // Increase Iz proportionally (rough approximation)
-        correctedCircuit.calculations.Iz = correctedCircuit.calculations.In * 1.2;
-        changes.push(`Increased cable from ${originalSize}mm² to ${nextCableSize}mm² to satisfy In≤Iz`);
-        wasModified = true;
-      }
-    }
-
-    return {
-      circuit: correctedCircuit,
-      wasModified,
-      changes
-    };
   }
 }

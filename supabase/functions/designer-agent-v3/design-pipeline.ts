@@ -1,7 +1,6 @@
 /**
- * Design Pipeline - Core Orchestrator with Job Progress Tracking
+ * Design Pipeline - Core Orchestrator
  * 1. Normalize → 2. Cache Check → 3. RAG → 4. AI → 5. Validate → 6. Cache Store
- * Now supports database-direct progress updates for async job tracking
  */
 
 import { FormNormalizer } from './form-normalizer.ts';
@@ -19,45 +18,12 @@ export class DesignPipeline {
   private ai: AIDesigner;
   private validator: ValidationEngine;
 
-  constructor(
-    private logger: any, 
-    private requestId: string,
-    private jobId?: string,
-    private supabaseAdmin?: any
-  ) {
+  constructor(private logger: any, private requestId: string) {
     this.normalizer = new FormNormalizer();
     this.cache = new CacheManager(logger);
     this.rag = new RAGEngine(logger);
     this.ai = new AIDesigner(logger);
     this.validator = new ValidationEngine(logger);
-  }
-
-  /**
-   * Update job progress in database (if jobId provided)
-   */
-  private async updateJobProgress(progress: number, currentStep: string): Promise<void> {
-    if (!this.jobId || !this.supabaseAdmin) return;
-    
-    try {
-      await this.supabaseAdmin
-        .from('circuit_design_jobs')
-        .update({
-          progress: Math.min(progress, 99), // Never reach 100 until complete
-          current_step: currentStep
-        })
-        .eq('id', this.jobId);
-      
-      this.logger.info('Job progress updated', { 
-        jobId: this.jobId, 
-        progress, 
-        step: currentStep 
-      });
-    } catch (error) {
-      this.logger.warn('Failed to update job progress', { 
-        jobId: this.jobId, 
-        error: error.message 
-      });
-    }
   }
 
   async execute(rawInput: any): Promise<DesignResult> {
@@ -66,8 +32,6 @@ export class DesignPipeline {
     // ========================================
     // PHASE 1: Normalize & Validate Form Inputs
     // ========================================
-    await this.updateJobProgress(10, 'Validating circuit parameters...');
-    
     const normalized = this.normalizer.normalize(rawInput);
     this.logger.info('Form normalized', {
       circuits: normalized.circuits.length,
@@ -77,10 +41,11 @@ export class DesignPipeline {
     });
 
     // ========================================
+    // PHASE 2: Cache Check (DISABLED FOR TESTING)
+    // ========================================
+    // ========================================
     // PHASE 2: Cache Check (Phase 2.1: Re-enabled for 60% faster cache hits)
     // ========================================
-    await this.updateJobProgress(15, 'Checking design cache...');
-    
     const cacheKey = this.cache.generateKey(normalized);
     const cached = await this.cache.get(cacheKey);
     
@@ -110,8 +75,6 @@ export class DesignPipeline {
     // ========================================
     // PHASE 3: RAG Search (enhanced for installation guidance)
     // ========================================
-    await this.updateJobProgress(20, 'Searching BS7671 regulations & installation guides...');
-    
     const ragContext = await this.rag.search(normalized);
     this.logger.info('RAG complete', {
       regulations: ragContext.regulations.length,
@@ -124,8 +87,6 @@ export class DesignPipeline {
     // ========================================
     // PHASE 4: AI Design Generation (with batch processing)
     // ========================================
-    await this.updateJobProgress(30, 'Preparing AI circuit designer...');
-    
     let design: any;
     
     // Log batch evaluation for debugging
@@ -160,14 +121,6 @@ export class DesignPipeline {
         name: `Batch ${i + 1}/${batches.length}`,
         execute: async () => {
           const batchStartTime = Date.now();
-          
-          // Progress update: Show which circuits are being designed
-          const circuitNames = batch.map(c => c.name).join(' & ');
-          const progressPercent = 35 + Math.round((i / batches.length) * 50);
-          await this.updateJobProgress(
-            progressPercent, 
-            `AI designing: ${circuitNames}...`
-          );
           
           this.logger.info(`Batch ${i + 1}/${batches.length} starting`, {
             circuits: batch.map(c => c.name),
