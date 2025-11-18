@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { StructuredDesignWizard } from "./structured-input/StructuredDesignWizard";
 import { DesignReviewEditor } from "./DesignReviewEditor";
-import { CircuitDesignProcessingView } from "./CircuitDesignProcessingView";
+import { CircuitDesignProcessing } from "./CircuitDesignProcessing";
 import { DesignInputs } from "@/types/installation-design";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 import { supabase } from "@/integrations/supabase/client";
@@ -10,7 +10,6 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import { clearDesignCache } from "@/utils/clearDesignCache";
-import { useCircuitDesignGeneration } from "@/hooks/useCircuitDesignGeneration";
 
 export const AIInstallationDesigner = () => {
   const [currentView, setCurrentView] = useState<'input' | 'processing' | 'results'>('input');
@@ -19,47 +18,6 @@ export const AIInstallationDesigner = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [designData, setDesignData] = useState<any>(null);
   const [isClearingCache, setIsClearingCache] = useState(false);
-  const [currentJobId, setCurrentJobId] = useState<string | null>(null);
-  const [isCancelling, setIsCancelling] = useState(false);
-
-  // Use the circuit design generation hook
-  const { 
-    job,
-    progress, 
-    status, 
-    currentStep,
-    designData: jobDesignData,
-    error 
-  } = useCircuitDesignGeneration(currentJobId);
-
-  // Handle job completion
-  useEffect(() => {
-    if (status === 'complete' && jobDesignData) {
-      console.log('✅ Circuit design completed:', jobDesignData);
-      
-      setDesignData({ circuits: jobDesignData });
-      setCurrentView('results');
-      setIsProcessing(false);
-      sessionStorage.removeItem('circuit-design-active');
-      
-      toast.success('Circuit design complete! 🎉', {
-        description: `${jobDesignData.length} circuit${jobDesignData.length !== 1 ? 's' : ''} designed and validated`,
-        duration: 5000
-      });
-    }
-  }, [status, jobDesignData]);
-
-  // Handle job failure
-  useEffect(() => {
-    if (status === 'failed' && error) {
-      toast.error('Design generation failed', {
-        description: error
-      });
-      setCurrentView('input');
-      setIsProcessing(false);
-      sessionStorage.removeItem('circuit-design-active');
-    }
-  }, [status, error]);
 
   const handleClearCache = async () => {
     setIsClearingCache(true);
@@ -227,41 +185,16 @@ export const AIInstallationDesigner = () => {
     }
   }, []);
 
-  const handleCancel = async () => {
-    if (!currentJobId) return;
-    
-    setIsCancelling(true);
-    
-    try {
-      const { error } = await supabase.functions.invoke('cancel-circuit-design-job', {
-        body: { jobId: currentJobId }
-      });
-      
-      if (error) {
-        toast.error('Failed to cancel', {
-          description: error.message
-        });
-      } else {
-        toast.info('Design generation cancelled');
-        setCurrentView('input');
-        setIsProcessing(false);
-        setCurrentJobId(null);
-        sessionStorage.removeItem('circuit-design-active');
-      }
-    } catch (error: any) {
-      toast.error('Failed to cancel', {
-        description: error.message
-      });
-    } finally {
-      setIsCancelling(false);
-    }
+  const handleCancel = () => {
+    setCurrentView('input');
+    setIsProcessing(false);
+    sessionStorage.removeItem('circuit-design-data');
+    toast.info('Design generation cancelled');
   };
 
   const handleRetry = () => {
     setCurrentView('input');
-    setCurrentJobId(null);
     sessionStorage.removeItem('circuit-design-data');
-    sessionStorage.removeItem('circuit-design-active');
   };
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
@@ -293,11 +226,13 @@ export const AIInstallationDesigner = () => {
       )}
 
       {currentView === 'processing' && (
-        <CircuitDesignProcessingView
-          progress={progress}
-          currentStep={currentStep}
-          onCancel={handleCancel}
-          isCancelling={isCancelling}
+        <CircuitDesignProcessing 
+          circuitCount={totalCircuits || 0}
+          estimatedTime={
+            // Estimate based on circuit count
+            totalCircuits <= 3 ? 20 :
+            totalCircuits <= 10 ? 40 : 60
+          }
         />
       )}
 
