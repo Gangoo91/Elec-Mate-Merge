@@ -207,17 +207,17 @@ Use the RAG context to ensure technical accuracy and regulatory compliance.`;
 export async function generateInstallationMethod(
   query: string,
   projectDetails: any,
-  onProgress?: (progress: number, step: string) => Promise<void>,
+  onProgress?: (progress: number, step: string) => void,
   sharedRegulations?: any[]
 ): Promise<any> {
   console.log('🔧 Installation Method Agent starting...');
   const startTime = Date.now();
   
-  if (onProgress) await onProgress(0, 'Installation Method: Starting...');
+  if (onProgress) onProgress(0, 'Installation Method: Starting...');
   
   // STEP 1: RAG - Use shared regulations if provided, otherwise search
   console.log('🔍 Fetching RAG knowledge...');
-  if (onProgress) await onProgress(10, 'Installation Method: Searching installation procedures...');
+  if (onProgress) onProgress(10, 'Installation Method: Searching installation procedures...');
   
   const ragResults = sharedRegulations || await Promise.all([
     searchPracticalWorkIntelligence(query, 5),
@@ -234,7 +234,7 @@ export async function generateInstallationMethod(
     .join('\n\n');
 
   // STEP 2: GPT-5 Mini with tool calling
-  if (onProgress) await onProgress(40, 'Installation Method: Generating comprehensive installation guide...');
+  if (onProgress) onProgress(40, 'Installation Method: Generating comprehensive installation guide...');
   
   const userPrompt = `Project: ${projectDetails.jobTitle || 'Electrical Installation'}
 Location: ${projectDetails.location || 'Site'}
@@ -270,7 +270,7 @@ ${ragContext}`;
   const methodData = JSON.parse(response.toolCalls[0].function.arguments);
   console.log('✅ Installation method generated successfully');
   
-  if (onProgress) await onProgress(100, 'Installation Method: Complete!');
+  if (onProgress) onProgress(100, 'Installation Method: Complete!');
   
   const duration = Date.now() - startTime;
   console.log(`⏱️ Installation Method Agent completed in ${duration}ms`);
