@@ -26,6 +26,8 @@ import { calculateExpectedR1R2, getMaxZsForDevice, mapLoadTypeToCircuitDescripti
 import { MobileCircuitResults } from './MobileCircuitResults';
 import { CircuitCard } from './CircuitCard';
 import { RequestSummaryHeader } from './RequestSummaryHeader';
+import { StructuredDesignSections } from './StructuredDesignSections';
+import { AtAGlanceSummary } from './AtAGlanceSummary';
 
 interface DesignReviewEditorProps {
   design: InstallationDesign;
@@ -1228,6 +1230,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
        currentCircuit.protectionDevice && 
        currentCircuit.calculations && 
        currentCircuit.justifications ? (
+        <>
         <Card className="p-6">
           <div className="space-y-6">
             {/* Header */}
@@ -1723,6 +1726,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             {/* Legacy installationGuidance removed - now using structuredOutput */}
           </div>
         </Card>
+
+        {/* PHASE 5: Structured Output - 9 Comprehensive Sections */}
+        {currentCircuit.structuredOutput && (
+          <>
+            <AtAGlanceSummary summary={currentCircuit.structuredOutput.atAGlanceSummary} />
+            <StructuredDesignSections sections={currentCircuit.structuredOutput.sections} />
+          </>
+        )}
+        </>
       ) : (
         <Card className="p-6">
           <Alert variant="destructive">
