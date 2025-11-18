@@ -110,22 +110,22 @@ export class AIDesigner {
 
     // Output format
     parts.push('=== OUTPUT FORMAT ===');
-    parts.push('1. AT A GLANCE CARD: loadKw (loadPower/1000), loadIb (Ib with unit), Cable, Device, VD (✓/✗), Zs, Compliance, Notes');
+    parts.push('1. AT A GLANCE CARD: loadKw (loadPower/1000), loadIb (Ib with unit), Cable, Device, VD (pass/fail), Zs, Compliance, Notes');
     parts.push('2. 9 SECTIONS: Circuit Summary, Load Details, Cable Selection & Calc, Device Selection, Compliance, Justification, Installation, Safety, Testing');
     parts.push('');
     
     // Core design rules
     parts.push('=== CORE RULES ===');
-    parts.push('• Ib ≤ In ≤ Iz (433.1.1) | VD: ≤3% lighting, ≤5% power (525.1) | Zs ≤ max (411.3.2)');
-    parts.push('• RCBO mandatory: ALL sockets (411.3.3), ALL bathroom circuits (701.411.3.3)');
-    parts.push('• Cable sizes: T&E (1.5-16mm²), SWA (1.5-95mm²) - round UP to nearest valid');
-    parts.push('• CPC per Table 54.7: 1.5→1.0, 2.5→1.5, 4→2.5, 6→2.5, 10→4, 16→6mm²');
+    parts.push('- Ib <= In <= Iz (433.1.1) | VD: <=3% lighting, <=5% power (525.1) | Zs <= max (411.3.2)');
+    parts.push('- RCBO mandatory: ALL sockets (411.3.3), ALL bathroom circuits (701.411.3.3)');
+    parts.push('- Cable sizes: T&E (1.5-16mm2), SWA (1.5-95mm2) - round UP to nearest valid');
+    parts.push('- CPC per Table 54.7: 1.5->1.0, 2.5->1.5, 4->2.5, 6->2.5, 10->4, 16->6mm2');
     parts.push('');
 
     // Auto-correction rules
     parts.push('=== AUTO-CORRECT (SILENT) ===');
     parts.push('1. 3-phase MUST use 400V/415V (never 230V)');
-    parts.push('2. Motors: FLC=(kW×1000)/(√3×V×0.85×0.9), Ib=FLC×1.25, Type D MCB');
+    parts.push('2. Motors: FLC=(kW*1000)/(sqrt(3)*V*0.85*0.9), Ib=FLC*1.25, Type D MCB');
     parts.push('3. Socket/bathroom circuits: SET type="RCBO" (never MCB)');
     parts.push('4. Outdoor/buried: MUST use SWA (never T&E)');
     parts.push('5. Document all corrections in justifications.corrections');
@@ -137,12 +137,6 @@ export class AIDesigner {
 
     return parts.join('\n');
   }
-    parts.push('  3. Design current Ib = FLC × 1.25 (starting allowance per Reg 552.1.1)');
-    parts.push('  4. Protection device: Type D MCB to handle 10-14x FLC starting surge');
-    parts.push('  5. Cable sizing: Use Ib for current-carrying capacity check');
-    parts.push('  6. Voltage drop: Check at FLC (running), must be ≤5%');
-    parts.push('  7. Document in justifications: "Motor circuit designed for FLC=XA, starting current ~10x FLC"');
-    parts.push('');
     parts.push('=== RCBO PROTECTION MANDATORY RULES ===');
     parts.push('1. ALL socket circuits MUST use RCBO protection (never MCB)');
     parts.push('   - Includes: wall sockets, power outlets, socket rings, radial sockets');
@@ -258,9 +252,9 @@ export class AIDesigner {
     parts.push('');
     
     parts.push('=== CORE RULES ===');
-    parts.push('• Ib ≤ In ≤ Iz (433.1.1) | VD: ≤3% light, ≤5% power (525.1) | Zs ≤ max (411.3.2)');
-    parts.push('• RCBO: sockets (411.3.3), bathrooms (701.411.3.3) | Cables: T&E 1.5-16mm², SWA 1.5-95mm²');
-    parts.push('• CPC Table 54.7 | 3-phase=400V/415V | Motors: FLC calc, Type D | Outdoor=SWA only');
+    parts.push('- Ib <= In <= Iz (433.1.1) | VD: <=3% light, <=5% power (525.1) | Zs <= max (411.3.2)');
+    parts.push('- RCBO: sockets (411.3.3), bathrooms (701.411.3.3) | Cables: T&E 1.5-16mm2, SWA 1.5-95mm2');
+    parts.push('- CPC Table 54.7 | 3-phase=400V/415V | Motors: FLC calc, Type D | Outdoor=SWA only');
     parts.push('');
 
     parts.push('=== AUTO-CORRECT ===');
