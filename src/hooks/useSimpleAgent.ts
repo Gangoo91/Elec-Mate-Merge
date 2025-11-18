@@ -84,10 +84,15 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
           stage: 'validation', 
           message: 'Almost there - finalising details...' 
         });
+      } else if (elapsed < 240000) {
+        setProgress({ 
+          stage: 'validation', 
+          message: 'Still processing - complex project requires more time...' 
+        });
       } else {
         setProgress({ 
           stage: 'validation', 
-          message: 'Completing final checks...' 
+          message: 'Final checks in progress...' 
         });
       }
     }, 1000);
@@ -123,17 +128,26 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
       clearInterval(progressTimer);
       let errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
       
-      // Detect timeout errors and provide helpful message
-      if (errorMessage.includes('timeout') || errorMessage.includes('FunctionsHttpError')) {
-        errorMessage = `${agentName} is taking longer than expected. This sometimes happens with complex projects. Please try again or simplify your request.`;
+      // Detect specific error types and provide helpful messages
+      if (errorMessage.includes('timeout') || errorMessage.includes('5 minutes')) {
+        errorMessage = `${agentName} timeout: Complex projects may take 2-3 minutes. Please try again with a simpler request or break it into smaller parts.`;
+      } else if (errorMessage.includes('split is not a function') || errorMessage.includes('phase.phase')) {
+        errorMessage = `${agentName} data error: The project plan data structure is corrupted. This is a known issue being fixed. Please try regenerating.`;
+      } else if (errorMessage.includes('FunctionsHttpError')) {
+        errorMessage = `${agentName} connection error: Unable to reach the backend. Check your internet connection and try again.`;
       }
       
-      console.error(`❌ ${agentName} error:`, errorMessage);
+      console.error(`❌ ${agentName} error:`, {
+        originalError: err,
+        userMessage: errorMessage,
+        timestamp: new Date().toISOString()
+      });
+      
       setError(errorMessage);
       
       toast.error(`${agentName} failed`, {
         description: errorMessage,
-        duration: 5000
+        duration: 7000
       });
 
       return null;

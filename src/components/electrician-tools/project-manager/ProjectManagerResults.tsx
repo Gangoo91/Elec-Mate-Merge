@@ -79,6 +79,9 @@ const ProjectManagerResults = ({
       let icsContent = 'BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//AI Project Manager//EN\n';
       
       results.projectPlan.phases.forEach((phase: any, idx: number) => {
+        const phaseName = (phase.phaseName || phase.phase || `Phase ${idx + 1}`).toString();
+        const phaseDescription = (phase.description || '').toString();
+        
         const phaseStart = new Date(baseDate);
         phaseStart.setDate(phaseStart.getDate() + (phase.startDay ? parseInt(phase.startDay.replace('Day ', '')) - 1 : idx * 3));
         
@@ -86,11 +89,11 @@ const ProjectManagerResults = ({
         phaseEnd.setDate(phaseEnd.getDate() + (phase.duration || 1));
         
         icsContent += `BEGIN:VEVENT\n`;
-        icsContent += `SUMMARY:${phase.phase}\n`;
+        icsContent += `SUMMARY:${phaseName}\n`;
         icsContent += `DTSTART:${phaseStart.toISOString().replace(/[-:]/g, '').split('.')[0]}Z\n`;
         icsContent += `DTEND:${phaseEnd.toISOString().replace(/[-:]/g, '').split('.')[0]}Z\n`;
-        if (phase.description) {
-          icsContent += `DESCRIPTION:${phase.description.replace(/\n/g, '\\n')}\n`;
+        if (phaseDescription) {
+          icsContent += `DESCRIPTION:${phaseDescription.replace(/\n/g, '\\n')}\n`;
         }
         icsContent += `END:VEVENT\n`;
       });

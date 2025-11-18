@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils";
 
 interface Phase {
   phase: string;
+  phaseName?: string;
+  phaseNumber?: number;
   duration: number;
   durationUnit?: string;
   startDay?: string;
@@ -96,7 +98,7 @@ const PhasesSection = ({
                         <div className={`font-semibold flex items-center gap-2 flex-wrap ${
                           isComplete ? 'line-through text-muted-foreground' : ''
                         }`}>
-                          <span className="text-base sm:text-lg">{phase.phase}</span>
+                          <span className="text-base sm:text-lg">{phase.phaseName || phase.phase || `Phase ${idx + 1}`}</span>
                           {phase.criticalPath && !isComplete && (
                             <Badge variant="outline" className="text-xs bg-pink-400/20 border-pink-400/40 text-pink-400">
                               Critical Path
