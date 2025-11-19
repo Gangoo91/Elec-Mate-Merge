@@ -100,7 +100,30 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
     
     if (jobStatus === 'complete' && jobMethodData && !celebrationShown) {
       console.log('✅ Setting method data and showing celebration');
-      setMethodData(jobMethodData);
+      
+      // Map backend field names to frontend format
+      const mappedData = {
+        ...jobMethodData,
+        steps: jobMethodData.steps?.map((step: any) => ({
+          stepNumber: step.step,
+          title: step.title,
+          content: step.description,  // ✅ Map description → content
+          safety: step.safetyNotes,
+          toolsRequired: step.tools,  // ✅ Map tools → toolsRequired
+          materialsNeeded: step.materials,  // ✅ Map materials → materialsNeeded
+          estimatedDuration: step.estimatedTime ? `${step.estimatedTime} mins` : undefined,
+          riskLevel: step.riskLevel || 'medium',
+          qualifications: step.qualifications,
+          linkedHazards: step.linkedHazards,
+          notes: step.notes,
+          assignedPersonnel: step.assignedPersonnel,
+          bsReferences: step.bsReferences,
+          inspectionCheckpoints: step.inspectionCheckpoints
+        })) || []
+      };
+
+      console.log('✅ Mapped method data:', mappedData);
+      setMethodData(mappedData);
       setIsGenerating(false);
       
       if (!celebrationShown) {

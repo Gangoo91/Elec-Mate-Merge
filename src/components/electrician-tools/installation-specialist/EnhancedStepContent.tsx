@@ -66,6 +66,9 @@ export const EnhancedStepContent = ({ content }: EnhancedStepContentProps) => {
 
 // Helper: Parse step content into structured sections
 function parseStepContent(content: string) {
+  if (!content || typeof content !== 'string') {
+    return { overview: '', subSteps: [], regulations: [] };
+  }
   const lines = content.split('\n').filter(l => l.trim());
   
   let overview = '';
