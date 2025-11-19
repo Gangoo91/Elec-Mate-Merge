@@ -148,6 +148,14 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
     }
   }, [currentJobId, jobStatus, isPolling, startPolling]);
 
+  // Force re-render when job completes
+  useEffect(() => {
+    if (jobStatus === 'complete' && jobMethodData) {
+      console.log('✅ Job complete - forcing state update');
+      setShowResults(true);
+    }
+  }, [jobStatus, jobMethodData]);
+
   const handleRegenerate = () => {
     if (lastProjectRef.current) {
       handleGenerate(lastProjectRef.current.details, lastProjectRef.current.description, true);

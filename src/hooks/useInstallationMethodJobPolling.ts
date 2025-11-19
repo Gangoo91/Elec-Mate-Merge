@@ -74,10 +74,13 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
 
       setJob(data);
 
-      // Debug: Log job state after setting
-      console.log('📦 Job state after setJob:', {
-        hasJob: !!data,
-        hasMethodData: !!data?.method_data
+      // Debug: Verify polling is working
+      console.log('🔄 Polling active:', {
+        jobId,
+        status: data.status,
+        progress: data.progress,
+        isPolling,
+        timestamp: new Date().toISOString()
       });
 
       // Fallback: If method_data is missing on complete, try direct query
@@ -170,7 +173,7 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
         clearTimeout(timeoutId);
       }
     };
-  }, [jobId, isPolling]); // Removed pollJob to prevent stale closures
+  }, [jobId, isPolling, pollJob]);
 
   const startPolling = useCallback(() => {
     setIsPolling(true);
