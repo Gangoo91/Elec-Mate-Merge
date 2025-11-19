@@ -343,6 +343,29 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           authorisedDate: today
         };
         
+        // ✅ FIX: Populate _fullMethodStatement with all new fields from Quick Mode
+        const _fullMethodStatement = {
+          executiveSummary: response.data?.executiveSummary || null,
+          materialsList: response.data?.materialsList || [],
+          testingRequirements: response.data?.testingRequirements || [],
+          testingProcedures: response.data?.testingProcedures || [],
+          regulatoryReferences: response.data?.regulatoryReferences || [],
+          scopeOfWork: response.data?.scopeOfWork || null,
+          scheduleDetails: response.data?.scheduleDetails || null,
+          installationSteps: installationSteps,
+          equipmentSchedule: [],
+          qualityRequirements: [],
+          siteLogistics: response.data?.siteLogistics || {},
+          conditionalFlags: {},
+          workAtHeightEquipment: [],
+          competencyRequirements: response.data?.competencyRequirements || {},
+          _agentOutputs: {
+            installer: response.data,
+            maintenance: null,
+            healthSafety: null
+          }
+        };
+        
         setMethodData({
           jobTitle: description,
           installationType: projectDetails.installationType,
@@ -355,12 +378,7 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           competencyRequirements: response.data?.competencyRequirements,
           siteLogistics: response.data?.siteLogistics,
           regulatoryCitations: response.data?.regulatoryCitations || [],
-          _fullMethodStatement: {
-            executiveSummary: response.data?.executiveSummary,
-            materialsList: response.data?.materialsList || [],
-            testingRequirements: response.data?.testingRequirements || [],
-            regulatoryReferences: response.data?.regulatoryReferences || []
-          }
+          _fullMethodStatement  // ✅ Pass complete data structure
         });
       }
 

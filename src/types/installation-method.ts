@@ -12,6 +12,9 @@ export interface InstallationStep {
   qualifications?: string[];
   linkedHazards?: string[];
   notes?: string;
+  assignedPersonnel?: string[];
+  bsReferences?: string[];
+  inspectionCheckpoints?: string[];
 }
 
 export interface InstallationMethodSummary {
