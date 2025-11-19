@@ -229,7 +229,7 @@ export async function generateInstallationMethod(
   
   const ragContext = ragResults
     .map((r: any, i: number) => 
-      `[${i + 1}] ${r.regulation}: ${r.content.substring(0, 400)}`
+      `[${i + 1}] ${r.regulation}: ${(r.content ?? '').substring(0, 400)}`
     )
     .join('\n\n');
 
