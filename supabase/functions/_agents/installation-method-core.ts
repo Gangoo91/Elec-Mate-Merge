@@ -7,9 +7,9 @@
 import { 
   searchPracticalWorkIntelligence, 
   searchBS7671Intelligence,
-  searchRegulationsIntelligence,
-  callOpenAI
+  searchRegulationsIntelligence
 } from '../_shared/rams-rag.ts';
+import { callOpenAI } from '../_shared/ai-providers.ts';
 
 const INSTALLATION_METHOD_TOOL = {
   type: 'function' as const,
@@ -248,21 +248,6 @@ CRITICAL: Every step must follow this structure with 4+ tools extracted from RAG
 
 Use the RAG context to ensure technical accuracy and regulatory compliance.`;
 
-/**
- * Wrapper for OpenAI calls with 3-minute timeout
- * Installation Specialist-only timeout protection
- */
-async function callOpenAIWithTimeout(params: any): Promise<any> {
-  const TIMEOUT_MS = 180000; // 3 minutes
-  
-  return Promise.race([
-    callOpenAI(params),
-    new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('OpenAI call timed out after 3 minutes')), TIMEOUT_MS)
-    )
-  ]);
-}
-
 export async function generateInstallationMethod(
   query: string,
   projectDetails: any,
@@ -393,7 +378,7 @@ RAG Context (cite regulation numbers):
 ${ragContext}`;
 
   console.log('🤖 Calling GPT-5 Mini with installation method tool...');
-  const response = await callOpenAIWithTimeout({
+  const response = await callOpenAI({
     messages: [
       { role: 'system', content: SYSTEM_PROMPT },
       { role: 'user', content: userPrompt }
@@ -401,7 +386,7 @@ ${ragContext}`;
     model: 'gpt-5-mini-2025-08-07',
     tools: [INSTALLATION_METHOD_TOOL],
     tool_choice: { type: 'function', function: { name: 'provide_installation_method_guidance' } }
-  });
+  }, Deno.env.get('OPENAI_API_KEY')!, 180000); // 3-minute timeout
 
   if (!response.toolCalls || response.toolCalls.length === 0) {
     throw new Error('GPT-5 Mini did not return installation method tool call');
