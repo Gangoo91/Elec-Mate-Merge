@@ -185,31 +185,21 @@ export async function retrieveInstallationKnowledge(
     
     const [practicalWorkResults, regulationsResults] = await Promise.all([
       // Practical work intelligence (tools, materials, procedures)
-      Promise.race([
-        supabase.rpc('search_practical_work_intelligence_hybrid', {
-          query_text: expandedQuery,
-          match_count: Math.floor(matchCount * 0.6), // 60% for practical work
-          filter_trade: null // Installation methods apply to all trades
-        }),
-        new Promise<never>((_, reject) => 
-          setTimeout(() => reject(new Error('Practical work search timeout')), 30000)
-        )
-      ]).catch(err => {
-        logger.error('Practical work search failed/timeout', { error: err instanceof Error ? err.message : String(err) });
+      supabase.rpc('search_practical_work_intelligence_hybrid', {
+        query_text: expandedQuery,
+        match_count: Math.floor(matchCount * 0.6), // 60% for practical work
+        filter_trade: null // Installation methods apply to all trades
+      }).catch(err => {
+        logger.error('Practical work search failed', { error: err instanceof Error ? err.message : String(err) });
         return { data: [], error: err };
       }),
       
       // BS 7671 regulations (regulation numbers, compliance)
-      Promise.race([
-        supabase.rpc('search_bs7671_intelligence_hybrid', {
-          query_text: expandedQuery,
-          match_count: Math.floor(matchCount * 0.4) // 40% for regulations
-        }),
-        new Promise<never>((_, reject) => 
-          setTimeout(() => reject(new Error('Regulations search timeout')), 30000)
-        )
-      ]).catch(err => {
-        logger.error('Regulations search failed/timeout', { error: err instanceof Error ? err.message : String(err) });
+      supabase.rpc('search_bs7671_intelligence_hybrid', {
+        query_text: expandedQuery,
+        match_count: Math.floor(matchCount * 0.4) // 40% for regulations
+      }).catch(err => {
+        logger.error('Regulations search failed', { error: err instanceof Error ? err.message : String(err) });
         return { data: [], error: err };
       })
     ]);
