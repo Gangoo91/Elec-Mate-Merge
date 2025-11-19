@@ -138,11 +138,28 @@ serve(async (req) => {
 
     if (practicalWorkDocs.length >= 3) {
       testContext += '## PRACTICAL TESTING PROCEDURES:\n\n';
-      testContext += practicalWorkDocs.slice(0, 8).map((pw: any) => 
-        `**${pw.primary_topic}**\n${pw.content}\n` +
-        `${pw.expected_results ? `Expected Results: ${pw.expected_results}\n` : ''}` +
-        `${pw.tools_required?.length > 0 ? `Tools: ${pw.tools_required.join(', ')}` : ''}`
-      ).join('\n\n---\n\n');
+      testContext += practicalWorkDocs.slice(0, 12).map((pw: any) => {
+        let docText = `**${pw.primary_topic}**\n${pw.content}\n`;
+        
+        // Extract detailed procedural fields
+        if (pw.step_by_step_procedure) {
+          docText += `\nPROCEDURE:\n${pw.step_by_step_procedure}\n`;
+        }
+        if (pw.expected_results) {
+          docText += `\nEXPECTED RESULTS: ${pw.expected_results}\n`;
+        }
+        if (pw.tools_required?.length > 0) {
+          docText += `\nTOOLS REQUIRED: ${pw.tools_required.join(', ')}\n`;
+        }
+        if (pw.test_instrument_settings) {
+          docText += `\nINSTRUMENT SETUP: ${pw.test_instrument_settings}\n`;
+        }
+        if (pw.common_mistakes) {
+          docText += `\nCOMMON MISTAKES TO AVOID: ${pw.common_mistakes}\n`;
+        }
+        
+        return docText;
+      }).join('\n\n---\n\n');
       
       testContext += '\n\n## RELEVANT BS 7671 REGULATIONS:\n\n';
       testContext += regulations.slice(0, 10).map((reg: any) => 
@@ -206,12 +223,21 @@ serve(async (req) => {
 
 Write all responses in UK English (British spelling and terminology). Do not use American spellings.
 
+🔧 YOU ARE AN INSPECTION & TESTING SPECIALIST WITH 30 YEARS HANDS-ON EXPERIENCE
+- You've conducted over 10,000 EICRs and commissioning tests in the field
+- You know every possible test failure scenario and exactly how to diagnose it
+- You explain things the way you'd mentor an apprentice on-site: practical, clear, zero jargon unless necessary
+- You use real-world examples: "I once had a reading of 3.2Ω that turned out to be a loose termination at the CU..."
+- You mention common mistakes apprentices make: "Electricians often forget to zero their leads and wonder why R1+R2 is 0.5Ω too high..."
+- You include trade wisdom from 30 years experience: "Always test insulation resistance BEFORE polarity - saves you 20 minutes if there's a fault..."
+- You know which tests waste time if done in wrong order, which faults show up as misleading readings, and how to troubleshoot fast
+
 YOUR UNIQUE VALUE: You teach people HOW to perform each test (GN3 practical guidance)
 - Not just "do continuity test" → Explain where to put leads, what buttons to press, what to expect
 - Use the GN3 (Guidance Note 3) knowledge in RAG for practical test procedures
 - Specify expected results with units and pass/fail criteria
 - Include test instrument setup (which mode, which range, how to zero)
-- Anticipate common test failures and troubleshooting
+- Anticipate common test failures and troubleshooting based on 30 years of seeing every possible issue
 
 CURRENT DATE: September 2025
 
@@ -266,7 +292,7 @@ ${contextSection}
 
 Respond ONLY with valid JSON in this exact format:
 {
-  "response": "COMPREHENSIVE GN3 testing guidance (300-400 words) covering: Complete Chapter 64 test sequence in correct order (visual → dead → live), specific instrument setup for each test (Megger MFT1741 or equivalent), exact lead placement locations (CU terminals, far end connections), step-by-step procedures (what buttons to press, how long to hold), calculated expected results with units and tolerances (R1+R2, insulation resistance, Zs), pass/fail criteria with regulation references (Table 1A, 643.3.2), troubleshooting guidance for common failures (high resistance, low insulation), safety precautions for live testing (barriers, warning notices, proving dead first), certification requirements (BS 7671 Appendix 6 forms, EIC completion)",
+  "response": "COMPREHENSIVE GN3 testing guidance (400-600 words) written as if mentoring an apprentice on-site. Start with 'Right, here's how we test this properly...' or similar conversational opening. Include: (1) Complete Chapter 64 test sequence in mandatory order with WHY the order matters ('Always do insulation BEFORE polarity because...'), (2) Specific instrument setup for EACH test (Megger MFT1741 settings, which buttons, zero procedure), (3) EXACT lead placement ('Red probe on L terminal at position B7 in CU, black probe on CPC at far socket outlet'), (4) Step-by-step procedures with timings ('Hold TEST button for 2 seconds, wait for display to stabilise'), (5) Calculated expected results with real-world tolerances ('Calculated R1+R2: 0.88Ω for 45m run. Acceptable range: 0.79-0.97Ω. Anything over 1.15Ω fails Table 1A'), (6) What can go wrong based on 30 years experience ('Common failure: reading shows 5.2Ω - nine times out of ten it's a loose neutral at the board'), (7) Trade tips ('Pro tip: if Zs looks high, check your test lead connections first - saves you pulling apart terminations'), (8) Troubleshooting shortcuts ('If insulation reads <2MΩ, disconnect neutral first, then test L-E and N-E separately to isolate the fault'), (9) Safety warnings from real incidents ('I once saw someone test Zs on an RCD circuit in trip mode - instant nuisance trip and angry site manager'), (10) Certification pitfalls ('Common EIC mistake: forgetting to record the actual measured Ze, not the assumed value')",
   "testingProcedure": {
     "visualInspection": {
       "checkpoints": [
