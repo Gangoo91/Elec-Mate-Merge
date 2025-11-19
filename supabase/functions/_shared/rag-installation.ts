@@ -12,6 +12,7 @@ import { generateEmbeddingWithRetry } from './v3-core.ts';
 import type { SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { rerankWithCrossEncoder, type RegulationResult } from './cross-encoder-reranker.ts';
 import { calculateConfidence } from './confidence-scorer.ts';
+import { withTimeout, Timeouts } from './timeout.ts';
 
 /**
  * Query expansion for installation-specific terms
@@ -147,6 +148,24 @@ export async function retrieveInstallationKnowledge(
   entities: any,
   logger: any
 ): Promise<any[]> {
+  // Wrap entire retrieval in 30s timeout for speed optimization
+  return withTimeout(
+    performInstallationRetrieval(query, matchCount, openAiKey, entities, logger),
+    30000,
+    'Installation RAG Search'
+  );
+}
+
+/**
+ * Internal retrieval function (timeout-protected)
+ */
+async function performInstallationRetrieval(
+  query: string,
+  matchCount: number,
+  openAiKey: string,
+  entities: any,
+  logger: any
+): Promise<any[]> {
   const searchStart = Date.now();
   
   // Create supabase client
@@ -203,14 +222,12 @@ export async function retrieveInstallationKnowledge(
     const keyword2 = finalKeywords[1] || 'cable';
     const keyword3 = finalKeywords[2] || 'circuit';
     
-    // FIX 4: Dynamic result limits based on query complexity
-    const isComplexQuery = finalKeywords.length > 3 || query.length > 50;
-    const practicalLimit = isComplexQuery ? 25 : 15;
-    const regulationsLimit = isComplexQuery ? 15 : 10;
+    // Optimized: Fixed moderate limits for speed (30s target)
+    const practicalLimit = 15;  // Down from 25
+    const regulationsLimit = 10; // Down from 15
     
     logger.debug('Keywords extracted', { 
-      keywords: finalKeywords, 
-      isComplex: isComplexQuery,
+      keywords: finalKeywords,
       limits: { practical: practicalLimit, regulations: regulationsLimit }
     });
     
@@ -230,31 +247,6 @@ export async function retrieveInstallationKnowledge(
       
       practicalData = data || [];
       practicalError = error;
-      
-      // Retry with simpler query if failed or zero results
-      if ((practicalError || practicalData.length === 0) && practicalLimit > 10) {
-        logger.warn('Practical work RPC failed/empty, retrying with simpler query', { 
-          originalError: practicalError?.message,
-          originalLimit: practicalLimit 
-        });
-        
-        const { data: retryData, error: retryError } = await supabase.rpc(
-          'search_practical_work_intelligence_hybrid',
-          {
-            query_text: keyword1 + ' ' + keyword2, // Simpler query with just top keywords
-            match_count: 10, // Reduced limit
-            filter_trade: null
-          }
-        );
-        
-        if (!retryError && retryData && retryData.length > 0) {
-          practicalData = retryData;
-          practicalError = null;
-          logger.info('Retry successful', { resultsCount: retryData.length });
-        } else {
-          logger.warn('Retry also failed, proceeding with regulations-only', { retryError });
-        }
-      }
     } catch (err) {
       practicalError = err;
       logger.error('Practical work RPC exception', { error: err });
@@ -268,8 +260,7 @@ export async function retrieveInstallationKnowledge(
       resultsCount: practicalData?.length || 0,
       avgScore: practicalData?.length > 0 
         ? (practicalData.reduce((sum: number, r: any) => sum + (r.hybrid_score || 0), 0) / practicalData.length).toFixed(2)
-        : 0,
-      usedRetry: practicalLimit > 10 && (practicalError || practicalData.length === 0)
+        : 0
     });
     
     // Use RPC function for Regulations Intelligence
@@ -301,84 +292,10 @@ export async function retrieveInstallationKnowledge(
       total: initialResultCount
     });
 
-    // Zero-result fallback - trigger broader RPC search if results are too low
-    let shouldUseFallback = initialResultCount < 5;
-    let fallbackPractical: any[] = [];
-    let fallbackRegulations: any[] = [];
-    
-    if (shouldUseFallback) {
-      logger.warn('Low RAG results, triggering broader RPC fallback', { 
-        currentCount: initialResultCount,
-        threshold: 5
-      });
-      
-      // Broader practical work RPC search
-      const { data: fbPractical } = await supabase.rpc(
-        'search_practical_work_intelligence_hybrid',
-        {
-          query_text: expandedQuery.join(' '), // Use expanded query for broader context
-          match_count: 15,
-          filter_trade: null
-        }
-      );
-      
-      // Broader regulations RPC search
-      const { data: fbRegulations } = await supabase.rpc(
-        'search_regulations_intelligence_hybrid',
-        {
-          query_text: expandedQuery.join(' '),
-          match_count: 10
-        }
-      );
-      
-      fallbackPractical = fbPractical || [];
-      fallbackRegulations = fbRegulations || [];
-      
-      logger.info('Fallback RPC search complete', { 
-        practicalCount: fallbackPractical.length,
-        regulationsCount: fallbackRegulations.length
-      });
-    }
-
-    // Essential practical fallback data
-    const practicalFallback = [
-      { 
-        regulation_number: 'Safe Isolation',
-        content: 'Safely isolate the electrical supply before commencing any work. Verify isolation using an approved voltage tester.',
-        tools_required: ['Voltage tester', 'Lock-off kit', 'Warning notices'],
-        materials_needed: ['Isolation locks', 'Warning tags'],
-        source: 'practical_fallback'
-      },
-      { 
-        regulation_number: 'Cable Installation',
-        content: 'Install cables using appropriate fixing methods. Ensure cables are properly supported and protected from mechanical damage.',
-        tools_required: ['Cable clips', 'Conduit cutters', 'Crimping tool', 'Wire strippers'],
-        materials_needed: ['Cable', 'Fixings', 'Conduit', 'Accessories'],
-        source: 'practical_fallback'
-      },
-      { 
-        regulation_number: 'Terminations',
-        content: 'Make all terminations securely using appropriate torque settings. Ensure correct conductor identification.',
-        tools_required: ['Torque screwdriver', 'Wire strippers', 'Side cutters'],
-        materials_needed: ['Terminal blocks', 'Ferrules', 'Cable markers'],
-        source: 'practical_fallback'
-      },
-      { 
-        regulation_number: 'Testing & Verification',
-        content: 'Carry out all required tests including continuity, insulation resistance, and polarity. Record all results.',
-        tools_required: ['Multifunction tester', 'Test leads', 'Test probes'],
-        materials_needed: ['Test certificates', 'Labels'],
-        source: 'practical_fallback'
-      }
-    ];
-
-    // Combine results: practical + regulations + broader fallback (if triggered) + essential fallback
+    // Combine results: practical + regulations only (no fallbacks for speed)
     let knowledge = [
       ...(practicalData || []),
-      ...(regulationsData || []),
-      ...fallbackPractical,
-      ...fallbackRegulations,
-      ...practicalFallback
+      ...(regulationsData || [])
     ];
 
     // Normalize field names for consistent consumption by AI
