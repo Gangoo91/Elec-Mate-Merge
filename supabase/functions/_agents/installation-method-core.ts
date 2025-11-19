@@ -47,7 +47,7 @@ const INSTALLATION_METHOD_TOOL = {
         },
         installationSteps: {
           type: 'array',
-          minItems: 8, // Allow flexible 8-15 steps based on work complexity
+          minItems: 12, // Minimum 12 steps, scale up to 15 based on work complexity
           items: {
             type: 'object',
             properties: {
@@ -144,10 +144,10 @@ EXECUTIVE SUMMARY: Cable specification, installation method with BS 7671 referen
 
 MATERIALS LIST: Description, specification (BS/EN codes), quantity with units, notes.
 
-INSTALLATION STEPS (8-15 steps - scale based on work complexity):
-- Simple installations (domestic socket): 8-10 steps
-- Medium complexity (sub-main, motor): 10-12 steps
-- Complex installations (3-phase, multiple zones): 12-15 steps
+INSTALLATION STEPS (12-15 steps - scale based on work complexity):
+- Simple installations (domestic socket): 12 steps
+- Medium complexity (sub-main, motor): 13-14 steps
+- Complex installations (3-phase, multiple zones): 15 steps
 
 For each step:
 - Step number + professional title
