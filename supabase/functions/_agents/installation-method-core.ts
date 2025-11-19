@@ -248,6 +248,21 @@ CRITICAL: Every step must follow this structure with 4+ tools extracted from RAG
 
 Use the RAG context to ensure technical accuracy and regulatory compliance.`;
 
+/**
+ * Wrapper for OpenAI calls with 3-minute timeout
+ * Installation Specialist-only timeout protection
+ */
+async function callOpenAIWithTimeout(params: any): Promise<any> {
+  const TIMEOUT_MS = 180000; // 3 minutes
+  
+  return Promise.race([
+    callOpenAI(params),
+    new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('OpenAI call timed out after 3 minutes')), TIMEOUT_MS)
+    )
+  ]);
+}
+
 export async function generateInstallationMethod(
   query: string,
   projectDetails: any,
@@ -378,7 +393,7 @@ RAG Context (cite regulation numbers):
 ${ragContext}`;
 
   console.log('🤖 Calling GPT-5 Mini with installation method tool...');
-  const response = await callOpenAI({
+  const response = await callOpenAIWithTimeout({
     messages: [
       { role: 'system', content: SYSTEM_PROMPT },
       { role: 'user', content: userPrompt }
