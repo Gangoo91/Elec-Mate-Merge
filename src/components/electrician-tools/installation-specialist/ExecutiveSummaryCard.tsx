@@ -51,16 +51,16 @@ export const ExecutiveSummaryCard = ({ executiveSummary }: ExecutiveSummaryCardP
   const vdStatus = getVoltageDropStatus(voltageDrop);
 
   return (
-    <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 via-primary/5 to-background shadow-xl hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300 animate-fade-in">
-      <CardContent className="p-5 sm:p-6">
+    <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 via-primary/5 to-background shadow-xl hover:shadow-2xl hover:shadow-blue-500/20 hover:-translate-y-0.5 transition-all duration-300 animate-fade-in">
+      <CardContent className="p-5 sm:p-6 lg:p-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-5">
           <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/10 shadow-lg">
-            <FileText className="h-6 w-6 text-blue-400" />
+            <FileText className="h-6 w-6 lg:h-7 lg:w-7 text-blue-400" />
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-bold text-xl text-foreground">Executive Summary</h3>
+              <h3 className="font-bold text-xl lg:text-2xl text-foreground">Executive Summary</h3>
               <Badge variant="outline" className="bg-blue-500/10 border-blue-500/30 text-blue-400 text-xs">
                 AI Generated
               </Badge>

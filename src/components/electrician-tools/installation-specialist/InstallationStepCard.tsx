@@ -56,19 +56,19 @@ export const InstallationStepCard = ({
 
   return (
     <Card className={cn(
-      "relative overflow-hidden transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 animate-fade-in",
-      isExpanded && "ring-2 ring-primary/30 shadow-xl shadow-primary/20"
+      "relative overflow-hidden transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-0.5 animate-fade-in",
+      isExpanded && "ring-2 ring-primary/30 shadow-2xl shadow-primary/20"
     )}>
       {/* Timeline connector (vertical line with gradient) */}
       <div className="absolute left-6 top-12 bottom-0 w-1 bg-gradient-to-b from-elec-yellow via-primary/60 to-transparent rounded-full" />
       
-      <div className={cn("p-4", isMobile ? "sm:p-5" : "sm:p-6")}>
+      <div className={cn("p-4", isMobile ? "sm:p-5" : "sm:p-6 lg:p-8")}>
         <div className="flex items-start gap-4">
           {/* Step number with timeline dot and pulse effect */}
           <div className="relative flex-shrink-0">
             <div className={cn(
               "rounded-full flex items-center justify-center font-black transition-all duration-300 touch-manipulation",
-              isMobile ? "w-12 h-12 text-xl" : "w-14 h-14 text-2xl",
+              isMobile ? "w-12 h-12 text-xl" : "w-14 h-14 text-2xl lg:w-16 lg:h-16 lg:text-3xl",
               isExpanded 
                 ? "bg-gradient-to-br from-elec-yellow to-primary text-black shadow-2xl shadow-elec-yellow/40 scale-110" 
                 : "bg-gradient-to-br from-primary/30 to-primary/10 text-primary shadow-md hover:scale-105 active:scale-95"
