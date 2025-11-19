@@ -195,7 +195,7 @@ export async function generateInstallationMethod(
       logger
     ),
     new Promise<never>((_, reject) => 
-      setTimeout(() => reject(new Error('RAG search timeout after 60s')), 60000)
+      setTimeout(() => reject(new Error('RAG search timeout after 90s')), 90000)
     )
   ]).catch(error => {
     console.error('❌ RAG search failed/timeout:', error);
