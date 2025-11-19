@@ -78,6 +78,9 @@ Deno.serve(async (req) => {
         projectDetails: job.project_details,
         designerContext: job.designer_context,
         jobId: job.id // CRITICAL: Pass jobId for job-aware processing
+      },
+      headers: {
+        'x-supabase-timeout': '360000' // 360 seconds = 6 minutes (matches backend timeout)
       }
     });
 
