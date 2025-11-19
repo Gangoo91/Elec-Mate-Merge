@@ -4,13 +4,9 @@
  * Generates enhanced method statements for professional PDF templates
  */
 
-import { 
-  searchPracticalWorkIntelligence, 
-  searchBS7671Intelligence,
-  searchRegulationsIntelligence,
-  callOpenAI
-} from '../_shared/rams-rag.ts';
-import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { searchInstallationKnowledge } from '../_shared/rag-installation.ts';
+import { callOpenAI } from '../_shared/ai-providers.ts';
+import { createLogger } from '../_shared/logger.ts';
 
 const INSTALLATION_METHOD_TOOL = {
   type: 'function' as const,
@@ -260,40 +256,43 @@ export async function generateInstallationMethod(
   
   if (onProgress) onProgress(0, 'Installation Method: Starting...');
   
-  // STEP 1: RAG - Use shared regulations if provided, otherwise search
+  // STEP 1: RAG - Use modern installation-specific search
   console.log('🔍 Fetching RAG knowledge...');
   if (onProgress) onProgress(10, 'Installation Method: Searching installation procedures...');
   
-  console.log('🔍 Fetching installation method RAG data...');
+  const logger = createLogger('installation-method-agent');
   
-  const ragResults = sharedRegulations || await Promise.all([
-    searchPracticalWorkIntelligence(query),
-    searchBS7671Intelligence(query),
-    searchRegulationsIntelligence(query)
-  ]).then(results => results.flat())
-    .catch(error => {
-      console.error('❌ RAG search failed:', error);
-      // Return minimal fallback data to prevent total failure
-      return [
-        { 
-          regulation_number: '134.1.1', 
-          content: 'Good workmanship and proper materials shall be used in electrical installations.', 
-          source: 'fallback' 
-        },
-        {
-          regulation_number: '411.3.1.1',
-          content: 'Automatic disconnection of supply shall be provided for protection against electric shock.',
-          source: 'fallback'
-        }
-      ];
-    });
+  const ragResults = sharedRegulations || await searchInstallationKnowledge(
+    query,
+    logger,
+    {
+      includeCache: true,
+      includeReranking: true,
+      maxResults: 30
+    }
+  ).catch(error => {
+    console.error('❌ RAG search failed:', error);
+    // Return minimal fallback data to prevent total failure
+    return [
+      { 
+        regulation_number: '134.1.1', 
+        content: 'Good workmanship and proper materials shall be used in electrical installations.', 
+        source: 'fallback' 
+      },
+      {
+        regulation_number: '411.3.1.1',
+        content: 'Automatic disconnection of supply shall be provided for protection against electric shock.',
+        source: 'fallback'
+      }
+    ];
+  });
   
   // Validate we have at least some data
   if (ragResults.length === 0) {
     throw new Error('RAG search returned no results - cannot generate accurate method statement');
   }
   
-  console.log(`✅ Fetched ${ragResults.length} RAG results for installation method agent`);
+  console.log(`✅ Fetched ${ragResults.length} RAG results (cache: ${ragResults.some((r: any) => r.cached)})`);
   
   // Enhanced debugging - RAG breakdown
   const practicalWorkCount = ragResults.filter((r: any) => 
@@ -381,21 +380,17 @@ ${ragContext}`;
   let methodData: any;
   
   try {
-    console.log('🤖 Calling GPT-5 Mini with 3-minute timeout protection...');
+    console.log('🤖 Calling GPT-5 Mini with built-in timeout protection...');
     
-    const response = await withTimeout(
-      callOpenAI({
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: userPrompt }
-        ],
-        model: 'gpt-5-mini-2025-08-07',
-        tools: [INSTALLATION_METHOD_TOOL],
-        tool_choice: { type: 'function', function: { name: 'provide_installation_method_guidance' } }
-      }),
-      180000, // 3 minutes
-      'Installation Method OpenAI Call'
-    );
+    const response = await callOpenAI({
+      messages: [
+        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'user', content: userPrompt }
+      ],
+      model: 'gpt-5-mini-2025-08-07',
+      tools: [INSTALLATION_METHOD_TOOL],
+      tool_choice: { type: 'function', function: { name: 'provide_installation_method_guidance' } }
+    }, Deno.env.get('OPENAI_API_KEY')!, 180000); // Built-in 3-minute timeout
 
     if (!response.toolCalls || response.toolCalls.length === 0) {
       throw new Error('GPT-5 Mini did not return installation method tool call');
@@ -415,10 +410,8 @@ ${ragContext}`;
     console.log('✅ Installation method generated successfully');
     
   } catch (error) {
-    if (error.name === 'TimeoutError') {
-      console.error('⏱️ OpenAI call timed out after 3 minutes');
-      throw new Error('AI generation timed out. OpenAI took longer than 3 minutes to respond. Please try again with a simpler request.');
-    }
+    // AIProviderError includes timeout details
+    console.error('⏱️ OpenAI call failed:', error);
     throw error;
   }
   
