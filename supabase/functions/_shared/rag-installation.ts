@@ -177,22 +177,48 @@ export async function retrieveInstallationKnowledge(
   const embedding = await generateEmbeddingWithRetry(expandedQuery, openAiKey);
 
   try {
-    // Fast BS 7671 RAG search + practical fallback (Solution 3)
-    logger.debug('Starting BS 7671 RAG search', { 
-      matchCount: matchCount
-    });
+    // Direct SQL RAG (Solution 4 - proven in installer-v3)
+    logger.debug('Starting direct SQL RAG search');
     
-    // Solution 3: Skip slow practical work RPC, use only fast BS 7671 regulations
-    const regulationsResults = await supabase.rpc('search_bs7671_intelligence_hybrid', {
-      query_text: query, // Use simple query (not expanded) for speed
-      match_count: matchCount
-    }).catch(err => {
-      logger.error('Regulations search failed', { error: err instanceof Error ? err.message : String(err) });
-      return { data: [], error: err };
-    });
-
-    logger.info('BS 7671 RAG search complete', { 
-      regulations: regulationsResults.data?.length || 0
+    // Extract keywords for ILIKE search
+    const keywords = query
+      .toLowerCase()
+      .split(/\s+/)
+      .filter(w => w.length > 3)
+      .slice(0, 5); // Top 5 keywords
+    
+    const keyword1 = keywords[0] || 'installation';
+    const keyword2 = keywords[1] || 'cable';
+    const keyword3 = keywords[2] || 'circuit';
+    
+    logger.debug('Keywords extracted', { keywords });
+    
+    // Direct SQL Query 1: Practical Work Intelligence
+    const { data: practicalData, error: practicalError } = await supabase
+      .from('practical_work_intelligence')
+      .select('*')
+      .or(`primary_topic.ilike.%${keyword1}%,primary_topic.ilike.%${keyword2}%,equipment_category.ilike.%${keyword1}%`)
+      .limit(15);
+    
+    if (practicalError) {
+      logger.error('Practical work SQL query failed', { error: practicalError });
+    }
+    
+    // Direct SQL Query 2: BS 7671 Regulations Intelligence
+    const { data: regulationsData, error: regulationsError } = await supabase
+      .from('regulations_intelligence')
+      .select('*')
+      .or(`regulation_number.ilike.%${keyword1}%,primary_topic.ilike.%${keyword1}%,primary_topic.ilike.%${keyword2}%`)
+      .limit(10);
+    
+    if (regulationsError) {
+      logger.error('Regulations SQL query failed', { error: regulationsError });
+    }
+    
+    logger.info('Direct SQL RAG complete', {
+      practical: practicalData?.length || 0,
+      regulations: regulationsData?.length || 0,
+      total: (practicalData?.length || 0) + (regulationsData?.length || 0)
     });
 
     // Essential practical fallback data
@@ -227,9 +253,10 @@ export async function retrieveInstallationKnowledge(
       }
     ];
 
-    // Combine results: regulations + practical fallback
+    // Combine results: practical + regulations + fallback
     let knowledge = [
-      ...(regulationsResults.data || []),
+      ...(practicalData || []),
+      ...(regulationsData || []),
       ...practicalFallback
     ];
 
