@@ -90,6 +90,7 @@ serve(async (req) => {
             status: 'complete',
             progress: 100,
             current_step: 'Generation complete!',
+            method_data: response.data, // ✅ Store FULL response with all fields
             completed_at: new Date().toISOString()
           })
           .eq('id', jobId);
@@ -126,7 +127,12 @@ serve(async (req) => {
         competencyRequirements: {
           minimumQualifications: extractQualifications(result.steps)
         },
-        ragCitations: result.ragCitations || []
+        ragCitations: result.ragCitations || [],
+        // 🆕 MISSING FIELDS - Pass through complete data
+        executiveSummary: result.executiveSummary || null,
+        materialsList: result.materialsList || [],
+        testingRequirements: result.testingRequirements || [],
+        regulatoryReferences: result.regulatoryReferences || []
       }
     };
 
