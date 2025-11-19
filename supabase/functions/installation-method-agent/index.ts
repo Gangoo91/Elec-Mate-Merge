@@ -138,26 +138,34 @@ serve(async (req) => {
       }
     );
 
-  } catch (error) {
+  } catch (error: any) {
     logger.error('Installation method generation failed', { 
-      error: error instanceof Error ? error.message : String(error) 
+      error: error instanceof Error ? error.message : String(error),
+      errorName: error?.name,
+      statusCode: error?.statusCode
     });
 
-    // Update job status to failed if job-aware mode
-    const body = await req.json().catch(() => ({}));
-    const { jobId } = body;
-    
+    // Job-aware error handling (jobId already available from line 44)
     if (jobId) {
       try {
         const supabase = createClient();
+        
+        // Distinguish timeout errors from other failures
+        const isTimeout = error?.name === 'AIProviderError' && error?.statusCode === 408;
+        const errorMessage = isTimeout
+          ? 'OpenAI is taking longer than expected. Please try again or simplify your request.'
+          : (error instanceof Error ? error.message : 'Unknown error occurred');
+        
         await supabase
           .from('installation_method_jobs')
           .update({
             status: 'failed',
-            error_message: error instanceof Error ? error.message : 'Unknown error occurred',
+            error_message: errorMessage,
             completed_at: new Date().toISOString()
           })
           .eq('id', jobId);
+          
+        logger.info('Job marked as failed', { jobId, isTimeout });
       } catch (updateErr) {
         logger.error('Failed to update job failure status', { error: updateErr });
       }
@@ -166,10 +174,11 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error' 
+        error: error instanceof Error ? error.message : 'Unknown error',
+        retryable: error?.statusCode === 408 // Signal to frontend if retryable
       }),
       { 
-        status: 500, 
+        status: error?.statusCode || 500, 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
       }
     );
