@@ -18,6 +18,15 @@ timeout_sec = 360
 verify_jwt = false
 timeout_sec = 360
 
+# Job Queue Architecture for Installation Method Agent
+[functions.create-installation-method-job]
+verify_jwt = false
+timeout_sec = 30
+
+[functions.process-installation-method-job]
+verify_jwt = false
+timeout_sec = 600
+
 [functions.visual-analysis-rag-enhanced]
 verify_jwt = false
 timeout_sec = 180

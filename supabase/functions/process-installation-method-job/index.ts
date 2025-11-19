@@ -72,18 +72,13 @@ Deno.serve(async (req) => {
     let heartbeatInterval: number | undefined;
 
     // Start the AI call
-    const agentPromise = fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/installation-method-agent`, {
-      method: 'POST',
-      headers: {
-        'Authorization': req.headers.get('Authorization') || '',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+    const agentPromise = supabase.functions.invoke('installation-method-agent', {
+      body: {
         query: job.query,
         projectDetails: job.project_details,
         designerContext: job.designer_context,
         jobId: job.id // CRITICAL: Pass jobId for job-aware processing
-      })
+      }
     });
 
     // Heartbeat: Update progress every 10 seconds (20% → 80%)
@@ -110,12 +105,11 @@ Deno.serve(async (req) => {
     try {
       agentResponse = await agentPromise;
       
-      if (!agentResponse.ok) {
-        const errorText = await agentResponse.text();
-        throw new Error(`Agent call failed: ${agentResponse.status} ${agentResponse.statusText} - ${errorText}`);
+      if (agentResponse.error) {
+        throw new Error(`Agent call failed: ${agentResponse.error.message}`);
       }
 
-      agentData = await agentResponse.json();
+      agentData = agentResponse.data;
       
       logger.info('Agent call completed', { duration: Date.now() - startTime });
       
