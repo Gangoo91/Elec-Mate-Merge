@@ -4,7 +4,7 @@
  * Generates enhanced method statements for professional PDF templates
  */
 
-import { searchInstallationKnowledge } from '../_shared/rag-installation.ts';
+import { retrieveInstallationKnowledge } from '../_shared/rag-installation.ts';
 import { callOpenAI } from '../_shared/ai-providers.ts';
 import { createLogger } from '../_shared/logger.ts';
 
@@ -253,6 +253,7 @@ export async function generateInstallationMethod(
 ): Promise<any> {
   console.log('🔧 Installation Method Agent starting...');
   const startTime = Date.now();
+  const phaseTimings: any = {};
   
   if (onProgress) onProgress(0, 'Installation Method: Starting...');
   
@@ -261,17 +262,24 @@ export async function generateInstallationMethod(
   if (onProgress) onProgress(10, 'Installation Method: Searching installation procedures...');
   
   const logger = createLogger('installation-method-agent');
+  const openAiKey = Deno.env.get('OPENAI_API_KEY')!;
+  const entities = { installationMethod: projectDetails.workType || 'general' };
   
-  const ragResults = sharedRegulations || await searchInstallationKnowledge(
-    query,
-    logger,
-    {
-      includeCache: true,
-      includeReranking: true,
-      maxResults: 30
-    }
-  ).catch(error => {
-    console.error('❌ RAG search failed:', error);
+  const ragStart = Date.now();
+  const ragResults = sharedRegulations || await Promise.race([
+    retrieveInstallationKnowledge(
+      query,
+      20, // Reduced from 30 to 20 for faster results
+      openAiKey,
+      entities,
+      logger
+    ),
+    new Promise<never>((_, reject) => 
+      setTimeout(() => reject(new Error('RAG search timeout after 60s')), 60000)
+    )
+  ]).catch(error => {
+    console.error('❌ RAG search failed/timeout:', error);
+    logger.error('RAG failure', { error: error instanceof Error ? error.message : String(error) });
     // Return minimal fallback data to prevent total failure
     return [
       { 
@@ -286,6 +294,9 @@ export async function generateInstallationMethod(
       }
     ];
   });
+  
+  phaseTimings.rag = Date.now() - ragStart;
+  logger.info('RAG complete', { duration: phaseTimings.rag, count: ragResults.length });
   
   // Validate we have at least some data
   if (ragResults.length === 0) {
@@ -381,6 +392,7 @@ ${ragContext}`;
   
   try {
     console.log('🤖 Calling GPT-5 Mini with built-in timeout protection...');
+    const aiStart = Date.now();
     
     const response = await callOpenAI({
       messages: [
@@ -391,6 +403,9 @@ ${ragContext}`;
       tools: [INSTALLATION_METHOD_TOOL],
       tool_choice: { type: 'function', function: { name: 'provide_installation_method_guidance' } }
     }, Deno.env.get('OPENAI_API_KEY')!, 180000); // Built-in 3-minute timeout
+    
+    phaseTimings.openai = Date.now() - aiStart;
+    logger.info('OpenAI complete', { duration: phaseTimings.openai });
 
     if (!response.toolCalls || response.toolCalls.length === 0) {
       throw new Error('GPT-5 Mini did not return installation method tool call');
@@ -417,8 +432,9 @@ ${ragContext}`;
   
   if (onProgress) onProgress(100, 'Installation Method: Complete!');
   
-  const duration = Date.now() - startTime;
-  console.log(`⏱️ Installation Method Agent completed in ${duration}ms`);
+  phaseTimings.total = Date.now() - startTime;
+  logger.info('Generation complete', phaseTimings);
+  console.log(`⏱️ Installation Method Agent completed in ${phaseTimings.total}ms (RAG: ${phaseTimings.rag}ms, OpenAI: ${phaseTimings.openai}ms)`);
 
   // Helper: Extract practical tips from steps
   const extractPracticalTipsFromSteps = (steps: any[]): string[] => {
