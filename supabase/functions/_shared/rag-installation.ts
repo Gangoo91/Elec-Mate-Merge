@@ -214,15 +214,52 @@ export async function retrieveInstallationKnowledge(
       limits: { practical: practicalLimit, regulations: regulationsLimit }
     });
     
-    // FIX 2: Word boundary matching for precise ILIKE patterns
-    // Build OR conditions dynamically for better precision
+    // FIX 2 + FUZZY MATCHING: Enhanced category matching with keyword variations
+    // Generate keyword variations (stems) for better matching
+    const keywordVariations = finalKeywords.flatMap(k => {
+      if (k === 'charger') return ['charger', 'charging', 'charg'];
+      if (k === 'shower') return ['shower', 'showers'];
+      if (k === 'socket') return ['socket', 'sockets', 'outlet'];
+      if (k === 'cooker') return ['cooker', 'cooking', 'oven'];
+      return [k];
+    });
+
+    // Detect EV queries for specialized patterns
+    const isEVQuery = finalKeywords.some(k => ['ev', 'electric', 'vehicle', 'charger', 'charging'].includes(k));
+    
     const practicalOrConditions = [
+      // Primary topic patterns
       `primary_topic.ilike.% ${keyword1} %`,
       `primary_topic.ilike.% ${keyword2} %`,
       `primary_topic.ilike.%${keyword1}%`,
-      `equipment_category.ilike.% ${keyword1} %`,
-      `equipment_category.ilike.%${keyword1}%`
-    ].join(',');
+      ...finalKeywords.slice(0, 5).map(k => `primary_topic.ilike.%${k}%`),
+      
+      // Equipment category - EXACT underscore format matching
+      `equipment_category.eq.${keyword1}_${keyword2}`,
+      `equipment_category.ilike.${keyword1}_%`,
+      `equipment_category.ilike.%_${keyword1}`,
+      `equipment_category.ilike.%${keyword1}%`,
+      
+      // Keyword variations for fuzzy matching
+      ...keywordVariations.slice(0, 8).map(v => `equipment_category.ilike.%${v}%`),
+      
+      // Materials/tools fallback
+      ...finalKeywords.slice(0, 3).map(k => `materials_needed.cs.{${k}}`),
+      ...finalKeywords.slice(0, 3).map(k => `tools_required.cs.{${k}}`)
+    ];
+
+    // Add EV-specific smart matching
+    if (isEVQuery) {
+      practicalOrConditions.push(
+        'equipment_category.eq.ev_charging',
+        'equipment_category.eq.electric_vehicle_charging',
+        'equipment_category.ilike.%ev_%',
+        'primary_topic.ilike.%Section 722%'
+      );
+      logger.info('[RAG] EV query detected - adding specialized patterns');
+    }
+    
+    const practicalOrConditionsString = practicalOrConditions.join(',');
     
     const regulationsOrConditions = [
       `regulation_number.ilike.% ${keyword1} %`,
@@ -236,7 +273,7 @@ export async function retrieveInstallationKnowledge(
     const { data: practicalData, error: practicalError } = await supabase
       .from('practical_work_intelligence')
       .select('*')
-      .or(practicalOrConditions)
+      .or(practicalOrConditionsString)
       .limit(practicalLimit);
     
     if (practicalError) {
