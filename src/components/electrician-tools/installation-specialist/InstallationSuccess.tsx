@@ -17,6 +17,8 @@ interface InstallationSuccessProps {
 
 const InstallationSuccess = ({ results, onViewResults, generationTime, open, onOpenChange }: InstallationSuccessProps) => {
   useEffect(() => {
+    if (!open) return;
+
     // Confetti animation - blue/yellow theme for Installation
     const duration = 3000;
     const animationEnd = Date.now() + duration;
@@ -55,7 +57,7 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
     }
 
     return () => clearInterval(interval);
-  }, []);
+  }, [open]);
 
   // Extract stats from results
   const totalSteps = results?.steps?.length || results?.summary?.totalSteps || 0;
