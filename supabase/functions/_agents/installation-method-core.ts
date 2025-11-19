@@ -227,10 +227,20 @@ export async function generateInstallationMethod(
 
   console.log(`✅ Fetched ${ragResults.length} RAG results`);
   
+  // Debug: Log sample RAG result to verify field names
+  if (ragResults.length > 0) {
+    console.log('📊 Sample RAG result fields:', Object.keys(ragResults[0]));
+    console.log('📊 Sample practical work:', ragResults.find((r: any) => r.source === 'practical_work_intelligence'));
+    console.log('📊 Sample regulation:', ragResults.find((r: any) => r.regulation_number));
+  }
+  
   const ragContext = ragResults
-    .map((r: any, i: number) => 
-      `[${i + 1}] ${r.regulation}: ${(r.content ?? '').substring(0, 400)}`
-    )
+    .map((r: any, i: number) => {
+      // Handle multiple possible field names from different RPC functions
+      const regNumber = r.regulation_number || r.regulation || r.topic || 'N/A';
+      const contentText = r.content || r.primary_topic || r.description || '';
+      return `[${i + 1}] ${regNumber}: ${contentText.substring(0, 400)}`;
+    })
     .join('\n\n');
 
   // STEP 2: GPT-5 Mini with tool calling
