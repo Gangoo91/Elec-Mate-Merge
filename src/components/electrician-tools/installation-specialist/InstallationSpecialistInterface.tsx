@@ -92,7 +92,14 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
 
   // Handle job completion
   useEffect(() => {
+    console.log('🔍 Job Status Check:', { 
+      jobStatus, 
+      hasMethodData: !!jobMethodData, 
+      celebrationShown 
+    });
+    
     if (jobStatus === 'complete' && jobMethodData && !celebrationShown) {
+      console.log('✅ Setting method data and showing celebration');
       setMethodData(jobMethodData);
       setIsGenerating(false);
       
