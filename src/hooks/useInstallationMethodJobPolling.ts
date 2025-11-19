@@ -40,7 +40,19 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
     try {
       const { data, error } = await supabase
         .from('installation_method_jobs')
-        .select('*')
+        .select(`
+          id,
+          status,
+          progress,
+          current_step,
+          method_data,
+          quality_metrics,
+          error_message,
+          created_at,
+          started_at,
+          completed_at,
+          user_id
+        `)
         .eq('id', jobId)
         .single();
 
@@ -49,7 +61,41 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
         return;
       }
 
+      // Debug: Log raw data from Supabase
+      console.log('📦 Raw polling data:', {
+        id: data.id,
+        status: data.status,
+        progress: data.progress,
+        hasMethodData: !!data.method_data,
+        methodDataType: typeof data.method_data,
+        methodDataKeys: data.method_data ? Object.keys(data.method_data) : [],
+        methodDataPreview: data.method_data ? JSON.stringify(data.method_data).substring(0, 200) : null
+      });
+
       setJob(data);
+
+      // Debug: Log job state after setting
+      console.log('📦 Job state after setJob:', {
+        hasJob: !!data,
+        hasMethodData: !!data?.method_data
+      });
+
+      // Fallback: If method_data is missing on complete, try direct query
+      if (data.status === 'complete' && !data.method_data) {
+        console.warn('⚠️ method_data missing on complete job, attempting direct query...');
+        const { data: directData, error: directError } = await supabase
+          .from('installation_method_jobs')
+          .select('method_data')
+          .eq('id', jobId)
+          .single();
+        
+        if (directData?.method_data) {
+          console.log('✅ Retrieved method_data via direct query');
+          setJob({ ...data, method_data: directData.method_data });
+        } else {
+          console.error('❌ Direct query also failed:', directError);
+        }
+      }
 
       // Stuck job detection: 360s timeout (6 minutes) - reset on progress OR step change
       if (data.status === 'processing') {
