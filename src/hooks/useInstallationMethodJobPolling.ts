@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface InstallationMethodJob {
@@ -30,9 +30,9 @@ interface UseInstallationMethodJobPollingReturn {
 export const useInstallationMethodJobPolling = (jobId: string | null): UseInstallationMethodJobPollingReturn => {
   const [job, setJob] = useState<InstallationMethodJob | null>(null);
   const [isPolling, setIsPolling] = useState(false);
-  const [lastProgress, setLastProgress] = useState(0);
-  const [lastCurrentStep, setLastCurrentStep] = useState<string>('');
-  const [lastActivityUpdate, setLastActivityUpdate] = useState(Date.now());
+  const lastProgressRef = useRef(0);
+  const lastCurrentStepRef = useRef<string>('');
+  const lastActivityUpdateRef = useRef(Date.now());
 
   const pollJob = useCallback(async () => {
     if (!jobId) return;
@@ -53,15 +53,15 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
 
       // Stuck job detection: 360s timeout (6 minutes) - reset on progress OR step change
       if (data.status === 'processing') {
-        const hasProgressChanged = data.progress !== lastProgress;
-        const hasStepChanged = data.current_step !== lastCurrentStep;
+        const hasProgressChanged = data.progress !== lastProgressRef.current;
+        const hasStepChanged = data.current_step !== lastCurrentStepRef.current;
         
         if (hasProgressChanged || hasStepChanged) {
-          setLastProgress(data.progress);
-          setLastCurrentStep(data.current_step || '');
-          setLastActivityUpdate(Date.now());
+          lastProgressRef.current = data.progress;
+          lastCurrentStepRef.current = data.current_step || '';
+          lastActivityUpdateRef.current = Date.now();
         } else {
-          const stuckDuration = Date.now() - lastActivityUpdate;
+          const stuckDuration = Date.now() - lastActivityUpdateRef.current;
           if (stuckDuration > 360000) {
             console.error('❌ STUCK JOB DETECTED: No activity in 360s at', data.progress + '%');
             await supabase
@@ -77,14 +77,16 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
         }
       }
 
-      // Stop polling when complete, failed, or cancelled
+      // Stop polling when complete, failed, or cancelled - but give state time to propagate
       if (data.status === 'complete' || data.status === 'failed' || data.status === 'cancelled') {
-        setIsPolling(false);
+        setTimeout(() => {
+          setIsPolling(false);
+        }, 100);
       }
     } catch (error) {
       console.error('Error polling job:', error);
     }
-  }, [jobId, lastProgress, lastCurrentStep, lastActivityUpdate]);
+  }, [jobId]);
 
   useEffect(() => {
     if (!jobId || !isPolling) return;
