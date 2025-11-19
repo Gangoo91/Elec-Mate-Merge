@@ -33,7 +33,8 @@ export const CircuitBuilderStep = ({
       name: '',
       loadType: 'socket',
       phases: 'single',
-      specialLocation: 'none'
+      specialLocation: 'none',
+      cableLength: 20
     });
   };
 

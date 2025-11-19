@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { CircuitInput } from "@/types/installation-design";
-import { SMART_DEFAULTS } from "@/lib/circuit-templates";
+import { SMART_DEFAULTS, DEFAULT_CABLE_LENGTHS } from "@/lib/circuit-templates";
 import { Plus } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
@@ -39,6 +39,8 @@ export const QuickAddButtons = ({ installationType, onAddCircuit }: QuickAddButt
   const handleQuickAdd = (preset: typeof presets[0]) => {
     const defaults = SMART_DEFAULTS[installationType];
     const presetType = preset.type as string;
+    const defaultLength = DEFAULT_CABLE_LENGTHS[installationType][presetType as keyof typeof DEFAULT_CABLE_LENGTHS[typeof installationType]];
+    
     onAddCircuit({
       name: preset.label,
       loadType: preset.type as any,
@@ -46,7 +48,7 @@ export const QuickAddButtons = ({ installationType, onAddCircuit }: QuickAddButt
       phases: installationType === 'industrial' && presetType.includes('motor') ? 'three' : 'single',
       specialLocation: presetType === 'shower' ? 'bathroom' : 
                        presetType === 'ev-charger' ? 'outdoor' : 'none',
-      cableLength: undefined,
+      cableLength: defaultLength || 20,
       notes: ''
     });
   };

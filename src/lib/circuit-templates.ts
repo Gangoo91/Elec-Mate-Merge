@@ -1,5 +1,45 @@
 import { CircuitPreset } from '@/types/installation-design';
 
+export const DEFAULT_CABLE_LENGTHS = {
+  domestic: {
+    'socket': 25,
+    'lighting': 20,
+    'cooker': 10,
+    'shower': 15,
+    'ev-charger': 20,
+    'immersion': 12,
+    'heating': 15,
+    'smoke-alarm': 20,
+    'garage': 25,
+    'outdoor': 25
+  },
+  commercial: {
+    'office-sockets': 30,
+    'emergency-lighting': 40,
+    'hvac': 25,
+    'server-room': 25,
+    'kitchen-equipment': 20,
+    'signage': 15,
+    'fire-alarm': 35,
+    'access-control': 30,
+    'cctv': 30,
+    'data-cabinet': 25,
+    'lighting': 30
+  },
+  industrial: {
+    'three-phase-motor': 40,
+    'machine-tool': 40,
+    'welding': 35,
+    'conveyor': 50,
+    'extraction': 45,
+    'control-panel': 30,
+    'overhead-lighting': 50,
+    'workshop-sockets': 35,
+    'compressor': 40,
+    'production-line': 45
+  }
+} as const;
+
 export const DOMESTIC_TEMPLATES: CircuitPreset[] = [
   {
     id: 'house-rewire',
