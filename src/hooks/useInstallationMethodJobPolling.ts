@@ -127,7 +127,7 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
       if (data.status === 'complete' || data.status === 'failed' || data.status === 'cancelled') {
         setTimeout(() => {
           setIsPolling(false);
-        }, 100);
+        }, 500); // Increased to 500ms for reliable state propagation
       }
     } catch (error) {
       console.error('Error polling job:', error);
@@ -170,7 +170,7 @@ export const useInstallationMethodJobPolling = (jobId: string | null): UseInstal
         clearTimeout(timeoutId);
       }
     };
-  }, [jobId, isPolling, pollJob]);
+  }, [jobId, isPolling]); // Removed pollJob to prevent stale closures
 
   const startPolling = useCallback(() => {
     setIsPolling(true);

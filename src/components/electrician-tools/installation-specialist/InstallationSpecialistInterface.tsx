@@ -113,8 +113,17 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
       });
       setIsGenerating(false);
       setShowResults(false);
+      stopPolling();
     }
-  }, [jobStatus, jobMethodData, jobError, celebrationShown]);
+  }, [jobStatus, jobMethodData, jobError, celebrationShown, stopPolling]);
+
+  // Restart polling if job is processing but polling stopped
+  useEffect(() => {
+    if (currentJobId && jobStatus === 'processing' && !isPolling) {
+      console.warn('⚠️ Job processing but polling stopped - restarting');
+      startPolling();
+    }
+  }, [currentJobId, jobStatus, isPolling, startPolling]);
 
   const handleRegenerate = () => {
     if (lastProjectRef.current) {
