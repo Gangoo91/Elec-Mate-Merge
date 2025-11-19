@@ -8,6 +8,8 @@ import { Edit2, Save, X, Trash2, ChevronUp, ChevronDown, AlertTriangle, AlertCir
 import { InstallationStep } from "@/types/installation-method";
 import { cn } from "@/lib/utils";
 import { EnhancedStepContent } from "./EnhancedStepContent";
+import { MobileStepHeader } from "./MobileStepHeader";
+import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
 
 
 interface InstallationStepCardProps {
@@ -27,6 +29,7 @@ export const InstallationStepCard = ({
 }: InstallationStepCardProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedStep, setEditedStep] = useState(step);
+  const { isMobile } = useMobileEnhanced();
 
   const handleSave = () => {
     onUpdate(editedStep);
@@ -59,15 +62,16 @@ export const InstallationStepCard = ({
       {/* Timeline connector (vertical line with gradient) */}
       <div className="absolute left-6 top-12 bottom-0 w-1 bg-gradient-to-b from-elec-yellow via-primary/60 to-transparent rounded-full" />
       
-      <div className="p-4 sm:p-5">
-        <div className="flex items-start gap-3">
+      <div className={cn("p-4", isMobile ? "sm:p-5" : "sm:p-6")}>
+        <div className="flex items-start gap-4">
           {/* Step number with timeline dot and pulse effect */}
           <div className="relative flex-shrink-0">
             <div className={cn(
-              "w-12 h-12 rounded-full flex items-center justify-center font-black text-xl transition-all duration-300",
+              "rounded-full flex items-center justify-center font-black transition-all duration-300 touch-manipulation",
+              isMobile ? "w-12 h-12 text-xl" : "w-14 h-14 text-2xl",
               isExpanded 
                 ? "bg-gradient-to-br from-elec-yellow to-primary text-black shadow-2xl shadow-elec-yellow/40 scale-110" 
-                : "bg-gradient-to-br from-primary/30 to-primary/10 text-primary shadow-md hover:scale-105"
+                : "bg-gradient-to-br from-primary/30 to-primary/10 text-primary shadow-md hover:scale-105 active:scale-95"
             )}>
               {step.stepNumber}
             </div>
@@ -121,57 +125,48 @@ export const InstallationStepCard = ({
               </div>
             ) : (
               // VIEW MODE
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {/* Header with title and quick info */}
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-lg text-foreground mb-1">{step.title}</h3>
-                    
-                    {/* Quick info badges */}
-                    <div className="flex flex-wrap gap-2">
-                      {step.estimatedDuration && (
-                        <Badge variant="outline" className="text-xs">
-                          <Clock className="h-3 w-3 mr-1" />
-                          {step.estimatedDuration}
-                        </Badge>
-                      )}
-                      {step.riskLevel && (
-                        <Badge className={cn("text-xs font-semibold", riskColors[step.riskLevel])}>
-                          {(step.riskLevel || 'medium').toUpperCase()}
-                        </Badge>
-                      )}
-                      {linkedHazards.length > 0 && (
-                        <Badge variant="outline" className="text-xs bg-destructive/5 border-destructive/40">
-                          <ShieldAlert className="h-3 w-3 mr-1" />
-                          {linkedHazards.length} hazards
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
+                <div className="flex items-start justify-between gap-3">
+                  {/* Mobile-optimised header */}
+                  <MobileStepHeader
+                    title={step.title}
+                    estimatedDuration={step.estimatedDuration}
+                    riskLevel={step.riskLevel}
+                    hazardCount={linkedHazards.length}
+                  />
                   
-                  {/* Expand/Collapse button with icon animation */}
+                  {/* Expand/Collapse button with improved touch target */}
                   <Button
                     variant="ghost"
-                    size="sm"
+                    size={isMobile ? "default" : "sm"}
                     onClick={() => setIsExpanded(!isExpanded)}
-                    className="shrink-0 gap-1.5 font-semibold hover:bg-primary/10 hover:text-primary transition-all min-h-[44px]"
+                    className={cn(
+                      "shrink-0 gap-1.5 font-semibold hover:bg-primary/10 hover:text-primary transition-all touch-manipulation active:scale-95",
+                      isMobile ? "min-h-[44px] min-w-[44px] px-3" : "min-h-[36px]"
+                    )}
                   >
                     {isExpanded ? (
                       <>
-                        <ChevronUp className="h-4 w-4 transition-transform" />
-                        Collapse
+                        <ChevronUp className={cn(isMobile ? "h-5 w-5" : "h-4 w-4", "transition-transform")} />
+                        {!isMobile && "Collapse"}
                       </>
                     ) : (
                       <>
-                        <ChevronDown className="h-4 w-4 transition-transform" />
-                        Expand
+                        <ChevronDown className={cn(isMobile ? "h-5 w-5" : "h-4 w-4", "transition-transform")} />
+                        {!isMobile && "Expand"}
                       </>
                     )}
                   </Button>
                 </div>
 
-                {/* Always visible: Description */}
-                <EnhancedStepContent content={step.content || (step as any).description || ''} />
+                {/* Always visible: Description with improved readability */}
+                <div className={cn(
+                  "prose prose-sm max-w-none",
+                  isMobile && "text-[15px] leading-relaxed"
+                )}>
+                  <EnhancedStepContent content={step.content || (step as any).description || ''} />
+                </div>
 
                 {/* Expandable section with slide-down animation */}
                 {isExpanded && (
@@ -323,46 +318,59 @@ export const InstallationStepCard = ({
                 )}
 
                 {/* Action Buttons */}
-                <div className="flex gap-2 flex-wrap pt-2">
+                <div className={cn(
+                  "flex flex-wrap gap-2 pt-4 border-t border-border/50",
+                  isMobile && "pt-5"
+                )}>
+                  <Button
+                    variant="ghost"
+                    size={isMobile ? "default" : "sm"}
+                    onClick={() => setIsEditing(true)}
+                    className={cn(
+                      "hover:bg-primary/10 hover:text-primary font-medium touch-manipulation active:scale-95",
+                      isMobile ? "min-h-[44px] flex-1" : "min-h-[40px]"
+                    )}
+                  >
+                    <Edit2 className={cn(isMobile ? "h-5 w-5 mr-2" : "h-4 w-4 mr-2")} />
+                    Edit Step
+                  </Button>
                   {onMoveUp && (
-                    <Button
-                      variant="outline"
-                      size="sm"
+                    <Button 
+                      variant="ghost" 
+                      size={isMobile ? "default" : "sm"}
                       onClick={onMoveUp}
-                      className="h-9 px-3 gap-1.5 touch-manipulation"
+                      className={cn(
+                        "hover:bg-primary/10 hover:text-primary touch-manipulation active:scale-95",
+                        isMobile ? "min-h-[44px] flex-1" : "min-h-[40px]"
+                      )}
                     >
-                      <ChevronUp className="h-4 w-4" />
-                      <span className="text-xs">Up</span>
+                      ↑ Move Up
                     </Button>
                   )}
                   {onMoveDown && (
-                    <Button
-                      variant="outline"
-                      size="sm"
+                    <Button 
+                      variant="ghost" 
+                      size={isMobile ? "default" : "sm"}
                       onClick={onMoveDown}
-                      className="h-9 px-3 gap-1.5 touch-manipulation"
+                      className={cn(
+                        "hover:bg-primary/10 hover:text-primary touch-manipulation active:scale-95",
+                        isMobile ? "min-h-[44px] flex-1" : "min-h-[40px]"
+                      )}
                     >
-                      <ChevronDown className="h-4 w-4" />
-                      <span className="text-xs">Down</span>
+                      ↓ Move Down
                     </Button>
                   )}
                   <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setIsEditing(true)}
-                    className="h-9 px-3 gap-1.5 touch-manipulation"
-                  >
-                    <Edit2 className="h-4 w-4" />
-                    <span className="text-xs">Edit</span>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
+                    variant="ghost"
+                    size={isMobile ? "default" : "sm"}
                     onClick={onDelete}
-                    className="h-9 px-3 gap-1.5 text-destructive hover:text-destructive hover:bg-destructive/10 touch-manipulation"
+                    className={cn(
+                      "text-destructive hover:bg-destructive/10 hover:text-destructive touch-manipulation active:scale-95",
+                      isMobile ? "min-h-[44px] w-full mt-2" : "min-h-[40px] ml-auto"
+                    )}
                   >
-                    <Trash2 className="h-4 w-4" />
-                    <span className="text-xs">Delete</span>
+                    <Trash2 className={cn(isMobile ? "h-5 w-5 mr-2" : "h-4 w-4 mr-2")} />
+                    Delete
                   </Button>
                 </div>
               </div>
