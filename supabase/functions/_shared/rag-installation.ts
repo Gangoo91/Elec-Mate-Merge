@@ -214,78 +214,43 @@ export async function retrieveInstallationKnowledge(
       limits: { practical: practicalLimit, regulations: regulationsLimit }
     });
     
-    // FIX 2 + FUZZY MATCHING: Enhanced category matching with keyword variations
-    // Generate keyword variations (stems) for better matching
-    const keywordVariations = finalKeywords.flatMap(k => {
-      if (k === 'charger') return ['charger', 'charging', 'charg'];
-      if (k === 'shower') return ['shower', 'showers'];
-      if (k === 'socket') return ['socket', 'sockets', 'outlet'];
-      if (k === 'cooker') return ['cooker', 'cooking', 'oven'];
-      return [k];
-    });
-
-    // Detect EV queries for specialized patterns
-    const isEVQuery = finalKeywords.some(k => ['ev', 'electric', 'vehicle', 'charger', 'charging'].includes(k));
-    
-    const practicalOrConditions = [
-      // Primary topic patterns
-      `primary_topic.ilike.% ${keyword1} %`,
-      `primary_topic.ilike.% ${keyword2} %`,
-      `primary_topic.ilike.%${keyword1}%`,
-      ...finalKeywords.slice(0, 5).map(k => `primary_topic.ilike.%${k}%`),
-      
-      // Equipment category - EXACT underscore format matching
-      `equipment_category.eq.${keyword1}_${keyword2}`,
-      `equipment_category.ilike.${keyword1}_%`,
-      `equipment_category.ilike.%_${keyword1}`,
-      `equipment_category.ilike.%${keyword1}%`,
-      
-      // Keyword variations for fuzzy matching
-      ...keywordVariations.slice(0, 8).map(v => `equipment_category.ilike.%${v}%`),
-      
-      // Materials/tools fallback
-      ...finalKeywords.slice(0, 3).map(k => `materials_needed.cs.{${k}}`),
-      ...finalKeywords.slice(0, 3).map(k => `tools_required.cs.{${k}}`)
-    ];
-
-    // Add EV-specific smart matching
-    if (isEVQuery) {
-      practicalOrConditions.push(
-        'equipment_category.eq.ev_charging',
-        'equipment_category.eq.electric_vehicle_charging',
-        'equipment_category.ilike.%ev_%',
-        'primary_topic.ilike.%Section 722%'
-      );
-      logger.info('[RAG] EV query detected - adding specialized patterns');
-    }
-    
-    const practicalOrConditionsString = practicalOrConditions.join(',');
-    
-    const regulationsOrConditions = [
-      `regulation_number.ilike.% ${keyword1} %`,
-      `regulation_number.ilike.%${keyword1}%`,
-      `primary_topic.ilike.% ${keyword1} %`,
-      `primary_topic.ilike.% ${keyword2} %`,
-      `primary_topic.ilike.%${keyword1}%`
-    ].join(',');
-    
-    // Direct SQL Query 1: Practical Work Intelligence
-    const { data: practicalData, error: practicalError } = await supabase
-      .from('practical_work_intelligence')
-      .select('*')
-      .or(practicalOrConditionsString)
-      .limit(practicalLimit);
+    // Use RPC function for Practical Work Intelligence
+    const { data: practicalData, error: practicalError } = await supabase.rpc(
+      'search_practical_work_intelligence_hybrid',
+      {
+        query_text: query, // Use FULL query for better context
+        match_count: practicalLimit,
+        filter_trade: null
+      }
+    );
     
     if (practicalError) {
-      logger.error('Practical work SQL query failed', { error: practicalError });
+      logger.error('Practical work RPC failed', { error: practicalError });
     }
     
-    // Direct SQL Query 2: BS 7671 Regulations Intelligence
-    const { data: regulationsData, error: regulationsError } = await supabase
-      .from('regulations_intelligence')
-      .select('*')
-      .or(regulationsOrConditions)
-      .limit(regulationsLimit);
+    logger.info('Practical work RPC complete', {
+      resultsCount: practicalData?.length || 0,
+      avgScore: practicalData?.length > 0 
+        ? (practicalData.reduce((sum: number, r: any) => sum + (r.hybrid_score || 0), 0) / practicalData.length).toFixed(2)
+        : 0
+    });
+    
+    // Use RPC function for Regulations Intelligence
+    const { data: regulationsData, error: regulationsError } = await supabase.rpc(
+      'search_regulations_intelligence_hybrid',
+      {
+        query_text: query, // Use FULL query
+        match_count: regulationsLimit
+      }
+    );
+    
+    if (regulationsError) {
+      logger.error('Regulations RPC failed', { error: regulationsError });
+    }
+    
+    logger.info('Regulations RPC complete', {
+      resultsCount: regulationsData?.length || 0
+    });
     
     if (regulationsError) {
       logger.error('Regulations SQL query failed', { error: regulationsError });
@@ -293,40 +258,46 @@ export async function retrieveInstallationKnowledge(
     
     const initialResultCount = (practicalData?.length || 0) + (regulationsData?.length || 0);
     
-    logger.info('Direct SQL RAG complete', {
+    logger.info('RPC RAG complete', {
       practical: practicalData?.length || 0,
       regulations: regulationsData?.length || 0,
       total: initialResultCount
     });
 
-    // FIX 5: Zero-result fallback - trigger broader search if results are too low
+    // Zero-result fallback - trigger broader RPC search if results are too low
     let shouldUseFallback = initialResultCount < 5;
     let fallbackPractical: any[] = [];
     let fallbackRegulations: any[] = [];
     
     if (shouldUseFallback) {
-      logger.warn('Low RAG results, triggering broader fallback search', { 
+      logger.warn('Low RAG results, triggering broader RPC fallback', { 
         currentCount: initialResultCount,
         threshold: 5
       });
       
-      // Execute broader search with relaxed filters (no word boundaries)
-      const { data: fbPractical } = await supabase
-        .from('practical_work_intelligence')
-        .select('*')
-        .or(`primary_topic.ilike.%${keyword1}%,equipment_category.ilike.%installation%`)
-        .limit(10);
+      // Broader practical work RPC search
+      const { data: fbPractical } = await supabase.rpc(
+        'search_practical_work_intelligence_hybrid',
+        {
+          query_text: expandedQuery.join(' '), // Use expanded query for broader context
+          match_count: 15,
+          filter_trade: null
+        }
+      );
       
-      const { data: fbRegulations } = await supabase
-        .from('regulations_intelligence')
-        .select('*')
-        .or(`primary_topic.ilike.%${keyword1}%,primary_topic.ilike.%electrical%`)
-        .limit(8);
+      // Broader regulations RPC search
+      const { data: fbRegulations } = await supabase.rpc(
+        'search_regulations_intelligence_hybrid',
+        {
+          query_text: expandedQuery.join(' '),
+          match_count: 10
+        }
+      );
       
       fallbackPractical = fbPractical || [];
       fallbackRegulations = fbRegulations || [];
       
-      logger.info('Fallback search complete', { 
+      logger.info('Fallback RPC search complete', { 
         practicalCount: fallbackPractical.length,
         regulationsCount: fallbackRegulations.length
       });
