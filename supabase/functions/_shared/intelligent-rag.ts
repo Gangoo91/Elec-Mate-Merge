@@ -807,6 +807,9 @@ export async function intelligentRAGSearch(
     keepHighestScore: true
   });
   
+  // Extract priority from context for cross-encoder reranking
+  const priority = params.context?.ragPriority;
+  
   // Step 2: Cross-Encoder Reranking (ALWAYS applied for best quality)
   const logger2 = { info: console.log, warn: console.warn, error: console.error, debug: console.log };
   
