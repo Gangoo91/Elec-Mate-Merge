@@ -137,7 +137,7 @@ export const InstallationStepCard = ({
                       )}
                       {step.riskLevel && (
                         <Badge className={cn("text-xs font-semibold", riskColors[step.riskLevel])}>
-                          {step.riskLevel.toUpperCase()}
+                          {(step.riskLevel || 'medium').toUpperCase()}
                         </Badge>
                       )}
                       {linkedHazards.length > 0 && (

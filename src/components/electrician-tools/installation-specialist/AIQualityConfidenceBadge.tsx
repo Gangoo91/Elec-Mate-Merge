@@ -67,7 +67,7 @@ export const AIQualityConfidenceBadge = ({ metrics, isGenerating }: AIQualityCon
           </div>
           <Badge variant="outline" className={getRAGQualityColor(metrics.ragDataQuality)}>
             {getRAGQualityIcon()}
-            <span className="ml-1.5">{metrics.ragDataQuality.toUpperCase()}</span>
+            <span className="ml-1.5">{(metrics.ragDataQuality || 'unknown').toUpperCase()}</span>
           </Badge>
         </div>
 

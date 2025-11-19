@@ -56,7 +56,7 @@ export const InstallationSummaryStats = ({
                 <span className="text-xs font-medium">Duration</span>
               </div>
               <div className="text-lg font-black text-foreground truncate" title={estimatedDuration}>
-                {estimatedDuration.split(' ')[0]}
+                {estimatedDuration?.split(' ')[0] || 'N/A'}
               </div>
             </div>
           </div>

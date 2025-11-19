@@ -56,7 +56,7 @@ export const InstallationMethodDisplay = ({
         <div className="mb-4">
           <h2 className="text-2xl font-bold text-foreground mb-1">{jobTitle}</h2>
           <p className="text-sm text-muted-foreground">
-            {installationType ? `${installationType.charAt(0).toUpperCase() + installationType.slice(1)} Installation` : 'Installation Method Statement'}
+            {installationType ? `${installationType.charAt(0).toUpperCase()}${installationType.slice(1)} Installation` : 'Installation Method Statement'}
           </p>
         </div>
       )}
@@ -89,7 +89,7 @@ export const InstallationMethodDisplay = ({
             <ShieldCheck className="h-5 w-5 text-primary" />
             <div>
               <Badge className={riskColors[summary.overallRiskLevel]}>
-                {summary.overallRiskLevel.toUpperCase()}
+                {(summary.overallRiskLevel || 'medium').toUpperCase()}
               </Badge>
               <div className="text-xs text-muted-foreground mt-1">Risk Level</div>
             </div>
@@ -153,7 +153,7 @@ export const InstallationMethodDisplay = ({
                 )}
                 {step.riskLevel && (
                   <Badge className={riskColors[step.riskLevel]}>
-                    {step.riskLevel.toUpperCase()}
+                    {(step.riskLevel || 'medium').toUpperCase()}
                   </Badge>
                 )}
               </div>

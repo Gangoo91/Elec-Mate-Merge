@@ -274,7 +274,7 @@ export const InstallationResultsEditor = ({
                 <div className="flex flex-wrap gap-2">
                   {installationType && (
                     <Badge className="bg-gradient-to-r from-elec-yellow/20 to-primary/20 text-foreground border-elec-yellow/40 px-3 py-1 text-sm font-semibold">
-                      {installationType.charAt(0).toUpperCase() + installationType.slice(1)} Installation
+                      {installationType ? `${installationType.charAt(0).toUpperCase()}${installationType.slice(1)}` : 'General'} Installation
                     </Badge>
                   )}
                   <Badge className="bg-gradient-to-r from-success/20 to-emerald-500/20 text-success border-success/40 px-3 py-1 text-sm font-semibold animate-pulse">
