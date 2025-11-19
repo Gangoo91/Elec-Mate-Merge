@@ -69,7 +69,7 @@ export const InstallationHeroSummary = ({
       content: (
         <div className="text-center space-y-5">
           <Badge className={cn("text-2xl px-8 py-4 font-black shadow-xl animate-pulse", riskColors[riskLevel])}>
-            {riskLevel.toUpperCase()} RISK
+            {(riskLevel || 'medium').toUpperCase()} RISK
           </Badge>
           <div className="flex justify-center gap-1.5 mt-5">
             {[...Array(10)].map((_, i) => (

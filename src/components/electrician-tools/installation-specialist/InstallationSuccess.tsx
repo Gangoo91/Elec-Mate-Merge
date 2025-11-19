@@ -107,7 +107,7 @@ const InstallationSuccess = ({ results, onViewResults, generationTime, open, onO
             <div className="bg-elec-dark/80 backdrop-blur-sm rounded-xl p-5 sm:p-4 border border-blue-500/30 hover:border-blue-500/50 transition-all">
               <div className="flex flex-col items-center gap-1">
                 <div className="text-4xl sm:text-3xl font-bold text-blue-400 mb-1 truncate w-full text-center" title={estimatedDuration}>
-                  {estimatedDuration.split(' ')[0]}
+                  {estimatedDuration?.split(' ')[0] || 'N/A'}
                 </div>
                 <div className="text-base sm:text-sm text-white/80 flex items-center justify-center gap-1">
                   <Clock className="h-4 w-4" />
