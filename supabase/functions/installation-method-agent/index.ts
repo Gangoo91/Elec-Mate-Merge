@@ -80,7 +80,54 @@ serve(async (req) => {
 
     logger.info('✅ Installation method generated successfully');
 
-    // Update job status if job-aware mode
+    // Transform to expected frontend format
+    const response = {
+      success: true,
+      data: {
+        steps: result.steps.map((step: any, index: number) => ({
+          id: `step-${index + 1}`,
+          step: step.step,           // Keep backend field name
+          stepNumber: step.step,
+          title: step.title,
+          description: step.description,
+          tools: step.tools || [],   // ✅ Keep as 'tools' (not equipmentNeeded)
+          materials: step.materials || [],
+          safetyNotes: step.safetyNotes || [],
+          linkedHazards: step.linkedHazards || [],
+          qualifications: step.qualifications || [],
+          estimatedTime: step.estimatedTime || 30, // Number, not string
+          riskLevel: determineRiskLevel(step.linkedHazards || []),
+          bsReferences: step.bsReferences || [],
+          assignedPersonnel: step.assignedPersonnel || []
+        })),
+        toolsRequired: result.toolsRequired || [],
+        materialsRequired: extractAllMaterials(result.steps),
+        testingProcedures: result.testingProcedures || [],
+        practicalTips: extractPracticalTips(result.steps),
+        commonMistakes: extractCommonMistakes(result.steps),
+        scopeOfWork: result.scopeOfWork,
+        scheduleDetails: result.scheduleDetails,
+        competencyRequirements: {
+          minimumQualifications: extractQualifications(result.steps)
+        },
+        ragCitations: result.ragCitations || [],
+        executiveSummary: result.executiveSummary || null,
+        materialsList: result.materialsList || [],
+        testingRequirements: result.testingRequirements || [],
+        regulatoryReferences: result.regulatoryReferences || [],
+        // 🆕 ADD SUMMARY with risk calculation
+        summary: {
+          totalSteps: result.steps.length,
+          estimatedDuration: calculateTotalDuration(result.steps),
+          requiredQualifications: extractQualifications(result.steps),
+          toolsRequired: result.toolsRequired || [],
+          materialsRequired: extractAllMaterials(result.steps),
+          overallRiskLevel: calculateOverallRisk(result.steps)
+        }
+      }
+    };
+
+    // ✅ Update job status AFTER response is created
     if (jobId) {
       try {
         const supabase = createClient();
@@ -90,7 +137,7 @@ serve(async (req) => {
             status: 'complete',
             progress: 100,
             current_step: 'Generation complete!',
-            method_data: response.data, // ✅ Store FULL response with all fields
+            method_data: response.data, // ✅ Now response.data exists with all fields
             completed_at: new Date().toISOString()
           })
           .eq('id', jobId);
@@ -98,43 +145,6 @@ serve(async (req) => {
         logger.error('Failed to update job completion', { error: err });
       }
     }
-
-    // Transform to expected frontend format
-    const response = {
-      success: true,
-      data: {
-        steps: result.steps.map((step: any, index: number) => ({
-          id: `step-${index + 1}`,
-          stepNumber: step.step,
-          title: step.title,
-          description: step.description,
-          safetyRequirements: step.safetyNotes || [],
-          equipmentNeeded: step.tools || [],
-          qualifications: step.qualifications || [],
-          estimatedDuration: `${step.estimatedTime || 30} minutes`,
-          riskLevel: determineRiskLevel(step.linkedHazards || []),
-          linkedHazards: step.linkedHazards || [],
-          materialsNeeded: step.materials || [],
-          assignedPersonnel: step.assignedPersonnel || [] // NEW: Personnel assignments
-        })),
-        toolsRequired: result.toolsRequired || [],
-        materialsRequired: extractAllMaterials(result.steps),
-        testingProcedures: result.testingProcedures || [],
-        practicalTips: extractPracticalTips(result.steps),
-        commonMistakes: extractCommonMistakes(result.steps),
-        scopeOfWork: result.scopeOfWork, // NEW: For PDF template
-        scheduleDetails: result.scheduleDetails, // NEW: For PDF template
-        competencyRequirements: {
-          minimumQualifications: extractQualifications(result.steps)
-        },
-        ragCitations: result.ragCitations || [],
-        // 🆕 MISSING FIELDS - Pass through complete data
-        executiveSummary: result.executiveSummary || null,
-        materialsList: result.materialsList || [],
-        testingRequirements: result.testingRequirements || [],
-        regulatoryReferences: result.regulatoryReferences || []
-      }
-    };
 
     return new Response(
       JSON.stringify(response),
@@ -232,5 +242,29 @@ function extractQualifications(steps: any[]): string[] {
   steps.forEach(step => {
     (step.qualifications || []).forEach((q: string) => quals.add(q));
   });
-  return Array.from(quals);
+  return quals.size > 0 ? Array.from(quals) : ['18th Edition BS7671', 'Level 3 Electrical Installation'];
+}
+
+function calculateOverallRisk(steps: any[]): 'low' | 'medium' | 'high' {
+  const riskCounts = { low: 0, medium: 0, high: 0 };
+  
+  steps.forEach(step => {
+    const linkedHazards = step.linkedHazards || [];
+    if (linkedHazards.length >= 4) riskCounts.high++;
+    else if (linkedHazards.length >= 2) riskCounts.medium++;
+    else riskCounts.low++;
+  });
+  
+  // If any high-risk steps, overall is high
+  if (riskCounts.high > 0) return 'high';
+  // If more than half are medium, overall is medium
+  if (riskCounts.medium > steps.length / 2) return 'medium';
+  return 'low';
+}
+
+function calculateTotalDuration(steps: any[]): string {
+  const totalMins = steps.reduce((sum, step) => sum + (step.estimatedTime || 30), 0);
+  const hours = Math.floor(totalMins / 60);
+  const mins = totalMins % 60;
+  return hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
 }

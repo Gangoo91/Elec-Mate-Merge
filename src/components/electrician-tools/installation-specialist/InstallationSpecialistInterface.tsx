@@ -101,16 +101,16 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
     if (jobStatus === 'complete' && jobMethodData && !celebrationShown) {
       console.log('✅ Setting method data and showing celebration');
       
-      // Map backend field names to frontend format
+      // Map backend field names to frontend format with defensive fallbacks
       const mappedData = {
         ...jobMethodData,
         steps: jobMethodData.steps?.map((step: any) => ({
           stepNumber: step.step,
           title: step.title,
-          content: step.description,  // ✅ Map description → content
+          content: step.description,
           safety: step.safetyNotes,
-          toolsRequired: step.tools,  // ✅ Map tools → toolsRequired
-          materialsNeeded: step.materials,  // ✅ Map materials → materialsNeeded
+          toolsRequired: step.tools || step.equipmentNeeded || [], // ✅ Defensive mapping
+          materialsNeeded: step.materials || step.materialsNeeded || [], // ✅ Defensive mapping
           estimatedDuration: step.estimatedTime ? `${step.estimatedTime} mins` : undefined,
           riskLevel: step.riskLevel || 'medium',
           qualifications: step.qualifications,
