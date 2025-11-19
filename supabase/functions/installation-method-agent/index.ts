@@ -39,7 +39,7 @@ serve(async (req) => {
     logger.info('🔧 Installation Method Agent request received');
 
     const body = await req.json();
-    const { query, projectDetails } = body;
+    const { query, projectDetails, jobId } = body;
 
     if (!query || !projectDetails) {
       throw new Error('Missing required fields: query and projectDetails');
@@ -47,19 +47,56 @@ serve(async (req) => {
 
     logger.info('Generating installation method statement', { 
       query: query.substring(0, 100),
-      jobTitle: projectDetails.jobTitle 
+      jobTitle: projectDetails.jobTitle,
+      jobId 
     });
+
+    // Create progress updater for job-aware mode
+    const updateJobProgress = async (progress: number, step: string) => {
+      logger.debug(`Progress: ${progress}%`, { step });
+      
+      if (jobId) {
+        try {
+          const supabase = createClient();
+          await supabase
+            .from('installation_method_jobs')
+            .update({
+              progress,
+              current_step: step
+            })
+            .eq('id', jobId);
+        } catch (err) {
+          logger.error('Failed to update job progress', { error: err });
+        }
+      }
+    };
 
     // Call the installation method core agent
     const result = await generateInstallationMethod(
       query,
       projectDetails,
-      async (progress: number, step: string) => {
-        logger.debug(`Progress: ${progress}%`, { step });
-      }
+      updateJobProgress
     );
 
     logger.info('✅ Installation method generated successfully');
+
+    // Update job status if job-aware mode
+    if (jobId) {
+      try {
+        const supabase = createClient();
+        await supabase
+          .from('installation_method_jobs')
+          .update({
+            status: 'complete',
+            progress: 100,
+            current_step: 'Generation complete!',
+            completed_at: new Date().toISOString()
+          })
+          .eq('id', jobId);
+      } catch (err) {
+        logger.error('Failed to update job completion', { error: err });
+      }
+    }
 
     // Transform to expected frontend format
     const response = {
@@ -105,6 +142,26 @@ serve(async (req) => {
     logger.error('Installation method generation failed', { 
       error: error instanceof Error ? error.message : String(error) 
     });
+
+    // Update job status to failed if job-aware mode
+    const body = await req.json().catch(() => ({}));
+    const { jobId } = body;
+    
+    if (jobId) {
+      try {
+        const supabase = createClient();
+        await supabase
+          .from('installation_method_jobs')
+          .update({
+            status: 'failed',
+            error_message: error instanceof Error ? error.message : 'Unknown error occurred',
+            completed_at: new Date().toISOString()
+          })
+          .eq('id', jobId);
+      } catch (updateErr) {
+        logger.error('Failed to update job failure status', { error: updateErr });
+      }
+    }
 
     return new Response(
       JSON.stringify({ 
