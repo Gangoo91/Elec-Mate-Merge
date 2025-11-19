@@ -71,17 +71,21 @@ Deno.serve(async (req) => {
     let currentProgress = 20;
     let heartbeatInterval: number | undefined;
 
-    // Start the AI call
-    const agentPromise = supabase.functions.invoke('installation-method-agent', {
-      body: {
+    // Start the AI call using direct fetch for full timeout control
+    const agentUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/installation-method-agent`;
+    const agentPromise = fetch(agentUrl, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         query: job.query,
         projectDetails: job.project_details,
         designerContext: job.designer_context,
         jobId: job.id // CRITICAL: Pass jobId for job-aware processing
-      },
-      headers: {
-        'x-supabase-timeout': '360000' // 360 seconds = 6 minutes (matches backend timeout)
-      }
+      }),
+      signal: AbortSignal.timeout(360000), // 6 minutes = 360000ms
     });
 
     // Heartbeat: Update progress every 10 seconds (20% → 80%)
@@ -102,17 +106,17 @@ Deno.serve(async (req) => {
       logger.info('Heartbeat progress update', { progress: currentProgress, elapsed });
     }, 10000);
 
-    let agentResponse;
     let agentData;
 
     try {
-      agentResponse = await agentPromise;
+      const response = await agentPromise;
       
-      if (agentResponse.error) {
-        throw new Error(`Agent call failed: ${agentResponse.error.message}`);
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Agent call failed with status ${response.status}: ${errorText}`);
       }
 
-      agentData = agentResponse.data;
+      agentData = await response.json();
       
       logger.info('Agent call completed', { duration: Date.now() - startTime });
       
