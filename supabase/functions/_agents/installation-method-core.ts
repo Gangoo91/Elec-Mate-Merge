@@ -301,15 +301,15 @@ RAG Context (cite regulation numbers):
 ${ragContext}`;
 
   console.log('🤖 Calling GPT-5 Mini with installation method tool...');
-  const response = await callOpenAI(
-    [
+  const response = await callOpenAI({
+    messages: [
       { role: 'system', content: SYSTEM_PROMPT },
       { role: 'user', content: userPrompt }
     ],
-    'gpt-5-mini',
-    [INSTALLATION_METHOD_TOOL],
-    { type: 'function', function: { name: 'provide_installation_method_guidance' } }
-  );
+    model: 'gpt-5-mini-2025-08-07',
+    tools: [INSTALLATION_METHOD_TOOL],
+    tool_choice: { type: 'function', function: { name: 'provide_installation_method_guidance' } }
+  });
 
   if (!response.toolCalls || response.toolCalls.length === 0) {
     throw new Error('GPT-5 Mini did not return installation method tool call');
