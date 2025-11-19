@@ -171,7 +171,7 @@ export const InstallationStepCard = ({
                 </div>
 
                 {/* Always visible: Description */}
-                <EnhancedStepContent content={step.content} />
+                <EnhancedStepContent content={step.content || (step as any).description || ''} />
 
                 {/* Expandable section with slide-down animation */}
                 {isExpanded && (
