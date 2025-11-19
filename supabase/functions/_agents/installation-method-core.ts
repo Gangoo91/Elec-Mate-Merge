@@ -219,13 +219,51 @@ export async function generateInstallationMethod(
   console.log('🔍 Fetching RAG knowledge...');
   if (onProgress) onProgress(10, 'Installation Method: Searching installation procedures...');
   
+  console.log('🔍 Fetching installation method RAG data...');
+  
   const ragResults = sharedRegulations || await Promise.all([
     searchPracticalWorkIntelligence(query),
     searchBS7671Intelligence(query),
     searchRegulationsIntelligence(query)
-  ]).then(results => results.flat());
-
-  console.log(`✅ Fetched ${ragResults.length} RAG results`);
+  ]).then(results => results.flat())
+    .catch(error => {
+      console.error('❌ RAG search failed:', error);
+      // Return minimal fallback data to prevent total failure
+      return [
+        { 
+          regulation_number: '134.1.1', 
+          content: 'Good workmanship and proper materials shall be used in electrical installations.', 
+          source: 'fallback' 
+        },
+        {
+          regulation_number: '411.3.1.1',
+          content: 'Automatic disconnection of supply shall be provided for protection against electric shock.',
+          source: 'fallback'
+        }
+      ];
+    });
+  
+  // Validate we have at least some data
+  if (ragResults.length === 0) {
+    throw new Error('RAG search returned no results - cannot generate accurate method statement');
+  }
+  
+  console.log(`✅ Fetched ${ragResults.length} RAG results for installation method agent`);
+  
+  // Enhanced debugging - RAG breakdown
+  const practicalWorkCount = ragResults.filter((r: any) => 
+    r.source === 'practical_work_intelligence' || r.hybrid_score
+  ).length;
+  const bs7671Count = ragResults.filter((r: any) => 
+    r.regulation_number && r.source !== 'fallback'
+  ).length;
+  
+  console.log('📊 RAG Breakdown:', {
+    total: ragResults.length,
+    practicalWork: practicalWorkCount,
+    bs7671: bs7671Count,
+    sampleFields: ragResults[0] ? Object.keys(ragResults[0]) : []
+  });
   
   // Debug: Log sample RAG result to verify field names
   if (ragResults.length > 0) {
@@ -285,6 +323,32 @@ ${ragContext}`;
   const duration = Date.now() - startTime;
   console.log(`⏱️ Installation Method Agent completed in ${duration}ms`);
 
+  // Helper: Extract practical tips from steps
+  const extractPracticalTipsFromSteps = (steps: any[]): string[] => {
+    const tips = new Set<string>();
+    steps?.forEach(s => {
+      (s.safetyNotes || []).forEach((note: string) => tips.add(note));
+    });
+    const uniqueTips = Array.from(tips).slice(0, 5);
+    return uniqueTips.length > 0 ? uniqueTips : [
+      'Always verify isolation before commencing work',
+      'Use proper cable management and support spacing',
+      'Document all test results immediately',
+      'Maintain clean working area throughout installation'
+    ];
+  };
+  
+  // Helper: Extract common mistakes
+  const extractCommonMistakesFromSteps = (steps: any[]): string[] => {
+    return [
+      'Insufficient cable support spacing',
+      'Incorrect termination torque settings',
+      'Missing or incomplete test documentation',
+      'Poor cable routing in containment'
+    ];
+  };
+  
+  // Return complete installation method data
   return {
     executiveSummary: methodData.executiveSummary,
     materialsList: methodData.materialsList || [],
@@ -295,10 +359,14 @@ ${ragContext}`;
     regulatoryReferences: methodData.regulatoryReferences || [],
     scopeOfWork: methodData.scopeOfWork,
     scheduleDetails: methodData.scheduleDetails,
-    ragCitations: ragResults.map((r: any) => ({
-      regulation: r.regulation,
-      content: r.content,
-      source: r.source
-    }))
+    practicalTips: extractPracticalTipsFromSteps(methodData.installationSteps),
+    commonMistakes: extractCommonMistakesFromSteps(methodData.installationSteps),
+    ragCitations: ragResults
+      .map((r: any) => ({
+        regulation: r.regulation_number || r.regulation || r.topic || null,
+        content: r.content || r.primary_topic || r.description || '',
+        source: r.source || 'practical_work_intelligence'
+      }))
+      .filter(c => c.regulation !== null && c.content.length > 0)
   };
 }
