@@ -354,7 +354,13 @@ ${projectDetails.electricianName ? `- Electrician: ${projectDetails.electricianN
           testingProcedures: response.data?.testingProcedures || [],
           competencyRequirements: response.data?.competencyRequirements,
           siteLogistics: response.data?.siteLogistics,
-          regulatoryCitations: response.data?.regulatoryCitations || []
+          regulatoryCitations: response.data?.regulatoryCitations || [],
+          _fullMethodStatement: {
+            executiveSummary: response.data?.executiveSummary,
+            materialsList: response.data?.materialsList || [],
+            testingRequirements: response.data?.testingRequirements || [],
+            regulatoryReferences: response.data?.regulatoryReferences || []
+          }
         });
       }
 

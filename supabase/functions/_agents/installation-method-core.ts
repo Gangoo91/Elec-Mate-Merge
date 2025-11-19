@@ -220,9 +220,9 @@ export async function generateInstallationMethod(
   if (onProgress) onProgress(10, 'Installation Method: Searching installation procedures...');
   
   const ragResults = sharedRegulations || await Promise.all([
-    searchPracticalWorkIntelligence(query, 5),
-    searchBS7671Intelligence(query, 5),
-    searchRegulationsIntelligence(query, 5)
+    searchPracticalWorkIntelligence(query),
+    searchBS7671Intelligence(query),
+    searchRegulationsIntelligence(query)
   ]).then(results => results.flat());
 
   console.log(`✅ Fetched ${ragResults.length} RAG results`);
@@ -276,9 +276,13 @@ ${ragContext}`;
   console.log(`⏱️ Installation Method Agent completed in ${duration}ms`);
 
   return {
+    executiveSummary: methodData.executiveSummary,
+    materialsList: methodData.materialsList || [],
     steps: methodData.installationSteps || [],
     toolsRequired: methodData.toolsRequired || [],
+    testingRequirements: methodData.testingRequirements || [],
     testingProcedures: methodData.testingProcedures || [],
+    regulatoryReferences: methodData.regulatoryReferences || [],
     scopeOfWork: methodData.scopeOfWork,
     scheduleDetails: methodData.scheduleDetails,
     ragCitations: ragResults.map((r: any) => ({
