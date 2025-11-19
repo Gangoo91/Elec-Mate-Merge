@@ -214,25 +214,62 @@ export async function retrieveInstallationKnowledge(
       limits: { practical: practicalLimit, regulations: regulationsLimit }
     });
     
-    // Use RPC function for Practical Work Intelligence
-    const { data: practicalData, error: practicalError } = await supabase.rpc(
-      'search_practical_work_intelligence_hybrid',
-      {
-        query_text: query, // Use FULL query for better context
-        match_count: practicalLimit,
-        filter_trade: null
-      }
-    );
+    // Use RPC function for Practical Work Intelligence with retry logic
+    let practicalData: any[] = [];
+    let practicalError: any = null;
     
-    if (practicalError) {
-      logger.error('Practical work RPC failed', { error: practicalError });
+    try {
+      const { data, error } = await supabase.rpc(
+        'search_practical_work_intelligence_hybrid',
+        {
+          query_text: query, // Use FULL query for better context
+          match_count: practicalLimit,
+          filter_trade: null
+        }
+      );
+      
+      practicalData = data || [];
+      practicalError = error;
+      
+      // Retry with simpler query if failed or zero results
+      if ((practicalError || practicalData.length === 0) && practicalLimit > 10) {
+        logger.warn('Practical work RPC failed/empty, retrying with simpler query', { 
+          originalError: practicalError?.message,
+          originalLimit: practicalLimit 
+        });
+        
+        const { data: retryData, error: retryError } = await supabase.rpc(
+          'search_practical_work_intelligence_hybrid',
+          {
+            query_text: keyword1 + ' ' + keyword2, // Simpler query with just top keywords
+            match_count: 10, // Reduced limit
+            filter_trade: null
+          }
+        );
+        
+        if (!retryError && retryData && retryData.length > 0) {
+          practicalData = retryData;
+          practicalError = null;
+          logger.info('Retry successful', { resultsCount: retryData.length });
+        } else {
+          logger.warn('Retry also failed, proceeding with regulations-only', { retryError });
+        }
+      }
+    } catch (err) {
+      practicalError = err;
+      logger.error('Practical work RPC exception', { error: err });
+    }
+    
+    if (practicalError && practicalData.length === 0) {
+      logger.warn('⚠️ Graceful degradation: Proceeding with regulations-only (no practical work data)');
     }
     
     logger.info('Practical work RPC complete', {
       resultsCount: practicalData?.length || 0,
       avgScore: practicalData?.length > 0 
         ? (practicalData.reduce((sum: number, r: any) => sum + (r.hybrid_score || 0), 0) / practicalData.length).toFixed(2)
-        : 0
+        : 0,
+      usedRetry: practicalLimit > 10 && (practicalError || practicalData.length === 0)
     });
     
     // Use RPC function for Regulations Intelligence
