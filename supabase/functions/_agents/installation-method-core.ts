@@ -163,12 +163,21 @@ MATERIALS LIST REQUIREMENTS:
 - Unit (metres, items, boxes, rolls)
 - Notes (wastage allowances, storage requirements)
 
+RAG DATA EXTRACTION RULES:
+- ALWAYS extract tools from RAG context labeled "TOOLS:"
+- ALWAYS extract materials from RAG context labeled "MATERIALS:"
+- When RAG lists specific equipment (e.g., "insulated screwdriver set"), use EXACT terminology
+- Combine tools from multiple RAG entries for comprehensive coverage
+- Supplement RAG tools with additional items needed for completeness (aim for 4+ per step)
+- Cite BS 7671 references shown in RAG data under "BS 7671:"
+- Use cable sizes and power ratings from RAG when calculating specifications
+
 INSTALLATION STEPS FORMAT (10-16 steps):
 - Each step must include:
   * Step number and professional title
   * Description: 2-3 professional sentences (client-facing language)
-  * Tools: Specific equipment with model/standard where relevant
-  * Materials: Items used in THIS step specifically
+  * Tools: EXTRACT from RAG "TOOLS:" sections first, then supplement with additional items (4+ per step minimum)
+  * Materials: Items used in THIS step specifically (from RAG "MATERIALS:" sections)
   * Safety notes: Step-specific controls (not generic site rules)
   * Linked hazards: Hazards for THIS specific step
   * BS 7671 references: Cite ALL applicable regulations (e.g., ["514.1.1", "522.6.101"])
@@ -201,6 +210,41 @@ TESTING REQUIREMENTS (BS 7671 Part 6):
 **NEW FIELDS FOR PDF TEMPLATE:**
 - Scope of Work: Clear project description, key deliverables (3-5 bullet points), exclusions
 - Schedule Details: Working hours (e.g., "08:00-17:00 Mon-Fri"), team size, weather dependencies, access requirements
+
+EXAMPLE STEP (use as template for tool/material extraction):
+{
+  "step": 1,
+  "title": "Site preparation and safety setup",
+  "description": "Establish safe working area, erect barriers and signage, and confirm consumer unit isolation procedure with responsible person. Conduct a site-specific risk assessment and record before commencement.",
+  "tools": [
+    "Insulated screwdriver set",
+    "Torque screwdriver (2-10Nm)",
+    "Voltage tester (Fluke T6-600 or equivalent)",
+    "Personal lockout kit",
+    "Digital camera for documentation"
+  ],
+  "materials": [
+    "Barrier tape (red/white)",
+    "Warning signs ('Danger: Electricians at Work')",
+    "Personal locks and tags",
+    "Site risk assessment forms"
+  ],
+  "safetyNotes": [
+    "Confirm isolation before proceeding",
+    "Test for dead using voltage tester",
+    "Apply personal lockout to consumer unit"
+  ],
+  "linkedHazards": [
+    "Electric shock from live conductors",
+    "Unauthorised re-energisation during work"
+  ],
+  "qualifications": ["18th Edition qualified"],
+  "estimatedTime": 30,
+  "bsReferences": ["514.1.1", "537.2.1.1"],
+  "assignedPersonnel": ["Lead Electrician"]
+}
+
+CRITICAL: Every step must follow this structure with 4+ tools extracted from RAG "TOOLS:" sections.
 
 Use the RAG context to ensure technical accuracy and regulatory compliance.`;
 
@@ -274,10 +318,43 @@ export async function generateInstallationMethod(
   
   const ragContext = ragResults
     .map((r: any, i: number) => {
-      // Handle multiple possible field names from different RPC functions
       const regNumber = r.regulation_number || r.regulation || r.topic || 'N/A';
       const contentText = r.content || r.primary_topic || r.description || '';
-      return `[${i + 1}] ${regNumber}: ${contentText.substring(0, 400)}`;
+      
+      // Build rich context with all available fields
+      let context = `[${i + 1}] ${regNumber}: ${contentText.substring(0, 300)}`;
+      
+      // Add tools if available (from practical_work_intelligence)
+      if (r.tools_required && r.tools_required.length > 0) {
+        context += `\n   TOOLS: ${r.tools_required.join(', ')}`;
+      }
+      
+      // Add materials if available
+      if (r.materials_needed && r.materials_needed.length > 0) {
+        context += `\n   MATERIALS: ${r.materials_needed.join(', ')}`;
+      }
+      
+      // Add equipment category for context
+      if (r.equipment_category) {
+        context += `\n   CATEGORY: ${r.equipment_category}`;
+      }
+      
+      // Add cable sizes if relevant
+      if (r.cable_sizes && r.cable_sizes.length > 0) {
+        context += `\n   CABLE SIZES: ${r.cable_sizes.join(', ')}`;
+      }
+      
+      // Add power ratings if relevant
+      if (r.power_ratings && r.power_ratings.length > 0) {
+        context += `\n   POWER RATINGS: ${r.power_ratings.join(', ')}`;
+      }
+      
+      // Add BS 7671 regulations if available
+      if (r.bs7671_regulations && r.bs7671_regulations.length > 0) {
+        context += `\n   BS 7671: ${r.bs7671_regulations.join(', ')}`;
+      }
+      
+      return context;
     })
     .join('\n\n');
 
@@ -316,6 +393,16 @@ ${ragContext}`;
   }
 
   const methodData = JSON.parse(response.toolCalls[0].function.arguments);
+
+  // Validation: Check if steps have tools
+  const stepsWithoutTools = methodData.installationSteps?.filter((s: any) => 
+    !s.tools || s.tools.length < 3
+  ) || [];
+
+  if (stepsWithoutTools.length > 0) {
+    console.warn(`⚠️ ${stepsWithoutTools.length} steps missing sufficient tools - AI may not have extracted RAG data properly`);
+    console.warn('Steps needing attention:', stepsWithoutTools.map((s: any) => `Step ${s.step}: ${s.title}`));
+  }
   console.log('✅ Installation method generated successfully');
   
   if (onProgress) onProgress(100, 'Installation Method: Complete!');
