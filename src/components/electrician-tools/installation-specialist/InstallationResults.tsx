@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Plus, RotateCcw, Download, AlertCircle, Wrench, CheckCircle2, FileText, Database, TrendingUp, BookOpen } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { InstallationStepCard } from "./InstallationStepCard";
 import { InstallationStep, InstallationMethodSummary, InstallationProjectDetails } from "@/types/installation-method";
 import { toast } from "@/hooks/use-toast";
@@ -22,6 +23,7 @@ import { RegulatoryCitationsPanel } from "./RegulatoryCitationsPanel";
 import { ExecutiveSummaryCard } from "./ExecutiveSummaryCard";
 import { MaterialsListTable } from "./MaterialsListTable";
 import { TestingRequirementsTable } from "./TestingRequirementsTable";
+import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
 
 interface ProjectMetadata {
   documentRef: string;
@@ -129,6 +131,7 @@ export const InstallationResults = ({
   const [showMetadataForm, setShowMetadataForm] = useState(false);
   const [projectMetadata, setProjectMetadata] = useState<ProjectMetadata | undefined>(initialMetadata);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const { isMobile } = useMobileEnhanced();
 
   // Extract comprehensive data - prioritize props over fullMethodStatement
   const testingProcedures = propTestingProcedures || fullMethodStatement?.testingProcedures || [];
@@ -571,34 +574,58 @@ export const InstallationResults = ({
         competency={competencyRequirements}
       />
 
-      {/* Action Buttons */}
-      <div className="sticky bottom-0 left-0 right-0 z-20 p-4 sm:p-6 bg-gradient-to-t from-background via-background/98 to-background/90 border-t border-blue-500/20 backdrop-blur-xl shadow-2xl md:static md:p-0 md:bg-transparent md:border-0 md:shadow-none">
-        <div className="flex flex-wrap gap-3">
+      {/* Action Buttons - Mobile-First Layout */}
+      <div className={cn(
+        "sticky bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-background via-background/98 to-background/90 border-t border-blue-500/20 backdrop-blur-xl shadow-2xl",
+        "md:static md:bg-transparent md:border-0 md:shadow-none",
+        isMobile ? "p-4" : "p-6"
+      )}>
+        <div className={cn(
+          "flex gap-3",
+          isMobile ? "flex-col" : "flex-wrap"
+        )}>
+          {/* Primary CTA - Generate PDF (full width on mobile) */}
           <MobileButton 
             onClick={handleExportPDF} 
             variant="elec" 
-            size="wide"
+            size={isMobile ? "wide" : "default"}
             disabled={isGeneratingPDF}
-            className="shadow-xl hover:shadow-2xl transition-all text-base font-bold"
+            className={cn(
+              "shadow-xl hover:shadow-2xl transition-all font-bold touch-manipulation active:scale-95",
+              isMobile ? "h-14 text-base w-full" : "h-12 text-sm"
+            )}
           >
-            <Download className="h-5 w-5 mr-2" />
+            <Download className={cn(isMobile ? "h-6 w-6 mr-2" : "h-5 w-5 mr-2")} />
             {isGeneratingPDF ? 'Generating PDF...' : 'Generate PDF'}
           </MobileButton>
-          <MobileButton 
-            onClick={() => setShowMetadataForm(!showMetadataForm)} 
-            variant={showMetadataForm ? "default" : "outline"}
-            className="flex-1 md:flex-none min-h-[48px] font-semibold"
-          >
-            {showMetadataForm ? 'Hide' : 'Edit'} Metadata
-          </MobileButton>
-          <MobileButton 
-            onClick={onStartOver} 
-            variant="outline"
-            className="min-h-[48px] font-semibold hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50"
-          >
-            <RotateCcw className="h-4 w-4 mr-2" />
-            Start Over
-          </MobileButton>
+
+          {/* Secondary Actions (side-by-side on mobile) */}
+          <div className={cn(
+            "flex gap-3",
+            isMobile && "w-full"
+          )}>
+            <MobileButton 
+              onClick={() => setShowMetadataForm(!showMetadataForm)} 
+              variant={showMetadataForm ? "default" : "outline"}
+              className={cn(
+                "font-semibold touch-manipulation active:scale-95",
+                isMobile ? "h-12 flex-1" : "h-12 min-w-[140px]"
+              )}
+            >
+              {showMetadataForm ? 'Hide' : 'Edit'} Metadata
+            </MobileButton>
+            <MobileButton 
+              onClick={onStartOver} 
+              variant="outline"
+              className={cn(
+                "font-semibold hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50 touch-manipulation active:scale-95",
+                isMobile ? "h-12 flex-1" : "h-12 min-w-[140px]"
+              )}
+            >
+              <RotateCcw className={cn(isMobile ? "h-5 w-5 mr-2" : "h-4 w-4 mr-2")} />
+              Start Over
+            </MobileButton>
+          </div>
         </div>
       </div>
     </div>
