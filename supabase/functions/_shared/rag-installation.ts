@@ -177,42 +177,60 @@ export async function retrieveInstallationKnowledge(
   const embedding = await generateEmbeddingWithRetry(expandedQuery, openAiKey);
 
   try {
-    // Dual RAG search: Practical work + BS 7671 regulations
-    logger.debug('Starting dual RAG search', { 
-      practicalCount: Math.floor(matchCount * 0.6), 
-      regulationsCount: Math.floor(matchCount * 0.4) 
+    // Fast BS 7671 RAG search + practical fallback (Solution 3)
+    logger.debug('Starting BS 7671 RAG search', { 
+      matchCount: matchCount
     });
     
-    const [practicalWorkResults, regulationsResults] = await Promise.all([
-      // Practical work intelligence (tools, materials, procedures)
-      supabase.rpc('search_practical_work_intelligence_hybrid', {
-        query_text: expandedQuery,
-        match_count: Math.floor(matchCount * 0.6), // 60% for practical work
-        filter_trade: null // Installation methods apply to all trades
-      }).catch(err => {
-        logger.error('Practical work search failed', { error: err instanceof Error ? err.message : String(err) });
-        return { data: [], error: err };
-      }),
-      
-      // BS 7671 regulations (regulation numbers, compliance)
-      supabase.rpc('search_bs7671_intelligence_hybrid', {
-        query_text: expandedQuery,
-        match_count: Math.floor(matchCount * 0.4) // 40% for regulations
-      }).catch(err => {
-        logger.error('Regulations search failed', { error: err instanceof Error ? err.message : String(err) });
-        return { data: [], error: err };
-      })
-    ]);
+    // Solution 3: Skip slow practical work RPC, use only fast BS 7671 regulations
+    const regulationsResults = await supabase.rpc('search_bs7671_intelligence_hybrid', {
+      query_text: query, // Use simple query (not expanded) for speed
+      match_count: matchCount
+    }).catch(err => {
+      logger.error('Regulations search failed', { error: err instanceof Error ? err.message : String(err) });
+      return { data: [], error: err };
+    });
 
-    logger.info('Dual RAG search complete', { 
-      practicalWork: practicalWorkResults.data?.length || 0,
+    logger.info('BS 7671 RAG search complete', { 
       regulations: regulationsResults.data?.length || 0
     });
 
-    // Combine results
+    // Essential practical fallback data
+    const practicalFallback = [
+      { 
+        regulation_number: 'Safe Isolation',
+        content: 'Safely isolate the electrical supply before commencing any work. Verify isolation using an approved voltage tester.',
+        tools_required: ['Voltage tester', 'Lock-off kit', 'Warning notices'],
+        materials_needed: ['Isolation locks', 'Warning tags'],
+        source: 'practical_fallback'
+      },
+      { 
+        regulation_number: 'Cable Installation',
+        content: 'Install cables using appropriate fixing methods. Ensure cables are properly supported and protected from mechanical damage.',
+        tools_required: ['Cable clips', 'Conduit cutters', 'Crimping tool', 'Wire strippers'],
+        materials_needed: ['Cable', 'Fixings', 'Conduit', 'Accessories'],
+        source: 'practical_fallback'
+      },
+      { 
+        regulation_number: 'Terminations',
+        content: 'Make all terminations securely using appropriate torque settings. Ensure correct conductor identification.',
+        tools_required: ['Torque screwdriver', 'Wire strippers', 'Side cutters'],
+        materials_needed: ['Terminal blocks', 'Ferrules', 'Cable markers'],
+        source: 'practical_fallback'
+      },
+      { 
+        regulation_number: 'Testing & Verification',
+        content: 'Carry out all required tests including continuity, insulation resistance, and polarity. Record all results.',
+        tools_required: ['Multifunction tester', 'Test leads', 'Test probes'],
+        materials_needed: ['Test certificates', 'Labels'],
+        source: 'practical_fallback'
+      }
+    ];
+
+    // Combine results: regulations + practical fallback
     let knowledge = [
-      ...(practicalWorkResults.data || []),
-      ...(regulationsResults.data || [])
+      ...(regulationsResults.data || []),
+      ...practicalFallback
     ];
 
     // Normalize field names for consistent consumption by AI
@@ -236,9 +254,9 @@ export async function retrieveInstallationKnowledge(
       sampleToolsCount: knowledge[0]?.tools?.length || 0
     });
 
-    // Graceful degradation: if both RAG searches failed, use minimal fallback
+    // Graceful degradation: if BS 7671 search failed, fallback data still available
     if (knowledge.length === 0) {
-      logger.warn('No RAG results from dual search, using fallback data');
+      logger.warn('No RAG results, using minimal fallback data');
       knowledge = [
         {
           regulation_number: '134.1.1',
