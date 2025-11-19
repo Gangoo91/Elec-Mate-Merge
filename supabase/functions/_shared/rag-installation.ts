@@ -177,18 +177,97 @@ export async function retrieveInstallationKnowledge(
   const embedding = await generateEmbeddingWithRetry(expandedQuery, openAiKey);
 
   try {
-    // Hybrid search (BM25 + Vector + RRF)
-    const { data: hybridResults, error } = await supabase.rpc('search_installation_hybrid', {
-      query_text: expandedQuery,
-      query_embedding: embedding,
-      match_count: matchCount
+    // Dual RAG search: Practical work + BS 7671 regulations
+    logger.debug('Starting dual RAG search', { 
+      practicalCount: Math.floor(matchCount * 0.6), 
+      regulationsCount: Math.floor(matchCount * 0.4) 
+    });
+    
+    const [practicalWorkResults, regulationsResults] = await Promise.all([
+      // Practical work intelligence (tools, materials, procedures)
+      Promise.race([
+        supabase.rpc('search_practical_work_intelligence_hybrid', {
+          query_text: expandedQuery,
+          match_count: Math.floor(matchCount * 0.6), // 60% for practical work
+          filter_trade: null // Installation methods apply to all trades
+        }),
+        new Promise<never>((_, reject) => 
+          setTimeout(() => reject(new Error('Practical work search timeout')), 30000)
+        )
+      ]).catch(err => {
+        logger.error('Practical work search failed/timeout', { error: err instanceof Error ? err.message : String(err) });
+        return { data: [], error: err };
+      }),
+      
+      // BS 7671 regulations (regulation numbers, compliance)
+      Promise.race([
+        supabase.rpc('search_bs7671_intelligence_hybrid', {
+          query_text: expandedQuery,
+          match_count: Math.floor(matchCount * 0.4) // 40% for regulations
+        }),
+        new Promise<never>((_, reject) => 
+          setTimeout(() => reject(new Error('Regulations search timeout')), 30000)
+        )
+      ]).catch(err => {
+        logger.error('Regulations search failed/timeout', { error: err instanceof Error ? err.message : String(err) });
+        return { data: [], error: err };
+      })
+    ]);
+
+    logger.info('Dual RAG search complete', { 
+      practicalWork: practicalWorkResults.data?.length || 0,
+      regulations: regulationsResults.data?.length || 0
     });
 
-    if (error) {
-      throw error;
-    }
+    // Combine results
+    let knowledge = [
+      ...(practicalWorkResults.data || []),
+      ...(regulationsResults.data || [])
+    ];
 
-    let knowledge = hybridResults || [];
+    // Normalize field names for consistent consumption by AI
+    knowledge = knowledge.map(item => ({
+      ...item,
+      // Map 'topic' or 'primary_topic' to 'regulation_number' for consistency
+      regulation_number: item.regulation_number || item.primary_topic || item.topic || 'N/A',
+      // Ensure content exists
+      content: item.content || item.primary_topic || '',
+      // Preserve rich fields from practical work intelligence
+      tools: item.tools_required || [],
+      materials: item.materials_needed || [],
+      regulations: item.bs7671_regulations || [],
+      // Keep source for debugging
+      source: item.source || 'unknown'
+    }));
+
+    logger.info('Field normalization complete', { 
+      totalItems: knowledge.length,
+      sampleRegNumber: knowledge[0]?.regulation_number,
+      sampleToolsCount: knowledge[0]?.tools?.length || 0
+    });
+
+    // Graceful degradation: if both RAG searches failed, use minimal fallback
+    if (knowledge.length === 0) {
+      logger.warn('No RAG results from dual search, using fallback data');
+      knowledge = [
+        {
+          regulation_number: '134.1.1',
+          content: 'Good workmanship and proper materials shall be used in electrical installations.',
+          source: 'fallback',
+          tools: [],
+          materials: [],
+          regulations: ['134.1.1']
+        },
+        {
+          regulation_number: '411.3.1.1',
+          content: 'Automatic disconnection of supply is required for protection against electric shock.',
+          source: 'fallback',
+          tools: [],
+          materials: [],
+          regulations: ['411.3.1.1']
+        }
+      ];
+    }
 
     // Cross-encoder reranking
     if (knowledge.length > 0) {
