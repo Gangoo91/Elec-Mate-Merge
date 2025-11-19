@@ -26,7 +26,11 @@ function expandInstallationQuery(query: string): string {
     'shower': ['high current', 'pull cord', 'double pole isolation', 'bathroom'],
     'socket': ['ring final', 'radial', 'spurs', '2.5mm²', '32A'],
     'light': ['lighting circuit', 'switch drops', '1.5mm²', '6A'],
-    'ev': ['EV charging', 'Section 722', 'outdoor socket', 'RCD protection'],
+    // FIX 3: Enhanced EV term expansion
+    'ev': ['electric vehicle', 'EV charging', 'EVCP', 'Section 722', 'Mode 3', 'Type 2', 'dedicated circuit', 'charging point'],
+    'charger': ['charging point', 'EVCP', 'socket-outlet', 'dedicated circuit', 'Mode 3', 'Type 2'],
+    'charging': ['EV charging', 'Section 722', 'charging point', 'Mode 3', 'dedicated supply'],
+    '722': ['Section 722', 'EV charging', 'electric vehicle', 'charging installation'],
     'trunking': ['segregation', 'capacity factor', 'cable management'],
   };
 
@@ -180,25 +184,60 @@ export async function retrieveInstallationKnowledge(
     // Direct SQL RAG (Solution 4 - proven in installer-v3)
     logger.debug('Starting direct SQL RAG search');
     
-    // Extract keywords for ILIKE search
-    const keywords = query
+    // FIX 1: Improved keyword extraction with stop-word filtering and technical term prioritization
+    const stopWords = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'install', 'fit', 'connect', 'need'];
+    const technicalTerms = ['ev', 'charger', 'charging', '722', 'rcbo', 'rcd', 'swa', 'shower', 'bathroom', 'socket'];
+    
+    // Extract all potential keywords
+    const allKeywords = query
       .toLowerCase()
       .split(/\s+/)
-      .filter(w => w.length > 3)
-      .slice(0, 5); // Top 5 keywords
+      .filter(w => w.length > 2 && !stopWords.includes(w)) // Allow 3+ chars, remove stop words
+      .slice(0, 8); // Top 8 keywords
     
-    const keyword1 = keywords[0] || 'installation';
-    const keyword2 = keywords[1] || 'cable';
-    const keyword3 = keywords[2] || 'circuit';
+    // Prioritize technical terms first
+    const priorityKeywords = allKeywords.filter(k => technicalTerms.some(t => k.includes(t)));
+    const finalKeywords = [...new Set([...priorityKeywords, ...allKeywords])].slice(0, 5);
     
-    logger.debug('Keywords extracted', { keywords });
+    const keyword1 = finalKeywords[0] || 'installation';
+    const keyword2 = finalKeywords[1] || 'cable';
+    const keyword3 = finalKeywords[2] || 'circuit';
+    
+    // FIX 4: Dynamic result limits based on query complexity
+    const isComplexQuery = finalKeywords.length > 3 || query.length > 50;
+    const practicalLimit = isComplexQuery ? 25 : 15;
+    const regulationsLimit = isComplexQuery ? 15 : 10;
+    
+    logger.debug('Keywords extracted', { 
+      keywords: finalKeywords, 
+      isComplex: isComplexQuery,
+      limits: { practical: practicalLimit, regulations: regulationsLimit }
+    });
+    
+    // FIX 2: Word boundary matching for precise ILIKE patterns
+    // Build OR conditions dynamically for better precision
+    const practicalOrConditions = [
+      `primary_topic.ilike.% ${keyword1} %`,
+      `primary_topic.ilike.% ${keyword2} %`,
+      `primary_topic.ilike.%${keyword1}%`,
+      `equipment_category.ilike.% ${keyword1} %`,
+      `equipment_category.ilike.%${keyword1}%`
+    ].join(',');
+    
+    const regulationsOrConditions = [
+      `regulation_number.ilike.% ${keyword1} %`,
+      `regulation_number.ilike.%${keyword1}%`,
+      `primary_topic.ilike.% ${keyword1} %`,
+      `primary_topic.ilike.% ${keyword2} %`,
+      `primary_topic.ilike.%${keyword1}%`
+    ].join(',');
     
     // Direct SQL Query 1: Practical Work Intelligence
     const { data: practicalData, error: practicalError } = await supabase
       .from('practical_work_intelligence')
       .select('*')
-      .or(`primary_topic.ilike.%${keyword1}%,primary_topic.ilike.%${keyword2}%,equipment_category.ilike.%${keyword1}%`)
-      .limit(15);
+      .or(practicalOrConditions)
+      .limit(practicalLimit);
     
     if (practicalError) {
       logger.error('Practical work SQL query failed', { error: practicalError });
@@ -208,18 +247,53 @@ export async function retrieveInstallationKnowledge(
     const { data: regulationsData, error: regulationsError } = await supabase
       .from('regulations_intelligence')
       .select('*')
-      .or(`regulation_number.ilike.%${keyword1}%,primary_topic.ilike.%${keyword1}%,primary_topic.ilike.%${keyword2}%`)
-      .limit(10);
+      .or(regulationsOrConditions)
+      .limit(regulationsLimit);
     
     if (regulationsError) {
       logger.error('Regulations SQL query failed', { error: regulationsError });
     }
     
+    const initialResultCount = (practicalData?.length || 0) + (regulationsData?.length || 0);
+    
     logger.info('Direct SQL RAG complete', {
       practical: practicalData?.length || 0,
       regulations: regulationsData?.length || 0,
-      total: (practicalData?.length || 0) + (regulationsData?.length || 0)
+      total: initialResultCount
     });
+
+    // FIX 5: Zero-result fallback - trigger broader search if results are too low
+    let shouldUseFallback = initialResultCount < 5;
+    let fallbackPractical: any[] = [];
+    let fallbackRegulations: any[] = [];
+    
+    if (shouldUseFallback) {
+      logger.warn('Low RAG results, triggering broader fallback search', { 
+        currentCount: initialResultCount,
+        threshold: 5
+      });
+      
+      // Execute broader search with relaxed filters (no word boundaries)
+      const { data: fbPractical } = await supabase
+        .from('practical_work_intelligence')
+        .select('*')
+        .or(`primary_topic.ilike.%${keyword1}%,equipment_category.ilike.%installation%`)
+        .limit(10);
+      
+      const { data: fbRegulations } = await supabase
+        .from('regulations_intelligence')
+        .select('*')
+        .or(`primary_topic.ilike.%${keyword1}%,primary_topic.ilike.%electrical%`)
+        .limit(8);
+      
+      fallbackPractical = fbPractical || [];
+      fallbackRegulations = fbRegulations || [];
+      
+      logger.info('Fallback search complete', { 
+        practicalCount: fallbackPractical.length,
+        regulationsCount: fallbackRegulations.length
+      });
+    }
 
     // Essential practical fallback data
     const practicalFallback = [
@@ -253,10 +327,12 @@ export async function retrieveInstallationKnowledge(
       }
     ];
 
-    // Combine results: practical + regulations + fallback
+    // Combine results: practical + regulations + broader fallback (if triggered) + essential fallback
     let knowledge = [
       ...(practicalData || []),
       ...(regulationsData || []),
+      ...fallbackPractical,
+      ...fallbackRegulations,
       ...practicalFallback
     ];
 
