@@ -479,10 +479,23 @@ async function vectorSearchWithEmbedding(
     searchTypes.push('bs7671');
   }
 
+  // PRIORITY 3: Practical Work Intelligence (commissioning/testing/installation)
+  if (priority && priority.practical_work > 50) {
+    searches.push(
+      supabase.rpc('search_practical_work_intelligence_hybrid', {
+        query_text: params.query,
+        query_embedding: null,
+        match_count: 12,
+        filter_trade: 'commissioning'
+      })
+    );
+    searchTypes.push('practical_work');
+  }
+
   // Circuit Designer uses only 2 RAG searches:
   // 1. Design knowledge (vector, 95% priority)
   // 2. BS 7671 regulations (keyword, 90% priority)
-  // Other agents may still use health_safety, practical_work, installation
+  // Other agents (commissioning, installation) also use practical_work
 
   // PHASE 4: Maintenance knowledge search - skip entirely (not needed for RAMS)
   console.log('⏭️ Skipping maintenance search (not needed for H&S RAMS)');
@@ -548,7 +561,8 @@ async function vectorSearchWithEmbedding(
                       (resultMap.design?.length || 0) + 
                       (resultMap.installation?.length || 0) + 
                       (resultMap.health_safety?.length || 0) +
-                      (resultMap.maintenance?.length || 0);
+                      (resultMap.maintenance?.length || 0) +
+                      (resultMap.practical_work?.length || 0);
   
   const hasMinimumResults = totalResults >= 3;
   
@@ -614,7 +628,8 @@ async function vectorSearchWithEmbedding(
       totalSearches: searches.length,
       hasMinimumResults,
       totalResults
-    }
+    },
+    practicalWorkDocs: resultMap.practical_work || []
   };
 }
 

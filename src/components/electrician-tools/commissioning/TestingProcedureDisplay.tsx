@@ -73,7 +73,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                 <ChevronDown className={`h-4 w-4 ml-auto transition-transform ${showSafetyNotes ? 'rotate-180' : ''}`} />
               </button>
               {showSafetyNotes && (
-                <ul className="mt-2 space-y-1 text-xs text-muted-foreground">
+                <ul className="mt-2 space-y-1 text-xs text-gray-200">
                   {procedure.visualInspection.safetyNotes.map((note, i) => (
                     <li key={i}>• {note}</li>
                   ))}
@@ -140,13 +140,13 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                       <Zap className="h-4 w-4" />
                       Instrument Setup
                     </div>
-                    <p className="text-xs text-muted-foreground">{test.instrumentSetup}</p>
+                    <p className="text-xs text-gray-200">{test.instrumentSetup}</p>
                   </div>
 
                   {/* Procedure */}
                   <div>
                     <div className="text-sm font-medium text-foreground mb-2">Procedure</div>
-                    <ol className="space-y-1 text-xs text-muted-foreground list-decimal list-inside">
+                    <ol className="space-y-1 text-xs text-gray-200 list-decimal list-inside">
                       {test.procedure.map((step, i) => (
                         <li key={i}>{step}</li>
                       ))}
@@ -159,13 +159,13 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                       <CheckCircle2 className="h-4 w-4" />
                       Acceptance Criteria
                     </div>
-                    <p className="text-xs text-muted-foreground">{test.acceptanceCriteria}</p>
+                    <p className="text-xs text-gray-200">{test.acceptanceCriteria}</p>
                     {test.expectedResult && (
                       <div className="mt-2">
                         {typeof test.expectedResult === 'object' ? (
                           <div className="space-y-1">
                             {test.expectedResult.calculated && (
-                              <p className="text-xs text-muted-foreground">
+                              <p className="text-xs text-gray-200">
                                 <span className="font-medium">Calculated:</span> {test.expectedResult.calculated}
                               </p>
                             )}
@@ -175,7 +175,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                               </p>
                             )}
                             {test.expectedResult.maximumPermitted && (
-                              <p className="text-xs text-muted-foreground">
+                              <p className="text-xs text-gray-200">
                                 <span className="font-medium">Maximum:</span> {test.expectedResult.maximumPermitted}
                               </p>
                             )}
@@ -204,7 +204,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                         <AlertTriangle className="h-4 w-4" />
                         Troubleshooting
                       </div>
-                      <ul className="space-y-1 text-xs text-muted-foreground">
+                      <ul className="space-y-1 text-xs text-gray-200">
                         {test.troubleshooting.map((tip, i) => (
                           <li key={i}>• {tip}</li>
                         ))}
@@ -248,7 +248,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                     <Badge variant="outline" className="shrink-0">{index + 1}</Badge>
                     <div>
                       <div className="font-medium text-foreground">{test.testName}</div>
-                      <div className="text-xs text-muted-foreground">{test.regulation}</div>
+                      <div className="text-xs text-gray-200">{test.regulation}</div>
                     </div>
                   </div>
                 </AccordionTrigger>
@@ -259,13 +259,13 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                       <Zap className="h-4 w-4" />
                       Instrument Setup
                     </div>
-                    <p className="text-xs text-muted-foreground">{test.instrumentSetup}</p>
+                    <p className="text-xs text-gray-200">{test.instrumentSetup}</p>
                   </div>
 
                   {/* Procedure */}
                   <div>
                     <div className="text-sm font-medium text-foreground mb-2">Procedure</div>
-                    <ol className="space-y-1 text-xs text-muted-foreground list-decimal list-inside">
+                    <ol className="space-y-1 text-xs text-gray-200 list-decimal list-inside">
                       {test.procedure.map((step, i) => (
                         <li key={i}>{step}</li>
                       ))}
@@ -282,17 +282,17 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                             <p className="text-xs text-purple-300 font-mono">{test.calculation.formula}</p>
                           )}
                           {test.calculation.Ze && (
-                            <p className="text-xs text-muted-foreground">Ze = {test.calculation.Ze}</p>
+                            <p className="text-xs text-gray-200">Ze = {test.calculation.Ze}</p>
                           )}
                           {test.calculation.R1R2 && (
-                            <p className="text-xs text-muted-foreground">R1+R2 = {test.calculation.R1R2}</p>
+                            <p className="text-xs text-gray-200">R1+R2 = {test.calculation.R1R2}</p>
                           )}
                           {test.calculation.expectedZs && (
                             <p className="text-xs text-purple-300 font-semibold">Expected Zs = {test.calculation.expectedZs}</p>
                           )}
                         </div>
                       ) : (
-                        <p className="text-xs text-muted-foreground font-mono">{test.calculation}</p>
+                        <p className="text-xs text-gray-200 font-mono">{test.calculation}</p>
                       )}
                     </div>
                   )}
@@ -303,13 +303,13 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                       <CheckCircle2 className="h-4 w-4" />
                       Acceptance Criteria
                     </div>
-                    <p className="text-xs text-muted-foreground">{test.acceptanceCriteria}</p>
+                    <p className="text-xs text-gray-200">{test.acceptanceCriteria}</p>
                     {test.expectedResult && (
                       <div className="mt-2">
                         {typeof test.expectedResult === 'object' ? (
                           <div className="space-y-1">
                             {test.expectedResult.calculated && (
-                              <p className="text-xs text-muted-foreground">
+                              <p className="text-xs text-gray-200">
                                 <span className="font-medium">Calculated:</span> {test.expectedResult.calculated}
                               </p>
                             )}
@@ -319,7 +319,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                               </p>
                             )}
                             {test.expectedResult.maximumPermitted && (
-                              <p className="text-xs text-muted-foreground">
+                              <p className="text-xs text-gray-200">
                                 <span className="font-medium">Maximum:</span> {test.expectedResult.maximumPermitted}
                               </p>
                             )}
@@ -348,7 +348,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                         <AlertTriangle className="h-4 w-4" />
                         Troubleshooting
                       </div>
-                      <ul className="space-y-1 text-xs text-muted-foreground">
+                      <ul className="space-y-1 text-xs text-gray-200">
                         {test.troubleshooting.map((tip, i) => (
                           <li key={i}>• {tip}</li>
                         ))}
