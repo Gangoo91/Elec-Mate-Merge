@@ -391,7 +391,8 @@ ${ragContext}`;
   let methodData: any;
   
   try {
-    console.log('🤖 Calling GPT-5 Mini with built-in timeout protection...');
+    console.log('🤖 Calling GPT-5 Mini with 4-minute timeout protection...');
+    console.log(`⏱️ Timeout configured: 240000ms (4 minutes)`);
     const aiStart = Date.now();
     
     const response = await callOpenAI({
@@ -402,10 +403,15 @@ ${ragContext}`;
       model: 'gpt-5-mini-2025-08-07',
       tools: [INSTALLATION_METHOD_TOOL],
       tool_choice: { type: 'function', function: { name: 'provide_installation_method_guidance' } }
-    }, Deno.env.get('OPENAI_API_KEY')!, 180000); // Built-in 3-minute timeout
+    }, Deno.env.get('OPENAI_API_KEY')!, 240000); // Built-in 4-minute timeout
     
-    phaseTimings.openai = Date.now() - aiStart;
-    logger.info('OpenAI complete', { duration: phaseTimings.openai });
+    const aiDuration = Date.now() - aiStart;
+    phaseTimings.openai = aiDuration;
+    logger.info('✅ OpenAI complete', { 
+      duration: aiDuration,
+      durationSeconds: Math.round(aiDuration / 1000),
+      percentOfTimeout: Math.round((aiDuration / 240000) * 100)
+    });
 
     if (!response.toolCalls || response.toolCalls.length === 0) {
       throw new Error('GPT-5 Mini did not return installation method tool call');
