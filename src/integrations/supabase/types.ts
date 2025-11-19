@@ -2837,6 +2837,60 @@ export type Database = {
         }
         Relationships: []
       }
+      installation_method_jobs: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          current_step: string | null
+          designer_context: Json | null
+          error_message: string | null
+          id: string
+          method_data: Json | null
+          progress: number
+          project_details: Json
+          quality_metrics: Json | null
+          query: string
+          started_at: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          current_step?: string | null
+          designer_context?: Json | null
+          error_message?: string | null
+          id?: string
+          method_data?: Json | null
+          progress?: number
+          project_details: Json
+          quality_metrics?: Json | null
+          query: string
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          current_step?: string | null
+          designer_context?: Json | null
+          error_message?: string | null
+          id?: string
+          method_data?: Json | null
+          progress?: number
+          project_details?: Json
+          quality_metrics?: Json | null
+          query?: string
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       installation_methods: {
         Row: {
           bs7671_reference: string | null
