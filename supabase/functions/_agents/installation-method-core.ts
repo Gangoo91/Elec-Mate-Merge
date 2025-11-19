@@ -7,9 +7,10 @@
 import { 
   searchPracticalWorkIntelligence, 
   searchBS7671Intelligence,
-  searchRegulationsIntelligence
+  searchRegulationsIntelligence,
+  callOpenAI
 } from '../_shared/rams-rag.ts';
-import { callOpenAI } from '../_shared/ai-providers.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 
 const INSTALLATION_METHOD_TOOL = {
   type: 'function' as const,
@@ -377,33 +378,49 @@ Query: ${query}
 RAG Context (cite regulation numbers):
 ${ragContext}`;
 
-  console.log('🤖 Calling GPT-5 Mini with installation method tool...');
-  const response = await callOpenAI({
-    messages: [
-      { role: 'system', content: SYSTEM_PROMPT },
-      { role: 'user', content: userPrompt }
-    ],
-    model: 'gpt-5-mini-2025-08-07',
-    tools: [INSTALLATION_METHOD_TOOL],
-    tool_choice: { type: 'function', function: { name: 'provide_installation_method_guidance' } }
-  }, Deno.env.get('OPENAI_API_KEY')!, 180000); // 3-minute timeout
+  let methodData: any;
+  
+  try {
+    console.log('🤖 Calling GPT-5 Mini with 3-minute timeout protection...');
+    
+    const response = await withTimeout(
+      callOpenAI({
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: userPrompt }
+        ],
+        model: 'gpt-5-mini-2025-08-07',
+        tools: [INSTALLATION_METHOD_TOOL],
+        tool_choice: { type: 'function', function: { name: 'provide_installation_method_guidance' } }
+      }),
+      180000, // 3 minutes
+      'Installation Method OpenAI Call'
+    );
 
-  if (!response.toolCalls || response.toolCalls.length === 0) {
-    throw new Error('GPT-5 Mini did not return installation method tool call');
+    if (!response.toolCalls || response.toolCalls.length === 0) {
+      throw new Error('GPT-5 Mini did not return installation method tool call');
+    }
+
+    methodData = JSON.parse(response.toolCalls[0].function.arguments);
+
+    // Validation: Check if steps have tools
+    const stepsWithoutTools = methodData.installationSteps?.filter((s: any) => 
+      !s.tools || s.tools.length < 3
+    ) || [];
+
+    if (stepsWithoutTools.length > 0) {
+      console.warn(`⚠️ ${stepsWithoutTools.length} steps missing sufficient tools - AI may not have extracted RAG data properly`);
+      console.warn('Steps needing attention:', stepsWithoutTools.map((s: any) => `Step ${s.step}: ${s.title}`));
+    }
+    console.log('✅ Installation method generated successfully');
+    
+  } catch (error) {
+    if (error.name === 'TimeoutError') {
+      console.error('⏱️ OpenAI call timed out after 3 minutes');
+      throw new Error('AI generation timed out. OpenAI took longer than 3 minutes to respond. Please try again with a simpler request.');
+    }
+    throw error;
   }
-
-  const methodData = JSON.parse(response.toolCalls[0].function.arguments);
-
-  // Validation: Check if steps have tools
-  const stepsWithoutTools = methodData.installationSteps?.filter((s: any) => 
-    !s.tools || s.tools.length < 3
-  ) || [];
-
-  if (stepsWithoutTools.length > 0) {
-    console.warn(`⚠️ ${stepsWithoutTools.length} steps missing sufficient tools - AI may not have extracted RAG data properly`);
-    console.warn('Steps needing attention:', stepsWithoutTools.map((s: any) => `Step ${s.step}: ${s.title}`));
-  }
-  console.log('✅ Installation method generated successfully');
   
   if (onProgress) onProgress(100, 'Installation Method: Complete!');
   
