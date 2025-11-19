@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { CircuitInput, DomesticLoadType, CommercialLoadType, IndustrialLoadType } from "@/types/installation-design";
 import { Trash2, Copy, GripVertical } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { DEFAULT_CABLE_LENGTHS } from "@/lib/circuit-templates";
 
 interface CircuitCardProps {
   circuit: CircuitInput;
@@ -126,7 +127,19 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
             <Label className="text-sm font-semibold">Load Type *</Label>
             <Select 
               value={circuit.loadType} 
-              onValueChange={(v) => onUpdate({ loadType: v as any })}
+              onValueChange={(value) => {
+                const updates: Partial<CircuitInput> = { loadType: value as any };
+                
+                // Auto-fill cable length if currently empty
+                if (!circuit.cableLength) {
+                  const defaultLength = DEFAULT_CABLE_LENGTHS[installationType]?.[value as any];
+                  if (defaultLength) {
+                    updates.cableLength = defaultLength;
+                  }
+                }
+                
+                onUpdate(updates);
+              }}
             >
               <SelectTrigger className="text-base">
                 <SelectValue />
@@ -194,7 +207,7 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
               className="text-base"
             />
             <p className="text-xs text-muted-foreground">
-              Optional - improves voltage drop accuracy
+              Auto-filled based on typical runs - adjust if needed
             </p>
           </div>
         </div>
