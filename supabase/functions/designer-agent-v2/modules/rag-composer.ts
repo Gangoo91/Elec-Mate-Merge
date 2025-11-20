@@ -4,12 +4,9 @@
  * Direct keyword extraction from user inputs
  */
 
-import { searchPracticalWorkIntelligence, formatForAIContext } from '../../_shared/rag-practical-work.ts';
+import { searchCircuitRegulations, searchInstallationPractices } from '../../_shared/circuit-rag.ts';
 import { filterRegulationsForCircuit } from '../../_shared/circuit-regulation-mapper.ts';
-import { withTimeout, Timeouts } from '../../_shared/timeout.ts';
-import { withRetry } from '../../_shared/retry.ts';
 import { generateEmbedding } from '../../_shared/rams-rag.ts';
-import { safeAll } from '../../_shared/safe-parallel.ts';
 
 /**
  * Core Regulations Cache Loader
@@ -215,12 +212,9 @@ async function searchDesignKnowledge(supabase: any, query: string, keywords: str
   console.log(`📚 Design Knowledge Search: ${query}`);
   
   try {
-    // Generate embedding from text with timeout & retry (~200-400ms)
+    // Generate embedding from text (simple, no timeout wrapper)
     console.log('🔄 Generating embedding for design knowledge query...');
-    const queryEmbedding = await withRetry(
-      () => withTimeout(generateEmbedding(query), 5000, 'Embedding Generation'),
-      { maxRetries: 2, baseDelayMs: 500, maxDelayMs: 2000 }
-    );
+    const queryEmbedding = await generateEmbedding(query);
     console.log(`✅ Embedding generated (${queryEmbedding.length} dimensions)`);
     
     // Call RPC with vector embedding and correct parameters
@@ -253,7 +247,7 @@ async function searchRegulationsIntelligence(supabase: any, keywords: string[], 
   const queryText = keywords.join(' ');
   const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
     query_text: queryText,
-    match_count: limit
+    match_count: 10  // Consistent with AI RAMS pattern
   });
   
   if (error) {
@@ -273,11 +267,11 @@ async function searchRegulationsIntelligence(supabase: any, keywords: string[], 
  * Helper: Search Practical Work Intelligence (keyword)
  */
 async function searchPracticalWorkIntelligenceDirect(supabase: any, params: any) {
-  const { keywords, limit } = params;
+  const { keywords } = params;
   const queryText = keywords.join(' ');
   const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
     query_text: queryText,
-    match_count: limit,
+    match_count: 10,  // Consistent with AI RAMS pattern
     filter_trade: null // All trades
   });
   
@@ -429,58 +423,59 @@ export async function buildRAGSearches(
   // Get circuit types for structured calculations
   const circuitTypes = circuits?.map((c: any) => c.circuitType).filter(Boolean) || [];
   
-  // ===== PARALLEL RAG SEARCHES WITH INCREASED TIMEOUTS =====
+  // ===== SIMPLE PARALLEL RAG SEARCHES (MIRRORS AI RAMS) =====
   const searchStart = Date.now();
   
-  const { successes, failures } = await safeAll([
-    {
-      name: 'Design Knowledge',
-      execute: () => withTimeout(
-        searchDesignKnowledge(supabase, query, allKeywords, 8),
-        10000,
-        'Design Knowledge RAG'
-      )
-    },
-    {
-      name: 'BS 7671 Regulations',
-      execute: () => withTimeout(
-        searchRegulationsIntelligence(supabase, allKeywords, 6),
-        8000,
-        'BS 7671 RAG'
-      )
-    },
-    {
-      name: 'Practical Work',
-      execute: () => withTimeout(
-        searchPracticalWorkIntelligenceDirect(supabase, {
-          keywords: allKeywords,
-          limit: 6,
-          activity_filter: []
-        }),
-        8000,
-        'Practical Work RAG'
-      )
-    },
-    {
-      name: 'Structured Calculations',
-      execute: () => withTimeout(
-        retrieveStructuredCalculations(supabase, circuitTypes),
-        6000,
-        'Structured Calculations DB'
-      )
+  // Build job inputs for RAG search
+  const jobInputs = {
+    circuits: circuits || [],
+    supply: {},
+    projectInfo: { installationType: type }
+  };
+  
+  // Parallel RAG searches (no timeouts, simple and direct)
+  let designDocs: any[] = [];
+  let regulations: any[] = [];
+  let practicalWork: any[] = [];
+  let calculations: any[] = [];
+  let failedBranches = 0;
+  
+  try {
+    const [regulationsResults, practicalResults] = await Promise.all([
+      searchCircuitRegulations(jobInputs).catch(err => {
+        logger.warn('⚠️ Regulations search failed', { error: err.message });
+        failedBranches++;
+        return [];
+      }),
+      searchInstallationPractices(jobInputs).catch(err => {
+        logger.warn('⚠️ Practical work search failed', { error: err.message });
+        failedBranches++;
+        return [];
+      })
+    ]);
+    
+    regulations = regulationsResults;
+    practicalWork = practicalResults;
+    
+    // Design knowledge search (vector-based)
+    try {
+      designDocs = await searchDesignKnowledge(supabase, query, allKeywords, 10);
+    } catch (err) {
+      logger.warn('⚠️ Design knowledge search failed', { error: err instanceof Error ? err.message : String(err) });
+      failedBranches++;
     }
-  ]);
-  
-  // Extract results, defaulting to [] for failed branches
-  let designDocs = successes.find(s => s.name === 'Design Knowledge')?.result || [];
-  let regulations = successes.find(s => s.name === 'BS 7671 Regulations')?.result || [];
-  let practicalWork = successes.find(s => s.name === 'Practical Work')?.result || [];
-  let calculations = successes.find(s => s.name === 'Structured Calculations')?.result || [];
-  
-  // Log any failures (but don't crash)
-  failures.forEach(f => {
-    logger.warn(`⚠️ RAG branch failed: ${f.name}`, f.error);
-  });
+    
+    // Structured calculations
+    try {
+      calculations = await retrieveStructuredCalculations(supabase, circuitTypes);
+    } catch (err) {
+      logger.warn('⚠️ Structured calculations failed', { error: err instanceof Error ? err.message : String(err) });
+      failedBranches++;
+    }
+    
+  } catch (error) {
+    logger.error('RAG search failed', { error });
+  }
   
   // Fallback to core regulations if ALL RAG branches failed
   if (designDocs.length === 0 && regulations.length === 0 && 
@@ -493,15 +488,18 @@ export async function buildRAGSearches(
   
   // Log completion
   const ragTime = Date.now() - searchStart;
+  const totalBranches = 4;
+  const successfulBranches = totalBranches - failedBranches;
+  
   logger.info(`✅ Design: ${designDocs.length} docs`);
   logger.info(`✅ BS 7671: ${regulations.length} regs`);
   logger.info(`✅ Practical: ${practicalWork.length} docs`);
   logger.info(`✅ Calculations: ${calculations.length} formulas`);
-  logger.info(`⏱️ RAG completed in ${ragTime}ms with ${successes.length}/4 branches`);
+  logger.info(`⏱️ RAG completed in ${ragTime}ms with ${successfulBranches}/${totalBranches} branches`);
   
   // Monitor RAG health
-  const successRate = (successes.length / 4) * 100;
-  logger.info(`📊 RAG Health: ${successRate.toFixed(0)}% (${successes.length}/4 branches)`);
+  const successRate = (successfulBranches / totalBranches) * 100;
+  logger.info(`📊 RAG Health: ${successRate.toFixed(0)}% (${successfulBranches}/${totalBranches} branches)`);
   
   if (successRate < 50) {
     logger.error(`🚨 CRITICAL: Only ${successes.length}/4 RAG branches succeeded`);
