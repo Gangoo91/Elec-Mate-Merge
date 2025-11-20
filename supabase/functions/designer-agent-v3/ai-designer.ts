@@ -235,7 +235,7 @@ export class AIDesigner {
         tool_choice
       },
       this.openAiKey,
-      120000 // 120s timeout (2 minutes - correction buffer)
+      240000 // 240s timeout (4 minutes for complex multi-circuit corrections)
     );
 
     const duration = Date.now() - startTime;
