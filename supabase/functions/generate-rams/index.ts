@@ -96,47 +96,52 @@ Deno.serve(async (req) => {
       agentStatus: string,
       step: string
     ) => {
-      const agentField = agent === 'hs' ? 'hs_agent_progress' : 'installer_agent_progress';
-      const statusField = agent === 'hs' ? 'hs_agent_status' : 'installer_agent_status';
-      
-      // Update agent-specific fields
-      const { data } = await supabase
-        .from('rams_generation_jobs')
-        .update({
-          [agentField]: agentProgress,
-          [statusField]: agentStatus,
-          current_step: step
-        })
-        .eq('id', jobId)
-        .select('hs_agent_progress, installer_agent_progress')
-        .single();
-      
-      if (!data) return;
-      
-      // PHASE 1 FIX: Sequential progress zones (no backwards jumps)
-      // Zone 1: 0-10% = Initialization
-      // Zone 2: 10-50% = H&S agent (0-100% mapped to 10-50%)
-      // Zone 3: 50-90% = Installer agent (0-100% mapped to 50-90%)
-      // Zone 4: 90-100% = Finalization
-      const hsProgress = data.hs_agent_progress || 0;
-      const installerProgress = data.installer_agent_progress || 0;
-      
-      let overallProgress = 10; // Start after initialization
-      
-      if (agent === 'hs') {
-        // H&S zone: 10-50%
-        overallProgress = Math.round(10 + (hsProgress * 0.4));
-      } else {
-        // Installer zone: 50-90% (starts at 50 even if H&S not complete)
-        const hsComplete = data.hs_agent_status === 'complete' ? 40 : (hsProgress * 0.4);
-        overallProgress = Math.round(10 + hsComplete + (installerProgress * 0.4));
+      try {
+        const agentField = agent === 'hs' ? 'hs_agent_progress' : 'installer_agent_progress';
+        const statusField = agent === 'hs' ? 'hs_agent_status' : 'installer_agent_status';
+        
+        // Update agent-specific fields
+        const { data, error } = await supabase
+          .from('rams_generation_jobs')
+          .update({
+            [agentField]: agentProgress,
+            [statusField]: agentStatus,
+            current_step: step
+          })
+          .eq('id', jobId)
+          .select('hs_agent_progress, installer_agent_progress, hs_agent_status, installer_agent_status')
+          .single();
+        
+        if (error || !data) return;
+        
+        // PHASE 1 FIX: Sequential progress zones (no backwards jumps)
+        // Zone 1: 0-10% = Initialization
+        // Zone 2: 10-50% = H&S agent (0-100% mapped to 10-50%)
+        // Zone 3: 50-90% = Installer agent (0-100% mapped to 50-90%)
+        // Zone 4: 90-100% = Finalization
+        const hsProgress = data.hs_agent_progress || 0;
+        const installerProgress = data.installer_agent_progress || 0;
+        
+        let overallProgress = 10; // Start after initialization
+        
+        if (agent === 'hs') {
+          // H&S zone: 10-50%
+          overallProgress = Math.round(10 + (hsProgress * 0.4));
+        } else {
+          // Installer zone: 50-90% (starts at 50 even if H&S not complete)
+          const hsComplete = data.hs_agent_status === 'complete' ? 40 : (hsProgress * 0.4);
+          overallProgress = Math.round(10 + hsComplete + (installerProgress * 0.4));
+        }
+        
+        // Update overall progress
+        await supabase
+          .from('rams_generation_jobs')
+          .update({ progress: overallProgress })
+          .eq('id', jobId);
+      } catch (error) {
+        console.error('⚠️ Agent progress update failed (non-fatal):', error);
+        // Progress updates must never crash the job
       }
-      
-      // Update overall progress
-      await supabase
-        .from('rams_generation_jobs')
-        .update({ progress: overallProgress })
-        .eq('id', jobId);
     };
 
     // Helper function to check if cancelled

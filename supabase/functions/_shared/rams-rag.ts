@@ -106,17 +106,21 @@ export async function searchBS7671Intelligence(query: string) {
   return data || [];
 }
 
-export async function callOpenAI({
-  messages,
-  model,
-  tools,
-  tool_choice
-}: {
-  messages: any[];
-  model: string;
-  tools?: any[];
-  tool_choice?: any;
-}): Promise<any> {
+export async function callOpenAI(
+  {
+    messages,
+    model,
+    tools,
+    tool_choice
+  }: {
+    messages: any[];
+    model: string;
+    tools?: any[];
+    tool_choice?: any;
+  },
+  apiKey?: string,
+  timeoutMs: number = 300000
+): Promise<any> {
   const isNewModel = model.includes('gpt-5') || model.includes('gpt-4.1');
   const body: any = {
     model,
@@ -131,23 +135,48 @@ export async function callOpenAI({
     if (tool_choice) body.tool_choice = tool_choice;
   }
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body)
-  });
-
-  if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`OpenAI error: ${error}`);
+  const key = apiKey || Deno.env.get('OPENAI_API_KEY');
+  if (!key) {
+    throw new Error('OPENAI_API_KEY is not configured');
   }
 
-  const data = await response.json();
-  return {
-    content: data.choices[0].message.content,
-    toolCalls: data.choices[0].message.tool_calls
-  };
+  const controller = new AbortController();
+  const timeout = setTimeout(() => {
+    try {
+      controller.abort();
+    } catch (e) {
+      console.error('Error aborting OpenAI request:', e);
+    }
+  }, timeoutMs);
+
+  try {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${key}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+      signal: controller.signal
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`OpenAI error: ${response.status} ${errorText}`);
+    }
+
+    const data = await response.json();
+    return {
+      content: data.choices[0].message.content,
+      toolCalls: data.choices[0].message.tool_calls
+    };
+  } catch (error) {
+    const err: any = error;
+    if (err?.name === 'AbortError') {
+      throw new Error(`OpenAI request timed out after ${timeoutMs}ms`);
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
 }

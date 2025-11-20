@@ -140,26 +140,33 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
   const aiHeartbeat = setInterval(async () => {
     if (onProgress) {
       const elapsed = Math.floor((Date.now() - aiStart) / 1000);
-      await onProgress(Math.min(85, 25 + elapsed * 2), `Health & Safety: Deep analysis (${elapsed}s)...`);
+      await onProgress(
+        Math.min(85, 25 + elapsed * 2),
+        `Health & Safety: Deep analysis (${elapsed}s)...`
+      );
     }
   }, 10000); // Every 10 seconds
   
-  const response = await callOpenAI({
-    model: 'gpt-5-mini-2025-08-07',
-    messages: [
-      { role: 'system', content: SYSTEM_PROMPT },
-      { 
-        role: 'user', 
-        content: `Generate a risk assessment for: ${query}\n\nProject: ${projectDetails.projectName}\nLocation: ${projectDetails.location}\n\nContext:\n${ragContext}` 
-      }
-    ],
-    tools: [HEALTH_SAFETY_TOOL],
-    tool_choice: { type: 'function', function: { name: 'generate_risk_assessment' } }
-  });
+  let response: any;
+  try {
+    response = await callOpenAI({
+      model: 'gpt-5-mini-2025-08-07',
+      messages: [
+        { role: 'system', content: SYSTEM_PROMPT },
+        { 
+          role: 'user', 
+          content: `Generate a risk assessment for: ${query}\n\nProject: ${projectDetails.projectName}\nLocation: ${projectDetails.location}\n\nContext:\n${ragContext}` 
+        }
+      ],
+      tools: [HEALTH_SAFETY_TOOL],
+      tool_choice: { type: 'function', function: { name: 'generate_risk_assessment' } }
+    });
+  } finally {
+    // Always clear heartbeat, even if OpenAI call fails or times out
+    clearInterval(aiHeartbeat);
+  }
+
   const aiDuration = Date.now() - aiStart;
-  
-  // Clear heartbeat
-  clearInterval(aiHeartbeat);
   
   if (!response.toolCalls?.[0]) {
     throw new Error('No tool call in response');
