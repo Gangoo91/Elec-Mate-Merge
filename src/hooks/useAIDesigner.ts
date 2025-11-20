@@ -23,6 +23,10 @@ export interface DesignProgress {
   stage: number;
   message: string;
   percent: number;
+  designer_progress?: number;
+  designer_status?: string;
+  installer_progress?: number;
+  installer_status?: string;
 }
 
 export const useAIDesigner = () => {

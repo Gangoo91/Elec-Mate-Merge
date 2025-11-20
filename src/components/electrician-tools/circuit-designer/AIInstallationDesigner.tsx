@@ -299,7 +299,11 @@ export const AIInstallationDesigner = () => {
           progress={{ 
             stage: Math.floor(progress / 14), 
             percent: progress,
-            message: currentStep || 'Processing...'
+            message: currentStep || 'Processing...',
+            designer_progress: job?.designer_progress || 0,
+            designer_status: job?.designer_status || 'pending',
+            installer_progress: job?.installer_progress || 0,
+            installer_status: job?.installer_status || 'pending'
           }}
           userRequest={userRequest}
           totalCircuits={totalCircuits}
