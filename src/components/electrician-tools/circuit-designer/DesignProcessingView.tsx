@@ -97,7 +97,7 @@ export const DesignProcessingView = ({
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-3 py-6">
-      <div className="max-w-2xl w-full space-y-4">
+      <div className="max-w-5xl w-full space-y-4">
         {/* Main Progress Card */}
         <Card className="border-elec-yellow/20 bg-elec-card">
           <CardContent className="p-6">
