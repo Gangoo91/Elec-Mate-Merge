@@ -12,6 +12,12 @@ interface CircuitDesignJob {
   created_at: string;
   started_at: string | null;
   completed_at: string | null;
+  // Parallel agent tracking
+  designer_progress: number;
+  designer_status: string;
+  installer_progress: number;
+  installer_status: string;
+  installation_data: any;
 }
 
 interface UseCircuitDesignGenerationReturn {

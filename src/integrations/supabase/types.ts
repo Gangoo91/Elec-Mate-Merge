@@ -708,8 +708,14 @@ export type Database = {
           created_at: string
           current_step: string | null
           design_data: Json | null
+          designer_progress: number | null
+          designer_status: string | null
           error_message: string | null
           id: string
+          installation_data: Json | null
+          installation_job_id: string | null
+          installer_progress: number | null
+          installer_status: string | null
           job_inputs: Json
           progress: number
           raw_response: Json | null
@@ -724,8 +730,14 @@ export type Database = {
           created_at?: string
           current_step?: string | null
           design_data?: Json | null
+          designer_progress?: number | null
+          designer_status?: string | null
           error_message?: string | null
           id?: string
+          installation_data?: Json | null
+          installation_job_id?: string | null
+          installer_progress?: number | null
+          installer_status?: string | null
           job_inputs: Json
           progress?: number
           raw_response?: Json | null
@@ -740,8 +752,14 @@ export type Database = {
           created_at?: string
           current_step?: string | null
           design_data?: Json | null
+          designer_progress?: number | null
+          designer_status?: string | null
           error_message?: string | null
           id?: string
+          installation_data?: Json | null
+          installation_job_id?: string | null
+          installer_progress?: number | null
+          installer_status?: string | null
           job_inputs?: Json
           progress?: number
           raw_response?: Json | null
@@ -751,7 +769,15 @@ export type Database = {
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "circuit_design_jobs_installation_job_id_fkey"
+            columns: ["installation_job_id"]
+            isOneToOne: false
+            referencedRelation: "installation_method_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       circuit_level_cache: {
         Row: {

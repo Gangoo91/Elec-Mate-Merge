@@ -20,7 +20,8 @@ export class RAGEngine {
   }
 
   /**
-   * Execute parallel RAG search across 2 intelligence tables
+   * Execute RAG search for circuit design regulations ONLY
+   * Installation methods are now handled by installation-method-agent
    * Phase 3: Added batch-aware match count for faster processing
    */
   async search(normalized: NormalizedInputs, isBatch = false): Promise<RAGContext> {
@@ -31,38 +32,30 @@ export class RAGEngine {
 
     // Build search queries from form fields (NOT text prompts)
     const queries = {
-      regulationKeywords: this.buildRegulationKeywords(normalized),
-      practicalKeywords: this.buildPracticalKeywords(normalized)
+      regulationKeywords: this.buildRegulationKeywords(normalized)
     };
 
     this.logger.info('RAG queries built', {
       regulationKeywords: queries.regulationKeywords.split(' ').length,
-      practicalKeywords: queries.practicalKeywords.split(' ').length,
       isBatch,
       matchCount
     });
 
-    // Parallel search with dynamic match count
-    const [regulations, practicalGuides] = await Promise.all([
-      this.searchRegulations(queries.regulationKeywords, matchCount).catch(err => {
-        this.logger.error('Regulations search failed', { error: err.message });
-        return [];
-      }),
-      this.searchPracticalWork(queries.practicalKeywords, matchCount).catch(err => {
-        this.logger.error('Practical work search failed', { error: err.message });
-        return [];
-      })
-    ]);
+    // Search regulations only (installation methods removed)
+    const regulations = await this.searchRegulations(queries.regulationKeywords, matchCount).catch(err => {
+      this.logger.error('Regulations search failed', { error: err.message });
+      return [];
+    });
 
     const searchTime = Date.now() - startTime;
 
-    // Fallback: If all sources failed, use core regulations cache
-    if (regulations.length === 0 && practicalGuides.length === 0) {
-      this.logger.warn('All RAG sources failed, using core regulations fallback');
+    // Fallback: If regulations search failed, use core regulations cache
+    if (regulations.length === 0) {
+      this.logger.warn('Regulations search failed, using core regulations fallback');
       const coreRegs = this.getCoreRegulations();
       return {
         regulations: this.weightResults(coreRegs, 90),
-        practicalGuides: [],
+        practicalGuides: [], // No longer searched here
         totalResults: coreRegs.length,
         searchTime
       };
@@ -70,8 +63,8 @@ export class RAGEngine {
 
     return {
       regulations: this.weightResults(regulations, 90),
-      practicalGuides: this.weightResults(practicalGuides, 95),
-      totalResults: regulations.length + practicalGuides.length,
+      practicalGuides: [], // Installation methods now handled by installation-method-agent
+      totalResults: regulations.length,
       searchTime
     };
   }
@@ -120,67 +113,6 @@ export class RAGEngine {
   }
 
   /**
-   * Build practical work keywords from installation details
-   * PHASE 3: Enhanced with installation-specific terms
-   */
-  private buildPracticalKeywords(inputs: NormalizedInputs): string {
-    const keywords: string[] = [];
-
-    // PHASE 3: Add installation guidance keywords
-    keywords.push('installation');
-    keywords.push('termination');
-    keywords.push('testing');
-    keywords.push('cable routing');
-    keywords.push('tools required');
-
-    inputs.circuits.forEach(c => {
-      // Installation method
-      if (c.installMethod && c.installMethod !== 'auto') {
-        const methodNum = c.installMethod.replace('method_', '');
-        keywords.push(`reference method ${methodNum}`);
-        keywords.push('cable installation');
-        keywords.push('clip spacing'); // PHASE 3
-      }
-
-      // Load-specific practical guidance
-      keywords.push(`${c.loadType} installation`);
-      
-      if (c.loadType === 'shower') {
-        keywords.push('shower circuit installation');
-        keywords.push('isolator switch');
-        keywords.push('pull cord'); // PHASE 3
-      }
-      
-      if (c.loadType === 'cooker') {
-        keywords.push('cooker circuit installation');
-        keywords.push('control unit');
-        keywords.push('diversity factor'); // PHASE 3
-      }
-
-      // Outdoor installation specifics
-      if (c.specialLocation === 'outdoor' && c.outdoorInstall) {
-        keywords.push(`${c.outdoorInstall} cable`);
-        keywords.push('outdoor wiring');
-        keywords.push('SWA termination'); // PHASE 3
-        keywords.push('gland sizing'); // PHASE 3
-      }
-
-      // Protection installation
-      if (c.protectionType && c.protectionType !== 'auto') {
-        keywords.push(`${c.protectionType} installation`);
-        keywords.push('RCD testing'); // PHASE 3
-      }
-    });
-
-    // Trade filter
-    keywords.push('electrical installation');
-    keywords.push('commissioning');
-    keywords.push('safe isolation'); // PHASE 3
-
-    return keywords.join(' ');
-  }
-
-  /**
    * Search Regulations Intelligence (keyword search, weight 90)
    * Phase 2: Increased timeout and improved fallback handling
    * Phase 3: Dynamic match count based on batch size
@@ -214,44 +146,6 @@ export class RAGEngine {
       }
       this.logger.error('Regulations search exception, using fallback', { error: error.message });
       return this.getCoreRegulations();
-    }
-  }
-
-  /**
-   * Search Practical Work Intelligence (keyword search, weight 95)
-   * Phase 2: Added timeout protection
-   * Phase 3: Dynamic match count based on batch size
-   */
-  private async searchPracticalWork(keywords: string, matchCount = 6): Promise<any[]> {
-    try {
-      const { data, error } = await this.supabase.rpc(
-        'search_practical_work_intelligence_hybrid',
-        {
-          query_text: keywords,
-          match_count: matchCount,
-          filter_trade: 'installer'
-        }
-      ).abortSignal(AbortSignal.timeout(30000)); // Phase 2: Added 30s timeout
-
-      if (error) {
-        this.logger.warn('Practical work search failed', { error: error.message });
-        return [];
-      }
-
-      this.logger.info('Practical work search complete', { 
-        results: data?.length || 0,
-        matchCount
-      });
-
-      return data || [];
-    } catch (error) {
-      // Phase 2: Timeout-specific handling
-      if (error.name === 'AbortError' || error.message.includes('timeout')) {
-        this.logger.warn('Practical work search timed out, returning empty results');
-        return [];
-      }
-      this.logger.error('Practical work search exception', { error: error.message });
-      return [];
     }
   }
 

@@ -5,6 +5,11 @@ project_id = "jtwygbeceundfgnkirof"
 verify_jwt = false
 timeout_sec = 480
 
+# Parallel Circuit Designer Architecture
+[functions.process-circuit-design-parallel]
+verify_jwt = false
+timeout_sec = 360
+
 [functions.project-mgmt-v3]
 verify_jwt = false
 timeout_sec = 360
