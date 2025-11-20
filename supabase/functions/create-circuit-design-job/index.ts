@@ -60,12 +60,20 @@ Deno.serve(async (req) => {
 
     console.log(`✅ Created circuit design job: ${job.id}`);
 
-    // Trigger v3 parallel pipeline (designer-agent-v3 + installation-method-agent)
-    supabase.functions.invoke('process-circuit-design-job', {
+    // Trigger proven v2 pipeline with proper background task handling
+    const designTask = supabase.functions.invoke('process-circuit-design-v2', {
       body: { jobId: job.id }
-    }).catch(err => console.error('Failed to trigger v3 processing:', err));
+    }).then(() => {
+      console.log('✅ V2 pipeline HTTP response received');
+    }).catch((error) => {
+      console.log('ℹ️ V2 pipeline HTTP connection closed:', error.message);
+      // Expected for long-running jobs - v2 updates DB directly
+    });
 
-    console.log(`🚀 Triggered v3 parallel pipeline for job: ${job.id}`);
+    // Keep function alive until design completes (prevents timeout)
+    EdgeRuntime.waitUntil(designTask);
+
+    console.log(`🚀 Triggered v2 pipeline with waitUntil for job: ${job.id}`);
 
     return new Response(
       JSON.stringify({ jobId: job.id, status: 'pending' }),
