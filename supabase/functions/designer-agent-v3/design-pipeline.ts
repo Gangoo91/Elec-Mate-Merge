@@ -289,6 +289,11 @@ export class DesignPipeline {
       while (!validationResult.isValid && correctionAttempt < maxRetries) {
         correctionAttempt++;
         
+        // Update progress to show correction phase
+        if (this.logger.updateJobProgress) {
+          await this.logger.updateJobProgress(87, 'Correcting design errors...');
+        }
+        
         const errorCount = validationResult.issues.filter((i: any) => i.severity === 'error').length;
         
         this.logger.warn(`Design validation failed, attempting correction (${correctionAttempt}/${maxRetries})`, { 
@@ -369,11 +374,16 @@ export class DesignPipeline {
         } catch (correctionError) {
           this.logger.error('Correction attempt failed', { 
             error: correctionError.message,
-            attempt: correctionAttempt
+            attempt: correctionAttempt,
+            isTimeout: correctionError.message.includes('timeout')
           });
-          throw new Error(
-            `Design validation failed:\n\n${errorSummary}\n\nCorrection attempt ${correctionAttempt} failed: ${correctionError.message}`
-          );
+          
+          // Provide clear error message for timeout vs other errors
+          const errorMessage = correctionError.message.includes('timeout')
+            ? `AI correction timed out after ${correctionAttempt} attempts. This design may be too complex. Try reducing the number of circuits or simplifying the requirements.`
+            : `Design validation failed:\n\n${errorSummary}\n\nCorrection attempt ${correctionAttempt} failed: ${correctionError.message}`;
+          
+          throw new Error(errorMessage);
         }
       }
     }
