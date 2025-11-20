@@ -99,10 +99,10 @@ export const DesignProcessingView = ({
   const estimatedTimeRemaining = Math.max(0, EXPECTED_TOTAL_SECONDS - elapsedTime);
 
   // Get agent statuses from progress object
-  const designerProgress = (progress as any)?.designer_progress || 0;
-  const designerStatus = (progress as any)?.designer_status || 'pending';
-  const installerProgress = (progress as any)?.installer_progress || 0;
-  const installerStatus = (progress as any)?.installer_status || 'pending';
+  const designerProgress = progress?.designer_progress || 0;
+  const designerStatus = progress?.designer_status || 'pending';
+  const installerProgress = progress?.installer_progress || 0;
+  const installerStatus = progress?.installer_status || 'pending';
 
   const getStatusVariant = (status: string): "default" | "secondary" | "destructive" | "outline" => {
     switch (status) {
