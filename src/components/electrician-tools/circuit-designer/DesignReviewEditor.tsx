@@ -26,6 +26,7 @@ import { calculateExpectedR1R2, getMaxZsForDevice, mapLoadTypeToCircuitDescripti
 import { MobileCircuitResults } from './MobileCircuitResults';
 import { CircuitCard } from './CircuitCard';
 import { RequestSummaryHeader } from './RequestSummaryHeader';
+import { processElectricalText } from '@/lib/text-processor';
 
 interface DesignReviewEditorProps {
   design: InstallationDesign;
@@ -1350,16 +1351,6 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       </span>
                     </div>
                   </div>
-                  
-                  {/* Installation Guidance - Cable Routing */}
-                  {currentCircuit.installationGuidance?.cableRouting && (
-                    <div className="py-2 px-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                      <p className="text-xs text-blue-400 font-medium mb-1">Cable Routing</p>
-                      <p className="text-sm text-white/80 leading-relaxed">
-                        {currentCircuit.installationGuidance.cableRouting}
-                      </p>
-                    </div>
-                  )}
                 </div>
               </Card>
 
@@ -1598,25 +1589,57 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 </div>
                 <div className="space-y-3">
                   <div className="bg-primary/5 p-3 rounded">
-                    <p className="text-xs text-white/60 mb-1">Cable Routing</p>
-                    <p className="text-sm text-white/90">{currentCircuit.installationGuidance.cableRouting}</p>
+                    <p className="text-xs text-elec-yellow font-medium mb-2">Cable Routing</p>
+                    <div 
+                      className="text-sm text-white leading-relaxed text-left"
+                      dangerouslySetInnerHTML={{ 
+                        __html: processElectricalText(currentCircuit.installationGuidance.cableRouting || '') 
+                      }}
+                    />
                   </div>
                   <div className="bg-primary/5 p-3 rounded">
-                    <p className="text-xs text-white/60 mb-1">Termination Advice</p>
-                    <p className="text-sm text-white/90">{currentCircuit.installationGuidance.terminationAdvice}</p>
+                    <p className="text-xs text-elec-yellow font-medium mb-2">Termination Advice</p>
+                    <div 
+                      className="text-sm text-white leading-relaxed text-left"
+                      dangerouslySetInnerHTML={{ 
+                        __html: processElectricalText(currentCircuit.installationGuidance.terminationAdvice || '') 
+                      }}
+                    />
                   </div>
                   <div className="bg-primary/5 p-3 rounded">
-                    <p className="text-xs text-white/60 mb-1">Testing Requirements</p>
-                    <p className="text-sm text-white/90">{currentCircuit.installationGuidance.testingRequirements}</p>
+                    <p className="text-xs text-elec-yellow font-medium mb-2">Testing Requirements</p>
+                    <div 
+                      className="text-sm text-white leading-relaxed text-left"
+                      dangerouslySetInnerHTML={{ 
+                        __html: processElectricalText(currentCircuit.installationGuidance.testingRequirements || '') 
+                      }}
+                    />
                   </div>
+                  
+                  {currentCircuit.installationGuidance?.fixingsAndSupport && 
+                   currentCircuit.installationGuidance.fixingsAndSupport.length > 0 && (
+                    <div className="bg-primary/5 p-3 rounded">
+                      <p className="text-xs text-elec-yellow font-medium mb-2">Fixings & Support</p>
+                      <div 
+                        className="text-sm text-white leading-relaxed text-left"
+                        dangerouslySetInnerHTML={{ 
+                          __html: processElectricalText(currentCircuit.installationGuidance.fixingsAndSupport.join(' ') || '') 
+                        }}
+                      />
+                    </div>
+                  )}
+                  
                   {currentCircuit.installationGuidance?.safetyNotes?.length > 0 && (
-                    <div>
-                      <p className="text-sm font-medium text-white mb-2">Safety Notes:</p>
-                      <ul className="space-y-1">
+                    <div className="bg-amber-500/10 border border-amber-500/20 p-3 rounded">
+                      <p className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                        <AlertTriangle className="h-4 w-4 text-amber-400" />
+                        Safety Notes
+                      </p>
+                      <ul className="space-y-2">
                         {currentCircuit.installationGuidance.safetyNotes.map((note, idx) => (
-                          <li key={idx} className="text-sm text-white/70 flex items-start gap-2">
-                            <span className="text-primary">•</span>
-                            <span>{note}</span>
+                          <li key={idx} className="text-sm text-white flex items-start gap-2 text-left leading-relaxed">
+                            <span className="text-amber-400 font-bold">•</span>
+                            <span className="flex-1">{note}</span>
                           </li>
                         ))}
                       </ul>
@@ -1624,7 +1647,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   )}
                   {currentCircuit.installationGuidance.estimatedInstallTime && (
                     <div className="bg-primary/5 p-3 rounded">
-                      <p className="text-xs text-white/60 mb-1">Estimated Install Time</p>
+                      <p className="text-xs text-elec-yellow font-medium mb-2">Estimated Install Time</p>
                       <p className="text-sm font-medium text-white">{currentCircuit.installationGuidance.estimatedInstallTime}</p>
                     </div>
                   )}
@@ -1674,9 +1697,9 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   </Badge>
                 </div>
                 
-                <div className="grid gap-3 md:grid-cols-2">
+                <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
                   {/* R1+R2 - Blue gradient */}
-                  <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 p-4 rounded-lg border border-blue-500/20">
+                  <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 p-4 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-colors">
                     <div className="flex items-center gap-2 mb-3">
                       <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
                         <span className="text-blue-400 font-bold text-xs">R₁+R₂</span>
@@ -1696,16 +1719,25 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                         <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.r1r2.at70C}</p>
                       </div>
                     </div>
-                    <div className="text-xs text-white/50 leading-relaxed border-t border-blue-500/10 pt-2 mt-2">
-                      {currentCircuit.expectedTestResults.r1r2.calculation}
-                    </div>
+                    {currentCircuit.expectedTestResults.r1r2.calculation && (
+                      <Collapsible>
+                        <CollapsibleTrigger className="text-xs text-blue-400 hover:text-blue-300 underline cursor-pointer">
+                          Show calculation
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          <div className="text-xs text-white/50 leading-relaxed border-t border-blue-500/10 pt-2 mt-2">
+                            {currentCircuit.expectedTestResults.r1r2.calculation}
+                          </div>
+                        </CollapsibleContent>
+                      </Collapsible>
+                    )}
                   </div>
 
                   {/* Zs - Green/Red based on compliance */}
-                  <div className={`bg-gradient-to-br p-4 rounded-lg border ${
+                  <div className={`bg-gradient-to-br p-4 rounded-lg border hover:border-opacity-60 transition-colors ${
                     currentCircuit.expectedTestResults.zs.compliant 
-                      ? 'from-green-500/10 to-green-600/5 border-green-500/20' 
-                      : 'from-red-500/10 to-red-600/5 border-red-500/20'
+                      ? 'from-green-500/10 to-green-600/5 border-green-500/20 hover:border-green-500/40' 
+                      : 'from-red-500/10 to-red-600/5 border-red-500/20 hover:border-red-500/40'
                   }`}>
                     <div className="flex items-center gap-2 mb-3">
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
@@ -1767,7 +1799,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   </div>
 
                   {/* Insulation Resistance - Purple gradient */}
-                  <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 p-4 rounded-lg border border-purple-500/20">
+                  <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 p-4 rounded-lg border border-purple-500/20 hover:border-purple-500/40 transition-colors">
                     <div className="flex items-center gap-2 mb-3">
                       <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center">
                         <span className="text-purple-400 font-bold text-xs">IR</span>
@@ -1790,7 +1822,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   </div>
 
                   {/* Polarity - Amber gradient */}
-                  <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 p-4 rounded-lg border border-amber-500/20">
+                  <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 p-4 rounded-lg border border-amber-500/20 hover:border-amber-500/40 transition-colors">
                     <div className="flex items-center gap-2 mb-3">
                       <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
                         <span className="text-amber-400 font-bold text-xs">P</span>
@@ -1807,7 +1839,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
                   {/* RCD Test - Cyan gradient */}
                   {currentCircuit.rcdProtected && currentCircuit.expectedTestResults.rcdTest && (
-                    <div className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 p-4 rounded-lg border border-cyan-500/20 md:col-span-2">
+                    <div className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 p-4 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 transition-colors lg:col-span-2 xl:col-span-3">
                       <div className="flex items-center gap-2 mb-3">
                         <div className="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center">
                           <span className="text-cyan-400 font-bold text-xs">RCD</span>
