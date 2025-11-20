@@ -63,7 +63,14 @@ Deno.serve(async (req) => {
       location: job.project_info.location,
       contractor: job.project_info.contractor,
       supervisor: job.project_info.supervisor,
-      assessor: job.project_info.assessor
+      assessor: job.project_info.assessor,
+      siteManagerName: job.project_info.siteManagerName,
+      siteManagerPhone: job.project_info.siteManagerPhone,
+      firstAiderName: job.project_info.firstAiderName,
+      firstAiderPhone: job.project_info.firstAiderPhone,
+      safetyOfficerName: job.project_info.safetyOfficerName,
+      safetyOfficerPhone: job.project_info.safetyOfficerPhone,
+      assemblyPoint: job.project_info.assemblyPoint
     };
 
     // ⚡ CRITICAL FIX #2: Fail-safe progress updater (never throws)
@@ -409,6 +416,13 @@ Deno.serve(async (req) => {
       location: projectDetails.location,
       contractor: projectDetails.contractor || '',
       supervisor: projectDetails.supervisor || '',
+      siteManagerName: projectDetails.siteManagerName,
+      siteManagerPhone: projectDetails.siteManagerPhone,
+      firstAiderName: projectDetails.firstAiderName,
+      firstAiderPhone: projectDetails.firstAiderPhone,
+      safetyOfficerName: projectDetails.safetyOfficerName,
+      safetyOfficerPhone: projectDetails.safetyOfficerPhone,
+      assemblyPoint: projectDetails.assemblyPoint,
       steps: installerData.installationSteps.map((s: any, idx: number) => ({
         id: `step-${idx + 1}`,
         stepNumber: s.step,
