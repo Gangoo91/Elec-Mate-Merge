@@ -61,7 +61,7 @@ Deno.serve(async (req) => {
     console.log(`✅ Created circuit design job: ${job.id}`);
 
     // Trigger background processing (fire and forget)
-    const processUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/process-circuit-design-parallel`;
+    const processUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/process-circuit-design-v2`;
     fetch(processUrl, {
       method: 'POST',
       headers: {

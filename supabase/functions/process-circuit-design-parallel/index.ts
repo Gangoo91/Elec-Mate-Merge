@@ -68,8 +68,8 @@ Deno.serve(async (req) => {
     
     // Start both agents immediately
     const [designerJobId, installerJobId] = await Promise.all([
-      startDesignerAgent(supabase, jobId, job.job_inputs, logger),
-      startInstallationAgent(supabase, jobId, job.job_inputs, logger)
+      startDesignerAgent(supabase, jobId, job.job_inputs, job.user_id, logger),
+      startInstallationAgent(supabase, jobId, job.job_inputs, job.user_id, logger)
     ]);
 
     logger.info('Both agents started', { designerJobId, installerJobId });
@@ -204,7 +204,7 @@ async function startInstallationAgent(
   const { data: installJob, error } = await supabase
     .from('installation_method_jobs')
     .insert({
-      user_id: requirements.userId || null,
+      user_id: userId,
       query: installQuery,
       project_details: {
         projectName: requirements.projectName || 'Circuit Installation',
