@@ -48,7 +48,7 @@ export const CircuitDesignProcessing = ({ circuitCount, estimatedTime }: Circuit
   const statusMessage = getStatusMessage();
 
   return (
-    <div className="w-full max-w-2xl mx-auto px-4 py-8 animate-fade-in">
+    <div className="w-full max-w-5xl mx-auto px-4 py-8 animate-fade-in">
       <Card className="p-8 bg-card border-border">
         {/* Animated Lightning Bolt */}
         <div className="flex justify-center mb-8">
