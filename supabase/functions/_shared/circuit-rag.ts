@@ -37,6 +37,7 @@ export async function generateEmbedding(text: string): Promise<number[]> {
 
 /**
  * Search circuit regulations (BS 7671, IET Wiring Regulations)
+ * PHASE 4: Added progress callbacks to match AI RAMS pattern
  */
 export async function searchCircuitRegulations(
   jobInputs: any,
@@ -47,15 +48,12 @@ export async function searchCircuitRegulations(
   // Build query from circuit parameters
   const query = buildCircuitQuery(jobInputs);
   
-  if (onProgress) onProgress('Generating query embedding...');
-  const queryEmbedding = await generateEmbedding(query);
-  
-  if (onProgress) onProgress('Searching BS 7671 & design regulations...');
+  if (onProgress) onProgress('Searching regulations database...');
   
   // Search regulations intelligence (same as RAMS uses)
   const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
     query_text: query,
-    match_count: 15  // Enough for both designer and installer agents
+    match_count: 10  // Match RAMS: reduced from 15 to 10 for consistency
   });
   
   if (error) {
@@ -69,6 +67,7 @@ export async function searchCircuitRegulations(
 
 /**
  * Search practical installation guides
+ * PHASE 4: Added progress callbacks to match AI RAMS pattern
  */
 export async function searchInstallationPractices(
   jobInputs: any,
