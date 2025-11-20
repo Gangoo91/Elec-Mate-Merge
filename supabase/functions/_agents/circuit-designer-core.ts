@@ -47,22 +47,22 @@ export async function designCircuits(
     throw new Error(`Designer agent failed: ${error.message}`);
   }
   
-  if (!data || !data.success || !data.designs) {
-    throw new Error('Designer agent returned no designs');
+  if (!data || !data.success || !data.design) {
+    throw new Error('Designer agent returned no design');
   }
   
   await progressCallback(70, 'Designer: Verifying voltage drop...');
   await progressCallback(90, 'Designer: Finalizing calculations...');
   await progressCallback(100, 'Designer: Complete ✓');
   
-  console.log(`✅ Designer completed ${data.designs.length} circuit designs`);
+  console.log(`✅ Designer completed ${data.design.circuits.length} circuit designs`);
   
   return {
-    circuits: data.designs,
+    circuits: data.design.circuits,
     metadata: {
       completedAt: new Date().toISOString(),
       regulationsUsed: sharedRegulations?.length || 0,
-      totalCircuits: data.designs.length
+      totalCircuits: data.design.circuits.length
     }
   };
 }
