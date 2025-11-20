@@ -69,6 +69,10 @@ serve(async (req) => {
     // Progress heartbeat: AI generation phase
     await updateJobProgress(30, 'Generating circuit designs with AI...');
     
+    // Confirm agent started successfully (for watchdog detection)
+    await updateJobProgress(35, 'Design agent started - preparing AI context...');
+    logger.info('✅ Agent confirmed active', { jobId });
+    
     // Watchdog: Auto-fail job if agent crashes without updating status
     const watchdogTimeout = setTimeout(async () => {
       if (jobId) {
@@ -105,17 +109,28 @@ serve(async (req) => {
     let result;
     try {
       result = await pipeline.execute(body);
+      
+      // Progress heartbeat: Validation phase
+      await updateJobProgress(90, 'Validating compliance and finalizing...');
+      
+    } catch (pipelineError) {
+      // Pipeline failed - let outer catch handle it
+      logger.error('Pipeline execution failed', { 
+        error: pipelineError.message,
+        jobId 
+      });
+      throw pipelineError;
+      
+    } finally {
+      // ALWAYS clean up timers
+      if (heartbeatInterval) {
+        clearInterval(heartbeatInterval);
+        logger.debug('Heartbeat interval cleared');
+      }
       clearTimeout(watchdogTimeout);
-      clearInterval(heartbeatInterval);
-    } catch (error) {
-      clearTimeout(watchdogTimeout);
-      clearInterval(heartbeatInterval);
-      throw error;
+      logger.debug('Watchdog timeout cleared');
     }
     
-    // Progress heartbeat: Validation phase
-    await updateJobProgress(90, 'Validating compliance and finalizing...');
-
     const duration = Date.now() - startTime;
     logger.info('V3 Pipeline complete', {
       duration,
@@ -157,28 +172,33 @@ serve(async (req) => {
 
   } catch (error) {
     const duration = Date.now() - startTime;
-    const body = await req.json().catch(() => ({}));
-    const jobId = body.jobId;
     
     logger.error('V3 Pipeline failed', { 
       error: error.message,
       duration,
-      jobId 
+      jobId // Use jobId from outer scope (line 32)
     });
     
-    // Job-aware mode: Mark job as failed
+    // CRITICAL: Mark job as failed in database
     if (jobId) {
       try {
+        logger.info('Marking job as failed', { jobId, error: error.message });
+        
         await supabase
           .from('circuit_design_jobs')
           .update({
             status: 'failed',
-            error_message: error.message,
+            error_message: `Design generation failed: ${error.message}`,
             completed_at: new Date().toISOString()
           })
           .eq('id', jobId);
+        
+        logger.info('Job marked as failed successfully', { jobId });
       } catch (err) {
-        logger.error('Failed to mark job as failed', { error: err });
+        logger.error('Failed to mark job as failed in database', { 
+          jobId, 
+          error: err.message 
+        });
       }
     }
     
