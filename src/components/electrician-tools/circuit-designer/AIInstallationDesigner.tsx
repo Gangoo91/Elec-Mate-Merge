@@ -1,8 +1,7 @@
-// Force rebuild to deploy designer-agent-v3 structured output updates
 import { useState, useEffect } from "react";
 import { StructuredDesignWizard } from "./structured-input/StructuredDesignWizard";
 import { DesignReviewEditor } from "./DesignReviewEditor";
-import { CircuitDesignProcessing } from "./CircuitDesignProcessing";
+import { DesignProcessingView } from "./DesignProcessingView";
 import { DesignInputs } from "@/types/installation-design";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 import { supabase } from "@/integrations/supabase/client";
@@ -10,14 +9,18 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import { clearDesignCache } from "@/utils/clearDesignCache";
+import { useCircuitDesignGeneration } from "@/hooks/useCircuitDesignGeneration";
 
 export const AIInstallationDesigner = () => {
   const [currentView, setCurrentView] = useState<'input' | 'processing' | 'results'>('input');
   const [userRequest, setUserRequest] = useState<string>('');
   const [totalCircuits, setTotalCircuits] = useState<number>(0);
-  const [isProcessing, setIsProcessing] = useState(false);
   const [designData, setDesignData] = useState<any>(null);
   const [isClearingCache, setIsClearingCache] = useState(false);
+  const [jobId, setJobId] = useState<string | null>(null);
+  
+  // Use job polling hook
+  const { job, progress, status, currentStep, designData: jobDesignData, error } = useCircuitDesignGeneration(jobId);
 
   const handleClearCache = async () => {
     setIsClearingCache(true);
@@ -173,6 +176,57 @@ export const AIInstallationDesigner = () => {
     }
   };
 
+  // Monitor job completion
+  useEffect(() => {
+    if (status === 'complete' && jobDesignData) {
+      console.log('✅ Job complete, processing results...');
+      
+      // Extract project info from job inputs
+      const jobInputs = job?.job_inputs as any;
+      
+      const designWithMetadata = {
+        circuits: jobDesignData.circuits.map((circuit: any) => ({
+          ...circuit,
+          loadPower: circuit.loadPower,
+          phases: circuit.phases,
+          cableLength: circuit.cableLength,
+          installationMethod: circuit.installationMethod || circuit.installMethod,
+          installationGuidance: circuit.installationGuidance,
+          structuredOutput: circuit.structuredOutput
+        })),
+        projectInfo: jobInputs?.projectInfo || {
+          projectName: 'Untitled Project',
+          location: 'Not specified'
+        },
+        supply: jobInputs?.supply || {
+          voltage: 230,
+          phases: 'single',
+          pfc: 16000,
+          ze: 0.35,
+          earthingSystem: 'TN-C-S'
+        }
+      };
+
+      setDesignData(designWithMetadata);
+      sessionStorage.setItem('circuit-design-data', JSON.stringify(designWithMetadata));
+      setCurrentView('results');
+      
+      const cacheInfo = jobDesignData.fromCache ? ' (from cache)' : '';
+      const autoFixInfo = jobDesignData.autoFixApplied ? ' (auto-fixed)' : '';
+      toast.success('Design generated successfully' + cacheInfo + autoFixInfo, {
+        description: `${jobDesignData.circuits?.length || 0} circuit${(jobDesignData.circuits?.length || 0) !== 1 ? 's' : ''} designed`
+      });
+    }
+    
+    if (status === 'failed' && error) {
+      toast.error('Design generation failed', {
+        description: error || 'Please try again'
+      });
+      setCurrentView('input');
+      setJobId(null);
+    }
+  }, [status, jobDesignData, error, job]);
+
   // Load design data from session on mount
   useEffect(() => {
     const savedData = sessionStorage.getItem('circuit-design-data');
@@ -185,15 +239,22 @@ export const AIInstallationDesigner = () => {
     }
   }, []);
 
-  const handleCancel = () => {
+  const handleCancel = async () => {
+    if (jobId) {
+      // Cancel the job
+      await supabase.functions.invoke('cancel-circuit-design-job', {
+        body: { jobId }
+      });
+    }
     setCurrentView('input');
-    setIsProcessing(false);
+    setJobId(null);
     sessionStorage.removeItem('circuit-design-data');
     toast.info('Design generation cancelled');
   };
 
   const handleRetry = () => {
     setCurrentView('input');
+    setJobId(null);
     sessionStorage.removeItem('circuit-design-data');
   };
 
