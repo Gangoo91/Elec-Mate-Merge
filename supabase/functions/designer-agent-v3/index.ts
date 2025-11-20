@@ -63,8 +63,16 @@ serve(async (req) => {
     // Progress heartbeat: RAG search phase
     await updateJobProgress(10, 'Searching design knowledge base...');
 
+    // Progress callback for RAG (passes through to pipeline)
+    const ragProgressCallback = async (msg: string) => {
+      logger.info('RAG progress', { message: msg });
+      if (jobId) {
+        await updateJobProgress(15, msg);
+      }
+    };
+
     // Single entry point - all logic delegated to pipeline
-    const pipeline = new DesignPipeline(logger, requestId);
+    const pipeline = new DesignPipeline(logger, requestId, ragProgressCallback);
     
     // Progress heartbeat: AI generation phase
     await updateJobProgress(30, 'Generating circuit designs with AI...');

@@ -5,7 +5,7 @@
 
 import { FormNormalizer } from './form-normalizer.ts';
 import { CacheManager } from './cache-manager.ts';
-import { RAGEngine } from './rag-engine.ts';
+import { searchCircuitRegulations } from '../_shared/circuit-rag.ts';
 import { AIDesigner } from './ai-designer.ts';
 import { ValidationEngine } from './validation-engine.ts';
 import { safeAll, type ParallelTask } from '../_shared/safe-parallel.ts';
@@ -14,16 +14,20 @@ import type { NormalizedInputs, DesignResult } from './types.ts';
 export class DesignPipeline {
   private normalizer: FormNormalizer;
   private cache: CacheManager;
-  private rag: RAGEngine;
   private ai: AIDesigner;
   private validator: ValidationEngine;
+  private progressCallback?: (msg: string) => void;
 
-  constructor(private logger: any, private requestId: string) {
+  constructor(
+    private logger: any, 
+    private requestId: string,
+    progressCallback?: (msg: string) => void
+  ) {
     this.normalizer = new FormNormalizer();
     this.cache = new CacheManager(logger);
-    this.rag = new RAGEngine(logger);
     this.ai = new AIDesigner(logger);
     this.validator = new ValidationEngine(logger);
+    this.progressCallback = progressCallback;
   }
 
   async execute(rawInput: any): Promise<DesignResult> {
@@ -73,19 +77,43 @@ export class DesignPipeline {
     });
 
     // ========================================
-    // PHASE 3: RAG Search (enhanced for installation guidance)
-    // Phase 3 Optimization: Pass batch flag for dynamic match count
+    // PHASE 3: RAG Search - Simple & Direct (mirrors AI RAMS pattern)
+    // Uses searchCircuitRegulations with match_count: 10
     // ========================================
-    const isBatch = normalized.circuits.length > 2;
-    const ragContext = await this.rag.search(normalized, isBatch);
+    const ragStart = Date.now();
+    
+    // Build job inputs for RAG search
+    const jobInputs = {
+      circuits: normalized.circuits,
+      supply: normalized.supply,
+      projectInfo: normalized.projectInfo || {}
+    };
+    
+    // Simple RAG call with progress callbacks (matches rams-rag.ts pattern)
+    const ragResults = await searchCircuitRegulations(
+      jobInputs,
+      this.progressCallback
+    );
+    
+    const ragTime = Date.now() - ragStart;
     this.logger.info('RAG complete', {
-      regulations: ragContext.regulations.length,
-      practicalGuides: ragContext.practicalGuides.length,
-      totalResults: ragContext.totalResults,
-      searchTime: ragContext.searchTime,
-      voltage: normalized.supply.voltage,
-      isBatch
+      results: ragResults.length,
+      searchTime: ragTime,
+      voltage: normalized.supply.voltage
     });
+    
+    // Transform to expected format
+    const ragContext = {
+      regulations: ragResults.map((r: any) => ({
+        regulation_number: r.regulation_number,
+        content: r.content,
+        similarity: r.hybrid_score || r.similarity || 0,
+        source: r.source || 'regulations_intelligence'
+      })),
+      practicalGuides: [],
+      totalResults: ragResults.length,
+      searchTime: ragTime
+    };
 
     // ========================================
     // PHASE 4: AI Design Generation (with batch processing)
