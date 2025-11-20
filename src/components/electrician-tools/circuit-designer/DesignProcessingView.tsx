@@ -95,7 +95,7 @@ export const DesignProcessingView = ({
     ? Math.floor((currentPercent / 100) * totalCircuits)
     : 0;
 
-  const EXPECTED_TOTAL_SECONDS = 70;
+  const EXPECTED_TOTAL_SECONDS = 180; // 3 minutes for parallel agent processing
   const estimatedTimeRemaining = Math.max(0, EXPECTED_TOTAL_SECONDS - elapsedTime);
 
   // Get agent statuses from progress object
