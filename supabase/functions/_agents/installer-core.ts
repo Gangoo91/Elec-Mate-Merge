@@ -31,7 +31,8 @@ const INSTALLER_TOOL = {
               tools: { type: 'array', items: { type: 'string' }, minItems: 3 },
               materials: { type: 'array', items: { type: 'string' } },
               linkedHazards: { type: 'array', items: { type: 'string' }, minItems: 1 },
-              qualifications: { type: 'array', items: { type: 'string' } }
+              qualifications: { type: 'array', items: { type: 'string' } },
+              safetyNotes: { type: 'array', items: { type: 'string' } }
             },
             required: ['step', 'title', 'description', 'tools']
           }

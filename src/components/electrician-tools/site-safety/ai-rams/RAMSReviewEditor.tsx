@@ -829,24 +829,19 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
               
               {/* Enhanced Risks Section */}
               <div className="space-y-4">
-                <div className="flex items-center justify-between gap-3">
+                <div className="space-y-3">
                   <h4 className="text-xl font-bold text-elec-light flex items-center gap-3">
                     <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                     <span>Identified Hazards</span>
                   </h4>
-                  <div className="flex flex-col md:flex-row items-stretch md:items-center gap-2">
-                    <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-bold text-center">
-                      {ramsData.risks?.length || 0} Risks
-                    </Badge>
-                    <Button 
-                      onClick={addRisk} 
-                      size="sm" 
-                      className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card min-h-[44px] px-3 py-2 text-sm touch-manipulation"
-                    >
-                      <Plus className="h-4 w-4 mr-1" />
-                      Add Hazard
-                    </Button>
-                  </div>
+                  <Button 
+                    onClick={addRisk} 
+                    size="sm" 
+                    className="w-full sm:w-auto bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card min-h-[44px] px-4 py-2 text-sm touch-manipulation"
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Hazard
+                  </Button>
                 </div>
                 
                 {/* Empty state when no risks */}
