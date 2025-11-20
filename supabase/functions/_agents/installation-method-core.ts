@@ -189,21 +189,23 @@ export async function generateInstallationMethod(
   const openAiKey = Deno.env.get('OPENAI_API_KEY')!;
   const entities = { installationMethod: projectDetails.workType || 'general' };
   
+  // PHASE 4: Remove Promise.race wrapper - direct await like AI RAMS pattern
   const ragStart = Date.now();
-  const ragResults = sharedRegulations || await Promise.race([
-    retrieveInstallationKnowledge(
+  let ragResults;
+  
+  try {
+    ragResults = sharedRegulations || await retrieveInstallationKnowledge(
       query,
-      15, // OPTIMIZED: Reduced from 20 to 15 for faster RAG retrieval
+      10, // PHASE 4: Match RAMS - reduced from 15 to 10 for consistency
       openAiKey,
       entities,
       logger
-    )
-    // PHASE 1: No outer timeout - let RAG complete naturally (matches AI RAMS pattern)
-  ]).catch(error => {
-    console.error('❌ RAG search failed/timeout:', error);
+    );
+  } catch (error) {
+    console.error('❌ RAG search failed:', error);
     logger.error('RAG failure', { error: error instanceof Error ? error.message : String(error) });
     // Return minimal fallback data to prevent total failure
-    return [
+    ragResults = [
       { 
         regulation_number: '134.1.1', 
         content: 'Good workmanship and proper materials shall be used in electrical installations.', 
@@ -215,7 +217,7 @@ export async function generateInstallationMethod(
         source: 'fallback'
       }
     ];
-  });
+  }
   
   phaseTimings.rag = Date.now() - ragStart;
   logger.info('RAG complete', { duration: phaseTimings.rag, count: ragResults.length });
