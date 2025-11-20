@@ -32,7 +32,7 @@ const ProjectManagerProcessingView = ({ progress, startTime }: ProjectManagerPro
   }, [startTime]);
 
   const percentage = progress ? STAGE_PERCENTAGES[progress.stage] : 0;
-  const estimatedTotal = 90; // seconds
+  const estimatedTotal = 180; // 3 minutes - realistic for comprehensive project plans
   const remaining = Math.max(0, estimatedTotal - elapsedTime);
 
   const formatTime = (seconds: number) => {
@@ -51,7 +51,7 @@ const ProjectManagerProcessingView = ({ progress, startTime }: ProjectManagerPro
           <div className="flex-1">
             <h3 className="text-xl font-semibold mb-1">AI Project Manager</h3>
             <p className="text-sm text-muted-foreground">
-              {progress?.message || 'Analysing project requirements...'}
+              {progress?.message || 'Analysing project requirements... (may take 2-3 minutes)'}
             </p>
           </div>
         </div>
