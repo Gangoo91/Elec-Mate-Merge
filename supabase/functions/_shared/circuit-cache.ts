@@ -1,93 +1,142 @@
 /**
- * Circuit-Level Cache (Phase 2.2)
- * Caches standard circuits to skip AI generation for common designs
+ * LAYER 1: Full Circuit Design Cache
+ * Cache complete circuit + installation designs for instant retrieval
+ * Mirrors rams-cache.ts pattern
+ * 
+ * Cache Structure:
+ * - Key: Semantic hash of job inputs + OpenAI key
+ * - TTL: 30 days
+ * - Storage: Supabase table `circuit_design_cache_v4`
  */
 
-import { createClient } from './deps.ts';
+import { SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
-export interface CircuitCacheKey {
-  loadType: string;
-  loadPower: number;
-  cableLength: number;
-  voltage: number;
-  phases: string;
+export interface FullCacheResult {
+  hit: boolean;
+  data?: any;
+  similarity?: number;
+  ageSeconds?: number;
 }
 
-export class CircuitCache {
-  private supabase: any;
-  
-  constructor(private logger: any) {
-    this.supabase = createClient(
-      Deno.env.get('SUPABASE_URL')!,
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-    );
-  }
-
-  /**
-   * Generate cache key for a circuit
-   */
-  generateKey(circuit: CircuitCacheKey): string {
-    // Normalize to nearest standard values for better cache hits
-    const normalizedPower = Math.round(circuit.loadPower / 100) * 100;
-    const normalizedLength = Math.round(circuit.cableLength / 5) * 5;
-    
-    return `${circuit.loadType}_${normalizedPower}W_${normalizedLength}m_${circuit.voltage}V_${circuit.phases}`;
-  }
-
-  /**
-   * Get cached circuit design
-   */
-  async get(key: string): Promise<any | null> {
-    const { data, error } = await this.supabase
-      .from('circuit_level_cache')
-      .select('design')
-      .eq('circuit_hash', key)
-      .gte('created_at', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()) // 30 day TTL
-      .single();
-
-    if (error || !data) {
-      return null;
+/**
+ * Generate semantic cache key
+ */
+async function generateCacheKey(jobInputs: any, openAiKey: string): Promise<string> {
+  const normalized = {
+    circuits: jobInputs.circuits?.map((c: any) => ({
+      loadType: c.loadType,
+      loadPower: Math.round(c.loadPower / 100) * 100,
+      cableLength: Math.round(c.cableLength / 5) * 5,
+      phases: c.phases
+    })).sort((a: any, b: any) => a.loadPower - b.loadPower) || [],
+    supply: {
+      voltage: jobInputs.supply?.voltage || 230,
+      phases: jobInputs.supply?.phases || 'single',
+      ze: Math.round((jobInputs.supply?.ze || 0.35) * 100) / 100,
+      earthing: jobInputs.supply?.earthingSystem || 'TN-C-S'
     }
+  };
+  
+  const hash = await crypto.subtle.digest(
+    'SHA-256',
+    new TextEncoder().encode(JSON.stringify(normalized) + openAiKey)
+  );
+  
+  return Array.from(new Uint8Array(hash))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('')
+    .slice(0, 32);
+}
 
-    // Increment hit counter (fire-and-forget)
-    this.incrementHitCount(key).catch(() => {});
-
-    return data.design;
-  }
-
-  /**
-   * Store circuit design in cache
-   */
-  async set(key: string, design: any, circuit: CircuitCacheKey): Promise<void> {
-    await this.supabase
-      .from('circuit_level_cache')
-      .upsert({
-        circuit_hash: key,
-        circuit_type: circuit.loadType,
-        load_power: circuit.loadPower,
-        cable_length: circuit.cableLength,
-        voltage: circuit.voltage,
-        design: design,
-        hit_count: 1,
-        created_at: new Date().toISOString(),
-        last_hit_at: new Date().toISOString()
-      }, {
-        onConflict: 'circuit_hash'
-      });
-
-    this.logger.info('Circuit cached', { key });
-  }
-
-  /**
-   * Increment hit counter
-   */
-  private async incrementHitCount(key: string): Promise<void> {
-    await this.supabase
-      .from('circuit_level_cache')
-      .update({
-        hit_count: this.supabase.raw('hit_count + 1'),
-        last_hit_at: new Date().toISOString()
+/**
+ * Check full design cache
+ */
+export async function checkCircuitDesignCache(params: {
+  supabase: SupabaseClient;
+  jobInputs: any;
+  openAiKey: string;
+}): Promise<FullCacheResult> {
+  
+  console.log('🔍 Checking full circuit design cache...');
+  
+  try {
+    const cacheKey = await generateCacheKey(params.jobInputs, params.openAiKey);
+    
+    const { data, error } = await params.supabase
+      .from('circuit_design_cache_v4')
+      .select('*')
+      .eq('cache_key', cacheKey)
+      .gt('expires_at', new Date().toISOString())
+      .single();
+    
+    if (error || !data) {
+      console.log('❌ Full design cache miss');
+      return { hit: false };
+    }
+    
+    // Update hit count
+    await params.supabase
+      .from('circuit_design_cache_v4')
+      .update({ 
+        hit_count: data.hit_count + 1,
+        last_used_at: new Date().toISOString()
       })
-      .eq('circuit_hash', key);
+      .eq('id', data.id);
+    
+    const ageSeconds = Math.floor(
+      (Date.now() - new Date(data.created_at).getTime()) / 1000
+    );
+    
+    console.log(`✅ Full design cache HIT! (hits: ${data.hit_count + 1}, age: ${ageSeconds}s)`);
+    
+    return { 
+      hit: true, 
+      data: data.design,
+      similarity: 1.0,
+      ageSeconds
+    };
+    
+  } catch (error) {
+    console.error('❌ Full design cache check failed:', error);
+    return { hit: false };
+  }
+}
+
+/**
+ * Store complete design in cache
+ */
+export async function storeCircuitDesignCache(params: {
+  supabase: SupabaseClient;
+  jobInputs: any;
+  design: any;
+  openAiKey: string;
+}): Promise<void> {
+  
+  console.log('💾 Storing full circuit design in cache...');
+  
+  try {
+    const cacheKey = await generateCacheKey(params.jobInputs, params.openAiKey);
+    
+    const { error } = await params.supabase
+      .from('circuit_design_cache_v4')
+      .insert({
+        cache_key: cacheKey,
+        job_inputs: params.jobInputs,
+        design: params.design,
+        hit_count: 0,
+        created_at: new Date().toISOString(),
+        last_used_at: new Date().toISOString(),
+        expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+      });
+    
+    if (error) {
+      console.error('❌ Failed to cache full design:', error);
+      return;
+    }
+    
+    console.log('✅ Full circuit design cached');
+    
+  } catch (error) {
+    console.error('❌ Full design cache storage failed:', error);
   }
 }
