@@ -1,7 +1,10 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { DesignProgress } from '@/hooks/useAIDesigner';
-import { CheckCircle2, Loader2, Clock, XCircle, Zap } from 'lucide-react';
+import { CheckCircle2, Loader2, Clock, XCircle, Zap, Wrench } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { StageIndicator } from './StageIndicator';
 
@@ -95,6 +98,31 @@ export const DesignProcessingView = ({
   const EXPECTED_TOTAL_SECONDS = 70;
   const estimatedTimeRemaining = Math.max(0, EXPECTED_TOTAL_SECONDS - elapsedTime);
 
+  // Get agent statuses from progress object
+  const designerProgress = (progress as any)?.designer_progress || 0;
+  const designerStatus = (progress as any)?.designer_status || 'pending';
+  const installerProgress = (progress as any)?.installer_progress || 0;
+  const installerStatus = (progress as any)?.installer_status || 'pending';
+
+  const getStatusVariant = (status: string): "default" | "secondary" | "destructive" | "outline" => {
+    switch (status) {
+      case 'complete': return 'default';
+      case 'processing': return 'secondary';
+      case 'failed': return 'destructive';
+      default: return 'outline';
+    }
+  };
+
+  const getStatusBadgeText = (status: string): string => {
+    switch (status) {
+      case 'complete': return 'Complete ✓';
+      case 'processing': return 'Processing...';
+      case 'failed': return 'Failed';
+      case 'pending': return 'Pending';
+      default: return status;
+    }
+  };
+
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-3 py-6">
       <div className="max-w-5xl w-full space-y-4">
@@ -109,11 +137,64 @@ export const DesignProcessingView = ({
 
               {/* Title */}
               <div className="text-center">
-              <h2 className="text-xl sm:text-2xl font-bold mb-2">AI Circuit Designer</h2>
+                <h2 className="text-xl sm:text-2xl font-bold mb-2">Parallel AI Circuit Design</h2>
                 <p className="text-gray-100 text-sm">
-                  Designing your installation with BS 7671 compliance...
+                  Two specialized agents working simultaneously...
                 </p>
               </div>
+
+              {/* Dual Agent Progress */}
+              <div className="w-full space-y-6">
+                {/* Designer Agent Progress */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2 text-sm font-medium">
+                      <Zap className="h-4 w-4 text-elec-yellow" />
+                      Circuit Designer
+                    </span>
+                    <Badge variant={getStatusVariant(designerStatus)} className="text-xs">
+                      {getStatusBadgeText(designerStatus)}
+                    </Badge>
+                  </div>
+                  <Progress value={designerProgress} className="h-2" />
+                  <p className="text-xs text-muted-foreground">
+                    Calculating cable sizes, protection devices, and BS 7671 compliance
+                  </p>
+                </div>
+
+                {/* Installation Specialist Progress */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2 text-sm font-medium">
+                      <Wrench className="h-4 w-4 text-blue-400" />
+                      Installation Specialist
+                    </span>
+                    <Badge variant={getStatusVariant(installerStatus)} className="text-xs">
+                      {getStatusBadgeText(installerStatus)}
+                    </Badge>
+                  </div>
+                  <Progress value={installerProgress} className="h-2" />
+                  <p className="text-xs text-muted-foreground">
+                    Generating tools, materials, and installation procedures
+                  </p>
+                </div>
+
+                {/* Overall Progress */}
+                <div className="pt-4 border-t border-border/50">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium">Overall Progress</span>
+                    <span className="text-sm font-bold text-elec-yellow">{currentPercent}%</span>
+                  </div>
+                  <Progress value={currentPercent} className="h-3" />
+                </div>
+              </div>
+
+              {/* Current Step Alert */}
+              <Alert className="w-full bg-elec-card/50 border-elec-yellow/30">
+                <AlertDescription className="text-sm text-center">
+                  {progress?.message || 'Processing in parallel...'}
+                </AlertDescription>
+              </Alert>
 
               {/* Progress Bar */}
               <div className="w-full space-y-4">

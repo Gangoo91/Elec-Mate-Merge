@@ -52,20 +52,17 @@ Deno.serve(async (req) => {
       })
       .eq('id', jobId);
 
-    // Call designer-agent-v3 in job-aware mode (true fire-and-forget)
-    // Designer-agent-v3 has its own error handling, watchdog, and database updates
-    // We ignore HTTP timeout errors since the agent updates the DB directly
-    const designTask = supabase.functions.invoke('designer-agent-v3', {
+    // Call parallel orchestrator (fire-and-forget)
+    // The orchestrator runs both designer and installer agents in parallel
+    const designTask = supabase.functions.invoke('process-circuit-design-parallel', {
       body: {
-        ...job.job_inputs,
-        jobId: jobId,
-        mode: 'direct-design'
+        jobId: jobId
       }
     }).then(() => {
-      console.log('✅ Designer agent HTTP response received (ignoring status)');
+      console.log('✅ Parallel orchestrator HTTP response received (ignoring status)');
     }).catch((error) => {
-      console.log('ℹ️ Designer agent HTTP connection closed:', error.message);
-      // This is expected for long-running jobs - agent updates DB directly
+      console.log('ℹ️ Parallel orchestrator HTTP connection closed:', error.message);
+      // This is expected for long-running jobs - orchestrator updates DB directly
     });
 
     // Watchdog: Detect if agent fails to start within 90 seconds
