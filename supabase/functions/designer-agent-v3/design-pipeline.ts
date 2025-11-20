@@ -361,8 +361,6 @@ export class DesignPipeline {
               remainingErrors: validationResult.issues.filter((i: any) => i.severity === 'error').length
             });
             
-            // Phase 1.2: Reduced retries from 2 to 1 (saves 1-2s)
-            const maxRetries = 1;
             if (correctionAttempt >= maxRetries) {
               throw new Error(
                 `Design validation failed after ${maxRetries} correction attempts:\n\n${validationResult.autoFixSuggestions.join('\n\n')}\n\nPlease review the design inputs and try again.`
