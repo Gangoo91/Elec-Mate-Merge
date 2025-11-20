@@ -9,6 +9,7 @@ import {
   searchRegulationsIntelligence,
   callOpenAI
 } from '../_shared/rams-rag.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 
 const INSTALLER_TOOL = {
   type: 'function' as const,
@@ -99,6 +100,22 @@ export async function generateMethodStatement(
   console.log('🔧 Installer Agent starting...');
   const startTime = Date.now();
   
+  // Wrap entire agent in 4-minute timeout (safety net before Edge Function 6-min limit)
+  return withTimeout(
+    generateMethodStatementInternal(query, projectDetails, onProgress, sharedRegulations),
+    240000, // 4 minutes
+    'Installer Agent'
+  );
+}
+
+async function generateMethodStatementInternal(
+  query: string,
+  projectDetails: any,
+  onProgress?: (progress: number, step: string) => Promise<void>,
+  sharedRegulations?: any[]
+): Promise<any> {
+  const startTime = Date.now();
+  
   if (onProgress) await onProgress(0, 'Installer: Starting method statement...');
   
   // STEP 1: RAG - Use shared regulations if provided, otherwise search
@@ -142,6 +159,7 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
   const aiHeartbeat = setInterval(async () => {
     if (onProgress) {
       const elapsed = Math.floor((Date.now() - aiStart) / 1000);
+      console.log(`⏱️ Installer AI heartbeat: ${elapsed}s elapsed`);
       await onProgress(
         Math.min(90, 35 + elapsed * 2),
         `Installer: Generating steps (${elapsed}s)...`
@@ -151,6 +169,7 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
   
   let response: any;
   try {
+    console.log('🚀 Starting OpenAI call for installer agent...');
     response = await callOpenAI({
       model: 'gpt-5-mini-2025-08-07',
       messages: [
@@ -162,7 +181,12 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
       ],
       tools: [INSTALLER_TOOL],
       tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } }
-    });
+    }, undefined, 180000); // 3-minute OpenAI timeout
+    console.log('✅ OpenAI call completed successfully');
+  } catch (error) {
+    clearInterval(aiHeartbeat);
+    console.error('❌ Installer OpenAI call failed:', error);
+    throw new Error(`Installer AI generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
   } finally {
     // Always clear heartbeat, even if OpenAI call fails or times out
     clearInterval(aiHeartbeat);
