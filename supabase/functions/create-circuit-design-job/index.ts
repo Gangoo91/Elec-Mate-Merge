@@ -60,18 +60,12 @@ Deno.serve(async (req) => {
 
     console.log(`✅ Created circuit design job: ${job.id}`);
 
-    // Trigger background processing (fire and forget)
-    const processUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/process-circuit-design-v2`;
-    fetch(processUrl, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ jobId: job.id })
-    }).catch(err => console.error('Failed to trigger processing:', err));
+    // Trigger v3 parallel pipeline (designer-agent-v3 + installation-method-agent)
+    supabase.functions.invoke('process-circuit-design-job', {
+      body: { jobId: job.id }
+    }).catch(err => console.error('Failed to trigger v3 processing:', err));
 
-    console.log(`🚀 Triggered background processing for job: ${job.id}`);
+    console.log(`🚀 Triggered v3 parallel pipeline for job: ${job.id}`);
 
     return new Response(
       JSON.stringify({ jobId: job.id, status: 'pending' }),
