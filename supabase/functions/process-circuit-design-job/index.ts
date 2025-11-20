@@ -52,48 +52,21 @@ Deno.serve(async (req) => {
       })
       .eq('id', jobId);
 
-    // Call designer-agent-v3 in job-aware mode with error handling
-    const designTask = (async () => {
-      try {
-        console.log('📡 Invoking designer-agent-v3 for job:', jobId);
-        
-        const { data, error } = await supabase.functions.invoke('designer-agent-v3', {
-          body: {
-            ...job.job_inputs,
-            jobId: jobId,
-            mode: 'direct-design'
-          }
-        });
-        
-        if (error) {
-          console.error('❌ Designer agent invocation error:', error);
-          
-          // Mark job as failed
-          await supabase
-            .from('circuit_design_jobs')
-            .update({
-              status: 'failed',
-              error_message: `Agent invocation failed: ${error.message || JSON.stringify(error)}`,
-              completed_at: new Date().toISOString()
-            })
-            .eq('id', jobId);
-        } else {
-          console.log('✅ Designer agent invoked successfully:', data);
-        }
-      } catch (err) {
-        console.error('❌ Designer agent invocation exception:', err);
-        
-        // Mark job as failed
-        await supabase
-          .from('circuit_design_jobs')
-          .update({
-            status: 'failed',
-            error_message: `Agent invocation exception: ${err instanceof Error ? err.message : String(err)}`,
-            completed_at: new Date().toISOString()
-          })
-          .eq('id', jobId);
+    // Call designer-agent-v3 in job-aware mode (true fire-and-forget)
+    // Designer-agent-v3 has its own error handling, watchdog, and database updates
+    // We ignore HTTP timeout errors since the agent updates the DB directly
+    const designTask = supabase.functions.invoke('designer-agent-v3', {
+      body: {
+        ...job.job_inputs,
+        jobId: jobId,
+        mode: 'direct-design'
       }
-    })();
+    }).then(() => {
+      console.log('✅ Designer agent HTTP response received (ignoring status)');
+    }).catch((error) => {
+      console.log('ℹ️ Designer agent HTTP connection closed:', error.message);
+      // This is expected for long-running jobs - agent updates DB directly
+    });
 
     // Keep function alive until design completes
     EdgeRuntime.waitUntil(designTask);
