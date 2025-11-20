@@ -11,6 +11,31 @@ import { Trash2 } from "lucide-react";
 import { clearDesignCache } from "@/utils/clearDesignCache";
 import { useCircuitDesignGeneration } from "@/hooks/useCircuitDesignGeneration";
 
+// User-friendly error message mapper
+const getFriendlyErrorMessage = (error: string): string => {
+  if (error.includes('user_id') || error.includes('authentication')) {
+    return 'Authentication error. Please try logging out and back in.';
+  }
+  if (error.includes('timeout') || error.includes('3 minutes')) {
+    return 'Design generation is taking longer than expected. Please try again with fewer circuits, or contact support if the issue persists.';
+  }
+  if (error.includes('rate limit') || error.includes('429')) {
+    return 'Too many requests. Please wait a moment and try again.';
+  }
+  if (error.includes('cancelled')) {
+    return 'Design generation was cancelled.';
+  }
+  if (error.includes('RAG') || error.includes('regulations')) {
+    return 'Unable to access design knowledge base. Please try again in a moment.';
+  }
+  if (error.includes('OpenAI') || error.includes('API')) {
+    return 'AI service temporarily unavailable. Please try again in a moment.';
+  }
+  
+  // Generic fallback
+  return `Design generation failed: ${error.slice(0, 100)}`;
+};
+
 export const AIInstallationDesigner = () => {
   const [currentView, setCurrentView] = useState<'input' | 'processing' | 'results'>('input');
   const [userRequest, setUserRequest] = useState<string>('');
