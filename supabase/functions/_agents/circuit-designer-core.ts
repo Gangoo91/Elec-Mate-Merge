@@ -1,10 +1,10 @@
 /**
  * Circuit Designer Agent Core
- * Wrapper around designer-agent-v2 that accepts progress callbacks and shared RAG
+ * Wrapper that calls designer-agent-v2 edge function
  * Mirrors health-safety-core.ts and installer-core.ts pattern
  */
 
-import { handleBatchDesign } from '../designer-agent-v2/batch-design-handler.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 export async function designCircuits(
   jobInputs: any,
@@ -16,9 +16,14 @@ export async function designCircuits(
   
   await progressCallback(10, 'Designer: Analyzing circuit requirements...');
   
+  const supabase = createClient(
+    Deno.env.get('SUPABASE_URL')!,
+    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+  );
+  
   // Build request body for designer-agent-v2
   const designRequest = {
-    mode: 'batch-design',
+    mode: 'direct-design',
     projectInfo: jobInputs.projectInfo || {
       projectName: jobInputs.projectName || 'Circuit Design',
       location: jobInputs.location || 'Not specified'
@@ -31,41 +36,33 @@ export async function designCircuits(
   };
   
   await progressCallback(20, 'Designer: Searching regulations...');
-  
-  // Call existing designer-agent-v2 batch handler
-  const logger = {
-    info: (msg: string, data?: any) => console.log(`[Designer] ${msg}`, data),
-    error: (msg: string, data?: any) => console.error(`[Designer] ${msg}`, data)
-  };
-  
   await progressCallback(40, 'Designer: Calculating cable sizes & protection...');
   
-  const response = await handleBatchDesign(designRequest, logger);
+  // Call designer-agent-v2 via Supabase client
+  const { data, error } = await supabase.functions.invoke('designer-agent-v2', {
+    body: designRequest
+  });
   
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Designer agent failed: ${errorText}`);
+  if (error) {
+    throw new Error(`Designer agent failed: ${error.message}`);
   }
   
-  const result = await response.json();
-  
-  await progressCallback(70, 'Designer: Verifying voltage drop...');
-  await progressCallback(90, 'Designer: Finalizing calculations...');
-  
-  if (!result.success || !result.designs) {
+  if (!data || !data.success || !data.designs) {
     throw new Error('Designer agent returned no designs');
   }
   
+  await progressCallback(70, 'Designer: Verifying voltage drop...');
+  await progressCallback(90, 'Designer: Finalizing calculations...');
   await progressCallback(100, 'Designer: Complete ✓');
   
-  console.log(`✅ Designer completed ${result.designs.length} circuit designs`);
+  console.log(`✅ Designer completed ${data.designs.length} circuit designs`);
   
   return {
-    circuits: result.designs,
+    circuits: data.designs,
     metadata: {
       completedAt: new Date().toISOString(),
       regulationsUsed: sharedRegulations?.length || 0,
-      totalCircuits: result.designs.length
+      totalCircuits: data.designs.length
     }
   };
 }
