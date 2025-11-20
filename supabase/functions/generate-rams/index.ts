@@ -281,27 +281,43 @@ Deno.serve(async (req) => {
       // Health & Safety Agent (use cache if available)
       hsCacheResult.hit 
         ? Promise.resolve(hsCacheResult.data)
-        : generateHealthSafety(
-            job.job_description,
-            projectDetails,
-            async (progress: number, step: string) => {
-              if (await checkCancelled()) throw new Error('Job cancelled');
-              await updateAgentProgress('hs', progress, 'processing', step);
-            },
-            sharedRegulations
-          ),
+        : (async () => {
+            try {
+              console.log('🏥 Starting Health & Safety agent...');
+              return await generateHealthSafety(
+                job.job_description,
+                projectDetails,
+                async (progress: number, step: string) => {
+                  if (await checkCancelled()) throw new Error('Job cancelled');
+                  await updateAgentProgress('hs', progress, 'processing', step);
+                },
+                sharedRegulations
+              );
+            } catch (error) {
+              console.error('❌ Health & Safety agent failed:', error);
+              throw error;
+            }
+          })(),
       // Installer Agent (use cache if available)
       installerCacheResult.hit
         ? Promise.resolve(installerCacheResult.data)
-        : generateMethodStatement(
-            job.job_description,
-            projectDetails,
-            async (progress: number, step: string) => {
-              if (await checkCancelled()) throw new Error('Job cancelled');
-              await updateAgentProgress('installer', progress, 'processing', step);
-            },
-            sharedRegulations
-          )
+        : (async () => {
+            try {
+              console.log('🔧 Starting Installer agent...');
+              return await generateMethodStatement(
+                job.job_description,
+                projectDetails,
+                async (progress: number, step: string) => {
+                  if (await checkCancelled()) throw new Error('Job cancelled');
+                  await updateAgentProgress('installer', progress, 'processing', step);
+                },
+                sharedRegulations
+              );
+            } catch (error) {
+              console.error('❌ Installer agent failed:', error);
+              throw error;
+            }
+          })()
     ]);
 
     // Log cache performance
@@ -324,19 +340,31 @@ Deno.serve(async (req) => {
     const duration = Date.now() - startTime;
     console.log(`✅ Agents completed in ${(duration / 1000).toFixed(1)}s`);
 
-    // Extract results
+    // Extract results with detailed logging
     let hsData, hsError, installerData, installerError;
 
     if (hsResult.status === 'fulfilled') {
       hsData = hsResult.value;
+      console.log('✅ Health & Safety agent succeeded');
     } else {
       hsError = hsResult.reason;
+      console.error('❌ Health & Safety agent rejected:', {
+        message: hsError?.message,
+        stack: hsError?.stack,
+        name: hsError?.name
+      });
     }
 
     if (installerResult.status === 'fulfilled') {
       installerData = installerResult.value;
+      console.log('✅ Installer agent succeeded');
     } else {
       installerError = installerResult.reason;
+      console.error('❌ Installer agent rejected:', {
+        message: installerError?.message,
+        stack: installerError?.stack,
+        name: installerError?.name
+      });
     }
 
     const hsSucceeded = hsData && !hsError;
