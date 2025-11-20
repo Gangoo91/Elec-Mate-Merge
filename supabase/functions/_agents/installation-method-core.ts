@@ -197,10 +197,8 @@ export async function generateInstallationMethod(
       openAiKey,
       entities,
       logger
-    ),
-    new Promise<never>((_, reject) => 
-      setTimeout(() => reject(new Error('RAG search timeout after 90s')), 90000)
     )
+    // PHASE 1: No outer timeout - let RAG complete naturally (matches AI RAMS pattern)
   ]).catch(error => {
     console.error('❌ RAG search failed/timeout:', error);
     logger.error('RAG failure', { error: error instanceof Error ? error.message : String(error) });

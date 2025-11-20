@@ -148,12 +148,8 @@ export async function retrieveInstallationKnowledge(
   entities: any,
   logger: any
 ): Promise<any[]> {
-  // Wrap entire retrieval in 30s timeout for speed optimization
-  return withTimeout(
-    performInstallationRetrieval(query, matchCount, openAiKey, entities, logger),
-    30000,
-    'Installation RAG Search'
-  );
+  // PHASE 1: No timeout - let database complete naturally (matches AI RAMS pattern)
+  return performInstallationRetrieval(query, matchCount, openAiKey, entities, logger);
 }
 
 /**
@@ -342,24 +338,25 @@ async function performInstallationRetrieval(
       ];
     }
 
-    // Cross-encoder reranking
-    if (knowledge.length > 0) {
-      logger.debug('Reranking installation guides with cross-encoder');
-      const rerankStart = Date.now();
-      
-      knowledge = await rerankWithCrossEncoder(
-        query,
-        knowledge as RegulationResult[],
-        openAiKey,
-        logger
-      );
-      
-      logger.info('Cross-encoder reranking complete', {
-        duration: Date.now() - rerankStart,
-        topScore: knowledge[0]?.finalScore?.toFixed(3),
-        bottomScore: knowledge[knowledge.length - 1]?.finalScore?.toFixed(3)
-      });
-    }
+    // PHASE 2: Cross-encoder disabled - hybrid BM25 + vector scores are already high quality (matches AI RAMS pattern)
+    // Cross-encoder was adding 5+ seconds overhead and always failing with empty responses
+    // if (knowledge.length > 0) {
+    //   logger.debug('Reranking installation guides with cross-encoder');
+    //   const rerankStart = Date.now();
+    //   
+    //   knowledge = await rerankWithCrossEncoder(
+    //     query,
+    //     knowledge as RegulationResult[],
+    //     openAiKey,
+    //     logger
+    //   );
+    //   
+    //   logger.info('Cross-encoder reranking complete', {
+    //     duration: Date.now() - rerankStart,
+    //     topScore: knowledge[0]?.finalScore?.toFixed(3),
+    //     bottomScore: knowledge[knowledge.length - 1]?.finalScore?.toFixed(3)
+    //   });
+    // }
 
     // Calculate confidence scores
     const knowledgeWithConfidence = knowledge.map(item => ({
