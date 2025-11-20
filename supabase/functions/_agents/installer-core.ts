@@ -142,26 +142,33 @@ ${regulations.map(r => `- ${r.regulation_number || r.id}: ${r.content || r.prima
   const aiHeartbeat = setInterval(async () => {
     if (onProgress) {
       const elapsed = Math.floor((Date.now() - aiStart) / 1000);
-      await onProgress(Math.min(90, 35 + elapsed * 2), `Installer: Generating steps (${elapsed}s)...`);
+      await onProgress(
+        Math.min(90, 35 + elapsed * 2),
+        `Installer: Generating steps (${elapsed}s)...`
+      );
     }
   }, 10000); // Every 10 seconds
   
-  const response = await callOpenAI({
-    model: 'gpt-5-mini-2025-08-07',
-    messages: [
-      { role: 'system', content: SYSTEM_PROMPT },
-      { 
-        role: 'user', 
-        content: `Generate installation method statement for: ${query}\n\nProject: ${projectDetails.projectName}\nLocation: ${projectDetails.location}\n\nContext:\n${ragContext}` 
-      }
-    ],
-    tools: [INSTALLER_TOOL],
-    tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } }
-  });
+  let response: any;
+  try {
+    response = await callOpenAI({
+      model: 'gpt-5-mini-2025-08-07',
+      messages: [
+        { role: 'system', content: SYSTEM_PROMPT },
+        { 
+          role: 'user', 
+          content: `Generate installation method statement for: ${query}\n\nProject: ${projectDetails.projectName}\nLocation: ${projectDetails.location}\n\nContext:\n${ragContext}` 
+        }
+      ],
+      tools: [INSTALLER_TOOL],
+      tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } }
+    });
+  } finally {
+    // Always clear heartbeat, even if OpenAI call fails or times out
+    clearInterval(aiHeartbeat);
+  }
+
   const aiDuration = Date.now() - aiStart;
-  
-  // Clear heartbeat
-  clearInterval(aiHeartbeat);
   
   if (!response.toolCalls?.[0]) {
     throw new Error('No tool call in response');
