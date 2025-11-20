@@ -1,6 +1,7 @@
 // DEPLOYMENT v3.3.1 - Fixed lovableApiKey initialization - 2025-10-24T16:10:00Z
 import { corsHeaders, serve } from '../_shared/deps.ts';
 import { createLogger } from '../_shared/logger.ts';
+import { MetricsCollector } from '../_shared/metrics.ts';
 import { handleBatchDesign } from './batch-design-handler.ts';
 
 const VERSION = 'v4.0.0-best-in-class'; // All 7 optimization phases deployed
@@ -35,6 +36,7 @@ serve(async (req) => {
 
   const requestId = crypto.randomUUID();
   const logger = createLogger(requestId);
+  const metrics = new MetricsCollector(requestId, 'designer-agent-v2');
 
   // Log version on every request
   logger.info(`🚀 Designer Agent V2 ${VERSION} - Request started`);
@@ -45,8 +47,17 @@ serve(async (req) => {
     // NEW: Direct synchronous design mode (simple, fast, no job tracking)
     if (body.mode === 'direct-design') {
       logger.info('🎯 Direct design mode - synchronous processing');
-      const result = await handleBatchDesign(body, logger);
-      return result;
+      try {
+        const result = await handleBatchDesign(body, logger);
+        metrics.setSuccess(true);
+        metrics.setRegulationCount(body.circuits?.length || 0);
+        await metrics.flush();
+        return result;
+      } catch (error) {
+        metrics.setError(error.code || 'DESIGN_FAILED');
+        await metrics.flush();
+        throw error;
+      }
     }
     
     // Legacy: Batch design with async job tracking
@@ -79,9 +90,18 @@ serve(async (req) => {
         );
       } else {
         // Synchronous mode (legacy)
-        const result = await handleBatchDesign(body, logger);
-        logger.info(`✅ Batch design complete - Version: ${VERSION}`);
-        return result;
+        try {
+          const result = await handleBatchDesign(body, logger);
+          metrics.setSuccess(true);
+          metrics.setRegulationCount(body.circuits?.length || 0);
+          logger.info(`✅ Batch design complete - Version: ${VERSION}`);
+          await metrics.flush();
+          return result;
+        } catch (error) {
+          metrics.setError(error.code || 'UNKNOWN_ERROR');
+          await metrics.flush();
+          throw error;
+        }
       }
     }
 
@@ -101,6 +121,8 @@ serve(async (req) => {
 
   } catch (error) {
     logger.error('Designer agent error', { error });
+    metrics.setError(error.code || 'INTERNAL_ERROR');
+    await metrics.flush();
     
     return new Response(
       JSON.stringify({

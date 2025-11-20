@@ -17,8 +17,64 @@ import { findMatchingTemplate, applyTemplate } from '../_shared/circuit-template
 import { checkCircuitCache, storeCircuitCache } from '../_shared/circuit-level-cache.ts';
 import { safeAll, ParallelTask } from '../_shared/safe-parallel.ts';
 import { suggestVoltageDropFix, suggestZsFix } from './auto-fix-handler.ts';
+import { callOpenAI, AIProviderError } from '../_shared/ai-providers.ts';
 
 const VERSION = 'v4.0.0-best-in-class'; // PHASE 1-7 optimizations implemented
+
+// ============= PHASE 7: MODEL FALLBACK CHAIN =============
+const MODEL_FALLBACK_CHAIN = [
+  'gpt-5-mini-2025-08-07',  // Primary: Fast, cost-effective
+  'gpt-4.1-mini',           // Fallback 1: More reliable, slightly slower
+  'gpt-5-turbo'             // Fallback 2: Most reliable, slowest
+];
+
+/**
+ * PHASE 7: Call OpenAI with automatic model fallback
+ */
+async function callOpenAIWithFallback(
+  options: any,
+  openAiKey: string,
+  requestId: string,
+  timeoutMs: number = 280000
+): Promise<any> {
+  let lastError: any;
+  
+  for (let i = 0; i < MODEL_FALLBACK_CHAIN.length; i++) {
+    const model = MODEL_FALLBACK_CHAIN[i];
+    const isLastModel = i === MODEL_FALLBACK_CHAIN.length - 1;
+    
+    try {
+      console.log(`[${requestId}] [DIAGNOSTIC] 🤖 Attempting AI call with ${model}...`);
+      
+      const response = await callOpenAI(
+        {
+          ...options,
+          model: model
+        },
+        openAiKey,
+        timeoutMs
+      );
+      
+      console.log(`[${requestId}] [DIAGNOSTIC] ✅ AI call successful with ${model}`);
+      return response;
+      
+    } catch (error) {
+      lastError = error;
+      console.warn(`[${requestId}] [DIAGNOSTIC] ⚠️ ${model} failed:`, error.message);
+      
+      if (isLastModel) {
+        console.error(`[${requestId}] [DIAGNOSTIC] ❌ All AI models failed. Last error:`, error);
+        throw new Error(`All AI models failed. Last error: ${error.message}`);
+      }
+      
+      console.log(`[${requestId}] [DIAGNOSTIC] 🔄 Trying fallback model: ${MODEL_FALLBACK_CHAIN[i + 1]}...`);
+      // Wait 2 seconds before trying next model
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
+  }
+  
+  throw lastError;
+}
 
 // ============= PERFORMANCE TUNING =============
 const MAX_PARALLEL_BATCHES = {
@@ -1244,6 +1300,11 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
     }
     
     // ============= ONLY PROCEED WITH RAG/AI IF SOME CIRCUITS NEED IT =============
+    console.log(`[${jobId || 'no-job'}] [DIAGNOSTIC] RAG search initiated`, {
+      circuitCount: aiRequiredCircuits.length,
+      searchTypes: ['bs7671', 'design_knowledge', 'installation_methods'],
+      timestamp: new Date().toISOString()
+    });
     const ragStart = Date.now();
     
     let regulations: any[] = [];
@@ -1288,6 +1349,10 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
         }
         
         timings.ragSearch = Date.now() - ragStart;
+        console.log(`[${jobId || 'no-job'}] [DIAGNOSTIC] RAG completed in ${timings.ragSearch}ms`, {
+          resultsCount: regulations.length,
+          avgRelevanceScore: (regulations.reduce((sum: number, r: any) => sum + (r.score || 0), 0) / Math.max(regulations.length, 1)).toFixed(3)
+        });
         logger.info('RAG search complete', { 
           regulationCount: regulations.length,
           coreRegsPreloaded: coreRegs.length,
@@ -1304,6 +1369,12 @@ export async function handleBatchDesign(body: any, logger: any): Promise<Respons
       if (regulations.length === 0) {
         return ERROR_TEMPLATES.RAG_SEARCH_FAILED(['No regulations retrieved']).toResponse(VERSION);
       }
+      
+      const ragDuration = Date.now() - ragStart;
+      console.log(`[${jobId || 'no-job'}] [DIAGNOSTIC] RAG completed in ${ragDuration}ms`, {
+        resultsCount: regulations.length,
+        avgRelevanceScore: (regulations.reduce((sum: number, r: any) => sum + (r.score || 0), 0) / regulations.length).toFixed(3)
+      });
       
       // 4. Build AI prompt with TOON format (only for AI-required circuits)
       const regulationsText = formatRegulationsAsTOON(
@@ -1387,6 +1458,12 @@ Use UK English. Output ONLY via the design_circuits tool - no conversational tex
       ];
       
       // 5. Call AI model with parallel batch processing
+      console.log(`[${jobId || 'no-job'}] [DIAGNOSTIC] OpenAI call started`, {
+        model: 'gpt-5-mini-2025-08-07 (with fallback chain)',
+        circuitCount: aiRequiredCircuits.length,
+        ragContextSize: regulationsText.length,
+        timestamp: new Date().toISOString()
+      });
       const modelStart = Date.now();
       logger.info(`Processing ${aiRequiredCircuits.length} circuits in batches...`);
       
@@ -1454,17 +1531,29 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
               ];
               
               try {
-                const batchResponse = await callOpenAIWithRetry(
-                  batchMessages,
-                  [DESIGN_TOOL_SCHEMA],
-                  { type: 'function', function: { name: 'design_circuits' } },
+                const batchStart = Date.now();
+                const batchResponse = await callOpenAIWithFallback(
+                  {
+                    messages: batchMessages,
+                    tools: [DESIGN_TOOL_SCHEMA],
+                    tool_choice: { type: 'function', function: { name: 'design_circuits' } },
+                    max_tokens: 6000
+                  },
                   openAiKey,
-                  logger,
-                  280000, // 280s timeout
-                  { current: globalBatchIndex, total: circuitBatches.length }
+                  jobId || 'no-job',
+                  280000 // 280s timeout
                 );
                 
-                const toolCalls = parseToolCalls(batchResponse);
+                const batchDuration = Date.now() - batchStart;
+                console.log(`[${jobId || 'no-job'}] [DIAGNOSTIC] Batch ${globalBatchIndex} OpenAI completed in ${batchDuration}ms`);
+                
+                // Parse tool calls from response
+                const toolCalls = batchResponse.toolCalls ? 
+                  batchResponse.toolCalls.map((tc: any) => ({
+                    name: tc.function.name,
+                    arguments: JSON.parse(tc.function.arguments)
+                  })) : 
+                  parseToolCalls(batchResponse);
                 const batchCircuits: any[] = [];
                 
                 // Fix 2: Add defensive logging for batch processing
@@ -1658,8 +1747,12 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
     }
     
     logger.info(`✅ Post-design validation complete. All circuits have compliance warnings attached where applicable.`);
-    
+     
     // 7. Normalise and add PDF fields (using merged circuits)
+    console.log(`[${jobId || 'no-job'}] [DIAGNOSTIC] Validation pipeline executing`, {
+      circuitsToValidate: allDesignedCircuits.length,
+      timestamp: new Date().toISOString()
+    });
     const validationStart = Date.now();
     const processedCircuits = allDesignedCircuits.map((c, idx) => {
       const safe = safeCircuit(c);
@@ -1738,6 +1831,12 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
       // Continue with circuits as-is if validation fails
     }
     
+    const validationDuration = Date.now() - validationStart;
+    console.log(`[${jobId || 'no-job'}] [DIAGNOSTIC] Validation completed in ${validationDuration}ms`, {
+      compliantCircuits: validationResult?.passed ? processedCircuits.length : 0,
+      nonCompliantCircuits: validationResult?.passed ? 0 : validationResult?.errors?.length || 0
+    });
+    
     // Check for critical validation errors - early exit for fast feedback
     if (validationResult && !validationResult.passed && validationResult.errors.length > 0) {
       const criticalErrors = validationResult.errors.filter(e => e.severity === 'critical');
@@ -1782,6 +1881,12 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
     }
     
     timings.total = Date.now() - startTime;
+    
+    console.log(`[${jobId || 'no-job'}] [DIAGNOSTIC] Response formatting complete`, {
+      circuitCount: safeCircuits.length,
+      totalDuration: timings.total,
+      timestamp: new Date().toISOString()
+    });
     
     // 9. Apply safety defaults to ensure all circuits have complete data
     const safeCircuits = processedCircuits.map(c => {
