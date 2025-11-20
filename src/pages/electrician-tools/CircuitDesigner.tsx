@@ -17,7 +17,7 @@ const CircuitDesigner = () => {
 
   return (
     <div className="min-h-screen bg-elec-dark">
-      <div className="container mx-auto px-3 sm:px-4 lg:px-8 xl:px-12 py-4 sm:py-6 pb-safe">
+      <div className="mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 2xl:px-16 max-w-[95vw] 2xl:max-w-[1800px] py-4 sm:py-6 pb-safe">
         <div className="space-y-3 sm:space-y-4 animate-fade-in">
           {/* Desktop Breadcrumb + Mobile Back Button */}
           <div className="flex items-center justify-between">
