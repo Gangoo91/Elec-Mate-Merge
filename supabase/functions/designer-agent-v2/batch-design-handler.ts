@@ -17,64 +17,8 @@ import { findMatchingTemplate, applyTemplate } from '../_shared/circuit-template
 import { checkCircuitCache, storeCircuitCache } from '../_shared/circuit-level-cache.ts';
 import { safeAll, ParallelTask } from '../_shared/safe-parallel.ts';
 import { suggestVoltageDropFix, suggestZsFix } from './auto-fix-handler.ts';
-import { callOpenAI, AIProviderError } from '../_shared/ai-providers.ts';
 
 const VERSION = 'v4.0.0-best-in-class'; // PHASE 1-7 optimizations implemented
-
-// ============= PHASE 7: MODEL FALLBACK CHAIN =============
-const MODEL_FALLBACK_CHAIN = [
-  'gpt-5-mini-2025-08-07',  // Primary: Fast, cost-effective
-  'gpt-4.1-mini',           // Fallback 1: More reliable, slightly slower
-  'gpt-5-turbo'             // Fallback 2: Most reliable, slowest
-];
-
-/**
- * PHASE 7: Call OpenAI with automatic model fallback
- */
-async function callOpenAIWithFallback(
-  options: any,
-  openAiKey: string,
-  requestId: string,
-  timeoutMs: number = 280000
-): Promise<any> {
-  let lastError: any;
-  
-  for (let i = 0; i < MODEL_FALLBACK_CHAIN.length; i++) {
-    const model = MODEL_FALLBACK_CHAIN[i];
-    const isLastModel = i === MODEL_FALLBACK_CHAIN.length - 1;
-    
-    try {
-      console.log(`[${requestId}] [DIAGNOSTIC] 🤖 Attempting AI call with ${model}...`);
-      
-      const response = await callOpenAI(
-        {
-          ...options,
-          model: model
-        },
-        openAiKey,
-        timeoutMs
-      );
-      
-      console.log(`[${requestId}] [DIAGNOSTIC] ✅ AI call successful with ${model}`);
-      return response;
-      
-    } catch (error) {
-      lastError = error;
-      console.warn(`[${requestId}] [DIAGNOSTIC] ⚠️ ${model} failed:`, error.message);
-      
-      if (isLastModel) {
-        console.error(`[${requestId}] [DIAGNOSTIC] ❌ All AI models failed. Last error:`, error);
-        throw new Error(`All AI models failed. Last error: ${error.message}`);
-      }
-      
-      console.log(`[${requestId}] [DIAGNOSTIC] 🔄 Trying fallback model: ${MODEL_FALLBACK_CHAIN[i + 1]}...`);
-      // Wait 2 seconds before trying next model
-      await new Promise(resolve => setTimeout(resolve, 2000));
-    }
-  }
-  
-  throw lastError;
-}
 
 // ============= PERFORMANCE TUNING =============
 const MAX_PARALLEL_BATCHES = {
@@ -1532,28 +1476,23 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
               
               try {
                 const batchStart = Date.now();
-                const batchResponse = await callOpenAIWithFallback(
-                  {
-                    messages: batchMessages,
-                    tools: [DESIGN_TOOL_SCHEMA],
-                    tool_choice: { type: 'function', function: { name: 'design_circuits' } },
-                    max_tokens: 6000
-                  },
+                console.log(`[${jobId || 'no-job'}] [DIAGNOSTIC] Batch ${globalBatchIndex} calling OpenAI with fallback chain...`);
+                
+                const batchResponse = await callOpenAIWithRetry(
+                  batchMessages,
+                  [DESIGN_TOOL_SCHEMA],
+                  { type: 'function', function: { name: 'design_circuits' } },
                   openAiKey,
-                  jobId || 'no-job',
-                  280000 // 280s timeout
+                  logger,
+                  280000, // 280s timeout
+                  { current: globalBatchIndex, total: circuitBatches.length }
                 );
                 
                 const batchDuration = Date.now() - batchStart;
                 console.log(`[${jobId || 'no-job'}] [DIAGNOSTIC] Batch ${globalBatchIndex} OpenAI completed in ${batchDuration}ms`);
                 
                 // Parse tool calls from response
-                const toolCalls = batchResponse.toolCalls ? 
-                  batchResponse.toolCalls.map((tc: any) => ({
-                    name: tc.function.name,
-                    arguments: JSON.parse(tc.function.arguments)
-                  })) : 
-                  parseToolCalls(batchResponse);
+                const toolCalls = parseToolCalls(batchResponse);
                 const batchCircuits: any[] = [];
                 
                 // Fix 2: Add defensive logging for batch processing
