@@ -51,7 +51,7 @@ export class AIDesigner {
         tool_choice
       },
       this.openAiKey,
-      240000 // 240s timeout (4 minutes max for initial generation)
+      360000 // 360s timeout (6 minutes for complex multi-circuit designs)
     );
 
     const duration = Date.now() - startTime;

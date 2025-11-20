@@ -68,8 +68,37 @@ Deno.serve(async (req) => {
       // This is expected for long-running jobs - agent updates DB directly
     });
 
+    // Watchdog: Detect if agent fails to start within 90 seconds
+    const watchdogDelay = setTimeout(async () => {
+      console.log('⏰ Watchdog: Checking if agent started...');
+      
+      const { data: currentJob } = await supabase
+        .from('circuit_design_jobs')
+        .select('progress, status')
+        .eq('id', jobId)
+        .single();
+      
+      // If job hasn't progressed beyond 35% in 90 seconds, agent never started
+      if (currentJob && currentJob.status === 'processing' && currentJob.progress <= 35) {
+        console.error('❌ Watchdog: Agent failed to start - marking job as failed');
+        
+        await supabase
+          .from('circuit_design_jobs')
+          .update({
+            status: 'failed',
+            error_message: 'Design agent failed to start. This may be a temporary platform issue. Please try generating the design again.',
+            completed_at: new Date().toISOString()
+          })
+          .eq('id', jobId);
+      } else {
+        console.log('✅ Watchdog: Agent is active');
+      }
+    }, 90000); // 90 seconds
+
     // Keep function alive until design completes
-    EdgeRuntime.waitUntil(designTask);
+    EdgeRuntime.waitUntil(
+      designTask.finally(() => clearTimeout(watchdogDelay))
+    );
 
     console.log(`✅ Started background design for job: ${jobId}`);
 
