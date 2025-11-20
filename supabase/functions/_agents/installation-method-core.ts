@@ -8,7 +8,7 @@
  * 2. generateInstallationMethods - Used by new circuit-design-v2 unified function (new)
  */
 
-import { retrieveInstallationKnowledge } from '../_shared/rag-installation.ts';
+import { searchInstallationPractices, searchCircuitRegulations } from '../_shared/circuit-rag.ts';
 import { callOpenAI } from '../_shared/ai-providers.ts';
 import { createLogger } from '../_shared/logger.ts';
 
@@ -187,27 +187,43 @@ export async function generateInstallationMethod(
   
   const logger = createLogger('installation-method-agent');
   const openAiKey = Deno.env.get('OPENAI_API_KEY')!;
-  const entities = { installationMethod: projectDetails.workType || 'general' };
+  // Build job inputs for RAG search (mirrors AI RAMS pattern)
+  const jobInputs = {
+    circuits: [{ loadType: projectDetails.workType || 'general', description: query }],
+    supply: {},
+    projectInfo: projectDetails
+  };
   
-  // PHASE 4: Remove Promise.race wrapper - direct await like AI RAMS pattern
+  // RAG progress callback
+  const ragProgressCallback = onProgress 
+    ? (msg: string) => onProgress(25, `Installation Method: ${msg}`)
+    : undefined;
+  
+  // Simple, direct RAG calls (mirrors AI RAMS pattern)
   const ragStart = Date.now();
   let ragResults;
   
   try {
-    ragResults = sharedRegulations || await retrieveInstallationKnowledge(
-      query,
-      10, // PHASE 4: Match RAMS - reduced from 15 to 10 for consistency
-      openAiKey,
-      entities,
-      logger
-    );
+    if (sharedRegulations) {
+      // Use shared regulations from circuit designer
+      ragResults = sharedRegulations;
+    } else {
+      // Parallel RAG search: Installation practices + Regulations
+      const [practicesResults, regulationsResults] = await Promise.all([
+        searchInstallationPractices(jobInputs, ragProgressCallback),
+        searchCircuitRegulations(jobInputs, ragProgressCallback)
+      ]);
+      
+      // Combine results (take top 10 total, consistent with AI RAMS)
+      ragResults = [...practicesResults, ...regulationsResults].slice(0, 10);
+    }
   } catch (error) {
     console.error('❌ RAG search failed:', error);
     logger.error('RAG failure', { error: error instanceof Error ? error.message : String(error) });
     // Return minimal fallback data to prevent total failure
     ragResults = [
       { 
-        regulation_number: '134.1.1', 
+        regulation_number: '134.1.1',
         content: 'Good workmanship and proper materials shall be used in electrical installations.', 
         source: 'fallback' 
       },
