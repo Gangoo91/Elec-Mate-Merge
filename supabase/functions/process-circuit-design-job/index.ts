@@ -52,14 +52,48 @@ Deno.serve(async (req) => {
       })
       .eq('id', jobId);
 
-    // Call designer-agent-v3 in job-aware mode (fire and forget with waitUntil)
-    const designTask = supabase.functions.invoke('designer-agent-v3', {
-      body: {
-        ...job.job_inputs,
-        jobId: jobId, // Make agent job-aware
-        mode: 'direct-design'
+    // Call designer-agent-v3 in job-aware mode with error handling
+    const designTask = (async () => {
+      try {
+        console.log('📡 Invoking designer-agent-v3 for job:', jobId);
+        
+        const { data, error } = await supabase.functions.invoke('designer-agent-v3', {
+          body: {
+            ...job.job_inputs,
+            jobId: jobId,
+            mode: 'direct-design'
+          }
+        });
+        
+        if (error) {
+          console.error('❌ Designer agent invocation error:', error);
+          
+          // Mark job as failed
+          await supabase
+            .from('circuit_design_jobs')
+            .update({
+              status: 'failed',
+              error_message: `Agent invocation failed: ${error.message || JSON.stringify(error)}`,
+              completed_at: new Date().toISOString()
+            })
+            .eq('id', jobId);
+        } else {
+          console.log('✅ Designer agent invoked successfully:', data);
+        }
+      } catch (err) {
+        console.error('❌ Designer agent invocation exception:', err);
+        
+        // Mark job as failed
+        await supabase
+          .from('circuit_design_jobs')
+          .update({
+            status: 'failed',
+            error_message: `Agent invocation exception: ${err instanceof Error ? err.message : String(err)}`,
+            completed_at: new Date().toISOString()
+          })
+          .eq('id', jobId);
       }
-    });
+    })();
 
     // Keep function alive until design completes
     EdgeRuntime.waitUntil(designTask);
