@@ -22,8 +22,8 @@ const VERSION = 'v4.0.0-best-in-class'; // PHASE 1-7 optimizations implemented
 
 // ============= PERFORMANCE TUNING =============
 const MAX_PARALLEL_BATCHES = {
-  SMALL_JOB: 3,  // For ≤15 circuits (was 2)
-  LARGE_JOB: 4   // For >15 circuits (was 3)
+  SMALL_JOB: 9,  // Process all batches at once for small jobs (≤15 circuits)
+  LARGE_JOB: 12  // Max concurrency for large jobs (>15 circuits) - matches AI RAMS parallelism
 };
 
 // FIX #4: Maximum job timeout to prevent stuck jobs
