@@ -314,12 +314,41 @@ Deno.serve(async (req) => {
 
     await safeUpdateProgress(95, 'Merging circuit designs with installation methods...');
 
-    // Merge results
+    // Transform and merge installation guidance into each circuit
+    const enhancedCircuits = (designerData.circuits || []).map((circuit: any) => {
+      // Transform installation guidance structure to match frontend expectations
+      if (installerData.installationGuidance) {
+        const ig = installerData.installationGuidance;
+        const tr = installerData.testingRequirements;
+        
+        circuit.installationGuidance = {
+          cableRouting: Array.isArray(ig.cableRouting) 
+            ? ig.cableRouting.join(' ') 
+            : ig.cableRouting || 'Route cables per BS 7671 Section 522, maintaining safe zones and appropriate segregation from other services.',
+          terminationAdvice: Array.isArray(ig.termination) 
+            ? ig.termination.join(' ') 
+            : ig.termination || 'Ensure proper termination with correct torque settings per manufacturer specifications and BS 7671 requirements.',
+          testingRequirements: tr?.tests 
+            ? (Array.isArray(tr.tests) ? tr.tests.join(' ') : tr.tests)
+            : 'Conduct full testing per BS 7671 Part 6: continuity, insulation resistance, polarity, earth fault loop impedance, and RCD operation (where applicable).',
+          safetyNotes: Array.isArray(ig.safetyConsiderations) 
+            ? ig.safetyConsiderations 
+            : (ig.safetyConsiderations ? [ig.safetyConsiderations] : []),
+          fixingsAndSupport: Array.isArray(ig.fixingsAndSupport) 
+            ? ig.fixingsAndSupport 
+            : (ig.fixingsAndSupport ? [ig.fixingsAndSupport] : []),
+          estimatedInstallTime: '2-4 hours depending on complexity and site conditions'
+        };
+      }
+      
+      return circuit;
+    });
+
     const mergedData = {
-      circuits: designerData.circuits || [],
+      circuits: enhancedCircuits,
       installationMethods: installerData.methods || [],
       summary: {
-        totalCircuits: designerData.circuits?.length || 0,
+        totalCircuits: enhancedCircuits.length,
         totalMethods: installerData.methods?.length || 0,
         generatedAt: new Date().toISOString(),
         version: VERSION

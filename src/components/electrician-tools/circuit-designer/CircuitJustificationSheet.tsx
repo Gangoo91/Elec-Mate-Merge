@@ -1,6 +1,6 @@
 import { CircuitDesign } from '@/types/installation-design';
 import { Drawer } from 'vaul';
-import { X, FileText, Cable, Shield, AlertTriangle } from 'lucide-react';
+import { X, FileText, Cable, Shield, AlertTriangle, ClipboardCheck, CheckCircle2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 interface CircuitJustificationSheetProps {
@@ -220,36 +220,36 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <FileText className="h-4 w-4 text-elec-yellow" />
-                  <h3 className="text-sm font-semibold text-elec-light">Installation Guidance</h3>
+                  <h3 className="text-sm font-semibold text-elec-yellow">Installation Guidance</h3>
                 </div>
                 <div className="bg-elec-dark/60 rounded-lg p-4 border border-elec-yellow/20 space-y-4">
                   <div>
-                    <p className="text-xs text-elec-light/60 mb-1.5">Cable Routing</p>
-                    <p className="text-sm text-elec-light/90 leading-relaxed">
+                    <p className="text-xs text-elec-yellow mb-1.5">Cable Routing</p>
+                    <p className="text-sm text-elec-light leading-relaxed">
                       {circuit.installationGuidance.cableRouting}
                     </p>
                   </div>
                   
                   <div>
-                    <p className="text-xs text-elec-light/60 mb-1.5">Termination Advice</p>
-                    <p className="text-sm text-elec-light/90 leading-relaxed">
+                    <p className="text-xs text-elec-yellow mb-1.5">Termination Advice</p>
+                    <p className="text-sm text-elec-light leading-relaxed">
                       {circuit.installationGuidance.terminationAdvice}
                     </p>
                   </div>
                   
                   <div>
-                    <p className="text-xs text-elec-light/60 mb-1.5">Testing Requirements</p>
-                    <p className="text-sm text-elec-light/90 leading-relaxed">
+                    <p className="text-xs text-elec-yellow mb-1.5">Testing Requirements</p>
+                    <p className="text-sm text-elec-light leading-relaxed">
                       {circuit.installationGuidance.testingRequirements}
                     </p>
                   </div>
                   
                   {circuit.installationGuidance.safetyNotes && circuit.installationGuidance.safetyNotes.length > 0 && (
                     <div>
-                      <p className="text-xs text-elec-light/60 mb-2">Safety Notes</p>
+                      <p className="text-xs text-elec-yellow mb-2">Safety Notes</p>
                       <ul className="space-y-1.5">
                         {circuit.installationGuidance.safetyNotes.map((note, idx) => (
-                          <li key={idx} className="text-sm text-elec-light/90 flex items-start gap-2">
+                          <li key={idx} className="text-sm text-elec-light flex items-start gap-2">
                             <span className="text-elec-yellow mt-0.5">•</span>
                             <span>{note}</span>
                           </li>
@@ -258,14 +258,14 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                     </div>
                   )}
                   
-                  {circuit.installationGuidance.toolsRequired && circuit.installationGuidance.toolsRequired.length > 0 && (
+                  {circuit.installationGuidance.fixingsAndSupport && circuit.installationGuidance.fixingsAndSupport.length > 0 && (
                     <div>
-                      <p className="text-xs text-elec-light/60 mb-2">Tools Required</p>
+                      <p className="text-xs text-elec-yellow mb-2">Fixings & Support</p>
                       <ul className="space-y-1.5">
-                        {circuit.installationGuidance.toolsRequired.map((tool, idx) => (
-                          <li key={idx} className="text-sm text-elec-light/90 flex items-start gap-2">
+                        {circuit.installationGuidance.fixingsAndSupport.map((item, idx) => (
+                          <li key={idx} className="text-sm text-elec-light flex items-start gap-2">
                             <span className="text-elec-yellow mt-0.5">•</span>
-                            <span>{tool}</span>
+                            <span>{item}</span>
                           </li>
                         ))}
                       </ul>
@@ -274,10 +274,137 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                   
                   {circuit.installationGuidance.estimatedInstallTime && (
                     <div>
-                      <p className="text-xs text-elec-light/60 mb-1">Estimated Install Time</p>
+                      <p className="text-xs text-elec-yellow mb-1">Estimated Install Time</p>
                       <p className="text-sm text-elec-light font-medium">
                         {circuit.installationGuidance.estimatedInstallTime}
                       </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+            
+            {/* Expected Test Results */}
+            {circuit.expectedTestResults && (
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <ClipboardCheck className="h-4 w-4 text-elec-yellow" />
+                  <h3 className="text-sm font-semibold text-elec-yellow">Expected Test Results</h3>
+                </div>
+                <div className="grid gap-3">
+                  {/* R1+R2 */}
+                  <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 p-3 rounded-lg border border-blue-500/20">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center">
+                        <span className="text-blue-400 font-bold text-xs">R₁+R₂</span>
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold text-elec-light">Earth Continuity</p>
+                        <p className="text-xs text-elec-light/60">BS 7671 Reg 643.2.2</p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="bg-blue-500/5 p-2 rounded">
+                        <p className="text-xs text-blue-300/80">At 20°C</p>
+                        <p className="text-sm font-bold text-elec-light">{circuit.expectedTestResults.r1r2.at20C}</p>
+                      </div>
+                      <div className="bg-blue-500/5 p-2 rounded">
+                        <p className="text-xs text-blue-300/80">At 70°C</p>
+                        <p className="text-sm font-bold text-elec-light">{circuit.expectedTestResults.r1r2.at70C}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Zs */}
+                  <div className={`bg-gradient-to-br p-3 rounded-lg border ${
+                    circuit.expectedTestResults.zs.compliant 
+                      ? 'from-green-500/10 to-green-600/5 border-green-500/20' 
+                      : 'from-red-500/10 to-red-600/5 border-red-500/20'
+                  }`}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                        circuit.expectedTestResults.zs.compliant 
+                          ? 'bg-green-500/20' 
+                          : 'bg-red-500/20'
+                      }`}>
+                        <span className={`font-bold text-xs ${
+                          circuit.expectedTestResults.zs.compliant 
+                            ? 'text-green-400' 
+                            : 'text-red-400'
+                        }`}>Zs</span>
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-xs font-semibold text-elec-light">Earth Fault Loop Impedance</p>
+                        <p className="text-xs text-elec-light/60">BS 7671 Reg 411.4.4</p>
+                      </div>
+                      {circuit.expectedTestResults.zs.compliant ? (
+                        <CheckCircle2 className="h-4 w-4 text-green-400" />
+                      ) : (
+                        <AlertTriangle className="h-4 w-4 text-red-400" />
+                      )}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className={`p-2 rounded ${
+                        circuit.expectedTestResults.zs.compliant 
+                          ? 'bg-green-500/5' 
+                          : 'bg-red-500/5'
+                      }`}>
+                        <p className={`text-xs ${
+                          circuit.expectedTestResults.zs.compliant 
+                            ? 'text-green-300/80' 
+                            : 'text-red-300/80'
+                        }`}>Calculated</p>
+                        <p className="text-sm font-bold text-elec-light">{circuit.expectedTestResults.zs.calculated}</p>
+                      </div>
+                      <div className={`p-2 rounded ${
+                        circuit.expectedTestResults.zs.compliant 
+                          ? 'bg-green-500/5' 
+                          : 'bg-red-500/5'
+                      }`}>
+                        <p className={`text-xs ${
+                          circuit.expectedTestResults.zs.compliant 
+                            ? 'text-green-300/80' 
+                            : 'text-red-300/80'
+                        }`}>Max Permitted</p>
+                        <p className="text-sm font-bold text-elec-light">{circuit.expectedTestResults.zs.maxPermitted}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Insulation & Polarity */}
+                  <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 p-3 rounded-lg border border-purple-500/20">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center">
+                        <span className="text-purple-400 font-bold text-xs">IR</span>
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold text-elec-light">Insulation Resistance</p>
+                        <p className="text-xs text-elec-light/60">BS 7671 Reg 643.3.1</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-elec-light">{circuit.expectedTestResults.insulationResistance.minResistance} @ {circuit.expectedTestResults.insulationResistance.testVoltage}</p>
+                  </div>
+
+                  {circuit.rcdProtected && circuit.expectedTestResults.rcdTest && (
+                    <div className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 p-3 rounded-lg border border-cyan-500/20">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                          <span className="text-cyan-400 font-bold text-xs">RCD</span>
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold text-elec-light">RCD Trip Times</p>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div className="bg-cyan-500/5 p-2 rounded">
+                          <p className="text-xs text-cyan-300/80">At 1× IΔn</p>
+                          <p className="text-sm font-bold text-elec-light">{circuit.expectedTestResults.rcdTest.at1x}</p>
+                        </div>
+                        <div className="bg-cyan-500/5 p-2 rounded">
+                          <p className="text-xs text-cyan-300/80">At 5× IΔn</p>
+                          <p className="text-sm font-bold text-elec-light">{circuit.expectedTestResults.rcdTest.at5x}</p>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
