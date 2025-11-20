@@ -159,6 +159,35 @@ CRITICAL DESIGN RULES:
 ✅ For long runs (>100m), expect larger cables (10mm², 16mm², 25mm²)
 ✅ Show your working - include calculation steps in justifications
 
+ENHANCED JUSTIFICATION REQUIREMENTS (CRITICAL):
+
+When providing design justifications, you MUST explain WHY with 3-5 sentences minimum per justification:
+
+WHY Cable Size (include ALL of these points):
+- Load analysis: "Design current calculated as ${Ib}A based on ${loadPower}W load at ${voltage}V"
+- Iteration process: "Initial ${firstSize}mm² gave ${firstVd}% voltage drop (exceeds ${limit}%). Increased to ${finalSize}mm² achieving ${finalVd}% (compliant)."
+- Installation method impact: "Installation method ${method} with grouping factor ${Ca} reduces effective capacity from ${It}A to ${Iz}A"
+- Safety margin: "Final capacity ${Iz}A provides ${margin}% safety margin above design current"
+- Voltage drop compliance: "Achieved ${actualVd}% voltage drop vs ${limit}% limit using ${cableSize}mm² over ${length}m"
+- Future-proofing: "Cable sized with ${margin}% spare capacity for potential future load increases"
+
+WHY Protection Device (include ALL of these points):
+- Discrimination analysis: "Coordinated with upstream ${upstreamDevice}A main switch for proper discrimination"
+- Earth fault loop impedance: "Zs of ${zs}Ω provides ${margin}% margin below ${maxZs}Ω maximum (ensures <0.4s disconnection)"
+- Breaking capacity: "${kaRating}kA breaking capacity exceeds prospective fault current of ${pfc}kA"
+- Type selection rationale: "Type ${curve} curve selected for ${loadType} loads to prevent nuisance tripping while providing fast fault clearance"
+- Coordination: "Rating of ${In}A protects ${cableSize}mm² cable (${Iz}A capacity) while allowing design current of ${Ib}A"
+
+WHY RCD Protection (if applicable - include ALL of these points):
+- Regulation requirement: "Reg 411.3.3 mandates 30mA RCD for socket circuits to limit touch voltage to safe levels"
+- Additional protection reasoning: "RCD provides supplementary protection against direct contact and reduces fire risk from earth faults"
+- Type selection: "Type A RCD selected to detect both AC and pulsating DC fault currents (common in modern electronic equipment)"
+- Nuisance tripping prevention: "30mA rating balances safety with preventing nuisance trips from appliance leakage currents"
+- Touch voltage protection: "30mA trip ensures prospective touch voltage remains below 50V limit per BS 7671"
+
+Example of GOOD justification format:
+"Cable sizing: Design current calculated as 32.5A based on 7500W load at 230V. Initial trial with 4mm² gave 6.2% voltage drop (exceeds 5% limit for 45m run). Increased to 6mm² achieving 4.1% voltage drop (compliant per Reg 525.1). Installation method C (clipped direct) with grouping factor 0.94 reduces capacity from 36A to 33.8A, providing 4% safety margin. Cable also sized with consideration for Ze of 0.35Ω and R1+R2 of 0.42Ω giving total Zs of 0.77Ω (well below 0.87Ω maximum for 32A Type B RCBO)."
+
 SAFETY MARGINS FOR HIGH-RISK CIRCUITS:
 ⚠️ Outdoor circuits: Target Zs ≤ 75% of maxZs (not 100%)
 ⚠️ EV chargers: Target Zs ≤ 80% of maxZs
@@ -1761,6 +1790,53 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
         return applyDefaultCircuitValues(c);
       }
       return c;
+    });
+    
+    // 10. Generate expected test results for every circuit (CRITICAL for EIC compliance)
+    logger.info('📋 Generating expected test results for all circuits...');
+    safeCircuits.forEach((circuit: any) => {
+      try {
+        const r1At20C = (((circuit.cableSize === 2.5 ? 7.41 : circuit.cableSize === 1.5 ? 12.1 : circuit.cableSize === 4 ? 4.61 : circuit.cableSize === 6 ? 3.08 : circuit.cableSize === 10 ? 1.83 : 1.15) + 
+                         (circuit.cpcSize === 1.5 ? 12.1 : circuit.cpcSize === 2.5 ? 7.41 : circuit.cpcSize === 4 ? 4.61 : circuit.cpcSize === 6 ? 3.08 : 7.41)) * 
+                         (circuit.cableLength || 20)) / 1000;
+        const r1At70C = r1At20C * 1.2;
+        
+        circuit.expectedTestResults = {
+          r1r2: {
+            at20C: Number(r1At20C.toFixed(4)),
+            at70C: Number(r1At70C.toFixed(4)),
+            value: `${r1At70C.toFixed(3)}Ω`,
+            regulation: 'BS 7671 Reg 612.2'
+          },
+          zs: {
+            value: circuit.calculations?.zs || 0,
+            maxPermitted: circuit.calculations?.maxZs || 0,
+            compliant: (circuit.calculations?.zs || 0) <= (circuit.calculations?.maxZs || 999),
+            regulation: 'BS 7671 Reg 612.9'
+          },
+          insulationResistance: {
+            testVoltage: circuit.voltage && circuit.voltage <= 50 ? '250V DC' : '500V DC',
+            minResistance: circuit.voltage && circuit.voltage <= 50 ? '≥0.5 MΩ' : '≥1.0 MΩ',
+            regulation: 'BS 7671 Table 61'
+          },
+          polarity: {
+            expected: 'Correct - Line conductor to switching contacts',
+            regulation: 'BS 7671 Reg 612.6'
+          }
+        };
+        
+        // Add RCD test results if RCD protected
+        if (circuit.rcdProtected) {
+          circuit.expectedTestResults.rcdTest = {
+            at1x: '< 300ms at 30mA',
+            at5x: '< 40ms at 150mA',
+            regulation: 'BS 7671 Reg 612.13'
+          };
+        }
+      } catch (error) {
+        logger.warn(`Failed to generate expected test results for ${circuit.name}`, { error });
+        // Continue without test results rather than failing
+      }
     });
     
     // 10. Build complete InstallationDesign response

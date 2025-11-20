@@ -13,11 +13,11 @@ const wrapListItems = (text: string): string => {
     
     if (isBulletPoint) {
       if (!inList) {
-        result.push('<ul class="list-disc list-outside ml-6 space-y-2 mb-4 text-left">');
+        result.push('<ul class="list-disc list-outside ml-6 space-y-3 mb-4 text-left">');
         inList = true;
       }
       const content = line.replace(/^[\s]*[\-\*\+]\s/, '');
-      result.push(`  <li class="leading-relaxed text-gray-200 pl-2">${content}</li>`);
+      result.push(`  <li class="leading-loose text-white pl-2">${content}</li>`);
     } else {
       if (inList) {
         result.push('</ul>');
@@ -37,43 +37,41 @@ const wrapListItems = (text: string): string => {
 export const processElectricalText = (text: string): string => {
   if (!text) return text;
   
-  // First, wrap list items properly
+  // First, wrap list items properly with better spacing
   text = wrapListItems(text);
   
   return text
-    // Format BS 7671 references
-    .replace(/BS 7671:?(\d{4})?(\+A\d:?\d{4})?/gi, '<span class="inline-flex items-center px-2 py-1 rounded-md bg-elec-yellow/20 text-elec-yellow font-medium text-sm">BS 7671$1$2</span>')
+    // Format BS 7671 references - Simple bold with color
+    .replace(/BS 7671:?(\d{4})?(\+A\d:?\d{4})?/gi, '<strong class="text-elec-yellow font-semibold">BS 7671$1$2</strong>')
     
-    // Format regulation numbers (e.g., 411.3.3, 134.1.1)
-    .replace(/(\d{3}\.\d+\.\d+)/g, '<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono text-xs">$1</span>')
+    // Format regulation numbers - Inline monospace without background
+    .replace(/(\d{3}\.\d+\.\d+)/g, '<code class="text-blue-400 font-mono text-sm">$1</code>')
     
-    // Format classification codes (C1, C2, C3, FI)
-    .replace(/\b(C[123]|FI)\b/g, '<span class="inline-flex items-center px-1.5 py-0.5 rounded-md bg-red-500/20 text-red-400 font-semibold text-xs">$1</span>')
+    // Format classification codes - Simple text with color
+    .replace(/\b(C[123]|FI)\b/g, '<strong class="text-red-400 font-bold">$1</strong>')
     
-    
-    // Format safety classifications with proper colours
-    .replace(/\b(SATISFACTORY|PASS)\b/gi, '<span class="inline-flex items-center px-2 py-1 rounded-md bg-green-500/20 text-green-400 font-medium text-sm">$1</span>')
-    .replace(/\b(UNSATISFACTORY|FAIL|DANGEROUS)\b/gi, '<span class="inline-flex items-center px-2 py-1 rounded-md bg-red-500/20 text-red-400 font-medium text-sm">$1</span>')
-    .replace(/\b(INVESTIGATION REQUIRED|IMPROVEMENT RECOMMENDED)\b/gi, '<span class="inline-flex items-center px-2 py-1 rounded-md bg-orange-500/20 text-orange-400 font-medium text-sm">$1</span>')
-    
+    // Format safety classifications - Simple bold with color
+    .replace(/\b(SATISFACTORY|PASS)\b/gi, '<strong class="text-green-400 font-semibold">$1</strong>')
+    .replace(/\b(UNSATISFACTORY|FAIL|DANGEROUS)\b/gi, '<strong class="text-red-400 font-semibold">$1</strong>')
+    .replace(/\b(INVESTIGATION REQUIRED|IMPROVEMENT RECOMMENDED)\b/gi, '<strong class="text-orange-400 font-semibold">$1</strong>')
     
     // Bold text formatting
-    .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
     
     // Italic text formatting
-    .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
+    .replace(/\*(.*?)\*/g, '<em class="italic text-white">$1</em>')
     
     // Format headings (starts with #)
-    .replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold text-white mt-4 mb-2">$1</h3>')
+    .replace(/^### (.*$)/gim, '<h3 class="text-lg font-semibold text-white mt-4 mb-3">$1</h3>')
     .replace(/^## (.*$)/gim, '<h2 class="text-xl font-semibold text-white mt-6 mb-3">$1</h2>')
     .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold text-white mt-8 mb-4">$1</h1>')
     
-    // Wrap paragraphs properly
+    // Wrap paragraphs properly with better spacing
     .split('\n\n')
     .map(para => {
       const trimmed = para.trim();
       if (trimmed && !trimmed.includes('<ul') && !trimmed.includes('<h')) {
-        return `<p class="mb-4 text-gray-200 leading-relaxed text-left">${trimmed}</p>`;
+        return `<p class="mb-4 text-white leading-loose text-left">${trimmed}</p>`;
       }
       return para;
     })
