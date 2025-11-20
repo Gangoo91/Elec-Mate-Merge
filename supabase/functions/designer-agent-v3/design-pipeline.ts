@@ -286,13 +286,13 @@ export class DesignPipeline {
       const maxRetries = 2;
       let correctionAttempt = 0;
       
+      // Update progress to show validation complete, entering correction phase
+      if (this.logger.updateJobProgress) {
+        await this.logger.updateJobProgress(87, 'Validating design compliance...');
+      }
+      
       while (!validationResult.isValid && correctionAttempt < maxRetries) {
         correctionAttempt++;
-        
-        // Update progress to show correction phase
-        if (this.logger.updateJobProgress) {
-          await this.logger.updateJobProgress(87, 'Correcting design errors...');
-        }
         
         const errorCount = validationResult.issues.filter((i: any) => i.severity === 'error').length;
         
