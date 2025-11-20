@@ -22,6 +22,16 @@ const SummaryField = ({ label, value }: { label: string; value: string }) => (
 );
 
 export const AtAGlanceSummary = ({ summary }: AtAGlanceSummaryProps) => {
+  // Defensive checks for missing/undefined values
+  const safeLoadKw = summary?.loadKw ?? 0;
+  const safeLoadIb = summary?.loadIb || 'N/A';
+  const safeCable = summary?.cable || 'Not specified';
+  const safeProtectiveDevice = summary?.protectiveDevice || 'Not specified';
+  const safeVoltageDrop = summary?.voltageDrop || 'N/A';
+  const safeZs = summary?.zs || 'N/A';
+  const safeComplianceTick = summary?.complianceTick ?? false;
+  const safeNotes = summary?.notes || '';
+
   return (
     <Card className="bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border-elec-yellow/40 mb-6">
       <div className="p-5 sm:p-6">
@@ -30,23 +40,23 @@ export const AtAGlanceSummary = ({ summary }: AtAGlanceSummaryProps) => {
             <Zap className="h-5 w-5 text-elec-yellow" />
             At a Glance
           </h3>
-          {summary.complianceTick && (
+          {safeComplianceTick && (
             <CheckCircle2 className="h-6 w-6 text-green-400 animate-pulse-subtle" />
           )}
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-          <SummaryField label="Load" value={`${summary.loadKw}kW (${summary.loadIb})`} />
-          <SummaryField label="Cable" value={summary.cable} />
-          <SummaryField label="Protective Device" value={summary.protectiveDevice} />
-          <SummaryField label="Voltage Drop" value={summary.voltageDrop} />
-          <SummaryField label="Zs" value={summary.zs} />
+          <SummaryField label="Load" value={`${safeLoadKw}kW (${safeLoadIb})`} />
+          <SummaryField label="Cable" value={safeCable} />
+          <SummaryField label="Protective Device" value={safeProtectiveDevice} />
+          <SummaryField label="Voltage Drop" value={safeVoltageDrop} />
+          <SummaryField label="Zs" value={safeZs} />
         </div>
         
-        {summary.notes && (
+        {safeNotes && (
           <div className="mt-4 p-3 sm:p-4 bg-elec-dark/40 rounded border border-elec-yellow/20">
             <p className="text-xs text-white/60 mb-1">Notes</p>
-            <p className="text-sm text-white/90">{summary.notes}</p>
+            <p className="text-sm text-white/90">{safeNotes}</p>
           </div>
         )}
       </div>

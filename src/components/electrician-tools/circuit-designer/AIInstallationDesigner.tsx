@@ -131,12 +131,38 @@ export const AIInstallationDesigner = () => {
       const designWithMetadata = {
         circuits: jobDesignData.circuits.map((circuit: any) => ({
           ...circuit,
+          // Explicitly preserve all core fields
+          name: circuit.name,
+          loadType: circuit.loadType,
           loadPower: circuit.loadPower,
           phases: circuit.phases,
           cableLength: circuit.cableLength,
+          cableSize: circuit.cableSize,
+          cpcSize: circuit.cpcSize,
+          voltage: circuit.voltage,
+          protectionDevice: circuit.protectionDevice,
+          calculations: circuit.calculations,
+          justifications: circuit.justifications,
           installationMethod: circuit.installationMethod || circuit.installMethod,
           installationGuidance: circuit.installationGuidance,
-          structuredOutput: circuit.structuredOutput
+          reasoning: circuit.reasoning,
+          rcdProtected: circuit.rcdProtected,
+          circuitNumber: circuit.circuitNumber,
+          specialLocation: circuit.specialLocation,
+          // CRITICAL: Deep clone structuredOutput to preserve all nested data
+          structuredOutput: circuit.structuredOutput ? {
+            atAGlanceSummary: circuit.structuredOutput.atAGlanceSummary ? {
+              loadKw: circuit.structuredOutput.atAGlanceSummary.loadKw,
+              loadIb: circuit.structuredOutput.atAGlanceSummary.loadIb,
+              cable: circuit.structuredOutput.atAGlanceSummary.cable,
+              protectiveDevice: circuit.structuredOutput.atAGlanceSummary.protectiveDevice,
+              voltageDrop: circuit.structuredOutput.atAGlanceSummary.voltageDrop,
+              zs: circuit.structuredOutput.atAGlanceSummary.zs,
+              complianceTick: circuit.structuredOutput.atAGlanceSummary.complianceTick,
+              notes: circuit.structuredOutput.atAGlanceSummary.notes
+            } : undefined,
+            sections: circuit.structuredOutput.sections
+          } : undefined
         })),
         projectInfo: jobInputs?.projectInfo || {
           projectName: 'Untitled Project',
@@ -150,6 +176,13 @@ export const AIInstallationDesigner = () => {
           earthingSystem: 'TN-C-S'
         }
       };
+
+      console.log('🔧 Design data mapped:', {
+        circuitCount: designWithMetadata.circuits.length,
+        firstCircuit: designWithMetadata.circuits[0]?.name,
+        hasAtAGlance: !!designWithMetadata.circuits[0]?.structuredOutput?.atAGlanceSummary,
+        loadKw: designWithMetadata.circuits[0]?.structuredOutput?.atAGlanceSummary?.loadKw
+      });
 
       setDesignData(designWithMetadata);
       sessionStorage.setItem('circuit-design-data', JSON.stringify(designWithMetadata));
