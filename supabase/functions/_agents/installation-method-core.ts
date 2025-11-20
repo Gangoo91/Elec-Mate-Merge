@@ -477,7 +477,7 @@ ${ragContext}`;
   let methodData: any;
   
   try {
-    const timeoutMs = mode === 'simplified' ? 120000 : 300000; // 2 minutes for simplified, 5 for full
+    const timeoutMs = mode === 'simplified' ? 180000 : 300000; // 3 minutes for simplified, 5 for full
     console.log(`🤖 Calling GPT-5 Mini in ${mode} mode with ${timeoutMs}ms timeout...`);
     const aiStart = Date.now();
     
@@ -504,7 +504,7 @@ ${ragContext}`;
     
     const aiDuration = Date.now() - aiStart;
     phaseTimings.openai = aiDuration;
-    const timeoutMs = mode === 'simplified' ? 120000 : 300000;
+    // timeoutMs already defined above (line 480)
     logger.info('✅ OpenAI complete', { 
       mode,
       duration: aiDuration,
