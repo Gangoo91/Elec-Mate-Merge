@@ -36,7 +36,22 @@ serve(async (req) => {
 
   const requestId = crypto.randomUUID();
   const logger = createLogger(requestId);
-  const metrics = new MetricsCollector(requestId, 'designer-agent-v2');
+  
+  // PHASE 5: Initialize metrics with safety check
+  let metrics: MetricsCollector;
+  try {
+    metrics = new MetricsCollector(requestId, 'designer-agent-v2');
+  } catch (error) {
+    console.warn('⚠️ Metrics initialization failed, continuing without metrics:', error);
+    // Create a no-op metrics collector to prevent crashes
+    metrics = {
+      setSuccess: () => {},
+      setRegulationCount: () => {},
+      setError: () => {},
+      flush: async () => {},
+      getMetrics: () => ({})
+    } as any;
+  }
 
   // Log version on every request
   logger.info(`🚀 Designer Agent V2 ${VERSION} - Request started`);

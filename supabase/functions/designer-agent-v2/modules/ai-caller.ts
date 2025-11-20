@@ -6,8 +6,15 @@
 import { callOpenAI, AIProviderError } from '../../_shared/ai-providers.ts';
 import { withRetry } from '../../_shared/retry.ts';
 
+// Model fallback chain for reliability
+const MODEL_FALLBACK_CHAIN = [
+  'gpt-5-mini-2025-08-07',  // Primary: Fast, cost-effective
+  'gpt-4.1-mini-2025-04-14', // Fallback 1: More reliable
+  'gpt-4o-mini'             // Fallback 2: Legacy reliable model
+];
+
 /**
- * Call OpenAI with retry and timeout handling
+ * Call OpenAI with retry, timeout handling, and automatic model fallback
  */
 export async function callOpenAIWithRetry(
   messages: any[],
@@ -16,57 +23,85 @@ export async function callOpenAIWithRetry(
   openAiKey: string,
   logger: any,
   timeoutMs: number = 280000,
-  batchInfo?: { current: number, total: number } // NEW: For progress tracking
+  batchInfo?: { current: number, total: number },
+  modelFallbackChain?: string[] // Optional: custom fallback chain
 ): Promise<any> {
   const batchLabel = batchInfo ? `Batch ${batchInfo.current}/${batchInfo.total}` : 'Processing';
-  logger.info(`Calling OpenAI GPT-5 Mini with ${timeoutMs}ms timeout and retry...`);
+  const fallbackChain = modelFallbackChain || MODEL_FALLBACK_CHAIN;
   
-  // Log the timeout being used
+  logger.info(`Calling OpenAI with ${timeoutMs}ms timeout and retry...`);
   console.log(`⏱️ ${batchLabel} - OpenAI timeout configured: ${timeoutMs}ms (${Math.round(timeoutMs/1000)}s)`);
   console.log(`🚀 ${batchLabel} - Starting OpenAI API call at ${new Date().toISOString()}`);
   
   const startTime = Date.now();
+  let lastError: any;
 
-  return await withRetry(async () => {
-    const response = await callOpenAI(
-      {
-        messages,
-        model: 'gpt-5-mini-2025-08-07', // FAST & EFFICIENT: GPT-5 Mini for 20-30s response time
-        max_completion_tokens: 6000, // GPT-5 uses max_completion_tokens, optimized for circuit designs (500-2000 tokens per batch)
-        tools,
-        tool_choice
-      },
-      openAiKey,
-      timeoutMs // Explicitly pass timeout
-    );
+  // Try each model in the fallback chain
+  for (let modelIndex = 0; modelIndex < fallbackChain.length; modelIndex++) {
+    const model = fallbackChain[modelIndex];
+    const isLastModel = modelIndex === fallbackChain.length - 1;
+    
+    try {
+      console.log(`🤖 ${batchLabel} - Attempting with ${model} (${modelIndex + 1}/${fallbackChain.length})`);
+      
+      const response = await withRetry(async () => {
+        const response = await callOpenAI(
+          {
+            messages,
+            model,
+            max_completion_tokens: 6000,
+            tools,
+            tool_choice
+          },
+          openAiKey,
+          timeoutMs
+        );
 
-    const elapsedSeconds = Math.round((Date.now() - startTime) / 1000);
-    console.log(`✅ ${batchLabel} - OpenAI response received in ${elapsedSeconds}s`);
-
-    return response;
-  }, {
-    maxRetries: 3,
-    baseDelayMs: 2000,
-    maxDelayMs: 10000,
-    shouldRetry: (error: unknown) => {
-      // Only retry on actual timeout/network errors, not validation errors
-      if (error instanceof Error) {
-        const msg = error.message.toLowerCase();
-        const isRetryable = msg.includes('timeout') || 
-                          msg.includes('network') || 
-                          msg.includes('econnreset') ||
-                          msg.includes('429') ||
-                          msg.includes('503');
-        
-        if (!isRetryable) {
-          console.error('❌ Non-retryable OpenAI error:', error.message);
+        return response;
+      }, {
+        maxRetries: isLastModel ? 3 : 1, // More retries on last model
+        baseDelayMs: 2000,
+        maxDelayMs: 10000,
+        shouldRetry: (error: unknown) => {
+          if (error instanceof Error) {
+            const msg = error.message.toLowerCase();
+            const isRetryable = msg.includes('timeout') || 
+                              msg.includes('network') || 
+                              msg.includes('econnreset') ||
+                              msg.includes('429') ||
+                              msg.includes('503');
+            
+            if (!isRetryable) {
+              console.error('❌ Non-retryable OpenAI error:', error.message);
+            }
+            
+            return isRetryable;
+          }
+          return false;
         }
-        
-        return isRetryable;
+      });
+
+      const elapsedSeconds = Math.round((Date.now() - startTime) / 1000);
+      console.log(`✅ ${batchLabel} - ${model} succeeded in ${elapsedSeconds}s`);
+
+      return response;
+      
+    } catch (error) {
+      lastError = error;
+      console.warn(`⚠️ ${batchLabel} - ${model} failed:`, error instanceof Error ? error.message : String(error));
+      
+      if (isLastModel) {
+        console.error(`❌ ${batchLabel} - All AI models failed. Last error:`, error);
+        throw new Error(`All AI models failed. Last error: ${error instanceof Error ? error.message : String(error)}`);
       }
-      return false;
+      
+      console.log(`🔄 ${batchLabel} - Trying fallback model: ${fallbackChain[modelIndex + 1]}...`);
+      // Wait 2 seconds before trying next model
+      await new Promise(resolve => setTimeout(resolve, 2000));
     }
-  });
+  }
+  
+  throw lastError;
 }
 
 /**
