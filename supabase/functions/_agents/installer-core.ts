@@ -21,7 +21,7 @@ const INSTALLER_TOOL = {
       properties: {
         installationSteps: {
           type: 'array',
-          minItems: 10,
+          minItems: 8,
           items: {
             type: 'object',
             properties: {
@@ -30,12 +30,10 @@ const INSTALLER_TOOL = {
               description: { type: 'string' },
               tools: { type: 'array', items: { type: 'string' }, minItems: 3 },
               materials: { type: 'array', items: { type: 'string' } },
-              safetyNotes: { type: 'array', items: { type: 'string' } },
-              linkedHazards: { type: 'array', items: { type: 'string' }, minItems: 2 },
-              qualifications: { type: 'array', items: { type: 'string' } },
-              estimatedTime: { type: 'number' }
+              linkedHazards: { type: 'array', items: { type: 'string' }, minItems: 1 },
+              qualifications: { type: 'array', items: { type: 'string' } }
             },
-            required: ['step', 'title', 'description', 'tools', 'estimatedTime']
+            required: ['step', 'title', 'description', 'tools']
           }
         },
         toolsRequired: {
@@ -74,7 +72,7 @@ CRITICAL REQUIREMENTS:
 7. Reference regulation numbers (e.g., BS 7671 Reg 411.3.2)
 
 OUTPUT FORMAT:
-- 10-16 detailed installation steps breaking down the full workflow:
+- 8-14 detailed installation steps breaking down the full workflow:
   * Site preparation & safety setup (isolation, signage, barriers)
   * Isolation procedures & dead testing
   * Cable installation & routing (containment, support, protection)
