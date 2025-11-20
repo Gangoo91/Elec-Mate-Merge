@@ -3,7 +3,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Shield, Wrench, CheckCircle, Clock, Zap, XCircle, FileText, ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { TimelineExpectation } from './TimelineExpectation';
-import { animateValue } from '@/utils/animation-helpers';
 import { Button } from '@/components/ui/button';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 
@@ -44,18 +43,35 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
   hsAgentStatus = 'pending',
   installerAgentStatus = 'pending',
 }) => {
-  const [displayProgress, setDisplayProgress] = React.useState(0);
+  const [timerProgress, setTimerProgress] = React.useState(0);
+  const [isComplete, setIsComplete] = React.useState(false);
   const [showCancelDialog, setShowCancelDialog] = useState(false);
 
+  // Timer-based smooth progress: 0-95% over 3:30 (210 seconds)
   React.useEffect(() => {
-    const cleanup = animateValue(
-      displayProgress,
-      overallProgress,
-      300,
-      (value) => setDisplayProgress(value)
-    );
-    return cleanup;
-  }, [overallProgress]);
+    const TOTAL_TIME = 210; // 3 minutes 30 seconds
+    const MAX_PROGRESS = 95; // Never go above 95% until complete
+    
+    const interval = setInterval(() => {
+      setTimerProgress(prev => {
+        if (prev >= MAX_PROGRESS) return MAX_PROGRESS;
+        const increment = (MAX_PROGRESS / TOTAL_TIME); // ~0.45% per second
+        return Math.min(prev + increment, MAX_PROGRESS);
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Jump to 100% when actually complete
+  React.useEffect(() => {
+    if (overallProgress >= 100 && !isComplete) {
+      setTimerProgress(100);
+      setIsComplete(true);
+    }
+  }, [overallProgress, isComplete]);
+
+  const displayProgress = isComplete ? 100 : timerProgress;
 
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);

@@ -841,7 +841,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     <Button 
                       onClick={addRisk} 
                       size="sm" 
-                      className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card"
+                      className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card min-h-[48px] px-4 md:px-3 md:min-h-[40px] text-base md:text-sm touch-manipulation"
                     >
                       <Plus className="h-4 w-4 mr-1" />
                       Add Hazard
@@ -940,8 +940,8 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   {/* Competency Matrix */}
                   <CompetencyMatrixCard methodData={methodData as MethodStatementData} />
 
-                  {/* PPE Details */}
-                  <PPEDetailsGrid methodData={methodData as MethodStatementData} />
+                  {/* PPE Details - REMOVED: Already shown in Risk Assessment tab */}
+                  {/* <PPEDetailsGrid methodData={methodData as MethodStatementData} /> */}
 
                   {/* Progress Summary */}
                   {methodData.steps && methodData.steps.length > 0 && (
@@ -962,7 +962,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                         <Button 
                           onClick={addStep} 
                           size="sm" 
-                          className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card"
+                          className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card min-h-[48px] px-4 md:px-3 md:min-h-[40px] text-base md:text-sm touch-manipulation"
                         >
                           <Plus className="h-4 w-4 mr-1" />
                           Add Step

@@ -218,8 +218,13 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                     <h5 className="text-sm font-bold text-elec-light">⚠️ Safety Requirements</h5>
                   </div>
                   {isEditing && (
-                    <Button variant="ghost" size="sm" onClick={handleAddSafety}>
-                      <Plus className="h-4 w-4" />
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={handleAddSafety}
+                      className="min-h-[44px] min-w-[44px] touch-manipulation hover:bg-amber-500/20"
+                    >
+                      <Plus className="h-5 w-5" />
                     </Button>
                   )}
                 </div>
@@ -254,8 +259,13 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                       <h5 className="text-sm font-semibold text-elec-light">Equipment Needed</h5>
                     </div>
                     {isEditing && (
-                      <Button variant="ghost" size="sm" onClick={handleAddEquipment}>
-                        <Plus className="h-4 w-4" />
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={handleAddEquipment}
+                        className="min-h-[44px] min-w-[44px] touch-manipulation hover:bg-blue-500/20"
+                      >
+                        <Plus className="h-5 w-5" />
                       </Button>
                     )}
                   </div>
@@ -288,8 +298,13 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                       <h5 className="text-sm font-semibold text-elec-light">Qualifications Required</h5>
                     </div>
                     {isEditing && (
-                      <Button variant="ghost" size="sm" onClick={handleAddQualification}>
-                        <Plus className="h-4 w-4" />
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={handleAddQualification}
+                        className="min-h-[44px] min-w-[44px] touch-manipulation hover:bg-purple-500/20"
+                      >
+                        <Plus className="h-5 w-5" />
                       </Button>
                     )}
                   </div>
@@ -322,8 +337,13 @@ export const EnhancedStepCard: React.FC<EnhancedStepCardProps> = ({
                       <h5 className="text-sm font-semibold text-elec-light">Assigned Personnel</h5>
                     </div>
                     {isEditing && (
-                      <Button variant="ghost" size="sm" onClick={handleAddPersonnel}>
-                        <Plus className="h-4 w-4" />
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={handleAddPersonnel}
+                        className="min-h-[44px] min-w-[44px] touch-manipulation hover:bg-green-500/20"
+                      >
+                        <Plus className="h-5 w-5" />
                       </Button>
                     )}
                   </div>
