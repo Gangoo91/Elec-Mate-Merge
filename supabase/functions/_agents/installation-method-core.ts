@@ -329,9 +329,17 @@ ${ragContext}`;
   let methodData: any;
   
   try {
-    console.log('🤖 Calling GPT-5 Mini with 4-minute timeout protection...');
-    console.log(`⏱️ Timeout configured: 240000ms (4 minutes)`);
+    console.log('🤖 Calling GPT-5 Mini with extended timeout...');
+    console.log(`⏱️ Timeout configured: 300000ms (5 minutes)`);
     const aiStart = Date.now();
+    
+    // Heartbeat during AI call to show progress
+    const aiHeartbeat = setInterval(async () => {
+      if (onProgress) {
+        const elapsed = Math.floor((Date.now() - aiStart) / 1000);
+        await onProgress(Math.min(95, 47 + elapsed), `Installer: Generating installation method (${elapsed}s elapsed)...`);
+      }
+    }, 10000); // Every 10 seconds
     
     const response = await callOpenAI({
       messages: [
@@ -341,14 +349,17 @@ ${ragContext}`;
       model: 'gpt-5-mini-2025-08-07',
       tools: [INSTALLATION_METHOD_TOOL],
       tool_choice: { type: 'function', function: { name: 'provide_installation_method_guidance' } }
-    }, Deno.env.get('OPENAI_API_KEY')!, 240000); // Built-in 4-minute timeout
+    }, Deno.env.get('OPENAI_API_KEY')!); // Use default 5-minute timeout
+    
+    // Clear heartbeat
+    clearInterval(aiHeartbeat);
     
     const aiDuration = Date.now() - aiStart;
     phaseTimings.openai = aiDuration;
     logger.info('✅ OpenAI complete', { 
       duration: aiDuration,
       durationSeconds: Math.round(aiDuration / 1000),
-      percentOfTimeout: Math.round((aiDuration / 240000) * 100)
+      percentOfTimeout: Math.round((aiDuration / 300000) * 100)
     });
 
     if (!response.toolCalls || response.toolCalls.length === 0) {
