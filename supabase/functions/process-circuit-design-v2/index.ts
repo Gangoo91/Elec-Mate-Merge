@@ -19,7 +19,6 @@ import { searchCircuitRegulations } from '../_shared/circuit-rag.ts';
 import { designCircuits } from '../_agents/circuit-designer-core.ts';
 import { generateInstallationMethods } from '../_agents/installation-method-core.ts';
 
-const AGENT_TIMEOUT_MS = 180000; // 3 minutes (mirror RAMS timeout)
 const VERSION = 'v2.0.0-unified';
 
 Deno.serve(async (req) => {
@@ -236,15 +235,8 @@ Deno.serve(async (req) => {
     logger.info('🤖 Starting AI agent generation in parallel...');
     const startTime = Date.now();
 
-    // Timeout protection
-    const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(
-        () => reject(new Error('Generation timeout after 3 minutes')),
-        AGENT_TIMEOUT_MS
-      );
-    });
-
-    const agentsPromise = Promise.allSettled([
+    // Each agent manages its own timeout internally
+    const [designerResult, installerResult] = await Promise.allSettled([
       // Circuit Designer Agent
       designerCacheResult.hit
         ? Promise.resolve(designerCacheResult.data)
@@ -268,11 +260,6 @@ Deno.serve(async (req) => {
             sharedRegulations
           )
     ]);
-
-    const [designerResult, installerResult] = await Promise.race([
-      agentsPromise,
-      timeoutPromise
-    ]) as PromiseSettledResult<any>[];
 
     // Log cache performance
     if (designerCacheResult.hit) {
