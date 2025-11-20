@@ -94,7 +94,7 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
           <span>•</span>
           <span>{(design.totalLoad / 1000).toFixed(1)}kW</span>
           <span>•</span>
-          <span>{design.consumerUnit.mainSwitchRating}A</span>
+          <span>{design.consumerUnit?.mainSwitchRating || 100}A</span>
         </div>
       </div>
 
