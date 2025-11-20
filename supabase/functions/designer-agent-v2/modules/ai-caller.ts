@@ -31,8 +31,8 @@ export async function callOpenAIWithRetry(
     const response = await callOpenAI(
       {
         messages,
-        model: 'gpt-5-mini-2025-08-07', // FAST & EFFICIENT: GPT-5 Mini for 45-60s response time
-        max_completion_tokens: 32000, // GPT-5 uses max_completion_tokens, increased for complex multi-circuit designs
+        model: 'gpt-5-mini-2025-08-07', // FAST & EFFICIENT: GPT-5 Mini for 20-30s response time
+        max_completion_tokens: 6000, // GPT-5 uses max_completion_tokens, optimized for circuit designs (500-2000 tokens per batch)
         tools,
         tool_choice
       },
