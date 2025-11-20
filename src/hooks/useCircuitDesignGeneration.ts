@@ -68,8 +68,15 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
         .single();
       
       if (!error && data) {
-        console.log('📊 Polling update:', (data as any).status, (data as any).progress + '%');
+        const jobStatus = (data as any).status;
+        console.log('📊 Polling update:', jobStatus, (data as any).progress + '%');
         setJob(data as any as CircuitDesignJob);
+        
+        // Stop polling when job reaches terminal state
+        if (jobStatus === 'complete' || jobStatus === 'failed' || jobStatus === 'cancelled') {
+          console.log('✅ Job finished, stopping poll interval');
+          clearInterval(pollInterval);
+        }
       }
     }, 10000);
 
@@ -94,7 +101,12 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
           
           setJob(updatedJob);
           
-          // FIX #3: Remove frontend stuck-job cleanup - backend handles timeouts
+          // Unsubscribe when job completes
+          if (updatedJob.status === 'complete' || updatedJob.status === 'failed' || updatedJob.status === 'cancelled') {
+            console.log('✅ Job finished, unsubscribing from Realtime');
+            supabase.removeChannel(channel);
+          }
+          
           // Clear any existing timeout when job updates
           if (stuckCheckTimeout) {
             clearTimeout(stuckCheckTimeout);
