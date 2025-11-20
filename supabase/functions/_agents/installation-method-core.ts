@@ -12,7 +12,73 @@ import { searchInstallationPractices, searchCircuitRegulations } from '../_share
 import { callOpenAI } from '../_shared/ai-providers.ts';
 import { createLogger } from '../_shared/logger.ts';
 
-const INSTALLATION_METHOD_TOOL = {
+// Simplified schema for Circuit Designer integration (flexible quality-focused)
+const INSTALLATION_METHOD_TOOL_SIMPLIFIED = {
+  type: 'function' as const,
+  function: {
+    name: 'provide_installation_guidance',
+    description: 'Generate installation and testing guidance for circuit design documentation',
+    parameters: {
+      type: 'object',
+      properties: {
+        installationGuidance: {
+          type: 'object',
+          properties: {
+            safetyConsiderations: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Key safety points - scale with installation complexity',
+              minItems: 4  // At least 4, but can expand to 10+ for complex work
+            },
+            fixingsAndSupport: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Cable support and fixing requirements - comprehensive coverage',
+              minItems: 3  // At least 3, can expand to 8+ for complex routing
+            },
+            cableRouting: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Cable routing guidance - thorough and well-considered',
+              minItems: 4  // At least 4, can expand to 10+ for complex routes
+            },
+            termination: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Termination requirements - complete and detailed',
+              minItems: 3  // At least 3, can expand to 8+ for complex terminations
+            }
+          },
+          required: ['safetyConsiderations', 'fixingsAndSupport', 'cableRouting', 'termination']
+        },
+        testingRequirements: {
+          type: 'object',
+          properties: {
+            intro: {
+              type: 'string',
+              description: 'Professional introduction to testing requirements'
+            },
+            tests: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Required tests - comprehensive coverage of BS 7671 Part 6',
+              minItems: 6  // At least 6 core tests, can expand to 12+ for complex circuits
+            },
+            recordingNote: {
+              type: 'string',
+              description: 'Note about recording requirements (EIC/Schedule of Test Results reference)'
+            }
+          },
+          required: ['intro', 'tests', 'recordingNote']
+        }
+      },
+      required: ['installationGuidance', 'testingRequirements']
+    }
+  }
+};
+
+// Full schema for standalone Installation Specialist (comprehensive RAMS)
+const INSTALLATION_METHOD_TOOL_FULL = {
   type: 'function' as const,
   function: {
     name: 'provide_installation_method_guidance',
@@ -169,11 +235,84 @@ TESTING PROCEDURES (3+ procedures): Test name, BS 7671 Part 6 standard, procedur
 
 Use RAG context to extract accurate tools, materials, and regulations.`;
 
+const SYSTEM_PROMPT_SIMPLIFIED = `You are an Installation Guidance Specialist providing comprehensive, well-thought-out installation and testing guidance for electrical circuit design documentation.
+
+CRITICAL REQUIREMENTS:
+1. UK English ONLY
+2. Follow BS 7671:2018+A2:2022 strictly
+3. Professional, thorough, and detailed language
+4. Scale guidance based on installation complexity - don't artificially limit yourself
+5. Demonstrate expertise through comprehensive coverage
+
+INSTALLATION GUIDANCE (4 subsections - be thorough):
+
+1. SAFETY CONSIDERATIONS (minimum 4, expand as needed):
+   - Isolation and proving dead procedures
+   - Safe isolation to GS38 standards
+   - Circuit-specific safety requirements
+   - Polarity verification
+   - Working at height considerations (if applicable)
+   - Confined space requirements (if applicable)
+   - Hot work procedures (if applicable)
+   - Additional hazard-specific controls
+
+2. FIXINGS & SUPPORT (minimum 3, expand as needed):
+   - Cable support intervals per BS 7671 Table 4A2/4A3
+   - Appropriate clips/cleats/trunking for installation method
+   - Support distance from terminations
+   - Manufacturer recommendations for cable type
+   - Special considerations (fire barriers, thermal insulation, etc.)
+   - Expansion joints (if required)
+   - Mechanical protection requirements
+
+3. CABLE ROUTING (minimum 4, expand as needed):
+   - BS 7671 Reg 522 compliance (mechanical protection)
+   - Minimum bending radii for cable type
+   - Phase grouping requirements (if 3-phase)
+   - Separation from other services
+   - Protection zones and safe zones
+   - Cable segregation (power vs data)
+   - Fire barrier penetrations
+   - Thermal insulation considerations
+   - Voltage band segregation
+
+4. TERMINATION (minimum 3, expand as needed):
+   - Cable preparation and stripping
+   - Cable glands/grommets requirements
+   - CPC continuity and bonding
+   - Phase sequence (if 3-phase: Brown-Black-Grey, L1-L2-L3)
+   - Torque settings for terminations
+   - Circuit labelling to BS 7671 Reg 514
+   - Neutral and earth bar allocation
+   - Cable identification and marking
+
+TESTING REQUIREMENTS (minimum 6 tests, expand as needed):
+
+Intro: Reference BS 7671 Part 6 (Chapter 64) and the correct testing sequence.
+
+Tests (scale based on circuit complexity):
+- Continuity of protective conductors (R1+R2 or R2)
+- Continuity of ring final circuit conductors (if applicable)
+- Insulation resistance (minimum 1MΩ at 500V DC for LV circuits)
+- Polarity verification
+- Earth fault loop impedance (Zs) - reference max Zs from circuit design
+- Phase sequence (if 3-phase) - confirm correct rotation
+- RCD operation and tripping times (if applicable) - test at 1× and 5× IΔn
+- Functional testing of all equipment
+- Voltage measurement under load (if specified)
+- Prospective fault current (if specified)
+- Additional circuit-specific tests
+
+Recording note: All test results must be recorded on the Electrical Installation Certificate (EIC) and Schedule of Test Results in accordance with BS 7671:2018+A2:2022 Appendix 6.
+
+Extract relevant details from RAG context and circuit specifications. Be comprehensive and demonstrate professional expertise.`;
+
 export async function generateInstallationMethod(
   query: string,
   projectDetails: any,
   onProgress?: (progress: number, step: string) => void,
-  sharedRegulations?: any[]
+  sharedRegulations?: any[],
+  mode: 'full' | 'simplified' = 'full'  // NEW: Mode parameter for schema selection
 ): Promise<any> {
   console.log('🔧 Installation Method Agent starting...');
   const startTime = Date.now();
@@ -310,16 +449,25 @@ export async function generateInstallationMethod(
     .join('\n\n');
 
   // STEP 2: GPT-5 Mini with tool calling
-  if (onProgress) onProgress(40, 'Installation Method: Generating comprehensive installation guide...');
+  // Select schema and prompt based on mode
+  const toolSchema = mode === 'simplified' ? INSTALLATION_METHOD_TOOL_SIMPLIFIED : INSTALLATION_METHOD_TOOL_FULL;
+  const systemPrompt = mode === 'simplified' ? SYSTEM_PROMPT_SIMPLIFIED : SYSTEM_PROMPT;
+  const functionName = toolSchema.function.name;
+  
+  // Mode-aware progress message
+  const progressMsg = mode === 'simplified' 
+    ? 'Installation Method: Generating installation guidance...'
+    : 'Installation Method: Generating comprehensive installation guide...';
+  if (onProgress) onProgress(40, progressMsg);
   
   const userPrompt = `Project: ${projectDetails.jobTitle || 'Electrical Installation'}
 Location: ${projectDetails.location || 'Site'}
 Installation Type: ${projectDetails.workType || query}
 
-Generate professional installation method statement for PDF export:
-- 6-10 installation steps (100-150 words each)
-- Testing procedures with BS 7671 Part 6 compliance
-- Extract tools/materials from RAG context below
+${mode === 'simplified' 
+  ? 'Generate installation and testing guidance for circuit design documentation.'
+  : 'Generate professional installation method statement for PDF export:\n- 6-10 installation steps (100-150 words each)\n- Testing procedures with BS 7671 Part 6 compliance\n- Extract tools/materials from RAG context below'
+}
 
 Query: ${query}
 
@@ -329,41 +477,43 @@ ${ragContext}`;
   let methodData: any;
   
   try {
-    console.log('🤖 Calling GPT-5 Mini with extended timeout...');
-    console.log(`⏱️ Timeout configured: 300000ms (5 minutes)`);
+    const timeoutMs = mode === 'simplified' ? 120000 : 300000; // 2 minutes for simplified, 5 for full
+    console.log(`🤖 Calling GPT-5 Mini in ${mode} mode with ${timeoutMs}ms timeout...`);
     const aiStart = Date.now();
     
     // Heartbeat during AI call to show progress
     const aiHeartbeat = setInterval(async () => {
       if (onProgress) {
         const elapsed = Math.floor((Date.now() - aiStart) / 1000);
-        await onProgress(Math.min(95, 47 + elapsed), `Installer: Generating installation method (${elapsed}s elapsed)...`);
+        await onProgress(Math.min(95, 47 + elapsed), `Installer: Generating ${mode === 'simplified' ? 'guidance' : 'method statement'} (${elapsed}s elapsed)...`);
       }
     }, 10000); // Every 10 seconds
     
     const response = await callOpenAI({
       messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt }
       ],
       model: 'gpt-5-mini-2025-08-07',
-      tools: [INSTALLATION_METHOD_TOOL],
-      tool_choice: { type: 'function', function: { name: 'provide_installation_method_guidance' } }
-    }, Deno.env.get('OPENAI_API_KEY')!); // Use default 5-minute timeout
+      tools: [toolSchema],
+      tool_choice: { type: 'function', function: { name: functionName } }
+    }, Deno.env.get('OPENAI_API_KEY')!, timeoutMs)
     
     // Clear heartbeat
     clearInterval(aiHeartbeat);
     
     const aiDuration = Date.now() - aiStart;
     phaseTimings.openai = aiDuration;
+    const timeoutMs = mode === 'simplified' ? 120000 : 300000;
     logger.info('✅ OpenAI complete', { 
+      mode,
       duration: aiDuration,
       durationSeconds: Math.round(aiDuration / 1000),
-      percentOfTimeout: Math.round((aiDuration / 300000) * 100)
+      percentOfTimeout: Math.round((aiDuration / timeoutMs) * 100)
     });
 
     if (!response.toolCalls || response.toolCalls.length === 0) {
-      throw new Error('GPT-5 Mini did not return installation method tool call');
+      throw new Error(`GPT-5 Mini did not return ${mode} installation method tool call`);
     }
 
     methodData = JSON.parse(response.toolCalls[0].function.arguments);
@@ -416,7 +566,32 @@ ${ragContext}`;
     ];
   };
   
-  // Return complete installation method data
+  // Return data based on mode
+  if (mode === 'simplified') {
+    // Simplified mode: Return installation guidance structure for Circuit Designer
+    return {
+      installationGuidance: methodData.installationGuidance || {
+        safetyConsiderations: [],
+        fixingsAndSupport: [],
+        cableRouting: [],
+        termination: []
+      },
+      testingRequirements: methodData.testingRequirements || {
+        intro: '',
+        tests: [],
+        recordingNote: ''
+      },
+      ragCitations: ragResults
+        .map((r: any) => ({
+          regulation: r.regulation_number || r.regulation || r.topic || null,
+          content: r.content || r.primary_topic || r.description || '',
+          source: r.source || 'practical_work_intelligence'
+        }))
+        .filter(c => c.regulation !== null && c.content.length > 0)
+    };
+  }
+  
+  // Full mode: Return complete installation method data for standalone RAMS
   return {
     executiveSummary: methodData.executiveSummary,
     materialsList: methodData.materialsList || [],
@@ -447,7 +622,8 @@ ${ragContext}`;
 export async function generateInstallationMethods(
   jobInputs: any,
   progressCallback: (progress: number, step: string) => Promise<void>,
-  sharedRegulations?: any[]
+  sharedRegulations?: any[],
+  mode: 'full' | 'simplified' = 'simplified'  // NEW: Default to simplified for Circuit Designer
 ): Promise<any> {
   
   console.log('🛠️ Installation Method Agent starting...');
@@ -484,7 +660,7 @@ export async function generateInstallationMethods(
   };
   
   // Call existing generateInstallationMethod
-  const result = await generateInstallationMethod(query, projectDetails, updateProgress);
+  const result = await generateInstallationMethod(query, projectDetails, updateProgress, sharedRegulations, mode);
   
   await progressCallback(90, 'Installer: Finalizing method statement...');
   await progressCallback(100, 'Installer: Complete ✓');
