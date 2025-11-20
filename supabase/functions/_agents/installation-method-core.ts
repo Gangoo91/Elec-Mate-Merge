@@ -667,6 +667,21 @@ export async function generateInstallationMethods(
   
   console.log('✅ Installation methods generated successfully');
   
+  // Return proper structure based on mode
+  if (mode === 'simplified') {
+    return {
+      installationGuidance: result.installationGuidance || {},
+      testingRequirements: result.testingRequirements || {},
+      ragCitations: result.ragCitations || [],
+      metadata: {
+        completedAt: new Date().toISOString(),
+        regulationsUsed: sharedRegulations?.length || 0,
+        mode: mode
+      }
+    };
+  }
+  
+  // Full mode returns steps
   return {
     methods: result.steps || [],
     metadata: {

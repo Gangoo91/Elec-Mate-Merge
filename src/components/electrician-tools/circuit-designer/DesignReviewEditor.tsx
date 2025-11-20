@@ -1662,7 +1662,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
             {/* 7. Expected Test Results */}
             {currentCircuit.expectedTestResults && (
-              <div className="space-y-3 bg-card/50 p-4 rounded-lg border border-primary/10">
+              <div className="space-y-4 bg-card/50 p-4 rounded-lg border border-primary/10">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <ClipboardCheck className="h-4 w-4 text-primary" />
@@ -1673,78 +1673,160 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     EIC Schedule Preview
                   </Badge>
                 </div>
-                <div className="grid gap-3">
-                  {/* R1+R2 */}
-                  <div className="bg-primary/5 p-3 rounded">
-                    <p className="text-xs text-white/60 mb-2">R1+R2 (Earth Continuity)</p>
-                    <div className="grid grid-cols-2 gap-2 text-sm">
-                      <div>
-                        <p className="text-white/60">At 20°C:</p>
-                        <p className="font-medium text-white">{currentCircuit.expectedTestResults.r1r2.at20C}</p>
+                
+                <div className="grid gap-3 md:grid-cols-2">
+                  {/* R1+R2 - Blue gradient */}
+                  <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 p-4 rounded-lg border border-blue-500/20">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+                        <span className="text-blue-400 font-bold text-xs">R₁+R₂</span>
                       </div>
                       <div>
-                        <p className="text-white/60">At 70°C:</p>
-                        <p className="font-medium text-white">{currentCircuit.expectedTestResults.r1r2.at70C}</p>
-                      </div>
-                    </div>
-                    <p className="text-xs text-white/60 mt-2">{currentCircuit.expectedTestResults.r1r2.calculation}</p>
-                  </div>
-
-                  {/* Zs */}
-                  <div className="bg-primary/5 p-3 rounded">
-                    <p className="text-xs text-white/60 mb-2">Earth Fault Loop Impedance (Zs)</p>
-                    <div className="grid grid-cols-2 gap-2 text-sm">
-                      <div>
-                        <p className="text-white/60">Calculated:</p>
-                        <p className="font-medium text-white">{currentCircuit.expectedTestResults.zs.calculated}</p>
-                      </div>
-                      <div>
-                        <p className="text-white/60">Max Permitted:</p>
-                        <p className="font-medium text-white">{currentCircuit.expectedTestResults.zs.maxPermitted}</p>
+                        <p className="text-sm font-semibold text-white">Earth Continuity</p>
+                        <p className="text-xs text-white/60">BS 7671:2018+A2 Reg 643.2.2</p>
                       </div>
                     </div>
-                    <div className={`mt-2 flex items-center gap-2 text-xs ${currentCircuit.expectedTestResults.zs.compliant ? 'text-green-600' : 'text-red-600'}`}>
-                      {currentCircuit.expectedTestResults.zs.compliant ? <CheckCircle2 className="h-3 w-3" /> : <AlertTriangle className="h-3 w-3" />}
-                      <span>{currentCircuit.expectedTestResults.zs.compliant ? 'Compliant' : 'Non-compliant'}</span>
+                    <div className="grid grid-cols-2 gap-3 mb-2">
+                      <div className="bg-blue-500/5 p-2 rounded">
+                        <p className="text-xs text-blue-300/80 mb-1">At 20°C</p>
+                        <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.r1r2.at20C}</p>
+                      </div>
+                      <div className="bg-blue-500/5 p-2 rounded">
+                        <p className="text-xs text-blue-300/80 mb-1">At 70°C</p>
+                        <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.r1r2.at70C}</p>
+                      </div>
+                    </div>
+                    <div className="text-xs text-white/50 leading-relaxed border-t border-blue-500/10 pt-2 mt-2">
+                      {currentCircuit.expectedTestResults.r1r2.calculation}
                     </div>
                   </div>
 
-                  {/* Insulation Resistance */}
-                  <div className="bg-primary/5 p-3 rounded">
-                    <p className="text-xs text-white/60 mb-2">Insulation Resistance</p>
-                    <div className="grid grid-cols-2 gap-2 text-sm">
-                      <div>
-                        <p className="text-white/60">Test Voltage:</p>
-                        <p className="font-medium text-white">{currentCircuit.expectedTestResults.insulationResistance.testVoltage}</p>
+                  {/* Zs - Green/Red based on compliance */}
+                  <div className={`bg-gradient-to-br p-4 rounded-lg border ${
+                    currentCircuit.expectedTestResults.zs.compliant 
+                      ? 'from-green-500/10 to-green-600/5 border-green-500/20' 
+                      : 'from-red-500/10 to-red-600/5 border-red-500/20'
+                  }`}>
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                        currentCircuit.expectedTestResults.zs.compliant 
+                          ? 'bg-green-500/20' 
+                          : 'bg-red-500/20'
+                      }`}>
+                        <span className={`font-bold text-xs ${
+                          currentCircuit.expectedTestResults.zs.compliant 
+                            ? 'text-green-400' 
+                            : 'text-red-400'
+                        }`}>Zs</span>
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white">Earth Fault Loop Impedance</p>
+                        <p className="text-xs text-white/60">BS 7671:2018+A2 Reg 411.4.4</p>
+                      </div>
+                      {currentCircuit.expectedTestResults.zs.compliant ? (
+                        <CheckCircle2 className="h-5 w-5 text-green-400" />
+                      ) : (
+                        <AlertTriangle className="h-5 w-5 text-red-400" />
+                      )}
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 mb-2">
+                      <div className={`p-2 rounded ${
+                        currentCircuit.expectedTestResults.zs.compliant 
+                          ? 'bg-green-500/5' 
+                          : 'bg-red-500/5'
+                      }`}>
+                        <p className={`text-xs mb-1 ${
+                          currentCircuit.expectedTestResults.zs.compliant 
+                            ? 'text-green-300/80' 
+                            : 'text-red-300/80'
+                        }`}>Calculated</p>
+                        <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.zs.calculated}</p>
+                      </div>
+                      <div className={`p-2 rounded ${
+                        currentCircuit.expectedTestResults.zs.compliant 
+                          ? 'bg-green-500/5' 
+                          : 'bg-red-500/5'
+                      }`}>
+                        <p className={`text-xs mb-1 ${
+                          currentCircuit.expectedTestResults.zs.compliant 
+                            ? 'text-green-300/80' 
+                            : 'text-red-300/80'
+                        }`}>Max Permitted</p>
+                        <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.zs.maxPermitted}</p>
+                      </div>
+                    </div>
+                    <div className={`text-xs font-semibold ${
+                      currentCircuit.expectedTestResults.zs.compliant 
+                        ? 'text-green-400' 
+                        : 'text-red-400'
+                    }`}>
+                      {currentCircuit.expectedTestResults.zs.compliant 
+                        ? '✓ Compliant - Disconnection time \u003c0.4s achieved' 
+                        : '✗ Non-compliant - Review cable size or Ze'}
+                    </div>
+                  </div>
+
+                  {/* Insulation Resistance - Purple gradient */}
+                  <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 p-4 rounded-lg border border-purple-500/20">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center">
+                        <span className="text-purple-400 font-bold text-xs">IR</span>
                       </div>
                       <div>
-                        <p className="text-white/60">Min Required:</p>
-                        <p className="font-medium text-white">{currentCircuit.expectedTestResults.insulationResistance.minResistance}</p>
+                        <p className="text-sm font-semibold text-white">Insulation Resistance</p>
+                        <p className="text-xs text-white/60">BS 7671:2018+A2 Reg 643.3.1</p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="bg-purple-500/5 p-2 rounded">
+                        <p className="text-xs text-purple-300/80 mb-1">Test Voltage</p>
+                        <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.insulationResistance.testVoltage}</p>
+                      </div>
+                      <div className="bg-purple-500/5 p-2 rounded">
+                        <p className="text-xs text-purple-300/80 mb-1">Min Required</p>
+                        <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.insulationResistance.minResistance}</p>
                       </div>
                     </div>
                   </div>
 
-                  {/* Polarity */}
-                  <div className="bg-primary/5 p-3 rounded">
-                    <p className="text-xs text-white/60 mb-1">Polarity</p>
-                    <p className="text-sm font-medium text-white">{currentCircuit.expectedTestResults.polarity}</p>
+                  {/* Polarity - Amber gradient */}
+                  <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 p-4 rounded-lg border border-amber-500/20">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
+                        <span className="text-amber-400 font-bold text-xs">P</span>
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-white">Polarity Test</p>
+                        <p className="text-xs text-white/60">BS 7671:2018+A2 Reg 643.4</p>
+                      </div>
+                    </div>
+                    <p className="text-sm text-white/90 leading-relaxed bg-amber-500/5 p-2 rounded">
+                      {currentCircuit.expectedTestResults.polarity}
+                    </p>
                   </div>
 
-                  {/* RCD Test */}
+                  {/* RCD Test - Cyan gradient */}
                   {currentCircuit.rcdProtected && currentCircuit.expectedTestResults.rcdTest && (
-                    <div className="bg-primary/5 p-3 rounded">
-                      <p className="text-xs text-white/60 mb-2">RCD Trip Times</p>
-                      <div className="grid grid-cols-2 gap-2 text-sm">
-                        <div>
-                          <p className="text-white/60">At 1× IΔn:</p>
-                          <p className="font-medium text-white">{currentCircuit.expectedTestResults.rcdTest.at1x}</p>
+                    <div className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 p-4 rounded-lg border border-cyan-500/20 md:col-span-2">
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                          <span className="text-cyan-400 font-bold text-xs">RCD</span>
                         </div>
                         <div>
-                          <p className="text-white/60">At 5× IΔn:</p>
-                          <p className="font-medium text-white">{currentCircuit.expectedTestResults.rcdTest.at5x}</p>
+                          <p className="text-sm font-semibold text-white">RCD Trip Times</p>
+                          <p className="text-xs text-white/60">{currentCircuit.expectedTestResults.rcdTest.regulation}</p>
                         </div>
                       </div>
-                      <p className="text-xs text-white/60 mt-2">{currentCircuit.expectedTestResults.rcdTest.regulation}</p>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-cyan-500/5 p-2 rounded">
+                          <p className="text-xs text-cyan-300/80 mb-1">At 1× IΔn (no-trip limit)</p>
+                          <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.rcdTest.at1x}</p>
+                        </div>
+                        <div className="bg-cyan-500/5 p-2 rounded">
+                          <p className="text-xs text-cyan-300/80 mb-1">At 5× IΔn (must trip)</p>
+                          <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.rcdTest.at5x}</p>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>

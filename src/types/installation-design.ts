@@ -137,6 +137,7 @@ export interface CircuitDesign {
     terminationAdvice: string;
     testingRequirements: string;
     safetyNotes: string[];
+    fixingsAndSupport?: string[];
     toolsRequired?: string[];
     estimatedInstallTime?: string;
   };
