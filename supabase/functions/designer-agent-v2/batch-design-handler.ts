@@ -164,19 +164,19 @@ ENHANCED JUSTIFICATION REQUIREMENTS (CRITICAL):
 When providing design justifications, you MUST explain WHY with 3-5 sentences minimum per justification:
 
 WHY Cable Size (include ALL of these points):
-- Load analysis: "Design current calculated as ${Ib}A based on ${loadPower}W load at ${voltage}V"
-- Iteration process: "Initial ${firstSize}mm² gave ${firstVd}% voltage drop (exceeds ${limit}%). Increased to ${finalSize}mm² achieving ${finalVd}% (compliant)."
-- Installation method impact: "Installation method ${method} with grouping factor ${Ca} reduces effective capacity from ${It}A to ${Iz}A"
-- Safety margin: "Final capacity ${Iz}A provides ${margin}% safety margin above design current"
-- Voltage drop compliance: "Achieved ${actualVd}% voltage drop vs ${limit}% limit using ${cableSize}mm² over ${length}m"
-- Future-proofing: "Cable sized with ${margin}% spare capacity for potential future load increases"
+- Load analysis: "Design current calculated as \${Ib}A based on \${loadPower}W load at \${voltage}V"
+- Iteration process: "Initial \${firstSize}mm² gave \${firstVd}% voltage drop (exceeds \${limit}%). Increased to \${finalSize}mm² achieving \${finalVd}% (compliant)."
+- Installation method impact: "Installation method \${method} with grouping factor \${Ca} reduces effective capacity from \${It}A to \${Iz}A"
+- Safety margin: "Final capacity \${Iz}A provides \${margin}% safety margin above design current"
+- Voltage drop compliance: "Achieved \${actualVd}% voltage drop vs \${limit}% limit using \${cableSize}mm² over \${length}m"
+- Future-proofing: "Cable sized with \${margin}% spare capacity for potential future load increases"
 
 WHY Protection Device (include ALL of these points):
-- Discrimination analysis: "Coordinated with upstream ${upstreamDevice}A main switch for proper discrimination"
-- Earth fault loop impedance: "Zs of ${zs}Ω provides ${margin}% margin below ${maxZs}Ω maximum (ensures <0.4s disconnection)"
-- Breaking capacity: "${kaRating}kA breaking capacity exceeds prospective fault current of ${pfc}kA"
-- Type selection rationale: "Type ${curve} curve selected for ${loadType} loads to prevent nuisance tripping while providing fast fault clearance"
-- Coordination: "Rating of ${In}A protects ${cableSize}mm² cable (${Iz}A capacity) while allowing design current of ${Ib}A"
+- Discrimination analysis: "Coordinated with upstream \${upstreamDevice}A main switch for proper discrimination"
+- Earth fault loop impedance: "Zs of \${zs}Ω provides \${margin}% margin below \${maxZs}Ω maximum (ensures <0.4s disconnection)"
+- Breaking capacity: "\${kaRating}kA breaking capacity exceeds prospective fault current of \${pfc}kA"
+- Type selection rationale: "Type \${curve} curve selected for \${loadType} loads to prevent nuisance tripping while providing fast fault clearance"
+- Coordination: "Rating of \${In}A protects \${cableSize}mm² cable (\${Iz}A capacity) while allowing design current of \${Ib}A"
 
 WHY RCD Protection (if applicable - include ALL of these points):
 - Regulation requirement: "Reg 411.3.3 mandates 30mA RCD for socket circuits to limit touch voltage to safe levels"
