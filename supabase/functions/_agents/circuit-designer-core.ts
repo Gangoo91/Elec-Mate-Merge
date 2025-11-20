@@ -5,15 +5,24 @@
  */
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { lovableAICircuit } from '../_shared/circuit-breaker.ts';
 
-export async function designCircuits(
+// Internal function for single design attempt
+async function designCircuitsInternal(
   jobInputs: any,
   progressCallback: (progress: number, step: string) => Promise<void>,
   sharedRegulations?: any[]
 ): Promise<any> {
-  
-  console.log('🔧 Circuit Designer Agent starting...');
   const startTime = Date.now();
+  
+  // PHASE 4: Check circuit breaker before proceeding
+  if (lovableAICircuit.isOpen()) {
+    throw new Error(
+      `Circuit breaker OPEN for Designer Agent - service temporarily unavailable. ` +
+      `Too many recent failures. Will retry automatically in 60 seconds.`
+    );
+  }
   
   // PHASE 2: Explicit timeout handling (280s = 4m 40s)
   const FUNCTION_TIMEOUT_MS = 280000;
@@ -121,6 +130,9 @@ export async function designCircuits(
       const duration = Date.now() - startTime;
       console.log(`✅ Designer completed ${data.design.circuits.length} circuit designs in ${(duration/1000).toFixed(1)}s`);
       
+      // PHASE 4: Record success in circuit breaker
+      lovableAICircuit.onSuccess();
+      
       return {
         circuits: data.design.circuits,
         metadata: {
@@ -132,6 +144,9 @@ export async function designCircuits(
       };
       
     } catch (caughtError) {
+      // PHASE 4: Record failure in circuit breaker
+      lovableAICircuit.onFailure();
+      
       // Log full error for debugging
       console.error('❌ Circuit Designer Core caught error:', {
         error: caughtError,
@@ -147,4 +162,85 @@ export async function designCircuits(
   
   // Race timeout against design promise
   return await Promise.race([timeoutPromise, designPromise]);
+}
+
+// PHASE 3: Smart retry with circuit splitting
+export async function designCircuits(
+  jobInputs: any,
+  progressCallback: (progress: number, step: string) => Promise<void>,
+  sharedRegulations?: any[],
+  attemptNumber: number = 1
+): Promise<any> {
+  
+  console.log(`🔧 Circuit Designer Agent starting (attempt ${attemptNumber})...`);
+  
+  try {
+    // Use retry wrapper for retryable errors (timeout, rate limit, 502/503)
+    return await withRetry(
+      () => designCircuitsInternal(jobInputs, progressCallback, sharedRegulations),
+      {
+        ...RetryPresets.STANDARD,
+        shouldRetry: (error: unknown) => {
+          if (error instanceof Error) {
+            const message = error.message.toLowerCase();
+            return message.includes('timeout') ||
+                   message.includes('rate limit') ||
+                   message.includes('502') ||
+                   message.includes('503') ||
+                   message.includes('429') ||
+                   message.includes('econnreset');
+          }
+          return false;
+        }
+      }
+    );
+  } catch (error) {
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    
+    // PHASE 3: If first attempt failed and we have many circuits, split and retry
+    if (attemptNumber === 1 && jobInputs.circuits && jobInputs.circuits.length > 5) {
+      console.warn(`⚠️ Design failed with ${jobInputs.circuits.length} circuits. Splitting into batches...`);
+      
+      await progressCallback(15, 'Designer: Retrying with split batches...');
+      
+      const halfLength = Math.ceil(jobInputs.circuits.length / 2);
+      const firstHalf = jobInputs.circuits.slice(0, halfLength);
+      const secondHalf = jobInputs.circuits.slice(halfLength);
+      
+      console.log(`🔄 Splitting: Batch 1 (${firstHalf.length} circuits), Batch 2 (${secondHalf.length} circuits)`);
+      
+      // Process both batches in parallel
+      const [firstResult, secondResult] = await Promise.all([
+        designCircuits(
+          { ...jobInputs, circuits: firstHalf },
+          progressCallback,
+          sharedRegulations,
+          2
+        ),
+        designCircuits(
+          { ...jobInputs, circuits: secondHalf },
+          progressCallback,
+          sharedRegulations,
+          2
+        )
+      ]);
+      
+      console.log(`✅ Split design completed: ${firstResult.circuits.length + secondResult.circuits.length} total circuits`);
+      
+      return {
+        circuits: [...firstResult.circuits, ...secondResult.circuits],
+        metadata: {
+          completedAt: new Date().toISOString(),
+          regulationsUsed: sharedRegulations?.length || 0,
+          totalCircuits: firstResult.circuits.length + secondResult.circuits.length,
+          retriedWithSplit: true,
+          batchCount: 2
+        }
+      };
+    }
+    
+    // No more retries, throw final error
+    console.error(`❌ All design attempts failed after ${attemptNumber} attempt(s):`, errorMsg);
+    throw error;
+  }
 }
