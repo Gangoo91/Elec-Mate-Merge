@@ -2,6 +2,10 @@
  * Installation Method Core Agent
  * ISOLATED from AI RAMS - Used ONLY by Installation Specialist
  * Generates enhanced method statements for professional PDF templates
+ * 
+ * NOTE: This file exports TWO functions:
+ * 1. generateInstallationMethod - Used by standalone installation-method-agent (existing)
+ * 2. generateInstallationMethods - Used by new circuit-design-v2 unified function (new)
  */
 
 import { retrieveInstallationKnowledge } from '../_shared/rag-installation.ts';
@@ -405,5 +409,67 @@ ${ragContext}`;
         source: r.source || 'practical_work_intelligence'
       }))
       .filter(c => c.regulation !== null && c.content.length > 0)
+  };
+}
+
+/**
+ * NEW: Wrapper for circuit-design-v2 unified function
+ * Accepts progress callbacks and shared RAG results
+ * Mirrors the signature of designCircuits in circuit-designer-core.ts
+ */
+export async function generateInstallationMethods(
+  jobInputs: any,
+  progressCallback: (progress: number, step: string) => Promise<void>,
+  sharedRegulations?: any[]
+): Promise<any> {
+  
+  console.log('🛠️ Installation Method Agent starting...');
+  
+  await progressCallback(10, 'Installer: Analyzing installation requirements...');
+  
+  // Build query from circuit parameters
+  const circuits = jobInputs.circuits || [];
+  const supply = jobInputs.supply || {};
+  
+  const query = `
+    Installation method for ${circuits.length} electrical circuits
+    ${supply.voltage || 230}V ${supply.phases || 'single'} phase
+    Earthing: ${supply.earthingSystem || 'TN-C-S'}
+    Load types: ${circuits.map((c: any) => c.loadType).join(', ')}
+    Cable lengths: ${circuits.map((c: any) => `${c.cableLength}m`).join(', ')}
+    Total power: ${circuits.reduce((sum: number, c: any) => sum + (c.loadPower || 0), 0)}W
+  `.trim();
+  
+  const projectDetails = {
+    jobTitle: jobInputs.projectName || 'Circuit Installation',
+    location: jobInputs.location || 'Not specified',
+    circuits: circuits,
+    supply: supply
+  };
+  
+  await progressCallback(30, 'Installer: Planning installation steps...');
+  
+  // Wrap progress callback for the inner function
+  const updateProgress = async (progress: number, step: string) => {
+    // Map 0-100 of inner function to 30-90 of outer function
+    const mappedProgress = 30 + Math.floor(progress * 0.6);
+    await progressCallback(mappedProgress, `Installer: ${step}`);
+  };
+  
+  // Call existing generateInstallationMethod
+  const result = await generateInstallationMethod(query, projectDetails, updateProgress);
+  
+  await progressCallback(90, 'Installer: Finalizing method statement...');
+  await progressCallback(100, 'Installer: Complete ✓');
+  
+  console.log('✅ Installation methods generated successfully');
+  
+  return {
+    methods: result.steps || [],
+    metadata: {
+      completedAt: new Date().toISOString(),
+      regulationsUsed: sharedRegulations?.length || 0,
+      totalSteps: result.steps?.length || 0
+    }
   };
 }

@@ -663,6 +663,39 @@ export type Database = {
         }
         Relationships: []
       }
+      circuit_design_cache_v4: {
+        Row: {
+          cache_key: string
+          created_at: string | null
+          design: Json
+          expires_at: string
+          hit_count: number | null
+          id: string
+          job_inputs: Json
+          last_used_at: string | null
+        }
+        Insert: {
+          cache_key: string
+          created_at?: string | null
+          design: Json
+          expires_at: string
+          hit_count?: number | null
+          id?: string
+          job_inputs: Json
+          last_used_at?: string | null
+        }
+        Update: {
+          cache_key?: string
+          created_at?: string | null
+          design?: Json
+          expires_at?: string
+          hit_count?: number | null
+          id?: string
+          job_inputs?: Json
+          last_used_at?: string | null
+        }
+        Relationships: []
+      }
       circuit_design_calculations: {
         Row: {
           calculation_name: string
@@ -815,6 +848,78 @@ export type Database = {
           last_hit_at?: string | null
           load_power?: number
           voltage?: number
+        }
+        Relationships: []
+      }
+      circuit_partial_cache: {
+        Row: {
+          agent_output: Json
+          agent_type: string
+          cache_key: string
+          created_at: string | null
+          expires_at: string
+          hit_count: number | null
+          id: string
+          job_inputs: Json
+          last_used_at: string | null
+        }
+        Insert: {
+          agent_output: Json
+          agent_type: string
+          cache_key: string
+          created_at?: string | null
+          expires_at: string
+          hit_count?: number | null
+          id?: string
+          job_inputs: Json
+          last_used_at?: string | null
+        }
+        Update: {
+          agent_output?: Json
+          agent_type?: string
+          cache_key?: string
+          created_at?: string | null
+          expires_at?: string
+          hit_count?: number | null
+          id?: string
+          job_inputs?: Json
+          last_used_at?: string | null
+        }
+        Relationships: []
+      }
+      circuit_rag_cache: {
+        Row: {
+          cache_key: string
+          created_at: string | null
+          expires_at: string
+          hit_count: number | null
+          id: string
+          knowledge_base_type: string
+          last_used_at: string | null
+          query_text: string
+          rag_results: Json
+        }
+        Insert: {
+          cache_key: string
+          created_at?: string | null
+          expires_at: string
+          hit_count?: number | null
+          id?: string
+          knowledge_base_type: string
+          last_used_at?: string | null
+          query_text: string
+          rag_results: Json
+        }
+        Update: {
+          cache_key?: string
+          created_at?: string | null
+          expires_at?: string
+          hit_count?: number | null
+          id?: string
+          knowledge_base_type?: string
+          last_used_at?: string | null
+          query_text?: string
+          rag_results?: Json
         }
         Relationships: []
       }
