@@ -834,14 +834,14 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     <AlertTriangle className="h-6 w-6 text-elec-yellow" />
                     <span>Identified Hazards</span>
                   </h4>
-                  <div className="flex items-center gap-2">
-                    <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-bold">
+                  <div className="flex flex-col md:flex-row items-stretch md:items-center gap-2">
+                    <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-bold text-center">
                       {ramsData.risks?.length || 0} Risks
                     </Badge>
                     <Button 
                       onClick={addRisk} 
                       size="sm" 
-                      className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card min-h-[48px] px-4 md:px-3 md:min-h-[40px] text-base md:text-sm touch-manipulation"
+                      className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card min-h-[44px] px-3 py-2 text-sm touch-manipulation"
                     >
                       <Plus className="h-4 w-4 mr-1" />
                       Add Hazard
@@ -955,14 +955,14 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                         <FileText className="h-5 w-5 text-elec-yellow" />
                         Installation Steps
                       </h4>
-                      <div className="flex items-center gap-2">
-                        <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-bold">
+                      <div className="flex flex-col md:flex-row items-stretch md:items-center gap-2">
+                        <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-bold text-center">
                           {methodData.steps?.length || 0} Steps
                         </Badge>
                         <Button 
                           onClick={addStep} 
                           size="sm" 
-                          className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card min-h-[48px] px-4 md:px-3 md:min-h-[40px] text-base md:text-sm touch-manipulation"
+                          className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card min-h-[44px] px-3 py-2 text-sm touch-manipulation"
                         >
                           <Plus className="h-4 w-4 mr-1" />
                           Add Step
