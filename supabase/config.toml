@@ -25,7 +25,7 @@ timeout_sec = 30
 
 [functions.process-installation-method-job]
 verify_jwt = false
-timeout_sec = 600
+timeout_sec = 30
 
 [functions.visual-analysis-rag-enhanced]
 verify_jwt = false

@@ -64,103 +64,28 @@ Deno.serve(async (req) => {
       })
       .eq('id', jobId);
 
-    // Step 2: Call installation-method-agent with heartbeat (20-80%)
-    logger.info('Calling installation-method-agent');
-    
-    const startTime = Date.now();
-    let currentProgress = 20;
-    let heartbeatInterval: number | undefined;
+    // Step 2: Trigger installation-method-agent in background (fire and forget)
+    logger.info('Starting background generation for installation method');
 
-    // Start the AI call using direct fetch for full timeout control
-    const agentUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/installation-method-agent`;
-    const agentPromise = fetch(agentUrl, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+    const agentTask = supabase.functions.invoke('installation-method-agent', {
+      body: {
         query: job.query,
         projectDetails: job.project_details,
         designerContext: job.designer_context,
-        jobId: job.id // CRITICAL: Pass jobId for job-aware processing
-      }),
-      signal: AbortSignal.timeout(360000), // 6 minutes = 360000ms
+        jobId: job.id // Agent will update job table directly
+      }
     });
 
-    // Heartbeat: Update progress every 10 seconds (20% → 80%)
-    heartbeatInterval = setInterval(async () => {
-      const elapsed = Date.now() - startTime;
-      
-      // Gradually increase from 20% to 80% over 180 seconds (3 minutes)
-      currentProgress = Math.min(80, 20 + Math.floor((elapsed / 180000) * 60));
-      
-      await supabase
-        .from('installation_method_jobs')
-        .update({
-          progress: currentProgress,
-          current_step: 'AI is generating detailed method statement steps...'
-        })
-        .eq('id', jobId);
-        
-      logger.info('Heartbeat progress update', { progress: currentProgress, elapsed });
-    }, 10000);
+    // Keep function alive until agent completes
+    EdgeRuntime.waitUntil(agentTask);
 
-    let agentData;
-
-    try {
-      const response = await agentPromise;
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Agent call failed with status ${response.status}: ${errorText}`);
-      }
-
-      agentData = await response.json();
-      
-      logger.info('Agent call completed', { duration: Date.now() - startTime });
-      
-    } finally {
-      // Always clear the heartbeat interval
-      if (heartbeatInterval !== undefined) {
-        clearInterval(heartbeatInterval);
-      }
-    }
-
-    // Step 3: Finalizing (80-100%)
-    await supabase
-      .from('installation_method_jobs')
-      .update({
-        progress: 90,
-        current_step: 'Finalizing method statement...'
-      })
-      .eq('id', jobId);
-
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    // Mark as complete
-    await supabase
-      .from('installation_method_jobs')
-      .update({
-        status: 'complete',
-        progress: 100,
-        current_step: 'Generation complete!',
-        method_data: agentData.data || agentData,
-        quality_metrics: agentData.qualityMetrics || null,
-        completed_at: new Date().toISOString()
-      })
-      .eq('id', jobId);
-
-    logger.info('✅ Job completed successfully', { 
-      jobId, 
-      totalDuration: Date.now() - startTime 
-    });
+    logger.info(`✅ Started background generation for job: ${jobId}`);
 
     return new Response(
       JSON.stringify({ 
         success: true,
-        jobId,
-        status: 'complete'
+        message: 'Method statement generation started in background',
+        jobId: jobId
       }),
       { 
         status: 200, 
