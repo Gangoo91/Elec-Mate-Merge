@@ -69,7 +69,49 @@ serve(async (req) => {
     // Progress heartbeat: AI generation phase
     await updateJobProgress(30, 'Generating circuit designs with AI...');
     
-    const result = await pipeline.execute(body);
+    // Watchdog: Auto-fail job if agent crashes without updating status
+    const watchdogTimeout = setTimeout(async () => {
+      if (jobId) {
+        const { data: currentJob } = await supabase
+          .from('circuit_design_jobs')
+          .select('status')
+          .eq('id', jobId)
+          .single();
+        
+        // If job is still processing after 10 minutes, mark as timed out
+        if (currentJob?.status === 'processing') {
+          logger.error('Watchdog timeout - marking job as failed');
+          await supabase
+            .from('circuit_design_jobs')
+            .update({
+              status: 'failed',
+              error_message: 'Agent timed out after 10 minutes without completing',
+              completed_at: new Date().toISOString()
+            })
+            .eq('id', jobId);
+        }
+      }
+    }, 600000); // 10 minutes
+
+    // HEARTBEAT: Update progress during pipeline execution to prevent stuck detection
+    let heartbeatProgress = 30;
+    const heartbeatInterval = setInterval(async () => {
+      if (heartbeatProgress < 85) {
+        heartbeatProgress = Math.min(85, heartbeatProgress + 5);
+        await updateJobProgress(heartbeatProgress, 'AI is designing circuits...');
+      }
+    }, 15000); // Every 15 seconds
+
+    let result;
+    try {
+      result = await pipeline.execute(body);
+      clearTimeout(watchdogTimeout);
+      clearInterval(heartbeatInterval);
+    } catch (error) {
+      clearTimeout(watchdogTimeout);
+      clearInterval(heartbeatInterval);
+      throw error;
+    }
     
     // Progress heartbeat: Validation phase
     await updateJobProgress(90, 'Validating compliance and finalizing...');
