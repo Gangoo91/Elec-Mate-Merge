@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { StructuredDesignWizard } from "./structured-input/StructuredDesignWizard";
 import { DesignReviewEditor } from "./DesignReviewEditor";
 import { DesignProcessingView } from "./DesignProcessingView";
@@ -18,6 +18,7 @@ export const AIInstallationDesigner = () => {
   const [designData, setDesignData] = useState<any>(null);
   const [isClearingCache, setIsClearingCache] = useState(false);
   const [jobId, setJobId] = useState<string | null>(null);
+  const successToastShown = useRef(false);
   
   // Use job polling hook
   const { job, progress, status, currentStep, designData: jobDesignData, error } = useCircuitDesignGeneration(jobId);
@@ -41,6 +42,7 @@ export const AIInstallationDesigner = () => {
 
   const handleGenerate = async (inputs: DesignInputs) => {
     try {
+      successToastShown.current = false; // Reset flag for new job
       // Store user request and circuit count for processing view
       const userDescription = inputs.additionalPrompt || 
         `${inputs.projectName} - ${inputs.circuits.length} circuit${inputs.circuits.length !== 1 ? 's' : ''}`;
@@ -122,7 +124,7 @@ export const AIInstallationDesigner = () => {
 
   // Monitor job completion
   useEffect(() => {
-    if (status === 'complete' && jobDesignData) {
+    if (status === 'complete' && jobDesignData && !successToastShown.current) {
       console.log('✅ Job complete, processing results...');
       
       // Extract project info from job inputs
@@ -193,6 +195,9 @@ export const AIInstallationDesigner = () => {
       toast.success('Design generated successfully' + cacheInfo + autoFixInfo, {
         description: `${jobDesignData.circuits?.length || 0} circuit${(jobDesignData.circuits?.length || 0) !== 1 ? 's' : ''} designed`
       });
+      
+      // Mark toast as shown
+      successToastShown.current = true;
     }
     
     if (status === 'failed' && error) {
@@ -202,7 +207,7 @@ export const AIInstallationDesigner = () => {
       setCurrentView('input');
       setJobId(null);
     }
-  }, [status, jobDesignData, error, job]);
+  }, [status, jobDesignData, error]);
 
   // Load design data from session on mount
   useEffect(() => {
