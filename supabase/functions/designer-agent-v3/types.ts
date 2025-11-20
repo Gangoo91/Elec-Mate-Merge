@@ -138,14 +138,12 @@ export interface CircuitJustifications {
   corrections?: string; // PHASE 2: Track what was corrected
 }
 
-// PHASE 3: Installation Guidance
+// PHASE 3: Installation Guidance (Basic electrical context only - detailed methods from installation specialist agent)
 export interface InstallationGuidance {
-  cableRouting: string;
-  terminationAdvice: string;
-  testingRequirements: string;
-  safetyNotes: string[];
-  toolsRequired?: string[];
-  estimatedInstallTime?: string;
+  cableRouting: string; // Installation method reference from BS 7671 Appendix 4
+  terminationAdvice: string; // Basic termination requirements
+  testingRequirements: string; // Required electrical tests per BS 7671 Part 6
+  safetyNotes: string[]; // Electrical safety warnings only
 }
 
 // PHASE 4: Design Reasoning

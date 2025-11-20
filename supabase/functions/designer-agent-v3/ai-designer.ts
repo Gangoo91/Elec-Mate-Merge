@@ -111,7 +111,8 @@ export class AIDesigner {
     // Output format
     parts.push('=== OUTPUT FORMAT ===');
     parts.push('1. AT A GLANCE CARD: loadKw (loadPower/1000), loadIb (Ib with unit), Cable, Device, VD (pass/fail), Zs, Compliance, Notes');
-    parts.push('2. 9 SECTIONS: Circuit Summary, Load Details, Cable Selection & Calc, Device Selection, Compliance, Justification, Installation, Safety, Testing');
+    parts.push('2. 9 SECTIONS: Circuit Summary, Load Details, Cable Selection & Calc, Device Selection, Compliance, Justification, Installation Context (basic electrical only), Safety, Testing');
+    parts.push('3. INSTALLATION: Provide only electrical installation method reference, basic termination requirements, and required tests. Detailed practical work methods handled by installation specialist agent.');
     parts.push('');
     
     // Core design rules
@@ -178,7 +179,8 @@ export class AIDesigner {
     // Consolidated format and rules
     parts.push('=== OUTPUT FORMAT ===');
     parts.push('1. AT A GLANCE: loadKw (loadPower/1000), loadIb, Cable, Device, VD, Zs, Compliance, Notes');
-    parts.push('2. 9 SECTIONS: Circuit Summary, Load Details, Cable Selection & Calc, Device Selection, Compliance, Justification, Installation, Safety, Testing');
+    parts.push('2. 9 SECTIONS: Circuit Summary, Load Details, Cable Selection & Calc, Device Selection, Compliance, Justification, Installation Context (electrical only), Safety, Testing');
+    parts.push('3. INSTALLATION: Electrical method reference, basic termination, tests only. Detailed methods from installation specialist agent.');
     parts.push('');
     
     parts.push('=== CORE RULES ===');
@@ -585,33 +587,24 @@ export class AIDesigner {
                   },
                   installationGuidance: {
                     type: 'object',
-                    description: 'PHASE 3: Practical installation guidance for electricians',
+                    description: 'PHASE 3: Basic electrical installation context (detailed methods handled by installation specialist agent)',
                     properties: {
                       cableRouting: {
                         type: 'string',
-                        description: 'How to route the cable (clip spacing, conduit size, tray spacing)'
+                        description: 'Installation method reference from BS 7671 Appendix 4 (e.g., "Method C - clipped direct", "Method B - in conduit")'
                       },
                       terminationAdvice: {
                         type: 'string',
-                        description: 'Termination best practices (ferrules, torque settings, connection method)'
+                        description: 'Basic termination requirements (e.g., "Use appropriate cable glands and maintain IP rating")'
                       },
                       testingRequirements: {
                         type: 'string',
-                        description: 'Required tests (R1+R2, Zs, insulation, polarity, RCD trip time)'
+                        description: 'Required electrical tests per BS 7671 Part 6 (R1+R2, Zs, insulation resistance, polarity, RCD trip time)'
                       },
                       safetyNotes: {
                         type: 'array',
                         items: { type: 'string' },
-                        description: 'Safety warnings and precautions'
-                      },
-                      toolsRequired: {
-                        type: 'array',
-                        items: { type: 'string' },
-                        description: 'Specific tools needed for this circuit'
-                      },
-                      estimatedInstallTime: {
-                        type: 'string',
-                        description: 'Estimated installation time (e.g., "2-3 hours")'
+                        description: 'Electrical safety warnings only (e.g., "Isolate supply before work", "Verify dead with approved tester")'
                       }
                     },
                     required: ['cableRouting', 'terminationAdvice', 'testingRequirements', 'safetyNotes']
