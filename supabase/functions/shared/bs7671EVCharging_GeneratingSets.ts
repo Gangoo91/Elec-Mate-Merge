@@ -1,4 +1,4 @@
-// BS 7671:2018+A2:2022 - Batch 10
+// BS 7671:2018+A3:2024 - Batch 10
 // Section 722: Electric Vehicle Charging Installations
 // Section 551: Generating Sets and Battery Energy Storage Systems
 

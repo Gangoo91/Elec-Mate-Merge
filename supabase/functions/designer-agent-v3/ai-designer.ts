@@ -85,7 +85,7 @@ export class AIDesigner {
     const parts: string[] = [];
 
     // Core identity
-    parts.push('You are a BS 7671:2018+A2:2022 electrical circuit design expert. Design COMPLIANT circuits using the provided knowledge base. Use exact voltage/phase values from each request.');
+    parts.push('You are a BS 7671:2018+A3:2024 electrical circuit design expert. Design COMPLIANT circuits using the provided knowledge base. Use exact voltage/phase values from each request.');
     parts.push('');
 
     // Inject RAG context
@@ -151,7 +151,7 @@ export class AIDesigner {
   ): string {
     const parts: string[] = [];
 
-    parts.push(`BS 7671:2018+A2:2022 expert. Batch ${batchNumber}/${totalBatches}, ${circuitCount} circuits. Design COMPLIANT circuits.`);
+    parts.push(`BS 7671:2018+A3:2024 expert. Batch ${batchNumber}/${totalBatches}, ${circuitCount} circuits. Design COMPLIANT circuits.`);
     parts.push('');
 
     // Reduce RAG for large batches
@@ -340,7 +340,7 @@ export class AIDesigner {
   private buildCorrectionPrompt(validationErrors: string, originalDesign: Design): string {
     const parts: string[] = [];
     
-    parts.push('You are a BS 7671:2018+A2:2022 electrical circuit design expert.');
+    parts.push('You are a BS 7671:2018+A3:2024 electrical circuit design expert.');
     parts.push('');
     parts.push('=== CORRECTION MODE ===');
     parts.push('The previous design failed validation. Fix ONLY the errors listed below.');

@@ -572,7 +572,7 @@ const ProcessOnsiteGuide = () => {
             <div className="flex items-center gap-3">
               <FileText className="h-6 w-6 text-primary" />
               <div>
-                <p className="font-semibold text-primary">BS 7671:2018+A2:2022 (Wiring Regulations)</p>
+                <p className="font-semibold text-primary">BS 7671:2018+A3:2024 (Wiring Regulations)</p>
                 <p className="text-sm text-muted-foreground">
                   🔥 FOUNDATIONAL DOCUMENT - The legal basis for all electrical installations
                 </p>

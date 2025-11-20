@@ -12,7 +12,7 @@ export const expandedTestFlows: TestFlow[] = [
     isComprehensive: true,
     estimatedDuration: '4-6 hours',
     regulatoryStandards: [
-      'BS 7671:2018+A2:2022',
+      'BS 7671:2018+A3:2024',
       'IET Guidance Note 3'
     ],
     steps: [
@@ -82,7 +82,7 @@ export const expandedTestFlows: TestFlow[] = [
     difficulty: 'intermediate',
     estimatedDuration: '3-5 hours',
     regulatoryStandards: [
-      'BS 7671:2018+A2:2022',
+      'BS 7671:2018+A3:2024',
       'IET Guidance Note 3'
     ],
     steps: [
@@ -110,7 +110,7 @@ export const expandedTestFlows: TestFlow[] = [
     difficulty: 'intermediate',
     estimatedDuration: '1-2 hours',
     regulatoryStandards: [
-      'BS 7671:2018+A2:2022'
+      'BS 7671:2018+A3:2024'
     ],
     steps: [
       {

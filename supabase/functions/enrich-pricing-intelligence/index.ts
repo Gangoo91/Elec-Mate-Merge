@@ -106,7 +106,7 @@ Extract:
   "typical_lead_time_days": estimated days,
   "bulk_discount_available": true/false,
   "bulk_discount_threshold": minimum quantity,
-  "bs_standards_compliance": ["BS 7671:2018+A2:2022", etc.],
+  "bs_standards_compliance": ["BS 7671:2018+A3:2024", etc.],
   "required_for_compliance": ["Part P", "Building Regs", etc.],
   "quality_rating": "budget | standard | premium",
   "common_failure_modes": ["connection_loose", etc.],

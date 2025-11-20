@@ -12,7 +12,7 @@ import { InstallationDesign, CircuitDesign } from '@/types/installation-design';
 import { 
   CheckCircle2, AlertTriangle, AlertCircle, Download, Zap, Cable, Shield, 
   TrendingDown, Percent, Gauge, Wrench, MapPin, ClipboardCheck, FileText,
-  Upload, Loader2, Check, ChevronDown, Copy
+  Upload, Loader2, Check, ChevronDown, Copy, TestTube, Anchor, Clock
 } from 'lucide-react';
 import { downloadEICPDF } from '@/lib/eic/pdfGenerator';
 import { generateEICSchedule } from '@/lib/eic/scheduleGenerator';
@@ -1582,62 +1582,89 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
             {/* 5. Installation Method Guidance */}
             {currentCircuit.installationGuidance && (
-              <div className="space-y-3 bg-card/50 p-4 rounded-lg border border-primary/10">
+              <div className="space-y-4 bg-card/50 p-4 rounded-lg border border-primary/10">
                 <div className="flex items-center gap-2">
                   <Wrench className="h-4 w-4 text-primary" />
                   <h4 className="font-semibold text-white">Installation Guidance</h4>
                 </div>
-                <div className="space-y-3">
-                  <div className="bg-primary/5 p-3 rounded">
-                    <p className="text-xs text-elec-yellow font-medium mb-2">Cable Routing</p>
-                    <div 
-                      className="text-sm text-white leading-relaxed text-left"
-                      dangerouslySetInnerHTML={{ 
-                        __html: processElectricalText(currentCircuit.installationGuidance.cableRouting || '') 
-                      }}
-                    />
-                  </div>
-                  <div className="bg-primary/5 p-3 rounded">
-                    <p className="text-xs text-elec-yellow font-medium mb-2">Termination Advice</p>
-                    <div 
-                      className="text-sm text-white leading-relaxed text-left"
-                      dangerouslySetInnerHTML={{ 
-                        __html: processElectricalText(currentCircuit.installationGuidance.terminationAdvice || '') 
-                      }}
-                    />
-                  </div>
-                  <div className="bg-primary/5 p-3 rounded">
-                    <p className="text-xs text-elec-yellow font-medium mb-2">Testing Requirements</p>
-                    <div 
-                      className="text-sm text-white leading-relaxed text-left"
-                      dangerouslySetInnerHTML={{ 
-                        __html: processElectricalText(currentCircuit.installationGuidance.testingRequirements || '') 
-                      }}
-                    />
-                  </div>
-                  
-                  {currentCircuit.installationGuidance?.fixingsAndSupport && 
-                   currentCircuit.installationGuidance.fixingsAndSupport.length > 0 && (
-                    <div className="bg-primary/5 p-3 rounded">
-                      <p className="text-xs text-elec-yellow font-medium mb-2">Fixings & Support</p>
+                <div className="space-y-4">
+                  {/* Cable Routing */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Cable className="h-4 w-4 text-blue-400" />
+                      <h5 className="text-sm font-semibold text-white">Cable Routing</h5>
+                    </div>
+                    <div className="bg-card/30 border border-border/40 rounded-lg p-3">
                       <div 
-                        className="text-sm text-white leading-relaxed text-left"
+                        className="text-sm text-white/90 leading-relaxed text-left"
                         dangerouslySetInnerHTML={{ 
-                          __html: processElectricalText(currentCircuit.installationGuidance.fixingsAndSupport.join(' ') || '') 
+                          __html: processElectricalText(currentCircuit.installationGuidance.cableRouting || '') 
                         }}
                       />
                     </div>
+                  </div>
+
+                  {/* Termination Advice */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Wrench className="h-4 w-4 text-green-400" />
+                      <h5 className="text-sm font-semibold text-white">Termination Advice</h5>
+                    </div>
+                    <div className="bg-card/30 border border-border/40 rounded-lg p-3">
+                      <div 
+                        className="text-sm text-white/90 leading-relaxed text-left"
+                        dangerouslySetInnerHTML={{ 
+                          __html: processElectricalText(currentCircuit.installationGuidance.terminationAdvice || '') 
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Testing Requirements */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 mb-2">
+                      <TestTube className="h-4 w-4 text-purple-400" />
+                      <h5 className="text-sm font-semibold text-white">Testing Requirements</h5>
+                    </div>
+                    <div className="bg-card/30 border border-border/40 rounded-lg p-3">
+                      <div 
+                        className="text-sm text-white/90 leading-relaxed text-left"
+                        dangerouslySetInnerHTML={{ 
+                          __html: processElectricalText(currentCircuit.installationGuidance.testingRequirements || '') 
+                        }}
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Fixings & Support */}
+                  {currentCircuit.installationGuidance?.fixingsAndSupport && 
+                   currentCircuit.installationGuidance.fixingsAndSupport.length > 0 && (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Anchor className="h-4 w-4 text-orange-400" />
+                        <h5 className="text-sm font-semibold text-white">Fixings & Support</h5>
+                      </div>
+                      <div className="bg-card/30 border border-border/40 rounded-lg p-3">
+                        <div 
+                          className="text-sm text-white/90 leading-relaxed text-left"
+                          dangerouslySetInnerHTML={{ 
+                            __html: processElectricalText(currentCircuit.installationGuidance.fixingsAndSupport.join(' ') || '') 
+                          }}
+                        />
+                      </div>
+                    </div>
                   )}
                   
+                  {/* Safety Notes */}
                   {currentCircuit.installationGuidance?.safetyNotes?.length > 0 && (
-                    <div className="bg-amber-500/10 border border-amber-500/20 p-3 rounded">
+                    <div className="bg-amber-500/10 border border-amber-500/20 p-3 rounded-lg">
                       <p className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
                         <AlertTriangle className="h-4 w-4 text-amber-400" />
                         Safety Notes
                       </p>
                       <ul className="space-y-2">
                         {currentCircuit.installationGuidance.safetyNotes.map((note, idx) => (
-                          <li key={idx} className="text-sm text-white flex items-start gap-2 text-left leading-relaxed">
+                          <li key={idx} className="text-sm text-white/90 flex items-start gap-2 text-left leading-relaxed">
                             <span className="text-amber-400 font-bold">•</span>
                             <span className="flex-1">{note}</span>
                           </li>
@@ -1645,10 +1672,17 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       </ul>
                     </div>
                   )}
+
+                  {/* Estimated Install Time */}
                   {currentCircuit.installationGuidance.estimatedInstallTime && (
-                    <div className="bg-primary/5 p-3 rounded">
-                      <p className="text-xs text-elec-yellow font-medium mb-2">Estimated Install Time</p>
-                      <p className="text-sm font-medium text-white">{currentCircuit.installationGuidance.estimatedInstallTime}</p>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Clock className="h-4 w-4 text-cyan-400" />
+                        <h5 className="text-sm font-semibold text-white">Estimated Install Time</h5>
+                      </div>
+                      <div className="bg-card/30 border border-border/40 rounded-lg p-3">
+                        <p className="text-sm font-medium text-white">{currentCircuit.installationGuidance.estimatedInstallTime}</p>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -1706,7 +1740,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-white">Earth Continuity</p>
-                        <p className="text-xs text-white/60">BS 7671:2018+A2 Reg 643.2.2</p>
+                        <p className="text-xs text-white/50">BS 7671:2018+A3:2024 Reg 643.2.2</p>
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-3 mb-2">
@@ -1753,7 +1787,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       </div>
                       <div className="flex-1">
                         <p className="text-sm font-semibold text-white">Earth Fault Loop Impedance</p>
-                        <p className="text-xs text-white/60">BS 7671:2018+A2 Reg 411.4.4</p>
+                        <p className="text-xs text-white/50">BS 7671:2018+A3:2024 Reg 411.4.4</p>
                       </div>
                       {currentCircuit.expectedTestResults.zs.compliant ? (
                         <CheckCircle2 className="h-5 w-5 text-green-400" />
@@ -1806,7 +1840,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-white">Insulation Resistance</p>
-                        <p className="text-xs text-white/60">BS 7671:2018+A2 Reg 643.3.1</p>
+                        <p className="text-xs text-white/50">BS 7671:2018+A3:2024 Reg 643.3.1</p>
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
@@ -1829,7 +1863,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-white">Polarity Test</p>
-                        <p className="text-xs text-white/60">BS 7671:2018+A2 Reg 643.4</p>
+                        <p className="text-xs text-white/50">BS 7671:2018+A3:2024 Reg 643.4</p>
                       </div>
                     </div>
                     <p className="text-sm text-white/90 leading-relaxed bg-amber-500/5 p-2 rounded">

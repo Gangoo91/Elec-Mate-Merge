@@ -27,7 +27,7 @@ const CommercialInstallations = () => {
   ];
 
   const keyStandards = [
-    "BS 7671:2018+A2:2022 (18th Edition Wiring Regulations)",
+    "BS 7671:2018+A3:2024 (18th Edition Wiring Regulations)",
     "BS 5266 Emergency lighting code of practice",
     "BS 5839 Fire detection and alarm systems",
     "Building Regulations Approved Document B (Fire safety)",

@@ -1,5 +1,5 @@
 /**
- * BS 7671:2018+A2:2022 Appendix 4
+ * BS 7671:2018+A3:2024 Appendix 4
  * Cable Rating Correction Factors
  * 
  * Temperature, Grouping, and Thermal Insulation Derating Factors

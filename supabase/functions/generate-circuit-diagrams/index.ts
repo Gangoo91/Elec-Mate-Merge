@@ -217,7 +217,7 @@ async function generateDiagram({ type, circuitInfo, projectName, lovableApiKey }
 }
 
 function buildSingleLinePrompt(circuitInfo: any, projectName: string): string {
-  return `Generate a professional BS 7671:2018+A2:2022 compliant SINGLE LINE ELECTRICAL DIAGRAM for this installation:
+  return `Generate a professional BS 7671:2018+A3:2024 compliant SINGLE LINE ELECTRICAL DIAGRAM for this installation:
 
 PROJECT: ${projectName}
 
@@ -258,7 +258,7 @@ STYLE: Technical drawing, professional engineering documentation, high contrast 
 }
 
 function buildSchematicPrompt(circuitInfo: any, projectName: string): string {
-  return `Generate a detailed BS 7671:2018+A2:2022 compliant CIRCUIT SCHEMATIC DIAGRAM for this installation:
+  return `Generate a detailed BS 7671:2018+A3:2024 compliant CIRCUIT SCHEMATIC DIAGRAM for this installation:
 
 PROJECT: ${projectName}
 

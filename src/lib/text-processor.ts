@@ -13,11 +13,11 @@ const wrapListItems = (text: string): string => {
     
     if (isBulletPoint) {
       if (!inList) {
-        result.push('<ul class="list-disc list-outside ml-6 space-y-3 mb-4 text-left">');
+        result.push('<ul class="list-disc list-outside ml-5 space-y-2 mb-4 text-left">');
         inList = true;
       }
       const content = line.replace(/^[\s]*[\-\*\+]\s/, '');
-      result.push(`  <li class="leading-loose text-white pl-2">${content}</li>`);
+      result.push(`  <li class="leading-relaxed text-white/90 pl-1">${content}</li>`);
     } else {
       if (inList) {
         result.push('</ul>');
@@ -41,11 +41,11 @@ export const processElectricalText = (text: string): string => {
   text = wrapListItems(text);
   
   return text
-    // Format BS 7671 references - Simple bold with color
-    .replace(/BS 7671:?(\d{4})?(\+A\d:?\d{4})?/gi, '<strong class="text-elec-yellow font-semibold">BS 7671$1$2</strong>')
+    // Format BS 7671 references - Subtle primary color
+    .replace(/BS 7671:?(\d{4})?(\+A\d:?\d{4})?/gi, '<span class="text-primary font-medium">BS 7671$1$2</span>')
     
-    // Format regulation numbers - Inline monospace without background
-    .replace(/(\d{3}\.\d+\.\d+)/g, '<code class="text-blue-400 font-mono text-sm">$1</code>')
+    // Format regulation numbers - Subtle blue with background
+    .replace(/(\d{3}\.\d+\.\d+)/g, '<code class="text-blue-300 font-mono text-sm px-1 py-0.5 rounded bg-blue-500/10">$1</code>')
     
     // Format classification codes - Simple text with color
     .replace(/\b(C[123]|FI)\b/g, '<strong class="text-red-400 font-bold">$1</strong>')

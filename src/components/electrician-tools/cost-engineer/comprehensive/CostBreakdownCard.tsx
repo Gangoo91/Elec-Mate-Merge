@@ -196,7 +196,7 @@ const CostBreakdownCard = ({
                       What You Bring
                     </div>
                     <ul className="space-y-1 text-xs">
-                      <li>✓ 18th Edition BS7671:2018+A2:2022 qualified</li>
+                      <li>✓ 18th Edition BS7671:2018+A3:2024 qualified</li>
                       <li>✓ Years of experience and expertise</li>
                       <li>✓ Professional liability insurance coverage</li>
                       <li>✓ Ongoing training and CPD (annual £{MARKET_RATES_2025.businessCosts.continuousTraining}+)</li>

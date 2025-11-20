@@ -693,7 +693,7 @@ serve(async (req) => {
       },
       {
         id: 2,
-        message: "New BS 7671:2018+A2:2022 compliance requirements affecting equipment pricing",
+        message: "New BS 7671:2018+A3:2024 compliance requirements affecting equipment pricing",
         date: new Date().toLocaleDateString('en-GB'),
         type: "info" as const
       }

@@ -1,5 +1,5 @@
 /**
- * BS 7671:2018+A2:2022 Chapter 41
+ * BS 7671:2018+A3:2024 Chapter 41
  * Protection Against Electric Shock
  * Maximum Earth Fault Loop Impedance (Zs) Values
  */

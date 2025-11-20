@@ -206,7 +206,7 @@ const ComplianceManager = () => {
               <div className="space-y-4">
                 <div className="flex justify-between items-center pb-2 border-b border-elec-yellow/10">
                   <div>
-                    <p className="font-medium">BS 7671:2018+A2:2022</p>
+                    <p className="font-medium">BS 7671:2018+A3:2024</p>
                     <p className="text-sm text-muted-foreground">18th Edition Amendment 2</p>
                   </div>
                   <Badge>Current</Badge>

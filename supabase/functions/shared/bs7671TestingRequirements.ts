@@ -1,5 +1,5 @@
 /**
- * BS 7671:2018+A2:2022 Chapter 64 - Initial Verification
+ * BS 7671:2018+A3:2024 Chapter 64 - Initial Verification
  * Testing procedures, sequences, and pass/fail criteria
  */
 

@@ -149,7 +149,7 @@ export const ExportControls = ({ canvasObjects }: ExportControlsProps) => {
       // BS 7671 Compliance footer
       pdf.setFontSize(8);
       pdf.setTextColor(80, 80, 80);
-      pdf.text('Drawn in accordance with BS 7671:2018+A2:2024 (IEC 60364)', 10, pageHeight - 8);
+      pdf.text('Drawn in accordance with BS 7671:2018+A3:2024 (IEC 60364)', 10, pageHeight - 8);
       
       // Footer - right side
       pdf.text('Created with Electrician Tools - Professional Diagram Builder', pageWidth - 10, pageHeight - 8, { align: 'right' });
