@@ -176,7 +176,27 @@ export const AIInstallationDesigner = () => {
           pfc: 16000,
           ze: 0.35,
           earthingSystem: 'TN-C-S'
-        }
+        },
+        // Transform supply into consumerUnit format for mobile compatibility
+        consumerUnit: {
+          type: (jobInputs?.supply?.consumerUnitType as 'split-load' | 'high-integrity' | 'main-switch') || 'split-load',
+          mainSwitchRating: jobInputs?.supply?.mainSwitchRating || 100,
+          incomingSupply: {
+            voltage: jobInputs?.supply?.voltage || 230,
+            phases: (jobInputs?.supply?.phases as 'single' | 'three') || 'single',
+            incomingPFC: jobInputs?.supply?.pfc || 16000,
+            Ze: jobInputs?.supply?.ze || 0.35,
+            earthingSystem: (jobInputs?.supply?.earthingSystem as 'TN-S' | 'TN-C-S' | 'TT') || 'TN-C-S'
+          }
+        },
+        projectName: jobInputs?.projectInfo?.projectName || 'Untitled Project',
+        location: jobInputs?.projectInfo?.location || 'Not specified',
+        clientName: jobInputs?.projectInfo?.clientName,
+        electricianName: jobInputs?.projectInfo?.electricianName,
+        installationType: (jobInputs?.projectInfo?.installationType as 'domestic' | 'commercial' | 'industrial') || 'domestic',
+        totalLoad: jobDesignData?.circuits?.reduce((sum, c) => sum + (c.loadPower || 0), 0) || 0,
+        diversityApplied: false,
+        materials: []
       };
 
       console.log('🔧 Design data mapped:', {
