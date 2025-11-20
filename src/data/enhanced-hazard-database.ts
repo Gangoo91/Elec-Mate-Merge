@@ -43,7 +43,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       "Ensure adequate lighting to see conductor colours and connections clearly"
     ],
     trainingRequired: [
-      "BS7671:2018+A2:2022 18th Edition Wiring Regulations",
+      "BS7671:2018+A3:2024 18th Edition Wiring Regulations",
       "Safe Isolation Procedures (GS38)",
       "Emergency First Aid at Work with CPR/AED",
       "Electrical Safety Awareness Training"
@@ -93,7 +93,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     ],
     trainingRequired: [
       "Electrical Installation Testing & Inspection (2391)",
-      "BS7671:2018+A2:2022 18th Edition",
+      "BS7671:2018+A3:2024 18th Edition",
       "Special Locations (Bathrooms/Kitchens)"
     ],
     realWorldScenarios: [
@@ -228,7 +228,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       "Check for carbon deposits around terminals, busbars, circuit breakers"
     ],
     trainingRequired: [
-      "BS 7671:2018+A2:2022 18th Edition Wiring Regulations",
+      "BS 7671:2018+A3:2024 18th Edition Wiring Regulations",
       "Arc Flash Hazard Awareness and Safety (NFPA 70E or equivalent)",
       "Thermal Imaging Level 1 Certification (minimum)",
       "Electrical Maintenance and Inspection (City & Guilds 2391 or equivalent)",
@@ -255,7 +255,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     ],
     lastUpdated: "2025-01-15",
     sources: [
-      "BS 7671:2018+A2:2022 - 18th Edition Wiring Regulations",
+      "BS 7671:2018+A3:2024 - 18th Edition Wiring Regulations",
       "NFPA 70E - Standard for Electrical Safety in the Workplace",
       "HSE Electrical Safety Statistics",
       "Electrical Safety First - Arc Fault Research"
@@ -1347,7 +1347,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
       administrative: ["BS 7671 Schedule of Inspection compliance", "C1/C2/C3 coding accuracy", "Limitation clauses where access restricted", "Photographic evidence", "Report sign-off by qualified supervisor", "Five-year review cycle compliance"],
       engineering: ["Full testing sequence per Appendix 15", "Continuity, insulation resistance, polarity, earth fault loop impedance, RCD testing"]
     },
-    bs7671References: ["Part 6 - Inspection and testing", "Appendix 6 - Model forms for certification", "BS 7671:2018+A2:2022 Schedule of Inspection"],
+    bs7671References: ["Part 6 - Inspection and testing", "Appendix 6 - Model forms for certification", "BS 7671:2018+A3:2024 Schedule of Inspection"],
     category: "regulatory-compliance",
     workType: ["inspection", "testing"],
     environment: ["all-environments"]

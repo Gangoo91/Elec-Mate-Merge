@@ -35,7 +35,7 @@ const IndustrialInstallations = () => {
   ];
 
   const keyStandards = [
-    "BS 7671:2018+A2:2022 compliance",
+    "BS 7671:2018+A3:2024 compliance",
     "BS EN 60204 Machinery safety standards",
     "Health and Safety at Work Act requirements",
     "DSEAR assessment for hazardous areas",

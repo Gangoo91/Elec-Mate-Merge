@@ -18,7 +18,7 @@ const EICRReports = () => {
         <div className="flex flex-col items-center justify-center mb-6">
           <h1 className="text-3xl font-bold tracking-tight mb-4">EICR Reports & Management</h1>
           <p className="text-muted-foreground text-center max-w-2xl mb-4">
-            Create, manage, and export Electrical Installation Condition Reports with automated fault detection and BS 7671:2018+A2:2022 compliance
+            Create, manage, and export Electrical Installation Condition Reports with automated fault detection and BS 7671:2018+A3:2024 compliance
           </p>
           <BackButton customUrl="/electrician-tools/inspection-testing" label="Back to Testing" />
         </div>
@@ -92,7 +92,7 @@ const EICRReports = () => {
                     Professional PDF Generation
                   </span>
                   <span className="px-3 py-1 bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 rounded-full text-xs font-medium">
-                    BS 7671:2018+A2:2022 Compliant
+                    BS 7671:2018+A3:2024 Compliant
                   </span>
                 </div>
 
@@ -258,7 +258,7 @@ const EICRReports = () => {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
-              All EICR reports generated through Elec-Mate comply with BS 7671:2018+A2:2022 standards 
+              All EICR reports generated through Elec-Mate comply with BS 7671:2018+A3:2024 standards 
               and include comprehensive fault detection, circuit analysis, and professional documentation. 
               Always verify critical findings with appropriate testing equipment and exercise professional judgement.
             </p>

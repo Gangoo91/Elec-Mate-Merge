@@ -1,5 +1,5 @@
 /**
- * BS 7671:2018+A2:2022 - Chapter 52: Selection and Erection of Wiring Systems
+ * BS 7671:2018+A3:2024 - Chapter 52: Selection and Erection of Wiring Systems
  * Installation Methods, Cable Support, Safe Zones, Terminations
  */
 

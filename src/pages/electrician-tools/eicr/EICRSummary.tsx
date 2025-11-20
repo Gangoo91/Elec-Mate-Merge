@@ -287,7 +287,7 @@ const EICRSummary = () => {
               <h3 className="text-lg font-semibold mb-2">Generate EICR Report</h3>
               <p className="text-muted-foreground">
                 Create a professional PDF report with all inspection and testing data. 
-                This report will be compliant with BS 7671:2018+A2:2022 requirements.
+                This report will be compliant with BS 7671:2018+A3:2024 requirements.
               </p>
             </div>
             <div className="flex gap-3">

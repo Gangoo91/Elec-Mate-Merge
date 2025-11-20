@@ -62,7 +62,7 @@ Provide justifications in this JSON format:
         messages: [
           { 
             role: 'system', 
-            content: 'You are an expert electrical engineer. Generate concise, regulation-compliant justifications for circuit designs per BS 7671:2018+A2:2022.' 
+            content: 'You are an expert electrical engineer. Generate concise, regulation-compliant justifications for circuit designs per BS 7671:2018+A3:2024.' 
           },
           { role: 'user', content: prompt }
         ],

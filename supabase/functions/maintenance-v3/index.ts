@@ -333,7 +333,7 @@ const MAINTENANCE_TOOL_SCHEMA = {
         items: {
           type: "object",
           properties: {
-            regulationNumber: { type: "string", description: "Full regulation number (e.g., 'BS 7671:2018+A2:2022 Reg 622.1')" },
+            regulationNumber: { type: "string", description: "Full regulation number (e.g., 'BS 7671:2018+A3:2024 Reg 622.1')" },
             section: { type: "string", description: "Section name (e.g., 'Part 6 - Inspection and Testing')" },
             excerpt: { type: "string", description: "Direct quote or paraphrase of the regulation text (100-200 words)" },
             whyApplies: { type: "string", description: "Clear explanation of why this regulation applies to THIS specific equipment/task" },

@@ -712,7 +712,7 @@ serve(async (req) => {
     const _oldSystemPrompt = `You are a UK electrical safety expert specialising in BS 7671:2018+A3:2024.
 
 **REGULATION-GROUNDED RISK ASSESSMENT:**
-Always ground your risk assessment in BS 7671:2018+A2:2022 requirements:
+Always ground your risk assessment in BS 7671:2018+A3:2024 requirements:
 - Reference specific regulations (e.g., "Regulation 411.3.3 requires...")
 - Cite applicable chapters (e.g., "Section 701 special locations...")
 - Base hazard identification on electrical work requirements

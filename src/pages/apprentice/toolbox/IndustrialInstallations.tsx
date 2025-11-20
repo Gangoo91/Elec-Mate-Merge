@@ -28,7 +28,7 @@ const IndustrialInstallations = () => {
   ];
 
   const keyStandards = [
-    "BS 7671:2018+A2:2022 (18th Edition Wiring Regulations)",
+    "BS 7671:2018+A3:2024 (18th Edition Wiring Regulations)",
     "ATEX Directive 2014/34/EU (Equipment for explosive atmospheres)",
     "DSEAR Regulations 2002 (Dangerous substances and explosive atmospheres)",
     "BS EN 60204-1 Safety of machinery - Electrical equipment",

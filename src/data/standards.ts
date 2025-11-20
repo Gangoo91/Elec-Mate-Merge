@@ -13,7 +13,7 @@ export const ukElectricalStandards: Standard[] = [
   {
     code: "BS 7671:2018+A3:2024",
     title: "Requirements for Electrical Installations",
-    description: "IET Wiring Regulations - 18th Edition",
+    description: "IET Wiring Regulations - 18th Edition (Amendment 3)",
     scope: "Covers design, installation, inspection and testing of electrical installations in buildings up to 1000V AC",
     useCases: [
       "Cable sizing calculations",

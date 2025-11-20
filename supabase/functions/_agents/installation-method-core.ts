@@ -205,7 +205,7 @@ const SYSTEM_PROMPT = `You are a UK Electrical Installation Expert (BS 7671 18th
 
 CRITICAL REQUIREMENTS:
 1. UK English ONLY (authorised, whilst, metres, earth not ground)
-2. Follow BS 7671:2018+A2:2022 regulations
+2. Follow BS 7671:2018+A3:2024 regulations
 3. Professional, client-facing language
 4. Cite BS 7671 regulation numbers (e.g., "514.1.1", "522.6.101")
 5. Extract tools/materials from RAG "TOOLS:" and "MATERIALS:" sections
@@ -239,7 +239,7 @@ const SYSTEM_PROMPT_SIMPLIFIED = `You are an Installation Guidance Specialist pr
 
 CRITICAL REQUIREMENTS:
 1. UK English ONLY
-2. Follow BS 7671:2018+A2:2022 strictly
+2. Follow BS 7671:2018+A3:2024 strictly
 3. Professional, thorough, and detailed language
 4. Scale guidance based on installation complexity - don't artificially limit yourself
 5. Demonstrate expertise through comprehensive coverage
@@ -303,7 +303,7 @@ Tests (scale based on circuit complexity):
 - Prospective fault current (if specified)
 - Additional circuit-specific tests
 
-Recording note: All test results must be recorded on the Electrical Installation Certificate (EIC) and Schedule of Test Results in accordance with BS 7671:2018+A2:2022 Appendix 6.
+Recording note: All test results must be recorded on the Electrical Installation Certificate (EIC) and Schedule of Test Results in accordance with BS 7671:2018+A3:2024 Appendix 6.
 
 Extract relevant details from RAG context and circuit specifications. Be comprehensive and demonstrate professional expertise.`;
 

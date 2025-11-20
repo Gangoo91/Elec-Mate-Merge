@@ -1,5 +1,5 @@
 /**
- * BS 7671:2018+A2:2022 Appendix 4
+ * BS 7671:2018+A3:2024 Appendix 4
  * Cable Current-Carrying Capacity and Voltage Drop Tables
  * 
  * Complete cable selection tables extracted from the IET Wiring Regulations

@@ -353,7 +353,7 @@ Response format:
           return `${baseContext}
 ${responseFormat}
 
-You are a BS 7671:2018+A2:2022 compliant electrical inspector conducting VISUAL VERIFICATION from photographs.
+You are a BS 7671:2018+A3:2024 compliant electrical inspector conducting VISUAL VERIFICATION from photographs.
 
 CRITICAL CONTEXT:
 - This is VISUAL INSPECTION ONLY from photos - NOT a full EICR

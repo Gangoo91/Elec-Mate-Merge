@@ -35,7 +35,7 @@ const CommercialInstallations = () => {
   ];
 
   const keyStandards = [
-    "BS 7671:2018+A2:2022 compliance",
+    "BS 7671:2018+A3:2024 compliance",
     "BS 5266 Emergency lighting standards", 
     "BS 5839 Fire detection and alarm systems",
     "Electrical Installation Certificate required",

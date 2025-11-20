@@ -425,7 +425,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                       <p className="font-medium text-xs mb-1">✓ What this rate covers:</p>
                       <ul className="text-xs space-y-0.5 pl-4 text-muted-foreground">
                         <li>• Years of training and apprenticeship</li>
-                        <li>• 18th Edition BS7671:2018+A2:2022 qualification</li>
+                        <li>• 18th Edition BS7671:2018+A3:2024 qualification</li>
                         <li>• NICEIC/NAPIT membership (£450-520/year)</li>
                         <li>• Ongoing CPD training (£400/year)</li>
                         <li>• Professional liability insurance (£850/year)</li>

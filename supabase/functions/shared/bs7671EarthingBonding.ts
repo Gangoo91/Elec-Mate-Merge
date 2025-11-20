@@ -1,5 +1,5 @@
 /**
- * BS 7671:2018+A2:2022 - Chapter 54: Earthing Arrangements and Protective Conductors
+ * BS 7671:2018+A3:2024 - Chapter 54: Earthing Arrangements and Protective Conductors
  * TN-S, TN-C-S, TT Systems, Main Bonding, Supplementary Bonding, CPC Sizing
  */
 

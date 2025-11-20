@@ -28,7 +28,7 @@ const OutdoorInstallations = () => {
   ];
 
   const keyStandards = [
-    "BS 7671:2018+A2:2022 (18th Edition Wiring Regulations)",
+    "BS 7671:2018+A3:2024 (18th Edition Wiring Regulations)",
     "BS 5489-1:2020 Code of practice for the design of road lighting",
     "BS EN 13201 Series Road lighting performance requirements",
     "NRSWA 1991 New Roads and Street Works Act regulations",

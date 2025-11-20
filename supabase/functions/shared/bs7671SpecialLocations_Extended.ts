@@ -1,5 +1,5 @@
 /**
- * BS 7671:2018+A2:2022 - Part 7 Special Locations (Extended)
+ * BS 7671:2018+A3:2024 - Part 7 Special Locations (Extended)
  * Section 702 (Swimming Pools), 704 (Construction Sites), 708 (Caravan Parks)
  */
 

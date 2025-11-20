@@ -40,7 +40,7 @@ const InspectionTesting = () => {
       <Alert className="bg-blue-500/10 border-blue-500/30">
         <TestTube className="h-4 w-4 text-blue-400" />
         <AlertDescription className="text-blue-200">
-          <strong>Professional Standards:</strong> All procedures follow BS 7671:2018+A2:2022 requirements. 
+          <strong>Professional Standards:</strong> All procedures follow BS 7671:2018+A3:2024 requirements. 
           Reports are automatically generated with proper fault codes and classifications. 
           Always ensure you are competent and qualified before conducting electrical testing.
         </AlertDescription>

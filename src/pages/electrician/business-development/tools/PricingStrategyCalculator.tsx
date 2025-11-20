@@ -438,7 +438,7 @@ const PricingStrategyCalculator = () => {
             <div className="flex items-start gap-2">
               <Info className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
               <p className="text-blue-200/80 text-sm">
-                Prices shown are estimates for planning purposes. Always verify reduced VAT eligibility (5%) where applicable and ensure all designs comply with BS 7671:2018+A2:2022. CIS deductions may apply for subcontract labour.
+                Prices shown are estimates for planning purposes. Always verify reduced VAT eligibility (5%) where applicable and ensure all designs comply with BS 7671:2018+A3:2024. CIS deductions may apply for subcontract labour.
               </p>
             </div>
           </div>

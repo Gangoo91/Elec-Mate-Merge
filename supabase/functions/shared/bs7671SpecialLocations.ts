@@ -1,5 +1,5 @@
 /**
- * BS 7671:2018+A2:2022 Part 7 - Special Locations
+ * BS 7671:2018+A3:2024 Part 7 - Special Locations
  * Critical requirements for bathrooms, EV charging, swimming pools, etc.
  */
 
