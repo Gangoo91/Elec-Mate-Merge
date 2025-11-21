@@ -262,7 +262,7 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
                     {diagnosis.additionalContext.commonMistakes.map((mistake, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-sm text-white/80">
                         <span className="text-amber-400">•</span>
-                        <span>{mistake}</span>
+                        <span className="text-left">{mistake}</span>
                       </li>
                     ))}
                   </ul>
