@@ -8467,22 +8467,35 @@ export type Database = {
           similarity: number
         }[]
       }
-      search_bs7671_hybrid: {
-        Args: {
-          match_count?: number
-          query_embedding: string
-          query_text: string
-        }
-        Returns: {
-          amendment: string
-          content: string
-          hybrid_score: number
-          id: string
-          metadata: Json
-          regulation_number: string
-          section: string
-        }[]
-      }
+      search_bs7671_hybrid:
+        | {
+            Args: {
+              match_count?: number
+              query_embedding: string
+              query_text: string
+            }
+            Returns: {
+              amendment: string
+              content: string
+              hybrid_score: number
+              id: string
+              metadata: Json
+              regulation_number: string
+              section: string
+            }[]
+          }
+        | {
+            Args: { match_count?: number; query_embedding: string }
+            Returns: {
+              amendment: string
+              content: string
+              hybrid_score: number
+              id: string
+              metadata: Json
+              regulation_number: string
+              section: string
+            }[]
+          }
       search_bs7671_hybrid_cached: {
         Args: {
           match_count?: number
