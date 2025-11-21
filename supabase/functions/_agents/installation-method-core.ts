@@ -8,9 +8,78 @@
  * 2. generateInstallationMethods - Used by new circuit-design-v2 unified function (new)
  */
 
-import { searchInstallationPractices, searchCircuitRegulations } from '../_shared/circuit-rag.ts';
+import { searchInstallationMethodRAG } from './installation-method-rag.ts';
 import { callOpenAI } from '../_shared/ai-providers.ts';
 import { createLogger } from '../_shared/logger.ts';
+
+/**
+ * Extract rich keywords from job inputs for fast intelligence search
+ */
+function extractInstallationKeywords(jobInputs: any): string[] {
+  const keywords = new Set<string>();
+  
+  // Project type keywords
+  if (jobInputs.projectInfo?.workType) {
+    const workType = jobInputs.projectInfo.workType.toLowerCase();
+    keywords.add(workType);
+    
+    // Add synonyms
+    if (workType.includes('domestic')) {
+      keywords.add('residential');
+      keywords.add('dwelling');
+    }
+    if (workType.includes('commercial')) {
+      keywords.add('business');
+      keywords.add('office');
+    }
+  }
+  
+  // Circuit-specific keywords
+  if (jobInputs.circuits && Array.isArray(jobInputs.circuits)) {
+    jobInputs.circuits.forEach((circuit: any) => {
+      if (circuit.loadType) {
+        const loadType = circuit.loadType.toLowerCase();
+        keywords.add(loadType);
+        
+        // Extract circuit type keywords
+        if (loadType.includes('socket')) keywords.add('socket circuits');
+        if (loadType.includes('light')) keywords.add('lighting circuits');
+        if (loadType.includes('shower')) keywords.add('shower circuits');
+        if (loadType.includes('cooker')) keywords.add('cooker circuits');
+        if (loadType.includes('motor')) keywords.add('motor circuits');
+      }
+      
+      if (circuit.cableSize) {
+        keywords.add(`${circuit.cableSize}mm cable`);
+      }
+      
+      if (circuit.description) {
+        const desc = circuit.description.toLowerCase();
+        if (desc.includes('ring')) keywords.add('ring final circuit');
+        if (desc.includes('radial')) keywords.add('radial circuit');
+      }
+    });
+  }
+  
+  // Supply system keywords
+  if (jobInputs.supply) {
+    if (jobInputs.supply.earthingSystem) {
+      keywords.add(jobInputs.supply.earthingSystem);
+    }
+    if (jobInputs.supply.phases) {
+      keywords.add(`${jobInputs.supply.phases} phase`);
+    }
+  }
+  
+  // Generic installation keywords
+  keywords.add('installation method');
+  keywords.add('cable installation');
+  keywords.add('testing');
+  keywords.add('inspection');
+  keywords.add('certification');
+  
+  return Array.from(keywords);
+}
 
 // Simplified schema for Circuit Designer integration (flexible quality-focused)
 const INSTALLATION_METHOD_TOOL_SIMPLIFIED = {
@@ -338,37 +407,107 @@ export async function generateInstallationMethod(
     ? (msg: string) => onProgress(25, `Installation Method: ${msg}`)
     : undefined;
   
-  // Simple, direct RAG calls (mirrors AI RAMS pattern)
+  // STEP 1: RAG SEARCH (ULTRA-FAST INTELLIGENCE APPROACH)
   const ragStart = Date.now();
-  let ragResults;
+  logger.info('Starting installation method RAG search (fast intelligence)');
+  
+  let ragResults: any[] = [];
   
   try {
-    if (sharedRegulations) {
-      // Use shared regulations from circuit designer
+    // Build rich keyword list from jobInputs
+    const keywords = extractInstallationKeywords(jobInputs);
+    const workType = jobInputs.projectInfo?.workType || 'general installation';
+    const circuitTypes = jobInputs.circuits?.map((c: any) => c.loadType).filter(Boolean) || [];
+    
+    logger.info('Extracted keywords for RAG', {
+      keywords: keywords.slice(0, 10),
+      workType,
+      circuitCount: circuitTypes.length
+    });
+    
+    // Use shared regulations if provided AND non-empty
+    if (Array.isArray(sharedRegulations) && sharedRegulations.length > 0) {
+      logger.info(`Using ${sharedRegulations.length} shared regulations from circuit designer`);
       ragResults = sharedRegulations;
     } else {
-      // Parallel RAG search: Installation practices + Regulations
-      const [practicesResults, regulationsResults] = await Promise.all([
-        searchInstallationPractices(jobInputs, ragProgressCallback),
-        searchCircuitRegulations(jobInputs, ragProgressCallback)
-      ]);
+      // Run fast intelligence RAG search
+      const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+      const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+      const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2.49.4');
+      const supabase = createClient(supabaseUrl, supabaseKey);
       
-      // Combine results (take top 10 total, consistent with AI RAMS)
-      ragResults = [...practicesResults, ...regulationsResults].slice(0, 10);
+      const ragResult = await searchInstallationMethodRAG(
+        supabase,
+        keywords,
+        workType,
+        circuitTypes,
+        15 // limit
+      );
+      
+      // Combine regulations + practical work
+      ragResults = [
+        ...ragResult.regulations.map((r: any) => ({
+          content: r.primary_topic || r.regulation_number,
+          regulation_number: r.regulation_number,
+          keywords: r.keywords,
+          applies_to: r.applies_to,
+          source: 'regulations_intelligence'
+        })),
+        ...ragResult.practicalWork.map((pw: any) => ({
+          content: pw.content,
+          primary_topic: pw.primary_topic,
+          tools_required: pw.tools_required,
+          bs7671_regulations: pw.bs7671_regulations,
+          equipment_category: pw.equipment_category,
+          cable_sizes: pw.cable_sizes,
+          power_ratings: pw.power_ratings,
+          source: 'practical_work_intelligence'
+        }))
+      ];
+      
+      logger.info(`✅ RAG complete: ${ragResults.length} results (${ragResult.searchTimeMs}ms, quality: ${ragResult.qualityScore.toFixed(1)})`);
     }
+    
+    // Minimal fallback if STILL empty
+    if (ragResults.length === 0) {
+      logger.error('🚨 CRITICAL: RAG returned 0 results even after fast intelligence search', {
+        keywords: keywords.slice(0, 10),
+        workType,
+        circuitTypes: circuitTypes.slice(0, 3)
+      });
+      
+      // Apply minimal core regulations fallback
+      ragResults = [
+        {
+          content: 'Good workmanship and proper materials',
+          regulation_number: '134.1.1',
+          source: 'fallback'
+        },
+        {
+          content: 'Automatic disconnection of supply (ADS) for shock protection',
+          regulation_number: '411.3.1.1',
+          source: 'fallback'
+        }
+      ];
+      
+      logger.warn('⚠️ Using minimal BS 7671 fallback regulations');
+    }
+    
   } catch (error) {
-    console.error('❌ RAG search failed:', error);
-    logger.error('RAG failure', { error: error instanceof Error ? error.message : String(error) });
-    // Return minimal fallback data to prevent total failure
+    logger.error('RAG search failed', { 
+      error: error instanceof Error ? error.message : String(error) 
+    });
+    
+    // Minimal fallback on error
     ragResults = [
-      { 
+      {
+        content: 'Good workmanship and proper materials',
         regulation_number: '134.1.1',
-        content: 'Good workmanship and proper materials shall be used in electrical installations.', 
-        source: 'fallback' 
+        source: 'fallback'
       },
       {
+        content: 'Automatic disconnection of supply (ADS) for shock protection',
         regulation_number: '411.3.1.1',
-        content: 'Automatic disconnection of supply shall be provided for protection against electric shock.',
         source: 'fallback'
       }
     ];
