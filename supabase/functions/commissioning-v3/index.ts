@@ -94,92 +94,56 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY not configured');
     }
 
-    // Use intelligent RAG with cross-encoder for testing knowledge
+    // Use commissioning-specific RAG module for reliable GN3 retrieval
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
     
-    logger.debug('Starting intelligent RAG for commissioning');
+    logger.debug('Starting commissioning RAG search');
     const ragStart = Date.now();
     
-    const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
-    const ragResults = await intelligentRAGSearch(
-      {
-        circuitType: circuitType || 'general',
-        searchTerms: `${query} testing commissioning GN3 Chapter 64 inspection procedures`.split(' ').filter(w => w.length > 3),
-        expandedQuery: `${query} testing commissioning GN3 Chapter 64 inspection procedures`,
-        context: {
-          agentType: 'commissioning', // NEW - for trade filtering
-          ragPriority: {
-            practical_work: 95,      // PRIMARY - hands-on testing procedures
-            bs7671: 85,              // HIGH - Chapter 64 testing requirements
-            inspection: 40,          // FALLBACK
-            design: 0,
-            installation: 0,
-            health_safety: 0,
-            project_mgmt: 0
-          }
-        }
-      },
+    const { retrieveCommissioningKnowledge } = await import('../_shared/rag-commissioning.ts');
+    const ragResults = await retrieveCommissioningKnowledge(
+      `${query} testing commissioning GN3 Chapter 64 inspection procedures`,
       OPENAI_API_KEY,
-      supabase
+      supabase,
+      logger,
+      circuitType
     );
     
-    logger.debug('Testing knowledge retrieved', { 
-      duration: Date.now() - ragStart
+    const ragDuration = Date.now() - ragStart;
+    logger.info('✅ Commissioning RAG complete', { 
+      duration: ragDuration,
+      resultsCount: ragResults.length
     });
 
-    // Build context with cascade priority
+    // Build GN3-first context from commissioning RAG
     let testContext = '';
+    const gn3ProceduresFound = ragResults.length;
+    const regulationsFound = ragResults.filter(r => r.regulation_number).length;
 
-    // TIER 1: Practical Work Intelligence + Regulations Intelligence
-    const practicalWorkDocs = ragResults?.practicalWorkDocs || [];
-    const regulations = ragResults?.regulations || [];
-
-    if (practicalWorkDocs.length >= 3) {
-      testContext += '## PRACTICAL TESTING PROCEDURES:\n\n';
-      testContext += practicalWorkDocs.slice(0, 12).map((pw: any) => {
-        let docText = `**${pw.primary_topic}**\n${pw.content}\n`;
-        
-        // Extract detailed procedural fields
-        if (pw.step_by_step_procedure) {
-          docText += `\nPROCEDURE:\n${pw.step_by_step_procedure}\n`;
-        }
-        if (pw.expected_results) {
-          docText += `\nEXPECTED RESULTS: ${pw.expected_results}\n`;
-        }
-        if (pw.tools_required?.length > 0) {
-          docText += `\nTOOLS REQUIRED: ${pw.tools_required.join(', ')}\n`;
-        }
-        if (pw.test_instrument_settings) {
-          docText += `\nINSTRUMENT SETUP: ${pw.test_instrument_settings}\n`;
-        }
-        if (pw.common_mistakes) {
-          docText += `\nCOMMON MISTAKES TO AVOID: ${pw.common_mistakes}\n`;
-        }
-        
-        return docText;
+    if (ragResults.length > 0) {
+      testContext = '## GN3 TESTING & INSPECTION GUIDANCE:\n\n';
+      testContext += ragResults.map((item: any) => {
+        const header = item.regulation_number 
+          ? `**[${item.regulation_number}]**` 
+          : item.topic 
+            ? `**${item.topic}**` 
+            : '**Testing Guidance**';
+        return `${header}\n${item.content}`;
       }).join('\n\n---\n\n');
       
-      testContext += '\n\n## RELEVANT BS 7671 REGULATIONS:\n\n';
-      testContext += regulations.slice(0, 10).map((reg: any) => 
-        `**${reg.regulation_number}**\n${reg.content}`
-      ).join('\n\n');
-      
-      logger.info('✅ Using Practical Work Intelligence + Regulations', {
-        practicalWorkCount: practicalWorkDocs.length,
-        regulationsCount: regulations.length
+      logger.info('✅ RAG Quality Metrics', {
+        gn3ProceduresFound,
+        regulationsFound,
+        totalSources: ragResults.length,
+        avgConfidence: ragResults.length > 0 
+          ? (ragResults.reduce((sum: number, r: any) => sum + (r.confidence?.overall || 0.7), 0) / ragResults.length).toFixed(2)
+          : 'N/A'
       });
     } else {
-      // Fallback to regulations only
-      testContext = regulations.slice(0, 10).map((reg: any) => 
-        `**${reg.regulation_number || 'Testing Procedure'}**\n${reg.content || reg.section || 'No content available'}`
-      ).join('\n\n');
-      
-      logger.info('⚠️ Using Regulations only (insufficient Practical Work data)', {
-        practicalWorkCount: practicalWorkDocs.length,
-        regulationsCount: regulations.length
-      });
+      testContext = '⚠️ No specific GN3 guidance found. Use general BS 7671 Chapter 64 principles.';
+      logger.warn('⚠️ RAG returned zero results', { query });
     }
 
     // Build conversation context with DESIGN DATA
@@ -645,9 +609,9 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
           ragTimeMs: ragStart ? Date.now() - ragStart : null,
           totalTimeMs: totalTime,
           ragQualityMetrics: {
-            gn3ProceduresFound: practicalWorkDocs.length,
-            regulationsFound: regulations.length,
-            totalSources: practicalWorkDocs.length + regulations.length
+            gn3ProceduresFound,
+            regulationsFound,
+            totalSources: gn3ProceduresFound + regulationsFound
           }
         }
       }),
