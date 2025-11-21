@@ -12,6 +12,7 @@ import {
   callLovableAIWithTimeout,
   parseJsonWithRepair
 } from "../_shared/v3-core.ts";
+import { callOpenAI } from '../_shared/ai-providers.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
 
