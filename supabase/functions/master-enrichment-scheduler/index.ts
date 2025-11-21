@@ -89,6 +89,42 @@ async function fetchAllPracticalWorkIds(
   return result;
 }
 
+// Helper: Fetch all design_knowledge IDs with pagination
+async function fetchAllDesignKnowledgeIds(
+  supabase: ReturnType<typeof createClient>,
+  table: string,
+  opts?: { enriched?: boolean }
+): Promise<string[]> {
+  const pageSize = 1000;
+  let offset = 0;
+  const ids = new Set<string>();
+  let pages = 0;
+
+  while (true) {
+    let query = supabase.from(table).select(
+      opts?.enriched ? 'design_knowledge_id' : 'id'
+    ).range(offset, offset + pageSize - 1);
+
+    const { data, error } = await query;
+    if (error) throw error;
+
+    if (!data || data.length === 0) break;
+
+    pages++;
+    for (const row of data) {
+      const id = opts?.enriched ? row.design_knowledge_id?.trim() : row.id?.trim();
+      if (id) ids.add(id);
+    }
+
+    if (data.length < pageSize) break;
+    offset += pageSize;
+  }
+
+  const result = Array.from(ids).sort();
+  console.log(`📄 Fetched ${table} in ${pages} page(s) → ${result.length} unique IDs`);
+  return result;
+}
+
 interface EnrichmentTask {
   name: string;
   functionName: string;
@@ -118,8 +154,8 @@ const ENRICHMENT_TASKS: EnrichmentTask[] = [
   // Phase 4: Practical Work Unified Enrichment (Priority 4) - ✅ 12-item batches, 10 concurrent workers (8 facets/source)
   { name: 'Practical Work', functionName: 'enrich-practical-work', sourceTable: 'practical_work', targetTable: 'practical_work_intelligence', batchSize: 12, priority: 4, filter: { is_canonical: true }, workerCount: 10 },
   
-  // Phase 5: Design Knowledge Enrichment (Priority 1) - 12-item batches, 200 workers (RAPID MODE), 8 facets/source
-  { name: 'Design Knowledge', functionName: 'enrich-design-knowledge', sourceTable: 'design_knowledge', targetTable: 'design_knowledge_intelligence', batchSize: 12, priority: 1, filter: null, workerCount: 200 },
+  // Phase 5: Design Knowledge Enrichment (Priority 1) - 6-item batches, 200 workers (RAPID MODE), 8 facets/source
+  { name: 'Design Knowledge', functionName: 'enrich-design-knowledge', sourceTable: 'design_knowledge', targetTable: 'design_knowledge_intelligence', batchSize: 6, priority: 1, filter: null, workerCount: 200 },
 ];
 
 // Global worker state tracking
@@ -612,6 +648,42 @@ serve(async (req) => {
       return new Response(JSON.stringify({
         success: false,
         error: error.message || 'Failed to compute missing procedures'
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+  }
+
+  // NEW ACTION: compute_missing_design_knowledge - Calculate missing design knowledge sources
+  if (action === 'compute_missing_design_knowledge') {
+    console.log('📊 COMPUTE MISSING: Calculating missing sources for Design Knowledge...');
+    
+    try {
+      const sourceIds = await fetchAllDesignKnowledgeIds(supabase, 'design_knowledge');
+      const enrichedIds = await fetchAllDesignKnowledgeIds(supabase, 'design_knowledge_intelligence', { enriched: true });
+      
+      const enrichedSet = new Set(enrichedIds);
+      const missingIds = sourceIds.filter(id => !enrichedSet.has(id));
+      
+      console.log(`📊 SOURCE ITEMS: ${sourceIds.length} unique | ENRICHED: ${enrichedIds.length} | MISSING: ${missingIds.length}`);
+      
+      return new Response(JSON.stringify({
+        success: true,
+        total_unique: sourceIds.length,
+        enriched_unique: enrichedIds.length,
+        missing_count: missingIds.length,
+        sample: missingIds.slice(0, 10),
+        suggested_batch_size: 6,
+        suggested_workers: 200
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    } catch (error) {
+      console.error('❌ Compute missing design knowledge failed:', error);
+      return new Response(JSON.stringify({
+        success: false,
+        error: error.message || 'Failed to compute missing sources'
       }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }

@@ -697,6 +697,8 @@ export default function EnrichmentConsole() {
       // Task-specific action names
       const computeAction = selectedTask === 'practical_work' 
         ? 'compute_missing_practical_work' 
+        : selectedTask === 'design_knowledge'
+        ? 'compute_missing_design_knowledge'
         : 'compute_missing';
       const startAction = selectedTask === 'practical_work'
         ? 'start_missing_practical_work'
