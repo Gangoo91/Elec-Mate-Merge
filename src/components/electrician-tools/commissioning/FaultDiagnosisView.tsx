@@ -331,7 +331,7 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
 
         {/* Footer */}
         <div className="flex justify-center pt-6">
-          <Button onClick={onStartOver} size="lg" className="gap-2 min-h-[48px] bg-blue-600 hover:bg-blue-700 text-white border-none sm:bg-transparent sm:border sm:border-border sm:hover:bg-accent sm:text-foreground">
+          <Button onClick={onStartOver} variant="outline" size="lg" className="gap-2 min-h-[48px]">
             <ArrowLeft className="h-5 w-5" />
             Start New Diagnosis
           </Button>
