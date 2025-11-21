@@ -1166,13 +1166,14 @@ Analyse this installation photo and provide structured fault diagnosis with RAG 
       logger.info(`🤖 Using model: ${modelToUse}${imageUrl ? ' (vision structured diagnosis)' : ''}`);
 
       const aiResponse = await callOpenAI(
-        troubleshootingMessages,
-        modelToUse,
+        {
+          messages: troubleshootingMessages,
+          model: modelToUse,
+          tools: [faultDiagnosisTool],
+          tool_choice: { type: 'function', function: { name: 'provide_fault_diagnosis' } }
+        },
         imageUrl ? LOVABLE_API_KEY! : OPENAI_API_KEY!,
-        logger,
-        120000,
-        [faultDiagnosisTool],
-        { type: 'function', function: { name: 'provide_fault_diagnosis' } }
+        120000
       );
       
       const toolCall = aiResponse.toolCalls?.[0];
@@ -1273,10 +1274,11 @@ Analyse this installation photo and provide structured fault diagnosis with RAG 
     logger.info(`🤖 Using model: ${modelToUse}${imageUrl ? ' (vision Q&A)' : ''}`);
 
     const aiResponse = await callOpenAI(
-      questionMessages,
-      modelToUse,
+      {
+        messages: questionMessages,
+        model: modelToUse
+      },
       imageUrl ? LOVABLE_API_KEY! : OPENAI_API_KEY!,
-      logger,
       120000
     );
     
