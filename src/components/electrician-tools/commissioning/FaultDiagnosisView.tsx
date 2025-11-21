@@ -144,22 +144,28 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
         {/* Safety Alert Banner */}
         {diagnosis && risk && (diagnosis.faultSummary.safetyRisk === 'HIGH' || diagnosis.faultSummary.safetyRisk === 'CRITICAL') && (
           <Card className={`${risk.color} border-none p-6 sm:p-7 shadow-xl`}>
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 p-4 bg-white/20 rounded-lg">
-                <RiskIcon className={`h-8 w-8 sm:h-10 sm:w-10 ${risk.textColor}`} />
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-3">
-                  <Badge className="bg-white/30 text-white border-none text-base px-4 py-1.5">
-                    {diagnosis.faultSummary.safetyRisk} RISK
-                  </Badge>
-                  <h3 className="text-xl sm:text-2xl font-bold text-white text-left">Safety Critical Issue</h3>
+            <div className="space-y-4">
+              {/* Mobile: Icon centered on top, Desktop: Icon on left */}
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+                <div className="flex-shrink-0 p-5 sm:p-4 bg-white/20 rounded-2xl sm:rounded-lg">
+                  <RiskIcon className={`h-12 w-12 sm:h-8 sm:w-8 ${risk.textColor}`} />
                 </div>
-                {diagnosis.faultSummary.immediateAction && (
-                  <p className="text-base text-white font-semibold text-left leading-relaxed">
-                    Immediate Action: {diagnosis.faultSummary.immediateAction}
-                  </p>
-                )}
+                <div className="flex-1 w-full text-center sm:text-left">
+                  <div className="flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-2 mb-4 sm:mb-3">
+                    <Badge className="bg-white/30 text-white border-none text-lg sm:text-base px-5 py-2 sm:px-4 sm:py-1.5 font-bold">
+                      {diagnosis.faultSummary.safetyRisk} RISK
+                    </Badge>
+                    <h3 className="text-2xl sm:text-xl font-bold text-white">Safety Critical Issue</h3>
+                  </div>
+                  {diagnosis.faultSummary.immediateAction && (
+                    <div className="space-y-2">
+                      <p className="text-lg sm:text-base text-white font-bold">Immediate Action:</p>
+                      <p className="text-lg sm:text-base text-white leading-relaxed">
+                        {diagnosis.faultSummary.immediateAction}
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </Card>
