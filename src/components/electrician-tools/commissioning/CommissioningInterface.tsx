@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { useSimpleAgent } from "@/hooks/useSimpleAgent";
 import CommissioningInput from "./CommissioningInput";
 import CommissioningProcessingView from "./CommissioningProcessingView";
@@ -6,17 +6,26 @@ import CommissioningSuccess from "./CommissioningSuccess";
 import CommissioningResults from "./CommissioningResults";
 import type { CommissioningResponse } from "@/types/commissioning-response";
 
+const CommissioningChat = lazy(() => import("./CommissioningChat"));
+
 const CommissioningInterface = () => {
   const [showResults, setShowResults] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [celebrationShown, setCelebrationShown] = useState(false);
   const [results, setResults] = useState<CommissioningResponse | null>(null);
   const [generationStartTime, setGenerationStartTime] = useState(0);
+  const [responseMode, setResponseMode] = useState<'procedure' | 'conversational' | null>(null);
+  const [conversationalResponse, setConversationalResponse] = useState<{
+    text: string;
+    queryType: 'troubleshooting' | 'question';
+    citations: any[];
+  } | null>(null);
   const [projectInfo, setProjectInfo] = useState({
     projectName: "",
     location: "",
     clientName: "",
-    installationDate: ""
+    installationDate: "",
+    selectedType: 'domestic' as 'domestic' | 'commercial' | 'industrial'
   });
   
   const { callAgent, isLoading, progress } = useSimpleAgent();
@@ -38,7 +47,8 @@ const CommissioningInterface = () => {
       projectName: data.projectName,
       location: data.location,
       clientName: data.clientName,
-      installationDate: data.installationDate
+      installationDate: data.installationDate,
+      selectedType: data.selectedType
     });
     
     const response = await callAgent('commissioning', {
@@ -54,12 +64,25 @@ const CommissioningInterface = () => {
     });
     
     if (response?.success) {
-      setResults(response as CommissioningResponse);
-      
-      // Show celebration screen if not shown before
-      if (!celebrationShown) {
-        setShowCelebration(true);
-        setCelebrationShown(true);
+      const typedResponse = response as CommissioningResponse;
+      if (typedResponse.mode === 'conversational') {
+        // Conversational response
+        setResponseMode('conversational');
+        setConversationalResponse({
+          text: typedResponse.response || '',
+          queryType: typedResponse.queryType || 'question',
+          citations: typedResponse.citations || []
+        });
+        setShowCelebration(false);
+      } else {
+        // Structured procedure response
+        setResponseMode('procedure');
+        setResults(typedResponse);
+        
+        if (!celebrationShown) {
+          setShowCelebration(true);
+          setCelebrationShown(true);
+        }
       }
     }
   };
@@ -69,6 +92,8 @@ const CommissioningInterface = () => {
     setShowCelebration(false);
     setCelebrationShown(false);
     setResults(null);
+    setResponseMode(null);
+    setConversationalResponse(null);
   };
 
   const handleViewResults = () => {
@@ -89,8 +114,32 @@ const CommissioningInterface = () => {
     return <CommissioningProcessingView progress={progress} startTime={generationStartTime} />;
   }
 
-  // Show results page
-  if (results) {
+  // CONVERSATIONAL MODE: Show chat-style response
+  if (responseMode === 'conversational' && conversationalResponse) {
+    return (
+      <Suspense fallback={<CommissioningProcessingView progress={progress} startTime={generationStartTime} />}>
+        <CommissioningChat
+          response={conversationalResponse.text}
+          queryType={conversationalResponse.queryType}
+          citations={conversationalResponse.citations}
+          onStartOver={handleStartOver}
+          onAskFollowUp={(followUpQuery) => {
+            handleGenerate({
+              prompt: followUpQuery,
+              selectedType: projectInfo.selectedType,
+              projectName: projectInfo.projectName,
+              location: projectInfo.location,
+              clientName: projectInfo.clientName,
+              installationDate: projectInfo.installationDate
+            });
+          }}
+        />
+      </Suspense>
+    );
+  }
+
+  // PROCEDURE MODE: Show structured results
+  if (responseMode === 'procedure' && results) {
     return (
       <>
         <CommissioningResults 

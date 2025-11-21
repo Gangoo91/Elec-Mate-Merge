@@ -83,6 +83,14 @@ serve(async (req) => {
       hasSharedRegs: !!sharedRegulations?.length
     });
 
+    // PHASE 0: Query Classification - Detect if user wants procedure vs troubleshooting/Q&A
+    const classification = classifyCommissioningQuery(effectiveQuery);
+    logger.info('🧠 Query classified', { 
+      mode: classification.mode,
+      confidence: classification.confidence,
+      reasoning: classification.reasoning
+    });
+
     // Get API keys
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
     if (!OPENAI_API_KEY) {
@@ -146,6 +154,146 @@ serve(async (req) => {
       logger.warn('⚠️ RAG returned zero results', { query });
     }
 
+    // Query Classification Function
+    function classifyCommissioningQuery(query: string): {
+      mode: 'procedure' | 'troubleshooting' | 'question';
+      confidence: number;
+      reasoning: string;
+    } {
+      const lowerQuery = query.toLowerCase();
+      
+      // TROUBLESHOOTING PATTERNS (user has a fault/problem)
+      const troubleshootingPatterns = [
+        /reading.*(?:showing|is|reads|getting)/i,
+        /(?:fault|problem|issue|error).*(?:with|on|in)/i,
+        /why.*(?:am i|is|does)/i,
+        /(?:insulation|continuity|zs|rcd).*(?:failing|failed|won't|doesn't)/i,
+        /(?:0\.\d+|[0-9]+\.?[0-9]*)\s*(?:mω|ω|ma|v)\s*on/i,
+        /what.*wrong/i,
+        /how.*(?:fix|repair|solve)/i
+      ];
+      
+      // QUESTION PATTERNS (learning/clarification)
+      const questionPatterns = [
+        /^what\s+(?:is|are|does|should)/i,
+        /^when\s+(?:do|should|can)/i,
+        /^where\s+(?:do|should)/i,
+        /^how\s+(?:do|can|should).*(?:\?|$)/i,
+        /^can\s+(?:i|you|we)/i,
+        /^why\s+(?:is|does|do)/i,
+        /what.*(?:mean|required|acceptable|criteria)/i,
+        /explain/i,
+        /difference between/i
+      ];
+      
+      // PROCEDURE GENERATION PATTERNS (wants full structured output)
+      const procedurePatterns = [
+        /(?:step|procedure|testing|commission|test).*(?:for|on)/i,
+        /(?:generate|create|provide|give me).*(?:procedure|test|commissioning)/i,
+        /(?:complete|full).*(?:testing|commissioning|procedure)/i,
+        /all.*tests.*required/i,
+        /eic|eicr|electrical installation certificate/i,
+        /new.*(?:consumer unit|distribution board|circuit)/i
+      ];
+      
+      const troubleshootingScore = troubleshootingPatterns.filter(p => p.test(query)).length;
+      const questionScore = questionPatterns.filter(p => p.test(query)).length;
+      const procedureScore = procedurePatterns.filter(p => p.test(query)).length;
+      
+      const isDetailedRequest = query.length > 80 && /\d+/.test(query);
+      
+      if (troubleshootingScore > 0 && troubleshootingScore >= questionScore) {
+        return {
+          mode: 'troubleshooting',
+          confidence: Math.min(0.95, 0.6 + (troubleshootingScore * 0.15)),
+          reasoning: `Detected fault/problem indicators`
+        };
+      }
+      
+      if (questionScore > procedureScore && query.length < 100) {
+        return {
+          mode: 'question',
+          confidence: Math.min(0.9, 0.5 + (questionScore * 0.2)),
+          reasoning: `Detected question pattern`
+        };
+      }
+      
+      if (procedureScore > 0 || isDetailedRequest) {
+        return {
+          mode: 'procedure',
+          confidence: Math.min(0.95, 0.7 + (procedureScore * 0.1)),
+          reasoning: `Detected procedure request`
+        };
+      }
+      
+      return {
+        mode: 'question',
+        confidence: 0.4,
+        reasoning: 'No clear pattern detected - defaulting to conversational mode'
+      };
+    }
+
+    // Conversational Prompt Builder
+    function buildConversationalPrompt(
+      mode: 'troubleshooting' | 'question',
+      ragContext: string,
+      conversationContext: string
+    ): string {
+      const basePersona = `You are a GN3 PRACTICAL TESTING GURU with 30 years field experience.
+
+Write all responses in UK English (British spelling and terminology).
+
+You're having a conversation with an electrician who needs quick, practical advice.
+- Be conversational but professional
+- Reference specific BS 7671 regulations when relevant
+- Give actionable steps, not just theory
+- Mention common pitfalls from your 30 years experience
+- Keep responses focused: 200-400 words max
+
+AVAILABLE KNOWLEDGE:
+${ragContext}
+
+${conversationContext}`;
+
+      if (mode === 'troubleshooting') {
+        return `${basePersona}
+
+🔧 TROUBLESHOOTING MODE INSTRUCTIONS:
+
+The electrician has encountered a fault or unexpected reading. Your response MUST:
+
+1. **Acknowledge the specific problem**
+2. **Explain why it's failing** (regulation reference + practical cause)
+3. **Provide diagnostic steps** in order
+4. **Give realistic fault scenarios** from experience
+5. **Specify test settings** (instrument mode, expected readings)
+6. **Include safety warnings** if relevant
+
+TONE: "Here's what I'd do..." not "You should refer to BS 7671..."
+
+STRUCTURE:
+- Quick diagnosis (1-2 sentences)
+- Most likely cause + why (1 paragraph)
+- Step-by-step fix procedure (numbered list)
+- If that doesn't work, next steps (1 paragraph)
+- Regulation reference (brief, at end)`;
+      } else {
+        return `${basePersona}
+
+❓ QUESTION MODE INSTRUCTIONS:
+
+The electrician wants to learn or clarify something. Your response MUST:
+
+1. **Direct answer first** (answer in first 2 sentences)
+2. **Explain the "why"** with regulation backing
+3. **Give practical context** (when does this apply, exceptions, scenarios)
+4. **Add a real-world tip** from your experience
+5. **Reference BS 7671** (regulation numbers)
+
+TONE: Clear, helpful, like explaining to an apprentice over coffee`;
+      }
+    }
+
     // Build conversation context with DESIGN DATA
     let contextSection = '';
     if (previousAgentOutputs && previousAgentOutputs.length > 0) {
@@ -183,7 +331,12 @@ serve(async (req) => {
       contextSection += '5. If unsure what the user means, reference what was discussed to clarify\n';
     }
 
-    const systemPrompt = `You are a GN3 PRACTICAL TESTING GURU - BS 7671:2018+A3:2024 Chapter 64 specialist.
+    // BRANCH LOGIC: Procedure vs Conversational Mode
+    if (classification.mode === 'procedure') {
+      logger.info('📋 Generating structured procedure');
+      
+      // EXISTING PROCEDURE GENERATION CODE CONTINUES BELOW
+      const systemPrompt = `You are a GN3 PRACTICAL TESTING GURU - BS 7671:2018+A3:2024 Chapter 64 specialist.
 
 Write all responses in UK English (British spelling and terminology). Do not use American spellings.
 
@@ -743,6 +896,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
     return new Response(
       JSON.stringify({
         success: true,
+        mode: 'procedure',
         response: enrichedResponse.response,
         enrichment: enrichedResponse.enrichment,
         citations: enrichedResponse.citations,
@@ -762,6 +916,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
           receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none',
           ragTimeMs: ragStart ? Date.now() - ragStart : null,
           totalTimeMs: totalTime,
+          classification,
           ragQualityMetrics: {
             gn3ProceduresFound,
             regulationsFound,
@@ -774,6 +929,56 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
         status: 200 
       }
     );
+
+  } else {
+    // CONVERSATIONAL MODE - Troubleshooting or Question
+    logger.info('💬 Generating conversational response', { mode: classification.mode });
+    
+    const conversationalPrompt = buildConversationalPrompt(
+      classification.mode,
+      testContext,
+      contextSection
+    );
+    
+    const aiResponse = await callLovableAIWithTimeout(
+      {
+        model: 'google/gemini-2.5-flash',
+        messages: [
+          { role: 'system', content: conversationalPrompt },
+          { role: 'user', content: effectiveQuery }
+        ],
+        temperature: 0.7,
+        max_tokens: 2000
+      },
+      180000,
+      logger
+    );
+    
+    const conversationalResponse = aiResponse.choices?.[0]?.message?.content || 'Unable to generate response';
+    
+    return new Response(
+      JSON.stringify({
+        success: true,
+        mode: 'conversational',
+        queryType: classification.mode,
+        response: conversationalResponse,
+        citations: ragResults || [],
+        metadata: {
+          classification,
+          ragQualityMetrics: {
+            gn3ProceduresFound,
+            regulationsFound,
+            totalSources: gn3ProceduresFound + regulationsFound
+          }
+        }
+      }),
+      { 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200 
+      }
+    );
+  }
+  // END OF BRANCH LOGIC
 
   } catch (error) {
     logger.error('Commissioning V3 error', { error: error instanceof Error ? error.message : String(error) });
