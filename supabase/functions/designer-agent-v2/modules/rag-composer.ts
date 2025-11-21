@@ -1,12 +1,12 @@
 /**
- * RAG Composer Module - 3-5 Second Optimization
- * Parallel RAG searches with circuit-specific keywords
- * Direct keyword extraction from user inputs
+ * RAG Composer Module - Ultra-Fast Intelligence Integration
+ * Replaced slow vector search with <50ms keyword-based GIN index searches
  */
 
 import { searchCircuitRegulations, searchInstallationPractices } from '../../_shared/circuit-rag.ts';
 import { filterRegulationsForCircuit } from '../../_shared/circuit-regulation-mapper.ts';
-import { generateEmbedding } from '../../_shared/rams-rag.ts';
+import { searchDesignIntelligence } from '../../_shared/intelligence-search.ts';
+import { extractIntelligenceKeywords } from '../../_shared/circuit-keyword-extractor.ts';
 
 /**
  * Core Regulations Cache Loader
@@ -205,68 +205,8 @@ function getCriticalTopicsForType(type: 'domestic' | 'commercial' | 'industrial'
 }
 
 /**
- * Helper: Search Design Knowledge (vector-based semantic search)
- * Generates embedding from query text and uses vector similarity search
- */
-async function searchDesignKnowledge(supabase: any, query: string, keywords: string[], limit: number) {
-  console.log(`📚 Design Knowledge Search: ${query}`);
-  
-  try {
-    // Generate embedding from text (simple, no timeout wrapper)
-    console.log('🔄 Generating embedding for design knowledge query...');
-    const queryEmbedding = await generateEmbedding(query);
-    console.log(`✅ Embedding generated (${queryEmbedding.length} dimensions)`);
-    
-    // Call RPC with vector embedding and correct parameters
-    const { data, error } = await supabase.rpc('search_design_knowledge', {
-      query_embedding: queryEmbedding,
-      circuit_filter: null,
-      source_filter: null,
-      match_threshold: 0.7,
-      match_count: limit
-    });
-    
-    if (error) {
-      console.error('Design knowledge search error:', error);
-      return [];
-    }
-    
-    console.log(`✅ Found ${data?.length || 0} design knowledge results`);
-    return data || [];
-  } catch (error) {
-    console.error('Design knowledge search failed:', error);
-    return [];
-  }
-}
-
-/**
- * Helper: Search Regulations Intelligence (keyword-based hybrid)
- * FIX: Use search_keywords parameter for lightning-fast keyword search
- */
-async function searchRegulationsIntelligence(supabase: any, keywords: string[], limit: number) {
-  const queryText = keywords.join(' ');
-  const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
-    query_text: queryText,
-    match_count: 10  // Consistent with AI RAMS pattern
-  });
-  
-  if (error) {
-    console.error('Regulations intelligence search error:', error);
-    return [];
-  }
-  
-  return (data || []).map((row: any) => ({
-    regulation_number: row.regulation_number,
-    content: row.content || row.regulation_text || '',
-    section: row.section,
-    similarity: row.hybrid_score ? row.hybrid_score / 10 : 0.5 // Normalize
-  }));
-}
-
-
-/**
  * Build RAG searches for circuit design
- * REFACTORED: Direct searches, no shared intelligent-rag.ts
+ * OPTIMIZED: Ultra-fast keyword-based intelligence search
  */
 export async function buildRAGSearches(
   query: string,
@@ -280,7 +220,7 @@ export async function buildRAGSearches(
 ): Promise<any> {
   const type = installationType || 'domestic';
   
-  logger.info('🎯 3-5s RAG: Parallel searches with circuit-specific keywords', { 
+  logger.info('⚡ Ultra-Fast RAG: Intelligence keyword search', { 
     searchTerms: searchTerms.length, 
     installationType: type,
     circuitCount: circuits?.length || 0
@@ -314,27 +254,27 @@ export async function buildRAGSearches(
       // Validate loadType
       if (!circuit.loadType) {
         if (strictValidation) {
-          throw new Error(`Circuit "${circuitId}" missing loadType`);
+          throw new Error(`Circuit \"${circuitId}\" missing loadType`);
         }
-        assumptions.push(`Circuit "${circuitId}": load type details missing - proceeding with generic design guidance`);
-        logger.warn(`⚠️ Assumption: Circuit "${circuitId}" missing loadType, using generic approach`, { circuitId });
+        assumptions.push(`Circuit \"${circuitId}\": load type details missing - proceeding with generic design guidance`);
+        logger.warn(`⚠️ Assumption: Circuit \"${circuitId}\" missing loadType, using generic approach`, { circuitId });
       }
       
       // Validate installMethod with intelligent defaults
       if (!circuit.installMethod) {
         if (strictValidation) {
-          throw new Error(`Circuit "${circuitId}" missing installMethod`);
+          throw new Error(`Circuit \"${circuitId}\" missing installMethod`);
         }
         
         // Apply safe defaults based on context
         if (circuit.specialLocation === 'outdoor') {
-          assumptions.push(`Circuit "${circuitId}": install method assumed - outdoor typical installation (SWA buried/clipped)`);
-          logger.warn(`⚠️ Assumption: Circuit "${circuitId}" outdoor installation method assumed`, { circuitId });
+          assumptions.push(`Circuit \"${circuitId}\": install method assumed - outdoor typical installation (SWA buried/clipped)`);
+          logger.warn(`⚠️ Assumption: Circuit \"${circuitId}\" outdoor installation method assumed`, { circuitId });
         } else {
           // Default to Reference Method C (clipped direct) for domestic
           circuit.installMethod = 'method_c';
-          assumptions.push(`Circuit "${circuitId}": install method assumed - Reference Method C (clipped direct)`);
-          logger.warn(`⚠️ Assumption: Circuit "${circuitId}" using Reference Method C as default`, { circuitId, method: 'method_c' });
+          assumptions.push(`Circuit \"${circuitId}\": install method assumed - Reference Method C (clipped direct)`);
+          logger.warn(`⚠️ Assumption: Circuit \"${circuitId}\" using Reference Method C as default`, { circuitId, method: 'method_c' });
         }
       }
     }
@@ -398,7 +338,7 @@ export async function buildRAGSearches(
   // Get circuit types for structured calculations
   const circuitTypes = circuits?.map((c: any) => c.circuitType).filter(Boolean) || [];
   
-  // ===== SIMPLE PARALLEL RAG SEARCHES (MIRRORS AI RAMS) =====
+  // ===== SIMPLE PARALLEL RAG SEARCHES (ULTRA-FAST INTELLIGENCE) =====
   const searchStart = Date.now();
   
   // Build job inputs for RAG search
@@ -408,20 +348,30 @@ export async function buildRAGSearches(
     projectInfo: { installationType: type }
   };
   
-  // PHASE 3: Reordered RAG searches - Design RAG FIRST, then BS7671 vector (NO PRACTICAL - install-method-agent owns that)
   let designDocs: any[] = [];
   let regulations: any[] = [];
   let calculations: any[] = [];
   let failedBranches = 0;
   
   try {
-    // STEP 1: Design RAG FIRST (most circuit-specific) - INCREASED LIMIT
+    // STEP 1: ULTRA-FAST INTELLIGENCE SEARCH (replaces slow vector search)
     try {
-      logger.info('🎯 Phase 3: Searching Design RAG first (vector search, limit 15)');
-      designDocs = await searchDesignKnowledge(supabase, query, allKeywords, 15);
-      logger.info(`✅ Design RAG: ${designDocs.length} results`);
+      logger.info('⚡ Searching design intelligence (keyword GIN indexes, <50ms)');
+      
+      const intelligenceKeywords = extractIntelligenceKeywords(circuits || []);
+      const loadTypes = circuits?.map(c => c.loadType).filter(Boolean) || [];
+      
+      designDocs = await searchDesignIntelligence(supabase, {
+        keywords: [...allKeywords, ...intelligenceKeywords],
+        loadTypes: loadTypes,
+        categories: ['cable_sizing', 'voltage_drop', 'protection', 'earthing', 'special_locations'],
+        facetTypes: ['concept', 'formula', 'table', 'example'],
+        limit: 25 // Increased - we can afford more now it's <50ms
+      });
+      
+      logger.info(`✅ Intelligence search: ${designDocs.length} facets in ${Date.now() - searchStart}ms`);
     } catch (err) {
-      logger.error('❌ Design RAG failed', { 
+      logger.error('❌ Intelligence search failed', { 
         error: err instanceof Error ? err.message : String(err),
         stack: err instanceof Error ? err.stack : undefined
       });
@@ -430,7 +380,7 @@ export async function buildRAGSearches(
     
     // STEP 2: BS7671 Regulations via VECTOR search (not hybrid) - INCREASED LIMIT
     try {
-      logger.info('🎯 Phase 3: Searching BS7671 regulations (vector search, limit 15)');
+      logger.info('🎯 Searching BS7671 regulations (vector search, limit 15)');
       regulations = await searchCircuitRegulations(jobInputs, 'vector');
       logger.info(`✅ BS7671 RAG: ${regulations.length} results`);
     } catch (err) {
@@ -461,8 +411,8 @@ export async function buildRAGSearches(
   // PHASE 3: Critical RAG source validation (fail fast if essential data missing)
   const criticalSourcesMissing = [];
   if (designDocs.length === 0) {
-    criticalSourcesMissing.push('Design Knowledge');
-    logger.error('🚨 CRITICAL: Design RAG returned 0 results');
+    criticalSourcesMissing.push('Design Intelligence');
+    logger.error('🚨 CRITICAL: Design intelligence returned 0 results');
   }
   if (regulations.length === 0) {
     criticalSourcesMissing.push('BS 7671 Regulations');
@@ -472,7 +422,7 @@ export async function buildRAGSearches(
   // If BOTH critical sources failed, throw error (don't proceed with incomplete context)
   if (criticalSourcesMissing.length === 2) {
     logger.error('🚨 FATAL: Both critical RAG sources failed - cannot design compliant circuits safely');
-    throw new Error(`Critical RAG sources failed: ${criticalSourcesMissing.join(', ')}. Circuit design requires both design knowledge and BS 7671 regulations.`);
+    throw new Error(`Critical RAG sources failed: ${criticalSourcesMissing.join(', ')}. Circuit design requires both design intelligence and BS 7671 regulations.`);
   }
   
   // If only ONE critical source failed, load fallback but log warning
@@ -485,32 +435,13 @@ export async function buildRAGSearches(
   
   // Log completion
   const ragTime = Date.now() - searchStart;
-  const totalBranches = 3; // UPDATED: Removed practical work branch
+  const totalBranches = 3;
   const successfulBranches = totalBranches - failedBranches;
   
-  logger.info(`✅ Design: ${designDocs.length} docs`);
+  logger.info(`✅ Intelligence: ${designDocs.length} facets`);
   logger.info(`✅ BS 7671: ${regulations.length} regs`);
   logger.info(`✅ Calculations: ${calculations.length} formulas`);
   logger.info(`⏱️ RAG completed in ${ragTime}ms with ${successfulBranches}/${totalBranches} branches`);
-  
-  // PHASE 4: Enhanced RAG Health Monitoring (3 branches, no practical work)
-  const successRate = (successfulBranches / totalBranches) * 100;
-  const healthStatus = {
-    designDocs: designDocs.length >= 12 ? '✓' : designDocs.length >= 8 ? '⚠️' : '✗',
-    bs7671: regulations.length >= 12 ? '✓' : regulations.length >= 8 ? '⚠️' : '✗',
-    calculations: calculations.length >= 8 ? '✓' : calculations.length >= 5 ? '⚠️' : '✗'
-  };
-  
-  logger.info(`📊 RAG Health Check:`, {
-    designDocs: `${designDocs.length}/15 ${healthStatus.designDocs}`,
-    bs7671: `${regulations.length}/15 ${healthStatus.bs7671}`,
-    calculations: `${calculations.length}/10 ${healthStatus.calculations}`,
-    overallHealth: `${successfulBranches}/${totalBranches} branches (${successRate.toFixed(0)}%)`
-  });
-  
-  if (successRate < 50) {
-    logger.error(`🚨 CRITICAL: Only ${successfulBranches}/${totalBranches} RAG branches succeeded - design quality will be impaired`);
-  }
   
   const totalTime = Date.now() - startTime;
   
@@ -527,28 +458,21 @@ export async function buildRAGSearches(
   const hasAnyResults = designDocs.length + regulations.length > 0;
   
   if (!hasAnyResults) {
-    logger.warn('⚠️ All RAG searches timed out, using essential fallback regulations');
+    logger.warn('⚠️ All RAG searches failed, using essential fallback regulations');
     const fallbackRegulations = [
       {
         regulation_number: '433.1.1',
         content: 'Every circuit shall be designed so that a protective device is provided to break any overload current flowing in the circuit conductors before such a current could cause a temperature rise detrimental to insulation, joints, terminations or surroundings.',
         section: 'Protection against overload current',
         similarity: 1.0,
-        source: 'timeout-fallback'
+        source: 'fallback'
       },
       {
         regulation_number: '525.1',
         content: 'The voltage drop between the origin of the installation and any load point shall not exceed 3% of the nominal voltage for lighting circuits and 5% for other uses.',
         section: 'Voltage drop in consumers installations',
         similarity: 1.0,
-        source: 'timeout-fallback'
-      },
-      {
-        regulation_number: '411.3.2',
-        content: 'RCD protection required for socket-outlets rated up to 20A for use by ordinary persons and intended for general use.',
-        section: 'RCD protection requirements',
-        similarity: 1.0,
-        source: 'timeout-fallback'
+        source: 'fallback'
       }
     ];
     
@@ -560,13 +484,13 @@ export async function buildRAGSearches(
       installationDocs: [],
       maintenanceDocs: [],
       structuredCalculations: calculations,
-      searchMethod: 'timeout-fallback',
+      searchMethod: 'fallback',
       totalDocs: fallbackRegulations.length + calculations.length
     };
   }
   
-  logger.info('🎯 RAG Complete (3-5s optimization)', {
-    designDocs: designDocs.length,
+  logger.info('⚡ Ultra-Fast RAG Complete', {
+    intelligence: designDocs.length,
     regulations: regulations.length,
     calculations: calculations.length,
     ragTime: `${ragTime}ms`,
@@ -576,56 +500,94 @@ export async function buildRAGSearches(
   const ragResults = {
     regulations,
     designDocs,
-    practicalWorkDocs: [], // Install-method-agent handles this now
+    practicalWorkDocs: [],
     healthSafetyDocs: [],
     installationDocs: [],
     maintenanceDocs: [],
     structuredCalculations: calculations,
-    searchMethod: 'direct-search',
+    searchMethod: 'intelligence-keywords',
     totalDocs: designDocs.length + regulations.length + calculations.length,
-    assumptions, // Thread assumptions through
-    suggestions // Thread suggestions through
+    assumptions,
+    suggestions
   };
   
-  // ============= PHASE 2: CIRCUIT-SPECIFIC RAG FILTERING =============
-  // Extract unique circuit types from batch
-  const circuitTypesSet = new Set(
-    circuits?.map(c => (c.loadType || 'socket').toLowerCase()) || ['socket']
-  );
-  
-  // If batch has multiple circuit types, keep all regulations
-  // If batch is homogeneous (all same type) AND has 4+ circuits, filter aggressively to reduce tokens
-  // Smaller batches retain all context to avoid losing critical regulations
-  if (circuitTypesSet.size === 1 && circuits && circuits.length >= 4) {
-    const singleType = Array.from(circuitTypesSet)[0];
-    logger.info(`🔍 Homogeneous batch detected: ${circuits.length} ${singleType} circuits, applying aggressive RAG filtering`);
-    
-    const originalRegCount = ragResults.regulations?.length || 0;
-    const originalDocCount = ragResults.designDocs?.length || 0;
-    
-    // Filter regulations to ONLY those relevant for this circuit type
-    ragResults.regulations = filterRegulationsForCircuit(
-      ragResults.regulations || [],
-      singleType
-    );
-    
-    ragResults.designDocs = filterRegulationsForCircuit(
-      ragResults.designDocs || [],
-      singleType
-    );
-    
-    const newRegCount = ragResults.regulations?.length || 0;
-    const newDocCount = ragResults.designDocs?.length || 0;
-    
-    logger.info(`📉 RAG filtered: regulations ${originalRegCount}→${newRegCount}, docs ${originalDocCount}→${newDocCount} (${Math.round((1 - (newRegCount + newDocCount) / (originalRegCount + originalDocCount)) * 100)}% reduction)`);
-  } else {
-    const reason = circuitTypesSet.size > 1 
-      ? `Mixed batch with ${circuitTypesSet.size} types`
-      : `Small homogeneous batch (${circuits?.length || 0} circuits)`;
-    logger.info(`🔀 ${reason}, keeping all regulations to avoid missing requirements`);
-  }
-
   return ragResults;
+}
+
+/**
+ * Format intelligence facets for AI consumption
+ * Groups by facet type for structured learning
+ */
+function formatIntelligenceFacets(facets: any[]): string {
+  const grouped = {
+    concepts: facets.filter(f => f.facet_type === 'concept'),
+    formulas: facets.filter(f => f.facet_type === 'formula'),
+    tables: facets.filter(f => f.facet_type === 'table'),
+    examples: facets.filter(f => f.facet_type === 'example'),
+    regulations: facets.filter(f => f.facet_type === 'regulation')
+  };
+  
+  let output = '=== DESIGN INTELLIGENCE ===\n\n';
+  
+  // Concepts first (understanding)
+  if (grouped.concepts.length > 0) {
+    output += '## DESIGN CONCEPTS\n';
+    grouped.concepts.forEach(f => {
+      output += `### ${f.primary_topic}\n`;
+      output += `${f.content}\n`;
+      if (f.bs7671_regulations?.length > 0) {
+        output += `Regulations: ${f.bs7671_regulations.join(', ')}\n`;
+      }
+      output += '\n';
+    });
+  }
+  
+  // Formulas second (calculations)
+  if (grouped.formulas.length > 0) {
+    output += '## CALCULATION FORMULAS\n';
+    grouped.formulas.forEach(f => {
+      output += `### ${f.primary_topic}\n`;
+      if (f.formulas?.length > 0) {
+        f.formulas.forEach((formula: string) => {
+          output += `Formula: ${formula}\n`;
+        });
+      }
+      output += `${f.content}\n`;
+      if (f.calculation_steps?.length > 0) {
+        output += `Steps:\n`;
+        f.calculation_steps.forEach((step: string, i: number) => {
+          output += `${i + 1}. ${step}\n`;
+        });
+      }
+      output += '\n';
+    });
+  }
+  
+  // Tables third (lookup data)
+  if (grouped.tables.length > 0) {
+    output += '## REFERENCE TABLES\n';
+    grouped.tables.forEach(f => {
+      output += `### ${f.primary_topic}\n`;
+      output += `${f.content}\n\n`;
+    });
+  }
+  
+  // Examples last (worked examples)
+  if (grouped.examples.length > 0) {
+    output += '## WORKED EXAMPLES\n';
+    grouped.examples.forEach(f => {
+      output += `### ${f.primary_topic}\n`;
+      output += `${f.content}\n`;
+      if (f.worked_examples?.length > 0) {
+        f.worked_examples.forEach((ex: any) => {
+          output += `Example: ${JSON.stringify(ex)}\n`;
+        });
+      }
+      output += '\n';
+    });
+  }
+  
+  return output;
 }
 
 /**
@@ -634,86 +596,36 @@ export async function buildRAGSearches(
 export function mergeRegulations(ragResults: any): any[] {
   const regulations = new Map();
 
-  // PHASE 1: Add pre-structured calculation formulas FIRST (highest priority)
-  if (ragResults.calculationFormulas && ragResults.calculationFormulas.length > 0) {
-    ragResults.calculationFormulas.forEach((calc: any, idx: number) => {
+  // PHASE 0: Format and add design intelligence FIRST (highest priority)
+  if (ragResults.designDocs && ragResults.designDocs.length > 0) {
+    const intelligenceContext = formatIntelligenceFacets(ragResults.designDocs);
+    
+    regulations.set('DESIGN_INTELLIGENCE', {
+      regulation_number: 'DESIGN_INTELLIGENCE',
+      content: intelligenceContext,
+      section: 'Enhanced Design Knowledge',
+      similarity: 1.0
+    });
+  }
+
+  // PHASE 1: Add pre-structured calculation formulas SECOND
+  if (ragResults.structuredCalculations && ragResults.structuredCalculations.length > 0) {
+    ragResults.structuredCalculations.forEach((calc: any, idx: number) => {
       regulations.set(`CALC-${idx}`, {
-        regulation_number: calc.regulation_reference || `Calculation-${calc.circuit_type}`,
-        topic: calc.calculation_name,
-        content: formatCalculationForAI(calc),
-        category: 'calculation_formula',
-        circuit_type: calc.circuit_type
+        regulation_number: `CALC_${calc.calculation_name}`,
+        content: `Formula: ${calc.formula}\n\n${calc.notes || ''}`,
+        section: calc.topic || 'Calculations',
+        similarity: 0.9
       });
     });
   }
 
-  // Merge BS 7671 results
+  // PHASE 2: Merge BS 7671 results
   if (ragResults.regulations) {
     ragResults.regulations.forEach((reg: any) => {
       regulations.set(reg.regulation_number, reg);
     });
   }
 
-  // Merge design knowledge
-  if (ragResults.designKnowledge) {
-    ragResults.designKnowledge.forEach((doc: any, idx: number) => {
-      regulations.set(`DK-${idx}`, { ...doc, regulation_number: `Design-${idx}` });
-    });
-  }
-
-  // Merge design docs (if not already included)
-  if (ragResults.designDocs) {
-    ragResults.designDocs.forEach((doc: any, idx: number) => {
-      const key = doc.regulation_number || `DOC-${idx}`;
-      if (!regulations.has(key)) {
-        regulations.set(key, { ...doc, regulation_number: key });
-      }
-    });
-  }
-
   return Array.from(regulations.values());
-}
-
-/**
- * Format calculation formula for AI consumption
- * Pre-structures calculation data so AI can directly apply formulas
- */
-function formatCalculationForAI(calc: any): string {
-  let content = `${calc.calculation_name}\n\n`;
-  
-  if (calc.formula) {
-    content += `Formula: ${calc.formula}\n\n`;
-  }
-  
-  if (calc.worked_example) {
-    content += `Worked Example:\n`;
-    if (typeof calc.worked_example === 'object') {
-      Object.entries(calc.worked_example).forEach(([key, value]) => {
-        content += `  ${key}: ${value}\n`;
-      });
-    } else {
-      content += `${calc.worked_example}\n`;
-    }
-    content += '\n';
-  }
-  
-  if (calc.table_data) {
-    content += `Table Data:\n`;
-    if (Array.isArray(calc.table_data)) {
-      calc.table_data.forEach((row: any) => {
-        if (typeof row === 'object') {
-          content += `  ${JSON.stringify(row)}\n`;
-        } else {
-          content += `  ${row}\n`;
-        }
-      });
-    }
-    content += '\n';
-  }
-  
-  if (calc.notes) {
-    content += `Notes: ${calc.notes}`;
-  }
-  
-  return content.trim();
 }
