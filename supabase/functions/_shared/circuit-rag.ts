@@ -56,7 +56,7 @@ export async function searchBS7671Vector(
     if (onProgress) onProgress('Searching BS7671 regulations (vector)...');
     
     // Pure vector search on bs7671_embeddings
-    const { data, error } = await supabase.rpc('match_bs7671_regulations', {
+    const { data, error } = await supabase.rpc('search_bs7671_hybrid', {
       query_embedding: queryEmbedding,
       match_threshold: 0.7,
       match_count: 15  // Increased from 10 to 15
