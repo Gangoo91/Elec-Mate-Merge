@@ -15,6 +15,11 @@ const EICRCriticalAlertBanner = ({
   primaryDefect,
   urgency 
 }: EICRCriticalAlertBannerProps) => {
+  // Early return if classification is invalid
+  if (!classification || !['C1', 'C2', 'C3', 'FI'].includes(classification)) {
+    return null;
+  }
+
   const config = {
     C1: {
       bg: 'bg-gradient-to-r from-red-500/20 to-red-600/20',
