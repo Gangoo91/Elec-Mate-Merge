@@ -133,6 +133,12 @@ export default function EnrichmentConsole() {
       avgFacetsAllTime: 0
     }
   });
+  
+  // Health monitoring alerts
+  const [healthAlerts, setHealthAlerts] = useState<{
+    type: 'error' | 'warning' | 'info';
+    message: string;
+  }[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const isMobile = useIsMobile();
   const [missingRegulations, setMissingRegulations] = useState<string[]>([]);
@@ -253,7 +259,8 @@ export default function EnrichmentConsole() {
         // DESIGN KNOWLEDGE: 8-facet architecture
         const { count: sourceTotal } = await supabase
           .from('design_knowledge')
-          .select('*', { count: 'exact', head: true });
+          .select('*', { count: 'exact', head: true })
+          .eq('is_active', true);
 
         const { count: facetsCreated } = await supabase
           .from('design_knowledge_intelligence')
@@ -299,6 +306,36 @@ export default function EnrichmentConsole() {
             avgFacetsAllTime: complianceData?.avg_facets_all_time || 0
           }
         });
+
+        // ✅ HEALTH MONITORING - Check for data loss indicators
+        const alerts: { type: 'error' | 'warning' | 'info'; message: string; }[] = [];
+        
+        // Alert if design_knowledge drops significantly
+        if (sourceTotal && sourceTotal < 850) {
+          alerts.push({
+            type: 'error',
+            message: `⚠️ Low source count: ${sourceTotal} (expected ~900+). Data may have been deleted.`
+          });
+        }
+        
+        // Alert if intelligence facets too low
+        if (facetsCreated && facetsCreated < 6000) {
+          alerts.push({
+            type: 'warning',
+            message: `⚠️ Low facet count: ${facetsCreated} (expected ~7,000+). Consider re-enrichment.`
+          });
+        }
+        
+        // Alert if average facets per source is too low
+        const avgFacets = sourceTotal > 0 ? facetsCreated / sourceTotal : 0;
+        if (avgFacets < 7) {
+          alerts.push({
+            type: 'warning',
+            message: `⚠️ Low avg facets/source: ${avgFacets.toFixed(1)} (target: 8). Quality may be degraded.`
+          });
+        }
+        
+        setHealthAlerts(alerts);
 
       } else if (selectedTask === 'bs7671') {
         // BS 7671: Faceted model
@@ -881,6 +918,30 @@ export default function EnrichmentConsole() {
       {/* Facet Distribution Dashboard (Practical Work only) */}
       {selectedTask === 'practical_work' && (
         <FacetDistributionStats />
+      )}
+
+      {/* Health Monitoring Alerts (Design Knowledge only) */}
+      {selectedTask === 'design_knowledge' && healthAlerts.length > 0 && (
+        <Card className="p-4 border-destructive bg-destructive/5">
+          <div className="space-y-3">
+            {healthAlerts.map((alert, idx) => (
+              <div key={idx} className="flex items-start gap-2">
+                <AlertCircle className={`w-5 h-5 mt-0.5 ${
+                  alert.type === 'error' ? 'text-destructive' :
+                  alert.type === 'warning' ? 'text-warning' : 'text-info'
+                }`} />
+                <div>
+                  <p className="text-sm font-medium">{alert.message}</p>
+                  {idx === 0 && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      CASCADE protection is now active. Re-ingest original sources or restore from backup.
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
       )}
 
       {/* Missing Items Alert (All Tasks) */}
