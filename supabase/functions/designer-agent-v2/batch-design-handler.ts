@@ -122,6 +122,14 @@ CRITICAL DESIGN RULES:
 - Ring finals MUST use 2.5mm² cable (BS 7671 Appendix 15)
 - Socket/outdoor/bathroom circuits MUST have 30mA RCD protection
 
+EXPECTED TEST RESULTS (MANDATORY FOR EVERY CIRCUIT):
+You MUST provide expectedTestResults for EIC commissioning:
+- r1r2: Calculate R1+R2 at 20°C using Table 54.7: [(r1 + r2) × L / 1000]. At 70°C: multiply by 1.2
+- zs: Calculated Zs value with compliance check vs maxZs
+- insulationResistance: Expected >1MΩ per Reg 612.3 (250V DC for SELV, 500V DC for LV)
+- polarity: "Correct - Line conductor to switching contacts" per Reg 612.6
+- rcdTest (if RCD protected): <300ms at 1×IΔn, <40ms at 5×IΔn per Reg 612.13
+
 ITERATIVE DESIGN PROCESS:
 1. Start with minimum cable size (1.5mm² lighting, 2.5mm² sockets, 6mm² high power)
 2. Calculate voltage drop using Appendix 4: Vd% = (mV/A/m × Ib × L / 1000) / voltage × 100
@@ -274,7 +282,8 @@ const DESIGN_TOOL_SCHEMA = {
               },
               expectedTestResults: {
                 type: 'object',
-                description: 'Expected commissioning test results',
+                description: 'REQUIRED: Expected commissioning test results for EIC compliance',
+                required: ['r1r2', 'zs', 'insulationResistance', 'polarity'],
                 properties: {
                   r1r2: {
                     type: 'object',
@@ -1081,15 +1090,14 @@ You produce designs that:
 - Highlight critical safety warnings
 - Suggest best practices beyond minimum compliance
 
-**INSTALLATION GUIDANCE (MANDATORY):**
+**CRITICAL REQUIREMENTS:**
 For EVERY circuit, you MUST provide:
-- installationGuidance: Reference method, clip spacing, practical tips from the practical installation guidance provided
-- expectedTestResults: R1+R2 (at 20°C and 70°C), Zs, insulation resistance, polarity, RCD test (if applicable)
+- expectedTestResults: R1+R2 (at 20°C and 70°C), Zs, insulation resistance, polarity, RCD test (if applicable) - MANDATORY for EIC compliance
 - deratingFactors: Ca, Cg, Ci factors with explanation and table references
 - faultCurrentAnalysis: PSCC at circuit, device capacity, compliance check
 - specialLocationCompliance: If bathroom/outdoor/special location, include zone requirements and specific regulations
 
-Use the **PRACTICAL INSTALLATION GUIDANCE** section provided in the context to populate these fields accurately.
+Installation guidance (reference methods, clip spacing) is handled by the installation-method-agent.
 
 Use UK English. Output ONLY via the design_circuits tool - no conversational text.`
         },
@@ -1534,50 +1542,17 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
       return c;
     });
     
-    // 10. Generate expected test results for every circuit (CRITICAL for EIC compliance)
-    logger.info('📋 Generating expected test results for all circuits...');
+    // 10. Validate that AI provided EIC test results (PHASE 3: No fallback - AI MUST generate)
+    logger.info('📋 Validating AI-generated test results for EIC compliance...');
     safeCircuits.forEach((circuit: any) => {
-      try {
-        const r1At20C = (((circuit.cableSize === 2.5 ? 7.41 : circuit.cableSize === 1.5 ? 12.1 : circuit.cableSize === 4 ? 4.61 : circuit.cableSize === 6 ? 3.08 : circuit.cableSize === 10 ? 1.83 : 1.15) + 
-                         (circuit.cpcSize === 1.5 ? 12.1 : circuit.cpcSize === 2.5 ? 7.41 : circuit.cpcSize === 4 ? 4.61 : circuit.cpcSize === 6 ? 3.08 : 7.41)) * 
-                         (circuit.cableLength || 20)) / 1000;
-        const r1At70C = r1At20C * 1.2;
-        
-        circuit.expectedTestResults = {
-          r1r2: {
-            at20C: Number(r1At20C.toFixed(4)),
-            at70C: Number(r1At70C.toFixed(4)),
-            value: `${r1At70C.toFixed(3)}Ω`,
-            regulation: 'BS 7671 Reg 612.2'
-          },
-          zs: {
-            value: circuit.calculations?.zs || 0,
-            maxPermitted: circuit.calculations?.maxZs || 0,
-            compliant: (circuit.calculations?.zs || 0) <= (circuit.calculations?.maxZs || 999),
-            regulation: 'BS 7671 Reg 612.9'
-          },
-          insulationResistance: {
-            testVoltage: circuit.voltage && circuit.voltage <= 50 ? '250V DC' : '500V DC',
-            minResistance: circuit.voltage && circuit.voltage <= 50 ? '≥0.5 MΩ' : '≥1.0 MΩ',
-            regulation: 'BS 7671 Table 61'
-          },
-          polarity: {
-            expected: 'Correct - Line conductor to switching contacts',
-            regulation: 'BS 7671 Reg 612.6'
-          }
-        };
-        
-        // Add RCD test results if RCD protected
-        if (circuit.rcdProtected) {
-          circuit.expectedTestResults.rcdTest = {
-            at1x: '< 300ms at 30mA',
-            at5x: '< 40ms at 150mA',
-            regulation: 'BS 7671 Reg 612.13'
-          };
-        }
-      } catch (error) {
-        logger.warn(`Failed to generate expected test results for ${circuit.name}`, { error });
-        // Continue without test results rather than failing
+      if (!circuit.expectedTestResults || !circuit.expectedTestResults.r1r2) {
+        logger.warn(`⚠️ Circuit ${circuit.name} missing EIC test results - AI failed prompt requirements`, {
+          circuitName: circuit.name,
+          hasTestResults: !!circuit.expectedTestResults,
+          hasR1R2: !!(circuit.expectedTestResults?.r1r2)
+        });
+      } else {
+        logger.info(`✅ Circuit ${circuit.name} has complete EIC test results`);
       }
     });
     

@@ -433,10 +433,9 @@ export async function buildRAGSearches(
     projectInfo: { installationType: type }
   };
   
-  // PHASE 3: Reordered RAG searches - Design RAG FIRST, then BS7671 vector, then practical
+  // PHASE 3: Reordered RAG searches - Design RAG FIRST, then BS7671 vector (NO PRACTICAL - install-method-agent owns that)
   let designDocs: any[] = [];
   let regulations: any[] = [];
-  let practicalWork: any[] = [];
   let calculations: any[] = [];
   let failedBranches = 0;
   
@@ -467,19 +466,7 @@ export async function buildRAGSearches(
       failedBranches++;
     }
     
-    // STEP 3: Practical work (supplementary)
-    try {
-      logger.info('🎯 Phase 3: Searching practical installation guides');
-      practicalWork = await searchInstallationPractices(jobInputs);
-      logger.info(`✅ Practical RAG: ${practicalWork.length} results`);
-    } catch (err) {
-      logger.warn('⚠️ Practical work search failed (non-critical)', { 
-        error: err instanceof Error ? err.message : String(err) 
-      });
-      failedBranches++;
-    }
-    
-    // STEP 4: Structured calculations
+    // STEP 3: Structured calculations (practical work removed - install-method-agent handles installation guidance)
     try {
       calculations = await retrieveStructuredCalculations(supabase, circuitTypes);
     } catch (err) {
@@ -523,28 +510,25 @@ export async function buildRAGSearches(
   
   // Log completion
   const ragTime = Date.now() - searchStart;
-  const totalBranches = 4;
+  const totalBranches = 3; // UPDATED: Removed practical work branch
   const successfulBranches = totalBranches - failedBranches;
   
   logger.info(`✅ Design: ${designDocs.length} docs`);
   logger.info(`✅ BS 7671: ${regulations.length} regs`);
-  logger.info(`✅ Practical: ${practicalWork.length} docs`);
   logger.info(`✅ Calculations: ${calculations.length} formulas`);
   logger.info(`⏱️ RAG completed in ${ragTime}ms with ${successfulBranches}/${totalBranches} branches`);
   
-  // PHASE 4: Enhanced RAG Health Monitoring
+  // PHASE 4: Enhanced RAG Health Monitoring (3 branches, no practical work)
   const successRate = (successfulBranches / totalBranches) * 100;
   const healthStatus = {
     designDocs: designDocs.length >= 12 ? '✓' : designDocs.length >= 8 ? '⚠️' : '✗',
     bs7671: regulations.length >= 12 ? '✓' : regulations.length >= 8 ? '⚠️' : '✗',
-    practical: practicalWork.length >= 8 ? '✓' : practicalWork.length >= 5 ? '⚠️' : '✗',
     calculations: calculations.length >= 8 ? '✓' : calculations.length >= 5 ? '⚠️' : '✗'
   };
   
   logger.info(`📊 RAG Health Check:`, {
     designDocs: `${designDocs.length}/15 ${healthStatus.designDocs}`,
     bs7671: `${regulations.length}/15 ${healthStatus.bs7671}`,
-    practical: `${practicalWork.length}/10 ${healthStatus.practical}`,
     calculations: `${calculations.length}/10 ${healthStatus.calculations}`,
     overallHealth: `${successfulBranches}/${totalBranches} branches (${successRate.toFixed(0)}%)`
   });
