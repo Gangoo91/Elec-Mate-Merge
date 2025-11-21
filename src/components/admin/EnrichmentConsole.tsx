@@ -254,8 +254,20 @@ export default function EnrichmentConsole() {
           .from('design_knowledge_intelligence')
           .select('*', { count: 'exact', head: true });
 
+        // Get sources with 6-8 facets (fully enriched)
+        const { data: sourceEnriched, error: rpcError } = await supabase
+          .rpc('count_fully_enriched_design_sources', {
+            min_facets: 6,
+            max_facets: 8
+          });
+
+        if (rpcError) {
+          console.error('Error counting fully enriched sources:', rpcError);
+        }
+
+        const fullyEnrichedCount = sourceEnriched || 0;
         const targetFacets = Math.round((sourceTotal || 0) * 8.0);
-        const progress = targetFacets > 0 ? Math.round(((facetsCreated || 0) / targetFacets) * 100) : 0;
+        const progress = sourceTotal > 0 ? Math.round((fullyEnrichedCount / sourceTotal) * 100) : 0;
 
         // Fetch compliance metrics
         const { data: complianceData } = await supabase
@@ -265,12 +277,12 @@ export default function EnrichmentConsole() {
 
         setStats({
           sourceTotal: sourceTotal || 0,
-          sourceEnriched: facetsCreated || 0,
+          sourceEnriched: fullyEnrichedCount,
           isEstimated: false,
           actualCanonical: 0,
           facetsCreated: facetsCreated || 0,
           targetFacets,
-          remaining: Math.max(0, targetFacets - (facetsCreated || 0)),
+          remaining: Math.max(0, (sourceTotal || 0) - fullyEnrichedCount),
           progress,
           stageProgress: {},
           compliance: {

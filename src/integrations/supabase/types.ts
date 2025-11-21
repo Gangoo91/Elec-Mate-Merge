@@ -8430,6 +8430,10 @@ export type Database = {
       cleanup_expired_tools_cache: { Args: never; Returns: undefined }
       cleanup_hs_query_cache: { Args: never; Returns: undefined }
       cleanup_rag_cache: { Args: never; Returns: undefined }
+      count_fully_enriched_design_sources: {
+        Args: { max_facets?: number; min_facets?: number }
+        Returns: number
+      }
       extract_postcode_district: {
         Args: { full_postcode: string }
         Returns: string
