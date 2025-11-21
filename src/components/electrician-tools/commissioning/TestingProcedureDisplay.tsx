@@ -64,7 +64,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
             )}
           </div>
 
-          {procedure.visualInspection.safetyNotes && (
+          {procedure.visualInspection.safetyNotes && Array.isArray(procedure.visualInspection.safetyNotes) && procedure.visualInspection.safetyNotes.length > 0 && (
             <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
               <button
                 onClick={() => setShowSafetyNotes(!showSafetyNotes)}
@@ -85,7 +85,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
           )}
 
           <div className="space-y-2">
-            {procedure.visualInspection.checkpoints.map((checkpoint, index) => {
+            {procedure.visualInspection.checkpoints && Array.isArray(procedure.visualInspection.checkpoints) && procedure.visualInspection.checkpoints.map((checkpoint, index) => {
               const checkboxId = `visual-${index}`;
               return (
                 <div
@@ -152,14 +152,16 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                   </div>
 
                   {/* Procedure */}
-                  <div>
-                    <div className="text-sm font-medium text-foreground mb-2">Procedure</div>
-                    <ol className="space-y-1 text-xs text-gray-200 list-decimal list-inside">
-                      {test.procedure.map((step, i) => (
-                        <li key={i}>{step}</li>
-                      ))}
-                    </ol>
-                  </div>
+                  {test.procedure && Array.isArray(test.procedure) && (
+                    <div>
+                      <div className="text-sm font-medium text-foreground mb-2">Procedure</div>
+                      <ol className="space-y-1 text-xs text-gray-200 list-decimal list-inside">
+                        {test.procedure.map((step, i) => (
+                          <li key={i}>{step}</li>
+                        ))}
+                      </ol>
+                    </div>
+                  )}
 
                   {/* Expected Results */}
                   <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
@@ -206,7 +208,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                   </div>
 
                   {/* Troubleshooting */}
-                  {test.troubleshooting && test.troubleshooting.length > 0 && (
+                  {test.troubleshooting && Array.isArray(test.troubleshooting) && test.troubleshooting.length > 0 && (
                     <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
                       <div className="flex items-center gap-2 text-amber-300 text-sm font-medium mb-2">
                         <AlertTriangle className="h-4 w-4" />
@@ -221,7 +223,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                   )}
 
                   {/* Common Mistakes */}
-                  {test.commonMistakes && test.commonMistakes.length > 0 && (
+                  {test.commonMistakes && Array.isArray(test.commonMistakes) && test.commonMistakes.length > 0 && (
                     <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
                       <div className="flex items-center gap-2 text-red-300 text-sm font-medium mb-2">
                         <AlertTriangle className="h-4 w-4" />
@@ -236,7 +238,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                   )}
 
                   {/* Pro Tips */}
-                  {test.proTips && test.proTips.length > 0 && (
+                  {test.proTips && Array.isArray(test.proTips) && test.proTips.length > 0 && (
                     <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
                       <div className="flex items-center gap-2 text-blue-300 text-sm font-medium mb-2">
                         <CheckCircle2 className="h-4 w-4" />
@@ -314,14 +316,16 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                   </div>
 
                   {/* Procedure */}
-                  <div>
-                    <div className="text-sm font-medium text-foreground mb-2">Procedure</div>
-                    <ol className="space-y-1 text-xs text-gray-200 list-decimal list-inside">
-                      {test.procedure.map((step, i) => (
-                        <li key={i}>{step}</li>
-                      ))}
-                    </ol>
-                  </div>
+                  {test.procedure && Array.isArray(test.procedure) && (
+                    <div>
+                      <div className="text-sm font-medium text-foreground mb-2">Procedure</div>
+                      <ol className="space-y-1 text-xs text-gray-200 list-decimal list-inside">
+                        {test.procedure.map((step, i) => (
+                          <li key={i}>{step}</li>
+                        ))}
+                      </ol>
+                    </div>
+                  )}
 
                   {/* Calculation Breakdown */}
                   {test.calculation && typeof test.calculation === 'object' && (
@@ -401,7 +405,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                   </div>
 
                   {/* Troubleshooting */}
-                  {test.troubleshooting && test.troubleshooting.length > 0 && (
+                  {test.troubleshooting && Array.isArray(test.troubleshooting) && test.troubleshooting.length > 0 && (
                     <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
                       <div className="flex items-center gap-2 text-amber-300 text-sm font-medium mb-2">
                         <AlertTriangle className="h-4 w-4" />
@@ -416,7 +420,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                   )}
 
                   {/* Common Mistakes */}
-                  {test.commonMistakes && test.commonMistakes.length > 0 && (
+                  {test.commonMistakes && Array.isArray(test.commonMistakes) && test.commonMistakes.length > 0 && (
                     <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
                       <div className="flex items-center gap-2 text-red-300 text-sm font-medium mb-2">
                         <AlertTriangle className="h-4 w-4" />
@@ -431,7 +435,7 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                   )}
 
                   {/* Pro Tips */}
-                  {test.proTips && test.proTips.length > 0 && (
+                  {test.proTips && Array.isArray(test.proTips) && test.proTips.length > 0 && (
                     <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
                       <div className="flex items-center gap-2 text-blue-300 text-sm font-medium mb-2">
                         <CheckCircle2 className="h-4 w-4" />

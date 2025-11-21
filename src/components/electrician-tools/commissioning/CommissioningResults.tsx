@@ -42,7 +42,7 @@ const CommissioningResults = ({
 
     let markdown = "# Testing Checklist\n\n";
 
-    if (visualInspection?.checkpoints) {
+    if (visualInspection?.checkpoints && Array.isArray(visualInspection.checkpoints)) {
       markdown += "## Visual Inspection\n";
       visualInspection.checkpoints.forEach((c) => {
         markdown += `- [ ] ${c.item} - ${c.requirement}\n`;
@@ -50,7 +50,7 @@ const CommissioningResults = ({
       markdown += "\n";
     }
 
-    if (deadTests) {
+    if (deadTests && Array.isArray(deadTests)) {
       markdown += "## Dead Tests (Isolation Required)\n";
       deadTests.forEach((t, i) => {
         markdown += `### ${i + 1}. ${t.testName}\n`;
@@ -59,7 +59,7 @@ const CommissioningResults = ({
       });
     }
 
-    if (liveTests) {
+    if (liveTests && Array.isArray(liveTests)) {
       markdown += "## Live Tests\n";
       liveTests.forEach((t, i) => {
         markdown += `### ${i + 1}. ${t.testName}\n`;

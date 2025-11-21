@@ -81,14 +81,18 @@ const CertificationRequirements = ({ certification }: CertificationRequirementsP
       )}
 
       {/* Additional Notes */}
-      {certification.additionalNotes && certification.additionalNotes.length > 0 && (
+      {certification.additionalNotes && (
         <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
           <div className="text-sm font-medium text-amber-300 mb-2">Additional Notes</div>
-          <ul className="space-y-1 text-xs text-muted-foreground">
-            {certification.additionalNotes.map((note, index) => (
-              <li key={index}>• {note}</li>
-            ))}
-          </ul>
+          {Array.isArray(certification.additionalNotes) ? (
+            <ul className="space-y-1 text-xs text-muted-foreground">
+              {certification.additionalNotes.map((note, index) => (
+                <li key={index}>• {note}</li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-xs text-muted-foreground">{certification.additionalNotes}</p>
+          )}
         </div>
       )}
     </div>

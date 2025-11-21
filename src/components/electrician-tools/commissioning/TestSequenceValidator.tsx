@@ -14,8 +14,12 @@ interface TestSequenceValidatorProps {
 }
 
 export const TestSequenceValidator = ({ currentTest, allTests }: TestSequenceValidatorProps) => {
-  const hasPrerequisites = currentTest.prerequisiteTests && currentTest.prerequisiteTests.length > 0;
-  const hasConflicts = currentTest.conflictingTests && currentTest.conflictingTests.length > 0;
+  const hasPrerequisites = currentTest.prerequisiteTests && 
+                          Array.isArray(currentTest.prerequisiteTests) && 
+                          currentTest.prerequisiteTests.length > 0;
+  const hasConflicts = currentTest.conflictingTests && 
+                      Array.isArray(currentTest.conflictingTests) && 
+                      currentTest.conflictingTests.length > 0;
 
   if (!hasPrerequisites && !hasConflicts) return null;
 

@@ -11,6 +11,11 @@ interface CalculationBreakdownProps {
 }
 
 export const CalculationBreakdown = ({ calculation }: CalculationBreakdownProps) => {
+  // Defensive check - ensure we have required fields
+  if (!calculation || !calculation.formula || !calculation.components || !calculation.expectedResult) {
+    return null;
+  }
+
   return (
     <Card className="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border-blue-200 dark:border-blue-800">
       <div className="flex items-center gap-2 mb-3">
@@ -29,12 +34,14 @@ export const CalculationBreakdown = ({ calculation }: CalculationBreakdownProps)
         <div className="bg-white/80 dark:bg-elec-dark/80 p-3 rounded border border-blue-200 dark:border-blue-800">
           <p className="text-sm text-muted-foreground mb-2">Components:</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {Object.entries(calculation.components).map(([key, value]) => (
-              <div key={key} className="flex items-start gap-2">
-                <span className="font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">{key}:</span>
-                <span className="text-sm text-foreground">{value}</span>
-              </div>
-            ))}
+            {calculation.components && typeof calculation.components === 'object' && 
+              Object.entries(calculation.components).map(([key, value]) => (
+                <div key={key} className="flex items-start gap-2">
+                  <span className="font-mono text-sm font-semibold text-blue-700 dark:text-blue-400">{key}:</span>
+                  <span className="text-sm text-foreground">{value}</span>
+                </div>
+              ))
+            }
           </div>
         </div>
 
