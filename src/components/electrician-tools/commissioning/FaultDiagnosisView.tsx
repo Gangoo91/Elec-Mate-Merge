@@ -283,7 +283,7 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
                     {diagnosis.additionalContext.proTips.map((tip, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-sm text-white/80">
                         <span className="text-blue-400">💡</span>
-                        <span>{tip}</span>
+                        <span className="text-left">{tip}</span>
                       </li>
                     ))}
                   </ul>
