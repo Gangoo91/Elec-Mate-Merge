@@ -1162,7 +1162,7 @@ Analyse this installation photo and provide structured fault diagnosis with RAG 
         content: userMessageContent
       });
 
-      const modelToUse = imageUrl ? 'google/gemini-2.5-flash' : 'gpt-5-mini';
+      const modelToUse = imageUrl ? 'gpt-4o-mini' : 'gpt-5-mini';
       logger.info(`🤖 Using model: ${modelToUse}${imageUrl ? ' (vision structured diagnosis)' : ''}`);
 
       const aiResponse = await callOpenAI(
@@ -1172,7 +1172,7 @@ Analyse this installation photo and provide structured fault diagnosis with RAG 
           tools: [faultDiagnosisTool],
           tool_choice: { type: 'function', function: { name: 'provide_fault_diagnosis' } }
         },
-        imageUrl ? LOVABLE_API_KEY! : OPENAI_API_KEY!,
+        OPENAI_API_KEY!,
         120000
       );
       
@@ -1270,7 +1270,7 @@ Analyse this installation photo and provide structured fault diagnosis with RAG 
       content: userMessageContent
     });
 
-    const modelToUse = imageUrl ? 'google/gemini-2.5-flash' : 'gpt-5-mini';
+    const modelToUse = imageUrl ? 'gpt-4o-mini' : 'gpt-5-mini';
     logger.info(`🤖 Using model: ${modelToUse}${imageUrl ? ' (vision Q&A)' : ''}`);
 
     const aiResponse = await callOpenAI(
@@ -1278,7 +1278,7 @@ Analyse this installation photo and provide structured fault diagnosis with RAG 
         messages: questionMessages,
         model: modelToUse
       },
-      imageUrl ? LOVABLE_API_KEY! : OPENAI_API_KEY!,
+      OPENAI_API_KEY!,
       120000
     );
     
