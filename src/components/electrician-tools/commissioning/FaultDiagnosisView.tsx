@@ -38,12 +38,12 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
     <div className="min-h-screen bg-elec-gray p-4 sm:p-6 lg:p-8">
       <div className="max-w-5xl mx-auto space-y-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
               {isCompliantPhoto ? '📸 Photo Analysis' : eicrDefects && eicrDefects.length > 0 ? '📸 EICR Photo Analysis' : 'Fault Diagnosis'}
             </h1>
-            <p className="text-sm sm:text-base text-white/70">
+            <p className="text-base text-white/90">
               {isCompliantPhoto ? 'Installation appears compliant' : eicrDefects && eicrDefects.length > 0 ? 'EICR defect coding with BS 7671 compliance' : 'Structured troubleshooting workflow'}
             </p>
           </div>
@@ -52,15 +52,15 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
               <Button 
                 onClick={() => setShowEICRCodes(!showEICRCodes)}
                 variant={showEICRCodes ? "default" : "outline"}
-                size="sm" 
-                className="gap-2"
+                size="lg" 
+                className="gap-2 min-h-[48px]"
               >
-                <FileText className="h-4 w-4" />
+                <FileText className="h-5 w-5" />
                 <span className="hidden sm:inline">EICR Codes</span>
               </Button>
             )}
-            <Button onClick={onStartOver} variant="outline" size="sm" className="gap-2">
-              <ArrowLeft className="h-4 w-4" />
+            <Button onClick={onStartOver} variant="outline" size="lg" className="gap-2 min-h-[48px]">
+              <ArrowLeft className="h-5 w-5" />
               <span className="hidden sm:inline">Back</span>
             </Button>
           </div>
@@ -68,10 +68,10 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
 
         {/* Uploaded Photo Display */}
         {imageUrl && (
-          <Card className="bg-elec-dark/80 border-blue-500/30 p-4 sm:p-6">
-            <div className="space-y-3">
-              <h3 className="text-lg font-semibold text-white flex items-center gap-2 text-left">
-                <ImageIcon className="h-5 w-5 text-blue-400" />
+          <Card className="bg-elec-dark/80 border-2 border-blue-500/30 p-5 sm:p-6">
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold text-white flex items-center gap-2 text-left">
+                <ImageIcon className="h-6 w-6 text-blue-400" />
                 Installation Photo
               </h3>
               <div className="relative rounded-lg overflow-hidden bg-black/50">
@@ -87,36 +87,36 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
 
         {/* Compliant Installation Banner (NONE classification) */}
         {isCompliantPhoto && eicrDefects[0] && (
-          <Card className="bg-green-500 border-none p-5 sm:p-6">
+          <Card className="bg-green-500 border-none p-6 sm:p-7 shadow-xl">
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 p-3 bg-white/20 rounded-lg">
-                <CheckCircle2 className="h-6 w-6 sm:h-8 sm:w-8 text-green-100" />
+              <div className="flex-shrink-0 p-4 bg-white/20 rounded-lg">
+                <CheckCircle2 className="h-8 w-8 sm:h-10 sm:w-10 text-green-100" />
               </div>
               <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <Badge className="bg-white/30 text-white border-none">
+                <div className="flex items-center gap-2 mb-3">
+                  <Badge className="bg-white/30 text-white border-none text-base px-4 py-1.5">
                     NO DEFECTS FOUND
                   </Badge>
-                  <h3 className="text-lg sm:text-xl font-bold text-white text-left">Installation Appears Compliant</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white text-left">Installation Appears Compliant</h3>
                 </div>
-                <p className="text-sm sm:text-base text-white/90 mb-3 text-left">
+                <p className="text-base text-white mb-4 text-left leading-relaxed">
                   {eicrDefects[0].compliantSummary || eicrDefects[0].defectSummary}
                 </p>
                 {eicrDefects[0].goodPracticeNotes && eicrDefects[0].goodPracticeNotes.length > 0 && (
-                  <div className="space-y-1">
-                    <p className="text-xs font-semibold text-white/80 text-left">Good Practice Observed:</p>
-                    <ul className="space-y-1">
+                  <div className="space-y-2">
+                    <p className="text-sm font-semibold text-white text-left">Good Practice Observed:</p>
+                    <ul className="space-y-2">
                       {eicrDefects[0].goodPracticeNotes.map((note: string, idx: number) => (
-                        <li key={idx} className="text-sm text-white/80 flex items-start gap-2 text-left">
-                          <span className="text-green-300">✓</span>
+                        <li key={idx} className="text-base text-white flex items-start gap-2 text-left leading-relaxed">
+                          <span className="text-green-300 text-xl">✓</span>
                           <span>{note}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 )}
-                <div className="mt-4 pt-3 border-t border-white/20">
-                  <p className="text-xs text-white/70 text-left">
+                <div className="mt-5 pt-4 border-t border-white/20">
+                  <p className="text-sm text-white/90 text-left leading-relaxed">
                     This classification adds credibility to the AI system. If an installation is compliant, we'll say so.
                   </p>
                 </div>
@@ -127,20 +127,20 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
 
         {/* Safety Alert Banner */}
         {diagnosis && risk && (diagnosis.faultSummary.safetyRisk === 'HIGH' || diagnosis.faultSummary.safetyRisk === 'CRITICAL') && (
-          <Card className={`${risk.color} border-none p-5 sm:p-6`}>
+          <Card className={`${risk.color} border-none p-6 sm:p-7 shadow-xl`}>
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 p-3 bg-white/20 rounded-lg">
-                <RiskIcon className={`h-6 w-6 sm:h-8 sm:w-8 ${risk.textColor}`} />
+              <div className="flex-shrink-0 p-4 bg-white/20 rounded-lg">
+                <RiskIcon className={`h-8 w-8 sm:h-10 sm:w-10 ${risk.textColor}`} />
               </div>
               <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <Badge className="bg-white/30 text-white border-none">
+                <div className="flex items-center gap-2 mb-3">
+                  <Badge className="bg-white/30 text-white border-none text-base px-4 py-1.5">
                     {diagnosis.faultSummary.safetyRisk} RISK
                   </Badge>
-                  <h3 className="text-lg sm:text-xl font-bold text-white text-left">Safety Critical Issue</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white text-left">Safety Critical Issue</h3>
                 </div>
                 {diagnosis.faultSummary.immediateAction && (
-                  <p className="text-sm sm:text-base text-white/90 font-medium text-left">
+                  <p className="text-base text-white font-semibold text-left leading-relaxed">
                     Immediate Action: {diagnosis.faultSummary.immediateAction}
                   </p>
                 )}
@@ -151,15 +151,15 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
 
         {/* EICR Defect Codes */}
         {eicrDefects && eicrDefects.length > 0 && showEICRCodes && !isCompliantPhoto && (
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <FileText className="h-6 w-6 text-blue-400" />
-              <h2 className="text-xl font-bold text-white">EICR Defect Analysis</h2>
-              <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/50">
+          <div className="space-y-5">
+            <div className="flex items-center gap-3">
+              <FileText className="h-7 w-7 text-blue-400" />
+              <h2 className="text-2xl font-bold text-white">EICR Defect Analysis</h2>
+              <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/50 text-base px-4 py-1.5">
                 {eicrDefects.length} Defect{eicrDefects.length > 1 ? 's' : ''}
               </Badge>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-5">
               {eicrDefects.map((defect, idx) => (
                 // Use enhanced card if defect has makingSafe or clientCommunication
                 defect.makingSafe || defect.clientCommunication ? (
@@ -172,23 +172,23 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
           </div>
         )}
 
-        {/* Fault Summary */}
+        {/* Fault Summary - ALWAYS EXPANDED */}
         {diagnosis && risk && (
-          <Card className="bg-elec-dark/80 border-blue-500/30 p-5 sm:p-6">
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <div className={`flex-shrink-0 p-2 rounded-lg ${risk.color}`}>
-                  <RiskIcon className="h-5 w-5 text-white" />
+          <Card className="bg-elec-dark/80 border-2 border-blue-500/30 p-6 sm:p-7 shadow-lg">
+            <div className="space-y-5">
+              <div className="flex items-start gap-4">
+                <div className={`flex-shrink-0 p-3 rounded-lg ${risk.color}`}>
+                  <RiskIcon className="h-6 w-6 text-white" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-white mb-2 text-left">Reported Symptom</h3>
-                  <p className="text-base text-white/80 mb-4 text-left">{diagnosis.faultSummary.reportedSymptom}</p>
+                  <h3 className="text-xl font-semibold text-white mb-3 text-left">Reported Symptom</h3>
+                  <p className="text-base text-white mb-5 text-left leading-relaxed">{diagnosis.faultSummary.reportedSymptom}</p>
                   
-                  <h4 className="text-sm font-semibold text-white/70 mb-2">Likely Root Causes</h4>
-                  <ol className="space-y-2 text-left">
+                  <h4 className="text-base font-semibold text-white mb-3">Likely Root Causes</h4>
+                  <ol className="space-y-3 text-left">
                     {diagnosis.faultSummary.likelyRootCauses.map((cause, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-white/80">
-                        <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-500/50 flex items-center justify-center text-xs font-semibold text-blue-300">
+                      <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
+                        <span className="flex-shrink-0 w-7 h-7 rounded-full bg-blue-500/20 border-2 border-blue-500/50 flex items-center justify-center text-sm font-bold text-blue-300">
                           {idx + 1}
                         </span>
                         <span className="flex-1 pt-0.5">{cause}</span>
@@ -198,9 +198,9 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 pt-3 border-t border-white/10">
-                <span className="text-sm text-white/60">Safety Risk:</span>
-                <Badge className={`${risk.color} text-white border-none`}>
+              <div className="flex items-center gap-3 pt-4 border-t-2 border-white/10">
+                <span className="text-base text-white font-medium">Safety Risk:</span>
+                <Badge className={`${risk.color} text-white border-none text-base px-4 py-2`}>
                   {diagnosis.faultSummary.safetyRisk}
                 </Badge>
               </div>
@@ -208,14 +208,14 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
           </Card>
         )}
 
-        {/* Diagnostic Workflow */}
+        {/* Diagnostic Workflow - First Step EXPANDED */}
         {diagnosis && diagnosis.diagnosticWorkflow && (
-          <div className="space-y-4">
-            <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <CheckCircle2 className="h-5 w-5 text-blue-400" />
+          <div className="space-y-5">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              <CheckCircle2 className="h-7 w-7 text-blue-400" />
               Diagnostic Workflow
             </h2>
-            <div className="space-y-3">
+            <div className="space-y-4">
               {diagnosis.diagnosticWorkflow.map((step) => (
                 <DiagnosticStepCard key={step.stepNumber} step={step} />
               ))}
@@ -223,11 +223,11 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
           </div>
         )}
 
-        {/* Lockout/Tagout */}
-        {diagnosis && diagnosis.lockoutTagout && (
-          <div className="space-y-4">
-            <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-red-400" />
+        {/* Lockout/Tagout - ALWAYS EXPANDED if Required */}
+        {diagnosis && diagnosis.lockoutTagout && diagnosis.lockoutTagout.required && (
+          <div className="space-y-5">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              <AlertTriangle className="h-7 w-7 text-red-400" />
               Isolation Requirements
             </h2>
             <LockoutTagoutPanel lockoutTagout={diagnosis.lockoutTagout} />
@@ -236,9 +236,9 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
 
         {/* Corrective Actions */}
         {diagnosis && diagnosis.correctiveActions && diagnosis.correctiveActions.length > 0 && (
-          <div className="space-y-4">
-            <h2 className="text-xl font-bold text-white">Corrective Actions</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="space-y-5">
+            <h2 className="text-2xl font-bold text-white">Corrective Actions</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
               {diagnosis.correctiveActions.map((action, idx) => (
                 <CorrectiveActionCard key={idx} action={action} index={idx} />
               ))}
@@ -248,20 +248,20 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
 
         {/* Additional Context */}
         {diagnosis && diagnosis.additionalContext && (
-          <Accordion type="single" collapsible className="space-y-2">
+          <Accordion type="single" collapsible className="space-y-3">
             {diagnosis.additionalContext.commonMistakes && diagnosis.additionalContext.commonMistakes.length > 0 && (
-              <AccordionItem value="mistakes" className="bg-elec-dark/80 border-amber-500/30 rounded-lg px-5">
-                <AccordionTrigger className="text-white hover:text-white/80">
+              <AccordionItem value="mistakes" className="bg-elec-dark/80 border-2 border-amber-500/30 rounded-lg px-6">
+                <AccordionTrigger className="text-white hover:text-white/80 py-4 min-h-[56px]">
                   <div className="flex items-center gap-2">
-                    <XCircle className="h-5 w-5 text-amber-400" />
-                    <span>Common Mistakes</span>
+                    <XCircle className="h-6 w-6 text-amber-400" />
+                    <span className="text-lg font-semibold">Common Mistakes</span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <ul className="space-y-2 pt-2">
+                  <ul className="space-y-3 pt-2">
                     {diagnosis.additionalContext.commonMistakes.map((mistake, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-white/80">
-                        <span className="text-amber-400">•</span>
+                      <li key={idx} className="flex items-start gap-2 text-base text-white leading-relaxed">
+                        <span className="text-amber-400 text-xl">•</span>
                         <span className="text-left">{mistake}</span>
                       </li>
                     ))}
@@ -271,18 +271,18 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
             )}
 
             {diagnosis.additionalContext.proTips && diagnosis.additionalContext.proTips.length > 0 && (
-              <AccordionItem value="tips" className="bg-elec-dark/80 border-blue-500/30 rounded-lg px-5">
-                <AccordionTrigger className="text-white hover:text-white/80">
+              <AccordionItem value="tips" className="bg-elec-dark/80 border-2 border-blue-500/30 rounded-lg px-6">
+                <AccordionTrigger className="text-white hover:text-white/80 py-4 min-h-[56px]">
                   <div className="flex items-center gap-2">
-                    <Lightbulb className="h-5 w-5 text-blue-400" />
-                    <span>Pro Tips</span>
+                    <Lightbulb className="h-6 w-6 text-blue-400" />
+                    <span className="text-lg font-semibold">Pro Tips</span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <ul className="space-y-2 pt-2">
+                  <ul className="space-y-3 pt-2">
                     {diagnosis.additionalContext.proTips.map((tip, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-white/80">
-                        <span className="text-blue-400">💡</span>
+                      <li key={idx} className="flex items-start gap-2 text-base text-white leading-relaxed">
+                        <span className="text-blue-400 text-xl">💡</span>
                         <span className="text-left">{tip}</span>
                       </li>
                     ))}
@@ -292,17 +292,17 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
             )}
 
             {diagnosis.additionalContext.regulations && diagnosis.additionalContext.regulations.length > 0 && (
-              <AccordionItem value="regs" className="bg-elec-dark/80 border-green-500/30 rounded-lg px-5">
-                <AccordionTrigger className="text-white hover:text-white/80">
+              <AccordionItem value="regs" className="bg-elec-dark/80 border-2 border-green-500/30 rounded-lg px-6">
+                <AccordionTrigger className="text-white hover:text-white/80 py-4 min-h-[56px]">
                   <div className="flex items-center gap-2">
-                    <BookOpen className="h-5 w-5 text-green-400" />
-                    <span>Relevant Regulations</span>
+                    <BookOpen className="h-6 w-6 text-green-400" />
+                    <span className="text-lg font-semibold">Relevant Regulations</span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
                   <div className="flex flex-wrap gap-2 pt-2">
                     {diagnosis.additionalContext.regulations.map((reg, idx) => (
-                      <Badge key={idx} variant="outline" className="text-green-300 border-green-500/50">
+                      <Badge key={idx} variant="outline" className="text-green-300 border-green-500/50 text-base px-3 py-1.5">
                         {reg}
                       </Badge>
                     ))}
@@ -315,8 +315,8 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
 
         {/* Footer */}
         <div className="flex justify-center pt-6">
-          <Button onClick={onStartOver} variant="outline" className="gap-2">
-            <ArrowLeft className="h-4 w-4" />
+          <Button onClick={onStartOver} variant="outline" size="lg" className="gap-2 min-h-[48px]">
+            <ArrowLeft className="h-5 w-5" />
             Start New Diagnosis
           </Button>
         </div>
