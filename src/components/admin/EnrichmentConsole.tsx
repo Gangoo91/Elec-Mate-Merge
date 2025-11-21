@@ -28,7 +28,8 @@ const TASK_CONFIG = {
     targetTable: 'regulations_intelligence',
     enrichmentModel: 'faceted',
     targetMultiplier: 30,
-    sourceFilter: { column: 'regulation_number', op: 'neq', value: 'General' }
+    sourceFilter: { column: 'regulation_number', op: 'neq', value: 'General' },
+    workerCount: 2
   },
   health_safety: {
     label: 'Health & Safety',
@@ -37,7 +38,8 @@ const TASK_CONFIG = {
     targetTable: 'health_safety_intelligence',
     enrichmentModel: 'simple',
     targetMultiplier: 1,
-    sourceFilter: null
+    sourceFilter: null,
+    workerCount: 6
   },
   pricing: {
     label: 'Pricing Data',
@@ -46,7 +48,8 @@ const TASK_CONFIG = {
     targetTable: 'pricing_intelligence',
     enrichmentModel: 'simple',
     targetMultiplier: 1,
-    sourceFilter: null
+    sourceFilter: null,
+    workerCount: 6
   },
   practical_work: {
     label: 'Practical Work',
@@ -55,7 +58,8 @@ const TASK_CONFIG = {
     targetTable: 'practical_work_intelligence',
     enrichmentModel: 'faceted',
     targetMultiplier: 8.0, // Updated to 8 facets per source
-    sourceFilter: { column: 'is_canonical', op: 'eq', value: true }
+    sourceFilter: { column: 'is_canonical', op: 'eq', value: true },
+    workerCount: 10
   },
   design_knowledge: {
     label: 'Design Knowledge',
@@ -64,7 +68,8 @@ const TASK_CONFIG = {
     targetTable: 'design_knowledge_intelligence',
     enrichmentModel: 'faceted',
     targetMultiplier: 8.0, // 8 facets per source
-    sourceFilter: null
+    sourceFilter: null,
+    workerCount: 200 // High concurrency for rapid enrichment
   }
 } as const;
 
@@ -825,7 +830,14 @@ export default function EnrichmentConsole() {
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-chart-3">{batches.filter(b => b.status === 'processing').length}</div>
-            <div className="text-xs text-muted-foreground">Active Batches</div>
+            <div className="text-xs text-muted-foreground">
+              Processing Now
+              {config.workerCount && (
+                <span className="block text-[10px] text-muted-foreground/70 mt-0.5">
+                  Max: {config.workerCount} workers
+                </span>
+              )}
+            </div>
           </div>
         </div>
 
@@ -1072,10 +1084,13 @@ export default function EnrichmentConsole() {
           <div className="flex items-center justify-between mb-3">
             <h4 className="font-medium flex items-center gap-2">
               <Activity className="w-4 h-4 animate-pulse text-success" />
-              Live Worker Activity
+              Live Batch Activity
             </h4>
             <Badge variant="secondary" className="text-xs">
-              {batches.filter(b => b.status === 'processing').length} Active Workers
+              {batches.filter(b => b.status === 'processing').length} Active Batches
+              {config.workerCount && (
+                <span className="ml-1 text-muted-foreground">/ {config.workerCount} max</span>
+              )}
             </Badge>
           </div>
           

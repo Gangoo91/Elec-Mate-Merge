@@ -280,16 +280,24 @@ serve(async (req) => {
     
     const threeMinutesAgo = new Date(Date.now() - 4.5 * 60 * 1000).toISOString(); // ✅ 4.5 minute threshold
     
+    // Support scope filtering for recover action
+    let jobTypesToRecover = ENRICHMENT_TASKS.map(t => `enrich_${t.sourceTable}`);
+    if (scope === 'single' && jobType) {
+      jobTypesToRecover = [jobType];
+    }
+    
     const { data: stuckBatches } = await supabase
       .from('batch_progress')
       .select('*, batch_jobs!inner(job_type, status)')
       .eq('status', 'processing')
-      .lt('started_at', threeMinutesAgo);
+      .lt('started_at', threeMinutesAgo)
+      .in('batch_jobs.job_type', jobTypesToRecover);
     
     let recovered = 0;
     const affectedJobIds = new Set<string>();
     
     if (stuckBatches && stuckBatches.length > 0) {
+      // Found stuck batches - recover them
       for (const batch of stuckBatches) {
         await supabase.from('batch_progress').update({
           status: 'pending',
@@ -307,26 +315,24 @@ serve(async (req) => {
           status: 'pending'
         }).eq('id', jobId);
       }
-    }
-    
-    const recoveredJobIds = Array.from(affectedJobIds);
-    console.log(`✅ Recovered ${recovered} stuck batches across ${recoveredJobIds.length} jobs`);
-    
-    // Build jobTaskMap to restart continuous worker pool
-    const jobTaskMap = new Map<string, EnrichmentTask>();
-    
-    for (const jobId of recoveredJobIds) {
-      const { data: job } = await supabase.from('batch_jobs').select('job_type').eq('id', jobId).single();
-      if (job) {
-        const task = ENRICHMENT_TASKS.find(t => `enrich_${t.sourceTable}` === job.job_type || t.functionName === job.job_type.replace('enrich_', 'enrich-'));
-        if (task) {
-          jobTaskMap.set(jobId, task);
+      
+      const recoveredJobIds = Array.from(affectedJobIds);
+      console.log(`✅ Recovered ${recovered} stuck batches across ${recoveredJobIds.length} jobs`);
+      
+      // Build jobTaskMap to restart continuous worker pool
+      const jobTaskMap = new Map<string, EnrichmentTask>();
+      
+      for (const jobId of recoveredJobIds) {
+        const { data: job } = await supabase.from('batch_jobs').select('job_type').eq('id', jobId).single();
+        if (job) {
+          const task = ENRICHMENT_TASKS.find(t => `enrich_${t.sourceTable}` === job.job_type || t.functionName === job.job_type.replace('enrich_', 'enrich-'));
+          if (task) {
+            jobTaskMap.set(jobId, task);
+          }
         }
       }
-    }
-    
-    // Restart continuous worker pool (including 200 workers for Design Knowledge)
-    if (recoveredJobIds.length > 0) {
+      
+      // Restart continuous worker pool
       console.log(`🚀 Recover: Restarting continuous worker pool for ${recoveredJobIds.length} jobs`);
       
       // @ts-ignore - EdgeRuntime is available in Deno edge functions
@@ -340,22 +346,83 @@ serve(async (req) => {
         console.log('✅ Long-running worker pool initiated with EdgeRuntime.waitUntil()');
       } else {
         console.warn('⚠️ EdgeRuntime not available, falling back to immediate processing');
-        // Fallback for local testing
         recoveredJobIds.forEach(jobId => {
           const task = jobTaskMap.get(jobId);
           if (task) processNextBatch(supabase, jobId, task);
         });
       }
+      
+      return new Response(JSON.stringify({ 
+        success: true, 
+        message: `Recovered ${recovered} stuck batches and restarted worker pool`,
+        recovered_batches: recovered,
+        affected_jobs: recoveredJobIds.length,
+        worker_pool_restarted: true
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    } else {
+      // No stuck batches found - fall back to continue logic
+      console.log('🔄 No stuck batches found, falling back to continue logic to refresh worker pool');
+      
+      const { data: pendingJobs } = await supabase
+        .from('batch_jobs')
+        .select('*')
+        .in('status', ['pending', 'processing'])
+        .in('job_type', jobTypesToRecover);
+      
+      if (!pendingJobs || pendingJobs.length === 0) {
+        return new Response(JSON.stringify({ 
+          success: true,
+          message: 'No stuck batches and no active jobs to refresh',
+          recovered_batches: 0,
+          affected_jobs: 0,
+          worker_pool_restarted: false
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+      
+      // Build jobTaskMap and restart worker pool for active jobs
+      const jobIds = pendingJobs.map(j => j.id);
+      const jobTaskMap = new Map<string, EnrichmentTask>();
+      
+      for (const job of pendingJobs) {
+        const task = ENRICHMENT_TASKS.find(t => `enrich_${t.sourceTable}` === job.job_type);
+        if (task) {
+          jobTaskMap.set(job.id, task);
+        }
+      }
+      
+      console.log(`🚀 Recover (fallback): Refreshing worker pool for ${jobIds.length} active jobs`);
+      
+      // @ts-ignore - EdgeRuntime is available in Deno edge functions
+      if (typeof EdgeRuntime !== 'undefined') {
+        // @ts-ignore
+        EdgeRuntime.waitUntil(
+          continuousProcessor(supabase, jobIds, jobTaskMap).catch(err => {
+            console.error('❌ Continuous processor failed:', err);
+          })
+        );
+        console.log('✅ Long-running worker pool initiated with EdgeRuntime.waitUntil()');
+      } else {
+        console.warn('⚠️ EdgeRuntime not available');
+        jobIds.forEach(jobId => {
+          const task = jobTaskMap.get(jobId);
+          if (task) processNextBatch(supabase, jobId, task);
+        });
+      }
+      
+      return new Response(JSON.stringify({ 
+        success: true,
+        message: `No stuck batches found — refreshed worker pool for ${jobIds.length} active jobs`,
+        recovered_batches: 0,
+        affected_jobs: jobIds.length,
+        worker_pool_restarted: true
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
     }
-    
-    return new Response(JSON.stringify({ 
-      success: true, 
-      recovered_batches: recovered,
-      affected_jobs: recoveredJobIds.length,
-      worker_pool_restarted: recoveredJobIds.length > 0
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
   }
   
   // Action: Abort all active jobs
