@@ -4,7 +4,7 @@ import { createLogger } from '../_shared/logger.ts';
 import { MetricsCollector } from '../_shared/metrics.ts';
 import { handleBatchDesign } from './batch-design-handler.ts';
 
-const VERSION = 'v4.0.0-best-in-class'; // All 7 optimization phases deployed
+const VERSION = 'v4.0.1-rag-fix'; // Fixed BS7671 function name + embedding generation
 
 serve(async (req) => {
   // Monitor request lifecycle for timeout debugging

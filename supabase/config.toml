@@ -173,3 +173,8 @@ timeout_sec = 120
 verify_jwt = false
 timeout_sec = 300
 
+# One-time Design Knowledge Embeddings Generator (RAG Fix)
+[functions.generate-missing-embeddings]
+verify_jwt = false
+timeout_sec = 300
+
