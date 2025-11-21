@@ -204,11 +204,48 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                         <AlertTriangle className="h-4 w-4" />
                         Troubleshooting
                       </div>
-                      <ul className="space-y-1 text-xs text-gray-200">
+                      <ul className="space-y-2 text-xs text-gray-200">
                         {test.troubleshooting.map((tip, i) => (
-                          <li key={i}>• {tip}</li>
+                          <li key={i} className="text-left leading-relaxed">• {tip}</li>
                         ))}
                       </ul>
+                    </div>
+                  )}
+
+                  {/* Common Mistakes */}
+                  {test.commonMistakes && test.commonMistakes.length > 0 && (
+                    <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+                      <div className="flex items-center gap-2 text-red-300 text-sm font-medium mb-2">
+                        <AlertTriangle className="h-4 w-4" />
+                        Common Mistakes to Avoid
+                      </div>
+                      <ul className="space-y-2 text-xs text-gray-200">
+                        {test.commonMistakes.map((mistake, i) => (
+                          <li key={i} className="text-left leading-relaxed">• {mistake}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Pro Tips */}
+                  {test.proTips && test.proTips.length > 0 && (
+                    <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+                      <div className="flex items-center gap-2 text-blue-300 text-sm font-medium mb-2">
+                        <CheckCircle2 className="h-4 w-4" />
+                        Pro Tips
+                      </div>
+                      <ul className="space-y-2 text-xs text-gray-200">
+                        {test.proTips.map((tip, i) => (
+                          <li key={i} className="text-left leading-relaxed">• {tip}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Test Duration */}
+                  {test.testDuration && (
+                    <div className="text-xs text-muted-foreground text-left">
+                      <span className="font-medium">⏱️ Estimated Time:</span> {test.testDuration}
                     </div>
                   )}
 
@@ -348,11 +385,48 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                         <AlertTriangle className="h-4 w-4" />
                         Troubleshooting
                       </div>
-                      <ul className="space-y-1 text-xs text-gray-200">
+                      <ul className="space-y-2 text-xs text-gray-200">
                         {test.troubleshooting.map((tip, i) => (
-                          <li key={i}>• {tip}</li>
+                          <li key={i} className="text-left leading-relaxed">• {tip}</li>
                         ))}
                       </ul>
+                    </div>
+                  )}
+
+                  {/* Common Mistakes */}
+                  {test.commonMistakes && test.commonMistakes.length > 0 && (
+                    <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+                      <div className="flex items-center gap-2 text-red-300 text-sm font-medium mb-2">
+                        <AlertTriangle className="h-4 w-4" />
+                        Common Mistakes to Avoid
+                      </div>
+                      <ul className="space-y-2 text-xs text-gray-200">
+                        {test.commonMistakes.map((mistake, i) => (
+                          <li key={i} className="text-left leading-relaxed">• {mistake}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Pro Tips */}
+                  {test.proTips && test.proTips.length > 0 && (
+                    <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+                      <div className="flex items-center gap-2 text-blue-300 text-sm font-medium mb-2">
+                        <CheckCircle2 className="h-4 w-4" />
+                        Pro Tips
+                      </div>
+                      <ul className="space-y-2 text-xs text-gray-200">
+                        {test.proTips.map((tip, i) => (
+                          <li key={i} className="text-left leading-relaxed">• {tip}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Test Duration */}
+                  {test.testDuration && (
+                    <div className="text-xs text-muted-foreground text-left">
+                      <span className="font-medium">⏱️ Estimated Time:</span> {test.testDuration}
                     </div>
                   )}
 

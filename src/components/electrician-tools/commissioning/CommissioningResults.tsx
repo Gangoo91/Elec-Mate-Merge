@@ -6,6 +6,7 @@ import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgent
 import TestingSummaryStats from "./results/TestingSummaryStats";
 import TestingProcedureDisplay from "./TestingProcedureDisplay";
 import CertificationRequirements from "./CertificationRequirements";
+import { RAGQualityBadge } from "./RAGQualityBadge";
 import type { CommissioningResponse } from "@/types/commissioning-response";
 
 interface CommissioningResultsProps {
@@ -99,6 +100,14 @@ const CommissioningResults = ({
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Summary Stats */}
       <TestingSummaryStats results={results} />
+
+      {/* RAG Quality Indicator */}
+      {results.metadata?.ragQualityMetrics && (
+        <RAGQualityBadge 
+          gn3ProceduresFound={results.metadata.ragQualityMetrics.gn3ProceduresFound || 0}
+          regulationsFound={results.metadata.ragQualityMetrics.regulationsFound || 0}
+        />
+      )}
 
       {/* Action Buttons */}
       <Card className="p-4">
