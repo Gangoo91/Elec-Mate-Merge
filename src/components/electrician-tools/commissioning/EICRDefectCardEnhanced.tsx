@@ -95,7 +95,7 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
   const primaryConfig = defect.primaryCode ? codeConfig[defect.primaryCode.code] : null;
 
   return (
-    <Card className={`${primaryConfig ? primaryConfig.bgLight : 'bg-elec-dark/80'} border-2 ${primaryConfig ? primaryConfig.borderColor : 'border-blue-500/30'} overflow-hidden`}>
+    <Card className={`${primaryConfig ? primaryConfig.bgLight : 'bg-elec-dark/80'} border-2 ${primaryConfig ? primaryConfig.borderColor : 'border-blue-500/30'} overflow-hidden shadow-lg`}>
       {/* Header */}
       {defect.primaryCode && primaryConfig && (
         <div className={`${primaryConfig.color} p-5 sm:p-6`}>
@@ -112,7 +112,7 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 text-left leading-relaxed">
                 {defect.primaryCode.title}
               </h3>
-              <p className="text-base text-white leading-relaxed text-left">
+              <p className="text-lg text-white leading-relaxed text-left">
                 {defect.defectSummary}
               </p>
             </div>
@@ -125,48 +125,57 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
 
       {/* Confidence Meter */}
       <div className="p-5 sm:p-6">
-        <ConfidenceMeter 
-          level={defect.confidenceAssessment.level}
-          score={defect.confidenceAssessment.score}
-          reasoning={defect.confidenceAssessment.reasoning}
-        />
+        <div className="space-y-2">
+          <h3 className="text-xl font-semibold text-white">Confidence Assessment</h3>
+          <ConfidenceMeter 
+            level={defect.confidenceAssessment.level}
+            score={defect.confidenceAssessment.score}
+            reasoning={defect.confidenceAssessment.reasoning}
+          />
+        </div>
       </div>
 
       {/* Context Factors */}
       {defect.contextFactors && (
         <div className="px-5 sm:px-6 pb-5">
-          <div className="bg-elec-dark/50 rounded-lg p-4">
-            <h5 className="text-base font-semibold text-white mb-3 text-left">Installation Context</h5>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          <div className="space-y-3">
+            <h3 className="text-xl font-semibold text-white">Installation Context</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {defect.contextFactors.bathroomZone && (
-                <Badge variant="outline" className="justify-center text-base py-2">
-                  Zone {defect.contextFactors.bathroomZone}
-                </Badge>
+                <div className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/10">
+                  <p className="text-sm text-white/60">Zone</p>
+                  <p className="text-base font-semibold text-white mt-1">Zone {defect.contextFactors.bathroomZone}</p>
+                </div>
               )}
               {defect.contextFactors.outdoorLocation !== undefined && (
-                <Badge variant="outline" className="justify-center text-base py-2">
-                  {defect.contextFactors.outdoorLocation ? 'Outdoor' : 'Indoor'}
-                </Badge>
+                <div className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/10">
+                  <p className="text-sm text-white/60">Location</p>
+                  <p className="text-base font-semibold text-white mt-1">{defect.contextFactors.outdoorLocation ? 'Outdoor' : 'Indoor'}</p>
+                </div>
               )}
               {defect.contextFactors.rcdPresent !== undefined && (
-                <Badge variant="outline" className="justify-center text-base py-2">
-                  RCD: {defect.contextFactors.rcdPresent ? 'Yes' : 'No'}
-                </Badge>
+                <div className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/10">
+                  <p className="text-sm text-white/60">RCD Protected</p>
+                  <p className="text-base font-semibold text-white mt-1">{defect.contextFactors.rcdPresent ? 'Yes' : 'No'}</p>
+                </div>
               )}
               {defect.contextFactors.conductorSize && (
-                <Badge variant="outline" className="justify-center text-base py-2">
-                  {defect.contextFactors.conductorSize}
-                </Badge>
+                <div className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/10">
+                  <p className="text-sm text-white/60">Conductor Size</p>
+                  <p className="text-base font-semibold text-white mt-1">{defect.contextFactors.conductorSize}</p>
+                </div>
               )}
               {defect.contextFactors.enclosureRating && (
-                <Badge variant="outline" className="justify-center text-base py-2">
-                  {defect.contextFactors.enclosureRating}
-                </Badge>
+                <div className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/10">
+                  <p className="text-sm text-white/60">Enclosure Rating</p>
+                  <p className="text-base font-semibold text-white mt-1">{defect.contextFactors.enclosureRating}</p>
+                </div>
               )}
               {defect.contextFactors.supplementaryBonding !== undefined && (
-                <Badge variant="outline" className="justify-center text-base py-2">
-                  Bonding: {defect.contextFactors.supplementaryBonding ? 'Yes' : 'No'}
-                </Badge>
+                <div className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/10">
+                  <p className="text-sm text-white/60">Bonding</p>
+                  <p className="text-base font-semibold text-white mt-1">{defect.contextFactors.supplementaryBonding ? 'Yes' : 'No'}</p>
+                </div>
               )}
             </div>
           </div>
@@ -176,36 +185,31 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
       {/* ALWAYS EXPANDED: Make Safe Now */}
       {defect.makingSafe && (
         <div className="px-5 sm:px-6 pb-5">
-          <div className="bg-red-500/10 border-2 border-red-500/30 rounded-lg p-5 shadow-lg">
-            <div className="flex items-center gap-2 mb-4">
-              <Shield className="h-6 w-6 text-red-400" />
-              <span className="font-bold text-white text-lg">🚨 Make Safe Now (Immediate Action)</span>
+          <div className="bg-gradient-to-r from-red-500/20 to-red-600/20 border-2 border-red-500 rounded-lg p-5 sm:p-6 space-y-4 shadow-xl">
+            <div className="flex items-center gap-3">
+              <AlertTriangle className="h-7 w-7 text-red-400" />
+              <h3 className="text-2xl font-semibold text-white">🚨 Make Safe Now</h3>
             </div>
-            <div className="space-y-4">
-              <div className="bg-red-500/10 border border-red-500/30 rounded p-4">
-                <p className="text-sm font-semibold text-red-300 mb-3 text-left leading-relaxed">IMMEDIATE SAFETY MEASURES (before fixing):</p>
-                <ol className="space-y-3">
-                  {defect.makingSafe.immediateSteps.map((step, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed text-left">
-                      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 border-2 border-red-500/50 flex items-center justify-center text-sm font-bold text-red-300">
-                        {idx + 1}
-                      </span>
-                      <span className="flex-1 pt-1">{step}</span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-              {defect.makingSafe.isolationRequired && (
-                <Badge className="bg-red-500/20 text-red-300 border-red-500/50 text-base px-4 py-2">
-                  ⚡ Isolation Required
-                </Badge>
-              )}
-              {defect.makingSafe.signageRequired && (
-                <p className="text-base text-white leading-relaxed text-left">
-                  <span className="font-semibold">Signage: </span>{defect.makingSafe.signageRequired}
-                </p>
-              )}
+            <div className="space-y-3">
+              {defect.makingSafe.immediateSteps.map((step, idx) => (
+                <div key={idx} className="flex gap-3 bg-elec-dark/80 p-5 rounded-lg backdrop-blur-sm min-h-[60px] items-start">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center text-base font-bold">
+                    {idx + 1}
+                  </span>
+                  <p className="text-lg text-white leading-loose flex-1">{step}</p>
+                </div>
+              ))}
             </div>
+            {defect.makingSafe.isolationRequired && (
+              <Badge className="bg-red-500 text-white border-none text-base px-4 py-2">
+                ⚡ Isolation Required
+              </Badge>
+            )}
+            {defect.makingSafe.signageRequired && (
+              <p className="text-lg text-white leading-relaxed">
+                <span className="font-semibold">Signage: </span>{defect.makingSafe.signageRequired}
+              </p>
+            )}
           </div>
         </div>
       )}
@@ -213,64 +217,69 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
       {/* ALWAYS EXPANDED: Client Communication */}
       {defect.clientCommunication && (
         <div className="px-5 sm:px-6 pb-5">
-          <div className="bg-blue-500/10 border-2 border-blue-500/30 rounded-lg p-5 shadow-lg">
-            <div className="flex items-center gap-2 mb-4">
-              <MessageSquare className="h-6 w-6 text-blue-400" />
-              <span className="font-bold text-white text-lg">💬 Tell the Client (Plain Language)</span>
+          <div className="bg-gradient-to-r from-blue-500/20 to-blue-600/20 border-2 border-blue-500 rounded-lg p-5 sm:p-6 space-y-4 shadow-xl">
+            <div className="flex items-center gap-3">
+              <MessageSquare className="h-7 w-7 text-blue-400" />
+              <h3 className="text-2xl font-semibold text-white">💬 Tell the Client</h3>
             </div>
-            <div className="space-y-4">
-              <div className="bg-blue-500/10 border border-blue-500/30 rounded p-4">
-                <p className="text-base text-white mb-4 text-left leading-relaxed">
-                  {defect.clientCommunication.plainLanguage}
-                </p>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-sm font-semibold text-white mb-2 text-left">What this means:</p>
-                    <p className="text-base text-white text-left leading-relaxed">{defect.clientCommunication.severityExplanation}</p>
-                  </div>
-                  {defect.clientCommunication.risksIfUnfixed && defect.clientCommunication.risksIfUnfixed.length > 0 && (
-                    <div>
-                      <p className="text-sm font-semibold text-white mb-2 text-left">Risks if not fixed:</p>
-                      <ul className="space-y-2">
-                        {defect.clientCommunication.risksIfUnfixed.map((risk, idx) => (
-                          <li key={idx} className="text-base text-white flex items-start gap-2 text-left leading-relaxed">
-                            <span className="text-orange-400 text-xl">⚠</span>
-                            <span>{risk}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+            
+            <div className="space-y-5 bg-elec-dark/80 p-5 rounded-lg backdrop-blur-sm">
+              {defect.clientCommunication.plainLanguage && (
+                <div>
+                  <p className="text-base text-white font-semibold mb-2">What's wrong:</p>
+                  <p className="text-lg text-white leading-loose">{defect.clientCommunication.plainLanguage}</p>
                 </div>
-              </div>
-              <div className="flex flex-wrap items-center gap-3">
-                <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/50 text-base px-4 py-2">
-                  Urgency: {defect.clientCommunication.urgencyLevel.replace('_', ' ')}
+              )}
+              
+              {defect.clientCommunication.severityExplanation && (
+                <div>
+                  <p className="text-base text-white font-semibold mb-2">Why it matters:</p>
+                  <p className="text-lg text-white leading-loose">{defect.clientCommunication.severityExplanation}</p>
+                </div>
+              )}
+              
+              {defect.clientCommunication.risksIfUnfixed && defect.clientCommunication.risksIfUnfixed.length > 0 && (
+                <div>
+                  <p className="text-base text-white font-semibold mb-2">If not fixed:</p>
+                  <ul className="space-y-2">
+                    {defect.clientCommunication.risksIfUnfixed.map((risk, idx) => (
+                      <li key={idx} className="text-lg text-white flex items-start gap-2 leading-loose">
+                        <span className="text-orange-400 text-xl">⚠</span>
+                        <span>{risk}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+            
+            <div className="flex flex-wrap items-center gap-3">
+              <Badge className="bg-blue-500 text-white border-none text-base px-4 py-2">
+                Urgency: {defect.clientCommunication.urgencyLevel.replace('_', ' ')}
+              </Badge>
+              {defect.clientCommunication.estimatedCost && (
+                <Badge variant="outline" className="text-white text-base px-4 py-2">
+                  Est. Cost: {defect.clientCommunication.estimatedCost}
                 </Badge>
-                {defect.clientCommunication.estimatedCost && (
-                  <Badge variant="outline" className="text-base px-4 py-2">
-                    Est. Cost: {defect.clientCommunication.estimatedCost}
-                  </Badge>
-                )}
-              </div>
+              )}
             </div>
           </div>
         </div>
       )}
 
       {/* Accordion Sections (Technical Details) */}
-      <Accordion type="multiple" className="px-5 sm:px-6 pb-5">
+      <Accordion type="multiple" className="px-5 sm:px-6 pb-5 space-y-3">
         {/* Hazard Explanation */}
         {defect.hazardExplanation && (
-          <AccordionItem value="hazard" className="border-white/10">
-            <AccordionTrigger className="text-white hover:text-white/80 py-4 min-h-[56px]">
-              <div className="flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-red-400" />
-                <span className="font-semibold text-base">Technical Hazard Explanation</span>
+          <AccordionItem value="hazard" className="border-white/10 bg-elec-dark/50 rounded-lg px-4">
+            <AccordionTrigger className="text-white hover:text-white/80 py-5 min-h-[60px]">
+              <div className="flex items-center gap-3">
+                <AlertTriangle className="h-6 w-6 text-red-400" />
+                <span className="font-semibold text-lg">Technical Hazard Explanation</span>
               </div>
             </AccordionTrigger>
-            <AccordionContent className="pt-2">
-              <p className="text-base text-white leading-relaxed text-left">
+            <AccordionContent className="pt-2 pb-4">
+              <p className="text-lg text-white leading-loose">
                 {defect.hazardExplanation}
               </p>
             </AccordionContent>
