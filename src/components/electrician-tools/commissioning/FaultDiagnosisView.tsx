@@ -1,4 +1,4 @@
-import { AlertTriangle, AlertCircle, CheckCircle2, Lightbulb, XCircle, BookOpen, ArrowLeft, FileText } from "lucide-react";
+import { AlertTriangle, AlertCircle, CheckCircle2, Lightbulb, XCircle, BookOpen, ArrowLeft, FileText, Image as ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -14,10 +14,11 @@ import type { FaultDiagnosis } from "@/types/commissioning-response";
 interface FaultDiagnosisViewProps {
   diagnosis: FaultDiagnosis | null;
   eicrDefects?: EICRDefect[];
+  imageUrl?: string | null;
   onStartOver: () => void;
 }
 
-const FaultDiagnosisView = ({ diagnosis, eicrDefects, onStartOver }: FaultDiagnosisViewProps) => {
+const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: FaultDiagnosisViewProps) => {
   const [showEICRCodes, setShowEICRCodes] = useState(true);
   
   // Check if this is a NONE classification (compliant installation)
@@ -65,6 +66,25 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, onStartOver }: FaultDiagno
           </div>
         </div>
 
+        {/* Uploaded Photo Display */}
+        {imageUrl && (
+          <Card className="bg-elec-dark/80 border-blue-500/30 p-4 sm:p-6">
+            <div className="space-y-3">
+              <h3 className="text-lg font-semibold text-white flex items-center gap-2 text-left">
+                <ImageIcon className="h-5 w-5 text-blue-400" />
+                Installation Photo
+              </h3>
+              <div className="relative rounded-lg overflow-hidden bg-black/50">
+                <img 
+                  src={imageUrl} 
+                  alt="Installation photo" 
+                  className="w-full h-auto max-h-[400px] object-contain"
+                />
+              </div>
+            </div>
+          </Card>
+        )}
+
         {/* Compliant Installation Banner (NONE classification) */}
         {isCompliantPhoto && eicrDefects[0] && (
           <Card className="bg-green-500 border-none p-5 sm:p-6">
@@ -77,17 +97,17 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, onStartOver }: FaultDiagno
                   <Badge className="bg-white/30 text-white border-none">
                     NO DEFECTS FOUND
                   </Badge>
-                  <h3 className="text-lg sm:text-xl font-bold text-white">Installation Appears Compliant</h3>
+                  <h3 className="text-lg sm:text-xl font-bold text-white text-left">Installation Appears Compliant</h3>
                 </div>
-                <p className="text-sm sm:text-base text-white/90 mb-3">
+                <p className="text-sm sm:text-base text-white/90 mb-3 text-left">
                   {eicrDefects[0].compliantSummary || eicrDefects[0].defectSummary}
                 </p>
                 {eicrDefects[0].goodPracticeNotes && eicrDefects[0].goodPracticeNotes.length > 0 && (
                   <div className="space-y-1">
-                    <p className="text-xs font-semibold text-white/80">Good Practice Observed:</p>
+                    <p className="text-xs font-semibold text-white/80 text-left">Good Practice Observed:</p>
                     <ul className="space-y-1">
                       {eicrDefects[0].goodPracticeNotes.map((note: string, idx: number) => (
-                        <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                        <li key={idx} className="text-sm text-white/80 flex items-start gap-2 text-left">
                           <span className="text-green-300">✓</span>
                           <span>{note}</span>
                         </li>
@@ -96,7 +116,7 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, onStartOver }: FaultDiagno
                   </div>
                 )}
                 <div className="mt-4 pt-3 border-t border-white/20">
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white/70 text-left">
                     This classification adds credibility to the AI system. If an installation is compliant, we'll say so.
                   </p>
                 </div>
@@ -117,10 +137,10 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, onStartOver }: FaultDiagno
                   <Badge className="bg-white/30 text-white border-none">
                     {diagnosis.faultSummary.safetyRisk} RISK
                   </Badge>
-                  <h3 className="text-lg sm:text-xl font-bold text-white">Safety Critical Issue</h3>
+                  <h3 className="text-lg sm:text-xl font-bold text-white text-left">Safety Critical Issue</h3>
                 </div>
                 {diagnosis.faultSummary.immediateAction && (
-                  <p className="text-sm sm:text-base text-white/90 font-medium">
+                  <p className="text-sm sm:text-base text-white/90 font-medium text-left">
                     Immediate Action: {diagnosis.faultSummary.immediateAction}
                   </p>
                 )}
@@ -161,8 +181,8 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, onStartOver }: FaultDiagno
                   <RiskIcon className="h-5 w-5 text-white" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-white mb-2">Reported Symptom</h3>
-                  <p className="text-base text-white/80 mb-4">{diagnosis.faultSummary.reportedSymptom}</p>
+                  <h3 className="text-lg font-semibold text-white mb-2 text-left">Reported Symptom</h3>
+                  <p className="text-base text-white/80 mb-4 text-left">{diagnosis.faultSummary.reportedSymptom}</p>
                   
                   <h4 className="text-sm font-semibold text-white/70 mb-2">Likely Root Causes</h4>
                   <ol className="space-y-2">

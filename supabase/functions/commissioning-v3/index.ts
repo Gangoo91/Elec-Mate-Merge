@@ -1068,10 +1068,6 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
                 type: 'string',
                 description: 'Detailed reasoning for this classification with specific BS 7671 regulation references'
               },
-              napitCode: {
-                type: 'string',
-                description: 'Specific NAPIT code (e.g., "C2-002" for socket without RCD) or "N/A" if NONE classification'
-              },
               defectSummary: {
                 type: 'string',
                 description: 'Clear description of the defect observed (or compliant installation if NONE)'
@@ -1131,7 +1127,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
                     type: 'array', 
                     items: { type: 'string' },
                     minItems: 3,
-                    description: 'Detailed step-by-step rectification procedure'
+                    description: 'HIGHLY TECHNICAL step-by-step rectification with specific cable sizes (e.g., "2.5mm² T&E"), BS 7671 regulation numbers, testing values (e.g., "IR ≥1.0MΩ @500V DC"), and manufacturer references'
                   },
                   requiredMaterials: { 
                     type: 'array', 
@@ -1201,13 +1197,13 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
         }
       };
       
-      const photoAnalysisPrompt = `You are a NAPIT/NICEIC-qualified EICR Inspector with 30 years experience.
+      const photoAnalysisPrompt = `You are a BS 7671:2018+A3:2024 certified EICR Inspector with 30 years experience.
 
 Write all responses in UK English (British spelling and terminology).
 
 📸 EICR PHOTO ANALYSIS INSTRUCTIONS:
 
-You MUST analyse this installation photo against BS 7671:2018+A3:2024 and NAPIT Code Directory.
+You MUST analyse this installation photo against BS 7671:2018+A3:2024, Guidance Note 3 (GN3), and Best Practice Guide 4.
 
 **CLASSIFICATION CODES:**
 - **C1 (Danger Present)**: Immediate danger to persons or property. Requires immediate remedial action. Examples: Exposed live parts, lack of earthing, reversed polarity.
@@ -1239,11 +1235,19 @@ You MUST analyse this installation photo against BS 7671:2018+A3:2024 and NAPIT 
 ${testContext}
 
 **OUTPUT REQUIREMENTS:**
-- Use specific NAPIT codes when applicable (e.g., "C2-002" for socket without RCD)
-- Reference specific BS 7671 regulation numbers
+- Reference specific BS 7671 regulation numbers (e.g., "411.3.3", "701.512.2")
+- Reference GN3 sections where applicable (e.g., "GN3 Section 2.7.2")
+- Reference Best Practice Guide 4 recommendations where relevant
 - Distinguish between "making safe" (immediate isolation/barriers) and "rectification" (proper fix)
 - Provide client communication in plain language
-- Include verification tests with acceptance criteria
+- **RECTIFICATION MUST BE HIGHLY TECHNICAL:**
+  * Use specific cable sizes (e.g., "2.5mm² T&E", "6mm² 3-core SWA", "10mm² single core")
+  * Reference BS 7671 regulation numbers for each step
+  * Include testing values and tolerances (e.g., "IR ≥1.0MΩ @500V DC", "Zs ≤0.35Ω", "RCD trip time <300ms @1×IΔn")
+  * Specify isolation points (e.g., "Isolate at MCB position 4 of main consumer unit")
+  * State earthing/bonding conductor sizes (e.g., "Install 10mm² main protective bonding conductor per 544.1.1")
+  * Reference manufacturer datasheets or standards where relevant
+- Include verification tests with specific acceptance criteria
 - Be explicit about confidence level and reasoning`;
 
       const photoMessages: any[] = [
@@ -1328,10 +1332,6 @@ Determine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehe
               },
               bs7671Regulations: eicrData.bs7671Regulations || [],
               gn3Guidance: eicrData.gn3Guidance || { section: 'N/A', content: '' },
-              napitReference: {
-                code: eicrData.napitCode || 'N/A',
-                description: eicrData.classificationReasoning
-              },
               hazardExplanation: eicrData.hazardExplanation,
               makingSafe: eicrData.makingSafe,
               clientCommunication: eicrData.clientCommunication,
