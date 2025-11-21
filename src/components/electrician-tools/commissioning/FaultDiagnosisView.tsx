@@ -36,7 +36,7 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
   const RiskIcon = risk?.icon;
 
   return (
-    <div className="min-h-screen bg-elec-gray p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-elec-gray py-4 px-0 sm:p-6 lg:p-8">
       <div className="max-w-5xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
