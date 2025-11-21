@@ -4,7 +4,8 @@ import CommissioningInput from "./CommissioningInput";
 import CommissioningProcessingView from "./CommissioningProcessingView";
 import CommissioningSuccess from "./CommissioningSuccess";
 import CommissioningResults from "./CommissioningResults";
-import type { CommissioningResponse } from "@/types/commissioning-response";
+import FaultDiagnosisView from "./FaultDiagnosisView";
+import type { CommissioningResponse, FaultDiagnosis } from "@/types/commissioning-response";
 
 const CommissioningChat = lazy(() => import("./CommissioningChat"));
 
@@ -14,12 +15,13 @@ const CommissioningInterface = () => {
   const [celebrationShown, setCelebrationShown] = useState(false);
   const [results, setResults] = useState<CommissioningResponse | null>(null);
   const [generationStartTime, setGenerationStartTime] = useState(0);
-  const [responseMode, setResponseMode] = useState<'procedure' | 'conversational' | null>(null);
+  const [responseMode, setResponseMode] = useState<'procedure' | 'conversational' | 'fault-diagnosis' | null>(null);
   const [conversationalResponse, setConversationalResponse] = useState<{
     text: string;
     queryType: 'troubleshooting' | 'question';
     citations: any[];
   } | null>(null);
+  const [faultDiagnosis, setFaultDiagnosis] = useState<FaultDiagnosis | null>(null);
   const [projectInfo, setProjectInfo] = useState({
     projectName: "",
     location: "",
@@ -65,7 +67,12 @@ const CommissioningInterface = () => {
     
     if (response?.success) {
       const typedResponse = response as CommissioningResponse;
-      if (typedResponse.mode === 'conversational') {
+      if (typedResponse.mode === 'fault-diagnosis') {
+        // Fault diagnosis response
+        setResponseMode('fault-diagnosis');
+        setFaultDiagnosis(typedResponse.structuredDiagnosis || null);
+        setShowCelebration(false);
+      } else if (typedResponse.mode === 'conversational') {
         // Conversational response
         setResponseMode('conversational');
         setConversationalResponse({
@@ -94,6 +101,7 @@ const CommissioningInterface = () => {
     setResults(null);
     setResponseMode(null);
     setConversationalResponse(null);
+    setFaultDiagnosis(null);
   };
 
   const handleViewResults = () => {
@@ -135,6 +143,16 @@ const CommissioningInterface = () => {
           }}
         />
       </Suspense>
+    );
+  }
+
+  // FAULT DIAGNOSIS MODE: Show structured fault troubleshooting
+  if (responseMode === 'fault-diagnosis' && faultDiagnosis) {
+    return (
+      <FaultDiagnosisView
+        diagnosis={faultDiagnosis}
+        onStartOver={handleStartOver}
+      />
     );
   }
 

@@ -259,25 +259,65 @@ ${conversationContext}`;
       if (mode === 'troubleshooting') {
         return `${basePersona}
 
-🔧 TROUBLESHOOTING MODE INSTRUCTIONS:
+🔧 TROUBLESHOOTING MODE - STRUCTURED FAULT DIAGNOSIS
 
-The electrician has encountered a fault or unexpected reading. Your response MUST:
+You MUST provide a comprehensive fault diagnosis using the RAG safety status system:
 
-1. **Acknowledge the specific problem**
-2. **Explain why it's failing** (regulation reference + practical cause)
-3. **Provide diagnostic steps** in order
-4. **Give realistic fault scenarios** from experience
-5. **Specify test settings** (instrument mode, expected readings)
-6. **Include safety warnings** if relevant
+**RAG STATUS DEFINITIONS:**
+- 🔴 RED: Critical safety issue, unsafe condition, MUST be addressed before proceeding
+  Examples: Live exposed conductors, arcing, thermal damage, voltage on earth
+- 🟡 AMBER: Requires investigation or adjustment, not immediately dangerous but non-compliant
+  Examples: High Zs reading (but below 230V), low IR (0.5-1.0MΩ), loose terminals
+- 🟢 GREEN: Normal verification checks, routine testing, acceptable conditions
+  Examples: Visual inspection, continuity verification, polarity confirmation
 
-TONE: "Here's what I'd do..." not "You should refer to BS 7671..."
+**RESPONSE STRUCTURE:**
 
-STRUCTURE:
-- Quick diagnosis (1-2 sentences)
-- Most likely cause + why (1 paragraph)
-- Step-by-step fix procedure (numbered list)
-- If that doesn't work, next steps (1 paragraph)
-- Regulation reference (brief, at end)`;
+1. **Fault Summary** (30-50 words)
+   - What symptom the user reported
+   - 2-4 most likely root causes from experience
+   - Safety risk level (LOW/MODERATE/HIGH/CRITICAL)
+   - Immediate action required
+
+2. **Diagnostic Workflow** (minimum 3 steps, RAG-coded)
+   Each step must include:
+   - RAG status (RED/AMBER/GREEN)
+   - What to test/inspect/verify
+   - What to measure (voltage, resistance, current, etc.)
+   - Expected reading with unit (e.g., "230V ±10%", "<0.05Ω", ">1.0MΩ")
+   - Acceptable range with tolerance
+   - Instrument setup (mode, range, connections)
+   - Safety warnings (PPE, isolation, live working)
+   - What to do if check fails
+   - BS 7671 regulation reference
+
+3. **Corrective Actions**
+   For each potential fault:
+   - Symptom that triggers this action
+   - Specific corrective procedure
+   - Tools required
+   - Estimated repair time
+   - How to verify the fix worked
+
+4. **Lockout/Tagout Requirements**
+   - Is LOTO required? (YES/NO)
+   - Step-by-step isolation procedure
+   - All isolation points to lock
+
+5. **Additional Context**
+   - Common mistakes that cause this fault
+   - Pro tips from 30 years experience
+   - Relevant BS 7671 regulations
+
+**CRITICAL RULES:**
+- Always start with safety (isolation, proving dead)
+- Give numeric expected readings, not vague descriptions
+- Reference specific instrument settings
+- Mention PPE requirements for live work
+- Cite BS 7671 regulation numbers
+- Use real-world fault scenarios from experience
+
+TONE: Urgent but calm, safety-first, practical troubleshooting mentor`;
       } else {
         return `${basePersona}
 
@@ -941,6 +981,136 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
       contextSection
     );
     
+    // Detect if we should use structured fault diagnosis
+    const useStructuredDiagnosis = classification.mode === 'troubleshooting' && 
+      (query.toLowerCase().includes('reading') || 
+       query.toLowerCase().includes('fault') || 
+       query.toLowerCase().includes('failing') ||
+       query.toLowerCase().includes('trip') ||
+       query.toLowerCase().includes('error'));
+    
+    if (useStructuredDiagnosis) {
+      logger.info('🔧 Using structured fault diagnosis tool');
+      
+      const faultDiagnosisTool = {
+        type: 'function' as const,
+        function: {
+          name: 'provide_fault_diagnosis',
+          description: 'Provide structured fault diagnosis with RAG safety status',
+          parameters: {
+            type: 'object',
+            properties: {
+              faultSummary: {
+                type: 'object',
+                properties: {
+                  reportedSymptom: { type: 'string' },
+                  likelyRootCauses: { type: 'array', items: { type: 'string' }, minItems: 2, maxItems: 4 },
+                  safetyRisk: { type: 'string', enum: ['LOW', 'MODERATE', 'HIGH', 'CRITICAL'] },
+                  immediateAction: { type: 'string' }
+                },
+                required: ['reportedSymptom', 'likelyRootCauses', 'safetyRisk']
+              },
+              diagnosticWorkflow: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    stepNumber: { type: 'number' },
+                    ragStatus: { type: 'string', enum: ['RED', 'AMBER', 'GREEN'] },
+                    stepTitle: { type: 'string' },
+                    action: { type: 'string' },
+                    whatToTest: { type: 'string' },
+                    whatToMeasure: { type: 'string' },
+                    expectedReading: { type: 'string' },
+                    acceptableRange: { type: 'string' },
+                    instrumentSetup: { type: 'string' },
+                    safetyWarnings: { type: 'array', items: { type: 'string' } },
+                    ifFailed: { type: 'string' },
+                    regulation: { type: 'string' }
+                  },
+                  required: ['stepNumber', 'ragStatus', 'stepTitle', 'action', 'whatToTest']
+                },
+                minItems: 3
+              },
+              correctiveActions: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    forSymptom: { type: 'string' },
+                    action: { type: 'string' },
+                    tools: { type: 'array', items: { type: 'string' } },
+                    estimatedTime: { type: 'string' },
+                    verificationTest: { type: 'string' }
+                  }
+                }
+              },
+              lockoutTagout: {
+                type: 'object',
+                properties: {
+                  required: { type: 'boolean' },
+                  procedure: { type: 'array', items: { type: 'string' } },
+                  isolationPoints: { type: 'array', items: { type: 'string' } }
+                }
+              },
+              additionalContext: {
+                type: 'object',
+                properties: {
+                  commonMistakes: { type: 'array', items: { type: 'string' } },
+                  proTips: { type: 'array', items: { type: 'string' } },
+                  regulations: { type: 'array', items: { type: 'string' } }
+                }
+              }
+            },
+            required: ['faultSummary', 'diagnosticWorkflow', 'correctiveActions']
+          }
+        }
+      };
+      
+      const aiResponse = await callOpenAI(
+        {
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            { role: 'system', content: conversationalPrompt },
+            { role: 'user', content: effectiveQuery }
+          ],
+          max_completion_tokens: 4000,
+          tools: [faultDiagnosisTool],
+          tool_choice: { type: 'function', function: { name: 'provide_fault_diagnosis' } }
+        },
+        OPENAI_API_KEY!,
+        180000
+      );
+      
+      const toolCall = aiResponse.toolCalls?.[0];
+      if (toolCall?.function?.arguments) {
+        const diagnosisData = JSON.parse(toolCall.function.arguments);
+        
+        return new Response(
+          JSON.stringify({
+            success: true,
+            mode: 'fault-diagnosis',
+            queryType: 'troubleshooting',
+            structuredDiagnosis: diagnosisData,
+            citations: ragResults || [],
+            metadata: {
+              classification,
+              ragQualityMetrics: {
+                gn3ProceduresFound,
+                regulationsFound,
+                totalSources: gn3ProceduresFound + regulationsFound
+              }
+            }
+          }),
+          { 
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            status: 200 
+          }
+        );
+      }
+    }
+    
+    // Fallback to conversational text response
     const aiResponse = await callOpenAI(
       {
         model: 'gpt-5-mini-2025-08-07',
@@ -949,7 +1119,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
           { role: 'user', content: effectiveQuery }
         ],
         temperature: 0.7,
-        max_tokens: 2000
+        max_completion_tokens: 2000
       },
       OPENAI_API_KEY!,
       180000
