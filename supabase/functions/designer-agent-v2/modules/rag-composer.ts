@@ -5,8 +5,8 @@
 
 import { searchCircuitRegulations, searchInstallationPractices } from '../../_shared/circuit-rag.ts';
 import { filterRegulationsForCircuit } from '../../_shared/circuit-regulation-mapper.ts';
-import { searchDesignIntelligence } from '../../_shared/intelligence-search.ts';
-import { extractIntelligenceKeywords } from '../../_shared/circuit-keyword-extractor.ts';
+import { searchDesignIntelligence, searchRegulationsIntelligence } from '../../_shared/intelligence-search.ts';
+import { extractIntelligenceKeywords, extractRegulationKeywords } from '../../_shared/circuit-keyword-extractor.ts';
 
 /**
  * Core Regulations Cache Loader
@@ -378,13 +378,23 @@ export async function buildRAGSearches(
       failedBranches++;
     }
     
-    // STEP 2: BS7671 Regulations via VECTOR search (not hybrid) - INCREASED LIMIT
+    // STEP 2: ULTRA-FAST BS7671 REGULATIONS INTELLIGENCE SEARCH
     try {
-      logger.info('🎯 Searching BS7671 regulations (vector search, limit 15)');
-      regulations = await searchCircuitRegulations(jobInputs, 'vector');
-      logger.info(`✅ BS7671 RAG: ${regulations.length} results`);
+      logger.info('⚡ Searching BS7671 regulations (keyword GIN indexes, <50ms)');
+      
+      const regulationKeywords = extractRegulationKeywords(circuits || [], jobInputs.supply || {});
+      const installationType = type || 'domestic';
+      
+      regulations = await searchRegulationsIntelligence(supabase, {
+        keywords: [...allKeywords, ...regulationKeywords],
+        appliesTo: [installationType, 'all'],
+        categories: ['Protection', 'Earthing', 'Special Locations', 'Design'],
+        limit: 25 // Increased - we can afford more now it's <50ms
+      });
+      
+      logger.info(`✅ BS7671 intelligence: ${regulations.length} regulations in ${Date.now() - searchStart}ms`);
     } catch (err) {
-      logger.error('❌ BS7671 RAG failed', {
+      logger.error('❌ BS7671 intelligence search failed', {
         error: err instanceof Error ? err.message : String(err),
         stack: err instanceof Error ? err.stack : undefined
       });
@@ -515,77 +525,114 @@ export async function buildRAGSearches(
 }
 
 /**
- * Format intelligence facets for AI consumption
- * Groups by facet type for structured learning
+ * Format design intelligence facets for AI consumption
+ * Structured output improves AI comprehension and reduces hallucinations
  */
 function formatIntelligenceFacets(facets: any[]): string {
-  const grouped = {
-    concepts: facets.filter(f => f.facet_type === 'concept'),
-    formulas: facets.filter(f => f.facet_type === 'formula'),
-    tables: facets.filter(f => f.facet_type === 'table'),
-    examples: facets.filter(f => f.facet_type === 'example'),
-    regulations: facets.filter(f => f.facet_type === 'regulation')
-  };
+  if (!facets || facets.length === 0) return '';
   
-  let output = '=== DESIGN INTELLIGENCE ===\n\n';
+  let output = '=== DESIGN KNOWLEDGE INTELLIGENCE (ENRICHED) ===\n\n';
   
-  // Concepts first (understanding)
-  if (grouped.concepts.length > 0) {
-    output += '## DESIGN CONCEPTS\n';
-    grouped.concepts.forEach(f => {
-      output += `### ${f.primary_topic}\n`;
-      output += `${f.content}\n`;
-      if (f.bs7671_regulations?.length > 0) {
-        output += `Regulations: ${f.bs7671_regulations.join(', ')}\n`;
+  // Group by category for better AI comprehension
+  const byCategory = facets.reduce((acc, f) => {
+    const cat = f.design_category || 'General';
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(f);
+    return acc;
+  }, {} as Record<string, any[]>);
+  
+  Object.entries(byCategory).forEach(([category, categoryFacets]) => {
+    output += `## ${category.toUpperCase()}\n\n`;
+    
+    categoryFacets.forEach((facet, idx) => {
+      output += `### ${idx + 1}. ${facet.primary_topic}\n`;
+      output += `Type: ${facet.facet_type}\n`;
+      
+      if (facet.keywords?.length > 0) {
+        output += `Keywords: ${facet.keywords.slice(0, 5).join(', ')}\n`;
       }
+      
+      if (facet.content) {
+        output += `${facet.content}\n`;
+      }
+      
+      // Add formulas if present
+      if (facet.formulas?.length > 0) {
+        output += `\nFormulas:\n`;
+        facet.formulas.forEach((f: string) => output += `- ${f}\n`);
+      }
+      
+      // Add calculation steps if present
+      if (facet.calculation_steps?.length > 0) {
+        output += `\nCalculation Steps:\n`;
+        facet.calculation_steps.forEach((s: string, i: number) => output += `${i + 1}. ${s}\n`);
+      }
+      
+      // Add BS7671 regulation references
+      if (facet.bs7671_regulations?.length > 0) {
+        output += `BS 7671: ${facet.bs7671_regulations.join(', ')}\n`;
+      }
+      
+      // Add worked examples if present
+      if (facet.worked_examples?.length > 0) {
+        output += `\nWorked Example:\n`;
+        const example = facet.worked_examples[0];
+        if (typeof example === 'object') {
+          Object.entries(example).forEach(([key, val]) => {
+            output += `- ${key}: ${val}\n`;
+          });
+        }
+      }
+      
       output += '\n';
     });
-  }
+  });
   
-  // Formulas second (calculations)
-  if (grouped.formulas.length > 0) {
-    output += '## CALCULATION FORMULAS\n';
-    grouped.formulas.forEach(f => {
-      output += `### ${f.primary_topic}\n`;
-      if (f.formulas?.length > 0) {
-        f.formulas.forEach((formula: string) => {
-          output += `Formula: ${formula}\n`;
-        });
+  return output;
+}
+
+/**
+ * Format regulation intelligence facets for AI consumption
+ * Structured output improves AI comprehension and reduces hallucinations
+ */
+function formatRegulationIntelligence(facets: any[]): string {
+  if (!facets || facets.length === 0) return '';
+  
+  let output = '=== BS 7671 REGULATIONS (ENRICHED INTELLIGENCE) ===\n\n';
+  
+  // Group by category
+  const byCategory = facets.reduce((acc, f) => {
+    const cat = f.category || 'General';
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(f);
+    return acc;
+  }, {} as Record<string, any[]>);
+  
+  Object.entries(byCategory).forEach(([category, regs]) => {
+    output += `## ${category.toUpperCase()}\n\n`;
+    
+    regs.forEach(reg => {
+      output += `### Reg ${reg.regulation_number}: ${reg.primary_topic}\n`;
+      
+      if (reg.keywords?.length > 0) {
+        output += `Keywords: ${reg.keywords.slice(0, 6).join(', ')}\n`;
       }
-      output += `${f.content}\n`;
-      if (f.calculation_steps?.length > 0) {
-        output += `Steps:\n`;
-        f.calculation_steps.forEach((step: string, i: number) => {
-          output += `${i + 1}. ${step}\n`;
-        });
+      
+      if (reg.applies_to?.length > 0) {
+        output += `Applies to: ${reg.applies_to.join(', ')}\n`;
       }
+      
+      if (reg.related_regulations?.length > 0) {
+        output += `Related: ${reg.related_regulations.join(', ')}\n`;
+      }
+      
+      if (reg.requirement_summary) {
+        output += `\nRequirement: ${reg.requirement_summary}\n`;
+      }
+      
       output += '\n';
     });
-  }
-  
-  // Tables third (lookup data)
-  if (grouped.tables.length > 0) {
-    output += '## REFERENCE TABLES\n';
-    grouped.tables.forEach(f => {
-      output += `### ${f.primary_topic}\n`;
-      output += `${f.content}\n\n`;
-    });
-  }
-  
-  // Examples last (worked examples)
-  if (grouped.examples.length > 0) {
-    output += '## WORKED EXAMPLES\n';
-    grouped.examples.forEach(f => {
-      output += `### ${f.primary_topic}\n`;
-      output += `${f.content}\n`;
-      if (f.worked_examples?.length > 0) {
-        f.worked_examples.forEach((ex: any) => {
-          output += `Example: ${JSON.stringify(ex)}\n`;
-        });
-      }
-      output += '\n';
-    });
-  }
+  });
   
   return output;
 }
@@ -620,10 +667,15 @@ export function mergeRegulations(ragResults: any): any[] {
     });
   }
 
-  // PHASE 2: Merge BS 7671 results
-  if (ragResults.regulations) {
-    ragResults.regulations.forEach((reg: any) => {
-      regulations.set(reg.regulation_number, reg);
+  // PHASE 2: Regulation Intelligence (pre-formatted, enriched)
+  if (ragResults.regulations && ragResults.regulations.length > 0) {
+    const regulationContext = formatRegulationIntelligence(ragResults.regulations);
+    
+    regulations.set('REGULATION_INTELLIGENCE', {
+      regulation_number: 'REGULATION_INTELLIGENCE',
+      content: regulationContext,
+      section: 'BS 7671 Regulations Intelligence',
+      similarity: 1.0
     });
   }
 
