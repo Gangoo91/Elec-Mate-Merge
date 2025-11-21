@@ -522,6 +522,63 @@ export default function EnrichmentConsole() {
   const handleRecover = () => callScheduler('recover');
   const handleDedupe = () => callScheduler('dedupe_batches');
   const handleAbortDupes = () => callScheduler('abort_duplicates');
+  
+  // Enhanced recovery that adds 50 more workers after recovering stuck batches
+  const handleRecoverStuck = async () => {
+    setIsLoading(true);
+    try {
+      // Step 1: Recover stuck batches
+      toast.info('Recovering stuck batches...');
+      const { data: recoverData, error: recoverError } = await supabase.functions.invoke('master-enrichment-scheduler', {
+        body: { 
+          action: 'recover', 
+          scope: 'single', 
+          jobType: config.jobType
+        }
+      });
+
+      if (recoverError) throw recoverError;
+      
+      toast.success(recoverData.message || 'Batches recovered');
+      
+      // Step 2: Add 50 more workers if there's an active job
+      if (activeJob) {
+        const currentWorkers = batches.filter(b => b.status === 'processing').length;
+        const maxWorkers = config.workerCount || 200;
+        const workersToAdd = Math.min(50, maxWorkers - currentWorkers);
+        
+        if (workersToAdd > 0) {
+          toast.info(`Adding ${workersToAdd} more workers...`);
+          
+          // Start additional workers by invoking the enrichment function directly
+          const workerPromises = [];
+          for (let i = 0; i < workersToAdd; i++) {
+            workerPromises.push(
+              supabase.functions.invoke('enrich-design-knowledge', {
+                body: {
+                  action: 'process_batch',
+                  jobId: activeJob.id,
+                  batchSize: 6
+                }
+              })
+            );
+          }
+          
+          await Promise.all(workerPromises);
+          toast.success(`Recovery complete + ${workersToAdd} workers added!`);
+        } else {
+          toast.success('Recovery complete (max workers already active)');
+        }
+      }
+      
+      await loadStatus();
+    } catch (error: any) {
+      console.error('Recovery failed:', error);
+      toast.error(error.message || 'Recovery failed');
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const handleClear = async () => {
     if (!confirm('Clear ALL jobs and batches? This cannot be undone.')) return;
     
@@ -840,17 +897,25 @@ export default function EnrichmentConsole() {
           )}
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-6 gap-3">
           <div className="text-center p-3 bg-muted rounded-md">
             <div className="text-2xl font-bold text-primary">
-              {stats.sourceEnriched?.toLocaleString()}
+              {stats.sourceTotal?.toLocaleString()}
             </div>
             <div className="text-xs text-muted-foreground">
               Source Records
             </div>
           </div>
           <div className="text-center p-3 bg-muted rounded-md">
-            <div className="text-2xl font-bold text-success">{stats.facetsCreated.toLocaleString()}</div>
+            <div className="text-2xl font-bold text-success">
+              {stats.sourceEnriched?.toLocaleString()}
+            </div>
+            <div className="text-xs text-muted-foreground">
+              Fully Enriched
+            </div>
+          </div>
+          <div className="text-center p-3 bg-muted rounded-md">
+            <div className="text-2xl font-bold text-chart-1">{stats.facetsCreated.toLocaleString()}</div>
             <div className="text-xs text-muted-foreground">
               Facets Created
             </div>
@@ -1064,11 +1129,11 @@ export default function EnrichmentConsole() {
           <MobileButton 
             variant="outline" 
             size="wide" 
-            onClick={handleRecover}
+            onClick={handleRecoverStuck}
             disabled={isLoading}
             icon={<RotateCw className="w-4 h-4" />}
           >
-            Recover & Restart Workers
+            Recover & Add Workers (+50)
             {stuckBatches.length > 0 && (
               <Badge variant="destructive" className="ml-1">{stuckBatches.length}</Badge>
             )}
@@ -1239,11 +1304,11 @@ export default function EnrichmentConsole() {
               <MobileButton 
                 variant="destructive" 
                 size="sm" 
-                onClick={handleRecover}
+                onClick={handleRecoverStuck}
                 disabled={isLoading}
                 icon={<RotateCw className="w-4 h-4" />}
               >
-                Reset Stuck Batches
+                Reset & Add Workers (+50)
               </MobileButton>
             </div>
           </div>
