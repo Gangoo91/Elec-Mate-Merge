@@ -222,7 +222,7 @@ export async function callOpenAI(
     messages,
     model = 'gpt-5-mini-2025-08-07',
     temperature = 0.7,
-    max_tokens = 30000,
+    max_tokens = 16000, // Reduced from 30000 to stay within model limits (max 16384)
     response_format,
     tools,
     tool_choice
