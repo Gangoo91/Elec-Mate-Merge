@@ -9,12 +9,18 @@ interface RAGQualityBadgeProps {
 export function RAGQualityBadge({ gn3ProceduresFound, regulationsFound }: RAGQualityBadgeProps) {
   const totalSources = gn3ProceduresFound + regulationsFound;
   
-  let quality: 'high' | 'medium' | 'low' = 'low';
+  let quality: 'high' | 'medium' | 'low' | 'zero' = 'zero';
   let icon = <AlertTriangle className="h-4 w-4" />;
   let message = '';
   let colorClasses = '';
   
-  if (gn3ProceduresFound >= 8 && regulationsFound >= 6) {
+  // Handle zero RAG data first
+  if (totalSources === 0) {
+    quality = 'zero';
+    icon = <AlertTriangle className="h-4 w-4" />;
+    message = 'Critical - No RAG data retrieved. AI may generate generic content.';
+    colorClasses = 'bg-red-500/20 text-red-300 border-red-500/40';
+  } else if (gn3ProceduresFound >= 8 && regulationsFound >= 6) {
     quality = 'high';
     icon = <CheckCircle2 className="h-4 w-4" />;
     message = 'Excellent - Using comprehensive GN3 practical procedures';

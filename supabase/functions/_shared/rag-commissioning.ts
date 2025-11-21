@@ -186,7 +186,17 @@ export async function retrieveCommissioningKnowledge(
       logger.warn('GN3 search failed, falling back to BS7671', { error: gn3Error.message });
     }
 
-    const gn3Results = gn3Data || [];
+    // Map GN3 results (they have different schema than BS7671)
+    const gn3Results = (gn3Data || []).map(r => ({
+      id: r.id,
+      regulation_number: r.topic || 'GN3',  // GN3 uses 'topic' not 'regulation_number'
+      section: 'Testing',
+      content: r.content || '',
+      source: 'GN3',
+      sourceType: 'practical' as const,
+      hybrid_score: r.hybrid_score || 0
+    }));
+    
     logger.info('GN3 search complete', { 
       resultsCount: gn3Results.length,
       source: 'inspection_testing_knowledge'
@@ -204,17 +214,24 @@ export async function retrieveCommissioningKnowledge(
       logger.warn('BS7671 search failed', { error: bs7671Error.message });
     }
 
-    const bs7671Results = bs7671Data || [];
+    // Map BS7671 results (they have proper regulation_number field)
+    const bs7671Results = (bs7671Data || []).map(r => ({
+      id: r.id,
+      regulation_number: r.regulation_number || r.topic || 'BS7671',
+      section: r.section || 'Testing',
+      content: r.content || '',
+      source: 'BS7671',
+      sourceType: 'regulatory' as const,
+      hybrid_score: r.hybrid_score || 0
+    }));
+    
     logger.info('BS7671 search complete', { 
       resultsCount: bs7671Results.length,
       source: 'bs7671_intelligence'
     });
 
     // 3. Merge results with GN3 prioritized (GN3 first, then BS7671)
-    let results = [
-      ...gn3Results.map(r => ({ ...r, source: 'GN3', sourceType: 'practical' })),
-      ...bs7671Results.map(r => ({ ...r, source: 'BS7671', sourceType: 'regulatory' }))
-    ];
+    let results = [...gn3Results, ...bs7671Results];
 
     logger.info('Merged RAG results', {
       total: results.length,
@@ -257,11 +274,12 @@ export async function retrieveCommissioningKnowledge(
 
     // Calculate confidence scores
     const resultsWithConfidence = results.map(r => {
+      // Defensive handling for both GN3 and BS7671 field structures
       const asReg: RegulationResult = {
-        id: r.id,
-        regulation_number: r.regulation_number || r.topic || 'GN3',
+        id: r.id || '',
+        regulation_number: r.regulation_number || 'Unknown',
         section: r.section || 'Testing',
-        content: r.content
+        content: r.content || ''
       };
       const baseConfidence = calculateConfidence(asReg, query, { testType });
       

@@ -7,14 +7,14 @@ interface TestingSummaryStatsProps {
 }
 
 const TestingSummaryStats = ({ results }: TestingSummaryStatsProps) => {
-  // Calculate total tests
+  // Calculate total tests (Visual checkpoints + Dead tests + Live tests)
   const visualCheckpoints = results.structuredData?.testingProcedure?.visualInspection?.checkpoints.length || 0;
   const deadTests = results.structuredData?.testingProcedure?.deadTests?.length || 0;
   const liveTests = results.structuredData?.testingProcedure?.liveTests?.length || 0;
-  const totalTests = visualCheckpoints + deadTests + liveTests;
+  const totalTestItems = visualCheckpoints + deadTests + liveTests;
 
-  // Calculate estimated duration (15 mins per test average)
-  const estimatedDuration = (totalTests * 15) / 60;
+  // Calculate estimated duration (15 mins per test item average)
+  const estimatedDuration = (totalTestItems * 15) / 60;
 
   // Get max Zs value from circuits
   const maxZs = results.circuits?.length > 0 
@@ -37,11 +37,11 @@ const TestingSummaryStats = ({ results }: TestingSummaryStatsProps) => {
           <div className="flex flex-col items-center text-center">
             <CheckCircle2 className="h-5 w-5 text-purple-400 mb-2" />
             <div className="text-2xl sm:text-3xl font-bold text-purple-400 mb-1">
-              {totalTests}
+              {totalTestItems}
             </div>
-            <div className="text-xs text-muted-foreground">Total Tests</div>
+            <div className="text-xs text-muted-foreground">Test Items</div>
             <div className="text-xs text-muted-foreground mt-1">
-              {visualCheckpoints}V / {deadTests}D / {liveTests}L
+              {visualCheckpoints}V + {deadTests}D + {liveTests}L
             </div>
           </div>
         </div>
