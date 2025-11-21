@@ -31,6 +31,9 @@ export interface TestProcedure {
   expectedResult?: TestResult | string;
   calculation?: CalculationBreakdown | string;
   troubleshooting?: string[];
+  commonMistakes?: string[];
+  proTips?: string[];
+  testDuration?: string;
 }
 
 export interface TestingProcedure {
@@ -65,6 +68,13 @@ export interface CommissioningResponse {
   enrichment?: any;
   rendering?: any;
   suggestedNextAgents?: any[];
+  metadata?: {
+    ragQualityMetrics?: {
+      gn3ProceduresFound: number;
+      regulationsFound: number;
+      totalSources: number;
+    };
+  };
   // Additional fields that may come from agent response
   circuits?: any[];
   overallResult?: string;

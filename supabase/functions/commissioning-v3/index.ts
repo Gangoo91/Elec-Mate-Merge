@@ -244,49 +244,61 @@ CURRENT DATE: September 2025
 GN3 PRACTICAL TEST KNOWLEDGE (YOU MUST USE THIS DATA):
 ${testContext}
 
-🔴 CRITICAL INSTRUCTIONS - FOR EACH TEST PROVIDE:
+🔴 MANDATORY CONTENT RULES - EVERY TEST MUST INCLUDE:
 
-1. TEST INSTRUMENT SETUP
-   Example: "Set Megger MFT1741 to 'Continuity' mode (Ω symbol). Zero test leads first by shorting together (should read ≤0.05Ω)."
-   
-2. LEAD PLACEMENT (EXACTLY WHERE)
-   Example: "At Consumer Unit: Connect red lead to Line terminal, black lead to CPC terminal. At far end: Link L-CPC with short test lead."
-   NOT just "test L-CPC" - too vague!
-   
-3. PROCEDURE STEP-BY-STEP
-   Example: "Step 1: Link L and CPC at far end. Step 2: Press TEST button. Step 3: Hold for 2 seconds. Step 4: Read display when stable."
-   
-4. EXPECTED RESULT WITH PASS/FAIL CRITERIA
-   Example: "Expected: 0.88Ω calculated (45m × 19.5mΩ/m × 2). Measured: 0.85Ω. Maximum: 1.15Ω per Table 1A. PASS (within 10% tolerance)."
-   
-5. TROUBLESHOOTING IF FAIL
-   Example: "If >1.15Ω: Check termination tightness (2.5Nm torque for 16mm²). Look for damaged conductor. Verify test lead zero reading."
+1. INSTRUMENT SETUP (minimum 100 characters)
+   ❌ BAD: "Set to continuity mode"
+   ✅ GOOD: "Set Megger MFT1741 to Continuity mode (Ω symbol on rotary dial). Press ZERO button. Short red and black leads together - display should read ≤0.05Ω. If higher, clean probe tips with wire wool. Select AUTO range mode (default). Ensure battery indicator shows >60% charge."
 
-CHAPTER 64 TEST SEQUENCE (MANDATORY ORDER):
+2. LEAD PLACEMENT (minimum 80 characters)
+   ❌ BAD: "Connect to L and CPC"
+   ✅ GOOD: "At Consumer Unit (position B7): Red probe to Line terminal of MCB. Black probe to Main Earth Bar terminal 3. At shower isolator (45m away): Use short link wire to bridge Line and CPC terminals inside isolator box. Ensure tight connection - torque to 0.5Nm."
 
-PART 1: Visual Inspection (643.1)
-- Cable type correct for environment
-- Support spacing per Table 4A2
-- Terminations tight, no exposed conductor
-- Correct polarity at switches
-- Gland entries sealed
+3. PROCEDURE (minimum 4 steps, each 30+ characters)
+   ❌ BAD: "1. Test circuit 2. Read result"
+   ✅ GOOD: 
+   "1. Verify circuit fully isolated - test for dead at both ends using voltage indicator
+    2. Connect test leads as described, ensuring firm contact (no 'floating' connections)
+    3. Press and hold TEST button for 2 seconds - display will flash during measurement
+    4. Wait for display to stabilise (solid reading, not flashing) - typically 3-5 seconds
+    5. Record reading to 3 decimal places (e.g., 0.873Ω)"
 
-PART 2: Dead Tests (643.2-643.4) - MUST complete before live tests
-1. Continuity of Protective Conductors (643.2.1) - R1+R2 method
-2. Continuity of Ring Final Circuits (643.2.2) - if applicable
-3. Insulation Resistance (643.3) - 500V DC for 230V circuits
-4. Polarity (643.4) - verify correct connections
+4. EXPECTED RESULT (all 6 fields required)
+   Must include: calculated value WITH calculation method, measured value (realistic), maximum permitted WITH regulation reference, PASS/FAIL/INVESTIGATE result, margin of safety %, tolerance range
 
-PART 3: Live Tests (after energisation - circuit must be live)
-5. Earth Fault Loop Impedance Zs (643.7.1) - no-trip mode if RCD present
-6. RCD Testing (643.10) - ×0.5, ×1, ×5 tests with trip times
-7. Functional Testing (643.11) - verify operation of controls
+   Example:
+   {
+     "calculated": "0.88Ω (45m × 19.5mΩ/m for 16mm² Line + 45m × 19.5mΩ/m for 16mm² CPC = 1.755Ω total ÷ 2 = 0.88Ω)",
+     "measured": "0.85Ω",
+     "maximumPermitted": "1.15Ω per BS 7671 Table 1A (10% tolerance on calculated value)",
+     "result": "PASS",
+     "marginOfSafety": "26% below maximum (0.30Ω margin)",
+     "tolerance": "Acceptable range: 0.79Ω - 0.97Ω (±10% of calculated)"
+   }
 
-INSTRUMENT REQUIREMENTS:
-- Multifunction tester (MFT) calibrated within last 12 months
-- Accuracy class ±2% or better
-- GS38 approved test leads and probes
-- Voltage proving device for isolation verification
+5. TROUBLESHOOTING (minimum 3 detailed scenarios, each 50+ characters)
+   ❌ BAD: "Check connections if high"
+   ✅ GOOD:
+   "• HIGH READING (>1.0Ω but <2.0Ω): 90% of the time this is a loose termination. At CU, remove Line and CPC conductors, inspect for strand damage, re-terminate with 2.5Nm torque. At far end, check link wire isn't just resting on terminals - must be firmly screwed down."
+   "• VERY HIGH READING (>5.0Ω): Indicates open circuit or severe damage. Disconnect link wire and test Line-to-Line continuity separately (should be <0.05Ω). If that's fine, test CPC separately. Likely causes: damaged CPC in wall, disconnected earth at accessory, or wrong cable identified."
+   "• UNSTABLE READING (bouncing between values): Poor test lead contact. Clean probe tips, ensure firm grip on terminals. Check test lead continuity by shorting together (should be stable ≤0.05Ω). If leads are fine, suspect intermittent connection in circuit - check for loose terminals at junction boxes."
+
+6. COMMON MISTAKES (minimum 2 realistic apprentice errors)
+   Example:
+   "• Forgetting to zero test leads: Adds 0.3-0.5Ω to every reading, making compliant circuits appear to fail
+    • Testing with circuit still live: Can damage MFT and give false readings - always isolate AND test for dead first
+    • Not linking L-CPC at far end: Results in infinite resistance reading, wasting time troubleshooting a non-existent fault"
+
+7. PRO TIPS (minimum 2 time-saving tricks)
+   Example:
+   "• Always test insulation resistance BEFORE polarity - if there's a fault to earth, polarity test can be misleading and waste 20 minutes
+    • Use a dedicated link wire (6" of 2.5mm² with ferrules) for far-end connections - much faster than stripping new wire every time
+    • If R1+R2 reads exactly double your expected value, you've accidentally measured the ring - check you linked L-CPC, not L-N"
+
+8. TEST DURATION (realistic timing)
+   Example: "Typical duration: 5-8 minutes (including setup, testing at 3 points, and recording results)"
+
+🔴 CRITICAL: If RAG data provides GN3 procedural steps, YOU MUST incorporate them verbatim into your 'procedure' array. Do not summarise or paraphrase GN3 procedures.
 
 ${contextSection}
 
@@ -421,20 +433,70 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
                   },
                   deadTests: {
                     type: 'array',
+                    minItems: 3,
                     items: {
                       type: 'object',
                       properties: {
-                        testName: { type: 'string' },
-                        regulation: { type: 'string' },
-                        testSequence: { type: 'number' },
-                        instrumentSetup: { type: 'string' },
-                        leadPlacement: { type: 'string' },
-                        procedure: { type: 'array', items: { type: 'string' } },
-                        expectedResult: { type: 'object' },
-                        troubleshooting: { type: 'array', items: { type: 'string' } },
-                        safetyNotes: { type: 'array', items: { type: 'string' } }
+                        testName: { type: 'string', minLength: 10 },
+                        regulation: { type: 'string', pattern: '^BS 7671.*643\\.[0-9]' },
+                        testSequence: { type: 'number', minimum: 1, maximum: 10 },
+                        instrumentSetup: { 
+                          type: 'string', 
+                          minLength: 100,
+                          description: 'DETAILED instrument setup: Model, mode setting, button sequence, zeroing procedure, range selection'
+                        },
+                        leadPlacement: { 
+                          type: 'string', 
+                          minLength: 80,
+                          description: 'EXACT lead positions: Terminal numbers, color coding, CU position, far-end connection method'
+                        },
+                        procedure: { 
+                          type: 'array', 
+                          items: { type: 'string', minLength: 30 },
+                          minItems: 4,
+                          description: 'Step-by-step procedure with timings, hold durations, and reading stabilisation'
+                        },
+                        expectedResult: { 
+                          type: 'object',
+                          required: ['calculated', 'measured', 'maximumPermitted', 'result'],
+                          properties: {
+                            calculated: { type: 'string', minLength: 15 },
+                            measured: { type: 'string', minLength: 10 },
+                            maximumPermitted: { type: 'string', minLength: 15 },
+                            result: { type: 'string', enum: ['PASS', 'FAIL', 'INVESTIGATE'] },
+                            marginOfSafety: { type: 'string' },
+                            tolerance: { type: 'string' }
+                          }
+                        },
+                        troubleshooting: { 
+                          type: 'array', 
+                          items: { type: 'string', minLength: 50 },
+                          minItems: 3,
+                          description: 'Real-world failure scenarios with diagnostic steps and fixes'
+                        },
+                        safetyNotes: { 
+                          type: 'array', 
+                          items: { type: 'string' },
+                          minItems: 2
+                        },
+                        commonMistakes: {
+                          type: 'array',
+                          items: { type: 'string', minLength: 40 },
+                          minItems: 2,
+                          description: 'Common apprentice errors and how to avoid them'
+                        },
+                        proTips: {
+                          type: 'array',
+                          items: { type: 'string', minLength: 30 },
+                          minItems: 2,
+                          description: 'Trade wisdom from 30 years experience'
+                        },
+                        testDuration: {
+                          type: 'string',
+                          description: 'Typical time to complete this test (e.g., "5-8 minutes")'
+                        }
                       },
-                      required: ['testName', 'regulation', 'procedure', 'expectedResult']
+                      required: ['testName', 'regulation', 'instrumentSetup', 'leadPlacement', 'procedure', 'expectedResult', 'troubleshooting', 'safetyNotes']
                     }
                   },
                   liveTests: {
@@ -581,7 +643,12 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
           contextSources,
           receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none',
           ragTimeMs: ragStart ? Date.now() - ragStart : null,
-          totalTimeMs: totalTime
+          totalTimeMs: totalTime,
+          ragQualityMetrics: {
+            gn3ProceduresFound: practicalWorkDocs.length,
+            regulationsFound: regulations.length,
+            totalSources: practicalWorkDocs.length + regulations.length
+          }
         }
       }),
       { 
