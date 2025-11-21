@@ -185,7 +185,7 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
                   <p className="text-base text-white/80 mb-4 text-left">{diagnosis.faultSummary.reportedSymptom}</p>
                   
                   <h4 className="text-sm font-semibold text-white/70 mb-2">Likely Root Causes</h4>
-                  <ol className="space-y-2">
+                  <ol className="space-y-2 text-left">
                     {diagnosis.faultSummary.likelyRootCauses.map((cause, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-sm text-white/80">
                         <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-500/50 flex items-center justify-center text-xs font-semibold text-blue-300">
