@@ -468,19 +468,73 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
                     items: {
                       type: 'object',
                       properties: {
-                        testName: { type: 'string' },
-                        regulation: { type: 'string' },
-                        testSequence: { type: 'number' },
+                        testName: { type: 'string', minLength: 10 },
+                        regulation: { type: 'string', pattern: '^BS 7671.*643\\.[0-9]' },
+                        testSequence: { type: 'number', minimum: 1, maximum: 10 },
                         prerequisite: { type: 'string' },
-                        instrumentSetup: { type: 'string' },
-                        leadPlacement: { type: 'string' },
-                        calculation: { type: 'object' },
-                        procedure: { type: 'array', items: { type: 'string' } },
-                        expectedResult: { type: 'object' },
+                        instrumentSetup: { 
+                          type: 'string', 
+                          minLength: 100,
+                          description: 'DETAILED instrument setup: Model, mode setting, button sequence, zeroing procedure, range selection. For RCD tests include no-trip mode settings.'
+                        },
+                        leadPlacement: { 
+                          type: 'string', 
+                          minLength: 80,
+                          description: 'EXACT lead positions: Terminal numbers, color coding, test point location, probe connection method. For Zs tests specify L-N-E connections.'
+                        },
+                        calculation: { 
+                          type: 'object',
+                          description: 'Calculation breakdown for expected result (e.g., Zs = Ze + R1+R2)'
+                        },
+                        procedure: { 
+                          type: 'array', 
+                          items: { type: 'string', minLength: 30 },
+                          minItems: 4,
+                          description: 'Step-by-step procedure with timings, hold durations, and reading stabilisation'
+                        },
+                        expectedResult: { 
+                          type: 'object',
+                          required: ['calculated', 'measured', 'maximumPermitted', 'result'],
+                          properties: {
+                            calculated: { type: 'string', minLength: 15 },
+                            measured: { type: 'string', minLength: 10 },
+                            maximumPermitted: { type: 'string', minLength: 15 },
+                            result: { type: 'string', enum: ['PASS', 'FAIL', 'INVESTIGATE'] },
+                            marginOfSafety: { type: 'string' },
+                            tolerance: { type: 'string' }
+                          }
+                        },
+                        troubleshooting: { 
+                          type: 'array', 
+                          items: { type: 'string', minLength: 50 },
+                          minItems: 3,
+                          description: 'Real-world failure scenarios with diagnostic steps and fixes. For Zs tests include high reading diagnosis, RCD trip issues, and contact problems.'
+                        },
                         interpretation: { type: 'string' },
-                        safetyNotes: { type: 'array', items: { type: 'string' } }
+                        safetyNotes: { 
+                          type: 'array', 
+                          items: { type: 'string' },
+                          minItems: 2,
+                          description: 'Critical safety warnings for live testing, PPE requirements, and competency requirements'
+                        },
+                        commonMistakes: {
+                          type: 'array',
+                          items: { type: 'string', minLength: 40 },
+                          minItems: 2,
+                          description: 'Common apprentice errors specific to live testing (e.g., forgetting no-trip mode, poor probe contact, testing with RCD energised)'
+                        },
+                        proTips: {
+                          type: 'array',
+                          items: { type: 'string', minLength: 30 },
+                          minItems: 2,
+                          description: 'Trade wisdom from 30 years experience for live testing (e.g., test Zs at multiple points, check voltage first, use test button on RCD)'
+                        },
+                        testDuration: {
+                          type: 'string',
+                          description: 'Typical time to complete this test including energisation and safety setup (e.g., "8-12 minutes")'
+                        }
                       },
-                      required: ['testName', 'regulation', 'procedure', 'expectedResult']
+                      required: ['testName', 'regulation', 'instrumentSetup', 'leadPlacement', 'procedure', 'expectedResult', 'troubleshooting', 'safetyNotes']
                     }
                   }
                 }
