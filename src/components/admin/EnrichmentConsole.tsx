@@ -995,7 +995,7 @@ export default function EnrichmentConsole() {
             disabled={isLoading}
             icon={<RotateCw className="w-4 h-4" />}
           >
-            Recover Stuck
+            Recover & Restart Workers
             {stuckBatches.length > 0 && (
               <Badge variant="destructive" className="ml-1">{stuckBatches.length}</Badge>
             )}

@@ -274,11 +274,11 @@ serve(async (req) => {
     });
   }
   
-      // Action: Recover stuck batches
+      // Action: Recover stuck batches and restart worker pool
   if (action === 'recover') {
-    console.log('🔧 Recovering stuck batches...');
+    console.log('🔧 Recovering stuck batches and restarting worker pool...');
     
-    const threeMinutesAgo = new Date(Date.now() - 4.5 * 60 * 1000).toISOString(); // ✅ Increased to 4.5 minutes
+    const threeMinutesAgo = new Date(Date.now() - 4.5 * 60 * 1000).toISOString(); // ✅ 4.5 minute threshold
     
     const { data: stuckBatches } = await supabase
       .from('batch_progress')
@@ -301,31 +301,58 @@ serve(async (req) => {
         recovered++;
       }
       
-      // Reset jobs to pending if needed
+      // Reset jobs to pending
       for (const jobId of affectedJobIds) {
         await supabase.from('batch_jobs').update({
           status: 'pending'
         }).eq('id', jobId);
-        
-        // Kick off processing (non-blocking)
-        const { data: job } = await supabase.from('batch_jobs').select('*').eq('id', jobId).single();
-        if (job) {
-          const task = ENRICHMENT_TASKS.find(t => t.functionName === job.job_type.replace('enrich_', 'enrich-'));
-          if (task) {
-            processNextBatch(supabase, jobId, task).catch(err => 
-              console.error(`Failed to process after recovery for ${jobId}:`, err)
-            );
-          }
+      }
+    }
+    
+    const recoveredJobIds = Array.from(affectedJobIds);
+    console.log(`✅ Recovered ${recovered} stuck batches across ${recoveredJobIds.length} jobs`);
+    
+    // Build jobTaskMap to restart continuous worker pool
+    const jobTaskMap = new Map<string, EnrichmentTask>();
+    
+    for (const jobId of recoveredJobIds) {
+      const { data: job } = await supabase.from('batch_jobs').select('job_type').eq('id', jobId).single();
+      if (job) {
+        const task = ENRICHMENT_TASKS.find(t => `enrich_${t.sourceTable}` === job.job_type || t.functionName === job.job_type.replace('enrich_', 'enrich-'));
+        if (task) {
+          jobTaskMap.set(jobId, task);
         }
       }
     }
     
-    console.log(`✅ Recovered ${recovered} stuck batches across ${affectedJobIds.size} jobs`);
+    // Restart continuous worker pool (including 200 workers for Design Knowledge)
+    if (recoveredJobIds.length > 0) {
+      console.log(`🚀 Recover: Restarting continuous worker pool for ${recoveredJobIds.length} jobs`);
+      
+      // @ts-ignore - EdgeRuntime is available in Deno edge functions
+      if (typeof EdgeRuntime !== 'undefined') {
+        // @ts-ignore
+        EdgeRuntime.waitUntil(
+          continuousProcessor(supabase, recoveredJobIds, jobTaskMap).catch(err => {
+            console.error('❌ Continuous processor failed after recovery:', err);
+          })
+        );
+        console.log('✅ Long-running worker pool initiated with EdgeRuntime.waitUntil()');
+      } else {
+        console.warn('⚠️ EdgeRuntime not available, falling back to immediate processing');
+        // Fallback for local testing
+        recoveredJobIds.forEach(jobId => {
+          const task = jobTaskMap.get(jobId);
+          if (task) processNextBatch(supabase, jobId, task);
+        });
+      }
+    }
     
     return new Response(JSON.stringify({ 
       success: true, 
       recovered_batches: recovered,
-      affected_jobs: affectedJobIds.size
+      affected_jobs: recoveredJobIds.length,
+      worker_pool_restarted: recoveredJobIds.length > 0
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     });
@@ -1337,65 +1364,6 @@ serve(async (req) => {
       });
     }
 
-    if (action === 'recover') {
-      console.log('🔄 Recovering stuck batches...');
-      
-      // Find batches stuck in processing for more than 10 minutes
-      const { data: stuckBatches } = await supabase
-        .from('batch_progress')
-        .select('*, batch_jobs!inner(job_type)')
-        .eq('status', 'processing')
-        .lt('started_at', new Date(Date.now() - 10 * 60 * 1000).toISOString());
-      
-      if (!stuckBatches || stuckBatches.length === 0) {
-        return new Response(JSON.stringify({ 
-          success: true,
-          message: 'No stuck batches found',
-          recovered: 0
-        }), {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
-      }
-
-      // Reset stuck batches to pending
-      const batchIds = stuckBatches.map(b => b.id);
-      await supabase
-        .from('batch_progress')
-        .update({ 
-          status: 'pending',
-          started_at: null,
-          error_message: null
-        })
-        .in('id', batchIds);
-      
-      // Get unique job IDs and restart them
-      const jobIds = [...new Set(stuckBatches.map(b => b.job_id))];
-      for (const jobId of jobIds) {
-        await supabase
-          .from('batch_jobs')
-          .update({ status: 'pending' })
-          .eq('id', jobId);
-        
-        const task = ENRICHMENT_TASKS.find(t => 
-          stuckBatches.find(b => b.job_id === jobId)?.batch_jobs?.job_type === `enrich_${t.sourceTable}`
-        );
-        
-        if (task) {
-          processNextBatch(supabase, jobId, task);
-        }
-      }
-
-      console.log(`✅ Recovered ${stuckBatches.length} stuck batches across ${jobIds.length} jobs`);
-      
-      return new Response(JSON.stringify({ 
-        success: true,
-        message: `Recovered ${stuckBatches.length} stuck batches`,
-        recovered: stuckBatches.length,
-        jobsRestarted: jobIds.length
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      });
-    }
 
     if (action === 'restart' && phase === 1) {
       console.log('🔄 Restarting Phase 1...');
