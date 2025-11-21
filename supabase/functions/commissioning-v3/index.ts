@@ -1,5 +1,5 @@
 // COMMISSIONING V3 - GN3 Practical Testing Guru
-// Deployed: 2025-10-11 21:30 UTC
+// Deployed: 2025-11-21 - Updated OpenAI API key configuration
 import { serve } from '../_shared/deps.ts';
 import {
   corsHeaders,
