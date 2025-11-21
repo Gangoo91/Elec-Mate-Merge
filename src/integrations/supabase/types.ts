@@ -1743,6 +1743,8 @@ export type Database = {
         Row: {
           acceptance_criteria: Json | null
           applies_to: string[]
+          archived_at: string | null
+          archived_by: string | null
           bs7671_regulations: string[] | null
           cable_sizes: string[] | null
           calculation_steps: string[] | null
@@ -1760,6 +1762,7 @@ export type Database = {
           formulas: string[] | null
           guidance_note_refs: string[] | null
           id: string
+          is_archived: boolean | null
           keywords: string[]
           load_types: string[] | null
           location_types: string[] | null
@@ -1780,6 +1783,8 @@ export type Database = {
         Insert: {
           acceptance_criteria?: Json | null
           applies_to?: string[]
+          archived_at?: string | null
+          archived_by?: string | null
           bs7671_regulations?: string[] | null
           cable_sizes?: string[] | null
           calculation_steps?: string[] | null
@@ -1797,6 +1802,7 @@ export type Database = {
           formulas?: string[] | null
           guidance_note_refs?: string[] | null
           id?: string
+          is_archived?: boolean | null
           keywords: string[]
           load_types?: string[] | null
           location_types?: string[] | null
@@ -1817,6 +1823,8 @@ export type Database = {
         Update: {
           acceptance_criteria?: Json | null
           applies_to?: string[]
+          archived_at?: string | null
+          archived_by?: string | null
           bs7671_regulations?: string[] | null
           cable_sizes?: string[] | null
           calculation_steps?: string[] | null
@@ -1834,6 +1842,7 @@ export type Database = {
           formulas?: string[] | null
           guidance_note_refs?: string[] | null
           id?: string
+          is_archived?: boolean | null
           keywords?: string[]
           load_types?: string[] | null
           location_types?: string[] | null
