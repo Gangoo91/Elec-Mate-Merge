@@ -263,31 +263,6 @@ async function searchRegulationsIntelligence(supabase: any, keywords: string[], 
   }));
 }
 
-/**
- * Helper: Search Practical Work Intelligence (keyword)
- */
-async function searchPracticalWorkIntelligenceDirect(supabase: any, params: any) {
-  const { keywords } = params;
-  const queryText = keywords.join(' ');
-  const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
-    query_text: queryText,
-    match_count: 10,  // Consistent with AI RAMS pattern
-    filter_trade: null // All trades
-  });
-  
-  if (error) {
-    console.error('Practical work intelligence search error:', error);
-    return [];
-  }
-  
-  return (data || []).map((row: any) => ({
-    content: row.primary_topic || row.content || '',
-    keywords: row.keywords,
-    equipment_category: row.equipment_category,
-    tools_required: row.tools_required,
-    bs7671_regulations: row.bs7671_regulations
-  }));
-}
 
 /**
  * Build RAG searches for circuit design
@@ -549,7 +524,7 @@ export async function buildRAGSearches(
   }
   
   // Fallback: if ALL searches timed out, provide essential regulations
-  const hasAnyResults = designDocs.length + regulations.length + practicalWork.length > 0;
+  const hasAnyResults = designDocs.length + regulations.length > 0;
   
   if (!hasAnyResults) {
     logger.warn('⚠️ All RAG searches timed out, using essential fallback regulations');
@@ -593,7 +568,6 @@ export async function buildRAGSearches(
   logger.info('🎯 RAG Complete (3-5s optimization)', {
     designDocs: designDocs.length,
     regulations: regulations.length,
-    practicalWork: practicalWork.length,
     calculations: calculations.length,
     ragTime: `${ragTime}ms`,
     totalTime: `${totalTime}ms`
@@ -602,13 +576,13 @@ export async function buildRAGSearches(
   const ragResults = {
     regulations,
     designDocs,
-    practicalWorkDocs: practicalWork,
+    practicalWorkDocs: [], // Install-method-agent handles this now
     healthSafetyDocs: [],
     installationDocs: [],
     maintenanceDocs: [],
     structuredCalculations: calculations,
     searchMethod: 'direct-search',
-    totalDocs: designDocs.length + regulations.length + practicalWork.length + calculations.length,
+    totalDocs: designDocs.length + regulations.length + calculations.length,
     assumptions, // Thread assumptions through
     suggestions // Thread suggestions through
   };
