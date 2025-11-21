@@ -7,7 +7,7 @@ import ReactMarkdown from 'react-markdown';
 
 interface CommissioningChatProps {
   response: string;
-  queryType: 'troubleshooting' | 'question';
+  queryType: 'troubleshooting' | 'question' | 'photo-analysis';
   citations: any[];
   onStartOver: () => void;
   onAskFollowUp: (query: string) => void;

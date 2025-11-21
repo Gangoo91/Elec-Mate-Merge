@@ -18,10 +18,11 @@ const CommissioningInterface = () => {
   const [responseMode, setResponseMode] = useState<'procedure' | 'conversational' | 'fault-diagnosis' | null>(null);
   const [conversationalResponse, setConversationalResponse] = useState<{
     text: string;
-    queryType: 'troubleshooting' | 'question';
+    queryType: 'troubleshooting' | 'question' | 'photo-analysis';
     citations: any[];
   } | null>(null);
   const [faultDiagnosis, setFaultDiagnosis] = useState<FaultDiagnosis | null>(null);
+  const [eicrDefects, setEicrDefects] = useState<any[]>([]);
   const [projectInfo, setProjectInfo] = useState({
     projectName: "",
     location: "",
@@ -69,10 +70,17 @@ const CommissioningInterface = () => {
     
     if (response?.success) {
       const typedResponse = response as CommissioningResponse;
-      if (typedResponse.mode === 'fault-diagnosis') {
+      if (typedResponse.mode === 'eicr-photo-analysis') {
+        // EICR Photo Analysis response
+        setResponseMode('fault-diagnosis'); // Reuse fault-diagnosis view
+        setEicrDefects(typedResponse.eicrDefects || []);
+        setFaultDiagnosis(null); // Clear standard diagnosis
+        setShowCelebration(false);
+      } else if (typedResponse.mode === 'fault-diagnosis') {
         // Fault diagnosis response
         setResponseMode('fault-diagnosis');
         setFaultDiagnosis(typedResponse.structuredDiagnosis || null);
+        setEicrDefects([]); // Clear EICR defects
         setShowCelebration(false);
       } else if (typedResponse.mode === 'conversational') {
         // Conversational response
@@ -104,6 +112,7 @@ const CommissioningInterface = () => {
     setResponseMode(null);
     setConversationalResponse(null);
     setFaultDiagnosis(null);
+    setEicrDefects([]);
   };
 
   const handleViewResults = () => {
@@ -148,11 +157,12 @@ const CommissioningInterface = () => {
     );
   }
 
-  // FAULT DIAGNOSIS MODE: Show structured fault troubleshooting
-  if (responseMode === 'fault-diagnosis' && faultDiagnosis) {
+  // FAULT DIAGNOSIS MODE: Show structured fault troubleshooting or EICR defects
+  if (responseMode === 'fault-diagnosis' && (faultDiagnosis || eicrDefects.length > 0)) {
     return (
       <FaultDiagnosisView
         diagnosis={faultDiagnosis}
+        eicrDefects={eicrDefects}
         onStartOver={handleStartOver}
       />
     );

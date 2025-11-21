@@ -113,14 +113,15 @@ export interface FaultDiagnosis {
 
 export interface CommissioningResponse {
   success: boolean;
-  mode?: 'procedure' | 'conversational' | 'fault-diagnosis';
-  queryType?: 'troubleshooting' | 'question';
+  mode?: 'procedure' | 'conversational' | 'fault-diagnosis' | 'eicr-photo-analysis';
+  queryType?: 'troubleshooting' | 'question' | 'photo-analysis';
   response?: string;
   structuredData?: {
     testingProcedure?: TestingProcedure;
     certification?: CertificationRequirements;
   };
   structuredDiagnosis?: FaultDiagnosis;
+  eicrDefects?: any[]; // EICR photo analysis defects
   citations?: any[];
   enrichment?: any;
   rendering?: any;
@@ -129,7 +130,7 @@ export interface CommissioningResponse {
     classification?: {
       mode: string;
       confidence: number;
-      reasoning: string;
+      reasoning?: string;
     };
     ragQualityMetrics?: {
       gn3ProceduresFound: number;
