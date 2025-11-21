@@ -39,6 +39,7 @@ const CommissioningInterface = () => {
     location: string;
     clientName: string;
     installationDate: string;
+    imageUrl?: string;
   }) => {
     setGenerationStartTime(Date.now());
     setShowResults(true);
@@ -62,7 +63,8 @@ const CommissioningInterface = () => {
       projectName: data.projectName,
       location: data.location,
       clientName: data.clientName,
-      installationDate: data.installationDate
+      installationDate: data.installationDate,
+      imageUrl: data.imageUrl
     });
     
     if (response?.success) {

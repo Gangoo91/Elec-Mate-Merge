@@ -13,11 +13,13 @@ import {
   FileText, 
   Home, 
   Factory,
-  ChevronDown
+  ChevronDown,
+  Camera
 } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { toast } from "sonner";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
+import PhotoUploadButton from "./PhotoUploadButton";
 
 interface ExampleScenario {
   title: string;
@@ -66,6 +68,7 @@ interface CommissioningInputProps {
     location: string;
     clientName: string;
     installationDate: string;
+    imageUrl?: string;
   }) => void;
   isProcessing: boolean;
 }
@@ -77,6 +80,15 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
   const [location, setLocation] = useState("");
   const [clientName, setClientName] = useState("");
   const [installationDate, setInstallationDate] = useState("");
+  const [imageUrl, setImageUrl] = useState<string>("");
+
+  const handlePhotoUploaded = (url: string) => {
+    setImageUrl(url);
+    if (!prompt.trim()) {
+      setPrompt("Analyse this installation photo for safety issues, compliance problems, and testing requirements");
+    }
+    toast.success("Photo ready for analysis");
+  };
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
     if (contextData) {
@@ -119,7 +131,8 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
       projectName,
       location,
       clientName,
-      installationDate
+      installationDate,
+      imageUrl
     });
   };
 
@@ -149,6 +162,28 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
         <div className="text-xs text-muted-foreground text-right mt-2">
           {prompt.length}/500
         </div>
+      </Card>
+
+      {/* 1.5. PHOTO UPLOAD (NEW) */}
+      <Card className="p-3 sm:p-6 bg-gradient-to-br from-purple-500/5 via-background to-background border-purple-500/20">
+        <div className="flex items-start gap-3 mb-4">
+          <div className="bg-gradient-to-br from-purple-400 to-purple-600 p-3 rounded-full">
+            <Camera className="h-6 w-6 text-elec-dark" />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-xl font-semibold">📸 Photo Analysis</h3>
+            <p className="text-sm text-muted-foreground">Upload installation photo for AI visual inspection</p>
+          </div>
+        </div>
+        <PhotoUploadButton 
+          onPhotoUploaded={handlePhotoUploaded}
+          disabled={isProcessing}
+        />
+        {imageUrl && (
+          <div className="mt-3 p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
+            <p className="text-xs text-purple-400 font-medium">✓ Photo uploaded - AI will analyse for safety issues and compliance</p>
+          </div>
+        )}
       </Card>
 
       {/* 2. INSTALLATION TYPE SELECTOR */}

@@ -39,7 +39,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, circuitType, voltage, messages, previousAgentOutputs, sharedRegulations, currentDesign, projectDetails } = body;
+    const { query, circuitType, voltage, messages, previousAgentOutputs, sharedRegulations, currentDesign, projectDetails, imageUrl } = body;
 
     // Track context sources
     const contextSources = {
@@ -111,9 +111,14 @@ serve(async (req) => {
     logger.debug('Starting commissioning RAG search');
     const ragStart = Date.now();
     
+    // Enhanced query for photo analysis
+    const enhancedQuery = imageUrl 
+      ? `${query} visual inspection photo analysis electrical installation safety compliance`
+      : `${query} testing commissioning GN3 Chapter 64 inspection procedures`;
+    
     const { retrieveCommissioningKnowledge } = await import('../_shared/rag-commissioning.ts');
     const ragResults = await retrieveCommissioningKnowledge(
-      `${query} testing commissioning GN3 Chapter 64 inspection procedures`,
+      enhancedQuery,
       OPENAI_API_KEY,
       supabase,
       logger,
@@ -240,6 +245,62 @@ serve(async (req) => {
       ragContext: string,
       conversationContext: string
     ): string {
+      const threePhaseGuidance = `
+**3-PHASE INSTALLATIONS (400V/415V BS 7671:2018+A3:2024)**:
+
+SAFE ISOLATION (Regulation 537.2):
+- Prove dead on ALL THREE PHASES individually
+- Test phase-to-earth AND phase-to-phase (6 tests total: L1-N, L2-N, L3-N, L1-L2, L2-L3, L3-L1)
+- Use approved voltage indicator conforming to GS38
+- Lock off isolator, apply warning labels
+- Verify isolation at BOTH ends if long cable run
+
+TESTING PROCEDURES:
+1. Phase Sequence (correct rotation L1→L2→L3):
+   - Use phase rotation tester
+   - Motors: clockwise rotation = correct sequence
+   - Incorrect = swap ANY TWO phases only (never swap all three)
+   - Critical for: Motors, 3-phase heating, lifts, pumps
+
+2. Voltage Balance (max 2% imbalance per BS 7671):
+   - Measure L1-N, L2-N, L3-N with no load
+   - Expect ~230V each phase
+   - Calculate: (Max voltage - Min voltage) / Average voltage × 100%
+   - Example: 232V, 228V, 230V → (232-228)/230×100 = 1.74% ✅ PASS
+
+3. Insulation Resistance (500V DC test):
+   - Test EACH phase to earth separately (≥1MΩ minimum)
+   - Test phase-to-phase: L1-L2, L2-L3, L3-L1 (≥1MΩ each)
+   - Disconnect neutral link at distribution board for accurate readings
+   - All loads OFF, all switches ON (test entire circuit)
+
+4. Earth Loop Impedance (Zs):
+   - Test at EACH phase separately
+   - Use highest reading to verify compliance
+   - Compare against BS 7671 Table 41.3 maximum Zs for protective device
+   - 3-phase circuits often use 4-pole RCBOs: check all poles trip together
+
+5. RCD Testing (if fitted):
+   - Test RCD on EACH phase separately
+   - All three tests must pass (<300ms at 1×IΔn, <40ms at 5×IΔn)
+   - Verify 4-pole RCD disconnects all phases simultaneously
+
+FAULT FINDING:
+- Phase loss → Check upstream isolator, check all three fuses, inspect connections at each phase
+- Unbalanced load → Redistribute single-phase loads across three phases evenly
+- Motor won't start → Verify phase sequence (wrong sequence = reverse rotation or no start)
+- Motor hums but won't turn → Likely single-phase supply (one phase lost)
+- RCD nuisance tripping → Test IR on each phase separately to identify faulty phase
+- High Zs on one phase → Check terminations, neutral-earth fault, or damaged conductor
+
+COMMON 3-PHASE MISTAKES (from 30 years experience):
+- Testing phase-to-earth IR only (forgetting phase-to-phase tests)
+- Wrong phase sequence causing motor damage
+- Not testing Zs on all three phases (highest determines compliance)
+- Forgetting to disconnect neutral for accurate IR readings
+- Not verifying 4-pole devices trip all poles together
+`;
+
       const basePersona = `You are a GN3 PRACTICAL TESTING GURU with 30 years field experience.
 
 Write all responses in UK English (British spelling and terminology).
@@ -250,6 +311,8 @@ You're having a conversation with an electrician who needs quick, practical advi
 - Give actionable steps, not just theory
 - Mention common pitfalls from your 30 years experience
 - Keep responses focused: 200-400 words max
+
+${threePhaseGuidance}
 
 AVAILABLE KNOWLEDGE:
 ${ragContext}
@@ -1062,19 +1125,54 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
         }
       };
       
+      // Build messages with vision support
+      const troubleshootingMessages: any[] = [
+        { role: 'system', content: conversationalPrompt }
+      ];
+
+      if (messages && messages.length > 0) {
+        troubleshootingMessages.push(...messages.slice(-6));
+      }
+
+      // Build user message with photo if provided
+      let userMessageContent: any;
+      if (imageUrl) {
+        logger.info('🖼️ Photo analysis mode (structured diagnosis) - using vision model');
+        userMessageContent = [
+          {
+            type: "text",
+            text: `${effectiveQuery}
+
+📸 PHOTO ANALYSIS - STRUCTURED FAULT DIAGNOSIS:
+Analyse this installation photo and provide structured fault diagnosis with RAG status codes.`
+          },
+          {
+            type: "image_url",
+            image_url: {
+              url: imageUrl
+            }
+          }
+        ];
+      } else {
+        userMessageContent = effectiveQuery;
+      }
+
+      troubleshootingMessages.push({
+        role: 'user',
+        content: userMessageContent
+      });
+
+      const modelToUse = imageUrl ? 'google/gemini-2.5-flash' : 'gpt-5-mini';
+      logger.info(`🤖 Using model: ${modelToUse}${imageUrl ? ' (vision structured diagnosis)' : ''}`);
+
       const aiResponse = await callOpenAI(
-        {
-          model: 'gpt-5-mini-2025-08-07',
-          messages: [
-            { role: 'system', content: conversationalPrompt },
-            { role: 'user', content: effectiveQuery }
-          ],
-          max_completion_tokens: 4000,
-          tools: [faultDiagnosisTool],
-          tool_choice: { type: 'function', function: { name: 'provide_fault_diagnosis' } }
-        },
-        OPENAI_API_KEY!,
-        180000
+        troubleshootingMessages,
+        modelToUse,
+        imageUrl ? LOVABLE_API_KEY! : OPENAI_API_KEY!,
+        logger,
+        120000,
+        [faultDiagnosisTool],
+        { type: 'function', function: { name: 'provide_fault_diagnosis' } }
       );
       
       const toolCall = aiResponse.toolCalls?.[0];
@@ -1127,19 +1225,59 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
       }
     }
     
-    // Fallback to conversational text response
+    // Fallback: QUESTION MODE - conversational text response
+    const conversationalPrompt = buildConversationalPrompt(
+      'question',
+      testContext,
+      contextSection
+    );
+
+    // Build messages with vision support
+    const questionMessages: any[] = [
+      { role: 'system', content: conversationalPrompt }
+    ];
+
+    // Add conversation history
+    if (messages && messages.length > 0) {
+      questionMessages.push(...messages.slice(-6));
+    }
+
+    // Build user message with photo if provided
+    let userMessageContent: any;
+    if (imageUrl) {
+      logger.info('🖼️ Photo analysis mode (question) - using vision model');
+      userMessageContent = [
+        {
+          type: "text",
+          text: `${effectiveQuery}
+
+📸 Analyse this installation photo and answer the question.`
+        },
+        {
+          type: "image_url",
+          image_url: {
+            url: imageUrl
+          }
+        }
+      ];
+    } else {
+      userMessageContent = effectiveQuery;
+    }
+
+    questionMessages.push({
+      role: 'user',
+      content: userMessageContent
+    });
+
+    const modelToUse = imageUrl ? 'google/gemini-2.5-flash' : 'gpt-5-mini';
+    logger.info(`🤖 Using model: ${modelToUse}${imageUrl ? ' (vision Q&A)' : ''}`);
+
     const aiResponse = await callOpenAI(
-      {
-        model: 'gpt-5-mini-2025-08-07',
-        messages: [
-          { role: 'system', content: conversationalPrompt },
-          { role: 'user', content: effectiveQuery }
-        ],
-        temperature: 0.7,
-        max_completion_tokens: 2000
-      },
-      OPENAI_API_KEY!,
-      180000
+      questionMessages,
+      modelToUse,
+      imageUrl ? LOVABLE_API_KEY! : OPENAI_API_KEY!,
+      logger,
+      120000
     );
     
     const conversationalResponse = aiResponse.content || 'Unable to generate response';
