@@ -36,24 +36,75 @@ export async function generateEmbedding(text: string): Promise<number[]> {
 }
 
 /**
- * Search circuit regulations (BS 7671, IET Wiring Regulations)
- * PHASE 4: Added progress callbacks to match AI RAMS pattern
+ * Search BS7671 regulations using PURE VECTOR search (PHASE 3)
+ * Replaces hybrid keyword+vector for better semantic matching
  */
-export async function searchCircuitRegulations(
+export async function searchBS7671Vector(
   jobInputs: any,
   onProgress?: (msg: string) => void
 ): Promise<any[]> {
   const supabase = createClient();
   
-  // Build query from circuit parameters
   const query = buildCircuitQuery(jobInputs);
   
-  if (onProgress) onProgress('Searching regulations database...');
+  if (onProgress) onProgress('Generating embedding for BS7671 vector search...');
   
-  // Search regulations intelligence (same as RAMS uses)
+  try {
+    // Generate embedding from query
+    const queryEmbedding = await generateEmbedding(query);
+    
+    if (onProgress) onProgress('Searching BS7671 regulations (vector)...');
+    
+    // Pure vector search on bs7671_embeddings
+    const { data, error } = await supabase.rpc('match_bs7671_regulations', {
+      query_embedding: queryEmbedding,
+      match_threshold: 0.7,
+      match_count: 15  // Increased from 10 to 15
+    });
+    
+    if (error) {
+      console.error('BS7671 vector search error:', error);
+      return [];
+    }
+    
+    if (onProgress) onProgress(`Found ${data?.length || 0} BS7671 regulations`);
+    
+    // Format results to match expected structure
+    return (data || []).map((row: any) => ({
+      regulation_number: row.regulation_number,
+      content: row.content,
+      section: row.section,
+      similarity: row.similarity || 0.8,
+      metadata: row.metadata
+    }));
+  } catch (error) {
+    console.error('BS7671 vector search failed:', error);
+    return [];
+  }
+}
+
+/**
+ * Search circuit regulations - Router function for vector or hybrid mode
+ * PHASE 3: Now defaults to vector search, supports 'hybrid' for backward compat
+ */
+export async function searchCircuitRegulations(
+  jobInputs: any,
+  searchMode: 'vector' | 'hybrid' = 'vector',
+  onProgress?: (msg: string) => void
+): Promise<any[]> {
+  if (searchMode === 'vector') {
+    return searchBS7671Vector(jobInputs, onProgress);
+  }
+  
+  // Legacy hybrid mode (kept for backward compatibility)
+  const supabase = createClient();
+  const query = buildCircuitQuery(jobInputs);
+  
+  if (onProgress) onProgress('Searching regulations database (hybrid)...');
+  
   const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
     query_text: query,
-    match_count: 10  // Match RAMS: reduced from 15 to 10 for consistency
+    match_count: 10
   });
   
   if (error) {
