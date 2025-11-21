@@ -174,16 +174,53 @@ export async function retrieveCommissioningKnowledge(
   const embedding = await generateEmbeddingWithRetry(expandedQuery, openAiKey);
 
   try {
-    // Use BS7671 hybrid search (primary source for testing/inspection)
-    const { data, error } = await supabase.rpc('search_bs7671_hybrid', {
+    // 1. Search GN3 Inspection & Testing Knowledge (PRIMARY SOURCE for practical procedures)
+    logger.debug('Searching GN3 inspection_testing_knowledge...');
+    const { data: gn3Data, error: gn3Error } = await supabase.rpc('search_inspection_testing_hybrid', {
       query_text: expandedQuery,
       query_embedding: embedding,
-      match_count: 12
+      match_count: 15  // Higher count for GN3 - we want comprehensive procedural details
     });
 
-    if (error) throw error;
+    if (gn3Error) {
+      logger.warn('GN3 search failed, falling back to BS7671', { error: gn3Error.message });
+    }
 
-    let results = data || [];
+    const gn3Results = gn3Data || [];
+    logger.info('GN3 search complete', { 
+      resultsCount: gn3Results.length,
+      source: 'inspection_testing_knowledge'
+    });
+
+    // 2. Search BS7671 Regulations (SECONDARY SOURCE for regulatory context)
+    logger.debug('Searching BS7671 regulations...');
+    const { data: bs7671Data, error: bs7671Error } = await supabase.rpc('search_bs7671_hybrid', {
+      query_text: expandedQuery,
+      query_embedding: embedding,
+      match_count: 8  // Lower count for regulations - just need key compliance points
+    });
+
+    if (bs7671Error) {
+      logger.warn('BS7671 search failed', { error: bs7671Error.message });
+    }
+
+    const bs7671Results = bs7671Data || [];
+    logger.info('BS7671 search complete', { 
+      resultsCount: bs7671Results.length,
+      source: 'bs7671_intelligence'
+    });
+
+    // 3. Merge results with GN3 prioritized (GN3 first, then BS7671)
+    let results = [
+      ...gn3Results.map(r => ({ ...r, source: 'GN3', sourceType: 'practical' })),
+      ...bs7671Results.map(r => ({ ...r, source: 'BS7671', sourceType: 'regulatory' }))
+    ];
+
+    logger.info('Merged RAG results', {
+      total: results.length,
+      gn3Count: gn3Results.length,
+      bs7671Count: bs7671Results.length
+    });
 
     // Cross-encoder reranking
     if (results.length > 0) {
@@ -226,9 +263,17 @@ export async function retrieveCommissioningKnowledge(
         section: r.section || 'Testing',
         content: r.content
       };
+      const baseConfidence = calculateConfidence(asReg, query, { testType });
+      
+      // Boost GN3 practical procedures by 15% (they're gold standard for testing)
+      const confidenceBoost = r.sourceType === 'practical' ? 0.15 : 0;
+      
       return {
         ...r,
-        confidence: calculateConfidence(asReg, query, { testType })
+        confidence: {
+          ...baseConfidence,
+          overall: Math.min(1.0, (baseConfidence.overall || 0.7) + confidenceBoost)
+        }
       };
     });
 
@@ -267,16 +312,20 @@ export function formatCommissioningContext(results: CommissioningResult[]): stri
     return 'No specific testing/inspection guidance found. Use general BS7671 Chapter 64 principles.';
   }
 
-  return `TESTING & INSPECTION GUIDANCE (${results.length} items):\n` +
+  const gn3Count = results.filter(r => r.sourceType === 'practical').length;
+  const bs7671Count = results.filter(r => r.sourceType === 'regulatory').length;
+
+  return `TESTING & INSPECTION GUIDANCE (${results.length} items: ${gn3Count} GN3 practical procedures, ${bs7671Count} BS7671 regulations):\n\n` +
     results
-      .slice(0, 10)
-      .map(r => {
+      .slice(0, 12)  // Increased from 10 to accommodate more GN3 procedures
+      .map((r, idx) => {
+        const sourceTag = r.sourceType === 'practical' ? '[GN3 PROCEDURE]' : '[BS7671 REG]';
         const prefix = r.regulation_number 
-          ? `[${r.regulation_number}]` 
+          ? `${sourceTag} [${r.regulation_number}]` 
           : r.topic 
-            ? `${r.topic}:` 
-            : '';
-        return `${prefix} ${r.content.substring(0, 180)}...`;
+            ? `${sourceTag} ${r.topic}:` 
+            : sourceTag;
+        return `${idx + 1}. ${prefix} ${r.content.substring(0, 200)}...`;
       })
       .join('\n\n');
 }
