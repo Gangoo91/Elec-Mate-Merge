@@ -119,8 +119,8 @@ serve(async (req) => {
 
     // Build GN3-first context from commissioning RAG
     let testContext = '';
-    const gn3ProceduresFound = ragResults.length;
-    const regulationsFound = ragResults.filter(r => r.regulation_number).length;
+    const gn3ProceduresFound = ragResults.filter(r => r.sourceType === 'practical').length;
+    const regulationsFound = ragResults.filter(r => r.sourceType === 'regulatory').length;
 
     if (ragResults.length > 0) {
       testContext = '## GN3 TESTING & INSPECTION GUIDANCE:\n\n';
