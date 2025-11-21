@@ -190,33 +190,34 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
 
         {/* Fault Summary - ALWAYS EXPANDED */}
         {diagnosis && risk && (
-          <Card className="bg-elec-dark/80 border-2 border-blue-500/30 p-6 sm:p-7 shadow-lg">
-            <div className="space-y-5">
-              <div className="flex items-start gap-4">
-                <div className={`flex-shrink-0 p-3 rounded-lg ${risk.color}`}>
-                  <RiskIcon className="h-6 w-6 text-white" />
+          <Card className="bg-elec-dark/80 border-2 border-blue-500/30 p-5 sm:p-7 shadow-lg">
+            <div className="space-y-6">
+              {/* Mobile: Icon on top, centered. Desktop: Icon on left */}
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+                <div className={`flex-shrink-0 p-4 sm:p-3 rounded-xl sm:rounded-lg ${risk.color}`}>
+                  <RiskIcon className="h-10 w-10 sm:h-6 sm:w-6 text-white" />
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-white mb-3 text-left">Reported Symptom</h3>
-                  <p className="text-base text-white mb-5 text-left leading-relaxed">{diagnosis.faultSummary.reportedSymptom}</p>
+                <div className="flex-1 w-full text-center sm:text-left">
+                  <h3 className="text-2xl sm:text-xl font-bold text-white mb-4 sm:mb-3">Reported Symptom</h3>
+                  <p className="text-lg sm:text-base text-white mb-6 sm:mb-5 leading-relaxed">{diagnosis.faultSummary.reportedSymptom}</p>
                   
-                  <h4 className="text-base font-semibold text-white mb-3">Likely Root Causes</h4>
-                  <ol className="space-y-3 text-left">
+                  <h4 className="text-xl sm:text-base font-bold text-white mb-5 sm:mb-3">Likely Root Causes</h4>
+                  <ol className="space-y-4 sm:space-y-3 text-left">
                     {diagnosis.faultSummary.likelyRootCauses.map((cause, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-base text-white leading-relaxed">
-                        <span className="flex-shrink-0 w-7 h-7 rounded-full bg-blue-500/20 border-2 border-blue-500/50 flex items-center justify-center text-sm font-bold text-blue-300">
+                      <li key={idx} className="flex items-start gap-4 sm:gap-3 text-lg sm:text-base text-white leading-relaxed">
+                        <span className="flex-shrink-0 w-9 h-9 sm:w-7 sm:h-7 rounded-full bg-blue-500/20 border-2 border-blue-500/50 flex items-center justify-center text-base sm:text-sm font-bold text-blue-300">
                           {idx + 1}
                         </span>
-                        <span className="flex-1 pt-0.5">{cause}</span>
+                        <span className="flex-1 pt-1 sm:pt-0.5">{cause}</span>
                       </li>
                     ))}
                   </ol>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 pt-4 border-t-2 border-white/10">
-                <span className="text-base text-white font-medium">Safety Risk:</span>
-                <Badge className={`${risk.color} text-white border-none text-base px-4 py-2`}>
+              <div className="flex flex-col sm:flex-row items-center sm:items-center justify-center sm:justify-start gap-3 pt-5 sm:pt-4 border-t-2 border-white/10">
+                <span className="text-lg sm:text-base text-white font-bold sm:font-medium">Safety Risk:</span>
+                <Badge className={`${risk.color} text-white border-none text-lg sm:text-base px-6 py-3 sm:px-4 sm:py-2 rounded-full`}>
                   {diagnosis.faultSummary.safetyRisk}
                 </Badge>
               </div>
