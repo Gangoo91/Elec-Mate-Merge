@@ -5,6 +5,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
+import { CalculationBreakdown } from "./CalculationBreakdown";
+import { TestSequenceValidator } from "./TestSequenceValidator";
 import type { TestingProcedure } from "@/types/commissioning-response";
 
 interface TestingProcedureDisplayProps {
@@ -134,6 +136,12 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="px-4 pb-4 space-y-3">
+                  {/* Test Sequence Validator */}
+                  <TestSequenceValidator 
+                    currentTest={test} 
+                    allTests={procedure.deadTests || []} 
+                  />
+                  
                   {/* Instrument Setup */}
                   <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
                     <div className="flex items-center gap-2 text-blue-300 text-sm font-medium mb-2">
@@ -290,6 +298,12 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="px-4 pb-4 space-y-3">
+                  {/* Test Sequence Validator */}
+                  <TestSequenceValidator 
+                    currentTest={test} 
+                    allTests={procedure.liveTests || []} 
+                  />
+                  
                   {/* Instrument Setup */}
                   <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
                     <div className="flex items-center gap-2 text-blue-300 text-sm font-medium mb-2">
@@ -309,11 +323,13 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                     </ol>
                   </div>
 
-                  {/* Calculation */}
-                  {test.calculation && (
-                    <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
-                      <div className="text-sm font-medium text-purple-300 mb-1">Calculation</div>
-                      {typeof test.calculation === 'object' ? (
+                  {/* Calculation Breakdown */}
+                  {test.calculation && typeof test.calculation === 'object' && (
+                    test.calculation.formula && test.calculation.components && test.calculation.expectedResult && test.calculation.limitCheck ? (
+                      <CalculationBreakdown calculation={test.calculation as any} />
+                    ) : (
+                      <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
+                        <div className="text-sm font-medium text-purple-300 mb-1">Calculation</div>
                         <div className="space-y-1">
                           {test.calculation.formula && (
                             <p className="text-xs text-purple-300 font-mono">{test.calculation.formula}</p>
@@ -328,9 +344,15 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
                             <p className="text-xs text-purple-300 font-semibold">Expected Zs = {test.calculation.expectedZs}</p>
                           )}
                         </div>
-                      ) : (
-                        <p className="text-xs text-gray-200 font-mono">{test.calculation}</p>
-                      )}
+                      </div>
+                    )
+                  )}
+                  
+                  {/* Fallback for old calculation format */}
+                  {test.calculation && typeof test.calculation === 'string' && (
+                    <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
+                      <div className="text-sm font-medium text-purple-300 mb-1">Calculation</div>
+                      <p className="text-xs text-gray-200 font-mono">{test.calculation}</p>
                     </div>
                   )}
 

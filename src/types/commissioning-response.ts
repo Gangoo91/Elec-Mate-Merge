@@ -20,6 +20,9 @@ export interface CalculationBreakdown {
   Ze?: string;
   R1R2?: string;
   expectedZs?: string;
+  components?: Record<string, string>;
+  expectedResult?: string;
+  limitCheck?: string;
 }
 
 export interface TestProcedure {
@@ -34,6 +37,9 @@ export interface TestProcedure {
   commonMistakes?: string[];
   proTips?: string[];
   testDuration?: string;
+  prerequisiteTests?: string[];
+  conflictingTests?: string[];
+  testSequence?: number;
 }
 
 export interface TestingProcedure {

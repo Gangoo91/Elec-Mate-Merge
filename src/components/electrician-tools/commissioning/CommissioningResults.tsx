@@ -7,6 +7,8 @@ import TestingSummaryStats from "./results/TestingSummaryStats";
 import TestingProcedureDisplay from "./TestingProcedureDisplay";
 import CertificationRequirements from "./CertificationRequirements";
 import { RAGQualityBadge } from "./RAGQualityBadge";
+import { CalculationBreakdown } from "./CalculationBreakdown";
+import { TestSequenceValidator } from "./TestSequenceValidator";
 import type { CommissioningResponse } from "@/types/commissioning-response";
 
 interface CommissioningResultsProps {
