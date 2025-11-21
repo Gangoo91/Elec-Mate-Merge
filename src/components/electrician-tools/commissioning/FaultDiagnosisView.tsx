@@ -25,7 +25,7 @@ const FaultDiagnosisView = ({ diagnosis, onStartOver }: FaultDiagnosisViewProps)
   const RiskIcon = risk.icon;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-dark to-blue-950 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-elec-gray p-4 sm:p-6 lg:p-8">
       <div className="max-w-5xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
