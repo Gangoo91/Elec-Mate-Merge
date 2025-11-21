@@ -97,8 +97,30 @@ export interface PracticalGuideResult {
   weightedScore?: number;
 }
 
+export interface DesignKnowledgeResult {
+  id: string;
+  design_knowledge_id: string;
+  facet_type: string;
+  primary_topic: string;
+  keywords: string[];
+  design_category: string;
+  design_subcategory?: string;
+  content: string;
+  formulas?: string[];
+  worked_examples?: any[];
+  calculation_steps?: string[];
+  bs7671_regulations?: string[];
+  table_refs?: string[];
+  common_mistakes?: string[];
+  typical_values?: any;
+  applies_to?: string[];
+  similarity?: number;
+  weightedScore?: number;
+}
+
 export interface RAGContext {
   regulations: RegulationResult[];
+  designKnowledge: DesignKnowledgeResult[];
   practicalGuides: PracticalGuideResult[];
   totalResults: number;
   searchTime: number;

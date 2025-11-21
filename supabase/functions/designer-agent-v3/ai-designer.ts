@@ -97,6 +97,49 @@ export class AIDesigner {
       parts.push('');
     }
 
+    // PHASE 4: Inject enriched design knowledge with formulas, examples, and calculations
+    if (context.designKnowledge.length > 0) {
+      parts.push('=== DESIGN KNOWLEDGE (Formulas, Examples, Tables) ===');
+      
+      context.designKnowledge.slice(0, 4).forEach(facet => {
+        parts.push(`\n[${facet.facet_type.toUpperCase()}] ${facet.primary_topic}`);
+        
+        // Inject formulas
+        if (facet.formulas && facet.formulas.length > 0) {
+          parts.push(`📐 Formulas: ${facet.formulas.join(' | ')}`);
+        }
+        
+        // Inject worked examples
+        if (facet.worked_examples && facet.worked_examples.length > 0) {
+          const examples = facet.worked_examples.slice(0, 2).map(ex => 
+            typeof ex === 'string' ? ex : JSON.stringify(ex)
+          );
+          parts.push(`💡 Examples: ${examples.join(' | ')}`);
+        }
+        
+        // Inject calculation steps
+        if (facet.calculation_steps && facet.calculation_steps.length > 0) {
+          parts.push(`🔢 Steps: ${facet.calculation_steps.join(' → ')}`);
+        }
+        
+        // Inject BS 7671 references
+        if (facet.bs7671_regulations && facet.bs7671_regulations.length > 0) {
+          parts.push(`📖 Regs: ${facet.bs7671_regulations.join(', ')}`);
+        }
+        
+        // Inject table references
+        if (facet.table_refs && facet.table_refs.length > 0) {
+          parts.push(`📊 Tables: ${facet.table_refs.join(', ')}`);
+        }
+        
+        // Inject common mistakes
+        if (facet.common_mistakes && facet.common_mistakes.length > 0) {
+          parts.push(`⚠️ Common Mistakes: ${facet.common_mistakes.join('; ')}`);
+        }
+      });
+      parts.push('');
+    }
+
     if (context.practicalGuides.length > 0) {
       parts.push('=== PRACTICAL GUIDANCE ===');
       context.practicalGuides.slice(0, 3).forEach(guide => {
@@ -122,6 +165,13 @@ export class AIDesigner {
     parts.push('- Cable sizes: T&E (1.5-16mm2), SWA (1.5-95mm2) - round UP to nearest valid');
     parts.push('- CPC sizing: Twin & Earth per Table 54.7 (1.5->1.0, 2.5->1.5, 4->2.5, 6->2.5, 10->4, 16->6mm2)');
     parts.push('- SWA cables: CPC MUST equal live conductor size per BS 7671:543.1.1 (e.g., 6mm² SWA = 6mm² CPC)');
+    parts.push('');
+    parts.push('=== USE EXACT KNOWLEDGE ===');
+    parts.push('- USE EXACT FORMULAS from Design Knowledge section above');
+    parts.push('- SHOW CALCULATION STEPS from worked examples');
+    parts.push('- REFERENCE TABLE VALUES explicitly (e.g., "Table 54.7: 2.5mm² = 7.41 mΩ/m")');
+    parts.push('- CITE BS 7671 regulations from knowledge base');
+    parts.push('- APPLY COMMON MISTAKE WARNINGS where relevant');
     parts.push('');
 
     // Auto-correction rules
@@ -165,6 +215,18 @@ export class AIDesigner {
       parts.push('');
     }
 
+    // PHASE 4: Inject enriched design knowledge for batch processing
+    if (context.designKnowledge.length > 0) {
+      parts.push('=== DESIGN KNOWLEDGE ===');
+      context.designKnowledge.slice(0, ragLimit).forEach(facet => {
+        parts.push(`[${facet.facet_type}] ${facet.primary_topic}`);
+        if (facet.formulas?.length) parts.push(`📐 ${facet.formulas.join(' | ')}`);
+        if (facet.bs7671_regulations?.length) parts.push(`📖 ${facet.bs7671_regulations.join(', ')}`);
+        if (facet.common_mistakes?.length) parts.push(`⚠️ ${facet.common_mistakes[0]}`);
+      });
+      parts.push('');
+    }
+
     if (context.practicalGuides.length > 0) {
       parts.push('=== PRACTICAL GUIDANCE ===');
       context.practicalGuides.slice(0, ragLimit).forEach(guide => {
@@ -187,6 +249,7 @@ export class AIDesigner {
     parts.push('- Ib <= In <= Iz (433.1.1) | VD: <=3% light, <=5% power (525.1) | Zs <= max (411.3.2)');
     parts.push('- RCBO: sockets (411.3.3), bathrooms (701.411.3.3) | Cables: T&E 1.5-16mm2, SWA 1.5-95mm2');
     parts.push('- CPC: T&E per Table 54.7, SWA=live size (543.1.1) | 3-phase=400V/415V | Motors: FLC calc, Type D | Outdoor=SWA');
+    parts.push('- USE EXACT FORMULAS from knowledge base | SHOW CALC STEPS | REFERENCE TABLES explicitly');
     parts.push('');
 
     parts.push('=== AUTO-CORRECT ===');
