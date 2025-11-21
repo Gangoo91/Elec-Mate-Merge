@@ -433,7 +433,7 @@ export async function buildRAGSearches(
     projectInfo: { installationType: type }
   };
   
-  // Parallel RAG searches (no timeouts, simple and direct)
+  // PHASE 3: Reordered RAG searches - Design RAG FIRST, then BS7671 vector, then practical
   let designDocs: any[] = [];
   let regulations: any[] = [];
   let practicalWork: any[] = [];
@@ -441,49 +441,84 @@ export async function buildRAGSearches(
   let failedBranches = 0;
   
   try {
-    const [regulationsResults, practicalResults] = await Promise.all([
-      searchCircuitRegulations(jobInputs).catch(err => {
-        logger.warn('⚠️ Regulations search failed', { error: err.message });
-        failedBranches++;
-        return [];
-      }),
-      searchInstallationPractices(jobInputs).catch(err => {
-        logger.warn('⚠️ Practical work search failed', { error: err.message });
-        failedBranches++;
-        return [];
-      })
-    ]);
-    
-    regulations = regulationsResults;
-    practicalWork = practicalResults;
-    
-    // Design knowledge search (vector-based)
+    // STEP 1: Design RAG FIRST (most circuit-specific) - INCREASED LIMIT
     try {
-      designDocs = await searchDesignKnowledge(supabase, query, allKeywords, 10);
+      logger.info('🎯 Phase 3: Searching Design RAG first (vector search, limit 15)');
+      designDocs = await searchDesignKnowledge(supabase, query, allKeywords, 15);
+      logger.info(`✅ Design RAG: ${designDocs.length} results`);
     } catch (err) {
-      logger.warn('⚠️ Design knowledge search failed', { error: err instanceof Error ? err.message : String(err) });
+      logger.error('❌ Design RAG failed', { 
+        error: err instanceof Error ? err.message : String(err),
+        stack: err instanceof Error ? err.stack : undefined
+      });
       failedBranches++;
     }
     
-    // Structured calculations
+    // STEP 2: BS7671 Regulations via VECTOR search (not hybrid) - INCREASED LIMIT
+    try {
+      logger.info('🎯 Phase 3: Searching BS7671 regulations (vector search, limit 15)');
+      regulations = await searchCircuitRegulations(jobInputs, 'vector');
+      logger.info(`✅ BS7671 RAG: ${regulations.length} results`);
+    } catch (err) {
+      logger.error('❌ BS7671 RAG failed', {
+        error: err instanceof Error ? err.message : String(err),
+        stack: err instanceof Error ? err.stack : undefined
+      });
+      failedBranches++;
+    }
+    
+    // STEP 3: Practical work (supplementary)
+    try {
+      logger.info('🎯 Phase 3: Searching practical installation guides');
+      practicalWork = await searchInstallationPractices(jobInputs);
+      logger.info(`✅ Practical RAG: ${practicalWork.length} results`);
+    } catch (err) {
+      logger.warn('⚠️ Practical work search failed (non-critical)', { 
+        error: err instanceof Error ? err.message : String(err) 
+      });
+      failedBranches++;
+    }
+    
+    // STEP 4: Structured calculations
     try {
       calculations = await retrieveStructuredCalculations(supabase, circuitTypes);
     } catch (err) {
-      logger.warn('⚠️ Structured calculations failed', { error: err instanceof Error ? err.message : String(err) });
+      logger.warn('⚠️ Structured calculations failed (non-critical)', { 
+        error: err instanceof Error ? err.message : String(err) 
+      });
       failedBranches++;
     }
     
   } catch (error) {
-    logger.error('RAG search failed', { error });
+    logger.error('RAG search pipeline failed', { 
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined
+    });
   }
   
-  // Fallback to core regulations if ALL RAG branches failed
-  if (designDocs.length === 0 && regulations.length === 0 && 
-      practicalWork.length === 0 && calculations.length === 0) {
-    logger.warn('⚠️ ALL RAG branches failed - loading core regulations fallback');
+  // PHASE 3: Critical RAG source validation (fail fast if essential data missing)
+  const criticalSourcesMissing = [];
+  if (designDocs.length === 0) {
+    criticalSourcesMissing.push('Design Knowledge');
+    logger.error('🚨 CRITICAL: Design RAG returned 0 results');
+  }
+  if (regulations.length === 0) {
+    criticalSourcesMissing.push('BS 7671 Regulations');
+    logger.error('🚨 CRITICAL: BS7671 RAG returned 0 results');
+  }
+  
+  // If BOTH critical sources failed, throw error (don't proceed with incomplete context)
+  if (criticalSourcesMissing.length === 2) {
+    logger.error('🚨 FATAL: Both critical RAG sources failed - cannot design compliant circuits safely');
+    throw new Error(`Critical RAG sources failed: ${criticalSourcesMissing.join(', ')}. Circuit design requires both design knowledge and BS 7671 regulations.`);
+  }
+  
+  // If only ONE critical source failed, load fallback but log warning
+  if (criticalSourcesMissing.length === 1) {
+    logger.warn(`⚠️ Critical source missing: ${criticalSourcesMissing[0]} - loading fallback regulations`);
     const coreRegs = await loadCoreRegulations(supabase);
-    regulations = coreRegs;
-    logger.info(`✅ Loaded ${coreRegs.length} core regulations as fallback`);
+    if (regulations.length === 0) regulations = coreRegs;
+    logger.info(`✅ Loaded ${coreRegs.length} fallback regulations`);
   }
   
   // Log completion
@@ -497,12 +532,25 @@ export async function buildRAGSearches(
   logger.info(`✅ Calculations: ${calculations.length} formulas`);
   logger.info(`⏱️ RAG completed in ${ragTime}ms with ${successfulBranches}/${totalBranches} branches`);
   
-  // Monitor RAG health
+  // PHASE 4: Enhanced RAG Health Monitoring
   const successRate = (successfulBranches / totalBranches) * 100;
-  logger.info(`📊 RAG Health: ${successRate.toFixed(0)}% (${successfulBranches}/${totalBranches} branches)`);
+  const healthStatus = {
+    designDocs: designDocs.length >= 12 ? '✓' : designDocs.length >= 8 ? '⚠️' : '✗',
+    bs7671: regulations.length >= 12 ? '✓' : regulations.length >= 8 ? '⚠️' : '✗',
+    practical: practicalWork.length >= 8 ? '✓' : practicalWork.length >= 5 ? '⚠️' : '✗',
+    calculations: calculations.length >= 8 ? '✓' : calculations.length >= 5 ? '⚠️' : '✗'
+  };
+  
+  logger.info(`📊 RAG Health Check:`, {
+    designDocs: `${designDocs.length}/15 ${healthStatus.designDocs}`,
+    bs7671: `${regulations.length}/15 ${healthStatus.bs7671}`,
+    practical: `${practicalWork.length}/10 ${healthStatus.practical}`,
+    calculations: `${calculations.length}/10 ${healthStatus.calculations}`,
+    overallHealth: `${successfulBranches}/${totalBranches} branches (${successRate.toFixed(0)}%)`
+  });
   
   if (successRate < 50) {
-    logger.error(`🚨 CRITICAL: Only ${successes.length}/4 RAG branches succeeded`);
+    logger.error(`🚨 CRITICAL: Only ${successfulBranches}/${totalBranches} RAG branches succeeded - design quality will be impaired`);
   }
   
   const totalTime = Date.now() - startTime;
