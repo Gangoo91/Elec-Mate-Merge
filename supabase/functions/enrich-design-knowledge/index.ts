@@ -414,7 +414,7 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const effectiveBatchSize = Math.min(batchSize || 12, 12);
+    const effectiveBatchSize = Math.min(batchSize || 6, 6); // Reduced from 12 to enable higher worker concurrency
     const { data: items, error: queryError } = await supabase
       .from('design_knowledge')
       .select('id, topic, content, source, metadata')
