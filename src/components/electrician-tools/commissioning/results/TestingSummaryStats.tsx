@@ -21,8 +21,24 @@ const TestingSummaryStats = ({ results }: TestingSummaryStatsProps) => {
     ? Math.max(...results.circuits.map((c: any) => parseFloat(c.zsMax || '0'))).toFixed(2)
     : 'N/A';
 
-  // Get certificate type
+  // Get certificate type and extract abbreviation
   const certificateType = results.structuredData?.certification?.certificateType || 'EIC';
+  
+  const getCertificateAbbreviation = (certType: string): string => {
+    // Extract abbreviation from parentheses (e.g., "EIC" from "Certificate (EIC)")
+    const match = certType.match(/\(([A-Z]+)\)/);
+    if (match) return match[1];
+    
+    // If no parentheses, try to extract first 3-4 uppercase letters
+    const abbrev = certType.match(/^[A-Z]{2,4}/);
+    if (abbrev) return abbrev[0];
+    
+    // Fallback: return as-is but truncate to 10 chars max
+    return certType.length > 10 ? certType.substring(0, 10) : certType;
+  };
+  
+  const certificateAbbreviation = getCertificateAbbreviation(certificateType);
+  const circuitCount = results.circuits?.length || 0;
 
   return (
     <Card className="p-4 sm:p-6 bg-gradient-to-br from-purple-500/5 via-background to-background border-purple-500/20">
@@ -31,7 +47,7 @@ const TestingSummaryStats = ({ results }: TestingSummaryStatsProps) => {
         Testing Procedure Summary
       </h3>
       
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 auto-rows-fr">
         {/* Total Tests */}
         <div className="bg-elec-gray/50 rounded-lg p-4 border border-purple-500/10 hover:border-purple-500/30 transition-all hover:scale-105">
           <div className="flex flex-col items-center text-center">
@@ -65,11 +81,13 @@ const TestingSummaryStats = ({ results }: TestingSummaryStatsProps) => {
           <div className="flex flex-col items-center text-center">
             <Zap className="h-5 w-5 text-purple-400 mb-2" />
             <div className="text-2xl sm:text-3xl font-bold text-purple-400 mb-1">
-              {maxZs}Ω
+              {maxZs === 'N/A' ? 'N/A' : `${maxZs}Ω`}
             </div>
             <div className="text-xs text-muted-foreground">Highest Zs Value</div>
             <div className="text-xs text-muted-foreground mt-1">
-              {results.circuits?.length || 0} circuits
+              {circuitCount > 0 
+                ? `${circuitCount} circuit${circuitCount === 1 ? '' : 's'}`
+                : 'No circuits tested'}
             </div>
           </div>
         </div>
@@ -79,7 +97,7 @@ const TestingSummaryStats = ({ results }: TestingSummaryStatsProps) => {
           <div className="flex flex-col items-center text-center">
             <FileText className="h-5 w-5 text-purple-400 mb-2" />
             <div className="text-2xl sm:text-3xl font-bold text-purple-400 mb-1">
-              {certificateType}
+              {certificateAbbreviation}
             </div>
             <div className="text-xs text-muted-foreground">Certificate Required</div>
             <div className="text-xs text-muted-foreground mt-1">
