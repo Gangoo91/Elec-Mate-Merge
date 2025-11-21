@@ -99,9 +99,9 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
       {/* Header */}
       {defect.primaryCode && primaryConfig && (
         <div className={`${primaryConfig.color} p-5 sm:p-6`}>
-          <div className="flex items-start justify-between gap-3 flex-wrap">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-2 flex-wrap">
+          <div className="flex flex-col-reverse sm:flex-row items-center sm:items-start sm:justify-between gap-3 flex-wrap">
+            <div className="flex-1 min-w-0 text-center sm:text-left">
+              <div className="flex items-center justify-center sm:justify-start gap-2 mb-2 flex-wrap">
                 <Badge className="bg-white/20 text-white border-none text-lg px-4 py-1.5">
                   {defect.primaryCode.code}
                 </Badge>
@@ -109,10 +109,10 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
                   {defect.primaryCode.urgency}
                 </Badge>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 text-left leading-relaxed">
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 text-center sm:text-left leading-relaxed">
                 {defect.primaryCode.title}
               </h3>
-              <p className="text-lg text-white leading-relaxed text-left">
+              <p className="text-lg text-white leading-relaxed text-center sm:text-left">
                 {defect.defectSummary}
               </p>
             </div>
