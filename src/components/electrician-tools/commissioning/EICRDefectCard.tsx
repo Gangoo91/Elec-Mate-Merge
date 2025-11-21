@@ -5,8 +5,9 @@ import { AlertTriangle, BookOpen, Wrench, ClipboardCheck, Info, FileText } from 
 import ConfidenceMeter from "./ConfidenceMeter";
 
 export interface EICRDefect {
+  classification?: 'C1' | 'C2' | 'C3' | 'FI' | 'NONE'; // Added for EICR photo analysis
   defectSummary: string;
-  primaryCode: {
+  primaryCode?: {
     code: 'C1' | 'C2' | 'C3' | 'FI';
     title: string;
     urgency: string;
@@ -16,25 +17,37 @@ export interface EICRDefect {
     condition: string;
     reasoning: string;
   };
-  bs7671Regulations: Array<{
+  bs7671Regulations?: Array<{
     regulation: string;
     description: string;
   }>;
-  gn3Guidance: {
+  gn3Guidance?: {
     section: string;
     content: string;
   };
-  napitReference: {
+  napitReference?: {
     code: string;
     description: string;
   };
-  hazardExplanation: string;
-  rectification: {
+  hazardExplanation?: string;
+  makingSafe?: {
+    immediateSteps: string[];
+    isolationRequired: boolean;
+    signageRequired: string;
+  };
+  clientCommunication?: {
+    plainLanguage: string;
+    severityExplanation: string;
+    risksIfUnfixed: string[];
+    urgencyLevel: 'IMMEDIATE' | 'WITHIN_48HRS' | 'WITHIN_WEEK' | 'PLANNED';
+    estimatedCost?: string;
+  };
+  rectification?: {
     steps: string[];
     estimatedTime?: string;
     requiredMaterials?: string[];
   };
-  verificationProcedure: {
+  verificationProcedure?: {
     tests: string[];
     acceptanceCriteria: string[];
   };
@@ -51,6 +64,9 @@ export interface EICRDefect {
     enclosureRating?: string;
     supplementaryBonding?: boolean;
   };
+  compliantSummary?: string; // For NONE classification
+  goodPracticeNotes?: string[]; // For NONE classification
+  noActionRequired?: boolean; // For NONE classification
 }
 
 interface EICRDefectCardProps {

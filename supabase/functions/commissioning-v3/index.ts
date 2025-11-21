@@ -1044,10 +1044,333 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
       contextSection
     );
     
-    // Use structured fault diagnosis for ALL troubleshooting queries (trust AI classification)
-    const useStructuredDiagnosis = classification.mode === 'troubleshooting';
+    // Use EICR Photo Analysis for photo uploads, otherwise use structured fault diagnosis
+    const useEICRPhotoAnalysis = !!imageUrl;
+    const useStructuredDiagnosis = !imageUrl && classification.mode === 'troubleshooting';
     
-    if (useStructuredDiagnosis) {
+    if (useEICRPhotoAnalysis) {
+      logger.info('📸 Using EICR Photo Analysis tool for image');
+      
+      const eicrPhotoAnalysisTool = {
+        type: 'function' as const,
+        function: {
+          name: 'provide_eicr_photo_analysis',
+          description: 'Analyse electrical installation photo and provide EICR defect coding with BS 7671 compliance assessment',
+          parameters: {
+            type: 'object',
+            properties: {
+              classification: {
+                type: 'string',
+                enum: ['C1', 'C2', 'C3', 'FI', 'NONE'],
+                description: 'EICR classification code. Use NONE if installation is compliant and no defects are found.'
+              },
+              classificationReasoning: {
+                type: 'string',
+                description: 'Detailed reasoning for this classification with specific BS 7671 regulation references'
+              },
+              napitCode: {
+                type: 'string',
+                description: 'Specific NAPIT code (e.g., "C2-002" for socket without RCD) or "N/A" if NONE classification'
+              },
+              defectSummary: {
+                type: 'string',
+                description: 'Clear description of the defect observed (or compliant installation if NONE)'
+              },
+              hazardExplanation: {
+                type: 'string',
+                description: 'Why this is dangerous/concerning (or why it is safe if NONE). Include specific risks.'
+              },
+              bs7671Regulations: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    regulation: { type: 'string', description: 'Regulation number (e.g., "411.3.3")' },
+                    description: { type: 'string', description: 'What this regulation requires' }
+                  },
+                  required: ['regulation', 'description']
+                },
+                description: 'Array of relevant BS 7671 regulations'
+              },
+              gn3Guidance: {
+                type: 'object',
+                properties: {
+                  section: { type: 'string', description: 'GN3 section reference' },
+                  content: { type: 'string', description: 'Guidance Notes content' }
+                },
+                required: ['section', 'content']
+              },
+              makingSafe: {
+                type: 'object',
+                properties: {
+                  immediateSteps: { 
+                    type: 'array', 
+                    items: { type: 'string' },
+                    description: 'IMMEDIATE steps to make safe (isolation, barriers, signage) - DISTINCT from fixing'
+                  },
+                  isolationRequired: { type: 'boolean' },
+                  signageRequired: { type: 'string', description: 'What warning signs to install' }
+                },
+                description: 'Immediate safety measures - NOT the permanent fix'
+              },
+              clientCommunication: {
+                type: 'object',
+                properties: {
+                  plainLanguage: { type: 'string', description: 'What to tell the owner/client in plain English' },
+                  severityExplanation: { type: 'string', description: 'How dangerous this is in everyday terms' },
+                  risksIfUnfixed: { type: 'array', items: { type: 'string' } },
+                  urgencyLevel: { type: 'string', enum: ['IMMEDIATE', 'WITHIN_48HRS', 'WITHIN_WEEK', 'PLANNED'] },
+                  estimatedCost: { type: 'string', description: 'Estimated cost bracket (e.g., "£150-£300")' }
+                },
+                required: ['plainLanguage', 'severityExplanation', 'urgencyLevel']
+              },
+              rectification: {
+                type: 'object',
+                properties: {
+                  steps: { 
+                    type: 'array', 
+                    items: { type: 'string' },
+                    minItems: 3,
+                    description: 'Detailed step-by-step rectification procedure'
+                  },
+                  requiredMaterials: { 
+                    type: 'array', 
+                    items: { type: 'string' },
+                    description: 'List of materials needed for the fix'
+                  },
+                  estimatedTime: { type: 'string', description: 'Time to complete (e.g., "2-3 hours")' }
+                },
+                required: ['steps']
+              },
+              verificationProcedure: {
+                type: 'object',
+                properties: {
+                  tests: { 
+                    type: 'array', 
+                    items: { type: 'string' },
+                    minItems: 2,
+                    description: 'Tests required to verify the fix (e.g., "Insulation resistance test", "RCD trip time test")'
+                  },
+                  acceptanceCriteria: { 
+                    type: 'array', 
+                    items: { type: 'string' },
+                    minItems: 2,
+                    description: 'What constitutes a successful fix (e.g., "IR reading ≥1MΩ", "RCD trips in <300ms at 1×IΔn")'
+                  }
+                },
+                required: ['tests', 'acceptanceCriteria']
+              },
+              confidenceAssessment: {
+                type: 'object',
+                properties: {
+                  level: { type: 'string', enum: ['high', 'medium', 'low'] },
+                  score: { type: 'number', minimum: 0, maximum: 100 },
+                  reasoning: { type: 'string', description: 'Why this confidence level (photo quality, visibility, clarity)' }
+                },
+                required: ['level', 'score', 'reasoning']
+              },
+              contextFactors: {
+                type: 'object',
+                properties: {
+                  bathroomZone: { type: 'string', description: 'Zone 0, 1, 2, or Outside zones' },
+                  outdoorLocation: { type: 'boolean' },
+                  rcdPresent: { type: 'boolean' },
+                  conductorSize: { type: 'string' },
+                  enclosureRating: { type: 'string', description: 'IP rating if visible' },
+                  supplementaryBonding: { type: 'boolean' }
+                },
+                description: 'Installation context visible in photo'
+              },
+              compliantSummary: {
+                type: 'string',
+                description: 'ONLY for NONE classification: What the photo shows is compliant (e.g., "Socket outlet correctly installed outside bathroom zones with RCD protection")'
+              },
+              goodPracticeNotes: {
+                type: 'array',
+                items: { type: 'string' },
+                description: 'ONLY for NONE classification: Positive observations (e.g., "Good cable management", "Clear labelling", "Tidy terminations")'
+              },
+              noActionRequired: {
+                type: 'boolean',
+                description: 'Set to true for NONE classification'
+              }
+            },
+            required: ['classification', 'classificationReasoning', 'defectSummary', 'confidenceAssessment'],
+            additionalProperties: false
+          }
+        }
+      };
+      
+      const photoAnalysisPrompt = `You are a NAPIT/NICEIC-qualified EICR Inspector with 30 years experience.
+
+Write all responses in UK English (British spelling and terminology).
+
+📸 EICR PHOTO ANALYSIS INSTRUCTIONS:
+
+You MUST analyse this installation photo against BS 7671:2018+A3:2024 and NAPIT Code Directory.
+
+**CLASSIFICATION CODES:**
+- **C1 (Danger Present)**: Immediate danger to persons or property. Requires immediate remedial action. Examples: Exposed live parts, lack of earthing, reversed polarity.
+- **C2 (Potentially Dangerous)**: Potentially dangerous - urgent remedial action required. Examples: Socket without RCD, high Zs reading, inadequate bonding.
+- **C3 (Improvement Recommended)**: Improvement recommended. Does not comply with current BS 7671 but not immediately dangerous. Examples: Old wiring colours, lack of SPD, inadequate labelling.
+- **FI (Further Investigation)**: Cannot confirm safety without further investigation. Examples: Concealed wiring cannot be verified, inaccessible distribution board.
+- **NONE**: Installation appears compliant with BS 7671. No defects observed. This is a VALID and IMPORTANT classification - use it when appropriate.
+
+**CRITICAL: The "NONE" classification adds credibility to your analysis.** If you classify everything as a defect, electricians will not trust you. Be honest and accurate.
+
+**PHOTO ANALYSIS CHECKLIST:**
+1. What can you see clearly? (cables, accessories, terminations, enclosures, signage)
+2. What is the location context? (bathroom, kitchen, outdoor, consumer unit, etc.)
+3. Are there visible defects? (exposed conductors, damaged cables, incorrect zones, missing RCD, poor terminations)
+4. Can you determine BS 7671 compliance? (If not, use FI classification)
+5. If compliant, what good practices are visible? (neat work, correct cable sizing, proper labelling)
+
+**CONFIDENCE ASSESSMENT:**
+- **High (80-100%)**: Clear photo, defect/compliance is obvious, all relevant details visible
+- **Medium (50-79%)**: Some ambiguity, partial view, or context unclear
+- **Low (0-49%)**: Poor photo quality, cannot see critical details, recommend physical inspection
+
+**BE HONEST:**
+- If you cannot see enough to make a determination → Use FI classification
+- If installation looks compliant → Use NONE classification with positive notes
+- If defect is clear → Use appropriate C1/C2/C3 code with detailed justification
+
+**AVAILABLE KNOWLEDGE:**
+${testContext}
+
+**OUTPUT REQUIREMENTS:**
+- Use specific NAPIT codes when applicable (e.g., "C2-002" for socket without RCD)
+- Reference specific BS 7671 regulation numbers
+- Distinguish between "making safe" (immediate isolation/barriers) and "rectification" (proper fix)
+- Provide client communication in plain language
+- Include verification tests with acceptance criteria
+- Be explicit about confidence level and reasoning`;
+
+      const photoMessages: any[] = [
+        { role: 'system', content: photoAnalysisPrompt },
+        {
+          role: 'user',
+          content: [
+            {
+              type: "text",
+              text: `Analyse this electrical installation photo and provide EICR defect coding:
+
+${effectiveQuery}
+
+Determine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehensive details.`
+            },
+            {
+              type: "image_url",
+              image_url: { url: imageUrl }
+            }
+          ]
+        }
+      ];
+
+      const aiResponse = await callOpenAI(
+        {
+          messages: photoMessages,
+          model: 'gpt-4o-mini', // Vision model required
+          tools: [eicrPhotoAnalysisTool],
+          tool_choice: { type: 'function', function: { name: 'provide_eicr_photo_analysis' } }
+        },
+        OPENAI_API_KEY!,
+        120000
+      );
+      
+      const toolCall = aiResponse.toolCalls?.[0];
+      logger.info('📸 EICR Photo Analysis tool call', { 
+        hasToolCall: !!toolCall, 
+        toolName: toolCall?.function?.name 
+      });
+      
+      if (toolCall?.function?.arguments) {
+        try {
+          const eicrData = JSON.parse(toolCall.function.arguments);
+          logger.info('✅ Parsed EICR defect data', {
+            classification: eicrData.classification,
+            napitCode: eicrData.napitCode,
+            confidence: eicrData.confidenceAssessment?.level
+          });
+          
+          // Transform into EICRDefect format for frontend
+          const eicrDefects = [];
+          
+          if (eicrData.classification === 'NONE') {
+            // Special handling for NONE classification
+            eicrDefects.push({
+              classification: 'NONE',
+              defectSummary: eicrData.defectSummary,
+              compliantSummary: eicrData.compliantSummary,
+              goodPracticeNotes: eicrData.goodPracticeNotes || [],
+              noActionRequired: true,
+              confidenceAssessment: eicrData.confidenceAssessment,
+              contextFactors: eicrData.contextFactors
+            });
+          } else {
+            // Standard defect
+            eicrDefects.push({
+              defectSummary: eicrData.defectSummary,
+              primaryCode: {
+                code: eicrData.classification,
+                title: {
+                  'C1': 'Danger Present',
+                  'C2': 'Potentially Dangerous',
+                  'C3': 'Improvement Recommended',
+                  'FI': 'Further Investigation'
+                }[eicrData.classification] || 'Unknown',
+                urgency: {
+                  'C1': 'IMMEDIATE',
+                  'C2': 'URGENT',
+                  'C3': 'RECOMMENDED',
+                  'FI': 'INVESTIGATE'
+                }[eicrData.classification] || 'UNKNOWN'
+              },
+              bs7671Regulations: eicrData.bs7671Regulations || [],
+              gn3Guidance: eicrData.gn3Guidance || { section: 'N/A', content: '' },
+              napitReference: {
+                code: eicrData.napitCode || 'N/A',
+                description: eicrData.classificationReasoning
+              },
+              hazardExplanation: eicrData.hazardExplanation,
+              makingSafe: eicrData.makingSafe,
+              clientCommunication: eicrData.clientCommunication,
+              rectification: eicrData.rectification || { steps: [] },
+              verificationProcedure: eicrData.verificationProcedure || { tests: [], acceptanceCriteria: [] },
+              confidenceAssessment: eicrData.confidenceAssessment,
+              contextFactors: eicrData.contextFactors
+            });
+          }
+          
+          return new Response(
+            JSON.stringify({
+              success: true,
+              mode: 'eicr-photo-analysis',
+              queryType: 'photo-analysis',
+              eicrDefects,
+              citations: ragResults || [],
+              metadata: {
+                classification: { mode: 'photo-analysis', confidence: eicrData.confidenceAssessment.score / 100 },
+                ragQualityMetrics: {
+                  gn3ProceduresFound,
+                  regulationsFound,
+                  totalSources: gn3ProceduresFound + regulationsFound
+                }
+              }
+            }),
+            { 
+              headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+              status: 200 
+            }
+          );
+        } catch (error) {
+          logger.error('❌ Failed to parse EICR photo analysis', { 
+            error: error instanceof Error ? error.message : String(error) 
+          });
+          // Fall through to conversational mode
+        }
+      }
+    } else if (useStructuredDiagnosis) {
       logger.info('🔧 Using structured fault diagnosis tool');
       
       const faultDiagnosisTool = {
