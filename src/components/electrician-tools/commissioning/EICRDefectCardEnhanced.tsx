@@ -192,11 +192,11 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
             </div>
             <div className="space-y-3">
               {defect.makingSafe.immediateSteps.map((step, idx) => (
-                <div key={idx} className="flex gap-3 bg-elec-dark/80 p-5 rounded-lg backdrop-blur-sm min-h-[60px] items-start">
+                <div key={idx} className="flex flex-col sm:flex-row items-center sm:items-start gap-3 bg-elec-dark/80 p-5 rounded-lg backdrop-blur-sm min-h-[60px]">
                   <span className="flex-shrink-0 w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center text-base font-bold">
                     {idx + 1}
                   </span>
-                  <p className="text-lg text-white leading-loose flex-1">{step}</p>
+                  <p className="text-lg text-white leading-loose flex-1 text-center sm:text-left">{step}</p>
                 </div>
               ))}
             </div>
