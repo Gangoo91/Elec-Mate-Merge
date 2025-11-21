@@ -1191,7 +1191,15 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
                 description: 'Set to true for NONE classification'
               }
             },
-            required: ['classification', 'classificationReasoning', 'defectSummary', 'confidenceAssessment'],
+            required: [
+              'classification', 
+              'classificationReasoning', 
+              'defectSummary',
+              'hazardExplanation',
+              'bs7671Regulations',
+              'confidenceAssessment',
+              'contextFactors'
+            ],
             additionalProperties: false
           }
         }
@@ -1248,7 +1256,32 @@ ${testContext}
   * State earthing/bonding conductor sizes (e.g., "Install 10mm² main protective bonding conductor per 544.1.1")
   * Reference manufacturer datasheets or standards where relevant
 - Include verification tests with specific acceptance criteria
-- Be explicit about confidence level and reasoning`;
+- Be explicit about confidence level and reasoning
+
+**MANDATORY FIELDS - YOU MUST COMPLETE ALL OF THESE:**
+
+FOR ALL CLASSIFICATIONS (including NONE):
+✅ classification
+✅ classificationReasoning (with specific BS 7671 reg numbers)
+✅ defectSummary (or compliant summary for NONE)
+✅ hazardExplanation (or safety confirmation for NONE)
+✅ bs7671Regulations (array with at least 2 regulations)
+✅ confidenceAssessment (level, score 0-100, reasoning)
+✅ contextFactors (location, RCD status, cable size if visible, IP rating, zones)
+
+FOR C1, C2, C3, FI CLASSIFICATIONS (defects found):
+✅ makingSafe (immediateSteps array, isolationRequired boolean, signageRequired string)
+✅ clientCommunication (plainLanguage, severityExplanation, risksIfUnfixed array, urgencyLevel, estimatedCost)
+✅ gn3Guidance (section, content)
+✅ rectification (steps array with min 3 items, requiredMaterials array, estimatedTime)
+✅ verificationProcedure (tests array min 2 items, acceptanceCriteria array min 2 items)
+
+FOR NONE CLASSIFICATION (compliant installation):
+✅ compliantSummary (why it's compliant)
+✅ goodPracticeNotes (array of positive observations)
+✅ noActionRequired (set to true)
+
+**CRITICAL: If you omit ANY required field above, the output will be REJECTED. Complete ALL fields.**`;
 
       const photoMessages: any[] = [
         { role: 'system', content: photoAnalysisPrompt },
@@ -1271,105 +1304,166 @@ Determine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehe
         }
       ];
 
-      const aiResponse = await callOpenAI(
-        {
-          messages: photoMessages,
-          model: 'gpt-4o-mini', // Vision model required
-          tools: [eicrPhotoAnalysisTool],
-          tool_choice: { type: 'function', function: { name: 'provide_eicr_photo_analysis' } }
-        },
-        OPENAI_API_KEY!,
-        120000
-      );
-      
-      const toolCall = aiResponse.toolCalls?.[0];
-      logger.info('📸 EICR Photo Analysis tool call', { 
-        hasToolCall: !!toolCall, 
-        toolName: toolCall?.function?.name 
-      });
-      
-      if (toolCall?.function?.arguments) {
-        try {
-          const eicrData = JSON.parse(toolCall.function.arguments);
-          logger.info('✅ Parsed EICR defect data', {
-            classification: eicrData.classification,
-            napitCode: eicrData.napitCode,
-            confidence: eicrData.confidenceAssessment?.level
-          });
-          
-          // Transform into EICRDefect format for frontend
-          const eicrDefects = [];
-          
-          if (eicrData.classification === 'NONE') {
-            // Special handling for NONE classification
-            eicrDefects.push({
-              classification: 'NONE',
-              defectSummary: eicrData.defectSummary,
-              compliantSummary: eicrData.compliantSummary,
-              goodPracticeNotes: eicrData.goodPracticeNotes || [],
-              noActionRequired: true,
-              confidenceAssessment: eicrData.confidenceAssessment,
-              contextFactors: eicrData.contextFactors
-            });
-          } else {
-            // Standard defect
-            eicrDefects.push({
-              defectSummary: eicrData.defectSummary,
-              primaryCode: {
-                code: eicrData.classification,
-                title: {
-                  'C1': 'Danger Present',
-                  'C2': 'Potentially Dangerous',
-                  'C3': 'Improvement Recommended',
-                  'FI': 'Further Investigation'
-                }[eicrData.classification] || 'Unknown',
-                urgency: {
-                  'C1': 'IMMEDIATE',
-                  'C2': 'URGENT',
-                  'C3': 'RECOMMENDED',
-                  'FI': 'INVESTIGATE'
-                }[eicrData.classification] || 'UNKNOWN'
-              },
-              bs7671Regulations: eicrData.bs7671Regulations || [],
-              gn3Guidance: eicrData.gn3Guidance || { section: 'N/A', content: '' },
-              hazardExplanation: eicrData.hazardExplanation,
-              makingSafe: eicrData.makingSafe,
-              clientCommunication: eicrData.clientCommunication,
-              rectification: eicrData.rectification || { steps: [] },
-              verificationProcedure: eicrData.verificationProcedure || { tests: [], acceptanceCriteria: [] },
-              confidenceAssessment: eicrData.confidenceAssessment,
-              contextFactors: eicrData.contextFactors
-            });
+      // Retry logic for incomplete responses
+      let aiResponse;
+      let eicrData;
+      let attempts = 0;
+      const maxAttempts = 2;
+
+      while (attempts < maxAttempts) {
+        attempts++;
+        logger.info(`🔄 EICR Analysis attempt ${attempts}/${maxAttempts}`);
+
+        aiResponse = await callOpenAI(
+          {
+            messages: photoMessages,
+            model: 'gpt-4o-mini', // Vision model required
+            tools: [eicrPhotoAnalysisTool],
+            tool_choice: { type: 'function', function: { name: 'provide_eicr_photo_analysis' } }
+          },
+          OPENAI_API_KEY!,
+          120000
+        );
+
+        const toolCall = aiResponse.toolCalls?.[0];
+        
+        if (!toolCall?.function?.arguments) {
+          if (attempts < maxAttempts) {
+            logger.warn('⚠️ No tool call response, retrying...');
+            continue;
           }
-          
-          return new Response(
-            JSON.stringify({
-              success: true,
-              mode: 'eicr-photo-analysis',
-              queryType: 'photo-analysis',
-              eicrDefects,
-              citations: ragResults || [],
-              metadata: {
-                classification: { mode: 'photo-analysis', confidence: eicrData.confidenceAssessment.score / 100 },
-                ragQualityMetrics: {
-                  gn3ProceduresFound,
-                  regulationsFound,
-                  totalSources: gn3ProceduresFound + regulationsFound
-                }
-              }
-            }),
-            { 
-              headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-              status: 200 
+          throw new Error('No EICR analysis tool call returned from AI');
+        }
+
+        try {
+          eicrData = JSON.parse(toolCall.function.arguments);
+
+          // Validate completeness
+          const validationErrors: string[] = [];
+
+          if (!eicrData.classification) validationErrors.push('Missing classification');
+          if (!eicrData.classificationReasoning) validationErrors.push('Missing classificationReasoning');
+          if (!eicrData.defectSummary) validationErrors.push('Missing defectSummary');
+          if (!eicrData.hazardExplanation) validationErrors.push('Missing hazardExplanation');
+          if (!eicrData.bs7671Regulations || eicrData.bs7671Regulations.length === 0) {
+            validationErrors.push('Missing bs7671Regulations');
+          }
+          if (!eicrData.confidenceAssessment) validationErrors.push('Missing confidenceAssessment');
+          if (!eicrData.contextFactors) validationErrors.push('Missing contextFactors');
+
+          // For defect classifications, require additional fields
+          if (['C1', 'C2', 'C3', 'FI'].includes(eicrData.classification)) {
+            if (!eicrData.makingSafe) validationErrors.push('Missing makingSafe for defect classification');
+            if (!eicrData.clientCommunication) validationErrors.push('Missing clientCommunication for defect classification');
+            if (!eicrData.rectification) validationErrors.push('Missing rectification for defect classification');
+            if (!eicrData.verificationProcedure) validationErrors.push('Missing verificationProcedure for defect classification');
+            if (!eicrData.gn3Guidance) validationErrors.push('Missing gn3Guidance for defect classification');
+          }
+
+          // For NONE classification, require compliant fields
+          if (eicrData.classification === 'NONE') {
+            if (!eicrData.compliantSummary) validationErrors.push('Missing compliantSummary for NONE classification');
+            if (!eicrData.goodPracticeNotes || eicrData.goodPracticeNotes.length === 0) {
+              validationErrors.push('Missing goodPracticeNotes for NONE classification');
             }
-          );
-        } catch (error) {
-          logger.error('❌ Failed to parse EICR photo analysis', { 
-            error: error instanceof Error ? error.message : String(error) 
-          });
-          // Fall through to conversational mode
+          }
+
+          if (validationErrors.length > 0) {
+            logger.error('❌ AI response validation failed:', validationErrors);
+            if (attempts < maxAttempts) {
+              logger.warn(`⚠️ Incomplete response, retrying... (${attempts}/${maxAttempts})`);
+              continue;
+            }
+            throw new Error(`Incomplete AI response after ${maxAttempts} attempts: ${validationErrors.join(', ')}`);
+          }
+
+          logger.info('✅ AI response validation passed');
+          break; // Success - exit retry loop
+
+        } catch (parseError) {
+          logger.error('❌ Failed to parse AI response:', parseError);
+          if (attempts < maxAttempts) {
+            logger.warn('⚠️ Parse error, retrying...');
+            continue;
+          }
+          throw parseError;
         }
       }
+      
+      // eicrData is already validated and parsed from retry loop
+      logger.info('✅ Parsed EICR defect data', {
+        classification: eicrData.classification,
+        confidence: eicrData.confidenceAssessment?.level,
+        hasRectification: !!eicrData.rectification,
+        hasMakingSafe: !!eicrData.makingSafe
+      });
+          
+      // Transform into EICRDefect format for frontend
+      const eicrDefects = [];
+      
+      if (eicrData.classification === 'NONE') {
+        // Special handling for NONE classification
+        eicrDefects.push({
+          classification: 'NONE',
+          defectSummary: eicrData.defectSummary,
+          compliantSummary: eicrData.compliantSummary,
+          goodPracticeNotes: eicrData.goodPracticeNotes || [],
+          noActionRequired: true,
+          confidenceAssessment: eicrData.confidenceAssessment,
+          contextFactors: eicrData.contextFactors
+        });
+      } else {
+        // Standard defect
+        eicrDefects.push({
+          defectSummary: eicrData.defectSummary,
+          primaryCode: {
+            code: eicrData.classification,
+            title: {
+              'C1': 'Danger Present',
+              'C2': 'Potentially Dangerous',
+              'C3': 'Improvement Recommended',
+              'FI': 'Further Investigation'
+            }[eicrData.classification] || 'Unknown',
+            urgency: {
+              'C1': 'IMMEDIATE',
+              'C2': 'URGENT',
+              'C3': 'RECOMMENDED',
+              'FI': 'INVESTIGATE'
+            }[eicrData.classification] || 'UNKNOWN'
+          },
+          bs7671Regulations: eicrData.bs7671Regulations || [],
+          gn3Guidance: eicrData.gn3Guidance || { section: 'N/A', content: '' },
+          hazardExplanation: eicrData.hazardExplanation,
+          makingSafe: eicrData.makingSafe,
+          clientCommunication: eicrData.clientCommunication,
+          rectification: eicrData.rectification || { steps: [] },
+          verificationProcedure: eicrData.verificationProcedure || { tests: [], acceptanceCriteria: [] },
+          confidenceAssessment: eicrData.confidenceAssessment,
+          contextFactors: eicrData.contextFactors
+        });
+      }
+      
+      return new Response(
+        JSON.stringify({
+          success: true,
+          mode: 'eicr-photo-analysis',
+          queryType: 'photo-analysis',
+          eicrDefects,
+          citations: ragResults || [],
+          metadata: {
+            classification: { mode: 'photo-analysis', confidence: eicrData.confidenceAssessment.score / 100 },
+            ragQualityMetrics: {
+              gn3ProceduresFound,
+              regulationsFound,
+              totalSources: gn3ProceduresFound + regulationsFound
+            }
+          }
+        }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200 
+        }
+      );
     } else if (useStructuredDiagnosis) {
       logger.info('🔧 Using structured fault diagnosis tool');
       
