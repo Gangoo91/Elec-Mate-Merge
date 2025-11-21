@@ -63,15 +63,64 @@ export interface CertificationRequirements {
   additionalNotes?: string[];
 }
 
+export interface DiagnosticStep {
+  stepNumber: number;
+  ragStatus: 'RED' | 'AMBER' | 'GREEN';
+  stepTitle: string;
+  action: string;
+  whatToTest: string;
+  whatToMeasure?: string;
+  expectedReading?: string;
+  acceptableRange?: string;
+  instrumentSetup?: string;
+  safetyWarnings?: string[];
+  ifFailed?: string;
+  regulation?: string;
+}
+
+export interface CorrectiveAction {
+  forSymptom: string;
+  action: string;
+  tools?: string[];
+  estimatedTime?: string;
+  verificationTest?: string;
+}
+
+export interface LockoutTagout {
+  required: boolean;
+  procedure?: string[];
+  isolationPoints?: string[];
+}
+
+export interface AdditionalContext {
+  commonMistakes?: string[];
+  proTips?: string[];
+  regulations?: string[];
+}
+
+export interface FaultDiagnosis {
+  faultSummary: {
+    reportedSymptom: string;
+    likelyRootCauses: string[];
+    safetyRisk: 'LOW' | 'MODERATE' | 'HIGH' | 'CRITICAL';
+    immediateAction?: string;
+  };
+  diagnosticWorkflow: DiagnosticStep[];
+  correctiveActions: CorrectiveAction[];
+  lockoutTagout?: LockoutTagout;
+  additionalContext?: AdditionalContext;
+}
+
 export interface CommissioningResponse {
   success: boolean;
-  mode?: 'procedure' | 'conversational';
+  mode?: 'procedure' | 'conversational' | 'fault-diagnosis';
   queryType?: 'troubleshooting' | 'question';
   response?: string;
   structuredData?: {
     testingProcedure?: TestingProcedure;
     certification?: CertificationRequirements;
   };
+  structuredDiagnosis?: FaultDiagnosis;
   citations?: any[];
   enrichment?: any;
   rendering?: any;
