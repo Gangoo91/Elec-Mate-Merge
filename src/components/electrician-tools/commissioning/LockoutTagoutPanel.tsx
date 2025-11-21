@@ -50,7 +50,7 @@ const LockoutTagoutPanel = ({ lockoutTagout }: LockoutTagoutPanelProps) => {
             </h4>
             <ol className="space-y-2">
               {lockoutTagout.procedure.map((step, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-sm text-white/80">
+                <li key={idx} className="flex items-start gap-3 text-sm text-white/80 text-left">
                   <span className="flex-shrink-0 w-6 h-6 rounded-full bg-red-500/20 border border-red-500/50 flex items-center justify-center text-xs font-semibold text-red-300">
                     {idx + 1}
                   </span>
