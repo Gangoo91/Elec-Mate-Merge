@@ -1226,7 +1226,7 @@ Analyse this installation photo and provide structured fault diagnosis with RAG 
     }
     
     // Fallback: QUESTION MODE - conversational text response
-    const conversationalPrompt = buildConversationalPrompt(
+    const questionModePrompt = buildConversationalPrompt(
       'question',
       testContext,
       contextSection
@@ -1234,7 +1234,7 @@ Analyse this installation photo and provide structured fault diagnosis with RAG 
 
     // Build messages with vision support
     const questionMessages: any[] = [
-      { role: 'system', content: conversationalPrompt }
+      { role: 'system', content: questionModePrompt }
     ];
 
     // Add conversation history
