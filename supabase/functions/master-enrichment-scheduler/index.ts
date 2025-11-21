@@ -118,6 +118,9 @@ const ENRICHMENT_TASKS: EnrichmentTask[] = [
   
   // Phase 4: Practical Work Unified Enrichment (Priority 4) - ✅ 12-item batches, 10 concurrent workers (8 facets/source)
   { name: 'Practical Work', functionName: 'enrich-practical-work', sourceTable: 'practical_work', targetTable: 'practical_work_intelligence', batchSize: 12, priority: 4, filter: { is_canonical: true }, workerCount: 10 },
+  
+  // Phase 5: Design Knowledge Enrichment (Priority 1) - 12-item batches, 10 workers, 8 facets/source
+  { name: 'Design Knowledge', functionName: 'enrich-design-knowledge', sourceTable: 'design_knowledge', targetTable: 'design_knowledge_intelligence', batchSize: 12, priority: 1, filter: null, workerCount: 10 },
 ];
 
 // Global worker state tracking

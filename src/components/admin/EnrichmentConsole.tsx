@@ -56,6 +56,15 @@ const TASK_CONFIG = {
     enrichmentModel: 'faceted',
     targetMultiplier: 8.0, // Updated to 8 facets per source
     sourceFilter: { column: 'is_canonical', op: 'eq', value: true }
+  },
+  design_knowledge: {
+    label: 'Design Knowledge',
+    jobType: 'enrich_design_knowledge',
+    sourceTable: 'design_knowledge',
+    targetTable: 'design_knowledge_intelligence',
+    enrichmentModel: 'faceted',
+    targetMultiplier: 8.0, // 8 facets per source
+    sourceFilter: null
   }
 } as const;
 
@@ -160,6 +169,7 @@ export default function EnrichmentConsole() {
 
       // Load stats based on task type
       const isPracticalWork = selectedTask === 'practical_work' || selectedTask.startsWith('practical_work_');
+      const isDesignKnowledge = selectedTask === 'design_knowledge';
       
       if (isPracticalWork) {
         // PRACTICAL WORK: All stages use same stats calculation
@@ -231,6 +241,45 @@ export default function EnrichmentConsole() {
             compliancePercentage10min: complianceData?.compliance_percentage || 0,
             exactly8CountAllTime: 0,
             avgFacetsAllTime: complianceData?.avg_facets_per_source || 0
+          }
+        });
+
+      } else if (isDesignKnowledge) {
+        // DESIGN KNOWLEDGE: 8-facet architecture
+        const { count: sourceTotal } = await supabase
+          .from('design_knowledge')
+          .select('*', { count: 'exact', head: true });
+
+        const { count: facetsCreated } = await supabase
+          .from('design_knowledge_intelligence')
+          .select('*', { count: 'exact', head: true });
+
+        const targetFacets = Math.round((sourceTotal || 0) * 8.0);
+        const progress = targetFacets > 0 ? Math.round(((facetsCreated || 0) / targetFacets) * 100) : 0;
+
+        // Fetch compliance metrics
+        const { data: complianceData } = await supabase
+          .from('design_knowledge_facet_compliance')
+          .select('*')
+          .single();
+
+        setStats({
+          sourceTotal: sourceTotal || 0,
+          sourceEnriched: facetsCreated || 0,
+          isEstimated: false,
+          actualCanonical: 0,
+          facetsCreated: facetsCreated || 0,
+          targetFacets,
+          remaining: Math.max(0, targetFacets - (facetsCreated || 0)),
+          progress,
+          stageProgress: {},
+          compliance: {
+            sourcesEnriched10min: complianceData?.sources_enriched || 0,
+            exactly8Count10min: 0,
+            avgFacets10min: complianceData?.avg_facets_per_source || 0,
+            compliancePercentage10min: complianceData?.compliance_percentage || 0,
+            exactly8CountAllTime: 0,
+            avgFacetsAllTime: complianceData?.avg_facets_all_time || 0
           }
         });
 
