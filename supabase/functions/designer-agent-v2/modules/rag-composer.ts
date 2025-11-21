@@ -354,22 +354,43 @@ export async function buildRAGSearches(
   let failedBranches = 0;
   
   try {
-    // STEP 1: ULTRA-FAST INTELLIGENCE SEARCH (replaces slow vector search)
+    // STEP 1: ULTRA-FAST INTELLIGENCE SEARCH (TWO-QUERY STRATEGY)
+    // Query 1: Universal formulas/tables (no loadTypes filter)
+    // Query 2: Load-specific examples (with loadTypes filter)
     try {
-      logger.info('⚡ Searching design intelligence (keyword GIN indexes, <50ms)');
+      logger.info('⚡ Searching design intelligence (two-query strategy: universal + load-specific)');
       
       const intelligenceKeywords = extractIntelligenceKeywords(circuits || []);
       const loadTypes = circuits?.map(c => c.loadType).filter(Boolean) || [];
       
-      designDocs = await searchDesignIntelligence(supabase, {
+      // QUERY 1: Universal calculation knowledge (formulas, tables, concepts)
+      // NO loadTypes filter - these are universal across all circuits
+      const universalKnowledge = await searchDesignIntelligence(supabase, {
         keywords: [...allKeywords, ...intelligenceKeywords],
-        loadTypes: loadTypes,
+        // NOTE: NO loadTypes filter here - formulas/tables are universal
         categories: ['cable_sizing', 'voltage_drop', 'protection', 'earthing', 'special_locations'],
-        facetTypes: ['concept', 'formula', 'table', 'example'],
-        limit: 25 // Increased - we can afford more now it's <50ms
+        facetTypes: ['formula', 'table', 'concept'], // Universal calculation methods
+        limit: 20 // Prioritize formulas and tables
       });
       
-      logger.info(`✅ Intelligence search: ${designDocs.length} facets in ${Date.now() - searchStart}ms`);
+      logger.info(`✅ Universal knowledge: ${universalKnowledge.length} facets (formulas, tables, concepts)`);
+      
+      // QUERY 2: Load-specific examples and guidance
+      // WITH loadTypes filter - these are specific to the circuit types
+      const loadSpecificKnowledge = await searchDesignIntelligence(supabase, {
+        keywords: [...allKeywords, ...intelligenceKeywords],
+        loadTypes: loadTypes, // Filter by actual circuit load types
+        categories: ['cable_sizing', 'voltage_drop', 'protection', 'earthing', 'special_locations'],
+        facetTypes: ['example'], // Load-specific worked examples
+        limit: 10 // Supplement with relevant examples
+      });
+      
+      logger.info(`✅ Load-specific knowledge: ${loadSpecificKnowledge.length} facets (examples for: ${loadTypes.join(', ')})`);
+      
+      // Merge both result sets (universal first, then load-specific)
+      designDocs = [...universalKnowledge, ...loadSpecificKnowledge];
+      
+      logger.info(`✅ Total design intelligence: ${designDocs.length} facets in ${Date.now() - searchStart}ms`);
     } catch (err) {
       logger.error('❌ Intelligence search failed', { 
         error: err instanceof Error ? err.message : String(err),
@@ -422,11 +443,18 @@ export async function buildRAGSearches(
   const criticalSourcesMissing = [];
   if (designDocs.length === 0) {
     criticalSourcesMissing.push('Design Intelligence');
-    logger.error('🚨 CRITICAL: Design intelligence returned 0 results');
+    logger.error('🚨 CRITICAL: Design intelligence returned 0 results even after two-query strategy', {
+      keywords: allKeywords.slice(0, 10),
+      loadTypes: circuits?.map(c => c.loadType).filter(Boolean) || [],
+      circuitCount: circuits?.length || 0
+    });
   }
   if (regulations.length === 0) {
     criticalSourcesMissing.push('BS 7671 Regulations');
-    logger.error('🚨 CRITICAL: BS7671 RAG returned 0 results');
+    logger.error('🚨 CRITICAL: BS7671 intelligence returned 0 results', {
+      keywords: allKeywords.slice(0, 10),
+      installationType: type
+    });
   }
   
   // If BOTH critical sources failed, throw error (don't proceed with incomplete context)
