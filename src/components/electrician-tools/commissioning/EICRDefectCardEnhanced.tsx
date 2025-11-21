@@ -298,11 +298,11 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
             <AccordionContent className="pt-2">
               <div className="space-y-3">
                 {defect.bs7671Regulations.map((reg, idx) => (
-                  <div key={idx} className="flex items-start gap-3 text-left">
+                  <div key={idx} className="flex flex-col sm:flex-row items-center sm:items-start gap-3 text-left">
                     <Badge variant="outline" className="text-blue-300 border-blue-500/50 flex-shrink-0 text-base px-3 py-1.5">
                       {reg.regulation}
                     </Badge>
-                    <span className="text-base text-white leading-relaxed text-left">{reg.description}</span>
+                    <span className="text-base text-white leading-relaxed text-center sm:text-left">{reg.description}</span>
                   </div>
                 ))}
               </div>
