@@ -940,9 +940,9 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
       contextSection
     );
     
-    const aiResponse = await callLovableAIWithTimeout(
+    const aiResponse = await callOpenAI(
       {
-        model: 'google/gemini-2.5-flash',
+        model: 'gpt-5-mini-2025-08-07',
         messages: [
           { role: 'system', content: conversationalPrompt },
           { role: 'user', content: effectiveQuery }
@@ -950,11 +950,11 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
         temperature: 0.7,
         max_tokens: 2000
       },
-      180000,
-      logger
+      OPENAI_API_KEY!,
+      180000
     );
     
-    const conversationalResponse = aiResponse.choices?.[0]?.message?.content || 'Unable to generate response';
+    const conversationalResponse = aiResponse.content || 'Unable to generate response';
     
     return new Response(
       JSON.stringify({
