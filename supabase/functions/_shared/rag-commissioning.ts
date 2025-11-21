@@ -211,7 +211,19 @@ export async function retrieveCommissioningKnowledge(
     });
 
     if (bs7671Error) {
-      logger.warn('BS7671 search failed', { error: bs7671Error.message });
+      logger.error('BS7671 search FAILED - CRITICAL ERROR', { 
+        error: bs7671Error.message,
+        code: bs7671Error.code,
+        details: bs7671Error.details,
+        hint: bs7671Error.hint,
+        query: expandedQuery.substring(0, 100),
+        embeddingDimensions: embedding?.length || 'unknown'
+      });
+    } else {
+      logger.info('BS7671 search succeeded', {
+        resultsCount: bs7671Data?.length || 0,
+        sample: bs7671Data?.[0]?.regulation_number || 'none'
+      });
     }
 
     // Map BS7671 results (they have proper regulation_number field)
