@@ -41,30 +41,44 @@ export class RAGEngine {
       matchCount
     });
 
-    // Search regulations only (installation methods removed)
-    const regulations = await this.searchRegulations(queries.regulationKeywords, matchCount).catch(err => {
-      this.logger.error('Regulations search failed', { error: err.message });
-      return [];
-    });
+    // Phase 4: Execute parallel searches for regulations + design knowledge
+    const [regulations, designKnowledge] = await Promise.all([
+      this.searchRegulations(queries.regulationKeywords, matchCount).catch(err => {
+        this.logger.error('Regulations search failed', { error: err.message });
+        return [];
+      }),
+      this.searchDesignKnowledge(queries.regulationKeywords, matchCount).catch(err => {
+        this.logger.error('Design knowledge search failed', { error: err.message });
+        return [];
+      })
+    ]);
 
     const searchTime = Date.now() - startTime;
 
-    // Fallback: If regulations search failed, use core regulations cache
-    if (regulations.length === 0) {
-      this.logger.warn('Regulations search failed, using core regulations fallback');
+    // Fallback: If both searches failed, use core regulations cache
+    if (regulations.length === 0 && designKnowledge.length === 0) {
+      this.logger.warn('All searches failed, using core regulations fallback');
       const coreRegs = this.getCoreRegulations();
       return {
         regulations: this.weightResults(coreRegs, 90),
-        practicalGuides: [], // No longer searched here
+        designKnowledge: [],
+        practicalGuides: [],
         totalResults: coreRegs.length,
         searchTime
       };
     }
 
+    this.logger.info('RAG search complete', {
+      regulations: regulations.length,
+      designKnowledge: designKnowledge.length,
+      searchTime
+    });
+
     return {
-      regulations: this.weightResults(regulations, 90),
+      regulations: this.weightResults(regulations, 85),
+      designKnowledge: this.weightResults(designKnowledge, 95), // Higher weight for enriched knowledge
       practicalGuides: [], // Installation methods now handled by installation-method-agent
-      totalResults: regulations.length,
+      totalResults: regulations.length + designKnowledge.length,
       searchTime
     };
   }
@@ -113,7 +127,42 @@ export class RAGEngine {
   }
 
   /**
-   * Search Regulations Intelligence (keyword search, weight 90)
+   * Search Design Knowledge Intelligence (hybrid search, weight 95)
+   * Phase 4: Added to retrieve enriched formulas, examples, and calculations
+   */
+  private async searchDesignKnowledge(keywords: string, matchCount = 6): Promise<any[]> {
+    try {
+      const { data, error } = await this.supabase.rpc(
+        'search_design_knowledge_intelligence_hybrid',
+        {
+          query_text: keywords,
+          match_count: matchCount
+        }
+      ).abortSignal(AbortSignal.timeout(30000));
+
+      if (error) {
+        this.logger.warn('Design knowledge search failed', { error: error.message });
+        return [];
+      }
+
+      this.logger.info('Design knowledge search complete', { 
+        results: data?.length || 0,
+        matchCount
+      });
+
+      return data || [];
+    } catch (error) {
+      if (error.name === 'AbortError' || error.message.includes('timeout')) {
+        this.logger.warn('Design knowledge search timed out');
+        return [];
+      }
+      this.logger.error('Design knowledge search exception', { error: error.message });
+      return [];
+    }
+  }
+
+  /**
+   * Search Regulations Intelligence (keyword search, weight 85)
    * Phase 2: Increased timeout and improved fallback handling
    * Phase 3: Dynamic match count based on batch size
    */
