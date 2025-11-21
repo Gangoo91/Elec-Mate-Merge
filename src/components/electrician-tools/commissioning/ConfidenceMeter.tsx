@@ -41,11 +41,11 @@ const ConfidenceMeter = ({ level, score, reasoning }: ConfidenceMeterProps) => {
 
   return (
     <div className={`bg-elec-dark/50 border-2 ${conf.borderColor} rounded-lg p-5 shadow-lg`}>
-      <div className="flex items-start gap-4">
+      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
         <div className={`p-3 rounded-lg ${conf.color}/20`}>
           <Icon className={`h-6 w-6 ${conf.textColor}`} />
         </div>
-        <div className="flex-1 space-y-3">
+        <div className="flex-1 space-y-3 w-full">
           <div className="flex items-center gap-3 flex-wrap">
             <Badge className={`${conf.color} text-white border-none text-base px-3 py-1.5`}>
               {conf.label}
