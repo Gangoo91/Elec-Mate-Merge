@@ -65,6 +65,8 @@ export interface CertificationRequirements {
 
 export interface CommissioningResponse {
   success: boolean;
+  mode?: 'procedure' | 'conversational';
+  queryType?: 'troubleshooting' | 'question';
   response?: string;
   structuredData?: {
     testingProcedure?: TestingProcedure;
@@ -75,13 +77,17 @@ export interface CommissioningResponse {
   rendering?: any;
   suggestedNextAgents?: any[];
   metadata?: {
+    classification?: {
+      mode: string;
+      confidence: number;
+      reasoning: string;
+    };
     ragQualityMetrics?: {
       gn3ProceduresFound: number;
       regulationsFound: number;
       totalSources: number;
     };
   };
-  // Additional fields that may come from agent response
   circuits?: any[];
   overallResult?: string;
   notes?: string;
