@@ -1730,6 +1730,128 @@ export type Database = {
         }
         Relationships: []
       }
+      design_knowledge_intelligence: {
+        Row: {
+          acceptance_criteria: Json | null
+          applies_to: string[]
+          bs7671_regulations: string[] | null
+          cable_sizes: string[] | null
+          calculation_steps: string[] | null
+          common_mistakes: string[] | null
+          confidence_score: number | null
+          content: string
+          created_at: string | null
+          design_category: string
+          design_constraints: Json | null
+          design_knowledge_id: string
+          design_subcategory: string | null
+          enrichment_version: string | null
+          facet_hash: string | null
+          facet_type: string
+          formulas: string[] | null
+          guidance_note_refs: string[] | null
+          id: string
+          keywords: string[]
+          load_types: string[] | null
+          location_types: string[] | null
+          other_standards: string[] | null
+          power_ratings: string[] | null
+          primary_topic: string
+          quality_score: number | null
+          related_topics: string[] | null
+          required_parameters: string[] | null
+          source: string | null
+          table_refs: string[] | null
+          test_procedures: string[] | null
+          typical_values: Json | null
+          updated_at: string | null
+          voltage_levels: string[] | null
+          worked_examples: Json[] | null
+        }
+        Insert: {
+          acceptance_criteria?: Json | null
+          applies_to?: string[]
+          bs7671_regulations?: string[] | null
+          cable_sizes?: string[] | null
+          calculation_steps?: string[] | null
+          common_mistakes?: string[] | null
+          confidence_score?: number | null
+          content: string
+          created_at?: string | null
+          design_category: string
+          design_constraints?: Json | null
+          design_knowledge_id: string
+          design_subcategory?: string | null
+          enrichment_version?: string | null
+          facet_hash?: string | null
+          facet_type: string
+          formulas?: string[] | null
+          guidance_note_refs?: string[] | null
+          id?: string
+          keywords: string[]
+          load_types?: string[] | null
+          location_types?: string[] | null
+          other_standards?: string[] | null
+          power_ratings?: string[] | null
+          primary_topic: string
+          quality_score?: number | null
+          related_topics?: string[] | null
+          required_parameters?: string[] | null
+          source?: string | null
+          table_refs?: string[] | null
+          test_procedures?: string[] | null
+          typical_values?: Json | null
+          updated_at?: string | null
+          voltage_levels?: string[] | null
+          worked_examples?: Json[] | null
+        }
+        Update: {
+          acceptance_criteria?: Json | null
+          applies_to?: string[]
+          bs7671_regulations?: string[] | null
+          cable_sizes?: string[] | null
+          calculation_steps?: string[] | null
+          common_mistakes?: string[] | null
+          confidence_score?: number | null
+          content?: string
+          created_at?: string | null
+          design_category?: string
+          design_constraints?: Json | null
+          design_knowledge_id?: string
+          design_subcategory?: string | null
+          enrichment_version?: string | null
+          facet_hash?: string | null
+          facet_type?: string
+          formulas?: string[] | null
+          guidance_note_refs?: string[] | null
+          id?: string
+          keywords?: string[]
+          load_types?: string[] | null
+          location_types?: string[] | null
+          other_standards?: string[] | null
+          power_ratings?: string[] | null
+          primary_topic?: string
+          quality_score?: number | null
+          related_topics?: string[] | null
+          required_parameters?: string[] | null
+          source?: string | null
+          table_refs?: string[] | null
+          test_procedures?: string[] | null
+          typical_values?: Json | null
+          updated_at?: string | null
+          voltage_levels?: string[] | null
+          worked_examples?: Json[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "design_knowledge_intelligence_design_knowledge_id_fkey"
+            columns: ["design_knowledge_id"]
+            isOneToOne: false
+            referencedRelation: "design_knowledge"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       design_patterns: {
         Row: {
           avg_response_time: number | null
@@ -8066,6 +8188,16 @@ export type Database = {
         }
         Relationships: []
       }
+      design_knowledge_facet_compliance: {
+        Row: {
+          avg_facets_all_time: number | null
+          avg_facets_per_source: number | null
+          compliance_percentage: number | null
+          sources_enriched: number | null
+          total_sources_all_time: number | null
+        }
+        Relationships: []
+      }
       hs_common_hazards: {
         Row: {
           content: string | null
@@ -8424,6 +8556,15 @@ export type Database = {
         }[]
       }
       normalize_query_text: { Args: { query_text: string }; Returns: string }
+      prune_design_knowledge_facets_to_8: {
+        Args: never
+        Returns: {
+          avg_after: number
+          avg_before: number
+          facets_deleted: number
+          sources_processed: number
+        }[]
+      }
       prune_practical_work_facets_to_8: {
         Args: never
         Returns: {
@@ -8544,6 +8685,25 @@ export type Database = {
           similarity: number
           source: string
           topic: string
+        }[]
+      }
+      search_design_knowledge_intelligence_hybrid: {
+        Args: {
+          filter_category?: string
+          filter_load_type?: string
+          match_count?: number
+          query_text: string
+        }
+        Returns: {
+          bs7671_regulations: string[]
+          content: string
+          design_knowledge_id: string
+          facet_type: string
+          formulas: string[]
+          hybrid_score: number
+          id: string
+          keywords: string[]
+          primary_topic: string
         }[]
       }
       search_health_safety: {

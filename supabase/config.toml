@@ -163,6 +163,10 @@ timeout_sec = 600
 verify_jwt = false
 timeout_sec = 600
 
+[functions.enrich-design-knowledge]
+verify_jwt = false
+timeout_sec = 600
+
 # AI Room Diagram Generator
 [functions.room-diagram-generator]
 verify_jwt = false
