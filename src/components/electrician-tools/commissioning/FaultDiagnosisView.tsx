@@ -1,19 +1,24 @@
-import { AlertTriangle, AlertCircle, CheckCircle2, Lightbulb, XCircle, BookOpen, ArrowLeft } from "lucide-react";
+import { AlertTriangle, AlertCircle, CheckCircle2, Lightbulb, XCircle, BookOpen, ArrowLeft, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useState } from "react";
 import DiagnosticStepCard from "./DiagnosticStepCard";
 import CorrectiveActionCard from "./CorrectiveActionCard";
 import LockoutTagoutPanel from "./LockoutTagoutPanel";
+import EICRDefectCard, { type EICRDefect } from "./EICRDefectCard";
 import type { FaultDiagnosis } from "@/types/commissioning-response";
 
 interface FaultDiagnosisViewProps {
   diagnosis: FaultDiagnosis;
+  eicrDefects?: EICRDefect[];
   onStartOver: () => void;
 }
 
-const FaultDiagnosisView = ({ diagnosis, onStartOver }: FaultDiagnosisViewProps) => {
+const FaultDiagnosisView = ({ diagnosis, eicrDefects, onStartOver }: FaultDiagnosisViewProps) => {
+  const [showEICRCodes, setShowEICRCodes] = useState(true);
+  
   const riskConfig = {
     CRITICAL: { color: 'bg-red-500', textColor: 'text-red-100', icon: AlertTriangle },
     HIGH: { color: 'bg-orange-500', textColor: 'text-orange-100', icon: AlertTriangle },
@@ -28,15 +33,28 @@ const FaultDiagnosisView = ({ diagnosis, onStartOver }: FaultDiagnosisViewProps)
     <div className="min-h-screen bg-elec-gray p-4 sm:p-6 lg:p-8">
       <div className="max-w-5xl mx-auto space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Fault Diagnosis</h1>
             <p className="text-sm sm:text-base text-white/70">Structured troubleshooting workflow</p>
           </div>
-          <Button onClick={onStartOver} variant="outline" size="sm" className="gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">Back</span>
-          </Button>
+          <div className="flex items-center gap-2">
+            {eicrDefects && eicrDefects.length > 0 && (
+              <Button 
+                onClick={() => setShowEICRCodes(!showEICRCodes)}
+                variant={showEICRCodes ? "default" : "outline"}
+                size="sm" 
+                className="gap-2"
+              >
+                <FileText className="h-4 w-4" />
+                <span className="hidden sm:inline">EICR Codes</span>
+              </Button>
+            )}
+            <Button onClick={onStartOver} variant="outline" size="sm" className="gap-2">
+              <ArrowLeft className="h-4 w-4" />
+              <span className="hidden sm:inline">Back</span>
+            </Button>
+          </div>
         </div>
 
         {/* Safety Alert Banner */}
@@ -61,6 +79,24 @@ const FaultDiagnosisView = ({ diagnosis, onStartOver }: FaultDiagnosisViewProps)
               </div>
             </div>
           </Card>
+        )}
+
+        {/* EICR Defect Codes */}
+        {eicrDefects && eicrDefects.length > 0 && showEICRCodes && (
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <FileText className="h-6 w-6 text-blue-400" />
+              <h2 className="text-xl font-bold text-white">EICR Observation Codes</h2>
+              <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/50">
+                {eicrDefects.length} Defect{eicrDefects.length > 1 ? 's' : ''}
+              </Badge>
+            </div>
+            <div className="space-y-4">
+              {eicrDefects.map((defect, idx) => (
+                <EICRDefectCard key={idx} defect={defect} />
+              ))}
+            </div>
+          </div>
         )}
 
         {/* Fault Summary */}
