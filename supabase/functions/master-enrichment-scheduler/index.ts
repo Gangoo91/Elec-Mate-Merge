@@ -106,7 +106,6 @@ const ENRICHMENT_TASKS: EnrichmentTask[] = [
   { name: 'BS 7671 Intelligence', functionName: 'enrich-regulations', sourceTable: 'bs7671_embeddings', targetTable: 'regulations_intelligence', batchSize: 20, priority: 1, workerCount: 2 },
   { name: 'Health & Safety Knowledge', functionName: 'enrich-health-safety', sourceTable: 'health_safety_knowledge', targetTable: 'health_safety_intelligence', batchSize: 15, priority: 1, workerCount: 6 },
   { name: 'Installation Procedures', functionName: 'enrich-installation-procedures', sourceTable: 'installation_knowledge', targetTable: 'installation_procedures', batchSize: 20, priority: 1, workerCount: 6 },
-  { name: 'Design Patterns', functionName: 'enrich-design-patterns', sourceTable: 'design_knowledge', targetTable: 'design_patterns_structured', batchSize: 20, priority: 1, workerCount: 6 },
   
   // Phase 2: Specialized Domains (Priority 2)
   { name: 'Inspection Procedures', functionName: 'enrich-inspection-procedures', sourceTable: 'inspection_testing_knowledge', targetTable: 'inspection_procedures', batchSize: 30, priority: 2, workerCount: 6 },
