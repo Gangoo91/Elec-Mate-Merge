@@ -23,6 +23,7 @@ const CommissioningInterface = () => {
   } | null>(null);
   const [faultDiagnosis, setFaultDiagnosis] = useState<FaultDiagnosis | null>(null);
   const [eicrDefects, setEicrDefects] = useState<any[]>([]);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
   const [projectInfo, setProjectInfo] = useState({
     projectName: "",
     location: "",
@@ -54,6 +55,9 @@ const CommissioningInterface = () => {
       installationDate: data.installationDate,
       selectedType: data.selectedType
     });
+    
+    // Store uploaded image URL for results display
+    setUploadedImageUrl(data.imageUrl || null);
     
     const response = await callAgent('commissioning', {
       query: data.prompt,
@@ -113,6 +117,7 @@ const CommissioningInterface = () => {
     setConversationalResponse(null);
     setFaultDiagnosis(null);
     setEicrDefects([]);
+    setUploadedImageUrl(null);
   };
 
   const handleViewResults = () => {
@@ -163,6 +168,7 @@ const CommissioningInterface = () => {
       <FaultDiagnosisView
         diagnosis={faultDiagnosis}
         eicrDefects={eicrDefects}
+        imageUrl={uploadedImageUrl}
         onStartOver={handleStartOver}
       />
     );

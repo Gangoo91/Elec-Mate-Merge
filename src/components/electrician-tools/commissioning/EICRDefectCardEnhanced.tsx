@@ -20,10 +20,6 @@ export interface EICRDefectEnhanced {
     section: string;
     content: string;
   };
-  napitReference?: {
-    code: string;
-    description: string;
-  };
   hazardExplanation?: string;
   makingSafe?: {
     immediateSteps: string[];
@@ -89,10 +85,10 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
       bgLight: 'bg-amber-500/10'
     },
     FI: {
-      color: 'bg-purple-500',
+      color: 'bg-purple-500/50',
       textColor: 'text-purple-100',
-      borderColor: 'border-purple-500',
-      bgLight: 'bg-purple-500/10'
+      borderColor: 'border-purple-500/30',
+      bgLight: 'bg-purple-500/5'
     }
   };
 
@@ -113,10 +109,10 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
                   {defect.primaryCode.urgency}
                 </Badge>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-1">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-1 text-left">
                 {defect.primaryCode.title}
               </h3>
-              <p className="text-sm sm:text-base text-white/90">
+              <p className="text-sm sm:text-base text-white/90 text-left">
                 {defect.defectSummary}
               </p>
             </div>
@@ -137,10 +133,10 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
       </div>
 
       {/* Context Factors */}
-      {defect.contextFactors && (
+        {defect.contextFactors && (
         <div className="px-4 sm:px-5 pb-4">
           <div className="bg-elec-dark/50 rounded-lg p-3">
-            <h5 className="text-sm font-semibold text-white mb-2">Installation Context</h5>
+            <h5 className="text-sm font-semibold text-white mb-2 text-left">Installation Context</h5>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {defect.contextFactors.bathroomZone && (
                 <Badge variant="outline" className="justify-center">
@@ -191,14 +187,14 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
             <AccordionContent>
               <div className="space-y-3">
                 <div className="bg-red-500/10 border border-red-500/30 rounded p-3">
-                  <p className="text-xs font-semibold text-red-300 mb-2">IMMEDIATE SAFETY MEASURES (before fixing):</p>
+                  <p className="text-xs font-semibold text-red-300 mb-2 text-left">IMMEDIATE SAFETY MEASURES (before fixing):</p>
                   <ol className="space-y-2">
                     {defect.makingSafe.immediateSteps.map((step, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-white/80">
+                      <li key={idx} className="flex items-start gap-2 text-sm text-white/80 text-left">
                         <span className="flex-shrink-0 w-6 h-6 rounded-full bg-red-500/20 border border-red-500/50 flex items-center justify-center text-xs font-semibold text-red-300">
                           {idx + 1}
                         </span>
-                        <span className="flex-1 pt-0.5">{step}</span>
+                        <span className="flex-1 pt-0.5 text-left">{step}</span>
                       </li>
                     ))}
                   </ol>
@@ -209,7 +205,7 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
                   </Badge>
                 )}
                 {defect.makingSafe.signageRequired && (
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white/70 text-left">
                     <span className="font-semibold">Signage: </span>{defect.makingSafe.signageRequired}
                   </p>
                 )}
@@ -230,22 +226,22 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
             <AccordionContent>
               <div className="space-y-3">
                 <div className="bg-blue-500/10 border border-blue-500/30 rounded p-3">
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white/80 mb-3 text-left">
                     {defect.clientCommunication.plainLanguage}
                   </p>
                   <div className="space-y-2">
                     <div>
-                      <p className="text-xs font-semibold text-white/70 mb-1">What this means:</p>
-                      <p className="text-sm text-white/80">{defect.clientCommunication.severityExplanation}</p>
+                      <p className="text-xs font-semibold text-white/70 mb-1 text-left">What this means:</p>
+                      <p className="text-sm text-white/80 text-left">{defect.clientCommunication.severityExplanation}</p>
                     </div>
                     {defect.clientCommunication.risksIfUnfixed && defect.clientCommunication.risksIfUnfixed.length > 0 && (
                       <div>
-                        <p className="text-xs font-semibold text-white/70 mb-1">Risks if not fixed:</p>
+                        <p className="text-xs font-semibold text-white/70 mb-1 text-left">Risks if not fixed:</p>
                         <ul className="space-y-1">
                           {defect.clientCommunication.risksIfUnfixed.map((risk, idx) => (
-                            <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                            <li key={idx} className="text-sm text-white/80 flex items-start gap-2 text-left">
                               <span className="text-orange-400">⚠</span>
-                              <span>{risk}</span>
+                              <span className="text-left">{risk}</span>
                             </li>
                           ))}
                         </ul>
@@ -278,7 +274,7 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
               </div>
             </AccordionTrigger>
             <AccordionContent>
-              <p className="text-sm text-white/80 leading-relaxed">
+              <p className="text-sm text-white/80 leading-relaxed text-left">
                 {defect.hazardExplanation}
               </p>
             </AccordionContent>
@@ -297,11 +293,11 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
             <AccordionContent>
               <div className="space-y-3">
                 {defect.bs7671Regulations.map((reg, idx) => (
-                  <div key={idx} className="flex items-start gap-2">
+                  <div key={idx} className="flex items-start gap-2 text-left">
                     <Badge variant="outline" className="text-blue-300 border-blue-500/50 flex-shrink-0">
                       {reg.regulation}
                     </Badge>
-                    <span className="text-sm text-white/80">{reg.description}</span>
+                    <span className="text-sm text-white/80 text-left">{reg.description}</span>
                   </div>
                 ))}
               </div>
@@ -309,33 +305,23 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
           </AccordionItem>
         )}
 
-        {/* GN3 & NAPIT */}
-        {(defect.gn3Guidance || defect.napitReference) && (
+        {/* BS 7671 & Guidance References */}
+        {defect.gn3Guidance && (
           <AccordionItem value="references" className="border-white/10">
             <AccordionTrigger className="text-white hover:text-white/80">
               <div className="flex items-center gap-2">
                 <FileText className="h-4 w-4 text-green-400" />
-                <span className="font-semibold">GN3 & NAPIT References</span>
+                <span className="font-semibold">BS 7671 & Guidance References</span>
               </div>
             </AccordionTrigger>
             <AccordionContent>
               <div className="space-y-3">
-                {defect.gn3Guidance && (
-                  <div className="bg-elec-dark/50 rounded p-3">
-                    <Badge className="bg-green-500/20 text-green-300 border-green-500/50 mb-2">
-                      {defect.gn3Guidance.section}
-                    </Badge>
-                    <p className="text-sm text-white/80">{defect.gn3Guidance.content}</p>
-                  </div>
-                )}
-                {defect.napitReference && (
-                  <div className="bg-elec-dark/50 rounded p-3">
-                    <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/50 mb-2">
-                      NAPIT {defect.napitReference.code}
-                    </Badge>
-                    <p className="text-sm text-white/80">{defect.napitReference.description}</p>
-                  </div>
-                )}
+                <div className="bg-elec-dark/50 rounded p-3">
+                  <Badge className="bg-green-500/20 text-green-300 border-green-500/50 mb-2">
+                    {defect.gn3Guidance.section}
+                  </Badge>
+                  <p className="text-sm text-white/80 text-left">{defect.gn3Guidance.content}</p>
+                </div>
               </div>
             </AccordionContent>
           </AccordionItem>
@@ -359,17 +345,17 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
                 )}
                 <ol className="space-y-2">
                   {defect.rectification.steps.map((step, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm text-white/80">
+                    <li key={idx} className="flex items-start gap-2 text-sm text-white/80 text-left">
                       <span className="flex-shrink-0 w-6 h-6 rounded-full bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-xs font-semibold text-amber-300">
                         {idx + 1}
                       </span>
-                      <span className="flex-1 pt-0.5">{step}</span>
+                      <span className="flex-1 pt-0.5 text-left">{step}</span>
                     </li>
                   ))}
                 </ol>
                 {defect.rectification.requiredMaterials && defect.rectification.requiredMaterials.length > 0 && (
                   <div className="mt-3 bg-elec-dark/50 rounded p-3">
-                    <h6 className="text-xs font-semibold text-white/70 mb-2">Required Materials:</h6>
+                    <h6 className="text-xs font-semibold text-white/70 mb-2 text-left">Required Materials:</h6>
                     <div className="flex flex-wrap gap-2">
                       {defect.rectification.requiredMaterials.map((material, idx) => (
                         <Badge key={idx} variant="outline" className="text-white/70">
@@ -397,12 +383,12 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
               <div className="space-y-3">
                 {defect.verificationProcedure.tests && defect.verificationProcedure.tests.length > 0 && (
                   <div>
-                    <h6 className="text-sm font-semibold text-white mb-2">Required Tests:</h6>
+                    <h6 className="text-sm font-semibold text-white mb-2 text-left">Required Tests:</h6>
                     <ul className="space-y-1">
                       {defect.verificationProcedure.tests.map((test, idx) => (
-                        <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                        <li key={idx} className="text-sm text-white/80 flex items-start gap-2 text-left">
                           <span className="text-blue-400">•</span>
-                          <span>{test}</span>
+                          <span className="text-left">{test}</span>
                         </li>
                       ))}
                     </ul>
@@ -410,7 +396,7 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
                 )}
                 {defect.verificationProcedure.acceptanceCriteria && defect.verificationProcedure.acceptanceCriteria.length > 0 && (
                   <div className="bg-green-500/10 border border-green-500/30 rounded p-3">
-                    <h6 className="text-sm font-semibold text-green-300 mb-2">Acceptance Criteria:</h6>
+                    <h6 className="text-sm font-semibold text-green-300 mb-2 text-left">Acceptance Criteria:</h6>
                     <ul className="space-y-1">
                       {defect.verificationProcedure.acceptanceCriteria.map((criteria, idx) => (
                         <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
