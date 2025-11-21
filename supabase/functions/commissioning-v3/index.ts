@@ -259,6 +259,57 @@ ${testContext}
     • Use a dedicated link wire (6" of 2.5mm² with ferrules) for far-end connections - much faster than stripping new wire every time
     • If R1+R2 reads exactly double your expected value, you've accidentally measured the ring - check you linked L-CPC, not L-N"
 
+**TEST SEQUENCE LOGIC:**
+For EVERY test (dead and live), specify:
+
+prerequisiteTests:
+- Safety isolation before dead tests
+- Continuity tests before insulation resistance
+- Dead tests complete before re-energisation
+- Polarity verified before Zs testing
+- Voltage presence confirmed before RCD testing
+
+conflictingTests:
+- Do NOT do insulation resistance immediately after RCD testing (RCD must be reconnected)
+- Do NOT do Zs testing before polarity verification
+- Do NOT do RCD testing before confirming circuit is energised and stable
+
+Examples:
+Dead Test - Insulation Resistance:
+  prerequisiteTests: ["Continuity of protective conductors", "Continuity of ring final circuits"]
+  conflictingTests: []
+
+Live Test - Earth Fault Loop Impedance (Zs):
+  prerequisiteTests: ["Safe re-energisation", "Polarity verification", "Voltage presence confirmed"]
+  conflictingTests: ["RCD testing without re-energisation"]
+
+Live Test - RCD Operation:
+  prerequisiteTests: ["Zs testing complete", "Circuit proven energised and stable"]
+  conflictingTests: ["Insulation resistance (unless RCD reconnected)"]
+
+**CALCULATION BREAKDOWN REQUIREMENTS:**
+For live tests requiring calculations (Zs, PSC, voltage drop):
+- Formula: Use proper mathematical notation (Zs = Ze + (R1 + R2))
+- Components: Break down EVERY value used:
+  * Ze: State source (DNO declaration, measured at origin, assumed for design)
+  * R1+R2: State if measured or calculated from cable data
+  * Cable details: Length in metres, CSA in mm²
+- Expected Result: Calculate to 2 decimal places with units
+- Limit Check: Show the comparison "0.89Ω < 1.44Ω (Table 41.3 for 32A Type B MCB) ✓"
+
+Example for Zs test:
+{
+  "formula": "Zs = Ze + (R1 + R2)",
+  "components": {
+    "Ze": "0.35Ω (measured at origin, TN-S supply)",
+    "R1R2": "0.54Ω (measured continuity test on ring final)",
+    "cableLength": "18m radial distance",
+    "cableCsa": "2.5mm² twin & earth"
+  },
+  "expectedResult": "0.89Ω",
+  "limitCheck": "0.89Ω < 1.44Ω (BS 7671 Table 41.3 for 32A Type B MCB) ✓ COMPLIANT"
+}
+
 8. TEST DURATION (realistic timing)
    Example: "Typical duration: 5-8 minutes (including setup, testing at 3 points, and recording results)"
 
@@ -458,6 +509,16 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
                         testDuration: {
                           type: 'string',
                           description: 'Typical time to complete this test (e.g., "5-8 minutes")'
+                        },
+                        prerequisiteTests: {
+                          type: 'array',
+                          items: { type: 'string' },
+                          description: 'Tests that MUST be completed before this test (e.g., ["Continuity of protective conductors"] before "Insulation resistance")'
+                        },
+                        conflictingTests: {
+                          type: 'array',
+                          items: { type: 'string' },
+                          description: 'Tests that should NOT be performed immediately before/after this test without intermediate steps'
                         }
                       },
                       required: ['testName', 'regulation', 'instrumentSetup', 'leadPlacement', 'procedure', 'expectedResult', 'troubleshooting', 'safetyNotes']
@@ -482,10 +543,39 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
                           minLength: 80,
                           description: 'EXACT lead positions: Terminal numbers, color coding, test point location, probe connection method. For Zs tests specify L-N-E connections.'
                         },
-                        calculation: { 
-                          type: 'object',
-                          description: 'Calculation breakdown for expected result (e.g., Zs = Ze + R1+R2)'
-                        },
+            calculation: {
+              type: 'object',
+              required: ['formula', 'components'],
+              properties: {
+                formula: { 
+                  type: 'string', 
+                  minLength: 10,
+                  description: 'Mathematical formula (e.g., "Zs = Ze + (R1 + R2)")'
+                },
+                components: {
+                  type: 'object',
+                  description: 'Individual component values with sources',
+                  properties: {
+                    Ze: { type: 'string', description: 'External impedance with source (e.g., "0.35Ω (from TNS supply)")' },
+                    R1: { type: 'string', description: 'Line conductor resistance' },
+                    R2: { type: 'string', description: 'CPC resistance' },
+                    R1R2: { type: 'string', description: 'Combined R1+R2 value' },
+                    cableLength: { type: 'string' },
+                    cableCsa: { type: 'string' }
+                  }
+                },
+                expectedResult: { 
+                  type: 'string',
+                  minLength: 10,
+                  description: 'Calculated result with units (e.g., "0.89Ω")'
+                },
+                limitCheck: {
+                  type: 'string',
+                  minLength: 20,
+                  description: 'Comparison against maximum permitted value from BS 7671 (e.g., "0.89Ω < 1.44Ω (Table 41.3) ✓")'
+                }
+              }
+            },
                         procedure: { 
                           type: 'array', 
                           items: { type: 'string', minLength: 30 },
@@ -529,14 +619,24 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
                           minItems: 2,
                           description: 'Trade wisdom from 30 years experience for live testing (e.g., test Zs at multiple points, check voltage first, use test button on RCD)'
                         },
-                        testDuration: {
-                          type: 'string',
-                          description: 'Typical time to complete this test including energisation and safety setup (e.g., "8-12 minutes")'
-                        }
-                      },
-                      required: ['testName', 'regulation', 'instrumentSetup', 'leadPlacement', 'procedure', 'expectedResult', 'troubleshooting', 'safetyNotes']
-                    }
-                  }
+            testDuration: {
+              type: 'string',
+              description: 'Typical time to complete this test including energisation and safety setup (e.g., "8-12 minutes")'
+            },
+            prerequisiteTests: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Tests that MUST be completed before this test (e.g., ["Safe re-energisation", "Polarity verification"] before "Zs testing")'
+            },
+            conflictingTests: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Tests that should NOT be performed immediately before/after this test without intermediate steps'
+            }
+          },
+          required: ['testName', 'regulation', 'instrumentSetup', 'leadPlacement', 'procedure', 'expectedResult', 'troubleshooting', 'safetyNotes']
+        }
+      }
                 }
               },
               certification: {
