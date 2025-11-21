@@ -1704,8 +1704,11 @@ export type Database = {
         Row: {
           content: string
           created_at: string | null
+          deleted_at: string | null
           embedding: string | null
           id: string
+          is_active: boolean
+          last_modified_by: string | null
           metadata: Json | null
           source: string
           topic: string
@@ -1713,8 +1716,11 @@ export type Database = {
         Insert: {
           content: string
           created_at?: string | null
+          deleted_at?: string | null
           embedding?: string | null
           id?: string
+          is_active?: boolean
+          last_modified_by?: string | null
           metadata?: Json | null
           source: string
           topic: string
@@ -1722,8 +1728,11 @@ export type Database = {
         Update: {
           content?: string
           created_at?: string | null
+          deleted_at?: string | null
           embedding?: string | null
           id?: string
+          is_active?: boolean
+          last_modified_by?: string | null
           metadata?: Json | null
           source?: string
           topic?: string
@@ -1743,7 +1752,7 @@ export type Database = {
           created_at: string | null
           design_category: string
           design_constraints: Json | null
-          design_knowledge_id: string
+          design_knowledge_id: string | null
           design_subcategory: string | null
           enrichment_version: string | null
           facet_hash: string | null
@@ -1780,7 +1789,7 @@ export type Database = {
           created_at?: string | null
           design_category: string
           design_constraints?: Json | null
-          design_knowledge_id: string
+          design_knowledge_id?: string | null
           design_subcategory?: string | null
           enrichment_version?: string | null
           facet_hash?: string | null
@@ -1817,7 +1826,7 @@ export type Database = {
           created_at?: string | null
           design_category?: string
           design_constraints?: Json | null
-          design_knowledge_id?: string
+          design_knowledge_id?: string | null
           design_subcategory?: string | null
           enrichment_version?: string | null
           facet_hash?: string | null
