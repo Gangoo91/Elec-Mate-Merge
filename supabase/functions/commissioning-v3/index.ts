@@ -981,13 +981,8 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
       contextSection
     );
     
-    // Detect if we should use structured fault diagnosis
-    const useStructuredDiagnosis = classification.mode === 'troubleshooting' && 
-      (query.toLowerCase().includes('reading') || 
-       query.toLowerCase().includes('fault') || 
-       query.toLowerCase().includes('failing') ||
-       query.toLowerCase().includes('trip') ||
-       query.toLowerCase().includes('error'));
+    // Use structured fault diagnosis for ALL troubleshooting queries (trust AI classification)
+    const useStructuredDiagnosis = classification.mode === 'troubleshooting';
     
     if (useStructuredDiagnosis) {
       logger.info('🔧 Using structured fault diagnosis tool');
@@ -1083,30 +1078,52 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
       );
       
       const toolCall = aiResponse.toolCalls?.[0];
+      logger.info('🔧 Tool call response', { 
+        hasToolCall: !!toolCall, 
+        toolName: toolCall?.function?.name,
+        hasArguments: !!toolCall?.function?.arguments 
+      });
+      
       if (toolCall?.function?.arguments) {
-        const diagnosisData = JSON.parse(toolCall.function.arguments);
-        
-        return new Response(
-          JSON.stringify({
-            success: true,
-            mode: 'fault-diagnosis',
-            queryType: 'troubleshooting',
-            structuredDiagnosis: diagnosisData,
-            citations: ragResults || [],
-            metadata: {
-              classification,
-              ragQualityMetrics: {
-                gn3ProceduresFound,
-                regulationsFound,
-                totalSources: gn3ProceduresFound + regulationsFound
+        try {
+          const diagnosisData = JSON.parse(toolCall.function.arguments);
+          logger.info('✅ Parsed fault diagnosis data successfully', {
+            hasWorkflow: !!diagnosisData.diagnosticWorkflow,
+            workflowSteps: diagnosisData.diagnosticWorkflow?.length || 0,
+            hasSummary: !!diagnosisData.faultSummary
+          });
+          
+          return new Response(
+            JSON.stringify({
+              success: true,
+              mode: 'fault-diagnosis',
+              queryType: 'troubleshooting',
+              structuredDiagnosis: diagnosisData,
+              citations: ragResults || [],
+              metadata: {
+                classification,
+                ragQualityMetrics: {
+                  gn3ProceduresFound,
+                  regulationsFound,
+                  totalSources: gn3ProceduresFound + regulationsFound
+                }
               }
+            }),
+            { 
+              headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+              status: 200 
             }
-          }),
-          { 
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-            status: 200 
-          }
-        );
+          );
+        } catch (error) {
+          logger.error('❌ Failed to parse tool call arguments', { 
+            error: error instanceof Error ? error.message : String(error) 
+          });
+          // Fall through to conversational mode
+        }
+      } else {
+        logger.warn('⚠️ No tool call returned despite troubleshooting mode - falling back to conversational', {
+          responseContent: aiResponse.content?.substring(0, 200)
+        });
       }
     }
     
