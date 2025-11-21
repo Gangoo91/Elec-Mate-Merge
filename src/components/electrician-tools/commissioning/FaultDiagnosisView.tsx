@@ -9,6 +9,7 @@ import CorrectiveActionCard from "./CorrectiveActionCard";
 import LockoutTagoutPanel from "./LockoutTagoutPanel";
 import EICRDefectCard, { type EICRDefect } from "./EICRDefectCard";
 import EICRDefectCardEnhanced from "./EICRDefectCardEnhanced";
+import EICRCriticalAlertBanner from "./EICRCriticalAlertBanner";
 import type { FaultDiagnosis } from "@/types/commissioning-response";
 
 interface FaultDiagnosisViewProps {
@@ -66,6 +67,21 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
           </div>
         </div>
 
+        {/* Critical Alert Banner */}
+        {eicrDefects && eicrDefects.length > 0 && !isCompliantPhoto && eicrDefects[0].classification !== 'NONE' && (
+          <EICRCriticalAlertBanner
+            classification={eicrDefects[0].classification as 'C1' | 'C2' | 'C3' | 'FI'}
+            confidenceScore={eicrDefects[0].confidenceAssessment?.score || 
+                            (eicrDefects[0].confidenceAssessment?.level === 'high' ? 90 : 
+                             eicrDefects[0].confidenceAssessment?.level === 'medium' ? 70 : 50)}
+            primaryDefect={eicrDefects[0].defectSummary}
+            urgency={eicrDefects[0].classification === 'C1' ? 'Immediate isolation required' :
+                    eicrDefects[0].classification === 'C2' ? 'Urgent rectification needed' :
+                    eicrDefects[0].classification === 'C3' ? 'Improvement recommended' :
+                    'Further investigation required'}
+          />
+        )}
+
         {/* Uploaded Photo Display */}
         {imageUrl && (
           <Card className="bg-elec-dark/80 border-2 border-blue-500/30 p-5 sm:p-6">
@@ -78,7 +94,7 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
                 <img 
                   src={imageUrl} 
                   alt="Installation photo" 
-                  className="w-full h-auto max-h-[400px] object-contain"
+                  className="w-full h-auto max-h-[300px] sm:max-h-[400px] object-contain"
                 />
               </div>
             </div>

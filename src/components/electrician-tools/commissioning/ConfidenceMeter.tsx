@@ -40,23 +40,23 @@ const ConfidenceMeter = ({ level, score, reasoning }: ConfidenceMeterProps) => {
   const displayScore = score || (level === 'high' ? 90 : level === 'medium' ? 70 : 50);
 
   return (
-    <div className={`bg-elec-dark/50 border-2 ${conf.borderColor} rounded-lg p-4`}>
-      <div className="flex items-start gap-3">
-        <div className={`p-2 rounded-lg ${conf.color}/20`}>
-          <Icon className={`h-5 w-5 ${conf.textColor}`} />
+    <div className={`bg-elec-dark/50 border-2 ${conf.borderColor} rounded-lg p-5 shadow-lg`}>
+      <div className="flex items-start gap-4">
+        <div className={`p-3 rounded-lg ${conf.color}/20`}>
+          <Icon className={`h-6 w-6 ${conf.textColor}`} />
         </div>
-        <div className="flex-1 space-y-2">
-          <div className="flex items-center gap-2 flex-wrap">
-            <Badge className={`${conf.color} text-white border-none`}>
+        <div className="flex-1 space-y-3">
+          <div className="flex items-center gap-3 flex-wrap">
+            <Badge className={`${conf.color} text-white border-none text-base px-3 py-1.5`}>
               {conf.label}
             </Badge>
-            <span className={`text-2xl font-bold ${conf.textColor}`}>
+            <span className={`text-4xl font-bold ${conf.textColor}`}>
               {displayScore}%
             </span>
           </div>
-          <p className="text-sm text-white/70">{conf.description}</p>
+          <p className="text-base text-white leading-relaxed">{conf.description}</p>
           {reasoning && (
-            <p className="text-sm text-white/80 bg-elec-dark/80 rounded p-2 mt-2">
+            <p className="text-base text-white bg-elec-dark/80 rounded p-4 mt-3 leading-relaxed">
               {reasoning}
             </p>
           )}
@@ -64,7 +64,7 @@ const ConfidenceMeter = ({ level, score, reasoning }: ConfidenceMeterProps) => {
       </div>
 
       {/* Visual confidence bar */}
-      <div className="mt-3 h-2 bg-elec-dark rounded-full overflow-hidden">
+      <div className="mt-4 h-3 bg-elec-dark rounded-full overflow-hidden">
         <div 
           className={`h-full ${conf.color} transition-all duration-500`}
           style={{ width: `${displayScore}%` }}

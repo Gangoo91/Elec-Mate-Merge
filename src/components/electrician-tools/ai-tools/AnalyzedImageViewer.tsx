@@ -15,12 +15,12 @@ export const AnalyzedImageViewer = ({ imageUrl, timestamp, onDownload }: Analyze
 
   return (
     <>
-      <Card className="overflow-hidden bg-card border-border/40">
+      <Card className="overflow-hidden bg-elec-card border-elec-yellow/10">
         <div className="relative group">
           <img 
             src={imageUrl} 
             alt="Analyzed installation" 
-            className="w-full h-auto max-h-[300px] object-contain bg-muted/30"
+            className="w-full h-auto max-h-[300px] sm:max-h-[400px] object-contain bg-elec-dark"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
             <div className="absolute bottom-3 left-3 right-3 flex gap-2">
