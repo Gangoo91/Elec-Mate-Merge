@@ -9,7 +9,6 @@ import { InstallationProjectDetails as ProjectDetailsType } from "@/types/instal
 import { InstallationTemplateSelector } from "./InstallationTemplateSelector";
 import { InstallationProjectDetails } from "./InstallationProjectDetails";
 import { InstallationTemplate } from "@/lib/installation-templates";
-import { StickyBottomBar } from "./StickyBottomBar";
 import {
   Collapsible,
   CollapsibleContent,
@@ -120,27 +119,25 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
       </Collapsible>
 
 
-      {/* Generate Button - Sticky on mobile */}
-      <StickyBottomBar>
-        <Button
-          onClick={handleSubmit}
-          disabled={!isValid || isProcessing}
-          size="lg"
-          className="w-full h-12 sm:h-14 bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white text-base sm:text-lg font-bold shadow-xl hover:shadow-2xl transition-all touch-manipulation active:scale-95 disabled:opacity-50"
-        >
-          {isProcessing ? (
-            <>
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
-              Generating Method Statement...
-            </>
-          ) : (
-            <>
-              <Zap className="h-5 w-5 mr-2" />
-              Generate Installation Method
-            </>
-          )}
-        </Button>
-      </StickyBottomBar>
+      {/* Generate Button */}
+      <Button
+        onClick={handleSubmit}
+        disabled={!isValid || isProcessing}
+        size="lg"
+        className="w-full h-12 sm:h-14 bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white text-base sm:text-lg font-bold shadow-xl hover:shadow-2xl transition-all touch-manipulation active:scale-95 disabled:opacity-50"
+      >
+        {isProcessing ? (
+          <>
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
+            Generating Method Statement...
+          </>
+        ) : (
+          <>
+            <Zap className="h-5 w-5 mr-2" />
+            Generate Installation Method
+          </>
+        )}
+      </Button>
     </div>
   );
 };
