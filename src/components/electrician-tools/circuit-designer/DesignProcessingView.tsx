@@ -128,7 +128,7 @@ export const DesignProcessingView = ({
       <Card className="border-elec-yellow/20 bg-elec-card max-w-2xl mx-auto w-full">
         <CardContent className="p-4 sm:p-6">
           {/* Header Section */}
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center shrink-0">
               <Loader2 className="w-5 h-5 text-elec-yellow animate-spin" />
             </div>
@@ -139,7 +139,7 @@ export const DesignProcessingView = ({
           </div>
 
           {/* Overall Progress */}
-          <div className="mb-6">
+          <div className="mb-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-muted-foreground">Overall Progress</span>
               <span className="text-2xl font-bold text-elec-yellow">{currentPercent}%</span>
@@ -153,7 +153,7 @@ export const DesignProcessingView = ({
           </div>
 
           {/* Current Activity */}
-          <div className="bg-muted/10 rounded-lg p-4 mb-6">
+          <div className="bg-muted/10 rounded-lg p-4 mb-4">
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 rounded-full bg-elec-yellow/10 flex items-center justify-center shrink-0 mt-0.5">
                 <span className="text-lg">{stageDetails[currentStage].icon}</span>
@@ -170,7 +170,7 @@ export const DesignProcessingView = ({
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 gap-3 mb-6">
+          <div className="grid grid-cols-2 gap-3 mb-4">
             <div className="bg-muted/10 rounded-lg p-3">
               <div className="flex items-center gap-2 mb-2">
                 <Clock className="w-4 h-4 text-muted-foreground" />
@@ -193,8 +193,8 @@ export const DesignProcessingView = ({
           </div>
 
           {/* Parallel Agents */}
-          <div className="space-y-3 mb-6 pt-6 border-t border-border/20">
-            <p className="text-xs font-medium text-muted-foreground mb-3">Parallel Processing</p>
+          <div className="space-y-3 mb-4 pt-4 border-t border-border/20">
+            <p className="text-xs font-medium text-muted-foreground mb-2">Parallel Processing</p>
             
             {/* Designer */}
             <div className="flex items-center gap-3">
