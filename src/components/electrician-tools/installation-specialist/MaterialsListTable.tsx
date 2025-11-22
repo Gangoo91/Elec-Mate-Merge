@@ -28,12 +28,7 @@ export const MaterialsListTable = ({ materialsList }: MaterialsListTableProps) =
             <Package className="h-6 w-6 text-purple-400" />
           </div>
           <div className="flex-1">
-            <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-bold text-xl text-foreground">Materials Required</h3>
-              <Badge variant="outline" className="bg-purple-500/10 border-purple-500/30 text-purple-400 text-xs">
-                AI Generated
-              </Badge>
-            </div>
+            <h3 className="font-bold text-xl text-foreground mb-1">Materials Required</h3>
             <p className="text-sm text-muted-foreground">
               {materialsList.length} item{materialsList.length !== 1 ? 's' : ''} with quantities and specifications
             </p>
