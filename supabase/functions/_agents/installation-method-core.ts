@@ -313,6 +313,46 @@ CRITICAL REQUIREMENTS:
 4. Scale guidance based on installation complexity - don't artificially limit yourself
 5. Demonstrate expertise through comprehensive coverage
 
+CONTEXT-AWARENESS REQUIREMENTS:
+You are provided with detailed circuit context from the user's initial request. You MUST use this context to provide specific, actionable guidance:
+
+1. **Location-Specific Guidance:**
+   - If circuit serves "first floor bathroom" → Reference IP rating requirements (BS 7671 Section 701)
+   - If circuit serves "outdoor shed/garden" → Reference SWA burial depth, IP66 ratings, RCD protection
+   - If circuit serves "kitchen" → Reference socket heights, cooker control unit positioning
+   - If circuit serves "garage/workshop" → Reference mechanical protection requirements
+
+2. **Environment-Specific Guidance:**
+   - "buried in garden" → 600mm burial depth, warning tape, SWA cable specification
+   - "surface conduit" → Clip spacing, conduit sizing, mechanical protection
+   - "loft space" → Thermal insulation de-rating, support requirements
+   - "cavity wall" → Safe zone compliance (BS 7671 522.6.202), oval conduit recommendations
+
+3. **Load-Specific Guidance:**
+   - "9.5kW electric shower" → Heat-resistant terminals, pull-cord isolator requirements, IPX4 minimum
+   - "32A cooker" → Control unit within 2m of cooker, cooker outlet plate positioning
+   - "Immersion heater" → Airing cupboard access, timer switch mounting
+   - "EV charger" → Outdoor IP ratings, cable entry glands, PEN fault protection
+
+4. **Cable Run-Specific Guidance:**
+   - Runs >15m → Reference voltage drop monitoring during testing
+   - Runs >30m → Emphasize importance of support/clip spacing calculations
+   - Complex routing → Describe specific routing strategy (via loft, under floor, external wall)
+
+EXAMPLES OF CONTEXT-AWARE GUIDANCE:
+
+❌ WRONG (Generic):
+"Install cable using appropriate clips and containment"
+
+✅ RIGHT (Context-Aware for "9.5kW shower, first floor bathroom, 18m cable run"):
+"Route cable from ground floor consumer unit to first floor bathroom via loft space. Maintain 50mm clearance from thermal insulation or apply 0.5 de-rating factor. Install pull-cord isolator adjacent to shower location per BS 7671 Section 701. Cable entry into bathroom zone: minimum IPX4 rating."
+
+❌ WRONG (Generic):
+"Terminate cable at appropriate terminals"
+
+✅ RIGHT (Context-Aware for "outdoor socket, 22m buried SWA"):
+"Route 2.5mm² 3-core SWA from consumer unit to outdoor socket position via buried trench. Burial depth: 600mm minimum with orange warning tape 150mm above cable. Terminate SWA using 20mm compression gland at outdoor IP66 socket. Earth braid requires separate CPC connection to socket earthing terminal."
+
 INSTALLATION GUIDANCE (4 subsections - be thorough):
 
 1. SAFETY CONSIDERATIONS (minimum 4, expand as needed):
@@ -773,20 +813,70 @@ export async function generateInstallationMethods(
   const circuits = jobInputs.circuits || [];
   const supply = jobInputs.supply || {};
   
+  // Build rich context-aware query from job inputs
+  const circuitContexts = circuits.map((circuit: any, index: number) => {
+    const parts: string[] = [
+      `Circuit ${index + 1}: ${circuit.loadType || 'Unknown load'}`
+    ];
+    
+    // Add power rating
+    if (circuit.loadPower) {
+      parts.push(`${circuit.loadPower}W`);
+    }
+    
+    // Add specific location if provided
+    if (circuit.location && circuit.location !== 'Not specified') {
+      parts.push(`Location: ${circuit.location}`);
+    }
+    
+    // Add cable length
+    if (circuit.cableLength) {
+      parts.push(`Cable run: ${circuit.cableLength}m`);
+    }
+    
+    // Add installation environment if specified
+    if (circuit.installationEnvironment) {
+      parts.push(`Environment: ${circuit.installationEnvironment}`);
+    }
+    
+    // Add any specific notes or requirements
+    if (circuit.notes || circuit.description) {
+      parts.push(`Notes: ${circuit.notes || circuit.description}`);
+    }
+    
+    return parts.join(' | ');
+  }).join('\n');
+
   const query = `
-    Installation method for ${circuits.length} electrical circuits
-    ${supply.voltage || 230}V ${supply.phases || 'single'} phase
-    Earthing: ${supply.earthingSystem || 'TN-C-S'}
-    Load types: ${circuits.map((c: any) => c.loadType).join(', ')}
-    Cable lengths: ${circuits.map((c: any) => `${c.cableLength}m`).join(', ')}
-    Total power: ${circuits.reduce((sum: number, c: any) => sum + (c.loadPower || 0), 0)}W
-  `.trim();
+Installation method for ${circuits.length} electrical circuit${circuits.length > 1 ? 's' : ''}
+
+SUPPLY DETAILS:
+- Voltage: ${supply.voltage || 230}V ${supply.phases || 'single'} phase
+- Earthing System: ${supply.earthingSystem || 'TN-C-S'}
+- Ze: ${supply.ze || 0.35}Ω
+- PFC: ${supply.pfc || 16000}A
+
+CIRCUIT DETAILS:
+${circuitContexts}
+
+SPECIAL REQUIREMENTS:
+${jobInputs.specialRequirements?.join('\n') || 'None specified'}
+
+ADDITIONAL CONTEXT:
+${jobInputs.additionalPrompt || 'No additional requirements'}
+
+PROJECT CONTEXT:
+- Project: ${jobInputs.projectName || 'Circuit Installation'}
+- Location: ${jobInputs.location || 'Not specified'}
+`.trim();
   
   const projectDetails = {
     jobTitle: jobInputs.projectName || 'Circuit Installation',
     location: jobInputs.location || 'Not specified',
     circuits: circuits,
-    supply: supply
+    supply: supply,
+    specialRequirements: jobInputs.specialRequirements || [],
+    additionalPrompt: jobInputs.additionalPrompt || ''
   };
   
   await progressCallback(30, 'Installer: Planning installation steps...');
