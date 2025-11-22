@@ -64,83 +64,92 @@ export const MobileJustificationAccordion = ({ sections }: MobileJustificationAc
 // Helper to build justification sections from circuit data
 export const buildJustificationSections = (circuit: any): JustificationSection[] => {
   const sections: JustificationSection[] = [];
+  const justifications = circuit.justifications;
 
-  // Cable Size Justification
-  if (circuit.structuredOutput?.cableSelectionBreakdown) {
+  // Cable Size Justification - Use justifications.cableSize
+  const cableSizeContent = justifications?.cableSize && justifications.cableSize !== 'No specific justification provided.' 
+    ? justifications.cableSize 
+    : `${circuit.cableSize}mm² / ${circuit.cpcSize}mm² cable selected to safely carry ${circuit.calculations?.Ib?.toFixed(1)}A design current with adequate voltage drop performance (${circuit.calculations?.voltageDrop?.percent?.toFixed(2)}% actual vs ${circuit.calculations?.voltageDrop?.limit}% limit).`;
+  
+  sections.push({
+    title: 'Cable Size Selection',
+    content: cableSizeContent,
+    icon: <Cable className="h-5 w-5 text-blue-400" />,
+    badge: `${circuit.cableSize}mm² / ${circuit.cpcSize}mm² CPC`,
+    borderColor: 'border-blue-500/50'
+  });
+
+  // Protection Device Justification - Use justifications.protection
+  const protectionContent = justifications?.protection && justifications.protection !== 'No specific justification provided.'
+    ? justifications.protection 
+    : `${circuit.protectionDevice?.rating || circuit.breakerRating}A Type ${circuit.protectionDevice?.curve || 'B'} ${circuit.protectionDevice?.type || 'MCB'} provides adequate protection and discrimination for this ${circuit.loadType} circuit, with earth fault loop impedance (${circuit.calculations?.zs?.toFixed(2)}Ω) below maximum permitted (${circuit.calculations?.maxZs?.toFixed(2)}Ω).`;
+  
+  sections.push({
+    title: 'Protection Device',
+    content: protectionContent,
+    icon: <Shield className="h-5 w-5 text-green-400" />,
+    badge: `${circuit.protectionDevice?.rating || circuit.breakerRating}A Type ${circuit.protectionDevice?.curve || 'B'}`,
+    borderColor: 'border-green-500/50'
+  });
+
+  // RCD Protection - Use justifications.rcd
+  if (circuit.rcdProtected && justifications?.rcd) {
     sections.push({
-      title: 'Cable Size Selection',
-      content: circuit.structuredOutput.cableSelectionBreakdown,
-      icon: <Cable className="h-5 w-5 text-blue-400" />,
-      badge: `${circuit.cableSize}mm² / ${circuit.cpcSize}mm² CPC`,
+      title: 'RCD Protection',
+      content: justifications.rcd,
+      icon: <Lock className="h-5 w-5 text-blue-400" />,
+      badge: '30mA RCD Required',
       borderColor: 'border-blue-500/50'
     });
   }
 
-  // Protection Device Justification
-  if (circuit.structuredOutput?.protectiveDeviceSelection) {
-    sections.push({
-      title: 'Protection Device',
-      content: circuit.structuredOutput.protectiveDeviceSelection,
-      icon: <Shield className="h-5 w-5 text-green-400" />,
-      badge: `${circuit.protectionType || circuit.breakerType} ${circuit.breakerRating}A`,
-      borderColor: 'border-green-500/50'
-    });
-  }
-
-  // RCD Protection (if applicable)
-  if (circuit.rcdProtection && circuit.structuredOutput?.complianceConfirmation?.includes('RCD')) {
-    sections.push({
-      title: 'RCD Protection',
-      content: circuit.structuredOutput.complianceConfirmation.split('\n').filter((line: string) => 
-        line.toLowerCase().includes('rcd')
-      ).join('\n') || 'RCD protection provided as per BS 7671 requirements.',
-      icon: <Lock className="h-5 w-5 text-purple-400" />,
-      badge: circuit.rcdRating ? `${circuit.rcdRating}mA` : 'Required',
-      borderColor: 'border-purple-500/50'
-    });
-  }
-
-  // Diversity (if applicable)
-  if (circuit.diversityFactor && circuit.diversityFactor < 1) {
-    const diversityContent = circuit.structuredOutput?.loadDetails?.split('\n').filter((line: string) =>
-      line.toLowerCase().includes('diversity')
-    ).join('\n') || `Diversity factor of ${(circuit.diversityFactor * 100).toFixed(0)}% applied to account for simultaneous demand.`;
-    
+  // Diversity - Use circuit.diversityJustification
+  if (circuit.diversityFactor && circuit.diversityFactor < 1.0 && circuit.diversityJustification) {
     sections.push({
       title: 'Diversity Applied',
-      content: diversityContent,
+      content: circuit.diversityJustification,
       icon: <Zap className="h-5 w-5 text-amber-400" />,
-      badge: `${(circuit.diversityFactor * 100).toFixed(0)}%`,
+      badge: `${(circuit.diversityFactor * 100).toFixed(0)}% Diversity Factor`,
       borderColor: 'border-amber-500/50'
     });
   }
 
-  // Fault Current Analysis (if available)
-  if (circuit.calculations?.prospectiveFaultCurrent) {
+  // Fault Current Analysis - Use circuit.faultCurrentAnalysis
+  if (circuit.faultCurrentAnalysis) {
+    const faultContent = [
+      `PSCC at Circuit: ${circuit.faultCurrentAnalysis.psccAtCircuit}kA`,
+      `Device Breaking Capacity: ${circuit.faultCurrentAnalysis.deviceBreakingCapacity}kA`,
+      `\nStatus: ${circuit.faultCurrentAnalysis.compliant ? '✓ Compliant' : '✗ Non-Compliant'}`,
+      `\n${circuit.faultCurrentAnalysis.marginOfSafety}`,
+      `\nRegulation: ${circuit.faultCurrentAnalysis.regulation}`
+    ].join('\n');
+    
     sections.push({
       title: 'Fault Current Analysis',
-      content: `Prospective fault current: ${circuit.calculations.prospectiveFaultCurrent}kA\n\nProtective device breaking capacity verified to exceed maximum prospective fault current.`,
+      content: faultContent,
       icon: <AlertTriangle className="h-5 w-5 text-red-400" />,
-      badge: `${circuit.calculations.prospectiveFaultCurrent}kA`,
-      borderColor: 'border-red-500/50'
+      badge: `${circuit.faultCurrentAnalysis.psccAtCircuit}kA`,
+      borderColor: circuit.faultCurrentAnalysis.compliant ? 'border-green-500/50' : 'border-red-500/50'
     });
   }
 
-  // Earthing Requirements
-  if (circuit.structuredOutput?.complianceConfirmation) {
-    const earthingContent = circuit.structuredOutput.complianceConfirmation.split('\n').filter((line: string) =>
-      line.toLowerCase().includes('earth') || line.toLowerCase().includes('cpc')
-    ).join('\n');
+  // Earthing Requirements - Use circuit.earthingRequirements
+  if (circuit.earthingRequirements) {
+    const earthingContent = [
+      `CPC Size: ${circuit.earthingRequirements.cpcSize}`,
+      `Supplementary Bonding: ${circuit.earthingRequirements.supplementaryBonding ? 'Required' : 'Not Required'}`,
+      circuit.earthingRequirements.bondingConductorSize ? `Bonding Conductor: ${circuit.earthingRequirements.bondingConductorSize}` : '',
+      `\n${circuit.earthingRequirements.justification}`,
+      `\nRegulation: ${circuit.earthingRequirements.regulation}`
+    ].filter(Boolean).join('\n');
     
-    if (earthingContent) {
-      sections.push({
-        title: 'Earthing Requirements',
-        content: earthingContent,
-        icon: <Shield className="h-5 w-5 text-cyan-400" />,
-        badge: `${circuit.cpcSize}mm² CPC`,
-        borderColor: 'border-cyan-500/50'
-      });
-    }
+    sections.push({
+      title: 'Earthing Requirements',
+      content: earthingContent,
+      icon: <Shield className="h-5 w-5 text-green-400" />,
+      badge: `${circuit.earthingRequirements.cpcSize}`,
+      borderColor: 'border-green-500/50'
+    });
   }
 
   // Special Location Compliance
