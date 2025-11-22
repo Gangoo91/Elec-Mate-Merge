@@ -547,9 +547,17 @@ function ensurePDFFields(circuit: any, index?: number): any {
     circuit.complianceSummary = allCompliant ? 'Fully compliant' : 'Requires attention';
   }
   
-  // Add PDF payload fields
-  circuit.complianceStatus = circuit.complianceSummary;
-  circuit.status = (circuit.complianceSummary === 'Fully compliant' || circuit.complianceSummary === 'Fully compliant (ring final)') ? 'complete' : 'incomplete';
+  // Add PDF payload fields with correct frontend status values
+  // Map compliance summary to frontend status: 'pass', 'fail', 'warning'
+  if (circuit.complianceSummary === 'Fully compliant' || circuit.complianceSummary === 'Fully compliant (ring final)') {
+    circuit.complianceStatus = 'pass';
+  } else if (vd.compliant === false || (zs > maxZs)) {
+    circuit.complianceStatus = 'fail';
+  } else {
+    circuit.complianceStatus = 'warning'; // Requires review
+  }
+  
+  circuit.status = (circuit.complianceStatus === 'pass') ? 'complete' : 'incomplete';
   
   // Generate structuredOutput for modern mobile-first UI
   if (!circuit.structuredOutput) {
