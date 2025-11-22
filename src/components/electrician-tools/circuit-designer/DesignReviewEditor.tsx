@@ -296,8 +296,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           cableSummary: `${circuit.cableSize || 2.5}mm² / ${circuit.cpcSize || 1.5}mm² CPC`,
           complianceSummary: (zsCompliant && vdCompliant) ? 'Fully compliant' : 'Requires attention',
           
-          // Installation guidance
-          installationNotes: circuit.installationGuidance?.cableRouting || '',
+          // Installation guidance - graceful fallback
+          installationNotes: circuit.installationNotes || 
+                             (circuit.installationGuidance as any)?.cableRouting || 
+                             '',
           
           // Structured output for advanced PDF templates
           structuredOutput: null,
