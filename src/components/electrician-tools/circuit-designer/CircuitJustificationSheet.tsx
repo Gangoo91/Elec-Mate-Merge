@@ -215,71 +215,19 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
               </div>
             )}
 
-            {/* Installation Guidance */}
-            {circuit.installationGuidance && (
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
+            {/* Installation Notes */}
+            {(circuit.installationNotes || circuit.installationGuidance) && (
+              <div className="space-y-4 border-l-4 border-elec-yellow/30 pl-4">
+                <div className="flex items-center gap-2 mb-3">
                   <FileText className="h-4 w-4 text-elec-yellow" />
-                  <h3 className="text-sm font-semibold text-elec-yellow">Installation Guidance</h3>
+                  <h3 className="text-sm font-semibold text-white">Installation Guidance</h3>
                 </div>
-                <div className="bg-elec-dark/60 rounded-lg p-4 border border-elec-yellow/20 space-y-4">
-                  <div>
-                    <p className="text-xs text-elec-yellow mb-2">Cable Routing</p>
-                    <p className="text-sm text-white leading-loose whitespace-pre-line">
-                      {circuit.installationGuidance.cableRouting}
-                    </p>
-                  </div>
-                  
-                  <div>
-                    <p className="text-xs text-elec-yellow mb-2">Termination Advice</p>
-                    <p className="text-sm text-white leading-loose whitespace-pre-line">
-                      {circuit.installationGuidance.terminationAdvice}
-                    </p>
-                  </div>
-                  
-                  <div>
-                    <p className="text-xs text-elec-yellow mb-2">Testing Requirements</p>
-                    <p className="text-sm text-white leading-loose whitespace-pre-line">
-                      {circuit.installationGuidance.testingRequirements}
-                    </p>
-                  </div>
-                  
-                  {circuit.installationGuidance.safetyNotes && circuit.installationGuidance.safetyNotes.length > 0 && (
-                    <div>
-                      <p className="text-xs text-elec-yellow mb-2">Safety Notes</p>
-                      <ul className="space-y-2">
-                        {circuit.installationGuidance.safetyNotes.map((note, idx) => (
-                          <li key={idx} className="text-sm text-white flex items-start gap-2 leading-loose">
-                            <span className="text-elec-yellow mt-0.5">•</span>
-                            <span>{note}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  
-                  {circuit.installationGuidance.fixingsAndSupport && circuit.installationGuidance.fixingsAndSupport.length > 0 && (
-                    <div>
-                      <p className="text-xs text-elec-yellow mb-2">Fixings & Support</p>
-                      <ul className="space-y-2">
-                        {circuit.installationGuidance.fixingsAndSupport.map((item, idx) => (
-                          <li key={idx} className="text-sm text-white flex items-start gap-2 leading-loose">
-                            <span className="text-elec-yellow mt-0.5">•</span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  
-                  {circuit.installationGuidance.estimatedInstallTime && (
-                    <div>
-                      <p className="text-xs text-elec-yellow mb-2">Estimated Install Time</p>
-                      <p className="text-sm text-white font-medium">
-                        {circuit.installationGuidance.estimatedInstallTime}
-                      </p>
-                    </div>
-                  )}
+                <div className="bg-elec-dark/60 rounded-lg p-4 border border-elec-yellow/20">
+                  <p className="text-sm text-white leading-loose whitespace-pre-line">
+                    {circuit.installationNotes || 
+                     (circuit.installationGuidance as any)?.cableRouting || 
+                     'Install per BS 7671:2018+A3:2024.'}
+                  </p>
                 </div>
               </div>
             )}

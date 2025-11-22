@@ -1132,18 +1132,20 @@ For EVERY circuit, you MUST provide:
 - specialLocationCompliance: If bathroom/outdoor/special location, include zone requirements and specific regulations
 
 INSTALLATION NOTES REQUIREMENTS (CRITICAL - NO GENERIC TEXT):
-You MUST write installationNotes that are SPECIFIC to each circuit's parameters:
+You MUST write installation notes that are SPECIFIC to each circuit's parameters:
 - Reference the EXACT load (e.g., "This 9.5kW shower", "These 13A socket circuits")
 - Reference the EXACT cable specification (e.g., "6mm² T&E", "2.5mm² SWA with 1.5mm² CPC")
 - Reference the EXACT cable length if >20m (e.g., "over the 35m run", "across the 60m distance")
 - Include location-specific advice if outdoor/bathroom/kitchen (e.g., "IP66-rated glands for outdoor entry", "Zone 2 compliant in bathroom")
 - Include cable-specific installation methods (e.g., "SWA burial depth 600mm", "Clipped direct with 300mm spacing")
 
-WRONG (generic): "Install cable clips at regular intervals. Maintain minimum bend radius."
-RIGHT (specific): "This 32A ring final uses 2.5mm² T&E clipped direct over 45m. Clip spacing 300mm horizontal. At 45m length, expect minor voltage drop—verify <5% on commissioning."
+CRITICAL SCHEMA REQUIREMENT - installationNotes ONLY:
+You MUST ONLY generate "installationNotes" as a STRING (2-4 sentences).
+DO NOT generate an "installationGuidance" object with cableRouting, terminationAdvice, testingRequirements, safetyNotes, or fixingsAndSupport.
+If you return the old object format, your response will be REJECTED as malformed.
 
-WRONG (generic): "Install per BS 7671."
-RIGHT (specific): "This 9.5kW shower requires 10mm² cable. Use 25mm conduit where exposed. Heat-resistant terminals rated 40A continuous. RCD spur at shower pull-cord for local isolation."
+WRONG: { "installationGuidance": { "cableRouting": "...", "terminationAdvice": "..." } }
+RIGHT: { "installationNotes": "This 9.5kW shower requires 10mm² cable over 18m. Use 25mm conduit where exposed. Heat-resistant terminals rated 40A." }
 
 Use UK English. Output ONLY via the design_circuits tool - no conversational text.`
         },
@@ -1195,6 +1197,8 @@ Circuit ${idx + 1}: ${c.name || c.loadType}
 - Load Power: ${c.loadPower}W (${(c.loadPower / 1000).toFixed(1)}kW)
 - Cable Length: ${c.cableLength}m${c.cableLength > 30 ? ' (LONG RUN - mention in installation notes)' : ''}
 - Location: ${c.location || 'Normal'}${c.specialLocation && c.specialLocation !== 'none' ? ` (${c.specialLocation} - include zone/IP requirements in notes)` : ''}
+
+REMEMBER: Generate "installationNotes" as a SINGLE STRING for this circuit (NOT an installationGuidance object).
 
 Write installationNotes that reference these EXACT values (not generic advice).
 `).join('\n')}
@@ -1256,7 +1260,41 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
                 
                 for (const toolCall of toolCalls) {
                   const circuits = toolCall?.arguments?.circuits || [];
-                  batchCircuits.push(...circuits);
+                  
+                  // POST-AI VALIDATION: Convert old installationGuidance to installationNotes
+                  const validatedCircuits = circuits.map((rawCircuit: any) => {
+                    // Priority 1: Use new installationNotes if AI correctly generated it
+                    if (rawCircuit.installationNotes && typeof rawCircuit.installationNotes === 'string') {
+                      return { ...rawCircuit, installationGuidance: undefined };
+                    }
+                    
+                    // Priority 2: AI misbehaved and generated old format - convert it
+                    if (rawCircuit.installationGuidance && typeof rawCircuit.installationGuidance === 'object') {
+                      logger.warn(`⚠️ AI generated old installationGuidance format for circuit "${rawCircuit.name || 'Unknown'}" - converting to installationNotes`);
+                      
+                      const guidance = rawCircuit.installationGuidance as any;
+                      const parts: string[] = [];
+                      
+                      if (guidance.cableRouting) parts.push(guidance.cableRouting);
+                      if (guidance.terminationAdvice) parts.push(guidance.terminationAdvice);
+                      if (guidance.testingRequirements) parts.push(guidance.testingRequirements);
+                      
+                      return {
+                        ...rawCircuit,
+                        installationNotes: parts.join(' ') || 'Install per BS 7671:2018+A3:2024.',
+                        installationGuidance: undefined
+                      };
+                    }
+                    
+                    // Priority 3: No installation guidance at all - add fallback
+                    return {
+                      ...rawCircuit,
+                      installationNotes: 'Install per BS 7671:2018+A3:2024.',
+                      installationGuidance: undefined
+                    };
+                  });
+                  
+                  batchCircuits.push(...validatedCircuits);
                 }
                 
                 // Fix 2: Log empty results

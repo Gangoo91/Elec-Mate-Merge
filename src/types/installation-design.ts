@@ -141,6 +141,7 @@ export interface CircuitDesign {
     toolsRequired?: string[];
     estimatedInstallTime?: string;
   };
+  installationNotes?: string; // New context-aware installation guidance field
   specialLocationCompliance?: {
     isSpecialLocation: boolean;
     locationType: string;
