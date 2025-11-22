@@ -81,67 +81,279 @@ function extractInstallationKeywords(jobInputs: any): string[] {
   return Array.from(keywords);
 }
 
-// Simplified schema for Circuit Designer integration (flexible quality-focused)
+// Enhanced schema for Circuit Designer - RAG-driven detailed guidance
 const INSTALLATION_METHOD_TOOL_SIMPLIFIED = {
   type: 'function' as const,
   function: {
     name: 'provide_installation_guidance',
-    description: 'Generate installation and testing guidance for circuit design documentation',
+    description: 'Generate detailed, context-aware installation guidance using RAG knowledge base',
     parameters: {
       type: 'object',
       properties: {
         installationGuidance: {
           type: 'object',
           properties: {
+            // SAFETY CONSIDERATIONS - with specific tools and regulations
             safetyConsiderations: {
               type: 'array',
-              items: { type: 'string' },
-              description: 'Key safety points - scale with installation complexity',
-              minItems: 4  // At least 4, but can expand to 10+ for complex work
+              items: {
+                type: 'object',
+                properties: {
+                  consideration: { 
+                    type: 'string',
+                    description: 'Specific safety requirement'
+                  },
+                  toolsRequired: { 
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Specific tools from RAG context'
+                  },
+                  bsReference: { 
+                    type: 'string',
+                    description: 'BS 7671 regulation number from RAG'
+                  },
+                  priority: {
+                    type: 'string',
+                    enum: ['critical', 'high', 'medium'],
+                    description: 'Safety priority level'
+                  }
+                },
+                required: ['consideration', 'toolsRequired', 'priority']
+              },
+              minItems: 4
             },
-            fixingsAndSupport: {
+            
+            // MATERIALS LIST - extracted from RAG with specifications
+            materialsRequired: {
               type: 'array',
-              items: { type: 'string' },
-              description: 'Cable support and fixing requirements - comprehensive coverage',
-              minItems: 3  // At least 3, can expand to 8+ for complex routing
+              items: {
+                type: 'object',
+                properties: {
+                  item: { 
+                    type: 'string',
+                    description: 'Material description from RAG'
+                  },
+                  specification: { 
+                    type: 'string',
+                    description: 'BS/EN standard or size (e.g., "10mm² T&E to BS 6004")'
+                  },
+                  quantity: { 
+                    type: 'string',
+                    description: 'Estimated quantity'
+                  },
+                  source: {
+                    type: 'string',
+                    description: 'Where this material was identified (RAG/circuit design/calculated)'
+                  }
+                },
+                required: ['item', 'specification', 'quantity']
+              },
+              minItems: 5
             },
+            
+            // TOOLS REQUIRED - extracted from RAG practical work intelligence
+            toolsRequired: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  tool: { 
+                    type: 'string',
+                    description: 'Tool name from RAG context'
+                  },
+                  purpose: { 
+                    type: 'string',
+                    description: 'What this tool is used for in this installation'
+                  },
+                  category: {
+                    type: 'string',
+                    description: 'Tool category (e.g., testing, termination, installation)'
+                  }
+                },
+                required: ['tool', 'purpose', 'category']
+              },
+              minItems: 8
+            },
+            
+            // CABLE ROUTING - context-aware with specific guidance
             cableRouting: {
               type: 'array',
-              items: { type: 'string' },
-              description: 'Cable routing guidance - thorough and well-considered',
-              minItems: 4  // At least 4, can expand to 10+ for complex routes
+              items: {
+                type: 'object',
+                properties: {
+                  step: { 
+                    type: 'string',
+                    description: 'Routing instruction'
+                  },
+                  cableType: { 
+                    type: 'string',
+                    description: 'Specific cable type/size from RAG or circuit design'
+                  },
+                  method: { 
+                    type: 'string',
+                    description: 'Installation method (buried, surface, conduit, trunking)'
+                  },
+                  bsReference: { 
+                    type: 'string',
+                    description: 'BS 7671 regulation reference'
+                  },
+                  notes: {
+                    type: 'string',
+                    description: 'Additional context-specific notes'
+                  }
+                },
+                required: ['step', 'method']
+              },
+              minItems: 4
             },
-            termination: {
+            
+            // TERMINATION REQUIREMENTS - detailed with torque values
+            terminationRequirements: {
               type: 'array',
-              items: { type: 'string' },
-              description: 'Termination requirements - complete and detailed',
-              minItems: 3  // At least 3, can expand to 8+ for complex terminations
+              items: {
+                type: 'object',
+                properties: {
+                  location: { 
+                    type: 'string',
+                    description: 'Where termination occurs (consumer unit, socket, isolator)'
+                  },
+                  procedure: { 
+                    type: 'string',
+                    description: 'Termination procedure'
+                  },
+                  toolsNeeded: { 
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Specific tools for this termination'
+                  },
+                  torqueSettings: { 
+                    type: 'string',
+                    description: 'Torque values if applicable'
+                  },
+                  bsReference: { 
+                    type: 'string',
+                    description: 'BS 7671 reference'
+                  }
+                },
+                required: ['location', 'procedure', 'toolsNeeded']
+              },
+              minItems: 3
+            },
+            
+            // INSTALLATION STEPS - core procedures with context
+            installationProcedure: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  stepNumber: { type: 'number' },
+                  title: { type: 'string' },
+                  description: { 
+                    type: 'string',
+                    description: '100-150 words context-aware description'
+                  },
+                  toolsForStep: { 
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Tools specifically for this step'
+                  },
+                  materialsForStep: { 
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Materials used in this step'
+                  },
+                  bsReferences: { 
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Relevant BS 7671 regulations'
+                  }
+                },
+                required: ['stepNumber', 'title', 'description', 'toolsForStep']
+              },
+              minItems: 6,
+              maxItems: 10
             }
           },
-          required: ['safetyConsiderations', 'fixingsAndSupport', 'cableRouting', 'termination']
+          required: [
+            'safetyConsiderations',
+            'materialsRequired',
+            'toolsRequired',
+            'cableRouting',
+            'terminationRequirements',
+            'installationProcedure'
+          ]
         },
+        
+        // TESTING REQUIREMENTS - detailed with expected values
         testingRequirements: {
           type: 'object',
           properties: {
             intro: {
               type: 'string',
-              description: 'Professional introduction to testing requirements'
+              description: 'Professional introduction to testing (BS 7671 Part 6 reference)'
             },
             tests: {
               type: 'array',
-              items: { type: 'string' },
-              description: 'Required tests - comprehensive coverage of BS 7671 Part 6',
-              minItems: 6  // At least 6 core tests, can expand to 12+ for complex circuits
+              items: {
+                type: 'object',
+                properties: {
+                  testName: { 
+                    type: 'string',
+                    description: 'Name of test (e.g., Continuity of Protective Conductors)'
+                  },
+                  regulation: { 
+                    type: 'string',
+                    description: 'BS 7671 regulation number'
+                  },
+                  procedure: { 
+                    type: 'string',
+                    description: 'How to perform the test'
+                  },
+                  expectedReading: { 
+                    type: 'string',
+                    description: 'Expected test result with units'
+                  },
+                  acceptanceCriteria: { 
+                    type: 'string',
+                    description: 'Pass/fail criteria'
+                  },
+                  toolsRequired: { 
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Testing equipment needed'
+                  }
+                },
+                required: ['testName', 'regulation', 'procedure', 'acceptanceCriteria', 'toolsRequired']
+              },
+              minItems: 6
             },
             recordingNote: {
               type: 'string',
-              description: 'Note about recording requirements (EIC/Schedule of Test Results reference)'
+              description: 'EIC/Schedule of Test Results recording requirements'
             }
           },
           required: ['intro', 'tests', 'recordingNote']
+        },
+        
+        // RAG CONTEXT SUMMARY - what knowledge was used
+        ragContextUsed: {
+          type: 'object',
+          properties: {
+            regulationsCount: { type: 'number' },
+            practicalProceduresCount: { type: 'number' },
+            toolsExtracted: { type: 'number' },
+            materialsExtracted: { type: 'number' },
+            keyRegulations: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Top 5 BS 7671 regulations used',
+              maxItems: 5
+            }
+          },
+          required: ['regulationsCount', 'practicalProceduresCount', 'toolsExtracted']
         }
       },
-      required: ['installationGuidance', 'testingRequirements']
+      required: ['installationGuidance', 'testingRequirements', 'ragContextUsed']
     }
   }
 };
@@ -304,117 +516,100 @@ TESTING PROCEDURES (3+ procedures): Test name, BS 7671 Part 6 standard, procedur
 
 Use RAG context to extract accurate tools, materials, and regulations.`;
 
-const SYSTEM_PROMPT_SIMPLIFIED = `You are an Installation Guidance Specialist providing comprehensive, well-thought-out installation and testing guidance for electrical circuit design documentation.
+const SYSTEM_PROMPT_SIMPLIFIED = `You are an Installation Guidance Specialist generating DETAILED, CONTEXT-AWARE installation guidance for electrical circuit design documentation.
 
 CRITICAL REQUIREMENTS:
 1. UK English ONLY
 2. Follow BS 7671:2018+A3:2024 strictly
-3. Professional, thorough, and detailed language
-4. Scale guidance based on installation complexity - don't artificially limit yourself
-5. Demonstrate expertise through comprehensive coverage
+3. Extract tools, materials, and regulations from RAG context below
+4. Generate specific, actionable guidance based on circuit context
+5. Use structured lists with detailed metadata
 
-CONTEXT-AWARENESS REQUIREMENTS:
-You are provided with detailed circuit context from the user's initial request. You MUST use this context to provide specific, actionable guidance:
+RAG EXTRACTION RULES:
+- **TOOLS**: Extract from "TOOLS:" sections in RAG context
+- **MATERIALS**: Extract from "MATERIALS:" and "CABLE SIZES:" sections
+- **REGULATIONS**: Extract regulation numbers from RAG context
+- **SPECIFICATIONS**: Use BS/EN codes from RAG (e.g., "BS 6004", "BS 7671 Section 522.6")
+- **CABLE SIZES**: Reference specific sizes from RAG or circuit design
 
-1. **Location-Specific Guidance:**
-   - If circuit serves "first floor bathroom" → Reference IP rating requirements (BS 7671 Section 701)
-   - If circuit serves "outdoor shed/garden" → Reference SWA burial depth, IP66 ratings, RCD protection
-   - If circuit serves "kitchen" → Reference socket heights, cooker control unit positioning
-   - If circuit serves "garage/workshop" → Reference mechanical protection requirements
+CONTEXT-AWARENESS EXAMPLES:
 
-2. **Environment-Specific Guidance:**
-   - "buried in garden" → 600mm burial depth, warning tape, SWA cable specification
-   - "surface conduit" → Clip spacing, conduit sizing, mechanical protection
-   - "loft space" → Thermal insulation de-rating, support requirements
-   - "cavity wall" → Safe zone compliance (BS 7671 522.6.202), oval conduit recommendations
+**SAFETY CONSIDERATIONS** - Extract from RAG and add context:
+{
+  "consideration": "Verify isolation before work commences",
+  "toolsRequired": ["Voltage detector", "Lock-off kit", "Warning notices"],
+  "bsReference": "BS 7671 Regulation 537.2",
+  "priority": "critical"
+}
 
-3. **Load-Specific Guidance:**
-   - "9.5kW electric shower" → Heat-resistant terminals, pull-cord isolator requirements, IPX4 minimum
-   - "32A cooker" → Control unit within 2m of cooker, cooker outlet plate positioning
-   - "Immersion heater" → Airing cupboard access, timer switch mounting
-   - "EV charger" → Outdoor IP ratings, cable entry glands, PEN fault protection
+**MATERIALS REQUIRED** - Extract from RAG with specifications:
+{
+  "item": "Twin & Earth Cable",
+  "specification": "10mm² T&E to BS 6004",
+  "quantity": "25m",
+  "source": "circuit_design"
+}
 
-4. **Cable Run-Specific Guidance:**
-   - Runs >15m → Reference voltage drop monitoring during testing
-   - Runs >30m → Emphasize importance of support/clip spacing calculations
-   - Complex routing → Describe specific routing strategy (via loft, under floor, external wall)
+**TOOLS REQUIRED** - Extract from RAG practical work:
+{
+  "tool": "Megger MFT1835 Multifunction Tester",
+  "purpose": "Insulation resistance and continuity testing per BS 7671 Part 6",
+  "category": "testing"
+}
 
-EXAMPLES OF CONTEXT-AWARE GUIDANCE:
+**CABLE ROUTING** - Be specific based on circuit context:
+{
+  "step": "Route 10mm² T&E from consumer unit to first floor bathroom via loft space",
+  "cableType": "10mm² Twin & Earth (BS 6004)",
+  "method": "clipped direct with 50mm thermal insulation clearance",
+  "bsReference": "BS 7671 Appendix 4 (thermal de-rating)",
+  "notes": "Maintain 300mm clip spacing per manufacturer guidance"
+}
 
-❌ WRONG (Generic):
-"Install cable using appropriate clips and containment"
+**TERMINATION REQUIREMENTS** - Detailed with torque:
+{
+  "location": "Consumer unit MCB terminals",
+  "procedure": "Strip 12mm insulation, insert conductor fully into terminal, torque to 2.5Nm",
+  "toolsNeeded": ["Wire strippers", "Torque screwdriver 2.5Nm", "Terminal block screwdriver"],
+  "torqueSettings": "2.5Nm for 10mm² conductor",
+  "bsReference": "BS 7671 Section 526"
+}
 
-✅ RIGHT (Context-Aware for "9.5kW shower, first floor bathroom, 18m cable run"):
-"Route cable from ground floor consumer unit to first floor bathroom via loft space. Maintain 50mm clearance from thermal insulation or apply 0.5 de-rating factor. Install pull-cord isolator adjacent to shower location per BS 7671 Section 701. Cable entry into bathroom zone: minimum IPX4 rating."
+**INSTALLATION PROCEDURE** - Step-by-step with context:
+{
+  "stepNumber": 1,
+  "title": "Site Preparation and Isolation",
+  "description": "Verify the supply can be safely isolated at the consumer unit. Display danger notices. Use voltage detector to prove dead on all incoming supply terminals. Fit lock-off device to main switch. Test voltage detector on known live source before and after testing to confirm functionality per GS38.",
+  "toolsForStep": ["Voltage detector (GS38)", "Lock-off kit", "Danger notices"],
+  "materialsForStep": ["Warning labels"],
+  "bsReferences": ["537.2.1.1", "GS38"]
+}
 
-❌ WRONG (Generic):
-"Terminate cable at appropriate terminals"
+**TESTING REQUIREMENTS** - Detailed with expected values:
+{
+  "testName": "Continuity of Protective Conductors (R1+R2)",
+  "regulation": "BS 7671 Section 643.2.1",
+  "procedure": "Connect MFT leads to line terminal at consumer unit and earth terminal at load point. Measure resistance. Record result.",
+  "expectedReading": "~0.8Ω for 18m run in 10mm² T&E",
+  "acceptanceCriteria": "R1+R2 must be ≤ maximum Zs minus Ze (typically < 1.0Ω for this circuit)",
+  "toolsRequired": ["Megger MFT1835", "Test leads", "Continuity probe"]
+}
 
-✅ RIGHT (Context-Aware for "outdoor socket, 22m buried SWA"):
-"Route 2.5mm² 3-core SWA from consumer unit to outdoor socket position via buried trench. Burial depth: 600mm minimum with orange warning tape 150mm above cable. Terminate SWA using 20mm compression gland at outdoor IP66 socket. Earth braid requires separate CPC connection to socket earthing terminal."
+**RAG CONTEXT SUMMARY** - Track what you used:
+{
+  "regulationsCount": 12,
+  "practicalProceduresCount": 8,
+  "toolsExtracted": 15,
+  "materialsExtracted": 10,
+  "keyRegulations": ["522.6.202", "643.2.1", "537.2", "411.3.2", "701.415"]
+}
 
-INSTALLATION GUIDANCE (4 subsections - be thorough):
-
-1. SAFETY CONSIDERATIONS (minimum 4, expand as needed):
-   - Isolation and proving dead procedures
-   - Safe isolation to GS38 standards
-   - Circuit-specific safety requirements
-   - Polarity verification
-   - Working at height considerations (if applicable)
-   - Confined space requirements (if applicable)
-   - Hot work procedures (if applicable)
-   - Additional hazard-specific controls
-
-2. FIXINGS & SUPPORT (minimum 3, expand as needed):
-   - Cable support intervals per BS 7671 Table 4A2/4A3
-   - Appropriate clips/cleats/trunking for installation method
-   - Support distance from terminations
-   - Manufacturer recommendations for cable type
-   - Special considerations (fire barriers, thermal insulation, etc.)
-   - Expansion joints (if required)
-   - Mechanical protection requirements
-
-3. CABLE ROUTING (minimum 4, expand as needed):
-   - BS 7671 Reg 522 compliance (mechanical protection)
-   - Minimum bending radii for cable type
-   - Phase grouping requirements (if 3-phase)
-   - Separation from other services
-   - Protection zones and safe zones
-   - Cable segregation (power vs data)
-   - Fire barrier penetrations
-   - Thermal insulation considerations
-   - Voltage band segregation
-
-4. TERMINATION (minimum 3, expand as needed):
-   - Cable preparation and stripping
-   - Cable glands/grommets requirements
-   - CPC continuity and bonding
-   - Phase sequence (if 3-phase: Brown-Black-Grey, L1-L2-L3)
-   - Torque settings for terminations
-   - Circuit labelling to BS 7671 Reg 514
-   - Neutral and earth bar allocation
-   - Cable identification and marking
-
-TESTING REQUIREMENTS (minimum 6 tests, expand as needed):
-
-Intro: Reference BS 7671 Part 6 (Chapter 64) and the correct testing sequence.
-
-Tests (scale based on circuit complexity):
-- Continuity of protective conductors (R1+R2 or R2)
-- Continuity of ring final circuit conductors (if applicable)
-- Insulation resistance (minimum 1MΩ at 500V DC for LV circuits)
-- Polarity verification
-- Earth fault loop impedance (Zs) - reference max Zs from circuit design
-- Phase sequence (if 3-phase) - confirm correct rotation
-- RCD operation and tripping times (if applicable) - test at 1× and 5× IΔn
-- Functional testing of all equipment
-- Voltage measurement under load (if specified)
-- Prospective fault current (if specified)
-- Additional circuit-specific tests
-
-Recording note: All test results must be recorded on the Electrical Installation Certificate (EIC) and Schedule of Test Results in accordance with BS 7671:2018+A3:2024 Appendix 6.
-
-Extract relevant details from RAG context and circuit specifications. Be comprehensive and demonstrate professional expertise.`;
+IMPORTANT REMINDERS:
+- Scale guidance based on circuit complexity
+- Extract tools/materials from RAG "TOOLS:" and "MATERIALS:" sections
+- Reference specific cable sizes, power ratings from RAG
+- Cite BS 7671 regulation numbers throughout
+- Be thorough - don't artificially limit yourself to minimums`;
 
 export async function generateInstallationMethod(
   query: string,
@@ -644,13 +839,19 @@ Location: ${projectDetails.location || 'Site'}
 Installation Type: ${projectDetails.workType || query}
 
 ${mode === 'simplified' 
-  ? 'Generate installation and testing guidance for circuit design documentation.'
-  : 'Generate professional installation method statement for PDF export:\n- 6-10 installation steps (100-150 words each)\n- Testing procedures with BS 7671 Part 6 compliance\n- Extract tools/materials from RAG context below'
+  ? `Generate DETAILED, CONTEXT-AWARE installation and testing guidance with:
+- Extract specific tools from RAG "TOOLS:" sections
+- Extract specific materials from RAG "MATERIALS:" and "CABLE SIZES:" sections
+- Reference BS 7671 regulations from RAG context
+- Generate 6-10 installation procedure steps
+- Include detailed testing requirements with expected values
+- Track RAG context usage in ragContextUsed field`
+  : 'Generate professional installation method statement for PDF export:\n- 12-15 installation steps (100-150 words each)\n- Testing procedures with BS 7671 Part 6 compliance\n- Extract tools/materials from RAG context below'
 }
 
 Query: ${query}
 
-RAG Context:
+RAG Context (EXTRACT TOOLS, MATERIALS, AND REGULATIONS FROM THIS):
 ${ragContext}`;
 
   let methodData: any;
@@ -747,18 +948,27 @@ ${ragContext}`;
   
   // Return data based on mode
   if (mode === 'simplified') {
-    // Simplified mode: Return installation guidance structure for Circuit Designer
+    // Enhanced simplified mode: Return detailed structured guidance
     return {
-      installationGuidance: methodData.installationGuidance || {
-        safetyConsiderations: [],
-        fixingsAndSupport: [],
-        cableRouting: [],
-        termination: []
+      installationGuidance: {
+        safetyConsiderations: methodData.installationGuidance?.safetyConsiderations || [],
+        materialsRequired: methodData.installationGuidance?.materialsRequired || [],
+        toolsRequired: methodData.installationGuidance?.toolsRequired || [],
+        cableRouting: methodData.installationGuidance?.cableRouting || [],
+        terminationRequirements: methodData.installationGuidance?.terminationRequirements || [],
+        installationProcedure: methodData.installationGuidance?.installationProcedure || []
       },
-      testingRequirements: methodData.testingRequirements || {
-        intro: '',
-        tests: [],
-        recordingNote: ''
+      testingRequirements: {
+        intro: methodData.testingRequirements?.intro || '',
+        tests: methodData.testingRequirements?.tests || [],
+        recordingNote: methodData.testingRequirements?.recordingNote || ''
+      },
+      ragContextUsed: methodData.ragContextUsed || {
+        regulationsCount: 0,
+        practicalProceduresCount: 0,
+        toolsExtracted: 0,
+        materialsExtracted: 0,
+        keyRegulations: []
       },
       ragCitations: ragResults
         .map((r: any) => ({
