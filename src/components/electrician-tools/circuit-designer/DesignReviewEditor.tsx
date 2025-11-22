@@ -1793,7 +1793,9 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                         {currentCircuit.installationGuidance.safetyNotes.map((note, idx) => (
                           <li key={idx} className="text-sm text-white/90 flex items-start gap-2 text-left leading-relaxed">
                             <span className="text-amber-400 font-bold">•</span>
-                            <span className="flex-1">{note}</span>
+                            <span className="flex-1">
+                              {typeof note === 'string' ? note : (note as any).consideration || JSON.stringify(note)}
+                            </span>
                           </li>
                         ))}
                       </ul>
