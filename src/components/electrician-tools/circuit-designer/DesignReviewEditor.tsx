@@ -1710,36 +1710,74 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       <h5 className="text-sm font-semibold text-white">Cable Routing</h5>
                     </div>
                     <div className="bg-card/30 border border-border/40 rounded-lg p-3">
-                      <div 
-                        className="text-sm text-white/90 leading-relaxed text-left"
-                        dangerouslySetInnerHTML={{ 
-                              __html: processElectricalText(
-                                Array.isArray(currentCircuit.installationGuidance.cableRouting) 
-                                  ? currentCircuit.installationGuidance.cableRouting.map((item: any) => item.step || item).join('\n\n')
-                                  : (currentCircuit.installationGuidance.cableRouting || '')
-                              )
-                        }}
-                      />
+                      {Array.isArray(currentCircuit.installationGuidance.cableRouting) && 
+                       currentCircuit.installationGuidance.cableRouting.length > 0 ? (
+                        <ul className="space-y-3">
+                          {currentCircuit.installationGuidance.cableRouting.map((routing: any, idx: number) => (
+                            <li key={idx} className="text-sm text-white/90 text-left">
+                              <div className="flex items-start gap-2">
+                                <span className="text-blue-400 font-bold mt-1">→</span>
+                                <div className="flex-1">
+                                  <p className="leading-relaxed">{routing.step}</p>
+                                  {routing.cableType && (
+                                    <p className="text-xs text-white/60 mt-1">
+                                      Cable: {routing.cableType} | Method: {routing.method}
+                                    </p>
+                                  )}
+                                  {routing.bsReference && (
+                                    <p className="text-xs text-amber-400/80 mt-1">
+                                      {routing.bsReference}
+                                    </p>
+                                  )}
+                                  {routing.notes && (
+                                    <p className="text-xs text-white/50 italic mt-1">{routing.notes}</p>
+                                  )}
+                                </div>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-sm text-white/60 italic">No cable routing guidance available</p>
+                      )}
                     </div>
                   </div>
 
-                  {/* Termination Advice */}
+                  {/* Termination Requirements */}
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 mb-2">
                       <Wrench className="h-4 w-4 text-green-400" />
-                      <h5 className="text-sm font-semibold text-white">Termination Advice</h5>
+                      <h5 className="text-sm font-semibold text-white">Termination Requirements</h5>
                     </div>
                     <div className="bg-card/30 border border-border/40 rounded-lg p-3">
-                      <div 
-                        className="text-sm text-white/90 leading-relaxed text-left"
-                        dangerouslySetInnerHTML={{ 
-                              __html: processElectricalText(
-                                Array.isArray(currentCircuit.installationGuidance.terminationAdvice) 
-                                  ? currentCircuit.installationGuidance.terminationAdvice.map((item: any) => item.procedure || item).join('\n\n')
-                                  : (currentCircuit.installationGuidance.terminationAdvice || '')
-                              )
-                        }}
-                      />
+                      {Array.isArray(currentCircuit.installationGuidance.terminationRequirements) && 
+                       currentCircuit.installationGuidance.terminationRequirements.length > 0 ? (
+                        <ul className="space-y-3">
+                          {currentCircuit.installationGuidance.terminationRequirements.map((term: any, idx: number) => (
+                            <li key={idx} className="text-sm text-white/90 text-left">
+                              <div className="space-y-1">
+                                <p className="font-semibold text-green-400">{term.location}</p>
+                                <p className="leading-relaxed">{term.procedure}</p>
+                                {term.toolsNeeded && term.toolsNeeded.length > 0 && (
+                                  <p className="text-xs text-white/60">
+                                    Tools: {term.toolsNeeded.join(', ')}
+                                  </p>
+                                )}
+                                {term.torqueSettings && (
+                                  <p className="text-xs text-amber-400/80">
+                                    Torque: {term.torqueSettings}
+                                  </p>
+                                )}
+                                {term.bsReference && (
+                                  <p className="text-xs text-amber-400/80">{term.bsReference}</p>
+                                )}
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-sm text-white/60 italic">No termination guidance available</p>
+                      )}
                     </div>
                   </div>
 
@@ -1750,16 +1788,56 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       <h5 className="text-sm font-semibold text-white">Testing Requirements</h5>
                     </div>
                     <div className="bg-card/30 border border-border/40 rounded-lg p-3">
-                      <div 
-                        className="text-sm text-white/90 leading-relaxed text-left"
-                        dangerouslySetInnerHTML={{ 
-                              __html: processElectricalText(
-                                typeof currentCircuit.installationGuidance.testingRequirements === 'object'
-                                  ? (currentCircuit.installationGuidance.testingRequirements as any)?.intro || ''
-                                  : (currentCircuit.installationGuidance.testingRequirements || '')
-                              )
-                        }}
-                      />
+                      {currentCircuit.testingRequirements && typeof currentCircuit.testingRequirements === 'object' ? (
+                        <div className="space-y-3 text-left">
+                          {/* Intro */}
+                          {currentCircuit.testingRequirements.intro && (
+                            <p className="text-sm text-white/90 leading-relaxed">
+                              {currentCircuit.testingRequirements.intro}
+                            </p>
+                          )}
+                          
+                          {/* Tests */}
+                          {Array.isArray(currentCircuit.testingRequirements.tests) && 
+                           currentCircuit.testingRequirements.tests.length > 0 && (
+                            <ul className="space-y-3">
+                              {currentCircuit.testingRequirements.tests.map((test: any, idx: number) => (
+                                <li key={idx} className="border-l-2 border-purple-400/50 pl-3">
+                                  <p className="font-semibold text-purple-400 text-sm">{test.testName}</p>
+                                  {test.regulation && (
+                                    <p className="text-xs text-amber-400/80 mt-1">{test.regulation}</p>
+                                  )}
+                                  <p className="text-sm text-white/80 mt-1 leading-relaxed">{test.procedure}</p>
+                                  {test.expectedReading && (
+                                    <p className="text-xs text-green-400/80 mt-1">
+                                      Expected: {test.expectedReading}
+                                    </p>
+                                  )}
+                                  {test.acceptanceCriteria && (
+                                    <p className="text-xs text-white/60 mt-1">
+                                      Pass criteria: {test.acceptanceCriteria}
+                                    </p>
+                                  )}
+                                  {test.toolsRequired && test.toolsRequired.length > 0 && (
+                                    <p className="text-xs text-white/50 mt-1">
+                                      Tools: {test.toolsRequired.join(', ')}
+                                    </p>
+                                  )}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                          
+                          {/* Recording Note */}
+                          {currentCircuit.testingRequirements.recordingNote && (
+                            <p className="text-xs text-white/60 italic border-t border-white/10 pt-2 mt-2">
+                              {currentCircuit.testingRequirements.recordingNote}
+                            </p>
+                          )}
+                        </div>
+                      ) : (
+                        <p className="text-sm text-white/60 italic">No testing requirements available</p>
+                      )}
                     </div>
                   </div>
                   
