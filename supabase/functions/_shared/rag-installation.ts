@@ -25,8 +25,11 @@ function expandInstallationQuery(query: string): string {
     'buried': ['direct burial', 'SWA', 'protection', 'warning tape', '600mm depth'],
     'bathroom': ['zones', 'Section 701', 'IP rating', 'supplementary bonding'],
     'shower': ['high current', 'pull cord', 'double pole isolation', 'bathroom'],
-    'socket': ['ring final', 'radial', 'spurs', '2.5mm²', '32A'],
-    'light': ['lighting circuit', 'switch drops', '1.5mm²', '6A'],
+    'socket': ['ring final', 'radial', 'spurs', '2.5mm²', '32A', 'power outlet', 'receptacle'],
+    'light': ['lighting circuit', 'switch drops', '1.5mm²', '6A', 'luminaire', 'lamp', 'downlight', 'LED'],
+    'lighting': ['light circuit', 'switch drops', '1.5mm²', '6A', 'luminaire', 'lamp', 'downlight', 'LED', 'illumination'],
+    'cooker': ['oven', 'hob', 'range', 'high current', 'double pole switch', '6mm²'],
+    'immersion': ['water heater', 'dual tariff', 'timer', 'high current'],
     // FIX 3: Enhanced EV term expansion
     'ev': ['electric vehicle', 'EV charging', 'EVCP', 'Section 722', 'Mode 3', 'Type 2', 'dedicated circuit', 'charging point'],
     'charger': ['charging point', 'EVCP', 'socket-outlet', 'dedicated circuit', 'Mode 3', 'Type 2'],
