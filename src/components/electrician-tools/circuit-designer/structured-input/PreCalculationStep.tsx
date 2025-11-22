@@ -189,7 +189,7 @@ export const PreCalculationStep = ({ circuits, voltage, earthingSystem }: PreCal
                   {validation.warnings.map((warning, i) => (
                     <div key={`warning-${i}`} className="flex items-start gap-2 text-xs text-amber-300">
                       <AlertTriangle className="h-3.5 w-3.5 mt-0.5 shrink-0" />
-                      <span className="flex-1">{warning}</span>
+                      <span className="flex-1 text-left">{warning}</span>
                     </div>
                   ))}
                 </div>
