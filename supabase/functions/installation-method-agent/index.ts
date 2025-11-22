@@ -1,4 +1,5 @@
 /**
+ * VERSION: v3.1.0 - Context-Aware Installation Guidance (2025-11-22)
  * Installation Method Agent Edge Function
  * ISOLATED from AI RAMS - Used ONLY by Installation Specialist
  * Generates enhanced method statements for professional PDF templates
