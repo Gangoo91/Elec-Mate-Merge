@@ -5,9 +5,11 @@ import { MobileInput } from "@/components/ui/mobile-input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { CircuitInput, DomesticLoadType, CommercialLoadType, IndustrialLoadType } from "@/types/installation-design";
-import { Trash2, Copy, GripVertical } from "lucide-react";
+import { Trash2, Copy, GripVertical, ChevronDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { DEFAULT_CABLE_LENGTHS } from "@/lib/circuit-templates";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { useState } from "react";
 
 interface CircuitCardProps {
   circuit: CircuitInput;
@@ -58,6 +60,8 @@ const INDUSTRIAL_LOADS: { value: IndustrialLoadType; label: string }[] = [
 ];
 
 export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDelete, onDuplicate }: CircuitCardProps) => {
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  
   const getLoadOptions = () => {
     switch (installationType) {
       case 'domestic':
@@ -74,57 +78,46 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
   const loadOptions = getLoadOptions();
 
   return (
-    <Card className="p-3 sm:p-4 relative">
-      {/* Header */}
-      <div className="flex items-start gap-2 sm:gap-3 mb-3 sm:mb-4">
-        <div className="mt-1">
-          <GripVertical className="h-5 w-5 text-muted-foreground" />
+    <Card className="p-2.5 sm:p-4 relative">
+      {/* Compact Header */}
+      <div className="flex items-center justify-between mb-2.5 sm:mb-3">
+        <div className="flex items-center gap-1.5">
+          <GripVertical className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
+          <Badge variant="outline" className="text-[10px] sm:text-xs">Circuit {index + 1}</Badge>
+          {circuit.phases === 'three' && (
+            <Badge variant="secondary" className="text-[10px] sm:text-xs">3Φ</Badge>
+          )}
         </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <Badge variant="outline" className="text-xs">Circuit {index + 1}</Badge>
-            {circuit.phases === 'three' && (
-              <Badge variant="secondary" className="text-xs">3-Phase</Badge>
-            )}
-          </div>
-        </div>
-        <div className="flex gap-1.5 sm:gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onDuplicate}
-            className="h-10 w-10 sm:h-8 sm:w-8 p-0 touch-manipulation"
-          >
-            <Copy className="h-4 w-4" />
+        <div className="flex gap-1">
+          <Button variant="ghost" size="sm" onClick={onDuplicate} className="h-8 w-8 p-0">
+            <Copy className="h-3.5 w-3.5" />
           </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onDelete}
-            className="h-10 w-10 sm:h-8 sm:w-8 p-0 text-destructive hover:text-destructive touch-manipulation"
-          >
-            <Trash2 className="h-4 w-4" />
+          <Button variant="ghost" size="sm" onClick={onDelete} className="h-8 w-8 p-0 text-destructive">
+            <Trash2 className="h-3.5 w-3.5" />
           </Button>
         </div>
       </div>
 
       {/* Form Fields */}
-      <div className="grid gap-3 sm:gap-4">
+      <div className="grid gap-2.5 sm:gap-3">
         {/* Circuit Name */}
-        <div className="space-y-2">
-          <Label className="text-sm font-semibold">Circuit Name/Description *</Label>
+        <div className="space-y-1.5">
+          <Label className="text-xs sm:text-sm font-medium">
+            <span className="sm:hidden">Name *</span>
+            <span className="hidden sm:inline">Circuit Name/Description *</span>
+          </Label>
           <MobileInput
             value={circuit.name}
             onChange={(e) => onUpdate({ name: e.target.value })}
-            placeholder="e.g., Kitchen Ring Main, Upstairs Lights"
-            className="text-base"
+            placeholder="e.g., Kitchen Ring Main"
+            className="text-sm sm:text-base"
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
           {/* Load Type */}
-          <div className="space-y-2">
-            <Label className="text-sm font-semibold">Load Type *</Label>
+          <div className="space-y-1.5">
+            <Label className="text-xs sm:text-sm font-medium">Load Type *</Label>
             <Select 
               value={circuit.loadType} 
               onValueChange={(value) => {
@@ -141,7 +134,7 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
                 onUpdate(updates);
               }}
             >
-              <SelectTrigger className="text-base">
+              <SelectTrigger className="text-sm sm:text-base">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -155,13 +148,13 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
           </div>
 
           {/* Phases */}
-          <div className="space-y-2">
-            <Label className="text-sm font-semibold">Phases *</Label>
+          <div className="space-y-1.5">
+            <Label className="text-xs sm:text-sm font-medium">Phases *</Label>
             <Select 
               value={circuit.phases} 
               onValueChange={(v: 'single' | 'three') => onUpdate({ phases: v })}
             >
-              <SelectTrigger className="text-base">
+              <SelectTrigger className="text-sm sm:text-base">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -172,11 +165,12 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
           {/* Load Power */}
-          <div className="space-y-2">
-            <Label className="text-sm font-semibold">
-              Load Power (W) *
+          <div className="space-y-1.5">
+            <Label className="text-xs sm:text-sm font-medium">
+              <span className="sm:hidden">Power (W) *</span>
+              <span className="hidden sm:inline">Load Power (W) *</span>
             </Label>
             <MobileInput
               type="number"
@@ -184,18 +178,16 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
               step="1"
               value={circuit.loadPower || ''}
               onChange={(e) => onUpdate({ loadPower: e.target.value ? Number(e.target.value) : undefined })}
-              placeholder="e.g., 7360 for 32A ring"
-              className="text-base"
+              placeholder="Ring: 7360W | Lighting: 1000W"
+              className="text-sm sm:text-base"
             />
-            <p className="text-xs text-muted-foreground">
-              Ring: 7360W | Lighting: 1000W | Shower: 9500W
-            </p>
           </div>
 
           {/* Cable Length */}
-          <div className="space-y-2">
-            <Label className="text-sm font-semibold">
-              Cable Run Length (m)
+          <div className="space-y-1.5">
+            <Label className="text-xs sm:text-sm font-medium">
+              <span className="sm:hidden">Cable (m)</span>
+              <span className="hidden sm:inline">Cable Run Length (m)</span>
             </Label>
             <MobileInput
               type="number"
@@ -204,44 +196,56 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
               value={circuit.cableLength || ''}
               onChange={(e) => onUpdate({ cableLength: e.target.value ? Number(e.target.value) : undefined })}
               placeholder="e.g., 25"
-              className="text-base"
+              className="text-sm sm:text-base"
             />
-            <p className="text-xs text-muted-foreground">
-              Auto-filled based on typical runs - adjust if needed
-            </p>
           </div>
         </div>
 
-        {/* Special Location */}
-        <div className="space-y-2">
-          <Label className="text-sm font-semibold">Special Location</Label>
-          <Select 
-            value={circuit.specialLocation || 'none'} 
-            onValueChange={(v) => onUpdate({ specialLocation: v as any })}
-          >
-            <SelectTrigger className="text-base">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="none">None</SelectItem>
-              <SelectItem value="bathroom">Bathroom (Zones apply)</SelectItem>
-              <SelectItem value="outdoor">Outdoor</SelectItem>
-              <SelectItem value="underground">Underground</SelectItem>
-              <SelectItem value="kitchen">Kitchen (RCD required)</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        {/* Collapsible Advanced Options */}
+        <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced} className="border-t border-border/50 pt-2.5">
+          <CollapsibleTrigger asChild>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="w-full text-xs h-8 text-muted-foreground hover:text-foreground gap-1"
+            >
+              <ChevronDown className={`h-3.5 w-3.5 transition-transform ${showAdvanced ? 'rotate-180' : ''}`} />
+              {showAdvanced ? 'Hide' : 'Show'} Advanced Options
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="space-y-2.5 mt-2.5">
+            {/* Special Location */}
+            <div className="space-y-1.5">
+              <Label className="text-xs sm:text-sm font-medium">Special Location</Label>
+              <Select 
+                value={circuit.specialLocation || 'none'} 
+                onValueChange={(v) => onUpdate({ specialLocation: v as any })}
+              >
+                <SelectTrigger className="text-sm sm:text-base">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">None</SelectItem>
+                  <SelectItem value="bathroom">Bathroom (Zones apply)</SelectItem>
+                  <SelectItem value="outdoor">Outdoor</SelectItem>
+                  <SelectItem value="underground">Underground</SelectItem>
+                  <SelectItem value="kitchen">Kitchen (RCD required)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-        {/* Notes */}
-        <div className="space-y-2">
-          <Label className="text-sm">Additional Notes (Optional)</Label>
-          <Textarea
-            value={circuit.notes || ''}
-            onChange={(e) => onUpdate({ notes: e.target.value })}
-            placeholder="Any special requirements, installation details, or considerations..."
-            className="min-h-[60px] text-base resize-none"
-          />
-        </div>
+            {/* Notes */}
+            <div className="space-y-1.5">
+              <Label className="text-xs sm:text-sm font-medium">Additional Notes</Label>
+              <Textarea
+                value={circuit.notes || ''}
+                onChange={(e) => onUpdate({ notes: e.target.value })}
+                placeholder="Special requirements or considerations..."
+                className="min-h-[50px] text-sm sm:text-base resize-none"
+              />
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
       </div>
     </Card>
   );
