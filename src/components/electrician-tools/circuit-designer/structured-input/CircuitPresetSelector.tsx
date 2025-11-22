@@ -36,8 +36,8 @@ export const CircuitPresetSelector = ({ installationType, onSelectPreset }: Circ
         <CollapsibleContent>
           <div className="p-3 sm:p-4 pt-0 grid gap-3 sm:grid-cols-2">
             {templates.map(template => (
-              <Card key={template.id} className="p-3 sm:p-4 hover:border-primary/50 transition-colors">
-                <div className="flex items-start justify-between gap-2 sm:gap-3 mb-2">
+              <Card key={template.id} className="p-3.5 sm:p-4 hover:border-primary/50 transition-colors">
+                <div className="flex items-start justify-between gap-1.5 sm:gap-3 mb-2">
                   <div className="flex-1 min-w-0">
                     <h4 className="font-semibold text-sm sm:text-base text-foreground truncate">{template.name}</h4>
                     <p className="text-xs sm:text-sm text-muted-foreground mt-1 line-clamp-2">{template.description}</p>
@@ -46,9 +46,9 @@ export const CircuitPresetSelector = ({ installationType, onSelectPreset }: Circ
                     size="sm"
                     variant="secondary"
                     onClick={() => onSelectPreset(template)}
-                    className="gap-1 shrink-0 min-h-[44px] px-3"
+                    className="gap-1 shrink-0 min-h-[44px] min-w-[44px] px-2.5 sm:px-3 flex items-center justify-center"
                   >
-                    <Plus className="h-4 w-4" />
+                    <Plus className="h-4 w-4 flex-shrink-0" />
                     <span className="hidden sm:inline">Add</span>
                   </Button>
                 </div>
