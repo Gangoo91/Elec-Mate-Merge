@@ -9,8 +9,8 @@ const CommissioningPage = () => {
 
   return (
     <div className="min-h-screen bg-elec-dark">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 py-4 sm:py-6">
-        <div className="space-y-4 sm:space-y-6 animate-fade-in">
+      <div className="container mx-auto px-3 sm:px-6 lg:px-12 py-3 sm:py-6 max-w-4xl">
+        <div className="space-y-3 sm:space-y-4 animate-fade-in">
           {/* Back Button - Mobile optimised */}
           <Link to={fromAgentSelector ? "/electrician/agent-selector" : "/electrician"}>
             <Button variant="outline" size="sm" className="gap-2 touch-manipulation h-10">
@@ -20,8 +20,8 @@ const CommissioningPage = () => {
 
           {/* Header */}
           <div className="text-center sm:text-left">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground flex items-center justify-center sm:justify-start gap-2">
-              <CheckCircle2 className="h-6 w-6 sm:h-8 sm:w-8 text-purple-400" />
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground flex items-center justify-center sm:justify-start gap-2">
+              <CheckCircle2 className="h-6 w-6 sm:h-7 sm:w-7 text-purple-400" />
               AI Testing & Commissioning Specialist
             </h1>
             <p className="text-muted-foreground text-sm sm:text-base mt-1">
