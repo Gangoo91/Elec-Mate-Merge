@@ -74,9 +74,9 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
   const loadOptions = getLoadOptions();
 
   return (
-    <Card className="p-4 relative">
+    <Card className="p-3 sm:p-4 relative">
       {/* Header */}
-      <div className="flex items-start gap-3 mb-4">
+      <div className="flex items-start gap-2 sm:gap-3 mb-3 sm:mb-4">
         <div className="mt-1">
           <GripVertical className="h-5 w-5 text-muted-foreground" />
         </div>
@@ -88,12 +88,12 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
             )}
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-1.5 sm:gap-2">
           <Button
             variant="ghost"
             size="sm"
             onClick={onDuplicate}
-            className="h-8 w-8 p-0"
+            className="h-10 w-10 sm:h-8 sm:w-8 p-0 touch-manipulation"
           >
             <Copy className="h-4 w-4" />
           </Button>
@@ -101,7 +101,7 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
             variant="ghost"
             size="sm"
             onClick={onDelete}
-            className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+            className="h-10 w-10 sm:h-8 sm:w-8 p-0 text-destructive hover:text-destructive touch-manipulation"
           >
             <Trash2 className="h-4 w-4" />
           </Button>
@@ -109,7 +109,7 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
       </div>
 
       {/* Form Fields */}
-      <div className="grid gap-4">
+      <div className="grid gap-3 sm:gap-4">
         {/* Circuit Name */}
         <div className="space-y-2">
           <Label className="text-sm font-semibold">Circuit Name/Description *</Label>
@@ -121,7 +121,7 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
           />
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           {/* Load Type */}
           <div className="space-y-2">
             <Label className="text-sm font-semibold">Load Type *</Label>
@@ -172,7 +172,7 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           {/* Load Power */}
           <div className="space-y-2">
             <Label className="text-sm font-semibold">

@@ -177,18 +177,18 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
   return (
     <div className="space-y-6">
       {/* Progress Header */}
-      <Card className="p-4 sm:p-6 bg-gradient-to-br from-primary/5 to-accent/5">
-        <div className="space-y-4">
+      <Card className="p-3 sm:p-4 md:p-6 bg-gradient-to-br from-primary/5 to-accent/5">
+        <div className="space-y-3 sm:space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-base sm:text-lg font-semibold text-foreground">Design Your Installation</h3>
-            <Badge variant="secondary" className="text-xs sm:text-sm">
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold text-foreground">Design Your Installation</h3>
+            <Badge variant="secondary" className="text-[10px] sm:text-xs md:text-sm px-2 py-0.5">
               {currentStep + 1} / {STEPS.length}
             </Badge>
           </div>
           
           <Progress value={progressPercentage} className="h-2" />
           
-          <div className="hidden sm:grid grid-cols-4 gap-2">
+          <div className="hidden md:grid md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-2">
             {STEPS.map((step, index) => (
               <div
                 key={step.id}
@@ -215,7 +215,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
           </div>
           
           {/* Mobile: Current Step Only */}
-          <div className="sm:hidden text-center">
+          <div className="md:hidden text-center">
             <div className="text-sm font-bold text-primary">{STEPS[currentStep].label}</div>
             <div className="text-xs text-muted-foreground">{STEPS[currentStep].description}</div>
           </div>
@@ -223,7 +223,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
       </Card>
 
       {/* Step Content */}
-      <Card className="p-4 sm:p-6">
+      <Card className="p-3 sm:p-4 md:p-6">
         {currentStep === 0 && (
           <ProjectInfoStep
             projectName={projectName}
@@ -314,14 +314,14 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
       </Card>
 
       {/* Navigation */}
-      <div className="mt-6 mb-safe">
-        <Card className="p-4 shadow-sm border-t-2 border-primary/20">
-          <div className="flex items-center justify-between gap-4">
+      <div className="mt-6 pb-safe">
+        <Card className="p-3 sm:p-4 shadow-sm border-t-2 border-primary/20 sticky bottom-0 sm:static">
+          <div className="flex items-center justify-between gap-3 sm:gap-4">
             <Button
               variant="outline"
               onClick={handleBack}
               disabled={currentStep === 0 || isProcessing}
-              className="gap-2 touch-manipulation"
+              className="gap-2 touch-manipulation min-h-[44px] sm:min-h-[40px]"
             >
               <ArrowLeft className="h-4 w-4" />
               <span className="hidden sm:inline">Back</span>
@@ -337,7 +337,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
               <Button
                 onClick={handleNext}
                 disabled={!canProceed() || isProcessing}
-                className="gap-2 touch-manipulation"
+                className="gap-2 touch-manipulation min-h-[44px] sm:min-h-[40px]"
               >
                 <span className="hidden sm:inline">
                   {currentStep === 2 ? 'Configure Installation' : currentStep === 3 ? 'Validate Design' : 'Next'}
@@ -350,12 +350,13 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
                 onClick={handleGenerate}
                 disabled={!canProceed() || isProcessing}
                 size="lg"
-                className="gap-2 bg-gradient-to-r from-primary to-primary/80 touch-manipulation"
+                className="gap-2 bg-gradient-to-r from-primary to-primary/80 touch-manipulation min-h-[44px] w-full sm:w-auto"
               >
                 {isProcessing ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
                     <span className="hidden sm:inline">Generating Design...</span>
+                    <span className="sm:hidden">Generating...</span>
                   </>
                 ) : (
                   <>

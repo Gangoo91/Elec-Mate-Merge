@@ -6,9 +6,6 @@ import { DesignInputs } from "@/types/installation-design";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
-import { clearDesignCache } from "@/utils/clearDesignCache";
 import { useCircuitDesignGeneration } from "@/hooks/useCircuitDesignGeneration";
 
 // User-friendly error message mapper
@@ -41,29 +38,11 @@ export const AIInstallationDesigner = () => {
   const [userRequest, setUserRequest] = useState<string>('');
   const [totalCircuits, setTotalCircuits] = useState<number>(0);
   const [designData, setDesignData] = useState<any>(null);
-  const [isClearingCache, setIsClearingCache] = useState(false);
   const [jobId, setJobId] = useState<string | null>(null);
   const successToastShown = useRef(false);
   
   // Use job polling hook
   const { job, progress, status, currentStep, designData: jobDesignData, error } = useCircuitDesignGeneration(jobId);
-
-  const handleClearCache = async () => {
-    setIsClearingCache(true);
-    const result = await clearDesignCache();
-    
-    if (result.success) {
-      toast.success('Cache cleared', {
-        description: 'All cached designs removed. Next design will use fresh RAG data.'
-      });
-    } else {
-      toast.error('Cache clear failed', {
-        description: result.error || 'Please try again'
-      });
-    }
-    
-    setIsClearingCache(false);
-  };
 
   const handleGenerate = async (inputs: DesignInputs) => {
     try {
@@ -292,20 +271,6 @@ export const AIInstallationDesigner = () => {
 
   return (
     <div className="space-y-4">
-      {/* Cache Clear Button - Always visible */}
-      <div className="flex justify-end">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handleClearCache}
-          disabled={isClearingCache}
-          className="gap-2"
-        >
-          <Trash2 className="h-4 w-4" />
-          {isClearingCache ? 'Clearing...' : 'Clear Cache'}
-        </Button>
-      </div>
-
       {/* Agent Inbox */}
       <AgentInbox 
         currentAgent="designer"

@@ -124,15 +124,15 @@ export const DesignProcessingView = ({
   };
 
   return (
-    <div className="min-h-[60vh] flex items-center justify-center px-4 py-6">
-      <div className="max-w-6xl w-full space-y-6">
+    <div className="min-h-[60vh] flex items-center justify-center px-3 sm:px-4 py-4 sm:py-6 pb-safe">
+      <div className="max-w-6xl w-full space-y-4 sm:space-y-6">
         {/* Status Banner - Top */}
         <Alert className="bg-elec-yellow/10 border-l-4 border-l-elec-yellow border-y-elec-yellow/30 border-r-elec-yellow/30">
-          <div className="flex items-center justify-between flex-wrap gap-3">
-            <AlertDescription className="text-base font-medium text-white flex-1">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3">
+            <AlertDescription className="text-sm sm:text-base font-medium text-white flex-1">
               {progress?.message || 'Processing in parallel...'}
             </AlertDescription>
-            <div className="flex items-center gap-4 text-sm text-white">
+            <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-white">
               <div className="flex items-center gap-1.5">
                 <Clock className="w-4 h-4" />
                 <span className="font-semibold">{formatTime(elapsedTime)}</span>
@@ -145,14 +145,14 @@ export const DesignProcessingView = ({
 
         {/* Main Progress Card - Compact */}
         <Card className="border-elec-yellow/20 bg-elec-card">
-          <CardContent className="p-5">
+          <CardContent className="p-3 sm:p-4 md:p-5">
             {/* Title Section */}
-            <div className="text-center mb-6">
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-elec-yellow/10 mb-3">
-                <Zap className="w-7 h-7 text-elec-yellow" />
+            <div className="text-center mb-4 sm:mb-6">
+              <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-elec-yellow/10 mb-2 sm:mb-3">
+                <Zap className="w-6 h-6 sm:w-7 sm:h-7 text-elec-yellow" />
               </div>
-              <h2 className="text-2xl font-bold text-white mb-2">Parallel AI Circuit Design</h2>
-              <p className="text-white text-sm">
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2">Parallel AI Circuit Design</h2>
+              <p className="text-white text-xs sm:text-sm">
                 Two specialised agents working simultaneously on your design
               </p>
             </div>
@@ -216,7 +216,7 @@ export const DesignProcessingView = ({
         </Card>
 
         {/* Stage Progress Grid - Responsive */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-2 sm:gap-3">
           {stageDetails.map((stage, idx) => {
             const isCompleted = idx < currentStage;
             const isCurrent = idx === currentStage;
@@ -226,16 +226,16 @@ export const DesignProcessingView = ({
               <Card
                 key={idx}
                 className={cn(
-                  "transition-all duration-300 hover:scale-105 min-h-[100px]",
+                  "transition-all duration-300 hover:scale-105 min-h-[90px] sm:min-h-[100px]",
                   isCompleted && "bg-green-500/10 border-green-500/30 shadow-sm shadow-green-500/20",
                   isCurrent && "bg-elec-yellow/10 border-elec-yellow border-2 shadow-md shadow-elec-yellow/40 animate-pulse",
                   isPending && "bg-muted/5 border-border/30 opacity-60"
                 )}
               >
-                <CardContent className="p-4 flex flex-col items-center justify-center text-center h-full">
-                  <div className="text-3xl mb-2">{stage.icon}</div>
+                <CardContent className="p-3 sm:p-4 flex flex-col items-center justify-center text-center h-full">
+                  <div className="text-2xl sm:text-3xl mb-1.5 sm:mb-2">{stage.icon}</div>
                   <div className={cn(
-                    "text-xs font-semibold mb-2 line-clamp-2",
+                    "text-[10px] sm:text-xs font-semibold mb-1.5 sm:mb-2 line-clamp-2",
                     isCompleted && "text-green-400",
                     isCurrent && "text-elec-yellow",
                     isPending && "text-white/50"
@@ -243,10 +243,10 @@ export const DesignProcessingView = ({
                     {stage.name}
                   </div>
                   {isCompleted && (
-                    <CheckCircle2 className="w-5 h-5 text-green-500" />
+                    <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
                   )}
                   {isCurrent && (
-                    <Loader2 className="w-5 h-5 text-elec-yellow animate-spin" />
+                    <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow animate-spin" />
                   )}
                 </CardContent>
               </Card>
@@ -255,13 +255,13 @@ export const DesignProcessingView = ({
         </div>
 
         {/* Bottom Row - Requirements and Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
           {/* User Requirements */}
           {userRequest && (
             <Card className="bg-elec-yellow/5 border-elec-yellow/20">
-              <CardContent className="p-4">
-                <p className="text-sm font-semibold text-elec-yellow mb-2">Your Requirements:</p>
-                <p className="text-sm text-white leading-relaxed line-clamp-3">{userRequest}</p>
+              <CardContent className="p-3 sm:p-4">
+                <p className="text-xs sm:text-sm font-semibold text-elec-yellow mb-1.5 sm:mb-2">Your Requirements:</p>
+                <p className="text-xs sm:text-sm text-white leading-relaxed line-clamp-3">{userRequest}</p>
               </CardContent>
             </Card>
           )}
@@ -269,10 +269,10 @@ export const DesignProcessingView = ({
           {/* Circuits Completed */}
           {totalCircuits > 0 && (
             <Card className="bg-green-500/10 border-green-500/20">
-              <CardContent className="p-4 flex items-center justify-between">
-                <span className="text-base font-semibold text-white">Circuits Completed</span>
-                <span className="text-3xl font-bold text-green-400">
-                  {estimatedCompleted}<span className="text-xl text-white/70">/{totalCircuits}</span>
+              <CardContent className="p-3 sm:p-4 flex items-center justify-between">
+                <span className="text-sm sm:text-base font-semibold text-white">Circuits Completed</span>
+                <span className="text-2xl sm:text-3xl font-bold text-green-400">
+                  {estimatedCompleted}<span className="text-lg sm:text-xl text-white/70">/{totalCircuits}</span>
                 </span>
               </CardContent>
             </Card>
@@ -298,7 +298,7 @@ export const DesignProcessingView = ({
             <Button
               variant="outline"
               onClick={onCancel}
-              className="w-full sm:w-auto border-red-500/30 hover:bg-red-500/10 hover:border-red-500/50 text-white"
+              className="w-full sm:w-auto min-h-[44px] border-red-500/30 hover:bg-red-500/10 hover:border-red-500/50 text-white touch-manipulation"
             >
               <XCircle className="w-4 h-4 mr-2" />
               Cancel Design
