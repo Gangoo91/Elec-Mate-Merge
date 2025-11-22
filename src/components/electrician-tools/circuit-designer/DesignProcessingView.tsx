@@ -172,18 +172,18 @@ export const DesignProcessingView = ({
           {/* Stats */}
           <div className="grid grid-cols-2 gap-3 mb-6">
             <div className="bg-muted/10 rounded-lg p-3">
-              <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
-                <Clock className="w-3.5 h-3.5" />
-                <span>Elapsed Time</span>
+              <div className="flex items-center gap-2 mb-2">
+                <Clock className="w-4 h-4 text-muted-foreground" />
+                <span className="text-xs text-muted-foreground">Elapsed Time</span>
               </div>
               <p className="text-lg font-semibold text-foreground">{formatTime(elapsedTime)}</p>
             </div>
             
             {totalCircuits > 0 && (
               <div className="bg-muted/10 rounded-lg p-3">
-                <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
-                  <Zap className="w-3.5 h-3.5" />
-                  <span>Circuits</span>
+                <div className="flex items-center gap-2 mb-2">
+                  <Zap className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-xs text-muted-foreground">Circuits</span>
                 </div>
                 <p className="text-lg font-semibold text-foreground">
                   {estimatedCompleted}<span className="text-muted-foreground">/{totalCircuits}</span>
