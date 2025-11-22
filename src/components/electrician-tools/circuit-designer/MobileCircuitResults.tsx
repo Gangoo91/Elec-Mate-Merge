@@ -162,12 +162,12 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
         <CircuitCard 
           circuit={selectedCircuit}
           onViewWorkings={() => setShowWorkingsSheet(true)}
-          onViewJustification={() => setShowJustificationSheet(true)}
+          showFullDetails={true}
         />
       </div>
 
       {/* Action Panel - Scrollable */}
-      <div className="px-4 pb-6 space-y-3">
+      <div className="px-4 pb-6">
         <div className="grid grid-cols-2 gap-3">
           <MobileButton
             variant="elec-outline"
@@ -186,17 +186,6 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
             Export PDF
           </MobileButton>
         </div>
-        
-        {/* Additional Quick Actions */}
-        <MobileButton
-          variant="outline"
-          size="wide"
-          icon={<FileText className="h-4 w-4" />}
-          onClick={() => setShowJustificationSheet(true)}
-          className="w-full border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
-        >
-          View Full Justifications
-        </MobileButton>
       </div>
 
       {/* Bottom Sheets */}
