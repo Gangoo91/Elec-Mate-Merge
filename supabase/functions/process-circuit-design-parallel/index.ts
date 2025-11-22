@@ -422,13 +422,9 @@ async function mergeResults(
 
   // ✅ DEBUG: Log installation data structure for verification
   logger.info('📦 Installation data retrieved:', {
-    hasInstallationGuidance: !!installationData?.installationGuidance,
-    cableRoutingCount: installationData?.installationGuidance?.cableRouting?.length || 0,
-    terminationCount: installationData?.installationGuidance?.terminationRequirements?.length || 0,
-    safetyCount: installationData?.installationGuidance?.safetyConsiderations?.length || 0,
-    materialsCount: installationData?.installationGuidance?.materialsRequired?.length || 0,
-    toolsCount: installationData?.installationGuidance?.toolsRequired?.length || 0,
-    procedureCount: installationData?.installationGuidance?.installationProcedure?.length || 0,
+    hasExecutiveSummary: !!installationData?.executiveSummary,
+    stepsCount: installationData?.steps?.length || 0,
+    materialsCount: installationData?.materialsList?.cables?.length || 0,
     testingCount: installationData?.testingRequirements?.tests?.length || 0,
     dataKeys: Object.keys(installationData || {})
   });
@@ -444,31 +440,35 @@ async function mergeResults(
     // Circuit technical specs from designer
     ...circuit,
     
-    // ✅ NEW: Merge structured installation guidance from installer
-    installationGuidance: {
-      // Pass through the structured data from Installation Method Agent
-      safetyConsiderations: installationData.installationGuidance?.safetyConsiderations || [],
-      materialsRequired: installationData.installationGuidance?.materialsRequired || [],
-      toolsRequired: installationData.installationGuidance?.toolsRequired || [],
-      cableRouting: installationData.installationGuidance?.cableRouting || [],
-      terminationRequirements: installationData.installationGuidance?.terminationRequirements || [],
-      installationProcedure: installationData.installationGuidance?.installationProcedure || []
-    },
+    // ✅ FIXED: Map install-method-agent output structure to frontend expectations
+    installationGuidance: installationData?.executiveSummary || '',
     
-    // ✅ NEW: Merge structured testing requirements
-    testingRequirements: {
-      intro: installationData.testingRequirements?.intro || '',
-      tests: installationData.testingRequirements?.tests || [],
-      recordingNote: installationData.testingRequirements?.recordingNote || ''
-    },
+    // ✅ Map installation steps from install-method-agent
+    installationSteps: installationData?.steps?.map((step: any) => step.description || step.title) || [],
     
-    // LEGACY: Keep for backward compatibility with old UI components
-    installationMethod: installationData.steps?.[index]?.title || circuit.installationMethod || 'Standard installation',
-    toolsRequired: extractToolsForCircuit(installationData, circuit, index),
-    materialsNeeded: extractMaterialsForCircuit(installationData, circuit, index),
-    installationSteps: extractStepsForCircuit(installationData, circuit, index),
-    safetyNotes: extractSafetyForCircuit(installationData, circuit, index),
-    estimatedInstallTime: installationData.steps?.[index]?.estimatedTime || 120
+    // ✅ Map tools from install-method-agent
+    toolsRequired: installationData?.steps?.flatMap((step: any) => step.tools || []) || [],
+    
+    // ✅ Map materials from install-method-agent
+    materialsNeeded: installationData?.materialsList?.cables?.map((cable: any) => 
+      `${cable.specification} - ${cable.quantity}`
+    ) || [],
+    
+    // ✅ Map safety notes from install-method-agent
+    safetyNotes: installationData?.steps?.flatMap((step: any) => step.safetyNotes || []) || [],
+    
+    // ✅ Map testing requirements from install-method-agent
+    testingRequirements: installationData?.testingRequirements?.tests?.map((test: any) => ({
+      testName: test.testName,
+      regulation: test.regulation,
+      expectedResults: test.expectedResults
+    })) || [],
+    
+    // Keep legacy fields
+    installationMethod: installationData?.steps?.[0]?.title || circuit.installationMethod || 'Standard installation',
+    estimatedInstallTime: installationData?.steps?.reduce((total: number, step: any) => 
+      total + (step.estimatedTimeMinutes || 30), 0
+    ) || 120
   })) || [];
 
   return {
