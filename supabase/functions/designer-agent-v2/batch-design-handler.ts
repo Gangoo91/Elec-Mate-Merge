@@ -265,20 +265,9 @@ const DESIGN_TOOL_SCHEMA = {
                 items: { type: 'string' },
                 description: 'Design warnings or considerations'
               },
-              installationGuidance: {
-                type: 'object',
-                description: 'Practical installation guidance',
-                properties: {
-                  referenceMethod: { type: 'string', description: 'BS 7671 reference method (e.g., "Method C - Clipped Direct")' },
-                  description: { type: 'string', description: 'Installation method description' },
-                  clipSpacing: { type: 'string', description: 'Cable clip spacing requirements (e.g., "300mm horizontal, 400mm vertical")' },
-                  practicalTips: { 
-                    type: 'array', 
-                    items: { type: 'string' },
-                    description: 'Practical installation tips from real-world guidance'
-                  },
-                  regulation: { type: 'string', description: 'BS 7671 regulation reference' }
-                }
+              installationNotes: {
+                type: 'string',
+                description: 'Circuit-specific installation guidance (2-4 sentences). MUST reference THIS circuit\'s exact specifications: load type, power, cable size, length, location, and protection. Example for 9.5kW shower, 10mm² cable, 18m run: "This 9.5kW shower requires 10mm² cable over 18m. Use 25mm PVC conduit where exposed. All connections must use heat-resistant terminals rated for 40A continuous load. Install RCD spur at shower pull-cord location for local isolation."'
               },
               expectedTestResults: {
                 type: 'object',
@@ -585,7 +574,7 @@ function ensurePDFFields(circuit: any, index?: number): any {
         protectiveDeviceSelection: circuit.protectionDeviceSummary || `${circuit.protectionDevice?.rating}A ${circuit.protectionDevice?.curve || 'B'}-curve ${circuit.protectionDevice?.type || 'MCB'}`,
         complianceConfirmation: `Voltage drop: ${circuit.voltageDropCompliant}\n${circuit.voltageDropText}\n\nEarth fault loop: ${circuit.zsCompliant}\n${circuit.earthFaultLoopText}\n\nRCD protection: ${circuit.rcdProtectedText}`,
         designJustification: circuit.justifications?.cableSize || 'Cable sized per BS 7671 calculations.',
-        installationGuidance: circuit.installationNotes || 'Install per BS 7671:2018+A3:2024.',
+        installationGuidance: circuit.installationNotes,
         safetyNotes: (circuit.warnings?.length > 0) ? circuit.warnings.join('\n') : 'No specific warnings.',
         testingCommissioningGuidance: `Test R1+R2, IR, and Zs (must be < ${circuit.earthFaultLoopText}).${circuit.rcdProtected ? ' Verify RCD operation.' : ''}`
       }
@@ -1142,7 +1131,19 @@ For EVERY circuit, you MUST provide:
 - faultCurrentAnalysis: PSCC at circuit, device capacity, compliance check
 - specialLocationCompliance: If bathroom/outdoor/special location, include zone requirements and specific regulations
 
-Installation guidance (reference methods, clip spacing) is handled by the installation-method-agent.
+INSTALLATION NOTES REQUIREMENTS (CRITICAL - NO GENERIC TEXT):
+You MUST write installationNotes that are SPECIFIC to each circuit's parameters:
+- Reference the EXACT load (e.g., "This 9.5kW shower", "These 13A socket circuits")
+- Reference the EXACT cable specification (e.g., "6mm² T&E", "2.5mm² SWA with 1.5mm² CPC")
+- Reference the EXACT cable length if >20m (e.g., "over the 35m run", "across the 60m distance")
+- Include location-specific advice if outdoor/bathroom/kitchen (e.g., "IP66-rated glands for outdoor entry", "Zone 2 compliant in bathroom")
+- Include cable-specific installation methods (e.g., "SWA burial depth 600mm", "Clipped direct with 300mm spacing")
+
+WRONG (generic): "Install cable clips at regular intervals. Maintain minimum bend radius."
+RIGHT (specific): "This 32A ring final uses 2.5mm² T&E clipped direct over 45m. Clip spacing 300mm horizontal. At 45m length, expect minor voltage drop—verify <5% on commissioning."
+
+WRONG (generic): "Install per BS 7671."
+RIGHT (specific): "This 9.5kW shower requires 10mm² cable. Use 25mm conduit where exposed. Heat-resistant terminals rated 40A continuous. RCD spur at shower pull-cord for local isolation."
 
 Use UK English. Output ONLY via the design_circuits tool - no conversational text.`
         },
@@ -1191,10 +1192,11 @@ Design the following ${batch.length} circuit(s):
 ${batch.map((c: any, idx: number) => `
 Circuit ${idx + 1}: ${c.name || c.loadType}
 - Load Type: ${c.loadType}
-- Load Power: ${c.loadPower}W
-- Cable Length: ${c.cableLength}m
-- Location: ${c.location || 'Normal'}
-- Special Requirements: ${c.specialLocation !== 'none' ? c.specialLocation : 'None'}
+- Load Power: ${c.loadPower}W (${(c.loadPower / 1000).toFixed(1)}kW)
+- Cable Length: ${c.cableLength}m${c.cableLength > 30 ? ' (LONG RUN - mention in installation notes)' : ''}
+- Location: ${c.location || 'Normal'}${c.specialLocation && c.specialLocation !== 'none' ? ` (${c.specialLocation} - include zone/IP requirements in notes)` : ''}
+
+Write installationNotes that reference these EXACT values (not generic advice).
 `).join('\n')}
 
 Supply Details:
