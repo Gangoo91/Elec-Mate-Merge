@@ -103,185 +103,183 @@ serve(async (req) => {
       });
     }
 
-    // ✅ ALIGNED TO JSON SCHEMA - camelCase field mapping
+    // ✅ ALIGNED TO JSON SCHEMA - camelCase field mapping (FLATTENED - NO WRAPPER)
     const payload = {
-      methodStatementData: {
-        // Project Metadata (exact schema match)
-        projectMetadata: methodData.projectMetadata || {
-          documentRef: methodData.projectMetadata?.documentRef || `MS-${Date.now()}`,
-          issueDate: methodData.projectMetadata?.issueDate || new Date().toISOString().split('T')[0],
-          reviewDate: methodData.projectMetadata?.reviewDate || new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB'),
-          companyName: methodData.projectMetadata?.companyName || '',
-          contractor: methodData.projectMetadata?.contractor || methodData.contractor || '',
-          siteManagerName: methodData.projectMetadata?.siteManagerName || methodData.siteManagerName || '',
-          siteManagerPhone: methodData.projectMetadata?.siteManagerPhone || methodData.siteManagerPhone || '',
-          firstAiderName: methodData.projectMetadata?.firstAiderName || methodData.firstAiderName || '',
-          firstAiderPhone: methodData.projectMetadata?.firstAiderPhone || methodData.firstAiderPhone || '',
-          safetyOfficerName: methodData.projectMetadata?.safetyOfficerName || methodData.safetyOfficerName || '',
-          safetyOfficerPhone: methodData.projectMetadata?.safetyOfficerPhone || methodData.safetyOfficerPhone || '',
-          assemblyPoint: methodData.projectMetadata?.assemblyPoint || methodData.assemblyPoint || '',
-          startDate: methodData.projectMetadata?.startDate || '',
-          completionDate: methodData.projectMetadata?.completionDate || '',
-          siteSupervisor: methodData.projectMetadata?.siteSupervisor || methodData.supervisor || '',
-          clientContact: methodData.projectMetadata?.clientContact || '',
-          preparedByName: methodData.projectMetadata?.preparedByName || '',
-          preparedByPosition: methodData.projectMetadata?.preparedByPosition || '',
-          preparedDate: methodData.projectMetadata?.preparedDate || '',
-          authorisedByName: methodData.projectMetadata?.authorisedByName || '',
-          authorisedByPosition: methodData.projectMetadata?.authorisedByPosition || '',
-          authorisedDate: methodData.projectMetadata?.authorisedDate || ''
-        },
+      // Project Metadata (exact schema match)
+      projectMetadata: methodData.projectMetadata || {
+        documentRef: methodData.projectMetadata?.documentRef || `MS-${Date.now()}`,
+        issueDate: methodData.projectMetadata?.issueDate || new Date().toISOString().split('T')[0],
+        reviewDate: methodData.projectMetadata?.reviewDate || new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB'),
+        companyName: methodData.projectMetadata?.companyName || '',
+        contractor: methodData.projectMetadata?.contractor || methodData.contractor || '',
+        siteManagerName: methodData.projectMetadata?.siteManagerName || methodData.siteManagerName || '',
+        siteManagerPhone: methodData.projectMetadata?.siteManagerPhone || methodData.siteManagerPhone || '',
+        firstAiderName: methodData.projectMetadata?.firstAiderName || methodData.firstAiderName || '',
+        firstAiderPhone: methodData.projectMetadata?.firstAiderPhone || methodData.firstAiderPhone || '',
+        safetyOfficerName: methodData.projectMetadata?.safetyOfficerName || methodData.safetyOfficerName || '',
+        safetyOfficerPhone: methodData.projectMetadata?.safetyOfficerPhone || methodData.safetyOfficerPhone || '',
+        assemblyPoint: methodData.projectMetadata?.assemblyPoint || methodData.assemblyPoint || '',
+        startDate: methodData.projectMetadata?.startDate || '',
+        completionDate: methodData.projectMetadata?.completionDate || '',
+        siteSupervisor: methodData.projectMetadata?.siteSupervisor || methodData.supervisor || '',
+        clientContact: methodData.projectMetadata?.clientContact || '',
+        preparedByName: methodData.projectMetadata?.preparedByName || '',
+        preparedByPosition: methodData.projectMetadata?.preparedByPosition || '',
+        preparedDate: methodData.projectMetadata?.preparedDate || '',
+        authorisedByName: methodData.projectMetadata?.authorisedByName || '',
+        authorisedByPosition: methodData.projectMetadata?.authorisedByPosition || '',
+        authorisedDate: methodData.projectMetadata?.authorisedDate || ''
+      },
 
-        // Executive Summary (exact schema match)
-        executiveSummary: methodData.executiveSummary || {
-          cableType: '',
-          cableSize: '',
-          runLength: '',
-          installationMethod: '',
-          supplyType: '',
-          protectiveDevice: '',
-          voltageDrop: '',
-          zsRequirement: '',
-          purpose: ''
-        },
-        
-        // Materials List (exact schema match)
-        materialsList: (methodData.materialsList || []).map((material: any) => ({
-          description: material.description || '',
-          specification: material.specification || '',
-          quantity: material.quantity || '',
-          unit: material.unit || '',
-          notes: material.notes || ''
-        })),
+      // Executive Summary (exact schema match)
+      executiveSummary: methodData.executiveSummary || {
+        cableType: '',
+        cableSize: '',
+        runLength: '',
+        installationMethod: '',
+        supplyType: '',
+        protectiveDevice: '',
+        voltageDrop: '',
+        zsRequirement: '',
+        purpose: ''
+      },
+      
+      // Materials List (exact schema match)
+      materialsList: (methodData.materialsList || []).map((material: any) => ({
+        description: material.description || '',
+        specification: material.specification || '',
+        quantity: material.quantity || '',
+        unit: material.unit || '',
+        notes: material.notes || ''
+      })),
 
-        // Installation Steps (exact schema match with camelCase)
-        steps: (methodData.steps || []).map((step: any) => ({
-          id: step.id || `step-${step.step || step.stepNumber}`,
-          stepNumber: step.step || step.stepNumber,
-          title: step.title,
-          description: step.description,
-          estimatedDuration: step.duration || step.estimatedDuration || 'Not specified',
-          riskLevel: step.riskLevel || 'MEDIUM',
-          safetyRequirements: step.safetyNotes || step.safetyRequirements || [],
-          equipmentNeeded: step.tools || step.equipmentNeeded || [],
-          materialsNeeded: step.materials || step.materialsNeeded || [],
-          personnel: step.personnel || '',
-          bsReferences: step.bsReferences || [],
-          linkedHazards: step.linkedHazards || [],
-          inspectionCheckpoints: step.inspectionCheckpoints || [],
-          isCompleted: step.isCompleted || false,
-          dependencies: step.dependencies || [],
-          notes: step.notes || ''
-        })),
-        
-        // Testing Requirements (exact schema match)
-        testingRequirements: (methodData.testingRequirements || []).map((test: any) => ({
-          description: test.description || '',
-          regulation: test.regulation || '',
-          expectedReading: test.expectedReading || '',
-          passRange: test.passRange || ''
-        })),
-        
-        // Regulatory References (exact schema match)
-        regulatoryReferences: (methodData.regulatoryReferences || []).map((ref: any) => ({
-          number: ref.number || '',
-          description: ref.description || ''
-        })),
+      // Installation Steps (exact schema match with camelCase)
+      steps: (methodData.steps || []).map((step: any) => ({
+        id: step.id || `step-${step.step || step.stepNumber}`,
+        stepNumber: step.step || step.stepNumber,
+        title: step.title,
+        description: step.description,
+        estimatedDuration: step.duration || step.estimatedDuration || 'Not specified',
+        riskLevel: step.riskLevel || 'MEDIUM',
+        safetyRequirements: step.safetyNotes || step.safetyRequirements || [],
+        equipmentNeeded: step.tools || step.equipmentNeeded || [],
+        materialsNeeded: step.materials || step.materialsNeeded || [],
+        personnel: step.personnel || '',
+        bsReferences: step.bsReferences || [],
+        linkedHazards: step.linkedHazards || [],
+        inspectionCheckpoints: step.inspectionCheckpoints || [],
+        isCompleted: step.isCompleted || false,
+        dependencies: step.dependencies || [],
+        notes: step.notes || ''
+      })),
+      
+      // Testing Requirements (exact schema match)
+      testingRequirements: (methodData.testingRequirements || []).map((test: any) => ({
+        description: test.description || '',
+        regulation: test.regulation || '',
+        expectedReading: test.expectedReading || '',
+        passRange: test.passRange || ''
+      })),
+      
+      // Regulatory References (exact schema match)
+      regulatoryReferences: (methodData.regulatoryReferences || []).map((ref: any) => ({
+        number: ref.number || '',
+        description: ref.description || ''
+      })),
 
-        // Installation Hazards (NEW - Section 5, exact schema match)
-        installationHazards: methodData.installationHazards || null,
+      // Installation Hazards (NEW - Section 5, exact schema match)
+      installationHazards: methodData.installationHazards || null,
 
-        // Scope of Work (exact schema match)
-        scopeOfWork: methodData.scopeOfWork || {
-          description: '',
-          keyDeliverables: [],
-          exclusions: ''
-        },
-        
-        // Schedule Details (exact schema match)
-        scheduleDetails: methodData.scheduleDetails || {
-          workingHours: '',
-          teamSize: '',
-          weatherDependency: '',
-          accessRequirements: '',
-          estimatedDuration: methodData.duration || ''
-        },
+      // Scope of Work (exact schema match)
+      scopeOfWork: methodData.scopeOfWork || {
+        description: '',
+        keyDeliverables: [],
+        exclusions: ''
+      },
+      
+      // Schedule Details (exact schema match)
+      scheduleDetails: methodData.scheduleDetails || {
+        workingHours: '',
+        teamSize: '',
+        weatherDependency: '',
+        accessRequirements: '',
+        estimatedDuration: methodData.duration || ''
+      },
 
-        // Practical Tips (exact schema match)
-        practicalTips: methodData.practicalTips || [],
+      // Practical Tips (exact schema match)
+      practicalTips: methodData.practicalTips || [],
 
-        // Common Mistakes (exact schema match)
-        commonMistakes: methodData.commonMistakes || [],
+      // Common Mistakes (exact schema match)
+      commonMistakes: methodData.commonMistakes || [],
 
-        // RAG Citations (exact schema match)
-        ragCitations: methodData.ragCitations || [],
-        
-        // Legacy/backward compatibility fields
-        projectName: methodData.projectName || '',
-        jobTitle: methodData.jobTitle || 'Installation Method Statement',
-        location: methodData.location || 'Site location',
-        contractor: methodData.contractor || '',
-        supervisor: methodData.supervisor || '',
-        workType: methodData.workType || 'Electrical installation',
-        duration: methodData.duration || 'Variable',
-        teamSize: methodData.teamSize || '1-2 persons',
-        description: methodData.description || '',
-        overallRiskLevel: methodData.overallRiskLevel || 'MEDIUM',
-        reviewDate: methodData.reviewDate || new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB'),
-        
-        // Emergency contacts (backward compatibility)
-        siteManagerName: methodData.siteManagerName || '',
-        siteManagerPhone: methodData.siteManagerPhone || '',
-        firstAiderName: methodData.firstAiderName || '',
-        firstAiderPhone: methodData.firstAiderPhone || '',
-        safetyOfficerName: methodData.safetyOfficerName || '',
-        safetyOfficerPhone: methodData.safetyOfficerPhone || '',
-        assemblyPoint: methodData.assemblyPoint || '',
-        
-        // Competency Matrix
-        competencyMatrix: methodData.competencyMatrix || {},
-        
-        // Emergency Procedures (static)
-        emergencyProcedures: {
-          electricShock: emergencyProcedures.electricShock,
-          arcFlash: emergencyProcedures.arcFlash,
-          fire: emergencyProcedures.fire
-        },
-        
-        id: methodData.id || '',
-        approvedBy: methodData.approvedBy || '',
-        createdAt: methodData.createdAt || new Date().toISOString(),
-        updatedAt: methodData.updatedAt || new Date().toISOString(),
-        
-        // Legacy fields
-        toolsRequired: methodData.toolsRequired || [],
-        materialsRequired: methodData.materialsRequired || [],
-        totalEstimatedTime: methodData.totalEstimatedTime || '',
-        difficultyLevel: methodData.difficultyLevel || '',
-        complianceRegulations: methodData.complianceRegulations || [],
-        complianceWarnings: methodData.complianceWarnings || [],
-        
-        // Equipment & Schedules
-        equipmentSchedule: createEquipmentSchedule(
-          methodData.toolsRequired,
-          methodData.materialsRequired
-        ),
-        qualityRequirements: methodData.qualityRequirements || [],
-        testingProcedures: methodData.testingProcedures || [],
-        siteLogistics: methodData.siteLogistics || {},
-        competencyRequirements: methodData.competencyRequirements || {},
-        conditionalFlags: methodData.conditionalFlags || {},
-        workAtHeightEquipment: methodData.workAtHeightEquipment || []
-      }
+      // RAG Citations (exact schema match)
+      ragCitations: methodData.ragCitations || [],
+      
+      // Legacy/backward compatibility fields
+      projectName: methodData.projectName || '',
+      jobTitle: methodData.jobTitle || 'Installation Method Statement',
+      location: methodData.location || 'Site location',
+      contractor: methodData.contractor || '',
+      supervisor: methodData.supervisor || '',
+      workType: methodData.workType || 'Electrical installation',
+      duration: methodData.duration || 'Variable',
+      teamSize: methodData.teamSize || '1-2 persons',
+      description: methodData.description || '',
+      overallRiskLevel: methodData.overallRiskLevel || 'MEDIUM',
+      reviewDate: methodData.reviewDate || new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB'),
+      
+      // Emergency contacts (backward compatibility)
+      siteManagerName: methodData.siteManagerName || '',
+      siteManagerPhone: methodData.siteManagerPhone || '',
+      firstAiderName: methodData.firstAiderName || '',
+      firstAiderPhone: methodData.firstAiderPhone || '',
+      safetyOfficerName: methodData.safetyOfficerName || '',
+      safetyOfficerPhone: methodData.safetyOfficerPhone || '',
+      assemblyPoint: methodData.assemblyPoint || '',
+      
+      // Competency Matrix
+      competencyMatrix: methodData.competencyMatrix || {},
+      
+      // Emergency Procedures (static)
+      emergencyProcedures: {
+        electricShock: emergencyProcedures.electricShock,
+        arcFlash: emergencyProcedures.arcFlash,
+        fire: emergencyProcedures.fire
+      },
+      
+      id: methodData.id || '',
+      approvedBy: methodData.approvedBy || '',
+      createdAt: methodData.createdAt || new Date().toISOString(),
+      updatedAt: methodData.updatedAt || new Date().toISOString(),
+      
+      // Legacy fields
+      toolsRequired: methodData.toolsRequired || [],
+      materialsRequired: methodData.materialsRequired || [],
+      totalEstimatedTime: methodData.totalEstimatedTime || '',
+      difficultyLevel: methodData.difficultyLevel || '',
+      complianceRegulations: methodData.complianceRegulations || [],
+      complianceWarnings: methodData.complianceWarnings || [],
+      
+      // Equipment & Schedules
+      equipmentSchedule: createEquipmentSchedule(
+        methodData.toolsRequired,
+        methodData.materialsRequired
+      ),
+      qualityRequirements: methodData.qualityRequirements || [],
+      testingProcedures: methodData.testingProcedures || [],
+      siteLogistics: methodData.siteLogistics || {},
+      competencyRequirements: methodData.competencyRequirements || {},
+      conditionalFlags: methodData.conditionalFlags || {},
+      workAtHeightEquipment: methodData.workAtHeightEquipment || []
     };
 
-    console.log('📤 Sending payload to PDF Monkey (nested structure)...');
+    console.log('📤 Sending payload to PDF Monkey (FLATTENED - no wrapper)...');
     console.log('📦 Method Statement Data:', {
-      jobTitle: payload.methodStatementData.jobTitle,
-      stepsCount: payload.methodStatementData.steps?.length,
-      toolsCount: payload.methodStatementData.toolsRequired?.length,
-      materialsCount: payload.methodStatementData.materialsRequired?.length,
-      workType: payload.methodStatementData.workType
+      jobTitle: payload.jobTitle,
+      stepsCount: payload.steps?.length,
+      toolsCount: payload.toolsRequired?.length,
+      materialsCount: payload.materialsRequired?.length,
+      workType: payload.workType
     });
 
     const response = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
