@@ -18,9 +18,6 @@ import { downloadEICPDF } from '@/lib/eic/pdfGenerator';
 import { generateEICSchedule } from '@/lib/eic/scheduleGenerator';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
-import { SendToAgentDropdown } from '@/components/install-planner-v2/SendToAgentDropdown';
-import { AgentFlowDiagram } from '@/components/install-planner-v2/AgentFlowDiagram';
-import { AgentType } from '@/types/agent-request';
 import { useNavigate } from 'react-router-dom';
 import { calculateExpectedR1R2, getMaxZsForDevice, mapLoadTypeToCircuitDescription } from '@/utils/eic-transformer';
 import { MobileCircuitResults } from './MobileCircuitResults';
@@ -776,22 +773,6 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
     };
   };
   
-  const handleQuickForward = (targetAgent: AgentType) => {
-    const routes: Record<AgentType, string> = {
-      'designer': '/electrician/circuit-designer',
-      'cost-engineer': '/electrician/cost-engineer',
-      'installer': '/electrician/installation-specialist',
-      'health-safety': '/electrician/health-safety',
-      'commissioning': '/electrician/commissioning',
-      'maintenance': '/electrician/maintenance',
-      'project-manager': '/electrician/project-manager',
-      'tutor': '/electrician/ai-tutor'
-    };
-    
-    navigate(routes[targetAgent], { 
-      state: { fromAgentSelector: true }
-    });
-  };
   
   const handleProceedToInstaller = () => {
     // Build context from selected circuits (Phase 2: Structured protection data)
@@ -1091,42 +1072,65 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   // Desktop view
   return (
     <div className="space-y-4 sm:space-y-5 md:space-y-6 px-3 sm:px-4 pb-safe">
-      {/* Request Summary Header */}
-      <RequestSummaryHeader design={design} />
-
-      {/* Agent Flow Diagram */}
-      <AgentFlowDiagram currentAgent="designer" onQuickForward={handleQuickForward} />
-
-      {/* Compact Project Summary */}
-      <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
-        <div className="flex items-center justify-between flex-wrap gap-3 sm:gap-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6">
-            <div>
-              <h2 className="text-base sm:text-lg md:text-xl font-bold">{design.projectName}</h2>
-              <p className="text-xs sm:text-sm text-muted-foreground">{design.location}</p>
-            </div>
-            <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm">
-              <div className="flex items-center gap-1.5">
-                <Zap className="h-4 w-4 text-primary" />
-                <span className="font-semibold">{design.totalLoad / 1000}kW</span>
+      {/* Unified Header Card - combines RequestSummaryHeader and Project Summary */}
+      <Card className="p-4 sm:p-5 md:p-6 bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
+        <div className="space-y-4">
+          {/* Top row: Title, location, and key metrics */}
+          <div className="flex items-start justify-between flex-wrap gap-4">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/20 rounded-xl flex items-center justify-center border border-elec-yellow/40 shrink-0">
+                  <Zap className="h-5 w-5 text-elec-yellow" />
+                </div>
+                <div className="min-w-0">
+                  <h2 className="text-xl md:text-2xl font-bold truncate">{design.projectName}</h2>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <MapPin className="h-3.5 w-3.5" />
+                    <p className="truncate">{design.location}</p>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-1.5">
+            </div>
+            
+            {/* Key metrics on the right */}
+            <div className="flex items-center gap-4 sm:gap-6 text-sm flex-wrap">
+              <div className="flex items-center gap-2">
+                <Zap className="h-4 w-4 text-primary" />
+                <span className="font-semibold">{design.totalLoad / 1000}kW Total</span>
+              </div>
+              <div className="flex items-center gap-2">
                 <TrendingDown className="h-4 w-4 text-green-500" />
                 <span className="font-semibold">
                   {design.diversityBreakdown 
                     ? `${fmt(design.diversityBreakdown.diversifiedLoad, 1)}kW`
-                    : `${design.totalLoad / 1000}kW`}
+                    : `${design.totalLoad / 1000}kW`} Diversified
                 </span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <Shield className="h-4 w-4 text-primary" />
-                <span className="font-semibold">{design.consumerUnit?.mainSwitchRating || 100}A</span>
+              <div className="flex items-center gap-2">
+                <Cable className="h-4 w-4 text-blue-400" />
+                <span className="font-semibold">{design.circuits.length} Circuits</span>
+              </div>
+              <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full ${allCompliant ? 'bg-green-500/10 text-green-600' : 'bg-amber-500/10 text-amber-600'}`}>
+                {allCompliant ? <CheckCircle2 className="h-4 w-4" /> : <AlertTriangle className="h-4 w-4" />}
+                <span className="font-medium text-xs">{allCompliant ? 'Compliant' : 'Issues'}</span>
               </div>
             </div>
           </div>
-          <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${allCompliant ? 'bg-green-500/10 text-green-600' : 'bg-amber-500/10 text-amber-600'}`}>
-            {allCompliant ? <CheckCircle2 className="h-5 w-5" /> : <AlertTriangle className="h-5 w-5" />}
-            <span className="font-semibold">{allCompliant ? 'All Compliant' : 'Issues Found'}</span>
+          
+          {/* Bottom row: Installation type and voltage badges */}
+          <div className="flex flex-wrap gap-2">
+            <Badge variant="outline" className="border-primary/30">
+              {design.installationType || 'Standard Installation'}
+            </Badge>
+            <Badge variant="outline" className="border-blue-500/30 text-blue-400">
+              {design.consumerUnit?.incomingSupply?.voltage || 230}V
+            </Badge>
+            <Badge variant="outline" className="border-purple-500/30 text-purple-400">
+              {(typeof design.circuits[0]?.phases === 'number' && design.circuits[0]?.phases === 3) || design.circuits[0]?.phases === 'three' ? '3-Phase' : 'Single-Phase'}
+            </Badge>
+            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
+              {design.consumerUnit?.mainSwitchRating || 100}A Main Switch
+            </Badge>
           </div>
         </div>
       </Card>
@@ -2498,10 +2502,6 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        <SendToAgentDropdown 
-          currentAgent="designer" 
-          currentOutput={design} 
-        />
         <Button size="lg" variant="outline" onClick={onReset} className="w-full sm:w-auto min-h-[44px] touch-manipulation">
           New Design
         </Button>
