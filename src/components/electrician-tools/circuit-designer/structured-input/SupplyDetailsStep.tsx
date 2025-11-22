@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Info, Zap, ChevronDown, ChevronUp, Building2, Calendar } from "lucide-react";
+import { Info, Zap, ChevronDown, Building2, Calendar, Wrench } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -88,35 +88,34 @@ export const SupplyDetailsStep = ({
     }
   }, [earthingSystem]);
   return (
-    <div className="space-y-4">
-      <div>
-        <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-2">Supply Details</h2>
-        <p className="text-sm sm:text-base text-muted-foreground">Configure the electrical supply characteristics</p>
-      </div>
-
-      <Alert className="bg-blue-500/10 border-blue-500/30">
-        <Info className="h-4 w-4 text-blue-400" />
-        <AlertDescription className="text-xs sm:text-sm">
-          Smart defaults are pre-filled based on your installation type. Adjust only if you have specific requirements.
+    <div className="space-y-4 sm:space-y-5">
+      {/* Smart defaults info */}
+      <Alert className="p-2.5 sm:p-3 bg-blue-500/10 border-blue-500/30">
+        <Info className="h-3.5 w-3.5 text-blue-400" />
+        <AlertDescription className="text-xs sm:text-sm text-blue-100">
+          Smart defaults pre-filled. Adjust only if you have specific requirements.
         </AlertDescription>
       </Alert>
 
-      <div className="grid gap-4">
-        {/* Property Context */}
-        <Card className="p-5 border-primary/20">
-          <div className="flex items-center gap-2 mb-4">
-            <Calendar className="h-5 w-5 text-primary" />
-            <h3 className="font-semibold text-lg">Property Context</h3>
+      <div className="space-y-4 sm:space-y-5">
+        {/* Property Context Section */}
+        <div className="space-y-3 pt-4 border-t border-border/30">
+          <div className="flex items-center gap-1.5">
+            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <h3 className="text-xs uppercase tracking-wide font-medium text-muted-foreground">Property Context</h3>
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="property-age" className="text-base font-semibold">Property Age</Label>
+          <div className="space-y-1.5">
+            <Label htmlFor="property-age" className="text-sm sm:text-base font-medium sm:font-semibold">
+              <span className="sm:hidden">Age</span>
+              <span className="hidden sm:inline">Property Age</span>
+            </Label>
             <Select 
               value={propertyAge || ''} 
               onValueChange={(v) => setPropertyAge((v as 'new-build' | 'modern' | 'older' | 'very-old') || undefined)}
             >
-              <SelectTrigger id="property-age" className="text-base">
-                <SelectValue placeholder="Select property age..." />
+              <SelectTrigger id="property-age" className="h-11 sm:h-12 bg-card border-elec-yellow/20 text-sm sm:text-base">
+                <SelectValue placeholder="Select age (helps AI adjust diversity factors)..." />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="new-build">New Build (&lt; 5 years)</SelectItem>
@@ -125,23 +124,22 @@ export const SupplyDetailsStep = ({
                 <SelectItem value="very-old">Very Old (40+ years)</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-xs text-muted-foreground">Helps AI adjust diversity factors and flag upgrade requirements</p>
+            <p className="text-xs text-muted-foreground">Adjusts diversity factors and upgrade requirements</p>
           </div>
-        </Card>
+        </div>
 
-        {/* Primary Supply Settings */}
-        <Card className="p-5 border-primary/20">
-          <div className="flex items-center gap-2 mb-4">
-            <Zap className="h-5 w-5 text-primary" />
-            <h3 className="font-semibold text-lg">Primary Supply</h3>
+        {/* Primary Supply Section */}
+        <div className="space-y-3 pt-4 border-t border-border/30">
+          <div className="flex items-center gap-1.5">
+            <Zap className="h-4 w-4 text-muted-foreground" />
+            <h3 className="text-xs uppercase tracking-wide font-medium text-muted-foreground">Primary Supply</h3>
           </div>
           
-          <div className="space-y-4">
-            {/* Combined Supply Type */}
-            <div className="space-y-2">
-              <Label htmlFor="supply-type" className="text-base font-semibold">Supply Type *</Label>
+          <div className="space-y-3">
+            <div className="space-y-1.5">
+              <Label htmlFor="supply-type" className="text-sm sm:text-base font-medium sm:font-semibold">Supply Type *</Label>
               <Select value={supplyType} onValueChange={handleSupplyTypeChange}>
-                <SelectTrigger id="supply-type" className="text-base">
+                <SelectTrigger id="supply-type" className="h-11 sm:h-12 bg-card border-elec-yellow/20 text-sm sm:text-base">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -152,8 +150,8 @@ export const SupplyDetailsStep = ({
               </Select>
               
               {supplyType === '110-single' && (
-                <Alert className="mt-2 bg-amber-500/10 border-amber-500/30">
-                  <Info className="h-4 w-4 text-amber-400" />
+                <Alert className="p-2 bg-amber-500/10 border-amber-500/30">
+                  <Info className="h-3.5 w-3.5 text-amber-400" />
                   <AlertDescription className="text-xs">
                     110V requires transformers. Ensure proper labelling and verify supply source.
                   </AlertDescription>
@@ -161,8 +159,8 @@ export const SupplyDetailsStep = ({
               )}
               
               {supplyType === '400-three' && (
-                <Alert className="mt-2 bg-blue-500/10 border-blue-500/30">
-                  <Info className="h-4 w-4 text-blue-400" />
+                <Alert className="p-2 bg-blue-500/10 border-blue-500/30">
+                  <Info className="h-3.5 w-3.5 text-blue-400" />
                   <AlertDescription className="text-xs">
                     400V three-phase provides higher capacity. Phase balance is critical for compliance.
                   </AlertDescription>
@@ -170,21 +168,23 @@ export const SupplyDetailsStep = ({
               )}
             </div>
           </div>
-        </Card>
+        </div>
 
         {/* Consumer Unit Details */}
-        <Card className="p-5 border-primary/20">
-          <div className="flex items-center gap-2 mb-4">
-            <Building2 className="h-5 w-5 text-primary" />
-            <h3 className="font-semibold text-lg">Consumer Unit Details</h3>
+        <div className="space-y-3 pt-4 border-t border-border/30">
+          <div className="flex items-center gap-1.5">
+            <Building2 className="h-4 w-4 text-muted-foreground" />
+            <h3 className="text-xs uppercase tracking-wide font-medium text-muted-foreground">Consumer Unit Details</h3>
           </div>
           
-          <div className="grid sm:grid-cols-3 gap-4">
-            {/* Main Switch Rating */}
-            <div className="space-y-2">
-              <Label htmlFor="main-switch" className="text-base font-semibold">Main Switch Rating</Label>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
+            <div className="space-y-1.5">
+              <Label htmlFor="main-switch" className="text-sm sm:text-base font-medium sm:font-semibold">
+                <span className="sm:hidden">Main Switch (A)</span>
+                <span className="hidden sm:inline">Main Switch Rating</span>
+              </Label>
               <Select value={mainSwitchRating?.toString() || ''} onValueChange={(v) => setMainSwitchRating(v ? Number(v) : undefined)}>
-                <SelectTrigger id="main-switch" className="text-base">
+                <SelectTrigger id="main-switch" className="h-11 sm:h-12 bg-card border-elec-yellow/20 text-sm sm:text-base">
                   <SelectValue placeholder="Auto" />
                 </SelectTrigger>
                 <SelectContent>
@@ -196,11 +196,13 @@ export const SupplyDetailsStep = ({
               </Select>
             </div>
 
-            {/* Number of Ways */}
-            <div className="space-y-2">
-              <Label htmlFor="ways" className="text-base font-semibold">Number of Ways</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="ways" className="text-sm sm:text-base font-medium sm:font-semibold">
+                <span className="sm:hidden">Ways</span>
+                <span className="hidden sm:inline">Number of Ways</span>
+              </Label>
               <Select defaultValue="auto">
-                <SelectTrigger id="ways" className="text-base">
+                <SelectTrigger id="ways" className="h-11 sm:h-12 bg-card border-elec-yellow/20 text-sm sm:text-base">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -215,11 +217,10 @@ export const SupplyDetailsStep = ({
               </Select>
             </div>
 
-            {/* CU Type */}
-            <div className="space-y-2">
-              <Label htmlFor="cu-type" className="text-base font-semibold">Type</Label>
+            <div className="space-y-1.5 sm:col-span-3 lg:col-span-1">
+              <Label htmlFor="cu-type" className="text-sm sm:text-base font-medium sm:font-semibold">Type</Label>
               <Select defaultValue="split-load">
-                <SelectTrigger id="cu-type" className="text-base">
+                <SelectTrigger id="cu-type" className="h-11 sm:h-12 bg-card border-elec-yellow/20 text-sm sm:text-base">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -230,19 +231,21 @@ export const SupplyDetailsStep = ({
               </Select>
             </div>
           </div>
-          <p className="text-xs text-muted-foreground mt-3">AI will auto-select if not specified</p>
-        </Card>
+          <p className="text-xs text-muted-foreground">AI will auto-select if not specified</p>
+        </div>
 
         {/* Earthing System */}
-        <Card className="p-5">
-          <h3 className="font-semibold text-lg mb-4">Earthing & Protection</h3>
+        <div className="space-y-3 pt-4 border-t border-border/30">
+          <div className="flex items-center gap-1.5">
+            <Wrench className="h-4 w-4 text-muted-foreground" />
+            <h3 className="text-xs uppercase tracking-wide font-medium text-muted-foreground">Earthing & Protection</h3>
+          </div>
           
-          <div className="grid sm:grid-cols-2 gap-4">
-            {/* Earthing System */}
-            <div className="space-y-2">
-              <Label htmlFor="earthing" className="text-base font-semibold">Earthing System *</Label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+            <div className="space-y-1.5">
+              <Label htmlFor="earthing" className="text-sm sm:text-base font-medium sm:font-semibold">Earthing System *</Label>
               <Select value={earthingSystem} onValueChange={(v: any) => setEarthingSystem(v)}>
-                <SelectTrigger id="earthing" className="text-base">
+                <SelectTrigger id="earthing" className="h-11 sm:h-12 bg-card border-elec-yellow/20 text-sm sm:text-base">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -254,40 +257,28 @@ export const SupplyDetailsStep = ({
               <p className="text-xs text-muted-foreground">Check your consumer unit label</p>
             </div>
 
-            {/* Ze */}
-            <div className="space-y-2">
-              <Label htmlFor="ze" className="text-base font-semibold">External Earth Fault Loop Impedance (Ze) *</Label>
+            <div className="space-y-1.5">
+              <Label htmlFor="ze" className="text-sm sm:text-base font-medium sm:font-semibold">
+                <span className="sm:hidden">Ze (Ω) *</span>
+                <span className="hidden sm:inline">External Earth Fault Loop Impedance (Ze) *</span>
+              </Label>
               <MobileInput
                 id="ze"
                 type="number"
                 step="0.01"
                 value={ze}
                 onChange={(e) => setZe(Number(e.target.value))}
-                className="text-base"
+                className="h-11 sm:h-12 bg-card border-elec-yellow/20 text-sm sm:text-base"
               />
-              <div className="text-[11px] sm:text-xs text-muted-foreground space-y-0.5">
-                <div className="font-medium mb-1">Typical values:</div>
-                <div className="grid grid-cols-3 gap-2 text-center">
-                  <div className="space-y-0.5">
-                    <div className="font-semibold text-elec-yellow">TN-S</div>
-                    <div>0.35Ω</div>
-                  </div>
-                  <div className="space-y-0.5">
-                    <div className="font-semibold text-elec-yellow">TN-C-S</div>
-                    <div>0.35Ω</div>
-                  </div>
-                  <div className="space-y-0.5">
-                    <div className="font-semibold text-elec-yellow">TT</div>
-                    <div>200Ω</div>
-                  </div>
-                </div>
+              <div className="text-xs text-muted-foreground space-y-0.5">
+                <div className="font-medium">Typical: TN-S/TN-C-S: 0.35Ω, TT: 200Ω</div>
               </div>
             </div>
 
-            {/* PSCC */}
-            <div className="space-y-3">
-              <Label htmlFor="pscc" className="text-base font-semibold">
-                Prospective Short Circuit Current (PSCC)
+            <div className="space-y-1.5 sm:col-span-2">
+              <Label htmlFor="pscc" className="text-sm sm:text-base font-medium sm:font-semibold">
+                <span className="sm:hidden">PSCC (kA)</span>
+                <span className="hidden sm:inline">Prospective Short Circuit Current (PSCC)</span>
               </Label>
               <MobileInput
                 id="pscc"
@@ -296,69 +287,40 @@ export const SupplyDetailsStep = ({
                 value={pscc || ''}
                 onChange={(e) => setPscc(e.target.value ? Number(e.target.value) : undefined)}
                 placeholder="Leave blank to auto-calculate"
-                hint="AI will calculate based on Ze if not provided"
-                className="text-base"
+                className="h-11 sm:h-12 bg-card border-elec-yellow/20 text-sm sm:text-base"
               />
-              <Alert className="bg-muted/50 p-3 sm:p-4">
-                <div className="flex items-start gap-2">
-                  <Info className="h-4 w-4 sm:h-3 sm:w-3 mt-0.5 flex-shrink-0" />
-                  <AlertDescription className="text-[11px] sm:text-xs flex-1">
-                    <div className="font-medium mb-2">Typical PSCC values:</div>
-                    <div className="grid grid-cols-1 gap-1.5">
-                      <div className="flex justify-between items-center">
-                        <span className="font-semibold text-elec-yellow">TN-S (0.35Ω):</span>
-                        <span className="font-mono">~657A</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="font-semibold text-elec-yellow">TN-C-S (0.35Ω):</span>
-                        <span className="font-mono">~657A</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="font-semibold text-elec-yellow">TT (200Ω):</span>
-                        <span className="font-mono">~1.15A</span>
-                      </div>
-                    </div>
-                  </AlertDescription>
-                </div>
-              </Alert>
+              <p className="text-xs text-muted-foreground">AI will calculate based on Ze if not provided</p>
             </div>
           </div>
-        </Card>
+        </div>
 
-        {/* Advanced Settings - Collapsible */}
-        <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
-          <Card className="p-5">
+        {/* Advanced Settings */}
+        <div className="pt-4 border-t border-border/30">
+          <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
             <CollapsibleTrigger asChild>
-              <Button variant="ghost" className="w-full justify-between p-0 h-auto hover:bg-transparent">
-                <h3 className="font-semibold text-lg">Advanced Settings</h3>
-                {showAdvanced ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full justify-between hover:bg-elec-yellow/10 -ml-3"
+              >
+                <span className="flex items-center gap-1.5 font-medium text-sm">
+                  <ChevronDown 
+                    className={`h-4 w-4 transition-transform duration-200 ${showAdvanced && "rotate-180"}`}
+                  />
+                  Advanced Settings
+                </span>
               </Button>
             </CollapsibleTrigger>
             
-            <CollapsibleContent className="mt-4">
-              <div className="grid sm:grid-cols-2 gap-4">
-                {/* PSCC */}
-                <div className="space-y-3">
-                  <Label htmlFor="pscc" className="text-base font-semibold">
-                    Prospective Short Circuit Current (PSCC)
+            <CollapsibleContent className="mt-3 space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+                <div className="space-y-1.5">
+                  <Label htmlFor="install-method" className="text-sm sm:text-base font-medium sm:font-semibold">
+                    <span className="sm:hidden">Install Method</span>
+                    <span className="hidden sm:inline">Default Installation Method</span>
                   </Label>
-                  <MobileInput
-                    id="pscc"
-                    type="number"
-                    step="0.1"
-                    value={pscc || ''}
-                    onChange={(e) => setPscc(e.target.value ? Number(e.target.value) : undefined)}
-                    placeholder="Leave blank to auto-calculate"
-                    className="text-base"
-                  />
-                  <p className="text-xs text-muted-foreground">AI will calculate based on Ze if not provided</p>
-                </div>
-
-                {/* Installation Method */}
-                <div className="space-y-2">
-                  <Label htmlFor="install-method" className="text-base">Default Installation Method</Label>
                   <Select value={installationMethod} onValueChange={setInstallationMethod}>
-                    <SelectTrigger id="install-method" className="text-base">
+                    <SelectTrigger id="install-method" className="h-11 sm:h-12 bg-card border-elec-yellow/20 text-sm sm:text-base">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -371,22 +333,23 @@ export const SupplyDetailsStep = ({
                   </Select>
                 </div>
 
-                {/* Ambient Temperature */}
-                <div className="space-y-2">
-                  <Label htmlFor="ambient-temp" className="text-base">Ambient Temperature (°C)</Label>
+                <div className="space-y-1.5">
+                  <Label htmlFor="ambient-temp" className="text-sm sm:text-base font-medium sm:font-semibold">
+                    <span className="sm:hidden">Temp (°C)</span>
+                    <span className="hidden sm:inline">Ambient Temperature (°C)</span>
+                  </Label>
                   <MobileInput
                     id="ambient-temp"
                     type="number"
                     value={ambientTemp}
                     onChange={(e) => setAmbientTemp(Number(e.target.value))}
-                    className="text-base"
+                    className="h-11 sm:h-12 bg-card border-elec-yellow/20 text-sm sm:text-base"
                   />
                   <p className="text-xs text-muted-foreground">Standard: 25°C</p>
                 </div>
 
-                {/* Grouping Factor */}
-                <div className="space-y-2">
-                  <Label htmlFor="grouping" className="text-base">Cable Grouping Factor</Label>
+                <div className="space-y-1.5 sm:col-span-2">
+                  <Label htmlFor="grouping" className="text-sm sm:text-base font-medium sm:font-semibold">Cable Grouping Factor</Label>
                   <MobileInput
                     id="grouping"
                     type="number"
@@ -395,14 +358,14 @@ export const SupplyDetailsStep = ({
                     max="1"
                     value={groupingFactor}
                     onChange={(e) => setGroupingFactor(Number(e.target.value))}
-                    className="text-base"
+                    className="h-11 sm:h-12 bg-card border-elec-yellow/20 text-sm sm:text-base"
                   />
                   <p className="text-xs text-muted-foreground">1.0 = no grouping (default)</p>
                 </div>
               </div>
             </CollapsibleContent>
-          </Card>
-        </Collapsible>
+          </Collapsible>
+        </div>
       </div>
     </div>
   );
