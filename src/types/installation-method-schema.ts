@@ -5,6 +5,33 @@ export const INSTALLATION_METHOD_FULL_SCHEMA = {
   title: "Installation Method Statement (Full Mode)",
   description: "Complete structured output from the AI Installation Specialist",
   properties: {
+    projectMetadata: {
+      type: "object",
+      description: "Project and document metadata",
+      properties: {
+        workType: { type: "string", description: "Type of work (Domestic/Commercial/Industrial)" },
+        location: { type: "string", description: "Job location/site address" },
+        principalContractor: { type: "string", description: "Principal contractor name" },
+        reference: { type: "string", description: "Method statement reference number" },
+        preparedBy: { type: "string", description: "Person/organisation who prepared this" },
+        date: { type: "string", description: "Date of preparation (ISO format)" },
+        programmeDuration: { type: "string", description: "Expected work programme duration" },
+        reviewDate: { type: "string", description: "Date for next review" },
+        documentStatus: { type: "string", description: "Current document status" },
+        emergencyContacts: {
+          type: "object",
+          description: "Emergency contacts and key personnel",
+          properties: {
+            emergency: { type: "string", description: "Emergency number (999)" },
+            siteManager: { type: "string", description: "Site manager name and contact" },
+            firstAider: { type: "string", description: "First aider name and contact" },
+            hsOfficer: { type: "string", description: "H&S officer name and contact" },
+            assemblyPoint: { type: "string", description: "Assembly point location" }
+          }
+        },
+        riskAssessmentReference: { type: "string", description: "Associated Risk Assessment reference" }
+      }
+    },
     executiveSummary: {
       type: "object",
       description: "High-level overview of the installation",

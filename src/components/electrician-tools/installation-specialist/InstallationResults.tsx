@@ -24,6 +24,7 @@ import { ExecutiveSummaryCard } from "./ExecutiveSummaryCard";
 import { MaterialsListTable } from "./MaterialsListTable";
 import { TestingRequirementsTable } from "./TestingRequirementsTable";
 import { JSONSchemaViewer } from "./JSONSchemaViewer";
+import { ProjectMetadataCard } from "./ProjectMetadataCard";
 import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
 
 interface ProjectMetadata {
@@ -370,6 +371,11 @@ export const InstallationResults = ({
             </div>
           </CardContent>
         </Card>
+      )}
+
+      {/* ✅ NEW: Project Metadata Card */}
+      {fullMethodStatement?.projectMetadata && (
+        <ProjectMetadataCard metadata={fullMethodStatement.projectMetadata} />
       )}
 
       {/* 🚀 AI Quality Metrics Display */}

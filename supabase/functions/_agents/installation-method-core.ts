@@ -401,6 +401,37 @@ const INSTALLATION_METHOD_TOOL_FULL = {
     parameters: {
       type: 'object',
       properties: {
+        projectMetadata: {
+          type: 'object',
+          description: 'Project and document metadata for professional documentation',
+          properties: {
+            workType: { type: 'string', description: 'Type of work (Domestic/Commercial/Industrial)' },
+            location: { type: 'string', description: 'Job location/site address' },
+            principalContractor: { type: 'string', description: 'Principal contractor name' },
+            reference: { type: 'string', description: 'Method statement reference (e.g., MS-001)' },
+            preparedBy: { type: 'string', description: 'Person/organisation who prepared this' },
+            date: { type: 'string', description: 'Date of preparation (ISO format)' },
+            programmeDuration: { type: 'string', description: 'Expected work programme duration' },
+            reviewDate: { type: 'string', description: 'Date for next review' },
+            documentStatus: { 
+              type: 'string',
+              enum: ['Draft', 'For Review', 'Approved', 'Superseded'],
+              description: 'Current document status'
+            },
+            emergencyContacts: {
+              type: 'object',
+              properties: {
+                emergency: { type: 'string', default: '999' },
+                siteManager: { type: 'string', description: 'Site manager name and contact' },
+                firstAider: { type: 'string', description: 'First aider name and contact' },
+                hsOfficer: { type: 'string', description: 'H&S officer name and contact' },
+                assemblyPoint: { type: 'string', description: 'Assembly point location' }
+              }
+            },
+            riskAssessmentReference: { type: 'string', description: 'Associated Risk Assessment ref (e.g., RA-001)' }
+          },
+          required: ['workType', 'location', 'reference', 'preparedBy', 'date', 'programmeDuration', 'reviewDate', 'documentStatus']
+        },
         executiveSummary: {
           type: 'object',
           properties: {
