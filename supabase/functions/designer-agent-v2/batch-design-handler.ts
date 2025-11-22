@@ -548,13 +548,19 @@ function ensurePDFFields(circuit: any, index?: number): any {
   }
   
   // Add PDF payload fields with correct frontend status values
-  // Map compliance summary to frontend status: 'pass', 'fail', 'warning'
+  // Map compliance to status: 'pass', 'fail', 'warning'
   if (circuit.complianceSummary === 'Fully compliant' || circuit.complianceSummary === 'Fully compliant (ring final)') {
     circuit.complianceStatus = 'pass';
-  } else if (vd.compliant === false || (zs > maxZs)) {
-    circuit.complianceStatus = 'fail';
   } else {
-    circuit.complianceStatus = 'warning'; // Requires review
+    // Check actual circuit compliance from calculations
+    const isVdNonCompliant = circuit.calculations?.voltageDrop?.compliant === false;
+    const isZsNonCompliant = (circuit.calculations?.zs || 0) > (circuit.calculations?.maxZs || 999);
+    
+    if (isVdNonCompliant || isZsNonCompliant) {
+      circuit.complianceStatus = 'fail';
+    } else {
+      circuit.complianceStatus = 'warning'; // Requires review
+    }
   }
   
   circuit.status = (circuit.complianceStatus === 'pass') ? 'complete' : 'incomplete';
