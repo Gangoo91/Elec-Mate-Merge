@@ -17,6 +17,8 @@ import { findMatchingTemplate, applyTemplate } from '../_shared/circuit-template
 import { checkCircuitCache, storeCircuitCache } from '../_shared/circuit-level-cache.ts';
 import { safeAll, ParallelTask } from '../_shared/safe-parallel.ts';
 import { suggestVoltageDropFix, suggestZsFix } from './auto-fix-handler.ts';
+import { calculateSimplifiedCableSize } from '../_shared/simplifiedCableSizingEngine.ts';
+import { selectOptimalCableType, getLoadTypeRequirements } from '../_shared/cableTypeSelection.ts';
 
 const VERSION = 'v4.0.0-best-in-class'; // PHASE 1-7 optimizations implemented
 
@@ -116,6 +118,23 @@ const CORE_DESIGNER_PROMPT = `You are a BS 7671:2018+A3:2024 electrical design e
 
 Your role: Design COMPLIANT circuits using the provided regulations in TOON format.
 
+CRITICAL CABLE SIZING RULES:
+- LIGHTING: Start with 1.5mm² and ONLY increase if voltage drop exceeds 3% or current capacity insufficient
+- SOCKETS (ring): MUST use 2.5mm² cable (BS 7671 Appendix 15) - NEVER 4mm²/6mm²
+- SOCKETS (radial): Start 2.5mm², only increase if voltage drop or current demands it
+- HIGH POWER (>7kW): Start 6mm², iterate upwards only when calculations prove necessary
+- COMMERCIAL: Use single-core cables in conduit/trunking (pvc-single or xlpe-single), NOT twin-and-earth
+- DOMESTIC: Use twin-and-earth (pvc-twin-earth) for clipped direct installations
+- COST AWARENESS: Larger cable = 2-3x cost increase - only upsize when calculations require it
+- ITERATE: Try smallest size first, only increase when voltage drop OR current capacity fails
+
+CABLE TYPE SELECTION:
+- Commercial/Industrial: pvc-single or xlpe-single in conduit
+- Domestic: pvc-twin-earth for protected routes
+- Outdoor: swa (armoured) for weather/UV protection
+- Underground: swa (armoured) for mechanical protection
+- Fire circuits: xlpe-single for better fire performance
+
 CRITICAL DESIGN RULES:
 - ITERATE cable sizes until voltage drop ≤ limit (3% lighting, 5% other uses)
 - ITERATE CPC sizes until Zs ≤ maxZs
@@ -131,12 +150,13 @@ You MUST provide expectedTestResults for EIC commissioning:
 - rcdTest (if RCD protected): <300ms at 1×IΔn, <40ms at 5×IΔn per Reg 612.13
 
 ITERATIVE DESIGN PROCESS:
-1. Start with minimum cable size (1.5mm² lighting, 2.5mm² sockets, 6mm² high power)
-2. Calculate voltage drop using Appendix 4: Vd% = (mV/A/m × Ib × L / 1000) / voltage × 100
-3. If Vd% > limit: try next size (1.5→2.5→4→6→10→16→25mm²) and recalculate
-4. Calculate Zs = Ze + (R1+R2) [÷4 for ring finals]
-5. If Zs > maxZs: increase CPC size and recalculate
-6. Return ONLY when BOTH voltage drop AND Zs are compliant
+1. Determine cable TYPE first (singles for commercial, T&E for domestic)
+2. Start with MINIMUM cable SIZE (1.5mm² lighting, 2.5mm² sockets, 6mm² high power)
+3. Calculate voltage drop using Appendix 4: Vd% = (mV/A/m × Ib × L / 1000) / voltage × 100
+4. If Vd% > limit: try next size (1.5→2.5→4→6→10→16→25mm²) and recalculate
+5. Calculate Zs = Ze + (R1+R2) [÷4 for ring finals]
+6. If Zs > maxZs: increase CPC size and recalculate
+7. Return ONLY when BOTH voltage drop AND Zs are compliant
 
 Ring finals: 2.5mm² cable capacity = 27A per leg (parallel paths distribute load). This is COMPLIANT per Appendix 15.
 
@@ -1418,6 +1438,103 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
     ];
     
     logger.info(`📊 Final circuit count: ${allDesignedCircuits.length} (${cachedCircuits.length} cached + ${templatedCircuits.length} templated + ${designedCircuits.length} AI-designed)`);
+    
+    // ============= POST-AI CALCULATION ENGINE OPTIMIZATION =============
+    // Override AI choices with BS 7671 calculation engine results for optimal cable sizing
+    logger.info('🔧 Running BS 7671 calculation engine to optimize cable sizing...');
+    const isCommercial = projectInfo.installationType === 'commercial' || projectInfo.installationType === 'industrial';
+    
+    for (let i = 0; i < allDesignedCircuits.length; i++) {
+      const circuit = allDesignedCircuits[i];
+      const originalSize = circuit.cableSize;
+      const originalCableType = circuit.cableType || 'pvc-twin-earth';
+      
+      try {
+        // Step 1: Determine optimal cable TYPE
+        const loadTypeContext = getLoadTypeRequirements(circuit.loadType);
+        const cableSelection = selectOptimalCableType({
+          loadType: circuit.loadType,
+          location: isCommercial ? 'inside' : (loadTypeContext.location || 'inside'),
+          cableRun: circuit.installationMethod || (isCommercial ? 'conduit' : 'clipped-direct'),
+          mechanicalProtection: circuit.specialLocation !== 'none' || loadTypeContext.mechanicalProtection,
+          fireProtection: loadTypeContext.fireProtection || 'none',
+          ambientTemp: supply.ambientTemp
+        });
+        
+        // Update cable type if different
+        if (circuit.cableType !== cableSelection.cableType) {
+          logger.info(`Cable type optimized for "${circuit.name}": ${circuit.cableType || 'unset'} → ${cableSelection.cableType} (${cableSelection.reason})`);
+          circuit.cableType = cableSelection.cableType;
+        }
+        
+        // Step 2: Calculate optimal cable SIZE using BS 7671 engine
+        // Check if it's a lighting circuit
+        const isLighting = circuit.loadType?.toLowerCase().includes('light') || 
+                          circuit.name?.toLowerCase().includes('light');
+        
+        const sizeResult = calculateSimplifiedCableSize({
+          current: circuit.calculations?.Ib || circuit.loadPower / supply.voltage,
+          installationType: circuit.installationMethod || (isCommercial ? 'conduit' : 'clipped-direct'),
+          ambientTemp: supply.ambientTemp || 30,
+          groupingCircuits: supply.groupingFactor || 1,
+          length: circuit.cableLength,
+          voltage: supply.voltage || 230,
+          cableType: circuit.cableType,
+          voltageDropLimit: isLighting ? 3 : 5 // 3% for lighting, 5% for other
+        });
+        
+        if (sizeResult) {
+          // Only override if the AI got it wrong
+          if (circuit.cableSize !== sizeResult.recommendedSize) {
+            const reason = sizeResult.selectionReason === 'voltage-drop' ? 
+              'voltage drop limited' : 
+              sizeResult.selectionReason === 'current' ? 
+                'current capacity' : 
+                'voltage drop + current';
+            
+            // Add warning about cost optimization
+            if (!circuit.warnings) circuit.warnings = [];
+            circuit.warnings.push(
+              `Cable size optimized from ${circuit.cableSize}mm² to ${sizeResult.recommendedSize}mm² (${reason}) - saves cost while maintaining compliance`
+            );
+            
+            logger.info(`Cable size optimized for "${circuit.name}": ${circuit.cableSize}mm² → ${sizeResult.recommendedSize}mm² (${reason})`);
+            
+            // Update circuit with optimized values
+            circuit.cableSize = sizeResult.recommendedSize;
+            circuit.calculations.Iz = sizeResult.deratedCapacity;
+            circuit.calculations.voltageDrop.percent = sizeResult.voltageDropPercent;
+            circuit.calculations.voltageDrop.compliant = sizeResult.voltageDropCompliant;
+            
+            // Update derating factors
+            if (!circuit.deratingFactors) circuit.deratingFactors = {};
+            circuit.deratingFactors.Ca = sizeResult.factors.temperature;
+            circuit.deratingFactors.Cg = sizeResult.factors.grouping;
+            circuit.deratingFactors.overall = sizeResult.factors.overall;
+          }
+        }
+        
+        // Step 3: Enforce lighting circuit maximum size (prevent oversizing)
+        if (isLighting && circuit.cableSize > 2.5) {
+          const maxLightingSize = circuit.cableLength > 100 ? 2.5 : 1.5;
+          
+          if (circuit.cableSize > maxLightingSize) {
+            if (!circuit.warnings) circuit.warnings = [];
+            circuit.warnings.push(
+              `Lighting circuit cable reduced from ${circuit.cableSize}mm² to ${maxLightingSize}mm² (cost optimization - lighting rarely needs >2.5mm²)`
+            );
+            logger.info(`Lighting circuit "${circuit.name}" cable size reduced: ${circuit.cableSize}mm² → ${maxLightingSize}mm²`);
+            circuit.cableSize = maxLightingSize;
+          }
+        }
+        
+      } catch (error: any) {
+        logger.warn(`Calculation engine skipped for "${circuit.name}":`, error.message);
+        // Continue with AI's original design if calculation engine fails
+      }
+    }
+    
+    logger.info('✅ BS 7671 calculation engine optimization complete');
     
     // 6.5. VALIDATION: Convert to sanity check + logging system (not a failure gate)
     logger.info('✅ Performing post-design validation sanity checks...');
