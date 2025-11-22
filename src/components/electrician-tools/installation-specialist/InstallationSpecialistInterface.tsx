@@ -119,7 +119,8 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
           assignedPersonnel: step.assignedPersonnel,
           bsReferences: step.bsReferences,
           inspectionCheckpoints: step.inspectionCheckpoints
-        })) || []
+        })) || [],
+        _fullMethodStatement: jobMethodData // ✅ Preserve complete backend response for JSON Schema Viewer
       };
 
       console.log('✅ Mapped method data:', mappedData);
