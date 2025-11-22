@@ -55,9 +55,6 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
             <Wrench className="h-5 w-5 text-blue-400" />
             <h2 className="text-lg sm:text-xl font-bold">Describe Your Installation Work</h2>
           </div>
-          <p className="text-xs sm:text-sm text-muted-foreground">
-            Generate BS 7671-compliant method statements with step-by-step procedures, safety controls, and testing requirements
-          </p>
           <div className="space-y-2">
             <Label htmlFor="installation-description">What needs to be installed?</Label>
             <Textarea
