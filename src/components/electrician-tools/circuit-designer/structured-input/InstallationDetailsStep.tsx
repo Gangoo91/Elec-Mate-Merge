@@ -59,67 +59,65 @@ export const InstallationDetailsStep = ({ circuits, onUpdate }: InstallationDeta
               
               {/* Installation Method */}
               <MobileSelectWrapper
+                compact
                 label="Cable Installation Method"
                 value={circuit.installMethod || 'auto'}
                 onValueChange={(value) => updateCircuit(index, 'installMethod', value)}
                 options={[
-                  { value: 'auto', label: 'Auto (let AI decide)', description: 'AI will select based on circuit type' },
-                  { value: 'method_c', label: 'Method C - Clipped Direct', description: 'T&E cable clipped to surface (most common)' },
-                  { value: 'method_a', label: 'Method A - Enclosed in Conduit', description: 'Cable in conduit in thermally insulated wall' },
-                  { value: 'method_b', label: 'Method B - In Trunking', description: 'Cable in trunking on wall or spaced from wall' },
-                  { value: 'method_d', label: 'Method D - Buried Direct', description: 'SWA cable buried in ground' },
-                  { value: 'method_e', label: 'Method E - In Conduit/Trunking', description: 'Single cable in conduit/trunking on wall' },
-                  { value: 'method_f', label: 'Method F - In Thermal Insulation', description: 'Cable totally surrounded by insulation' },
+                  { value: 'auto', label: 'Auto (let AI decide)' },
+                  { value: 'method_c', label: 'Method C - Clipped Direct' },
+                  { value: 'method_a', label: 'Method A - Enclosed in Conduit' },
+                  { value: 'method_b', label: 'Method B - In Trunking' },
+                  { value: 'method_d', label: 'Method D - Buried Direct' },
+                  { value: 'method_e', label: 'Method E - In Conduit/Trunking' },
+                  { value: 'method_f', label: 'Method F - In Thermal Insulation' },
                 ]}
-                icon={<MapPin className="h-4 w-4" />}
-                hint="BS 7671 Table 4A2 - Installation methods determine derating factors"
               />
 
               {/* Protection Device Type */}
               <MobileSelectWrapper
+                compact
                 label="Protection Device Preference"
                 value={circuit.protectionType || 'auto'}
                 onValueChange={(value) => updateCircuit(index, 'protectionType', value)}
                 options={[
-                  { value: 'auto', label: 'Auto (let AI decide)', description: 'AI will select based on regulations' },
-                  { value: 'MCB', label: 'MCB Only', description: 'Miniature Circuit Breaker (no RCD)' },
-                  { value: 'RCBO', label: 'RCBO (30mA Type AC)', description: 'Combined MCB + RCD protection' },
-                  { value: 'RCBO-TypeA', label: 'RCBO (30mA Type A)', description: 'For EV chargers & DC-sensitive loads' },
-                  { value: 'RCBO-TypeB', label: 'RCBO (30mA Type B)', description: 'For high DC residual current' },
+                  { value: 'auto', label: 'Auto (let AI decide)' },
+                  { value: 'MCB', label: 'MCB Only' },
+                  { value: 'RCBO', label: 'RCBO (30mA Type AC)' },
+                  { value: 'RCBO-TypeA', label: 'RCBO (30mA Type A)' },
+                  { value: 'RCBO-TypeB', label: 'RCBO (30mA Type B)' },
                 ]}
-                icon={<Shield className="h-4 w-4" />}
-                hint="EV chargers require Type A or Type B RCD (BS 7671 Reg 722.531.2)"
               />
 
               {/* Bathroom Zone (if bathroom circuit) */}
               {circuit.specialLocation === 'bathroom' && (
                 <MobileSelectWrapper
+                  compact
                   label="Bathroom Zone"
                   value={circuit.bathroomZone || 'outside_zones'}
                   onValueChange={(value) => updateCircuit(index, 'bathroomZone', value)}
                   options={[
-                    { value: 'zone_0', label: 'Zone 0', description: 'Inside bath/shower tray - IPX7 required' },
-                    { value: 'zone_1', label: 'Zone 1', description: 'Above bath/shower - IPX4 required' },
-                    { value: 'zone_2', label: 'Zone 2', description: '0.6m around zones 0&1 - IPX4 required' },
-                    { value: 'outside_zones', label: 'Outside Zones', description: 'Beyond zone 2 - standard installation' },
+                    { value: 'zone_0', label: 'Zone 0' },
+                    { value: 'zone_1', label: 'Zone 1' },
+                    { value: 'zone_2', label: 'Zone 2' },
+                    { value: 'outside_zones', label: 'Outside Zones' },
                   ]}
-                  hint="BS 7671 Section 701 - Bathroom zones determine IP ratings"
                 />
               )}
 
               {/* Outdoor Installation Type */}
               {circuit.specialLocation === 'outdoor' && (
                 <MobileSelectWrapper
+                  compact
                   label="Outdoor Installation Type"
                   value={circuit.outdoorInstall || 'wall_mounted'}
                   onValueChange={(value) => updateCircuit(index, 'outdoorInstall', value)}
                   options={[
-                    { value: 'buried', label: 'Buried in Ground', description: 'SWA cable buried at 600mm depth' },
-                    { value: 'overhead', label: 'Overhead Line', description: 'Catenary wire or pole-mounted' },
-                    { value: 'wall_mounted', label: 'Wall Mounted', description: 'Clipped to external wall (IP65 rated)' },
-                    { value: 'other', label: 'Other', description: 'Let AI determine best method' },
+                    { value: 'buried', label: 'Buried in Ground' },
+                    { value: 'overhead', label: 'Overhead Line' },
+                    { value: 'wall_mounted', label: 'Wall Mounted' },
+                    { value: 'other', label: 'Other' },
                   ]}
-                  hint="BS 7671 Reg 522.8 - Outdoor wiring requires weather protection"
                 />
               )}
 

@@ -19,6 +19,7 @@ interface MobileSelectWrapperProps {
   hint?: string;
   disabled?: boolean;
   icon?: React.ReactNode;
+  compact?: boolean;
 }
 
 export function MobileSelectWrapper({
@@ -30,20 +31,26 @@ export function MobileSelectWrapper({
   error,
   hint,
   disabled,
-  icon
+  icon,
+  compact = false
 }: MobileSelectWrapperProps) {
   return (
-    <div className="space-y-3">
+    <div className={cn(compact ? "space-y-1.5" : "space-y-3")}>
       {label && (
-        <Label className="text-sm font-semibold text-elec-light flex items-center gap-2">
-          <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+        <Label className={cn(
+          "flex items-center gap-2",
+          compact 
+            ? "text-xs font-medium text-muted-foreground" 
+            : "text-sm font-semibold text-elec-light"
+        )}>
+          {!compact && <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>}
           {label}
         </Label>
       )}
       
       <div className="relative group">
         <div className="relative">
-          {icon && (
+          {icon && !compact && (
             <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-elec-yellow/70 z-10">
               {icon}
             </div>
@@ -51,10 +58,11 @@ export function MobileSelectWrapper({
           
           <Select value={value || undefined} onValueChange={onValueChange} disabled={disabled}>
             <SelectTrigger className={cn(
-              "h-14 bg-card border border-primary/30 rounded-xl text-elec-light",
+              compact ? "h-11" : "h-14",
+              "bg-card border border-primary/30 rounded-xl text-elec-light",
               "hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200",
-              "text-base font-medium",
-              icon ? "pl-12" : "pl-4",
+              compact ? "text-sm" : "text-base font-medium",
+              icon && !compact ? "pl-12" : "pl-4",
               error ? "border-destructive focus:border-destructive" : ""
             )}>
               <SelectValue placeholder={placeholder} />
@@ -68,7 +76,7 @@ export function MobileSelectWrapper({
                 >
                   <div>
                     <div className="font-medium">{option.label}</div>
-                    {option.description && (
+                    {option.description && !compact && (
                       <div className="text-xs text-elec-light/60 mt-1">{option.description}</div>
                     )}
                   </div>
@@ -79,7 +87,7 @@ export function MobileSelectWrapper({
         </div>
       </div>
       
-      {hint && !error && (
+      {!compact && hint && !error && (
         <p className="text-xs text-elec-light/70 flex items-center gap-1">
           <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
           {hint}
