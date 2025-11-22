@@ -125,7 +125,7 @@ export const useMaintenanceAdvisor = () => {
     equipmentDescription: '',
     location: '',
     ageYears: 0,
-    detailLevel: 'quick',
+    detailLevel: 'full',
   });
   const [results, setResults] = useState<MaintenanceResults | null>(null);
   const [progress, setProgress] = useState('');
@@ -143,7 +143,7 @@ export const useMaintenanceAdvisor = () => {
       equipmentDescription: '',
       location: '',
       ageYears: 0,
-      detailLevel: 'quick',
+      detailLevel: 'full',
     });
     setResults(null);
     setProgress('');
@@ -161,7 +161,8 @@ export const useMaintenanceAdvisor = () => {
     setStartTime(Date.now());
 
     try {
-      const isQuick = input.detailLevel === 'quick';
+      // Always use full detail
+      const isQuick = false;
       
       // Start backend call immediately
       const invokePromise = supabase.functions.invoke('maintenance-v3', {
@@ -181,7 +182,7 @@ export const useMaintenanceAdvisor = () => {
           siteAddress: input.siteAddress,
           assessorName: input.assessorName,
           companyName: input.companyName,
-          detailLevel: input.detailLevel || 'quick',
+          detailLevel: 'full',
         }
       });
 
