@@ -6,10 +6,9 @@ import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { 
   ArrowLeft, ArrowRight, Zap, Cable, Shield, TrendingDown, 
-  CheckCircle2, AlertTriangle, AlertCircle, Download, FileText, RotateCcw
+  CheckCircle2, AlertTriangle, AlertCircle, Download, RotateCcw
 } from 'lucide-react';
 import { CircuitWorkingsSheet } from './CircuitWorkingsSheet';
-import { CircuitJustificationSheet } from './CircuitJustificationSheet';
 import { CircuitCard } from './CircuitCard';
 
 interface MobileCircuitResultsProps {
@@ -21,7 +20,6 @@ interface MobileCircuitResultsProps {
 export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircuitResultsProps) => {
   const [selectedCircuitIndex, setSelectedCircuitIndex] = useState(0);
   const [showWorkingsSheet, setShowWorkingsSheet] = useState(false);
-  const [showJustificationSheet, setShowJustificationSheet] = useState(false);
 
   const selectedCircuit = design.circuits[selectedCircuitIndex];
 
@@ -157,12 +155,12 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
         </div>
       </div>
 
-      {/* Main Circuit Card - Swipeable */}
+      {/* Main Circuit Card - Swipeable with Full Details */}
       <div {...swipeHandlers} className="px-2 sm:px-4 mb-6">
         <CircuitCard 
           circuit={selectedCircuit}
           onViewWorkings={() => setShowWorkingsSheet(true)}
-          onViewJustification={() => setShowJustificationSheet(true)}
+          showFullDetails={true}
         />
       </div>
 
@@ -186,31 +184,14 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
             Export PDF
           </MobileButton>
         </div>
-        
-        {/* Additional Quick Actions */}
-        <MobileButton
-          variant="outline"
-          size="wide"
-          icon={<FileText className="h-4 w-4" />}
-          onClick={() => setShowJustificationSheet(true)}
-          className="w-full border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
-        >
-          View Full Justifications
-        </MobileButton>
       </div>
 
-      {/* Bottom Sheets */}
+      {/* Bottom Sheet - Workings Only */}
       <CircuitWorkingsSheet
         circuit={selectedCircuit}
         design={design}
         isOpen={showWorkingsSheet}
         onClose={() => setShowWorkingsSheet(false)}
-      />
-
-      <CircuitJustificationSheet
-        circuit={selectedCircuit}
-        isOpen={showJustificationSheet}
-        onClose={() => setShowJustificationSheet(false)}
       />
     </div>
   );

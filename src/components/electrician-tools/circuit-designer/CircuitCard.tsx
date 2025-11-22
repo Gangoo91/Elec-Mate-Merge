@@ -4,6 +4,9 @@ import { Badge } from '@/components/ui/badge';
 import { MobileButton } from '@/components/ui/mobile-button';
 import { AtAGlanceSummary } from './AtAGlanceSummary';
 import { StructuredDesignSections } from './StructuredDesignSections';
+import { MobileJustificationAccordion, buildJustificationSections } from './mobile/MobileJustificationAccordion';
+import { MobileTestResultsCompact } from './mobile/MobileTestResultsCompact';
+import { MobileInstallationGuidanceSection } from './mobile/MobileInstallationGuidanceSection';
 import { 
   CheckCircle2, AlertTriangle, AlertCircle, Zap, Calculator
 } from 'lucide-react';
@@ -13,9 +16,10 @@ interface CircuitCardProps {
   onViewWorkings?: () => void;
   onViewJustification?: () => void;
   className?: string;
+  showFullDetails?: boolean; // New prop for mobile full details
 }
 
-export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, className = '' }: CircuitCardProps) => {
+export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, className = '', showFullDetails = false }: CircuitCardProps) => {
   // Calculate compliance status
   const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
   const zsCompliant = (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999);
@@ -72,6 +76,20 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
             
             {/* 9 Structured Sections */}
             <StructuredDesignSections sections={circuit.structuredOutput.sections} />
+
+            {/* Mobile Full Details Section (Inline Justifications) */}
+            {showFullDetails && (
+              <div className="space-y-6 mt-6">
+                {/* Detailed Justifications Accordion */}
+                <MobileJustificationAccordion sections={buildJustificationSections(circuit)} />
+                
+                {/* Installation Guidance */}
+                <MobileInstallationGuidanceSection circuit={circuit} />
+                
+                {/* Expected Test Results */}
+                <MobileTestResultsCompact circuit={circuit} />
+              </div>
+            )}
           </>
         ) : (
           <div className="text-center py-12 text-white/60">
