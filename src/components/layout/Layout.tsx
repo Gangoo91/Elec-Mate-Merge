@@ -40,8 +40,6 @@ const Layout = () => {
           </div>
         </main>
       </div>
-      
-      <Toaster />
     </div>
   );
 };
