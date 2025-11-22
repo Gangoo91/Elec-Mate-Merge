@@ -265,9 +265,23 @@ export const SupplyDetailsStep = ({
                 onChange={(e) => setZe(Number(e.target.value))}
                 className="text-base"
               />
-              <p className="text-xs text-muted-foreground">
-                Typical: TN-S (0.35Ω), TN-C-S (0.35Ω), TT (200Ω)
-              </p>
+              <div className="text-[11px] sm:text-xs text-muted-foreground space-y-0.5">
+                <div className="font-medium mb-1">Typical values:</div>
+                <div className="grid grid-cols-3 gap-2 text-center">
+                  <div className="space-y-0.5">
+                    <div className="font-semibold text-elec-yellow">TN-S</div>
+                    <div>0.35Ω</div>
+                  </div>
+                  <div className="space-y-0.5">
+                    <div className="font-semibold text-elec-yellow">TN-C-S</div>
+                    <div>0.35Ω</div>
+                  </div>
+                  <div className="space-y-0.5">
+                    <div className="font-semibold text-elec-yellow">TT</div>
+                    <div>200Ω</div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* PSCC */}
@@ -285,13 +299,27 @@ export const SupplyDetailsStep = ({
                 hint="AI will calculate based on Ze if not provided"
                 className="text-base"
               />
-              <Alert className="bg-muted/50">
-                <Info className="h-3 w-3" />
-                <AlertDescription className="text-xs space-y-1">
-                  <div><strong>TN-S (0.35Ω):</strong> ~657A typical</div>
-                  <div><strong>TN-C-S (0.35Ω):</strong> ~657A typical</div>
-                  <div><strong>TT (200Ω):</strong> ~1.15A typical</div>
-                </AlertDescription>
+              <Alert className="bg-muted/50 p-3 sm:p-4">
+                <div className="flex items-start gap-2">
+                  <Info className="h-4 w-4 sm:h-3 sm:w-3 mt-0.5 flex-shrink-0" />
+                  <AlertDescription className="text-[11px] sm:text-xs flex-1">
+                    <div className="font-medium mb-2">Typical PSCC values:</div>
+                    <div className="grid grid-cols-1 gap-1.5">
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold text-elec-yellow">TN-S (0.35Ω):</span>
+                        <span className="font-mono">~657A</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold text-elec-yellow">TN-C-S (0.35Ω):</span>
+                        <span className="font-mono">~657A</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold text-elec-yellow">TT (200Ω):</span>
+                        <span className="font-mono">~1.15A</span>
+                      </div>
+                    </div>
+                  </AlertDescription>
+                </div>
               </Alert>
             </div>
           </div>
