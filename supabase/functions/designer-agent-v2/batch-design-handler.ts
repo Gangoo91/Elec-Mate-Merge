@@ -1527,12 +1527,6 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
     
     timings.total = Date.now() - startTime;
     
-    console.log(`[${jobId || 'no-job'}] [DIAGNOSTIC] Response formatting complete`, {
-      circuitCount: safeCircuits.length,
-      totalDuration: timings.total,
-      timestamp: new Date().toISOString()
-    });
-    
     // 9. Apply safety defaults to ensure all circuits have complete data
     const safeCircuits = processedCircuits.map(c => {
       if (!TypeGuards.isValidCircuit(c)) {
@@ -1540,6 +1534,12 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
         return applyDefaultCircuitValues(c);
       }
       return c;
+    });
+    
+    console.log(`[${jobId || 'no-job'}] [DIAGNOSTIC] Response formatting complete`, {
+      circuitCount: safeCircuits.length,
+      totalDuration: timings.total,
+      timestamp: new Date().toISOString()
     });
     
     // 10. Validate that AI provided EIC test results (PHASE 3: No fallback - AI MUST generate)
