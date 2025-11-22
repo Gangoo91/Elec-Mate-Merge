@@ -175,18 +175,18 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
   const progressPercentage = ((currentStep + 1) / STEPS.length) * 100;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3 sm:space-y-4 md:space-y-6">
       {/* Progress Header */}
-      <Card className="p-3 sm:p-4 md:p-6 bg-gradient-to-br from-primary/5 to-accent/5">
-        <div className="space-y-3 sm:space-y-4">
+      <Card className="p-2 sm:p-3 md:p-4 bg-gradient-to-br from-primary/5 to-accent/5">
+        <div className="space-y-2 sm:space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm sm:text-base md:text-lg font-semibold text-foreground">Design Your Installation</h3>
+            <h3 className="text-xs sm:text-base md:text-lg font-semibold text-foreground">Design Your Installation</h3>
             <Badge variant="secondary" className="text-[10px] sm:text-xs md:text-sm px-2 py-0.5">
               {currentStep + 1} / {STEPS.length}
             </Badge>
           </div>
           
-          <Progress value={progressPercentage} className="h-2" />
+          <Progress value={progressPercentage} className="h-1.5 sm:h-2" />
           
           <div className="hidden md:grid md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-2">
             {STEPS.map((step, index) => (
@@ -223,7 +223,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
       </Card>
 
       {/* Step Content */}
-      <Card className="p-3 sm:p-4 md:p-6">
+      <Card className="p-2.5 sm:p-4 md:p-6">
         {currentStep === 0 && (
           <ProjectInfoStep
             projectName={projectName}
@@ -315,8 +315,8 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
 
       {/* Navigation */}
       <div className="mt-6 pb-safe">
-        <Card className="p-3 sm:p-4 shadow-sm border-t-2 border-primary/20 sticky bottom-0 sm:static">
-          <div className="flex items-center justify-between gap-3 sm:gap-4">
+        <Card className="p-2.5 sm:p-4 shadow-sm border-t-2 border-primary/20 sticky bottom-0 sm:static">
+          <div className="flex items-center justify-between gap-2 sm:gap-4">
             <Button
               variant="outline"
               onClick={handleBack}
@@ -327,8 +327,8 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
               <span className="hidden sm:inline">Back</span>
             </Button>
             
-            <div className="flex-1 text-center">
-              <p className="text-xs sm:text-sm text-muted-foreground">
+            <div className="hidden sm:flex flex-1 text-center">
+              <p className="text-xs sm:text-sm text-muted-foreground w-full">
                 Step {currentStep + 1} of {STEPS.length}
               </p>
             </div>
@@ -337,7 +337,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
               <Button
                 onClick={handleNext}
                 disabled={!canProceed() || isProcessing}
-                className="gap-2 touch-manipulation min-h-[44px] sm:min-h-[40px]"
+                className="gap-1.5 sm:gap-2 touch-manipulation min-h-[44px] sm:min-h-[40px] text-sm sm:text-base"
               >
                 <span className="hidden sm:inline">
                   {currentStep === 2 ? 'Configure Installation' : currentStep === 3 ? 'Validate Design' : 'Next'}
