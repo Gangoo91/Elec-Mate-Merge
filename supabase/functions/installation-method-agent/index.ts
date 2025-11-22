@@ -122,6 +122,27 @@ serve(async (req) => {
       // FULL MODE: Return detailed steps for Method Statement PDF (Installation Specialist)
       success: true,
       data: {
+        // ✅ NEW: Project metadata at top level
+        projectMetadata: result.projectMetadata || {
+          workType: projectDetails.installationType || 'Commercial',
+          location: projectDetails.location || 'To be confirmed',
+          principalContractor: projectDetails.clientName || 'Client to be confirmed',
+          reference: `MS-${Date.now().toString().slice(-4)}`,
+          preparedBy: projectDetails.electricianName || 'Qualified Electrician',
+          date: new Date().toISOString().split('T')[0],
+          programmeDuration: result.scheduleDetails?.totalDuration || 'TBC',
+          reviewDate: new Date(Date.now() + 365*24*60*60*1000).toISOString().split('T')[0],
+          documentStatus: 'Draft',
+          emergencyContacts: {
+            emergency: '999',
+            siteManager: 'TBC on site',
+            firstAider: 'TBC on site',
+            hsOfficer: 'TBC on site',
+            assemblyPoint: 'Main site entrance'
+          },
+          riskAssessmentReference: `RA-${Date.now().toString().slice(-4)}`
+        },
+        
         steps: result.steps.map((step: any, index: number) => ({
           id: `step-${index + 1}`,
           step: step.step,
