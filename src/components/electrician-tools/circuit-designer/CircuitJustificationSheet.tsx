@@ -223,11 +223,39 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                   <h3 className="text-sm font-semibold text-white">Installation Guidance</h3>
                 </div>
                 <div className="bg-elec-dark/60 rounded-lg p-4 border border-elec-yellow/20">
-                  <p className="text-sm text-white leading-loose whitespace-pre-line">
-                    {circuit.installationNotes || 
-                     (circuit.installationGuidance as any)?.cableRouting || 
-                     'Install per BS 7671:2018+A3:2024.'}
-                  </p>
+                  {circuit.installationNotes ? (
+                    <p className="text-sm text-white leading-loose whitespace-pre-line">
+                      {circuit.installationNotes}
+                    </p>
+                  ) : circuit.installationGuidance ? (
+                    <div className="space-y-3 text-sm text-white/90">
+                      {/* Display structured installation guidance */}
+                      {(circuit.installationGuidance as any)?.safetyConsiderations?.length > 0 && (
+                        <div>
+                          <p className="font-semibold text-amber-400 mb-2">Safety Considerations:</p>
+                          <ul className="list-disc list-inside space-y-1">
+                            {(circuit.installationGuidance as any).safetyConsiderations.map((item: any, idx: number) => (
+                              <li key={idx}>{item.consideration || item}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {(circuit.installationGuidance as any)?.cableRouting?.length > 0 && (
+                        <div>
+                          <p className="font-semibold text-blue-400 mb-2">Cable Routing:</p>
+                          <ul className="list-disc list-inside space-y-1">
+                            {(circuit.installationGuidance as any).cableRouting.map((item: any, idx: number) => (
+                              <li key={idx}>{item.step || item}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-white leading-loose">
+                      Install per BS 7671:2018+A3:2024.
+                    </p>
+                  )}
                 </div>
               </div>
             )}

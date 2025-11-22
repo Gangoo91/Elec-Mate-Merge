@@ -1713,7 +1713,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       <div 
                         className="text-sm text-white/90 leading-relaxed text-left"
                         dangerouslySetInnerHTML={{ 
-                          __html: processElectricalText(currentCircuit.installationGuidance.cableRouting || '') 
+                              __html: processElectricalText(
+                                Array.isArray(currentCircuit.installationGuidance.cableRouting) 
+                                  ? currentCircuit.installationGuidance.cableRouting.map((item: any) => item.step || item).join('\n\n')
+                                  : (currentCircuit.installationGuidance.cableRouting || '')
+                              )
                         }}
                       />
                     </div>
@@ -1729,7 +1733,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       <div 
                         className="text-sm text-white/90 leading-relaxed text-left"
                         dangerouslySetInnerHTML={{ 
-                          __html: processElectricalText(currentCircuit.installationGuidance.terminationAdvice || '') 
+                              __html: processElectricalText(
+                                Array.isArray(currentCircuit.installationGuidance.terminationAdvice) 
+                                  ? currentCircuit.installationGuidance.terminationAdvice.map((item: any) => item.procedure || item).join('\n\n')
+                                  : (currentCircuit.installationGuidance.terminationAdvice || '')
+                              )
                         }}
                       />
                     </div>
@@ -1745,7 +1753,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       <div 
                         className="text-sm text-white/90 leading-relaxed text-left"
                         dangerouslySetInnerHTML={{ 
-                          __html: processElectricalText(currentCircuit.installationGuidance.testingRequirements || '') 
+                              __html: processElectricalText(
+                                typeof currentCircuit.installationGuidance.testingRequirements === 'object'
+                                  ? (currentCircuit.installationGuidance.testingRequirements as any)?.intro || ''
+                                  : (currentCircuit.installationGuidance.testingRequirements || '')
+                              )
                         }}
                       />
                     </div>
