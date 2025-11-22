@@ -13,7 +13,7 @@ export function Toaster() {
         closeButton
         className="sm:hidden"
         toastOptions={{
-          className: "mx-4 max-w-md",
+          className: "w-[calc(100%-2rem)] max-w-md left-1/2 -translate-x-1/2",
           style: {
             borderRadius: "0.5rem",
           }

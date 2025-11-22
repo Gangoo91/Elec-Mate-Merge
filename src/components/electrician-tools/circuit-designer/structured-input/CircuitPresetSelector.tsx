@@ -24,32 +24,32 @@ export const CircuitPresetSelector = ({ installationType, onSelectPreset }: Circ
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <Card className="overflow-hidden border-primary/20">
-        <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
-          <div className="flex items-center gap-2">
-            <FileText className="h-5 w-5 text-primary" />
-            <h3 className="font-semibold">Quick Start Templates</h3>
+        <CollapsibleTrigger className="w-full p-4 min-h-[56px] flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
+          <div className="flex items-center gap-2 flex-wrap">
+            <FileText className="h-5 w-5 text-primary flex-shrink-0" />
+            <h3 className="font-semibold text-sm sm:text-base">Quick Start Templates</h3>
             <Badge variant="secondary" className="text-xs">{templates.length} available</Badge>
           </div>
-          <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+          <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
         </CollapsibleTrigger>
         
         <CollapsibleContent>
-          <div className="p-4 pt-0 grid sm:grid-cols-2 gap-3">
+          <div className="p-3 sm:p-4 pt-0 grid gap-3 sm:grid-cols-2">
             {templates.map(template => (
-              <Card key={template.id} className="p-4 hover:border-primary/50 transition-colors">
-                <div className="flex items-start justify-between gap-3 mb-2">
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-foreground">{template.name}</h4>
-                    <p className="text-sm text-muted-foreground mt-1">{template.description}</p>
+              <Card key={template.id} className="p-3 sm:p-4 hover:border-primary/50 transition-colors">
+                <div className="flex items-start justify-between gap-2 sm:gap-3 mb-2">
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold text-sm sm:text-base text-foreground truncate">{template.name}</h4>
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1 line-clamp-2">{template.description}</p>
                   </div>
                   <Button
                     size="sm"
                     variant="secondary"
                     onClick={() => onSelectPreset(template)}
-                    className="gap-1 shrink-0"
+                    className="gap-1 shrink-0 min-h-[44px] px-3"
                   >
                     <Plus className="h-4 w-4" />
-                    Add
+                    <span className="hidden sm:inline">Add</span>
                   </Button>
                 </div>
                 <div className="flex flex-wrap gap-1 mt-3">

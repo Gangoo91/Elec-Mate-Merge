@@ -84,6 +84,28 @@ export const DOMESTIC_TEMPLATES: CircuitPreset[] = [
       { name: 'Bathroom Lights', loadType: 'lighting', loadPower: 300, cableLength: 10, phases: 'single', specialLocation: 'bathroom' },
       { name: 'Extractor Fan', loadType: 'heating', loadPower: 100, cableLength: 8, phases: 'single', specialLocation: 'bathroom' }
     ]
+  },
+  {
+    id: 'solar-pv',
+    name: 'Solar PV Installation',
+    description: '3 circuits - Solar panel system with battery storage',
+    circuits: [
+      { name: 'Solar Inverter', loadType: 'ev-charger', loadPower: 5000, cableLength: 15, phases: 'single', specialLocation: 'outdoor', notes: 'AC coupled inverter' },
+      { name: 'Battery Storage', loadType: 'ev-charger', loadPower: 3000, cableLength: 12, phases: 'single', specialLocation: 'none', notes: 'Optional battery system' },
+      { name: 'Generation Meter', loadType: 'socket', loadPower: 100, cableLength: 8, phases: 'single', specialLocation: 'none', notes: 'Export meter supply' }
+    ]
+  },
+  {
+    id: 'garage-conversion',
+    name: 'Garage/Outbuilding Conversion',
+    description: '5 circuits - Complete garage or outbuilding electrical setup',
+    circuits: [
+      { name: 'Garage Lighting', loadType: 'lighting', loadPower: 800, cableLength: 25, phases: 'single', specialLocation: 'none' },
+      { name: 'Garage Socket Ring', loadType: 'socket', loadPower: 7360, cableLength: 30, phases: 'single', specialLocation: 'none' },
+      { name: 'Outdoor Lighting', loadType: 'lighting', loadPower: 500, cableLength: 20, phases: 'single', specialLocation: 'outdoor' },
+      { name: 'Security/CCTV', loadType: 'socket', loadPower: 300, cableLength: 25, phases: 'single', specialLocation: 'outdoor', notes: 'Camera & alarm system' },
+      { name: 'Workshop Equipment', loadType: 'socket', loadPower: 3000, cableLength: 15, phases: 'single', specialLocation: 'none', notes: 'Power tools circuit' }
+    ]
   }
 ];
 
