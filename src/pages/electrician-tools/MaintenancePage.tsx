@@ -21,24 +21,14 @@ const MaintenancePage = () => {
 
   return (
     <div className="min-h-screen bg-elec-dark">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-20 py-4 sm:py-6">
-        <div className="space-y-6 animate-fade-in">
+      <div className="container mx-auto px-3 sm:px-6 lg:px-12 py-3 sm:py-6 max-w-4xl">
+        <div className="space-y-0 animate-fade-in">
           {/* Back Button */}
           <Link to="/electrician/agent-selector">
-            <Button variant="outline" size="default" className="gap-2 touch-manipulation h-12 sm:h-10 w-full sm:w-auto">
-              <ArrowLeft className="h-5 w-5" /> Back to Agent Selector
+            <Button variant="outline" size="sm" className="gap-2 touch-manipulation h-10 mb-4">
+              <ArrowLeft className="h-4 w-4" /> Back to Agent Selector
             </Button>
           </Link>
-
-          {/* Header */}
-          <div className="text-center sm:text-left">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
-              Maintenance Specialist
-            </h1>
-            <p className="text-white text-base sm:text-lg mt-3">
-              Periodic inspections, preventive maintenance & fault diagnosis guidance
-            </p>
-          </div>
 
           {/* Main Interface */}
           {state === 'input' && (
