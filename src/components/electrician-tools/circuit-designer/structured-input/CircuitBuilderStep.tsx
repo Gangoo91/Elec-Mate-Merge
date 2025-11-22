@@ -58,11 +58,11 @@ export const CircuitBuilderStep = ({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 md:space-y-6">
       <div>
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="text-xl sm:text-2xl font-bold text-foreground">Build Your Circuits</h2>
-          <Badge variant="secondary" className="text-xs sm:text-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">Build Your Circuits</h2>
+          <Badge variant="secondary" className="text-xs sm:text-sm w-fit">
             {circuits.length} Circuit{circuits.length !== 1 ? 's' : ''}
           </Badge>
         </div>
@@ -94,14 +94,14 @@ export const CircuitBuilderStep = ({
 
       {/* Circuits List */}
       {circuits.length > 0 && (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
+        <div className="space-y-3 md:space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <h3 className="text-base sm:text-lg font-semibold">Your Circuits</h3>
             <Button
               variant="outline"
               size="sm"
               onClick={addBlankCircuit}
-              className="gap-2 touch-manipulation"
+              className="gap-2 touch-manipulation min-h-[44px] w-full sm:w-auto"
             >
               <Plus className="h-4 w-4" />
               <span className="hidden sm:inline">Add Custom Circuit</span>
@@ -127,13 +127,13 @@ export const CircuitBuilderStep = ({
 
       {/* Empty State */}
       {circuits.length === 0 && (
-        <Card className="p-12 text-center border-dashed">
-          <Zap className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-foreground mb-2">No Circuits Added Yet</h3>
-          <p className="text-muted-foreground mb-6">
+        <Card className="p-8 sm:p-12 text-center border-dashed">
+          <Zap className="h-10 w-10 sm:h-12 sm:w-12 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">No Circuits Added Yet</h3>
+          <p className="text-sm sm:text-base text-muted-foreground mb-6">
             Choose a template above or add individual circuits to get started
           </p>
-          <Button onClick={addBlankCircuit} size="lg" className="gap-2">
+          <Button onClick={addBlankCircuit} size="lg" className="gap-2 min-h-[44px] w-full sm:w-auto">
             <Plus className="h-5 w-5" />
             Add Your First Circuit
           </Button>
