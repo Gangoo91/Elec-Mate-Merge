@@ -143,5 +143,39 @@ export const buildJustificationSections = (circuit: any): JustificationSection[]
     }
   }
 
+  // Special Location Compliance
+  if (circuit.specialLocationCompliance?.isSpecialLocation) {
+    const specialLocContent = [
+      circuit.specialLocationCompliance.locationType ? `Location Type: ${circuit.specialLocationCompliance.locationType}` : '',
+      circuit.specialLocationCompliance.requirements || '',
+      circuit.specialLocationCompliance.additionalProtection || ''
+    ].filter(Boolean).join('\n\n');
+    
+    if (specialLocContent) {
+      sections.push({
+        title: 'Special Location',
+        content: specialLocContent,
+        icon: <AlertTriangle className="h-5 w-5 text-amber-400" />,
+        badge: circuit.specialLocationCompliance.locationType || 'Required',
+        borderColor: 'border-amber-500/50'
+      });
+    }
+  }
+
+  // Design Warnings
+  if (circuit.warnings && circuit.warnings.length > 0) {
+    const warningsContent = circuit.warnings
+      .map((warning: string, idx: number) => `${idx + 1}. ${warning}`)
+      .join('\n\n');
+    
+    sections.push({
+      title: 'Design Warnings',
+      content: warningsContent,
+      icon: <AlertTriangle className="h-5 w-5 text-red-400" />,
+      badge: `${circuit.warnings.length} Warning${circuit.warnings.length > 1 ? 's' : ''}`,
+      borderColor: 'border-red-500/50'
+    });
+  }
+
   return sections;
 };
