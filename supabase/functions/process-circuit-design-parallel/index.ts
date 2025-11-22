@@ -420,13 +420,16 @@ async function mergeResults(
   const designData = circuitJob.data.design_data;
   const installationData = installJob.data.method_data;
 
-  // ✅ DEBUG: Log structure to verify simplified mode data
-  logger.info('📦 Installation data structure', {
+  // ✅ DEBUG: Log installation data structure for verification
+  logger.info('📦 Installation data retrieved:', {
     hasInstallationGuidance: !!installationData?.installationGuidance,
-    hasCableRouting: !!installationData?.installationGuidance?.cableRouting,
     cableRoutingCount: installationData?.installationGuidance?.cableRouting?.length || 0,
-    hasTestingRequirements: !!installationData?.testingRequirements,
-    testsCount: installationData?.testingRequirements?.tests?.length || 0,
+    terminationCount: installationData?.installationGuidance?.terminationRequirements?.length || 0,
+    safetyCount: installationData?.installationGuidance?.safetyConsiderations?.length || 0,
+    materialsCount: installationData?.installationGuidance?.materialsRequired?.length || 0,
+    toolsCount: installationData?.installationGuidance?.toolsRequired?.length || 0,
+    procedureCount: installationData?.installationGuidance?.installationProcedure?.length || 0,
+    testingCount: installationData?.testingRequirements?.tests?.length || 0,
     dataKeys: Object.keys(installationData || {})
   });
 
