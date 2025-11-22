@@ -1090,7 +1090,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
   // Desktop view
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-5 md:space-y-6 px-3 sm:px-4 pb-safe">
       {/* Request Summary Header */}
       <RequestSummaryHeader design={design} />
 
@@ -1098,14 +1098,14 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       <AgentFlowDiagram currentAgent="designer" onQuickForward={handleQuickForward} />
 
       {/* Compact Project Summary */}
-      <Card className="p-4 bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
-        <div className="flex items-center justify-between flex-wrap gap-4">
-          <div className="flex items-center gap-6">
+      <Card className="p-3 sm:p-4 md:p-5 bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
+        <div className="flex items-center justify-between flex-wrap gap-3 sm:gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6">
             <div>
-              <h2 className="text-xl font-bold">{design.projectName}</h2>
-              <p className="text-sm text-muted-foreground">{design.location}</p>
+              <h2 className="text-base sm:text-lg md:text-xl font-bold">{design.projectName}</h2>
+              <p className="text-xs sm:text-sm text-muted-foreground">{design.location}</p>
             </div>
-            <div className="flex items-center gap-4 text-sm">
+            <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm">
               <div className="flex items-center gap-1.5">
                 <Zap className="h-4 w-4 text-primary" />
                 <span className="font-semibold">{design.totalLoad / 1000}kW</span>
@@ -1133,15 +1133,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
       {/* Diversity Breakdown Card */}
       {design.diversityBreakdown && (
-        <Card className="p-4 sm:p-6 bg-card/30 border-white/10">
+        <Card className="p-3 sm:p-4 md:p-5 bg-card/30 border-white/10">
           <Accordion type="single" collapsible>
             <AccordionItem value="diversity" className="border-none">
-              <AccordionTrigger className="hover:no-underline">
+              <AccordionTrigger className="hover:no-underline min-h-[44px] touch-manipulation">
                 <div className="flex items-center gap-3 flex-1">
-                  <Percent className="h-5 w-5 text-primary flex-shrink-0" />
+                  <Percent className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
                   <div className="text-left">
-                    <h3 className="text-base font-semibold text-white">Load Diversity Breakdown</h3>
-                    <p className="text-sm text-white/70 mt-0.5">
+                    <h3 className="text-sm sm:text-base font-semibold text-white">Load Diversity Breakdown</h3>
+                    <p className="text-xs sm:text-sm text-white/70 mt-0.5">
                       {fmt(design.diversityBreakdown.totalConnectedLoad, 1)}kW → {fmt(design.diversityBreakdown.diversifiedLoad, 1)}kW 
                       <Badge variant="secondary" className="ml-2">{fmt(design.diversityBreakdown.overallDiversityFactor * 100, 0)}% applied</Badge>
                     </p>
@@ -1201,12 +1201,12 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       )}
 
       {/* Enhanced Circuit Selector Pills */}
-      <Card className="p-4 bg-card border-elec-yellow/20">
-        <div className="space-y-3">
+      <Card className="p-3 sm:p-4 bg-card border-elec-yellow/20">
+        <div className="space-y-2.5 sm:space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Zap className="h-5 w-5 text-primary" />
-              <h3 className="font-semibold">Select Circuit to View</h3>
+              <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+              <h3 className="text-sm sm:text-base font-semibold">Select Circuit to View</h3>
               <Badge variant="default" className="ml-2">
                 {design.circuits.length} Circuit{design.circuits.length !== 1 ? 's' : ''}
               </Badge>
@@ -1225,7 +1225,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 <button
                   key={idx}
                   onClick={() => setSelectedCircuit(idx)}
-                  className={`flex-shrink-0 px-6 py-4 rounded-xl border-2 transition-all ${
+                  className={`flex-shrink-0 px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 rounded-xl border-2 transition-all touch-manipulation min-h-[44px] ${
                     isActive 
                       ? 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow shadow-lg shadow-elec-yellow/20' 
                       : 'bg-elec-dark/60 border-elec-yellow/20 text-elec-light/60 hover:border-elec-yellow/40'
@@ -1256,23 +1256,23 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       </Card>
 
       {/* All Circuits Summary Table */}
-      <Card className="p-6" id="circuit-summary-table">
-        <div className="space-y-4">
+      <Card className="p-3 sm:p-4 md:p-5 lg:p-6" id="circuit-summary-table">
+        <div className="space-y-3 sm:space-y-4">
           <div className="flex items-center gap-2">
-            <FileText className="h-5 w-5 text-primary" />
-            <h3 className="text-lg font-semibold">All Circuits Overview</h3>
+            <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+            <h3 className="text-base sm:text-lg font-semibold">All Circuits Overview</h3>
           </div>
           
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full text-xs sm:text-sm">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left py-2 px-2 font-semibold">Circuit</th>
-                  <th className="text-left py-2 px-2 font-semibold">Name</th>
-                  <th className="text-left py-2 px-2 font-semibold">Load</th>
-                  <th className="text-left py-2 px-2 font-semibold">Cable</th>
-                  <th className="text-left py-2 px-2 font-semibold">Protection</th>
-                  <th className="text-left py-2 px-2 font-semibold">Status</th>
+                  <th className="text-left py-2 px-1.5 sm:px-2 font-semibold text-xs sm:text-sm">Circuit</th>
+                  <th className="text-left py-2 px-1.5 sm:px-2 font-semibold text-xs sm:text-sm">Name</th>
+                  <th className="text-left py-2 px-1.5 sm:px-2 font-semibold text-xs sm:text-sm">Load</th>
+                  <th className="text-left py-2 px-1.5 sm:px-2 font-semibold text-xs sm:text-sm">Cable</th>
+                  <th className="text-left py-2 px-1.5 sm:px-2 font-semibold text-xs sm:text-sm">Protection</th>
+                  <th className="text-left py-2 px-1.5 sm:px-2 font-semibold text-xs sm:text-sm">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -1402,12 +1402,12 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             <div className="space-y-4">
               {/* Load Details Card */}
               <Card className="bg-card/30 border-white/10">
-                <div className="p-4 space-y-3">
-                  <div className="flex items-center gap-2 text-base font-semibold text-white">
-                    <Zap className="h-5 w-5 text-primary" />
+                <div className="p-3 sm:p-4 space-y-2.5 sm:space-y-3">
+                  <div className="flex items-center gap-2 text-sm sm:text-base font-semibold text-white">
+                    <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                     Load Details
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                     <div className="flex items-center gap-3 py-2 px-3 bg-background/30 rounded-lg">
                       <span className="text-sm text-white/80 min-w-[120px]">Power:</span>
                       <span className="font-medium text-white">{currentCircuit.loadPower}W ({fmt(currentCircuit.loadPower / 1000, 1)}kW)</span>
@@ -1432,9 +1432,9 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
               {/* Cable Specification Card */}
               <Card className="bg-card/30 border-white/10">
-                <div className="p-4 space-y-3">
-                  <div className="flex items-center gap-2 text-base font-semibold text-white">
-                    <Cable className="h-5 w-5 text-primary" />
+                <div className="p-3 sm:p-4 space-y-2.5 sm:space-y-3">
+                  <div className="flex items-center gap-2 text-sm sm:text-base font-semibold text-white">
+                    <Cable className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                     Cable Specification
                   </div>
                   
@@ -1471,9 +1471,9 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
               {/* Protection Device Card */}
               <Card className="bg-card/30 border-white/10">
-                <div className="p-4 space-y-3">
-                  <div className="flex items-center gap-2 text-base font-semibold text-white">
-                    <Shield className="h-5 w-5 text-primary" />
+                <div className="p-3 sm:p-4 space-y-2.5 sm:space-y-3">
+                  <div className="flex items-center gap-2 text-sm sm:text-base font-semibold text-white">
+                    <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                     Protection Device
                   </div>
                   
@@ -1520,11 +1520,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
             {/* Calculations */}
             <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm font-medium">
-                <TrendingDown className="h-4 w-4 text-primary" />
+              <div className="flex items-center gap-2 text-xs sm:text-sm font-medium">
+                <TrendingDown className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
                 Compliance Checks
               </div>
-              <div className="grid md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
                 <div className={`p-3 rounded-lg ${currentCircuit.calculations.voltageDrop.compliant ? 'bg-green-500/10' : 'bg-red-500/10'}`}>
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-sm font-medium">Voltage Drop</span>
@@ -1558,16 +1558,16 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             </div>
 
             {/* Justifications */}
-            <div className="space-y-3 bg-card/50 p-4 rounded-lg border border-primary/10">
-              <div className="flex items-center justify-between">
-                <h4 className="font-semibold text-white">Design Justification</h4>
+            <div className="space-y-2.5 sm:space-y-3 bg-card/50 p-3 sm:p-4 rounded-lg border border-primary/10">
+              <div className="flex items-center justify-between gap-2">
+                <h4 className="text-sm sm:text-base font-semibold text-white">Design Justification</h4>
                 {isPlaceholderJustification(currentCircuit) && (
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => handleRegenerateJustifications(selectedCircuit)}
                     disabled={regeneratingCircuits.has(selectedCircuit)}
-                    className="h-7 text-xs"
+                    className="h-8 sm:h-7 text-xs min-h-[44px] sm:min-h-0 touch-manipulation"
                   >
                     {regeneratingCircuits.has(selectedCircuit) ? (
                       <>
@@ -2142,12 +2142,12 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
       {/* Send to EIC Testing Card */}
       <Card className="bg-gradient-to-br from-emerald-500/10 to-green-500/10 border-emerald-500/30">
-        <div className="p-6 space-y-4">
-          <div className="flex items-center gap-3">
-            <ClipboardCheck className="h-8 w-8 text-emerald-400" />
+        <div className="p-3 sm:p-4 md:p-5 lg:p-6 space-y-3 sm:space-y-4">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <ClipboardCheck className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-emerald-400 flex-shrink-0" />
             <div>
-              <h3 className="text-lg font-semibold text-white">Ready for EIC Testing?</h3>
-              <p className="text-sm text-white/70">
+              <h3 className="text-base sm:text-lg font-semibold text-white">Ready for EIC Testing?</h3>
+              <p className="text-xs sm:text-sm text-white/70">
                 Export this design to pre-fill an Electrical Installation Certificate
               </p>
             </div>
@@ -2156,21 +2156,21 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           {/* JSON Preview Collapsible */}
           <Collapsible open={showJsonPreview} onOpenChange={setShowJsonPreview}>
             <CollapsibleTrigger asChild>
-              <Button variant="ghost" size="sm" className="w-full justify-between text-white/70 hover:text-white hover:bg-white/5">
+              <Button variant="ghost" size="sm" className="w-full justify-between text-white/70 hover:text-white hover:bg-white/5 min-h-[44px] touch-manipulation text-xs sm:text-sm">
                 <span className="flex items-center gap-2">
-                  <FileText className="h-4 w-4" />
+                  <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                   {showJsonPreview ? 'Hide' : 'Show'} JSON Payload Preview
                 </span>
-                <ChevronDown className={`h-4 w-4 transition-transform ${showJsonPreview ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform ${showJsonPreview ? 'rotate-180' : ''}`} />
               </Button>
             </CollapsibleTrigger>
             <CollapsibleContent>
               <Tabs defaultValue="raw" className="mt-3">
-              <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="raw">Raw Request</TabsTrigger>
-                <TabsTrigger value="transformed">EIC Format</TabsTrigger>
-                <TabsTrigger value="design-pdf">Design PDF</TabsTrigger>
-                <TabsTrigger value="pdf-monkey">PDF Payload</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto gap-1">
+                <TabsTrigger value="raw" className="min-h-[44px] text-xs sm:text-sm">Raw Request</TabsTrigger>
+                <TabsTrigger value="transformed" className="min-h-[44px] text-xs sm:text-sm">EIC Format</TabsTrigger>
+                <TabsTrigger value="design-pdf" className="min-h-[44px] text-xs sm:text-sm">Design PDF</TabsTrigger>
+                <TabsTrigger value="pdf-monkey" className="min-h-[44px] text-xs sm:text-sm">PDF Payload</TabsTrigger>
               </TabsList>
                 
                 {/* Tab 1: Raw Request Payload */}
@@ -2406,7 +2406,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           <Button 
             onClick={handleExportToEIC}
             disabled={isExporting}
-            className="w-full bg-emerald-600 hover:bg-emerald-700"
+            className="w-full bg-emerald-600 hover:bg-emerald-700 min-h-[44px] touch-manipulation"
           >
             {isExporting ? (
               <>
@@ -2433,8 +2433,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       </Card>
 
       {/* Actions */}
-      <div className="flex gap-3 flex-wrap">
-        <Button size="lg" onClick={handleExportPDF} className="flex-1" disabled={isExporting}>
+      <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
+        <Button size="lg" onClick={handleExportPDF} className="w-full sm:flex-1 min-h-[44px] touch-manipulation" disabled={isExporting}>
           {isExporting ? (
             <>
               <Loader2 className="h-5 w-5 mr-2 animate-spin" />
@@ -2447,23 +2447,23 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             </>
           )}
         </Button>
-        <Button size="lg" variant="secondary" onClick={handleCreateInstallationMethod} className="flex-1">
+        <Button size="lg" variant="secondary" onClick={handleCreateInstallationMethod} className="w-full sm:flex-1 min-h-[44px] touch-manipulation">
           <Wrench className="h-5 w-5 mr-2" />
           Create Installation Method
         </Button>
         
         {/* Phase 1: Circuit Selection Dialog */}
         <Dialog open={showCircuitSelector} onOpenChange={setShowCircuitSelector}>
-          <DialogContent className="max-w-2xl">
+          <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Select Circuits for Installation Method</DialogTitle>
               <DialogDescription>
                 Choose which circuits you want to create installation methods for
               </DialogDescription>
             </DialogHeader>
-            <div className="space-y-2 max-h-[400px] overflow-y-auto">
+            <div className="space-y-2 max-h-[50vh] overflow-y-auto">
               {design.circuits?.map((circuit, idx) => (
-                <div key={idx} className="flex items-start gap-3 p-3 rounded-lg border border-border/50 hover:bg-accent/5">
+                <div key={idx} className="flex items-start gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-lg border border-border/50 hover:bg-accent/5 touch-manipulation min-h-[44px]">
                   <Checkbox 
                     checked={selectedCircuitsForInstall.includes(idx)}
                     onCheckedChange={(checked) => {
@@ -2475,24 +2475,24 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     }}
                   />
                   <div className="flex-1">
-                    <label className="text-sm font-medium cursor-pointer">
+                    <label className="text-xs sm:text-sm font-medium cursor-pointer">
                       <strong>C{circuit.circuitNumber || idx + 1}:</strong> {circuit.name}
                     </label>
-                    <div className="text-xs text-muted-foreground mt-1">
+                    <div className="text-[10px] sm:text-xs text-muted-foreground mt-1">
                       {circuit.cableSize}mm² / {circuit.cpcSize}mm² CPC • {circuit.protectionDevice.rating}A {circuit.protectionDevice.type} • {circuit.cableLength}m
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setShowCircuitSelector(false)}>
+            <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-0">
+              <Button variant="outline" onClick={() => setShowCircuitSelector(false)} className="w-full sm:w-auto min-h-[44px] touch-manipulation">
                 Cancel
               </Button>
               <Button onClick={() => {
                 setShowCircuitSelector(false);
                 handleProceedToInstaller();
-              }} disabled={selectedCircuitsForInstall.length === 0}>
+              }} disabled={selectedCircuitsForInstall.length === 0} className="w-full sm:w-auto min-h-[44px] touch-manipulation">
                 Create Method ({selectedCircuitsForInstall.length} circuit{selectedCircuitsForInstall.length > 1 ? 's' : ''})
               </Button>
             </DialogFooter>
@@ -2502,7 +2502,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           currentAgent="designer" 
           currentOutput={design} 
         />
-        <Button size="lg" variant="outline" onClick={onReset}>
+        <Button size="lg" variant="outline" onClick={onReset} className="w-full sm:w-auto min-h-[44px] touch-manipulation">
           New Design
         </Button>
       </div>
