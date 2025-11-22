@@ -547,6 +547,33 @@ function ensurePDFFields(circuit: any, index?: number): any {
     circuit.complianceSummary = allCompliant ? 'Fully compliant' : 'Requires attention';
   }
   
+  // Generate structuredOutput for modern mobile-first UI
+  if (!circuit.structuredOutput) {
+    circuit.structuredOutput = {
+      atAGlanceSummary: {
+        loadKw: Number(circuit.loadPower ?? 0) / 1000,
+        loadIb: circuit.designCurrentIb || 'N/A',
+        cable: circuit.cableSummary || 'N/A',
+        protectiveDevice: circuit.protectionDeviceSummary || 'N/A',
+        voltageDrop: circuit.voltageDropText || 'N/A',
+        zs: circuit.earthFaultLoopText || 'N/A',
+        complianceTick: (circuit.zsCompliant === 'Compliant') && (circuit.voltageDropCompliant === 'Compliant'),
+        notes: circuit.warnings?.[0] || ''
+      },
+      sections: {
+        circuitSummary: `${circuit.name} - ${circuit.loadType}\n${circuit.description || 'Circuit design per BS 7671:2018+A3:2024'}`,
+        loadDetails: `Design current (Ib): ${circuit.designCurrentIb}\nNominal current (In): ${circuit.nominalCurrentIn}\nLoad power: ${Number(circuit.loadPower ?? 0) / 1000}kW\nPhases: ${circuit.phases === 3 ? 'Three-phase' : 'Single-phase'}`,
+        cableSelectionBreakdown: `Cable: ${circuit.cableSummary}\nCurrent carrying capacity (Iz): ${circuit.cableCurrentIz}\nInstallation method: ${circuit.installationMethod || 'Method C (clipped direct)'}\nReference method: ${circuit.referenceMethod || 'Not specified'}`,
+        protectiveDeviceSelection: circuit.protectionDeviceSummary || `${circuit.protectionDevice?.rating}A ${circuit.protectionDevice?.curve || 'B'}-curve ${circuit.protectionDevice?.type || 'MCB'}`,
+        complianceConfirmation: `Voltage drop: ${circuit.voltageDropCompliant}\n${circuit.voltageDropText}\n\nEarth fault loop: ${circuit.zsCompliant}\n${circuit.earthFaultLoopText}\n\nRCD protection: ${circuit.rcdProtectedText}`,
+        designJustification: circuit.justifications?.cableSize || 'Cable sized per BS 7671 calculations.',
+        installationGuidance: circuit.installationNotes || 'Install per BS 7671:2018+A3:2024.',
+        safetyNotes: (circuit.warnings?.length > 0) ? circuit.warnings.join('\n') : 'No specific warnings.',
+        testingCommissioningGuidance: `Test R1+R2, IR, and Zs (must be < ${circuit.earthFaultLoopText}).${circuit.rcdProtected ? ' Verify RCD operation.' : ''}`
+      }
+    };
+  }
+  
   return circuit;
 }
 
