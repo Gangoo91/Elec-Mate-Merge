@@ -103,10 +103,36 @@ serve(async (req) => {
       });
     }
 
-    // Build payload in the SAME nested structure as combined RAMS
+    // ✅ ALIGNED TO JSON SCHEMA - camelCase field mapping
     const payload = {
       methodStatementData: {
-        // Executive Summary (NEW)
+        // Project Metadata (exact schema match)
+        projectMetadata: methodData.projectMetadata || {
+          documentRef: methodData.projectMetadata?.documentRef || `MS-${Date.now()}`,
+          issueDate: methodData.projectMetadata?.issueDate || new Date().toISOString().split('T')[0],
+          reviewDate: methodData.projectMetadata?.reviewDate || new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB'),
+          companyName: methodData.projectMetadata?.companyName || '',
+          contractor: methodData.projectMetadata?.contractor || methodData.contractor || '',
+          siteManagerName: methodData.projectMetadata?.siteManagerName || methodData.siteManagerName || '',
+          siteManagerPhone: methodData.projectMetadata?.siteManagerPhone || methodData.siteManagerPhone || '',
+          firstAiderName: methodData.projectMetadata?.firstAiderName || methodData.firstAiderName || '',
+          firstAiderPhone: methodData.projectMetadata?.firstAiderPhone || methodData.firstAiderPhone || '',
+          safetyOfficerName: methodData.projectMetadata?.safetyOfficerName || methodData.safetyOfficerName || '',
+          safetyOfficerPhone: methodData.projectMetadata?.safetyOfficerPhone || methodData.safetyOfficerPhone || '',
+          assemblyPoint: methodData.projectMetadata?.assemblyPoint || methodData.assemblyPoint || '',
+          startDate: methodData.projectMetadata?.startDate || '',
+          completionDate: methodData.projectMetadata?.completionDate || '',
+          siteSupervisor: methodData.projectMetadata?.siteSupervisor || methodData.supervisor || '',
+          clientContact: methodData.projectMetadata?.clientContact || '',
+          preparedByName: methodData.projectMetadata?.preparedByName || '',
+          preparedByPosition: methodData.projectMetadata?.preparedByPosition || '',
+          preparedDate: methodData.projectMetadata?.preparedDate || '',
+          authorisedByName: methodData.projectMetadata?.authorisedByName || '',
+          authorisedByPosition: methodData.projectMetadata?.authorisedByPosition || '',
+          authorisedDate: methodData.projectMetadata?.authorisedDate || ''
+        },
+
+        // Executive Summary (exact schema match)
         executiveSummary: methodData.executiveSummary || {
           cableType: '',
           cableSize: '',
@@ -119,7 +145,7 @@ serve(async (req) => {
           purpose: ''
         },
         
-        // Materials List with Units (NEW)
+        // Materials List (exact schema match)
         materialsList: (methodData.materialsList || []).map((material: any) => ({
           description: material.description || '',
           specification: material.specification || '',
@@ -127,8 +153,28 @@ serve(async (req) => {
           unit: material.unit || '',
           notes: material.notes || ''
         })),
+
+        // Installation Steps (exact schema match with camelCase)
+        steps: (methodData.steps || []).map((step: any) => ({
+          id: step.id || `step-${step.step || step.stepNumber}`,
+          stepNumber: step.step || step.stepNumber,
+          title: step.title,
+          description: step.description,
+          estimatedDuration: step.duration || step.estimatedDuration || 'Not specified',
+          riskLevel: step.riskLevel || 'MEDIUM',
+          safetyRequirements: step.safetyNotes || step.safetyRequirements || [],
+          equipmentNeeded: step.tools || step.equipmentNeeded || [],
+          materialsNeeded: step.materials || step.materialsNeeded || [],
+          personnel: step.personnel || '',
+          bsReferences: step.bsReferences || [],
+          linkedHazards: step.linkedHazards || [],
+          inspectionCheckpoints: step.inspectionCheckpoints || [],
+          isCompleted: step.isCompleted || false,
+          dependencies: step.dependencies || [],
+          notes: step.notes || ''
+        })),
         
-        // Testing Requirements (NEW)
+        // Testing Requirements (exact schema match)
         testingRequirements: (methodData.testingRequirements || []).map((test: any) => ({
           description: test.description || '',
           regulation: test.regulation || '',
@@ -136,17 +182,46 @@ serve(async (req) => {
           passRange: test.passRange || ''
         })),
         
-        // Regulatory References (NEW)
+        // Regulatory References (exact schema match)
         regulatoryReferences: (methodData.regulatoryReferences || []).map((ref: any) => ({
           number: ref.number || '',
           description: ref.description || ''
         })),
+
+        // Installation Hazards (NEW - Section 5, exact schema match)
+        installationHazards: methodData.installationHazards || null,
+
+        // Scope of Work (exact schema match)
+        scopeOfWork: methodData.scopeOfWork || {
+          description: '',
+          keyDeliverables: [],
+          exclusions: ''
+        },
         
+        // Schedule Details (exact schema match)
+        scheduleDetails: methodData.scheduleDetails || {
+          workingHours: '',
+          teamSize: '',
+          weatherDependency: '',
+          accessRequirements: '',
+          estimatedDuration: methodData.duration || ''
+        },
+
+        // Practical Tips (exact schema match)
+        practicalTips: methodData.practicalTips || [],
+
+        // Common Mistakes (exact schema match)
+        commonMistakes: methodData.commonMistakes || [],
+
+        // RAG Citations (exact schema match)
+        ragCitations: methodData.ragCitations || [],
+        
+        // Legacy/backward compatibility fields
         projectName: methodData.projectName || '',
         jobTitle: methodData.jobTitle || 'Installation Method Statement',
         location: methodData.location || 'Site location',
-        contractor: methodData.contractor || 'Contractor name',
-        supervisor: methodData.supervisor || 'Site supervisor',
+        contractor: methodData.contractor || '',
+        supervisor: methodData.supervisor || '',
         workType: methodData.workType || 'Electrical installation',
         duration: methodData.duration || 'Variable',
         teamSize: methodData.teamSize || '1-2 persons',
@@ -154,7 +229,7 @@ serve(async (req) => {
         overallRiskLevel: methodData.overallRiskLevel || 'MEDIUM',
         reviewDate: methodData.reviewDate || new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB'),
         
-        // Emergency contacts and site personnel
+        // Emergency contacts (backward compatibility)
         siteManagerName: methodData.siteManagerName || '',
         siteManagerPhone: methodData.siteManagerPhone || '',
         firstAiderName: methodData.firstAiderName || '',
@@ -163,63 +238,22 @@ serve(async (req) => {
         safetyOfficerPhone: methodData.safetyOfficerPhone || '',
         assemblyPoint: methodData.assemblyPoint || '',
         
-        // Scope of Work
-        scopeOfWork: methodData.scopeOfWork ? {
-          description: methodData.scopeOfWork.description || '',
-          keyDeliverables: methodData.scopeOfWork.keyDeliverables || [],
-          exclusions: methodData.scopeOfWork.exclusions || ''
-        } : {
-          description: '',
-          keyDeliverables: [],
-          exclusions: ''
-        },
+        // Competency Matrix
+        competencyMatrix: methodData.competencyMatrix || {},
         
-        // Schedule Details
-        scheduleDetails: methodData.scheduleDetails ? {
-          workingHours: methodData.scheduleDetails.workingHours || '',
-          teamSize: methodData.scheduleDetails.teamSize || '',
-          weatherDependency: methodData.scheduleDetails.weatherDependency || '',
-          accessRequirements: methodData.scheduleDetails.accessRequirements || ''
-        } : {},
-        
-        // Competency Matrix (corrected from competencyRequirements)
-        competencyMatrix: methodData.competencyMatrix ? {
-          competencyRequirements: methodData.competencyMatrix.competencyRequirements || '',
-          trainingRequired: methodData.competencyMatrix.trainingRequired || '',
-          supervisionLevel: methodData.competencyMatrix.supervisionLevel || '',
-          additionalCertifications: methodData.competencyMatrix.additionalCertifications || ''
-        } : {},
-        
-        // Emergency Procedures (static data)
+        // Emergency Procedures (static)
         emergencyProcedures: {
           electricShock: emergencyProcedures.electricShock,
           arcFlash: emergencyProcedures.arcFlash,
           fire: emergencyProcedures.fire
         },
         
-        steps: (methodData.steps || []).map((step: any) => ({
-          id: step.id || `step-${step.stepNumber}`,
-          stepNumber: step.stepNumber,
-          title: step.title,
-          description: step.description,
-          estimatedDuration: step.estimatedDuration || 'Not specified',
-          riskLevel: step.riskLevel || 'MEDIUM',
-          safetyRequirements: step.safetyRequirements || [],
-          equipmentNeeded: step.equipmentNeeded || [],
-          qualifications: step.qualifications || [],
-          bsReferences: step.bsReferences || [], // NEW: BS 7671 references
-          isCompleted: step.isCompleted || false,
-          dependencies: step.dependencies || [],
-          notes: step.notes || '',
-          linkedHazards: step.linkedHazards || []
-        })),
         id: methodData.id || '',
         approvedBy: methodData.approvedBy || '',
         createdAt: methodData.createdAt || new Date().toISOString(),
         updatedAt: methodData.updatedAt || new Date().toISOString(),
-        // Extended method statement fields
-        practicalTips: methodData.practicalTips || [],
-        commonMistakes: methodData.commonMistakes || [],
+        
+        // Legacy fields
         toolsRequired: methodData.toolsRequired || [],
         materialsRequired: methodData.materialsRequired || [],
         totalEstimatedTime: methodData.totalEstimatedTime || '',
@@ -227,22 +261,16 @@ serve(async (req) => {
         complianceRegulations: methodData.complianceRegulations || [],
         complianceWarnings: methodData.complianceWarnings || [],
         
-        // Plant, Equipment & Materials Schedule (structured)
+        // Equipment & Schedules
         equipmentSchedule: createEquipmentSchedule(
           methodData.toolsRequired,
           methodData.materialsRequired
         ),
-        // Quality requirements
         qualityRequirements: methodData.qualityRequirements || [],
-        // Testing procedures
         testingProcedures: methodData.testingProcedures || [],
-        // Site logistics
         siteLogistics: methodData.siteLogistics || {},
-        // Competency requirements
         competencyRequirements: methodData.competencyRequirements || {},
-        // Conditional flags
         conditionalFlags: methodData.conditionalFlags || {},
-        // Work at height equipment
         workAtHeightEquipment: methodData.workAtHeightEquipment || []
       }
     };
