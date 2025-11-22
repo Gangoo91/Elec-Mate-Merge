@@ -25,44 +25,37 @@ export const InstallationDetailsStep = ({ circuits, onUpdate }: InstallationDeta
   };
 
   return (
-    <div className="space-y-4">
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-elec-light mb-2">Installation Details</h2>
-        <p className="text-elec-light/70">
-          Configure installation parameters for each circuit to speed up AI processing
-        </p>
-      </div>
-
-      <Alert className="bg-elec-yellow/10 border-elec-yellow/30">
-        <Info className="h-4 w-4 text-elec-yellow" />
-        <AlertDescription className="text-elec-light/80 text-sm">
+    <div className="space-y-3 sm:space-y-4">
+      <Alert className="p-2.5 sm:p-3 bg-blue-500/10 border-blue-500/30">
+        <Info className="h-3.5 w-3.5 text-blue-400" />
+        <AlertDescription className="text-xs text-foreground/80">
           More details = faster AI processing. Use "Auto" for any field you're unsure about.
         </AlertDescription>
       </Alert>
 
-      <div className="space-y-4">
+      <div className="space-y-0 divide-y divide-border/30">
         {circuits.map((circuit, index) => (
-          <Card key={circuit.id} className="bg-card border-elec-yellow/30">
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-lg text-elec-light flex items-center gap-2">
-                    <Zap className="h-4 w-4 text-elec-yellow" />
-                    {circuit.name}
-                  </CardTitle>
-                  <CardDescription className="text-sm text-elec-light/60">
-                    {circuit.loadType} • {circuit.loadPower}W • {circuit.cableLength}m
-                  </CardDescription>
-                </div>
-                {circuit.specialLocation && circuit.specialLocation !== 'none' && (
-                  <Badge variant="outline" className="bg-destructive/10 text-destructive border-destructive/30">
-                    {circuit.specialLocation}
-                  </Badge>
-                )}
+          <div key={circuit.id} className="py-4 first:pt-0">
+            {/* Compact circuit header */}
+            <div className="flex items-start justify-between gap-2 mb-3">
+              <div className="min-w-0 flex-1">
+                <h3 className="text-sm font-medium text-foreground flex items-center gap-1.5 mb-1">
+                  <Zap className="h-3.5 w-3.5 text-elec-yellow shrink-0" />
+                  <span className="truncate">{circuit.name}</span>
+                </h3>
+                <p className="text-xs text-muted-foreground">
+                  {circuit.loadType} • {circuit.loadPower}W • {circuit.cableLength}m
+                </p>
               </div>
-            </CardHeader>
+              {circuit.specialLocation && circuit.specialLocation !== 'none' && (
+                <Badge variant="warning" className="text-xs capitalize shrink-0">
+                  {circuit.specialLocation}
+                </Badge>
+              )}
+            </div>
 
-            <CardContent className="space-y-4">
+            {/* Form fields */}
+            <div className="space-y-3">
               
               {/* Installation Method */}
               <MobileSelectWrapper
@@ -132,19 +125,18 @@ export const InstallationDetailsStep = ({ circuits, onUpdate }: InstallationDeta
 
               {/* Show auto-calculated values as info */}
               {circuit.calculatedIb && (
-                <div className="text-xs text-elec-light/60 space-y-1 pt-2 border-t border-border/20">
-                  <div>Design Current (Ib): <span className="text-elec-yellow font-mono">{circuit.calculatedIb.toFixed(1)}A</span></div>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground pt-3 border-t border-border/20">
+                  <span>Design: <strong className="text-elec-yellow">{circuit.calculatedIb.toFixed(1)}A</strong></span>
                   {circuit.suggestedMCB && (
-                    <div>Suggested MCB: <span className="text-elec-yellow font-mono">{circuit.suggestedMCB}A</span></div>
+                    <span>MCB: <strong className="text-elec-yellow">{circuit.suggestedMCB}A</strong></span>
                   )}
                   {circuit.calculatedDiversity && circuit.calculatedDiversity < 1 && (
-                    <div>Diversity Factor: <span className="text-elec-yellow font-mono">{(circuit.calculatedDiversity * 100).toFixed(0)}%</span></div>
+                    <span>Diversity: <strong className="text-elec-yellow">{(circuit.calculatedDiversity * 100).toFixed(0)}%</strong></span>
                   )}
                 </div>
               )}
-
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         ))}
       </div>
     </div>
