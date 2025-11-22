@@ -25,29 +25,29 @@ const getComplexityColor = (complexity: 'basic' | 'intermediate' | 'advanced') =
 
 const TemplateCard = ({ template, onSelect }: { template: InstallationTemplate; onSelect: () => void }) => (
   <Card
-    className="p-4 cursor-pointer hover:border-blue-400/40 hover:scale-[1.02] transition-all duration-200 touch-manipulation"
+    className="p-3 sm:p-4 cursor-pointer hover:border-blue-400/40 hover:scale-[1.02] transition-all duration-200 touch-manipulation active:scale-[0.98] min-h-[44px]"
     onClick={onSelect}
   >
-    <div className="space-y-3">
+    <div className="space-y-2 sm:space-y-3">
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
-          <h4 className="font-semibold text-base mb-1 text-foreground flex items-center gap-2">
+          <h4 className="font-semibold text-sm sm:text-base mb-1 text-foreground flex items-center gap-2">
             {template.name}
             {template.isPopular && (
-              <Star className="h-4 w-4 text-amber-400 fill-amber-400" />
+              <Star className="h-3 w-3 sm:h-4 sm:w-4 text-amber-400 fill-amber-400 flex-shrink-0" />
             )}
           </h4>
-          <p className="text-sm text-muted-foreground line-clamp-2">
+          <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">
             {template.description}
           </p>
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2">
-        <Badge variant="outline" className={getComplexityColor(template.complexity)}>
+      <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+        <Badge variant="outline" className={`${getComplexityColor(template.complexity)} text-xs sm:text-sm`}>
           {template.complexity}
         </Badge>
-        <Badge variant="secondary" className="gap-1">
+        <Badge variant="secondary" className="gap-1 text-xs sm:text-sm">
           <Clock className="h-3 w-3" />
           {template.estimatedDuration}
         </Badge>
@@ -70,30 +70,30 @@ export const InstallationTemplateSelector = ({
   };
 
   return (
-    <Card className="p-4 sm:p-6">
-      <div className="space-y-4">
+    <Card className="p-3 sm:p-4 md:p-6">
+      <div className="space-y-3 sm:space-y-4">
         <div className="flex items-center gap-2">
-          <Zap className="h-5 w-5 text-blue-400" />
-          <h3 className="text-lg font-semibold">Quick Start Templates</h3>
+          <Zap className="h-5 w-5 text-blue-400 flex-shrink-0" />
+          <h3 className="text-base sm:text-lg font-semibold">Quick Start Templates</h3>
         </div>
 
-        <p className="text-sm text-muted-foreground">
+        <p className="text-xs sm:text-sm text-muted-foreground">
           Choose a template to get started quickly with pre-configured installation guidance
         </p>
 
         <Tabs value={selectedCategory} onValueChange={(v: any) => onCategoryChange(v)}>
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="domestic" className="gap-2">
-              <Home className="h-4 w-4" />
-              <span className="hidden sm:inline">Domestic</span>
+          <TabsList className="grid w-full grid-cols-3 h-11 sm:h-10">
+            <TabsTrigger value="domestic" className="gap-1.5 sm:gap-2 min-h-[44px] touch-manipulation">
+              <Home className="h-5 w-5 sm:h-4 sm:w-4" />
+              <span className="text-xs sm:text-sm">Home</span>
             </TabsTrigger>
-            <TabsTrigger value="commercial" className="gap-2">
-              <Building2 className="h-4 w-4" />
-              <span className="hidden sm:inline">Commercial</span>
+            <TabsTrigger value="commercial" className="gap-1.5 sm:gap-2 min-h-[44px] touch-manipulation">
+              <Building2 className="h-5 w-5 sm:h-4 sm:w-4" />
+              <span className="text-xs sm:text-sm">Comm</span>
             </TabsTrigger>
-            <TabsTrigger value="industrial" className="gap-2">
-              <Factory className="h-4 w-4" />
-              <span className="hidden sm:inline">Industrial</span>
+            <TabsTrigger value="industrial" className="gap-1.5 sm:gap-2 min-h-[44px] touch-manipulation">
+              <Factory className="h-5 w-5 sm:h-4 sm:w-4" />
+              <span className="text-xs sm:text-sm">Indust</span>
             </TabsTrigger>
           </TabsList>
 
