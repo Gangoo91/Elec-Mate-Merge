@@ -96,13 +96,13 @@ serve(async (req) => {
       // ✅ SIMPLIFIED MODE: Return enhanced structured guidance for Circuit Designer
       success: true,
       data: {
-        installationGuidance: result.installationGuidance || {
-          safetyConsiderations: [],
-          materialsRequired: [],
-          toolsRequired: [],
-          cableRouting: [],
-          terminationRequirements: [],
-          installationProcedure: []
+        installationGuidance: {
+          safetyConsiderations: result.installationGuidance?.safetyConsiderations || [],
+          materialsRequired: result.installationGuidance?.materialsRequired || [],
+          toolsRequired: result.installationGuidance?.toolsRequired || [],
+          cableRouting: result.installationGuidance?.cableRouting || [],
+          terminationRequirements: result.installationGuidance?.terminationRequirements || [],
+          installationProcedure: result.installationGuidance?.installationProcedure || []
         },
         testingRequirements: result.testingRequirements || {
           intro: '',
@@ -177,6 +177,17 @@ serve(async (req) => {
     if (jobId) {
       try {
         const supabase = createClient();
+        
+        // ✅ DEBUG: Log what we're storing in the database
+        logger.info('💾 Storing installation data:', {
+          jobId,
+          hasInstallationGuidance: !!response.data.installationGuidance,
+          cableRoutingItems: response.data.installationGuidance?.cableRouting?.length || 0,
+          terminationItems: response.data.installationGuidance?.terminationRequirements?.length || 0,
+          safetyItems: response.data.installationGuidance?.safetyConsiderations?.length || 0,
+          testingItems: response.data.testingRequirements?.tests?.length || 0
+        });
+        
         await supabase
           .from('installation_method_jobs')
           .update({

@@ -977,13 +977,26 @@ ${ragContext}`;
     }
 
     methodData = JSON.parse(response.toolCalls[0].function.arguments);
+    
+    // ✅ DEBUG: Log extracted installation guidance structure
+    logger.info('📦 Installation guidance structure:', {
+      mode,
+      hasInstallationGuidance: !!methodData.installationGuidance,
+      safetyCount: methodData.installationGuidance?.safetyConsiderations?.length || 0,
+      toolsCount: methodData.installationGuidance?.toolsRequired?.length || 0,
+      materialsCount: methodData.installationGuidance?.materialsRequired?.length || 0,
+      cableRoutingCount: methodData.installationGuidance?.cableRouting?.length || 0,
+      terminationCount: methodData.installationGuidance?.terminationRequirements?.length || 0,
+      procedureCount: methodData.installationGuidance?.installationProcedure?.length || 0,
+      testingCount: methodData.testingRequirements?.tests?.length || 0
+    });
 
-    // Validation: Check if steps have tools
+    // Validation: Check if steps have tools (full mode only)
     const stepsWithoutTools = methodData.installationSteps?.filter((s: any) => 
       !s.tools || s.tools.length < 3
     ) || [];
 
-    if (stepsWithoutTools.length > 0) {
+    if (mode === 'full' && stepsWithoutTools.length > 0) {
       console.warn(`⚠️ ${stepsWithoutTools.length} steps missing sufficient tools - AI may not have extracted RAG data properly`);
       console.warn('Steps needing attention:', stepsWithoutTools.map((s: any) => `Step ${s.step}: ${s.title}`));
     }
