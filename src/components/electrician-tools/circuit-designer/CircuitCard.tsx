@@ -4,10 +4,6 @@ import { Badge } from '@/components/ui/badge';
 import { MobileButton } from '@/components/ui/mobile-button';
 import { AtAGlanceSummary } from './AtAGlanceSummary';
 import { StructuredDesignSections } from './StructuredDesignSections';
-import { MobileCableJustification } from './mobile/MobileCableJustification';
-import { MobileInstallationGuidance } from './mobile/MobileInstallationGuidance';
-import { MobileTestResults } from './mobile/MobileTestResults';
-import { MobileComplianceDetails } from './mobile/MobileComplianceDetails';
 import { 
   CheckCircle2, AlertTriangle, AlertCircle, Zap, Calculator
 } from 'lucide-react';
@@ -17,10 +13,9 @@ interface CircuitCardProps {
   onViewWorkings?: () => void;
   onViewJustification?: () => void;
   className?: string;
-  showFullDetails?: boolean;
 }
 
-export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, className = '', showFullDetails = false }: CircuitCardProps) => {
+export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, className = '' }: CircuitCardProps) => {
   // Calculate compliance status
   const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
   const zsCompliant = (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999);
@@ -77,46 +72,6 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
             
             {/* 9 Structured Sections */}
             <StructuredDesignSections sections={circuit.structuredOutput.sections} />
-
-            {/* Mobile Full Details View */}
-            {showFullDetails && (
-              <div className="mt-6 space-y-4">
-                {/* Cable & Protection - Always Visible */}
-                <div>
-                  <h3 className="text-sm font-semibold text-elec-yellow mb-3 flex items-center gap-2">
-                    <Calculator className="h-4 w-4" />
-                    Cable & Protection Justification
-                  </h3>
-                  <MobileCableJustification circuit={circuit} />
-                </div>
-
-                {/* Installation Guidance - Accordion */}
-                <MobileInstallationGuidance circuit={circuit} />
-
-                {/* Expected Test Results - Accordion */}
-                <MobileTestResults circuit={circuit} />
-
-                {/* Compliance Details - Accordion */}
-                <MobileComplianceDetails circuit={circuit} />
-
-                {/* Warnings - Always Visible if Present */}
-                {circuit.warnings && circuit.warnings.length > 0 && (
-                  <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-                    <div className="flex items-start gap-3">
-                      <AlertTriangle className="h-5 w-5 text-amber-400 mt-0.5 flex-shrink-0" />
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-amber-400 mb-2">Warnings</h4>
-                        <ul className="space-y-1">
-                          {circuit.warnings.map((warning, idx) => (
-                            <li key={idx} className="text-sm text-white/80">• {warning}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
           </>
         ) : (
           <div className="text-center py-12 text-white/60">
