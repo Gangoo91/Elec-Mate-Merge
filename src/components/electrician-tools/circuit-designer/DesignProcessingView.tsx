@@ -174,7 +174,7 @@ export const DesignProcessingView = ({
             <div className="bg-muted/10 rounded-lg p-3">
               <div className="flex items-center gap-2 mb-2">
                 <Clock className="w-4 h-4 text-muted-foreground" />
-                <span className="text-xs text-muted-foreground">Elapsed Time</span>
+                <span className="text-xs text-muted-foreground">Time</span>
               </div>
               <p className="text-lg font-semibold text-foreground">{formatTime(elapsedTime)}</p>
             </div>
