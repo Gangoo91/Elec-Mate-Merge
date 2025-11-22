@@ -174,6 +174,22 @@ export class AIDesigner {
     parts.push('- APPLY COMMON MISTAKE WARNINGS where relevant');
     parts.push('');
 
+    // CRITICAL SCHEMA REQUIREMENT - installationNotes ONLY
+    parts.push('=== CRITICAL SCHEMA REQUIREMENT - installationNotes ONLY ===');
+    parts.push('You MUST NOT generate an "installationGuidance" object with cableRouting, terminationAdvice, etc.');
+    parts.push('Only generate "installationNotes" as a STRING (2-4 sentences).');
+    parts.push('');
+    parts.push('INSTALLATION NOTES REQUIREMENTS (NO GENERIC TEXT):');
+    parts.push('- Reference the EXACT load (e.g., "This 9.5kW shower", "These 13A socket circuits")');
+    parts.push('- Reference the EXACT cable specification (e.g., "6mm² T&E", "2.5mm² SWA with 1.5mm² CPC")');
+    parts.push('- Reference the EXACT cable length if >20m (e.g., "over the 35m run")');
+    parts.push('- Include location-specific advice if outdoor/bathroom/kitchen');
+    parts.push('- Include cable-specific installation methods');
+    parts.push('');
+    parts.push('WRONG (generic): "Install cable clips at regular intervals."');
+    parts.push('RIGHT (specific): "This 32A ring final uses 2.5mm² T&E clipped direct over 45m. Clip spacing 300mm horizontal. Expect ~2.8% voltage drop—verify <5% on commissioning."');
+    parts.push('');
+
     // Auto-correction rules
     parts.push('=== AUTO-CORRECT (SILENT) ===');
     parts.push('1. 3-phase MUST use 400V/415V (never 230V)');
@@ -648,29 +664,9 @@ export class AIDesigner {
                     },
                     required: ['cableSize', 'protection']
                   },
-                  installationGuidance: {
-                    type: 'object',
-                    description: 'PHASE 3: Basic electrical installation context (detailed methods handled by installation specialist agent)',
-                    properties: {
-                      cableRouting: {
-                        type: 'string',
-                        description: 'Installation method reference from BS 7671 Appendix 4 (e.g., "Method C - clipped direct", "Method B - in conduit")'
-                      },
-                      terminationAdvice: {
-                        type: 'string',
-                        description: 'Basic termination requirements (e.g., "Use appropriate cable glands and maintain IP rating")'
-                      },
-                      testingRequirements: {
-                        type: 'string',
-                        description: 'Required electrical tests per BS 7671 Part 6 (R1+R2, Zs, insulation resistance, polarity, RCD trip time)'
-                      },
-                      safetyNotes: {
-                        type: 'array',
-                        items: { type: 'string' },
-                        description: 'Electrical safety warnings only (e.g., "Isolate supply before work", "Verify dead with approved tester")'
-                      }
-                    },
-                    required: ['cableRouting', 'terminationAdvice', 'testingRequirements', 'safetyNotes']
+                  installationNotes: {
+                    type: 'string',
+                    description: 'Circuit-specific installation guidance (2-4 sentences). CRITICAL: Must reference THIS circuit\'s exact specifications: load type, power, cable size, length, location, and protection. Example for 9.5kW shower, 10mm² cable, 18m run: "This 9.5kW shower requires 10mm² cable over 18m. Use 25mm PVC conduit where exposed. All connections must use heat-resistant terminals rated for 40A continuous load. Install RCD spur at shower pull-cord location for local isolation."'
                   },
                   structuredOutput: {
                     type: 'object',
@@ -721,7 +717,7 @@ export class AIDesigner {
                           },
                           installationGuidance: { 
                             type: 'string', 
-                            description: '7. Installation Guidance: Practical step-by-step installation instructions ONLY HERE - cable routing, fixing, terminations (150-200 words)' 
+                            description: '7. Installation Guidance: Circuit-specific practical installation instructions. Must reference THIS circuit\'s exact load, cable spec, and length. Include location-specific requirements (outdoor/bathroom IP ratings, SWA burial depth, etc.). NOT generic advice. (2-4 sentences, ~50-100 words)' 
                           },
                           safetyNotes: { 
                             type: 'string', 
@@ -765,7 +761,7 @@ export class AIDesigner {
                   'rcdProtected',
                   'calculations', 
                   'justifications', 
-                  'installationGuidance',
+                  'installationNotes',
                   'structuredOutput'
                 ]
               }
