@@ -51,9 +51,15 @@ export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallatio
   }
 
   // Extract structured data from Installation Method Agent
-  const safetyConsiderations = installationGuidance.safetyConsiderations || [];
-  const cableRouting = installationGuidance.cableRouting || [];
-  const terminationRequirements = installationGuidance.terminationRequirements || [];
+  const safetyConsiderations = Array.isArray(installationGuidance.safetyConsiderations) 
+    ? installationGuidance.safetyConsiderations 
+    : [];
+  const cableRouting = Array.isArray(installationGuidance.cableRouting) 
+    ? installationGuidance.cableRouting 
+    : [];
+  const terminationRequirements = Array.isArray(installationGuidance.terminationRequirements) 
+    ? installationGuidance.terminationRequirements 
+    : [];
 
   return (
     <div className="space-y-3">

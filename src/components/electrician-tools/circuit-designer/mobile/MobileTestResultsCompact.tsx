@@ -25,7 +25,7 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
     const results: TestResult[] = [];
 
     // Continuity (R1+R2)
-    if (circuit.calculations?.r1r2) {
+    if (circuit.calculations?.r1r2 != null) {
       results.push({
         test: 'Continuity (R1+R2)',
         expectedValue: `${circuit.calculations.r1r2.toFixed(3)}Ω`,
@@ -37,7 +37,7 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
     }
 
     // Earth Fault Loop Impedance (Zs)
-    if (circuit.calculations?.zs !== undefined && circuit.calculations?.maxZs !== undefined) {
+    if (circuit.calculations?.zs != null && circuit.calculations?.maxZs != null) {
       const zs = circuit.calculations.zs;
       const maxZs = circuit.calculations.maxZs;
       const status = zs <= maxZs ? 'pass' : 'fail';

@@ -5,17 +5,20 @@ import { Toaster as SonnerToaster } from "sonner"
 export function Toaster() {
   return (
     <>
-      {/* Mobile toast - bottom center */}
+      {/* Mobile toast - bottom center with optimized positioning */}
       <SonnerToaster 
         position="bottom-center" 
-        offset="16px"
+        offset="80px"
         richColors
         closeButton
         className="sm:hidden"
         toastOptions={{
-          className: "w-[calc(100%-2rem)] max-w-md left-1/2 -translate-x-1/2",
+          className: "mx-auto",
           style: {
-            borderRadius: "0.5rem",
+            borderRadius: "0.75rem",
+            maxWidth: "calc(100vw - 2rem)",
+            width: "100%",
+            margin: "0 auto",
           }
         }}
       />
