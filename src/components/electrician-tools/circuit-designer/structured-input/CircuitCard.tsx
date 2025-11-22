@@ -117,7 +117,7 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
           {/* Load Type */}
           <div className="space-y-1.5">
-            <Label className="text-xs sm:text-sm font-medium">Load Type *</Label>
+            <Label className="text-xs sm:text-sm font-medium">Load Type</Label>
             <Select 
               value={circuit.loadType} 
               onValueChange={(value) => {
