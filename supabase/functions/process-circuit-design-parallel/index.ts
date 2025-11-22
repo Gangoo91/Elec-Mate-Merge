@@ -410,7 +410,25 @@ async function mergeResults(
     // Circuit technical specs from designer
     ...circuit,
     
-    // Installation guidance from installer
+    // ✅ NEW: Merge structured installation guidance from installer
+    installationGuidance: {
+      // Pass through the structured data from Installation Method Agent
+      safetyConsiderations: installationData.installationGuidance?.safetyConsiderations || [],
+      materialsRequired: installationData.installationGuidance?.materialsRequired || [],
+      toolsRequired: installationData.installationGuidance?.toolsRequired || [],
+      cableRouting: installationData.installationGuidance?.cableRouting || [],
+      terminationRequirements: installationData.installationGuidance?.terminationRequirements || [],
+      installationProcedure: installationData.installationGuidance?.installationProcedure || []
+    },
+    
+    // ✅ NEW: Merge structured testing requirements
+    testingRequirements: {
+      intro: installationData.testingRequirements?.intro || '',
+      tests: installationData.testingRequirements?.tests || [],
+      recordingNote: installationData.testingRequirements?.recordingNote || ''
+    },
+    
+    // LEGACY: Keep for backward compatibility with old UI components
     installationMethod: installationData.steps?.[index]?.title || circuit.installationMethod || 'Standard installation',
     toolsRequired: extractToolsForCircuit(installationData, circuit, index),
     materialsNeeded: extractMaterialsForCircuit(installationData, circuit, index),

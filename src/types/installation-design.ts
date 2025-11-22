@@ -133,13 +133,38 @@ export interface CircuitDesign {
     tableReferences: string;
   };
   installationGuidance?: {
-    cableRouting: string;
-    terminationAdvice: string;
-    testingRequirements: string;
+    cableRouting: string | Array<{
+      step: string;
+      cableType?: string;
+      method: string;
+      bsReference?: string;
+      notes?: string;
+    }>;
+    terminationAdvice?: string;
+    terminationRequirements?: Array<{
+      location: string;
+      procedure: string;
+      toolsNeeded: string[];
+      torqueSettings?: string;
+      bsReference?: string;
+    }>;
+    testingRequirements?: string;
     safetyNotes: string[];
     fixingsAndSupport?: string[];
     toolsRequired?: string[];
     estimatedInstallTime?: string;
+  };
+  testingRequirements?: {
+    intro: string;
+    tests: Array<{
+      testName: string;
+      regulation: string;
+      procedure: string;
+      expectedReading?: string;
+      acceptanceCriteria: string;
+      toolsRequired: string[];
+    }>;
+    recordingNote: string;
   };
   installationNotes?: string; // New context-aware installation guidance field
   specialLocationCompliance?: {
