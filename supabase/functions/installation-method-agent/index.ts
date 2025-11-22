@@ -153,6 +153,15 @@ serve(async (req) => {
         materialsList: result.materialsList || [],
         testingRequirements: result.testingRequirements || [],
         regulatoryReferences: result.regulatoryReferences || [],
+        // ✅ ALSO include installationGuidance for Circuit Designer context
+        installationGuidance: result.installationGuidance || {
+          safetyConsiderations: [],
+          materialsRequired: [],
+          toolsRequired: [],
+          cableRouting: [],
+          terminationRequirements: [],
+          installationProcedure: []
+        },
         summary: {
           totalSteps: result.steps.length,
           estimatedDuration: calculateTotalDuration(result.steps),

@@ -1710,7 +1710,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       <h5 className="text-sm font-semibold text-white">Cable Routing</h5>
                     </div>
                     <div className="bg-card/30 border border-border/40 rounded-lg p-3">
-                      {Array.isArray(currentCircuit.installationGuidance.cableRouting) && 
+                      {currentCircuit.installationGuidance?.cableRouting && 
+                       Array.isArray(currentCircuit.installationGuidance.cableRouting) && 
                        currentCircuit.installationGuidance.cableRouting.length > 0 ? (
                         <ul className="space-y-3">
                           {currentCircuit.installationGuidance.cableRouting.map((routing: any, idx: number) => (
@@ -1718,13 +1719,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                               <div className="flex items-start gap-2">
                                 <span className="text-blue-400 font-bold mt-1">→</span>
                                 <div className="flex-1">
-                                  <p className="leading-relaxed">{routing.step}</p>
-                                  {routing.cableType && (
+                                  <p className="leading-relaxed">
+                                    {typeof routing === 'string' ? routing : (routing.step || routing.description || 'No description')}
+                                  </p>
+                                  {typeof routing === 'object' && routing.cableType && (
                                     <p className="text-xs text-white/60 mt-1">
                                       Cable: {routing.cableType} | Method: {routing.method}
                                     </p>
                                   )}
-                                  {routing.bsReference && (
+                                  {typeof routing === 'object' && routing.bsReference && (
                                     <p className="text-xs text-amber-400/80 mt-1">
                                       {routing.bsReference}
                                     </p>

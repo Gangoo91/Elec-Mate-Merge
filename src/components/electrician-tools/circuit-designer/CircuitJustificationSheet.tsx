@@ -230,22 +230,30 @@ export const CircuitJustificationSheet = ({ circuit, isOpen, onClose }: CircuitJ
                   ) : circuit.installationGuidance ? (
                     <div className="space-y-3 text-sm text-white/90">
                       {/* Display structured installation guidance */}
-                      {(circuit.installationGuidance as any)?.safetyConsiderations?.length > 0 && (
+                      {(circuit.installationGuidance as any)?.safetyConsiderations && 
+                       Array.isArray((circuit.installationGuidance as any).safetyConsiderations) && 
+                       (circuit.installationGuidance as any).safetyConsiderations.length > 0 && (
                         <div>
                           <p className="font-semibold text-amber-400 mb-2">Safety Considerations:</p>
                           <ul className="list-disc list-inside space-y-1">
                             {(circuit.installationGuidance as any).safetyConsiderations.map((item: any, idx: number) => (
-                              <li key={idx}>{item.consideration || item}</li>
+                              <li key={idx}>
+                                {typeof item === 'string' ? item : (item.consideration || JSON.stringify(item))}
+                              </li>
                             ))}
                           </ul>
                         </div>
                       )}
-                      {(circuit.installationGuidance as any)?.cableRouting?.length > 0 && (
+                      {(circuit.installationGuidance as any)?.cableRouting && 
+                       Array.isArray((circuit.installationGuidance as any).cableRouting) && 
+                       (circuit.installationGuidance as any).cableRouting.length > 0 && (
                         <div>
                           <p className="font-semibold text-blue-400 mb-2">Cable Routing:</p>
                           <ul className="list-disc list-inside space-y-1">
                             {(circuit.installationGuidance as any).cableRouting.map((item: any, idx: number) => (
-                              <li key={idx}>{item.step || item}</li>
+                              <li key={idx}>
+                                {typeof item === 'string' ? item : (item.step || item.description || JSON.stringify(item))}
+                              </li>
                             ))}
                           </ul>
                         </div>
