@@ -7,7 +7,6 @@ import { MaintenanceInput as MaintenanceInputType } from "./useMaintenanceAdviso
 import { MobileInput } from "@/components/ui/mobile-input";
 import { cn } from "@/lib/utils";
 import { FormSection } from "./FormSection";
-import { InlineDetailLevelSelector } from "./InlineDetailLevelSelector";
 import { CollapsibleFormSection } from "./CollapsibleFormSection";
 import { QuickFillExamplesGrid } from "./QuickFillExamplesGrid";
 
@@ -85,14 +84,6 @@ export const MaintenanceInput = ({
 
   return (
     <form className="space-y-0" onSubmit={handleSubmit}>
-      {/* Detail Level - Inline Selector */}
-      <FormSection>
-        <InlineDetailLevelSelector 
-          selectedLevel={input.detailLevel}
-          onChange={(level) => onInputChange({ detailLevel: level })}
-        />
-      </FormSection>
-      
       {/* Equipment Information - Primary Section */}
       <FormSection>
         <div className="space-y-3">
