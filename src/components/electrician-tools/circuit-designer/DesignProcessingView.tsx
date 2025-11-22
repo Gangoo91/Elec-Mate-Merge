@@ -125,187 +125,134 @@ export const DesignProcessingView = ({
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-3 sm:px-4 py-4 sm:py-6 pb-safe">
-      <div className="max-w-6xl w-full space-y-4 sm:space-y-6">
-        {/* Status Banner - Top */}
-        <Alert className="bg-elec-yellow/10 border-l-4 border-l-elec-yellow border-y-elec-yellow/30 border-r-elec-yellow/30">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3">
-            <AlertDescription className="text-sm sm:text-base font-medium text-white flex-1">
-              {progress?.message || 'Processing in parallel...'}
-            </AlertDescription>
-            <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-white">
-              <div className="flex items-center gap-1.5">
-                <Clock className="w-4 h-4" />
-                <span className="font-semibold">{formatTime(elapsedTime)}</span>
-              </div>
-              <span className="text-white/70">•</span>
-              <span className="text-white/90">~{formatTime(estimatedTimeRemaining)} remaining</span>
+      <Card className="border-elec-yellow/20 bg-elec-card max-w-2xl mx-auto w-full">
+        <CardContent className="p-4 sm:p-6">
+          {/* Header Section */}
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center shrink-0">
+              <Loader2 className="w-5 h-5 text-elec-yellow animate-spin" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h2 className="text-lg font-semibold text-foreground">Designing Your Installation</h2>
+              <p className="text-xs text-muted-foreground">BS 7671 compliant circuit design in progress</p>
             </div>
           </div>
-        </Alert>
 
-        {/* Main Progress Card - Compact */}
-        <Card className="border-elec-yellow/20 bg-elec-card">
-          <CardContent className="p-3 sm:p-4 md:p-5">
-            {/* Title Section */}
-            <div className="text-center mb-4 sm:mb-6">
-              <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-elec-yellow/10 mb-2 sm:mb-3">
-                <Zap className="w-6 h-6 sm:w-7 sm:h-7 text-elec-yellow" />
-              </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2">Parallel AI Circuit Design</h2>
-              <p className="text-white text-xs sm:text-sm">
-                Two specialised agents working simultaneously on your design
-              </p>
+          {/* Overall Progress */}
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm text-muted-foreground">Overall Progress</span>
+              <span className="text-2xl font-bold text-elec-yellow">{currentPercent}%</span>
             </div>
+            <div className="w-full bg-muted/20 rounded-full h-3 overflow-hidden">
+              <div 
+                className="h-full bg-elec-yellow transition-all duration-500"
+                style={{ width: `${currentPercent}%` }}
+              />
+            </div>
+          </div>
 
-            {/* Dual Agent Progress */}
-            <div className="space-y-5 mb-6">
-              {/* Circuit Designer */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Zap className="h-4 w-4 text-elec-yellow" />
-                    <span className="text-sm font-semibold text-white">Circuit Designer</span>
-                    <Badge variant={getStatusVariant(designerStatus)} className="text-xs">
-                      {designerProgress}%
-                    </Badge>
-                  </div>
-                  <span className="text-xs font-medium text-white">{getStatusBadgeText(designerStatus)}</span>
-                </div>
-                <Progress value={designerProgress} className="h-3" />
-                <p className="text-xs text-white">
-                  Calculating cable sizes, protection devices, and BS 7671 compliance
-                </p>
+          {/* Current Activity */}
+          <div className="bg-muted/10 rounded-lg p-4 mb-6">
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-full bg-elec-yellow/10 flex items-center justify-center shrink-0 mt-0.5">
+                <span className="text-lg">{stageDetails[currentStage].icon}</span>
               </div>
-
-              {/* Installation Specialist */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Wrench className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm font-semibold text-white">Installation Specialist</span>
-                    <Badge variant={getStatusVariant(installerStatus)} className="text-xs bg-blue-500/20 text-blue-400 border-blue-500/30">
-                      {installerProgress}%
-                    </Badge>
-                  </div>
-                  <span className="text-xs font-medium text-white">{getStatusBadgeText(installerStatus)}</span>
-                </div>
-                <Progress value={installerProgress} className="h-3 [&>div]:bg-blue-500" />
-                <p className="text-xs text-white">
-                  Generating tools, materials, and installation procedures
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-foreground mb-1">
+                  {stageDetails[currentStage].name}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {stageDetails[currentStage].description}
                 </p>
               </div>
             </div>
+          </div>
 
-            {/* Overall Progress - Prominent */}
-            <div className="pt-5 border-t border-border/50">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-base font-semibold text-white">Overall Progress</span>
-                <span className="text-3xl font-bold text-elec-yellow">{currentPercent}%</span>
+          {/* Stats */}
+          <div className="grid grid-cols-2 gap-3 mb-6">
+            <div className="bg-muted/10 rounded-lg p-3">
+              <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
+                <Clock className="w-3.5 h-3.5" />
+                <span>Elapsed Time</span>
               </div>
-              <div className="w-full bg-gray-800 rounded-full h-3 overflow-hidden shadow-inner">
-                <div 
-                  className="h-full bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow transition-all duration-700 ease-out shadow-lg shadow-elec-yellow/30"
-                  style={{ width: `${currentPercent}%` }}
-                />
-              </div>
-              <div className="flex items-center justify-center gap-2 mt-3 text-sm text-white">
-                <span>Stage {currentStage + 1} of {stageDetails.length}</span>
-              </div>
+              <p className="text-lg font-semibold text-foreground">{formatTime(elapsedTime)}</p>
             </div>
-          </CardContent>
-        </Card>
-
-        {/* Stage Progress Grid - Responsive */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-2 sm:gap-3">
-          {stageDetails.map((stage, idx) => {
-            const isCompleted = idx < currentStage;
-            const isCurrent = idx === currentStage;
-            const isPending = idx > currentStage;
             
-            return (
-              <Card
-                key={idx}
-                className={cn(
-                  "transition-all duration-300 hover:scale-105 min-h-[90px] sm:min-h-[100px]",
-                  isCompleted && "bg-green-500/10 border-green-500/30 shadow-sm shadow-green-500/20",
-                  isCurrent && "bg-elec-yellow/10 border-elec-yellow border-2 shadow-md shadow-elec-yellow/40 animate-pulse",
-                  isPending && "bg-muted/5 border-border/30 opacity-60"
-                )}
-              >
-                <CardContent className="p-3 sm:p-4 flex flex-col items-center justify-center text-center h-full">
-                  <div className="text-2xl sm:text-3xl mb-1.5 sm:mb-2">{stage.icon}</div>
-                  <div className={cn(
-                    "text-[10px] sm:text-xs font-semibold mb-1.5 sm:mb-2 line-clamp-2",
-                    isCompleted && "text-green-400",
-                    isCurrent && "text-elec-yellow",
-                    isPending && "text-white/50"
-                  )}>
-                    {stage.name}
-                  </div>
-                  {isCompleted && (
-                    <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
-                  )}
-                  {isCurrent && (
-                    <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow animate-spin" />
-                  )}
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-
-        {/* Bottom Row - Requirements and Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-          {/* User Requirements */}
-          {userRequest && (
-            <Card className="bg-elec-yellow/5 border-elec-yellow/20">
-              <CardContent className="p-3 sm:p-4">
-                <p className="text-xs sm:text-sm font-semibold text-elec-yellow mb-1.5 sm:mb-2">Your Requirements:</p>
-                <p className="text-xs sm:text-sm text-white leading-relaxed line-clamp-3">{userRequest}</p>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Circuits Completed */}
-          {totalCircuits > 0 && (
-            <Card className="bg-green-500/10 border-green-500/20">
-              <CardContent className="p-3 sm:p-4 flex items-center justify-between">
-                <span className="text-sm sm:text-base font-semibold text-white">Circuits Completed</span>
-                <span className="text-2xl sm:text-3xl font-bold text-green-400">
-                  {estimatedCompleted}<span className="text-lg sm:text-xl text-white/70">/{totalCircuits}</span>
-                </span>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-
-        {/* Retry Message */}
-        {retryMessage && (
-          <Card className="bg-amber-500/10 border-amber-500/30">
-            <CardContent className="p-4 flex items-start gap-3">
-              <Loader2 className="w-5 h-5 animate-spin text-amber-500 flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-semibold text-amber-400 mb-1">Recovery Mode</p>
-                <p className="text-sm text-white">{retryMessage}</p>
+            {totalCircuits > 0 && (
+              <div className="bg-muted/10 rounded-lg p-3">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
+                  <Zap className="w-3.5 h-3.5" />
+                  <span>Circuits</span>
+                </div>
+                <p className="text-lg font-semibold text-foreground">
+                  {estimatedCompleted}<span className="text-muted-foreground">/{totalCircuits}</span>
+                </p>
               </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Cancel Button */}
-        {onCancel && (
-          <div className="flex justify-center pt-2">
-            <Button
-              variant="outline"
-              onClick={onCancel}
-              className="w-full sm:w-auto min-h-[44px] border-red-500/30 hover:bg-red-500/10 hover:border-red-500/50 text-white touch-manipulation"
-            >
-              <XCircle className="w-4 h-4 mr-2" />
-              Cancel Design
-            </Button>
+            )}
           </div>
-        )}
-      </div>
+
+          {/* Parallel Agents */}
+          <div className="space-y-3 mb-6 pt-6 border-t border-border/20">
+            <p className="text-xs font-medium text-muted-foreground mb-3">Parallel Processing</p>
+            
+            {/* Designer */}
+            <div className="flex items-center gap-3">
+              <Zap className="w-4 h-4 text-elec-yellow shrink-0" />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-medium text-foreground">Circuit Designer</span>
+                  <span className="text-xs text-muted-foreground">{designerProgress}%</span>
+                </div>
+                <Progress value={designerProgress} className="h-1.5" />
+              </div>
+            </div>
+            
+            {/* Installer */}
+            <div className="flex items-center gap-3">
+              <Wrench className="w-4 h-4 text-blue-400 shrink-0" />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-medium text-foreground">Installation Specialist</span>
+                  <span className="text-xs text-muted-foreground">{installerProgress}%</span>
+                </div>
+                <Progress value={installerProgress} className="h-1.5 [&>div]:bg-blue-500" />
+              </div>
+            </div>
+          </div>
+
+          {/* Estimated Time Remaining */}
+          <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground pt-4 border-t border-border/20">
+            <Clock className="w-3.5 h-3.5" />
+            <span>Estimated time remaining: ~{formatTime(estimatedTimeRemaining)}</span>
+          </div>
+
+          {/* Retry Message */}
+          {retryMessage && (
+            <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg flex items-start gap-2">
+              <Loader2 className="w-4 h-4 animate-spin text-amber-500 flex-shrink-0 mt-0.5" />
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-semibold text-amber-400 mb-0.5">Recovery Mode</p>
+                <p className="text-xs text-muted-foreground">{retryMessage}</p>
+              </div>
+            </div>
+          )}
+
+          {/* Cancel Button */}
+          {onCancel && (
+            <div className="mt-6 pt-4 border-t border-border/20">
+              <Button
+                variant="outline"
+                onClick={onCancel}
+                className="w-full min-h-[44px] border-red-500/30 hover:bg-red-500/10 hover:border-red-500/50 text-foreground touch-manipulation"
+              >
+                <XCircle className="w-4 h-4 mr-2" />
+                Cancel Design
+              </Button>
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 };
