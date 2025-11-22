@@ -36,33 +36,36 @@ export const CircuitPresetSelector = ({ installationType, onSelectPreset }: Circ
         <CollapsibleContent>
           <div className="p-2.5 sm:p-4 pt-0 grid gap-3 sm:grid-cols-2">
             {templates.map(template => (
-              <Card key={template.id} className="p-3 sm:p-4 hover:border-primary/50 transition-colors">
-                <div className="flex items-center justify-between gap-1.5 sm:gap-2 mb-1.5">
-                  <div className="flex-1 min-w-0 pr-1">
-                    <h4 className="font-semibold text-sm sm:text-base text-foreground truncate">{template.name}</h4>
-                    <p className="text-xs sm:text-sm text-muted-foreground mt-1 line-clamp-2">{template.description}</p>
+              <Card key={template.id} className="p-2.5 sm:p-4 hover:border-primary/50 transition-colors relative">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between sm:gap-2">
+                  <div className="flex-1 min-w-0 mb-2 sm:mb-0 sm:pr-12">
+                    <h4 className="font-semibold text-sm text-foreground truncate">{template.name}</h4>
+                    <p className="text-xs text-muted-foreground mt-0.5 hidden sm:block line-clamp-2">{template.description}</p>
+                    
+                    <div className="flex flex-wrap gap-1 mt-1.5">
+                      {template.circuits.slice(0, 2).map((c, i) => (
+                        <Badge key={i} variant="outline" className="text-[10px] sm:text-xs">
+                          {c.name}
+                        </Badge>
+                      ))}
+                      {template.circuits.length > 2 && (
+                        <Badge variant="outline" className="text-[10px] sm:text-xs">
+                          +{template.circuits.length - 2} more
+                        </Badge>
+                      )}
+                    </div>
                   </div>
+                  
                   <Button
                     size="sm"
                     variant="secondary"
                     onClick={() => onSelectPreset(template)}
-                    className="gap-1 shrink-0 min-h-[40px] min-w-[40px] px-2.5 sm:px-3 flex items-center justify-center"
+                    className="gap-1 shrink-0 w-full sm:w-auto sm:absolute sm:right-2.5 sm:top-2.5 min-h-[36px] sm:min-h-[32px] sm:min-w-[32px] justify-center"
                   >
-                    <Plus className="h-4 w-4 flex-shrink-0" />
+                    <Plus className="h-3.5 w-3.5 flex-shrink-0" />
+                    <span className="sm:hidden">Add Template</span>
                     <span className="hidden sm:inline">Add</span>
                   </Button>
-                </div>
-                <div className="flex flex-wrap gap-1 mt-2">
-                  {template.circuits.slice(0, 3).map((c, i) => (
-                    <Badge key={i} variant="outline" className="text-xs">
-                      {c.name}
-                    </Badge>
-                  ))}
-                  {template.circuits.length > 3 && (
-                    <Badge variant="outline" className="text-xs">
-                      +{template.circuits.length - 3} more
-                    </Badge>
-                  )}
                 </div>
               </Card>
             ))}
