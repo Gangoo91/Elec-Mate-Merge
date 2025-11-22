@@ -235,7 +235,7 @@ function mapInstallationDesignToPDFMonkey(design: any, planData: any) {
       complianceSummary: circuit.complianceSummary || (circuit.zsCompliant && circuit.voltageDropCompliant ? 'Fully compliant' : 'Requires attention'),
       
       // Installation guidance
-      installationNotes: circuit.installationNotes || circuit.installationGuidance?.cableRouting || '',
+      installationNotes: circuit.installationNotes,
       
       // Structured output for advanced PDF templates
       structuredOutput: circuit.structuredOutput || null,
