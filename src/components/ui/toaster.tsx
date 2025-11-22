@@ -5,7 +5,7 @@ import { Toaster as SonnerToaster } from "sonner"
 export function Toaster() {
   return (
     <>
-      {/* Mobile toast - bottom center with optimized positioning */}
+      {/* Mobile toast - bottom center with compact sizing */}
       <SonnerToaster 
         position="bottom-center" 
         offset="80px"
@@ -13,12 +13,15 @@ export function Toaster() {
         closeButton
         className="sm:hidden"
         toastOptions={{
-          className: "mx-auto",
+          className: "mx-auto text-sm",
           style: {
             borderRadius: "0.75rem",
-            maxWidth: "calc(100vw - 2rem)",
-            width: "100%",
+            maxWidth: "320px",
+            width: "auto",
+            minWidth: "280px",
             margin: "0 auto",
+            padding: "12px 16px",
+            fontSize: "14px",
           }
         }}
       />
