@@ -59,12 +59,7 @@ export const ExecutiveSummaryCard = ({ executiveSummary }: ExecutiveSummaryCardP
             <FileText className="h-6 w-6 lg:h-7 lg:w-7 text-blue-400" />
           </div>
           <div className="flex-1">
-            <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-bold text-xl lg:text-2xl text-foreground">Executive Summary</h3>
-              <Badge variant="outline" className="bg-blue-500/10 border-blue-500/30 text-blue-400 text-xs">
-                AI Generated
-              </Badge>
-            </div>
+            <h3 className="font-bold text-xl lg:text-2xl text-foreground mb-1">Executive Summary</h3>
             <p className="text-sm text-muted-foreground">
               Installation at-a-glance with key specifications and compliance
             </p>
