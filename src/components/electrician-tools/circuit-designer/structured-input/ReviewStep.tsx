@@ -75,34 +75,48 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
           <Badge variant="outline" className="text-xs">{inputs.circuits.length} Total</Badge>
         </div>
         
-        <div className="space-y-0 divide-y divide-border/20">
-          {inputs.circuits.map((circuit, index) => (
-            <div key={circuit.id} className="py-3 first:pt-0">
-              <div className="flex items-start justify-between gap-2 mb-1.5">
-                <div className="flex items-center gap-2 min-w-0 flex-1">
-                  <Badge variant="outline" className="text-[10px] shrink-0">#{index + 1}</Badge>
-                  <span className="font-medium text-sm text-foreground truncate">
-                    {circuit.name || 'Unnamed Circuit'}
-                  </span>
-                </div>
-                {!circuit.loadPower && (
-                  <AlertCircle className="h-3.5 w-3.5 text-destructive shrink-0" />
-                )}
+      <div className="space-y-0 divide-y divide-border/20">
+        {inputs.circuits.map((circuit, index) => (
+          <div key={circuit.id} className="py-3 first:pt-0">
+            <div className="flex items-center gap-3 mb-2">
+              <Badge variant="outline" className="text-xs shrink-0">#{index + 1}</Badge>
+              <span className="font-semibold text-base text-foreground flex-1 truncate">
+                {circuit.name || 'Unnamed Circuit'}
+              </span>
+              {!circuit.loadPower && (
+                <AlertCircle className="h-4 w-4 text-destructive shrink-0" />
+              )}
+            </div>
+            
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm pl-8">
+              <div>
+                <span className="text-muted-foreground text-xs">Power:</span>
+                <span className="font-medium text-foreground ml-1.5">{circuit.loadPower}W</span>
               </div>
-              
-              <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
-                <span>{circuit.loadPower}W</span>
-                {circuit.cableLength && <span>• {circuit.cableLength}m</span>}
-                <span>• {circuit.phases === 'single' ? 'Single' : '3-Phase'}</span>
-                {circuit.specialLocation && circuit.specialLocation !== 'none' && (
-                  <Badge variant="warning" className="text-[10px] capitalize">
+              <div>
+                <span className="text-muted-foreground text-xs">Length:</span>
+                <span className="font-medium text-foreground ml-1.5">
+                  {circuit.cableLength ? `${circuit.cableLength}m` : 'Auto'}
+                </span>
+              </div>
+              <div>
+                <span className="text-muted-foreground text-xs">Phase:</span>
+                <span className="font-medium text-foreground ml-1.5">
+                  {circuit.phases === 'single' ? 'Single' : '3-Phase'}
+                </span>
+              </div>
+              {circuit.specialLocation && circuit.specialLocation !== 'none' && (
+                <div>
+                  <span className="text-muted-foreground text-xs">Location:</span>
+                  <Badge variant="warning" className="text-xs capitalize ml-1.5">
                     {circuit.specialLocation}
                   </Badge>
-                )}
-              </div>
+                </div>
+              )}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
       </Card>
 
       {/* Warnings */}
@@ -122,36 +136,36 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
           <CheckCircle2 className="h-4 w-4 text-green-400" />
           What You'll Get
         </h3>
-        <div className="grid gap-2 text-xs text-muted-foreground">
-          <div className="flex items-start gap-2">
-            <CheckCircle2 className="h-3 w-3 text-green-400 shrink-0 mt-0.5" />
-            <span>BS 7671 compliant cable sizing for each circuit</span>
-          </div>
-          <div className="flex items-start gap-2">
-            <CheckCircle2 className="h-3 w-3 text-green-400 shrink-0 mt-0.5" />
-            <span>Protection device selection (MCB/RCBO ratings and curves)</span>
-          </div>
-          <div className="flex items-start gap-2">
-            <CheckCircle2 className="h-3 w-3 text-green-400 shrink-0 mt-0.5" />
-            <span>Voltage drop calculations with compliance verification</span>
-          </div>
-          <div className="flex items-start gap-2">
-            <CheckCircle2 className="h-3 w-3 text-green-400 shrink-0 mt-0.5" />
-            <span>Earth fault loop impedance (Zs) calculations</span>
-          </div>
-          <div className="flex items-start gap-2">
-            <CheckCircle2 className="h-3 w-3 text-green-400 shrink-0 mt-0.5" />
-            <span>Detailed justifications referencing BS 7671 regulations</span>
-          </div>
-          <div className="flex items-start gap-2">
-            <CheckCircle2 className="h-3 w-3 text-green-400 shrink-0 mt-0.5" />
-            <span>Materials list with specifications</span>
-          </div>
-          <div className="flex items-start gap-2">
-            <CheckCircle2 className="h-3 w-3 text-green-400 shrink-0 mt-0.5" />
-            <span>Installation guidance and practical tips</span>
-          </div>
+      <div className="grid gap-2.5 text-sm">
+        <div className="flex items-start gap-2.5">
+          <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+          <span className="text-foreground">BS 7671 compliant cable sizing for each circuit</span>
         </div>
+        <div className="flex items-start gap-2.5">
+          <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+          <span className="text-foreground">Protection device selection (MCB/RCBO ratings and curves)</span>
+        </div>
+        <div className="flex items-start gap-2.5">
+          <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+          <span className="text-foreground">Voltage drop calculations with compliance verification</span>
+        </div>
+        <div className="flex items-start gap-2.5">
+          <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+          <span className="text-foreground">Earth fault loop impedance (Zs) calculations</span>
+        </div>
+        <div className="flex items-start gap-2.5">
+          <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+          <span className="text-foreground">Detailed justifications referencing BS 7671 regulations</span>
+        </div>
+        <div className="flex items-start gap-2.5">
+          <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+          <span className="text-foreground">Materials list with specifications</span>
+        </div>
+        <div className="flex items-start gap-2.5">
+          <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+          <span className="text-foreground">Installation guidance and practical tips</span>
+        </div>
+      </div>
       </Card>
     </div>
   );
