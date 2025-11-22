@@ -227,9 +227,23 @@ function mapInstallationDesignToPDFMonkey(design: any, planData: any) {
       complianceStatus: circuit.complianceStatus || 'warning',
       status: circuit.status || 'incomplete',
       
+      // Human-readable display fields
+      voltageDropText: circuit.voltageDropText || `${(circuit.calculations?.voltageDrop?.volts || 0).toFixed(2)}V (${(circuit.calculations?.voltageDrop?.percent || 0).toFixed(2)}%)`,
+      earthFaultLoopText: circuit.earthFaultLoopText || `${(circuit.calculations?.zs || 0).toFixed(2)}Ω (max ${(circuit.calculations?.maxZs || 0).toFixed(2)}Ω)`,
+      protectionSummary: circuit.protectionSummary || `${circuit.protectionDevice?.type || 'MCB'} ${circuit.protectionDevice?.rating || 6}A Type ${circuit.protectionDevice?.curve || 'B'} (${circuit.protectionDevice?.kaRating || 6}kA)`,
+      cableSummary: circuit.cableSummary || `${circuit.cableSize || 2.5}mm² / ${circuit.cpcSize || 1.5}mm² CPC`,
+      complianceSummary: circuit.complianceSummary || (circuit.zsCompliant && circuit.voltageDropCompliant ? 'Fully compliant' : 'Requires attention'),
+      
+      // Installation guidance
+      installationNotes: circuit.installationNotes || circuit.installationGuidance?.cableRouting || '',
+      
+      // Structured output for advanced PDF templates
+      structuredOutput: circuit.structuredOutput || null,
+      
       justificationCable: circuit.justifications?.cableSize || `${circuit.cableSize}mm² cable selected for adequate protection.`,
       justificationProtection: circuit.justifications?.protection || `${circuit.protectionDevice?.rating}A protection device provides adequate protection.`,
       justificationRcd: circuit.justifications?.rcd || (circuit.rcdProtected ? 'RCD protection provides additional safety.' : 'RCD not required.'),
+      justificationRingTopology: circuit.justifications?.ringTopology || '',
       
       hasWarnings: (circuit.warnings?.length || 0) > 0,
       warnings: circuit.warnings || [],
