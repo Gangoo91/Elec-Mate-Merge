@@ -1,20 +1,16 @@
 import { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { Wrench, Sparkles, FileText, Zap } from "lucide-react";
+import { Wrench, FileText, Zap, Loader2 } from "lucide-react";
 import { InstallationProjectDetails as ProjectDetailsType } from "@/types/installation-method";
-import { InstallationTemplateSelector } from "./InstallationTemplateSelector";
 import { InstallationProjectDetails } from "./InstallationProjectDetails";
 import { InstallationTemplate } from "@/lib/installation-templates";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronDown } from "lucide-react";
+import { InstallationTemplateGrid } from "./InstallationTemplateGrid";
+import { FormSection } from "./FormSection";
+import { InlineInstallationTypeSelector } from "./InlineInstallationTypeSelector";
+import { CollapsibleFormSection } from "./CollapsibleFormSection";
+import { cn } from "@/lib/utils";
 
 interface InstallationInputProps {
   onGenerate: (projectDetails: ProjectDetailsType, description: string, useFullMode: boolean) => void;
@@ -30,7 +26,6 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
     location: '',
     installationType: 'domestic'
   });
-  const [showProjectDetails, setShowProjectDetails] = useState(false);
 
   useEffect(() => {
     setProjectDetails(prev => ({ ...prev, installationType }));
@@ -41,7 +36,8 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
     setInstallationType(template.category);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     if (!description.trim()) {
       return;
     }
@@ -51,28 +47,19 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
   const isValid = description.trim().length > 0;
 
   return (
-    <div className="space-y-3 sm:space-y-4 lg:space-y-6 animate-fade-in">
-      {/* Hero Prompt Card */}
-      <Card className="p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-blue-500/5 via-background to-background border-blue-500/30 shadow-lg">
-        <div className="space-y-3 sm:space-y-4">
-          <div className="flex items-start gap-2 sm:gap-3">
-            <div className="p-2 sm:p-3 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 shadow-lg flex-shrink-0">
-              <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-1 sm:mb-2">
-                Describe Your Installation Work
-              </h2>
-              <p className="text-xs sm:text-sm text-muted-foreground">
-                Generate BS 7671-compliant method statements with step-by-step procedures, safety controls, and testing requirements
-              </p>
-            </div>
+    <form className="space-y-0" onSubmit={handleSubmit}>
+      {/* Installation Description - Hero Section */}
+      <FormSection>
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <Wrench className="h-5 w-5 text-blue-400" />
+            <h2 className="text-lg sm:text-xl font-bold">Describe Your Installation Work</h2>
           </div>
-
+          <p className="text-xs sm:text-sm text-muted-foreground">
+            Generate BS 7671-compliant method statements with step-by-step procedures, safety controls, and testing requirements
+          </p>
           <div className="space-y-2">
-            <Label htmlFor="installation-description" className="text-sm sm:text-base font-semibold">
-              What needs to be installed?
-            </Label>
+            <Label htmlFor="installation-description">What needs to be installed?</Label>
             <Textarea
               id="installation-description"
               value={description}
@@ -83,61 +70,81 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
               autoComplete="off"
               spellCheck={true}
             />
-            <p className="text-xs text-muted-foreground">
-              Be specific about the work scope, location, and any special requirements
-            </p>
+            <div className="flex justify-between items-center text-xs">
+              <p className="text-muted-foreground">
+                Be specific about the work scope and location
+              </p>
+              <p className={cn(
+                "font-medium",
+                description.length > 100 
+                  ? "text-blue-400" 
+                  : "text-muted-foreground"
+              )}>
+                {description.length} chars
+              </p>
+            </div>
           </div>
         </div>
-      </Card>
+      </FormSection>
 
-      {/* Template Selector */}
-      <InstallationTemplateSelector
-        selectedCategory={installationType}
-        onCategoryChange={setInstallationType}
-        onSelectTemplate={handleTemplateSelect}
-      />
+      {/* Installation Type - Inline Selector */}
+      <FormSection>
+        <InlineInstallationTypeSelector 
+          selectedType={installationType}
+          onChange={setInstallationType}
+          disabled={isProcessing}
+        />
+      </FormSection>
 
-      {/* Project Details (Collapsible) */}
-      <Collapsible open={showProjectDetails} onOpenChange={setShowProjectDetails}>
-        <Card className="overflow-hidden border-blue-500/20">
-          <CollapsibleTrigger className="w-full p-3 sm:p-4 md:p-6 min-h-[52px] flex items-center justify-between hover:bg-blue-500/5 transition-colors touch-manipulation active:scale-[0.99]">
-            <div className="flex items-center gap-2">
-              <FileText className="h-5 w-5 text-blue-400 flex-shrink-0" />
-              <h3 className="text-base sm:text-lg font-semibold">Project Details (Optional)</h3>
-            </div>
-            <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform duration-200 flex-shrink-0 ${showProjectDetails ? 'rotate-180' : ''}`} />
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="px-3 pb-3 sm:px-4 sm:pb-4 md:px-6 md:pb-6">
-              <InstallationProjectDetails
-                projectDetails={projectDetails}
-                onChange={setProjectDetails}
-              />
-            </div>
-          </CollapsibleContent>
-        </Card>
-      </Collapsible>
-
-
-      {/* Generate Button */}
-      <Button
-        onClick={handleSubmit}
-        disabled={!isValid || isProcessing}
-        size="lg"
-        className="w-full h-12 sm:h-14 bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white text-base sm:text-lg font-bold shadow-xl hover:shadow-2xl transition-all touch-manipulation active:scale-95 disabled:opacity-50"
+      {/* Quick Templates - Collapsed */}
+      <CollapsibleFormSection 
+        title="Quick Start Templates" 
+        subtitle="Pre-configured installation guidance"
+        badge="optional"
+        icon={<Zap className="h-5 w-5 text-blue-400" />}
+        defaultOpen={false}
       >
-        {isProcessing ? (
-          <>
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
-            Generating Method Statement...
-          </>
-        ) : (
-          <>
-            <Zap className="h-5 w-5 mr-2" />
-            Generate Installation Method
-          </>
-        )}
-      </Button>
-    </div>
+        <InstallationTemplateGrid 
+          selectedCategory={installationType}
+          onSelectTemplate={handleTemplateSelect}
+        />
+      </CollapsibleFormSection>
+
+      {/* Project Information - Collapsed */}
+      <CollapsibleFormSection 
+        title="Project Information" 
+        subtitle="Add project details for comprehensive method statements"
+        badge="optional"
+        icon={<FileText className="h-5 w-5 text-blue-400" />}
+        defaultOpen={false}
+      >
+        <InstallationProjectDetails 
+          projectDetails={projectDetails}
+          onChange={setProjectDetails}
+        />
+      </CollapsibleFormSection>
+
+      {/* Generate Button - Inline */}
+      <FormSection>
+        <Button 
+          type="submit"
+          size="lg"
+          disabled={!isValid || isProcessing}
+          className="w-full bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all"
+        >
+          {isProcessing ? (
+            <>
+              <Loader2 className="h-5 w-5 animate-spin" />
+              Generating Method Statement...
+            </>
+          ) : (
+            <>
+              <Zap className="h-5 w-5" />
+              Generate Installation Method
+            </>
+          )}
+        </Button>
+      </FormSection>
+    </form>
   );
 };

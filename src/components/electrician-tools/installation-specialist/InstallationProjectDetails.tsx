@@ -1,9 +1,7 @@
-import { Card } from '@/components/ui/card';
 import { MobileInput } from '@/components/ui/mobile-input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { InstallationProjectDetails as ProjectDetailsType } from '@/types/installation-method';
-import { Building2 } from 'lucide-react';
 
 interface InstallationProjectDetailsProps {
   projectDetails: ProjectDetailsType;
@@ -22,19 +20,13 @@ export const InstallationProjectDetails = ({
   };
 
   return (
-    <div className="space-y-3 sm:space-y-4">
-      <div className="flex items-center gap-2">
-        <Building2 className="h-5 w-5 text-blue-400 flex-shrink-0" />
-        <h3 className="text-base sm:text-lg font-semibold">Project Information</h3>
-      </div>
-
-      <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
+    <div className="space-y-3">
+      <div className="grid gap-3 sm:grid-cols-2">
         <MobileInput
           label="Project Name"
           value={projectDetails.projectName}
           onChange={(e) => handleChange('projectName', e.target.value)}
           placeholder="e.g., Smith Residence Kitchen Extension"
-          required
         />
         <MobileInput
           label="Location"
@@ -63,7 +55,7 @@ export const InstallationProjectDetails = ({
       </div>
 
       <div className="space-y-2">
-        <Label className="text-sm sm:text-base">Additional Requirements</Label>
+        <Label>Additional Requirements</Label>
         <Textarea
           value={projectDetails.additionalNotes || ''}
           onChange={(e) => handleChange('additionalNotes', e.target.value)}
