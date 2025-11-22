@@ -7,6 +7,7 @@ import { StructuredDesignSections } from './StructuredDesignSections';
 import { MobileJustificationAccordion, buildJustificationSections } from './mobile/MobileJustificationAccordion';
 import { MobileTestResultsCompact } from './mobile/MobileTestResultsCompact';
 import { MobileInstallationGuidanceSection } from './mobile/MobileInstallationGuidanceSection';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { 
   CheckCircle2, AlertTriangle, AlertCircle, Zap, Calculator
 } from 'lucide-react';
@@ -20,6 +21,8 @@ interface CircuitCardProps {
 }
 
 export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, className = '', showFullDetails = false }: CircuitCardProps) => {
+  const isMobile = useIsMobile();
+  
   // Calculate compliance status
   const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
   const zsCompliant = (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999);
@@ -78,12 +81,12 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
             <StructuredDesignSections sections={circuit.structuredOutput.sections} />
 
             {/* Mobile Full Details Section (Inline Justifications) */}
-            {showFullDetails && (
+            {(showFullDetails || !isMobile) && (
               <div className="space-y-6 mt-6">
                 {/* Detailed Justifications Accordion */}
                 <MobileJustificationAccordion sections={buildJustificationSections(circuit)} />
                 
-                {/* Installation Guidance */}
+                {/* Installation Guidance - Always shown on desktop, opt-in on mobile */}
                 <MobileInstallationGuidanceSection circuit={circuit} />
                 
                 {/* Expected Test Results */}
