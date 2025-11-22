@@ -39,16 +39,23 @@ serve(async (req) => {
     logger.info('🔧 Installation Method Agent request received');
 
     const body = await req.json();
-    const { query, projectDetails, jobId } = body;
+    const { query, projectDetails, designerContext, jobId } = body;
 
     if (!query || !projectDetails) {
       throw new Error('Missing required fields: query and projectDetails');
     }
 
+    // ✅ AUTO-DETECT MODE
+    // If called from Circuit Designer (designerContext exists), use simplified mode
+    // If called from Installation Specialist (no designerContext), use full mode
+    const mode = designerContext ? 'simplified' : 'full';
+
     logger.info('Generating installation method statement', { 
       query: query.substring(0, 100),
       jobTitle: projectDetails.jobTitle,
-      jobId 
+      jobId,
+      mode,
+      hasDesignerContext: !!designerContext
     });
 
     // Create progress updater for job-aware mode
@@ -71,31 +78,60 @@ serve(async (req) => {
       }
     };
 
-    // Call the installation method core agent
+    // Call the installation method core agent WITH MODE
     const result = await generateInstallationMethod(
       query,
       projectDetails,
-      updateJobProgress
+      updateJobProgress,
+      undefined,  // sharedRegulations (not used)
+      mode  // ✅ PASS THE MODE
     );
 
     logger.info('✅ Installation method generated successfully');
 
     // Transform to expected frontend format
-    const response = {
+    const response = mode === 'simplified' ? {
+      // ✅ SIMPLIFIED MODE: Return enhanced structured guidance for Circuit Designer
+      success: true,
+      data: {
+        installationGuidance: result.installationGuidance || {
+          safetyConsiderations: [],
+          materialsRequired: [],
+          toolsRequired: [],
+          cableRouting: [],
+          terminationRequirements: [],
+          installationProcedure: []
+        },
+        testingRequirements: result.testingRequirements || {
+          intro: '',
+          tests: [],
+          recordingNote: ''
+        },
+        ragContextUsed: result.ragContextUsed || {
+          regulationsCount: 0,
+          practicalProceduresCount: 0,
+          toolsExtracted: 0,
+          materialsExtracted: 0,
+          keyRegulations: []
+        },
+        ragCitations: result.ragCitations || []
+      }
+    } : {
+      // FULL MODE: Return detailed steps for Method Statement PDF (Installation Specialist)
       success: true,
       data: {
         steps: result.steps.map((step: any, index: number) => ({
           id: `step-${index + 1}`,
-          step: step.step,           // Keep backend field name
+          step: step.step,
           stepNumber: step.step,
           title: step.title,
           description: step.description,
-          tools: step.tools || [],   // ✅ Keep as 'tools' (not equipmentNeeded)
+          tools: step.tools || [],
           materials: step.materials || [],
           safetyNotes: step.safetyNotes || [],
           linkedHazards: step.linkedHazards || [],
           qualifications: step.qualifications || [],
-          estimatedTime: step.estimatedTime || 30, // Number, not string
+          estimatedTime: step.estimatedTime || 30,
           riskLevel: determineRiskLevel(step.linkedHazards || []),
           bsReferences: step.bsReferences || [],
           assignedPersonnel: step.assignedPersonnel || []
@@ -115,7 +151,6 @@ serve(async (req) => {
         materialsList: result.materialsList || [],
         testingRequirements: result.testingRequirements || [],
         regulatoryReferences: result.regulatoryReferences || [],
-        // 🆕 ADD SUMMARY with risk calculation
         summary: {
           totalSteps: result.steps.length,
           estimatedDuration: calculateTotalDuration(result.steps),
