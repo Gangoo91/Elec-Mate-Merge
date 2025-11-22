@@ -1,18 +1,21 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Calculator, Lightbulb, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { MobileButton } from "@/components/ui/mobile-button";
 
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import ProjectTypeSelector from "./ProjectTypeSelector";
 import CostAnalysisProcessingView from "./CostAnalysisProcessingView";
 import CostAnalysisResults from "./CostAnalysisResults";
 import { parseCostAnalysis, ParsedCostAnalysis } from "@/utils/cost-analysis-parser";
 import { BusinessSettingsDialog, BusinessSettings, DEFAULT_BUSINESS_SETTINGS } from "./BusinessSettingsDialog";
+import { CostEngineerFormSection } from "./CostEngineerFormSection";
+import { InlineProjectTypeSelector } from "./InlineProjectTypeSelector";
+import { CollapsibleSection } from "./CollapsibleSection";
+import { StickyGenerateButton } from "./StickyGenerateButton";
+import ProjectTypeSelector from "./ProjectTypeSelector";
 
 type ViewState = 'input' | 'processing' | 'results';
 
@@ -28,10 +31,11 @@ const CostEngineerInterface = () => {
   const [location, setLocation] = useState("");
   const [additionalInfo, setAdditionalInfo] = useState("");
   const [businessSettings, setBusinessSettings] = useState<BusinessSettings>(DEFAULT_BUSINESS_SETTINGS);
-  
+  const [showExamples, setShowExamples] = useState(false);
 
   const handleExampleSelect = (example: string) => {
     setPrompt(example);
+    setShowExamples(false);
     toast({
       title: "Example loaded",
       description: "You can edit this or generate directly",
@@ -238,48 +242,87 @@ const CostEngineerInterface = () => {
     );
   }
 
-  return (
-    <div className="mobile-section-spacing">
-      {/* Business Settings - Top Priority */}
-      <Card className="mobile-card border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-elec-dark/50">
-        <CardHeader className="space-y-2 px-4 sm:px-6">
-          <CardTitle className="text-xl sm:text-2xl font-bold flex items-center gap-2 flex-wrap">
-            <span className="text-2xl">💰</span>
-            <span>Business Profitability Settings</span>
-          </CardTitle>
-          <CardDescription className="text-sm sm:text-base leading-relaxed">
-            Configure your overheads and profit targets to get accurate break-even and quote recommendations
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="px-4 sm:px-6 pb-6">
-          <BusinessSettingsDialog 
-            onSettingsChange={setBusinessSettings}
-            currentSettings={businessSettings}
-          />
-        </CardContent>
-      </Card>
+  const isValid = prompt.trim().length > 0;
+  const hasBusinessSettings = businessSettings && Object.keys(businessSettings).length > 0;
 
-      {/* Project Information - Always Visible at Top */}
-      <Card className="mobile-card border-elec-yellow/20 bg-elec-card/50">
-        <CardHeader className="space-y-2">
-          <CardTitle className="mobile-heading flex items-center gap-2">
-            Project Information
-            <span className="text-xs font-normal px-2 py-1 rounded-full bg-green-500/20 text-green-500 border border-green-500/30">
-              +15% accuracy
+  return (
+    <div className="space-y-4 pb-24 sm:pb-6">
+      {/* Main Project Description */}
+      <CostEngineerFormSection>
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="project-description" className="text-lg sm:text-xl font-semibold">
+              ✨ Describe Your Project
+            </Label>
+            <span className={`text-xs sm:text-sm font-medium px-2 py-1 rounded ${
+              prompt.length >= 100 && prompt.length <= 300 
+                ? 'text-green-500 bg-green-500/10' 
+                : prompt.length < 100 
+                ? 'text-muted-foreground bg-muted' 
+                : 'text-orange-500 bg-orange-500/10'
+            }`}>
+              {prompt.length} chars {prompt.length >= 100 ? '✓' : ''}
             </span>
-          </CardTitle>
-          <CardDescription className="mobile-text">
-            Add project details for more precise pricing and professional reports
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="mobile-input-spacing">
+          </div>
+          <Textarea
+            id="project-description"
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            placeholder="Describe the electrical work needed..."
+            className="min-h-[120px] text-base resize-none"
+            rows={4}
+            autoComplete="off"
+            spellCheck={true}
+            style={{ fontSize: '16px' }}
+          />
+          <p className="text-sm text-muted-foreground">
+            💡 100+ characters recommended for accurate pricing
+          </p>
+        </div>
+      </CostEngineerFormSection>
+
+      {/* Project Type - Inline */}
+      <CostEngineerFormSection>
+        <div className="space-y-3">
+          <Label className="text-base sm:text-lg font-semibold">🏗️ Project Type</Label>
+          <InlineProjectTypeSelector 
+            selectedType={projectType}
+            onTypeChange={setProjectType}
+          />
+          <button
+            onClick={() => setShowExamples(!showExamples)}
+            className="text-sm text-elec-yellow hover:underline"
+          >
+            {showExamples ? '↑ Hide examples' : '↓ Show 5 examples'}
+          </button>
+        </div>
+      </CostEngineerFormSection>
+
+      {/* Examples - Collapsible */}
+      {showExamples && (
+        <div className="animate-in fade-in duration-200">
+          <ProjectTypeSelector
+            selectedType={projectType}
+            onTypeChange={setProjectType}
+            onExampleSelect={handleExampleSelect}
+          />
+        </div>
+      )}
+
+      {/* Optional Settings - Collapsed by default */}
+      <CostEngineerFormSection>
+        <CollapsibleSection
+          title="Optional Settings"
+          subtitle="Add project details for +15% accuracy"
+          badge="Optional"
+          defaultOpen={false}
+        >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <MobileInputWrapper
               label="Project Name"
               value={projectName}
               onChange={setProjectName}
-              placeholder="e.g., Smith Residence Rewire"
-              hint="Client or property name"
+              placeholder="e.g., Smith Residence"
               inputMode="text"
             />
             <MobileInputWrapper
@@ -287,7 +330,6 @@ const CostEngineerInterface = () => {
               value={clientInfo}
               onChange={setClientInfo}
               placeholder="e.g., Mr & Mrs Smith"
-              hint="Customer contact name"
               inputMode="text"
             />
           </div>
@@ -297,113 +339,67 @@ const CostEngineerInterface = () => {
             value={location}
             onChange={setLocation}
             placeholder="e.g., Manchester, M1 1AA"
-            hint="Project location for regional pricing"
             inputMode="text"
           />
 
           <div className="space-y-2">
-            <Label className="mobile-small-text font-semibold">
-              Additional Requirements
-            </Label>
+            <Label className="text-sm font-semibold">Additional Requirements</Label>
             <Textarea
               value={additionalInfo}
               onChange={(e) => setAdditionalInfo(e.target.value)}
-              placeholder="e.g., Access restrictions, parking arrangements, special requirements..."
-              className="min-h-[120px] text-base resize-none"
+              placeholder="Access, parking, special conditions..."
+              className="min-h-[80px] sm:min-h-[100px] text-base resize-none"
+              rows={3}
+              autoComplete="off"
+              spellCheck={true}
               style={{ fontSize: '16px' }}
             />
-            <p className="mobile-small-text text-muted-foreground">
-              Optional: Access, parking, working hours, special conditions
-            </p>
           </div>
-        </CardContent>
-      </Card>
+        </CollapsibleSection>
+      </CostEngineerFormSection>
 
-      {/* Project Type Selector */}
-      <Card className="mobile-card border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/50">
-        <CardHeader className="space-y-2">
-          <CardTitle className="mobile-heading flex items-center gap-2">
-            <Calculator className="h-6 w-6 text-elec-yellow" />
-            Select Project Type
-          </CardTitle>
-          <CardDescription className="mobile-text">
-            Choose your project category and browse examples for inspiration
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ProjectTypeSelector
-            selectedType={projectType}
-            onTypeChange={setProjectType}
-            onExampleSelect={handleExampleSelect}
+      {/* Business Settings - Collapsed by default */}
+      <CostEngineerFormSection>
+        <CollapsibleSection
+          title="Business Settings"
+          subtitle={hasBusinessSettings ? "Profitability analysis configured" : "Configure profitability analysis"}
+          badge={hasBusinessSettings ? "✓ Configured" : "Optional"}
+          badgeVariant={hasBusinessSettings ? "configured" : "optional"}
+          defaultOpen={false}
+        >
+          <BusinessSettingsDialog 
+            onSettingsChange={setBusinessSettings}
+            currentSettings={businessSettings}
           />
-        </CardContent>
-      </Card>
+        </CollapsibleSection>
+      </CostEngineerFormSection>
 
-      {/* Describe Your Project */}
-      <Card className="mobile-card border-elec-yellow/20 bg-gradient-to-br from-elec-card to-elec-dark/50">
-        <CardHeader className="space-y-2">
-          <CardTitle className="mobile-heading flex items-center gap-2">
-            <Lightbulb className="h-6 w-6 text-elec-yellow" />
-            Describe Your Project
-          </CardTitle>
-          <CardDescription className="mobile-text">
-            Be specific about the work required for accurate material pricing and labour estimates
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between mb-2">
-              <Label htmlFor="project-description" className="mobile-text font-semibold">
-                Project Description
-              </Label>
-              <span className={`mobile-small-text font-medium px-2 py-1 rounded ${
-                prompt.length >= 100 && prompt.length <= 300 
-                  ? 'text-green-500 bg-green-500/10' 
-                  : prompt.length < 100 
-                  ? 'text-yellow-500 bg-yellow-500/10' 
-                  : 'text-orange-500 bg-orange-500/10'
-              }`}>
-                {prompt.length} chars
-                {prompt.length >= 100 && prompt.length <= 300 ? ' ✓' : ''}
-              </span>
-            </div>
-            <Textarea
-              id="project-description"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              placeholder="e.g., Complete rewire of 3-bedroom house including new consumer unit, LED downlights throughout, outdoor power and garden lighting..."
-              className="min-h-[200px] sm:min-h-[220px] text-base resize-none"
-              style={{ fontSize: '16px' }}
-            />
-            <p className="mobile-small-text text-muted-foreground">
-              💡 Tip: Include property type, number of rooms, specific requirements, and special features
-            </p>
-          </div>
+      {/* Sticky Generate Button */}
+      <StickyGenerateButton>
+        <MobileButton 
+          variant="elec"
+          size="lg"
+          onClick={handleGenerate}
+          disabled={!isValid}
+          className="w-full font-semibold text-base sm:text-lg h-14"
+        >
+          <Sparkles className="h-5 w-5 mr-2" />
+          Generate Cost Analysis
+        </MobileButton>
+      </StickyGenerateButton>
 
-          <div className="flex flex-col gap-3 pt-2">
-            <MobileButton
-              variant="outline"
-              size="default"
-              onClick={handleFillTestData}
-              className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10"
-            >
-              <Sparkles className="h-4 w-4 mr-2" />
-              Fill Test Data
-            </MobileButton>
-            
-            <MobileButton 
-              variant="elec"
-              size="lg"
-              onClick={handleGenerate}
-              disabled={!prompt.trim()}
-              className="w-full font-semibold text-lg"
-            >
-              <Sparkles className="h-5 w-5 mr-2" />
-              Generate Cost Analysis
-            </MobileButton>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Test Data Button - Desktop only */}
+      <div className="hidden sm:block">
+        <MobileButton
+          variant="outline"
+          size="default"
+          onClick={handleFillTestData}
+          className="w-full"
+        >
+          <Sparkles className="h-4 w-4 mr-2" />
+          Fill Test Data
+        </MobileButton>
+      </div>
     </div>
   );
 };
