@@ -215,12 +215,32 @@ async function startInstallationAgent(
         scopeDescription: requirements.description || 'Circuit installation work'
       },
       designer_context: {
-        // Pass circuit requirements as context
-        circuits: requirements.circuits,
-        voltage: requirements.supply?.voltage,
-        phases: requirements.supply?.phases,
-        earthing: requirements.supply?.earthing,
-        loadType: requirements.circuits?.[0]?.loadType
+        // ✅ ENRICHED: Pass FULL circuit technical specifications
+        circuits: requirements.circuits.map((circuit: any) => ({
+          description: circuit.description,
+          loadType: circuit.loadType,
+          power: circuit.power,
+          cableSize: circuit.cableSize,
+          cpcSize: circuit.cpcSize,
+          protectionDevice: circuit.protectionDevice,
+          installationMethod: circuit.installationMethod,
+          cableLength: circuit.cableLength,
+          // EV-specific
+          chargerType: circuit.chargerType,
+          chargerPower: circuit.chargerPower,
+          // Calculated values from designer
+          designCurrent: circuit.designCurrentIb,
+          voltageDropPercent: circuit.voltageDropPercent,
+          earthFaultLoopImpedance: circuit.earthFaultLoopImpedanceZs
+        })),
+        supply: {
+          voltage: requirements.supply?.voltage,
+          phases: requirements.supply?.phases,
+          earthing: requirements.supply?.earthing,
+          externalImpedance: requirements.supply?.externalImpedance
+        },
+        projectType: requirements.installationType,
+        location: requirements.location
       },
       status: 'pending',
       progress: 0

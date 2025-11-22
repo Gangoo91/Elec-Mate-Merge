@@ -15,7 +15,7 @@ import { createLogger } from '../_shared/logger.ts';
 /**
  * Extract rich keywords from job inputs for fast intelligence search
  */
-function extractInstallationKeywords(jobInputs: any): string[] {
+function extractInstallationKeywords(jobInputs: any, designerContext?: any): string[] {
   const keywords = new Set<string>();
   
   // Project type keywords
@@ -34,23 +34,56 @@ function extractInstallationKeywords(jobInputs: any): string[] {
     }
   }
   
-  // Circuit-specific keywords
+  // ✅ CIRCUIT-SPECIFIC KEYWORDS (enriched from designerContext)
   if (jobInputs.circuits && Array.isArray(jobInputs.circuits)) {
     jobInputs.circuits.forEach((circuit: any) => {
+      // Load type
       if (circuit.loadType) {
         const loadType = circuit.loadType.toLowerCase();
         keywords.add(loadType);
         
-        // Extract circuit type keywords
+        // ✅ Add specific load type synonyms
+        if (loadType.includes('ev')) {
+          keywords.add('electric vehicle charging');
+          keywords.add('EV charger installation');
+          if (circuit.chargerPower) {
+            keywords.add(`${circuit.chargerPower}kW charger`);
+          }
+        }
+        if (loadType.includes('shower')) {
+          keywords.add('electric shower installation');
+          keywords.add('high current circuits');
+          if (circuit.power) {
+            keywords.add(`${Math.round(circuit.power/1000)}kW shower`);
+          }
+        }
+        if (loadType.includes('cooker')) {
+          keywords.add('cooker circuit');
+          keywords.add('diversity factor');
+        }
         if (loadType.includes('socket')) keywords.add('socket circuits');
         if (loadType.includes('light')) keywords.add('lighting circuits');
-        if (loadType.includes('shower')) keywords.add('shower circuits');
-        if (loadType.includes('cooker')) keywords.add('cooker circuits');
         if (loadType.includes('motor')) keywords.add('motor circuits');
       }
       
+      // ✅ Add cable size keywords
       if (circuit.cableSize) {
         keywords.add(`${circuit.cableSize}mm cable`);
+        keywords.add(`${circuit.cableSize}mm² conductor`);
+      }
+      
+      // ✅ Add protection device keywords
+      if (circuit.protectionDevice) {
+        keywords.add(circuit.protectionDevice);
+        const match = circuit.protectionDevice.match(/(\d+)A/);
+        if (match) {
+          keywords.add(`${match[1]} amp protection`);
+        }
+      }
+      
+      // ✅ Add installation method keywords
+      if (circuit.installationMethod) {
+        keywords.add(circuit.installationMethod);
       }
       
       if (circuit.description) {
@@ -63,8 +96,8 @@ function extractInstallationKeywords(jobInputs: any): string[] {
   
   // Supply system keywords
   if (jobInputs.supply) {
-    if (jobInputs.supply.earthingSystem) {
-      keywords.add(jobInputs.supply.earthingSystem);
+    if (jobInputs.supply.earthing) {
+      keywords.add(jobInputs.supply.earthing);
     }
     if (jobInputs.supply.phases) {
       keywords.add(`${jobInputs.supply.phases} phase`);
@@ -616,7 +649,8 @@ export async function generateInstallationMethod(
   projectDetails: any,
   onProgress?: (progress: number, step: string) => void,
   sharedRegulations?: any[],
-  mode: 'full' | 'simplified' = 'full'  // NEW: Mode parameter for schema selection
+  mode: 'full' | 'simplified' = 'full',  // NEW: Mode parameter for schema selection
+  designerContext?: any  // ✅ NEW: Accept designer context with full circuit specs
 ): Promise<any> {
   console.log('🔧 Installation Method Agent starting...');
   const startTime = Date.now();
@@ -630,8 +664,18 @@ export async function generateInstallationMethod(
   
   const logger = createLogger('installation-method-agent');
   const openAiKey = Deno.env.get('OPENAI_API_KEY')!;
-  // Build job inputs for RAG search (mirrors AI RAMS pattern)
-  const jobInputs = {
+  
+  // ✅ Build job inputs using designerContext if available (from Circuit Designer)
+  // Otherwise fallback to generic inputs (from Installation Specialist standalone)
+  const jobInputs = designerContext ? {
+    circuits: designerContext.circuits || [],
+    supply: designerContext.supply || {},
+    projectInfo: {
+      ...projectDetails,
+      projectType: designerContext.projectType,
+      location: designerContext.location
+    }
+  } : {
     circuits: [{ loadType: projectDetails.workType || 'general', description: query }],
     supply: {},
     projectInfo: projectDetails
@@ -644,20 +688,24 @@ export async function generateInstallationMethod(
   
   // STEP 1: RAG SEARCH (ULTRA-FAST INTELLIGENCE APPROACH)
   const ragStart = Date.now();
-  logger.info('Starting installation method RAG search (fast intelligence)');
+  logger.info('Starting installation method RAG search (fast intelligence)', {
+    hasDesignerContext: !!designerContext,
+    circuitCount: jobInputs.circuits?.length || 0
+  });
   
   let ragResults: any[] = [];
   
   try {
-    // Build rich keyword list from jobInputs
-    const keywords = extractInstallationKeywords(jobInputs);
+    // ✅ Build CIRCUIT-AWARE keyword list from jobInputs
+    const keywords = extractInstallationKeywords(jobInputs, designerContext);
     const workType = jobInputs.projectInfo?.workType || 'general installation';
     const circuitTypes = jobInputs.circuits?.map((c: any) => c.loadType).filter(Boolean) || [];
     
-    logger.info('Extracted keywords for RAG', {
-      keywords: keywords.slice(0, 10),
+    logger.info('Extracted circuit-aware keywords for RAG', {
+      keywords: keywords.slice(0, 15),
       workType,
-      circuitCount: circuitTypes.length
+      circuitCount: circuitTypes.length,
+      hasSpecificCircuits: designerContext?.circuits?.length > 0
     });
     
     // Use shared regulations if provided AND non-empty
@@ -834,24 +882,55 @@ export async function generateInstallationMethod(
     : 'Installation Method: Generating comprehensive installation guide...';
   if (onProgress) onProgress(40, progressMsg);
   
+  // ✅ Build circuit-specific context summary for AI prompt
+  let circuitContextSummary = '';
+  if (designerContext?.circuits && designerContext.circuits.length > 0) {
+    circuitContextSummary = '\n\n**CIRCUIT TECHNICAL SPECIFICATIONS:**\n';
+    designerContext.circuits.forEach((circuit: any, idx: number) => {
+      circuitContextSummary += `\nCircuit ${idx + 1}: ${circuit.description || circuit.loadType}
+- Load Type: ${circuit.loadType}
+- Power: ${circuit.power}W (Design Current: ${circuit.designCurrent}A)
+- Cable: ${circuit.cableSize}mm² with ${circuit.cpcSize}mm² CPC
+- Protection: ${circuit.protectionDevice}
+- Installation Method: ${circuit.installationMethod}
+- Cable Length: ${circuit.cableLength}m
+- Voltage Drop: ${circuit.voltageDropPercent}%
+- Earth Fault Loop Impedance (Zs): ${circuit.earthFaultLoopImpedance}Ω`;
+      
+      // Add EV-specific details
+      if (circuit.chargerType) {
+        circuitContextSummary += `\n- EV Charger Type: ${circuit.chargerType} (${circuit.chargerPower}kW)`;
+      }
+    });
+    
+    circuitContextSummary += `\n\n**Supply System:**
+- Voltage: ${designerContext.supply?.voltage}V
+- Phases: ${designerContext.supply?.phases}
+- Earthing: ${designerContext.supply?.earthing}
+- External Impedance (Ze): ${designerContext.supply?.externalImpedance}Ω`;
+  }
+
   const userPrompt = `Project: ${projectDetails.jobTitle || 'Electrical Installation'}
 Location: ${projectDetails.location || 'Site'}
 Installation Type: ${projectDetails.workType || query}
+${circuitContextSummary}
 
 ${mode === 'simplified' 
-  ? `Generate DETAILED, CONTEXT-AWARE installation and testing guidance with:
-- Extract specific tools from RAG "TOOLS:" sections
-- Extract specific materials from RAG "MATERIALS:" and "CABLE SIZES:" sections
-- Reference BS 7671 regulations from RAG context
-- Generate 6-10 installation procedure steps
-- Include detailed testing requirements with expected values
-- Track RAG context usage in ragContextUsed field`
+  ? `Generate DETAILED, CONTEXT-AWARE installation and testing guidance tailored to the specific circuit types above:
+- For EV chargers: Include outdoor installation, earthing electrode requirements, load management
+- For showers: Include supplementary bonding, RCD requirements, high current termination
+- For cookers: Include diversity calculations, dedicated circuit requirements
+- Extract specific tools from RAG "TOOLS:" sections relevant to these circuit types
+- Extract specific materials from RAG "MATERIALS:" sections
+- Reference BS 7671 regulations specific to these installations
+- Generate 6-10 installation procedure steps specific to these circuits
+- Include testing requirements with expected values based on actual circuit parameters`
   : 'Generate professional installation method statement for PDF export:\n- 12-15 installation steps (100-150 words each)\n- Testing procedures with BS 7671 Part 6 compliance\n- Extract tools/materials from RAG context below'
 }
 
 Query: ${query}
 
-RAG Context (EXTRACT TOOLS, MATERIALS, AND REGULATIONS FROM THIS):
+**RAG KNOWLEDGE BASE (EXTRACT TOOLS, MATERIALS, AND REGULATIONS FROM THIS):**
 ${ragContext}`;
 
   let methodData: any;
