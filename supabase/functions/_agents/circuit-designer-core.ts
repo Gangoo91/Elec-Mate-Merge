@@ -84,10 +84,29 @@ async function designCircuitsInternal(
           context: error.context || 'No additional context'
         };
         
+        // Helper to explain error codes
+        const getErrorExplanation = (code: string): string => {
+          switch (code) {
+            case 'INVOCATION_ERROR':
+              return 'The designer crashed mid-execution. Check edge function logs for details.';
+            case 'NO_CIRCUITS':
+              return 'No circuits were found in your design request.';
+            case 'RAG_SEARCH_FAILED':
+              return 'Could not retrieve regulations from database.';
+            case 'AI_TIMEOUT':
+              return 'OpenAI took too long to respond (>280s).';
+            case 'INVALID_INPUT':
+              return 'The circuit request was malformed or missing required fields.';
+            default:
+              return 'Unknown designer error. Check edge function logs.';
+          }
+        };
+        
         throw new Error(
-          `Designer agent failed: ${errorDetails.message} ` +
-          `[Code: ${errorDetails.code}] ` +
-          `[Context: ${JSON.stringify(errorDetails.context)}]`
+          `Designer agent failed: ${errorDetails.message}\n` +
+          `Code: ${errorDetails.code}\n` +
+          `Explanation: ${getErrorExplanation(errorDetails.code)}\n` +
+          `Context: ${JSON.stringify(errorDetails.context)}`
         );
       }
       
