@@ -86,8 +86,8 @@ export const DesignProcessingView = ({
     return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
   };
 
-  // Determine current stage based on progress
-  const currentStage = progress?.stage || 0;
+  // Determine current stage based on progress (clamped to valid range)
+  const currentStage = Math.min(progress?.stage || 0, stageDetails.length - 1);
   const currentPercent = progress?.percent || 0;
 
   // Estimate completed circuits based on progress
