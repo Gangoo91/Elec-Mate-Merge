@@ -223,6 +223,10 @@ function mapInstallationDesignToPDFMonkey(design: any, planData: any) {
       zsMax: circuit.zsMax || circuit.calculations?.maxZs?.toFixed(2) || '0.00',
       zsCompliant: circuit.zsCompliant ?? ((circuit.calculations?.zs || 0) <= (circuit.calculations?.maxZs || 999)),
       
+      // PDF payload status fields
+      complianceStatus: circuit.complianceStatus || 'warning',
+      status: circuit.status || 'incomplete',
+      
       justificationCable: circuit.justifications?.cableSize || `${circuit.cableSize}mm² cable selected for adequate protection.`,
       justificationProtection: circuit.justifications?.protection || `${circuit.protectionDevice?.rating}A protection device provides adequate protection.`,
       justificationRcd: circuit.justifications?.rcd || (circuit.rcdProtected ? 'RCD protection provides additional safety.' : 'RCD not required.'),
