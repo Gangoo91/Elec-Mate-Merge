@@ -7,7 +7,7 @@ const CircuitDesignerPage = () => {
   return (
     <div className="min-h-screen bg-elec-dark">
       <div className="px-2 sm:px-4 py-3 sm:py-4 md:py-6">
-        <div className="max-w-4xl mx-auto w-full">
+        <div className="max-w-7xl mx-auto w-full">
           {/* Navigation */}
           <div className="mb-4 sm:mb-8">
             <Link to="/electrician-tools/ai-tooling">
