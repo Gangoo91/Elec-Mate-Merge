@@ -78,13 +78,14 @@ serve(async (req) => {
       }
     };
 
-    // Call the installation method core agent WITH MODE
+    // Call the installation method core agent WITH MODE AND DESIGNER CONTEXT
     const result = await generateInstallationMethod(
       query,
       projectDetails,
       updateJobProgress,
       undefined,  // sharedRegulations (not used)
-      mode  // ✅ PASS THE MODE
+      mode,  // ✅ Pass mode
+      designerContext  // ✅ Pass full circuit context for circuit-aware guidance
     );
 
     logger.info('✅ Installation method generated successfully');
