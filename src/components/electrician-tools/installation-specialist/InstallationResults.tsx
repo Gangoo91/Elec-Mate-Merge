@@ -23,6 +23,7 @@ import { RegulatoryCitationsPanel } from "./RegulatoryCitationsPanel";
 import { ExecutiveSummaryCard } from "./ExecutiveSummaryCard";
 import { MaterialsListTable } from "./MaterialsListTable";
 import { TestingRequirementsTable } from "./TestingRequirementsTable";
+import { JSONSchemaViewer } from "./JSONSchemaViewer";
 import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
 
 interface ProjectMetadata {
@@ -545,6 +546,14 @@ export const InstallationResults = ({
       {/* 🗺️ Site Logistics & Planning */}
       {siteLogistics && (siteLogistics.isolationPoints?.length > 0 || siteLogistics.accessRequirements) && (
         <SiteLogisticsCard siteLogistics={siteLogistics} />
+      )}
+
+      {/* 🆕 JSON Schema & Output Data Viewer */}
+      {fullMethodStatement && (
+        <JSONSchemaViewer 
+          fullMethodStatement={fullMethodStatement}
+          mode="full"
+        />
       )}
 
       {/* ✅ NEW: AI-Generated Testing Requirements */}
