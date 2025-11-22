@@ -203,64 +203,6 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
 
   return (
     <div className="space-y-3 sm:space-y-4 md:space-y-6">
-      {/* Progress Header */}
-      <Card className="p-2 sm:p-3 md:p-4 bg-gradient-to-br from-primary/5 to-accent/5">
-        <div className="space-y-2 sm:space-y-3">
-          <div className="flex items-center justify-between gap-2">
-            <h3 className="text-xs sm:text-base md:text-lg font-semibold text-foreground">Design Your Installation</h3>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowClearCacheDialog(true)}
-                disabled={clearingCache}
-                className="gap-1.5 text-xs sm:text-sm touch-manipulation"
-              >
-                <Trash2 className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">Clear Cache</span>
-              </Button>
-              <Badge variant="secondary" className="text-[10px] sm:text-xs md:text-sm px-2 py-0.5">
-                {currentStep + 1} / {STEPS.length}
-              </Badge>
-            </div>
-          </div>
-          
-          <Progress value={progressPercentage} className="h-1.5 sm:h-2" />
-          
-          <div className="hidden md:grid md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-2">
-            {STEPS.map((step, index) => (
-              <div
-                key={step.id}
-                className={`text-center transition-all ${
-                  index === currentStep
-                    ? 'text-primary'
-                    : index < currentStep
-                    ? 'text-muted-foreground'
-                    : 'text-muted-foreground/50'
-                }`}
-              >
-                <div
-                  className={`text-xs sm:text-sm font-medium mb-1 ${
-                    index === currentStep ? 'font-bold' : ''
-                  }`}
-                >
-                  {step.label}
-                </div>
-                <div className="text-xs text-muted-foreground">
-                  {step.description}
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          {/* Mobile: Current Step Only */}
-          <div className="md:hidden text-center">
-            <div className="text-sm font-bold text-primary">{STEPS[currentStep].label}</div>
-            <div className="text-xs text-muted-foreground">{STEPS[currentStep].description}</div>
-          </div>
-        </div>
-      </Card>
-
       {/* Step Content */}
       <Card className="p-2.5 sm:p-4 md:p-6">
         {currentStep === 0 && (
