@@ -208,6 +208,119 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   const [exportId, setExportId] = useState('');
   const [showJsonPreview, setShowJsonPreview] = useState(false);
   
+  // Transform design to PDF Monkey payload structure (mirrors backend mapping)
+  const transformToPDFMonkeyPayload = (design: InstallationDesign) => {
+    // Calculate aggregates
+    const totalConnectedLoad = design.circuits?.reduce((sum, c) => sum + (c.loadPower || 0), 0) || 0;
+    const totalDesignCurrent = Math.round(design.circuits?.reduce((sum, c) => sum + (c.designCurrent || c.calculations?.Ib || 0), 0) || 0);
+    const compliantCircuits = design.circuits?.filter((c) => {
+      const zsCompliant = c.calculations?.zs ? c.calculations.zs <= (c.calculations?.maxZs || 999) : true;
+      const vdCompliant = c.calculations?.voltageDrop?.compliant ?? true;
+      return zsCompliant && vdCompliant;
+    }).length || 0;
+    const warningCount = design.circuits?.reduce((sum, c) => sum + (c.warnings?.length || 0), 0) || 0;
+    
+    return {
+      // Cover page
+      date: new Date().toLocaleDateString('en-GB'),
+      designReference: `DES-${Date.now()}`,
+      projectName: design.projectName || 'Electrical Installation',
+      location: design.location || '',
+      clientName: design.clientName || 'Client Name',
+      electricianName: design.electricianName || 'Electrical Contractor',
+      
+      // Installation summary
+      voltage: design.consumerUnit?.incomingSupply?.voltage || 230,
+      phases: (design.consumerUnit?.incomingSupply?.phases === 'single') ? 'Single Phase' : 'Three Phase',
+      earthingSystem: design.consumerUnit?.incomingSupply?.earthingSystem || 'TN-S',
+      ze: (design.consumerUnit?.incomingSupply?.Ze || 0.35).toFixed(2),
+      pscc: (design.consumerUnit?.incomingSupply?.incomingPFC || 3.2).toFixed(1),
+      
+      totalConnectedLoad: totalConnectedLoad.toLocaleString(),
+      diversityFactor: (design.diversityFactor || design.diversityBreakdown?.overallDiversityFactor || 1.0).toFixed(2),
+      diversifiedLoad: ((design.diversityBreakdown?.diversifiedLoad || totalConnectedLoad) * (design.diversityFactor || 1.0)).toLocaleString(),
+      totalDesignCurrent: totalDesignCurrent,
+      
+      consumerUnitType: design.consumerUnit?.type || '17th Edition RCBO Board',
+      mainSwitchRating: design.consumerUnit?.mainSwitchRating || 100,
+      consumerUnitWays: design.circuits?.length || 0,
+      totalCircuits: design.circuits?.length || 0,
+      
+      // Circuits with all fields including new display fields
+      circuits: (design.circuits || []).map((circuit, idx) => {
+        const zsCompliant = circuit.calculations?.zs ? circuit.calculations.zs <= (circuit.calculations?.maxZs || 999) : true;
+        const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
+        
+        return {
+          circuitNumber: circuit.circuitNumber || (idx + 1),
+          name: circuit.name || `Circuit ${idx + 1}`,
+          loadType: circuit.loadType || 'General',
+          loadPower: circuit.loadPower || 0,
+          designCurrentIb: (circuit.designCurrent || circuit.calculations?.Ib || 0).toFixed(1),
+          voltage: circuit.voltage || design.consumerUnit?.incomingSupply?.voltage || 230,
+          phases: (typeof circuit.phases === 'number' && circuit.phases === 3) || circuit.phases === 'three' ? 'Three Phase' : 'Single Phase',
+          
+          cableSize: circuit.cableSize?.toString() || '0',
+          cpcSize: circuit.cpcSize?.toString() || '0',
+          cableLength: circuit.cableLength || 0,
+          installationMethod: circuit.installationMethod || 'Method C (Clipped Direct)',
+          
+          protectionType: circuit.protectionDevice?.type || 'MCB',
+          protectionRating: circuit.protectionDevice?.rating || circuit.calculations?.In || 0,
+          protectionCurve: circuit.protectionDevice?.curve || 'B',
+          protectionKaRating: circuit.protectionDevice?.kaRating || 6,
+          rcdProtected: circuit.rcdProtected || false,
+          rcdProtectedText: circuit.rcdProtected ? '30mA RCBO' : 'No',
+          
+          nominalCurrentIn: circuit.calculations?.In || circuit.protectionDevice?.rating || 0,
+          cableCapacityIz: Math.round(circuit.calculations?.Iz || 0),
+          deratedCapacity: (circuit.calculations?.deratedCapacity || circuit.calculations?.Iz || 0).toFixed(1),
+          safetyMargin: (circuit.calculations?.safetyMargin || 0).toFixed(1),
+          
+          voltageDropVolts: (circuit.calculations?.voltageDrop?.volts || 0).toFixed(1),
+          voltageDropPercent: (circuit.calculations?.voltageDrop?.percent || 0).toFixed(1),
+          voltageDropCompliant: vdCompliant,
+          
+          zsActual: (circuit.calculations?.zs || 0).toFixed(2),
+          zsMax: (circuit.calculations?.maxZs || 0).toFixed(2),
+          zsCompliant: zsCompliant,
+          
+          // Status fields
+          complianceStatus: (zsCompliant && vdCompliant) ? 'compliant' : 'warning',
+          status: (zsCompliant && vdCompliant) ? 'complete' : 'incomplete',
+          
+          // Human-readable display fields
+          voltageDropText: `${(circuit.calculations?.voltageDrop?.volts || 0).toFixed(2)}V (${(circuit.calculations?.voltageDrop?.percent || 0).toFixed(2)}%)`,
+          earthFaultLoopText: `${(circuit.calculations?.zs || 0).toFixed(2)}Ω (max ${(circuit.calculations?.maxZs || 0).toFixed(2)}Ω)`,
+          protectionSummary: `${circuit.protectionDevice?.type || 'MCB'} ${circuit.protectionDevice?.rating || 6}A Type ${circuit.protectionDevice?.curve || 'B'} (${circuit.protectionDevice?.kaRating || 6}kA)`,
+          cableSummary: `${circuit.cableSize || 2.5}mm² / ${circuit.cpcSize || 1.5}mm² CPC`,
+          complianceSummary: (zsCompliant && vdCompliant) ? 'Fully compliant' : 'Requires attention',
+          
+          // Installation guidance
+          installationNotes: circuit.installationGuidance?.cableRouting || '',
+          
+          // Structured output for advanced PDF templates
+          structuredOutput: null,
+          
+          // Justifications
+          justificationCable: circuit.justifications?.cableSize || `${circuit.cableSize}mm² cable selected for adequate protection.`,
+          justificationProtection: circuit.justifications?.protection || `${circuit.protectionDevice?.rating}A protection device provides adequate protection.`,
+          justificationRcd: circuit.justifications?.rcd || (circuit.rcdProtected ? 'RCD protection provides additional safety.' : 'RCD not required.'),
+          justificationRingTopology: '',
+          
+          hasWarnings: (circuit.warnings?.length || 0) > 0,
+          warnings: circuit.warnings || [],
+        };
+      }),
+      
+      // Compliance
+      allCircuitsCompliant: compliantCircuits === (design.circuits?.length || 0) && (design.circuits?.length || 0) > 0,
+      compliantCircuits: compliantCircuits,
+      warningCount: warningCount,
+    };
+  };
+  
+  
   // Transform design to enhanced PDF JSON structure with human-readable strings
   const transformToEnhancedPdfJson = (design: InstallationDesign) => {
     // GUARD: Prevent crashes if circuits undefined
@@ -1956,10 +2069,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             </CollapsibleTrigger>
             <CollapsibleContent>
               <Tabs defaultValue="raw" className="mt-3">
-              <TabsList className="grid w-full grid-cols-3">
+              <TabsList className="grid w-full grid-cols-4">
                 <TabsTrigger value="raw">Raw Request</TabsTrigger>
                 <TabsTrigger value="transformed">EIC Format</TabsTrigger>
                 <TabsTrigger value="design-pdf">Design PDF</TabsTrigger>
+                <TabsTrigger value="pdf-monkey">PDF Payload</TabsTrigger>
               </TabsList>
                 
                 {/* Tab 1: Raw Request Payload */}
@@ -2160,6 +2274,30 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     <div className="max-h-96 overflow-auto rounded-lg bg-slate-900 p-4 pr-20">
                       <pre className="text-xs text-sky-300 font-mono">
                         {JSON.stringify(transformToEnhancedPdfJson(design), null, 2)}
+                      </pre>
+                    </div>
+                  </div>
+                </TabsContent>
+                
+                {/* Tab 4: PDF Monkey Payload */}
+                <TabsContent value="pdf-monkey" className="mt-3">
+                  <div className="relative">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-2 top-2 z-10 text-white/70 hover:text-white hover:bg-white/10"
+                      onClick={() => {
+                        const pdfMonkeyPayload = transformToPDFMonkeyPayload(design);
+                        navigator.clipboard.writeText(JSON.stringify(pdfMonkeyPayload, null, 2));
+                        toast.success('PDF Monkey Payload copied to clipboard');
+                      }}
+                    >
+                      <Copy className="h-4 w-4 mr-1" />
+                      Copy
+                    </Button>
+                    <div className="max-h-96 overflow-auto rounded-lg bg-slate-900 p-4 pr-20">
+                      <pre className="text-xs text-purple-300 font-mono">
+                        {JSON.stringify(transformToPDFMonkeyPayload(design), null, 2)}
                       </pre>
                     </div>
                   </div>
