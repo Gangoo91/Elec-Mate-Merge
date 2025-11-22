@@ -399,6 +399,16 @@ async function mergeResults(
   const designData = circuitJob.data.design_data;
   const installationData = installJob.data.method_data;
 
+  // ✅ DEBUG: Log structure to verify simplified mode data
+  logger.info('📦 Installation data structure', {
+    hasInstallationGuidance: !!installationData?.installationGuidance,
+    hasCableRouting: !!installationData?.installationGuidance?.cableRouting,
+    cableRoutingCount: installationData?.installationGuidance?.cableRouting?.length || 0,
+    hasTestingRequirements: !!installationData?.testingRequirements,
+    testsCount: installationData?.testingRequirements?.tests?.length || 0,
+    dataKeys: Object.keys(installationData || {})
+  });
+
   // Store installation data in circuit job
   await supabase
     .from('circuit_design_jobs')
