@@ -206,69 +206,130 @@ export const InstallationResults = ({
         description: "Creating your installation method document...",
       });
 
+      // ✅ ALIGNED TO JSON SCHEMA - All fields in camelCase
       const methodStatementPayload = {
-        jobTitle: `Installation Method: ${projectDetails?.installationType || 'General Installation'}`,
-        description: projectDetails?.projectName || 'Electrical Installation Method Statement',
-        projectName: projectDetails?.projectName || 'N/A',
-        location: projectDetails?.location || 'Site Location',
-        contractor: projectMetadata?.contractor || projectDetails?.electricianName || 'Contractor',
-        supervisor: projectMetadata?.siteSupervisor || projectDetails?.electricianName || 'Supervisor',
-        workType: projectDetails?.installationType || 'Electrical Installation',
-        duration: summary.estimatedDuration || 'Variable',
-        teamSize: '1-2 persons',
-        siteManagerName: projectMetadata?.siteManagerName || '',
-        siteManagerPhone: projectMetadata?.siteManagerPhone || '',
-        firstAiderName: projectMetadata?.firstAiderName || '',
-        firstAiderPhone: projectMetadata?.firstAiderPhone || '',
-        safetyOfficerName: projectMetadata?.safetyOfficerName || '',
-        safetyOfficerPhone: projectMetadata?.safetyOfficerPhone || '',
-        assemblyPoint: projectMetadata?.assemblyPoint || 'Main Car Park',
-        projectDetails: {
-          projectName: projectDetails?.projectName || 'N/A',
-          location: projectDetails?.location || 'Site Location',
-          clientName: projectDetails?.clientName || 'N/A',
-          electricianName: projectDetails?.electricianName || 'N/A',
-          installationType: projectDetails?.installationType || 'General'
+        // Project Metadata (exact schema match)
+        projectMetadata: fullMethodStatement?.projectMetadata || {
+          documentRef: projectMetadata?.documentRef || `MS-${Date.now()}`,
+          issueDate: projectMetadata?.issueDate || new Date().toISOString().split('T')[0],
+          reviewDate: projectMetadata?.reviewDate || new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          companyName: projectMetadata?.companyName || projectDetails?.clientName || 'Company Name',
+          contractor: projectMetadata?.contractor || projectDetails?.electricianName || 'Contractor',
+          siteManagerName: projectMetadata?.siteManagerName || '',
+          siteManagerPhone: projectMetadata?.siteManagerPhone || '',
+          firstAiderName: projectMetadata?.firstAiderName || '',
+          firstAiderPhone: projectMetadata?.firstAiderPhone || '',
+          safetyOfficerName: projectMetadata?.safetyOfficerName || '',
+          safetyOfficerPhone: projectMetadata?.safetyOfficerPhone || '',
+          assemblyPoint: projectMetadata?.assemblyPoint || 'Main Car Park',
+          startDate: projectMetadata?.startDate || new Date().toISOString().split('T')[0],
+          completionDate: projectMetadata?.completionDate || '',
+          siteSupervisor: projectMetadata?.siteSupervisor || projectDetails?.electricianName || 'Site Supervisor',
+          clientContact: projectMetadata?.clientContact || projectDetails?.clientName || '',
+          preparedByName: projectMetadata?.preparedByName || projectDetails?.electricianName || '',
+          preparedByPosition: projectMetadata?.preparedByPosition || 'Lead Electrician',
+          preparedDate: projectMetadata?.preparedDate || new Date().toISOString().split('T')[0],
+          authorisedByName: projectMetadata?.authorisedByName || '',
+          authorisedByPosition: projectMetadata?.authorisedByPosition || '',
+          authorisedDate: projectMetadata?.authorisedDate || ''
         },
-        steps: steps.map((step) => ({
-          id: `step-${step.stepNumber}`,
-          stepNumber: step.stepNumber,
+
+        // Executive Summary (exact schema match)
+        executiveSummary: fullMethodStatement?.executiveSummary || {
+          cableType: '',
+          cableSize: '',
+          runLength: '',
+          installationMethod: '',
+          supplyType: '',
+          protectiveDevice: '',
+          voltageDrop: '',
+          zsRequirement: '',
+          purpose: projectDetails?.projectName || ''
+        },
+
+        // Materials List (exact schema match)
+        materialsList: fullMethodStatement?.materialsList || (summary.materialsRequired?.map((m: any) => ({
+          description: typeof m === 'string' ? m : (m?.description || ''),
+          specification: typeof m === 'string' ? '' : (m?.specification || ''),
+          quantity: typeof m === 'string' ? '' : (m?.quantity || ''),
+          unit: typeof m === 'string' ? '' : (m?.unit || ''),
+          notes: typeof m === 'string' ? '' : (m?.notes || '')
+        })) || []),
+
+        // Installation Steps (exact schema match)
+        steps: steps.map((step: any, index: number) => ({
+          step: step.stepNumber || index + 1,
           title: step.title,
-          description: step.content,
-          safetyRequirements: step.safety || [],
-          linkedHazards: (step as any).linkedHazards || [],
-          inspectionCheckpoints: (step as any).inspectionCheckpoints || [],
-          equipmentNeeded: (step as any).toolsRequired || step.toolsRequired || [],
-          qualifications: summary.requiredQualifications || [],
-          bsReferences: (step as any).bsReferences || [], // NEW: BS 7671 references
-          estimatedDuration: step.estimatedDuration || 'Not specified',
+          description: step.content || step.description || '',
+          tools: step.toolsRequired || step.tools || [],
+          materials: step.materialsNeeded || step.materials || [],
+          safetyNotes: step.safety || step.safetyNotes || [],
+          duration: step.estimatedDuration || 'Not specified',
+          personnel: summary.requiredQualifications?.[0] || '1-2 qualified electricians',
+          bsReferences: step.bsReferences || [],
+          linkedHazards: step.linkedHazards || [],
+          inspectionCheckpoints: step.inspectionCheckpoints || [],
           riskLevel: (step.riskLevel || 'medium').toUpperCase()
         })),
+
+        // Testing Requirements (exact schema match)
+        testingRequirements: fullMethodStatement?.testingRequirements || testingProcedures?.map(test => ({
+          description: test.testName || '',
+          regulation: test.regulationRef || test.standard || '',
+          expectedReading: test.acceptanceCriteria || '',
+          passRange: test.certificateRequired || ''
+        })) || [],
+
+        // Testing Procedures (backward compatibility)
+        testingProcedures: fullMethodStatement?.testingProcedures || testingProcedures || [],
+
+        // Regulatory References (exact schema match)
+        regulatoryReferences: fullMethodStatement?.regulatoryReferences || regulatoryCitations?.map(ref => ({
+          number: ref.regulation || '',
+          description: ref.requirement || ''
+        })) || [],
+
+        // Installation Hazards (NEW - Section 5)
+        installationHazards: fullMethodStatement?.installationHazards || null,
+
+        // Scope of Work (exact schema match)
+        scopeOfWork: fullMethodStatement?.scopeOfWork || {
+          description: projectDetails?.projectName || 'Electrical installation work',
+          keyDeliverables: [`Complete installation of ${projectDetails?.installationType || 'electrical circuits'}`],
+          exclusions: ''
+        },
+
+        // Schedule Details (exact schema match)
+        scheduleDetails: fullMethodStatement?.scheduleDetails || {
+          workingHours: '08:00 - 17:00',
+          teamSize: '1-2 qualified electricians',
+          weatherDependency: 'Indoor work - not weather dependent',
+          accessRequirements: 'Standard site access required',
+          estimatedDuration: summary.estimatedDuration || 'Variable'
+        },
+
+        // Practical Tips (exact schema match)
+        practicalTips: fullMethodStatement?.practicalTips || [],
+
+        // Common Mistakes (exact schema match)
+        commonMistakes: fullMethodStatement?.commonMistakes || [],
+
+        // RAG Citations (exact schema match)
+        ragCitations: fullMethodStatement?.ragCitations || [],
+
+        // Legacy fields for backward compatibility
+        jobTitle: `Installation Method: ${projectDetails?.installationType || 'General Installation'}`,
+        projectName: projectDetails?.projectName || 'N/A',
+        location: projectDetails?.location || 'Site Location',
+        workType: projectDetails?.installationType || 'Electrical Installation',
+        overallRiskLevel: (summary.overallRiskLevel || 'medium').toUpperCase(),
         toolsRequired: summary.toolsRequired || [],
         materialsRequired: summary.materialsRequired || [],
-        overallRiskLevel: (summary.overallRiskLevel || 'medium').toUpperCase(),
-        estimatedDuration: summary.estimatedDuration || 'Not specified',
-        requiredQualifications: summary.requiredQualifications || ['18th Edition BS 7671:2018+A3:2024'],
-        testingProcedures: fullMethodStatement?.testingProcedures || [],
-        equipmentSchedule: fullMethodStatement?.equipmentSchedule || [],
-        qualityRequirements: fullMethodStatement?.qualityRequirements || [],
-        siteLogistics: fullMethodStatement?.siteLogistics || {},
-        conditionalFlags: fullMethodStatement?.conditionalFlags || {},
-        competencyRequirements: fullMethodStatement?.competencyRequirements || {},
-        workAtHeightEquipment: fullMethodStatement?.workAtHeightEquipment || [],
-        
-        // NEW: Enhanced fields from installation-method-agent
-        executiveSummary: fullMethodStatement?.executiveSummary || null,
-        materialsList: fullMethodStatement?.materialsList || [],
-        testingRequirements: fullMethodStatement?.testingRequirements || [],
-        regulatoryReferences: fullMethodStatement?.regulatoryReferences || [],
-        
-        projectMetadata: projectMetadata ? {
-          ...projectMetadata,
-          siteManagerName: projectMetadata.siteManagerName || '',
-          firstAiderName: projectMetadata.firstAiderName || '',
-          safetyOfficerName: projectMetadata.safetyOfficerName || ''
-        } : undefined
+        competencyRequirements: fullMethodStatement?.competencyRequirements || competencyRequirements || {},
+        siteLogistics: fullMethodStatement?.siteLogistics || siteLogistics || {},
+        conditionalFlags: fullMethodStatement?.conditionalFlags || conditionalFlags || {},
+        equipmentSchedule: fullMethodStatement?.equipmentSchedule || equipmentSchedule || [],
+        workAtHeightEquipment: fullMethodStatement?.workAtHeightEquipment || workAtHeightEquipment || []
       };
 
       const { data, error } = await supabase.functions.invoke('generate-method-statement-pdf', {
