@@ -125,7 +125,7 @@ export const DesignProcessingView = ({
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-3 sm:px-4 py-4 sm:py-6 pb-safe">
-      <Card className="border-elec-yellow/20 bg-elec-card max-w-2xl mx-auto w-full">
+      <Card className="border-elec-yellow/20 bg-elec-card max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto w-full">
         <CardContent className="p-4 sm:p-6">
           {/* Header Section */}
           <div className="flex items-center gap-3 mb-3">
