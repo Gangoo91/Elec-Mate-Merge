@@ -539,13 +539,17 @@ function ensurePDFFields(circuit: any, index?: number): any {
         'Compliant per BS 7671 Appendix 15.';
     }
     
-    // Override compliance summary for ring finals
+  // Override compliance summary for ring finals
     circuit.complianceSummary = 'Fully compliant (ring final)';
   } else {
     // Compliance summary with null safety
     const allCompliant = vd.compliant && (zs <= maxZs);
     circuit.complianceSummary = allCompliant ? 'Fully compliant' : 'Requires attention';
   }
+  
+  // Add PDF payload fields
+  circuit.complianceStatus = circuit.complianceSummary;
+  circuit.status = (circuit.complianceSummary === 'Fully compliant' || circuit.complianceSummary === 'Fully compliant (ring final)') ? 'complete' : 'incomplete';
   
   // Generate structuredOutput for modern mobile-first UI
   if (!circuit.structuredOutput) {
