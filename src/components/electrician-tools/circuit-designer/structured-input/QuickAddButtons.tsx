@@ -54,19 +54,19 @@ export const QuickAddButtons = ({ installationType, onAddCircuit }: QuickAddButt
   };
 
   return (
-    <Card className="p-4 bg-accent/30 border-dashed">
+    <Card className="p-3 sm:p-4 bg-accent/30 border-dashed">
       <div className="flex items-center gap-2 mb-3">
         <Plus className="h-4 w-4 text-primary" />
         <h3 className="font-semibold text-sm">Quick Add Common Circuits</h3>
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {presets.map(preset => (
           <Button
             key={preset.type}
             variant="outline"
-            size="sm"
+            size="default"
             onClick={() => handleQuickAdd(preset)}
-            className="gap-1.5"
+            className="gap-1.5 w-full justify-start"
           >
             <Plus className="h-3.5 w-3.5" />
             {preset.label}

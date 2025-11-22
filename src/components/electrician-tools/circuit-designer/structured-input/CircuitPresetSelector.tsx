@@ -34,10 +34,10 @@ export const CircuitPresetSelector = ({ installationType, onSelectPreset }: Circ
         </CollapsibleTrigger>
         
         <CollapsibleContent>
-          <div className="p-3 sm:p-4 pt-0 grid gap-3 sm:grid-cols-2">
+          <div className="p-2.5 sm:p-4 pt-0 grid gap-3 sm:grid-cols-2">
             {templates.map(template => (
-              <Card key={template.id} className="p-4 sm:p-5 hover:border-primary/50 transition-colors">
-                <div className="flex items-center justify-between gap-2 sm:gap-3 mb-2">
+              <Card key={template.id} className="p-3 sm:p-4 hover:border-primary/50 transition-colors">
+                <div className="flex items-center justify-between gap-1.5 sm:gap-2 mb-1.5">
                   <div className="flex-1 min-w-0 pr-1">
                     <h4 className="font-semibold text-sm sm:text-base text-foreground truncate">{template.name}</h4>
                     <p className="text-xs sm:text-sm text-muted-foreground mt-1 line-clamp-2">{template.description}</p>
@@ -46,13 +46,13 @@ export const CircuitPresetSelector = ({ installationType, onSelectPreset }: Circ
                     size="sm"
                     variant="secondary"
                     onClick={() => onSelectPreset(template)}
-                    className="gap-1 shrink-0 min-h-[44px] min-w-[44px] px-2.5 sm:px-3 flex items-center justify-center"
+                    className="gap-1 shrink-0 min-h-[40px] min-w-[40px] px-2.5 sm:px-3 flex items-center justify-center"
                   >
                     <Plus className="h-4 w-4 flex-shrink-0" />
                     <span className="hidden sm:inline">Add</span>
                   </Button>
                 </div>
-                <div className="flex flex-wrap gap-1 mt-3">
+                <div className="flex flex-wrap gap-1 mt-2">
                   {template.circuits.slice(0, 3).map((c, i) => (
                     <Badge key={i} variant="outline" className="text-xs">
                       {c.name}
