@@ -10,8 +10,10 @@ import { CircuitBuilderStep } from "./CircuitBuilderStep";
 import { InstallationDetailsStep } from "./InstallationDetailsStep";
 import { PreCalculationStep } from "./PreCalculationStep";
 import { ReviewStep } from "./ReviewStep";
-import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Sparkles, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { clearDesignCache } from "@/utils/clearDesignCache";
+import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 import { 
   calculateDesignCurrent, 
   suggestMCBRating, 
@@ -36,6 +38,8 @@ const STEPS = [
 
 export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredDesignWizardProps) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [showClearCacheDialog, setShowClearCacheDialog] = useState(false);
+  const [clearingCache, setClearingCache] = useState(false);
 
   // Project Info
   const [projectName, setProjectName] = useState('');
@@ -143,6 +147,29 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
     setCurrentStep(prev => Math.max(prev - 1, 0));
   };
 
+  const handleClearCache = async () => {
+    setClearingCache(true);
+    try {
+      const result = await clearDesignCache();
+      if (result.success) {
+        toast.success('Cache cleared successfully', {
+          description: `Cleared ${result.cleared} cache table${result.cleared !== 1 ? 's' : ''}`
+        });
+      } else {
+        toast.error('Failed to clear cache', {
+          description: result.error
+        });
+      }
+    } catch (error) {
+      toast.error('Cache clear failed', {
+        description: error instanceof Error ? error.message : 'Unknown error'
+      });
+    } finally {
+      setClearingCache(false);
+      setShowClearCacheDialog(false);
+    }
+  };
+
   const handleGenerate = async () => {
     if (!canProceed()) {
       toast.error('Please complete all required fields');
@@ -179,11 +206,23 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
       {/* Progress Header */}
       <Card className="p-2 sm:p-3 md:p-4 bg-gradient-to-br from-primary/5 to-accent/5">
         <div className="space-y-2 sm:space-y-3">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-2">
             <h3 className="text-xs sm:text-base md:text-lg font-semibold text-foreground">Design Your Installation</h3>
-            <Badge variant="secondary" className="text-[10px] sm:text-xs md:text-sm px-2 py-0.5">
-              {currentStep + 1} / {STEPS.length}
-            </Badge>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowClearCacheDialog(true)}
+                disabled={clearingCache}
+                className="gap-1.5 text-xs sm:text-sm touch-manipulation"
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">Clear Cache</span>
+              </Button>
+              <Badge variant="secondary" className="text-[10px] sm:text-xs md:text-sm px-2 py-0.5">
+                {currentStep + 1} / {STEPS.length}
+              </Badge>
+            </div>
           </div>
           
           <Progress value={progressPercentage} className="h-1.5 sm:h-2" />
@@ -370,6 +409,19 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
           </div>
         </Card>
       </div>
+
+      {/* Clear Cache Confirmation Dialog */}
+      <ConfirmationDialog
+        open={showClearCacheDialog}
+        onOpenChange={setShowClearCacheDialog}
+        title="Clear Design Cache?"
+        description="This will clear all cached circuit designs. Fresh designs will be generated with the latest AI models and regulations. Continue?"
+        confirmText="Clear Cache"
+        cancelText="Cancel"
+        onConfirm={handleClearCache}
+        variant="destructive"
+        loading={clearingCache}
+      />
     </div>
   );
 };
