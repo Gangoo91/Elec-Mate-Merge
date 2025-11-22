@@ -494,18 +494,18 @@ function ensurePDFFields(circuit: any, index?: number): any {
   // Add PDF-specific text fields with null safety
   circuit.rcdProtectedText = circuit.rcdProtected ? 'Yes' : 'No';
   circuit.nominalCurrentIn = (circuit.protectionDevice?.rating ?? 6) + 'A';
-  circuit.designCurrentIb = ((circuit.calculations?.Ib ?? 4.3) ?? 4.3).toFixed(1) + 'A';
-  circuit.cableCurrentIz = ((circuit.calculations?.Iz ?? 20) ?? 20).toFixed(1) + 'A';
+  circuit.designCurrentIb = Number(circuit.calculations?.Ib ?? 4.3).toFixed(1) + 'A';
+  circuit.cableCurrentIz = Number(circuit.calculations?.Iz ?? 20).toFixed(1) + 'A';
   
   // Voltage drop formatting with deep null safety
   const vd = circuit.calculations?.voltageDrop ?? { volts: 2.0, percent: 0.87, limit: 3, compliant: true };
-  circuit.voltageDropText = (vd.volts ?? 2.0).toFixed(2) + 'V (' + (vd.percent ?? 0.87).toFixed(2) + '%)';
+  circuit.voltageDropText = Number(vd.volts ?? 2.0).toFixed(2) + 'V (' + Number(vd.percent ?? 0.87).toFixed(2) + '%)';
   circuit.voltageDropCompliant = vd.compliant ? 'Compliant' : 'Non-compliant';
   
   // Earth fault loop impedance with deep null safety
-  const zs = circuit.calculations?.zs ?? 1.5;
-  const maxZs = circuit.calculations?.maxZs ?? 7.28;
-  circuit.earthFaultLoopText = (zs ?? 1.5).toFixed(2) + 'Ω (max ' + (maxZs ?? 7.28).toFixed(2) + 'Ω)';
+  const zs = Number(circuit.calculations?.zs ?? 1.5);
+  const maxZs = Number(circuit.calculations?.maxZs ?? 7.28);
+  circuit.earthFaultLoopText = zs.toFixed(2) + 'Ω (max ' + maxZs.toFixed(2) + 'Ω)';
   circuit.zsCompliant = zs <= maxZs ? 'Compliant' : 'Non-compliant';
   
   // Protection device summary with null safety
@@ -522,7 +522,7 @@ function ensurePDFFields(circuit: any, index?: number): any {
   }
   
   // Cable summary with guaranteed values
-  circuit.cableSummary = (circuit.cableSize ?? 2.5) + 'mm² / ' + (circuit.cpcSize ?? 1.5) + 'mm² CPC';
+  circuit.cableSummary = Number(circuit.cableSize ?? 2.5) + 'mm² / ' + Number(circuit.cpcSize ?? 1.5) + 'mm² CPC';
   
   // Add ring final circuit explanation if applicable
   if (isRingFinalCircuit(circuit)) {
@@ -535,7 +535,7 @@ function ensurePDFFields(circuit: any, index?: number): any {
     if (!hasRingExplanation && circuit.justifications) {
       circuit.justifications.ringTopology = 
         'Ring final circuit: Load distributed across two parallel conductor paths. ' +
-        `Each leg carries ${((circuit.calculations?.Ib || 32) / 2).toFixed(1)}A (max ${circuit.calculations?.Iz || 27}A per leg). ` +
+        `Each leg carries ${(Number(circuit.calculations?.Ib ?? 32) / 2).toFixed(1)}A (max ${Number(circuit.calculations?.Iz ?? 27)}A per leg). ` +
         'Compliant per BS 7671 Appendix 15.';
     }
     
