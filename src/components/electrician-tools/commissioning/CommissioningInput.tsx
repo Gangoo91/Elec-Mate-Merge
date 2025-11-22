@@ -11,7 +11,8 @@ import {
   Lightbulb, 
   AlertTriangle, 
   FileText, 
-  Camera
+  Camera,
+  Loader2
 } from "lucide-react";
 import { toast } from "sonner";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
@@ -19,7 +20,7 @@ import PhotoUploadButton from "./PhotoUploadButton";
 import { FormSection } from "./FormSection";
 import { InlineInstallationTypeSelector } from "./InlineInstallationTypeSelector";
 import { CollapsibleFormSection } from "./CollapsibleFormSection";
-import { StickyGenerateButton } from "./StickyGenerateButton";
+
 
 interface ExampleScenario {
   title: string;
@@ -137,7 +138,7 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
   };
 
   return (
-    <form className="space-y-0 pb-20 sm:pb-6" onSubmit={handleSubmit}>
+    <form className="space-y-0" onSubmit={handleSubmit}>
       {/* Agent Inbox */}
       <AgentInbox currentAgent="commissioning" onTaskAccept={handleTaskAccept} />
 
@@ -279,27 +280,27 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
         </div>
       </CollapsibleFormSection>
 
-      {/* Generate Button - Sticky on mobile */}
-      <StickyGenerateButton>
+      {/* Generate Button */}
+      <FormSection>
         <Button 
           type="submit"
           size="lg"
           disabled={!prompt.trim() || isProcessing}
-          className="w-full bg-gradient-to-r from-purple-400 to-purple-500 hover:from-purple-500 hover:to-purple-600 text-white h-12 sm:h-14 touch-manipulation text-base sm:text-lg font-semibold shadow-lg active:scale-95 transition-transform"
+          className="w-full bg-gradient-to-r from-purple-400 to-purple-500 hover:from-purple-500 hover:to-purple-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all"
         >
           {isProcessing ? (
             <>
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
-              Generating...
+              <Loader2 className="h-5 w-5 animate-spin" />
+              Generating Testing Procedure...
             </>
           ) : (
             <>
-              <CheckCircle2 className="h-5 w-5 mr-2" />
+              <CheckCircle2 className="h-5 w-5" />
               Generate Testing Procedure
             </>
           )}
         </Button>
-      </StickyGenerateButton>
+      </FormSection>
     </form>
   );
 };
