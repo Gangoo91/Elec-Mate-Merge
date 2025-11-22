@@ -136,34 +136,34 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
           <CheckCircle2 className="h-4 w-4 text-green-400" />
           What You'll Get
         </h3>
-      <div className="grid gap-2.5 text-sm">
+      <div className="grid gap-2.5 text-sm text-left">
         <div className="flex items-start gap-2.5">
           <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-          <span className="text-foreground">BS 7671 compliant cable sizing for each circuit</span>
+          <span className="text-foreground text-left">BS 7671 compliant cable sizing for each circuit</span>
         </div>
         <div className="flex items-start gap-2.5">
           <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-          <span className="text-foreground">Protection device selection (MCB/RCBO ratings and curves)</span>
+          <span className="text-foreground text-left">Protection device selection (MCB/RCBO ratings and curves)</span>
         </div>
         <div className="flex items-start gap-2.5">
           <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-          <span className="text-foreground">Voltage drop calculations with compliance verification</span>
+          <span className="text-foreground text-left">Voltage drop calculations with compliance verification</span>
         </div>
         <div className="flex items-start gap-2.5">
           <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-          <span className="text-foreground">Earth fault loop impedance (Zs) calculations</span>
+          <span className="text-foreground text-left">Earth fault loop impedance (Zs) calculations</span>
         </div>
         <div className="flex items-start gap-2.5">
           <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-          <span className="text-foreground">Detailed justifications referencing BS 7671 regulations</span>
+          <span className="text-foreground text-left">Detailed justifications referencing BS 7671 regulations</span>
         </div>
         <div className="flex items-start gap-2.5">
           <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-          <span className="text-foreground">Materials list with specifications</span>
+          <span className="text-foreground text-left">Materials list with specifications</span>
         </div>
         <div className="flex items-start gap-2.5">
           <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-          <span className="text-foreground">Installation guidance and practical tips</span>
+          <span className="text-foreground text-left">Installation guidance and practical tips</span>
         </div>
       </div>
       </Card>
