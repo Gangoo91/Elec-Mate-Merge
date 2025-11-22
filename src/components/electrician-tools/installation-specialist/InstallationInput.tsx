@@ -9,6 +9,7 @@ import { InstallationProjectDetails as ProjectDetailsType } from "@/types/instal
 import { InstallationTemplateSelector } from "./InstallationTemplateSelector";
 import { InstallationProjectDetails } from "./InstallationProjectDetails";
 import { InstallationTemplate } from "@/lib/installation-templates";
+import { StickyBottomBar } from "./StickyBottomBar";
 import {
   Collapsible,
   CollapsibleContent,
@@ -51,26 +52,26 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
   const isValid = description.trim().length > 0;
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-3 sm:space-y-4 lg:space-y-6 animate-fade-in">
       {/* Hero Prompt Card */}
-      <Card className="p-6 sm:p-8 bg-gradient-to-br from-blue-500/5 via-background to-background border-blue-500/30 shadow-lg">
-        <div className="space-y-4">
-          <div className="flex items-start gap-3">
-            <div className="p-3 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 shadow-lg">
-              <Wrench className="h-6 w-6 text-white" />
+      <Card className="p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-blue-500/5 via-background to-background border-blue-500/30 shadow-lg">
+        <div className="space-y-3 sm:space-y-4">
+          <div className="flex items-start gap-2 sm:gap-3">
+            <div className="p-2 sm:p-3 rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 shadow-lg flex-shrink-0">
+              <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
             </div>
-            <div className="flex-1">
-              <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
+            <div className="flex-1 min-w-0">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-1 sm:mb-2">
                 Describe Your Installation Work
               </h2>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-xs sm:text-sm text-muted-foreground">
                 Generate BS 7671-compliant method statements with step-by-step procedures, safety controls, and testing requirements
               </p>
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="installation-description" className="text-base font-semibold">
+            <Label htmlFor="installation-description" className="text-sm sm:text-base font-semibold">
               What needs to be installed?
             </Label>
             <Textarea
@@ -78,7 +79,10 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="e.g., Install a new consumer unit with 10-way dual RCD protection, replace main earthing and bonding, upgrade to BS 7671:2018+A3:2024 standards..."
-              className="min-h-[120px] text-base resize-none focus:ring-2 focus:ring-blue-400"
+              className="min-h-[100px] sm:min-h-[120px] text-base resize-none focus:ring-2 focus:ring-blue-400"
+              rows={4}
+              autoComplete="off"
+              spellCheck={true}
             />
             <p className="text-xs text-muted-foreground">
               Be specific about the work scope, location, and any special requirements
@@ -97,15 +101,15 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
       {/* Project Details (Collapsible) */}
       <Collapsible open={showProjectDetails} onOpenChange={setShowProjectDetails}>
         <Card className="overflow-hidden border-blue-500/20">
-          <CollapsibleTrigger className="w-full p-4 sm:p-6 flex items-center justify-between hover:bg-blue-500/5 transition-colors touch-manipulation">
+          <CollapsibleTrigger className="w-full p-3 sm:p-4 md:p-6 min-h-[52px] flex items-center justify-between hover:bg-blue-500/5 transition-colors touch-manipulation active:scale-[0.99]">
             <div className="flex items-center gap-2">
-              <FileText className="h-5 w-5 text-blue-400" />
-              <h3 className="text-lg font-semibold">Project Details (Optional)</h3>
+              <FileText className="h-5 w-5 text-blue-400 flex-shrink-0" />
+              <h3 className="text-base sm:text-lg font-semibold">Project Details (Optional)</h3>
             </div>
-            <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform ${showProjectDetails ? 'rotate-180' : ''}`} />
+            <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform duration-200 flex-shrink-0 ${showProjectDetails ? 'rotate-180' : ''}`} />
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className="px-4 pb-4 sm:px-6 sm:pb-6">
+            <div className="px-3 pb-3 sm:px-4 sm:pb-4 md:px-6 md:pb-6">
               <InstallationProjectDetails
                 projectDetails={projectDetails}
                 onChange={setProjectDetails}
@@ -116,13 +120,13 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
       </Collapsible>
 
 
-      {/* Generate Button */}
-      <div className="mt-6">
+      {/* Generate Button - Sticky on mobile */}
+      <StickyBottomBar>
         <Button
           onClick={handleSubmit}
           disabled={!isValid || isProcessing}
           size="lg"
-          className="w-full h-12 sm:h-14 bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white text-base sm:text-lg font-bold shadow-xl hover:shadow-2xl transition-all touch-manipulation disabled:opacity-50"
+          className="w-full h-12 sm:h-14 bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white text-base sm:text-lg font-bold shadow-xl hover:shadow-2xl transition-all touch-manipulation active:scale-95 disabled:opacity-50"
         >
           {isProcessing ? (
             <>
@@ -136,7 +140,7 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
             </>
           )}
         </Button>
-      </div>
+      </StickyBottomBar>
     </div>
   );
 };
