@@ -36,9 +36,9 @@ export const CircuitPresetSelector = ({ installationType, onSelectPreset }: Circ
         <CollapsibleContent>
           <div className="p-3 sm:p-4 pt-0 grid gap-3 sm:grid-cols-2">
             {templates.map(template => (
-              <Card key={template.id} className="p-3.5 sm:p-4 hover:border-primary/50 transition-colors">
-                <div className="flex items-start justify-between gap-1.5 sm:gap-3 mb-2">
-                  <div className="flex-1 min-w-0">
+              <Card key={template.id} className="p-4 sm:p-5 hover:border-primary/50 transition-colors">
+                <div className="flex items-center justify-between gap-2 sm:gap-3 mb-2">
+                  <div className="flex-1 min-w-0 pr-1">
                     <h4 className="font-semibold text-sm sm:text-base text-foreground truncate">{template.name}</h4>
                     <p className="text-xs sm:text-sm text-muted-foreground mt-1 line-clamp-2">{template.description}</p>
                   </div>
