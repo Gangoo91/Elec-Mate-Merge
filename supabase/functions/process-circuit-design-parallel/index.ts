@@ -1,4 +1,5 @@
 /**
+ * VERSION: v2.1.0 - Enhanced Designer Context (2025-11-22)
  * Parallel Circuit Design Orchestrator
  * Runs designer-agent-v3 and installation-method-agent in parallel
  * Based on proven AI RAMS dual-agent pattern
