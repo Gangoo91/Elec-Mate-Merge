@@ -75,7 +75,7 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
           <Badge variant="outline" className="text-xs">{inputs.circuits.length} Total</Badge>
         </div>
         
-      <div className="space-y-0 divide-y divide-border/20">
+      <div className="space-y-0 divide-y divide-border/40">
         {inputs.circuits.map((circuit, index) => (
           <div key={circuit.id} className="py-3 first:pt-0">
             <div className="flex items-center gap-3 mb-2">
