@@ -51,10 +51,6 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
       {/* Installation Description - Hero Section */}
       <FormSection>
         <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <Wrench className="h-5 w-5 text-blue-400" />
-            <h2 className="text-lg sm:text-xl font-bold">Describe Your Installation Work</h2>
-          </div>
           <div className="space-y-2">
             <Label htmlFor="installation-description">What needs to be installed?</Label>
             <Textarea
