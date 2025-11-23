@@ -225,6 +225,7 @@ serve(async (req) => {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     });
+  }
   
   } catch (fatalError) {
     // CRITICAL: Catch import/startup errors BEFORE logger exists
