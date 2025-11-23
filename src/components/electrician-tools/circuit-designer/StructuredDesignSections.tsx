@@ -48,7 +48,7 @@ export const StructuredDesignSections = ({ sections }: StructuredDesignSectionsP
               {title}
             </h4>
             <div className="prose prose-invert prose-sm max-w-none">
-              <p className="text-sm sm:text-base text-white/90 whitespace-pre-wrap leading-relaxed">
+              <p className="text-sm sm:text-base text-white whitespace-pre-wrap leading-relaxed text-left">
                 {sections[key]}
               </p>
             </div>
