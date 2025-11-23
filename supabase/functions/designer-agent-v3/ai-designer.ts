@@ -109,6 +109,14 @@ export class AIDesigner {
       parts.push('- Consider fire alarm systems, emergency lighting, data circuits');
       parts.push('- Discrimination between protective devices critical');
       parts.push('');
+      parts.push('=== COMMERCIAL CABLE TYPE RULES (MANDATORY) ===');
+      parts.push('❌ NEVER use Twin & Earth (T&E) in commercial installations');
+      parts.push('✅ ALWAYS use one of these approved cable types:');
+      parts.push('  • SWA (Steel Wire Armoured) - for sub-mains, outdoor runs, industrial areas');
+      parts.push('  • LSZH singles in conduit/trunking - for internal distribution');
+      parts.push('  • FP200/FP400 - REQUIRED for fire alarm and emergency lighting circuits');
+      parts.push('  • NYY or similar LSZH multicore - for larger power circuits');
+      parts.push('');
     } else if (type === 'industrial') {
       parts.push('=== INDUSTRIAL INSTALLATION CONTEXT ===');
       parts.push('- Predominantly three-phase 400V, sometimes higher voltages');
@@ -116,6 +124,14 @@ export class AIDesigner {
       parts.push('- SWA cable standard for most circuits, often larger sizes (>16mm²)');
       parts.push('- Type D MCBs common for motors, contactors, and DOL starters');
       parts.push('- Consider fault levels, discrimination, and starting currents');
+      parts.push('');
+      parts.push('=== INDUSTRIAL CABLE TYPE RULES (MANDATORY) ===');
+      parts.push('❌ NEVER use Twin & Earth (T&E) in industrial installations');
+      parts.push('✅ ALWAYS use one of these approved cable types:');
+      parts.push('  • SWA (Steel Wire Armoured) - STANDARD for all circuits');
+      parts.push('  • LSZH singles in heavy-duty conduit/trunking - for fixed installations');
+      parts.push('  • FP200/FP400 - REQUIRED for fire alarm and emergency systems');
+      parts.push('  • Flexible cable with appropriate armouring - for machinery connections');
       parts.push('');
     }
     parts.push('');

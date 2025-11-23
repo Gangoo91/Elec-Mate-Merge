@@ -123,32 +123,61 @@ export class DesignPipeline {
     this.logger.info('RAG search parameters', {
       keywords: Array.from(keywords),
       loadTypes: Array.from(loadTypes),
-      cableSizes: Array.from(cableSizes)
+      cableSizes: Array.from(cableSizes),
+      keywordCount: keywords.size,
+      sampleKeywords: Array.from(keywords).slice(0, 10)
     });
     
     // PARALLEL: Search design and regulations intelligence tables (installation guidance handled by separate agent)
-    const [designIntelligence, regulationsIntelligence] = await Promise.all([
-      searchDesignIntelligence(supabase, {
-        keywords: Array.from(keywords),
-        loadTypes: Array.from(loadTypes),
-        cableSizes: Array.from(cableSizes),
-        categories: ['cable_sizing', 'voltage_drop', 'protection'],
-        limit: 20  // Increased from 15 since we removed practical work
-      }),
-      searchRegulationsIntelligence(supabase, {
-        keywords: Array.from(keywords),
-        appliesTo: Array.from(loadTypes),
-        limit: 15  // Increased from 10 since we removed practical work
-      })
-    ]);
+    let designIntelligence: any[] = [];
+    let regulationsIntelligence: any[] = [];
+    
+    try {
+      [designIntelligence, regulationsIntelligence] = await Promise.all([
+        searchDesignIntelligence(supabase, {
+          keywords: Array.from(keywords),
+          loadTypes: Array.from(loadTypes),
+          cableSizes: Array.from(cableSizes),
+          categories: ['cable_sizing', 'voltage_drop', 'protection'],
+          limit: 20  // Increased from 15 since we removed practical work
+        }),
+        searchRegulationsIntelligence(supabase, {
+          keywords: Array.from(keywords),
+          appliesTo: Array.from(loadTypes),
+          limit: 15  // Increased from 10 since we removed practical work
+        })
+      ]);
+    } catch (ragError) {
+      this.logger.error('RAG search failed', {
+        error: ragError instanceof Error ? ragError.message : String(ragError),
+        keywords: Array.from(keywords).slice(0, 5)
+      });
+      // Continue with empty results rather than failing
+      designIntelligence = [];
+      regulationsIntelligence = [];
+    }
     
     const ragTime = Date.now() - ragStart;
     this.logger.info('Fast RAG complete (2-layer design focus)', {
       designIntelligence: designIntelligence.length,
       regulationsIntelligence: regulationsIntelligence.length,
       searchTime: ragTime,
-      note: 'Installation guidance handled by Design Installation Agent'
+      note: 'Installation guidance handled by Design Installation Agent',
+      sampleDesignKeywords: designIntelligence.slice(0, 3).map((d: any) => d.keywords?.slice(0, 3)).flat(),
+      sampleRegulations: regulationsIntelligence.slice(0, 3).map((r: any) => r.regulation_number)
     });
+    
+    // CRITICAL CHECK: Verify RAG returned results
+    if (designIntelligence.length === 0 && regulationsIntelligence.length === 0) {
+      this.logger.warn('RAG returned ZERO results - AI will use general knowledge only', {
+        keywords: Array.from(keywords).slice(0, 10),
+        possibleCauses: [
+          'Keywords do not match database entries',
+          'Database table is empty',
+          'RAG search query syntax issue'
+        ]
+      });
+    }
     
     // Build RAG context for AI (pure design focus - no practical work)
     const ragContext = {
@@ -162,6 +191,13 @@ export class DesignPipeline {
       totalResults: designIntelligence.length + regulationsIntelligence.length,
       searchTime: ragTime
     };
+    
+    this.logger.info('RAG context built', {
+      totalResults: ragContext.totalResults,
+      hasRegulations: ragContext.regulations.length > 0,
+      hasDesignKnowledge: ragContext.designKnowledge.length > 0,
+      isEmpty: ragContext.totalResults === 0
+    });
 
     // ========================================
     // PHASE 4: AI Design Generation (with batch processing)
