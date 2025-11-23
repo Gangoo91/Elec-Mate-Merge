@@ -121,7 +121,7 @@ export interface DesignKnowledgeResult {
 export interface RAGContext {
   regulations: RegulationResult[];
   designKnowledge: DesignKnowledgeResult[];
-  practicalGuides: PracticalGuideResult[];
+  // practicalGuides removed - handled by Design Installation Agent
   totalResults: number;
   searchTime: number;
 }
@@ -243,8 +243,7 @@ export interface DesignedCircuit {
   protectionDevice: ProtectionDevice;
   calculations: CircuitCalculations;
   justifications: CircuitJustifications;
-  installationNotes?: string; // Replaces installationGuidance object
-  installationGuidance?: InstallationGuidance; // LEGACY - will be removed
+  // installationNotes and installationGuidance removed - handled by Design Installation Agent
   structuredOutput?: StructuredOutput; // PHASE 5
   expectedTests?: ExpectedTestValues; // Expected test values for EIC/testing
 }
