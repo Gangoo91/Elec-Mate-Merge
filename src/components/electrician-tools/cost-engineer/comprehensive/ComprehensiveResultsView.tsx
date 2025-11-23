@@ -70,7 +70,7 @@ const ComprehensiveResultsView = ({
     : 75;
 
   return (
-    <div className="space-y-4 pb-6 sm:space-y-6 sm:pb-8">
+    <div className="space-y-6 pb-6 sm:space-y-4 sm:pb-8">
       {/* 0. Original User Request */}
       {originalQuery && (
         <OriginalRequestCard 
@@ -116,6 +116,8 @@ const ComprehensiveResultsView = ({
         explanation={structuredData?.recommendedQuote?.reasoning}
         breakEven={breakEven}
         totalLabourHours={totalLabourHours}
+        projectType={projectContext?.projectType}
+        jobDescription={structuredData?.response}
       />
 
       {/* 7. Cost Breakdown */}

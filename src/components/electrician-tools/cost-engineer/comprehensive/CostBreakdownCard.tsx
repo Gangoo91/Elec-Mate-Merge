@@ -65,8 +65,8 @@ const CostBreakdownCard = ({
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <CardTitle className="text-xl sm:text-lg font-bold text-white">Cost Breakdown</CardTitle>
-        <p className="text-sm text-white/80 mt-1">Tap any section to see detailed justification</p>
+        <CardTitle className="text-2xl sm:text-xl font-bold text-white">Cost Breakdown</CardTitle>
+        <p className="text-base sm:text-sm text-white mt-1">Tap any section to see detailed justification</p>
       </CardHeader>
       <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6">
         <div className="space-y-3">
@@ -77,7 +77,7 @@ const CostBreakdownCard = ({
                 <Package className="h-4 w-4 text-blue-500" />
                 <div>
                   <div className="font-medium text-white">Materials</div>
-                  <div className="text-sm text-white/80">
+                  <div className="text-base sm:text-sm text-white">
                     Net: £{materialsNet.toFixed(2)} + {markupPercentage}% markup
                   </div>
                 </div>
@@ -88,8 +88,8 @@ const CostBreakdownCard = ({
             </div>
             
             <Collapsible open={expandedSections.has('materials')} onOpenChange={() => toggleSection('materials')}>
-              <CollapsibleTrigger className="w-full px-3 pb-2">
-                <div className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors">
+              <CollapsibleTrigger className="w-full px-3 pb-2 touch-manipulation min-h-11">
+                <div className="flex items-center gap-2 text-base sm:text-sm text-primary hover:text-primary/80 transition-colors">
                   <Info className="h-3 w-3" />
                   <span>Why markup is essential</span>
                   <ChevronDown className={`h-3 w-3 transition-transform ${expandedSections.has('materials') ? 'rotate-180' : ''}`} />
@@ -152,7 +152,7 @@ const CostBreakdownCard = ({
                 <Wrench className="h-4 w-4 text-orange-500" />
                 <div>
                   <div className="font-medium text-white">Labour</div>
-                  <div className="text-sm text-white/80">
+                  <div className="text-base sm:text-sm text-white">
                     {labourHours.toFixed(1)} hours @ £{calculatedLabourRate.toFixed(2)}/hr
                   </div>
                 </div>
@@ -163,8 +163,8 @@ const CostBreakdownCard = ({
             </div>
             
             <Collapsible open={expandedSections.has('labour')} onOpenChange={() => toggleSection('labour')}>
-              <CollapsibleTrigger className="w-full px-3 pb-2">
-                <div className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors">
+              <CollapsibleTrigger className="w-full px-3 pb-2 touch-manipulation min-h-11">
+                <div className="flex items-center gap-2 text-base sm:text-sm text-primary hover:text-primary/80 transition-colors">
                   <Info className="h-3 w-3" />
                   <span>Why this rate is justified</span>
                   <ChevronDown className={`h-3 w-3 transition-transform ${expandedSections.has('labour') ? 'rotate-180' : ''}`} />
@@ -244,23 +244,23 @@ const CostBreakdownCard = ({
           {overheadTotal > 0 && (
             <div className="rounded-lg bg-background/30 border border-border/30">
               <div className="flex items-center justify-between p-3">
-                <div className="flex items-center gap-2">
-                  <Building className="h-4 w-4 text-purple-500" />
-                  <div>
-                    <div className="font-medium text-white">Business Overheads</div>
-                    <div className="text-sm text-white/80">
-                      {calculatedJobDuration.toFixed(1)} days @ £{(overheadTotal / calculatedJobDuration).toFixed(2)}/day
+                  <div className="flex items-center gap-2">
+                    <Building className="h-4 w-4 text-purple-500" />
+                    <div>
+                      <div className="font-medium text-white">Business Overheads</div>
+                      <div className="text-base sm:text-sm text-white">
+                        {calculatedJobDuration.toFixed(1)} days @ £{(overheadTotal / calculatedJobDuration).toFixed(2)}/day
+                      </div>
                     </div>
                   </div>
-                </div>
                 <div className="text-right">
                   <div className="font-bold text-white">£{overheadTotal.toFixed(2)}</div>
                 </div>
               </div>
               
               <Collapsible open={expandedSections.has('overheads')} onOpenChange={() => toggleSection('overheads')}>
-                <CollapsibleTrigger className="w-full px-3 pb-2">
-                  <div className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors">
+                <CollapsibleTrigger className="w-full px-3 pb-2 touch-manipulation min-h-11">
+                  <div className="flex items-center gap-2 text-base sm:text-sm text-primary hover:text-primary/80 transition-colors">
                     <Info className="h-3 w-3" />
                     <span>What overheads cover</span>
                     <ChevronDown className={`h-3 w-3 transition-transform ${expandedSections.has('overheads') ? 'rotate-180' : ''}`} />

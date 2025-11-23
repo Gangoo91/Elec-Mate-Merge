@@ -35,25 +35,25 @@ const QuickMetricsCard = ({
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl bg-gradient-to-br from-elec-card to-elec-dark/50">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5 bg-gradient-to-r from-blue-500/10 to-transparent border-b border-blue-500/20">
-        <CardTitle className="text-xl sm:text-2xl font-bold text-white">
+        <CardTitle className="text-2xl sm:text-xl font-bold text-white">
           📊 Job Snapshot
         </CardTitle>
       </CardHeader>
       
       <CardContent className="px-4 py-5 sm:px-6 sm:py-6">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-3">
           {/* Complexity */}
           {complexity && (
             <div className="p-4 rounded-lg bg-background/30 border border-border/30 text-center">
               <div className="flex items-center justify-center gap-2 mb-3">
-                <TrendingUp className="h-5 w-5 text-white/70" />
-                <span className="text-sm text-white/90 font-semibold">Complexity</span>
+                <TrendingUp className="h-5 w-5 text-white/90" />
+                <span className="text-base sm:text-sm text-white font-semibold">Complexity</span>
               </div>
               <div className="flex flex-col items-center gap-2">
-                <span className={`text-2xl font-bold px-3 py-1 rounded-lg border-2 ${getComplexityColor(complexity.rating)}`}>
+                <span className={`text-3xl sm:text-2xl font-bold px-3 py-1 rounded-lg border-2 ${getComplexityColor(complexity.rating)}`}>
                   {complexity.rating}/5
                 </span>
-                <span className="text-base font-medium text-white mt-1">{complexity.label}</span>
+                <span className="text-lg sm:text-base font-medium text-white mt-1">{complexity.label}</span>
               </div>
             </div>
           )}
@@ -62,14 +62,14 @@ const QuickMetricsCard = ({
           {confidence && (
             <div className="p-4 rounded-lg bg-background/30 border border-border/30 text-center">
               <div className="flex items-center justify-center gap-2 mb-3">
-                <CheckCircle2 className="h-5 w-5 text-white/70" />
-                <span className="text-sm text-white/90 font-semibold">Confidence</span>
+                <CheckCircle2 className="h-5 w-5 text-white/90" />
+                <span className="text-base sm:text-sm text-white font-semibold">Confidence</span>
               </div>
               <div className="flex flex-col items-center gap-2">
-                <span className={`text-2xl font-bold ${getConfidenceColor(avgConfidence)}`}>
+                <span className={`text-3xl sm:text-2xl font-bold ${getConfidenceColor(avgConfidence)}`}>
                   {avgConfidence}%
                 </span>
-                <span className="text-base text-white/90 mt-1">Accuracy</span>
+                <span className="text-lg sm:text-base text-white mt-1">Accuracy</span>
               </div>
             </div>
           )}
@@ -78,14 +78,14 @@ const QuickMetricsCard = ({
           {riskAssessment && (
             <div className="p-4 rounded-lg bg-background/30 border border-border/30 text-center">
               <div className="flex items-center justify-center gap-2 mb-3">
-                <AlertTriangle className="h-5 w-5 text-white/70" />
-                <span className="text-sm text-white/90 font-semibold">Risk Level</span>
+                <AlertTriangle className="h-5 w-5 text-white/90" />
+                <span className="text-base sm:text-sm text-white font-semibold">Risk Level</span>
               </div>
               <div className="flex flex-col items-center gap-2">
-                <span className="text-3xl">
+                <span className="text-4xl sm:text-3xl">
                   {highRisks > 0 ? '🔴' : '🟢'}
                 </span>
-                <span className="text-base font-medium text-white mt-1">
+                <span className="text-lg sm:text-base font-medium text-white mt-1">
                   {highRisks > 0 ? `${highRisks} High Risk${highRisks > 1 ? 's' : ''}` : 'Low Risk'}
                 </span>
               </div>

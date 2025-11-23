@@ -30,49 +30,54 @@ const RiskAssessmentTable = ({ risks }: RiskAssessmentTableProps) => {
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
+        <CardTitle className="text-2xl sm:text-xl font-bold text-white flex items-center gap-2">
           <AlertTriangle className="h-5 w-5 text-elec-yellow" />
           Risk Assessment
         </CardTitle>
       </CardHeader>
       <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6">
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-12"></TableHead>
-                <TableHead>Risk</TableHead>
-                <TableHead>Category</TableHead>
-                <TableHead>Mitigation</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {risks.map((risk, idx) => (
-                <TableRow key={idx}>
-                  <TableCell className="text-center text-xl">
-                    {getRiskDot(risk.severity)}
-                  </TableCell>
-                  <TableCell className="font-medium text-white">
-                    <span className="text-base sm:text-sm">{risk.risk}</span>
-                    <div className="text-sm text-white/80 mt-1">
-                      {risk.likelihood} likelihood
-                      {risk.contingency && risk.contingency > 0 && (
-                        <span> • +£{risk.contingency} if occurs</span>
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <span className={`px-2 py-1 rounded text-sm sm:text-xs ${getCategoryBadge(risk.category)}`}>
-                      {risk.category}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-base sm:text-sm text-white/80">
-                    {risk.mitigation}
-                  </TableCell>
+        <div className="overflow-x-auto -mx-4 sm:mx-0">
+          <div className="min-w-[600px] px-4 sm:px-0">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-12 text-white font-semibold text-base sm:text-sm"></TableHead>
+                  <TableHead className="text-white font-semibold text-base sm:text-sm">Risk</TableHead>
+                  <TableHead className="text-white font-semibold text-base sm:text-sm">Category</TableHead>
+                  <TableHead className="text-white font-semibold text-base sm:text-sm">Mitigation</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {risks.map((risk, idx) => (
+                  <TableRow key={idx}>
+                    <TableCell className="text-center text-xl">
+                      {getRiskDot(risk.severity)}
+                    </TableCell>
+                    <TableCell className="font-medium text-white">
+                      <span className="text-base sm:text-sm">{risk.risk}</span>
+                      <div className="text-sm text-white mt-1">
+                        {risk.likelihood} likelihood
+                        {risk.contingency && risk.contingency > 0 && (
+                          <span> • +£{risk.contingency} if occurs</span>
+                        )}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <span className={`px-2 py-1 rounded text-sm sm:text-xs ${getCategoryBadge(risk.category)}`}>
+                        {risk.category}
+                      </span>
+                    </TableCell>
+                    <TableCell className="text-base sm:text-sm text-white">
+                      {risk.mitigation}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+        <div className="text-xs text-center text-white/60 mt-2 sm:hidden">
+          ← Swipe to see more →
         </div>
       </CardContent>
     </Card>

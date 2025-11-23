@@ -8,6 +8,8 @@ interface PricingOptionsTiersProps {
   explanation?: string;
   breakEven: number;
   totalLabourHours: number;
+  projectType?: string;
+  jobDescription?: string;
 }
 
 const PricingOptionsTiers = ({
@@ -15,7 +17,9 @@ const PricingOptionsTiers = ({
   selectedTier,
   explanation,
   breakEven,
-  totalLabourHours
+  totalLabourHours,
+  projectType,
+  jobDescription
 }: PricingOptionsTiersProps) => {
   
   const sparsePrice = profitability?.quoteTiers?.minimum?.price || breakEven * 1.2;
@@ -34,6 +38,110 @@ const PricingOptionsTiers = ({
     };
   };
 
+  // Intelligent benchmark detection
+  const getBenchmark = (projectType?: string, jobDescription?: string, normalPrice?: number) => {
+    const desc = jobDescription?.toLowerCase() || '';
+    
+    // Domestic benchmarks
+    if (projectType === 'domestic' || desc.includes('house') || desc.includes('flat') || desc.includes('home')) {
+      if (desc.includes('rewire') || desc.includes('full rewire')) {
+        return {
+          name: '3-bed house full rewire',
+          range: '£4,000-6,500',
+          min: 4000,
+          max: 6500
+        };
+      }
+      if (desc.includes('consumer unit') || desc.includes('fuse board') || desc.includes('cu replacement')) {
+        return {
+          name: 'Consumer unit replacement',
+          range: '£500-1,200',
+          min: 500,
+          max: 1200
+        };
+      }
+      if (desc.includes('socket') || desc.includes('extension')) {
+        return {
+          name: 'Socket circuits & extensions',
+          range: '£200-800',
+          min: 200,
+          max: 800
+        };
+      }
+      // Default domestic
+      return {
+        name: 'Typical domestic work',
+        range: '£500-3,000',
+        min: 500,
+        max: 3000
+      };
+    }
+    
+    // Commercial benchmarks
+    if (projectType === 'commercial' || desc.includes('shop') || desc.includes('office') || desc.includes('restaurant') || desc.includes('kitchen') || desc.includes('commercial')) {
+      if (desc.includes('restaurant') || desc.includes('kitchen') || desc.includes('catering')) {
+        return {
+          name: 'Commercial kitchen/restaurant',
+          range: '£8,000-20,000',
+          min: 8000,
+          max: 20000
+        };
+      }
+      if (desc.includes('shop') || desc.includes('retail')) {
+        return {
+          name: 'Small shop fit-out',
+          range: '£3,000-8,000',
+          min: 3000,
+          max: 8000
+        };
+      }
+      if (desc.includes('office')) {
+        return {
+          name: 'Office electrical refit',
+          range: '£5,000-15,000',
+          min: 5000,
+          max: 15000
+        };
+      }
+      // Default commercial
+      return {
+        name: 'Commercial installation',
+        range: '£5,000-15,000',
+        min: 5000,
+        max: 15000
+      };
+    }
+    
+    // Industrial benchmarks
+    if (projectType === 'industrial' || desc.includes('factory') || desc.includes('warehouse') || desc.includes('3-phase') || desc.includes('industrial')) {
+      return {
+        name: 'Industrial installation',
+        range: '£10,000-50,000',
+        min: 10000,
+        max: 50000
+      };
+    }
+    
+    // Default fallback based on price
+    if (normalPrice && normalPrice < 2000) {
+      return {
+        name: 'Small electrical job',
+        range: '£200-2,000',
+        min: 200,
+        max: 2000
+      };
+    }
+    
+    return {
+      name: 'General electrical work',
+      range: '£1,000-10,000',
+      min: 1000,
+      max: 10000
+    };
+  };
+
+  const benchmark = getBenchmark(projectType, jobDescription, normalPrice);
+
   const sparse = calculateTierMetrics(sparsePrice);
   const normal = calculateTierMetrics(normalPrice);
   const busy = calculateTierMetrics(busyPrice);
@@ -41,9 +149,9 @@ const PricingOptionsTiers = ({
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <CardTitle className="text-xl sm:text-lg font-bold text-white">Pricing Options</CardTitle>
+        <CardTitle className="text-2xl sm:text-xl font-bold text-white">Pricing Options</CardTitle>
         {explanation && (
-          <p className="text-base sm:text-sm text-white/80 mt-2">{explanation}</p>
+          <p className="text-base sm:text-sm text-white mt-2">{explanation}</p>
         )}
       </CardHeader>
       <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6">
@@ -55,26 +163,26 @@ const PricingOptionsTiers = ({
           </h4>
           <div className="space-y-2 sm:space-y-1 text-base sm:text-sm">
             <div className="flex justify-between">
-              <span className="text-white/90">3-bed rewire typical range:</span>
-              <span className="font-medium text-white">£4,000-6,500</span>
+              <span className="text-white">{benchmark.name} typical range:</span>
+              <span className="font-medium text-white">{benchmark.range}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-white/90">This quote (Normal tier):</span>
+              <span className="text-white">This quote (Normal tier):</span>
               <span className={`font-bold ${
-                normalPrice < 4000 ? 'text-red-500' : 
-                normalPrice > 6500 ? 'text-red-500' : 
+                normalPrice < benchmark.min ? 'text-red-500' : 
+                normalPrice > benchmark.max ? 'text-red-500' : 
                 'text-green-600'
               }`}>
                 £{normalPrice.toFixed(0)}
-                {normalPrice < 4000 && ' ⚠️ Below market rate'}
-                {normalPrice > 6500 && ' ⚠️ Above market rate'}
-                {normalPrice >= 4000 && normalPrice <= 6500 && ' ✅ Within range'}
+                {normalPrice < benchmark.min && ' ⚠️ Below market rate'}
+                {normalPrice > benchmark.max && ' ⚠️ Above market rate'}
+                {normalPrice >= benchmark.min && normalPrice <= benchmark.max && ' ✅ Within range'}
               </span>
             </div>
-            <div className="text-sm sm:text-xs text-white/70 mt-3 sm:mt-2">
-              {normalPrice < 4000 && 'Consider if materials or labour are underestimated'}
-              {normalPrice > 6500 && 'Review for over-specification or excessive margins'}
-              {normalPrice >= 4000 && normalPrice <= 6500 && 'Competitive pricing for your region'}
+            <div className="text-sm sm:text-xs text-white/90 mt-3 sm:mt-2">
+              {normalPrice < benchmark.min && 'Consider if materials or labour are underestimated'}
+              {normalPrice > benchmark.max && 'Review for over-specification or excessive margins'}
+              {normalPrice >= benchmark.min && normalPrice <= benchmark.max && 'Competitive pricing for your region'}
             </div>
           </div>
         </div>
@@ -90,21 +198,21 @@ const PricingOptionsTiers = ({
               <Badge className="bg-blue-500/20 text-blue-500 border-blue-500/30 mb-2">
                 Work Sparse
               </Badge>
-              <div className="text-4xl sm:text-3xl font-bold text-white">£{sparsePrice.toFixed(0)}</div>
-              <div className="text-sm sm:text-xs text-white/70 mt-1">Low margin</div>
+              <div className="text-5xl sm:text-4xl font-bold text-white">£{sparsePrice.toFixed(0)}</div>
+              <div className="text-sm sm:text-xs text-white/90 mt-1">Low margin</div>
             </div>
             
             <div className="space-y-2 text-base sm:text-sm">
               <div className="flex justify-between">
-                <span className="text-white/90">Margin:</span>
+                <span className="text-white">Margin:</span>
                 <span className="font-medium text-white">{sparse.margin.toFixed(0)}%</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white/90">Profit:</span>
+                <span className="text-white">Profit:</span>
                 <span className="font-medium text-green-500">£{sparse.profit.toFixed(0)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white/90">Per hour:</span>
+                <span className="text-white">Per hour:</span>
                 <span className="font-medium text-white">£{sparse.profitPerHour.toFixed(0)}</span>
               </div>
             </div>
@@ -120,21 +228,21 @@ const PricingOptionsTiers = ({
               <Badge className="bg-elec-yellow/30 text-elec-yellow border-elec-yellow/50 mb-2">
                 Normal ⭐
               </Badge>
-              <div className="text-4xl sm:text-3xl font-bold text-elec-yellow">£{normalPrice.toFixed(0)}</div>
-              <div className="text-sm sm:text-xs text-white/70 mt-1">Target pricing</div>
+              <div className="text-5xl sm:text-4xl font-bold text-elec-yellow">£{normalPrice.toFixed(0)}</div>
+              <div className="text-sm sm:text-xs text-white/90 mt-1">Target pricing</div>
             </div>
             
             <div className="space-y-2 text-base sm:text-sm">
               <div className="flex justify-between">
-                <span className="text-white/90">Margin:</span>
+                <span className="text-white">Margin:</span>
                 <span className="font-medium text-white">{normal.margin.toFixed(0)}%</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white/90">Profit:</span>
+                <span className="text-white">Profit:</span>
                 <span className="font-medium text-green-500">£{normal.profit.toFixed(0)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white/90">Per hour:</span>
+                <span className="text-white">Per hour:</span>
                 <span className="font-medium text-white">£{normal.profitPerHour.toFixed(0)}</span>
               </div>
             </div>
@@ -150,21 +258,21 @@ const PricingOptionsTiers = ({
               <Badge className="bg-green-500/20 text-green-500 border-green-500/30 mb-2">
                 Busy Period
               </Badge>
-              <div className="text-4xl sm:text-3xl font-bold text-white">£{busyPrice.toFixed(0)}</div>
-              <div className="text-sm sm:text-xs text-white/70 mt-1">High margin</div>
+              <div className="text-5xl sm:text-4xl font-bold text-white">£{busyPrice.toFixed(0)}</div>
+              <div className="text-sm sm:text-xs text-white/90 mt-1">High margin</div>
             </div>
             
             <div className="space-y-2 text-base sm:text-sm">
               <div className="flex justify-between">
-                <span className="text-white/90">Margin:</span>
+                <span className="text-white">Margin:</span>
                 <span className="font-medium text-white">{busy.margin.toFixed(0)}%</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white/90">Profit:</span>
+                <span className="text-white">Profit:</span>
                 <span className="font-medium text-green-500">£{busy.profit.toFixed(0)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white/90">Per hour:</span>
+                <span className="text-white">Per hour:</span>
                 <span className="font-medium text-white">£{busy.profitPerHour.toFixed(0)}</span>
               </div>
             </div>
