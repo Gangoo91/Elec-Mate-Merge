@@ -207,6 +207,33 @@ export interface StructuredOutput {
   sections: DesignSections;
 }
 
+export interface ExpectedTestValues {
+  r1r2: {
+    at20C: number;
+    at70C: number;
+    value: string;
+    regulation: string;
+  };
+  zs: {
+    expected: number;
+    maxPermitted: number;
+    marginPercent: number;
+    compliant: boolean;
+    regulation: string;
+  };
+  insulationResistance: {
+    testVoltage: string;
+    minResistance: string;
+    regulation: string;
+  };
+  rcd?: {
+    ratingmA: number;
+    maxTripTimeMs: number;
+    testCurrentMultiple: number;
+    regulation: string;
+  };
+}
+
 export interface DesignedCircuit {
   name: string;
   loadType: string;
@@ -219,6 +246,7 @@ export interface DesignedCircuit {
   installationNotes?: string; // Replaces installationGuidance object
   installationGuidance?: InstallationGuidance; // LEGACY - will be removed
   structuredOutput?: StructuredOutput; // PHASE 5
+  expectedTests?: ExpectedTestValues; // Expected test values for EIC/testing
 }
 
 export interface Design {
@@ -265,6 +293,7 @@ export interface CachedDesign {
 export interface DesignResult {
   success: boolean;
   circuits?: DesignedCircuit[];
+  supply?: any;
   fromCache: boolean;
   cacheAge?: number;
   cacheHitCount?: number;
@@ -275,4 +304,8 @@ export interface DesignResult {
   requestId?: string;
   // PHASE 4: Reasoning
   reasoning?: DesignReasoning;
+  // Validation surfacing
+  validationPassed?: boolean;
+  validationIssues?: ValidationIssue[];
+  autoFixSuggestions?: string[];
 }

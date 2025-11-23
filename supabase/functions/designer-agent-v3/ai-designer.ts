@@ -260,6 +260,23 @@ export class AIDesigner {
     parts.push('WRONG: "Install cable clips at regular intervals using appropriate fixings for the substrate."');
     parts.push('RIGHT: "This 32A ring uses 2.5mm² T&E, Method C over 45m. Terminate in RCBO. Test: R1+R2 ≤ 0.85Ω, Zs ≤ 1.44Ω, verify RCD 30mA trip."');
     parts.push('');
+    
+    // Tighten schema expectations for calculations & expected tests
+    parts.push('=== CRITICAL: CALCULATIONS & EXPECTED TESTS SCHEMA ===');
+    parts.push('The "calculations" and "expectedTests" objects are NON-OPTIONAL.');
+    parts.push('Even if you provide values, they will be OVERWRITTEN by deterministic BS 7671 calculation engine.');
+    parts.push('YOUR values serve as HINTS only. The actual compliant values come from code.');
+    parts.push('');
+    parts.push('REQUIRED calculations fields:');
+    parts.push('- Ib: Design current (use Ib = P / (V × PF) for single-phase, Ib = P / (√3 × V × PF) for three-phase)');
+    parts.push('- In: Protection device rating (must be ≥ Ib)');
+    parts.push('- Iz: Cable capacity after derating (from BS 7671 tables)');
+    parts.push('- voltageDrop: { volts, percent, limit, compliant } - will be recalculated deterministically');
+    parts.push('- zs: Earth fault loop impedance - will be recalculated deterministically');
+    parts.push('- maxZs: Maximum Zs from Table 41.3 - will be recalculated deterministically');
+    parts.push('');
+    parts.push('All mathematical outputs MUST align with formulas provided in Design Knowledge section.');
+    parts.push('');
 
     // Expanded auto-correction rules
     parts.push('=== AUTO-CORRECT (SILENT) ===');

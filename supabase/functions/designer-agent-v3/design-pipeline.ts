@@ -8,6 +8,7 @@ import { CacheManager } from './cache-manager.ts';
 import { searchDesignIntelligence, searchRegulationsIntelligence } from '../_shared/intelligence-search.ts';
 import { AIDesigner } from './ai-designer.ts';
 import { ValidationEngine } from './validation-engine.ts';
+import { DeterministicCalculator } from './deterministic-calculations.ts';
 import { safeAll, type ParallelTask } from '../_shared/safe-parallel.ts';
 import type { NormalizedInputs, DesignResult } from './types.ts';
 
@@ -16,6 +17,7 @@ export class DesignPipeline {
   private cache: CacheManager;
   private ai: AIDesigner;
   private validator: ValidationEngine;
+  private calculator: DeterministicCalculator;
   private progressCallback?: (msg: string) => void;
 
   constructor(
@@ -27,6 +29,7 @@ export class DesignPipeline {
     this.cache = new CacheManager(logger);
     this.ai = new AIDesigner(logger);
     this.validator = new ValidationEngine(logger);
+    this.calculator = new DeterministicCalculator(logger);
     this.progressCallback = progressCallback;
   }
 
@@ -349,13 +352,21 @@ export class DesignPipeline {
     this.logger.info('Safety net applied - all calculations validated');
 
     // ========================================
+    // PHASE 4.6: Apply Deterministic BS 7671 Calculations
+    // ========================================
+    // CRITICAL: Use deterministic maths to overwrite AI-guessed values
+    design.circuits = this.calculator.applyToCircuits(design.circuits, normalized.supply);
+    
+    this.logger.info('Deterministic calculations applied to all circuits');
+
+    // ========================================
     // PHASE 5: Validation (with voltage context)
     // ========================================
     let validationResult = this.validator.validate(design, normalized.supply.voltage);
     
-    // OPTIMIZATION: Auto-correction loop (up to 2 retries for cascading fixes)
+    // RELAXED: Reduce auto-correction retries to 0 (surface issues instead of failing)
     if (!validationResult.isValid) {
-      const maxRetries = 2;
+      const maxRetries = 0; // CHANGED: Was 2, now 0 - surface validation issues
       let correctionAttempt = 0;
       
       // Update progress to show validation complete, entering correction phase
@@ -458,7 +469,11 @@ export class DesignPipeline {
       }
     }
 
-    this.logger.info('Design validated successfully', {
+    const isValidAfterCalculations = validationResult.isValid;
+    
+    this.logger.info('Design validation complete', {
+      passed: isValidAfterCalculations,
+      errorCount: validationResult.issues.filter((i: any) => i.severity === 'error').length,
       warningCount: validationResult.issues.filter((i: any) => i.severity === 'warning').length
     });
 
@@ -480,7 +495,8 @@ export class DesignPipeline {
     this.logger.info('Pipeline complete', {
       duration,
       circuits: design.circuits.length,
-      fromCache: false
+      fromCache: false,
+      validationPassed: isValidAfterCalculations
     });
 
     return {
@@ -489,9 +505,12 @@ export class DesignPipeline {
       supply: normalized.supply,
       fromCache: false,
       processingTime: duration,
-      validationPassed: true,
+      validationPassed: isValidAfterCalculations,
       autoFixApplied: false,
-      reasoning: design.reasoning
+      reasoning: design.reasoning,
+      // Surface validation results to frontend
+      validationIssues: validationResult.issues,
+      autoFixSuggestions: validationResult.autoFixSuggestions
     };
   }
 
