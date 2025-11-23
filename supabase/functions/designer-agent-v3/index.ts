@@ -153,24 +153,26 @@ serve(async (req) => {
       jobMode: jobId ? 'async-job' : 'direct'
     });
 
-    // Job-aware mode: Update job to complete with results
+    // Job-aware mode: Update job - Phase 1 complete (keep processing for Phase 2)
     if (jobId) {
       try {
         await supabase
           .from('circuit_design_jobs')
           .update({
-            status: 'complete',
-            progress: 100,
-            current_step: 'Design complete!',
+            status: 'processing', // Keep processing for Installation Agent (Phase 2)
+            progress: 50, // Phase 1 of 2 complete
+            current_step: 'Circuit design complete. Generating installation guidance...',
+            designer_status: 'complete',
+            designer_progress: 100,
             design_data: result,
-            raw_response: result,
-            completed_at: new Date().toISOString()
+            raw_response: result
+            // No completed_at yet - job still running Phase 2
           })
           .eq('id', jobId);
         
-        logger.info('Job marked complete', { jobId });
+        logger.info('Phase 1 (Designer) complete - waiting for Phase 2 (Installer)', { jobId });
       } catch (err) {
-        logger.error('Failed to mark job complete', { error: err });
+        logger.error('Failed to update job after design phase', { error: err });
       }
     }
 
