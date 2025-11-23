@@ -28,8 +28,11 @@ export class AIDesigner {
 
     const startTime = Date.now();
 
-    // Build system prompt with RAG context
-    const systemPrompt = this.buildSystemPrompt(context);
+    // Detect installation type from circuits
+    const installationType = this.detectInstallationType(inputs);
+
+    // Build system prompt with RAG context and installation type
+    const systemPrompt = this.buildSystemPrompt(context, installationType);
     
     // Convert form to structured JSON
     const structuredInput = this.buildStructuredInput(inputs);
@@ -81,35 +84,74 @@ export class AIDesigner {
   /**
    * Build system prompt with RAG context injection (OPTIMIZED - 50% reduction)
    */
-  private buildSystemPrompt(context: RAGContext): string {
+  private buildSystemPrompt(context: RAGContext, installationType?: string): string {
     const parts: string[] = [];
 
-    // Core identity
+    // Enhanced core identity with installation type context
     parts.push('You are a BS 7671:2018+A3:2024 electrical circuit design expert. Design COMPLIANT circuits using the provided knowledge base. Use exact voltage/phase values from each request.');
     parts.push('');
+    
+    // Installation type context
+    const type = installationType || 'general';
+    if (type === 'domestic') {
+      parts.push('=== DOMESTIC INSTALLATION CONTEXT ===');
+      parts.push('- Typically single-phase 230V supply, rarely three-phase');
+      parts.push('- Focus on socket circuits (ring finals/radials), lighting, showers, cookers');
+      parts.push('- RCBO protection mandatory for ALL socket circuits (411.3.3)');
+      parts.push('- Standard cable types: Twin & Earth (T&E) for internal, SWA for external/buried');
+      parts.push('- Typical max demand: 60-100A per dwelling');
+      parts.push('');
+    } else if (type === 'commercial') {
+      parts.push('=== COMMERCIAL INSTALLATION CONTEXT ===');
+      parts.push('- Often three-phase 400V supply for larger loads');
+      parts.push('- Higher diversity factors, larger distribution boards');
+      parts.push('- More SWA cable usage for sub-mains and outdoor runs');
+      parts.push('- Consider fire alarm systems, emergency lighting, data circuits');
+      parts.push('- Discrimination between protective devices critical');
+      parts.push('');
+    } else if (type === 'industrial') {
+      parts.push('=== INDUSTRIAL INSTALLATION CONTEXT ===');
+      parts.push('- Predominantly three-phase 400V, sometimes higher voltages');
+      parts.push('- Large motor loads, heavy machinery, high-power equipment');
+      parts.push('- SWA cable standard for most circuits, often larger sizes (>16mm²)');
+      parts.push('- Type D MCBs common for motors, contactors, and DOL starters');
+      parts.push('- Consider fault levels, discrimination, and starting currents');
+      parts.push('');
+    }
+    parts.push('');
 
-    // Inject RAG context
-    if (context.regulations.length > 0) {
-      parts.push('=== KEY REGULATIONS ===');
-      context.regulations.slice(0, 3).forEach(reg => {
+    // Inject Regulations Intelligence
+    if (context.regulations && context.regulations.length > 0) {
+      parts.push('=== REGULATIONS INTELLIGENCE ===');
+      context.regulations.slice(0, 5).forEach(reg => {
         parts.push(`${reg.regulation_number}: ${reg.content}`);
       });
       parts.push('');
     }
 
-    // PHASE 4: Inject enriched design knowledge with formulas, examples, and calculations
-    if (context.designKnowledge.length > 0) {
-      parts.push('=== DESIGN KNOWLEDGE (Formulas, Examples, Tables) ===');
+    // Inject Design Knowledge Intelligence (enriched facets only)
+    if (context.designKnowledge && context.designKnowledge.length > 0) {
+      parts.push('=== DESIGN KNOWLEDGE INTELLIGENCE ===');
       
-      context.designKnowledge.slice(0, 4).forEach(facet => {
+      context.designKnowledge.slice(0, 6).forEach(facet => {
         parts.push(`\n[${facet.facet_type.toUpperCase()}] ${facet.primary_topic}`);
         
-        // Inject formulas
+        // Core content
+        if (facet.content) {
+          parts.push(`${facet.content}`);
+        }
+        
+        // Formulas
         if (facet.formulas && facet.formulas.length > 0) {
           parts.push(`📐 Formulas: ${facet.formulas.join(' | ')}`);
         }
         
-        // Inject worked examples
+        // Calculation steps
+        if (facet.calculation_steps && facet.calculation_steps.length > 0) {
+          parts.push(`🔢 Steps: ${facet.calculation_steps.join(' → ')}`);
+        }
+        
+        // Worked examples
         if (facet.worked_examples && facet.worked_examples.length > 0) {
           const examples = facet.worked_examples.slice(0, 2).map(ex => 
             typeof ex === 'string' ? ex : JSON.stringify(ex)
@@ -117,35 +159,24 @@ export class AIDesigner {
           parts.push(`💡 Examples: ${examples.join(' | ')}`);
         }
         
-        // Inject calculation steps
-        if (facet.calculation_steps && facet.calculation_steps.length > 0) {
-          parts.push(`🔢 Steps: ${facet.calculation_steps.join(' → ')}`);
-        }
-        
-        // Inject BS 7671 references
+        // BS 7671 references
         if (facet.bs7671_regulations && facet.bs7671_regulations.length > 0) {
           parts.push(`📖 Regs: ${facet.bs7671_regulations.join(', ')}`);
         }
         
-        // Inject table references
+        // Table references
         if (facet.table_refs && facet.table_refs.length > 0) {
           parts.push(`📊 Tables: ${facet.table_refs.join(', ')}`);
         }
         
-        // Inject common mistakes
+        // Common mistakes
         if (facet.common_mistakes && facet.common_mistakes.length > 0) {
-          parts.push(`⚠️ Common Mistakes: ${facet.common_mistakes.join('; ')}`);
+          parts.push(`⚠️ Avoid: ${facet.common_mistakes.join('; ')}`);
         }
-      });
-      parts.push('');
-    }
-
-    if (context.practicalGuides.length > 0) {
-      parts.push('=== PRACTICAL GUIDANCE ===');
-      context.practicalGuides.slice(0, 3).forEach(guide => {
-        parts.push(`${guide.primary_topic}: ${guide.content || 'See keywords'}`);
-        if (guide.bs7671_regulations?.length > 0) {
-          parts.push(`  Regs: ${guide.bs7671_regulations.join(', ')}`);
+        
+        // Typical values
+        if (facet.typical_values) {
+          parts.push(`📋 Typical Values: ${JSON.stringify(facet.typical_values)}`);
         }
       });
       parts.push('');
@@ -158,13 +189,42 @@ export class AIDesigner {
     parts.push('3. INSTALLATION: Provide only electrical installation method reference, basic termination requirements, and required tests. Detailed practical work methods handled by installation specialist agent.');
     parts.push('');
     
-    // Core design rules
-    parts.push('=== CORE RULES ===');
-    parts.push('- Ib <= In <= Iz (433.1.1) | VD: <=3% lighting, <=5% power (525.1) | Zs <= max (411.3.2)');
+    // Expanded core design rules with installation type specifics
+    parts.push('=== CORE BS 7671 DESIGN RULES ===');
+    parts.push('UNIVERSAL (All Installations):');
+    parts.push('- Ib ≤ In ≤ Iz (433.1.1) | VD: ≤3% lighting, ≤5% power (525.1) | Zs ≤ max (411.3.2)');
     parts.push('- RCBO mandatory: ALL sockets (411.3.3), ALL bathroom circuits (701.411.3.3)');
-    parts.push('- Cable sizes: T&E (1.5-16mm2), SWA (1.5-95mm2) - round UP to nearest valid');
-    parts.push('- CPC sizing: Twin & Earth per Table 54.7 (1.5->1.0, 2.5->1.5, 4->2.5, 6->2.5, 10->4, 16->6mm2)');
-    parts.push('- SWA cables: CPC MUST equal live conductor size per BS 7671:543.1.1 (e.g., 6mm² SWA = 6mm² CPC)');
+    parts.push('- Cable sizes: T&E (1.5-16mm²), SWA (1.5-95mm²) - round UP to nearest valid size');
+    parts.push('- CPC sizing: T&E per Table 54.7 (1.5→1.0, 2.5→1.5, 4→2.5, 6→2.5, 10→4, 16→6mm²)');
+    parts.push('- SWA cables: CPC MUST equal live conductor size per 543.1.1 (e.g., 6mm² SWA = 6mm² CPC)');
+    parts.push('');
+    
+    // Type-specific rules
+    if (type === 'domestic') {
+      parts.push('DOMESTIC-SPECIFIC:');
+      parts.push('- Ring finals: 2.5mm² T&E, 32A RCBO, max floor area 100m² (433.1.204)');
+      parts.push('- Radial sockets: 2.5mm² = 20A max, 4mm² = 32A max');
+      parts.push('- Showers: Dedicated circuit, often 6mm² or 10mm² T&E with 32A-50A RCBO');
+      parts.push('- Cookers: Diversity per 311.1 (10A + 30% remainder + 5A if socket)');
+      parts.push('- Lighting: Typically 1.5mm² T&E, 6A MCB, max 12 points per circuit');
+      parts.push('');
+    } else if (type === 'commercial') {
+      parts.push('COMMERCIAL-SPECIFIC:');
+      parts.push('- Larger distribution: TPN boards, higher rated MCCBs/RCCBOs');
+      parts.push('- Sub-mains: Often SWA, calculate for diversity and future expansion');
+      parts.push('- Emergency systems: Separate circuits, maintained supplies, fire alarm integration');
+      parts.push('- Discrimination: Ensure upstream/downstream protection coordination');
+      parts.push('- Data/comms: Segregate from power cables, avoid EMI (521.10.1)');
+      parts.push('');
+    } else if (type === 'industrial') {
+      parts.push('INDUSTRIAL-SPECIFIC:');
+      parts.push('- Motors: Type D MCBs, FLC = P/(√3 × V × pf × eff), In = 1.25 × FLC minimum');
+      parts.push('- DOL starters: Consider starting current (5-7 × FLC), check supply capacity');
+      parts.push('- High fault currents: Verify breaking capacity (ka rating), consider fault level');
+      parts.push('- Larger cables: Use SWA as standard, multicore for motors (L1, L2, L3, E)');
+      parts.push('- IP ratings: Higher protection required (dust, moisture, mechanical damage)');
+      parts.push('');
+    }
     parts.push('');
     parts.push('=== USE EXACT KNOWLEDGE ===');
     parts.push('- USE EXACT FORMULAS from Design Knowledge section above');
@@ -174,29 +234,45 @@ export class AIDesigner {
     parts.push('- APPLY COMMON MISTAKE WARNINGS where relevant');
     parts.push('');
 
-    // CRITICAL SCHEMA REQUIREMENT - installationNotes ONLY
-    parts.push('=== CRITICAL SCHEMA REQUIREMENT - installationNotes ONLY ===');
-    parts.push('You MUST NOT generate an "installationGuidance" object with cableRouting, terminationAdvice, etc.');
-    parts.push('Only generate "installationNotes" as a STRING (2-4 sentences).');
+    // CRITICAL: Prevent designer from creating installer's job
+    parts.push('=== CRITICAL SCHEMA REQUIREMENT ===');
+    parts.push('WHY THIS EXISTS: A separate installation specialist agent handles detailed practical work methods.');
+    parts.push('YOUR ROLE: Provide ONLY electrical design specifications and basic installation context.');
     parts.push('');
-    parts.push('INSTALLATION NOTES REQUIREMENTS (NO GENERIC TEXT):');
-    parts.push('- Reference the EXACT load (e.g., "This 9.5kW shower", "These 13A socket circuits")');
-    parts.push('- Reference the EXACT cable specification (e.g., "6mm² T&E", "2.5mm² SWA with 1.5mm² CPC")');
-    parts.push('- Reference the EXACT cable length if >20m (e.g., "over the 35m run")');
-    parts.push('- Include location-specific advice if outdoor/bathroom/kitchen');
-    parts.push('- Include cable-specific installation methods');
+    parts.push('YOU MUST NOT GENERATE:');
+    parts.push('- "installationGuidance" object with cableRouting, terminationAdvice, toolsRequired, etc.');
+    parts.push('- Detailed step-by-step practical instructions');
+    parts.push('- Tool lists, material lists, or method statements');
     parts.push('');
-    parts.push('WRONG (generic): "Install cable clips at regular intervals."');
-    parts.push('RIGHT (specific): "This 32A ring final uses 2.5mm² T&E clipped direct over 45m. Clip spacing 300mm horizontal. Expect ~2.8% voltage drop—verify <5% on commissioning."');
+    parts.push('YOU MUST GENERATE:');
+    parts.push('- "installationNotes" as a STRING (2-4 sentences max)');
+    parts.push('- Electrical installation method reference only (e.g., "Method C: clipped direct")');
+    parts.push('- Basic termination requirements (e.g., "Terminate in RCBO at consumer unit")');
+    parts.push('- Required electrical tests (e.g., "Verify Zs ≤ 0.87Ω, RCD test 30mA trip")');
+    parts.push('');
+    parts.push('INSTALLATION NOTES REQUIREMENTS:');
+    parts.push('- Reference EXACT load (e.g., "This 9.5kW shower", "32A ring final")');
+    parts.push('- Reference EXACT cable (e.g., "6mm² T&E", "2.5mm² SWA with 2.5mm² CPC")');
+    parts.push('- Reference EXACT length if >20m (e.g., "over 35m run")');
+    parts.push('- Location-specific notes if outdoor/bathroom/kitchen');
+    parts.push('');
+    parts.push('EXAMPLE:');
+    parts.push('WRONG: "Install cable clips at regular intervals using appropriate fixings for the substrate."');
+    parts.push('RIGHT: "This 32A ring uses 2.5mm² T&E, Method C over 45m. Terminate in RCBO. Test: R1+R2 ≤ 0.85Ω, Zs ≤ 1.44Ω, verify RCD 30mA trip."');
     parts.push('');
 
-    // Auto-correction rules
+    // Expanded auto-correction rules
     parts.push('=== AUTO-CORRECT (SILENT) ===');
-    parts.push('1. 3-phase MUST use 400V/415V (never 230V)');
-    parts.push('2. Motors: FLC=(kW*1000)/(sqrt(3)*V*0.85*0.9), Ib=FLC*1.25, Type D MCB');
-    parts.push('3. Socket/bathroom circuits: SET type="RCBO" (never MCB)');
-    parts.push('4. Outdoor/buried: MUST use SWA (never T&E)');
-    parts.push('5. Document all corrections in justifications.corrections');
+    parts.push('Apply these corrections automatically without user intervention:');
+    parts.push('1. Three-phase circuits: MUST use 400V/415V (never 230V)');
+    parts.push('2. Motors: FLC = (kW × 1000) / (√3 × V × pf × eff), Ib = FLC × 1.25, Type D MCB/MCCB');
+    parts.push('3. Socket circuits: ALWAYS RCBO (never MCB) per 411.3.3');
+    parts.push('4. Bathroom circuits: ALWAYS RCBO per 701.411.3.3');
+    parts.push('5. Outdoor/buried cables: MUST use SWA (never T&E)');
+    parts.push('6. Domestic ring finals: 2.5mm² T&E, 32A RCBO, check continuity at each socket');
+    parts.push('7. Commercial emergency lighting: Separate circuit, maintained supply consideration');
+    parts.push('8. Industrial motors >5.5kW: Consider DOL vs star-delta starting currents');
+    parts.push('9. Document ALL corrections in justifications.corrections field');
     parts.push('');
     
     // Field requirements
@@ -207,33 +283,44 @@ export class AIDesigner {
   }
 
   /**
-   * Build optimized system prompt for batch processing (OPTIMIZED - 50% reduction)
+   * Build optimized system prompt for batch processing with installation type context
    */
   private buildBatchSystemPrompt(
     context: RAGContext,
     circuitCount: number,
     batchNumber: number,
-    totalBatches: number
+    totalBatches: number,
+    installationType?: string
   ): string {
     const parts: string[] = [];
 
     parts.push(`BS 7671:2018+A3:2024 expert. Batch ${batchNumber}/${totalBatches}, ${circuitCount} circuits. Design COMPLIANT circuits.`);
     parts.push('');
 
+    // Add installation type context for batches
+    const type = installationType || 'general';
+    if (type === 'domestic') {
+      parts.push('DOMESTIC: Single-phase 230V typical. RCBO for all sockets. T&E standard, SWA external.');
+    } else if (type === 'commercial') {
+      parts.push('COMMERCIAL: Three-phase 400V common. More SWA, discrimination critical.');
+    } else if (type === 'industrial') {
+      parts.push('INDUSTRIAL: Three-phase 400V standard. Motors common (Type D), large SWA cables.');
+    }
+    parts.push('');
+
     // Reduce RAG for large batches
     const ragLimit = circuitCount >= 6 ? 2 : 3;
 
-    if (context.regulations.length > 0) {
-      parts.push('=== KEY REGULATIONS ===');
+    if (context.regulations && context.regulations.length > 0) {
+      parts.push('=== REGULATIONS INTELLIGENCE ===');
       context.regulations.slice(0, ragLimit).forEach(reg => {
         parts.push(`${reg.regulation_number}: ${reg.content}`);
       });
       parts.push('');
     }
 
-    // PHASE 4: Inject enriched design knowledge for batch processing
-    if (context.designKnowledge.length > 0) {
-      parts.push('=== DESIGN KNOWLEDGE ===');
+    if (context.designKnowledge && context.designKnowledge.length > 0) {
+      parts.push('=== DESIGN KNOWLEDGE INTELLIGENCE ===');
       context.designKnowledge.slice(0, ragLimit).forEach(facet => {
         parts.push(`[${facet.facet_type}] ${facet.primary_topic}`);
         if (facet.formulas?.length) parts.push(`📐 ${facet.formulas.join(' | ')}`);
@@ -243,37 +330,26 @@ export class AIDesigner {
       parts.push('');
     }
 
-    if (context.practicalGuides.length > 0) {
-      parts.push('=== PRACTICAL GUIDANCE ===');
-      context.practicalGuides.slice(0, ragLimit).forEach(guide => {
-        parts.push(`${guide.primary_topic}: ${guide.content || 'See keywords'}`);
-        if (guide.bs7671_regulations?.length > 0) {
-          parts.push(`  Regs: ${guide.bs7671_regulations.join(', ')}`);
-        }
-      });
-      parts.push('');
-    }
-
     // Consolidated format and rules
     parts.push('=== OUTPUT FORMAT ===');
-    parts.push('1. AT A GLANCE: loadKw (loadPower/1000), loadIb, Cable, Device, VD, Zs, Compliance, Notes');
-    parts.push('2. 9 SECTIONS: Circuit Summary, Load Details, Cable Selection & Calc, Device Selection, Compliance, Justification, Installation Context (electrical only), Safety, Testing');
-    parts.push('3. INSTALLATION: Electrical method reference, basic termination, tests only. Detailed methods from installation specialist agent.');
+    parts.push('1. AT A GLANCE: loadKw, loadIb, Cable, Device, VD, Zs, Compliance, Notes');
+    parts.push('2. 9 SECTIONS: Summary, Load, Cable Calc, Device, Compliance, Justification, Installation (electrical only), Safety, Testing');
+    parts.push('3. installationNotes STRING ONLY - no installationGuidance object');
     parts.push('');
     
     parts.push('=== CORE RULES ===');
-    parts.push('- Ib <= In <= Iz (433.1.1) | VD: <=3% light, <=5% power (525.1) | Zs <= max (411.3.2)');
-    parts.push('- RCBO: sockets (411.3.3), bathrooms (701.411.3.3) | Cables: T&E 1.5-16mm2, SWA 1.5-95mm2');
-    parts.push('- CPC: T&E per Table 54.7, SWA=live size (543.1.1) | 3-phase=400V/415V | Motors: FLC calc, Type D | Outdoor=SWA');
-    parts.push('- USE EXACT FORMULAS from knowledge base | SHOW CALC STEPS | REFERENCE TABLES explicitly');
+    parts.push('- Ib ≤ In ≤ Iz | VD: ≤3% light, ≤5% power | Zs ≤ max');
+    parts.push('- RCBO: sockets, bathrooms | T&E 1.5-16mm², SWA 1.5-95mm²');
+    parts.push('- CPC: T&E per Table 54.7, SWA=live size | 3-phase=400V | Motors: Type D');
+    parts.push('- USE EXACT FORMULAS from knowledge | SHOW STEPS | CITE REGS');
     parts.push('');
 
     parts.push('=== AUTO-CORRECT ===');
-    parts.push('Silently fix: 3-phase voltage, socket/bathroom RCBO, motor FLC, cable types, outdoor SWA. Document in justifications.corrections.');
+    parts.push('Fix silently: 3-phase voltage, socket/bathroom RCBO, motor FLC, cable types, outdoor SWA. Document in justifications.corrections.');
     parts.push('');
     
     parts.push('=== REQUIRED ===');
-    parts.push('Copy: loadPower, phases, cableLength. Set: voltage, installationMethod, rcdProtected, circuitNumber, cableType. Design ALL circuits in batch.');
+    parts.push('Copy: loadPower, phases, cableLength. Set: voltage, installationMethod, rcdProtected, circuitNumber, cableType. Design ALL circuits.');
 
     return parts.join('\n');
   }
@@ -361,12 +437,16 @@ export class AIDesigner {
 
     const startTime = Date.now();
 
-    // Build system prompt with REDUCED RAG context for large batches
+    // Detect installation type
+    const installationType = this.detectInstallationType(inputs);
+
+    // Build system prompt with installation type context
     const systemPrompt = this.buildBatchSystemPrompt(
       context,
       inputs.circuits.length,
       batchNumber,
-      totalBatches
+      totalBatches,
+      installationType
     );
 
     const structuredInput = this.buildStructuredInput(inputs);
@@ -715,9 +795,9 @@ export class AIDesigner {
                             type: 'string', 
                             description: '6. Design Justification: Professional engineering rationale for design choices and safety margins (100-150 words)' 
                           },
-                          installationGuidance: { 
+                          installationNotes: { 
                             type: 'string', 
-                            description: '7. Installation Guidance: Circuit-specific practical installation instructions. Must reference THIS circuit\'s exact load, cable spec, and length. Include location-specific requirements (outdoor/bathroom IP ratings, SWA burial depth, etc.). NOT generic advice. (2-4 sentences, ~50-100 words)' 
+                            description: '7. Installation Notes: ELECTRICAL specifications only (installation method, termination requirements, testing). 2-4 sentences. Reference THIS circuit\'s exact load, cable spec, and length. Example: "This 32A ring uses 2.5mm² T&E over 45m, Method C. Terminate in RCBO. Test: R1+R2 ≤ 0.85Ω, Zs ≤ 1.44Ω, RCD 30mA trip." Do NOT generate detailed practical work methods - handled by installation specialist.' 
                           },
                           safetyNotes: { 
                             type: 'string', 
@@ -799,5 +879,40 @@ export class AIDesigner {
         }
       }
     };
+  }
+
+  /**
+   * Detect installation type from circuit characteristics
+   */
+  private detectInstallationType(inputs: NormalizedInputs): string {
+    // Check project info first
+    if (inputs.projectInfo?.installationType) {
+      return inputs.projectInfo.installationType.toLowerCase();
+    }
+
+    // Detect from circuit characteristics
+    const hasMotors = inputs.circuits.some(c => 
+      c.loadType.toLowerCase().includes('motor') || 
+      c.loadType.toLowerCase().includes('machinery')
+    );
+    
+    const hasThreePhase = inputs.circuits.some(c => c.phases === 3);
+    const hasLargePower = inputs.circuits.some(c => c.loadPower > 10000); // >10kW
+    
+    if (hasMotors || (hasThreePhase && hasLargePower)) {
+      return 'industrial';
+    }
+    
+    const hasCommercialLoads = inputs.circuits.some(c => 
+      c.loadType.toLowerCase().includes('emergency') ||
+      c.loadType.toLowerCase().includes('fire alarm') ||
+      c.loadType.toLowerCase().includes('data')
+    );
+    
+    if (hasCommercialLoads || (hasThreePhase && !hasMotors)) {
+      return 'commercial';
+    }
+    
+    return 'domestic';
   }
 }

@@ -5,7 +5,7 @@
 
 import { FormNormalizer } from './form-normalizer.ts';
 import { CacheManager } from './cache-manager.ts';
-import { searchCircuitRegulations } from '../_shared/circuit-rag.ts';
+import { searchDesignIntelligence, searchRegulationsIntelligence } from '../_shared/intelligence-search.ts';
 import { AIDesigner } from './ai-designer.ts';
 import { ValidationEngine } from './validation-engine.ts';
 import { safeAll, type ParallelTask } from '../_shared/safe-parallel.ts';
@@ -77,41 +77,85 @@ export class DesignPipeline {
     });
 
     // ========================================
-    // PHASE 3: RAG Search - Simple & Direct (mirrors AI RAMS pattern)
-    // Uses searchCircuitRegulations with match_count: 10
+    // PHASE 3: Fast Indexed RAG Search (Intelligence Tables)
+    // Uses GIN-indexed keyword search on intelligence tables
     // ========================================
     const ragStart = Date.now();
     
-    // Build job inputs for RAG search
-    const jobInputs = {
-      circuits: normalized.circuits,
-      supply: normalized.supply,
-      projectInfo: normalized.projectInfo || {}
-    };
-    
-    // Simple RAG call with progress callbacks (matches rams-rag.ts pattern)
-    const ragResults = await searchCircuitRegulations(
-      jobInputs,
-      this.progressCallback
+    // Create Supabase client for intelligence search
+    const { createClient } = await import('../_shared/deps.ts');
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
     
-    const ragTime = Date.now() - ragStart;
-    this.logger.info('RAG complete', {
-      results: ragResults.length,
-      searchTime: ragTime,
-      voltage: normalized.supply.voltage
+    // Extract search keywords from circuits
+    const keywords = new Set<string>();
+    const loadTypes = new Set<string>();
+    const cableSizes = new Set<number>();
+    
+    normalized.circuits.forEach(circuit => {
+      // Add load type
+      loadTypes.add(circuit.loadType.toLowerCase());
+      
+      // Add voltage keywords
+      keywords.add(`${normalized.supply.voltage}v`);
+      keywords.add(normalized.supply.phases === 3 ? 'three-phase' : 'single-phase');
+      
+      // Add circuit-specific keywords
+      keywords.add(circuit.loadType.toLowerCase());
+      keywords.add('cable sizing');
+      keywords.add('voltage drop');
+      keywords.add('protection');
+      
+      // Special location keywords
+      if (circuit.specialLocation) {
+        keywords.add(circuit.specialLocation.toLowerCase());
+      }
+      
+      // Common cable sizes for filtering
+      [1.5, 2.5, 4, 6, 10, 16, 25, 35].forEach(size => cableSizes.add(size));
     });
     
-    // Transform to expected format
+    this.logger.info('RAG search parameters', {
+      keywords: Array.from(keywords),
+      loadTypes: Array.from(loadTypes),
+      cableSizes: Array.from(cableSizes)
+    });
+    
+    // PARALLEL: Search both intelligence tables simultaneously
+    const [designIntelligence, regulationsIntelligence] = await Promise.all([
+      searchDesignIntelligence(supabase, {
+        keywords: Array.from(keywords),
+        loadTypes: Array.from(loadTypes),
+        cableSizes: Array.from(cableSizes),
+        categories: ['cable_sizing', 'voltage_drop', 'protection'],
+        limit: 15
+      }),
+      searchRegulationsIntelligence(supabase, {
+        keywords: Array.from(keywords),
+        appliesTo: Array.from(loadTypes),
+        limit: 10
+      })
+    ]);
+    
+    const ragTime = Date.now() - ragStart;
+    this.logger.info('Fast RAG complete', {
+      designIntelligence: designIntelligence.length,
+      regulationsIntelligence: regulationsIntelligence.length,
+      searchTime: ragTime
+    });
+    
+    // Build RAG context for AI
     const ragContext = {
-      regulations: ragResults.map((r: any) => ({
+      regulations: regulationsIntelligence.map((r: any) => ({
         regulation_number: r.regulation_number,
         content: r.content,
-        similarity: r.hybrid_score || r.similarity || 0,
-        source: r.source || 'regulations_intelligence'
+        confidence: r.confidence_score || 0,
+        source: 'regulations_intelligence'
       })),
-      practicalGuides: [],
-      totalResults: ragResults.length,
+      designKnowledge: designIntelligence,
+      totalResults: designIntelligence.length + regulationsIntelligence.length,
       searchTime: ragTime
     };
 
