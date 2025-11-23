@@ -53,64 +53,93 @@ Deno.serve(async (req) => {
       })
       .eq('id', jobId);
 
-    console.log('📋 Job data retrieved, launching parallel agents');
+    console.log('📋 Job data retrieved, launching SEQUENTIAL agent pipeline');
 
-    // PHASE 1: Launch Circuit Designer (fire-and-forget)
-    const designerPromise = supabase.functions.invoke('designer-agent-v3', {
-      body: {
-        jobId,
-        mode: 'direct-design',
-        projectInfo: job.job_inputs.projectInfo,
-        supply: job.job_inputs.supply,
-        circuits: job.job_inputs.circuits,
-        additionalPrompt: job.job_inputs.additionalPrompt || '',
-        specialRequirements: job.job_inputs.specialRequirements || [],
-        installationConstraints: job.job_inputs.installationConstraints || {}
-      }
-    }).then(() => {
-      console.log('✅ Designer agent HTTP invocation complete');
-    }).catch((error) => {
-      console.log('ℹ️ Designer agent HTTP connection closed:', error.message);
-      // Expected - designer updates DB directly
-    });
-
-    // PHASE 2: Launch Design Installation Agent (fire-and-forget)
-    // Prepare circuit context from job inputs
-    const circuitContext = {
-      circuits: job.job_inputs.circuits,
-      supply: job.job_inputs.supply,
-      projectInfo: job.job_inputs.projectInfo
-    };
-
-    const installationPromise = supabase.functions.invoke('design-installation-agent', {
-      body: {
-        jobId,
-        circuitDesignContext: circuitContext
-      }
-    }).then(() => {
-      console.log('✅ Installation agent HTTP invocation complete');
-    }).catch((error) => {
-      console.log('ℹ️ Installation agent HTTP connection closed:', error.message);
-      // Expected - installation agent updates DB directly
-    });
-
-    // Keep function alive until both agents complete (prevents timeout)
-    const bothAgents = Promise.allSettled([designerPromise, installationPromise]);
+    // ============================================
+    // PHASE 1: Circuit Designer (generates actual specs)
+    // ============================================
+    console.log('🔌 PHASE 1/2: Launching Circuit Designer...');
     
-    // Use EdgeRuntime.waitUntil if available (Supabase edge runtime)
-    if (typeof EdgeRuntime !== 'undefined' && EdgeRuntime.waitUntil) {
-      EdgeRuntime.waitUntil(bothAgents);
+    try {
+      const { data: designerResult, error: designerError } = await supabase.functions.invoke('designer-agent-v3', {
+        body: {
+          jobId,
+          mode: 'direct-design',
+          projectInfo: job.job_inputs.projectInfo,
+          supply: job.job_inputs.supply,
+          circuits: job.job_inputs.circuits,
+          additionalPrompt: job.job_inputs.additionalPrompt || '',
+          specialRequirements: job.job_inputs.specialRequirements || [],
+          installationConstraints: job.job_inputs.installationConstraints || {}
+        }
+      });
+
+      if (designerError) {
+        console.error('❌ Circuit Designer failed:', designerError);
+        throw new Error(`Circuit Designer failed: ${designerError.message}`);
+      }
+
+      console.log('✅ Circuit Designer complete');
+    } catch (designerError: any) {
+      console.error('❌ Designer invocation error:', designerError);
+      throw new Error(`Designer failed: ${designerError.message}`);
     }
 
-    console.log('🚀 Both agents launched in parallel with waitUntil');
+    // ============================================
+    // PHASE 1.5: Retrieve designed circuits from DB
+    // ============================================
+    console.log('📊 Retrieving designed circuits from database...');
+    
+    const { data: jobWithDesign, error: fetchError } = await supabase
+      .from('circuit_design_jobs')
+      .select('design_data')
+      .eq('id', jobId)
+      .single();
 
-    // Return immediately - agents update DB directly
+    if (fetchError || !jobWithDesign?.design_data?.circuits) {
+      console.error('❌ Failed to retrieve designed circuits:', fetchError);
+      throw new Error('Failed to retrieve designed circuits from database');
+    }
+
+    const designedCircuits = jobWithDesign.design_data.circuits;
+    console.log(`✅ Retrieved ${designedCircuits.length} designed circuits`);
+
+    // ============================================
+    // PHASE 2: Installation Agent (uses actual designed specs)
+    // ============================================
+    console.log('🔧 PHASE 2/2: Launching Installation Agent with ACTUAL designed specs...');
+    
+    try {
+      const { data: installResult, error: installError } = await supabase.functions.invoke('design-installation-agent', {
+        body: {
+          jobId,
+          designedCircuits: designedCircuits, // ✅ Pass DESIGNED circuits with actual specs
+          supply: job.job_inputs.supply,
+          projectInfo: job.job_inputs.projectInfo
+        }
+      });
+
+      if (installError) {
+        console.warn('⚠️ Installation Agent failed (non-critical):', installError);
+        // Don't fail entire job - designer succeeded
+      } else {
+        console.log('✅ Installation Agent complete');
+      }
+    } catch (installError: any) {
+      console.warn('⚠️ Installation Agent invocation error (non-critical):', installError);
+      // Don't fail entire job - designer succeeded
+    }
+
+    console.log('🚀 Sequential pipeline complete (Designer → Installer)');
+
+    // Return immediately - sequential execution launched
     return new Response(
       JSON.stringify({ 
         success: true,
         jobId,
-        message: 'Parallel agents launched successfully',
-        status: 'processing'
+        message: 'Sequential pipeline launched (Designer → Installer)',
+        status: 'processing',
+        executionMode: 'sequential'
       }),
       { 
         status: 202, // Accepted
