@@ -14,25 +14,107 @@ import { callOpenAI } from '../_shared/ai-providers.ts';
 import { createLogger } from '../_shared/logger.ts';
 
 /**
+ * Detect installation type from project details
+ */
+function detectInstallationType(projectDetails: any): 'domestic' | 'commercial' | 'industrial' {
+  const type = projectDetails?.installationType?.toLowerCase() || 
+               projectDetails?.projectInfo?.workType?.toLowerCase() || 
+               '';
+  
+  if (type.includes('domestic') || type.includes('residential')) return 'domestic';
+  if (type.includes('industrial')) return 'industrial';
+  return 'commercial'; // default
+}
+
+/**
+ * Extract circuit-specific keywords grouped by loadType for circuit-specific guidance
+ */
+function extractCircuitKeywordsByType(circuits: any[]): Record<string, string[]> {
+  const keywordsByCircuit: Record<string, string[]> = {};
+  
+  circuits.forEach((circuit, idx) => {
+    const keywords = new Set<string>();
+    const loadType = circuit.loadType?.toLowerCase() || 'general';
+    
+    // Load type specific keywords
+    if (loadType.includes('ev')) {
+      keywords.add('electric vehicle charging');
+      keywords.add('EV charger installation');
+      keywords.add('dedicated EV circuit');
+      if (circuit.chargerPower) keywords.add(`${circuit.chargerPower}kW charger`);
+    } else if (loadType.includes('shower')) {
+      keywords.add('electric shower installation');
+      keywords.add('high current circuits');
+      keywords.add('water heating');
+      if (circuit.power) keywords.add(`${Math.round(circuit.power/1000)}kW shower`);
+    } else if (loadType.includes('cooker')) {
+      keywords.add('cooker circuit');
+      keywords.add('diversity factor');
+      keywords.add('cooker control unit');
+    } else if (loadType.includes('socket')) {
+      keywords.add('socket circuits');
+      keywords.add('socket outlet installation');
+      if (circuit.description?.toLowerCase().includes('ring')) {
+        keywords.add('ring final circuit');
+      } else {
+        keywords.add('radial socket circuit');
+      }
+    } else if (loadType.includes('light')) {
+      keywords.add('lighting circuits');
+      keywords.add('lighting installation');
+      keywords.add('switching arrangements');
+    } else if (loadType.includes('motor')) {
+      keywords.add('motor circuits');
+      keywords.add('motor control');
+      keywords.add('starting methods');
+    }
+    
+    // Cable size keywords
+    if (circuit.cableSize) {
+      keywords.add(`${circuit.cableSize}mm cable`);
+      keywords.add(`${circuit.cableSize}mm² conductor`);
+    }
+    
+    // Protection device keywords
+    if (circuit.protectionDevice) {
+      keywords.add(circuit.protectionDevice);
+      const match = circuit.protectionDevice.match(/(\d+)A/);
+      if (match) keywords.add(`${match[1]} amp protection`);
+    }
+    
+    // Installation method keywords
+    if (circuit.installationMethod) {
+      keywords.add(circuit.installationMethod);
+    }
+    
+    keywordsByCircuit[`circuit_${idx}_${loadType}`] = Array.from(keywords);
+  });
+  
+  return keywordsByCircuit;
+}
+
+/**
  * Extract rich keywords from job inputs for fast intelligence search
  */
 function extractInstallationKeywords(jobInputs: any, designerContext?: any): string[] {
   const keywords = new Set<string>();
   
-  // Project type keywords
-  if (jobInputs.projectInfo?.workType) {
-    const workType = jobInputs.projectInfo.workType.toLowerCase();
-    keywords.add(workType);
-    
-    // Add synonyms
-    if (workType.includes('domestic')) {
-      keywords.add('residential');
-      keywords.add('dwelling');
-    }
-    if (workType.includes('commercial')) {
-      keywords.add('business');
-      keywords.add('office');
-    }
+  // Installation type keywords
+  const installationType = detectInstallationType(jobInputs);
+  keywords.add(installationType);
+  
+  if (installationType === 'domestic') {
+    keywords.add('residential');
+    keywords.add('dwelling');
+    keywords.add('Part P');
+  } else if (installationType === 'commercial') {
+    keywords.add('business');
+    keywords.add('office');
+    keywords.add('non-domestic');
+  } else if (installationType === 'industrial') {
+    keywords.add('factory');
+    keywords.add('manufacturing');
+    keywords.add('three-phase');
   }
   
   // ✅ CIRCUIT-SPECIFIC KEYWORDS (enriched from designerContext)
@@ -581,14 +663,44 @@ TESTING PROCEDURES (3+ procedures): Test name, BS 7671 Part 6 standard, procedur
 
 Use RAG context to extract accurate tools, materials, and regulations.`;
 
-const SYSTEM_PROMPT_SIMPLIFIED = `You are an Installation Guidance Specialist generating DETAILED, CONTEXT-AWARE installation guidance for electrical circuit design documentation.
+const SYSTEM_PROMPT_SIMPLIFIED = `You are an Installation Guidance Specialist generating DETAILED, CONTEXT-AWARE, TYPE-SPECIFIC installation guidance for electrical circuit design documentation.
 
 CRITICAL REQUIREMENTS:
 1. UK English ONLY
 2. Follow BS 7671:2018+A3:2024 strictly
 3. Extract tools, materials, and regulations from RAG context below
-4. Generate specific, actionable guidance based on circuit context
+4. Generate specific, actionable guidance based on circuit context AND installation type
 5. Use structured lists with detailed metadata
+6. **Adapt guidance for DOMESTIC, COMMERCIAL, or INDUSTRIAL contexts**
+
+**INSTALLATION TYPE CONSIDERATIONS:**
+
+**DOMESTIC (Residential/Dwelling):**
+- Part P Building Regulations compliance
+- Consumer unit compatibility (domestic MCB/RCBO sizes)
+- DIY-friendly language for homeowner understanding
+- Focus on: socket ring finals, lighting circuits, showers, cookers, EV chargers
+- Bonding in special locations (bathrooms, kitchens per BS 7671 Section 701)
+- RCD protection requirements (30mA for socket outlets ≤20A)
+- Regulations: 411.3.3 (fault protection), 701.415 (bathrooms), 411.3.1.1 (ADS)
+
+**COMMERCIAL (Offices/Shops/Non-domestic):**
+- Fire alarm system integration considerations
+- Emergency lighting circuits (BS 5266)
+- Compliance with non-domestic regulations
+- Focus on: sub-distribution boards, dedicated equipment circuits, emergency systems
+- Access control and security system integration
+- Coordination with building management systems
+- Regulations: 560.6 (safety services), 313.1 (supplies for safety services)
+
+**INDUSTRIAL (Factories/Manufacturing):**
+- Three-phase supply systems
+- Motor control circuits and starting methods
+- Heavy machinery installation
+- Focus on: high current circuits, motor circuits, control panels, protective equipment
+- IP rating requirements for harsh environments
+- Arc flash protection considerations
+- Regulations: 552.1 (rotating machines), 530.3.3 (switchgear selection)
 
 RAG EXTRACTION RULES:
 - **TOOLS**: Extract from "TOOLS:" sections in RAG context
@@ -597,20 +709,63 @@ RAG EXTRACTION RULES:
 - **SPECIFICATIONS**: Use BS/EN codes from RAG (e.g., "BS 6004", "BS 7671 Section 522.6")
 - **CABLE SIZES**: Reference specific sizes from RAG or circuit design
 
+**LOAD-TYPE SPECIFIC GUIDANCE:**
+
+**EV Charger Circuits:**
+- Dedicated circuit with RCD/RCBO protection
+- Outdoor installation considerations (IP65 enclosures)
+- Earthing electrode requirements (TT systems)
+- Load management systems (if applicable)
+- Regulations: 722.531.2.101 (RCD protection), 722.411.4.1 (earthing)
+
+**Electric Shower Circuits:**
+- Supplementary bonding requirements (if extraneous parts present)
+- 30mA RCD mandatory
+- High current cable termination (10mm²/16mm²)
+- Ceiling height clearances
+- Regulations: 701.415.2 (RCD), 701.411.3.3 (supplementary bonding)
+
+**Cooker Circuits:**
+- Diversity factor application (10A + 30% + 5A if socket)
+- Dedicated cooker control unit with indicator
+- Heat-resistant cable route planning
+- Regulations: Appendix 4 (diversity), 553.1.7 (control switches)
+
+**Socket Ring Finals (Domestic):**
+- 2.5mm² cable with 1.5mm² CPC
+- 32A Type B MCB or 30mA RCBO
+- Maximum floor area 100m²
+- Ring continuity testing critical
+- Regulations: 433.1.204 (ring final circuits), Appendix 15 (ring final testing)
+
+**Lighting Circuits:**
+- 1.5mm² cable with 1.0mm² CPC
+- 6A/10A Type B MCB
+- Switching arrangements (one-way, two-way, intermediate)
+- Energy efficiency considerations (LED compatibility)
+- Regulations: 559.5 (lighting circuits), 421.1.201 (lamp holders)
+
+**Motor Circuits:**
+- Starting current considerations (DOL, Star-Delta, VSD)
+- Thermal overload protection
+- Isolator within sight of motor
+- Control circuit segregation
+- Regulations: 552.1 (rotating machines), 537.2.1.5 (isolation)
+
 CONTEXT-AWARENESS EXAMPLES:
 
-**SAFETY CONSIDERATIONS** - Extract from RAG and add context:
+**SAFETY CONSIDERATIONS** - Type and load-specific:
 {
-  "consideration": "Verify isolation before work commences",
-  "toolsRequired": ["Voltage detector", "Lock-off kit", "Warning notices"],
-  "bsReference": "BS 7671 Regulation 537.2",
+  "consideration": "Verify isolation and test for voltage before work - critical for high current shower circuit",
+  "toolsRequired": ["Voltage detector (GS38)", "Lock-off kit", "Warning notices"],
+  "bsReference": "BS 7671 Regulation 537.2.1.1",
   "priority": "critical"
 }
 
 **MATERIALS REQUIRED** - Extract from RAG with specifications:
 {
   "item": "Twin & Earth Cable",
-  "specification": "10mm² T&E to BS 6004",
+  "specification": "10mm² T&E to BS 6004 (shower circuit)",
   "quantity": "25m",
   "source": "circuit_design"
 }
@@ -628,23 +783,23 @@ CONTEXT-AWARENESS EXAMPLES:
   "cableType": "10mm² Twin & Earth (BS 6004)",
   "method": "clipped direct with 50mm thermal insulation clearance",
   "bsReference": "BS 7671 Appendix 4 (thermal de-rating)",
-  "notes": "Maintain 300mm clip spacing per manufacturer guidance"
+  "notes": "Maintain 300mm clip spacing per manufacturer guidance. Avoid contact with thermal insulation."
 }
 
 **TERMINATION REQUIREMENTS** - Detailed with torque:
 {
-  "location": "Consumer unit MCB terminals",
+  "location": "Consumer unit RCBO terminals (domestic installation)",
   "procedure": "Strip 12mm insulation, insert conductor fully into terminal, torque to 2.5Nm",
   "toolsNeeded": ["Wire strippers", "Torque screwdriver 2.5Nm", "Terminal block screwdriver"],
   "torqueSettings": "2.5Nm for 10mm² conductor",
-  "bsReference": "BS 7671 Section 526"
+  "bsReference": "BS 7671 Section 526.1"
 }
 
 **INSTALLATION PROCEDURE** - Step-by-step with context:
 {
   "stepNumber": 1,
-  "title": "Site Preparation and Isolation",
-  "description": "Verify the supply can be safely isolated at the consumer unit. Display danger notices. Use voltage detector to prove dead on all incoming supply terminals. Fit lock-off device to main switch. Test voltage detector on known live source before and after testing to confirm functionality per GS38.",
+  "title": "Site Preparation and Isolation (Domestic Installation)",
+  "description": "Verify the supply can be safely isolated at the consumer unit. Display danger notices to prevent inadvertent re-energisation. Use voltage detector compliant with GS38 to prove dead on all incoming supply terminals. Fit lock-off device to main switch. Test voltage detector on known live source before and after testing to confirm functionality. This is critical for safe working on domestic installations where multiple occupants may have access to the consumer unit.",
   "toolsForStep": ["Voltage detector (GS38)", "Lock-off kit", "Danger notices"],
   "materialsForStep": ["Warning labels"],
   "bsReferences": ["537.2.1.1", "GS38"]
@@ -654,9 +809,9 @@ CONTEXT-AWARENESS EXAMPLES:
 {
   "testName": "Continuity of Protective Conductors (R1+R2)",
   "regulation": "BS 7671 Section 643.2.1",
-  "procedure": "Connect MFT leads to line terminal at consumer unit and earth terminal at load point. Measure resistance. Record result.",
+  "procedure": "Connect MFT leads to line terminal at consumer unit and earth terminal at load point. Measure resistance. Record result on EIC Schedule of Test Results.",
   "expectedReading": "~0.8Ω for 18m run in 10mm² T&E",
-  "acceptanceCriteria": "R1+R2 must be ≤ maximum Zs minus Ze (typically < 1.0Ω for this circuit)",
+  "acceptanceCriteria": "R1+R2 must be ≤ maximum Zs minus Ze (typically < 1.0Ω for this circuit to meet disconnection time)",
   "toolsRequired": ["Megger MFT1835", "Test leads", "Continuity probe"]
 }
 
@@ -666,14 +821,15 @@ CONTEXT-AWARENESS EXAMPLES:
   "practicalProceduresCount": 8,
   "toolsExtracted": 15,
   "materialsExtracted": 10,
-  "keyRegulations": ["522.6.202", "643.2.1", "537.2", "411.3.2", "701.415"]
+  "keyRegulations": ["522.6.202", "643.2.1", "537.2.1.1", "411.3.2.2", "701.415.2"]
 }
 
 IMPORTANT REMINDERS:
-- Scale guidance based on circuit complexity
+- Scale guidance based on circuit complexity AND installation type
 - Extract tools/materials from RAG "TOOLS:" and "MATERIALS:" sections
 - Reference specific cable sizes, power ratings from RAG
 - Cite BS 7671 regulation numbers throughout
+- Adapt language: domestic = homeowner-friendly, commercial = building manager focus, industrial = technical specialist
 - Be thorough - don't artificially limit yourself to minimums`;
 
 export async function generateInstallationMethod(
@@ -914,12 +1070,38 @@ export async function generateInstallationMethod(
     : 'Installation Method: Generating comprehensive installation guide...';
   if (onProgress) onProgress(40, progressMsg);
   
+  // ✅ Detect installation type for context-aware prompting
+  const installationType = detectInstallationType(projectDetails);
+  const installationTypeContext = installationType === 'domestic' 
+    ? '(DOMESTIC INSTALLATION - Part P compliance, consumer unit, homeowner-friendly guidance)'
+    : installationType === 'industrial'
+    ? '(INDUSTRIAL INSTALLATION - Three-phase systems, motor circuits, heavy machinery)'
+    : '(COMMERCIAL INSTALLATION - Non-domestic, fire alarm integration, emergency lighting)';
+  
   // ✅ Build circuit-specific context summary for AI prompt
   let circuitContextSummary = '';
   if (designerContext?.circuits && designerContext.circuits.length > 0) {
-    circuitContextSummary = '\n\n**CIRCUIT TECHNICAL SPECIFICATIONS:**\n';
+    circuitContextSummary = `\n\n**INSTALLATION TYPE:** ${installationType.toUpperCase()} ${installationTypeContext}\n\n**CIRCUIT TECHNICAL SPECIFICATIONS:**\n`;
     designerContext.circuits.forEach((circuit: any, idx: number) => {
-      circuitContextSummary += `\nCircuit ${idx + 1}: ${circuit.description || circuit.loadType}
+      const loadType = circuit.loadType?.toLowerCase() || 'general';
+      let loadTypeGuidance = '';
+      
+      // Add load-type specific context hints
+      if (loadType.includes('ev')) {
+        loadTypeGuidance = ' [EV CHARGER - Dedicated circuit, outdoor installation, earthing electrode, load management]';
+      } else if (loadType.includes('shower')) {
+        loadTypeGuidance = ' [ELECTRIC SHOWER - Supplementary bonding, 30mA RCD, high current termination]';
+      } else if (loadType.includes('cooker')) {
+        loadTypeGuidance = ' [COOKER - Diversity factor, dedicated CCU, heat-resistant routing]';
+      } else if (loadType.includes('socket') && circuit.description?.toLowerCase().includes('ring')) {
+        loadTypeGuidance = ' [RING FINAL - 2.5mm² cable, 32A protection, ring continuity testing]';
+      } else if (loadType.includes('light')) {
+        loadTypeGuidance = ' [LIGHTING - 1.5mm² cable, switching arrangements, LED compatibility]';
+      } else if (loadType.includes('motor')) {
+        loadTypeGuidance = ' [MOTOR CIRCUIT - Starting current, thermal overload, isolator required]';
+      }
+      
+      circuitContextSummary += `\nCircuit ${idx + 1}: ${circuit.description || circuit.loadType}${loadTypeGuidance}
 - Load Type: ${circuit.loadType}
 - Power: ${circuit.power}W (Design Current: ${circuit.designCurrent}A)
 - Cable: ${circuit.cableSize}mm² with ${circuit.cpcSize}mm² CPC
@@ -940,23 +1122,39 @@ export async function generateInstallationMethod(
 - Phases: ${designerContext.supply?.phases}
 - Earthing: ${designerContext.supply?.earthing}
 - External Impedance (Ze): ${designerContext.supply?.externalImpedance}Ω`;
+  } else {
+    // No designer context - add installation type only
+    circuitContextSummary = `\n\n**INSTALLATION TYPE:** ${installationType.toUpperCase()} ${installationTypeContext}`;
   }
 
   const userPrompt = `Project: ${projectDetails.jobTitle || 'Electrical Installation'}
 Location: ${projectDetails.location || 'Site'}
-Installation Type: ${projectDetails.workType || query}
+Installation Type: ${installationType.toUpperCase()} ${installationTypeContext}
 ${circuitContextSummary}
 
 ${mode === 'simplified' 
-  ? `Generate DETAILED, CONTEXT-AWARE installation and testing guidance tailored to the specific circuit types above:
-- For EV chargers: Include outdoor installation, earthing electrode requirements, load management
-- For showers: Include supplementary bonding, RCD requirements, high current termination
-- For cookers: Include diversity calculations, dedicated circuit requirements
-- Extract specific tools from RAG "TOOLS:" sections relevant to these circuit types
+  ? `Generate DETAILED, CONTEXT-AWARE, ${installationType.toUpperCase()}-SPECIFIC installation and testing guidance tailored to the specific circuit types above:
+
+**${installationType.toUpperCase()} INSTALLATION REQUIREMENTS:**
+${installationType === 'domestic' ? '- Part P Building Regulations compliance\n- Consumer unit compatibility (domestic MCB/RCBO)\n- RCD protection for socket outlets ≤20A (30mA)\n- Special location bonding (bathrooms per Section 701)\n- Homeowner-friendly language' : ''}
+${installationType === 'commercial' ? '- Fire alarm system integration\n- Emergency lighting circuits (BS 5266)\n- Non-domestic regulations compliance\n- Building management system coordination\n- Safety services compliance (Regulation 560.6)' : ''}
+${installationType === 'industrial' ? '- Three-phase supply considerations\n- Motor control and starting methods\n- IP rating requirements for harsh environments\n- Arc flash protection\n- Heavy machinery installation standards (Regulation 552.1)' : ''}
+
+**CIRCUIT-SPECIFIC GUIDANCE:**
+- For EV chargers: Outdoor installation (IP65), earthing electrode (TT systems), load management, Regulation 722.531.2.101
+- For showers: Supplementary bonding, 30mA RCD mandatory, high current termination (10-16mm²), Regulation 701.415.2
+- For cookers: Diversity (10A + 30% + 5A), dedicated CCU with indicator, heat-resistant routing, Regulation 553.1.7
+- For socket ring finals: 2.5mm² cable, 32A protection, max 100m² floor area, ring continuity critical, Regulation 433.1.204
+- For lighting: 1.5mm² cable, 6A/10A protection, switching arrangements, LED compatibility, Regulation 559.5
+- For motors: Starting current (DOL/Star-Delta/VSD), thermal overload, isolator within sight, Regulation 552.1
+
+**EXTRACTION REQUIREMENTS:**
+- Extract specific tools from RAG "TOOLS:" sections relevant to ${installationType} installations and these circuit types
 - Extract specific materials from RAG "MATERIALS:" sections
-- Reference BS 7671 regulations specific to these installations
-- Generate 6-10 installation procedure steps specific to these circuits
-- Include testing requirements with expected values based on actual circuit parameters`
+- Reference BS 7671 regulations specific to ${installationType} installations and these load types
+- Generate 6-10 installation procedure steps specific to these circuits and ${installationType} context
+- Include testing requirements with expected values based on actual circuit parameters
+- Adapt language to ${installationType} context (domestic = homeowner-friendly, commercial = building manager, industrial = technical specialist)`
   : 'Generate professional installation method statement for PDF export:\n- 12-15 installation steps (100-150 words each)\n- Testing procedures with BS 7671 Part 6 compliance\n- Extract tools/materials from RAG context below'
 }
 
