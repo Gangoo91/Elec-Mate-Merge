@@ -187,23 +187,34 @@ function extractDesignKeywords(designedCircuits: any[], supply: any, projectInfo
     if (circuit.loadType) keywords.add(circuit.loadType.toLowerCase());
     if (circuit.location) keywords.add(circuit.location.toLowerCase());
     
-    // ACTUAL designed cable specification
-    if (circuit.cableSpec) {
-      keywords.add(circuit.cableSpec.toLowerCase()); // e.g., "10mm² twin + earth"
-      const cableSizeMatch = circuit.cableSpec.match(/(\d+(?:\.\d+)?)\s*mm/);
+    // ACTUAL designed cable specification (from cableType field)
+    if (circuit.cableType) {
+      keywords.add(circuit.cableType.toLowerCase());
+      const cableSizeMatch = circuit.cableType.match(/(\d+(?:\.\d+)?)\s*mm/);
       if (cableSizeMatch) {
         keywords.add(`${cableSizeMatch[1]}mm cable`);
         keywords.add(`${cableSizeMatch[1]}mm² cable`);
       }
     }
     
-    // ACTUAL protection device
-    if (circuit.protection) {
-      keywords.add(circuit.protection.toLowerCase()); // e.g., "50A Type B MCB"
-      const ratingMatch = circuit.protection.match(/(\d+)A/);
-      if (ratingMatch) {
-        keywords.add(`${ratingMatch[1]}A protection`);
-        keywords.add(`${ratingMatch[1]} amp`);
+    // Add cable size if available
+    if (circuit.cableSize) {
+      keywords.add(`${circuit.cableSize}mm cable`);
+      keywords.add(`${circuit.cableSize}mm² cable`);
+    }
+    
+    // ACTUAL protection device (from protectionDevice object)
+    if (circuit.protectionDevice) {
+      const device = circuit.protectionDevice;
+      if (device.rating) {
+        keywords.add(`${device.rating}A protection`);
+        keywords.add(`${device.rating} amp`);
+      }
+      if (device.type) {
+        keywords.add(device.type.toLowerCase());
+      }
+      if (device.curve) {
+        keywords.add(`type ${device.curve}`.toLowerCase());
       }
     }
     
@@ -247,17 +258,23 @@ async function generateInstallationGuidance(
   regulations: any[]
 ) {
   // Build detailed circuit specifications for AI
-  const circuitSpecs = designedCircuits.map((circuit: any, i: number) => `
+  const circuitSpecs = designedCircuits.map((circuit: any, i: number) => {
+    const protectionStr = circuit.protectionDevice 
+      ? `${circuit.protectionDevice.rating}A Type ${circuit.protectionDevice.curve} ${circuit.protectionDevice.type}`
+      : 'Not specified';
+    
+    return `
 ### Circuit ${i + 1}: ${circuit.name}
-- **Designed Cable**: ${circuit.cableSpec} (ACTUAL designed specification)
-- **Designed Protection**: ${circuit.protection} (ACTUAL designed device)
-- **Installation Method**: ${circuit.installationMethod}
+- **Designed Cable**: ${circuit.cableType || `${circuit.cableSize}mm²`} (ACTUAL designed specification)
+- **Designed Protection**: ${protectionStr} (ACTUAL designed device)
+- **Installation Method**: ${circuit.installationMethod || 'Not specified'}
 - **Cable Length**: ${circuit.cableLength}m
 - **Load**: ${circuit.loadDetails?.totalPower || circuit.loadPower}W
 - **Location**: ${circuit.location || 'Not specified'}
 
 ⚠️ CRITICAL: Use these EXACT specifications. Do not suggest alternatives or different cable sizes.
-`).join('\n');
+`;
+  }).join('\n');
 
   const systemPrompt = `You are an expert Installation Guidance Specialist for electrical installations.
 
