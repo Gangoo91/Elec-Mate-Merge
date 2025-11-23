@@ -183,3 +183,8 @@ timeout_sec = 300
 verify_jwt = false
 timeout_sec = 300
 
+# Cost Engineer V3 - AI-powered pricing with RAG
+[functions.cost-engineer-v3]
+verify_jwt = false
+timeout_sec = 360
+
