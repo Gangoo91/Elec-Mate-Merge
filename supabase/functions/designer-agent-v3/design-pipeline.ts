@@ -343,9 +343,9 @@ export class DesignPipeline {
     // ========================================
     let validationResult = this.validator.validate(design, normalized.supply.voltage);
     
-    // RELAXED: Reduce auto-correction retries to 0 (surface issues instead of failing)
+    // Auto-correction: Retry validation failures with improved RAG context
     if (!validationResult.isValid) {
-      const maxRetries = 0; // CHANGED: Was 2, now 0 - surface validation issues
+      const maxRetries = 2; // AGGRESSIVE: 2 retries with improved RAG (50 results, 40 keywords)
       let correctionAttempt = 0;
       
       // Update progress to show validation complete, entering correction phase
@@ -429,7 +429,10 @@ export class DesignPipeline {
               );
             }
           } else {
-            this.logger.info(`Correction successful on attempt ${correctionAttempt}!`);
+            this.logger.info(`Correction successful on attempt ${correctionAttempt}!`, {
+              originalIssues: validationResult.issues.length,
+              correctedCircuits: failedCircuitNumbers.size
+            });
           }
         } catch (correctionError) {
           this.logger.error('Correction attempt failed', { 
