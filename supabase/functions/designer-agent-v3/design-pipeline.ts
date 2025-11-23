@@ -48,34 +48,22 @@ export class DesignPipeline {
     });
 
     // ========================================
-    // PHASE 2: Cache Check (DISABLED FOR TESTING)
-    // ========================================
-    // ========================================
-    // PHASE 2: Cache Check (Phase 2.1: Re-enabled for 60% faster cache hits)
+    // PHASE 2: Cache Check (DISABLED FOR TESTING RING FINAL FIX)
     // ========================================
     const cacheKey = this.cache.generateKey(normalized);
-    const cached = await this.cache.get(cacheKey);
+    
+    // TEMPORARILY DISABLED - Force fresh generation for testing
+    const cached = null; // Force cache miss
+    // const cached = await this.cache.get(cacheKey); // DISABLED
     
     if (cached) {
-      this.logger.info('Cache HIT', {
-        key: cacheKey.slice(0, 12),
-        age: cached.ageSeconds,
-        hits: cached.hitCount
+      // This block will never execute while disabled
+      this.logger.info('Cache HIT (disabled)', {
+        key: cacheKey.slice(0, 12)
       });
-      
-      return {
-        success: true,
-        circuits: cached.design.circuits,
-        supply: normalized.supply,
-        fromCache: true,
-        cacheAge: cached.ageSeconds,
-        processingTime: Date.now() - startTime,
-        validationPassed: true,
-        autoFixApplied: false
-      };
     }
     
-    this.logger.info('Cache MISS - proceeding with fresh generation', {
+    this.logger.info('Cache DISABLED - forcing fresh generation', {
       key: cacheKey.slice(0, 12)
     });
 
@@ -501,18 +489,11 @@ export class DesignPipeline {
     });
 
     // ========================================
-    // PHASE 6: Cache Storage (Phase 2.1: Re-enabled)
+    // PHASE 6: Cache Storage (DISABLED FOR TESTING RING FINAL FIX)
     // ========================================
-    try {
-      await this.cache.set(cacheKey, design);
-      this.logger.info('Design cached successfully', {
-        key: cacheKey.slice(0, 12)
-      });
-    } catch (error) {
-      this.logger.warn('Cache storage failed (non-critical)', {
-        error: error instanceof Error ? error.message : 'Unknown error'
-      });
-    }
+    // TEMPORARILY DISABLED - Don't cache during ring final testing
+    // await this.cache.set(cacheKey, design);
+    this.logger.info('Cache storage DISABLED for testing');
 
     const duration = Date.now() - startTime;
     this.logger.info('Pipeline complete', {
@@ -587,8 +568,9 @@ export class DesignPipeline {
     // Apply deterministic calculations (skip validation for speed)
     design.circuits = this.calculator.applyToCircuits(design.circuits, normalized.supply);
     
-    // Cache and return
-    await this.cache.set(cacheKey, design);
+    // Cache and return (DISABLED FOR TESTING RING FINAL FIX)
+    // await this.cache.set(cacheKey, design);
+    this.logger.info('Cache storage DISABLED for testing (fast path)');
     
     return {
       success: true,
