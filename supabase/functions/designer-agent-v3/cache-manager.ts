@@ -71,13 +71,13 @@ export class CacheManager {
    * Validates that cached design has valid circuits
    */
   async get(key: string): Promise<CachedDesign | null> {
-    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
     
     const { data, error } = await this.supabase
       .from('circuit_design_cache_v3')
       .select('*')
       .eq('cache_key', key)
-      .gte('created_at', sevenDaysAgo)
+      .gte('created_at', thirtyDaysAgo)
       .single();
 
     if (error || !data) {
