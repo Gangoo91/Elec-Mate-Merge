@@ -92,7 +92,7 @@ Deno.serve(async (req) => {
       } else {
         console.log('✅ Watchdog: Agents are active or making progress');
       }
-    }, 90000); // 90 seconds
+    }, 180000); // 180 seconds - catches edge function timeouts (was 90s)
 
     // Keep function alive until design completes
     EdgeRuntime.waitUntil(
