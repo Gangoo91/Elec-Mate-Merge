@@ -34,8 +34,8 @@ export const StructuredDesignSections = ({ sections }: StructuredDesignSectionsP
     { key: 'complianceConfirmation', title: '5. Compliance Confirmation', icon: CheckCircle2 },
     { key: 'designJustification', title: '6. Design Justification', icon: MessageSquare },
     { key: 'installationGuidance', title: '7. Installation Guidance', icon: Wrench },
-    { key: 'safetyNotes', title: '8. Safety Notes', icon: AlertTriangle },
-    { key: 'testingCommissioningGuidance', title: '9. Testing & Commissioning', icon: ClipboardCheck }
+    { key: 'testingCommissioningGuidance', title: '8. Testing & Commissioning', icon: ClipboardCheck },
+    { key: 'safetyNotes', title: '9. Safety Notes', icon: AlertTriangle }
   ];
 
   return (
