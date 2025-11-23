@@ -74,11 +74,17 @@ function groupCircuitsBySimilarity(circuits: any[]): any[][] {
   const groups: Map<string, any[]> = new Map();
   
   circuits.forEach(circuit => {
+    // DEFENSIVE: Ensure circuit object exists
+    if (!circuit) {
+      console.warn('⚠️ Null circuit in batch, skipping');
+      return;
+    }
+    
     // Group by load type AND complexity
     const isComplex = 
       (circuit.loadPower || 0) > 7200 || // High power (>32A)
       (circuit.cableLength || 0) > 100 || // Long run
-      circuit.specialLocation !== 'none'; // Special location
+      (circuit.specialLocation && circuit.specialLocation !== 'none'); // Special location
     
     const key = `${circuit.loadType || 'other'}_${isComplex ? 'complex' : 'simple'}`;
     
