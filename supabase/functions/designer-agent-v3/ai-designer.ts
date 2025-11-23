@@ -187,7 +187,7 @@ export class AIDesigner {
     // Output format (FOCUSED on electrical design - installation handled separately)
     parts.push('=== OUTPUT FORMAT ===');
     parts.push('1. AT A GLANCE CARD: loadKw (loadPower/1000), loadIb (Ib with unit), Cable, Device, VD (pass/fail), Zs, Compliance, Notes');
-    parts.push('2. 8 SECTIONS: Circuit Summary, Load Details, Cable Selection & Calc, Device Selection, Compliance, Justification, Safety (electrical only), Testing (basic electrical tests)');
+    parts.push('2. 8 SECTIONS: Summary, Load, Cable Calc, Device, Compliance, Justification, Safety (electrical), Testing (electrical tests only)');
     parts.push('');
     
     // === YOUR ROLE ===
@@ -390,7 +390,7 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
     // Consolidated format and rules
     parts.push('=== OUTPUT FORMAT ===');
     parts.push('1. AT A GLANCE: loadKw, loadIb, Cable, Device, VD, Zs, Compliance, Notes');
-    parts.push('2. 9 SECTIONS: Summary, Load, Cable Calc, Device, Compliance, Justification, Installation (electrical only), Safety, Testing');
+    parts.push('2. 8 SECTIONS: Summary, Load, Cable Calc, Device, Compliance, Justification, Safety (electrical), Testing (electrical tests only)');
     parts.push('3. installationNotes STRING ONLY - no installationGuidance object');
     parts.push('');
     
@@ -896,7 +896,7 @@ Output: cable size, MCB/RCBO rating, key calculations, brief installation notes 
                       },
                       sections: {
                         type: 'object',
-                        description: 'EXACTLY 9 sections in strict order - NO REPETITION',
+                        description: 'EXACTLY 8 sections in strict order - NO REPETITION',
                         properties: {
                           circuitSummary: { 
                             type: 'string', 
@@ -922,17 +922,13 @@ Output: cable size, MCB/RCBO rating, key calculations, brief installation notes 
                             type: 'string', 
                             description: '6. Design Justification: Professional engineering rationale for design choices and safety margins (100-150 words)' 
                           },
-                          installationGuidance: { 
-                            type: 'string', 
-                            description: '7. Installation Guidance: THREE PARAGRAPHS separated by double line breaks. Paragraph 1 (3-5 sentences): Installation best practices - cable routing methods for this load type, fixing intervals per BS 7671, termination procedures with torque settings, common mistakes to avoid. Paragraph 2 (3-5 sentences): Testing & commissioning - required BS 7671 Part 6 tests, test equipment needed, expected readings and acceptance criteria, verification checklist. Paragraph 3 (3-5 sentences): Inspection & maintenance - visual inspection points, common EICR observation codes for this circuit type, maintenance intervals, typical defects to watch for. Use Practical Work Intelligence heavily (90% weighting). Make it highly specific to THIS circuit type, power rating, and installation method.' 
-                          },
                           safetyNotes: { 
                             type: 'string', 
-                            description: '8. Safety Notes: Critical safety warnings, isolation requirements, and safe working practices (100-150 words)' 
+                            description: '7. Safety Notes: Critical electrical safety warnings, isolation requirements, and safe working practices (100-150 words)' 
                           },
                           testingCommissioningGuidance: { 
                             type: 'string', 
-                            description: '9. Testing & Commissioning Guidance: Required tests (R1+R2, Zs, insulation, RCD), expected results, and acceptance criteria (150-200 words)' 
+                            description: '8. Testing & Commissioning Guidance: BS 7671 Part 6 electrical tests ONLY - continuity of protective conductors (R1+R2), earth fault loop impedance (Zs), insulation resistance between live conductors and earth, RCD trip time and residual current. Include expected numerical readings based on cable size and circuit parameters, and acceptance criteria per GN3. NO installation procedures (handled by Installation Agent). (150-200 words)' 
                           }
                         },
                         required: [
@@ -942,7 +938,6 @@ Output: cable size, MCB/RCBO rating, key calculations, brief installation notes 
                           'protectiveDeviceSelection', 
                           'complianceConfirmation', 
                           'designJustification', 
-                          'installationGuidance', 
                           'safetyNotes', 
                           'testingCommissioningGuidance'
                         ]
