@@ -55,7 +55,7 @@ const AIAnalysisHeader = ({
             <Brain className="h-7 w-7 text-elec-yellow" />
             <div>
               <CardTitle className="text-xl sm:text-2xl font-bold text-white">AI Cost Engineer Analysis</CardTitle>
-              <p className="text-base sm:text-sm text-white/80 mt-1">
+              <p className="text-base sm:text-sm text-white mt-1">
                 Comprehensive pricing and profitability assessment
               </p>
             </div>
@@ -83,7 +83,7 @@ const AIAnalysisHeader = ({
           {complexity && (
             <div className="p-3 rounded-lg bg-background/30 border border-border/30">
               <div className="flex items-center gap-2 mb-1">
-                <TrendingUp className="h-4 w-4 text-white/70" />
+                <TrendingUp className="h-4 w-4 text-white/90" />
                 <span className="text-sm sm:text-xs text-white/90">Complexity</span>
               </div>
               <div className="flex items-center gap-2">
@@ -99,7 +99,7 @@ const AIAnalysisHeader = ({
           {confidence && (
             <div className="p-3 rounded-lg bg-background/30 border border-border/30">
               <div className="flex items-center gap-2 mb-1">
-                <CheckCircle2 className="h-4 w-4 text-white/70" />
+                <CheckCircle2 className="h-4 w-4 text-white/90" />
                 <span className="text-sm sm:text-xs text-white/90">Confidence</span>
               </div>
               <div className="flex items-center gap-2">
@@ -115,7 +115,7 @@ const AIAnalysisHeader = ({
           {riskAssessment && (
             <div className="p-3 rounded-lg bg-background/30 border border-border/30">
               <div className="flex items-center gap-2 mb-1">
-                <AlertTriangle className="h-4 w-4 text-white/70" />
+                <AlertTriangle className="h-4 w-4 text-white/90" />
                 <span className="text-sm sm:text-xs text-white/90">Risk Level</span>
               </div>
               <div className="flex items-center gap-2">
