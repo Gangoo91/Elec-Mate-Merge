@@ -253,10 +253,20 @@ export class DesignPipeline {
         lastReasoning = result.reasoning;
       });
 
+      // FIX: Renumber circuits sequentially (batch processing causes 1,2,1,2 pattern)
+      allDesignedCircuits = allDesignedCircuits.map((circuit, globalIndex) => ({
+        ...circuit,
+        circuitNumber: globalIndex + 1 // Sequential: 1, 2, 3, 4, 5, 6, 7, 8...
+      }));
+
       design = {
         circuits: allDesignedCircuits,
         reasoning: lastReasoning
       };
+
+      this.logger.info('Circuits renumbered sequentially after batch merge', {
+        circuitNumbers: allDesignedCircuits.map(c => c.circuitNumber)
+      });
 
       this.logger.info('All batches complete', {
         totalCircuits: design.circuits.length,
