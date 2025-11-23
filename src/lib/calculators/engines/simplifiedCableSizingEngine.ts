@@ -122,15 +122,21 @@ export const calculateSimplifiedCableSize = (inputs: SimplifiedCableSizingInputs
     const groupingFactor = getGroupingFactor(groupingCircuits);
     const overallFactor = tempFactor * groupingFactor;
     
-    // Calculate derated capacity
+    // Calculate derated capacity (Iz)
     const deratedCapacity = baseCapacity * overallFactor;
+    
+    // ✅ BS 7671 RULE 1: Design current must have safety margin
+    // Cable capacity must be >= Ib * 1.25 for reliability
+    const currentWithMargin = current * 1.25;
+    const currentCompliant = deratedCapacity >= currentWithMargin;
     
     // Calculate voltage drop
     const voltageDropPercent = calculateVoltageDropPercent(cableType, size, current, length, voltage);
-    
-    // Check BOTH current capacity AND voltage drop compliance
-    const currentCompliant = deratedCapacity >= current;
     const voltageDropCompliant = voltageDropPercent <= voltageDropLimit;
+    
+    // ✅ BS 7671 RULE 2: Protection device must not exceed cable capacity
+    // This validation happens in the designer agent when selecting MCB/RCBO
+    // Here we just ensure cable can handle the design current safely
     
     if (currentCompliant && voltageDropCompliant) {
       const safetyMargin = ((deratedCapacity - current) / current) * 100;
@@ -139,11 +145,19 @@ export const calculateSimplifiedCableSize = (inputs: SimplifiedCableSizingInputs
       let selectionReason: 'current' | 'voltage-drop' | 'both' = 'both';
       if (i > 0) {
         const prevSize = standardSizes[i - 1];
-        const prevVD = calculateVoltageDropPercent(cableType, prevSize, current, length, voltage);
-        if (prevVD > voltageDropLimit) {
-          selectionReason = 'voltage-drop';
-        } else {
-          selectionReason = 'current';
+        const prevCableData = getCableCapacity(cableType, prevSize);
+        
+        if (prevCableData) {
+          const prevBaseCapacity = prevCableData.capacities[referenceMethod] || Math.min(...Object.values(prevCableData.capacities));
+          const prevDeratedCapacity = prevBaseCapacity * overallFactor;
+          const prevCurrentCompliant = prevDeratedCapacity >= currentWithMargin;
+          const prevVD = calculateVoltageDropPercent(cableType, prevSize, current, length, voltage);
+          
+          if (prevVD > voltageDropLimit) {
+            selectionReason = 'voltage-drop';
+          } else if (!prevCurrentCompliant) {
+            selectionReason = 'current';
+          }
         }
       }
       

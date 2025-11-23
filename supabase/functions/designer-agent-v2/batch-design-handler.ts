@@ -1449,6 +1449,9 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
       const originalSize = circuit.cableSize;
       const originalCableType = circuit.cableType || 'pvc-twin-earth';
       
+      // ✅ Define standard sizes for validation
+      const standardSizes = [1.0, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300];
+      
       try {
         // Step 1: Determine optimal cable TYPE
         const loadTypeContext = getLoadTypeRequirements(circuit.loadType);
@@ -1535,6 +1538,55 @@ Design each circuit with full compliance to BS 7671:2018+A3:2024.`;
     }
     
     logger.info('✅ BS 7671 calculation engine optimization complete');
+    
+    // ✅ PHASE 3: VALIDATE PROTECTION DEVICE vs CABLE CAPACITY (In ≤ Iz rule)
+    logger.info('🔒 Validating protection device ratings against cable capacity (In ≤ Iz)...');
+    for (let i = 0; i < allDesignedCircuits.length; i++) {
+      const circuit = allDesignedCircuits[i];
+      const protectionRating = circuit.protectionDevice?.rating || 0;
+      const cableCapacity = circuit.calculations?.Iz || 0;
+      
+      // BS 7671 Rule: Protection device rating (In) MUST NOT exceed cable capacity (Iz)
+      if (protectionRating > cableCapacity) {
+        const nextCableSize = standardSizes[standardSizes.findIndex(s => s === circuit.cableSize) + 1];
+        
+        if (!circuit.warnings) circuit.warnings = [];
+        circuit.warnings.push(
+          `⚠️ CRITICAL: ${protectionRating}A protection device exceeds ${cableCapacity}A cable capacity (BS 7671 violation). Cable size increased to ${nextCableSize}mm² for compliance.`
+        );
+        
+        logger.warn(`❌ In > Iz violation detected for "${circuit.name}"`, {
+          protectionRating,
+          cableCapacity,
+          currentCableSize: circuit.cableSize,
+          nextCableSize,
+          action: 'Increasing cable size'
+        });
+        
+        // Auto-fix: Increase cable size
+        if (nextCableSize) {
+          circuit.cableSize = nextCableSize;
+          
+          // Recalculate capacity with new size
+          const sizeResult = calculateSimplifiedCableSize({
+            current: circuit.calculations?.Ib || circuit.loadPower / supply.voltage,
+            installationType: circuit.installationMethod || (isCommercial ? 'conduit' : 'clipped-direct'),
+            ambientTemp: supply.ambientTemp || 30,
+            groupingCircuits: supply.groupingFactor || 1,
+            length: circuit.cableLength,
+            voltage: supply.voltage || 230,
+            cableType: circuit.cableType
+          });
+          
+          if (sizeResult) {
+            circuit.calculations.Iz = sizeResult.deratedCapacity;
+            logger.info(`✅ Cable size increased for "${circuit.name}": ${circuit.cableSize}mm² (new Iz: ${sizeResult.deratedCapacity}A)`);
+          }
+        }
+      }
+    }
+    
+    logger.info('✅ Protection device validation complete');
     
     // 6.5. VALIDATION: Convert to sanity check + logging system (not a failure gate)
     logger.info('✅ Performing post-design validation sanity checks...');
