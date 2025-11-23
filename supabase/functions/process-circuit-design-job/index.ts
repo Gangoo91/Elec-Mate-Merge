@@ -65,30 +65,32 @@ Deno.serve(async (req) => {
       // This is expected for long-running jobs - orchestrator updates DB directly
     });
 
-    // Watchdog: Detect if agent fails to start within 90 seconds
+    // Watchdog: Detect if agents fail to start within 90 seconds
     const watchdogDelay = setTimeout(async () => {
-      console.log('⏰ Watchdog: Checking if agent started...');
+      console.log('⏰ Watchdog: Checking if agents started...');
       
       const { data: currentJob } = await supabase
         .from('circuit_design_jobs')
-        .select('progress, status')
+        .select('progress, status, designer_progress, installer_progress')
         .eq('id', jobId)
         .single();
       
-      // If job hasn't progressed beyond 35% in 90 seconds, agent never started
-      if (currentJob && currentJob.status === 'processing' && currentJob.progress <= 35) {
-        console.error('❌ Watchdog: Agent failed to start - marking job as failed');
+      // Only fail if job is still pending OR has very low progress after 90s
+      const hasProgress = (currentJob?.designer_progress || 0) > 5 || (currentJob?.installer_progress || 0) > 5 || (currentJob?.progress || 0) > 5;
+      
+      if (currentJob && currentJob.status === 'pending' && !hasProgress) {
+        console.error('❌ Watchdog: Agents failed to start - marking job as failed');
         
         await supabase
           .from('circuit_design_jobs')
           .update({
             status: 'failed',
-            error_message: 'Design agent failed to start. This may be a temporary platform issue. Please try generating the design again.',
+            error_message: 'Design agents failed to start. This may be a temporary platform issue. Please try generating the design again.',
             completed_at: new Date().toISOString()
           })
           .eq('id', jobId);
       } else {
-        console.log('✅ Watchdog: Agent is active');
+        console.log('✅ Watchdog: Agents are active or making progress');
       }
     }, 90000); // 90 seconds
 

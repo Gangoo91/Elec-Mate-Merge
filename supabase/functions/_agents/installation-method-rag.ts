@@ -36,9 +36,11 @@ export async function searchInstallationMethodRAG(
   const startTime = Date.now();
   
   console.log('⚡ Installation Method RAG (fast intelligence search)', {
-    keywords: keywords.slice(0, 5),
+    keywordCount: keywords.length,
+    keywordSet: keywords.slice(0, 8).join(', '),
     workType,
-    circuitTypes: circuitTypes?.slice(0, 3)
+    circuitTypes: circuitTypes?.slice(0, 3),
+    limit
   });
   
   // QUERY 1: Regulations Intelligence (FAST - GIN keyword indexes)
@@ -70,10 +72,12 @@ export async function searchInstallationMethodRAG(
   const qualityScore = regQuality + pwQuality;
   
   console.log(`✅ Installation Method RAG complete in ${searchTimeMs}ms:`, {
-    regulations: regulations.length,
-    practicalWork: practicalWorkResult.results.length,
+    regulationHits: regulations.length,
+    practicalWorkHits: practicalWorkResult.results.length,
+    totalHits: regulations.length + practicalWorkResult.results.length,
     practicalQuality: practicalWorkResult.qualityScore.toFixed(1),
-    combinedQuality: qualityScore.toFixed(1)
+    combinedQuality: qualityScore.toFixed(1),
+    searchSpeed: searchTimeMs < 300 ? '🚀 FAST' : searchTimeMs < 600 ? '✅ GOOD' : '⚠️ SLOW'
   });
   
   return {
