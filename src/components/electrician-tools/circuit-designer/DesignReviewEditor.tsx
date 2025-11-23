@@ -24,6 +24,8 @@ import { MobileCircuitResults } from './MobileCircuitResults';
 import { CircuitCard } from './CircuitCard';
 import { RequestSummaryHeader } from './RequestSummaryHeader';
 import { processElectricalText } from '@/lib/text-processor';
+import { ExpectedTestsDisplay } from './ExpectedTestsDisplay';
+import { InstallationGuidanceDisplay } from './InstallationGuidanceDisplay';
 
 interface DesignReviewEditorProps {
   design: InstallationDesign;
@@ -1561,6 +1563,14 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               </div>
             </div>
 
+            {/* Expected Test Results */}
+            {currentCircuit.expectedTests && (
+              <ExpectedTestsDisplay 
+                expectedTests={currentCircuit.expectedTests}
+                circuitName={currentCircuit.name}
+              />
+            )}
+
             {/* Justifications */}
             <div className="space-y-2.5 sm:space-y-3 bg-card/50 p-3 sm:p-4 rounded-lg border border-primary/10">
               <div className="flex items-center justify-between gap-2">
@@ -1699,208 +1709,12 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               </div>
             )}
 
-            {/* 5. Installation Method Guidance */}
+            {/* Installation Method Guidance - New Component */}
             {currentCircuit.installationGuidance && (
-              <div className="space-y-4 bg-card/50 p-4 rounded-lg border border-primary/10">
-                <div className="flex items-center gap-2">
-                  <Wrench className="h-4 w-4 text-primary" />
-                  <h4 className="font-semibold text-white">Installation Guidance</h4>
-                </div>
-                <div className="space-y-4">
-                  {/* Cable Routing */}
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Cable className="h-4 w-4 text-blue-400" />
-                      <h5 className="text-sm font-semibold text-white">Cable Routing</h5>
-                    </div>
-                    <div className="bg-card/30 border border-border/40 rounded-lg p-3">
-                      {currentCircuit.installationGuidance?.cableRouting && 
-                       Array.isArray(currentCircuit.installationGuidance.cableRouting) && 
-                       currentCircuit.installationGuidance.cableRouting.length > 0 ? (
-                        <ul className="space-y-3">
-                          {currentCircuit.installationGuidance.cableRouting.map((routing: any, idx: number) => (
-                            <li key={idx} className="text-sm text-white/90 text-left">
-                              <div className="flex items-start gap-2">
-                                <span className="text-blue-400 font-bold mt-1">→</span>
-                                <div className="flex-1">
-                                  <p className="leading-relaxed">
-                                    {typeof routing === 'string' ? routing : (routing.step || routing.description || 'No description')}
-                                  </p>
-                                  {typeof routing === 'object' && routing.cableType && (
-                                    <p className="text-xs text-white/60 mt-1">
-                                      Cable: {routing.cableType} | Method: {routing.method}
-                                    </p>
-                                  )}
-                                  {typeof routing === 'object' && routing.bsReference && (
-                                    <p className="text-xs text-amber-400/80 mt-1">
-                                      {routing.bsReference}
-                                    </p>
-                                  )}
-                                  {routing.notes && (
-                                    <p className="text-xs text-white/50 italic mt-1">{routing.notes}</p>
-                                  )}
-                                </div>
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="text-sm text-white/60 italic">No cable routing guidance available</p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Termination Requirements */}
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Wrench className="h-4 w-4 text-green-400" />
-                      <h5 className="text-sm font-semibold text-white">Termination Requirements</h5>
-                    </div>
-                    <div className="bg-card/30 border border-border/40 rounded-lg p-3">
-                      {Array.isArray(currentCircuit.installationGuidance.terminationRequirements) && 
-                       currentCircuit.installationGuidance.terminationRequirements.length > 0 ? (
-                        <ul className="space-y-3">
-                          {currentCircuit.installationGuidance.terminationRequirements.map((term: any, idx: number) => (
-                            <li key={idx} className="text-sm text-white/90 text-left">
-                              <div className="space-y-1">
-                                <p className="font-semibold text-green-400">{term.location}</p>
-                                <p className="leading-relaxed">{term.procedure}</p>
-                                {term.toolsNeeded && term.toolsNeeded.length > 0 && (
-                                  <p className="text-xs text-white/60">
-                                    Tools: {term.toolsNeeded.join(', ')}
-                                  </p>
-                                )}
-                                {term.torqueSettings && (
-                                  <p className="text-xs text-amber-400/80">
-                                    Torque: {term.torqueSettings}
-                                  </p>
-                                )}
-                                {term.bsReference && (
-                                  <p className="text-xs text-amber-400/80">{term.bsReference}</p>
-                                )}
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="text-sm text-white/60 italic">No termination guidance available</p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Testing Requirements */}
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 mb-2">
-                      <TestTube className="h-4 w-4 text-purple-400" />
-                      <h5 className="text-sm font-semibold text-white">Testing Requirements</h5>
-                    </div>
-                    <div className="bg-card/30 border border-border/40 rounded-lg p-3">
-                      {currentCircuit.testingRequirements && typeof currentCircuit.testingRequirements === 'object' ? (
-                        <div className="space-y-3 text-left">
-                          {/* Intro */}
-                          {currentCircuit.testingRequirements.intro && (
-                            <p className="text-sm text-white/90 leading-relaxed">
-                              {currentCircuit.testingRequirements.intro}
-                            </p>
-                          )}
-                          
-                          {/* Tests */}
-                          {Array.isArray(currentCircuit.testingRequirements.tests) && 
-                           currentCircuit.testingRequirements.tests.length > 0 && (
-                            <ul className="space-y-3">
-                              {currentCircuit.testingRequirements.tests.map((test: any, idx: number) => (
-                                <li key={idx} className="border-l-2 border-purple-400/50 pl-3">
-                                  <p className="font-semibold text-purple-400 text-sm">{test.testName}</p>
-                                  {test.regulation && (
-                                    <p className="text-xs text-amber-400/80 mt-1">{test.regulation}</p>
-                                  )}
-                                  <p className="text-sm text-white/80 mt-1 leading-relaxed">{test.procedure}</p>
-                                  {test.expectedReading && (
-                                    <p className="text-xs text-green-400/80 mt-1">
-                                      Expected: {test.expectedReading}
-                                    </p>
-                                  )}
-                                  {test.acceptanceCriteria && (
-                                    <p className="text-xs text-white/60 mt-1">
-                                      Pass criteria: {test.acceptanceCriteria}
-                                    </p>
-                                  )}
-                                  {test.toolsRequired && test.toolsRequired.length > 0 && (
-                                    <p className="text-xs text-white/50 mt-1">
-                                      Tools: {test.toolsRequired.join(', ')}
-                                    </p>
-                                  )}
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                          
-                          {/* Recording Note */}
-                          {currentCircuit.testingRequirements.recordingNote && (
-                            <p className="text-xs text-white/60 italic border-t border-white/10 pt-2 mt-2">
-                              {currentCircuit.testingRequirements.recordingNote}
-                            </p>
-                          )}
-                        </div>
-                      ) : (
-                        <p className="text-sm text-white/60 italic">No testing requirements available</p>
-                      )}
-                    </div>
-                  </div>
-                  
-                  {/* Fixings & Support */}
-                  {currentCircuit.installationGuidance?.fixingsAndSupport && 
-                   currentCircuit.installationGuidance.fixingsAndSupport.length > 0 && (
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Anchor className="h-4 w-4 text-orange-400" />
-                        <h5 className="text-sm font-semibold text-white">Fixings & Support</h5>
-                      </div>
-                      <div className="bg-card/30 border border-border/40 rounded-lg p-3">
-                        <div 
-                          className="text-sm text-white/90 leading-relaxed text-left"
-                          dangerouslySetInnerHTML={{ 
-                            __html: processElectricalText(currentCircuit.installationGuidance.fixingsAndSupport.join(' ') || '') 
-                          }}
-                        />
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Safety Notes */}
-                  {currentCircuit.installationGuidance?.safetyNotes?.length > 0 && (
-                    <div className="bg-amber-500/10 border border-amber-500/20 p-3 rounded-lg">
-                      <p className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                        <AlertTriangle className="h-4 w-4 text-amber-400" />
-                        Safety Notes
-                      </p>
-                      <ul className="space-y-2">
-                        {currentCircuit.installationGuidance.safetyNotes.map((note, idx) => (
-                          <li key={idx} className="text-sm text-white/90 flex items-start gap-2 text-left leading-relaxed">
-                            <span className="text-amber-400 font-bold">•</span>
-                            <span className="flex-1">
-                              {typeof note === 'string' ? note : (note as any).consideration || JSON.stringify(note)}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {/* Estimated Install Time */}
-                  {currentCircuit.installationGuidance.estimatedInstallTime && (
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Clock className="h-4 w-4 text-cyan-400" />
-                        <h5 className="text-sm font-semibold text-white">Estimated Install Time</h5>
-                      </div>
-                      <div className="bg-card/30 border border-border/40 rounded-lg p-3">
-                        <p className="text-sm font-medium text-white">{currentCircuit.installationGuidance.estimatedInstallTime}</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
+              <InstallationGuidanceDisplay 
+                installationGuidance={currentCircuit.installationGuidance as any}
+                testingRequirements={currentCircuit.testingRequirements}
+              />
             )}
 
             {/* 6. Special Location Compliance */}
