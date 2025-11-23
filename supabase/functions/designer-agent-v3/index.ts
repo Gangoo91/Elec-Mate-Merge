@@ -27,9 +27,11 @@ serve(async (req) => {
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
   );
 
+  let jobId: string | undefined; // Declare outside try block for catch access
+
   try {
     const body = await req.json();
-    const jobId = body.jobId; // Detect if running in job-aware mode
+    jobId = body.jobId; // Detect if running in job-aware mode
     
     // Validate mode - V3 only supports direct-design
     if (body.mode !== 'direct-design') {
