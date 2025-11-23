@@ -12,14 +12,17 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 const VERSION = 'v3.1.0-job-aware';
 
 serve(async (req) => {
-  // Handle CORS preflight
-  if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
-  }
+  let requestId: string | undefined;
+  
+  try {
+    // Handle CORS preflight
+    if (req.method === 'OPTIONS') {
+      return new Response(null, { headers: corsHeaders });
+    }
 
-  const requestId = crypto.randomUUID();
-  const logger = createLogger(requestId);
-  const startTime = Date.now();
+    requestId = crypto.randomUUID();
+    const logger = createLogger(requestId);
+    const startTime = Date.now();
   
   // Initialize Supabase client for job updates (if job-aware mode)
   const supabase = createClient(
@@ -218,6 +221,26 @@ serve(async (req) => {
       version: VERSION,
       requestId,
       processingTime: duration
+    }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    });
+  
+  } catch (fatalError) {
+    // CRITICAL: Catch import/startup errors BEFORE logger exists
+    console.error('FATAL: designer-agent-v3 crashed before logger initialization', {
+      error: fatalError instanceof Error ? fatalError.message : String(fatalError),
+      stack: fatalError instanceof Error ? fatalError.stack : undefined,
+      requestId,
+      timestamp: new Date().toISOString()
+    });
+    
+    return new Response(JSON.stringify({
+      success: false,
+      error: `Designer agent startup failure: ${fatalError instanceof Error ? fatalError.message : String(fatalError)}`,
+      fatal: true,
+      requestId,
+      version: VERSION
     }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
