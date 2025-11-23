@@ -53,12 +53,26 @@ export class DeterministicCalculator {
     // Parse cable type from circuit data
     const cableType = this.parseCableType(circuit);
 
+    // Detect if this is a ring final circuit
+    const isRing = this.isRingFinal(circuit);
+    const totalLength = (circuit as any).cableLength || 0;
+    const effectiveLength = isRing ? totalLength / 2 : totalLength; // Two parallel paths in ring
+
+    // Log ring detection
+    if (isRing) {
+      this.logger.info('Ring final detected', {
+        circuit: circuit.name,
+        totalLength,
+        effectiveLength
+      });
+    }
+
     // 1. Calculate accurate voltage drop using BS 7671 unified calculations
     const vdResult = calculateVoltageDrop({
       cableType,
       cableSize: circuit.cableSize,
       current: circuit.calculations?.Ib || 0,
-      length: (circuit as any).cableLength || 0,
+      length: effectiveLength, // ✅ FIXED: Half length for ring finals
       voltage: supply.voltage,
       powerFactor: 0.95,
       phaseConfig: supply.phases === 'three' ? 'three' : 'single',
@@ -87,7 +101,7 @@ export class DeterministicCalculator {
       cableType,
       cableSize: circuit.cableSize,
       cpcSize: circuit.cpcSize,
-      length: (circuit as any).cableLength || 0,
+      length: effectiveLength, // ✅ FIXED: Half length for ring finals
       temperature: 70,
       protectiveDevice: {
         type: circuit.protectionDevice.curve,
@@ -110,7 +124,7 @@ export class DeterministicCalculator {
     }
 
     // 3. Generate expected test values
-    circuit.expectedTests = this.generateExpectedTests(circuit, supply, zsResult);
+    circuit.expectedTests = this.generateExpectedTests(circuit, supply, zsResult, isRing);
 
     return circuit;
   }
@@ -121,7 +135,8 @@ export class DeterministicCalculator {
   private generateExpectedTests(
     circuit: DesignedCircuit,
     supply: NormalizedSupply,
-    zsResult: any
+    zsResult: any,
+    isRing: boolean
   ): ExpectedTestValues {
     const r1r2 = zsResult?.r1PlusR2 || 0;
     const zs = zsResult?.calculatedZs || 0;
@@ -131,7 +146,7 @@ export class DeterministicCalculator {
       r1r2: {
         at20C: r1r2 / 1.2, // Reverse temperature factor
         at70C: r1r2,
-        value: `${r1r2.toFixed(3)}Ω`,
+        value: `${r1r2.toFixed(3)}Ω${isRing ? ' (ring final - measured at each socket)' : ''}`,
         regulation: 'BS 7671 Reg 612.2'
       },
       zs: {
@@ -159,6 +174,25 @@ export class DeterministicCalculator {
     }
 
     return expectedTests;
+  }
+
+  /**
+   * Detect if a circuit is a ring final circuit
+   */
+  private isRingFinal(circuit: DesignedCircuit): boolean {
+    const name = circuit.name?.toLowerCase() || '';
+    const loadType = circuit.loadType?.toLowerCase() || '';
+    const justification = circuit.justifications?.cableSize?.toLowerCase() || '';
+    
+    // Check multiple indicators
+    return (
+      name.includes('ring') ||
+      loadType.includes('ring') ||
+      justification.includes('ring final') ||
+      justification.includes('ring circuit') ||
+      // Typical ring final: 32A sockets on 2.5mm²
+      (loadType.includes('socket') && circuit.protectionDevice.rating === 32 && circuit.cableSize === 2.5)
+    );
   }
 
   /**
