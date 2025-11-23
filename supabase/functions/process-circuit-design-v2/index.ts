@@ -17,7 +17,7 @@ import { checkRAGCache, storeRAGCache } from '../_shared/circuit-rag-cache.ts';
 import { checkPartialCache, storePartialCache } from '../_shared/circuit-partial-cache.ts';
 import { searchCircuitRegulations } from '../_shared/circuit-rag.ts';
 import { designCircuits } from '../_agents/circuit-designer-core.ts';
-import { generateInstallationMethods } from '../_agents/installation-method-core.ts';
+
 
 const VERSION = 'v2.0.0-unified';
 
@@ -70,50 +70,21 @@ Deno.serve(async (req) => {
     const jobInputs = job.job_inputs;
     const openAiKey = Deno.env.get('OPENAI_API_KEY')!;
 
-    // Safe progress updater
+    // Safe progress updater (simplified - single agent only)
     const safeUpdateProgress = async (progress: number, step: string): Promise<void> => {
       try {
         await supabase
           .from('circuit_design_jobs')
-          .update({ progress, current_step: step })
+          .update({ 
+            progress, 
+            current_step: step,
+            designer_progress: progress,
+            designer_status: progress < 100 ? 'processing' : 'complete'
+          })
           .eq('id', jobId);
       } catch (error) {
         logger.error('⚠️ Progress update failed (non-fatal)', { error });
       }
-    };
-
-    // Agent-specific progress updater
-    const updateAgentProgress = async (
-      agent: 'designer' | 'installer',
-      agentProgress: number,
-      agentStatus: string,
-      step: string
-    ) => {
-      const progressField = agent === 'designer' ? 'designer_progress' : 'installer_progress';
-      const statusField = agent === 'designer' ? 'designer_status' : 'installer_status';
-      
-      const { data } = await supabase
-        .from('circuit_design_jobs')
-        .update({
-          [progressField]: agentProgress,
-          [statusField]: agentStatus,
-          current_step: step
-        })
-        .eq('id', jobId)
-        .select('designer_progress, installer_progress')
-        .single();
-
-      if (!data) return;
-
-      // Calculate combined progress (designer: 0-50%, installer: 50-100%)
-      const designerProg = data.designer_progress || 0;
-      const installerProg = data.installer_progress || 0;
-      const combinedProgress = Math.floor((designerProg * 0.5) + (installerProg * 0.5));
-
-      await supabase
-        .from('circuit_design_jobs')
-        .update({ progress: combinedProgress })
-        .eq('id', jobId);
     };
 
     // Check cancellation helper
@@ -213,29 +184,20 @@ Deno.serve(async (req) => {
       );
     }
 
-    // ⚡ LAYER 3: Partial Agent Cache
-    logger.info('🔍 Checking partial caches for both agents...');
+    // ⚡ LAYER 3: Designer Cache Only (installation guidance now integrated)
+    logger.info('🔍 Checking partial cache for designer...');
     
-    const [designerCacheResult, installerCacheResult] = await Promise.all([
-      checkPartialCache({
-        supabase,
-        jobInputs,
-        agentType: 'circuit_designer',
-        openAiKey
-      }),
-      checkPartialCache({
-        supabase,
-        jobInputs,
-        agentType: 'installation_method',
-        openAiKey
-      })
-    ]);
+    const designerCacheResult = await checkPartialCache({
+      supabase,
+      jobInputs,
+      agentType: 'circuit_designer',
+      openAiKey
+    });
 
-    // TRUE PARALLEL EXECUTION
-    logger.info('🤖 Starting AI agent generation in parallel...');
+    // SINGLE AGENT EXECUTION (installation guidance integrated into designer)
+    logger.info('🤖 Starting AI Designer (includes installation guidance)...');
     const startTime = Date.now();
 
-    // Designer handles both circuit design AND installation guidance now (simplified V2.1)
     const [designerResult] = await Promise.allSettled([
       designerCacheResult.hit
         ? Promise.resolve(designerCacheResult.data)
@@ -243,14 +205,11 @@ Deno.serve(async (req) => {
             jobInputs,
             async (progress: number, step: string) => {
               if (await checkCancelled()) throw new Error('Job cancelled');
-              await updateAgentProgress('designer', progress, 'processing', step);
+              await safeUpdateProgress(progress, step);
             },
             sharedRegulations
           )
     ]);
-
-    // Update installer status to complete (no longer needed)
-    await updateAgentProgress('installer', 100, 'complete', 'Installation guidance integrated into designer');
 
     // Log cache performance
     if (designerCacheResult.hit) {

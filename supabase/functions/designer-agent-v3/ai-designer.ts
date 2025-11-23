@@ -226,28 +226,29 @@ export class AIDesigner {
     parts.push('');
     
     // === INSTALLATION GUIDANCE REQUIREMENTS ===
-    parts.push('=== INSTALLATION GUIDANCE REQUIREMENTS (90% WEIGHTING) ===');
-    parts.push('For EACH circuit, provide THREE PARAGRAPHS using the Practical Work Intelligence above:');
+    parts.push('=== INSTALLATION GUIDANCE REQUIREMENTS (CRITICAL - 90% WEIGHTING) ===');
+    parts.push('For EACH circuit, generate THREE PARAGRAPHS of practical installation guidance:');
     parts.push('');
-    parts.push('Paragraph 1 - Installation Best Practices:');
-    parts.push('- Cable routing methods specific to this load type');
+    parts.push('Paragraph 1 - Installation Best Practices (3-5 sentences):');
+    parts.push('- Cable routing methods specific to this load type (surface, buried, trunking)');
     parts.push('- Fixing intervals and support requirements per BS 7671');
-    parts.push('- Termination procedures and torque settings');
-    parts.push('- Common installation mistakes to avoid');
+    parts.push('- Termination procedures including torque settings');
+    parts.push('- Common installation mistakes to avoid for this circuit type');
     parts.push('');
-    parts.push('Paragraph 2 - Testing & Commissioning:');
-    parts.push('- Required tests per BS 7671 Part 6');
-    parts.push('- Test equipment and expected readings');
-    parts.push('- Acceptance criteria');
-    parts.push('- Verification checklist items');
+    parts.push('Paragraph 2 - Testing & Commissioning (3-5 sentences):');
+    parts.push('- Required tests per BS 7671 Part 6 (continuity, insulation, RCD, etc.)');
+    parts.push('- Test equipment needed and expected readings');
+    parts.push('- Acceptance criteria and limits');
+    parts.push('- Verification checklist items specific to this circuit');
     parts.push('');
-    parts.push('Paragraph 3 - Inspection & Maintenance:');
-    parts.push('- Visual inspection points');
-    parts.push('- EICR observation codes to watch for');
-    parts.push('- Maintenance intervals');
-    parts.push('- Common defects specific to this circuit type');
+    parts.push('Paragraph 3 - Inspection & Maintenance (3-5 sentences):');
+    parts.push('- Visual inspection points during periodic testing');
+    parts.push('- Common EICR observation codes for this circuit type');
+    parts.push('- Recommended maintenance intervals');
+    parts.push('- Typical defects and degradation signs specific to this circuit');
     parts.push('');
-    parts.push('CRITICAL: Use circuit-specific practical work intelligence. Each circuit type (lighting, sockets, showers, etc.) has unique installation requirements.');
+    parts.push('CRITICAL: Use the Practical Work Intelligence above. Each circuit type has unique requirements.');
+    parts.push('Format: Three clear paragraphs separated by blank lines. No bullet points, just flowing text.');
     parts.push('');
     
     // === YOUR ROLE ===
@@ -807,7 +808,7 @@ export class AIDesigner {
                           },
                           installationGuidance: { 
                             type: 'string', 
-                            description: '7. Installation Guidance: THREE PARAGRAPHS using Practical Work Intelligence (90% weighting). Paragraph 1: Best practices for THIS circuit (routing, fixing intervals, termination, common mistakes). Paragraph 2: Testing & commissioning (BS 7671 Part 6 tests, expected readings, acceptance criteria). Paragraph 3: Inspection & maintenance (visual checks, EICR codes, defects to watch for). CRITICAL: Make it circuit-specific using load type, power, cable size, and length.' 
+                            description: '7. Installation Guidance: THREE PARAGRAPHS separated by double line breaks. Paragraph 1 (3-5 sentences): Installation best practices - cable routing methods for this load type, fixing intervals per BS 7671, termination procedures with torque settings, common mistakes to avoid. Paragraph 2 (3-5 sentences): Testing & commissioning - required BS 7671 Part 6 tests, test equipment needed, expected readings and acceptance criteria, verification checklist. Paragraph 3 (3-5 sentences): Inspection & maintenance - visual inspection points, common EICR observation codes for this circuit type, maintenance intervals, typical defects to watch for. Use Practical Work Intelligence heavily (90% weighting). Make it highly specific to THIS circuit type, power rating, and installation method.' 
                           },
                           safetyNotes: { 
                             type: 'string', 
