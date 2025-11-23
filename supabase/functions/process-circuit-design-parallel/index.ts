@@ -202,6 +202,41 @@ async function startInstallationAgent(
   const installQuery = buildInstallationQuery(requirements);
 
   // Create installation method job
+  const designerContext = {
+    // ✅ ENRICHED: Pass FULL circuit technical specifications
+    circuits: requirements.circuits.map((circuit: any) => ({
+      description: circuit.description,
+      loadType: circuit.loadType,
+      power: circuit.power,
+      cableSize: circuit.cableSize,
+      cpcSize: circuit.cpcSize,
+      protectionDevice: circuit.protectionDevice,
+      installationMethod: circuit.installationMethod,
+      cableLength: circuit.cableLength,
+      // EV-specific
+      chargerType: circuit.chargerType,
+      chargerPower: circuit.chargerPower,
+      // Calculated values from designer
+      designCurrent: circuit.designCurrentIb,
+      voltageDropPercent: circuit.voltageDropPercent,
+      earthFaultLoopImpedance: circuit.earthFaultLoopImpedanceZs
+    })),
+    supply: {
+      voltage: requirements.supply?.voltage,
+      phases: requirements.supply?.phases,
+      earthing: requirements.supply?.earthing,
+      externalImpedance: requirements.supply?.externalImpedance
+    },
+    projectType: requirements.installationType,
+    location: requirements.location
+  };
+
+  logger.info('🔍 Creating installation job with designer context:', {
+    hasContext: !!designerContext,
+    circuitCount: designerContext.circuits.length,
+    contextKeys: Object.keys(designerContext)
+  });
+
   const { data: installJob, error } = await supabase
     .from('installation_method_jobs')
     .insert({
@@ -215,34 +250,7 @@ async function startInstallationAgent(
         installationType: requirements.installationType || 'commercial',
         scopeDescription: requirements.description || 'Circuit installation work'
       },
-      designer_context: {
-        // ✅ ENRICHED: Pass FULL circuit technical specifications
-        circuits: requirements.circuits.map((circuit: any) => ({
-          description: circuit.description,
-          loadType: circuit.loadType,
-          power: circuit.power,
-          cableSize: circuit.cableSize,
-          cpcSize: circuit.cpcSize,
-          protectionDevice: circuit.protectionDevice,
-          installationMethod: circuit.installationMethod,
-          cableLength: circuit.cableLength,
-          // EV-specific
-          chargerType: circuit.chargerType,
-          chargerPower: circuit.chargerPower,
-          // Calculated values from designer
-          designCurrent: circuit.designCurrentIb,
-          voltageDropPercent: circuit.voltageDropPercent,
-          earthFaultLoopImpedance: circuit.earthFaultLoopImpedanceZs
-        })),
-        supply: {
-          voltage: requirements.supply?.voltage,
-          phases: requirements.supply?.phases,
-          earthing: requirements.supply?.earthing,
-          externalImpedance: requirements.supply?.externalImpedance
-        },
-        projectType: requirements.installationType,
-        location: requirements.location
-      },
+      designer_context: designerContext,
       status: 'pending',
       progress: 0
     })
@@ -422,10 +430,18 @@ async function mergeResults(
 
   // ✅ DEBUG: Log installation data structure for verification
   logger.info('📦 Installation data retrieved:', {
+    // SIMPLIFIED mode fields (for Circuit Designer)
+    hasInstallationGuidance: !!installationData?.installationGuidance,
+    cableRoutingCount: installationData?.installationGuidance?.cableRouting?.length || 0,
+    terminationCount: installationData?.installationGuidance?.terminationRequirements?.length || 0,
+    safetyCount: installationData?.installationGuidance?.safetyConsiderations?.length || 0,
+    materialsCount: installationData?.installationGuidance?.materialsRequired?.length || 0,
+    toolsCount: installationData?.installationGuidance?.toolsRequired?.length || 0,
+    procedureCount: installationData?.installationGuidance?.installationProcedure?.length || 0,
+    testingCount: installationData?.testingRequirements?.tests?.length || 0,
+    // FULL mode fields (for standalone)
     hasExecutiveSummary: !!installationData?.executiveSummary,
     stepsCount: installationData?.steps?.length || 0,
-    materialsCount: installationData?.materialsList?.cables?.length || 0,
-    testingCount: installationData?.testingRequirements?.tests?.length || 0,
     dataKeys: Object.keys(installationData || {})
   });
 
@@ -440,35 +456,32 @@ async function mergeResults(
     // Circuit technical specs from designer
     ...circuit,
     
-    // ✅ FIXED: Map install-method-agent output structure to frontend expectations
-    installationGuidance: installationData?.executiveSummary || '',
+    // ✅ NEW: Merge structured installation guidance from SIMPLIFIED mode
+    installationGuidance: {
+      safetyConsiderations: installationData?.installationGuidance?.safetyConsiderations || [],
+      materialsRequired: installationData?.installationGuidance?.materialsRequired || [],
+      toolsRequired: installationData?.installationGuidance?.toolsRequired || [],
+      cableRouting: installationData?.installationGuidance?.cableRouting || [],
+      terminationRequirements: installationData?.installationGuidance?.terminationRequirements || [],
+      installationProcedure: installationData?.installationGuidance?.installationProcedure || []
+    },
     
-    // ✅ Map installation steps from install-method-agent
-    installationSteps: installationData?.steps?.map((step: any) => step.description || step.title) || [],
+    // ✅ NEW: Merge structured testing requirements
+    testingRequirements: {
+      intro: installationData?.testingRequirements?.intro || '',
+      tests: installationData?.testingRequirements?.tests || [],
+      recordingNote: installationData?.testingRequirements?.recordingNote || ''
+    },
     
-    // ✅ Map tools from install-method-agent
-    toolsRequired: installationData?.steps?.flatMap((step: any) => step.tools || []) || [],
-    
-    // ✅ Map materials from install-method-agent
-    materialsNeeded: installationData?.materialsList?.cables?.map((cable: any) => 
-      `${cable.specification} - ${cable.quantity}`
-    ) || [],
-    
-    // ✅ Map safety notes from install-method-agent
-    safetyNotes: installationData?.steps?.flatMap((step: any) => step.safetyNotes || []) || [],
-    
-    // ✅ Map testing requirements from install-method-agent
-    testingRequirements: installationData?.testingRequirements?.tests?.map((test: any) => ({
-      testName: test.testName,
-      regulation: test.regulation,
-      expectedResults: test.expectedResults
-    })) || [],
-    
-    // Keep legacy fields
-    installationMethod: installationData?.steps?.[0]?.title || circuit.installationMethod || 'Standard installation',
-    estimatedInstallTime: installationData?.steps?.reduce((total: number, step: any) => 
-      total + (step.estimatedTimeMinutes || 30), 0
-    ) || 120
+    // LEGACY: Keep for backward compatibility
+    installationMethod: installationData?.installationGuidance?.cableRouting?.[0]?.routingMethod || 
+                        circuit.installationMethod || 
+                        'Standard installation',
+    toolsRequired: installationData?.installationGuidance?.toolsRequired || [],
+    materialsNeeded: installationData?.installationGuidance?.materialsRequired || [],
+    installationSteps: installationData?.installationGuidance?.installationProcedure || [],
+    safetyNotes: installationData?.installationGuidance?.safetyConsiderations?.map((s: any) => s.hazard) || [],
+    estimatedInstallTime: 120
   })) || [];
 
   return {

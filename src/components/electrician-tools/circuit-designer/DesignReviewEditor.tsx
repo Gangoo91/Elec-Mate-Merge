@@ -1945,7 +1945,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   </Badge>
                 </div>
                 
-                <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+                <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
                   {/* R1+R2 - Blue gradient */}
                   <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 p-4 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-colors">
                     <div className="flex items-center gap-2 mb-3">
