@@ -18,6 +18,10 @@ interface CircuitDesignJob {
   installer_progress: number;
   installer_status: string;
   installation_data: any;
+  // NEW: Installation guidance from Design Installation Agent
+  installation_agent_progress: number;
+  installation_agent_status: string;
+  installation_guidance: any;
 }
 
 interface UseCircuitDesignGenerationReturn {
@@ -26,6 +30,7 @@ interface UseCircuitDesignGenerationReturn {
   status: 'idle' | 'pending' | 'processing' | 'complete' | 'failed' | 'cancelled';
   currentStep: string;
   designData: any;
+  installationGuidance: any;
   error: string | null;
 }
 
@@ -158,6 +163,7 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
     status: jobId ? ((job?.status as any) || 'pending') : 'idle',
     currentStep: job?.current_step || '',
     designData: job?.design_data,
+    installationGuidance: job?.installation_guidance,
     error: job?.error_message
   };
 };
