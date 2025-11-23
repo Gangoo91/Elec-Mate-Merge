@@ -1011,12 +1011,12 @@ COMPLETENESS CHECK:
 ✓ Small fixings/consumables not forgotten?
 If ANY category missing, estimate it and flag in response.`;
 
-    // ==== CALL 1: CORE COST ESTIMATE (Faster, no profitability) ====
+    // ==== CALL 1: CORE COST ESTIMATE (GPT-5 Mini for reliability) ====
     logger.debug('Calling AI for core cost estimate', { provider: 'OpenAI' });
-    logger.info('🤖 Calling OpenAI GPT-4o-mini for core estimate', {
-      model: 'gpt-4o-mini',
+    logger.info('🤖 Calling OpenAI GPT-5 Mini for core estimate', {
+      model: 'gpt-5-mini-2025-08-07',
       maxTokens: 8000,
-      timeoutMs: 120000, // 2 minutes for gpt-4o-mini
+      timeoutMs: 120000, // 2 minutes for gpt-5-mini
       hasTools: true,
       splitMode: 'core-estimate'
     });
@@ -1027,7 +1027,7 @@ If ANY category missing, estimate it and flag in response.`;
     let coreResult;
     try {
       coreResult = await callAI(OPENAI_API_KEY, {
-        model: 'gpt-4o-mini', // Stable, proven reliable
+        model: 'gpt-5-mini-2025-08-07', // GPT-5 Mini - better JSON reliability
         systemPrompt,
         userPrompt,
         maxTokens: 8000,
@@ -1857,13 +1857,13 @@ If ANY category missing, estimate it and flag in response.`;
           preview: coreResult.content?.substring(0, 500)
         });
         
-        // If first attempt failed and we're using gpt-5-mini, retry with gpt-5
+        // If first attempt failed, retry with full GPT-5 for maximum reliability
         if (parseRetries === 0) {
-          logger.warn('Retrying with GPT-5 for more reliable JSON generation');
+          logger.warn('Retrying with full GPT-5 for maximum JSON reliability');
           
           try {
             coreResult = await callAI(OPENAI_API_KEY, {
-              model: 'gpt-5-mini-2025-08-07', // Fallback to mini if nano fails
+              model: 'gpt-5-2025-08-07', // Full GPT-5 for fallback reliability
               systemPrompt,
               userPrompt,
               maxTokens: 8000,
