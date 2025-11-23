@@ -38,7 +38,7 @@ const FutureWorkPipelineCard = ({ pipeline }: FutureWorkPipelineCardProps) => {
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div className="flex-1">
                   <div className="font-medium text-white text-base sm:text-sm">{item.opportunity}</div>
-                  <div className="text-base sm:text-sm text-white/80 mt-1">
+                  <div className="text-base sm:text-sm text-white mt-1">
                     {item.description}
                   </div>
                 </div>
@@ -47,7 +47,7 @@ const FutureWorkPipelineCard = ({ pipeline }: FutureWorkPipelineCardProps) => {
                 </Badge>
               </div>
               
-              <div className="flex items-center gap-4 text-sm text-white/80">
+              <div className="flex items-center gap-4 text-sm text-white">
                 <div className="flex items-center gap-1">
                   <Calendar className="h-3 w-3" />
                   <span>{item.timing}</span>

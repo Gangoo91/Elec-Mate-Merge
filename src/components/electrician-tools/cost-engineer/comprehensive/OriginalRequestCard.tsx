@@ -19,11 +19,11 @@ const OriginalRequestCard = ({ query, projectContext, timestamp }: OriginalReque
   return (
     <Card className="border-0 sm:border border-blue-500/30 rounded-none sm:rounded-xl bg-gradient-to-br from-blue-500/10 to-elec-dark/50">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5 space-y-2 pb-3">
-        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
+        <CardTitle className="text-2xl sm:text-xl font-bold text-white flex items-center gap-2">
           <MessageSquare className="h-5 w-5 text-blue-400" />
           Original Request
         </CardTitle>
-        <CardDescription className="text-base sm:text-sm text-white/80">
+        <CardDescription className="text-base sm:text-sm text-white">
           Your project description analysed by AI Cost Engineer
         </CardDescription>
       </CardHeader>
@@ -62,10 +62,10 @@ const OriginalRequestCard = ({ query, projectContext, timestamp }: OriginalReque
         {/* Additional Info if present */}
         {projectContext?.additionalInfo && (
           <div className="pt-2 border-t border-border/50">
-            <p className="text-sm font-semibold text-white mb-2">
+            <p className="text-base sm:text-sm font-semibold text-white mb-2">
               Additional Requirements:
             </p>
-            <p className="text-sm text-white/80 whitespace-pre-wrap">
+            <p className="text-base sm:text-sm text-white whitespace-pre-wrap">
               {projectContext.additionalInfo}
             </p>
           </div>

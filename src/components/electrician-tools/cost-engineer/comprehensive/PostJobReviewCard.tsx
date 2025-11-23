@@ -68,7 +68,7 @@ const PostJobReviewCard = ({
           <ClipboardCheck className="h-5 w-5 text-elec-yellow" />
           Post-Job Review
         </CardTitle>
-        <p className="text-base sm:text-sm text-white/80">
+        <p className="text-base sm:text-sm text-white">
           Track actual vs estimate to improve future quotes
         </p>
       </CardHeader>
@@ -104,6 +104,7 @@ const PostJobReviewCard = ({
                   value={actualCost}
                   onChange={(e) => setActualCost(e.target.value)}
                   placeholder={`Est: £${estimatedCost.toFixed(0)}`}
+                  className="min-h-11"
                 />
                 {costVariance !== null && (
                   <div className={`text-xs flex items-center gap-1 ${
@@ -123,6 +124,7 @@ const PostJobReviewCard = ({
                   value={actualHours}
                   onChange={(e) => setActualHours(e.target.value)}
                   placeholder={`Est: ${estimatedHours.toFixed(1)}h`}
+                  className="min-h-11"
                 />
                 {hoursVariance !== null && (
                   <div className={`text-xs flex items-center gap-1 ${
@@ -139,8 +141,8 @@ const PostJobReviewCard = ({
             {actualProfit > 0 && (
               <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-base sm:text-sm text-white/80">Actual Profit</span>
-                  <span className={`text-xl sm:text-lg font-bold ${
+                  <span className="text-base sm:text-sm text-white">Actual Profit</span>
+                  <span className={`text-2xl sm:text-xl font-bold ${
                     actualProfit >= estimatedProfit ? 'text-green-500' : 'text-red-500'
                   }`}>
                     £{actualProfit.toFixed(0)}
