@@ -457,17 +457,17 @@ async function generateInstallationGuidance(
   practicalWork: any[],
   regulations: any[]
 ) {
-  const circuitGuidance: any = {};
+  console.log(`🔄 Generating circuit-specific guidance for ${designedCircuits.length} circuits in parallel...`);
   
-  console.log(`🔄 Generating circuit-specific guidance for ${designedCircuits.length} circuits...`);
+  // Import safeAll for parallel execution
+  const { safeAll } = await import('../_shared/safe-parallel.ts');
   
-  // Generate guidance for each circuit individually
-  for (let i = 0; i < designedCircuits.length; i++) {
-    const circuit = designedCircuits[i];
-    
-    console.log(`  📍 Circuit ${i + 1}/${designedCircuits.length}: ${circuit.name} (${circuit.cableType || circuit.cableSize + 'mm²'})`);
-    
-    try {
+  // Create parallel tasks for each circuit
+  const circuitTasks = designedCircuits.map((circuit, i) => ({
+    name: `Circuit ${i + 1}: ${circuit.name}`,
+    execute: async () => {
+      console.log(`  📍 Starting Circuit ${i + 1}/${designedCircuits.length}: ${circuit.name} (${circuit.cableType || circuit.cableSize + 'mm²'})`);
+      
       const guidance = await generateInstallationGuidancePerCircuit(
         circuit,
         i,
@@ -477,24 +477,52 @@ async function generateInstallationGuidance(
         regulations
       );
       
-      circuitGuidance[`circuit_${i}`] = {
+      console.log(`  ✅ Circuit ${i + 1} guidance generated`);
+      
+      return {
+        circuitIndex: i,
         circuitName: circuit.name,
         cableSpec: circuit.cableType || `${circuit.cableSize}mm²`,
         protection: circuit.protectionDevice,
         guidance: guidance
       };
-      
-      console.log(`  ✅ Circuit ${i + 1} guidance generated`);
-    } catch (error: any) {
-      console.error(`  ❌ Failed to generate guidance for circuit ${i + 1}:`, error);
-      circuitGuidance[`circuit_${i}`] = {
-        circuitName: circuit.name,
-        cableSpec: circuit.cableType || `${circuit.cableSize}mm²`,
-        protection: circuit.protectionDevice,
-        error: error.message
-      };
     }
-  }
+  }));
+  
+  // Execute all circuits in parallel
+  const { successes, failures } = await safeAll(circuitTasks);
+  
+  console.log(`✅ Parallel generation complete: ${successes.length} succeeded, ${failures.length} failed`);
+  
+  // Build result object with all circuits
+  const circuitGuidance: any = {};
+  
+  // Add successful circuits
+  successes.forEach(({ result }) => {
+    circuitGuidance[`circuit_${result.circuitIndex}`] = {
+      circuitName: result.circuitName,
+      cableSpec: result.cableSpec,
+      protection: result.protection,
+      guidance: result.guidance
+    };
+  });
+  
+  // Add failed circuits with error messages
+  failures.forEach(({ name, error }) => {
+    // Extract circuit index from name "Circuit X: ..."
+    const match = name.match(/Circuit (\d+):/);
+    const circuitIndex = match ? parseInt(match[1]) - 1 : -1;
+    const circuit = designedCircuits[circuitIndex] || {};
+    
+    console.error(`  ❌ ${name} failed:`, error);
+    
+    circuitGuidance[`circuit_${circuitIndex}`] = {
+      circuitName: circuit.name || 'Unknown',
+      cableSpec: circuit.cableType || `${circuit.cableSize}mm²` || 'Unknown',
+      protection: circuit.protectionDevice,
+      error: error instanceof Error ? error.message : String(error)
+    };
+  });
   
   return circuitGuidance;
 }

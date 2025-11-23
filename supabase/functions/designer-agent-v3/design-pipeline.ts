@@ -174,66 +174,70 @@ export class DesignPipeline {
       willBatch: normalized.circuits.length > 2
     });
     
-    // Determine if batching is needed
-    if (normalized.circuits.length > 2) {
-      // BATCH PROCESSING for 3+ circuits
-      const batchSize = this.determineBatchSize(normalized.circuits.length);
-      const batches = this.splitIntoBatches(normalized.circuits, batchSize);
-      
-      this.logger.info('Batch processing enabled', {
-        totalCircuits: normalized.circuits.length,
-        batchCount: batches.length,
-        batchSize,
-        estimatedTime: `${batches.length * 90}s`
+    // PER-CIRCUIT PARALLEL PROCESSING for all circuit counts
+    if (normalized.circuits.length === 1) {
+      // Single circuit: use regular generation
+      this.logger.info('Single circuit mode', {
+        circuit: normalized.circuits[0].name,
+        timeout: '90s'
       });
-
-      // PARALLEL PROCESSING: Run all batches concurrently
+      design = await this.ai.generate(normalized, ragContext);
+      
+      this.logger.info('AI design complete', {
+        circuits: design.circuits.length
+      });
+    } else {
+      // PARALLEL PROCESSING: Generate each circuit in parallel for 2+ circuits
       const parallelStartTime = Date.now();
       
-      this.logger.info('Starting parallel batch execution', {
-        batches: batches.length,
-        estimatedTime: '90s (parallel)'
+      this.logger.info('Per-circuit parallel processing enabled', {
+        totalCircuits: normalized.circuits.length,
+        estimatedTime: '40-60s (all circuits in parallel)'
       });
 
-      // Create parallel tasks for each batch
-      const batchTasks: ParallelTask<any>[] = batches.map((batch, i) => ({
-        name: `Batch ${i + 1}/${batches.length}`,
+      // Create parallel tasks for each individual circuit
+      const circuitTasks: ParallelTask<any>[] = normalized.circuits.map((circuit, i) => ({
+        name: `Circuit ${i + 1}/${normalized.circuits.length}: ${circuit.name}`,
         execute: async () => {
-          const batchStartTime = Date.now();
+          const circuitStartTime = Date.now();
           
-          this.logger.info(`Batch ${i + 1}/${batches.length} starting`, {
-            circuits: batch.map(c => c.name),
-            circuitCount: batch.length
+          this.logger.info(`Circuit ${i + 1}/${normalized.circuits.length} starting`, {
+            name: circuit.name,
+            loadType: circuit.loadType,
+            power: circuit.loadPower
           });
 
-          // Create temporary normalized inputs for this batch
-          const batchInputs = {
+          // Create single-circuit inputs for this specific circuit
+          const singleCircuitInputs: NormalizedInputs = {
             supply: normalized.supply,
-            circuits: batch
+            circuits: [circuit]
           };
 
-          // Generate design for this batch (reuse RAG context)
-          const batchDesign = await this.ai.generateBatch(
-            batchInputs,
-            ragContext,
-            i + 1,
-            batches.length
+          // Generate design for this single circuit (reuse RAG context)
+          const circuitDesign = await this.ai.generate(
+            singleCircuitInputs,
+            ragContext
           );
 
-          this.logger.info(`Batch ${i + 1}/${batches.length} complete`, {
-            duration: Date.now() - batchStartTime,
-            circuits: batchDesign.circuits.length
+          this.logger.info(`Circuit ${i + 1}/${normalized.circuits.length} complete`, {
+            duration: Date.now() - circuitStartTime,
+            cableType: circuitDesign.circuits[0]?.cableType,
+            protection: circuitDesign.circuits[0]?.protectionDevice?.rating
           });
 
-          return batchDesign;
+          return {
+            circuit: circuitDesign.circuits[0],
+            reasoning: circuitDesign.reasoning,
+            originalIndex: i
+          };
         }
       }));
 
-      // Execute all batches in parallel
-      const { successes, failures } = await safeAll(batchTasks);
+      // Execute all circuits in parallel
+      const { successes, failures } = await safeAll(circuitTasks);
 
       const parallelDuration = Date.now() - parallelStartTime;
-      this.logger.info('Parallel batch execution complete', {
+      this.logger.info('Per-circuit parallel execution complete', {
         duration: parallelDuration,
         successful: successes.length,
         failed: failures.length
@@ -242,48 +246,28 @@ export class DesignPipeline {
       // Handle failures: fail fast with clear error
       if (failures.length > 0) {
         const errorMessages = failures.map(f => `${f.name}: ${f.error}`).join('\n');
-        throw new Error(`Batch processing failed (${failures.length}/${batches.length} batches):\n${errorMessages}`);
+        throw new Error(`Circuit generation failed (${failures.length}/${normalized.circuits.length} circuits):\n${errorMessages}`);
       }
 
-      // Merge all batch results into single design
-      let allDesignedCircuits: any[] = [];
-      let lastReasoning = '';
+      // Merge all circuit results into single design, preserving original order
+      const sortedResults = successes
+        .map(s => s.result)
+        .sort((a, b) => a.originalIndex - b.originalIndex);
 
-      successes.forEach(({ result }) => {
-        allDesignedCircuits.push(...result.circuits);
-        lastReasoning = result.reasoning;
-      });
-
-      // FIX: Renumber circuits sequentially (batch processing causes 1,2,1,2 pattern)
-      allDesignedCircuits = allDesignedCircuits.map((circuit, globalIndex) => ({
-        ...circuit,
-        circuitNumber: globalIndex + 1 // Sequential: 1, 2, 3, 4, 5, 6, 7, 8...
+      const allDesignedCircuits = sortedResults.map((result, idx) => ({
+        ...result.circuit,
+        circuitNumber: idx + 1 // Sequential numbering: 1, 2, 3, 4...
       }));
 
       design = {
         circuits: allDesignedCircuits,
-        reasoning: lastReasoning
+        reasoning: sortedResults[sortedResults.length - 1]?.reasoning || 'Parallel circuit generation complete'
       };
 
-      this.logger.info('Circuits renumbered sequentially after batch merge', {
-        circuitNumbers: allDesignedCircuits.map(c => c.circuitNumber)
-      });
-
-      this.logger.info('All batches complete', {
+      this.logger.info('All circuits complete', {
         totalCircuits: design.circuits.length,
-        batches: batches.length,
-        parallelDuration
-      });
-    } else {
-      // REGULAR MODE for 1-5 circuits (full RAG, complete prompt, 90s timeout)
-      this.logger.info('Regular mode processing (1-5 circuits)', {
-        circuits: normalized.circuits.length,
-        timeout: '90s'
-      });
-      design = await this.ai.generate(normalized, ragContext);
-      
-      this.logger.info('AI design complete', {
-        circuits: design.circuits.length
+        parallelDuration,
+        circuitNumbers: allDesignedCircuits.map(c => c.circuitNumber)
       });
     }
 
@@ -493,26 +477,5 @@ export class DesignPipeline {
       validationIssues: validationResult.issues,
       autoFixSuggestions: validationResult.autoFixSuggestions
     };
-  }
-
-
-  /**
-   * Determine optimal batch size based on circuit count
-   * PARALLEL PROCESSING: Always use 2 circuits per batch for 3+ circuits
-   */
-  private determineBatchSize(circuitCount: number): number {
-    if (circuitCount <= 2) return circuitCount; // Process 1-2 circuits in one call
-    return 2; // Batch everything else into groups of 2
-  }
-
-  /**
-   * Split array into batches of specified size
-   */
-  private splitIntoBatches<T>(items: T[], batchSize: number): T[][] {
-    const batches: T[][] = [];
-    for (let i = 0; i < items.length; i += batchSize) {
-      batches.push(items.slice(i, i + batchSize));
-    }
-    return batches;
   }
 }
