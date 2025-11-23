@@ -5,7 +5,7 @@
 
 import { FormNormalizer } from './form-normalizer.ts';
 import { CacheManager } from './cache-manager.ts';
-import { searchDesignIntelligence, searchRegulationsIntelligence } from '../_shared/intelligence-search.ts';
+import { searchDesignIntelligence, searchRegulationsIntelligence, searchPracticalWorkIntelligence } from '../_shared/intelligence-search.ts';
 import { AIDesigner } from './ai-designer.ts';
 import { ValidationEngine } from './validation-engine.ts';
 import { DeterministicCalculator } from './deterministic-calculations.ts';
@@ -92,7 +92,7 @@ export class DesignPipeline {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
     
-    // Extract search keywords from circuits
+    // Extract search keywords from circuits (targeting ~50 keywords for comprehensive RAG)
     const keywords = new Set<string>();
     const loadTypes = new Set<string>();
     const cableSizes = new Set<number>();
@@ -111,6 +111,23 @@ export class DesignPipeline {
       keywords.add('voltage drop');
       keywords.add('protection');
       
+      // Practical work specific keywords (installation, testing, best practices)
+      keywords.add('installation');
+      keywords.add('routing');
+      keywords.add('termination');
+      keywords.add('testing');
+      keywords.add('commissioning');
+      keywords.add('inspection');
+      keywords.add('cable support');
+      keywords.add('fixing intervals');
+      keywords.add('torque settings');
+      keywords.add('insulation resistance');
+      keywords.add('earth loop impedance');
+      keywords.add('rcd testing');
+      keywords.add('polarity');
+      keywords.add('continuity');
+      keywords.add('best practices');
+      
       // Special location keywords
       if (circuit.specialLocation) {
         keywords.add(circuit.specialLocation.toLowerCase());
@@ -126,8 +143,8 @@ export class DesignPipeline {
       cableSizes: Array.from(cableSizes)
     });
     
-    // PARALLEL: Search both intelligence tables simultaneously
-    const [designIntelligence, regulationsIntelligence] = await Promise.all([
+    // PARALLEL: Search all three intelligence tables simultaneously (design, regulations, practical work)
+    const [designIntelligence, regulationsIntelligence, practicalWorkIntelligence] = await Promise.all([
       searchDesignIntelligence(supabase, {
         keywords: Array.from(keywords),
         loadTypes: Array.from(loadTypes),
@@ -139,17 +156,25 @@ export class DesignPipeline {
         keywords: Array.from(keywords),
         appliesTo: Array.from(loadTypes),
         limit: 10
+      }),
+      searchPracticalWorkIntelligence(supabase, {
+        keywords: Array.from(keywords),
+        appliesTo: Array.from(loadTypes),
+        cableSizes: Array.from(cableSizes).map(String),
+        activityTypes: ['installation', 'testing', 'commissioning'],
+        limit: 25
       })
     ]);
     
     const ragTime = Date.now() - ragStart;
-    this.logger.info('Fast RAG complete', {
+    this.logger.info('Fast RAG complete (3-layer)', {
       designIntelligence: designIntelligence.length,
       regulationsIntelligence: regulationsIntelligence.length,
+      practicalWorkIntelligence: practicalWorkIntelligence.length,
       searchTime: ragTime
     });
     
-    // Build RAG context for AI
+    // Build RAG context for AI (includes practical work intelligence)
     const ragContext = {
       regulations: regulationsIntelligence.map((r: any) => ({
         regulation_number: r.regulation_number,
@@ -158,7 +183,8 @@ export class DesignPipeline {
         source: 'regulations_intelligence'
       })),
       designKnowledge: designIntelligence,
-      totalResults: designIntelligence.length + regulationsIntelligence.length,
+      practicalWork: practicalWorkIntelligence,
+      totalResults: designIntelligence.length + regulationsIntelligence.length + practicalWorkIntelligence.length,
       searchTime: ragTime
     };
 

@@ -235,9 +235,8 @@ Deno.serve(async (req) => {
     logger.info('🤖 Starting AI agent generation in parallel...');
     const startTime = Date.now();
 
-    // Each agent manages its own timeout internally
-    const [designerResult, installerResult] = await Promise.allSettled([
-      // Circuit Designer Agent
+    // Designer handles both circuit design AND installation guidance now (simplified V2.1)
+    const [designerResult] = await Promise.allSettled([
       designerCacheResult.hit
         ? Promise.resolve(designerCacheResult.data)
         : designCircuits(
@@ -247,28 +246,16 @@ Deno.serve(async (req) => {
               await updateAgentProgress('designer', progress, 'processing', step);
             },
             sharedRegulations
-          ),
-      // Installation Method Agent
-      installerCacheResult.hit
-        ? Promise.resolve(installerCacheResult.data)
-        : generateInstallationMethods(
-            jobInputs,
-            async (progress: number, step: string) => {
-              if (await checkCancelled()) throw new Error('Job cancelled');
-              await updateAgentProgress('installer', progress, 'processing', step);
-            },
-            sharedRegulations
           )
     ]);
+
+    // Update installer status to complete (no longer needed)
+    await updateAgentProgress('installer', 100, 'complete', 'Installation guidance integrated into designer');
 
     // Log cache performance
     if (designerCacheResult.hit) {
       logger.info('✅ LAYER 3: Circuit Designer from cache');
       await updateAgentProgress('designer', 100, 'complete', 'Circuit Designer (from cache)');
-    }
-    if (installerCacheResult.hit) {
-      logger.info('✅ LAYER 3: Installation Method from cache');
-      await updateAgentProgress('installer', 100, 'complete', 'Installation Method (from cache)');
     }
 
     if (await checkCancelled()) {
@@ -279,20 +266,16 @@ Deno.serve(async (req) => {
     }
 
     const elapsedMs = Date.now() - startTime;
-    logger.info(`✅ Both agents completed in ${Math.round(elapsedMs / 1000)}s`);
+    logger.info(`✅ Designer agent completed in ${Math.round(elapsedMs / 1000)}s (includes installation guidance)`);
 
-    // Handle agent failures
+    // Handle designer failure
     if (designerResult.status === 'rejected') {
       throw new Error(`Circuit Designer failed: ${designerResult.reason}`);
     }
-    if (installerResult.status === 'rejected') {
-      throw new Error(`Installation Planner failed: ${installerResult.reason}`);
-    }
 
     const designerData = designerResult.value;
-    const installerData = installerResult.value;
 
-    // Store partial results in cache
+    // Store partial result in cache
     if (!designerCacheResult.hit) {
       await storePartialCache({
         supabase,
@@ -302,54 +285,14 @@ Deno.serve(async (req) => {
         openAiKey
       });
     }
-    if (!installerCacheResult.hit) {
-      await storePartialCache({
-        supabase,
-        jobInputs,
-        agentType: 'installation_method',
-        agentOutput: installerData,
-        openAiKey
-      });
-    }
 
-    await safeUpdateProgress(95, 'Merging circuit designs with installation methods...');
+    await safeUpdateProgress(95, 'Finalizing circuit design...');
 
-    // Transform and merge installation guidance into each circuit
-    const enhancedCircuits = (designerData.circuits || []).map((circuit: any) => {
-      // Transform installation guidance structure to match frontend expectations
-      if (installerData.installationGuidance) {
-        const ig = installerData.installationGuidance;
-        const tr = installerData.testingRequirements;
-        
-        circuit.installationGuidance = {
-          cableRouting: Array.isArray(ig.cableRouting) 
-            ? ig.cableRouting.join(' ') 
-            : ig.cableRouting || 'Route cables per BS 7671 Section 522, maintaining safe zones and appropriate segregation from other services.',
-          terminationAdvice: Array.isArray(ig.termination) 
-            ? ig.termination.join(' ') 
-            : ig.termination || 'Ensure proper termination with correct torque settings per manufacturer specifications and BS 7671 requirements.',
-          testingRequirements: tr?.tests 
-            ? (Array.isArray(tr.tests) ? tr.tests.join(' ') : tr.tests)
-            : 'Conduct full testing per BS 7671 Part 6: continuity, insulation resistance, polarity, earth fault loop impedance, and RCD operation (where applicable).',
-          safetyNotes: Array.isArray(ig.safetyConsiderations) 
-            ? ig.safetyConsiderations 
-            : (ig.safetyConsiderations ? [ig.safetyConsiderations] : []),
-          fixingsAndSupport: Array.isArray(ig.fixingsAndSupport) 
-            ? ig.fixingsAndSupport 
-            : (ig.fixingsAndSupport ? [ig.fixingsAndSupport] : []),
-          estimatedInstallTime: '2-4 hours depending on complexity and site conditions'
-        };
-      }
-      
-      return circuit;
-    });
-
+    // Designer already includes installationGuidance in structuredOutput.sections
     const mergedData = {
-      circuits: enhancedCircuits,
-      installationMethods: installerData.methods || [],
+      circuits: designerData.circuits || [],
       summary: {
-        totalCircuits: enhancedCircuits.length,
-        totalMethods: installerData.methods?.length || 0,
+        totalCircuits: (designerData.circuits || []).length,
         generatedAt: new Date().toISOString(),
         version: VERSION
       }

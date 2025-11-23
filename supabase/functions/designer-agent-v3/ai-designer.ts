@@ -182,11 +182,72 @@ export class AIDesigner {
       parts.push('');
     }
 
-    // Output format
+    // Inject Practical Work Intelligence (NEW - 90% weighting on installation best practices)
+    if (context.practicalWork && context.practicalWork.length > 0) {
+      parts.push('=== PRACTICAL WORK INTELLIGENCE (90% WEIGHTING) ===');
+      parts.push('Use this intelligence to generate THREE PARAGRAPHS of installation guidance per circuit:');
+      parts.push('');
+      
+      context.practicalWork.slice(0, 25).forEach(pw => {
+        parts.push(`\n[${pw.activity_type?.toUpperCase() || 'PRACTICAL'}] ${pw.topic || pw.primary_topic}`);
+        
+        if (pw.content) {
+          parts.push(`${pw.content}`);
+        }
+        
+        if (pw.procedure_steps && pw.procedure_steps.length > 0) {
+          parts.push(`🔧 Steps: ${pw.procedure_steps.join(' → ')}`);
+        }
+        
+        if (pw.tools_required && pw.tools_required.length > 0) {
+          parts.push(`🛠️ Tools: ${pw.tools_required.join(', ')}`);
+        }
+        
+        if (pw.safety_notes && pw.safety_notes.length > 0) {
+          parts.push(`⚠️ Safety: ${pw.safety_notes.join('; ')}`);
+        }
+        
+        if (pw.testing_procedures && pw.testing_procedures.length > 0) {
+          parts.push(`🧪 Testing: ${pw.testing_procedures.join(' | ')}`);
+        }
+        
+        if (pw.common_mistakes && pw.common_mistakes.length > 0) {
+          parts.push(`❌ Avoid: ${pw.common_mistakes.join('; ')}`);
+        }
+      });
+      parts.push('');
+    }
+
+    // Output format (UPDATED with installation guidance requirement)
     parts.push('=== OUTPUT FORMAT ===');
     parts.push('1. AT A GLANCE CARD: loadKw (loadPower/1000), loadIb (Ib with unit), Cable, Device, VD (pass/fail), Zs, Compliance, Notes');
     parts.push('2. 9 SECTIONS: Circuit Summary, Load Details, Cable Selection & Calc, Device Selection, Compliance, Justification, Installation Context (basic electrical only), Safety, Testing');
-    parts.push('3. INSTALLATION: Provide only electrical installation method reference, basic termination requirements, and required tests. Detailed practical work methods handled by installation specialist agent.');
+    parts.push('3. INSTALLATION GUIDANCE (NEW): Three paragraphs covering best practices, testing, and maintenance (see below)');
+    parts.push('');
+    
+    // === INSTALLATION GUIDANCE REQUIREMENTS ===
+    parts.push('=== INSTALLATION GUIDANCE REQUIREMENTS (90% WEIGHTING) ===');
+    parts.push('For EACH circuit, provide THREE PARAGRAPHS using the Practical Work Intelligence above:');
+    parts.push('');
+    parts.push('Paragraph 1 - Installation Best Practices:');
+    parts.push('- Cable routing methods specific to this load type');
+    parts.push('- Fixing intervals and support requirements per BS 7671');
+    parts.push('- Termination procedures and torque settings');
+    parts.push('- Common installation mistakes to avoid');
+    parts.push('');
+    parts.push('Paragraph 2 - Testing & Commissioning:');
+    parts.push('- Required tests per BS 7671 Part 6');
+    parts.push('- Test equipment and expected readings');
+    parts.push('- Acceptance criteria');
+    parts.push('- Verification checklist items');
+    parts.push('');
+    parts.push('Paragraph 3 - Inspection & Maintenance:');
+    parts.push('- Visual inspection points');
+    parts.push('- EICR observation codes to watch for');
+    parts.push('- Maintenance intervals');
+    parts.push('- Common defects specific to this circuit type');
+    parts.push('');
+    parts.push('CRITICAL: Use circuit-specific practical work intelligence. Each circuit type (lighting, sockets, showers, etc.) has unique installation requirements.');
     parts.push('');
     
     // === YOUR ROLE ===
@@ -196,6 +257,7 @@ export class AIDesigner {
     parts.push('APPLY the formulas, tables, regulations, and examples from the intelligence sections.');
     parts.push('SHOW YOUR WORKING using calculation steps from the knowledge base.');
     parts.push('CITE specific regulation numbers and table references from the RAG results.');
+    parts.push('GENERATE practical installation guidance using the Practical Work Intelligence (90% weighting).');
     parts.push('');
 
     // === OUTPUT REQUIREMENTS ===
@@ -205,13 +267,7 @@ export class AIDesigner {
     parts.push('3. Reference tables explicitly (e.g., "Table 54.7: 2.5mm² conductor resistance = 7.41 mΩ/m")');
     parts.push('4. Cite regulation numbers in justifications (e.g., "per 433.1.1", "Table 41.3")');
     parts.push('5. Use exact voltage/phase values from each circuit request');
-    parts.push('');
-
-    // === INSTALLATION NOTES ===
-    parts.push('=== INSTALLATION NOTES ===');
-    parts.push('Provide "installationNotes" as a STRING (2-4 sentences max).');
-    parts.push('Include: installation method reference, basic termination, required tests.');
-    parts.push('Do NOT generate "installationGuidance" object - handled by specialist agent.');
+    parts.push('6. Provide three-paragraph installation guidance for each circuit');
     parts.push('');
     
     // === CALCULATIONS SCHEMA ===
@@ -231,7 +287,7 @@ export class AIDesigner {
     
     // Field requirements
     parts.push('=== REQUIRED FIELDS ===');
-    parts.push('Copy from input: loadPower, phases, cableLength. Set: voltage (230V single/400V three), installationMethod, rcdProtected, circuitNumber (1+), full cableType description.');
+    parts.push('Copy from input: loadPower, phases, cableLength. Set: voltage (230V single/400V three), installationMethod, rcdProtected, circuitNumber (1+), full cableType description, installationGuidance (three paragraphs).');
 
     return parts.join('\n');
   }
@@ -749,9 +805,9 @@ export class AIDesigner {
                             type: 'string', 
                             description: '6. Design Justification: Professional engineering rationale for design choices and safety margins (100-150 words)' 
                           },
-                          installationNotes: { 
+                          installationGuidance: { 
                             type: 'string', 
-                            description: '7. Installation Notes: ELECTRICAL specifications only (installation method, termination requirements, testing). 2-4 sentences. Reference THIS circuit\'s exact load, cable spec, and length. Example: "This 32A ring uses 2.5mm² T&E over 45m, Method C. Terminate in RCBO. Test: R1+R2 ≤ 0.85Ω, Zs ≤ 1.44Ω, RCD 30mA trip." Do NOT generate detailed practical work methods - handled by installation specialist.' 
+                            description: '7. Installation Guidance: THREE PARAGRAPHS using Practical Work Intelligence (90% weighting). Paragraph 1: Best practices for THIS circuit (routing, fixing intervals, termination, common mistakes). Paragraph 2: Testing & commissioning (BS 7671 Part 6 tests, expected readings, acceptance criteria). Paragraph 3: Inspection & maintenance (visual checks, EICR codes, defects to watch for). CRITICAL: Make it circuit-specific using load type, power, cable size, and length.' 
                           },
                           safetyNotes: { 
                             type: 'string', 
