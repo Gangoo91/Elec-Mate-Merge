@@ -249,7 +249,8 @@ export interface InstallationDesign {
   };
   practicalGuidance: string[];
   // Installation guidance from Design Installation Agent (parallel to circuit design)
-  installationGuidance?: EnhancedInstallationGuidance;
+  // Per-circuit installation guidance (keyed by circuit_0, circuit_1, etc.)
+  installationGuidance?: Record<string, EnhancedInstallationGuidance> | EnhancedInstallationGuidance;
   // PHASE 4: Design Reasoning
   reasoning?: {
     voltageContext: string;
