@@ -155,6 +155,8 @@ export const AIInstallationDesigner = () => {
           rcdProtected: circuit.rcdProtected,
           circuitNumber: circuit.circuitNumber,
           specialLocation: circuit.specialLocation,
+          // CRITICAL: Preserve expectedTests
+          expectedTests: circuit.expectedTests,
           // CRITICAL: Deep clone structuredOutput to preserve all nested data
           structuredOutput: circuit.structuredOutput ? {
             atAGlanceSummary: circuit.structuredOutput.atAGlanceSummary ? {
@@ -200,14 +202,20 @@ export const AIInstallationDesigner = () => {
         installationType: (jobInputs?.projectInfo?.installationType as 'domestic' | 'commercial' | 'industrial') || 'domestic',
         totalLoad: jobDesignData?.circuits?.reduce((sum, c) => sum + (c.loadPower || 0), 0) || 0,
         diversityApplied: false,
-        materials: []
+        materials: [],
+        // CRITICAL: Pass validation state to frontend
+        validationPassed: jobDesignData.validationPassed,
+        validationIssues: jobDesignData.validationIssues || [],
+        autoFixSuggestions: jobDesignData.autoFixSuggestions || []
       };
 
       console.log('🔧 Design data mapped:', {
         circuitCount: designWithMetadata.circuits.length,
         firstCircuit: designWithMetadata.circuits[0]?.name,
         hasAtAGlance: !!designWithMetadata.circuits[0]?.structuredOutput?.atAGlanceSummary,
-        loadKw: designWithMetadata.circuits[0]?.structuredOutput?.atAGlanceSummary?.loadKw
+        hasExpectedTests: !!designWithMetadata.circuits[0]?.expectedTests,
+        validationPassed: designWithMetadata.validationPassed,
+        issueCount: designWithMetadata.validationIssues.length
       });
 
       setDesignData(designWithMetadata);
@@ -216,8 +224,12 @@ export const AIInstallationDesigner = () => {
       
       const cacheInfo = jobDesignData.fromCache ? ' (from cache)' : '';
       const autoFixInfo = jobDesignData.autoFixApplied ? ' (auto-fixed)' : '';
+      const validationInfo = !jobDesignData.validationPassed 
+        ? ` - ${jobDesignData.validationIssues?.length || 0} validation issue(s) found` 
+        : '';
+      
       toast.success('Design generated successfully' + cacheInfo + autoFixInfo, {
-        description: `${jobDesignData.circuits?.length || 0} circuit${(jobDesignData.circuits?.length || 0) !== 1 ? 's' : ''} designed`
+        description: `${jobDesignData.circuits?.length || 0} circuit${(jobDesignData.circuits?.length || 0) !== 1 ? 's' : ''} designed${validationInfo}`
       });
       
       // Mark toast as shown
