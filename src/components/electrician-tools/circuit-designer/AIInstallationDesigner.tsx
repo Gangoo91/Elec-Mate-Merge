@@ -41,8 +41,8 @@ export const AIInstallationDesigner = () => {
   const [jobId, setJobId] = useState<string | null>(null);
   const successToastShown = useRef(false);
   
-  // Use job polling hook
-  const { job, progress, status, currentStep, designData: jobDesignData, error } = useCircuitDesignGeneration(jobId);
+  // Use job polling hook (now includes installationGuidance)
+  const { job, progress, status, currentStep, designData: jobDesignData, installationGuidance, error } = useCircuitDesignGeneration(jobId);
 
   const handleGenerate = async (inputs: DesignInputs) => {
     try {
@@ -203,6 +203,8 @@ export const AIInstallationDesigner = () => {
         totalLoad: jobDesignData?.circuits?.reduce((sum, c) => sum + (c.loadPower || 0), 0) || 0,
         diversityApplied: false,
         materials: [],
+        // NEW: Add installation guidance from parallel agent
+        installationGuidance: installationGuidance || undefined,
         // CRITICAL: Pass validation state to frontend
         validationPassed: jobDesignData.validationPassed,
         validationIssues: jobDesignData.validationIssues || [],

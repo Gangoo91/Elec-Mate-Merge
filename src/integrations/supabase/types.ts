@@ -745,7 +745,10 @@ export type Database = {
           designer_status: string | null
           error_message: string | null
           id: string
+          installation_agent_progress: number | null
+          installation_agent_status: string | null
           installation_data: Json | null
+          installation_guidance: Json | null
           installation_job_id: string | null
           installer_progress: number | null
           installer_status: string | null
@@ -767,7 +770,10 @@ export type Database = {
           designer_status?: string | null
           error_message?: string | null
           id?: string
+          installation_agent_progress?: number | null
+          installation_agent_status?: string | null
           installation_data?: Json | null
+          installation_guidance?: Json | null
           installation_job_id?: string | null
           installer_progress?: number | null
           installer_status?: string | null
@@ -789,7 +795,10 @@ export type Database = {
           designer_status?: string | null
           error_message?: string | null
           id?: string
+          installation_agent_progress?: number | null
+          installation_agent_status?: string | null
           installation_data?: Json | null
+          installation_guidance?: Json | null
           installation_job_id?: string | null
           installer_progress?: number | null
           installer_status?: string | null

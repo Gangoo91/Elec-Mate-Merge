@@ -27,6 +27,7 @@ import { RequestSummaryHeader } from './RequestSummaryHeader';
 import { processElectricalText } from '@/lib/text-processor';
 import { ExpectedTestsDisplay } from './ExpectedTestsDisplay';
 import { InstallationGuidanceDisplay } from './InstallationGuidanceDisplay';
+import { InstallationGuidancePanel } from './InstallationGuidancePanel';
 
 interface DesignReviewEditorProps {
   design: InstallationDesign;
@@ -2243,6 +2244,23 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           )}
         </div>
       </Card>
+
+      {/* NEW: Installation Guidance Section */}
+      {design.installationGuidance && (
+        <Card className="p-6">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Wrench className="h-5 w-5 text-primary" />
+              <h3 className="text-lg font-semibold">Installation Guidance</h3>
+              <Badge variant="secondary" className="ml-auto">AI Generated</Badge>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Comprehensive installation guidance generated in parallel with circuit design
+            </p>
+            <InstallationGuidancePanel guidance={design.installationGuidance} />
+          </div>
+        </Card>
+      )}
 
       {/* Actions */}
       <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">

@@ -1,11 +1,13 @@
 // Enhanced Installation Guidance with RAG-driven structured data
 export interface EnhancedInstallationGuidance {
+  executiveSummary?: string;
   safetyConsiderations: SafetyConsideration[];
   materialsRequired: MaterialRequirement[];
   toolsRequired: ToolRequirement[];
   cableRouting: CableRoutingStep[];
   terminationRequirements: TerminationRequirement[];
   installationProcedure: InstallationStep[];
+  testingRequirements?: TestingRequirements;
 }
 
 export interface SafetyConsideration {

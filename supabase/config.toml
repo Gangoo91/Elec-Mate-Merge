@@ -5,10 +5,15 @@ project_id = "jtwygbeceundfgnkirof"
 verify_jwt = false
 timeout_sec = 480
 
-# Parallel Circuit Designer Architecture
+# Parallel Circuit Designer Architecture (Designer + Installation Guidance)
 [functions.process-circuit-design-parallel]
 verify_jwt = false
 timeout_sec = 360
+
+# Design Installation Agent (generates installation guidance for circuits)
+[functions.design-installation-agent]
+verify_jwt = false
+timeout_sec = 180
 
 [functions.project-mgmt-v3]
 verify_jwt = false

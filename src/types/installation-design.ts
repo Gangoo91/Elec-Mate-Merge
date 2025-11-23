@@ -248,6 +248,8 @@ export interface InstallationDesign {
     }>;
   };
   practicalGuidance: string[];
+  // Installation guidance from Design Installation Agent (parallel to circuit design)
+  installationGuidance?: EnhancedInstallationGuidance;
   // PHASE 4: Design Reasoning
   reasoning?: {
     voltageContext: string;
@@ -256,6 +258,14 @@ export interface InstallationDesign {
     complianceChecks: string;
     correctionsApplied?: string;
   };
+  // Validation state
+  validationPassed?: boolean;
+  validationIssues?: string[];
+  autoFixSuggestions?: Array<{
+    circuit: string;
+    issue: string;
+    suggestion: string;
+  }>;
 }
 
 export interface DesignInputs {
