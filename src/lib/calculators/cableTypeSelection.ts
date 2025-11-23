@@ -1,4 +1,10 @@
-// Intelligent Cable Type Selection Logic
+// ⚠️ DEPRECATED: Replaced by RAG-driven cable selection
+// This file contained hardcoded cable selection rules that override BS 7671 intelligence
+// All cable selection logic now comes from design_knowledge_intelligence RAG search
+// The AI agent reads BS 7671 regulations and makes intelligent decisions
+export const DEPRECATED = true;
+
+// Intelligent Cable Type Selection Logic (LEGACY - DO NOT USE)
 // Determines the most appropriate cable type based on installation context
 
 import { CableType } from './bs7671-data/cableCapacities';

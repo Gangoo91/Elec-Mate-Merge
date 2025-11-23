@@ -189,107 +189,44 @@ export class AIDesigner {
     parts.push('3. INSTALLATION: Provide only electrical installation method reference, basic termination requirements, and required tests. Detailed practical work methods handled by installation specialist agent.');
     parts.push('');
     
-    // Expanded core design rules with installation type specifics
-    parts.push('=== CORE BS 7671 DESIGN RULES ===');
-    parts.push('UNIVERSAL (All Installations):');
-    parts.push('- Ib ≤ In ≤ Iz (433.1.1) | VD: ≤3% lighting, ≤5% power (525.1) | Zs ≤ max (411.3.2)');
-    parts.push('- RCBO mandatory: ALL sockets (411.3.3), ALL bathroom circuits (701.411.3.3)');
-    parts.push('- Cable sizes: T&E (1.5-16mm²), SWA (1.5-95mm²) - round UP to nearest valid size');
-    parts.push('- CPC sizing: T&E per Table 54.7 (1.5→1.0, 2.5→1.5, 4→2.5, 6→2.5, 10→4, 16→6mm²)');
-    parts.push('- SWA cables: CPC MUST equal live conductor size per 543.1.1 (e.g., 6mm² SWA = 6mm² CPC)');
-    parts.push('');
-    
-    // Type-specific rules
-    if (type === 'domestic') {
-      parts.push('DOMESTIC-SPECIFIC:');
-      parts.push('- Ring finals: 2.5mm² T&E, 32A RCBO, max floor area 100m² (433.1.204)');
-      parts.push('- Radial sockets: 2.5mm² = 20A max, 4mm² = 32A max');
-      parts.push('- Showers: Dedicated circuit, often 6mm² or 10mm² T&E with 32A-50A RCBO');
-      parts.push('- Cookers: Diversity per 311.1 (10A + 30% remainder + 5A if socket)');
-      parts.push('- Lighting: Typically 1.5mm² T&E, 6A MCB, max 12 points per circuit');
-      parts.push('');
-    } else if (type === 'commercial') {
-      parts.push('COMMERCIAL-SPECIFIC:');
-      parts.push('- Larger distribution: TPN boards, higher rated MCCBs/RCCBOs');
-      parts.push('- Sub-mains: Often SWA, calculate for diversity and future expansion');
-      parts.push('- Emergency systems: Separate circuits, maintained supplies, fire alarm integration');
-      parts.push('- Discrimination: Ensure upstream/downstream protection coordination');
-      parts.push('- Data/comms: Segregate from power cables, avoid EMI (521.10.1)');
-      parts.push('');
-    } else if (type === 'industrial') {
-      parts.push('INDUSTRIAL-SPECIFIC:');
-      parts.push('- Motors: Type D MCBs, FLC = P/(√3 × V × pf × eff), In = 1.25 × FLC minimum');
-      parts.push('- DOL starters: Consider starting current (5-7 × FLC), check supply capacity');
-      parts.push('- High fault currents: Verify breaking capacity (ka rating), consider fault level');
-      parts.push('- Larger cables: Use SWA as standard, multicore for motors (L1, L2, L3, E)');
-      parts.push('- IP ratings: Higher protection required (dust, moisture, mechanical damage)');
-      parts.push('');
-    }
-    parts.push('');
-    parts.push('=== USE EXACT KNOWLEDGE ===');
-    parts.push('- USE EXACT FORMULAS from Design Knowledge section above');
-    parts.push('- SHOW CALCULATION STEPS from worked examples');
-    parts.push('- REFERENCE TABLE VALUES explicitly (e.g., "Table 54.7: 2.5mm² = 7.41 mΩ/m")');
-    parts.push('- CITE BS 7671 regulations from knowledge base');
-    parts.push('- APPLY COMMON MISTAKE WARNINGS where relevant');
+    // === YOUR ROLE ===
+    parts.push('=== YOUR ROLE ===');
+    parts.push('You are a BS 7671:2018+A3:2024 electrical circuit design expert.');
+    parts.push('USE THE KNOWLEDGE BASE ABOVE to design compliant circuits.');
+    parts.push('APPLY the formulas, tables, regulations, and examples from the intelligence sections.');
+    parts.push('SHOW YOUR WORKING using calculation steps from the knowledge base.');
+    parts.push('CITE specific regulation numbers and table references from the RAG results.');
     parts.push('');
 
-    // CRITICAL: Prevent designer from creating installer's job
-    parts.push('=== CRITICAL SCHEMA REQUIREMENT ===');
-    parts.push('WHY THIS EXISTS: A separate installation specialist agent handles detailed practical work methods.');
-    parts.push('YOUR ROLE: Provide ONLY electrical design specifications and basic installation context.');
+    // === OUTPUT REQUIREMENTS ===
+    parts.push('=== OUTPUT REQUIREMENTS ===');
+    parts.push('1. Design circuits that comply with BS 7671 regulations found in knowledge base');
+    parts.push('2. Show calculations using formulas from Design Knowledge Intelligence');
+    parts.push('3. Reference tables explicitly (e.g., "Table 54.7: 2.5mm² conductor resistance = 7.41 mΩ/m")');
+    parts.push('4. Cite regulation numbers in justifications (e.g., "per 433.1.1", "Table 41.3")');
+    parts.push('5. Use exact voltage/phase values from each circuit request');
     parts.push('');
-    parts.push('YOU MUST NOT GENERATE:');
-    parts.push('- "installationGuidance" object with cableRouting, terminationAdvice, toolsRequired, etc.');
-    parts.push('- Detailed step-by-step practical instructions');
-    parts.push('- Tool lists, material lists, or method statements');
-    parts.push('');
-    parts.push('YOU MUST GENERATE:');
-    parts.push('- "installationNotes" as a STRING (2-4 sentences max)');
-    parts.push('- Electrical installation method reference only (e.g., "Method C: clipped direct")');
-    parts.push('- Basic termination requirements (e.g., "Terminate in RCBO at consumer unit")');
-    parts.push('- Required electrical tests (e.g., "Verify Zs ≤ 0.87Ω, RCD test 30mA trip")');
-    parts.push('');
-    parts.push('INSTALLATION NOTES REQUIREMENTS:');
-    parts.push('- Reference EXACT load (e.g., "This 9.5kW shower", "32A ring final")');
-    parts.push('- Reference EXACT cable (e.g., "6mm² T&E", "2.5mm² SWA with 2.5mm² CPC")');
-    parts.push('- Reference EXACT length if >20m (e.g., "over 35m run")');
-    parts.push('- Location-specific notes if outdoor/bathroom/kitchen');
-    parts.push('');
-    parts.push('EXAMPLE:');
-    parts.push('WRONG: "Install cable clips at regular intervals using appropriate fixings for the substrate."');
-    parts.push('RIGHT: "This 32A ring uses 2.5mm² T&E, Method C over 45m. Terminate in RCBO. Test: R1+R2 ≤ 0.85Ω, Zs ≤ 1.44Ω, verify RCD 30mA trip."');
+
+    // === INSTALLATION NOTES ===
+    parts.push('=== INSTALLATION NOTES ===');
+    parts.push('Provide "installationNotes" as a STRING (2-4 sentences max).');
+    parts.push('Include: installation method reference, basic termination, required tests.');
+    parts.push('Do NOT generate "installationGuidance" object - handled by specialist agent.');
     parts.push('');
     
-    // Tighten schema expectations for calculations & expected tests
-    parts.push('=== CRITICAL: CALCULATIONS & EXPECTED TESTS SCHEMA ===');
+    // === CALCULATIONS SCHEMA ===
+    parts.push('=== CALCULATIONS SCHEMA ===');
     parts.push('The "calculations" and "expectedTests" objects are NON-OPTIONAL.');
     parts.push('Even if you provide values, they will be OVERWRITTEN by deterministic BS 7671 calculation engine.');
     parts.push('YOUR values serve as HINTS only. The actual compliant values come from code.');
     parts.push('');
     parts.push('REQUIRED calculations fields:');
-    parts.push('- Ib: Design current (use Ib = P / (V × PF) for single-phase, Ib = P / (√3 × V × PF) for three-phase)');
-    parts.push('- In: Protection device rating (must be ≥ Ib)');
-    parts.push('- Iz: Cable capacity after derating (from BS 7671 tables)');
+    parts.push('- Ib: Design current (find formula in RAG knowledge base)');
+    parts.push('- In: Protection device rating');
+    parts.push('- Iz: Cable capacity after derating (from BS 7671 tables in RAG)');
     parts.push('- voltageDrop: { volts, percent, limit, compliant } - will be recalculated deterministically');
     parts.push('- zs: Earth fault loop impedance - will be recalculated deterministically');
     parts.push('- maxZs: Maximum Zs from Table 41.3 - will be recalculated deterministically');
-    parts.push('');
-    parts.push('All mathematical outputs MUST align with formulas provided in Design Knowledge section.');
-    parts.push('');
-
-    // Expanded auto-correction rules
-    parts.push('=== AUTO-CORRECT (SILENT) ===');
-    parts.push('Apply these corrections automatically without user intervention:');
-    parts.push('1. Three-phase circuits: MUST use 400V/415V (never 230V)');
-    parts.push('2. Motors: FLC = (kW × 1000) / (√3 × V × pf × eff), Ib = FLC × 1.25, Type D MCB/MCCB');
-    parts.push('3. Socket circuits: ALWAYS RCBO (never MCB) per 411.3.3');
-    parts.push('4. Bathroom circuits: ALWAYS RCBO per 701.411.3.3');
-    parts.push('5. Outdoor/buried cables: MUST use SWA (never T&E)');
-    parts.push('6. Domestic ring finals: 2.5mm² T&E, 32A RCBO, check continuity at each socket');
-    parts.push('7. Commercial emergency lighting: Separate circuit, maintained supply consideration');
-    parts.push('8. Industrial motors >5.5kW: Consider DOL vs star-delta starting currents');
-    parts.push('9. Document ALL corrections in justifications.corrections field');
     parts.push('');
     
     // Field requirements
