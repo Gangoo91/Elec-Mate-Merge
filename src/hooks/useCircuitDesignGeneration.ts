@@ -157,11 +157,28 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
     };
   }, [jobId]);
 
+  // Enhanced progress messages for sequential execution
+  const getProgressMessage = () => {
+    if (!job) return '';
+    
+    // Phase 1: Circuit Designer
+    if (job.designer_status === 'processing') {
+      return `${job.current_step} (Phase 1/2)`;
+    }
+    
+    // Phase 2: Installation Agent
+    if (job.designer_status === 'complete' && job.installation_agent_status === 'processing') {
+      return `${job.current_step} (Phase 2/2)`;
+    }
+    
+    return job.current_step || '';
+  };
+
   return {
     job,
     progress: job?.status === 'failed' ? 0 : (job?.progress || 0), // Show 0% on failure
     status: jobId ? ((job?.status as any) || 'pending') : 'idle',
-    currentStep: job?.current_step || '',
+    currentStep: getProgressMessage(),
     designData: job?.design_data,
     installationGuidance: job?.installation_guidance,
     error: job?.error_message

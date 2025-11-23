@@ -20,16 +20,20 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
-    const { jobId, circuitDesignContext } = await req.json();
+    const { jobId, designedCircuits, supply, projectInfo } = await req.json();
 
-    if (!jobId) {
+    if (!jobId || !designedCircuits) {
       return new Response(
-        JSON.stringify({ error: 'jobId is required' }),
+        JSON.stringify({ error: 'jobId and designedCircuits are required' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    console.log('🔧 Design Installation Agent START', { jobId });
+    console.log('🔧 Design Installation Agent START', { 
+      jobId,
+      circuitCount: designedCircuits.length,
+      receivedActualSpecs: true 
+    });
 
     // Update job: Installation agent starting
     await supabase
@@ -41,9 +45,9 @@ Deno.serve(async (req) => {
       })
       .eq('id', jobId);
 
-    // STEP 1: Extract keywords from circuit design context
-    const keywords = extractDesignKeywords(circuitDesignContext);
-    console.log(`📝 Extracted ${keywords.size} keywords for RAG search`);
+    // STEP 1: Extract keywords from DESIGNED circuits (actual specs)
+    const keywords = extractDesignKeywords(designedCircuits, supply, projectInfo);
+    console.log(`📝 Extracted ${keywords.size} keywords from DESIGNED circuits`);
 
     // Update progress
     await supabase
@@ -83,10 +87,12 @@ Deno.serve(async (req) => {
       })
       .eq('id', jobId);
 
-    // STEP 3: Generate installation guidance using OpenAI
+    // STEP 3: Generate installation guidance using OpenAI with DESIGNED circuits
     const aiStart = Date.now();
     const installationGuidance = await generateInstallationGuidance(
-      circuitDesignContext,
+      designedCircuits,
+      supply,
+      projectInfo,
       practicalWorkResult.results,
       regulations
     );
@@ -162,7 +168,7 @@ Deno.serve(async (req) => {
   }
 });
 
-function extractDesignKeywords(circuitContext: any): Set<string> {
+function extractDesignKeywords(designedCircuits: any[], supply: any, projectInfo: any): Set<string> {
   const keywords = new Set<string>();
   
   // Base installation keywords
@@ -174,55 +180,119 @@ function extractDesignKeywords(circuitContext: any): Set<string> {
   
   baseKeywords.forEach(kw => keywords.add(kw));
 
-  if (!circuitContext?.circuits) return keywords;
-
-  // Extract from circuit data
-  circuitContext.circuits.forEach((circuit: any) => {
+  // Extract from DESIGNED circuit specifications (actual specs, not input requirements)
+  designedCircuits.forEach((circuit: any) => {
+    // Circuit name and type
+    if (circuit.name) keywords.add(circuit.name.toLowerCase());
     if (circuit.loadType) keywords.add(circuit.loadType.toLowerCase());
     if (circuit.location) keywords.add(circuit.location.toLowerCase());
-    if (circuit.cableType) keywords.add(circuit.cableType.toLowerCase());
-    if (circuit.cableSize) keywords.add(`${circuit.cableSize}mm`);
-    if (circuit.protectionDevice) keywords.add(circuit.protectionDevice.toLowerCase());
+    
+    // ACTUAL designed cable specification
+    if (circuit.cableSpec) {
+      keywords.add(circuit.cableSpec.toLowerCase()); // e.g., "10mm² twin + earth"
+      const cableSizeMatch = circuit.cableSpec.match(/(\d+(?:\.\d+)?)\s*mm/);
+      if (cableSizeMatch) {
+        keywords.add(`${cableSizeMatch[1]}mm cable`);
+        keywords.add(`${cableSizeMatch[1]}mm² cable`);
+      }
+    }
+    
+    // ACTUAL protection device
+    if (circuit.protection) {
+      keywords.add(circuit.protection.toLowerCase()); // e.g., "50A Type B MCB"
+      const ratingMatch = circuit.protection.match(/(\d+)A/);
+      if (ratingMatch) {
+        keywords.add(`${ratingMatch[1]}A protection`);
+        keywords.add(`${ratingMatch[1]} amp`);
+      }
+    }
+    
+    // Installation method
+    if (circuit.installationMethod) {
+      keywords.add(circuit.installationMethod.toLowerCase());
+    }
+    
+    // Load details
+    if (circuit.loadDetails?.totalPower) {
+      keywords.add(`${circuit.loadDetails.totalPower}W load`);
+      keywords.add(`${Math.round(circuit.loadDetails.totalPower / 1000)}kW load`);
+    }
   });
 
   // Add supply system keywords
-  if (circuitContext.supply?.earthingSystem) {
-    keywords.add(circuitContext.supply.earthingSystem.toLowerCase());
+  if (supply?.voltage) {
+    keywords.add(`${supply.voltage}V`);
+  }
+  if (supply?.phases) {
+    keywords.add(`${supply.phases} phase`);
+    keywords.add(`${supply.phases}-phase`);
+  }
+  if (supply?.earthingSystem) {
+    keywords.add(supply.earthingSystem.toLowerCase());
+  }
+
+  // Add project context
+  if (projectInfo?.type) {
+    keywords.add(projectInfo.type.toLowerCase());
   }
 
   return keywords;
 }
 
 async function generateInstallationGuidance(
-  circuitContext: any,
+  designedCircuits: any[],
+  supply: any,
+  projectInfo: any,
   practicalWork: any[],
   regulations: any[]
 ) {
+  // Build detailed circuit specifications for AI
+  const circuitSpecs = designedCircuits.map((circuit: any, i: number) => `
+### Circuit ${i + 1}: ${circuit.name}
+- **Designed Cable**: ${circuit.cableSpec} (ACTUAL designed specification)
+- **Designed Protection**: ${circuit.protection} (ACTUAL designed device)
+- **Installation Method**: ${circuit.installationMethod}
+- **Cable Length**: ${circuit.cableLength}m
+- **Load**: ${circuit.loadDetails?.totalPower || circuit.loadPower}W
+- **Location**: ${circuit.location || 'Not specified'}
+
+⚠️ CRITICAL: Use these EXACT specifications. Do not suggest alternatives or different cable sizes.
+`).join('\n');
+
   const systemPrompt = `You are an expert Installation Guidance Specialist for electrical installations.
 
-Generate comprehensive installation guidance based on the circuit design and BS 7671:2018+A2:2024.
+Generate comprehensive installation guidance based on the ACTUAL DESIGNED circuit specifications and BS 7671:2018+A2:2024.
 
-KNOWLEDGE BASE PROVIDED:
+## DESIGNED CIRCUIT SPECIFICATIONS (USE THESE EXACT SPECS)
+
+${circuitSpecs}
+
+## Supply System
+- Voltage: ${supply?.voltage || '230'}V
+- Phases: ${supply?.phases || 'Single'}
+- Earthing: ${supply?.earthingSystem || 'TN-S'}
+
+## Project Context
+- Type: ${projectInfo?.type || 'Residential'}
+- Location: ${projectInfo?.location || 'General'}
+
+## KNOWLEDGE BASE PROVIDED
 - ${practicalWork.length} practical work intelligence results
 - ${regulations.length} BS 7671 regulations
-- ${circuitContext.circuits?.length || 0} designed circuits
 
-CIRCUIT CONTEXT:
-${JSON.stringify(circuitContext, null, 2).slice(0, 2000)}
-
-PRACTICAL WORK KNOWLEDGE:
+## PRACTICAL WORK KNOWLEDGE:
 ${practicalWork.slice(0, 10).map((pw: any) => 
   `- ${pw.primary_topic}: ${pw.procedure_summary || pw.description || ''}`
 ).join('\n')}
 
-BS 7671 REGULATIONS:
+## BS 7671 REGULATIONS:
 ${regulations.slice(0, 8).map((reg: any) => 
   `- ${reg.regulation_number}: ${(reg.content || reg.primary_topic || '').slice(0, 150)}`
 ).join('\n')}
 
-OUTPUT STRUCTURE (JSON):
+## OUTPUT STRUCTURE (JSON):
 {
-  "executiveSummary": "2-3 paragraph overview of installation requirements",
+  "executiveSummary": "2-3 paragraph overview of installation requirements based on DESIGNED specs",
   "safetyConsiderations": [
     {
       "consideration": "Safety requirement",
@@ -233,8 +303,8 @@ OUTPUT STRUCTURE (JSON):
   ],
   "materialsRequired": [
     {
-      "item": "Material name",
-      "specification": "Detailed spec",
+      "item": "Material name (using EXACT designed cable sizes)",
+      "specification": "Detailed spec matching designed specs",
       "quantity": "Quantity needed",
       "source": "Where to get it"
     }
@@ -248,9 +318,9 @@ OUTPUT STRUCTURE (JSON):
   ],
   "cableRouting": [
     {
-      "step": "Routing instruction",
-      "cableType": "Cable type",
-      "method": "Installation method",
+      "step": "Routing instruction for designed cable size",
+      "cableType": "Cable type from designed specs",
+      "method": "Installation method from designed specs",
       "bsReference": "BS 7671 reference",
       "notes": "Additional notes"
     }
@@ -258,9 +328,9 @@ OUTPUT STRUCTURE (JSON):
   "terminationRequirements": [
     {
       "location": "Where to terminate",
-      "procedure": "How to terminate",
+      "procedure": "How to terminate (specific to designed cable size)",
       "toolsNeeded": ["tool1", "tool2"],
-      "torqueSettings": "Torque requirements",
+      "torqueSettings": "Torque requirements for this cable size",
       "bsReference": "BS 7671 reference"
     }
   ],
@@ -268,9 +338,9 @@ OUTPUT STRUCTURE (JSON):
     {
       "stepNumber": 1,
       "title": "Step title",
-      "description": "Detailed step description (100-150 words)",
+      "description": "Detailed step description using DESIGNED specifications (100-150 words)",
       "toolsForStep": ["tool1", "tool2"],
-      "materialsForStep": ["material1"],
+      "materialsForStep": ["material1 with designed specs"],
       "bsReferences": ["regulation1"]
     }
   ],
@@ -281,7 +351,7 @@ OUTPUT STRUCTURE (JSON):
         "testName": "Test name",
         "regulation": "BS 7671 regulation",
         "procedure": "How to perform",
-        "expectedReading": "Expected result",
+        "expectedReading": "Expected result based on designed specs",
         "acceptanceCriteria": "Pass criteria",
         "toolsRequired": ["test equipment"]
       }
@@ -290,14 +360,17 @@ OUTPUT STRUCTURE (JSON):
   }
 }
 
-IMPORTANT:
+## CRITICAL REQUIREMENTS:
 - Generate 8-12 installation procedure steps
 - Keep step descriptions 100-150 words
 - Include specific BS 7671 references
-- Focus on practical, actionable guidance
-- Consider the actual cable sizes and protection devices from the design`;
+- Use ONLY the designed cable sizes and protection devices specified above
+- DO NOT suggest alternative cable sizes or protection ratings
+- Materials list must match the DESIGNED specifications exactly
+- Termination procedures must be specific to the DESIGNED cable sizes
+- Testing criteria must be based on the DESIGNED protection device ratings`;
 
-  const userPrompt = `Generate complete installation guidance for this electrical design.`;
+  const userPrompt = `Generate complete installation guidance for these electrical circuits using the EXACT designed specifications provided above.`;
 
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
