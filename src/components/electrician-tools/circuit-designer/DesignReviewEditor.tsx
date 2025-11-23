@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { InstallationDesign, CircuitDesign } from '@/types/installation-design';
+import type { EnhancedInstallationGuidance } from '@/types/circuit-design';
 import { 
   CheckCircle2, AlertTriangle, AlertCircle, Download, Zap, Cable, Shield, 
   TrendingDown, Percent, Gauge, Wrench, MapPin, ClipboardCheck, FileText,
@@ -525,14 +526,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           tableReferences: circuit.deratingFactors.tableReferences
         } : null,
         
-        installationGuidance: circuit.installationGuidance ? {
-          cableRouting: circuit.installationGuidance.cableRouting,
-          terminationAdvice: circuit.installationGuidance.terminationAdvice,
-          testingRequirements: circuit.installationGuidance.testingRequirements,
-          safetyNotes: circuit.installationGuidance.safetyNotes || [],
-          toolsRequired: circuit.installationGuidance.toolsRequired || [],
-          estimatedInstallTime: circuit.installationGuidance.estimatedInstallTime
-        } : null,
+        installationGuidance: circuit.installationGuidance || null,
         
         specialLocationCompliance: circuit.specialLocationCompliance ? {
           isSpecialLocation: circuit.specialLocationCompliance.isSpecialLocation,
@@ -1712,7 +1706,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             {/* Installation Method Guidance - New Component */}
             {currentCircuit.installationGuidance && (
               <InstallationGuidanceDisplay 
-                installationGuidance={currentCircuit.installationGuidance as any}
+                installationGuidance={currentCircuit.installationGuidance as EnhancedInstallationGuidance}
                 testingRequirements={currentCircuit.testingRequirements}
               />
             )}
