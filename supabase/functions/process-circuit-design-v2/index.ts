@@ -244,9 +244,19 @@ Deno.serve(async (req) => {
     const elapsedMs = Date.now() - startTime;
     logger.info(`✅ Designer agent completed in ${Math.round(elapsedMs / 1000)}s (includes installation guidance)`);
 
-    // Handle designer failure
+    // Handle designer failure with defensive error checking
     if (designerResult.status === 'rejected') {
-      throw new Error(`Circuit Designer failed: ${designerResult.reason}`);
+      const error = designerResult.reason;
+      const errorMessage = error instanceof Error 
+        ? error.message 
+        : (typeof error === 'string' ? error : JSON.stringify(error));
+      
+      logger.error('Circuit Designer failed:', {
+        error: errorMessage,
+        stack: error instanceof Error ? error.stack : undefined
+      });
+      
+      throw new Error(`Circuit Designer failed: ${errorMessage}`);
     }
 
     const designerData = designerResult.value;
