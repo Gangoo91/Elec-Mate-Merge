@@ -674,7 +674,17 @@ IMPORTANT REMINDERS:
 - Extract tools/materials from RAG "TOOLS:" and "MATERIALS:" sections
 - Reference specific cable sizes, power ratings from RAG
 - Cite BS 7671 regulation numbers throughout
-- Be thorough - don't artificially limit yourself to minimums`;
+- Be thorough - don't artificially limit yourself to minimums
+
+**CRITICAL FOR SIMPLIFIED MODE:**
+- You MUST populate ALL arrays with DETAILED, SPECIFIC items
+- cableRouting: MINIMUM 4 items, describe actual routing with cable types and methods
+- terminationRequirements: MINIMUM 3 items, include torque settings and specifications
+- safetyConsiderations: MINIMUM 4 items, reference actual hazards with tools needed
+- materialsRequired: MINIMUM 5 items, include quantities and BS/EN specifications
+- toolsRequired: MINIMUM 8 items, include specific tool names and purposes
+- installationProcedure: MINIMUM 6 steps, each with tools, materials, and BS references
+- Empty arrays are NOT acceptable - generate realistic, context-aware content`;
 
 export async function generateInstallationMethod(
   query: string,
@@ -896,6 +906,11 @@ export async function generateInstallationMethod(
       // Add BS 7671 regulations if available
       if (r.bs7671_regulations && r.bs7671_regulations.length > 0) {
         context += `\n   BS 7671: ${r.bs7671_regulations.join(', ')}`;
+      }
+      
+      // ✅ Add debug logging for total context size
+      if (r.applies_to && r.applies_to.length > 0) {
+        context += `\n   APPLIES TO: ${r.applies_to.join(', ')}`;
       }
       
       return context;
