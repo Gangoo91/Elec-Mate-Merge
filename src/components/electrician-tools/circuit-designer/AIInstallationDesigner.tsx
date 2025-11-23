@@ -33,6 +33,80 @@ const getFriendlyErrorMessage = (error: string): string => {
   return `Design generation failed: ${error.slice(0, 100)}`;
 };
 
+// Format structured installation guidance into readable text
+const formatInstallationGuidance = (guidance: any): string => {
+  if (!guidance) return '';
+  
+  const sections: string[] = [];
+  
+  // Executive Summary
+  if (guidance.executiveSummary) {
+    sections.push(`📋 OVERVIEW\n${guidance.executiveSummary}\n`);
+  }
+  
+  // Safety Considerations
+  if (guidance.safetyConsiderations?.length > 0) {
+    const safetyItems = guidance.safetyConsiderations
+      .map((s: any) => `• ${s.consideration || s.description || s}`)
+      .join('\n');
+    sections.push(`⚠️ SAFETY CONSIDERATIONS\n${safetyItems}\n`);
+  }
+  
+  // Materials Required
+  if (guidance.materialsRequired?.length > 0) {
+    const materials = guidance.materialsRequired
+      .map((m: any) => {
+        const qty = m.quantity || '';
+        const item = m.item || m.name || '';
+        const spec = m.specification ? ` (${m.specification})` : '';
+        return `• ${qty}${qty ? 'x ' : ''}${item}${spec}`;
+      })
+      .join('\n');
+    sections.push(`📦 MATERIALS REQUIRED\n${materials}\n`);
+  }
+  
+  // Tools Required
+  if (guidance.toolsRequired?.length > 0) {
+    const tools = guidance.toolsRequired
+      .map((t: any) => `• ${t.tool || t.name || t}${t.purpose ? ` - ${t.purpose}` : ''}`)
+      .join('\n');
+    sections.push(`🔧 TOOLS REQUIRED\n${tools}\n`);
+  }
+  
+  // Cable Routing
+  if (guidance.cableRouting?.length > 0) {
+    const routing = guidance.cableRouting
+      .map((r: any) => `• ${r.step || r.description || r}${r.method ? ` (${r.method})` : ''}`)
+      .join('\n');
+    sections.push(`🔌 CABLE ROUTING\n${routing}\n`);
+  }
+  
+  // Installation Procedure
+  if (guidance.installationProcedure?.length > 0) {
+    const steps = guidance.installationProcedure
+      .map((step: any) => {
+        const num = step.stepNumber || '';
+        const title = step.title || '';
+        const desc = step.description || '';
+        return `${num}. ${title}\n   ${desc}`;
+      })
+      .join('\n\n');
+    sections.push(`🔧 INSTALLATION STEPS\n${steps}\n`);
+  }
+  
+  // Testing Requirements
+  if (guidance.testingRequirements?.tests?.length > 0) {
+    const tests = guidance.testingRequirements.tests
+      .map((t: any) => `• ${t.testName || t.name}: ${t.procedure || t.description || ''}`)
+      .join('\n');
+    sections.push(`✅ TESTING REQUIREMENTS\n${tests}`);
+  } else if (guidance.testingRequirements?.intro) {
+    sections.push(`✅ TESTING REQUIREMENTS\n${guidance.testingRequirements.intro}`);
+  }
+  
+  return sections.join('\n---\n\n');
+};
+
 export const AIInstallationDesigner = () => {
   const [currentView, setCurrentView] = useState<'input' | 'processing' | 'results'>('input');
   const [userRequest, setUserRequest] = useState<string>('');
@@ -150,7 +224,8 @@ export const AIInstallationDesigner = () => {
           calculations: circuit.calculations,
           justifications: circuit.justifications,
           installationMethod: circuit.installationMethod || circuit.installMethod,
-          installationGuidance: circuit.installationGuidance,
+          // Format structured installation guidance as readable text
+          installationGuidance: installationGuidance ? formatInstallationGuidance(installationGuidance) : undefined,
           reasoning: circuit.reasoning,
           rcdProtected: circuit.rcdProtected,
           circuitNumber: circuit.circuitNumber,
