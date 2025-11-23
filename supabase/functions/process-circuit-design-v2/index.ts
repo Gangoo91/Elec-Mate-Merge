@@ -166,13 +166,22 @@ Deno.serve(async (req) => {
       sharedRegulations = ragCacheResult.data;
     } else {
       logger.info('🔄 LAYER 2 RAG CACHE DISABLED - fetching fresh regulations from RAG...');
-      sharedRegulations = await searchCircuitRegulations(jobInputs);
+      try {
+        sharedRegulations = await searchCircuitRegulations(jobInputs);
+        if (!sharedRegulations || !Array.isArray(sharedRegulations)) {
+          logger.warn('⚠️ RAG search returned invalid data, using empty array');
+          sharedRegulations = [];
+        }
+      } catch (error) {
+        logger.error('❌ RAG search failed, using empty array', error);
+        sharedRegulations = [];
+      }
       
       // Don't store in cache during testing
       // await storeRAGCache({ supabase, query, knowledgeBaseType: 'circuit_regulations', ragResults: sharedRegulations });
     }
 
-    logger.info(`✅ Using ${sharedRegulations.length} shared regulations for both agents`);
+    logger.info(`✅ Using ${sharedRegulations?.length || 0} shared regulations for both agents`);
 
     await safeUpdateProgress(10, 'Running Circuit Designer and Installation Planner in parallel...');
     await supabase
