@@ -60,9 +60,9 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
   const [elapsedTime, setElapsedTime] = useState(0);
   const [progressMessage, setProgressMessage] = useState("");
 
-  const totalDuration = ANALYSIS_STAGES.reduce((sum, stage) => sum + stage.duration, 0);
-  const estimatedTime = `${totalDuration - 10}-${totalDuration + 10} seconds`;
-  const isOverdue = elapsedTime > totalDuration + 10;
+  const totalDuration = 180; // 3 minutes
+  const estimatedTime = "3 minutes";
+  const isOverdue = elapsedTime > 210;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -72,16 +72,16 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
     return () => clearInterval(timer);
   }, []);
 
-  // Progress messages at key milestones
+  // Progress messages at key milestones (3-minute workflow)
   useEffect(() => {
-    if (elapsedTime >= 30 && elapsedTime < 90) {
+    if (elapsedTime >= 20 && elapsedTime < 80) {
       setProgressMessage("Searching regulations and pricing database...");
-    } else if (elapsedTime >= 90 && elapsedTime < 150) {
-      setProgressMessage("Generating detailed estimate with AI...");
-    } else if (elapsedTime >= 150 && elapsedTime < 210) {
-      setProgressMessage("Calculating profitability and business insights...");
-    } else if (elapsedTime >= 210) {
-      setProgressMessage("Almost complete, finalising report...");
+    } else if (elapsedTime >= 80 && elapsedTime < 150) {
+      setProgressMessage("Generating detailed estimate with GPT-5 Mini...");
+    } else if (elapsedTime >= 150 && elapsedTime < 180) {
+      setProgressMessage("Finalising calculations and alternatives...");
+    } else if (elapsedTime >= 180) {
+      setProgressMessage("Almost complete...");
     }
   }, [elapsedTime]);
 
@@ -113,29 +113,29 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
 
   return (
     <div className="mobile-safe-area min-h-[600px] flex items-center justify-center px-0 sm:p-6 animate-fade-in">
-      <Card className="w-full max-w-7xl border-0 sm:border-2 border-elec-yellow/20 rounded-none sm:rounded-xl bg-gradient-to-br from-elec-card to-elec-dark/50 shadow-xl">
-        <CardHeader className="text-center space-y-5 pb-6 px-4 py-6 sm:px-6 sm:py-6">
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-elec-yellow/20 to-green-500/20 flex items-center justify-center">
-              <Calculator className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
+      <Card className="w-full max-w-7xl border-0 sm:border-2 border-elec-yellow/30 rounded-none sm:rounded-2xl bg-gradient-to-br from-elec-card via-elec-dark/70 to-elec-dark shadow-2xl">
+        <CardHeader className="text-center space-y-4 sm:space-y-5 pb-6 px-4 sm:px-8 py-6 sm:py-8">
+          <div className="flex justify-center mb-2">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-elec-yellow/30 to-green-500/30 flex items-center justify-center shadow-lg">
+              <Calculator className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow" />
             </div>
           </div>
 
-          <div className="space-y-3">
-            <CardTitle className="mobile-heading font-bold text-foreground">
+          <div className="space-y-3 sm:space-y-4">
+            <CardTitle className="text-2xl sm:text-3xl font-bold text-white">
               AI Cost Analysis In Progress
             </CardTitle>
             
-            <p className="text-sm sm:text-base text-white font-medium">
-              ⏱️ Typically takes: {estimatedTime}
+            <p className="text-base sm:text-lg text-white font-semibold">
+              ⏱️ Typically takes: 3 minutes
             </p>
             
-            <p className="text-xs sm:text-sm text-white leading-relaxed">
-              AI is searching 45,000+ pricing items and generating detailed cost breakdown...
+            <p className="text-sm sm:text-base text-white leading-relaxed max-w-2xl mx-auto">
+              AI is searching 45,000+ UK pricing items and generating detailed cost breakdown...
             </p>
             
             <p className="text-base sm:text-lg text-elec-yellow font-semibold">
-              This typically takes 2-3 minutes for accurate results
+              This typically takes 3 minutes for accurate results
             </p>
             
             {progressMessage && (
@@ -145,47 +145,47 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
             )}
           </div>
 
-          <div className="space-y-4 mt-6 px-2">
+          <div className="space-y-4 sm:space-y-5 mt-6 px-2 sm:px-4">
             <div className="flex justify-between items-baseline gap-4">
-              <span className="text-sm sm:text-base text-white font-medium">
+              <span className="text-base sm:text-lg text-white font-semibold">
                 Overall Progress
               </span>
-              <span className="text-3xl sm:text-4xl font-bold text-elec-yellow tabular-nums">
+              <span className="text-4xl sm:text-5xl font-bold text-elec-yellow tabular-nums">
                 {Math.round(progress)}%
               </span>
             </div>
             
-            <Progress value={progress} className="h-3 sm:h-2.5" />
+            <Progress value={progress} className="h-4 sm:h-3" />
             
-            <div className="flex flex-col xs:flex-row xs:justify-between xs:items-center gap-2 xs:gap-4">
+            <div className="flex flex-col xs:flex-row xs:justify-between xs:items-center gap-3 xs:gap-4">
               <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-white shrink-0" />
-                <span className="text-xs sm:text-sm text-white font-medium tabular-nums">
+                <Clock className="h-5 w-5 text-white shrink-0" />
+                <span className="text-sm sm:text-base text-white font-semibold tabular-nums">
                   Elapsed: {formatTime(elapsedTime)}
                 </span>
               </div>
               {isOverdue ? (
-                <span className="text-xs sm:text-sm text-orange-400 font-medium">
+                <span className="text-sm sm:text-base text-orange-400 font-semibold">
                   Still processing...
                 </span>
               ) : (
-                <span className="text-xs sm:text-sm text-white font-medium tabular-nums">
+                <span className="text-sm sm:text-base text-white font-semibold tabular-nums">
                   ~{formatTime(Math.max(0, totalDuration - elapsedTime))} remaining
                 </span>
               )}
             </div>
             
-            <p className="text-xs text-white/80 text-center leading-relaxed">
-              ⏱️ Progress estimate based on typical request duration
+            <p className="text-xs sm:text-sm text-white text-center leading-relaxed">
+              ⏱️ Progress estimate based on typical 3-minute request duration
             </p>
           </div>
 
-          {elapsedTime > 120 && (
-            <div className="mt-6 mx-2 p-4 bg-orange-500/10 border-2 border-orange-500/30 rounded-xl">
+          {elapsedTime > 180 && (
+            <div className="mt-6 mx-2 p-4 sm:p-5 bg-orange-500/10 border-2 border-orange-500/40 rounded-xl shadow-lg">
               <div className="flex items-start gap-3">
-                <Clock className="h-5 w-5 text-orange-400 shrink-0 mt-0.5" />
-                <p className="text-xs sm:text-sm text-orange-400 leading-relaxed">
-                  Still processing... Generating alternative quotes and order lists takes time for accuracy.
+                <Clock className="h-6 w-6 sm:h-5 sm:w-5 text-orange-400 shrink-0 mt-0.5" />
+                <p className="text-sm sm:text-base text-orange-400 leading-relaxed font-medium">
+                  Still processing... Complex estimates can take up to 4 minutes for full accuracy.
                 </p>
               </div>
             </div>
@@ -205,28 +205,28 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
                 <div
                   key={stage.id}
                   className={`
-                    rounded-xl transition-all duration-300 p-4 sm:p-5
-                    ${isActive ? 'bg-elec-yellow/10 border-2 border-elec-yellow/40 shadow-lg border-l-4' : ''}
-                    ${isComplete ? 'bg-green-500/5 border-2 border-green-500/30' : ''}
-                    ${isPending ? 'bg-elec-dark/30 border border-elec-yellow/10 opacity-60' : ''}
+                    rounded-xl sm:rounded-2xl transition-all duration-300 p-5 sm:p-6
+                    ${isActive ? 'bg-elec-yellow/10 border-2 border-elec-yellow/50 shadow-xl border-l-4' : ''}
+                    ${isComplete ? 'bg-green-500/10 border-2 border-green-500/40 shadow-lg' : ''}
+                    ${isPending ? 'bg-elec-dark/40 border border-elec-yellow/20 opacity-70' : ''}
                   `}
                 >
-                  <div className="flex flex-col xs:flex-row gap-4">
+                  <div className="flex flex-col xs:flex-row gap-4 sm:gap-5">
                     {/* Icon - Centered on mobile, left-aligned on desktop */}
                     <div className="shrink-0 self-center xs:self-start">
                       {isComplete ? (
-                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-green-500/20 flex items-center justify-center">
-                          <CheckCircle2 className="h-7 w-7 sm:h-8 sm:w-8 text-green-500" />
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-green-500/20 flex items-center justify-center shadow-md">
+                          <CheckCircle2 className="h-8 w-8 sm:h-9 sm:w-9 text-green-400" />
                         </div>
                       ) : isActive ? (
-                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-elec-yellow/20 flex items-center justify-center relative">
-                          <Icon className="h-7 w-7 sm:h-8 sm:w-8 text-elec-yellow" />
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-elec-yellow/20 flex items-center justify-center relative shadow-md">
+                          <Icon className="h-8 w-8 sm:h-9 sm:w-9 text-elec-yellow" />
                           {/* Subtle static glow instead of animation */}
                           <div className="absolute inset-0 rounded-full bg-elec-yellow/10 blur-sm" />
                         </div>
                       ) : (
-                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-elec-grey/50 flex items-center justify-center">
-                          <Icon className="h-7 w-7 sm:h-8 sm:w-8 text-white/60" />
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-elec-grey/50 flex items-center justify-center">
+                          <Icon className="h-8 w-8 sm:h-9 sm:w-9 text-white" />
                         </div>
                       )}
                     </div>
@@ -234,10 +234,10 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
                     {/* Content area - Full width on mobile */}
                     <div className="flex-1 space-y-3 text-center xs:text-left">
                       {/* Title - Full width on mobile */}
-                      <h3 className={`text-base sm:text-lg font-bold ${
+                      <h3 className={`text-lg sm:text-xl font-bold ${
                         isActive ? 'text-elec-yellow' : 
-                        isComplete ? 'text-green-500' : 
-                        'text-white/60'
+                        isComplete ? 'text-green-400' : 
+                        'text-white'
                       }`}>
                         {stage.title}
                       </h3>
@@ -245,13 +245,13 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
                       {/* Status Badge - Full width on mobile, fits content on desktop */}
                       <div className="flex justify-center xs:justify-start">
                         {isComplete && (
-                          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-green-500/20 text-green-500 font-semibold text-xs sm:text-sm">
+                          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-green-500/20 text-green-400 font-semibold text-sm">
                             <CheckCircle2 className="h-4 w-4" />
                             <span>Complete</span>
                           </div>
                         )}
                         {isActive && (
-                          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-elec-yellow/20 text-elec-yellow font-semibold text-xs sm:text-sm">
+                          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-elec-yellow/20 text-elec-yellow font-semibold text-sm">
                             <Loader2 className="h-4 w-4 animate-spin" />
                             <span>In Progress</span>
                           </div>
@@ -260,12 +260,12 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
 
                       {/* Description - Full width, better spacing */}
                       {isActive && (
-                        <p className="text-sm sm:text-base text-white leading-relaxed pt-1">
+                        <p className="text-base sm:text-lg text-white leading-relaxed pt-1 font-medium">
                           {stage.substeps[currentSubstep]}
                         </p>
                       )}
                       {isComplete && (
-                        <p className="text-xs sm:text-sm text-green-500/70">
+                        <p className="text-sm sm:text-base text-green-400/90 font-medium">
                           Analysis complete
                         </p>
                       )}
