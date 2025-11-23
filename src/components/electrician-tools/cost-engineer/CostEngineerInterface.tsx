@@ -67,9 +67,10 @@ const CostEngineerInterface = () => {
     }
 
     setViewState('processing');
+    const startTime = Date.now();
 
     try {
-      // PHASE 1: Get core estimate (fast, <120s to avoid 150s gateway timeout)
+      // PHASE 1: Get core estimate
       const { data, error } = await supabase.functions.invoke('cost-engineer-v3', {
         body: { 
           query: prompt,
@@ -181,20 +182,44 @@ const CostEngineerInterface = () => {
       }
 
     } catch (error: any) {
-      console.error('Cost analysis error:', error);
+      const elapsedMs = Date.now() - startTime;
+      
+      console.error('Cost analysis error (detailed):', {
+        error,
+        name: error?.name,
+        message: error?.message,
+        stack: error?.stack,
+        elapsedMs,
+      });
+      
       setViewState('input');
       
-      // Handle timeout specifically
+      const msg = String(error?.message || '');
+      const isNetworkLike = 
+        msg.includes('Failed to send') ||
+        msg.includes('fetch failed') ||
+        msg.includes('NetworkError');
+      
+      // Handle different error types with specific messages
       if (error.name === 'AbortError') {
+        // Local client abort (6min timeout fired)
         toast({
-          title: "Analysis timeout",
-          description: "Request took longer than expected. Try a simpler query or contact support.",
+          title: "Request timeout",
+          description: `Request took ${Math.round(elapsedMs / 1000)}s. The analysis is too complex. Try simplifying your query.`,
+          variant: "destructive"
+        });
+      } else if (isNetworkLike) {
+        // Transport/proxy layer died
+        toast({
+          title: "Connection issue",
+          description: `Failed at ${Math.round(elapsedMs / 1000)}s. Connection lost during analysis. Please try again.`,
           variant: "destructive"
         });
       } else {
+        // Real function-side or AI error
         toast({
           title: "Analysis failed",
-          description: error.message || 'Failed to generate cost analysis. Please try again.',
+          description: msg || 'Failed to generate cost analysis. Please try again.',
           variant: "destructive"
         });
       }
