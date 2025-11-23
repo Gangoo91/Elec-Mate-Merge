@@ -166,8 +166,8 @@ export class RAGEngine {
     keywords.push('Section 522'); // Cable selection
     keywords.push('Table 4A2'); // Voltage drop
 
-    // Phase 5: Deduplicate and limit to top 20 keywords (up from 8)
-    const uniqueKeywords = [...new Set(keywords)].slice(0, 20);
+    // Phase 5: Deduplicate and limit to top 40 keywords for comprehensive coverage
+    const uniqueKeywords = [...new Set(keywords)].slice(0, 40);
     return uniqueKeywords.join(' ');
   }
 
