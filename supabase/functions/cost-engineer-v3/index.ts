@@ -1016,7 +1016,7 @@ If ANY category missing, estimate it and flag in response.`;
     logger.info('🤖 Calling OpenAI GPT-5 Mini for core estimate', {
       model: 'gpt-5-mini-2025-08-07',
       maxTokens: 16000, // Increased for reasoning tokens + output (was 8000)
-      timeoutMs: 240000, // 4 minutes for GPT-5 Mini reasoning (was 2 minutes)
+      timeoutMs: 210000, // 3.5 minutes for GPT-5 Mini reasoning (reduced from 4 min for stability)
       hasTools: true,
       splitMode: 'core-estimate'
     });
@@ -1031,7 +1031,7 @@ If ANY category missing, estimate it and flag in response.`;
         systemPrompt,
         userPrompt,
         maxTokens: 16000, // Increased for reasoning + output (was 8000)
-        timeoutMs: 240000, // 4 minutes for complex reasoning (was 120000)
+        timeoutMs: 210000, // 3.5 minutes for complex reasoning (reduced from 4 min for stability)
         jsonMode: true,
         tools: [{
         type: 'function',
@@ -2754,6 +2754,12 @@ Provide:
     });
     if (metricsError) logger.warn('Failed to log metrics', { error: metricsError.message });
 
+    // Log successful completion
+    logger.info('✅ Cost Engineer V3 completed', {
+      totalMs: Date.now() - functionStart,
+      mode: skipProfitability ? 'core-only' : 'full',
+    });
+
     // Return response (Designer-v3 compatible structure, no regulations)
     return new Response(
       JSON.stringify({
@@ -2793,7 +2799,12 @@ Provide:
     );
 
   } catch (error) {
-    logger.error('Cost Engineer V3 error', { error: error instanceof Error ? error.message : String(error) });
+    const totalMs = Date.now() - functionStart;
+    logger.error('❌ Cost Engineer V3 failed', {
+      totalMs,
+      errorName: error instanceof Error ? error.name : typeof error,
+      errorMessage: error instanceof Error ? error.message : String(error),
+    });
     return handleError(error);
   }
 });
