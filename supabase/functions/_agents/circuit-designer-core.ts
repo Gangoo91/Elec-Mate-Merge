@@ -62,9 +62,9 @@ async function designCircuitsInternal(
     await progressCallback(20, 'Designer: Searching regulations...');
     await progressCallback(40, 'Designer: Calculating cable sizes & protection...');
     
-    // PHASE 1: Enhanced error propagation - Call designer-agent-v2 via Supabase client
+    // PHASE 1: Enhanced error propagation - Call designer-agent-v3 via Supabase client
     try {
-      const { data, error } = await supabase.functions.invoke('designer-agent-v2', {
+      const { data, error } = await supabase.functions.invoke('designer-agent-v3', {
         body: designRequest
       });
       
