@@ -2,7 +2,7 @@
 // Enables real-time token streaming for better UX
 
 export interface StreamChunk {
-  type: 'token' | 'citation' | 'tool_call' | 'done' | 'error';
+  type: 'token' | 'citation' | 'tool_call' | 'done' | 'error' | 'progress' | 'heartbeat' | 'result';
   content?: string;
   data?: any;
 }

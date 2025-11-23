@@ -1030,8 +1030,8 @@ If ANY category missing, estimate it and flag in response.`;
         model: 'gpt-5-mini-2025-08-07', // GPT-5 Mini - better JSON reliability
         systemPrompt,
         userPrompt,
-        maxTokens: 16000, // Increased for reasoning + output (was 8000)
-        timeoutMs: 210000, // 3.5 minutes for complex reasoning (reduced from 4 min for stability)
+        maxTokens: 16000,
+        timeoutMs: 240000, // Back to 4 minutes - heartbeats keep connection alive
         jsonMode: true,
         tools: [{
         type: 'function',
@@ -2798,13 +2798,16 @@ Provide:
       }
     );
 
-  } catch (error) {
-    const totalMs = Date.now() - functionStart;
-    logger.error('❌ Cost Engineer V3 failed', {
-      totalMs,
-      errorName: error instanceof Error ? error.name : typeof error,
-      errorMessage: error instanceof Error ? error.message : String(error),
-    });
-    return handleError(error);
-  }
+    } catch (error) {
+      const totalMs = Date.now() - functionStart;
+      logger.error('❌ Cost Engineer V3 failed', {
+        totalMs,
+        errorName: error instanceof Error ? error.name : typeof error,
+        errorMessage: error instanceof Error ? error.message : String(error),
+      });
+      
+      // Send error via stream
+      builder.sendError(error instanceof Error ? error.message : String(error));
+    }
+  }, corsHeaders);
 });
