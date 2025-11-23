@@ -6,8 +6,11 @@ interface MobileInstallationGuidanceSectionProps {
 }
 
 export const MobileInstallationGuidanceSection = ({ circuit }: MobileInstallationGuidanceSectionProps) => {
-  // Check if we have the new text-based installation guidance
-  const hasGuidance = circuit.installationGuidance && typeof circuit.installationGuidance === 'string';
+  // Check if we have installation guidance (either string or object)
+  const hasGuidance = circuit.installationGuidance && (
+    typeof circuit.installationGuidance === 'string' || 
+    typeof circuit.installationGuidance === 'object'
+  );
   
   if (!hasGuidance) {
     return (
