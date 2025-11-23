@@ -27,8 +27,8 @@ export class RAGEngine {
   async search(normalized: NormalizedInputs, isBatch = false): Promise<RAGContext> {
     const startTime = Date.now();
 
-    // Phase 3: Reduce match count for batch processing (3+ circuits)
-    const matchCount = isBatch ? 4 : 6;
+    // Phase 5: Increased to 50 items for comprehensive context (25 for batches)
+    const matchCount = isBatch ? 25 : 50;
 
     // Build search queries from form fields (NOT text prompts)
     const queries = {
@@ -68,9 +68,13 @@ export class RAGEngine {
       };
     }
 
-    this.logger.info('RAG search complete', {
-      regulations: regulations.length,
-      designKnowledge: designKnowledge.length,
+    // Log RAG quality metrics for debugging
+    this.logger.info('RAG Quality Check', {
+      totalItems: regulations.length + designKnowledge.length,
+      topRegulations: regulations.slice(0, 3).map(r => r.regulation_number),
+      topDesignTopics: designKnowledge.slice(0, 3).map(d => d.primary_topic),
+      avgRegScore: regulations.length > 0 ? (regulations.reduce((sum, r) => sum + (r.hybrid_score || r.similarity || 0), 0) / regulations.length).toFixed(2) : '0',
+      avgDesignScore: designKnowledge.length > 0 ? (designKnowledge.reduce((sum, d) => sum + (d.hybrid_score || d.similarity || 0), 0) / designKnowledge.length).toFixed(2) : '0',
       searchTime
     });
 
@@ -96,18 +100,51 @@ export class RAGEngine {
     keywords.push(inputs.supply.phases === 'three' ? 'three phase' : 'single phase');
     keywords.push(inputs.supply.earthing);
 
-    // Circuit-specific keywords - only core terms (Phase 1)
+    // Circuit-specific keywords - EXPANDED for better RAG coverage (Phase 5)
     inputs.circuits.forEach(c => {
       keywords.push(c.loadType);
       
-      // Special location regulations - simplified
+      // Power rating keywords for better matching
+      if (c.loadPower > 5000) keywords.push('high power load');
+      if (c.loadPower > 10000) keywords.push('heavy duty');
+      
+      // Installation method keywords
+      if (c.installMethod && c.installMethod !== 'auto') {
+        keywords.push(c.installMethod.replace('method_', 'Reference Method '));
+      }
+      
+      // Cable length keywords (affects VD and Zs)
+      if (c.cableLength > 50) keywords.push('long cable run');
+      if (c.cableLength > 100) keywords.push('extended circuit');
+      
+      // Special locations - EXPANDED
       if (c.specialLocation !== 'none') {
         keywords.push(c.specialLocation);
+        keywords.push(`Section 7${c.specialLocation === 'bathroom' ? '01' : '17'}`); // BS 7671 sections
         
         if (c.specialLocation === 'bathroom' && c.bathroomZone) {
           const zoneNum = c.bathroomZone.replace('zone_', '');
           keywords.push(`Zone ${zoneNum}`);
+          keywords.push('IP rating'); // Bathrooms need IP-rated equipment
+          keywords.push('RCD protection'); // Mandatory in bathrooms
         }
+        
+        if (c.specialLocation === 'outdoor') {
+          keywords.push('SWA cable'); // Outdoor typically needs SWA
+          keywords.push('IP65'); // Outdoor IP rating
+          keywords.push('weather resistance');
+          if (c.outdoorInstall === 'underground') {
+            keywords.push('buried cable');
+            keywords.push('depth requirements');
+          }
+        }
+      }
+      
+      // Three-phase specific keywords
+      if (c.phases === 'three') {
+        keywords.push('three phase');
+        keywords.push('load balancing');
+        keywords.push('neutral conductor');
       }
       
       // Protection type - only if specified
@@ -116,13 +153,21 @@ export class RAGEngine {
       }
     });
 
-    // Core regulation sections - essential only (Phase 1)
+    // Supply-specific keywords
+    if (inputs.supply.earthing === 'TN-S') {
+      keywords.push('separate earth');
+    } else if (inputs.supply.earthing === 'TN-C-S') {
+      keywords.push('PME');
+      keywords.push('protective multiple earthing');
+    }
+
+    // Core regulation sections - essential only
     keywords.push('Section 433'); // Overcurrent protection
     keywords.push('Section 522'); // Cable selection
     keywords.push('Table 4A2'); // Voltage drop
 
-    // Phase 1: Deduplicate and limit to top 8 keywords
-    const uniqueKeywords = [...new Set(keywords)].slice(0, 8);
+    // Phase 5: Deduplicate and limit to top 20 keywords (up from 8)
+    const uniqueKeywords = [...new Set(keywords)].slice(0, 20);
     return uniqueKeywords.join(' ');
   }
 
@@ -138,7 +183,7 @@ export class RAGEngine {
           query_text: keywords,
           match_count: matchCount
         }
-      ).abortSignal(AbortSignal.timeout(30000));
+      ).abortSignal(AbortSignal.timeout(45000)); // Phase 5: Increased for 50-item searches
 
       if (error) {
         this.logger.warn('Design knowledge search failed', { error: error.message });
@@ -174,7 +219,7 @@ export class RAGEngine {
           query_text: keywords,
           match_count: matchCount
         }
-      ).abortSignal(AbortSignal.timeout(30000)); // Phase 2: Increased to 30s
+      ).abortSignal(AbortSignal.timeout(45000)); // Phase 5: Increased for 50-item searches
 
       if (error) {
         this.logger.warn('Regulations search failed, using fallback', { error: error.message });

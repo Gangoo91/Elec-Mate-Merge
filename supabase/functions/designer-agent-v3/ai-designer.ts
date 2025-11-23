@@ -120,20 +120,20 @@ export class AIDesigner {
     }
     parts.push('');
 
-    // Inject Regulations Intelligence
+    // Inject Regulations Intelligence (Phase 5: Increased to 25 from 5)
     if (context.regulations && context.regulations.length > 0) {
       parts.push('=== REGULATIONS INTELLIGENCE ===');
-      context.regulations.slice(0, 5).forEach(reg => {
+      context.regulations.slice(0, 25).forEach(reg => {
         parts.push(`${reg.regulation_number}: ${reg.content}`);
       });
       parts.push('');
     }
 
-    // Inject Design Knowledge Intelligence (enriched facets only)
+    // Inject Design Knowledge Intelligence (Phase 5: Increased to 25 from 6)
     if (context.designKnowledge && context.designKnowledge.length > 0) {
       parts.push('=== DESIGN KNOWLEDGE INTELLIGENCE ===');
       
-      context.designKnowledge.slice(0, 6).forEach(facet => {
+      context.designKnowledge.slice(0, 25).forEach(facet => {
         parts.push(`\n[${facet.facet_type.toUpperCase()}] ${facet.primary_topic}`);
         
         // Core content
