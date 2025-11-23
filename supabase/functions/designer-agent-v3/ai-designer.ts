@@ -935,20 +935,6 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
   }
 
   /**
-   * Simplified tool schema for fast mode (1-3 circuits)
-   * Removes: structuredOutput, detailed justifications, extensive installation guidance
-   * Keeps: Essential design parameters + calculations + brief notes
-   */
-  private buildSimpleTool(): object {
-    return {
-      type: 'function',
-      function: {
-        name: 'design_circuits_fast',
-        description: 'Quick BS 7671 circuit design for 1-3 circuits',
-        parameters: {
-          type: 'object',
-
-  /**
    * Detect installation type from circuit characteristics
    */
   private detectInstallationType(inputs: NormalizedInputs): string {
