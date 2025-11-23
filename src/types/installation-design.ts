@@ -174,6 +174,32 @@ export interface CircuitDesign {
     zonesApplicable?: string;
     regulation: string;
   };
+  expectedTests?: {
+    r1r2: {
+      at20C: number;
+      at70C: number;
+      value: string;
+      regulation: string;
+    };
+    zs: {
+      expected: number;
+      maxPermitted: number;
+      marginPercent: number;
+      compliant: boolean;
+      regulation: string;
+    };
+    insulationResistance: {
+      testVoltage: string;
+      minResistance: string;
+      regulation: string;
+    };
+    rcd?: {
+      ratingmA: number;
+      maxTripTimeMs: number;
+      testCurrentMultiple: number;
+      regulation: string;
+    };
+  };
   expectedTestResults?: {
     r1r2: {
       at20C: string;

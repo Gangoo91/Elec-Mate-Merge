@@ -238,41 +238,10 @@ export class DesignPipeline {
         failed: failures.length
       });
 
-      // Handle failures: retry failed batches sequentially as fallback
+      // Handle failures: fail fast with clear error
       if (failures.length > 0) {
-        this.logger.warn('Some batches failed, retrying sequentially', {
-          failedBatches: failures.map(f => f.name)
-        });
-
-        // If too many failures (>50%), fail the entire design
-        if (failures.length > batches.length / 2) {
-          const errorMessages = failures.map(f => `${f.name}: ${f.error}`).join('\n');
-          throw new Error(`Too many batch failures (${failures.length}/${batches.length}):\n${errorMessages}`);
-        }
-
-        // Retry failed batches sequentially
-        for (const failure of failures) {
-          const batchIndex = parseInt(failure.name.split(' ')[1].split('/')[0]) - 1;
-          const batch = batches[batchIndex];
-
-          this.logger.info(`Retrying failed ${failure.name}`, {
-            circuits: batch.map(c => c.name)
-          });
-
-          const batchInputs = {
-            supply: normalized.supply,
-            circuits: batch
-          };
-
-          const batchDesign = await this.ai.generateBatch(
-            batchInputs,
-            ragContext,
-            batchIndex + 1,
-            batches.length
-          );
-
-          successes.push({ name: failure.name, result: batchDesign });
-        }
+        const errorMessages = failures.map(f => `${f.name}: ${f.error}`).join('\n');
+        throw new Error(`Batch processing failed (${failures.length}/${batches.length} batches):\n${errorMessages}`);
       }
 
       // Merge all batch results into single design
