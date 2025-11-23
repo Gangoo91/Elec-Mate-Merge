@@ -97,16 +97,20 @@ Deno.serve(async (req) => {
       return data?.status === 'cancelled';
     };
 
-    // ⚡ LAYER 1: Full Design Cache
+    // ⚡ LAYER 1: Full Design Cache (DISABLED FOR TESTING RING FINAL FIX)
     await safeUpdateProgress(2, 'Checking design cache...');
-    const cacheResult = await checkCircuitDesignCache({
-      supabase,
-      jobInputs,
-      openAiKey
-    });
+    
+    // TEMPORARILY DISABLED - Force cache miss
+    const cacheResult = { hit: false }; // Force cache miss
+    // const cacheResult = await checkCircuitDesignCache({
+    //   supabase,
+    //   jobInputs,
+    //   openAiKey
+    // });
 
     if (cacheResult.hit) {
-      logger.info('✅ LAYER 1 CACHE HIT - Instant response!', {
+      // This block will never execute while disabled
+      logger.info('✅ LAYER 1 CACHE HIT - DISABLED', {
         similarity: cacheResult.similarity,
         ageSeconds: cacheResult.ageSeconds
       });
@@ -129,6 +133,8 @@ Deno.serve(async (req) => {
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+    
+    logger.info('🔄 LAYER 1 CACHE DISABLED - forcing fresh generation');
 
     await safeUpdateProgress(5, 'Initializing agents...');
 
@@ -139,31 +145,31 @@ Deno.serve(async (req) => {
       );
     }
 
-    // ⚡ LAYER 2: RAG Cache - Shared search
+    // ⚡ LAYER 2: RAG Cache - Shared search (DISABLED FOR TESTING RING FINAL FIX)
     await safeUpdateProgress(8, 'Searching regulations intelligence (shared)...');
     
-    logger.info('🔍 Checking RAG cache for circuit regulations...');
+    logger.info('🔍 RAG cache disabled - fetching fresh regulations');
     const query = buildCircuitQuery(jobInputs);
-    const ragCacheResult = await checkRAGCache({
-      supabase,
-      query,
-      knowledgeBaseType: 'circuit_regulations'
-    });
+    
+    // TEMPORARILY DISABLED - Force fresh RAG search
+    const ragCacheResult = { hit: false }; // Force cache miss
+    // const ragCacheResult = await checkRAGCache({
+    //   supabase,
+    //   query,
+    //   knowledgeBaseType: 'circuit_regulations'
+    // });
 
     let sharedRegulations;
     if (ragCacheResult.hit) {
-      logger.info('✅ LAYER 2 RAG CACHE HIT - Saved 45s!');
+      // This block will never execute while disabled
+      logger.info('✅ LAYER 2 RAG CACHE HIT - DISABLED');
       sharedRegulations = ragCacheResult.data;
     } else {
-      logger.info('Fetching fresh regulations from RAG...');
+      logger.info('🔄 LAYER 2 RAG CACHE DISABLED - fetching fresh regulations from RAG...');
       sharedRegulations = await searchCircuitRegulations(jobInputs);
       
-      await storeRAGCache({
-        supabase,
-        query,
-        knowledgeBaseType: 'circuit_regulations',
-        ragResults: sharedRegulations
-      });
+      // Don't store in cache during testing
+      // await storeRAGCache({ supabase, query, knowledgeBaseType: 'circuit_regulations', ragResults: sharedRegulations });
     }
 
     logger.info(`✅ Using ${sharedRegulations.length} shared regulations for both agents`);
@@ -184,18 +190,20 @@ Deno.serve(async (req) => {
       );
     }
 
-    // ⚡ LAYER 3: Designer Cache Only (installation guidance now integrated)
-    logger.info('🔍 Checking partial cache for designer...');
+    // ⚡ LAYER 3: Designer Cache Only (DISABLED FOR TESTING RING FINAL FIX)
+    logger.info('🔍 Partial cache disabled for designer');
     
-    const designerCacheResult = await checkPartialCache({
-      supabase,
-      jobInputs,
-      agentType: 'circuit_designer',
-      openAiKey
-    });
+    // TEMPORARILY DISABLED - Force fresh generation
+    const designerCacheResult = { hit: false }; // Force cache miss
+    // const designerCacheResult = await checkPartialCache({
+    //   supabase,
+    //   jobInputs,
+    //   agentType: 'circuit_designer',
+    //   openAiKey
+    // });
 
     // SINGLE AGENT EXECUTION (installation guidance integrated into designer)
-    logger.info('🤖 Starting AI Designer (includes installation guidance)...');
+    logger.info('🤖 Starting AI Designer (includes installation guidance) - NO CACHE');
     const startTime = Date.now();
 
     const [designerResult] = await Promise.allSettled([
@@ -213,8 +221,8 @@ Deno.serve(async (req) => {
 
     // Log cache performance
     if (designerCacheResult.hit) {
-      logger.info('✅ LAYER 3: Circuit Designer from cache');
-      await updateAgentProgress('designer', 100, 'complete', 'Circuit Designer (from cache)');
+      logger.info('✅ LAYER 3: Circuit Designer from cache - DISABLED');
+      // Don't update agent progress for disabled cache
     }
 
     if (await checkCancelled()) {
@@ -234,16 +242,17 @@ Deno.serve(async (req) => {
 
     const designerData = designerResult.value;
 
-    // Store partial result in cache
-    if (!designerCacheResult.hit) {
-      await storePartialCache({
-        supabase,
-        jobInputs,
-        agentType: 'circuit_designer',
-        agentOutput: designerData,
-        openAiKey
-      });
-    }
+    // Store partial result in cache (DISABLED FOR TESTING RING FINAL FIX)
+    // if (!designerCacheResult.hit) {
+    //   await storePartialCache({
+    //     supabase,
+    //     jobInputs,
+    //     agentType: 'circuit_designer',
+    //     agentOutput: designerData,
+    //     openAiKey
+    //   });
+    // }
+    logger.info('🔄 LAYER 3 CACHE STORAGE DISABLED');
 
     await safeUpdateProgress(95, 'Finalizing circuit design...');
 
@@ -257,13 +266,14 @@ Deno.serve(async (req) => {
       }
     };
 
-    // Store in full design cache
-    await storeCircuitDesignCache({
-      supabase,
-      jobInputs,
-      design: mergedData,
-      openAiKey
-    });
+    // Store in full design cache (DISABLED FOR TESTING RING FINAL FIX)
+    // await storeCircuitDesignCache({
+    //   supabase,
+    //   jobInputs,
+    //   design: mergedData,
+    //   openAiKey
+    // });
+    logger.info('🔄 LAYER 1 CACHE STORAGE DISABLED');
 
     // Mark job as complete
     await supabase
