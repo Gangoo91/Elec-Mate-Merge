@@ -51,14 +51,20 @@ const ANALYSIS_STAGES: ProcessingStage[] = [
 
 interface CostAnalysisProcessingViewProps {
   onCancel: () => void;
+  realProgress?: number;
+  realStep?: string;
 }
 
-const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProps) => {
+const CostAnalysisProcessingView = ({ onCancel, realProgress, realStep }: CostAnalysisProcessingViewProps) => {
   const [currentStage, setCurrentStage] = useState(0);
   const [currentSubstep, setCurrentSubstep] = useState(0);
   const [progress, setProgress] = useState(0);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [progressMessage, setProgressMessage] = useState("");
+
+  // Use real progress if available, otherwise fall back to simulated
+  const displayProgress = realProgress ?? progress;
+  const displayMessage = realStep ?? progressMessage;
 
   const totalDuration = 180; // 3 minutes
   const estimatedTime = "3 minutes";
@@ -134,9 +140,9 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
               Searching 45,000+ UK pricing items for accurate quotes
             </p>
             
-            {progressMessage && (
+            {displayMessage && (
               <p className="text-sm sm:text-base text-elec-yellow font-medium mt-3 animate-fade-in">
-                {progressMessage}
+                {displayMessage}
               </p>
             )}
           </div>
@@ -147,11 +153,11 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
                 Overall Progress
               </span>
               <span className="text-4xl sm:text-5xl font-bold text-elec-yellow tabular-nums">
-                {Math.round(progress)}%
+                {Math.round(displayProgress)}%
               </span>
             </div>
             
-            <Progress value={progress} className="h-4 sm:h-3" />
+            <Progress value={displayProgress} className="h-4 sm:h-3" />
             
             <div className="flex flex-col xs:flex-row xs:justify-between xs:items-center gap-3 xs:gap-4">
               <div className="flex items-center gap-2">
