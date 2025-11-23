@@ -68,17 +68,9 @@ export class DesignPipeline {
     });
 
     // ========================================
-    // FAST PATH: 1-3 circuits → simple, lightweight generation
+    // Regular path: 1-5 circuits → full RAG + complete prompt (90s timeout)
+    // Batch path: 6+ circuits → parallel batch processing
     // ========================================
-    const isSmallJob = normalized.circuits.length <= 3;
-    
-    if (isSmallJob) {
-      this.logger.info('FAST PATH: Small job detected', {
-        circuits: normalized.circuits.length
-      });
-      
-      return await this.executeFastPath(normalized, cacheKey, startTime);
-    }
 
     // ========================================
     // PHASE 3: Fast Indexed RAG Search (Intelligence Tables)
@@ -283,8 +275,11 @@ export class DesignPipeline {
         parallelDuration
       });
     } else {
-      // SINGLE CALL for 1-5 circuits (existing flow)
-      this.logger.info('Single-call processing (≤5 circuits)');
+      // REGULAR MODE for 1-5 circuits (full RAG, complete prompt, 90s timeout)
+      this.logger.info('Regular mode processing (1-5 circuits)', {
+        circuits: normalized.circuits.length,
+        timeout: '90s'
+      });
       design = await this.ai.generate(normalized, ragContext);
       
       this.logger.info('AI design complete', {
@@ -500,70 +495,6 @@ export class DesignPipeline {
     };
   }
 
-  /**
-   * FAST PATH: Minimal RAG, simple prompt, 30s completion
-   * For 1-3 circuits only
-   */
-  private async executeFastPath(
-    normalized: NormalizedInputs,
-    cacheKey: string,
-    startTime: number
-  ): Promise<DesignResult> {
-    
-    // MINIMAL RAG: 5 design results only (no regulations, no practical work)
-    const { createClient } = await import('../_shared/deps.ts');
-    const supabase = createClient(
-      Deno.env.get('SUPABASE_URL')!,
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-    );
-    
-    const keywords: string[] = [];
-    normalized.circuits.forEach(c => {
-      keywords.push(c.loadType.toLowerCase());
-      keywords.push('cable sizing');
-    });
-    
-    const designIntelligence = await searchDesignIntelligence(supabase, {
-      keywords,
-      loadTypes: [],
-      cableSizes: [],
-      categories: ['cable_sizing', 'voltage_drop', 'protection'],
-      limit: 5 // MINIMAL
-    });
-    
-    this.logger.info('Fast RAG complete', {
-      results: designIntelligence.length
-    });
-    
-    // SIMPLE RAG CONTEXT (no regulations, no practical work)
-    const ragContext = {
-      regulations: [],
-      designKnowledge: designIntelligence,
-      practicalWork: [],
-      totalResults: designIntelligence.length,
-      searchTime: 50
-    };
-    
-    // FAST AI CALL (new lightweight method)
-    const design = await this.ai.generateFast(normalized, ragContext);
-    
-    // Apply deterministic calculations (skip validation for speed)
-    design.circuits = this.calculator.applyToCircuits(design.circuits, normalized.supply);
-    
-    // Cache and return (DISABLED FOR TESTING RING FINAL FIX)
-    // await this.cache.set(cacheKey, design);
-    this.logger.info('Cache storage DISABLED for testing (fast path)');
-    
-    return {
-      success: true,
-      circuits: design.circuits,
-      supply: normalized.supply,
-      fromCache: false,
-      processingTime: Date.now() - startTime,
-      validationPassed: true,
-      autoFixApplied: false
-    };
-  }
 
   /**
    * Determine optimal batch size based on circuit count
