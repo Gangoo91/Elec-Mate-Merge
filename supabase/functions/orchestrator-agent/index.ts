@@ -947,8 +947,8 @@ function getAgentTransition(currentAgent: string, nextAgent: string): string {
 
 function getAgentFunctionName(agent: string): string {
   const mapping: Record<string, string> = {
-    'designer': 'designer-agent',
-    'design': 'designer-agent',
+    'designer': 'designer-agent-v3',
+    'design': 'designer-agent-v3',
     'cost-engineer': 'cost-engineer-agent',
     'cost': 'cost-engineer-agent',
     'installer': 'installer-v3',
