@@ -70,9 +70,97 @@ const CostEngineerInterface = () => {
     const startTime = Date.now();
 
     try {
-      // PHASE 1: Get core estimate
-      const { data, error } = await supabase.functions.invoke('cost-engineer-v3', {
-        body: { 
+      const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/cost-engineer-v3`;
+      const eventSource = new EventSource(url);
+
+      eventSource.onmessage = (event) => {
+        try {
+          const chunk = JSON.parse(event.data);
+          console.log('Received chunk:', chunk.type);
+
+          if (chunk.type === 'progress') {
+            console.log(`Progress: ${chunk.content} (${chunk.data?.progress}%)`);
+          } else if (chunk.type === 'heartbeat') {
+            console.log('💓 Heartbeat received');
+          } else if (chunk.type === 'result') {
+            eventSource.close();
+            const data = chunk.data;
+
+            // Store original query from response
+            if (data.originalQuery) {
+              setOriginalQueryFromResponse(data.originalQuery);
+            }
+
+            // Store structured data
+            const coreStructuredData = data.structuredData;
+            setStructuredData(coreStructuredData);
+
+            // Parse results
+            if (coreStructuredData && coreStructuredData.summary) {
+              setParsedResults({
+                totalCost: coreStructuredData.summary.grandTotal,
+                materialsTotal: coreStructuredData.materials?.subtotal || 0,
+                labourTotal: coreStructuredData.labour?.subtotal || 0,
+                materials: coreStructuredData.materials?.items?.map((m: any) => ({
+                  item: m.description || m.item || 'Unknown item',
+                  quantity: m.quantity,
+                  unit: m.unit,
+                  unitPrice: m.unitPrice,
+                  total: m.total,
+                  supplier: m.supplier
+                })) || [],
+                labour: {
+                  hours: coreStructuredData.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0,
+                  rate: 50,
+                  total: coreStructuredData.labour?.subtotal || 0,
+                  description: coreStructuredData.labour?.tasks?.[0]?.description || 'Installation labour'
+                },
+                additionalCosts: [],
+                vatAmount: coreStructuredData.summary.vat,
+                vatRate: 20,
+                subtotal: coreStructuredData.summary.subtotal,
+                rawText: data.response
+              });
+            } else {
+              const parsed = parseCostAnalysis(data.response);
+              setParsedResults(parsed);
+            }
+
+            setViewState('results');
+            toast({
+              title: "Analysis complete!",
+              description: "Cost estimate ready to view",
+            });
+          } else if (chunk.type === 'error') {
+            eventSource.close();
+            throw new Error(chunk.content || 'Analysis failed');
+          } else if (chunk.type === 'done') {
+            eventSource.close();
+          }
+        } catch (parseError) {
+          console.error('Error parsing SSE chunk:', parseError);
+        }
+      };
+
+      eventSource.onerror = (error) => {
+        console.error('EventSource error:', error);
+        eventSource.close();
+        setViewState('input');
+        toast({
+          title: "Connection error",
+          description: "Failed to connect to analysis service. Please try again.",
+          variant: "destructive"
+        });
+      };
+
+      // Send the initial request via POST
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({
           query: prompt,
           region: location || 'UK',
           projectContext: {
@@ -82,103 +170,12 @@ const CostEngineerInterface = () => {
             additionalInfo: additionalInfo
           },
           businessSettings: businessSettings,
-          skipProfitability: true // Skip profitability in first call
-        }
+          skipProfitability: false
+        })
       });
 
-      if (error) {
-        console.error('Core estimate error:', error);
-        throw new Error(error.message || 'Failed to get core estimate');
-      }
-
-      if (!data || !data.success) {
-        throw new Error(data?.error || 'Cost Engineer returned unsuccessful response');
-      }
-
-      // Store original query from response
-      if (data.originalQuery) {
-        setOriginalQueryFromResponse(data.originalQuery);
-      }
-
-      // Store core estimate data
-      const coreStructuredData = data.structuredData;
-      setStructuredData(coreStructuredData);
-
-      // Parse core results
-      if (coreStructuredData && coreStructuredData.summary) {
-        setParsedResults({
-          totalCost: coreStructuredData.summary.grandTotal,
-          materialsTotal: coreStructuredData.materials?.subtotal || 0,
-          labourTotal: coreStructuredData.labour?.subtotal || 0,
-          materials: coreStructuredData.materials?.items?.map((m: any) => ({
-            item: m.description || m.item || 'Unknown item',
-            quantity: m.quantity,
-            unit: m.unit,
-            unitPrice: m.unitPrice,
-            total: m.total,
-            supplier: m.supplier
-          })) || [],
-          labour: {
-            hours: coreStructuredData.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0,
-            rate: 50,
-            total: coreStructuredData.labour?.subtotal || 0,
-            description: coreStructuredData.labour?.tasks?.[0]?.description || 'Installation labour'
-          },
-          additionalCosts: [],
-          vatAmount: coreStructuredData.summary.vat,
-          vatRate: 20,
-          subtotal: coreStructuredData.summary.subtotal,
-          rawText: data.response
-        });
-      } else {
-        const parsed = parseCostAnalysis(data.response);
-        setParsedResults(parsed);
-      }
-
-      // Show results immediately
-      setViewState('results');
-      toast({
-        title: "Core estimate ready!",
-        description: "Fetching profitability analysis...",
-      });
-
-      // PHASE 2: Get profitability analysis in background (only if business settings exist)
-      if (businessSettings && Object.keys(businessSettings).length > 0) {
-        try {
-          const { data: profData, error: profError } = await supabase.functions.invoke('cost-engineer-v3', {
-            body: {
-              query: prompt,
-              region: location || 'UK',
-              projectContext: {
-                projectType: projectType,
-                projectName: projectName,
-                clientInfo: clientInfo,
-                additionalInfo: additionalInfo
-              },
-              businessSettings: businessSettings,
-              skipProfitability: false // Get profitability this time
-            }
-          });
-
-          if (!profError && profData?.success && profData.structuredData) {
-            // Merge profitability data into existing structured data
-            setStructuredData({
-              ...coreStructuredData,
-              profitabilityAnalysis: profData.structuredData.profitabilityAnalysis
-            });
-
-            toast({
-              title: "Profitability analysis complete!",
-              description: "Full analysis with break-even pricing ready",
-            });
-          }
-        } catch (profError: any) {
-          console.warn('Profitability fetch failed:', profError);
-          toast({
-            title: "Note",
-            description: "Core estimate ready. Profitability analysis unavailable.",
-          });
-        }
+      if (!response.ok) {
+        throw new Error('Failed to start analysis');
       }
 
     } catch (error: any) {
@@ -195,34 +192,12 @@ const CostEngineerInterface = () => {
       setViewState('input');
       
       const msg = String(error?.message || '');
-      const isNetworkLike = 
-        msg.includes('Failed to send') ||
-        msg.includes('fetch failed') ||
-        msg.includes('NetworkError');
       
-      // Handle different error types with specific messages
-      if (error.name === 'AbortError') {
-        // Local client abort (6min timeout fired)
-        toast({
-          title: "Request timeout",
-          description: `Request took ${Math.round(elapsedMs / 1000)}s. The analysis is too complex. Try simplifying your query.`,
-          variant: "destructive"
-        });
-      } else if (isNetworkLike) {
-        // Transport/proxy layer died
-        toast({
-          title: "Connection issue",
-          description: `Failed at ${Math.round(elapsedMs / 1000)}s. Connection lost during analysis. Please try again.`,
-          variant: "destructive"
-        });
-      } else {
-        // Real function-side or AI error
-        toast({
-          title: "Analysis failed",
-          description: msg || 'Failed to generate cost analysis. Please try again.',
-          variant: "destructive"
-        });
-      }
+      toast({
+        title: "Analysis failed",
+        description: msg || 'Failed to generate cost analysis. Please try again.',
+        variant: "destructive"
+      });
     }
   };
 

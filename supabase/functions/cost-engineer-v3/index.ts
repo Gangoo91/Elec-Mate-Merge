@@ -16,6 +16,7 @@ import { searchPricingKnowledge, formatPricingContext, searchLabourTimeKnowledge
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
 import { sanitizeAIJson, safeJsonParse } from '../_shared/json-sanitizer.ts';
+import { createStreamingResponse, StreamingResponseBuilder } from '../_shared/streaming-utils.ts';
 
 // ===== COST ENGINEER PRICING CONSTANTS =====
 const COST_ENGINEER_PRICING = {
@@ -372,9 +373,10 @@ serve(async (req) => {
 
   const requestId = generateRequestId();
   const logger = createLogger(requestId, { function: 'cost-engineer-v3' });
-  const functionStart = Date.now(); // Timer for total execution
+  const functionStart = Date.now();
 
-  try {
+  return createStreamingResponse(async (builder: StreamingResponseBuilder) => {
+    try {
     const body = await req.json();
     const { query, materials, labourHours, region, messages, previousAgentOutputs, sharedRegulations, businessSettings, skipProfitability, currentDesign, projectDetails } = body;
 
@@ -2559,20 +2561,22 @@ Provide:
             actions: ['Confirm site access and supply isolation', 'Order materials 3-5 days before start', 'Schedule installation with client']
           };
 
-          const defaultBusiness = {
-            upsells: [],
-            pipeline: [],
-            conversations: {
-              opening: 'Based on the work required, I\'ve prepared a detailed quote that covers all materials, labour, and compliance with BS 7671 regulations.',
-              tooExpensive: 'This price reflects current material costs and the proper installation time needed to meet BS 7671 standards. Cutting corners isn\'t an option when it comes to electrical safety.',
-              discountRequest: 'The quote is already competitive for the quality and compliance level provided. However, I can explore alternative solutions if budget is a concern.'
-            },
-            siteChecklist: {
-              critical: ['Verify main supply can be safely isolated', 'Check for asbestos risk in older properties', 'Confirm access to all work areas'],
-              important: ['Measure accurate cable runs', 'Check for hidden obstacles (plasterboard, insulation)', 'Identify earthing system type', 'Note any existing installation defects']
-            },
-            propertyContext: { age: 'Unknown', installationAge: 'Unknown' }
-          };
+      builder.sendChunk({ type: 'progress', content: 'Retrieving material pricing...', data: { step: 'materials', progress: 30 } });
+      
+      const defaultBusiness = {
+        upsells: [],
+        pipeline: [],
+        conversations: {
+          opening: 'Based on the work required, I\'ve prepared a detailed quote that covers all materials, labour, and compliance with BS 7671 regulations.',
+          tooExpensive: 'This price reflects current material costs and the proper installation time needed to meet BS 7671 standards. Cutting corners isn\'t an option when it comes to electrical safety.',
+          discountRequest: 'The quote is already competitive for the quality and compliance level provided. However, I can explore alternative solutions if budget is a concern.'
+        },
+        siteChecklist: {
+          critical: ['Verify main supply can be safely isolated', 'Check for asbestos risk in older properties', 'Confirm access to all work areas'],
+          important: ['Measure accurate cable runs', 'Check for hidden obstacles (plasterboard, insulation)', 'Identify earthing system type', 'Note any existing installation defects']
+        },
+        propertyContext: { age: 'Unknown', installationAge: 'Unknown' }
+      };
 
           // Run both calls in parallel with coordinated timeout
           const enhancementWithRetry = async (callFn: Promise<any>, fallback: any, name: string) => {
