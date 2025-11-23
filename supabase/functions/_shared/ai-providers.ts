@@ -216,7 +216,7 @@ export async function callGemini(
 export async function callOpenAI(
   options: AICallOptions,
   openAiKey: string,
-  timeoutMs: number = 300000 // 300s (5 min) timeout - increased for detailed AI generation
+  timeoutMs: number = 300000 // 300s (5 min) timeout - increased for complex batch processing
 ): Promise<AIResponse> {
   const {
     messages,

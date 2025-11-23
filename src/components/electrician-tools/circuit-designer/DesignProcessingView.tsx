@@ -25,6 +25,11 @@ export const DesignProcessingView = ({
 }: DesignProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [startTime] = useState(Date.now());
+  const [displayPercent, setDisplayPercent] = useState(0);
+
+  // Determine current stage and percent early
+  const currentStage = Math.min(progress?.stage || 0, 6);
+  const currentPercent = progress?.percent || 0;
 
   // Track elapsed time
   useEffect(() => {
@@ -33,6 +38,25 @@ export const DesignProcessingView = ({
     }, 1000);
     return () => clearInterval(interval);
   }, [startTime]);
+
+  // Smooth progress animation to prevent frozen UI at 40%
+  useEffect(() => {
+    const diff = currentPercent - displayPercent;
+    if (Math.abs(diff) > 0) {
+      const increment = diff / 20; // 20 steps over 2 seconds
+      const interval = setInterval(() => {
+        setDisplayPercent(prev => {
+          const next = prev + increment;
+          if (Math.abs(currentPercent - next) < Math.abs(increment)) {
+            clearInterval(interval);
+            return currentPercent;
+          }
+          return next;
+        });
+      }, 100);
+      return () => clearInterval(interval);
+    }
+  }, [currentPercent, displayPercent]);
 
   // Enhanced stage definitions with detailed descriptions
   const stageDetails = [
@@ -56,9 +80,9 @@ export const DesignProcessingView = ({
     },
     { 
       name: 'AI Circuit Design', 
-      description: 'Calculating cable sizes, protection devices',
+      description: 'Calculating cables, protection, and installation guidance',
       icon: '🤖',
-      estimatedSeconds: 40
+      estimatedSeconds: 150
     },
     { 
       name: 'Compliance Validation', 
@@ -86,23 +110,13 @@ export const DesignProcessingView = ({
     return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
   };
 
-  // Determine current stage based on progress (clamped to valid range)
-  const currentStage = Math.min(progress?.stage || 0, stageDetails.length - 1);
-  const currentPercent = progress?.percent || 0;
-
   // Estimate completed circuits based on progress
   const estimatedCompleted = totalCircuits > 0 
     ? Math.floor((currentPercent / 100) * totalCircuits)
     : 0;
 
-  const EXPECTED_TOTAL_SECONDS = 180; // 3 minutes for parallel agent processing
+  const EXPECTED_TOTAL_SECONDS = 210; // 3.5 minutes for unified agent
   const estimatedTimeRemaining = Math.max(0, EXPECTED_TOTAL_SECONDS - elapsedTime);
-
-  // Get agent statuses from progress object
-  const designerProgress = progress?.designer_progress || 0;
-  const designerStatus = progress?.designer_status || 'pending';
-  const installerProgress = progress?.installer_progress || 0;
-  const installerStatus = progress?.installer_status || 'pending';
 
   const getStatusVariant = (status: string): "default" | "secondary" | "destructive" | "outline" => {
     switch (status) {
@@ -142,12 +156,12 @@ export const DesignProcessingView = ({
           <div className="mb-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-muted-foreground">Overall Progress</span>
-              <span className="text-2xl font-bold text-elec-yellow">{currentPercent}%</span>
+              <span className="text-2xl font-bold text-elec-yellow">{Math.round(displayPercent)}%</span>
             </div>
             <div className="w-full bg-muted/20 rounded-full h-3 overflow-hidden">
               <div 
-                className="h-full bg-elec-yellow transition-all duration-500"
-                style={{ width: `${currentPercent}%` }}
+                className="h-full bg-elec-yellow transition-all duration-300"
+                style={{ width: `${displayPercent}%` }}
               />
             </div>
           </div>
@@ -192,34 +206,6 @@ export const DesignProcessingView = ({
             )}
           </div>
 
-          {/* Parallel Agents */}
-          <div className="space-y-3 mb-4 pt-4 border-t border-border/20">
-            <p className="text-xs font-medium text-muted-foreground mb-2">Parallel Processing</p>
-            
-            {/* Designer */}
-            <div className="flex items-center gap-3">
-              <Zap className="w-4 h-4 text-elec-yellow shrink-0" />
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-medium text-foreground">Circuit Designer</span>
-                  <span className="text-xs text-muted-foreground">{designerProgress}%</span>
-                </div>
-                <Progress value={designerProgress} className="h-1.5" />
-              </div>
-            </div>
-            
-            {/* Installer */}
-            <div className="flex items-center gap-3">
-              <Wrench className="w-4 h-4 text-blue-400 shrink-0" />
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-medium text-foreground">Installation Specialist</span>
-                  <span className="text-xs text-muted-foreground">{installerProgress}%</span>
-                </div>
-                <Progress value={installerProgress} className="h-1.5 [&>div]:bg-blue-500" />
-              </div>
-            </div>
-          </div>
 
           {/* Estimated Time Remaining */}
           <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground pt-4 border-t border-border/20">
