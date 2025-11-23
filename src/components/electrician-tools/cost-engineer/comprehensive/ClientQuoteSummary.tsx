@@ -50,7 +50,7 @@ const ClientQuoteSummary = ({
             <div className="text-4xl sm:text-5xl font-bold text-elec-yellow mb-2">
               £{amount.toFixed(2)}
             </div>
-            <div className="text-base sm:text-sm text-white/80">
+            <div className="text-base sm:text-sm text-white">
               excl. VAT | £{totalIncVat.toFixed(2)} inc. VAT
             </div>
           </div>
