@@ -121,13 +121,35 @@ Deno.serve(async (req) => {
 
       if (installError) {
         console.warn('⚠️ Installation Agent failed (non-critical):', installError);
-        // Don't fail entire job - designer succeeded
+        
+        // Designer succeeded, so mark job complete anyway
+        await supabase
+          .from('circuit_design_jobs')
+          .update({
+            status: 'complete',
+            progress: 100,
+            current_step: 'Design complete (installation guidance unavailable)',
+            installation_agent_status: 'failed',
+            completed_at: new Date().toISOString()
+          })
+          .eq('id', jobId);
       } else {
         console.log('✅ Installation Agent complete');
       }
     } catch (installError: any) {
       console.warn('⚠️ Installation Agent invocation error (non-critical):', installError);
-      // Don't fail entire job - designer succeeded
+      
+      // Designer succeeded, so mark job complete anyway
+      await supabase
+        .from('circuit_design_jobs')
+        .update({
+          status: 'complete',
+          progress: 100,
+          current_step: 'Design complete (installation guidance unavailable)',
+          installation_agent_status: 'failed',
+          completed_at: new Date().toISOString()
+        })
+        .eq('id', jobId);
     }
 
     console.log('🚀 Sequential pipeline complete (Designer → Installer)');

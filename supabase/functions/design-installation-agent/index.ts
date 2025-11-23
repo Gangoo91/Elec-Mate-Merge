@@ -106,14 +106,17 @@ Deno.serve(async (req) => {
       .update({ installation_agent_progress: 90 })
       .eq('id', jobId);
 
-    // STEP 4: Save to database
+    // STEP 4: Save to database and mark ENTIRE job complete
     await supabase
       .from('circuit_design_jobs')
       .update({
         installation_agent_status: 'complete',
         installation_agent_progress: 100,
         installation_guidance: installationGuidance,
-        current_step: 'Installation guidance complete'
+        status: 'complete', // Mark entire job complete (both phases done)
+        progress: 100,
+        current_step: 'Design and installation guidance complete!',
+        completed_at: new Date().toISOString()
       })
       .eq('id', jobId);
 
