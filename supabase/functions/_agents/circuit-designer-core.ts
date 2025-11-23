@@ -70,19 +70,64 @@ async function designCircuitsInternal(
       
       // Capture actual error details from response
       if (error) {
-        console.error('❌ Designer agent invocation failed:', {
+        console.error('❌ Designer v3 failed, attempting v2 fallback...', {
           message: error.message,
           context: error.context,
           name: error.name,
+          code: (error as any).code,
           timestamp: new Date().toISOString()
         });
         
-        // Extract detailed error information
-        const errorDetails = {
-          message: error.message || 'Unknown error',
-          code: (error as any).code || 'INVOCATION_ERROR',
-          context: error.context || 'No additional context'
+        // FALLBACK: Try designer-agent-v2 (proven stable)
+        await progressCallback(30, 'Designer: Retrying with backup system...');
+        
+        const { data: v2Data, error: v2Error } = await supabase.functions.invoke('designer-agent-v2', {
+          body: designRequest
+        });
+        
+        if (v2Error || !v2Data?.success) {
+          console.error('❌ Designer v2 fallback also failed:', {
+            v2Error: v2Error?.message,
+            v2Data: v2Data
+          });
+          
+          throw new Error(
+            `Both v3 and v2 designers failed.\n` +
+            `V3 Error: ${error.message}\n` +
+            `V2 Error: ${v2Error?.message || v2Data?.error || 'Unknown v2 error'}`
+          );
+        }
+        
+        console.warn('⚠️ V3 failed but V2 fallback succeeded');
+        
+        await progressCallback(70, 'Designer: Verifying voltage drop...');
+        await progressCallback(90, 'Designer: Finalising calculations...');
+        await progressCallback(100, 'Designer: Complete ✓ (via v2 fallback)');
+        
+        const duration = Date.now() - startTime;
+        console.log(`✅ Designer completed ${v2Data.circuits.length} circuits via V2 fallback in ${(duration/1000).toFixed(1)}s`);
+        
+        lovableAICircuit.onSuccess();
+        
+        return {
+          circuits: v2Data.circuits,
+          supply: v2Data.supply,
+          reasoning: v2Data.reasoning,
+          validationPassed: v2Data.validationPassed,
+          validationIssues: v2Data.validationIssues,
+          autoFixSuggestions: v2Data.autoFixSuggestions,
+          fromCache: v2Data.fromCache || false,
+          processingTime: duration,
+          usedFallback: true
         };
+      }
+      
+      // V3 succeeded - proceed with normal flow
+      const errorDetails = {
+        message: error?.message || 'Unknown error',
+        code: (error as any)?.code || 'INVOCATION_ERROR',
+        context: error?.context || 'No additional context'
+      };
         
         // Helper to explain error codes
         const getErrorExplanation = (code: string): string => {
