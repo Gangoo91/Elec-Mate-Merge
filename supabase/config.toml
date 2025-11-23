@@ -67,12 +67,12 @@ timeout_sec = 60
 verify_jwt = false
 timeout_sec = 180
 
-# Circuit Designer - Direct Synchronous Mode
-[functions.designer-agent-v2]
+# Circuit Designer V3 - Enhanced with 30-day cache, indexed RAG, installation type context
+[functions.designer-agent-v3]
 verify_jwt = false
-timeout_sec = 300
+timeout_sec = 360
 
-# Circuit Designer V3 - Job Queue Architecture
+# Circuit Designer Job Queue Architecture
 [functions.create-circuit-design-job]
 verify_jwt = false
 timeout_sec = 30
@@ -80,10 +80,6 @@ timeout_sec = 30
 [functions.process-circuit-design-job]
 verify_jwt = false
 timeout_sec = 600
-
-[functions.designer-agent-v3]
-verify_jwt = false
-timeout_sec = 360
 
 [functions.cancel-circuit-design-job]
 verify_jwt = false
