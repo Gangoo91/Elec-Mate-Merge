@@ -68,14 +68,15 @@ async function designCircuitsInternal(
         body: designRequest
       });
       
-      // Capture actual error details from response
+      // Capture actual error details from response with defensive checks
       if (error) {
         console.error('❌ Designer v3 failed, attempting v2 fallback...', {
-          message: error.message,
-          context: error.context,
-          name: error.name,
-          code: (error as any).code,
-          timestamp: new Date().toISOString()
+          message: error?.message || 'Unknown error',
+          context: error?.context || {},
+          name: error?.name || 'Error',
+          code: (error as any)?.code || 'UNKNOWN',
+          timestamp: new Date().toISOString(),
+          fullError: JSON.stringify(error).substring(0, 500) // Capture full error for debugging
         });
         
         // FALLBACK: Try designer-agent-v2 (proven stable)
