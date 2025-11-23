@@ -612,6 +612,76 @@ Generate: cable size, MCB/RCBO, calculations, 1-paragraph installation notes per
   }
 
   /**
+   * FAST GENERATION: Minimal prompt for 1-3 circuits
+   * Target: 15-20 seconds total
+   */
+  async generateFast(
+    inputs: NormalizedInputs,
+    context: RAGContext
+  ): Promise<Design> {
+    this.logger.info('AI Designer FAST MODE', {
+      circuits: inputs.circuits.length,
+      ragResults: context.totalResults
+    });
+    
+    const startTime = Date.now();
+    
+    // MINIMAL PROMPT (target <2000 tokens)
+    const systemPrompt = `BS 7671:2018+A3:2024 expert. Design ${inputs.circuits.length} compliant circuit(s).
+
+QUICK RULES:
+- Ib ≤ In ≤ Iz (cable current capacity must exceed MCB rating)
+- VD ≤ 5% (3% preferred for lighting)
+- Zs ≤ max for MCB type (Tables 41.2-41.4)
+- RCBO for ALL sockets and bathrooms (Reg 411.3.3)
+- Standard sizes: 1.5mm²/2.5mm²/4mm²/6mm²/10mm² T&E or SWA
+
+${context.designKnowledge.slice(0, 3).map((k, i) => 
+  `${i + 1}. ${k.primary_topic}: ${k.content.slice(0, 150)}...`
+).join('\n\n')}
+
+Output: cable size, MCB/RCBO rating, key calculations, brief installation notes (50-100 words per circuit).`;
+
+    const structuredInput = this.buildStructuredInput(inputs);
+    const tools = [this.buildSimpleTool()];
+    
+    const response = await callOpenAI(
+      {
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: JSON.stringify(structuredInput, null, 2) }
+        ],
+        model: 'gpt-5-mini-2025-08-07',
+        max_completion_tokens: 4000,
+        tools,
+        tool_choice: { type: 'function', function: { name: 'design_circuits_fast' } }
+      },
+      this.openAiKey,
+      30000 // 30s timeout
+    );
+    
+    const duration = Date.now() - startTime;
+    this.logger.info('AI FAST MODE complete', { 
+      duration,
+      circuits: response.toolCalls?.[0] ? JSON.parse(response.toolCalls[0].function.arguments).circuits.length : 0
+    });
+    
+    if (!response.toolCalls || response.toolCalls.length === 0) {
+      throw new Error('No tool calls in AI fast mode response');
+    }
+    
+    const design = JSON.parse(response.toolCalls[0].function.arguments);
+    
+    if (design.circuits.length !== inputs.circuits.length) {
+      throw new Error(
+        `Fast mode circuit count mismatch: expected ${inputs.circuits.length}, got ${design.circuits.length}`
+      );
+    }
+    
+    return design;
+  }
+
+  /**
    * Build optimized correction prompt (no RAG re-injection)
    */
   private buildCorrectionPrompt(validationErrors: string, originalDesign: Design): string {
@@ -994,6 +1064,103 @@ Generate: cable size, MCB/RCBO, calculations, 1-paragraph installation notes per
           },
           required: ['circuits', 'reasoning'],
           additionalProperties: false
+        }
+      }
+    };
+  }
+
+  /**
+   * Simplified tool schema for fast mode (1-3 circuits)
+   * Removes: structuredOutput, detailed justifications, extensive installation guidance
+   * Keeps: Essential design parameters + calculations + brief notes
+   */
+  private buildSimpleTool(): object {
+    return {
+      type: 'function',
+      function: {
+        name: 'design_circuits_fast',
+        description: 'Quick BS 7671 circuit design for 1-3 circuits',
+        parameters: {
+          type: 'object',
+          properties: {
+            circuits: {
+              type: 'array',
+              description: 'Circuit designs',
+              items: {
+                type: 'object',
+                properties: {
+                  circuitNumber: { type: 'number' },
+                  name: { type: 'string' },
+                  loadType: { type: 'string' },
+                  loadPower: { type: 'number' },
+                  phases: { type: 'number' },
+                  voltage: { type: 'number' },
+                  cableLength: { type: 'number' },
+                  
+                  // Cable selection
+                  cableSize: { type: 'string', description: 'e.g., "2.5mm²"' },
+                  cpcSize: { type: 'string', description: 'e.g., "1.5mm²"' },
+                  cableType: { type: 'string', description: 'e.g., "PVC twin & earth"' },
+                  installationMethod: { type: 'string' },
+                  
+                  // Protection
+                  protectionDevice: {
+                    type: 'object',
+                    properties: {
+                      type: { type: 'string', description: 'MCB or RCBO' },
+                      rating: { type: 'number' },
+                      curve: { type: 'string', description: 'B, C, or D' },
+                      breakingCapacity: { type: 'string', description: 'e.g., "6kA"' }
+                    },
+                    required: ['type', 'rating', 'curve', 'breakingCapacity']
+                  },
+                  rcdProtected: { type: 'boolean' },
+                  
+                  // Calculations (simplified)
+                  calculations: {
+                    type: 'object',
+                    properties: {
+                      Ib: { type: 'number', description: 'Design current (A)' },
+                      In: { type: 'number', description: 'MCB rating (A)' },
+                      Iz: { type: 'number', description: 'Cable capacity (A)' },
+                      voltageDrop: {
+                        type: 'object',
+                        properties: {
+                          volts: { type: 'number' },
+                          percent: { type: 'number' },
+                          compliant: { type: 'boolean' }
+                        },
+                        required: ['volts', 'percent', 'compliant']
+                      },
+                      zs: { type: 'number', description: 'Earth fault loop impedance (Ω)' },
+                      maxZs: { type: 'number', description: 'Max permitted Zs (Ω)' }
+                    },
+                    required: ['Ib', 'In', 'Iz', 'voltageDrop', 'zs', 'maxZs']
+                  },
+                  
+                  // Brief installation notes (50-100 words)
+                  installationNotes: { 
+                    type: 'string',
+                    description: 'Brief installation guidance (50-100 words) covering: cable route, fixing method, and key safety considerations'
+                  }
+                },
+                required: [
+                  'circuitNumber', 'name', 'loadType', 'loadPower', 'phases', 'voltage',
+                  'cableSize', 'cpcSize', 'cableType', 'protectionDevice', 'rcdProtected',
+                  'calculations', 'installationNotes'
+                ]
+              }
+            },
+            reasoning: {
+              type: 'object',
+              description: 'Brief design justification',
+              properties: {
+                summary: { type: 'string', description: 'Quick summary of design approach (2-3 sentences)' }
+              },
+              required: ['summary']
+            }
+          },
+          required: ['circuits', 'reasoning']
         }
       }
     };
