@@ -18,7 +18,9 @@ export const InstallationGuidanceDisplay = ({
   return (
     <div className="space-y-4">
       {/* Safety Considerations */}
-      {installationGuidance.safetyConsiderations && installationGuidance.safetyConsiderations.length > 0 && (
+      {installationGuidance.safetyConsiderations && 
+       Array.isArray(installationGuidance.safetyConsiderations) && 
+       installationGuidance.safetyConsiderations.length > 0 && (
         <Card className="bg-card/30 border-destructive/30">
           <CardHeader className="pb-3">
             <CardTitle className="text-base sm:text-lg flex items-center gap-2">
@@ -52,7 +54,9 @@ export const InstallationGuidanceDisplay = ({
       )}
 
       {/* Materials Required */}
-      {installationGuidance.materialsRequired && installationGuidance.materialsRequired.length > 0 && (
+      {installationGuidance.materialsRequired && 
+       Array.isArray(installationGuidance.materialsRequired) && 
+       installationGuidance.materialsRequired.length > 0 && (
         <Card className="bg-card/30 border-white/10">
           <CardHeader className="pb-3">
             <CardTitle className="text-base sm:text-lg flex items-center gap-2">
@@ -78,7 +82,9 @@ export const InstallationGuidanceDisplay = ({
       )}
 
       {/* Tools Required */}
-      {installationGuidance.toolsRequired && installationGuidance.toolsRequired.length > 0 && (
+      {installationGuidance.toolsRequired && 
+       Array.isArray(installationGuidance.toolsRequired) && 
+       installationGuidance.toolsRequired.length > 0 && (
         <Card className="bg-card/30 border-white/10">
           <CardHeader className="pb-3">
             <CardTitle className="text-base sm:text-lg flex items-center gap-2">
@@ -100,7 +106,9 @@ export const InstallationGuidanceDisplay = ({
       )}
 
       {/* Cable Routing */}
-      {installationGuidance.cableRouting && installationGuidance.cableRouting.length > 0 && (
+      {installationGuidance.cableRouting && 
+       Array.isArray(installationGuidance.cableRouting) && 
+       installationGuidance.cableRouting.length > 0 && (
         <Card className="bg-card/30 border-white/10">
           <CardHeader className="pb-3">
             <CardTitle className="text-base sm:text-lg flex items-center gap-2">
@@ -137,7 +145,9 @@ export const InstallationGuidanceDisplay = ({
       )}
 
       {/* Termination Requirements */}
-      {installationGuidance.terminationRequirements && installationGuidance.terminationRequirements.length > 0 && (
+      {installationGuidance.terminationRequirements && 
+       Array.isArray(installationGuidance.terminationRequirements) && 
+       installationGuidance.terminationRequirements.length > 0 && (
         <Card className="bg-card/30 border-white/10">
           <CardHeader className="pb-3">
             <CardTitle className="text-base sm:text-lg flex items-center gap-2">
@@ -175,7 +185,9 @@ export const InstallationGuidanceDisplay = ({
       )}
 
       {/* Installation Procedure */}
-      {installationGuidance.installationProcedure && installationGuidance.installationProcedure.length > 0 && (
+      {installationGuidance.installationProcedure && 
+       Array.isArray(installationGuidance.installationProcedure) && 
+       installationGuidance.installationProcedure.length > 0 && (
         <Card className="bg-card/30 border-white/10">
           <CardHeader className="pb-3">
             <CardTitle className="text-base sm:text-lg">
@@ -217,7 +229,10 @@ export const InstallationGuidanceDisplay = ({
       )}
 
       {/* Testing Requirements */}
-      {testingRequirements && testingRequirements.tests && testingRequirements.tests.length > 0 && (
+      {testingRequirements && 
+       testingRequirements.tests && 
+       Array.isArray(testingRequirements.tests) && 
+       testingRequirements.tests.length > 0 && (
         <Card className="bg-card/30 border-white/10">
           <CardHeader className="pb-3">
             <CardTitle className="text-base sm:text-lg">

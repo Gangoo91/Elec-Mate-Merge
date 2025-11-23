@@ -91,18 +91,28 @@ serve(async (req) => {
 
     logger.info('✅ Installation method generated successfully');
 
+    // Helper function to ensure array type (defensive sanitization)
+    const ensureArray = (value: any): any[] => {
+      if (Array.isArray(value)) return value;
+      if (typeof value === 'string' && value.trim()) {
+        // Convert string to single-item array with basic structure
+        return [{ step: value, method: 'As specified' }];
+      }
+      return []; // Return empty array for null/undefined/invalid
+    };
+
     // Transform to expected frontend format
     const response = mode === 'simplified' ? {
       // ✅ SIMPLIFIED MODE: Return enhanced structured guidance for Circuit Designer
       success: true,
       data: {
         installationGuidance: {
-          safetyConsiderations: result.installationGuidance?.safetyConsiderations || [],
-          materialsRequired: result.installationGuidance?.materialsRequired || [],
-          toolsRequired: result.installationGuidance?.toolsRequired || [],
-          cableRouting: result.installationGuidance?.cableRouting || [],
-          terminationRequirements: result.installationGuidance?.terminationRequirements || [],
-          installationProcedure: result.installationGuidance?.installationProcedure || []
+          safetyConsiderations: ensureArray(result.installationGuidance?.safetyConsiderations),
+          materialsRequired: ensureArray(result.installationGuidance?.materialsRequired),
+          toolsRequired: ensureArray(result.installationGuidance?.toolsRequired),
+          cableRouting: ensureArray(result.installationGuidance?.cableRouting),
+          terminationRequirements: ensureArray(result.installationGuidance?.terminationRequirements),
+          installationProcedure: ensureArray(result.installationGuidance?.installationProcedure)
         },
         testingRequirements: result.testingRequirements || {
           intro: '',
@@ -204,6 +214,7 @@ serve(async (req) => {
           jobId,
           hasInstallationGuidance: !!response.data.installationGuidance,
           cableRoutingItems: response.data.installationGuidance?.cableRouting?.length || 0,
+          cableRoutingType: Array.isArray(response.data.installationGuidance?.cableRouting) ? 'array' : typeof response.data.installationGuidance?.cableRouting,
           terminationItems: response.data.installationGuidance?.terminationRequirements?.length || 0,
           safetyItems: response.data.installationGuidance?.safetyConsiderations?.length || 0,
           testingItems: response.data.testingRequirements?.tests?.length || 0
