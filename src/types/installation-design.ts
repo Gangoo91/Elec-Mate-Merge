@@ -1,6 +1,8 @@
 // AI Installation Designer Types
 // BS 7671:2018+A3:2024 Compliant Circuit Design
 
+import { EnhancedInstallationGuidance, TestingRequirements } from './circuit-design';
+
 // Extended load types for different installation types
 export type DomesticLoadType = 'socket' | 'lighting' | 'cooker' | 'shower' | 'ev-charger' | 'immersion' | 'heating' | 'smoke-alarm' | 'garage' | 'outdoor';
 
@@ -132,40 +134,8 @@ export interface CircuitDesign {
     explanation: string;
     tableReferences: string;
   };
-  installationGuidance?: {
-    cableRouting: string | Array<{
-      step: string;
-      cableType?: string;
-      method: string;
-      bsReference?: string;
-      notes?: string;
-    }>;
-    terminationAdvice?: string;
-    terminationRequirements?: Array<{
-      location: string;
-      procedure: string;
-      toolsNeeded: string[];
-      torqueSettings?: string;
-      bsReference?: string;
-    }>;
-    testingRequirements?: string;
-    safetyNotes: string[];
-    fixingsAndSupport?: string[];
-    toolsRequired?: string[];
-    estimatedInstallTime?: string;
-  };
-  testingRequirements?: {
-    intro: string;
-    tests: Array<{
-      testName: string;
-      regulation: string;
-      procedure: string;
-      expectedReading?: string;
-      acceptanceCriteria: string;
-      toolsRequired: string[];
-    }>;
-    recordingNote: string;
-  };
+  installationGuidance?: EnhancedInstallationGuidance;
+  testingRequirements?: TestingRequirements;
   installationNotes?: string; // New context-aware installation guidance field
   specialLocationCompliance?: {
     isSpecialLocation: boolean;
