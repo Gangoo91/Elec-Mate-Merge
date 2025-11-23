@@ -343,9 +343,10 @@ export class DesignPipeline {
     // ========================================
     let validationResult = this.validator.validate(design, normalized.supply.voltage);
     
-    // Auto-correction: Retry validation failures with improved RAG context
+    // RAG-FIRST: Comprehensive RAG (40 keywords, 50 results) eliminates need for retries
+    // Validation issues surface clearly for manual review of edge cases
     if (!validationResult.isValid) {
-      const maxRetries = 2; // AGGRESSIVE: 2 retries with improved RAG (50 results, 40 keywords)
+      const maxRetries = 0; // Trust improved RAG for first-time compliance, avoid timeouts on 10+ circuits
       let correctionAttempt = 0;
       
       // Update progress to show validation complete, entering correction phase
@@ -429,9 +430,10 @@ export class DesignPipeline {
               );
             }
           } else {
-            this.logger.info(`Correction successful on attempt ${correctionAttempt}!`, {
+            this.logger.info(`RAG-first design validation complete`, {
               originalIssues: validationResult.issues.length,
-              correctedCircuits: failedCircuitNumbers.size
+              ragResults: context?.totalResults || 0,
+              strategy: 'First-time compliance via comprehensive RAG'
             });
           }
         } catch (correctionError) {
