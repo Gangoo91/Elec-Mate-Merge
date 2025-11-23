@@ -76,7 +76,7 @@ const JobNotesCard = ({ projectName }: JobNotesCardProps) => {
           />
         </div>
 
-        <p className="text-sm text-white/70">
+        <p className="text-base sm:text-sm text-white/90">
           💡 Notes are saved automatically to this device
         </p>
       </CardContent>
