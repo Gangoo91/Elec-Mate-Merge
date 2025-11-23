@@ -64,14 +64,36 @@ Deno.serve(async (req) => {
     logger.info('Job status updated to processing');
 
     // ===========================================
-    // PARALLEL AGENT EXECUTION
+    // SEQUENTIAL START, PARALLEL FINISH
     // ===========================================
     
-    // Start both agents immediately
-    const [designerJobId, installerJobId] = await Promise.all([
-      startDesignerAgent(supabase, jobId, job.job_inputs, job.user_id, logger),
-      startInstallationAgent(supabase, jobId, job.job_inputs, job.user_id, logger)
-    ]);
+    // Start designer first
+    logger.info('🤖 Starting designer agent...');
+    const designerJobId = await startDesignerAgent(supabase, jobId, job.job_inputs, job.user_id, logger);
+
+    // Wait for designer to calculate circuits (poll until 80% complete)
+    logger.info('⏳ Waiting for circuit calculations before starting installation agent...');
+    await waitForDesignerCalculations(supabase, jobId, logger);
+
+    // Fetch calculated circuit data
+    const { data: circuitJob } = await supabase
+      .from('circuit_design_jobs')
+      .select('design_data')
+      .eq('id', jobId)
+      .single();
+
+    // Now start installation agent with CALCULATED circuit specs
+    const enrichedRequirements = {
+      ...job.job_inputs,
+      circuits: circuitJob?.design_data?.circuits || job.job_inputs.circuits
+    };
+
+    logger.info('🤖 Starting installation agent with calculated circuit data...', {
+      circuitCount: enrichedRequirements.circuits?.length || 0,
+      hasDesignerData: !!circuitJob?.design_data?.circuits
+    });
+    
+    const installerJobId = await startInstallationAgent(supabase, jobId, enrichedRequirements, job.user_id, logger);
 
     logger.info('Both agents started', { designerJobId, installerJobId });
 
@@ -153,12 +175,61 @@ Deno.serve(async (req) => {
 });
 
 /**
+ * Wait for designer to calculate circuit specs before starting installer
+ */
+async function waitForDesignerCalculations(
+  supabase: any,
+  circuitJobId: string,
+  logger: any
+): Promise<void> {
+  const maxWait = 120000; // 2 minutes max
+  const pollInterval = 2000; // 2 seconds
+  const targetProgress = 80; // Designer should be 80% done when circuits are calculated
+  
+  const startTime = Date.now();
+  
+  while (Date.now() - startTime < maxWait) {
+    const { data: job } = await supabase
+      .from('circuit_design_jobs')
+      .select('designer_progress, designer_status, design_data')
+      .eq('id', circuitJobId)
+      .single();
+    
+    if (job?.designer_status === 'failed') {
+      throw new Error('Designer failed before completing calculations');
+    }
+    
+    // Check if we have calculated circuit data
+    if (job?.design_data?.circuits && job.design_data.circuits.length > 0) {
+      logger.info('✅ Designer calculations complete, starting installation agent', {
+        circuitCount: job.design_data.circuits.length,
+        progress: job.designer_progress
+      });
+      return;
+    }
+    
+    // Or if designer reached target progress
+    if (job?.designer_progress >= targetProgress) {
+      logger.info('✅ Designer reached target progress, starting installation agent', {
+        progress: job.designer_progress
+      });
+      return;
+    }
+    
+    await new Promise(resolve => setTimeout(resolve, pollInterval));
+  }
+  
+  throw new Error('Timeout waiting for designer calculations');
+}
+
+/**
  * Start the designer agent (circuit calculations only)
  */
 async function startDesignerAgent(
   supabase: any, 
   circuitJobId: string, 
   requirements: any,
+  userId: any,
   logger: any
 ): Promise<string> {
   logger.info('Starting designer agent', { circuitJobId });
@@ -234,7 +305,9 @@ async function startInstallationAgent(
   logger.info('🔍 Creating installation job with designer context:', {
     hasContext: !!designerContext,
     circuitCount: designerContext.circuits.length,
-    contextKeys: Object.keys(designerContext)
+    contextKeys: Object.keys(designerContext),
+    firstCircuit: designerContext.circuits[0], // Verify circuit data structure
+    contextSize: JSON.stringify(designerContext).length // Verify payload size
   });
 
   const { data: installJob, error } = await supabase
