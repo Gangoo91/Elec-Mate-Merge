@@ -182,83 +182,23 @@ export class AIDesigner {
       parts.push('');
     }
 
-    // Inject Practical Work Intelligence (NEW - 90% weighting on installation best practices)
-    if (context.practicalWork && context.practicalWork.length > 0) {
-      parts.push('=== PRACTICAL WORK INTELLIGENCE (90% WEIGHTING) ===');
-      parts.push('Use this intelligence to generate THREE PARAGRAPHS of installation guidance per circuit:');
-      parts.push('');
-      
-      context.practicalWork.slice(0, 25).forEach(pw => {
-        parts.push(`\n[${pw.activity_type?.toUpperCase() || 'PRACTICAL'}] ${pw.topic || pw.primary_topic}`);
-        
-        if (pw.content) {
-          parts.push(`${pw.content}`);
-        }
-        
-        if (pw.procedure_steps && pw.procedure_steps.length > 0) {
-          parts.push(`🔧 Steps: ${pw.procedure_steps.join(' → ')}`);
-        }
-        
-        if (pw.tools_required && pw.tools_required.length > 0) {
-          parts.push(`🛠️ Tools: ${pw.tools_required.join(', ')}`);
-        }
-        
-        if (pw.safety_notes && pw.safety_notes.length > 0) {
-          parts.push(`⚠️ Safety: ${pw.safety_notes.join('; ')}`);
-        }
-        
-        if (pw.testing_procedures && pw.testing_procedures.length > 0) {
-          parts.push(`🧪 Testing: ${pw.testing_procedures.join(' | ')}`);
-        }
-        
-        if (pw.common_mistakes && pw.common_mistakes.length > 0) {
-          parts.push(`❌ Avoid: ${pw.common_mistakes.join('; ')}`);
-        }
-      });
-      parts.push('');
-    }
+    // Practical Work Intelligence removed - handled by Design Installation Agent running in parallel
 
-    // Output format (UPDATED with installation guidance requirement)
+    // Output format (FOCUSED on electrical design - installation handled separately)
     parts.push('=== OUTPUT FORMAT ===');
     parts.push('1. AT A GLANCE CARD: loadKw (loadPower/1000), loadIb (Ib with unit), Cable, Device, VD (pass/fail), Zs, Compliance, Notes');
-    parts.push('2. 9 SECTIONS: Circuit Summary, Load Details, Cable Selection & Calc, Device Selection, Compliance, Justification, Installation Context (basic electrical only), Safety, Testing');
-    parts.push('3. INSTALLATION GUIDANCE (NEW): Three paragraphs covering best practices, testing, and maintenance (see below)');
-    parts.push('');
-    
-    // === INSTALLATION GUIDANCE REQUIREMENTS ===
-    parts.push('=== INSTALLATION GUIDANCE REQUIREMENTS (CRITICAL - 90% WEIGHTING) ===');
-    parts.push('For EACH circuit, generate THREE PARAGRAPHS of practical installation guidance:');
-    parts.push('');
-    parts.push('Paragraph 1 - Installation Best Practices (3-5 sentences):');
-    parts.push('- Cable routing methods specific to this load type (surface, buried, trunking)');
-    parts.push('- Fixing intervals and support requirements per BS 7671');
-    parts.push('- Termination procedures including torque settings');
-    parts.push('- Common installation mistakes to avoid for this circuit type');
-    parts.push('');
-    parts.push('Paragraph 2 - Testing & Commissioning (3-5 sentences):');
-    parts.push('- Required tests per BS 7671 Part 6 (continuity, insulation, RCD, etc.)');
-    parts.push('- Test equipment needed and expected readings');
-    parts.push('- Acceptance criteria and limits');
-    parts.push('- Verification checklist items specific to this circuit');
-    parts.push('');
-    parts.push('Paragraph 3 - Inspection & Maintenance (3-5 sentences):');
-    parts.push('- Visual inspection points during periodic testing');
-    parts.push('- Common EICR observation codes for this circuit type');
-    parts.push('- Recommended maintenance intervals');
-    parts.push('- Typical defects and degradation signs specific to this circuit');
-    parts.push('');
-    parts.push('CRITICAL: Use the Practical Work Intelligence above. Each circuit type has unique requirements.');
-    parts.push('Format: Three clear paragraphs separated by blank lines. No bullet points, just flowing text.');
+    parts.push('2. 8 SECTIONS: Circuit Summary, Load Details, Cable Selection & Calc, Device Selection, Compliance, Justification, Safety (electrical only), Testing (basic electrical tests)');
     parts.push('');
     
     // === YOUR ROLE ===
     parts.push('=== YOUR ROLE ===');
     parts.push('You are a BS 7671:2018+A3:2024 electrical circuit design expert.');
+    parts.push('FOCUS on cable sizing, protection device selection, and electrical calculations.');
     parts.push('USE THE KNOWLEDGE BASE ABOVE to design compliant circuits.');
     parts.push('APPLY the formulas, tables, regulations, and examples from the intelligence sections.');
     parts.push('SHOW YOUR WORKING using calculation steps from the knowledge base.');
     parts.push('CITE specific regulation numbers and table references from the RAG results.');
-    parts.push('GENERATE practical installation guidance using the Practical Work Intelligence (90% weighting).');
+    parts.push('NOTE: Installation guidance (routing, fixing, testing procedures) is handled by a separate Installation Agent.');
     parts.push('');
 
     // === OUTPUT REQUIREMENTS ===
@@ -268,7 +208,6 @@ export class AIDesigner {
     parts.push('3. Reference tables explicitly (e.g., "Table 54.7: 2.5mm² conductor resistance = 7.41 mΩ/m")');
     parts.push('4. Cite regulation numbers in justifications (e.g., "per 433.1.1", "Table 41.3")');
     parts.push('5. Use exact voltage/phase values from each circuit request');
-    parts.push('6. Provide three-paragraph installation guidance for each circuit');
     parts.push('');
     
     // === CALCULATIONS SCHEMA ===
@@ -288,7 +227,7 @@ export class AIDesigner {
     
     // Field requirements
     parts.push('=== REQUIRED FIELDS ===');
-    parts.push('Copy from input: loadPower, phases, cableLength. Set: voltage (230V single/400V three), installationMethod, rcdProtected, circuitNumber (1+), full cableType description, installationGuidance (three paragraphs).');
+    parts.push('Copy from input: loadPower, phases, cableLength. Set: voltage (230V single/400V three), installationMethod, rcdProtected, circuitNumber (1+), full cableType description.');
 
     return parts.join('\n');
   }
@@ -320,7 +259,7 @@ ${context.designKnowledge.slice(0, 3).map(k =>
   `${k.primary_topic}: ${k.content.slice(0, 200)}`
 ).join('\n\n')}
 
-Generate: cable size, MCB/RCBO, calculations, 1-paragraph installation notes per circuit.`;
+Generate: cable size, MCB/RCBO, calculations only (installation handled separately).`;
 
     const structuredInput = this.buildStructuredInput(inputs);
     const tools = [this.buildSimpleTool()];
@@ -388,9 +327,9 @@ Generate: cable size, MCB/RCBO, calculations, 1-paragraph installation notes per
                       maxZs: { type: 'number' }
                     }
                   },
-                  installationNotes: { type: 'string' }
+                  // installationNotes removed - handled by Design Installation Agent
                 },
-                required: ['name', 'cableSize', 'protectionDevice', 'calculations', 'installationNotes']
+                required: ['name', 'cableSize', 'protectionDevice', 'calculations']
               }
             }
           },

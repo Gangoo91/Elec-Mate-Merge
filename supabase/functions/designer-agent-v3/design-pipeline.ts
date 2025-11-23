@@ -5,7 +5,7 @@
 
 import { FormNormalizer } from './form-normalizer.ts';
 import { CacheManager } from './cache-manager.ts';
-import { searchDesignIntelligence, searchRegulationsIntelligence, searchPracticalWorkIntelligence } from '../_shared/intelligence-search.ts';
+import { searchDesignIntelligence, searchRegulationsIntelligence } from '../_shared/intelligence-search.ts';
 import { AIDesigner } from './ai-designer.ts';
 import { ValidationEngine } from './validation-engine.ts';
 import { DeterministicCalculator } from './deterministic-calculations.ts';
@@ -112,22 +112,12 @@ export class DesignPipeline {
       keywords.add('voltage drop');
       keywords.add('protection');
       
-      // Practical work specific keywords (installation, testing, best practices)
-      keywords.add('installation');
-      keywords.add('routing');
-      keywords.add('termination');
-      keywords.add('testing');
-      keywords.add('commissioning');
-      keywords.add('inspection');
-      keywords.add('cable support');
-      keywords.add('fixing intervals');
-      keywords.add('torque settings');
-      keywords.add('insulation resistance');
-      keywords.add('earth loop impedance');
-      keywords.add('rcd testing');
-      keywords.add('polarity');
-      keywords.add('continuity');
-      keywords.add('best practices');
+      // Design-specific keywords (cable sizing, protection, compliance)
+      keywords.add('diversity factor');
+      keywords.add('derating factors');
+      keywords.add('grouping factor');
+      keywords.add('ambient temperature');
+      keywords.add('buried depth');
       
       // Special location keywords
       if (circuit.specialLocation) {
@@ -144,38 +134,31 @@ export class DesignPipeline {
       cableSizes: Array.from(cableSizes)
     });
     
-    // PARALLEL: Search all three intelligence tables simultaneously (design, regulations, practical work)
-    const [designIntelligence, regulationsIntelligence, practicalWorkIntelligence] = await Promise.all([
+    // PARALLEL: Search design and regulations intelligence tables (installation guidance handled by separate agent)
+    const [designIntelligence, regulationsIntelligence] = await Promise.all([
       searchDesignIntelligence(supabase, {
         keywords: Array.from(keywords),
         loadTypes: Array.from(loadTypes),
         cableSizes: Array.from(cableSizes),
         categories: ['cable_sizing', 'voltage_drop', 'protection'],
-        limit: 15
+        limit: 20  // Increased from 15 since we removed practical work
       }),
       searchRegulationsIntelligence(supabase, {
         keywords: Array.from(keywords),
         appliesTo: Array.from(loadTypes),
-        limit: 10
-      }),
-      searchPracticalWorkIntelligence(supabase, {
-        keywords: Array.from(keywords),
-        appliesTo: Array.from(loadTypes),
-        cableSizes: Array.from(cableSizes).map(String),
-        activityTypes: ['installation', 'testing', 'commissioning'],
-        limit: normalized.circuits.length <= 3 ? 5 : 25 // DYNAMIC: Less RAG for small jobs
+        limit: 15  // Increased from 10 since we removed practical work
       })
     ]);
     
     const ragTime = Date.now() - ragStart;
-    this.logger.info('Fast RAG complete (3-layer)', {
+    this.logger.info('Fast RAG complete (2-layer design focus)', {
       designIntelligence: designIntelligence.length,
       regulationsIntelligence: regulationsIntelligence.length,
-      practicalWorkIntelligence: practicalWorkIntelligence.length,
-      searchTime: ragTime
+      searchTime: ragTime,
+      note: 'Installation guidance handled by Design Installation Agent'
     });
     
-    // Build RAG context for AI (includes practical work intelligence)
+    // Build RAG context for AI (pure design focus - no practical work)
     const ragContext = {
       regulations: regulationsIntelligence.map((r: any) => ({
         regulation_number: r.regulation_number,
@@ -184,8 +167,7 @@ export class DesignPipeline {
         source: 'regulations_intelligence'
       })),
       designKnowledge: designIntelligence,
-      practicalWork: practicalWorkIntelligence,
-      totalResults: designIntelligence.length + regulationsIntelligence.length + practicalWorkIntelligence.length,
+      totalResults: designIntelligence.length + regulationsIntelligence.length,
       searchTime: ragTime
     };
 
