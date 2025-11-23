@@ -98,11 +98,11 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
+        <CardTitle className="text-2xl sm:text-xl font-bold text-white flex items-center gap-2">
           <MessageSquare className="h-5 w-5 text-blue-400" />
           How to Present & Defend This Quote
         </CardTitle>
-        <CardDescription className="text-base sm:text-sm text-white/80">
+        <CardDescription className="text-base sm:text-sm text-white">
           Ready-to-use responses for client conversations and pricing objections
         </CardDescription>
       </CardHeader>
@@ -112,11 +112,11 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
         <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
           <div className="flex items-start justify-between gap-3 mb-3">
             <div>
-              <h3 className="font-semibold text-base text-white flex items-center gap-2">
+              <h3 className="font-semibold text-lg sm:text-base text-white flex items-center gap-2">
                 <TrendingUp className="h-4 w-4 text-blue-400" />
                 30-Second Value Proposition
               </h3>
-              <p className="text-sm text-white/80 mt-1">
+              <p className="text-base sm:text-sm text-white mt-1">
                 Your elevator pitch for this quote
               </p>
             </div>
@@ -136,7 +136,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
 
         {/* Common Objections */}
         <div className="space-y-3">
-          <h3 className="font-semibold text-base text-white flex items-center gap-2">
+          <h3 className="font-semibold text-lg sm:text-base text-white flex items-center gap-2">
             <Shield className="h-4 w-4 text-amber-400" />
             Common Objections & Evidence-Based Responses
           </h3>
@@ -144,7 +144,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
           {/* Objection 1: Too Expensive */}
           <Collapsible open={expandedSections.has('objection1')} onOpenChange={() => toggleSection('objection1')}>
             <div className="border border-border rounded-lg">
-              <CollapsibleTrigger className="w-full p-4 sm:p-3 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
+              <CollapsibleTrigger className="w-full p-4 sm:p-3 flex items-center justify-between hover:bg-accent/50 active:bg-accent/70 transition-colors touch-manipulation min-h-12">
                 <div className="flex items-center gap-2 text-left">
                   <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
                   <span className="font-medium text-base sm:text-sm text-white">"This seems expensive / too high"</span>
@@ -154,30 +154,30 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
                   <div className="space-y-2">
-                    <h4 className="font-medium text-base sm:text-sm text-white flex items-center gap-2">
+                    <h4 className="font-medium text-lg sm:text-base text-white flex items-center gap-2">
                       <MessageSquare className="h-3 w-3 text-blue-400" />
                       Your Response:
                     </h4>
                     <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-white space-y-2">
                       <p>"I understand it might seem high at first glance. Let me break down exactly what's included:"</p>
                       
-                      <div className="pl-3 space-y-1 text-sm">
+                      <div className="pl-3 space-y-1 text-base sm:text-sm">
                         <p><strong>Materials: {formatCurrency(materialsTotal)}</strong></p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           • Trade supplier materials at net cost {formatCurrency(materialsNet)}<br/>
                           • Plus {materialsMarkup.toFixed(0)}% markup ({formatCurrency(markupAmount)}) to cover waste, collection time, warranty support<br/>
                           • Industry standard markup: 15-25% (we're at {materialsMarkup.toFixed(0)}%)
                         </p>
                         
                         <p className="pt-2"><strong>Labour: {formatCurrency(labourTotal)} ({Math.round(labourHours)} hours)</strong></p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           • Qualified electrician rate: {formatCurrency(labourRate)}/hour<br/>
                           • UK market rate for qualified: £{marketRate.min}-{marketRate.max}/hour (we're competitive)<br/>
                           • {region} regional adjustment: {regionalMultiplier}x
                         </p>
                         
                         <p className="pt-2"><strong>Business Costs: {formatCurrency(overheads)}</strong></p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           • Van, tools, insurance, certifications<br/>
                           • Every electrician must cover these costs<br/>
                           • Allocated fairly: {formatCurrency(dailyOverheadRate)}/day × {jobDays} days

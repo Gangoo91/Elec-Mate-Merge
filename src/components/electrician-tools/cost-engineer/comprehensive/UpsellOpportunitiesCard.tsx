@@ -14,7 +14,7 @@ const UpsellOpportunitiesCard = ({ upsells }: UpsellOpportunitiesCardProps) => {
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
+          <CardTitle className="text-2xl sm:text-xl font-bold text-white flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-elec-yellow" />
             Upsell Opportunities
           </CardTitle>
@@ -27,7 +27,7 @@ const UpsellOpportunitiesCard = ({ upsells }: UpsellOpportunitiesCardProps) => {
         <Accordion type="single" collapsible className="w-full">
           {upsells.map((upsell, idx) => (
             <AccordionItem key={idx} value={`upsell-${idx}`}>
-              <AccordionTrigger className="hover:no-underline touch-manipulation">
+              <AccordionTrigger className="hover:no-underline touch-manipulation min-h-12">
                 <div className="flex items-center gap-2 flex-1">
                   {upsell.isHot && <Flame className="h-4 w-4 text-orange-500" />}
                   <span className="font-medium text-white text-base sm:text-sm text-left">{upsell.opportunity}</span>
@@ -42,10 +42,10 @@ const UpsellOpportunitiesCard = ({ upsells }: UpsellOpportunitiesCardProps) => {
                     <span className="font-medium">Timing:</span> {upsell.timing}
                   </div>
                   <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30">
-                    <div className="text-sm font-medium text-white/80 mb-1">
+                    <div className="text-base sm:text-sm font-medium text-white mb-1">
                       💬 Conversation Script:
                     </div>
-                    <p className="text-base sm:text-sm text-white/90 italic">{upsell.script}</p>
+                    <p className="text-base sm:text-sm text-white italic">{upsell.script}</p>
                   </div>
                 </div>
               </AccordionContent>

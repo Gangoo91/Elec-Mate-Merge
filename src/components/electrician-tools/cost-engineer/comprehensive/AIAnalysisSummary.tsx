@@ -20,7 +20,7 @@ const AIAnalysisSummary = ({ jobDescription }: AIAnalysisSummaryProps) => {
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5 bg-gradient-to-r from-elec-yellow/10 to-transparent border-b border-elec-yellow/20">
         <div className="flex items-center gap-3">
           <Brain className="h-6 w-6 text-elec-yellow" />
-          <CardTitle className="text-xl sm:text-2xl font-bold text-white">
+          <CardTitle className="text-2xl sm:text-xl font-bold text-white">
             📋 Analysis & Reasoning
           </CardTitle>
         </div>
@@ -31,7 +31,7 @@ const AIAnalysisSummary = ({ jobDescription }: AIAnalysisSummaryProps) => {
           {sections.map((section, idx) => {
             if (section.type === 'header') {
               return (
-                <h4 key={idx} className="text-lg sm:text-xl font-bold text-elec-yellow mt-5 mb-2 first:mt-0">
+                <h4 key={idx} className="text-xl sm:text-lg font-bold text-elec-yellow mt-5 mb-2 first:mt-0">
                   {section.content}
                 </h4>
               );
@@ -39,7 +39,7 @@ const AIAnalysisSummary = ({ jobDescription }: AIAnalysisSummaryProps) => {
             
             if (section.type === 'paragraph') {
               return (
-                <p key={idx} className="text-base sm:text-base text-white/90 leading-relaxed">
+                <p key={idx} className="text-base sm:text-base text-white leading-relaxed">
                   {section.content}
                 </p>
               );
@@ -49,7 +49,7 @@ const AIAnalysisSummary = ({ jobDescription }: AIAnalysisSummaryProps) => {
               return (
                 <ul key={idx} className="space-y-3 ml-2">
                   {section.items.map((item, i) => (
-                    <li key={i} className="flex gap-3 text-white/90 text-base">
+                    <li key={i} className="flex gap-3 text-white text-base sm:text-sm">
                       <span className="text-elec-yellow font-bold mt-1">•</span>
                       <span className="flex-1">{item}</span>
                     </li>

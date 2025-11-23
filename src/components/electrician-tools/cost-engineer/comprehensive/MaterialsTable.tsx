@@ -91,58 +91,63 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
         </div>
       </CardHeader>
       <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6">
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-white font-semibold text-sm">Description</TableHead>
-                <TableHead className="text-right text-white font-semibold text-sm">Qty</TableHead>
-                <TableHead className="text-right text-white font-semibold text-sm">Unit Price</TableHead>
-                <TableHead className="text-right text-white font-semibold text-sm">Total</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {currentItems.map((item, idx) => (
-                <TableRow key={idx}>
-                  <TableCell className="font-medium text-base sm:text-sm text-white">
-                    {item.item || item.description}
-                    {item.supplier && (
-                      <div className="text-sm text-white/80">
-                        {item.supplier}
-                      </div>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right text-base sm:text-sm text-white">
-                    {item.quantity} {item.unit}
-                  </TableCell>
-                  <TableCell className="text-right font-mono text-base sm:text-sm text-white">
-                    {isEditMode ? (
-                      <div className="flex items-center justify-end gap-1">
-                        <span className="text-white/80">£</span>
-                        <Input
-                          type="number"
-                          step="0.01"
-                          min="0"
-                          value={item.unitPrice}
-                          onChange={(e) => handleEditPrice(idx, e.target.value)}
-                          className="w-20 h-8 text-right font-mono"
-                        />
-                      </div>
-                    ) : (
-                      `£${item.unitPrice?.toFixed(2)}`
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right font-mono font-medium text-base sm:text-sm text-white">
-                    £{item.total?.toFixed(2)}
-                  </TableCell>
+        <div className="overflow-x-auto -mx-4 sm:mx-0">
+          <div className="min-w-[600px] px-4 sm:px-0">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-white font-semibold text-base sm:text-sm">Description</TableHead>
+                  <TableHead className="text-right text-white font-semibold text-base sm:text-sm">Qty</TableHead>
+                  <TableHead className="text-right text-white font-semibold text-base sm:text-sm">Unit Price</TableHead>
+                  <TableHead className="text-right text-white font-semibold text-base sm:text-sm">Total</TableHead>
                 </TableRow>
-              ))}
-              <TableRow className="bg-elec-yellow/10 font-bold border-t-2 border-elec-yellow/30">
-                <TableCell colSpan={3} className="text-right text-white">Total Materials:</TableCell>
-                <TableCell className="text-right font-mono text-white text-lg sm:text-base">£{total.toFixed(2)}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {currentItems.map((item, idx) => (
+                  <TableRow key={idx}>
+                    <TableCell className="font-medium text-base sm:text-sm text-white">
+                      {item.item || item.description}
+                      {item.supplier && (
+                        <div className="text-sm text-white">
+                          {item.supplier}
+                        </div>
+                      )}
+                    </TableCell>
+                    <TableCell className="text-right text-base sm:text-sm text-white">
+                      {item.quantity} {item.unit}
+                    </TableCell>
+                    <TableCell className="text-right font-mono text-base sm:text-sm text-white">
+                      {isEditMode ? (
+                        <div className="flex items-center justify-end gap-1">
+                          <span className="text-white/80">£</span>
+                          <Input
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            value={item.unitPrice}
+                            onChange={(e) => handleEditPrice(idx, e.target.value)}
+                            className="w-20 h-8 text-right font-mono"
+                          />
+                        </div>
+                      ) : (
+                        `£${item.unitPrice?.toFixed(2)}`
+                      )}
+                    </TableCell>
+                    <TableCell className="text-right font-mono font-medium text-base sm:text-sm text-white">
+                      £{item.total?.toFixed(2)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+                <TableRow className="bg-elec-yellow/10 font-bold border-t-2 border-elec-yellow/30">
+                  <TableCell colSpan={3} className="text-right text-white">Total Materials:</TableCell>
+                  <TableCell className="text-right font-mono text-white text-lg sm:text-base">£{total.toFixed(2)}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+        <div className="text-xs text-center text-white/60 mt-2 sm:hidden">
+          ← Swipe to see more →
         </div>
       </CardContent>
     </Card>
