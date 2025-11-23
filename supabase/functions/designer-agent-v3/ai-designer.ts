@@ -294,6 +294,113 @@ export class AIDesigner {
   }
 
   /**
+   * FAST GENERATION: Minimal prompt for 1-3 circuits
+   * Target: 15-20 seconds
+   */
+  async generateFast(
+    inputs: NormalizedInputs,
+    context: RAGContext
+  ): Promise<Design> {
+    this.logger.info('AI Designer FAST MODE', {
+      circuits: inputs.circuits.length,
+      ragResults: context.totalResults
+    });
+    
+    const startTime = Date.now();
+    
+    // MINIMAL PROMPT (2000 tokens max)
+    const systemPrompt = `BS 7671:2018+A3:2024 expert. Design ${inputs.circuits.length} compliant circuit(s).
+
+QUICK RULES:
+- Ib ≤ In ≤ Iz | VD ≤ 5% | Zs ≤ max
+- RCBO for sockets/bathrooms | T&E/SWA standard sizes
+- Show key calculations | Cite main regulations
+
+${context.designKnowledge.slice(0, 3).map(k => 
+  `${k.primary_topic}: ${k.content.slice(0, 200)}`
+).join('\n\n')}
+
+Generate: cable size, MCB/RCBO, calculations, 1-paragraph installation notes per circuit.`;
+
+    const structuredInput = this.buildStructuredInput(inputs);
+    const tools = [this.buildSimpleTool()];
+    
+    const response = await callOpenAI(
+      {
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: JSON.stringify(structuredInput, null, 2) }
+        ],
+        model: 'gpt-5-mini-2025-08-07',
+        max_completion_tokens: 4000, // REDUCED from 8000
+        tools,
+        tool_choice: { type: 'function', function: { name: 'design_circuits_fast' } }
+      },
+      this.openAiKey,
+      30000 // 30s timeout
+    );
+    
+    const duration = Date.now() - startTime;
+    this.logger.info('AI FAST MODE complete', { 
+      duration,
+      circuits: response.toolCalls?.[0] ? JSON.parse(response.toolCalls[0].function.arguments).circuits.length : 0
+    });
+    
+    const design = JSON.parse(response.toolCalls[0].function.arguments);
+    return design;
+  }
+
+  /**
+   * Simplified tool schema for fast mode
+   */
+  private buildSimpleTool(): object {
+    return {
+      type: 'function',
+      function: {
+        name: 'design_circuits_fast',
+        description: 'Quick BS 7671 circuit design',
+        parameters: {
+          type: 'object',
+          properties: {
+            circuits: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  name: { type: 'string' },
+                  cableSize: { type: 'string' },
+                  cableType: { type: 'string' },
+                  protectionDevice: {
+                    type: 'object',
+                    properties: {
+                      type: { type: 'string' },
+                      rating: { type: 'number' }
+                    }
+                  },
+                  calculations: {
+                    type: 'object',
+                    properties: {
+                      Ib: { type: 'number' },
+                      In: { type: 'number' },
+                      Iz: { type: 'number' },
+                      voltageDrop: { type: 'object' },
+                      zs: { type: 'number' },
+                      maxZs: { type: 'number' }
+                    }
+                  },
+                  installationNotes: { type: 'string' }
+                },
+                required: ['name', 'cableSize', 'protectionDevice', 'calculations', 'installationNotes']
+              }
+            }
+          },
+          required: ['circuits']
+        }
+      }
+    };
+  }
+
+  /**
    * Build optimized system prompt for batch processing with installation type context
    */
   private buildBatchSystemPrompt(
