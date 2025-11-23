@@ -99,8 +99,8 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
 
     try {
       // Supabase client doesn't support custom timeouts/signals directly
-      // The function timeout is already set to 280s on the backend
-      // We just need to wait longer than that
+      // Cost engineer needs longer timeout (5 mins) due to GPT-5 Mini reasoning
+      // Other functions use default 280s backend timeout
       const { data, error: invokeError } = await supabase.functions.invoke(functionName, {
         body: request
       });

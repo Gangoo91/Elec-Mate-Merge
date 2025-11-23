@@ -1011,12 +1011,12 @@ COMPLETENESS CHECK:
 ✓ Small fixings/consumables not forgotten?
 If ANY category missing, estimate it and flag in response.`;
 
-    // ==== CALL 1: CORE COST ESTIMATE (GPT-5 Mini for reliability) ====
+    // ==== CALL 1: CORE COST ESTIMATE (GPT-5 Mini with extended timeout & tokens) ====
     logger.debug('Calling AI for core cost estimate', { provider: 'OpenAI' });
     logger.info('🤖 Calling OpenAI GPT-5 Mini for core estimate', {
       model: 'gpt-5-mini-2025-08-07',
-      maxTokens: 8000,
-      timeoutMs: 120000, // 2 minutes for gpt-5-mini
+      maxTokens: 16000, // Increased for reasoning tokens + output (was 8000)
+      timeoutMs: 240000, // 4 minutes for GPT-5 Mini reasoning (was 2 minutes)
       hasTools: true,
       splitMode: 'core-estimate'
     });
@@ -1030,8 +1030,8 @@ If ANY category missing, estimate it and flag in response.`;
         model: 'gpt-5-mini-2025-08-07', // GPT-5 Mini - better JSON reliability
         systemPrompt,
         userPrompt,
-        maxTokens: 8000,
-        timeoutMs: 120000, // 2 minutes sufficient
+        maxTokens: 16000, // Increased for reasoning + output (was 8000)
+        timeoutMs: 240000, // 4 minutes for complex reasoning (was 120000)
         jsonMode: true,
         tools: [{
         type: 'function',
@@ -1538,7 +1538,7 @@ If ANY category missing, estimate it and flag in response.`;
         errorName: aiError instanceof Error ? aiError.name : 'Unknown',
         stack: aiError instanceof Error ? aiError.stack?.split('\n')[0] : undefined,
         model: 'gpt-5-mini-2025-08-07',
-        maxTokens: 8000,
+        maxTokens: 16000, // Increased for reasoning tokens
         hadApiKey: !!OPENAI_API_KEY,
         apiKeyPrefix: OPENAI_API_KEY?.substring(0, 7)
       });

@@ -15,24 +15,24 @@ interface ProcessingStage {
 const ANALYSIS_STAGES: ProcessingStage[] = [
   {
     id: 'rag',
-    title: 'Searching Pricing Database',
+    title: 'Finding Prices',
     icon: Package,
     substeps: [
-      'Querying 45,000+ UK pricing items...',
-      'Finding matching materials and suppliers...',
-      'Retrieving current 2025 prices...'
+      'Searching UK supplier databases...',
+      'Matching materials to your project...',
+      'Retrieving current prices...'
     ],
     duration: 18
   },
   {
     id: 'ai',
-    title: 'AI Cost Analysis',
+    title: 'Calculating Costs',
     icon: Calculator,
     substeps: [
-      'Generating detailed cost breakdown...',
+      'Analysing costs and generating quotes...',
       'Calculating labour requirements...',
-      'Creating alternative quotes...',
-      'Preparing value engineering suggestions...'
+      'Creating quote options...',
+      'Preparing recommendations...'
     ],
     duration: 120
   },
@@ -42,7 +42,7 @@ const ANALYSIS_STAGES: ProcessingStage[] = [
     icon: CheckCircle2,
     substeps: [
       'Formatting cost analysis...',
-      'Generating material order list...',
+      'Generating material list...',
       'Preparing timescale estimates...'
     ],
     duration: 12
@@ -75,11 +75,11 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
   // Progress messages at key milestones (3-minute workflow)
   useEffect(() => {
     if (elapsedTime >= 20 && elapsedTime < 80) {
-      setProgressMessage("Searching regulations and pricing database...");
+      setProgressMessage("Searching pricing database...");
     } else if (elapsedTime >= 80 && elapsedTime < 150) {
-      setProgressMessage("Generating detailed estimate with GPT-5 Mini...");
+      setProgressMessage("Analysing costs...");
     } else if (elapsedTime >= 150 && elapsedTime < 180) {
-      setProgressMessage("Finalising calculations and alternatives...");
+      setProgressMessage("Finalising quote...");
     } else if (elapsedTime >= 180) {
       setProgressMessage("Almost complete...");
     }
@@ -123,19 +123,15 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
 
           <div className="space-y-3 sm:space-y-4">
             <CardTitle className="text-2xl sm:text-3xl font-bold text-white">
-              AI Cost Analysis In Progress
+              AI Cost Analysis
             </CardTitle>
             
-            <p className="text-base sm:text-lg text-white font-semibold">
-              ⏱️ Typically takes: 3 minutes
+            <p className="text-xl text-white font-semibold">
+              ⏱️ Estimated Time: 3 minutes
             </p>
             
-            <p className="text-sm sm:text-base text-white leading-relaxed max-w-2xl mx-auto">
-              AI is searching 45,000+ UK pricing items and generating detailed cost breakdown...
-            </p>
-            
-            <p className="text-base sm:text-lg text-elec-yellow font-semibold">
-              This typically takes 3 minutes for accurate results
+            <p className="text-base text-white/90 leading-relaxed max-w-2xl mx-auto">
+              Searching 45,000+ UK pricing items for accurate quotes
             </p>
             
             {progressMessage && (
@@ -174,10 +170,6 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
                 </span>
               )}
             </div>
-            
-            <p className="text-xs sm:text-sm text-white text-center leading-relaxed">
-              ⏱️ Progress estimate based on typical 3-minute request duration
-            </p>
           </div>
 
           {elapsedTime > 180 && (
