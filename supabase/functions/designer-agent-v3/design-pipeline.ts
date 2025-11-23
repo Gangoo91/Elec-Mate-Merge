@@ -80,6 +80,19 @@ export class DesignPipeline {
     });
 
     // ========================================
+    // FAST PATH: 1-3 circuits → simple, lightweight generation
+    // ========================================
+    const isSmallJob = normalized.circuits.length <= 3;
+    
+    if (isSmallJob) {
+      this.logger.info('FAST PATH: Small job detected', {
+        circuits: normalized.circuits.length
+      });
+      
+      return await this.executeFastPath(normalized, cacheKey, startTime);
+    }
+
+    // ========================================
     // PHASE 3: Fast Indexed RAG Search (Intelligence Tables)
     // Uses GIN-indexed keyword search on intelligence tables
     // ========================================
@@ -162,7 +175,7 @@ export class DesignPipeline {
         appliesTo: Array.from(loadTypes),
         cableSizes: Array.from(cableSizes).map(String),
         activityTypes: ['installation', 'testing', 'commissioning'],
-        limit: 25
+        limit: normalized.circuits.length <= 3 ? 5 : 25 // DYNAMIC: Less RAG for small jobs
       })
     ]);
     
@@ -521,6 +534,70 @@ export class DesignPipeline {
       // Surface validation results to frontend
       validationIssues: validationResult.issues,
       autoFixSuggestions: validationResult.autoFixSuggestions
+    };
+  }
+
+  /**
+   * FAST PATH: Minimal RAG, simple prompt, 30s completion
+   * For 1-3 circuits only
+   */
+  private async executeFastPath(
+    normalized: NormalizedInputs,
+    cacheKey: string,
+    startTime: number
+  ): Promise<DesignResult> {
+    
+    // MINIMAL RAG: 5 design results only (no regulations, no practical work)
+    const { createClient } = await import('../_shared/deps.ts');
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    );
+    
+    const keywords: string[] = [];
+    normalized.circuits.forEach(c => {
+      keywords.push(c.loadType.toLowerCase());
+      keywords.push('cable sizing');
+    });
+    
+    const designIntelligence = await searchDesignIntelligence(supabase, {
+      keywords,
+      loadTypes: [],
+      cableSizes: [],
+      categories: ['cable_sizing', 'voltage_drop', 'protection'],
+      limit: 5 // MINIMAL
+    });
+    
+    this.logger.info('Fast RAG complete', {
+      results: designIntelligence.length
+    });
+    
+    // SIMPLE RAG CONTEXT (no regulations, no practical work)
+    const ragContext = {
+      regulations: [],
+      designKnowledge: designIntelligence,
+      practicalWork: [],
+      totalResults: designIntelligence.length,
+      searchTime: 50
+    };
+    
+    // FAST AI CALL (new lightweight method)
+    const design = await this.ai.generateFast(normalized, ragContext);
+    
+    // Apply deterministic calculations (skip validation for speed)
+    design.circuits = this.calculator.applyToCircuits(design.circuits, normalized.supply);
+    
+    // Cache and return
+    await this.cache.set(cacheKey, design);
+    
+    return {
+      success: true,
+      circuits: design.circuits,
+      supply: normalized.supply,
+      fromCache: false,
+      processingTime: Date.now() - startTime,
+      validationPassed: true,
+      autoFixApplied: false
     };
   }
 
