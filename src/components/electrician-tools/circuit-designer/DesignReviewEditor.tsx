@@ -28,6 +28,7 @@ import { processElectricalText } from '@/lib/text-processor';
 import { ExpectedTestsDisplay } from './ExpectedTestsDisplay';
 import { InstallationGuidanceDisplay } from './InstallationGuidanceDisplay';
 import { InstallationGuidancePanel } from './InstallationGuidancePanel';
+import { InstallationGuidancePerCircuitPanel } from './InstallationGuidancePerCircuitPanel';
 
 interface DesignReviewEditorProps {
   design: InstallationDesign;
@@ -2257,7 +2258,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             <p className="text-sm text-muted-foreground">
               Comprehensive installation guidance generated in parallel with circuit design
             </p>
-            <InstallationGuidancePanel guidance={design.installationGuidance} />
+            <InstallationGuidancePerCircuitPanel 
+              guidance={
+                // Handle both per-circuit (Record) and legacy (single object) formats
+                (design.installationGuidance as any).safetyConsiderations 
+                  ? { 'circuit_0': design.installationGuidance as EnhancedInstallationGuidance }
+                  : design.installationGuidance as Record<string, EnhancedInstallationGuidance>
+              }
+              circuits={design.circuits}
+            />
           </div>
         </Card>
       )}

@@ -8718,25 +8718,47 @@ export type Database = {
           topic: string
         }[]
       }
-      search_design_knowledge_intelligence_hybrid: {
-        Args: {
-          filter_category?: string
-          filter_load_type?: string
-          match_count?: number
-          query_text: string
-        }
-        Returns: {
-          bs7671_regulations: string[]
-          content: string
-          design_knowledge_id: string
-          facet_type: string
-          formulas: string[]
-          hybrid_score: number
-          id: string
-          keywords: string[]
-          primary_topic: string
-        }[]
-      }
+      search_design_knowledge_intelligence_hybrid:
+        | {
+            Args: { match_count?: number; query_text: string }
+            Returns: {
+              bs7671_regulations: string[]
+              cable_sizes: string[]
+              calculation_steps: string[]
+              confidence_score: number
+              content: string
+              design_category: string
+              facet_type: string
+              formulas: string[]
+              hybrid_score: number
+              id: string
+              keywords: string[]
+              load_types: string[]
+              primary_topic: string
+              quality_score: number
+              table_refs: string[]
+              worked_examples: Json[]
+            }[]
+          }
+        | {
+            Args: {
+              filter_category?: string
+              filter_load_type?: string
+              match_count?: number
+              query_text: string
+            }
+            Returns: {
+              bs7671_regulations: string[]
+              content: string
+              design_knowledge_id: string
+              facet_type: string
+              formulas: string[]
+              hybrid_score: number
+              id: string
+              keywords: string[]
+              primary_topic: string
+            }[]
+          }
       search_health_safety: {
         Args: {
           match_count?: number
