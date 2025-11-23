@@ -119,7 +119,7 @@ async function designCircuitsInternal(
           success: data?.success,
           error: failureReason,
           code: errorCode,
-          hasDesign: !!data?.design,
+          hasCircuits: !!data?.circuits,
           dataKeys: data ? Object.keys(data) : []
         });
         
@@ -128,17 +128,18 @@ async function designCircuitsInternal(
         );
       }
       
-      // Verify we have design data
-      if (!data.design || !data.design.circuits) {
-        console.error('❌ Designer returned no design data:', {
+      // Verify we have circuits
+      if (!data.circuits || !Array.isArray(data.circuits) || data.circuits.length === 0) {
+        console.error('❌ Designer returned no circuits:', {
           hasData: !!data,
-          hasDesign: !!data?.design,
-          dataKeys: data ? Object.keys(data) : [],
-          designKeys: data?.design ? Object.keys(data.design) : []
+          hasCircuits: !!data?.circuits,
+          circuitsIsArray: Array.isArray(data?.circuits),
+          circuitCount: data?.circuits?.length || 0,
+          dataKeys: data ? Object.keys(data) : []
         });
         
         throw new Error(
-          `Designer agent returned no design data. Response structure: ${JSON.stringify(data).substring(0, 200)}`
+          `Designer agent returned no circuits. Response structure: ${JSON.stringify(data).substring(0, 300)}`
         );
       }
       
@@ -147,19 +148,20 @@ async function designCircuitsInternal(
       await progressCallback(100, 'Designer: Complete ✓');
       
       const duration = Date.now() - startTime;
-      console.log(`✅ Designer completed ${data.design.circuits.length} circuit designs in ${(duration/1000).toFixed(1)}s`);
+      console.log(`✅ Designer completed ${data.circuits.length} circuit designs in ${(duration/1000).toFixed(1)}s`);
       
       // PHASE 4: Record success in circuit breaker
       lovableAICircuit.onSuccess();
       
       return {
-        circuits: data.design.circuits,
-        metadata: {
-          completedAt: new Date().toISOString(),
-          regulationsUsed: sharedRegulations?.length || 0,
-          totalCircuits: data.design.circuits.length,
-          durationMs: duration
-        }
+        circuits: data.circuits,
+        supply: data.supply,
+        reasoning: data.reasoning,
+        validationPassed: data.validationPassed,
+        validationIssues: data.validationIssues,
+        autoFixSuggestions: data.autoFixSuggestions,
+        fromCache: data.fromCache || false,
+        processingTime: duration
       };
       
     } catch (caughtError) {
