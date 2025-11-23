@@ -1,7 +1,7 @@
 // Deployed: 2025-11-08 - Fixed aiResult undefined error
 import { serve } from '../_shared/deps.ts';
 import {
-  corsHeaders, 
+  corsHeaders,
   createLogger, 
   generateRequestId, 
   handleError, 
@@ -2798,16 +2798,13 @@ Provide:
       }
     );
 
-    } catch (error) {
-      const totalMs = Date.now() - functionStart;
-      logger.error('❌ Cost Engineer V3 failed', {
-        totalMs,
-        errorName: error instanceof Error ? error.name : typeof error,
-        errorMessage: error instanceof Error ? error.message : String(error),
-      });
-      
-      // Send error via stream
-      builder.sendError(error instanceof Error ? error.message : String(error));
-    }
-  }, corsHeaders);
+  } catch (error) {
+    const totalMs = Date.now() - functionStart;
+    logger.error('❌ Cost Engineer V3 failed', {
+      totalMs,
+      errorName: error instanceof Error ? error.name : typeof error,
+      errorMessage: error instanceof Error ? error.message : String(error),
+    });
+    return handleError(error);
+  }
 });
