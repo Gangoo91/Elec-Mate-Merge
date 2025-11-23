@@ -87,8 +87,18 @@ Deno.serve(async (req) => {
       })
       .eq('id', jobId);
 
-    // STEP 3: Generate installation guidance using OpenAI with DESIGNED circuits
+    // STEP 3: Generate circuit-specific installation guidance
     const aiStart = Date.now();
+    
+    // Initial progress update
+    await supabase
+      .from('circuit_design_jobs')
+      .update({ 
+        installation_agent_progress: 50,
+        current_step: 'Generating circuit-specific installation guidance...'
+      })
+      .eq('id', jobId);
+    
     const installationGuidance = await generateInstallationGuidance(
       designedCircuits,
       supply,
@@ -98,7 +108,7 @@ Deno.serve(async (req) => {
     );
     const aiTime = Date.now() - aiStart;
 
-    console.log(`✅ AI generation complete in ${aiTime}ms`);
+    console.log(`✅ Circuit-specific guidance complete in ${aiTime}ms`);
 
     // Update progress
     await supabase
@@ -253,69 +263,102 @@ function extractDesignKeywords(designedCircuits: any[], supply: any, projectInfo
   return keywords;
 }
 
-async function generateInstallationGuidance(
-  designedCircuits: any[],
+// Filter RAG results by circuit relevance
+function filterRagForCircuit(items: any[], circuit: any): any[] {
+  const cableSize = circuit.cableSize || extractCableSizeFromType(circuit.cableType);
+  const loadType = (circuit.loadType || '').toLowerCase();
+  const circuitName = (circuit.name || '').toLowerCase();
+  
+  return items.filter((item: any) => {
+    const keywords = item.keywords || [];
+    const content = (item.content || item.primary_topic || item.description || '').toLowerCase();
+    
+    // Check cable size relevance
+    const cableSizeMatch = content.includes(`${cableSize}mm`) || 
+                           keywords.some(k => k.includes(`${cableSize}mm`));
+    
+    // Check load type relevance
+    const loadTypeMatch = content.includes(loadType) || 
+                          keywords.some(k => k.toLowerCase().includes(loadType));
+    
+    // Check circuit name relevance
+    const nameMatch = content.includes(circuitName) || 
+                      keywords.some(k => k.toLowerCase().includes(circuitName));
+    
+    return cableSizeMatch || loadTypeMatch || nameMatch;
+  });
+}
+
+function extractCableSizeFromType(cableType: string | undefined): number {
+  if (!cableType) return 0;
+  const match = cableType.match(/(\d+(?:\.\d+)?)\s*mm/);
+  return match ? parseFloat(match[1]) : 0;
+}
+
+async function generateInstallationGuidancePerCircuit(
+  circuit: any,
+  circuitIndex: number,
   supply: any,
   projectInfo: any,
-  practicalWork: any[],
-  regulations: any[]
+  allPracticalWork: any[],
+  allRegulations: any[]
 ) {
-  // Build detailed circuit specifications for AI
-  const circuitSpecs = designedCircuits.map((circuit: any, i: number) => {
-    const protectionStr = circuit.protectionDevice 
-      ? `${circuit.protectionDevice.rating}A Type ${circuit.protectionDevice.curve} ${circuit.protectionDevice.type}`
-      : 'Not specified';
-    
-    return `
-### Circuit ${i + 1}: ${circuit.name}
-- **Designed Cable**: ${circuit.cableType || `${circuit.cableSize}mm²`} (ACTUAL designed specification)
-- **Designed Protection**: ${protectionStr} (ACTUAL designed device)
-- **Installation Method**: ${circuit.installationMethod || 'Not specified'}
-- **Cable Length**: ${circuit.cableLength}m
-- **Load**: ${circuit.loadDetails?.totalPower || circuit.loadPower}W
-- **Location**: ${circuit.location || 'Not specified'}
+  // Filter RAG results for this specific circuit
+  const relevantPracticalWork = filterRagForCircuit(allPracticalWork, circuit).slice(0, 8);
+  const relevantRegulations = filterRagForCircuit(allRegulations, circuit).slice(0, 6);
+  
+  const protectionStr = circuit.protectionDevice 
+    ? `${circuit.protectionDevice.rating}A Type ${circuit.protectionDevice.curve} ${circuit.protectionDevice.type}`
+    : 'Not specified';
+  
+  const cableSpec = circuit.cableType || `${circuit.cableSize}mm² cable`;
+  
+  const systemPrompt = `You are an expert Installation Guidance Specialist for UK electrical installations.
 
-⚠️ CRITICAL: Use these EXACT specifications. Do not suggest alternatives or different cable sizes.
-`;
-  }).join('\n');
+## CRITICAL LANGUAGE REQUIREMENTS
+- Use UK English spelling and terminology throughout
+- Use "earthing" not "grounding"  
+- Use "metres" not "meters"
+- Use "centre" not "center"
+- Use "utilise" not "utilize"
+- Use "colour" not "color"
+- British terms: "consumer unit", "earthing conductor", "protective conductor"
 
-  const systemPrompt = `You are an expert Installation Guidance Specialist for electrical installations.
+## SINGLE CIRCUIT TO INSTALL
 
-Generate comprehensive installation guidance based on the ACTUAL DESIGNED circuit specifications and BS 7671:2018+A2:2024.
-
-## DESIGNED CIRCUIT SPECIFICATIONS (USE THESE EXACT SPECS)
-
-${circuitSpecs}
+**Circuit:** ${circuit.name}
+**Designed Cable:** ${cableSpec} (ACTUAL designed specification)
+**Designed Protection:** ${protectionStr} (ACTUAL designed device)
+**Installation Method:** ${circuit.installationMethod || 'Method C - clipped direct'}
+**Cable Length:** ${circuit.cableLength}m
+**Load:** ${circuit.loadDetails?.totalPower || circuit.loadPower}W
+**Location:** ${circuit.location || circuit.specialLocation || 'Not specified'}
 
 ## Supply System
 - Voltage: ${supply?.voltage || '230'}V
 - Phases: ${supply?.phases || 'Single'}
 - Earthing: ${supply?.earthingSystem || 'TN-S'}
 
-## Project Context
-- Type: ${projectInfo?.type || 'Residential'}
-- Location: ${projectInfo?.location || 'General'}
-
-## KNOWLEDGE BASE PROVIDED
-- ${practicalWork.length} practical work intelligence results
-- ${regulations.length} BS 7671 regulations
+## FILTERED KNOWLEDGE BASE (relevant to ${cableSpec} and ${circuit.loadType})
+- ${relevantPracticalWork.length} relevant practical procedures
+- ${relevantRegulations.length} relevant BS 7671 regulations
 
 ## PRACTICAL WORK KNOWLEDGE:
-${practicalWork.slice(0, 10).map((pw: any) => 
+${relevantPracticalWork.map((pw: any) => 
   `- ${pw.primary_topic}: ${pw.procedure_summary || pw.description || ''}`
 ).join('\n')}
 
 ## BS 7671 REGULATIONS:
-${regulations.slice(0, 8).map((reg: any) => 
-  `- ${reg.regulation_number}: ${(reg.content || reg.primary_topic || '').slice(0, 150)}`
+${relevantRegulations.map((reg: any) => 
+  `- ${reg.regulation_number}: ${(reg.content || reg.primary_topic || '').slice(0, 120)}`
 ).join('\n')}
 
 ## OUTPUT STRUCTURE (JSON):
 {
-  "executiveSummary": "2-3 paragraph overview of installation requirements based on DESIGNED specs",
+  "executiveSummary": "2-3 paragraph overview SPECIFIC to this ${cableSpec} circuit installation",
   "safetyConsiderations": [
     {
-      "consideration": "Safety requirement",
+      "consideration": "Safety requirement specific to this cable size/circuit",
       "toolsRequired": ["tool1", "tool2"],
       "bsReference": "BS 7671 regulation",
       "priority": "critical" | "high" | "medium"
@@ -323,74 +366,60 @@ ${regulations.slice(0, 8).map((reg: any) =>
   ],
   "materialsRequired": [
     {
-      "item": "Material name (using EXACT designed cable sizes)",
-      "specification": "Detailed spec matching designed specs",
-      "quantity": "Quantity needed",
-      "source": "Where to get it"
+      "item": "Material name (EXACT ${cableSpec} specifications)",
+      "specification": "Detailed spec",
+      "quantity": "Quantity for ${circuit.cableLength}m run",
+      "source": "UK supplier"
     }
   ],
   "toolsRequired": [
     {
       "tool": "Tool name",
-      "purpose": "Why needed",
+      "purpose": "Why needed for ${cableSpec}",
       "category": "hand tool" | "test equipment" | "power tool"
     }
   ],
   "cableRouting": [
     {
-      "step": "Routing instruction for designed cable size",
-      "cableType": "Cable type from designed specs",
-      "method": "Installation method from designed specs",
+      "step": "Routing instruction for ${cableSpec}",
+      "cableType": "${cableSpec}",
+      "method": "${circuit.installationMethod || 'Method C'}",
       "bsReference": "BS 7671 reference",
-      "notes": "Additional notes"
+      "notes": "Bending radius, support spacing for ${cableSpec}"
     }
   ],
   "terminationRequirements": [
     {
       "location": "Where to terminate",
-      "procedure": "How to terminate (specific to designed cable size)",
+      "procedure": "Detailed termination for ${cableSpec} (stripping length, torque)",
       "toolsNeeded": ["tool1", "tool2"],
-      "torqueSettings": "Torque requirements for this cable size",
+      "torqueSettings": "EXACT torque for ${cableSpec} (e.g., 1.5mm²: 1.2Nm, 10mm²: 3.5Nm)",
       "bsReference": "BS 7671 reference"
     }
   ],
   "installationProcedure": [
     {
       "stepNumber": 1,
-      "title": "Step title",
-      "description": "Detailed step description using DESIGNED specifications (100-150 words)",
+      "title": "Step title for ${cableSpec}",
+      "description": "Hands-on technical procedure SPECIFIC to ${cableSpec} (120-180 words with exact measurements, torques, stripping lengths)",
       "toolsForStep": ["tool1", "tool2"],
-      "materialsForStep": ["material1 with designed specs"],
+      "materialsForStep": ["${cableSpec}"],
       "bsReferences": ["regulation1"]
     }
-  ],
-  "testingRequirements": {
-    "intro": "Testing overview",
-    "tests": [
-      {
-        "testName": "Test name",
-        "regulation": "BS 7671 regulation",
-        "procedure": "How to perform",
-        "expectedReading": "Expected result based on designed specs",
-        "acceptanceCriteria": "Pass criteria",
-        "toolsRequired": ["test equipment"]
-      }
-    ],
-    "recordingNote": "How to record results"
-  }
+  ]
 }
 
 ## CRITICAL REQUIREMENTS:
-- Generate 8-12 installation procedure steps
-- Keep step descriptions 100-150 words
-- Include specific BS 7671 references
-- Use ONLY the designed cable sizes and protection devices specified above
-- DO NOT suggest alternative cable sizes or protection ratings
-- Materials list must match the DESIGNED specifications exactly
-- Termination procedures must be specific to the DESIGNED cable sizes
-- Testing criteria must be based on the DESIGNED protection device ratings`;
+- Generate 6-10 installation steps SPECIFIC to ${cableSpec}
+- Include EXACT torque settings for this cable gauge
+- Include EXACT cable stripping lengths for ${cableSpec}
+- Include specific bending radius for this cable diameter
+- Provide hands-on technical details an installer needs on-site
+- Use ONLY UK English spelling and British electrical terminology
+- DO NOT include testing requirements (handled separately)
+- Materials, tools, and procedures must be specific to ${cableSpec}, not generic`;
 
-  const userPrompt = `Generate complete installation guidance for these electrical circuits using the EXACT designed specifications provided above.`;
+  const userPrompt = `Generate detailed installation guidance for this single ${cableSpec} circuit using UK English.`;
 
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
@@ -406,17 +435,66 @@ ${regulations.slice(0, 8).map((reg: any) =>
       ],
       response_format: { type: 'json_object' },
       temperature: 0.3,
-      max_tokens: 4000
+      max_tokens: 3000
     }),
   });
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`OpenAI API failed: ${response.status} ${errorText}`);
+    throw new Error(`OpenAI API failed for circuit ${circuitIndex + 1}: ${response.status} ${errorText}`);
   }
 
   const aiResponse = await response.json();
   const content = aiResponse.choices[0].message.content;
   
   return JSON.parse(content);
+}
+
+async function generateInstallationGuidance(
+  designedCircuits: any[],
+  supply: any,
+  projectInfo: any,
+  practicalWork: any[],
+  regulations: any[]
+) {
+  const circuitGuidance: any = {};
+  
+  console.log(`🔄 Generating circuit-specific guidance for ${designedCircuits.length} circuits...`);
+  
+  // Generate guidance for each circuit individually
+  for (let i = 0; i < designedCircuits.length; i++) {
+    const circuit = designedCircuits[i];
+    
+    console.log(`  📍 Circuit ${i + 1}/${designedCircuits.length}: ${circuit.name} (${circuit.cableType || circuit.cableSize + 'mm²'})`);
+    
+    try {
+      const guidance = await generateInstallationGuidancePerCircuit(
+        circuit,
+        i,
+        supply,
+        projectInfo,
+        practicalWork,
+        regulations
+      );
+      
+      circuitGuidance[`circuit_${i}`] = {
+        circuitName: circuit.name,
+        cableSpec: circuit.cableType || `${circuit.cableSize}mm²`,
+        protection: circuit.protectionDevice,
+        guidance: guidance
+      };
+      
+      console.log(`  ✅ Circuit ${i + 1} guidance generated`);
+    } catch (error: any) {
+      console.error(`  ❌ Failed to generate guidance for circuit ${i + 1}:`, error);
+      circuitGuidance[`circuit_${i}`] = {
+        circuitName: circuit.name,
+        cableSpec: circuit.cableType || `${circuit.cableSize}mm²`,
+        protection: circuit.protectionDevice,
+        error: error.message
+      };
+    }
+  }
+  
+  return circuitGuidance;
 }

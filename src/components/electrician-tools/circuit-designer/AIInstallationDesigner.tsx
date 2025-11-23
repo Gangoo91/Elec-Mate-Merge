@@ -94,15 +94,7 @@ const formatInstallationGuidance = (guidance: any): string => {
     sections.push(`🔧 INSTALLATION STEPS\n${steps}\n`);
   }
   
-  // Testing Requirements
-  if (guidance.testingRequirements?.tests?.length > 0) {
-    const tests = guidance.testingRequirements.tests
-      .map((t: any) => `• ${t.testName || t.name}: ${t.procedure || t.description || ''}`)
-      .join('\n');
-    sections.push(`✅ TESTING REQUIREMENTS\n${tests}`);
-  } else if (guidance.testingRequirements?.intro) {
-    sections.push(`✅ TESTING REQUIREMENTS\n${guidance.testingRequirements.intro}`);
-  }
+  // Testing Requirements removed - handled separately in expectedTests
   
   return sections.join('\n---\n\n');
 };
@@ -209,44 +201,52 @@ export const AIInstallationDesigner = () => {
       const jobInputs = (job as any)?.job_inputs;
       
       const designWithMetadata = {
-        circuits: jobDesignData.circuits.map((circuit: any) => ({
-          ...circuit,
-          // Explicitly preserve all core fields
-          name: circuit.name,
-          loadType: circuit.loadType,
-          loadPower: circuit.loadPower,
-          phases: circuit.phases,
-          cableLength: circuit.cableLength,
-          cableSize: circuit.cableSize,
-          cpcSize: circuit.cpcSize,
-          voltage: circuit.voltage,
-          protectionDevice: circuit.protectionDevice,
-          calculations: circuit.calculations,
-          justifications: circuit.justifications,
-          installationMethod: circuit.installationMethod || circuit.installMethod,
-          // Format structured installation guidance as readable text
-          installationGuidance: installationGuidance ? formatInstallationGuidance(installationGuidance) : undefined,
-          reasoning: circuit.reasoning,
-          rcdProtected: circuit.rcdProtected,
-          circuitNumber: circuit.circuitNumber,
-          specialLocation: circuit.specialLocation,
-          // CRITICAL: Preserve expectedTests
-          expectedTests: circuit.expectedTests,
-          // CRITICAL: Deep clone structuredOutput to preserve all nested data
-          structuredOutput: circuit.structuredOutput ? {
-            atAGlanceSummary: circuit.structuredOutput.atAGlanceSummary ? {
-              loadKw: circuit.structuredOutput.atAGlanceSummary.loadKw,
-              loadIb: circuit.structuredOutput.atAGlanceSummary.loadIb,
-              cable: circuit.structuredOutput.atAGlanceSummary.cable,
-              protectiveDevice: circuit.structuredOutput.atAGlanceSummary.protectiveDevice,
-              voltageDrop: circuit.structuredOutput.atAGlanceSummary.voltageDrop,
-              zs: circuit.structuredOutput.atAGlanceSummary.zs,
-              complianceTick: circuit.structuredOutput.atAGlanceSummary.complianceTick,
-              notes: circuit.structuredOutput.atAGlanceSummary.notes
-            } : undefined,
-            sections: circuit.structuredOutput.sections
-          } : undefined
-        })),
+        circuits: jobDesignData.circuits.map((circuit: any, index: number) => {
+          // Get circuit-specific guidance
+          const circuitKey = `circuit_${index}`;
+          const circuitGuidance = installationGuidance?.[circuitKey];
+          
+          return {
+            ...circuit,
+            // Explicitly preserve all core fields
+            name: circuit.name,
+            loadType: circuit.loadType,
+            loadPower: circuit.loadPower,
+            phases: circuit.phases,
+            cableLength: circuit.cableLength,
+            cableSize: circuit.cableSize,
+            cpcSize: circuit.cpcSize,
+            voltage: circuit.voltage,
+            protectionDevice: circuit.protectionDevice,
+            calculations: circuit.calculations,
+            justifications: circuit.justifications,
+            installationMethod: circuit.installationMethod || circuit.installMethod,
+            // Format circuit-specific installation guidance
+            installationGuidance: circuitGuidance?.guidance ? 
+              formatInstallationGuidance(circuitGuidance.guidance) : 
+              undefined,
+            reasoning: circuit.reasoning,
+            rcdProtected: circuit.rcdProtected,
+            circuitNumber: circuit.circuitNumber,
+            specialLocation: circuit.specialLocation,
+            // CRITICAL: Preserve expectedTests
+            expectedTests: circuit.expectedTests,
+            // CRITICAL: Deep clone structuredOutput to preserve all nested data
+            structuredOutput: circuit.structuredOutput ? {
+              atAGlanceSummary: circuit.structuredOutput.atAGlanceSummary ? {
+                loadKw: circuit.structuredOutput.atAGlanceSummary.loadKw,
+                loadIb: circuit.structuredOutput.atAGlanceSummary.loadIb,
+                cable: circuit.structuredOutput.atAGlanceSummary.cable,
+                protectiveDevice: circuit.structuredOutput.atAGlanceSummary.protectiveDevice,
+                voltageDrop: circuit.structuredOutput.atAGlanceSummary.voltageDrop,
+                zs: circuit.structuredOutput.atAGlanceSummary.zs,
+                complianceTick: circuit.structuredOutput.atAGlanceSummary.complianceTick,
+                notes: circuit.structuredOutput.atAGlanceSummary.notes
+              } : undefined,
+              sections: circuit.structuredOutput.sections
+            } : undefined
+          };
+        }),
         projectInfo: jobInputs?.projectInfo || {
           projectName: 'Untitled Project',
           location: 'Not specified'
