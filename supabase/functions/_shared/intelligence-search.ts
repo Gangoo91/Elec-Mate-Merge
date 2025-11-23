@@ -225,7 +225,7 @@ export async function searchPracticalWorkIntelligence(
   
   // ACTIVITY TYPE FILTER (installation, testing, maintenance, etc.)
   if (activityTypes.length > 0) {
-    query = query.in('activity_type', activityTypes);
+    query = query.overlaps('activity_types', activityTypes);
   }
   
   // ORDER BY CONFIDENCE + LIMIT
