@@ -50,10 +50,14 @@ const ANALYSIS_STAGES: ProcessingStage[] = [
 ];
 
 interface CostAnalysisProcessingViewProps {
+  progress: {
+    stage: 'initializing' | 'rag' | 'ai' | 'validation' | 'complete';
+    message: string;
+  } | null;
   onCancel: () => void;
 }
 
-const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProps) => {
+const CostAnalysisProcessingView = ({ progress: agentProgress, onCancel }: CostAnalysisProcessingViewProps) => {
   const [currentStage, setCurrentStage] = useState(0);
   const [currentSubstep, setCurrentSubstep] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -134,7 +138,12 @@ const CostAnalysisProcessingView = ({ onCancel }: CostAnalysisProcessingViewProp
               Searching 45,000+ UK pricing items for accurate quotes
             </p>
             
-            {progressMessage && (
+            {agentProgress?.message && (
+              <p className="text-sm sm:text-base text-elec-yellow font-medium mt-3 animate-fade-in">
+                {agentProgress.message}
+              </p>
+            )}
+            {!agentProgress?.message && progressMessage && (
               <p className="text-sm sm:text-base text-elec-yellow font-medium mt-3 animate-fade-in">
                 {progressMessage}
               </p>
