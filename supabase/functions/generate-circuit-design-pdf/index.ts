@@ -346,7 +346,8 @@ serve(async (req) => {
           // Warnings
           warnings: (c.warnings || []).join('; '),
           hasWarnings: (c.warnings?.length || 0) > 0
-        }),
+        };
+      }),
 
       // Materials
       materials: (design.materials || []).map((m: any) => ({
