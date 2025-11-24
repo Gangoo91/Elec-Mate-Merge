@@ -6,7 +6,7 @@ import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { MobileButton } from "@/components/ui/mobile-button";
 
 import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { useSimpleAgent } from "@/hooks/useSimpleAgent";
 import CostAnalysisProcessingView from "./CostAnalysisProcessingView";
 import CostAnalysisResults from "./CostAnalysisResults";
 import { parseCostAnalysis, ParsedCostAnalysis } from "@/utils/cost-analysis-parser";
@@ -32,7 +32,9 @@ const CostEngineerInterface = () => {
   const [additionalInfo, setAdditionalInfo] = useState("");
   const [businessSettings, setBusinessSettings] = useState<BusinessSettings>(DEFAULT_BUSINESS_SETTINGS);
   const [showExamples, setShowExamples] = useState(false);
-  const [abortController, setAbortController] = useState<AbortController | null>(null);
+
+  // Use the proven useSimpleAgent hook (same as all other working agents)
+  const { callAgent, isLoading, progress } = useSimpleAgent();
 
   const handleExampleSelect = (example: string) => {
     setPrompt(example);
@@ -68,185 +70,75 @@ const CostEngineerInterface = () => {
     }
 
     setViewState('processing');
-    const startTime = Date.now();
 
-    // Create AbortController for cancellation support
-    const controller = new AbortController();
-    setAbortController(controller);
+    // Simple call using the proven useSimpleAgent pattern
+    const response = await callAgent('cost-engineer', {
+      query: prompt,
+      region: location || 'UK',
+      projectContext: {
+        projectType: projectType,
+        projectName: projectName,
+        clientInfo: clientInfo,
+        additionalInfo: additionalInfo
+      },
+      businessSettings: businessSettings,
+      skipProfitability: false
+    });
 
-    try {
-      // Get Supabase session for auth token
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session?.access_token) {
-        throw new Error('Authentication required');
+    // Handle response - same pattern as all other working agents
+    if (response?.success && response.data) {
+      const data = response.data;
+
+      // Store original query from response
+      if (data.originalQuery) {
+        setOriginalQueryFromResponse(data.originalQuery);
       }
 
-      const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/cost-engineer-v3`;
-      
-      // Single POST request with proper auth and streaming
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`,
-          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY
-        },
-        body: JSON.stringify({
-          query: prompt,
-          region: location || 'UK',
-          projectContext: {
-            projectType: projectType,
-            projectName: projectName,
-            clientInfo: clientInfo,
-            additionalInfo: additionalInfo
+      // Store structured data
+      const coreStructuredData = data.structuredData;
+      setStructuredData(coreStructuredData);
+
+      // Parse results
+      if (coreStructuredData && coreStructuredData.summary) {
+        setParsedResults({
+          totalCost: coreStructuredData.summary.grandTotal,
+          materialsTotal: coreStructuredData.materials?.subtotal || 0,
+          labourTotal: coreStructuredData.labour?.subtotal || 0,
+          materials: coreStructuredData.materials?.items?.map((m: any) => ({
+            item: m.description || m.item || 'Unknown item',
+            quantity: m.quantity,
+            unit: m.unit,
+            unitPrice: m.unitPrice,
+            total: m.total,
+            supplier: m.supplier
+          })) || [],
+          labour: {
+            hours: coreStructuredData.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0,
+            rate: 50,
+            total: coreStructuredData.labour?.subtotal || 0,
+            description: coreStructuredData.labour?.tasks?.[0]?.description || 'Installation labour'
           },
-          businessSettings: businessSettings,
-          skipProfitability: false
-        }),
-        signal: controller.signal
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          additionalCosts: [],
+          vatAmount: coreStructuredData.summary.vat,
+          vatRate: 20,
+          subtotal: coreStructuredData.summary.subtotal,
+          rawText: data.response
+        });
+      } else {
+        // Fallback to text parsing
+        const parsed = parseCostAnalysis(data.response);
+        setParsedResults(parsed);
       }
 
-      if (!response.body) {
-        throw new Error('No response body');
-      }
-
-      // Parse SSE stream manually
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        
-        if (done) {
-          console.log('✅ Stream completed');
-          break;
-        }
-
-        // Decode chunk and add to buffer
-        buffer += decoder.decode(value, { stream: true });
-        
-        // Process complete SSE messages (ending with \n\n)
-        const messages = buffer.split('\n\n');
-        buffer = messages.pop() || ''; // Keep incomplete message in buffer
-
-        for (const message of messages) {
-          if (!message.trim() || !message.startsWith('data: ')) continue;
-          
-          try {
-            const jsonStr = message.replace(/^data: /, '').trim();
-            const chunk = JSON.parse(jsonStr);
-            
-            console.log('📨 Received chunk:', chunk.type);
-
-            if (chunk.type === 'progress') {
-              console.log(`Progress: ${chunk.content} (${chunk.data?.progress}%)`);
-            } 
-            else if (chunk.type === 'heartbeat') {
-              console.log('💓 Heartbeat received');
-            } 
-            else if (chunk.type === 'result') {
-              const data = chunk.data;
-
-              // Store original query from response
-              if (data.originalQuery) {
-                setOriginalQueryFromResponse(data.originalQuery);
-              }
-
-              // Store structured data
-              const coreStructuredData = data.structuredData;
-              setStructuredData(coreStructuredData);
-
-              // Parse results
-              if (coreStructuredData && coreStructuredData.summary) {
-                setParsedResults({
-                  totalCost: coreStructuredData.summary.grandTotal,
-                  materialsTotal: coreStructuredData.materials?.subtotal || 0,
-                  labourTotal: coreStructuredData.labour?.subtotal || 0,
-                  materials: coreStructuredData.materials?.items?.map((m: any) => ({
-                    item: m.description || m.item || 'Unknown item',
-                    quantity: m.quantity,
-                    unit: m.unit,
-                    unitPrice: m.unitPrice,
-                    total: m.total,
-                    supplier: m.supplier
-                  })) || [],
-                  labour: {
-                    hours: coreStructuredData.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0,
-                    rate: 50,
-                    total: coreStructuredData.labour?.subtotal || 0,
-                    description: coreStructuredData.labour?.tasks?.[0]?.description || 'Installation labour'
-                  },
-                  additionalCosts: [],
-                  vatAmount: coreStructuredData.summary.vat,
-                  vatRate: 20,
-                  subtotal: coreStructuredData.summary.subtotal,
-                  rawText: data.response
-                });
-              } else {
-                const parsed = parseCostAnalysis(data.response);
-                setParsedResults(parsed);
-              }
-
-              setViewState('results');
-              toast({
-                title: "Analysis complete!",
-                description: "Cost estimate ready to view",
-              });
-            } 
-            else if (chunk.type === 'error') {
-              throw new Error(chunk.content || 'Analysis failed');
-            }
-            else if (chunk.type === 'done') {
-              console.log('✅ Analysis complete');
-            }
-          } catch (parseError) {
-            console.warn('⚠️ Error parsing SSE chunk:', parseError);
-            // Continue processing other chunks
-          }
-        }
-      }
-
-    } catch (error: any) {
-      const elapsedMs = Date.now() - startTime;
-      
-      // Handle abort (user cancellation)
-      if (error.name === 'AbortError') {
-        console.log('🛑 Request aborted by user');
-        return;
-      }
-      
-      console.error('❌ Cost analysis error:', {
-        error,
-        name: error?.name,
-        message: error?.message,
-        stack: error?.stack,
-        elapsedMs,
-      });
-      
-      setViewState('input');
-      
-      const msg = String(error?.message || '');
-      
+      setViewState('results');
       toast({
-        title: "Analysis failed",
-        description: msg || 'Failed to generate cost analysis. Please try again.',
-        variant: "destructive"
+        title: "Analysis complete!",
+        description: "Cost estimate ready to view",
       });
-    } finally {
-      setAbortController(null);
     }
   };
 
   const handleCancel = () => {
-    if (abortController) {
-      abortController.abort();
-      setAbortController(null);
-    }
     setViewState('input');
     toast({
       title: "Analysis cancelled",
@@ -264,8 +156,8 @@ const CostEngineerInterface = () => {
     setAdditionalInfo("");
   };
 
-  if (viewState === 'processing') {
-    return <CostAnalysisProcessingView onCancel={handleCancel} />;
+  if (viewState === 'processing' && isLoading) {
+    return <CostAnalysisProcessingView progress={progress} onCancel={handleCancel} />;
   }
 
   if (viewState === 'results' && parsedResults) {
