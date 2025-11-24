@@ -871,12 +871,29 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       // CRITICAL: Recalculate totalLoad from circuits to ensure accuracy
       const calculatedTotalLoad = design.circuits?.reduce((sum, c) => sum + (c.loadPower || 0), 0) || 0;
       
+      // Helper: Get default cable type for installation type
+      const getDefaultCableType = (installationType: string, cableSize: number, cpcSize: number) => {
+        if (installationType === 'industrial') return `${cableSize}mm² SWA`;
+        if (installationType === 'commercial') return `${cableSize}mm² LSZH singles`;
+        return `${cableSize}mm² / ${cpcSize}mm² CPC twin and earth`;
+      };
+      
+      // Helper: Get default installation method for installation type
+      const getDefaultInstallationMethod = (installationType: string) => {
+        if (installationType === 'industrial') return 'Method D (Buried direct in ground or SWA)';
+        if (installationType === 'commercial') return 'Method B (In conduit on or in wall)';
+        return 'Method C (Clipped direct)';
+      };
+      
       const transformedDesign = {
         projectName: design.projectName || 'Untitled Project',
         location: design.location || 'Not Specified',
         clientName: design.clientName || 'Not Specified',
         electricianName: design.electricianName || 'Not Specified',
         installationType: design.installationType || 'domestic',
+        
+        // Add design reference for tracking
+        designReference: `REF-${new Date().toISOString().split('T')[0].replace(/-/g, '')}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`,
         
         consumerUnit: design.consumerUnit || {
           type: 'split-load',
@@ -890,8 +907,27 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           }
         },
         
-        // Pass circuits with all their data preserved
-        circuits: design.circuits || [],
+        // CRITICAL: Map circuits with all nested data explicitly preserved
+        circuits: (design.circuits || []).map(circuit => ({
+          ...circuit,
+          // Ensure critical fields are present with proper fallbacks
+          cableType: circuit.cableType || getDefaultCableType(
+            design.installationType || 'domestic',
+            circuit.cableSize || 1.5,
+            circuit.cpcSize || 1.0
+          ),
+          installationMethod: circuit.installationMethod || 
+            getDefaultInstallationMethod(design.installationType || 'domestic'),
+          // Preserve all nested objects
+          justifications: circuit.justifications || {},
+          calculations: circuit.calculations || {},
+          protectionDevice: circuit.protectionDevice || {},
+          expectedTestResults: circuit.expectedTests || circuit.expectedTestResults || {},
+          deratingFactors: circuit.deratingFactors || {},
+          faultCurrentAnalysis: circuit.faultCurrentAnalysis || {},
+          earthingRequirements: circuit.earthingRequirements || {},
+          installationGuidance: circuit.installationGuidance || {}
+        })),
         
         // CRITICAL: Use recalculated total load for accuracy
         totalLoad: calculatedTotalLoad,
@@ -906,23 +942,46 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           circuitDiversity: []
         },
         
+        // Compliance checks summary
+        complianceChecks: {
+          allCircuitsCompliant: design.circuits?.every(c => 
+            c.calculations?.voltageDrop?.compliant && 
+            c.calculations?.zs < c.calculations?.maxZs
+          ) || false,
+          totalWarnings: design.circuits?.reduce((sum, c) => sum + (c.warnings?.length || 0), 0) || 0,
+          criticalIssues: design.circuits?.filter(c => 
+            !c.calculations?.voltageDrop?.compliant || 
+            c.calculations?.zs >= c.calculations?.maxZs
+          ).length || 0
+        },
+        
         // Additional fields the PDF template may need
         materials: design.materials || [],
         practicalGuidance: design.practicalGuidance || [],
         installationGuidance: design.installationGuidance // Installation guidance per circuit
       };
       
-      // Verify circuit data before sending to edge function
-      console.log('[PDF-EXPORT] Circuit data verification:', {
+      // Detailed circuit data verification logging
+      console.log('[PDF-EXPORT] Complete circuit data sample:', {
         circuitCount: transformedDesign.circuits.length,
-        firstCircuit: transformedDesign.circuits[0],
-        hasCableType: !!transformedDesign.circuits[0]?.cableType,
-        hasJustifications: !!transformedDesign.circuits[0]?.justifications,
-        hasCalculations: !!transformedDesign.circuits[0]?.calculations,
-        totalLoad: transformedDesign.totalLoad,
-        diversityFactor: transformedDesign.diversityBreakdown?.overallDiversityFactor,
-        installationType: transformedDesign.installationType,
-        hasInstallationGuidance: !!transformedDesign.installationGuidance
+        sampleCircuit: transformedDesign.circuits[0],
+        verification: {
+          hasCableType: !!transformedDesign.circuits[0]?.cableType,
+          hasInstallationMethod: !!transformedDesign.circuits[0]?.installationMethod,
+          hasJustifications: !!transformedDesign.circuits[0]?.justifications,
+          hasCalculations: !!transformedDesign.circuits[0]?.calculations,
+          hasProtectionDevice: !!transformedDesign.circuits[0]?.protectionDevice,
+          hasExpectedTestResults: !!transformedDesign.circuits[0]?.expectedTestResults,
+          hasDeratingFactors: !!transformedDesign.circuits[0]?.deratingFactors,
+          hasFaultCurrentAnalysis: !!transformedDesign.circuits[0]?.faultCurrentAnalysis
+        },
+        designSummary: {
+          totalLoad: transformedDesign.totalLoad,
+          diversityFactor: transformedDesign.diversityBreakdown?.overallDiversityFactor,
+          installationType: transformedDesign.installationType,
+          hasInstallationGuidance: !!transformedDesign.installationGuidance,
+          complianceStatus: transformedDesign.complianceChecks
+        }
       });
       
       // Try PDF Monkey first

@@ -134,19 +134,54 @@ serve(async (req) => {
       },
 
       // Circuits
-      circuits: design.circuits.map((c: any) => ({
-        circuitNumber: c.circuitNumber,
-        name: c.name,
-        loadType: c.loadType,
-        loadPower: c.loadPower,
-        loadPowerKW: (c.loadPower / 1000).toFixed(1),
-        voltage: design.consumerUnit.incomingSupply.voltage,
-        phases: c.phases === 'single' ? 'Single Phase' : 'Three Phase',
-        cableType: c.cableType || `${c.cableSize}mm² / ${c.cpcSize}mm² CPC Twin & Earth`,
-        cableSize: c.cableSize,
-        cpcSize: c.cpcSize,
-        cableLength: c.cableLength,
-        installationMethod: c.installationMethod || 'Method C (Clipped Direct)',
+      circuits: design.circuits.map((c: any) => {
+        // Determine cable type with installation-aware fallback
+        const getCableTypeFallback = () => {
+          const installationType = design.installationType || 'domestic';
+          if (installationType === 'industrial') return `${c.cableSize}mm² SWA`;
+          if (installationType === 'commercial') return `${c.cableSize}mm² LSZH singles`;
+          return `${c.cableSize}mm² / ${c.cpcSize}mm² CPC twin and earth`;
+        };
+        
+        // Determine installation method with better fallback
+        const getInstallationMethodFallback = () => {
+          const installationType = design.installationType || 'domestic';
+          if (installationType === 'industrial') return 'Method D (SWA buried direct)';
+          if (installationType === 'commercial') return 'Method B (In conduit on/in wall)';
+          return 'Method C (Clipped direct)';
+        };
+        
+        const cableType = c.cableType || getCableTypeFallback();
+        const installationMethod = c.installationMethod || 
+          c.installationGuidance?.referenceMethod || 
+          getInstallationMethodFallback();
+        
+        // Log if using fallbacks
+        const usingCableTypeFallback = !c.cableType;
+        const usingInstallationMethodFallback = !c.installationMethod && !c.installationGuidance?.referenceMethod;
+        
+        if (usingCableTypeFallback || usingInstallationMethodFallback) {
+          console.warn('[CIRCUIT-PDF] Using fallback for circuit', c.circuitNumber || c.name, {
+            usingCableTypeFallback,
+            usingInstallationMethodFallback,
+            fallbackCableType: usingCableTypeFallback ? cableType : null,
+            fallbackInstallationMethod: usingInstallationMethodFallback ? installationMethod : null
+          });
+        }
+        
+        return {
+          circuitNumber: c.circuitNumber,
+          name: c.name,
+          loadType: c.loadType,
+          loadPower: c.loadPower,
+          loadPowerKW: (c.loadPower / 1000).toFixed(1),
+          voltage: design.consumerUnit.incomingSupply.voltage,
+          phases: c.phases === 'single' ? 'Single Phase' : 'Three Phase',
+          cableType: cableType,
+          cableSize: c.cableSize,
+          cpcSize: c.cpcSize,
+          cableLength: c.cableLength,
+          installationMethod: installationMethod,
         protectionDevice: `${c.protectionDevice.rating}A Type ${c.protectionDevice.curve} ${c.protectionDevice.type}`,
         protectionType: c.protectionDevice.type,
         protectionRating: c.protectionDevice.rating,
@@ -493,6 +528,28 @@ serve(async (req) => {
         competence: 'Design completed by qualified and competent electrical designer'
       }
     };
+
+    // Payload validation logging before sending to PDF Monkey
+    console.log('[CIRCUIT-PDF] Payload summary before API call:', {
+      projectName: payload.projectName,
+      installationType: payload.installationType,
+      circuitCount: payload.circuits.length,
+      totalLoad: payload.totalLoad,
+      diversifiedLoad: payload.diversifiedLoad,
+      allCircuitsHaveCableType: payload.circuits.every(c => c.cableType && !c.cableType.includes('undefined')),
+      allCircuitsHaveInstallationMethod: payload.circuits.every(c => c.installationMethod),
+      sampleCircuit: {
+        name: payload.circuits[0]?.name,
+        cableType: payload.circuits[0]?.cableType,
+        cableSize: payload.circuits[0]?.cableSize,
+        protectionDevice: payload.circuits[0]?.protectionDevice,
+        installationMethod: payload.circuits[0]?.installationMethod,
+        hasJustifications: !!payload.circuits[0]?.cableSizeJustification,
+        hasCalculations: !!payload.circuits[0]?.designCurrent
+      },
+      complianceStatus: payload.complianceStatus,
+      warningCount: payload.warningCount
+    });
 
     console.log('[CIRCUIT-PDF] Payload prepared, calling PDF Monkey API');
 
