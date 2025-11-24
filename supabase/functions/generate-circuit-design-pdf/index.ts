@@ -292,61 +292,61 @@ serve(async (req) => {
           expectedZs: c.calculations?.zs?.toFixed(2) || c.calculations?.maxZs?.toFixed(2) || 'Test on site',
           expectedInsulation: '>1MΩ',
           expectedTestResults: c.expectedTestResults ? {
-          r1r2: {
-            at20C: c.expectedTestResults.r1r2?.at20C || 'Calculate based on cable length',
-            at70C: c.expectedTestResults.r1r2?.at70C || 'Calculate based on cable length',
-            calculation: c.expectedTestResults.r1r2?.calculation || 'R1+R2 = (mΩ/m × length) / 1000'
-          },
-          zs: {
-            calculated: c.expectedTestResults.zs?.calculated || c.calculations?.zs?.toFixed(2) || 'Test required',
-            maxPermitted: c.expectedTestResults.zs?.maxPermitted || c.calculations?.maxZs?.toFixed(2) || 'See BS 7671',
-            compliant: c.expectedTestResults.zs?.compliant !== false ? 'Yes' : 'No'
-          },
-          insulationResistance: {
-            testVoltage: c.expectedTestResults.insulationResistance?.testVoltage || '500V DC',
-            minResistance: c.expectedTestResults.insulationResistance?.minResistance || '≥1.0MΩ'
-          },
-          polarity: c.expectedTestResults?.polarity || 'Correct at all points',
-          rcdTest: (c.rcdProtected && c.expectedTestResults?.rcdTest) || c.rcdProtected ? {
-            at1x: c.expectedTestResults?.rcdTest?.at1x || '≤300ms @ 30mA',
-            at5x: c.expectedTestResults?.rcdTest?.at5x || '≤40ms @ 150mA',
-            regulation: c.expectedTestResults?.rcdTest?.regulation || 'BS 7671 Regulation 643.2.2'
+            r1r2: {
+              at20C: c.expectedTestResults.r1r2?.at20C || 'Calculate based on cable length',
+              at70C: c.expectedTestResults.r1r2?.at70C || 'Calculate based on cable length',
+              calculation: c.expectedTestResults.r1r2?.calculation || 'R1+R2 = (mΩ/m × length) / 1000'
+            },
+            zs: {
+              calculated: c.expectedTestResults.zs?.calculated || c.calculations?.zs?.toFixed(2) || 'Test required',
+              maxPermitted: c.expectedTestResults.zs?.maxPermitted || c.calculations?.maxZs?.toFixed(2) || 'See BS 7671',
+              compliant: c.expectedTestResults.zs?.compliant !== false ? 'Yes' : 'No'
+            },
+            insulationResistance: {
+              testVoltage: c.expectedTestResults.insulationResistance?.testVoltage || '500V DC',
+              minResistance: c.expectedTestResults.insulationResistance?.minResistance || '≥1.0MΩ'
+            },
+            polarity: c.expectedTestResults?.polarity || 'Correct at all points',
+            rcdTest: (c.rcdProtected && c.expectedTestResults?.rcdTest) || c.rcdProtected ? {
+              at1x: c.expectedTestResults?.rcdTest?.at1x || '≤300ms @ 30mA',
+              at5x: c.expectedTestResults?.rcdTest?.at5x || '≤40ms @ 150mA',
+              regulation: c.expectedTestResults?.rcdTest?.regulation || 'BS 7671 Regulation 643.2.2'
+            } : {
+              at1x: 'Not applicable',
+              at5x: 'Not applicable',
+              regulation: 'Circuit not RCD protected'
+            }
           } : {
-            at1x: 'Not applicable',
-            at5x: 'Not applicable',
-            regulation: 'Circuit not RCD protected'
-          }
-        } : {
-          r1r2: {
-            at20C: 'Calculate based on cable length and CSA',
-            at70C: 'Multiply 20°C value by 1.2',
-            calculation: 'R1+R2 = (mΩ/m for live + mΩ/m for CPC) × length / 1000'
+            r1r2: {
+              at20C: 'Calculate based on cable length and CSA',
+              at70C: 'Multiply 20°C value by 1.2',
+              calculation: 'R1+R2 = (mΩ/m for live + mΩ/m for CPC) × length / 1000'
+            },
+            zs: {
+              calculated: c.calculations?.zs?.toFixed(2) || 'Test on site',
+              maxPermitted: c.calculations?.maxZs?.toFixed(2) || 'See BS 7671 Appendix 3',
+              compliant: 'Test required'
+            },
+            insulationResistance: {
+              testVoltage: '500V DC',
+              minResistance: '≥1.0MΩ (≥2.0MΩ preferred)'
+            },
+            polarity: 'Verify correct polarity at all outlets',
+            rcdTest: c.rcdProtected ? {
+              at1x: '≤300ms @ 30mA (1 × IΔn)',
+              at5x: '≤40ms @ 150mA (5 × IΔn)',
+              regulation: 'BS 7671 Regulation 643.2.2'
+            } : {
+              at1x: 'Not applicable - no RCD',
+              at5x: 'Not applicable - no RCD',
+              regulation: 'Circuit not RCD protected'
+            }
           },
-          zs: {
-            calculated: c.calculations?.zs?.toFixed(2) || 'Test on site',
-            maxPermitted: c.calculations?.maxZs?.toFixed(2) || 'See BS 7671 Appendix 3',
-            compliant: 'Test required'
-          },
-          insulationResistance: {
-            testVoltage: '500V DC',
-            minResistance: '≥1.0MΩ (≥2.0MΩ preferred)'
-          },
-          polarity: 'Verify correct polarity at all outlets',
-          rcdTest: c.rcdProtected ? {
-            at1x: '≤300ms @ 30mA (1 × IΔn)',
-            at5x: '≤40ms @ 150mA (5 × IΔn)',
-            regulation: 'BS 7671 Regulation 643.2.2'
-          } : {
-            at1x: 'Not applicable - no RCD',
-            at5x: 'Not applicable - no RCD',
-            regulation: 'Circuit not RCD protected'
-          }
-        },
 
           // Warnings
           warnings: (c.warnings || []).join('; '),
           hasWarnings: (c.warnings?.length || 0) > 0
-        })),
+        }),
 
       // Materials
       materials: (design.materials || []).map((m: any) => ({
