@@ -217,6 +217,22 @@ export class AIDesigner {
     parts.push('NOTE: Installation guidance (routing, fixing, testing procedures) is handled by a separate Installation Agent.');
     parts.push('');
 
+    // === CPC SIZING REQUIREMENTS (CRITICAL) ===
+    parts.push('=== CPC SIZING REQUIREMENTS ===');
+    parts.push('For TWIN AND EARTH cables, CPC is SMALLER than live conductor per BS 7671 Table 54.7:');
+    parts.push('• 1.5mm² T&E → Live: 1.5mm², CPC: 1.0mm²');
+    parts.push('• 2.5mm² T&E → Live: 2.5mm², CPC: 1.5mm²');
+    parts.push('• 4mm² T&E → Live: 4mm², CPC: 2.5mm²');
+    parts.push('• 6mm² T&E → Live: 6mm², CPC: 2.5mm²');
+    parts.push('• 10mm² T&E → Live: 10mm², CPC: 4mm²');
+    parts.push('• 16mm² T&E → Live: 16mm², CPC: 6mm²');
+    parts.push('');
+    parts.push('For SINGLE CORES and SWA, CPC typically EQUALS live conductor size.');
+    parts.push('');
+    parts.push('CRITICAL: You MUST set correct cpcSize field for accurate Zs and R1+R2 calculations!');
+    parts.push('Incorrect CPC sizing will result in wrong expected test values and installation failures.');
+    parts.push('');
+    
     // === OUTPUT REQUIREMENTS ===
     parts.push('=== OUTPUT REQUIREMENTS ===');
     parts.push('1. Design circuits that comply with BS 7671 regulations found in knowledge base');
@@ -558,7 +574,7 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
                   },
                   cableType: {
                     type: 'string',
-                    description: 'Full cable description (e.g., "6mm² twin and earth with 2.5mm² CPC, 70°C thermoplastic insulation")'
+                    description: 'Cable type description: Size + type only (e.g., "1.5mm² twin and earth" or "6mm² SWA"). DO NOT include CPC size in this field - it is stored separately in cpcSize field.'
                   },
                   rcdProtected: {
                     type: 'boolean',
@@ -572,7 +588,7 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
                   cpcSize: { 
                     type: 'number',
                     enum: [1.0, 1.5, 2.5, 4.0, 6.0, 10.0, 16.0, 25.0, 35.0, 50.0, 70.0, 95.0],
-                    description: 'CPC conductor CSA in mm² per BS 7671 Table 54.7. Must maintain correct ratio to live conductor. Outdoor circuits may need larger CPC for Zs compliance.'
+                    description: 'CPC conductor CSA in mm² per BS 7671 Table 54.7. CRITICAL FOR TWIN & EARTH: CPC is SMALLER than live (1.5mm² T&E = 1.0mm² CPC, 2.5mm² T&E = 1.5mm² CPC, 4mm² T&E = 2.5mm² CPC, 6mm² T&E = 2.5mm² CPC, 10mm² T&E = 4mm² CPC, 16mm² T&E = 6mm² CPC). For single cores/SWA, CPC typically equals live size. This affects R1+R2 and Zs calculations.'
                   },
                   protectionDevice: {
                     type: 'object',
@@ -686,7 +702,7 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
                         properties: {
                           loadKw: { type: 'number', description: 'Load in kW - CALCULATE from loadPower: loadPower/1000 (e.g., 7360W → 7.36)' },
                           loadIb: { type: 'string', description: 'Design current Ib with unit (e.g., "32A")' },
-                          cable: { type: 'string', description: 'Cable specification (e.g., "6mm² twin & earth with 2.5mm² CPC")' },
+                          cable: { type: 'string', description: 'Cable specification: Size and type only (e.g., "1.5mm² twin and earth" or "6mm² SWA"). DO NOT include CPC size here.' },
                           protectiveDevice: { type: 'string', description: 'Protection (e.g., "40A Type B MCB (6kA)")' },
                           voltageDrop: { type: 'string', description: 'VD result with compliance (e.g., "6.2V (2.7%) ✓ Compliant")' },
                           zs: { type: 'string', description: 'Zs with compliance (e.g., "0.68Ω ✓ Well within 1.37Ω limit")' },

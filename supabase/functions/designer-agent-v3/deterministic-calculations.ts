@@ -10,6 +10,7 @@ import {
   type VoltageDropParams,
   type EarthFaultParams
 } from '../_shared/bs7671-unified-calculations.ts';
+import { getCpcSize, validateCpcSize } from '../_shared/bs7671-data/cpcSizes.ts';
 import type { DesignedCircuit, ExpectedTestValues, NormalizedSupply } from './types.ts';
 
 export class DeterministicCalculator {
@@ -49,6 +50,9 @@ export class DeterministicCalculator {
     if (!circuit.calculations) {
       circuit.calculations = {} as any;
     }
+
+    // STEP 1: Validate and correct CPC size (CRITICAL for accurate Zs/R1+R2)
+    circuit = this.validateAndCorrectCpcSize(circuit);
 
     // Parse cable type from circuit data
     const cableType = this.parseCableType(circuit);
@@ -193,6 +197,41 @@ export class DeterministicCalculator {
       // Typical ring final: 32A sockets on 2.5mm²
       (loadType.includes('socket') && circuit.protectionDevice.rating === 32 && circuit.cableSize === 2.5)
     );
+  }
+
+  /**
+   * Validate and correct CPC size based on cable type (BS 7671 Table 54.7)
+   * This is a critical safety net to ensure accurate R1+R2 and Zs calculations
+   */
+  private validateAndCorrectCpcSize(circuit: DesignedCircuit): DesignedCircuit {
+    const cableTypeStr = (circuit as any).cableType || '';
+    const liveSize = circuit.cableSize;
+    const currentCpcSize = circuit.cpcSize;
+
+    const validation = validateCpcSize(cableTypeStr, liveSize, currentCpcSize);
+
+    if (!validation.valid) {
+      this.logger.warn('CPC size correction applied', {
+        circuit: circuit.name,
+        cableType: cableTypeStr,
+        liveSize,
+        incorrectCpc: currentCpcSize,
+        correctedCpc: validation.expectedCpcSize,
+        message: validation.message
+      });
+
+      // Auto-correct the CPC size
+      circuit.cpcSize = validation.expectedCpcSize;
+    } else {
+      this.logger.info('CPC size validated', {
+        circuit: circuit.name,
+        liveSize,
+        cpcSize: currentCpcSize,
+        cableType: cableTypeStr
+      });
+    }
+
+    return circuit;
   }
 
   /**
