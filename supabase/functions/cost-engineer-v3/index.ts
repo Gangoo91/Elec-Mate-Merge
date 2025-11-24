@@ -2665,7 +2665,7 @@ Provide:
             duration: Date.now() - profitabilityStart
           });
         }
-      }));
+      })());
       
       // Mark profitability as pending in the response
       costResult.profitabilityPending = true;
