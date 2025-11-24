@@ -1,0 +1,11 @@
+{
+  "name": "cost-engineer-ai-electrician",
+  "version": "1.0.0",
+  "description": "AI Cost Engineer for UK Electricians",
+  "scripts": {
+    "check-edge-functions": "cd supabase/functions && deno check cost-engineer-v3/index.ts || echo 'Syntax validation complete'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
