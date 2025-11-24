@@ -61,6 +61,99 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
 
     console.log(`🤖 Calling ${agentName} (${functionName})`, request);
 
+    // Cost engineer uses SSE, others use standard JSON
+    const usesSSE = agent === 'cost-engineer';
+
+    if (usesSSE) {
+      // SSE-based call for cost-engineer
+      try {
+        const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/${functionName}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+          },
+          body: JSON.stringify(request)
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const reader = response.body?.getReader();
+        if (!reader) throw new Error('No response body');
+
+        const decoder = new TextDecoder();
+        let buffer = '';
+        let finalResult: AgentResponse | null = null;
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            if (!line.trim() || line.startsWith(':')) continue;
+            if (!line.startsWith('data: ')) continue;
+
+            const data = line.slice(6).trim();
+            if (data === '[DONE]') continue;
+
+            try {
+              const chunk = JSON.parse(data);
+              
+              if (chunk.type === 'heartbeat') {
+                setProgress({ stage: 'ai', message: chunk.content || 'Processing...' });
+                console.log('💓 Heartbeat:', chunk.content);
+              } else if (chunk.type === 'result') {
+                finalResult = chunk.data;
+                setProgress({ stage: 'complete', message: 'Response ready!' });
+              } else if (chunk.type === 'error') {
+                throw new Error(chunk.content || 'Unknown error');
+              }
+            } catch (e) {
+              console.warn('Failed to parse SSE chunk:', e);
+            }
+          }
+        }
+
+        if (!finalResult) {
+          throw new Error('No result received from agent');
+        }
+
+        console.log(`✅ ${agentName} response:`, finalResult);
+        toast.success(`${agentName} completed`, {
+          description: `Request processed successfully`
+        });
+
+        return finalResult;
+      } catch (err) {
+        let errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+        
+        console.error(`❌ ${agentName} error:`, {
+          originalError: err,
+          userMessage: errorMessage,
+          timestamp: new Date().toISOString()
+        });
+        
+        setError(errorMessage);
+        
+        toast.error(`${agentName} failed`, {
+          description: errorMessage,
+          duration: 7000
+        });
+
+        return null;
+      } finally {
+        setIsLoading(false);
+        setTimeout(() => setProgress(null), 2000);
+      }
+    }
+
+    // Standard JSON-based call for other agents
     // Identify long-running agents
     const isLongRunningAgent = agent === 'project-manager' || agent === 'health-safety';
 
