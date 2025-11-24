@@ -130,11 +130,13 @@ const CostEngineerInterface = () => {
         setParsedResults(parsed);
       }
 
-      setViewState('results');
-      toast({
-        title: "Analysis complete!",
-        description: "Cost estimate ready to view",
-      });
+      setTimeout(() => {
+        setViewState('results');
+        toast({
+          title: "Analysis complete!",
+          description: "Cost estimate ready to view",
+        });
+      }, 0);
     }
   };
 
