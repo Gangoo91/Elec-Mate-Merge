@@ -37,8 +37,8 @@ export class AIDesigner {
     // Convert form to structured JSON
     const structuredInput = this.buildStructuredInput(inputs);
     
-    // Define tool schema
-    const tools = [this.buildDesignTool()];
+    // Define tool schema with installation type for dynamic cable type constraints
+    const tools = [this.buildDesignTool(installationType)];
     const tool_choice = { type: 'function', function: { name: 'design_circuits' } };
 
     // Call OpenAI with timeout
@@ -91,31 +91,37 @@ export class AIDesigner {
     parts.push('You are a BS 7671:2018+A3:2024 electrical circuit design expert. Design COMPLIANT circuits using the provided knowledge base. Use exact voltage/phase values from each request.');
     parts.push('');
     
-    // Installation type context
+    // Installation type context with MANDATORY cable type enforcement
     const type = installationType || 'general';
     if (type === 'domestic') {
       parts.push('=== DOMESTIC INSTALLATION CONTEXT ===');
       parts.push('- Typically single-phase 230V supply, rarely three-phase');
       parts.push('- Focus on socket circuits (ring finals/radials), lighting, showers, cookers');
       parts.push('- RCBO protection mandatory for ALL socket circuits (411.3.3)');
-      parts.push('- Standard cable types: Twin & Earth (T&E) for internal, SWA for external/buried');
       parts.push('- Typical max demand: 60-100A per dwelling');
+      parts.push('');
+      parts.push('=== DOMESTIC CABLE TYPE RULES (MANDATORY) ===');
+      parts.push('✅ Internal circuits: Twin & Earth (T&E) ONLY');
+      parts.push('✅ External/buried circuits: SWA (Steel Wire Armoured) ONLY');
+      parts.push('✅ Outdoor circuits: SWA with appropriate glands');
+      parts.push('❌ NEVER use: PVC singles, LSZH singles, conduit systems, FP200/FP400');
+      parts.push('NOTE: T&E has REDUCED CPC size per BS 7671 Table 54.7 (e.g., 2.5mm² T&E = 1.5mm² CPC)');
       parts.push('');
     } else if (type === 'commercial') {
       parts.push('=== COMMERCIAL INSTALLATION CONTEXT ===');
       parts.push('- Often three-phase 400V supply for larger loads');
       parts.push('- Higher diversity factors, larger distribution boards');
-      parts.push('- More SWA cable usage for sub-mains and outdoor runs');
-      parts.push('- Consider fire alarm systems, emergency lighting, data circuits');
+      parts.push('- SWA cable usage for sub-mains and outdoor runs');
+      parts.push('- Fire alarm systems, emergency lighting, data circuits');
       parts.push('- Discrimination between protective devices critical');
       parts.push('');
       parts.push('=== COMMERCIAL CABLE TYPE RULES (MANDATORY) ===');
-      parts.push('❌ NEVER use Twin & Earth (T&E) in commercial installations');
-      parts.push('✅ ALWAYS use one of these approved cable types:');
-      parts.push('  • SWA (Steel Wire Armoured) - for sub-mains, outdoor runs, industrial areas');
-      parts.push('  • LSZH singles in conduit/trunking - for internal distribution');
-      parts.push('  • FP200/FP400 - REQUIRED for fire alarm and emergency lighting circuits');
-      parts.push('  • NYY or similar LSZH multicore - for larger power circuits');
+      parts.push('❌ NEVER use Twin & Earth (T&E) - not suitable for commercial installations');
+      parts.push('✅ Internal distribution: LSZH singles in conduit/trunking');
+      parts.push('✅ Sub-mains/outdoor: SWA (Steel Wire Armoured)');
+      parts.push('✅ Fire circuits (alarms/emergency lighting): FP200/FP400 MANDATORY');
+      parts.push('✅ Data/low smoke areas: LSZH cables required');
+      parts.push('NOTE: CPC size EQUALS live conductor size for singles/SWA (NOT reduced like T&E)');
       parts.push('');
     } else if (type === 'industrial') {
       parts.push('=== INDUSTRIAL INSTALLATION CONTEXT ===');
@@ -126,12 +132,12 @@ export class AIDesigner {
       parts.push('- Consider fault levels, discrimination, and starting currents');
       parts.push('');
       parts.push('=== INDUSTRIAL CABLE TYPE RULES (MANDATORY) ===');
-      parts.push('❌ NEVER use Twin & Earth (T&E) in industrial installations');
-      parts.push('✅ ALWAYS use one of these approved cable types:');
-      parts.push('  • SWA (Steel Wire Armoured) - STANDARD for all circuits');
-      parts.push('  • LSZH singles in heavy-duty conduit/trunking - for fixed installations');
-      parts.push('  • FP200/FP400 - REQUIRED for fire alarm and emergency systems');
-      parts.push('  • Flexible cable with appropriate armouring - for machinery connections');
+      parts.push('❌ NEVER use Twin & Earth (T&E) - not suitable for industrial installations');
+      parts.push('✅ Standard for ALL circuits: SWA (Steel Wire Armoured)');
+      parts.push('✅ Heavy machinery: Flexible SWA or armoured flex');
+      parts.push('✅ Fixed installations: LSZH singles in heavy-duty steel conduit');
+      parts.push('✅ Fire/emergency systems: FP200/FP400 or similar fire-rated');
+      parts.push('NOTE: CPC size EQUALS live conductor size for SWA/singles (NOT reduced like T&E)');
       parts.push('');
     }
     parts.push('');
@@ -519,7 +525,7 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
   /**
    * Build strict tool schema for design_circuits function
    */
-  private buildDesignTool(): object {
+  private buildDesignTool(installationType?: string): object {
     return {
       type: 'function',
       function: {
@@ -574,7 +580,8 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
                   },
                   cableType: {
                     type: 'string',
-                    description: 'Cable type description: Size + type only (e.g., "1.5mm² twin and earth" or "6mm² SWA"). DO NOT include CPC size in this field - it is stored separately in cpcSize field.'
+                    enum: this.getAllowedCableTypes(installationType || 'general'),
+                    description: this.getCableTypeDescription(installationType || 'general')
                   },
                   rcdProtected: {
                     type: 'boolean',
@@ -820,13 +827,72 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
     };
   }
 
+
+  /**
+   * Get allowed cable types based on installation environment (LAYER 2: Dynamic Schema Constraint)
+   */
+  private getAllowedCableTypes(installationType: string): string[] {
+    const cableSizes = ['1.5mm²', '2.5mm²', '4mm²', '6mm²', '10mm²', '16mm²', '25mm²', '35mm²', '50mm²', '70mm²', '95mm²'];
+    
+    if (installationType === 'domestic') {
+      return [
+        ...cableSizes.map(size => `${size} twin and earth`),
+        ...cableSizes.map(size => `${size} SWA`)
+      ];
+    }
+    
+    if (installationType === 'commercial') {
+      return [
+        ...cableSizes.map(size => `${size} LSZH single`),
+        ...cableSizes.map(size => `${size} SWA`),
+        ...cableSizes.map(size => `${size} FP200`),
+        ...cableSizes.map(size => `${size} FP400`)
+      ];
+    }
+    
+    if (installationType === 'industrial') {
+      return [
+        ...cableSizes.map(size => `${size} SWA`),
+        ...cableSizes.map(size => `${size} LSZH single`),
+        ...cableSizes.map(size => `${size} FP200`),
+        ...cableSizes.map(size => `${size} armoured flex`)
+      ];
+    }
+    
+    // Fallback: all types allowed
+    return [
+      ...cableSizes.map(size => `${size} twin and earth`),
+      ...cableSizes.map(size => `${size} SWA`),
+      ...cableSizes.map(size => `${size} LSZH single`)
+    ];
+  }
+
+  /**
+   * Get cable type description based on installation environment (LAYER 2: Dynamic Schema Constraint)
+   */
+  private getCableTypeDescription(installationType: string): string {
+    if (installationType === 'domestic') {
+      return 'DOMESTIC: Use twin & earth for internal, SWA for external/buried. Format: "2.5mm² twin and earth" or "6mm² SWA"';
+    }
+    
+    if (installationType === 'commercial') {
+      return 'COMMERCIAL: Use LSZH singles in conduit, SWA for sub-mains, FP200/FP400 for fire circuits. Format: "2.5mm² LSZH single" or "10mm² SWA"';
+    }
+    
+    if (installationType === 'industrial') {
+      return 'INDUSTRIAL: Use SWA as standard, LSZH singles in heavy conduit, FP200/FP400 for fire systems. Format: "10mm² SWA" or "6mm² LSZH single"';
+    }
+    
+    return 'Cable type: size + type (e.g., "2.5mm² twin and earth", "6mm² SWA")';
+  }
+
   /**
    * Detect installation type from circuit characteristics
    */
   private detectInstallationType(inputs: NormalizedInputs): string {
-    // Check project info first
-    if (inputs.projectInfo?.installationType) {
-      return inputs.projectInfo.installationType.toLowerCase();
+    // Check supply info first
+    if (inputs.supply?.installationType) {
+      return inputs.supply.installationType.toLowerCase();
     }
 
     // Detect from circuit characteristics
@@ -835,7 +901,7 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
       c.loadType.toLowerCase().includes('machinery')
     );
     
-    const hasThreePhase = inputs.circuits.some(c => c.phases === 3);
+    const hasThreePhase = inputs.circuits.some(c => c.phases === 'three');
     const hasLargePower = inputs.circuits.some(c => c.loadPower > 10000); // >10kW
     
     if (hasMotors || (hasThreePhase && hasLargePower)) {

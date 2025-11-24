@@ -253,3 +253,56 @@ export class DeterministicCalculator {
     return 'pvc-twin-earth'; // Default for domestic
   }
 }
+
+/**
+ * LAYER 3: Validate cable type for installation environment (Post-AI Safety Net)
+ */
+export function validateCableTypeForEnvironment(
+  cableType: string,
+  installationType: string,
+  specialLocation?: string
+): { valid: boolean; reason?: string; suggestedType?: string } {
+  const cableLower = cableType.toLowerCase();
+  
+  // Domestic rules
+  if (installationType === 'domestic') {
+    if (specialLocation?.toLowerCase() === 'outdoor' && !cableLower.includes('swa')) {
+      return { 
+        valid: false, 
+        reason: 'Outdoor domestic circuits must use SWA',
+        suggestedType: cableType.replace(/twin.*earth|lszh.*single|fp\d+/i, 'SWA')
+      };
+    }
+    if (cableLower.includes('lszh') || cableLower.includes('fp200') || cableLower.includes('fp400')) {
+      return { 
+        valid: false, 
+        reason: 'LSZH/FP cables not standard for domestic installations - use twin & earth or SWA',
+        suggestedType: cableType.replace(/lszh.*single|fp\d+/i, 'twin and earth')
+      };
+    }
+  }
+  
+  // Commercial rules
+  if (installationType === 'commercial') {
+    if (cableLower.includes('twin') && cableLower.includes('earth')) {
+      return { 
+        valid: false, 
+        reason: 'Twin & Earth not permitted in commercial installations - use LSZH singles or SWA',
+        suggestedType: cableType.replace(/twin.*earth/i, 'LSZH single')
+      };
+    }
+  }
+  
+  // Industrial rules
+  if (installationType === 'industrial') {
+    if (cableLower.includes('twin') && cableLower.includes('earth')) {
+      return { 
+        valid: false, 
+        reason: 'Twin & Earth not permitted in industrial installations - use SWA or LSZH singles',
+        suggestedType: cableType.replace(/twin.*earth/i, 'SWA')
+      };
+    }
+  }
+  
+  return { valid: true };
+}
