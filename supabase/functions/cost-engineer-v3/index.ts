@@ -2659,10 +2659,6 @@ Provide:
               propertyContext: { age: 'Unknown', installationAge: 'Unknown' }
             };
           }
-        } catch (parseError: any) {
-          logger.warn('Failed to parse profitability analysis, continuing without it', { error: parseError.message });
-        }
-
         } catch (profitError: any) {
           logger.warn('Async profitability analysis failed', { 
             error: profitError.message,
