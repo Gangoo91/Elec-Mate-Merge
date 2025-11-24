@@ -868,12 +868,16 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       const { data: { user } } = await supabase.auth.getUser();
       
       // Transform design data to match PDF edge function's expected format
+      // CRITICAL: Recalculate totalLoad from circuits to ensure accuracy
+      const calculatedTotalLoad = design.circuits?.reduce((sum, c) => sum + (c.loadPower || 0), 0) || 0;
+      
       const transformedDesign = {
         projectName: design.projectName || 'Untitled Project',
         location: design.location || 'Not Specified',
         clientName: design.clientName || 'Not Specified',
         electricianName: design.electricianName || 'Not Specified',
         installationType: design.installationType || 'domestic',
+        
         consumerUnit: design.consumerUnit || {
           type: 'split-load',
           mainSwitchRating: 100,
@@ -885,12 +889,41 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             earthingSystem: 'TN-S'
           }
         },
+        
+        // Pass circuits with all their data preserved
         circuits: design.circuits || [],
-        totalLoad: design.totalLoad || 0,
-        diversityBreakdown: design.diversityBreakdown,
+        
+        // CRITICAL: Use recalculated total load for accuracy
+        totalLoad: calculatedTotalLoad,
+        
+        // CRITICAL: Ensure diversity breakdown is passed or calculated
+        diversityBreakdown: design.diversityBreakdown || {
+          totalConnectedLoad: calculatedTotalLoad,
+          diversifiedLoad: calculatedTotalLoad * 0.65,
+          overallDiversityFactor: 0.65,
+          reasoning: 'Standard diversity applied',
+          bs7671Reference: 'Appendix 15',
+          circuitDiversity: []
+        },
+        
+        // Additional fields the PDF template may need
         materials: design.materials || [],
-        practicalGuidance: design.practicalGuidance || []
+        practicalGuidance: design.practicalGuidance || [],
+        installationGuidance: design.installationGuidance // Installation guidance per circuit
       };
+      
+      // Verify circuit data before sending to edge function
+      console.log('[PDF-EXPORT] Circuit data verification:', {
+        circuitCount: transformedDesign.circuits.length,
+        firstCircuit: transformedDesign.circuits[0],
+        hasCableType: !!transformedDesign.circuits[0]?.cableType,
+        hasJustifications: !!transformedDesign.circuits[0]?.justifications,
+        hasCalculations: !!transformedDesign.circuits[0]?.calculations,
+        totalLoad: transformedDesign.totalLoad,
+        diversityFactor: transformedDesign.diversityBreakdown?.overallDiversityFactor,
+        installationType: transformedDesign.installationType,
+        hasInstallationGuidance: !!transformedDesign.installationGuidance
+      });
       
       // Try PDF Monkey first
       const { data, error } = await supabase.functions.invoke('generate-circuit-design-pdf', {
