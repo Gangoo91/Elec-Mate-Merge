@@ -2078,7 +2078,8 @@ If ANY category missing, estimate it and flag in response.`;
     // ==== CALL 2: PROFITABILITY ANALYSIS (ASYNC - runs in background) ====
     if (shouldCalculateProfitability) {
       // Start profitability in background - don't await
-      EdgeRuntime.waitUntil((async () => {
+      // ASYNC PROFITABILITY BLOCK - CLOSES AT LINE 2668
+      EdgeRuntime.waitUntil(Promise.resolve().then(async () => {
         try {
           logger.info('🧮 Starting ASYNC profitability analysis', { hasBusinessSettings: true, splitMode: true });
           const profitabilityStart = Date.now();
@@ -2665,7 +2666,7 @@ Provide:
             duration: Date.now() - profitabilityStart
           });
         }
-      })());
+      })); // END ASYNC PROFITABILITY BLOCK (opened at line 2081)
       
       // Mark profitability as pending in the response
       costResult.profitabilityPending = true;
