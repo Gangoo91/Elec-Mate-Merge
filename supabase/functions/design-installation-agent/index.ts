@@ -459,6 +459,13 @@ ${hasRCD ? `
 
 ## CRITICAL REQUIREMENTS:
 - Generate 6-10 installation steps SPECIFIC to ${cableSpec}
+- MANDATORY: FOLLOW FIRST FIX → SECOND FIX WORKFLOW ORDER:
+  * Step 1: Preparation & Planning (isolation, tools, materials, route marking, safety)
+  * Step 2: FIRST FIX - Cable Installation (install backboxes, conduit/trunking, pull ALL cables, fix cables to structure, label cables at both ends)
+  * Steps 3 to N-1: Intermediate preparation work (measurements, additional preparations as needed)
+  * Step N: SECOND FIX - All Terminations (strip and prepare cable ends, terminate at consumer unit, terminate at accessories/devices, torque settings)
+  * Final Step(s): Testing & Commissioning
+- DO NOT put cable pulling/installation after terminations - ALL cable installation MUST happen in Step 2 (First Fix)
 - Include EXACT torque settings for this cable gauge
 - Include EXACT cable stripping lengths for ${cableSpec}
 - Include specific bending radius for this cable diameter
