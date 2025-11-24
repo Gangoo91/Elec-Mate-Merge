@@ -45,7 +45,7 @@ export class FormNormalizer {
       phases: phases,
       ze: Math.round((supply.ze || 0.35) * 100) / 100, // Round to 2 decimals
       earthing: (supply.earthingSystem || supply.earthing || 'TN-C-S').toUpperCase(),
-      installationType: supply.installationType || 'domestic'
+      installationType: supply.installationType || rawInput.projectInfo?.installationType || 'domestic'
     };
   }
 
