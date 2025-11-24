@@ -1031,14 +1031,13 @@ If ANY category missing, estimate it and flag in response.`;
         logger.info('⏱️ 2-minute keepalive - still processing OpenAI request...');
       }, 120000); // 2 minutes
       
-      try {
-        coreResult = await callAI(OPENAI_API_KEY, {
-          model: 'gpt-5-mini-2025-08-07', // GPT-5 Mini - better JSON reliability
-          systemPrompt,
-          userPrompt,
-          maxTokens: 16000,
-          timeoutMs: 240000, // 4 minutes total timeout
-          jsonMode: true,
+      coreResult = await callAI(OPENAI_API_KEY, {
+        model: 'gpt-5-mini-2025-08-07', // GPT-5 Mini - better JSON reliability
+        systemPrompt,
+        userPrompt,
+        maxTokens: 16000,
+        timeoutMs: 240000, // 4 minutes total timeout
+        jsonMode: true,
         tools: [{
         type: 'function',
         function: {
@@ -1532,7 +1531,7 @@ If ANY category missing, estimate it and flag in response.`;
           }
         }
       }],
-      toolChoice: { type: 'function', function: { name: 'provide_cost_estimate' } }
+        toolChoice: { type: 'function', function: { name: 'provide_cost_estimate' } }
       });
       
       // Clear the keepalive timer on successful completion
