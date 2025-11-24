@@ -313,6 +313,15 @@ async function generateInstallationGuidancePerCircuit(
   
   const cableSpec = circuit.cableType || `${circuit.cableSize}mm² cable`;
   
+  // Determine circuit-specific testing requirements
+  const isRingFinal = circuit.name?.toLowerCase().includes('ring') || 
+                      circuit.loadType?.toLowerCase().includes('ring') ||
+                      circuit.justification?.toLowerCase().includes('ring final');
+  
+  const hasRCD = circuit.protectionDevice?.type?.toLowerCase().includes('rcbo') ||
+                 circuit.protectionDevice?.type?.toLowerCase().includes('rcd') ||
+                 circuit.rcdProtected === true;
+  
   const systemPrompt = `You are an expert Installation Guidance Specialist for UK electrical installations.
 
 ## CRITICAL LANGUAGE REQUIREMENTS
@@ -333,6 +342,8 @@ async function generateInstallationGuidancePerCircuit(
 **Cable Length:** ${circuit.cableLength}m
 **Load:** ${circuit.loadDetails?.totalPower || circuit.loadPower}W
 **Location:** ${circuit.location || circuit.specialLocation || 'Not specified'}
+**Ring Final Circuit:** ${isRingFinal ? 'YES - requires ring continuity testing' : 'NO'}
+**RCD Protection:** ${hasRCD ? 'YES - requires RCD testing' : 'NO'}
 
 ## Supply System
 - Voltage: ${supply?.voltage || '230'}V
@@ -406,8 +417,45 @@ ${relevantRegulations.map((reg: any) =>
       "materialsForStep": ["${cableSpec}"],
       "bsReferences": ["regulation1"]
     }
-  ]
+  ],
+  "testingRequirements": {
+    "intro": "BS 7671 Part 6 testing requirements specific to this ${cableSpec} circuit",
+    "tests": [
+      {
+        "testName": "Test name (e.g., Continuity of Protective Conductors)",
+        "regulation": "BS 7671 regulation (e.g., Regulation 643.2)",
+        "procedure": "Detailed step-by-step test procedure in UK English (4-6 sentences)",
+        "expectedReading": "Expected value or range for this ${cableSpec} circuit",
+        "acceptanceCriteria": "Pass/fail criteria from BS 7671",
+        "toolsRequired": ["Test equipment needed"]
+      }
+    ],
+    "recordingNote": "Recording and certification requirements"
+  }
 }
+
+## CIRCUIT-SPECIFIC TESTING REQUIREMENTS:
+${isRingFinal ? `
+**RING FINAL CIRCUIT TESTING (MANDATORY):**
+- Continuity of ring circuit conductors (line, neutral, CPC)
+- End-to-end resistance of ring (R1, R2, Rn)
+- Cross-connection test (socket outlets)
+- Verification that resistance at each outlet is within acceptable limits
+` : ''}
+${hasRCD ? `
+**RCD TESTING (MANDATORY for RCD/RCBO protected circuits):**
+- RCD operation at rated residual current (IΔn)
+- RCD operation at 5× rated residual current (5×IΔn)
+- RCD trip time measurements
+- Manual test button operation
+` : ''}
+
+**STANDARD TESTS (REQUIRED FOR ALL CIRCUITS):**
+1. **Continuity of Protective Conductors (R1+R2)** - BS 7671 Regulation 643.2
+2. **Insulation Resistance** - BS 7671 Regulation 643.3 (minimum 1.0 MΩ at 500V DC)
+3. **Polarity** - BS 7671 Regulation 643.6
+4. **Earth Fault Loop Impedance (Zs)** - BS 7671 Regulation 643.7
+5. **Functional Testing** - BS 7671 Regulation 643.10
 
 ## CRITICAL REQUIREMENTS:
 - Generate 6-10 installation steps SPECIFIC to ${cableSpec}
@@ -416,7 +464,8 @@ ${relevantRegulations.map((reg: any) =>
 - Include specific bending radius for this cable diameter
 - Provide hands-on technical details an installer needs on-site
 - Use ONLY UK English spelling and British electrical terminology
-- DO NOT include testing requirements (handled separately)
+- Generate 4-6 circuit-specific tests (include ring final tests if applicable, RCD tests if applicable)
+- Provide detailed test procedures with expected readings for ${cableSpec} and ${protectionStr}
 - Materials, tools, and procedures must be specific to ${cableSpec}, not generic`;
 
   const userPrompt = `Generate detailed installation guidance for this single ${cableSpec} circuit using UK English.`;
