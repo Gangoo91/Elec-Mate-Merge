@@ -17,14 +17,14 @@ export class FormNormalizer {
     }
 
     return {
-      supply: this.normalizeSupply(rawInput.supply),
+      supply: this.normalizeSupply(rawInput.supply, rawInput),
       circuits: rawInput.circuits.map((c: any, idx: number) => 
         this.normalizeCircuit(c, idx)
       )
     };
   }
 
-  private normalizeSupply(supply: any): NormalizedSupply {
+  private normalizeSupply(supply: any, rawInput: any): NormalizedSupply {
     // PHASE 1: Multi-voltage support - validate voltage input
     const voltage = supply.voltage || 230;
     if (![110, 230, 400].includes(voltage)) {
