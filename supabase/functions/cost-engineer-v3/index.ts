@@ -16,7 +16,6 @@ import { searchPricingKnowledge, formatPricingContext, searchLabourTimeKnowledge
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
 import { sanitizeAIJson, safeJsonParse } from '../_shared/json-sanitizer.ts';
-import { createStreamingResponse, StreamingResponseBuilder } from '../_shared/streaming-utils.ts';
 
 // ===== COST ENGINEER PRICING CONSTANTS =====
 const COST_ENGINEER_PRICING = {
@@ -375,8 +374,7 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'cost-engineer-v3' });
   const functionStart = Date.now();
 
-  return createStreamingResponse(async (builder: StreamingResponseBuilder) => {
-    try {
+  try {
     const body = await req.json();
     const { query, materials, labourHours, region, messages, previousAgentOutputs, sharedRegulations, businessSettings, skipProfitability, currentDesign, projectDetails } = body;
 
@@ -2809,7 +2807,16 @@ Provide:
       errorName: error instanceof Error ? error.name : typeof error,
       errorMessage: error instanceof Error ? error.message : String(error),
     });
-    builder.sendError(error instanceof Error ? error.message : String(error));
+    
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error occurred'
+      }),
+      { 
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      }
+    );
   }
-  }, corsHeaders);
 });

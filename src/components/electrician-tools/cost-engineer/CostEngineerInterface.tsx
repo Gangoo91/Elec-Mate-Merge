@@ -185,7 +185,7 @@ const CostEngineerInterface = () => {
   return (
     <div className="space-y-4 pb-24 sm:pb-6">
       {/* Main Project Description */}
-      <CostEngineerFormSection>
+      <CostEngineerFormSection className="bg-elec-grey/5 border-elec-grey/20">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <Label htmlFor="project-description" className="text-lg sm:text-xl font-semibold">
@@ -219,7 +219,7 @@ const CostEngineerInterface = () => {
       </CostEngineerFormSection>
 
       {/* Project Type - Inline */}
-      <CostEngineerFormSection>
+      <CostEngineerFormSection className="bg-elec-grey/5 border-elec-grey/20">
         <div className="space-y-3">
           <Label className="text-base sm:text-lg font-semibold">🏗️ Project Type</Label>
           <InlineProjectTypeSelector 
@@ -230,7 +230,7 @@ const CostEngineerInterface = () => {
             onClick={() => setShowExamples(!showExamples)}
             className="text-sm text-elec-yellow hover:underline"
           >
-            {showExamples ? '↑ Hide examples' : '↓ Show 5 examples'}
+            {showExamples ? '↑ Hide examples' : '↓ Show 8 examples'}
           </button>
         </div>
       </CostEngineerFormSection>
@@ -247,7 +247,7 @@ const CostEngineerInterface = () => {
       )}
 
       {/* Optional Settings - Collapsed by default */}
-      <CostEngineerFormSection>
+      <CostEngineerFormSection className="bg-elec-grey/5 border-elec-grey/20">
         <CollapsibleSection
           title="Optional Settings"
           subtitle="Add project details for +15% accuracy"
@@ -296,7 +296,7 @@ const CostEngineerInterface = () => {
       </CostEngineerFormSection>
 
       {/* Business Settings - Collapsed by default */}
-      <CostEngineerFormSection>
+      <CostEngineerFormSection className="bg-elec-grey/5 border-elec-grey/20">
         <CollapsibleSection
           title="Business Settings"
           subtitle={hasBusinessSettings ? "Profitability analysis configured" : "Configure profitability analysis"}
