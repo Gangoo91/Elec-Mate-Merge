@@ -278,8 +278,9 @@ export const AIInstallationDesigner = () => {
         totalLoad: jobDesignData?.circuits?.reduce((sum, c) => sum + (c.loadPower || 0), 0) || 0,
         diversityApplied: false,
         materials: [],
-        // NEW: Add installation guidance from parallel agent
-        installationGuidance: installationGuidance || undefined,
+        // CRITICAL: Add installation guidance from Design Installation Agent
+        // This is the TOP-LEVEL guidance that drives the InstallationGuidancePerCircuitPanel
+        installationGuidance: installationGuidance,
         // CRITICAL: Pass validation state to frontend
         validationPassed: jobDesignData.validationPassed,
         validationIssues: jobDesignData.validationIssues || [],
