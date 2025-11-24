@@ -24,7 +24,10 @@ const PROJECT_TYPES: ProjectType[] = [
       "Kitchen extension - 2x ring mains, 10.5kW shower circuit, 7kW EV charger installation, outdoor weatherproof sockets",
       "2 bathrooms with electric showers (9.5kW each), heated towel rails, extractor fans, garage sub-main supply",
       "Consumer unit upgrade from fusebox to 18th Edition split load board with surge protection and RCBO protection",
-      "4-bed house - 50A range cooker circuit, utility room ring main, garden lighting system, CCTV security installation"
+      "4-bed house - 50A range cooker circuit, utility room ring main, garden lighting system, CCTV security installation",
+      "Garage conversion - 2x double sockets, LED strip lighting, consumer unit upgrade with RCD protection, garden socket",
+      "Loft conversion - dedicated lighting circuit, power outlets, smoke detectors, heating controls integration",
+      "Bathroom renovation - extractor fan, shaver socket, heated mirror, underfloor heating controls, IP-rated downlights"
     ]
   },
   {
@@ -38,7 +41,10 @@ const PROJECT_TYPES: ProjectType[] = [
       "Retail shop 80m² - track lighting system, till points, intruder alarm system, display socket outlets, shop front lighting",
       "Restaurant with commercial kitchen - 3-phase 30kW oven, extraction system, cold rooms, dining area lighting, bar circuits",
       "Warehouse 500m² - LED high bay lighting, loading bay 3-phase supply, office partition electrics, emergency lighting",
-      "Gym facility - changing rooms, air conditioning circuits, equipment circuits, music system, reception area, emergency lights"
+      "Gym facility - changing rooms, air conditioning circuits, equipment circuits, music system, reception area, emergency lights",
+      "Restaurant kitchen - dedicated cooker circuits, extraction fan control, cold room electrics, till points, hand dryers",
+      "Gym facility - dedicated circuits for treadmills, air conditioning, audio system, changing room lighting, emergency lighting",
+      "Small warehouse - 3-phase distribution, LED high bay lighting, roller shutter controls, office area fit-out, CCTV power"
     ]
   },
   {
@@ -52,7 +58,10 @@ const PROJECT_TYPES: ProjectType[] = [
       "Production line installation - conveyor motors, control panels, emergency stop systems, overhead gantry lighting",
       "Manufacturing unit - stamping press 50kW, assembly area electrics, extraction system, tool charging stations",
       "Factory floor - overhead crane 3-phase supply, multiple welding bays, machine tool circuits, high bay LED lighting",
-      "Industrial unit - compressor room 3-phase, spray booth installation, roller shutter motors, distribution board upgrade"
+      "Industrial unit - compressor room 3-phase, spray booth installation, roller shutter motors, distribution board upgrade",
+      "Factory automation - PLC installation, motor control centres, sensor networks, safety interlock systems",
+      "Cold storage facility - 3-phase refrigeration units, alarm systems, emergency heating circuits, loading bay lighting",
+      "Manufacturing facility - spray booth electrics, dust extraction, overhead crane power, machine shop distribution"
     ]
   }
 ];
@@ -110,7 +119,7 @@ const ProjectTypeSelector = ({ selectedType, onTypeChange, onExampleSelect }: Pr
               
               {/* Show/Hide indicator */}
               <span className={`text-xs font-medium whitespace-nowrap ${isSelected ? 'text-elec-dark/60' : 'text-elec-yellow/70'}`}>
-                {isExpanded ? '↑ Hide Examples' : '↓ Show 5 Examples'}
+                {isExpanded ? '↑ Hide Examples' : '↓ Show 8 Examples'}
               </span>
             </Button>
           );
