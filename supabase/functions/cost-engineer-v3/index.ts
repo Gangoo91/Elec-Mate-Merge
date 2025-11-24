@@ -12,7 +12,7 @@ import {
   parseJsonWithRepair
 } from '../_shared/v3-core.ts';
 import { parseQueryEntities, type ParsedEntities } from '../_shared/query-parser.ts';
-import { searchPricingKnowledge, formatPricingContext, searchLabourTimeKnowledge, formatLabourTimeContext } from '../_shared/rag-cost-engineer.ts';
+import { searchPricingKnowledge, formatPricingContext } from '../_shared/rag-cost-engineer.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
 import { sanitizeAIJson, safeJsonParse } from '../_shared/json-sanitizer.ts';
@@ -484,10 +484,7 @@ serve(async (req) => {
     
     const { intelligentRAGSearch } = await import('../_shared/intelligent-rag.ts');
     
-    // Build labour-specific query
-    const labourQuery = `labour time standards installation time ${parsedEntities.jobType || 'circuit'} ${parsedEntities.circuitCount ? parsedEntities.circuitCount + ' circuits' : ''}`;
-    
-    const [queryEmbedding, finalPricingResults, ragResults, labourTimeResults, practicalWorkResults] = await Promise.all([
+    const [queryEmbedding, finalPricingResults, practicalWorkResults] = await Promise.all([
       // Generate embedding
       generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY),
       
@@ -499,37 +496,7 @@ serve(async (req) => {
         }))
       ),
       
-      // Combined installation + design knowledge with intelligent RAG
-      // COST ENGINEER OPTIMIZED PRIORITIES: Pricing (95), Practical Work (85), BS 7671 (80)
-      intelligentRAGSearch(
-        {
-          circuitType: parsedEntities.jobType,
-          searchTerms: enhancedQuery.split(' ').filter(w => w.length > 3),
-          expandedQuery: enhancedQuery,
-          context: {
-            ragPriority: {
-              bs7671: 80,           // BS 7671 regulations - compliance checking
-              practical_work: 85,   // Practical work - HIGHEST priority for labour estimation
-              design: 0,            // Skip design calculations (Designer Agent's domain)
-              health_safety: 0,     // Skip H&S (H&S Agent's domain)
-              installation: 0,      // Skip installation (covered by practical_work)
-              inspection: 0,        // Skip inspection (not needed for costing)
-              project_mgmt: 0       // Skip PM (using separate labour search)
-            },
-            agentType: 'cost-engineer',
-            skipEmbedding: false
-          },
-          installationType: parsedEntities.installationType || 'domestic'
-        },
-        OPENAI_API_KEY,
-        supabase,
-        logger
-      ),
-      
-      // Search project_mgmt_knowledge for labour time standards
-      searchLabourTimeKnowledge(labourQuery, await generateEmbeddingWithRetry(labourQuery, OPENAI_API_KEY), supabase, logger, parsedEntities.jobType),
-      
-      // NEW: Search practical_work_intelligence for installation guidance
+      // Search practical_work_intelligence for installation guidance
       supabase.rpc('search_practical_work_intelligence_hybrid', {
         query_text: enhancedQuery,
         query_embedding: await generateEmbeddingWithRetry(enhancedQuery, OPENAI_API_KEY),
@@ -543,10 +510,7 @@ serve(async (req) => {
       })
     ]);
     
-    logger.debug('Intelligent RAG complete', { duration: Date.now() - ragStart });
-    
-    const installationResults = ragResults?.installationDocs || [];
-    const pmResults = ragResults?.designDocs || [];
+    logger.debug('RAG search complete', { duration: Date.now() - ragStart });
     
     // Extract materials_needed arrays from practical work for completeness (MUST BE BEFORE LOGGING)
     const practicalMaterials = practicalWorkResults
@@ -555,16 +519,14 @@ serve(async (req) => {
       .filter((m: string) => m && m.length > 5) // Filter out empty/short entries
       || [];
     
-    logger.info('RAG search complete with Cost Engineer priorities (MULTI-QUERY)', {
+    logger.info('RAG search complete - Streamlined (Pricing + Practical Work only)', {
       materialQueries: materialQueries.length,
       uniquePricingItems: finalPricingResults.length,
       pricingCategories: [...new Set(finalPricingResults.map(m => m.category))].join(', '),
-      practicalWorkGuides: ragResults?.practicalWorkDocs?.length || 0,
+      practicalWorkGuides: practicalWorkResults?.length || 0,
       practicalMaterials: practicalMaterials.length,
       practicalMaterialsUnique: new Set(practicalMaterials).size,
-      regulations: ragResults?.regulations?.length || 0,
-      labourTimeEntries: labourTimeResults.length,
-      priorities: { practicalWork: 85, regulations: 80, pricing: 95 }
+      priorities: { practicalWork: 100, pricing: 100 }
     });
 
     // Step 5: Build comprehensive pricing context using RAG module formatter
@@ -572,12 +534,8 @@ serve(async (req) => {
       formatPricingContext(finalPricingResults) +
       `\n\nFALLBACK MARKET RATES (use if not in database, 15% markup applied):\n- 2.5mm² T&E cable: £1.13/metre\n- 1.5mm² T&E cable: £0.92/metre\n- 6mm² T&E cable: £2.53/metre\n- 10mm² T&E cable: £4.49/metre\n- 2.5mm² SWA: £4.03/m, 4mm² SWA: £5.52/m, 6mm² SWA: £8.21/m, 10mm² SWA: £10.93/m\n- SWA gland 20mm: £11.50 (x2)\n- Consumer units: 8-way £156.40, 10-way £179.40, 12-way £212.75, 16-way £281.75\n- 40A RCBO: £32.78`;
 
-    // Build PRACTICAL WORK context (from Practical Work Intelligence - PRIORITY) - LIMIT TO TOP 5
-    const practicalWorkContext = ragResults?.practicalWorkDocs && ragResults.practicalWorkDocs.length > 0
-      ? ragResults.practicalWorkDocs.slice(0, 5).map((pw: any) => 
-          `- ${pw.activity}: ${pw.step_description?.substring(0, 120)}... (${pw.time_estimate || 'time varies'})`
-        ).join('\n')
-      : '';
+    // Build PRACTICAL WORK context (from Practical Work Intelligence database)
+    const practicalWorkContext = '';
 
     // Format practical work intelligence from database
     function formatPracticalWorkContext(results: any[]): string {
@@ -616,12 +574,7 @@ serve(async (req) => {
       examples: [...new Set(practicalMaterials)].slice(0, 5)
     });
 
-    // Build regulations context (trimmed for compliance checks) - LIMIT TO TOP 3
-    const regulationsContext = ragResults?.regulations && ragResults.regulations.length > 0
-      ? ragResults.regulations.slice(0, 3).map((reg: any) =>
-          `- ${reg.regulation_number}: ${reg.content?.substring(0, 100)}...`
-        ).join('\n')
-      : '';
+    // Regulations context removed - Cost Engineer focuses on pricing and practical work
 
     // Build conversation context with DESIGNER OUTPUT FIRST (trimmed)
     let contextSection = '';
@@ -643,7 +596,7 @@ serve(async (req) => {
       ).slice(-3).join('\n');
     }
 
-    const labourTimeContext = formatLabourTimeContext(labourTimeResults);
+    // Labour time context removed - practical work intelligence covers this faster
     
     // Detect region from location string for automatic labour rate adjustment
     const detectRegion = (locationStr: string = ''): string => {
@@ -724,10 +677,7 @@ MARGIN APPLICATION:
 • Target profit: £800-1,200 (20-25% of break-even)
 
 ${pricingContext ? `DATABASE PRICING (PRIORITY):\n${pricingContext.substring(0, 1000)}\n` : ''}
-${practicalWorkContext ? `INSTALL METHODS:\n${practicalWorkContext.substring(0, 600)}\n` : ''}
 ${practicalWorkIntelligence ? `${practicalWorkIntelligence.substring(0, 800)}\n` : ''}
-${regulationsContext ? `REGULATIONS:\n${regulationsContext.substring(0, 600)}\n` : ''}
-${labourTimeContext ? `${labourTimeContext.substring(0, 500)}\n` : ''}
 
 CRITICAL PRICING RULES - FOLLOW EXACTLY:
 
@@ -2768,7 +2718,6 @@ Provide:
       request_id: requestId,
       rag_time: ragStart ? Date.now() - ragStart : null,
       total_time: totalTime,
-      regulation_count: (installationResults?.length || 0) + (pmResults?.length || 0),
       success: true,
       query_type: parsedEntities.jobType || 'general'
     });
@@ -2808,7 +2757,7 @@ Provide:
           ragMs: Date.now() - ragStart,
           aiMs: Date.now() - aiStart,
           pricingItems: finalPricingResults?.length || 0,
-          labourTimeItems: labourTimeResults?.length || 0,
+          practicalWorkItems: practicalWorkResults?.length || 0,
           contextSources,
           receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none'
         }
