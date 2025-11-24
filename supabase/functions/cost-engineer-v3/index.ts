@@ -968,7 +968,7 @@ If ANY category missing, estimate it and flag in response.`;
     logger.debug('Calling AI for core cost estimate', { provider: 'OpenAI' });
     logger.info('🤖 Calling OpenAI GPT-5 Mini for core estimate', {
       model: 'gpt-5-mini-2025-08-07',
-      maxTokens: 16000, // Increased for reasoning tokens + output (was 8000)
+      maxTokens: 12000, // Reduced from 16000 for faster response
       timeoutMs: 210000, // 3.5 minutes for GPT-5 Mini reasoning (reduced from 4 min for stability)
       hasTools: true,
       splitMode: 'core-estimate'
@@ -991,7 +991,7 @@ If ANY category missing, estimate it and flag in response.`;
         model: 'gpt-5-mini-2025-08-07', // GPT-5 Mini - better JSON reliability
         systemPrompt,
         userPrompt,
-        maxTokens: 16000,
+        maxTokens: 12000,
         timeoutMs: 240000, // 4 minutes total timeout
         jsonMode: true,
         tools: [{
@@ -1506,7 +1506,7 @@ If ANY category missing, estimate it and flag in response.`;
         errorName: aiError instanceof Error ? aiError.name : 'Unknown',
         stack: aiError instanceof Error ? aiError.stack?.split('\n')[0] : undefined,
         model: 'gpt-5-mini-2025-08-07',
-        maxTokens: 16000, // Increased for reasoning tokens
+        maxTokens: 12000, // Reduced from 16000 for faster response
         hadApiKey: !!OPENAI_API_KEY,
         apiKeyPrefix: OPENAI_API_KEY?.substring(0, 7)
       });
