@@ -16,6 +16,7 @@ import { searchPricingKnowledge, formatPricingContext, searchLabourTimeKnowledge
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
 import { sanitizeAIJson, safeJsonParse } from '../_shared/json-sanitizer.ts';
+import { createStreamingResponse, StreamingResponseBuilder } from '../_shared/streaming-utils.ts';
 
 // ===== COST ENGINEER PRICING CONSTANTS =====
 const COST_ENGINEER_PRICING = {
@@ -360,6 +361,8 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
+
+  return createStreamingResponse(async (builder: StreamingResponseBuilder) => {
 
   // Health check endpoint
   if (req.method === 'GET') {
@@ -1025,11 +1028,14 @@ If ANY category missing, estimate it and flag in response.`;
     const aiStart = Date.now();
     
     let coreResult;
+    
+    // Start heartbeat to prevent client timeout
+    const heartbeat = setInterval(() => {
+      builder.sendChunk({ type: 'heartbeat', content: 'Processing cost estimate...' });
+      logger.info('💓 Heartbeat sent to client');
+    }, 20000); // Every 20 seconds
+    
     try {
-      // Start a 2-minute keepalive timer to prevent HTTP idle timeout
-      const keepaliveTimer = setTimeout(() => {
-        logger.info('⏱️ 2-minute keepalive - still processing OpenAI request...');
-      }, 120000); // 2 minutes
       
       coreResult = await callAI(OPENAI_API_KEY, {
         model: 'gpt-5-mini-2025-08-07', // GPT-5 Mini - better JSON reliability
@@ -1534,14 +1540,14 @@ If ANY category missing, estimate it and flag in response.`;
         toolChoice: { type: 'function', function: { name: 'provide_cost_estimate' } }
       });
       
-      // Clear the keepalive timer on successful completion
-      clearTimeout(keepaliveTimer);
+      // Clear heartbeat on successful completion
+      clearInterval(heartbeat);
       
       const aiMs = Date.now() - aiStart;
       logger.info('✅ Core estimate AI call succeeded', { provider: 'openai', duration: aiMs, splitMode: 'core-estimate' });
     } catch (aiError) {
-      // Clear the keepalive timer on error
-      clearTimeout(keepaliveTimer);
+      // Clear heartbeat on error
+      clearInterval(heartbeat);
       
       const aiMs = Date.now() - aiStart;
       logger.error('❌ Core estimate AI call failed', { 
@@ -2774,9 +2780,10 @@ Provide:
       mode: skipProfitability ? 'core-only' : 'full',
     });
 
-    // Return response (Designer-v3 compatible structure, no regulations)
-    return new Response(
-      JSON.stringify({
+    // Send final result as single chunk
+    builder.sendChunk({
+      type: 'result',
+      data: {
         success: true,
         originalQuery: query,                          // Store user's original prompt
         response: costResult.response,                 // Narrative text from AI
@@ -2805,12 +2812,8 @@ Provide:
           contextSources,
           receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none'
         }
-      }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200 
       }
-    );
+    });
 
   } catch (error) {
     const totalMs = Date.now() - functionStart;
@@ -2820,15 +2823,7 @@ Provide:
       errorMessage: error instanceof Error ? error.message : String(error),
     });
     
-    return new Response(
-      JSON.stringify({
-        success: false,
-        error: error instanceof Error ? error.message : 'Unknown error occurred'
-      }),
-      { 
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
-    );
+    builder.sendError(error instanceof Error ? error.message : 'Unknown error occurred');
   }
+  }, corsHeaders);
 });
