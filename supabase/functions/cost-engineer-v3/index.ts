@@ -2336,6 +2336,74 @@ Return ONLY profitability analysis object.`;
               profitPerHour: costResult.pdfEnrichment.profitPerHour.target
             });
 
+          } catch (profitParseError: any) {
+            logger.error('❌ Failed to parse profitability result (ASYNC)', { 
+              error: profitParseError.message,
+              rawContent: profitabilityResult?.content?.substring(0, 200)
+            });
+            
+            // Provide fallback profitability structure
+            const jobDuration = costResult.timescales?.totalDays || 1;
+            const materialsTotal = costResult.summary?.materialsSubtotal || 0;
+            const labourTotal = costResult.summary?.labourSubtotal || 0;
+            const directTotal = materialsTotal + labourTotal;
+            const jobOverheadsTotal = jobDuration * 35; // £35/day overhead
+            const breakEvenSubtotal = directTotal + jobOverheadsTotal;
+            
+            costResult.profitabilityAnalysis = {
+              directCosts: { 
+                materials: materialsTotal, 
+                labour: labourTotal, 
+                total: directTotal 
+              },
+              jobOverheads: {
+                estimatedDuration: `${jobDuration} day${jobDuration > 1 ? 's' : ''}`,
+                overheadAllocation: jobOverheadsTotal,
+                travelCosts: 0,
+                permitsCosts: 0,
+                wasteCosts: 0,
+                total: jobOverheadsTotal
+              },
+              breakEven: {
+                subtotal: breakEvenSubtotal,
+                vat: breakEvenSubtotal * 0.20,
+                total: breakEvenSubtotal * 1.20,
+                explanation: `You must charge at least this amount to cover all direct costs (£${directTotal.toFixed(2)}) plus allocated job overheads (£${jobOverheadsTotal.toFixed(2)}).`
+              },
+              quotingGuidance: {
+                minimum: {
+                  margin: 10,
+                  subtotal: breakEvenSubtotal * 1.10,
+                  vat: breakEvenSubtotal * 1.10 * 0.20,
+                  total: breakEvenSubtotal * 1.10 * 1.20,
+                  profit: breakEvenSubtotal * 0.10,
+                  explanation: `Minimum viable quote - covers costs with small 10.0% margin`
+                },
+                target: {
+                  margin: 25,
+                  subtotal: breakEvenSubtotal * 1.25,
+                  vat: breakEvenSubtotal * 1.25 * 0.20,
+                  total: breakEvenSubtotal * 1.25 * 1.20,
+                  profit: breakEvenSubtotal * 0.25,
+                  explanation: `Recommended quote - healthy 25.0% profit margin for business growth`
+                },
+                premium: {
+                  margin: 35,
+                  subtotal: breakEvenSubtotal * 1.35,
+                  vat: breakEvenSubtotal * 1.35 * 0.20,
+                  total: breakEvenSubtotal * 1.35 * 1.20,
+                  profit: breakEvenSubtotal * 0.35,
+                  explanation: `Premium quote - strong 35.0% margin for high-value clients`
+                }
+              },
+              recommendations: ["Profitability analysis used fallback calculations - review manually"]
+            };
+            
+            logger.info('Fallback profitability structure created', { 
+              breakEvenTotal: costResult.profitabilityAnalysis.breakEven.total
+            });
+          }
+
           // ==== TIER 2: AI CONTEXTUAL INTELLIGENCE (PARALLEL CALLS) ====
           logger.info('🤖 Starting AI contextual intelligence enhancement (split into 2 parallel calls)');
           const enhancementStart = Date.now();
