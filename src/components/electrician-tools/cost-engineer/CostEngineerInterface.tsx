@@ -32,6 +32,7 @@ const CostEngineerInterface = () => {
   const [additionalInfo, setAdditionalInfo] = useState("");
   const [businessSettings, setBusinessSettings] = useState<BusinessSettings>(DEFAULT_BUSINESS_SETTINGS);
   const [showExamples, setShowExamples] = useState(false);
+  const [abortController, setAbortController] = useState<AbortController | null>(null);
 
   const handleExampleSelect = (example: string) => {
     setPrompt(example);
@@ -69,96 +70,26 @@ const CostEngineerInterface = () => {
     setViewState('processing');
     const startTime = Date.now();
 
+    // Create AbortController for cancellation support
+    const controller = new AbortController();
+    setAbortController(controller);
+
     try {
+      // Get Supabase session for auth token
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.access_token) {
+        throw new Error('Authentication required');
+      }
+
       const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/cost-engineer-v3`;
-      const eventSource = new EventSource(url);
-
-      eventSource.onmessage = (event) => {
-        try {
-          const chunk = JSON.parse(event.data);
-          console.log('Received chunk:', chunk.type);
-
-          if (chunk.type === 'progress') {
-            console.log(`Progress: ${chunk.content} (${chunk.data?.progress}%)`);
-          } else if (chunk.type === 'heartbeat') {
-            console.log('💓 Heartbeat received');
-          } else if (chunk.type === 'result') {
-            eventSource.close();
-            const data = chunk.data;
-
-            // Store original query from response
-            if (data.originalQuery) {
-              setOriginalQueryFromResponse(data.originalQuery);
-            }
-
-            // Store structured data
-            const coreStructuredData = data.structuredData;
-            setStructuredData(coreStructuredData);
-
-            // Parse results
-            if (coreStructuredData && coreStructuredData.summary) {
-              setParsedResults({
-                totalCost: coreStructuredData.summary.grandTotal,
-                materialsTotal: coreStructuredData.materials?.subtotal || 0,
-                labourTotal: coreStructuredData.labour?.subtotal || 0,
-                materials: coreStructuredData.materials?.items?.map((m: any) => ({
-                  item: m.description || m.item || 'Unknown item',
-                  quantity: m.quantity,
-                  unit: m.unit,
-                  unitPrice: m.unitPrice,
-                  total: m.total,
-                  supplier: m.supplier
-                })) || [],
-                labour: {
-                  hours: coreStructuredData.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0,
-                  rate: 50,
-                  total: coreStructuredData.labour?.subtotal || 0,
-                  description: coreStructuredData.labour?.tasks?.[0]?.description || 'Installation labour'
-                },
-                additionalCosts: [],
-                vatAmount: coreStructuredData.summary.vat,
-                vatRate: 20,
-                subtotal: coreStructuredData.summary.subtotal,
-                rawText: data.response
-              });
-            } else {
-              const parsed = parseCostAnalysis(data.response);
-              setParsedResults(parsed);
-            }
-
-            setViewState('results');
-            toast({
-              title: "Analysis complete!",
-              description: "Cost estimate ready to view",
-            });
-          } else if (chunk.type === 'error') {
-            eventSource.close();
-            throw new Error(chunk.content || 'Analysis failed');
-          } else if (chunk.type === 'done') {
-            eventSource.close();
-          }
-        } catch (parseError) {
-          console.error('Error parsing SSE chunk:', parseError);
-        }
-      };
-
-      eventSource.onerror = (error) => {
-        console.error('EventSource error:', error);
-        eventSource.close();
-        setViewState('input');
-        toast({
-          title: "Connection error",
-          description: "Failed to connect to analysis service. Please try again.",
-          variant: "destructive"
-        });
-      };
-
-      // Send the initial request via POST
+      
+      // Single POST request with proper auth and streaming
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          'Authorization': `Bearer ${session.access_token}`,
+          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY
         },
         body: JSON.stringify({
           query: prompt,
@@ -171,17 +102,125 @@ const CostEngineerInterface = () => {
           },
           businessSettings: businessSettings,
           skipProfitability: false
-        })
+        }),
+        signal: controller.signal
       });
 
       if (!response.ok) {
-        throw new Error('Failed to start analysis');
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      if (!response.body) {
+        throw new Error('No response body');
+      }
+
+      // Parse SSE stream manually
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        
+        if (done) {
+          console.log('✅ Stream completed');
+          break;
+        }
+
+        // Decode chunk and add to buffer
+        buffer += decoder.decode(value, { stream: true });
+        
+        // Process complete SSE messages (ending with \n\n)
+        const messages = buffer.split('\n\n');
+        buffer = messages.pop() || ''; // Keep incomplete message in buffer
+
+        for (const message of messages) {
+          if (!message.trim() || !message.startsWith('data: ')) continue;
+          
+          try {
+            const jsonStr = message.replace(/^data: /, '').trim();
+            const chunk = JSON.parse(jsonStr);
+            
+            console.log('📨 Received chunk:', chunk.type);
+
+            if (chunk.type === 'progress') {
+              console.log(`Progress: ${chunk.content} (${chunk.data?.progress}%)`);
+            } 
+            else if (chunk.type === 'heartbeat') {
+              console.log('💓 Heartbeat received');
+            } 
+            else if (chunk.type === 'result') {
+              const data = chunk.data;
+
+              // Store original query from response
+              if (data.originalQuery) {
+                setOriginalQueryFromResponse(data.originalQuery);
+              }
+
+              // Store structured data
+              const coreStructuredData = data.structuredData;
+              setStructuredData(coreStructuredData);
+
+              // Parse results
+              if (coreStructuredData && coreStructuredData.summary) {
+                setParsedResults({
+                  totalCost: coreStructuredData.summary.grandTotal,
+                  materialsTotal: coreStructuredData.materials?.subtotal || 0,
+                  labourTotal: coreStructuredData.labour?.subtotal || 0,
+                  materials: coreStructuredData.materials?.items?.map((m: any) => ({
+                    item: m.description || m.item || 'Unknown item',
+                    quantity: m.quantity,
+                    unit: m.unit,
+                    unitPrice: m.unitPrice,
+                    total: m.total,
+                    supplier: m.supplier
+                  })) || [],
+                  labour: {
+                    hours: coreStructuredData.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0,
+                    rate: 50,
+                    total: coreStructuredData.labour?.subtotal || 0,
+                    description: coreStructuredData.labour?.tasks?.[0]?.description || 'Installation labour'
+                  },
+                  additionalCosts: [],
+                  vatAmount: coreStructuredData.summary.vat,
+                  vatRate: 20,
+                  subtotal: coreStructuredData.summary.subtotal,
+                  rawText: data.response
+                });
+              } else {
+                const parsed = parseCostAnalysis(data.response);
+                setParsedResults(parsed);
+              }
+
+              setViewState('results');
+              toast({
+                title: "Analysis complete!",
+                description: "Cost estimate ready to view",
+              });
+            } 
+            else if (chunk.type === 'error') {
+              throw new Error(chunk.content || 'Analysis failed');
+            }
+            else if (chunk.type === 'done') {
+              console.log('✅ Analysis complete');
+            }
+          } catch (parseError) {
+            console.warn('⚠️ Error parsing SSE chunk:', parseError);
+            // Continue processing other chunks
+          }
+        }
       }
 
     } catch (error: any) {
       const elapsedMs = Date.now() - startTime;
       
-      console.error('Cost analysis error (detailed):', {
+      // Handle abort (user cancellation)
+      if (error.name === 'AbortError') {
+        console.log('🛑 Request aborted by user');
+        return;
+      }
+      
+      console.error('❌ Cost analysis error:', {
         error,
         name: error?.name,
         message: error?.message,
@@ -198,10 +237,16 @@ const CostEngineerInterface = () => {
         description: msg || 'Failed to generate cost analysis. Please try again.',
         variant: "destructive"
       });
+    } finally {
+      setAbortController(null);
     }
   };
 
   const handleCancel = () => {
+    if (abortController) {
+      abortController.abort();
+      setAbortController(null);
+    }
     setViewState('input');
     toast({
       title: "Analysis cancelled",
