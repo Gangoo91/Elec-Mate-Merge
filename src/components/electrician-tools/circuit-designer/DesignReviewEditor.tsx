@@ -2260,10 +2260,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             </p>
             <InstallationGuidancePerCircuitPanel 
               guidance={
-                // Handle both per-circuit (Record) and legacy (single object) formats
-                (design.installationGuidance as any).safetyConsiderations 
-                  ? { 'circuit_0': design.installationGuidance as EnhancedInstallationGuidance }
-                  : design.installationGuidance as Record<string, EnhancedInstallationGuidance>
+                // Unwrap nested .guidance field (circuit_0.guidance → circuit_0)
+                Object.entries(design.installationGuidance as any).reduce((acc, [key, value]) => {
+                  acc[key] = (value as any).guidance || value;
+                  return acc;
+                }, {} as Record<string, EnhancedInstallationGuidance>)
               }
               circuits={design.circuits}
             />
