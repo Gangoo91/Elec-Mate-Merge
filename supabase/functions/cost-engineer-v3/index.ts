@@ -1490,15 +1490,9 @@ If ANY category missing, estimate it and flag in response.`;
         toolChoice: { type: 'function', function: { name: 'provide_cost_estimate' } }
       });
       
-      // Clear heartbeat on successful completion
-      clearInterval(heartbeat);
-      
       const aiMs = Date.now() - aiStart;
       logger.info('✅ Core estimate AI call succeeded', { provider: 'openai', duration: aiMs, splitMode: 'core-estimate' });
     } catch (aiError) {
-      // Clear heartbeat on error
-      clearInterval(heartbeat);
-      
       const aiMs = Date.now() - aiStart;
       logger.error('❌ Core estimate AI call failed', { 
         duration: aiMs,
@@ -2073,10 +2067,21 @@ If ANY category missing, estimate it and flag in response.`;
       logger.info('✅ Auto-corrected calculations', costResult.summary);
     }
 
-    // ==== CALL 2: PROFITABILITY ANALYSIS (only if businessSettings exist AND not skipped) ====
-    if (businessSettings && !skipProfitability) {
-      logger.info('🧮 Starting profitability analysis', { hasBusinessSettings: true, splitMode: true });
-      const profitabilityStart = Date.now();
+    // ==== RETURN CORE ESTIMATE IMMEDIATELY ====
+    // Profitability will be calculated asynchronously in the background
+    const shouldCalculateProfitability = businessSettings && !skipProfitability;
+    
+    if (!shouldCalculateProfitability) {
+      logger.info('Skipping profitability analysis (no business settings or skipped)');
+    }
+
+    // ==== CALL 2: PROFITABILITY ANALYSIS (ASYNC - runs in background) ====
+    if (shouldCalculateProfitability) {
+      // Start profitability in background - don't await
+      EdgeRuntime.waitUntil((async () => {
+        try {
+          logger.info('🧮 Starting ASYNC profitability analysis', { hasBusinessSettings: true, splitMode: true });
+          const profitabilityStart = Date.now();
       
       const profitabilitySystemPrompt = `Profitability Analysis for UK Electrician
 
@@ -2141,101 +2146,102 @@ VALIDATION: Ensure 3-bed rewire quotes fall within £4,000-6,500 range
 
 Return ONLY profitability analysis object.`;
 
-      const profitabilityUserPrompt = `Calculate profitability analysis for this job using the business settings and job costs above.`;
+      
+        const profitabilityUserPrompt = `Calculate profitability analysis for this job using the business settings and job costs above.`;
 
-      try {
-        const profitabilityResult = await callAI(OPENAI_API_KEY, {
-          model: 'gpt-5-mini-2025-08-07',
-          systemPrompt: profitabilitySystemPrompt,
-          userPrompt: profitabilityUserPrompt,
-          maxTokens: 4000,
-          timeoutMs: 280000,
-          jsonMode: true,
-          tools: [{
-            type: 'function',
-            function: {
-              name: 'calculate_profitability',
-              description: 'Calculate break-even and profitability guidance',
-              parameters: {
-                type: 'object',
-                properties: {
-                  directCosts: {
-                    type: 'object',
-                    properties: {
-                      materials: { type: 'number' },
-                      labour: { type: 'number' },
-                      total: { type: 'number' }
-                    },
-                    required: ['materials', 'labour', 'total']
-                  },
-                  jobOverheads: {
-                    type: 'object',
-                    properties: {
-                      allocatedBusinessOverheads: { type: 'number' },
-                      travel: { type: 'number' },
-                      permitsAndFees: { type: 'number' },
-                      wasteDisposal: { type: 'number' },
-                      total: { type: 'number' }
-                    },
-                    required: ['allocatedBusinessOverheads', 'total']
-                  },
-                  breakEvenPoint: { type: 'number' },
-                  quoteTiers: {
-                    type: 'object',
-                    properties: {
-                      minimum: {
-                        type: 'object',
-                        properties: {
-                          price: { type: 'number' },
-                          margin: { type: 'number' },
-                          marginPercent: { type: 'number' }
-                        },
-                        required: ['price', 'margin', 'marginPercent']
-                      },
-                      target: {
-                        type: 'object',
-                        properties: {
-                          price: { type: 'number' },
-                          margin: { type: 'number' },
-                          marginPercent: { type: 'number' }
-                        },
-                        required: ['price', 'margin', 'marginPercent']
-                      },
-                      premium: {
-                        type: 'object',
-                        properties: {
-                          price: { type: 'number' },
-                          margin: { type: 'number' },
-                          marginPercent: { type: 'number' }
-                        },
-                        required: ['price', 'margin', 'marginPercent']
-                      }
-                    },
-                    required: ['minimum', 'target', 'premium']
-                  },
-                  recommendations: {
-                    type: 'array',
-                    items: { type: 'string' }
-                  }
-                },
-                required: ['directCosts', 'jobOverheads', 'breakEvenPoint', 'quoteTiers', 'recommendations']
-              }
-            }
-          }],
-          toolChoice: { type: 'function', function: { name: 'calculate_profitability' } }
-        });
-
-        const profitabilityMs = Date.now() - profitabilityStart;
-        logger.info('✅ Profitability analysis completed', { duration: profitabilityMs });
-
-        // Parse and attach profitability analysis
         try {
-          let profitabilityAnalysis;
-          if (profitabilityResult.toolCalls && profitabilityResult.toolCalls.length > 0) {
-            profitabilityAnalysis = parseJsonWithRepair(profitabilityResult.content, logger, 'profitability-tool-call');
-          } else {
-            profitabilityAnalysis = parseJsonWithRepair(profitabilityResult.content, logger, 'profitability-json');
-          }
+          const profitabilityResult = await callAI(OPENAI_API_KEY, {
+            model: 'gpt-5-mini-2025-08-07',
+            systemPrompt: profitabilitySystemPrompt,
+            userPrompt: profitabilityUserPrompt,
+            maxTokens: 4000,
+            timeoutMs: 280000,
+            jsonMode: true,
+            tools: [{
+              type: 'function',
+              function: {
+                name: 'calculate_profitability',
+                description: 'Calculate break-even and profitability guidance',
+                parameters: {
+                  type: 'object',
+                  properties: {
+                    directCosts: {
+                      type: 'object',
+                      properties: {
+                        materials: { type: 'number' },
+                        labour: { type: 'number' },
+                        total: { type: 'number' }
+                      },
+                      required: ['materials', 'labour', 'total']
+                    },
+                    jobOverheads: {
+                      type: 'object',
+                      properties: {
+                        allocatedBusinessOverheads: { type: 'number' },
+                        travel: { type: 'number' },
+                        permitsAndFees: { type: 'number' },
+                        wasteDisposal: { type: 'number' },
+                        total: { type: 'number' }
+                      },
+                      required: ['allocatedBusinessOverheads', 'total']
+                    },
+                    breakEvenPoint: { type: 'number' },
+                    quoteTiers: {
+                      type: 'object',
+                      properties: {
+                        minimum: {
+                          type: 'object',
+                          properties: {
+                            price: { type: 'number' },
+                            margin: { type: 'number' },
+                            marginPercent: { type: 'number' }
+                          },
+                          required: ['price', 'margin', 'marginPercent']
+                        },
+                        target: {
+                          type: 'object',
+                          properties: {
+                            price: { type: 'number' },
+                            margin: { type: 'number' },
+                            marginPercent: { type: 'number' }
+                          },
+                          required: ['price', 'margin', 'marginPercent']
+                        },
+                        premium: {
+                          type: 'object',
+                          properties: {
+                            price: { type: 'number' },
+                            margin: { type: 'number' },
+                            marginPercent: { type: 'number' }
+                          },
+                          required: ['price', 'margin', 'marginPercent']
+                        }
+                      },
+                      required: ['minimum', 'target', 'premium']
+                    },
+                    recommendations: {
+                      type: 'array',
+                      items: { type: 'string' }
+                    }
+                  },
+                  required: ['directCosts', 'jobOverheads', 'breakEvenPoint', 'quoteTiers', 'recommendations']
+                }
+              }
+            }],
+            toolChoice: { type: 'function', function: { name: 'calculate_profitability' } }
+          });
+
+          const profitabilityMs = Date.now() - profitabilityStart;
+          logger.info('✅ Profitability analysis completed (ASYNC)', { duration: profitabilityMs });
+
+          // Parse and attach profitability analysis
+          try {
+            let profitabilityAnalysis;
+            if (profitabilityResult.toolCalls && profitabilityResult.toolCalls.length > 0) {
+              profitabilityAnalysis = parseJsonWithRepair(profitabilityResult.content, logger, 'profitability-tool-call');
+            } else {
+              profitabilityAnalysis = parseJsonWithRepair(profitabilityResult.content, logger, 'profitability-json');
+            }
           
           // Transform profitability analysis to match frontend interface
           const jobDuration = costResult.timescales?.totalDays || 1;
@@ -2294,40 +2300,40 @@ Return ONLY profitability analysis object.`;
             targetQuote: costResult.profitabilityAnalysis.quotingGuidance.target.total
           });
 
-          // ==== TIER 1: PDF ENRICHMENT CALCULATIONS ====
-          const totalHours = costResult.labour.tasks.reduce((sum: number, task: any) => sum + (task.hours || 0), 0);
-          const materialsNet = costResult.materials.items.reduce((sum: number, item: any) => {
-            const netCost = (item.total || 0) / 1.15; // Reverse 15% markup
-            return sum + netCost;
-          }, 0);
-          const materialsMarkup = costResult.summary.materialsSubtotal - materialsNet;
-          const markupPercent = materialsNet > 0 ? ((materialsMarkup / materialsNet) * 100) : 15;
+            // ==== TIER 1: PDF ENRICHMENT CALCULATIONS ====
+            const totalHours = costResult.labour.tasks.reduce((sum: number, task: any) => sum + (task.hours || 0), 0);
+            const materialsNet = costResult.materials.items.reduce((sum: number, item: any) => {
+              const netCost = (item.total || 0) / 1.15; // Reverse 15% markup
+              return sum + netCost;
+            }, 0);
+            const materialsMarkup = costResult.summary.materialsSubtotal - materialsNet;
+            const markupPercent = materialsNet > 0 ? ((materialsMarkup / materialsNet) * 100) : 15;
 
-          costResult.pdfEnrichment = {
-            materialsNet: Number(materialsNet.toFixed(2)),
-            materialsMarkup: Number(materialsMarkup.toFixed(2)),
-            markupPercent: Number(markupPercent.toFixed(1)),
-            labourHours: totalHours,
-            labourRate: businessSettings?.labourRates?.electrician || 45,
-            profitPerHour: {
-              minimum: totalHours > 0 ? Number((costResult.profitabilityAnalysis.quotingGuidance.minimum.profit / totalHours).toFixed(2)) : 0,
-              target: totalHours > 0 ? Number((costResult.profitabilityAnalysis.quotingGuidance.target.profit / totalHours).toFixed(2)) : 0,
-              premium: totalHours > 0 ? Number((costResult.profitabilityAnalysis.quotingGuidance.premium.profit / totalHours).toFixed(2)) : 0
-            },
-            dates: {
-              generated: new Date().toISOString(),
-              displayDate: new Date().toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-            },
-            contingency: {
-              percent: 10,
-              amount: Number((costResult.summary.subtotal * 0.10).toFixed(2))
-            }
-          };
+            costResult.pdfEnrichment = {
+              materialsNet: Number(materialsNet.toFixed(2)),
+              materialsMarkup: Number(materialsMarkup.toFixed(2)),
+              markupPercent: Number(markupPercent.toFixed(1)),
+              labourHours: totalHours,
+              labourRate: businessSettings?.labourRates?.electrician || 45,
+              profitPerHour: {
+                minimum: totalHours > 0 ? Number((costResult.profitabilityAnalysis.quotingGuidance.minimum.profit / totalHours).toFixed(2)) : 0,
+                target: totalHours > 0 ? Number((costResult.profitabilityAnalysis.quotingGuidance.target.profit / totalHours).toFixed(2)) : 0,
+                premium: totalHours > 0 ? Number((costResult.profitabilityAnalysis.quotingGuidance.premium.profit / totalHours).toFixed(2)) : 0
+              },
+              dates: {
+                generated: new Date().toISOString(),
+                displayDate: new Date().toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+              },
+              contingency: {
+                percent: 10,
+                amount: Number((costResult.summary.subtotal * 0.10).toFixed(2))
+              }
+            };
 
-          logger.info('PDF enrichment calculations added', { 
-            materialsNet: costResult.pdfEnrichment.materialsNet,
-            profitPerHour: costResult.pdfEnrichment.profitPerHour.target
-          });
+            logger.info('PDF enrichment calculations added (ASYNC)', { 
+              materialsNet: costResult.pdfEnrichment.materialsNet,
+              profitPerHour: costResult.pdfEnrichment.profitPerHour.target
+            });
 
           // ==== TIER 2: AI CONTEXTUAL INTELLIGENCE (PARALLEL CALLS) ====
           logger.info('🤖 Starting AI contextual intelligence enhancement (split into 2 parallel calls)');
@@ -2658,15 +2664,17 @@ Provide:
           logger.warn('Failed to parse profitability analysis, continuing without it', { error: parseError.message });
         }
 
-      } catch (profitError: any) {
-        logger.warn('Profitability analysis failed, continuing without it', { 
-          error: profitError.message,
-          duration: Date.now() - profitabilityStart
-        });
-        // Don't fail the entire request if profitability fails
-      }
-    } else {
-      logger.info('Skipping profitability analysis (no business settings provided)');
+        } catch (profitError: any) {
+          logger.warn('Async profitability analysis failed', { 
+            error: profitError.message,
+            duration: Date.now() - profitabilityStart
+          });
+        }
+      })());
+      
+      // Mark profitability as pending in the response
+      costResult.profitabilityPending = true;
+      logger.info('✅ Profitability calculation started in background');
     }
 
     // Validate RAG usage
@@ -2726,8 +2734,11 @@ Provide:
     // Log successful completion
     logger.info('✅ Cost Engineer V3 completed', {
       totalMs: Date.now() - functionStart,
-      mode: skipProfitability ? 'core-only' : 'full',
+      mode: skipProfitability ? 'core-only' : (shouldCalculateProfitability ? 'core-immediate-profitability-async' : 'full'),
     });
+
+    // Clear heartbeat before sending final result
+    clearInterval(heartbeat);
 
     // Send final result as single chunk
     builder.sendChunk({
@@ -2766,6 +2777,10 @@ Provide:
 
   } catch (error) {
     const totalMs = Date.now() - functionStart;
+    
+    // Clear heartbeat on error
+    clearInterval(heartbeat);
+    
     logger.error('❌ Cost Engineer V3 failed', {
       totalMs,
       errorName: error instanceof Error ? error.name : typeof error,
