@@ -2809,6 +2809,7 @@ Provide:
       errorName: error instanceof Error ? error.name : typeof error,
       errorMessage: error instanceof Error ? error.message : String(error),
     });
-    return handleError(error);
+    builder.sendError(error instanceof Error ? error.message : String(error));
   }
+  }, corsHeaders);
 });
