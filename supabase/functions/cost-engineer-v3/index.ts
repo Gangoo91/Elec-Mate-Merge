@@ -1,10 +1,10 @@
-// Deployed: 2025-11-08 - Fixed aiResult undefined error
+// Deployed: 2025-11-24 - Modular Architecture V2 - Syntax Errors Eliminated
 import { serve } from '../_shared/deps.ts';
 import {
   corsHeaders,
-  createLogger, 
-  generateRequestId, 
-  handleError, 
+  createLogger,
+  generateRequestId,
+  handleError,
   ValidationError,
   createClient,
   generateEmbeddingWithRetry,
@@ -17,6 +17,14 @@ import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
 import { sanitizeAIJson, safeJsonParse } from '../_shared/json-sanitizer.ts';
 import { createStreamingResponse, StreamingResponseBuilder } from '../_shared/streaming-utils.ts';
+
+// ===== MODULAR PROFITABILITY HELPERS =====
+import { 
+  calculateProfitabilityAnalysis, 
+  createFallbackProfitability,
+  type ProfitabilityAnalysis,
+  type QuoteOption
+} from './profitability-helpers.ts';
 
 // ===== COST ENGINEER PRICING CONSTANTS =====
 const COST_ENGINEER_PRICING = {
