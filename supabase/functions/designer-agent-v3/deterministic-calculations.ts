@@ -201,76 +201,35 @@ export class DeterministicCalculator {
 
   /**
    * Validate and correct CPC size based on cable type (BS 7671 Table 54.7)
-   * Enhanced with intelligent detection of cable type from description
+   * This is a critical safety net to ensure accurate R1+R2 and Zs calculations
    */
   private validateAndCorrectCpcSize(circuit: DesignedCircuit): DesignedCircuit {
-    const cableTypeStr = ((circuit as any).cableType || '').toLowerCase();
+    const cableTypeStr = (circuit as any).cableType || '';
     const liveSize = circuit.cableSize;
     const currentCpcSize = circuit.cpcSize;
 
-    // Determine expected CPC size based on cable type
-    let expectedCpcSize: number;
+    const validation = validateCpcSize(cableTypeStr, liveSize, currentCpcSize);
 
-    // Twin & Earth: CPC is SMALLER (Table 54.7)
-    if (cableTypeStr.includes('twin') || cableTypeStr.includes('t&e') || cableTypeStr.includes('t+e')) {
-      expectedCpcSize = getCpcSize('twin-earth', liveSize);
-      
-      if (currentCpcSize !== expectedCpcSize) {
-        this.logger.warn('CPC size correction applied (T&E)', {
-          circuit: circuit.name,
-          cableType: cableTypeStr,
-          liveSize,
-          incorrectCpc: currentCpcSize,
-          correctedCpc: expectedCpcSize
-        });
-        circuit.cpcSize = expectedCpcSize;
-      }
-    }
-    // SWA, PVC singles, LSZH, fire-rated: CPC EQUALS live
-    else if (
-      cableTypeStr.includes('swa') ||
-      cableTypeStr.includes('singles') ||
-      cableTypeStr.includes('lszh') ||
-      cableTypeStr.includes('fp200') ||
-      cableTypeStr.includes('fp400') ||
-      cableTypeStr.includes('fire')
-    ) {
-      expectedCpcSize = liveSize; // CPC equals live conductor
-      
-      if (currentCpcSize !== expectedCpcSize) {
-        this.logger.warn('CPC size correction applied (SWA/singles/fire-rated)', {
-          circuit: circuit.name,
-          cableType: cableTypeStr,
-          liveSize,
-          incorrectCpc: currentCpcSize,
-          correctedCpc: expectedCpcSize
-        });
-        circuit.cpcSize = expectedCpcSize;
-      }
-    }
-    // Fallback: validate using library function
-    else {
-      const validation = validateCpcSize(cableTypeStr, liveSize, currentCpcSize);
-      
-      if (!validation.valid) {
-        this.logger.warn('CPC size correction applied (fallback)', {
-          circuit: circuit.name,
-          cableType: cableTypeStr,
-          liveSize,
-          incorrectCpc: currentCpcSize,
-          correctedCpc: validation.expectedCpcSize,
-          message: validation.message
-        });
-        circuit.cpcSize = validation.expectedCpcSize;
-      }
-    }
+    if (!validation.valid) {
+      this.logger.warn('CPC size correction applied', {
+        circuit: circuit.name,
+        cableType: cableTypeStr,
+        liveSize,
+        incorrectCpc: currentCpcSize,
+        correctedCpc: validation.expectedCpcSize,
+        message: validation.message
+      });
 
-    this.logger.info('CPC size validated', {
-      circuit: circuit.name,
-      liveSize,
-      cpcSize: circuit.cpcSize,
-      cableType: cableTypeStr
-    });
+      // Auto-correct the CPC size
+      circuit.cpcSize = validation.expectedCpcSize;
+    } else {
+      this.logger.info('CPC size validated', {
+        circuit: circuit.name,
+        liveSize,
+        cpcSize: currentCpcSize,
+        cableType: cableTypeStr
+      });
+    }
 
     return circuit;
   }

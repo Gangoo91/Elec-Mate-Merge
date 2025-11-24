@@ -217,55 +217,20 @@ export class AIDesigner {
     parts.push('NOTE: Installation guidance (routing, fixing, testing procedures) is handled by a separate Installation Agent.');
     parts.push('');
 
-    // === CABLE TYPE SELECTION MATRIX (MANDATORY) ===
-    parts.push('=== CABLE TYPE SELECTION MATRIX (MANDATORY) ===');
+    // === CPC SIZING REQUIREMENTS (CRITICAL) ===
+    parts.push('=== CPC SIZING REQUIREMENTS ===');
+    parts.push('For TWIN AND EARTH cables, CPC is SMALLER than live conductor per BS 7671 Table 54.7:');
+    parts.push('• 1.5mm² T&E → Live: 1.5mm², CPC: 1.0mm²');
+    parts.push('• 2.5mm² T&E → Live: 2.5mm², CPC: 1.5mm²');
+    parts.push('• 4mm² T&E → Live: 4mm², CPC: 2.5mm²');
+    parts.push('• 6mm² T&E → Live: 6mm², CPC: 2.5mm²');
+    parts.push('• 10mm² T&E → Live: 10mm², CPC: 4mm²');
+    parts.push('• 16mm² T&E → Live: 16mm², CPC: 6mm²');
     parts.push('');
-    parts.push('DOMESTIC INSTALLATIONS:');
-    parts.push('• Indoor circuits (lighting, sockets, showers, cookers):');
-    parts.push('  → Twin & Earth (T&E) ONLY');
-    parts.push('  → CPC is SMALLER per Table 54.7 (1.5mm²→1.0mm CPC, 2.5mm²→1.5mm CPC, 4mm²→2.5mm CPC, 6mm²→2.5mm CPC, 10mm²→4mm CPC)');
-    parts.push('• Outdoor circuits (garden lights, garage supply, EV charger, shed supply):');
-    parts.push('  → SWA (Steel Wire Armoured) ONLY');
-    parts.push('  → CPC EQUALS live conductor size');
-    parts.push('• Special locations (bathrooms, wet rooms):');
-    parts.push('  → Twin & Earth acceptable if IP-rated accessories used');
+    parts.push('For SINGLE CORES and SWA, CPC typically EQUALS live conductor size.');
     parts.push('');
-    parts.push('COMMERCIAL INSTALLATIONS:');
-    parts.push('• General circuits (lighting, sockets, equipment):');
-    parts.push('  → PVC singles in conduit/trunking OR LSZH singles');
-    parts.push('  → CPC EQUALS live conductor size (NOT smaller like T&E)');
-    parts.push('  → ❌ NEVER use Twin & Earth in commercial');
-    parts.push('• Fire alarm circuits:');
-    parts.push('  → FP200/FP400 fire-rated cable MANDATORY');
-    parts.push('  → CPC EQUALS live conductor size');
-    parts.push('• Emergency lighting circuits:');
-    parts.push('  → FP200/FP400 fire-rated cable MANDATORY');
-    parts.push('  → CPC EQUALS live conductor size');
-    parts.push('• Outdoor/sub-main circuits:');
-    parts.push('  → SWA ONLY');
-    parts.push('  → CPC EQUALS live conductor size');
-    parts.push('');
-    parts.push('INDUSTRIAL INSTALLATIONS:');
-    parts.push('• ALL circuits:');
-    parts.push('  → SWA as standard (most common)');
-    parts.push('  → PVC singles in heavy-duty conduit acceptable for fixed installations');
-    parts.push('  → CPC EQUALS live conductor size');
-    parts.push('  → ❌ NEVER use Twin & Earth');
-    parts.push('• Fire systems:');
-    parts.push('  → FP200/FP400 fire-rated MANDATORY');
-    parts.push('• Machinery/motor circuits:');
-    parts.push('  → SWA or armoured flexible cable');
-    parts.push('');
-    parts.push('CRITICAL RULES:');
-    parts.push('1. The cableType field MUST specify EXACT cable type, not just size');
-    parts.push('2. Examples of CORRECT outputs:');
-    parts.push('   - "2.5mm² twin and earth" (domestic indoor socket)');
-    parts.push('   - "10mm² SWA 3-core" (domestic outdoor garage supply)');
-    parts.push('   - "1.5mm² PVC singles" (commercial office lighting)');
-    parts.push('   - "1.5mm² FP200 fire-rated" (commercial fire alarm)');
-    parts.push('   - "16mm² SWA 4-core" (industrial motor circuit)');
-    parts.push('3. You MUST set correct cpcSize based on cable type selected');
-    parts.push('4. Incorrect cable type selection will result in non-compliant installation');
+    parts.push('CRITICAL: You MUST set correct cpcSize field for accurate Zs and R1+R2 calculations!');
+    parts.push('Incorrect CPC sizing will result in wrong expected test values and installation failures.');
     parts.push('');
     
     // === OUTPUT REQUIREMENTS ===
@@ -609,12 +574,7 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
                   },
                   cableType: {
                     type: 'string',
-                    description: `FULL cable specification including type and size. Choose based on installation environment:
-                      DOMESTIC INDOOR: "Xmm² twin and earth" (CPC smaller per Table 54.7)
-                      DOMESTIC OUTDOOR: "Xmm² SWA 3-core" (CPC equals live)
-                      COMMERCIAL: "Xmm² PVC singles" OR "Xmm² LSZH singles" OR "Xmm² SWA 3-core" (CPC equals live). Use FP200/FP400 for fire/emergency.
-                      INDUSTRIAL: "Xmm² SWA 3-core" (CPC equals live). Use FP200/FP400 for fire systems.
-                      NEVER use T&E in commercial/industrial. Examples: "2.5mm² twin and earth", "10mm² SWA 3-core", "1.5mm² FP200 fire-rated"`
+                    description: 'Cable type description: Size + type only (e.g., "1.5mm² twin and earth" or "6mm² SWA"). DO NOT include CPC size in this field - it is stored separately in cpcSize field.'
                   },
                   rcdProtected: {
                     type: 'boolean',
