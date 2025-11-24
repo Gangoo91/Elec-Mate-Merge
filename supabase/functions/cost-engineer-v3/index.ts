@@ -1026,13 +1026,19 @@ If ANY category missing, estimate it and flag in response.`;
     
     let coreResult;
     try {
-      coreResult = await callAI(OPENAI_API_KEY, {
-        model: 'gpt-5-mini-2025-08-07', // GPT-5 Mini - better JSON reliability
-        systemPrompt,
-        userPrompt,
-        maxTokens: 16000,
-        timeoutMs: 240000, // Back to 4 minutes - heartbeats keep connection alive
-        jsonMode: true,
+      // Start a 2-minute keepalive timer to prevent HTTP idle timeout
+      const keepaliveTimer = setTimeout(() => {
+        logger.info('⏱️ 2-minute keepalive - still processing OpenAI request...');
+      }, 120000); // 2 minutes
+      
+      try {
+        coreResult = await callAI(OPENAI_API_KEY, {
+          model: 'gpt-5-mini-2025-08-07', // GPT-5 Mini - better JSON reliability
+          systemPrompt,
+          userPrompt,
+          maxTokens: 16000,
+          timeoutMs: 240000, // 4 minutes total timeout
+          jsonMode: true,
         tools: [{
         type: 'function',
         function: {
@@ -1528,9 +1534,16 @@ If ANY category missing, estimate it and flag in response.`;
       }],
       toolChoice: { type: 'function', function: { name: 'provide_cost_estimate' } }
       });
+      
+      // Clear the keepalive timer on successful completion
+      clearTimeout(keepaliveTimer);
+      
       const aiMs = Date.now() - aiStart;
       logger.info('✅ Core estimate AI call succeeded', { provider: 'openai', duration: aiMs, splitMode: 'core-estimate' });
     } catch (aiError) {
+      // Clear the keepalive timer on error
+      clearTimeout(keepaliveTimer);
+      
       const aiMs = Date.now() - aiStart;
       logger.error('❌ Core estimate AI call failed', { 
         duration: aiMs,
