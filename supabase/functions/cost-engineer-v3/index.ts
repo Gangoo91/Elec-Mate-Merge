@@ -968,8 +968,8 @@ If ANY category missing, estimate it and flag in response.`;
     logger.debug('Calling AI for core cost estimate', { provider: 'OpenAI' });
     logger.info('🤖 Calling OpenAI GPT-5 Mini for core estimate', {
       model: 'gpt-5-mini-2025-08-07',
-      maxTokens: 12000, // Reduced from 16000 for faster response
-      timeoutMs: 210000, // 3.5 minutes for GPT-5 Mini reasoning (reduced from 4 min for stability)
+      maxTokens: 8000, // Optimized for faster response
+      timeoutMs: 150000, // 2.5 minutes for faster completion
       hasTools: true,
       splitMode: 'core-estimate'
     });
@@ -991,8 +991,8 @@ If ANY category missing, estimate it and flag in response.`;
         model: 'gpt-5-mini-2025-08-07', // GPT-5 Mini - better JSON reliability
         systemPrompt,
         userPrompt,
-        maxTokens: 12000,
-        timeoutMs: 240000, // 4 minutes total timeout
+        maxTokens: 8000,
+        timeoutMs: 150000, // 2.5 minutes total timeout
         jsonMode: true,
         tools: [{
         type: 'function',
@@ -1004,7 +1004,7 @@ If ANY category missing, estimate it and flag in response.`;
             properties: {
               response: {
                 type: 'string',
-                description: 'Detailed cost analysis (150-200 words) with value engineering recommendations'
+                description: 'Cost analysis (100-150 words max)'
               },
               materials: {
                 type: 'object',
@@ -1500,7 +1500,7 @@ If ANY category missing, estimate it and flag in response.`;
         errorName: aiError instanceof Error ? aiError.name : 'Unknown',
         stack: aiError instanceof Error ? aiError.stack?.split('\n')[0] : undefined,
         model: 'gpt-5-mini-2025-08-07',
-        maxTokens: 12000, // Reduced from 16000 for faster response
+        maxTokens: 8000, // Optimized for faster response
         hadApiKey: !!OPENAI_API_KEY,
         apiKeyPrefix: OPENAI_API_KEY?.substring(0, 7)
       });
