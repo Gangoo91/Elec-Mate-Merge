@@ -89,10 +89,24 @@ serve(async (req) => {
       // Enhanced Summary
       voltage: design.consumerUnit.incomingSupply.voltage,
       phases: design.consumerUnit.incomingSupply.phases === 'single' ? 'Single Phase' : 'Three Phase',
+      voltageDisplay: `${design.consumerUnit.incomingSupply.voltage}V ${design.consumerUnit.incomingSupply.phases === 'single' ? 'Single Phase' : 'Three Phase'}`,
+      earthingSystem: design.consumerUnit.incomingSupply.earthingSystem || 'TN-C-S',
+      ze: design.consumerUnit.incomingSupply.ze || '0.35',
+      pscc: design.consumerUnit.incomingSupply.pscc || '16',
       totalLoad: design.totalLoad / 1000, // Convert to kW
       diversifiedLoad: design.diversityBreakdown?.diversifiedLoad || design.totalLoad / 1000,
+      diversityFactorPercent: design.diversityBreakdown?.overallDiversityFactor 
+        ? (design.diversityBreakdown.overallDiversityFactor * 100).toFixed(0) + '%' 
+        : '65%',
       totalConnectedLoad: design.totalLoad,
-      totalDesignCurrent: ((design.diversityBreakdown?.diversifiedLoad || design.totalLoad / 1000) / design.consumerUnit.incomingSupply.voltage * 1000).toFixed(1),
+      totalDesignCurrent: (() => {
+        const diversifiedLoadW = design.diversityBreakdown?.diversifiedLoad || design.totalLoad;
+        const voltage = design.consumerUnit.incomingSupply.voltage;
+        const isThreePhase = design.consumerUnit.incomingSupply.phases === 'three';
+        return isThreePhase 
+          ? (diversifiedLoadW / (Math.sqrt(3) * voltage)).toFixed(1)  // Three-phase: P / (√3 × V)
+          : (diversifiedLoadW / voltage).toFixed(1);                   // Single-phase: P / V
+      })(),
       consumerUnitWays: Math.ceil(design.circuits.length * 1.5),
       circuitCount: design.circuits.length,
       totalCircuits: design.circuits.length,
