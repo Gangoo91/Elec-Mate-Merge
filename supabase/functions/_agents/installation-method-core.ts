@@ -29,7 +29,7 @@ export async function generateInstallationMethod(
 
   // STEP 1: Extract keywords from query (50 keywords target)
   const keywords = extractInstallationKeywords(request.query, request.designerContext);
-  console.log(`📝 Extracted ${keywords.length} keywords:`, keywords.slice(0, 10));
+  console.log(`📝 Extracted ${keywords.size} keywords:`, Array.from(keywords).slice(0, 10));
 
   // STEP 2: Ultra-fast parallel RAG search
   const ragStart = Date.now();
