@@ -100,7 +100,7 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
             if (!line.startsWith('data: ')) continue;
 
             const data = line.slice(6).trim();
-            if (data === '[DONE]') continue;
+            if (data === '[DONE]') break;
 
             try {
               const chunk = JSON.parse(data);
@@ -111,6 +111,7 @@ export const useSimpleAgent = (): UseSimpleAgentReturn => {
               } else if (chunk.type === 'result') {
                 finalResult = chunk.data;
                 setProgress({ stage: 'complete', message: 'Response ready!' });
+                break;
               } else if (chunk.type === 'error') {
                 throw new Error(chunk.content || 'Unknown error');
               }
