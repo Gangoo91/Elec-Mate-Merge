@@ -182,44 +182,44 @@ serve(async (req) => {
           cpcSize: c.cpcSize,
           cableLength: c.cableLength,
           installationMethod: installationMethod,
-        protectionDevice: `${c.protectionDevice.rating}A Type ${c.protectionDevice.curve} ${c.protectionDevice.type}`,
-        protectionType: c.protectionDevice.type,
-        protectionRating: c.protectionDevice.rating,
-        protectionCurve: c.protectionDevice.curve,
-        protectionKaRating: c.protectionDevice.kaRating,
-        rcdProtected: c.rcdProtected ? 'Yes' : 'No',
-        rcdProtectedText: c.rcdProtected ? `Yes (30mA)` : 'No',
-        afddRequired: c.afddRequired ? 'Yes' : 'No',
+          protectionDevice: `${c.protectionDevice.rating}A Type ${c.protectionDevice.curve} ${c.protectionDevice.type}`,
+          protectionType: c.protectionDevice.type,
+          protectionRating: c.protectionDevice.rating,
+          protectionCurve: c.protectionDevice.curve,
+          protectionKaRating: c.protectionDevice.kaRating,
+          rcdProtected: c.rcdProtected ? 'Yes' : 'No',
+          rcdProtectedText: c.rcdProtected ? `Yes (30mA)` : 'No',
+          afddRequired: c.afddRequired ? 'Yes' : 'No',
 
-        // Enhanced Calculations
-        designCurrent: c.calculations.Ib?.toFixed(1) || 'N/A',
-        designCurrentIb: c.calculations.Ib?.toFixed(1) || 'N/A',
-        nominalCurrentIn: c.protectionDevice.rating,
-        cableCapacityIz: c.calculations.Iz?.toFixed(0) || 'N/A',
-        deratedCapacity: c.calculations.deratedCapacity?.toFixed(0) || 'N/A',
-        safetyMargin: c.calculations.safetyMargin?.toFixed(0) || 'N/A',
-        voltageDrop: `${c.calculations.voltageDrop.volts?.toFixed(1) || 'N/A'}V (${c.calculations.voltageDrop.percent?.toFixed(1) || 'N/A'}%)`,
-        voltageDropVolts: c.calculations.voltageDrop.volts?.toFixed(1) || 'N/A',
-        voltageDropPercent: c.calculations.voltageDrop.percent?.toFixed(1) || 'N/A',
-        voltageDropCompliant: c.calculations.voltageDrop.compliant ? 'Yes' : 'No',
-        zsActual: c.calculations.zs?.toFixed(2) || 'N/A',
-        zsMax: c.calculations.maxZs?.toFixed(2) || 'N/A',
-        zsCompliant: c.calculations.zs < c.calculations.maxZs ? 'Yes' : 'No',
+          // Enhanced Calculations
+          designCurrent: c.calculations.Ib?.toFixed(1) || 'N/A',
+          designCurrentIb: c.calculations.Ib?.toFixed(1) || 'N/A',
+          nominalCurrentIn: c.protectionDevice.rating,
+          cableCapacityIz: c.calculations.Iz?.toFixed(0) || 'N/A',
+          deratedCapacity: c.calculations.deratedCapacity?.toFixed(0) || 'N/A',
+          safetyMargin: c.calculations.safetyMargin?.toFixed(0) || 'N/A',
+          voltageDrop: `${c.calculations.voltageDrop.volts?.toFixed(1) || 'N/A'}V (${c.calculations.voltageDrop.percent?.toFixed(1) || 'N/A'}%)`,
+          voltageDropVolts: c.calculations.voltageDrop.volts?.toFixed(1) || 'N/A',
+          voltageDropPercent: c.calculations.voltageDrop.percent?.toFixed(1) || 'N/A',
+          voltageDropCompliant: c.calculations.voltageDrop.compliant ? 'Yes' : 'No',
+          zsActual: c.calculations.zs?.toFixed(2) || 'N/A',
+          zsMax: c.calculations.maxZs?.toFixed(2) || 'N/A',
+          zsCompliant: c.calculations.zs < c.calculations.maxZs ? 'Yes' : 'No',
 
-        // Diversity
-        diversityFactor: c.diversityFactor ? `${(c.diversityFactor * 100).toFixed(0)}%` : '100%',
-        diversityJustification: c.diversityJustification || 'No diversity applied',
+          // Diversity
+          diversityFactor: c.diversityFactor ? `${(c.diversityFactor * 100).toFixed(0)}%` : '100%',
+          diversityJustification: c.diversityJustification || 'No diversity applied',
 
-        // Enhanced Justifications
-        justificationCable: c.justifications?.cableSize || `${c.cableSize}mm² cable selected based on design current`,
-        cableSizeJustification: c.justifications?.cableSize || `${c.cableSize}mm² cable selected based on design current`,
-        justificationProtection: c.justifications?.protection || `${c.protectionDevice.rating}A ${c.protectionDevice.curve} curve MCB selected`,
-        protectionJustification: c.justifications?.protection || `${c.protectionDevice.rating}A ${c.protectionDevice.curve} curve MCB selected`,
-        justificationRcd: c.justifications?.rcd || (c.rcdProtected ? '30mA RCD protection required' : 'RCD not required for this circuit'),
-        rcdJustification: c.justifications?.rcd || (c.rcdProtected ? '30mA RCD protection required' : 'RCD not required for this circuit'),
+          // Enhanced Justifications
+          justificationCable: c.justifications?.cableSize || `${c.cableSize}mm² cable selected based on design current`,
+          cableSizeJustification: c.justifications?.cableSize || `${c.cableSize}mm² cable selected based on design current`,
+          justificationProtection: c.justifications?.protection || `${c.protectionDevice.rating}A ${c.protectionDevice.curve} curve MCB selected`,
+          protectionJustification: c.justifications?.protection || `${c.protectionDevice.rating}A ${c.protectionDevice.curve} curve MCB selected`,
+          justificationRcd: c.justifications?.rcd || (c.rcdProtected ? '30mA RCD protection required' : 'RCD not required for this circuit'),
+          rcdJustification: c.justifications?.rcd || (c.rcdProtected ? '30mA RCD protection required' : 'RCD not required for this circuit'),
 
-        // Fault Current Analysis
-        faultCurrentAnalysis: c.faultCurrentAnalysis ? {
+          // Fault Current Analysis
+          faultCurrentAnalysis: c.faultCurrentAnalysis ? {
           psccAtCircuit: `${c.faultCurrentAnalysis.psccAtCircuit || 'Not calculated'} kA`,
           deviceBreakingCapacity: `${c.faultCurrentAnalysis.deviceBreakingCapacity || c.protectionDevice.kaRating} kA`,
           compliant: c.faultCurrentAnalysis.compliant !== false ? 'Yes' : 'No',
@@ -233,8 +233,8 @@ serve(async (req) => {
           regulation: 'BS 7671 434.5.2'
         },
 
-        // Earthing Requirements
-        earthingRequirements: c.earthingRequirements ? {
+          // Earthing Requirements
+          earthingRequirements: c.earthingRequirements ? {
           cpcSize: c.earthingRequirements.cpcSize || `${c.cpcSize}mm²`,
           supplementaryBonding: c.earthingRequirements.supplementaryBonding ? 'Yes' : 'No',
           bondingConductorSize: c.earthingRequirements.bondingConductorSize || 'Not required',
@@ -248,8 +248,8 @@ serve(async (req) => {
           regulation: 'BS 7671 Section 544'
         },
 
-        // Derating Factors
-        deratingFactors: c.deratingFactors ? {
+          // Derating Factors
+          deratingFactors: c.deratingFactors ? {
           Ca: c.deratingFactors.Ca || 1.0,
           Cg: c.deratingFactors.Cg || 1.0,
           Ci: c.deratingFactors.Ci || 1.0,
@@ -265,8 +265,8 @@ serve(async (req) => {
           tableReferences: 'BS 7671 Table 4A2, 4B1, 4C1'
         },
 
-        // Installation Guidance
-        installationGuidance: c.installationGuidance ? {
+          // Installation Guidance
+          installationGuidance: c.installationGuidance ? {
           referenceMethod: c.installationGuidance.referenceMethod || 'Method C',
           description: c.installationGuidance.description || 'Clipped direct to surface or in trunking',
           clipSpacing: c.installationGuidance.clipSpacing || '300mm horizontal, 400mm vertical',
@@ -280,18 +280,18 @@ serve(async (req) => {
           regulation: 'BS 7671 Appendix 4, Section 522'
         },
 
-        // Special Location
-        isSpecialLocation: c.specialLocationCompliance?.isSpecialLocation || false,
-        specialLocationType: c.specialLocationCompliance?.locationType || '',
-        specialLocationRequirements: (c.specialLocationCompliance?.requirements || []).join('; '),
-        specialLocationRegulation: c.specialLocationCompliance?.regulation || '',
-        specialLocationZones: c.specialLocationCompliance?.zonesApplicable || '',
+          // Special Location
+          isSpecialLocation: c.specialLocationCompliance?.isSpecialLocation || false,
+          specialLocationType: c.specialLocationCompliance?.locationType || '',
+          specialLocationRequirements: (c.specialLocationCompliance?.requirements || []).join('; '),
+          specialLocationRegulation: c.specialLocationCompliance?.regulation || '',
+          specialLocationZones: c.specialLocationCompliance?.zonesApplicable || '',
 
-        // Expected Test Results
-        expectedR1R2: c.expectedTestResults?.r1r2?.at70C || c.calculations?.zs?.toFixed(2) || 'Calculate on site',
-        expectedZs: c.calculations?.zs?.toFixed(2) || c.calculations?.maxZs?.toFixed(2) || 'Test on site',
-        expectedInsulation: '>1MΩ',
-        expectedTestResults: c.expectedTestResults ? {
+          // Expected Test Results
+          expectedR1R2: c.expectedTestResults?.r1r2?.at70C || c.calculations?.zs?.toFixed(2) || 'Calculate on site',
+          expectedZs: c.calculations?.zs?.toFixed(2) || c.calculations?.maxZs?.toFixed(2) || 'Test on site',
+          expectedInsulation: '>1MΩ',
+          expectedTestResults: c.expectedTestResults ? {
           r1r2: {
             at20C: c.expectedTestResults.r1r2?.at20C || 'Calculate based on cable length',
             at70C: c.expectedTestResults.r1r2?.at70C || 'Calculate based on cable length',
@@ -343,10 +343,10 @@ serve(async (req) => {
           }
         },
 
-        // Warnings
-        warnings: (c.warnings || []).join('; '),
-        hasWarnings: (c.warnings?.length || 0) > 0
-      })),
+          // Warnings
+          warnings: (c.warnings || []).join('; '),
+          hasWarnings: (c.warnings?.length || 0) > 0
+        })),
 
       // Materials
       materials: (design.materials || []).map((m: any) => ({
