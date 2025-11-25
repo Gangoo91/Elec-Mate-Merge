@@ -35,9 +35,9 @@ const MilestonesSection = ({ milestones }: MilestonesSectionProps) => {
               className="flex items-center gap-3 text-sm p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors"
             >
               <div className="w-2 h-2 rounded-full bg-pink-400 flex-shrink-0" />
-              <div className="flex-1">{text}</div>
+              <div className="flex-1 text-white">{text}</div>
               {date && (
-                <span className="text-muted-foreground text-xs">{date}</span>
+                <span className="text-white/60 text-xs">{date}</span>
               )}
             </div>
           );
