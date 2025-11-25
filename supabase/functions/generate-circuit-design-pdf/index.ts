@@ -198,6 +198,61 @@ serve(async (req) => {
           installationMethod: installationMethod,
           protectionDevice: `${c.protectionDevice.rating}A Type ${c.protectionDevice.curve} ${c.protectionDevice.type}`,
           protectionType: c.protectionDevice.type,
+          
+          // ✨ ADD: Full installation guidance from Installation Agent
+          fullInstallationGuidance: c.fullInstallationGuidance ? {
+            executiveSummary: c.fullInstallationGuidance.executiveSummary || '',
+            safetyConsiderations: (c.fullInstallationGuidance.safetyConsiderations || []).map((s: any) => ({
+              consideration: s.consideration,
+              priority: s.priority || 'medium',
+              bsReference: s.bsReference || '',
+              toolsRequired: (s.toolsRequired || []).join(', ')
+            })),
+            materialsRequired: (c.fullInstallationGuidance.materialsRequired || []).map((m: any) => ({
+              item: m.item,
+              specification: m.specification,
+              quantity: m.quantity,
+              source: m.source || ''
+            })),
+            toolsRequired: (c.fullInstallationGuidance.toolsRequired || []).map((t: any) => ({
+              tool: t.tool,
+              purpose: t.purpose,
+              category: t.category
+            })),
+            cableRouting: (c.fullInstallationGuidance.cableRouting || []).map((r: any) => ({
+              step: r.step,
+              method: r.method,
+              bsReference: r.bsReference || '',
+              notes: r.notes || ''
+            })),
+            terminationRequirements: (c.fullInstallationGuidance.terminationRequirements || []).map((t: any) => ({
+              location: t.location,
+              procedure: t.procedure,
+              toolsNeeded: (t.toolsNeeded || []).join(', '),
+              torqueSettings: t.torqueSettings || '',
+              bsReference: t.bsReference || ''
+            })),
+            installationProcedure: (c.fullInstallationGuidance.installationProcedure || []).map((step: any) => ({
+              stepNumber: step.stepNumber,
+              title: step.title,
+              description: step.description,
+              toolsForStep: (step.toolsForStep || []).join(', '),
+              materialsForStep: (step.materialsForStep || []).join(', '),
+              bsReferences: (step.bsReferences || []).join(', ')
+            })),
+            testingRequirements: c.fullInstallationGuidance.testingRequirements?.tests ? {
+              intro: c.fullInstallationGuidance.testingRequirements.intro || '',
+              tests: (c.fullInstallationGuidance.testingRequirements.tests || []).map((t: any) => ({
+                testName: t.testName,
+                procedure: t.procedure,
+                expectedReading: t.expectedReading || '',
+                acceptanceCriteria: t.acceptanceCriteria,
+                regulation: t.regulation,
+                toolsRequired: (t.toolsRequired || []).join(', ')
+              })),
+              recordingNote: c.fullInstallationGuidance.testingRequirements.recordingNote || ''
+            } : null
+          } : null,
           protectionRating: c.protectionDevice.rating,
           protectionCurve: c.protectionDevice.curve,
           protectionKaRating: c.protectionDevice.kaRating,
