@@ -69,40 +69,40 @@ export const UK_TRADE_PRICING_2025 = {
   },
 
   /**
-   * UK Industry Standard Timescales (2-person team, 8-hour days)
+   * UK Industry Standard Timescales (1 electrician, 8-hour days)
    * Based on NICEIC/NAPIT/JIB guidance and industry practice
    */
   timescaleBenchmarks: {
     // Domestic rewires (full strip-out, first-fix, second-fix, testing)
     rewire_1bed: { 
-      days: 2.5, 
-      labourHours: 40, 
+      days: 3.5, 
+      labourHours: 28, 
       pointsRange: '12-18',
-      description: '1-bed flat full rewire' 
+      description: '1-bed flat full rewire (1 electrician)' 
     },
     rewire_2bed: { 
-      days: 3.5, 
-      labourHours: 56, 
+      days: 5, 
+      labourHours: 40, 
       pointsRange: '18-25',
-      description: '2-bed house full rewire' 
+      description: '2-bed house full rewire (1 electrician)' 
     },
     rewire_3bed: { 
-      days: 4.5, 
-      labourHours: 72, 
+      days: 6, 
+      labourHours: 48, 
       pointsRange: '25-35',
-      description: '3-bed house full rewire' 
+      description: '3-bed house full rewire (1 electrician)' 
     },
     rewire_4bed: { 
-      days: 6, 
-      labourHours: 96, 
+      days: 8, 
+      labourHours: 64, 
       pointsRange: '35-45',
-      description: '4-bed house full rewire' 
+      description: '4-bed house full rewire (1 electrician)' 
     },
     rewire_5bed: { 
-      days: 7.5, 
-      labourHours: 120, 
+      days: 10, 
+      labourHours: 80, 
       pointsRange: '45-60',
-      description: '5-bed house full rewire' 
+      description: '5-bed house full rewire (1 electrician)' 
     },
     
     // Common individual jobs
@@ -206,16 +206,16 @@ export function formatTradePricingPrompt(): string {
 - New cooker circuit: £80-150
 - New shower circuit: £100-180
 
-⏱️ UK INDUSTRY STANDARD TIMESCALES (2-person team, 8-hour days):
+⏱️ UK INDUSTRY STANDARD TIMESCALES (1 ELECTRICIAN, 8-hour days):
 
 DOMESTIC REWIRES (strip-out, first-fix, second-fix, testing):
-- 1-bed flat: 2.5 days (40 labour hours total)
-- 2-bed house: 3.5 days (56 labour hours total)
-- 3-bed house: 4-5 days (64-80 labour hours total)
-- 4-bed house: 5-6 days (80-96 labour hours total)
-- 5-bed house: 7-8 days (112-128 labour hours total)
+- 1-bed flat: 3-4 days (28-32 labour hours)
+- 2-bed house: 4-5 days (32-40 labour hours)
+- 3-bed house: 5-7 days (40-56 labour hours)
+- 4-bed house: 7-9 days (56-72 labour hours)
+- 5-bed house: 9-12 days (72-96 labour hours)
 
-INDIVIDUAL JOBS:
+INDIVIDUAL JOBS (1 electrician):
 - Consumer unit change: 0.5 days (4 hours inc testing)
 - Additional socket (surface): 1.5 hours
 - Additional socket (chased): 2.5 hours
@@ -225,6 +225,9 @@ INDIVIDUAL JOBS:
 - EV charger install: 0.5 days (4 hours)
 - External lighting: 3 hours
 - Smoke alarm system: 6 hours
+
+⚠️ NOTE: If quoting for a 2-person team, halve the elapsed days but keep labour hours the same.
+Labour hours = what you charge for. Elapsed days = how long you're on site.
 
 ⚠️ If your labour estimate exceeds these benchmarks by >20%, review your timescales!
 
@@ -284,23 +287,27 @@ export function validateTimescales(estimate: any, query: string): string[] {
   const totalDays = estimate.timescales?.totalDays || 0;
   const totalHours = estimate.labour?.totalHours || 0;
   
-  // Check domestic rewires
+  // Check domestic rewires (1 electrician benchmarks)
   if (queryLower.includes('rewire')) {
     if (queryLower.includes('1 bed') || queryLower.includes('1-bed')) {
-      if (totalDays > 3) {
-        warnings.push(`⚠️ ${totalDays} days seems high for 1-bed rewire - typical is 2.5 days (40 hours)`);
+      if (totalHours > 32) {
+        warnings.push(`⚠️ ${totalHours} labour hours seems high for 1-bed rewire - typical is 28-32 hours (1 electrician)`);
       }
     } else if (queryLower.includes('2 bed') || queryLower.includes('2-bed')) {
-      if (totalDays > 4.5) {
-        warnings.push(`⚠️ ${totalDays} days seems high for 2-bed rewire - typical is 3.5 days (56 hours)`);
+      if (totalHours > 40) {
+        warnings.push(`⚠️ ${totalHours} labour hours seems high for 2-bed rewire - typical is 32-40 hours (1 electrician)`);
       }
     } else if (queryLower.includes('3 bed') || queryLower.includes('3-bed')) {
-      if (totalDays > 6) {
-        warnings.push(`⚠️ ${totalDays} days seems high for 3-bed rewire - typical is 4-5 days (64-80 hours)`);
+      if (totalHours > 56) {
+        warnings.push(`⚠️ ${totalHours} labour hours seems high for 3-bed rewire - typical is 40-56 hours (1 electrician)`);
       }
     } else if (queryLower.includes('4 bed') || queryLower.includes('4-bed')) {
-      if (totalDays > 7.5) {
-        warnings.push(`⚠️ ${totalDays} days seems high for 4-bed rewire - typical is 5-6 days (80-96 hours)`);
+      if (totalHours > 72) {
+        warnings.push(`⚠️ ${totalHours} labour hours seems high for 4-bed rewire - typical is 56-72 hours (1 electrician)`);
+      }
+    } else if (queryLower.includes('5 bed') || queryLower.includes('5-bed')) {
+      if (totalHours > 96) {
+        warnings.push(`⚠️ ${totalHours} labour hours seems high for 5-bed rewire - typical is 72-96 hours (1 electrician)`);
       }
     }
   }
@@ -313,15 +320,15 @@ export function validateTimescales(estimate: any, query: string): string[] {
     }
   }
   
-  // Check labour hours vs days consistency (2-person team = 16 hours per day)
+  // Check labour hours vs days consistency (1 electrician = 8 hours per day)
   if (totalDays > 0 && totalHours > 0) {
-    const expectedHoursMin = totalDays * 14; // Allow some variation (7 hours/person/day)
-    const expectedHoursMax = totalDays * 18; // Allow some variation (9 hours/person/day)
+    const expectedHoursMin = totalDays * 6; // Allow some variation (6 hours/day minimum)
+    const expectedHoursMax = totalDays * 10; // Allow some variation (10 hours/day maximum)
     
     if (totalHours < expectedHoursMin) {
-      warnings.push(`⚠️ Labour hours (${totalHours}h) seem low for ${totalDays} days - check team size assumptions`);
+      warnings.push(`⚠️ Labour hours (${totalHours}h) seem low for ${totalDays} days - check if days calculated correctly`);
     } else if (totalHours > expectedHoursMax) {
-      warnings.push(`⚠️ Labour hours (${totalHours}h) seem high for ${totalDays} days - typical is 16 hours/day for 2-person team`);
+      warnings.push(`⚠️ Labour hours (${totalHours}h) seem high for ${totalDays} days - typical is 8 hours/day for 1 electrician`);
     }
   }
   
