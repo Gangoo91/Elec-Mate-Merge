@@ -368,7 +368,7 @@ OUTPUT STRUCTURE (JSON):
 REQUIREMENTS:
 - ⚠️ USE THE TRADE PRICES LISTED ABOVE - they are accurate 2025 trade prices
 - Only use database pricing intelligence for specialist/unusual items not in the list above
-- If using database prices, remember they are LIST prices - apply 40% trade discount
+- If using database prices, remember they are LIST prices - apply 20% trade discount
 - Include 10% cable waste and 5% materials contingency
 - Labour rates: Electrician £${request.businessSettings?.labourRate || 45}/hr
 - Regional multiplier: ${getRegionalMultiplier(request.region || 'other')}x
