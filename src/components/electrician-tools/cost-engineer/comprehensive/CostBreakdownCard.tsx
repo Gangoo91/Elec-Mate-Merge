@@ -209,11 +209,11 @@ const CostBreakdownCard = ({
                   <div className="p-3 rounded-lg bg-muted/30">
                     <div className="font-medium mb-2">Comparison to Market</div>
                     <div className="space-y-1 text-xs">
-                      <div className="flex justify-between opacity-50">
+                      <div className="flex justify-between opacity-90">
                         <span>Apprentice rate:</span>
                         <span>£{MARKET_RATES_2025.hourlyRates.apprentice.min}-{MARKET_RATES_2025.hourlyRates.apprentice.max}/hr</span>
                       </div>
-                      <div className="flex justify-between opacity-50">
+                      <div className="flex justify-between opacity-90">
                         <span>Improver rate:</span>
                         <span>£{MARKET_RATES_2025.hourlyRates.improver.min}-{MARKET_RATES_2025.hourlyRates.improver.max}/hr</span>
                       </div>
@@ -221,11 +221,11 @@ const CostBreakdownCard = ({
                         <span>Qualified rate:</span>
                         <span>£{MARKET_RATES_2025.hourlyRates.qualified.min}-{MARKET_RATES_2025.hourlyRates.qualified.max}/hr ✓</span>
                       </div>
-                      <div className="flex justify-between opacity-50">
+                      <div className="flex justify-between opacity-90">
                         <span>Experienced:</span>
                         <span>£{MARKET_RATES_2025.hourlyRates.experienced.min}-{MARKET_RATES_2025.hourlyRates.experienced.max}/hr</span>
                       </div>
-                      <div className="flex justify-between opacity-50">
+                      <div className="flex justify-between opacity-90">
                         <span>Specialist:</span>
                         <span>£{MARKET_RATES_2025.hourlyRates.specialist.min}-{MARKET_RATES_2025.hourlyRates.specialist.max}/hr</span>
                       </div>
@@ -276,19 +276,19 @@ const CostBreakdownCard = ({
                           <span>£{(MARKET_RATES_2025.businessCosts.fuel + MARKET_RATES_2025.businessCosts.commercialInsurance + MARKET_RATES_2025.businessCosts.maintenance) / 12}/mo</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-white/80">Tool maintenance & replacement:</span>
+                          <span>Tool maintenance & replacement:</span>
                           <span>£{MARKET_RATES_2025.businessCosts.toolsReplacement / 12}/mo</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-white/80">Public liability insurance:</span>
+                          <span>Public liability insurance:</span>
                           <span>£{(MARKET_RATES_2025.businessCosts.publicLiabilityInsurance / 12).toFixed(0)}/mo</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-white/80">Professional memberships:</span>
+                          <span>Professional memberships:</span>
                           <span>£{(MARKET_RATES_2025.businessCosts.niceicMembership / 12).toFixed(0)}/mo</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-white/80">Software & subscriptions:</span>
+                          <span>Software & subscriptions:</span>
                           <span>£{((MARKET_RATES_2025.businessCosts.eicrsoftware + MARKET_RATES_2025.businessCosts.cloudStorage + MARKET_RATES_2025.businessCosts.businessApps) / 12).toFixed(0)}/mo</span>
                         </div>
                         <div className="flex justify-between pt-1 border-t border-border mt-2 font-medium">
@@ -302,11 +302,11 @@ const CostBreakdownCard = ({
                       <div className="font-medium mb-2">This Job's Share</div>
                       <div className="space-y-1 text-xs">
                         <div className="flex justify-between">
-                          <span className="text-white/80">Job duration:</span>
+                          <span>Job duration:</span>
                           <span>{calculatedJobDuration.toFixed(1)} days</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-white/80">Daily overhead rate:</span>
+                          <span>Daily overhead rate:</span>
                           <span>£{(overheadTotal / calculatedJobDuration).toFixed(2)}/day</span>
                         </div>
                         <div className="flex justify-between pt-1 border-t border-border mt-2 font-medium">
@@ -324,7 +324,7 @@ const CostBreakdownCard = ({
                       <div className="text-xs font-medium text-destructive">
                         What happens if you don't charge this:
                       </div>
-                      <ul className="text-xs text-white/80 space-y-0.5 mt-1">
+                      <ul className="text-xs text-white space-y-0.5 mt-1">
                         <li>• Your business runs at a loss</li>
                         <li>• Can't afford to maintain equipment</li>
                         <li>• Can't reinvest in training or tools</li>
@@ -344,7 +344,7 @@ const CostBreakdownCard = ({
                 <AlertTriangle className="h-4 w-4 text-yellow-500" />
                 <div>
                   <div className="font-medium">Contingency</div>
-                  <div className="text-xs text-white/80">
+                  <div className="text-xs text-white">
                     {contingencyPercent}% buffer
                   </div>
                 </div>
@@ -384,19 +384,19 @@ const CostBreakdownCard = ({
                     <div className="font-medium mb-2">Industry Standards</div>
                     <div className="space-y-1 text-xs">
                       <div className="flex justify-between">
-                        <span className="text-white/80">Simple jobs (new build):</span>
+                        <span>Simple jobs (new build):</span>
                         <span>3-5%</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-white/80">Standard domestic:</span>
+                        <span>Standard domestic:</span>
                         <span>5-10%</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-white/80">Renovation/older property:</span>
+                        <span>Renovation/older property:</span>
                         <span>10-15%</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-white/80">Complex commercial:</span>
+                        <span>Complex commercial:</span>
                         <span>15-20%</span>
                       </div>
                       <div className="flex justify-between pt-1 border-t border-border mt-2 font-medium">
@@ -408,20 +408,20 @@ const CostBreakdownCard = ({
                   
                   <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
                     <div className="font-medium mb-1 text-blue-500">💡 Real-World Example</div>
-                    <p className="text-xs text-muted-foreground italic">
+                    <p className="text-xs text-white italic">
                       "You open a ceiling to find old cloth-wrapped wiring that needs replacing. The contingency covers this extra work without awkward mid-job price negotiations."
                     </p>
                   </div>
                   
                   <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20">
                     <div className="font-medium mb-1 text-destructive">Without Contingency:</div>
-                    <ul className="text-xs text-muted-foreground space-y-0.5">
+                    <ul className="text-xs text-white space-y-0.5">
                       <li>• Every surprise becomes an argument</li>
                       <li>• You absorb costs or look unprofessional</li>
                       <li>• Client trust is damaged by price increases</li>
                       <li>• Projects run over budget causing disputes</li>
                     </ul>
-                    <p className="text-xs text-muted-foreground mt-2 italic">
+                    <p className="text-xs text-white mt-2 italic">
                       A contingency protects BOTH parties and maintains professional standards.
                     </p>
                   </div>
@@ -437,7 +437,7 @@ const CostBreakdownCard = ({
                 <Target className="h-5 w-5 text-elec-yellow" />
                 <div>
                   <div className="font-bold text-lg">Break-even Point</div>
-                  <div className="text-xs text-white/80">
+                  <div className="text-xs text-white">
                     Minimum to cover costs
                   </div>
                 </div>
@@ -475,22 +475,22 @@ const CostBreakdownCard = ({
                   <div className="p-3 rounded-lg bg-muted/30">
                     <div className="font-medium mb-2">What's Included</div>
                     <div className="space-y-1 text-xs">
-                      <div className="flex justify-between">
-                        <span className="text-white/80">All materials:</span>
+                        <div className="flex justify-between">
+                        <span>All materials:</span>
                         <span>£{materialsWithMarkup.toFixed(2)}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-white/80">All labour costs:</span>
+                        <span>All labour costs:</span>
                         <span>£{labourTotal.toFixed(2)}</span>
                       </div>
                       {overheadTotal > 0 && (
                         <div className="flex justify-between">
-                          <span className="text-white/80">Business overheads:</span>
+                          <span>Business overheads:</span>
                           <span>£{overheadTotal.toFixed(2)}</span>
                         </div>
                       )}
                       <div className="flex justify-between">
-                        <span className="text-white/80">Contingency buffer:</span>
+                        <span>Contingency buffer:</span>
                         <span>£{contingencyAmount.toFixed(2)}</span>
                       </div>
                       <div className="flex justify-between pt-1 border-t border-border mt-2 font-bold">
@@ -503,7 +503,7 @@ const CostBreakdownCard = ({
                   <div className="p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                     <div className="font-medium mb-2">To Make a Living</div>
                     <div className="space-y-1 text-xs">
-                      <div className="flex justify-between opacity-50">
+                      <div className="flex justify-between opacity-90">
                         <span>Break-even (0% profit):</span>
                         <span>£{breakEven.toFixed(2)} ❌</span>
                       </div>
@@ -524,18 +524,18 @@ const CostBreakdownCard = ({
                   
                   <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
                     <div className="font-medium mb-1 text-blue-500">💡 Why Profit Matters</div>
-                    <p className="text-xs text-muted-foreground mb-2">
+                    <p className="text-xs text-white mb-2">
                       Profit is your personal income, business growth fund, and financial security. Without profit, you're just moving money around while working for your suppliers and landlords.
                     </p>
                     <div className="text-xs font-medium">Industry Reality:</div>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-white mt-1">
                       Many electricians undercharge and work below break-even without realizing it. This leads to burnout, inability to pay yourself, no training budget, and business failure within 2-3 years.
                     </p>
                   </div>
                   
                   <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                     <div className="font-bold text-green-500 mb-1">✓ Always quote ABOVE break-even</div>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-white">
                       Add appropriate profit margin for your market, circumstances, and business sustainability. Your expertise and professional service deserve fair compensation.
                     </p>
                   </div>

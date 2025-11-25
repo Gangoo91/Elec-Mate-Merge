@@ -85,7 +85,7 @@ const ProfitabilityDashboard = ({ profitabilityAnalysis }: ProfitabilityDashboar
           <AlertDescription className="text-sm sm:text-base">
             <span className="font-semibold text-foreground">Break-Even Point: {formatCurrency(breakEven.total)}</span>
             <br />
-            <span className="text-muted-foreground">{breakEven.explanation}</span>
+            <span className="text-white">{breakEven.explanation}</span>
           </AlertDescription>
         </Alert>
 
@@ -104,10 +104,10 @@ const ProfitabilityDashboard = ({ profitabilityAnalysis }: ProfitabilityDashboar
                     {quotingGuidance.minimum.margin}% margin
                   </Badge>
                 </div>
-                <p className="text-xs sm:text-sm text-muted-foreground mb-2">
+                <p className="text-xs sm:text-sm text-white mb-2">
                   {quotingGuidance.minimum.explanation}
                 </p>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <span>Profit: <span className="font-semibold text-yellow-500">{formatCurrency(quotingGuidance.minimum.profit)}</span></span>
                 </div>
               </div>
@@ -115,7 +115,7 @@ const ProfitabilityDashboard = ({ profitabilityAnalysis }: ProfitabilityDashboar
                 <div className="text-2xl sm:text-3xl font-bold text-foreground">
                   {formatCurrency(quotingGuidance.minimum.total)}
                 </div>
-                <div className="text-xs text-muted-foreground">inc. VAT</div>
+                <div className="text-xs text-white">inc. VAT</div>
               </div>
             </div>
           </div>
@@ -137,10 +137,10 @@ const ProfitabilityDashboard = ({ profitabilityAnalysis }: ProfitabilityDashboar
                     {quotingGuidance.target.margin}% margin
                   </Badge>
                 </div>
-                <p className="text-xs sm:text-sm text-muted-foreground mb-2">
+                <p className="text-xs sm:text-sm text-white mb-2">
                   {quotingGuidance.target.explanation}
                 </p>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <span>Profit: <span className="font-semibold text-green-500">{formatCurrency(quotingGuidance.target.profit)}</span></span>
                 </div>
               </div>
@@ -148,7 +148,7 @@ const ProfitabilityDashboard = ({ profitabilityAnalysis }: ProfitabilityDashboar
                 <div className="text-2xl sm:text-3xl font-bold text-green-500">
                   {formatCurrency(quotingGuidance.target.total)}
                 </div>
-                <div className="text-xs text-muted-foreground">inc. VAT</div>
+                <div className="text-xs text-white">inc. VAT</div>
               </div>
             </div>
           </div>
@@ -164,10 +164,10 @@ const ProfitabilityDashboard = ({ profitabilityAnalysis }: ProfitabilityDashboar
                     {quotingGuidance.premium.margin}% margin
                   </Badge>
                 </div>
-                <p className="text-xs sm:text-sm text-muted-foreground mb-2">
+                <p className="text-xs sm:text-sm text-white mb-2">
                   {quotingGuidance.premium.explanation}
                 </p>
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <span>Profit: <span className="font-semibold text-purple-500">{formatCurrency(quotingGuidance.premium.profit)}</span></span>
                 </div>
               </div>
@@ -175,7 +175,7 @@ const ProfitabilityDashboard = ({ profitabilityAnalysis }: ProfitabilityDashboar
                 <div className="text-2xl sm:text-3xl font-bold text-foreground">
                   {formatCurrency(quotingGuidance.premium.total)}
                 </div>
-                <div className="text-xs text-muted-foreground">inc. VAT</div>
+                <div className="text-xs text-white">inc. VAT</div>
               </div>
             </div>
           </div>
@@ -197,7 +197,7 @@ const ProfitabilityDashboard = ({ profitabilityAnalysis }: ProfitabilityDashboar
                   <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center shrink-0 mt-0.5">
                     <span className="text-xs font-bold text-elec-yellow">{idx + 1}</span>
                   </div>
-                  <p className="text-sm text-muted-foreground flex-1">{rec}</p>
+                  <p className="text-sm text-white flex-1">{rec}</p>
                 </div>
               ))}
             </div>

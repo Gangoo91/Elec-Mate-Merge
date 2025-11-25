@@ -294,15 +294,15 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     
                     <div>
                       <p className="font-medium text-xs">Current Quote: {formatCurrency(recommendedPrice)}</p>
-                      <p className="text-xs text-white/80">Profit: {formatCurrency(profit)} ({margin.toFixed(1)}% margin)</p>
-                      <p className="text-xs text-white/80 mt-2">
+                      <p className="text-xs text-white">Profit: {formatCurrency(profit)} ({margin.toFixed(1)}% margin)</p>
+                      <p className="text-xs text-white mt-2">
                         This {margin.toFixed(1)}% margin is my business income for living expenses, tool replacement, and ongoing training.
                       </p>
                     </div>
                     
                     <div>
                       <p className="font-medium text-xs mb-1">Industry standard margins:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white/80">
+                      <ul className="text-xs space-y-0.5 pl-4 text-white">
                         <li>• Budget work: 10-15% (tight)</li>
                         <li>• Professional work: 20-30% (healthy)</li>
                         <li>• Specialist work: 30-40% (premium)</li>
@@ -318,7 +318,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                         <li>• Offer payment terms</li>
                       </ul>
                       <p className="font-medium text-xs text-destructive mt-2 mb-1">What I can't do:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white/80">
+                      <ul className="text-xs space-y-0.5 pl-4 text-white">
                         <li>• Work below break-even (I'd lose money)</li>
                         <li>• Cut corners on safety</li>
                         <li>• Use substandard materials</li>
@@ -356,7 +356,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     
                     <div>
                       <p className="font-medium text-destructive mb-1">❌ If you supply materials:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white/80">
+                      <ul className="text-xs space-y-0.5 pl-4 text-white">
                         <li>• No warranty if materials are faulty</li>
                         <li>• No guarantee they're correct for the job</li>
                         <li>• Delays if wrong items or missing parts</li>
@@ -372,7 +372,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     
                     <div>
                       <p className="font-medium text-xs mb-1">The {materialsMarkup.toFixed(0)}% markup covers:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white/80">
+                      <ul className="text-xs space-y-0.5 pl-4 text-white">
                         <li>• Expertise selecting correct items</li>
                         <li>• Trade supplier access</li>
                         <li>• Warranty and returns handling</li>
@@ -383,7 +383,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     
                     <div className="bg-green-500/10 border border-green-500/20 p-2 rounded">
                       <p className="font-medium text-xs mb-1">Trade pricing benefit:</p>
-                      <p className="text-xs text-white/80">My trade accounts get 25-40% off retail prices. You'd likely pay MORE buying retail yourself.</p>
+                      <p className="text-xs text-white">My trade accounts get 25-40% off retail prices. You'd likely pay MORE buying retail yourself.</p>
                     </div>
                     
                     <p className="pt-2 font-medium text-xs">"Recommendation: Keep materials included for warranty protection and to avoid delays. This protects both of us."</p>
@@ -423,7 +423,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     
                     <div>
                       <p className="font-medium text-xs mb-1">✓ What this rate covers:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white/80">
+                      <ul className="text-xs space-y-0.5 pl-4 text-white">
                         <li>• Years of training and apprenticeship</li>
                         <li>• 18th Edition BS7671:2018+A3:2024 qualification</li>
                         <li>• NICEIC/NAPIT membership (£450-520/year)</li>
@@ -436,7 +436,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     
                     <div>
                       <p className="font-medium text-xs mb-1">UK Market Rates 2025:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white/80">
+                      <ul className="text-xs space-y-0.5 pl-4 text-white">
                         <li>• Apprentice: £{marketRate.min - 12}-{marketRate.min - 6}/hour</li>
                         <li>• Improver: £{marketRate.min - 6}-{marketRate.min}/hour</li>
                         <li>• Qualified: £{marketRate.min}-{marketRate.max}/hour ← You're here</li>
@@ -448,7 +448,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     
                     <div>
                       <p className="font-medium text-xs mb-1">Compare to other trades:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white/80">
+                      <ul className="text-xs space-y-0.5 pl-4 text-white">
                         <li>• Plumber: £40-80/hour</li>
                         <li>• Gas engineer: £50-90/hour</li>
                         <li>• Builder: £35-60/hour</li>

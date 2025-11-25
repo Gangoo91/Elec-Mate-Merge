@@ -95,7 +95,7 @@ const AlternativeQuotesPanel = ({ alternatives }: AlternativeQuotesPanelProps) =
                     <Check className="h-3 w-3" />
                   </Badge>
                 )}
-                <Icon className={`h-6 w-6 ${isSelected ? color : 'text-muted-foreground'}`} />
+                <Icon className={`h-6 w-6 ${isSelected ? color : 'text-white'}`} />
                 <div className="text-center">
                   <p className={`mobile-small-text font-bold ${isSelected ? 'text-foreground' : 'text-elec-light'}`}>
                     {label}
