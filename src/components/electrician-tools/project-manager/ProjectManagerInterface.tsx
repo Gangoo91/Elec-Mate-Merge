@@ -292,12 +292,12 @@ const ProjectManagerInterface = () => {
       {/* Template Library - Collapsed */}
       <CollapsibleFormSection 
         title="Start from Template" 
-        subtitle="Pre-built project plans to customize"
+        subtitle="Pre-built project plans to customise"
         badge="optional"
         icon={<FileText className="h-5 w-5" />}
         defaultOpen={false}
       >
-        <TemplateLibrary onSelectTemplate={handleTemplateSelect} />
+        <TemplateLibrary projectType={selectedType} onSelectTemplate={handleTemplateSelect} />
       </CollapsibleFormSection>
 
       {/* Scope Checklist - Collapsed */}

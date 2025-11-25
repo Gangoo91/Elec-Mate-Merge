@@ -53,30 +53,31 @@ export const ScopeChecklist = ({ onScopeChange, initialScope = [] }: ScopeCheckl
   };
 
   return (
-    <Card>
-      <CardHeader className="pb-4">
-        <CardTitle className="text-lg">Project Scope</CardTitle>
-        <CardDescription>
+    <div className="border border-border/50 rounded-lg bg-card">
+      <div className="p-4 sm:p-6 border-b border-border/30">
+        <h3 className="text-base sm:text-lg font-semibold text-foreground">Project Scope</h3>
+        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
           Select the work items included in this project
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
+        </p>
+      </div>
+      <div className="p-4 sm:p-6 space-y-5 sm:space-y-6">
         {Object.entries(groupedByCategory).map(([category, items]: [string, any]) => (
           <div key={category} className="space-y-3">
             <h4 className="text-sm font-medium text-muted-foreground">
               {categoryLabels[category] || category}
             </h4>
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {items.map((item: any) => (
-                <div key={item.id} className="flex items-center space-x-3">
+                <div key={item.id} className="flex items-center space-x-3 touch-manipulation min-h-[44px] py-1">
                   <Checkbox
                     id={item.id}
                     checked={selectedItems.includes(item.id)}
                     onCheckedChange={() => handleToggle(item.id)}
+                    className="h-5 w-5"
                   />
                   <Label
                     htmlFor={item.id}
-                    className="text-sm font-normal cursor-pointer"
+                    className="text-sm font-normal cursor-pointer leading-relaxed flex-1"
                   >
                     {item.label}
                   </Label>
@@ -85,7 +86,7 @@ export const ScopeChecklist = ({ onScopeChange, initialScope = [] }: ScopeCheckl
             </div>
           </div>
         ))}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };

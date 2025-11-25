@@ -7,12 +7,13 @@ import { EditableProjectPlan } from '@/types/projectPlan';
 import { v4 as uuidv4 } from 'uuid';
 
 interface TemplateLibraryProps {
+  projectType: 'domestic' | 'commercial' | 'industrial';
   onSelectTemplate: (plan: Partial<EditableProjectPlan>) => void;
 }
 
-export const TemplateLibrary = ({ onSelectTemplate }: TemplateLibraryProps) => {
+export const TemplateLibrary = ({ projectType, onSelectTemplate }: TemplateLibraryProps) => {
   const { data: templates, isLoading, error } = useQuery({
-    queryKey: ['project-templates'],
+    queryKey: ['project-templates', projectType],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('project_templates')
@@ -20,7 +21,15 @@ export const TemplateLibrary = ({ onSelectTemplate }: TemplateLibraryProps) => {
         .order('usage_count', { ascending: false });
 
       if (error) throw error;
-      return data;
+      
+      // Filter templates by project type
+      return data?.filter(template => {
+        const type = template.template_type || '';
+        if (projectType === 'domestic') return type.startsWith('domestic_');
+        if (projectType === 'commercial') return type.startsWith('commercial_');
+        if (projectType === 'industrial') return type === 'industrial';
+        return false;
+      }) || [];
     },
   });
 
@@ -77,9 +86,9 @@ export const TemplateLibrary = ({ onSelectTemplate }: TemplateLibraryProps) => {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {[1, 2, 3, 4, 5, 6].map((i) => (
-          <Skeleton key={i} className="h-64" />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        {[1, 2, 3].map((i) => (
+          <Skeleton key={i} className="h-56 sm:h-64" />
         ))}
       </div>
     );
@@ -101,8 +110,10 @@ export const TemplateLibrary = ({ onSelectTemplate }: TemplateLibraryProps) => {
 
   if (!templates || templates.length === 0) {
     return (
-      <div className="p-6 border border-border/40 rounded-lg text-center">
-        <p className="text-sm text-muted-foreground">No templates available yet.</p>
+      <div className="p-4 sm:p-6 border border-border/40 rounded-lg text-center">
+        <p className="text-sm text-muted-foreground">
+          No {projectType} templates available yet.
+        </p>
       </div>
     );
   }
@@ -127,14 +138,19 @@ export const TemplateLibrary = ({ onSelectTemplate }: TemplateLibraryProps) => {
     'multi-trade': 'Multi-Trade Projects',
   };
 
+  // If only one category, don't show the heading
+  const showCategoryHeadings = Object.keys(grouped).length > 1;
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {Object.entries(grouped).map(([type, typeTemplates]: [string, any]) => (
         <div key={type} className="space-y-3">
-          <h3 className="text-lg font-semibold text-foreground">
-            {typeLabels[type] || type.charAt(0).toUpperCase() + type.slice(1)}
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {showCategoryHeadings && (
+            <h3 className="text-base sm:text-lg font-semibold text-foreground">
+              {typeLabels[type] || type.charAt(0).toUpperCase() + type.slice(1)}
+            </h3>
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {typeTemplates.map((template: any) => (
               <TemplateCard
                 key={template.id}
