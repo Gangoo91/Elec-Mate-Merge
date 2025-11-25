@@ -39,6 +39,45 @@ interface DesignReviewEditorProps {
 const fmt = (n: unknown, dp = 1, fallback = '—') => 
   (typeof n === 'number' && !isNaN(n) ? n.toFixed(dp) : fallback);
 
+// Transform Installation Agent's testingRequirements to expectedTestResults format
+const transformInstallationTestingToExpectedResults = (testingReqs: any): any => {
+  if (!testingReqs?.tests || !Array.isArray(testingReqs.tests)) return null;
+  
+  const result: any = {
+    r1r2: { at20C: '', at70C: '', calculation: '' },
+    zs: { calculated: '', maxPermitted: '', compliant: 'Yes' },
+    insulationResistance: { testVoltage: '500V DC', minResistance: '≥1.0MΩ' },
+    polarity: 'Verify correct polarity at all terminations',
+    rcdTest: { at1x: '≤300ms @ 30mA', at5x: '≤40ms @ 150mA' }
+  };
+  
+  // Extract procedural guidance from Installation Agent
+  testingReqs.tests.forEach((test: any) => {
+    const testName = test.testName || '';
+    const procedure = test.procedure || '';
+    const expectedReading = test.expectedReading || '';
+    const acceptanceCriteria = test.acceptanceCriteria || '';
+    
+    if (testName.toLowerCase().includes('continuity') || testName.toLowerCase().includes('r1+r2')) {
+      if (procedure) result.r1r2.calculation = procedure;
+    }
+    if (testName.toLowerCase().includes('loop') || testName.toLowerCase().includes('zs')) {
+      if (acceptanceCriteria) result.zs.maxPermitted = acceptanceCriteria;
+    }
+    if (testName.toLowerCase().includes('insulation')) {
+      if (expectedReading) result.insulationResistance.minResistance = expectedReading;
+    }
+    if (testName.toLowerCase().includes('polarity')) {
+      if (procedure) result.polarity = procedure;
+    }
+    if (testName.toLowerCase().includes('rcd')) {
+      result.rcdTest = { ...result.rcdTest, ...(test.details || {}) };
+    }
+  });
+  
+  return result;
+};
+
 export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps) => {
   const navigate = useNavigate();
   const [selectedCircuit, setSelectedCircuit] = useState(0);
@@ -917,26 +956,55 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         },
         
         // CRITICAL: Map circuits with all nested data explicitly preserved
-        circuits: (design.circuits || []).map(circuit => ({
-          ...circuit,
-          // Ensure critical fields are present with proper fallbacks
-          cableType: circuit.cableType || getDefaultCableType(
-            design.installationType || 'domestic',
-            circuit.cableSize || 1.5,
-            circuit.cpcSize || 1.0
-          ),
-          installationMethod: circuit.installationMethod || 
-            getDefaultInstallationMethod(design.installationType || 'domestic'),
-          // Preserve all nested objects
-          justifications: circuit.justifications || {},
-          calculations: circuit.calculations || {},
-          protectionDevice: circuit.protectionDevice || {},
-          expectedTestResults: circuit.expectedTests || circuit.expectedTestResults || {},
-          deratingFactors: circuit.deratingFactors || {},
-          faultCurrentAnalysis: circuit.faultCurrentAnalysis || {},
-          earthingRequirements: circuit.earthingRequirements || {},
-          installationGuidance: circuit.installationGuidance || {}
-        })),
+        circuits: (design.circuits || []).map((circuit, index) => {
+          // Get circuit-specific installation guidance from top-level installationGuidance
+          const circuitKey = `circuit_${index}`;
+          const circuitGuidanceData = design.installationGuidance?.[circuitKey]?.guidance;
+          
+          // Merge expectedTests from Circuit Designer with testingRequirements from Installation Agent
+          const mergedExpectedTests = {
+            ...(circuit.expectedTests || circuit.expectedTestResults || {}),
+            ...(circuitGuidanceData?.testingRequirements 
+              ? transformInstallationTestingToExpectedResults(circuitGuidanceData.testingRequirements)
+              : {})
+          };
+          
+          return {
+            ...circuit,
+            // Ensure critical fields are present with proper fallbacks
+            cableType: circuit.cableType || getDefaultCableType(
+              design.installationType || 'domestic',
+              circuit.cableSize || 1.5,
+              circuit.cpcSize || 1.0
+            ),
+            installationMethod: circuit.installationMethod || 
+              circuitGuidanceData?.cableRouting?.[0]?.method ||
+              getDefaultInstallationMethod(design.installationType || 'domestic'),
+            
+            // Use structured guidance for PDF (not the formatted string)
+            installationGuidance: circuit.installationGuidanceStructured || circuitGuidanceData ? {
+              referenceMethod: circuitGuidanceData?.cableRouting?.[0]?.method || 
+                circuit.installationMethod || 
+                getDefaultInstallationMethod(design.installationType || 'domestic'),
+              description: circuitGuidanceData?.cableRouting?.[0]?.description || 
+                'Cable installed as per BS 7671 requirements',
+              clipSpacing: '300mm horizontal, 400mm vertical per manufacturer guidance',
+              practicalTips: circuitGuidanceData?.installationProcedure?.map((s: any) => 
+                s.description || s.title || ''
+              ).filter(Boolean) || [],
+              regulation: circuitGuidanceData?.cableRouting?.[0]?.bsReference || 'BS 7671 Appendix 4'
+            } : {},
+            
+            // Preserve all nested objects with merged test results
+            justifications: circuit.justifications || {},
+            calculations: circuit.calculations || {},
+            protectionDevice: circuit.protectionDevice || {},
+            expectedTestResults: mergedExpectedTests,
+            deratingFactors: circuit.deratingFactors || {},
+            faultCurrentAnalysis: circuit.faultCurrentAnalysis || {},
+            earthingRequirements: circuit.earthingRequirements || {}
+          };
+        }),
         
         // CRITICAL: Use recalculated total load for accuracy
         totalLoad: calculatedTotalLoad,

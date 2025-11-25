@@ -99,6 +99,47 @@ const formatInstallationGuidance = (guidance: any): string => {
   return sections.join('\n---\n\n');
 };
 
+// Transform Installation Agent's testingRequirements to expectedTestResults format
+const transformTestingRequirements = (testingReqs: any): any => {
+  if (!testingReqs?.tests || !Array.isArray(testingReqs.tests)) return undefined;
+  
+  const result: any = {
+    r1r2: { at20C: '', at70C: '', calculation: '' },
+    zs: { calculated: '', maxPermitted: '', compliant: 'Yes' },
+    insulationResistance: { testVoltage: '500V DC', minResistance: '≥1.0MΩ' },
+    polarity: 'Verify correct polarity at all terminations',
+    rcdTest: { at1x: '≤300ms @ 30mA', at5x: '≤40ms @ 150mA' }
+  };
+  
+  // Extract values from structured testing requirements
+  testingReqs.tests.forEach((test: any) => {
+    const testName = test.testName || '';
+    const procedure = test.procedure || '';
+    const expectedReading = test.expectedReading || '';
+    const acceptanceCriteria = test.acceptanceCriteria || '';
+    
+    if (testName.toLowerCase().includes('continuity') || testName.toLowerCase().includes('r1+r2')) {
+      result.r1r2.calculation = procedure;
+      result.r1r2.at70C = expectedReading;
+    }
+    if (testName.toLowerCase().includes('loop') || testName.toLowerCase().includes('zs')) {
+      result.zs.calculated = expectedReading;
+      result.zs.maxPermitted = acceptanceCriteria;
+    }
+    if (testName.toLowerCase().includes('insulation')) {
+      result.insulationResistance.minResistance = expectedReading || result.insulationResistance.minResistance;
+    }
+    if (testName.toLowerCase().includes('polarity')) {
+      result.polarity = procedure || result.polarity;
+    }
+    if (testName.toLowerCase().includes('rcd')) {
+      result.rcdTest = { ...result.rcdTest, ...(test.details || {}) };
+    }
+  });
+  
+  return result;
+};
+
 export const AIInstallationDesigner = () => {
   const [currentView, setCurrentView] = useState<'input' | 'processing' | 'results'>('input');
   const [userRequest, setUserRequest] = useState<string>('');
@@ -221,10 +262,16 @@ export const AIInstallationDesigner = () => {
             calculations: circuit.calculations,
             justifications: circuit.justifications,
             installationMethod: circuit.installationMethod || circuit.installMethod,
-            // Format circuit-specific installation guidance
+            // Format circuit-specific installation guidance for UI display
             installationGuidance: circuitGuidance?.guidance ? 
               formatInstallationGuidance(circuitGuidance.guidance) : 
               undefined,
+            // Pass structured guidance object for PDF consumption
+            installationGuidanceStructured: circuitGuidance?.guidance || undefined,
+            // Transform testingRequirements from Installation Agent into expectedTestResults format
+            ...(circuitGuidance?.guidance?.testingRequirements && {
+              expectedTestResults: transformTestingRequirements(circuitGuidance.guidance.testingRequirements)
+            }),
             reasoning: circuit.reasoning,
             rcdProtected: circuit.rcdProtected,
             circuitNumber: circuit.circuitNumber,
