@@ -74,7 +74,7 @@ export const InstallationStepCard = ({
     )}>
       
       <div className={cn("p-6", isMobile && "p-4")}>
-        <div className="flex items-start gap-4 sm:gap-6">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
           {/* Step number - Touch optimized */}
           <div className="relative flex-shrink-0">
             <div className={cn(
@@ -86,7 +86,7 @@ export const InstallationStepCard = ({
             </div>
           </div>
 
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 w-full min-w-0">
             <div className="space-y-4">
               {/* Title - Inline editing */}
               <div className="flex items-start gap-2">
