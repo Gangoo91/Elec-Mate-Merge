@@ -7,6 +7,7 @@
 import { searchPricingKnowledge, formatPricingContext } from '../_shared/rag-cost-engineer.ts';
 import { searchPracticalWorkIntelligence } from '../_shared/rag-practical-work.ts';
 import { createLogger } from '../_shared/logger.ts';
+import { formatTradePricingPrompt, validatePricing } from '../_shared/uk-trade-pricing-2025.ts';
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
 
@@ -225,12 +226,17 @@ async function callCostEstimationAI(
   request: CostEngineerRequest,
   ragContext: any
 ): Promise<CostEstimate> {
+  // Get accurate trade pricing prompt
+  const tradePricingPrompt = formatTradePricingPrompt();
+
   const systemPrompt = `You are an expert Electrical Cost Engineer for UK installations.
 
 Generate a detailed cost estimate based on BS 7671:2018+A2:2024 and current UK pricing (2025).
 
+${tradePricingPrompt}
+
 KNOWLEDGE BASE PROVIDED:
-- ${ragContext.pricing.length} pricing intelligence results
+- ${ragContext.pricing.length} pricing intelligence results (use for specialist items only)
 - ${ragContext.practicalWork.length} practical work intelligence results
 - Keywords: ${ragContext.keywords.slice(0, 15).join(', ')}
 
@@ -278,7 +284,9 @@ OUTPUT STRUCTURE (JSON):
 }
 
 REQUIREMENTS:
-- Use ACTUAL UK trade prices from knowledge base
+- ⚠️ USE THE TRADE PRICES LISTED ABOVE - they are accurate 2025 trade prices
+- Only use database pricing intelligence for specialist/unusual items not in the list above
+- If using database prices, remember they are LIST prices - apply 40% trade discount
 - Include 10% cable waste and 5% materials contingency
 - Labour rates: Electrician £${request.businessSettings?.labourRate || 45}/hr
 - Regional multiplier: ${getRegionalMultiplier(request.region || 'other')}x
@@ -286,6 +294,7 @@ REQUIREMENTS:
 - Realistic time estimates based on practical work intelligence
 - UK English spelling (metres, colour, earthing)
 - All prices in GBP (£)
+- Compare your total against the benchmarks provided - if significantly higher, review your pricing!
 - Respond in valid JSON only`;
 
   const userPrompt = `Generate cost estimate for: ${request.query}
@@ -378,13 +387,31 @@ ${ragContext.practicalWork.slice(0, 10).map((pw: any, i: number) =>
   console.log(`✅ OpenAI response: ${content.length} chars`);
 
   // Parse JSON
+  let parsedEstimate;
   try {
-    return JSON.parse(content);
+    parsedEstimate = JSON.parse(content);
   } catch (parseError: any) {
     console.error('❌ JSON parse failed:', parseError.message);
     console.error('📋 Raw content (first 500 chars):', content.substring(0, 500));
     throw new Error(`Failed to parse OpenAI JSON: ${parseError.message}`);
   }
+
+  // Validate pricing against benchmarks
+  const pricingWarnings = validatePricing(parsedEstimate);
+  if (pricingWarnings.length > 0) {
+    console.warn('⚠️ Pricing validation warnings:', pricingWarnings);
+    // Add warnings to value engineering suggestions
+    if (!parsedEstimate.valueEngineering) {
+      parsedEstimate.valueEngineering = [];
+    }
+    pricingWarnings.forEach(warning => {
+      if (!parsedEstimate.valueEngineering.includes(warning)) {
+        parsedEstimate.valueEngineering.push(warning);
+      }
+    });
+  }
+
+  return parsedEstimate;
 }
 
 function calculateProfitability(
