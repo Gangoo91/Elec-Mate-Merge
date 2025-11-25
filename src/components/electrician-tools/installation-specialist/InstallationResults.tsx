@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -26,6 +26,8 @@ import { TestingRequirementsTable } from "./TestingRequirementsTable";
 import { JSONSchemaViewer } from "./JSONSchemaViewer";
 import { ProjectMetadataCard } from "./ProjectMetadataCard";
 import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
+import { SectionNavigationTabs } from "./SectionNavigationTabs";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer";
 
 interface ProjectMetadata {
   documentRef: string;
@@ -579,7 +581,7 @@ export const InstallationResults = ({
       />
 
       {/* Installation Steps */}
-      <div>
+      <div id="steps">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-foreground">Installation Procedure ({steps.length} Steps)</h3>
           <MobileButton onClick={addNewStep} variant="outline" size="sm" icon={<Plus className="h-4 w-4" />}>
@@ -601,9 +603,11 @@ export const InstallationResults = ({
       </div>
 
       {/* 📦 NEW: Enhanced Materials List with Quantities */}
-      {fullMethodStatement?.materialsList && fullMethodStatement.materialsList.length > 0 && (
-        <MaterialsListTable materialsList={fullMethodStatement.materialsList} />
-      )}
+      <div id="materials">
+        {fullMethodStatement?.materialsList && fullMethodStatement.materialsList.length > 0 && (
+          <MaterialsListTable materialsList={fullMethodStatement.materialsList} />
+        )}
+      </div>
 
       {/* 🎓 Competency Requirements */}
       {competencyRequirements && competencyRequirements.minimumQualifications && competencyRequirements.minimumQualifications.length > 0 && (
@@ -624,22 +628,26 @@ export const InstallationResults = ({
       )}
 
       {/* ✅ NEW: AI-Generated Testing Requirements */}
-      {fullMethodStatement?.testingRequirements && fullMethodStatement.testingRequirements.length > 0 && (
-        <TestingRequirementsTable testingRequirements={fullMethodStatement.testingRequirements} />
-      )}
+      <div id="testing">
+        {fullMethodStatement?.testingRequirements && fullMethodStatement.testingRequirements.length > 0 && (
+          <TestingRequirementsTable testingRequirements={fullMethodStatement.testingRequirements} />
+        )}
+
+        {/* Testing & Commissioning (Fallback for legacy data) */}
+        {!fullMethodStatement?.testingRequirements && testingProcedures && testingProcedures.length > 0 && (
+          <TestingProceduresSection procedures={testingProcedures} />
+        )}
+      </div>
 
       {/* 📖 BS 7671 Regulatory References - Enhanced for both formats */}
-      {fullMethodStatement?.regulatoryReferences && fullMethodStatement.regulatoryReferences.length > 0 && (
-        <RegulatoryCitationsPanel regulatoryCitations={fullMethodStatement.regulatoryReferences} />
-      )}
-      {regulatoryCitations && regulatoryCitations.length > 0 && !fullMethodStatement?.regulatoryReferences && (
-        <RegulatoryCitationsPanel regulatoryCitations={regulatoryCitations} />
-      )}
-
-      {/* Testing & Commissioning (Fallback for legacy data) */}
-      {!fullMethodStatement?.testingRequirements && testingProcedures && testingProcedures.length > 0 && (
-        <TestingProceduresSection procedures={testingProcedures} />
-      )}
+      <div id="compliance">
+        {fullMethodStatement?.regulatoryReferences && fullMethodStatement.regulatoryReferences.length > 0 && (
+          <RegulatoryCitationsPanel regulatoryCitations={fullMethodStatement.regulatoryReferences} />
+        )}
+        {regulatoryCitations && regulatoryCitations.length > 0 && !fullMethodStatement?.regulatoryReferences && (
+          <RegulatoryCitationsPanel regulatoryCitations={regulatoryCitations} />
+        )}
+      </div>
 
       {/* Equipment Schedule */}
       <EquipmentScheduleSection equipment={equipmentSchedule} />
@@ -650,60 +658,88 @@ export const InstallationResults = ({
         competency={competencyRequirements}
       />
 
-      {/* Action Buttons - Mobile-First Layout */}
-      <div className={cn(
-        "sticky bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-background via-background/98 to-background/90 border-t border-blue-500/20 backdrop-blur-xl shadow-2xl",
-        "md:static md:bg-transparent md:border-0 md:shadow-none",
-        isMobile ? "p-4" : "p-6"
-      )}>
-        <div className={cn(
-          "flex gap-3",
-          isMobile ? "flex-col" : "flex-wrap"
-        )}>
-          {/* Primary CTA - Generate PDF (full width on mobile) */}
-          <MobileButton 
-            onClick={handleExportPDF} 
-            variant="elec" 
-            size={isMobile ? "wide" : "default"}
-            disabled={isGeneratingPDF}
-            className={cn(
-              "shadow-xl hover:shadow-2xl transition-all font-bold touch-manipulation active:scale-95",
-              isMobile ? "h-14 text-base w-full" : "h-12 text-sm"
-            )}
-          >
-            <Download className={cn(isMobile ? "h-6 w-6 mr-2" : "h-5 w-5 mr-2")} />
-            {isGeneratingPDF ? 'Generating PDF...' : 'Generate PDF'}
-          </MobileButton>
+      {/* Section Navigation Tabs */}
+      <SectionNavigationTabs 
+        onNavigate={(sectionId) => {
+          const element = document.getElementById(sectionId);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }}
+      />
 
-          {/* Secondary Actions (side-by-side on mobile) */}
-          <div className={cn(
-            "flex gap-3",
-            isMobile && "w-full"
-          )}>
-            <MobileButton 
-              onClick={() => setShowMetadataForm(!showMetadataForm)} 
-              variant={showMetadataForm ? "default" : "outline"}
+      {/* Action Buttons - Inline at bottom */}
+      <Card className="mt-8">
+        <CardContent className={cn("p-6", isMobile && "p-4")}>
+          <div className="space-y-3">
+            {/* Primary CTA - Generate PDF */}
+            <Button 
+              onClick={handleExportPDF} 
+              variant="default"
+              disabled={isGeneratingPDF}
               className={cn(
-                "font-semibold touch-manipulation active:scale-95",
-                isMobile ? "h-12 flex-1" : "h-12 min-w-[140px]"
+                "w-full font-bold transition-all active:scale-95",
+                isMobile ? "h-14 text-base" : "h-12 text-sm"
               )}
             >
-              {showMetadataForm ? 'Hide' : 'Edit'} Metadata
-            </MobileButton>
-            <MobileButton 
-              onClick={onStartOver} 
-              variant="outline"
-              className={cn(
-                "font-semibold hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50 touch-manipulation active:scale-95",
-                isMobile ? "h-12 flex-1" : "h-12 min-w-[140px]"
-              )}
-            >
-              <RotateCcw className={cn(isMobile ? "h-5 w-5 mr-2" : "h-4 w-4 mr-2")} />
-              Start Over
-            </MobileButton>
+              <Download className={cn(isMobile ? "h-6 w-6 mr-2" : "h-5 w-5 mr-2")} />
+              {isGeneratingPDF ? 'Generating PDF...' : 'Generate PDF'}
+            </Button>
+
+            {/* Secondary Actions */}
+            <div className="flex gap-3">
+              <Button 
+                onClick={() => setShowMetadataForm(!showMetadataForm)} 
+                variant="outline"
+                className={cn(
+                  "flex-1 font-semibold transition-all active:scale-95",
+                  isMobile ? "h-12" : "h-10"
+                )}
+              >
+                {showMetadataForm ? 'Hide' : 'Edit'} Metadata
+              </Button>
+              <Button 
+                onClick={onStartOver} 
+                variant="outline"
+                className={cn(
+                  "flex-1 font-semibold hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50 transition-all active:scale-95",
+                  isMobile ? "h-12" : "h-10"
+                )}
+              >
+                <RotateCcw className={cn(isMobile ? "h-5 w-5 mr-2" : "h-4 w-4 mr-2")} />
+                Start Over
+              </Button>
+            </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
+
+      {/* Metadata Form as Bottom Sheet on Mobile */}
+      {isMobile ? (
+        <Drawer open={showMetadataForm} onOpenChange={setShowMetadataForm}>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>Project Metadata</DrawerTitle>
+              <DrawerDescription>Update project information and contacts</DrawerDescription>
+            </DrawerHeader>
+            <div className="px-4 pb-4 max-h-[80vh] overflow-y-auto">
+              {showMetadataForm && projectMetadata && (
+                <ProjectMetadataForm
+                  metadata={projectMetadata}
+                  onChange={(updated) => setProjectMetadata(updated)}
+                />
+              )}
+            </div>
+          </DrawerContent>
+        </Drawer>
+      ) : (
+        showMetadataForm && projectMetadata && (
+          <ProjectMetadataForm
+            metadata={projectMetadata}
+            onChange={(updated) => setProjectMetadata(updated)}
+          />
+        )
+      )}
     </div>
   );
 };

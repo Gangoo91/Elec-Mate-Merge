@@ -1,10 +1,10 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
-import { Wrench, X, CheckCircle2, Circle, Loader2, Search, Zap, Clock, ShieldCheck, FileText } from 'lucide-react';
+import { Wrench, X, CheckCircle2, Search, Zap, Clock, ShieldCheck, FileText } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { InstallationProjectDetails } from "@/types/installation-method";
 import { AIQualityConfidenceBadge } from "./AIQualityConfidenceBadge";
+import { cn } from "@/lib/utils";
 
 interface InstallationProcessingViewProps {
   originalQuery?: string;
@@ -159,77 +159,148 @@ export const InstallationProcessingView = ({ originalQuery, projectDetails, prog
             )}
           </div>
 
-          <div className="space-y-3">
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Progress</span>
-              <span className="font-medium">{progressValue}%</span>
-            </div>
-            <Progress value={progressValue} className="h-2" />
-            
-            {currentStep && displayProgress && (
-              <div className="pt-3 mt-3 border-t border-border text-xs text-muted-foreground">
-                <p className="flex items-center gap-2">
-                  <span className="inline-block w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></span>
-                  {currentStep}
-                </p>
+          <div className="space-y-4">
+            {/* Circular Progress Indicator */}
+            <div className="flex flex-col items-center gap-4 py-6">
+              <div className="relative w-32 h-32">
+                {/* Background circle */}
+                <svg className="w-full h-full -rotate-90">
+                  <circle
+                    cx="64"
+                    cy="64"
+                    r="56"
+                    stroke="currentColor"
+                    strokeWidth="8"
+                    fill="none"
+                    className="text-muted/30"
+                  />
+                  {/* Progress circle */}
+                  <circle
+                    cx="64"
+                    cy="64"
+                    r="56"
+                    stroke="currentColor"
+                    strokeWidth="8"
+                    fill="none"
+                    strokeDasharray={`${2 * Math.PI * 56}`}
+                    strokeDashoffset={`${2 * Math.PI * 56 * (1 - progressValue / 100)}`}
+                    className="text-elec-yellow transition-all duration-500"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                {/* Percentage in center */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-3xl font-black text-foreground">{progressValue}%</span>
+                </div>
               </div>
-            )}
 
-            {/* Time Statistics Grid */}
-            <div className="grid grid-cols-3 gap-4 pt-4 mt-4 border-t border-border">
-              <div className="text-center">
-                <div className="text-xs text-muted-foreground mb-1">Elapsed Time</div>
-                <div className="text-2xl font-bold text-purple-400">{formatTime(elapsedTime)}</div>
+              {/* Current step message */}
+              {currentStep && displayProgress && (
+                <div className="text-center">
+                  <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
+                    <span className="inline-block w-2 h-2 bg-elec-yellow rounded-full animate-pulse"></span>
+                    {currentStep}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Time Statistics - Improved Display */}
+            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border">
+              <div className="text-center p-3 bg-muted/30 rounded-lg">
+                <div className="text-xs text-muted-foreground mb-1">Elapsed</div>
+                <div className={cn(
+                  "text-3xl font-black transition-all",
+                  "bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
+                )}>
+                  {formatTime(elapsedTime)}
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-xs text-muted-foreground mb-1">Estimated Remaining</div>
-                <div className="text-2xl font-bold text-pink-400">{formatTime(estimatedRemaining)}</div>
-              </div>
-              <div className="text-center">
-                <div className="text-xs text-muted-foreground mb-1">Total Estimate</div>
-                <div className="text-2xl font-bold text-purple-400">{formatTime(estimatedTotal)}</div>
+              <div className="text-center p-3 bg-muted/30 rounded-lg">
+                <div className="text-xs text-muted-foreground mb-1">Remaining</div>
+                <div className={cn(
+                  "text-3xl font-black transition-all",
+                  "bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+                )}>
+                  {formatTime(estimatedRemaining)}
+                </div>
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* What's Happening */}
+      {/* Stage Cards with Visual Indicators */}
       <Card className="bg-muted/50">
         <CardContent className="p-6">
           <h4 className="font-semibold mb-4">What's Happening?</h4>
-          <div className="space-y-3">
-            <div className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
-              displayProgress?.stage === 'rag' ? 'bg-purple-500/10' : ''
-            }`}>
-              <Search className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+          <div className="space-y-2">
+            <div className={cn(
+              "flex items-start gap-3 p-3 rounded-lg transition-all",
+              displayProgress?.stage === 'rag' ? 'bg-elec-yellow/10 border-2 border-elec-yellow/30' : 'border-2 border-transparent'
+            )}>
+              {displayProgress && allStages.findIndex(s => s.stage === 'rag') < currentStageIndex ? (
+                <CheckCircle2 className="h-5 w-5 text-success mt-0.5 shrink-0" />
+              ) : (
+                <Search className={cn(
+                  "h-5 w-5 mt-0.5 shrink-0",
+                  displayProgress?.stage === 'rag' ? 'text-elec-yellow animate-pulse' : 'text-muted-foreground'
+                )} />
+              )}
               <div>
                 <div className="font-medium text-foreground">Searching BS 7671 installation requirements</div>
                 <div className="text-sm text-muted-foreground">Finding relevant cable routing, protection, and accessory regulations</div>
               </div>
             </div>
-            <div className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
-              displayProgress?.stage === 'ai' ? 'bg-purple-500/10' : ''
-            }`}>
-              <Zap className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+            
+            <div className={cn(
+              "flex items-start gap-3 p-3 rounded-lg transition-all",
+              displayProgress?.stage === 'ai' ? 'bg-elec-yellow/10 border-2 border-elec-yellow/30' : 'border-2 border-transparent'
+            )}>
+              {displayProgress && allStages.findIndex(s => s.stage === 'ai') < currentStageIndex ? (
+                <CheckCircle2 className="h-5 w-5 text-success mt-0.5 shrink-0" />
+              ) : (
+                <Zap className={cn(
+                  "h-5 w-5 mt-0.5 shrink-0",
+                  displayProgress?.stage === 'ai' ? 'text-elec-yellow animate-pulse' : 'text-muted-foreground'
+                )} />
+              )}
               <div>
                 <div className="font-medium text-foreground">Calculating cable sizes and protection</div>
                 <div className="text-sm text-muted-foreground">Determining conductor CSA, voltage drop, and protective device ratings</div>
               </div>
             </div>
-            <div className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
-              displayProgress?.stage === 'generation' ? 'bg-purple-500/10' : ''
-            }`}>
-              <Clock className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+            
+            <div className={cn(
+              "flex items-start gap-3 p-3 rounded-lg transition-all",
+              displayProgress?.stage === 'generation' ? 'bg-elec-yellow/10 border-2 border-elec-yellow/30' : 'border-2 border-transparent'
+            )}>
+              {displayProgress && allStages.findIndex(s => s.stage === 'generation') < currentStageIndex ? (
+                <CheckCircle2 className="h-5 w-5 text-success mt-0.5 shrink-0" />
+              ) : (
+                <Clock className={cn(
+                  "h-5 w-5 mt-0.5 shrink-0",
+                  displayProgress?.stage === 'generation' ? 'text-elec-yellow animate-pulse' : 'text-muted-foreground'
+                )} />
+              )}
               <div>
                 <div className="font-medium text-foreground">Generating step-by-step procedures</div>
                 <div className="text-sm text-muted-foreground">Creating detailed installation instructions with first fix and second fix</div>
               </div>
             </div>
-            <div className={`flex items-start gap-3 p-3 rounded-lg transition-colors ${
-              displayProgress?.stage === 'validation' ? 'bg-purple-500/10' : ''
-            }`}>
-              <ShieldCheck className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+            
+            <div className={cn(
+              "flex items-start gap-3 p-3 rounded-lg transition-all",
+              displayProgress?.stage === 'validation' ? 'bg-elec-yellow/10 border-2 border-elec-yellow/30' : 'border-2 border-transparent'
+            )}>
+              {displayProgress && allStages.findIndex(s => s.stage === 'validation') < currentStageIndex ? (
+                <CheckCircle2 className="h-5 w-5 text-success mt-0.5 shrink-0" />
+              ) : (
+                <ShieldCheck className={cn(
+                  "h-5 w-5 mt-0.5 shrink-0",
+                  displayProgress?.stage === 'validation' ? 'text-elec-yellow animate-pulse' : 'text-muted-foreground'
+                )} />
+              )}
               <div>
                 <div className="font-medium text-foreground">Verifying regulation compliance</div>
                 <div className="text-sm text-muted-foreground">Cross-checking with BS 7671 requirements and certification needs</div>
