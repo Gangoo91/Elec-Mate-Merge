@@ -94,12 +94,12 @@ serve(async (req) => {
       ze: design.consumerUnit.incomingSupply.ze || '0.35',
       pscc: design.consumerUnit.incomingSupply.pscc || '16',
       totalLoad: design.totalLoad / 1000, // Convert to kW
-      diversifiedLoad: design.diversityBreakdown?.diversifiedLoad || design.totalLoad / 1000,
-      diversityFactorPercent: design.diversityBreakdown?.overallDiversityFactor 
+      diversifiedLoad: design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || design.totalLoad / 1000,
+      diversityFactorPercent: design.diversityFactor || (design.diversityBreakdown?.overallDiversityFactor 
         ? (design.diversityBreakdown.overallDiversityFactor * 100).toFixed(0) + '%' 
-        : '65%',
+        : '65%'),
       totalConnectedLoad: design.totalLoad,
-      totalDesignCurrent: (() => {
+      totalDesignCurrent: design.totalDesignCurrent || (() => {
         const diversifiedLoadW = design.diversityBreakdown?.diversifiedLoad || design.totalLoad;
         const voltage = design.consumerUnit.incomingSupply.voltage;
         const isThreePhase = design.consumerUnit.incomingSupply.phases === 'three';
@@ -124,11 +124,11 @@ serve(async (req) => {
 
       // Diversity Breakdown
       diversityBreakdown: design.diversityBreakdown ? {
-        totalConnectedLoad: design.diversityBreakdown.totalConnectedLoad || design.totalLoad,
-        diversifiedLoad: design.diversityBreakdown.diversifiedLoad || design.totalLoad * 0.65,
-        overallDiversityFactor: design.diversityBreakdown.overallDiversityFactor 
+        totalConnectedLoad: design.totalConnectedLoad || design.diversityBreakdown.totalConnectedLoad || design.totalLoad,
+        diversifiedLoad: design.diversifiedLoad || design.diversityBreakdown.diversifiedLoad || design.totalLoad * 0.65,
+        overallDiversityFactor: design.diversityFactor || (design.diversityBreakdown.overallDiversityFactor 
           ? (design.diversityBreakdown.overallDiversityFactor * 100).toFixed(0) + '%' 
-          : '65%',
+          : '65%'),
         reasoning: design.diversityBreakdown.reasoning || 'Standard diversity applied per IET On-Site Guide',
         bs7671Reference: design.diversityBreakdown.bs7671Reference || 'Appendix 15',
         circuitDiversity: (design.diversityBreakdown.circuitDiversity || []).map((cd: any) => ({
