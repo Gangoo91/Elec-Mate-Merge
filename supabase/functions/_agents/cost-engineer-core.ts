@@ -7,7 +7,7 @@
 import { searchPricingKnowledge, formatPricingContext } from '../_shared/rag-cost-engineer.ts';
 import { searchPracticalWorkIntelligence } from '../_shared/rag-practical-work.ts';
 import { createLogger } from '../_shared/logger.ts';
-import { formatTradePricingPrompt, validatePricing } from '../_shared/uk-trade-pricing-2025.ts';
+import { formatTradePricingPrompt, validatePricing, validateTimescales } from '../_shared/uk-trade-pricing-2025.ts';
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
 
@@ -313,9 +313,13 @@ ${ragContext.pricing.slice(0, 15).map((p: any, i: number) =>
 ).join('\n')}
 
 PRACTICAL WORK INTELLIGENCE (Top 10):
-${ragContext.practicalWork.slice(0, 10).map((pw: any, i: number) => 
-  `${i + 1}. ${pw.activity_description || pw.task_name} - ${pw.duration_hours}hrs`
-).join('\n')}`;
+${ragContext.practicalWork.slice(0, 10).map((pw: any, i: number) => {
+  const durationHours = pw.typical_duration_minutes 
+    ? (pw.typical_duration_minutes / 60).toFixed(1) 
+    : (pw.duration_hours || 'N/A');
+  const teamSize = pw.team_size || 1;
+  return `${i + 1}. ${pw.primary_topic || pw.activity_description || 'Task'} - ${durationHours}hrs (${teamSize} person team)`;
+}).join('\n')}`;
 
   console.log('🤖 Calling OpenAI for cost estimation...');
 
@@ -405,6 +409,21 @@ ${ragContext.practicalWork.slice(0, 10).map((pw: any, i: number) =>
       parsedEstimate.valueEngineering = [];
     }
     pricingWarnings.forEach(warning => {
+      if (!parsedEstimate.valueEngineering.includes(warning)) {
+        parsedEstimate.valueEngineering.push(warning);
+      }
+    });
+  }
+
+  // Validate timescales against benchmarks
+  const timescaleWarnings = validateTimescales(parsedEstimate, request.query);
+  if (timescaleWarnings.length > 0) {
+    console.warn('⚠️ Timescale validation warnings:', timescaleWarnings);
+    // Add warnings to value engineering suggestions
+    if (!parsedEstimate.valueEngineering) {
+      parsedEstimate.valueEngineering = [];
+    }
+    timescaleWarnings.forEach(warning => {
       if (!parsedEstimate.valueEngineering.includes(warning)) {
         parsedEstimate.valueEngineering.push(warning);
       }
