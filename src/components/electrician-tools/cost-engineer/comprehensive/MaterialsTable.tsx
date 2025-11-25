@@ -119,7 +119,7 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
                     <TableCell className="text-right font-mono text-base sm:text-sm text-white">
                       {isEditMode ? (
                         <div className="flex items-center justify-end gap-1">
-                          <span className="text-white/80">£</span>
+                          <span className="text-white">£</span>
                           <Input
                             type="number"
                             step="0.01"

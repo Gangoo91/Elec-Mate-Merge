@@ -53,7 +53,7 @@ export const DetailedLabourBreakdown = ({
       'second-fix': { label: 'Second Fix', color: 'bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/30' },
       'testing': { label: 'Testing', color: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/30' },
       'commissioning': { label: 'Commissioning', color: 'bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/30' },
-      'general': { label: 'General', color: 'bg-muted text-muted-foreground border-border' }
+      'general': { label: 'General', color: 'bg-muted text-white border-border' }
     };
 
     const badge = category ? badges[category] : badges.general;
@@ -81,10 +81,10 @@ export const DetailedLabourBreakdown = ({
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium text-muted-foreground">Qualified Electrician</span>
+              <span className="text-sm font-medium text-white">Qualified Electrician</span>
             </div>
             <p className="text-2xl font-bold text-foreground">{electricianTotalHours.toFixed(1)} hrs</p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               @ £{tasks[0]?.electricianRate || 50}/hr = £{electricianSubtotal.toFixed(2)}
             </p>
           </div>
@@ -92,10 +92,10 @@ export const DetailedLabourBreakdown = ({
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <Wrench className="h-4 w-4 text-emerald-500" />
-                <span className="text-sm font-medium text-muted-foreground">Apprentice</span>
+                <span className="text-sm font-medium text-white">Apprentice</span>
               </div>
               <p className="text-2xl font-bold text-foreground">{apprenticeTotalHours.toFixed(1)} hrs</p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 @ £{tasks[0]?.apprenticeRate || 25}/hr = £{apprenticeSubtotal.toFixed(2)}
               </p>
             </div>
@@ -116,7 +116,7 @@ export const DetailedLabourBreakdown = ({
                     </div>
                     
                     {task.teamComposition && (
-                      <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-3 text-xs text-white">
                         {task.teamComposition.electricians > 0 && (
                           <span>
                             👷 {task.teamComposition.electricians} Electrician{task.teamComposition.electricians > 1 ? 's' : ''}
@@ -132,7 +132,7 @@ export const DetailedLabourBreakdown = ({
                   </div>
                   <div className="text-right">
                     <p className="font-bold text-lg text-foreground">£{task.total.toFixed(2)}</p>
-                    <p className="text-xs text-muted-foreground">{task.hours.toFixed(1)} hrs total</p>
+                    <p className="text-xs text-white">{task.hours.toFixed(1)} hrs total</p>
                   </div>
                 </div>
 
@@ -141,7 +141,7 @@ export const DetailedLabourBreakdown = ({
                   <div className="space-y-2">
                     <div className="space-y-1">
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-muted-foreground">Electrician</span>
+                        <span className="text-white">Electrician</span>
                         <span className="font-medium">
                           {task.electricianHours.toFixed(1)}h × £{task.electricianRate}/hr = £{task.electricianCost.toFixed(2)}
                         </span>
@@ -155,7 +155,7 @@ export const DetailedLabourBreakdown = ({
                     {task.apprenticeHours > 0 && (
                       <div className="space-y-1">
                         <div className="flex items-center justify-between text-xs">
-                          <span className="text-muted-foreground">Apprentice</span>
+                          <span className="text-white">Apprentice</span>
                           <span className="font-medium">
                             {task.apprenticeHours.toFixed(1)}h × £{task.apprenticeRate}/hr = £{task.apprenticeCost?.toFixed(2)}
                           </span>
@@ -182,7 +182,7 @@ export const DetailedLabourBreakdown = ({
         {/* Summary Totals */}
         <div className="space-y-2 pt-4 border-t">
           <div className="flex items-center justify-between px-4 py-2 rounded bg-muted/30">
-            <span className="text-sm text-muted-foreground">Electrician Labour</span>
+            <span className="text-sm text-white">Electrician Labour</span>
             <span className="font-semibold text-foreground">
               {electricianTotalHours.toFixed(1)}h = £{electricianSubtotal.toFixed(2)}
             </span>
@@ -190,7 +190,7 @@ export const DetailedLabourBreakdown = ({
           
           {apprenticeSubtotal > 0 && (
             <div className="flex items-center justify-between px-4 py-2 rounded bg-muted/30">
-              <span className="text-sm text-muted-foreground">Apprentice Labour</span>
+              <span className="text-sm text-white">Apprentice Labour</span>
               <span className="font-semibold text-foreground">
                 {apprenticeTotalHours.toFixed(1)}h = £{apprenticeSubtotal.toFixed(2)}
               </span>
@@ -204,7 +204,7 @@ export const DetailedLabourBreakdown = ({
 
           {travelTime > 0 && travelCost > 0 && (
             <div className="flex items-center justify-between px-4 py-2 rounded bg-muted/30">
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm text-white">
                 Travel & Site Setup ({travelTime}h)
               </span>
               <span className="font-semibold text-foreground">+£{travelCost.toFixed(2)}</span>
@@ -213,7 +213,7 @@ export const DetailedLabourBreakdown = ({
 
           {overheadAllocation > 0 && (
             <div className="flex items-center justify-between px-4 py-2 rounded bg-muted/30">
-              <span className="text-sm text-muted-foreground">Allocated Overheads</span>
+              <span className="text-sm text-white">Allocated Overheads</span>
               <span className="font-semibold text-foreground">+£{overheadAllocation.toFixed(2)}</span>
             </div>
           )}
