@@ -11,6 +11,7 @@ import { FormSection } from "./FormSection";
 import { InlineInstallationTypeSelector } from "./InlineInstallationTypeSelector";
 import { CollapsibleFormSection } from "./CollapsibleFormSection";
 import { cn } from "@/lib/utils";
+import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
 
 interface InstallationInputProps {
   onGenerate: (projectDetails: ProjectDetailsType, description: string, useFullMode: boolean) => void;
@@ -26,6 +27,7 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
     location: '',
     installationType: 'domestic'
   });
+  const { isMobile } = useMobileEnhanced();
 
   useEffect(() => {
     setProjectDetails(prev => ({ ...prev, installationType }));
@@ -52,29 +54,51 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
       <FormSection>
         <div className="space-y-3">
           <div className="space-y-2">
-            <Label htmlFor="installation-description">What needs to be installed?</Label>
+            <Label htmlFor="installation-description" className={cn(isMobile && "text-base")}>
+              What needs to be installed?
+            </Label>
             <Textarea
               id="installation-description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="e.g., Install a new consumer unit with 10-way dual RCD protection, replace main earthing and bonding, upgrade to BS 7671:2018+A3:2024 standards..."
-              className="min-h-[100px] sm:min-h-[120px] text-base resize-none focus:ring-2 focus:ring-blue-400"
-              rows={4}
+              className={cn(
+                "resize-none focus:ring-2 focus:ring-elec-yellow transition-all",
+                isMobile 
+                  ? "min-h-[160px] text-lg leading-relaxed" 
+                  : "min-h-[120px] text-base"
+              )}
+              rows={isMobile ? 6 : 4}
               autoComplete="off"
               spellCheck={true}
             />
-            <div className="flex justify-between items-center text-xs">
-              <p className="text-muted-foreground">
-                Be specific about the work scope and location
-              </p>
-              <p className={cn(
-                "font-medium",
-                description.length > 100 
-                  ? "text-blue-400" 
-                  : "text-muted-foreground"
-              )}>
-                {description.length} chars
-              </p>
+            {/* Character Count with Progress Bar */}
+            <div className="space-y-2">
+              <div className="flex justify-between items-center text-xs">
+                <p className="text-muted-foreground">
+                  Be specific about the work scope and location
+                </p>
+                <p className={cn(
+                  "font-medium transition-colors",
+                  description.length > 100 
+                    ? "text-elec-yellow" 
+                    : "text-muted-foreground"
+                )}>
+                  {description.length} characters
+                </p>
+              </div>
+              {/* Progress bar for character count */}
+              <div className="h-1 bg-muted rounded-full overflow-hidden">
+                <div 
+                  className={cn(
+                    "h-full transition-all duration-300",
+                    description.length > 100 
+                      ? "bg-elec-yellow" 
+                      : "bg-muted-foreground/30"
+                  )}
+                  style={{ width: `${Math.min((description.length / 150) * 100, 100)}%` }}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -117,22 +141,27 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
         />
       </CollapsibleFormSection>
 
-      {/* Generate Button - Inline */}
+      {/* Generate Button - Mobile optimised */}
       <FormSection>
         <Button 
           type="submit"
           size="lg"
           disabled={!isValid || isProcessing}
-          className="w-full bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all"
+          className={cn(
+            "w-full font-semibold shadow-lg hover:shadow-xl transition-all active:scale-95",
+            "bg-gradient-to-r from-elec-yellow via-elec-yellow to-elec-yellow/90",
+            "hover:from-elec-yellow/90 hover:to-elec-yellow text-black",
+            isMobile ? "h-14 text-base" : "h-12 text-sm"
+          )}
         >
           {isProcessing ? (
             <>
-              <Loader2 className="h-5 w-5 animate-spin" />
+              <Loader2 className={cn(isMobile ? "h-6 w-6 mr-2" : "h-5 w-5 mr-2", "animate-spin")} />
               Generating Method Statement...
             </>
           ) : (
             <>
-              <Zap className="h-5 w-5" />
+              <Zap className={cn(isMobile ? "h-6 w-6 mr-2" : "h-5 w-5 mr-2")} />
               Generate Installation Method
             </>
           )}
