@@ -9,6 +9,7 @@ import { Copy, Download, Eye, ChevronRight, Send } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { transformCostOutputToQuoteItems, CostEngineerOutput } from "@/utils/cost-to-quote-transformer";
 import ComprehensiveResultsView from "./comprehensive/ComprehensiveResultsView";
+import { ConfirmationDialog } from "@/components/ui/confirmation-dialog";
 
 interface CostAnalysisResultsProps {
   analysis: ParsedCostAnalysis;
@@ -28,6 +29,7 @@ interface CostAnalysisResultsProps {
 const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalysis, structuredData, projectContext }: CostAnalysisResultsProps) => {
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [showPayloadPreview, setShowPayloadPreview] = useState(false);
+  const [showQuoteHubConfirm, setShowQuoteHubConfirm] = useState(false);
   const navigate = useNavigate();
 
   const formatCurrency = (amount: number) => {
@@ -641,6 +643,10 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
   };
 
   const handleSendToQuoteHub = () => {
+    setShowQuoteHubConfirm(true);
+  };
+
+  const confirmSendToQuoteHub = () => {
     if (!structuredData) {
       toast({
         title: "No Data Available",
@@ -715,40 +721,49 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
         onNewAnalysis={onNewAnalysis}
       />
 
-      {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <Button 
-          onClick={handleSendToQuoteHub}
-          className="flex-1 touch-manipulation bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold"
-        >
-          <Send className="h-4 w-4 mr-2" />
-          Send to Quote Hub
-        </Button>
-        <Button 
-          onClick={handleCopyToClipboard}
-          variant="outline"
-          className="flex-1 touch-manipulation"
-        >
-          <Copy className="h-4 w-4 mr-2" />
-          Copy to Clipboard
-        </Button>
-        <Button 
-          onClick={() => setShowPayloadPreview(true)}
-          variant="outline"
-          className="flex-1 touch-manipulation"
-        >
-          <Eye className="h-4 w-4 mr-2" />
-          Preview Payload
-        </Button>
-        <Button 
-          onClick={handleExportPDF}
-          variant="outline"
-          className="flex-1 touch-manipulation"
-          disabled={isGeneratingPDF}
-        >
-          <Download className="h-4 w-4 mr-2" />
-          {isGeneratingPDF ? 'Generating PDF...' : 'Export PDF'}
-        </Button>
+      {/* Action Buttons - Reorganized with clear hierarchy */}
+      <div className="space-y-3">
+        {/* Primary Actions - Most Important */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <Button 
+            onClick={handleSendToQuoteHub}
+            className="touch-manipulation bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold h-12"
+          >
+            <Send className="h-4 w-4 mr-2" />
+            Send to Quote Hub
+          </Button>
+          <Button 
+            onClick={handleExportPDF}
+            variant="outline"
+            className="touch-manipulation h-12"
+            disabled={isGeneratingPDF}
+          >
+            <Download className="h-4 w-4 mr-2" />
+            {isGeneratingPDF ? 'Generating PDF...' : 'Export Internal PDF'}
+          </Button>
+        </div>
+        
+        {/* Secondary Actions */}
+        <div className="grid grid-cols-2 gap-3">
+          <Button 
+            onClick={handleCopyToClipboard}
+            variant="outline"
+            size="sm"
+            className="touch-manipulation"
+          >
+            <Copy className="h-4 w-4 mr-2" />
+            Copy Data
+          </Button>
+          <Button 
+            onClick={() => setShowPayloadPreview(true)}
+            variant="ghost"
+            size="sm"
+            className="touch-manipulation text-muted-foreground"
+          >
+            <Eye className="h-4 w-4 mr-2" />
+            Debug
+          </Button>
+        </div>
       </div>
 
       {/* New Analysis Button */}
@@ -809,6 +824,17 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Quote Hub Confirmation Dialog */}
+      <ConfirmationDialog
+        open={showQuoteHubConfirm}
+        onOpenChange={setShowQuoteHubConfirm}
+        title="Send to Quote Hub?"
+        description="This will take you to the Quote Builder. Make sure you've generated any internal PDFs you need first, as you'll leave this results page."
+        confirmText="Continue to Quote Hub"
+        cancelText="Stay Here"
+        onConfirm={confirmSendToQuoteHub}
+      />
     </div>
   );
 };
