@@ -39,6 +39,125 @@ interface DesignReviewEditorProps {
 const fmt = (n: unknown, dp = 1, fallback = '—') => 
   (typeof n === 'number' && !isNaN(n) ? n.toFixed(dp) : fallback);
 
+// Build complete export payload with ALL data from both agents
+const buildCompleteExportPayload = (design: InstallationDesign) => {
+  return {
+    // Document metadata
+    exportMetadata: {
+      exportedAt: new Date().toISOString(),
+      version: '2.0',
+      agents: ['CircuitDesignerAgent', 'DesignInstallationAgent'],
+      totalCircuits: design.circuits?.length || 0
+    },
+    
+    // Project info
+    project: {
+      projectName: design.projectName,
+      location: design.location,
+      clientName: design.clientName,
+      electricianName: design.electricianName,
+      installationType: design.installationType
+    },
+    
+    // Supply/Consumer unit
+    incomingSupply: {
+      voltage: design.consumerUnit?.incomingSupply?.voltage || 230,
+      phases: design.consumerUnit?.incomingSupply?.phases || 'single',
+      earthingSystem: design.consumerUnit?.incomingSupply?.earthingSystem || 'TN-S',
+      Ze: design.consumerUnit?.incomingSupply?.Ze || 0.35,
+      PSCC: design.consumerUnit?.incomingSupply?.incomingPFC || 6000
+    },
+    consumerUnit: {
+      type: design.consumerUnit?.type || 'Metal Consumer Unit',
+      mainSwitchRating: design.consumerUnit?.mainSwitchRating || 100,
+      totalCircuits: design.circuits?.length || 0
+    },
+    
+    // Load Assessment
+    loadAssessment: {
+      totalConnectedLoad: design.totalLoad,
+      diversifiedLoad: (design as any).diversifiedLoad || design.totalLoad,
+      diversityFactor: design.diversityFactor,
+      designCurrent: (design as any).designCurrent || 0
+    },
+    diversityBreakdown: design.diversityBreakdown || {},
+    
+    // Circuits with FULL data from both agents
+    circuits: (design.circuits || []).map((circuit, idx) => {
+      const circuitKey = `circuit_${idx}`;
+      const fullGuidance = design.installationGuidance?.[circuitKey]?.guidance;
+      
+      return {
+        // Basic circuit data
+        circuitNumber: circuit.circuitNumber || idx + 1,
+        name: circuit.name,
+        loadType: circuit.loadType,
+        loadPower: circuit.loadPower,
+        phases: circuit.phases,
+        
+        // Cable specification
+        cableSize: circuit.cableSize,
+        cpcSize: circuit.cpcSize,
+        cableType: circuit.cableType,
+        cableLength: circuit.cableLength,
+        installationMethod: circuit.installationMethod,
+        
+        // Protection
+        protectionDevice: circuit.protectionDevice,
+        rcdProtected: circuit.rcdProtected,
+        afddRequired: circuit.afddRequired,
+        
+        // Calculations
+        calculations: circuit.calculations || {},
+        deratingFactors: circuit.deratingFactors || {},
+        
+        // Justifications
+        justifications: circuit.justifications || {},
+        
+        // Expected test results
+        expectedTestResults: circuit.expectedTestResults || circuit.expectedTests || {},
+        
+        // Fault current analysis
+        faultCurrentAnalysis: circuit.faultCurrentAnalysis || {},
+        
+        // Earthing requirements
+        earthingRequirements: circuit.earthingRequirements || {},
+        
+        // Special locations
+        specialLocationCompliance: circuit.specialLocationCompliance || {},
+        
+        // Warnings
+        warnings: circuit.warnings || [],
+        
+        // ✨ FULL INSTALLATION GUIDANCE FROM INSTALLATION AGENT
+        installationGuidance: fullGuidance ? {
+          executiveSummary: fullGuidance.executiveSummary || '',
+          safetyConsiderations: fullGuidance.safetyConsiderations || [],
+          materialsRequired: fullGuidance.materialsRequired || [],
+          toolsRequired: fullGuidance.toolsRequired || [],
+          cableRouting: fullGuidance.cableRouting || [],
+          terminationRequirements: fullGuidance.terminationRequirements || [],
+          installationProcedure: fullGuidance.installationProcedure || [],
+          testingRequirements: fullGuidance.testingRequirements || {}
+        } : null,
+        
+        // Quality metrics from Installation Agent
+        guidanceQualityMetrics: design.installationGuidance?.[circuitKey]?.qualityMetrics || null
+      };
+    }),
+    
+    // Design notes & compliance
+    designNotes: (design as any).designNotes || {},
+    complianceStatement: 'BS 7671:2018+A3:2024',
+    
+    // Testing requirements summary
+    testingRequirements: (design as any).testingRequirements || {},
+    
+    // Quality metrics (from Installation Agent)
+    qualityMetrics: (design as any).qualityMetrics || {}
+  };
+};
+
 // Transform Installation Agent's testingRequirements to expectedTestResults format
 const transformInstallationTestingToExpectedResults = (testingReqs: any): any => {
   if (!testingReqs?.tests || !Array.isArray(testingReqs.tests)) return null;
@@ -994,6 +1113,21 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               ).filter(Boolean) || [],
               regulation: circuitGuidanceData?.cableRouting?.[0]?.bsReference || 'BS 7671 Appendix 4'
             } : {},
+            
+            // ✨ ADD: Full installation guidance from Installation Agent
+            fullInstallationGuidance: circuitGuidanceData ? {
+              executiveSummary: circuitGuidanceData.executiveSummary || '',
+              safetyConsiderations: circuitGuidanceData.safetyConsiderations || [],
+              materialsRequired: circuitGuidanceData.materialsRequired || [],
+              toolsRequired: circuitGuidanceData.toolsRequired || [],
+              cableRouting: circuitGuidanceData.cableRouting || [],
+              terminationRequirements: circuitGuidanceData.terminationRequirements || [],
+              installationProcedure: circuitGuidanceData.installationProcedure || [],
+              testingRequirements: circuitGuidanceData.testingRequirements || {}
+            } : null,
+            
+            // Quality metrics from Installation Agent
+            guidanceQualityMetrics: design.installationGuidance?.[circuitKey]?.qualityMetrics || null,
             
             // Preserve all nested objects with merged test results
             justifications: circuit.justifications || {},
@@ -2155,11 +2289,12 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             </CollapsibleTrigger>
             <CollapsibleContent>
               <Tabs defaultValue="raw" className="mt-3">
-              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto gap-1">
+              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-5 h-auto gap-1">
                 <TabsTrigger value="raw" className="min-h-[44px] text-xs sm:text-sm">Raw Request</TabsTrigger>
                 <TabsTrigger value="transformed" className="min-h-[44px] text-xs sm:text-sm">EIC Format</TabsTrigger>
                 <TabsTrigger value="design-pdf" className="min-h-[44px] text-xs sm:text-sm">Design PDF</TabsTrigger>
                 <TabsTrigger value="pdf-monkey" className="min-h-[44px] text-xs sm:text-sm">PDF Payload</TabsTrigger>
+                <TabsTrigger value="complete" className="min-h-[44px] text-xs sm:text-sm bg-primary/10">Complete Export</TabsTrigger>
               </TabsList>
                 
                 {/* Tab 1: Raw Request Payload */}
@@ -2384,6 +2519,30 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     <div className="max-h-96 overflow-auto rounded-lg bg-slate-900 p-4 pr-20">
                       <pre className="text-xs text-purple-300 font-mono">
                         {JSON.stringify(transformToPDFMonkeyPayload(design), null, 2)}
+                      </pre>
+                    </div>
+                  </div>
+                </TabsContent>
+                
+                {/* Tab 5: Complete Export with Both Agents */}
+                <TabsContent value="complete" className="mt-3">
+                  <div className="relative">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="absolute right-2 top-2 z-10 text-white/70 hover:text-white hover:bg-white/10"
+                      onClick={() => {
+                        const completePayload = buildCompleteExportPayload(design);
+                        navigator.clipboard.writeText(JSON.stringify(completePayload, null, 2));
+                        toast.success('Complete Export JSON copied to clipboard');
+                      }}
+                    >
+                      <Copy className="h-4 w-4 mr-1" />
+                      Copy
+                    </Button>
+                    <div className="max-h-96 overflow-auto rounded-lg bg-slate-900 p-4 pr-20">
+                      <pre className="text-xs text-amber-300 font-mono">
+                        {JSON.stringify(buildCompleteExportPayload(design), null, 2)}
                       </pre>
                     </div>
                   </div>
