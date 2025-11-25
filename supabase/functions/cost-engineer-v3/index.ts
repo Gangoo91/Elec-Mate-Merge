@@ -1,6 +1,9 @@
 // Deployed: 2025-11-25 - Modular Architecture V3 - Simplified Dependencies
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
+// Streaming utilities
+import { createStreamingResponse, StreamingResponseBuilder } from '../_shared/streaming-utils.ts';
+
 // Modular profitability helpers
 import { 
   calculateProfitabilityAnalysis, 
@@ -14,8 +17,21 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Generate unique request ID
+function generateRequestId(): string {
+  return `req_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+}
+
+// Validation error class
+class ValidationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'ValidationError';
+  }
+}
+
 // Simple logger
-const createLogger = (requestId: string) => ({
+const createLogger = (requestId: string, meta?: Record<string, any>) => ({
   info: (msg: string, data?: any) => console.log(`[${requestId}] ${msg}`, data || ''),
   error: (msg: string, data?: any) => console.error(`[${requestId}] ${msg}`, data || ''),
   warn: (msg: string, data?: any) => console.warn(`[${requestId}] ${msg}`, data || '')
@@ -360,12 +376,11 @@ function generateExpectedCategories(jobType: string): string[] {
   return ['Cables', 'Accessories', 'Components'];
 }
 
-serve(async (req) => {
+Deno.serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
-
-  return createStreamingResponse(async (builder: StreamingResponseBuilder) => {
 
   // Health check endpoint
   if (req.method === 'GET') {
@@ -376,11 +391,12 @@ serve(async (req) => {
     );
   }
 
-  const requestId = generateRequestId();
-  const logger = createLogger(requestId, { function: 'cost-engineer-v3' });
-  const functionStart = Date.now();
+  return createStreamingResponse(async (builder: StreamingResponseBuilder) => {
+    const requestId = generateRequestId();
+    const logger = createLogger(requestId, { function: 'cost-engineer-v3' });
+    const functionStart = Date.now();
 
-  try {
+    try {
     const body = await req.json();
     const { query, materials, labourHours, region, messages, previousAgentOutputs, sharedRegulations, businessSettings, skipProfitability, currentDesign, projectDetails } = body;
 
@@ -984,7 +1000,7 @@ If ANY category missing, estimate it and flag in response.`;
     
     // Start heartbeat to prevent client timeout
     const heartbeat = setInterval(() => {
-      builder.sendChunk({ type: 'heartbeat', content: 'Processing cost estimate...' });
+      builder.sendHeartbeat('Processing cost estimate...');
       logger.info('💓 Heartbeat sent to client');
     }, 20000); // Every 20 seconds
     
@@ -2162,37 +2178,34 @@ If ANY category missing, estimate it and flag in response.`;
     clearInterval(heartbeat);
 
     // Send final result as single chunk
-    builder.sendChunk({
-      type: 'result',
-      data: {
-        success: true,
-        originalQuery: query,                          // Store user's original prompt
-        response: costResult.response,                 // Narrative text from AI
-        structuredData: costResult,                    // Full structured breakdown
-        citations: [],                                 // Cost Engineer doesn't cite regulations
-        enrichment,                                    // UI metadata
-        rendering,                                     // Display hints + sources callout
-        suggestedNextAgents: suggestNextAgents(
-          'cost-engineer',
-          query,
-          costResult.response,
-          previousAgentOutputs?.map((o: any) => o.agent) || []
-        ).map((s: any) => ({
-          ...s,
-          contextHint: generateContextHint(s.agent, 'cost-engineer', costResult)
-        })),
-        metadata: {
-          requestId,
-          provider: 'OpenAI',
-          model: 'gpt-5-mini-2025-08-07',
-          totalMs: Date.now() - functionStart,
-          ragMs: Date.now() - ragStart,
-          aiMs: Date.now() - aiStart,
-          pricingItems: finalPricingResults?.length || 0,
-          practicalWorkItems: practicalWorkResults?.length || 0,
-          contextSources,
-          receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none'
-        }
+    builder.sendResult({
+      success: true,
+      originalQuery: query,                          // Store user's original prompt
+      response: costResult.response,                 // Narrative text from AI
+      structuredData: costResult,                    // Full structured breakdown
+      citations: [],                                 // Cost Engineer doesn't cite regulations
+      enrichment,                                    // UI metadata
+      rendering,                                     // Display hints + sources callout
+      suggestedNextAgents: suggestNextAgents(
+        'cost-engineer',
+        query,
+        costResult.response,
+        previousAgentOutputs?.map((o: any) => o.agent) || []
+      ).map((s: any) => ({
+        ...s,
+        contextHint: generateContextHint(s.agent, 'cost-engineer', costResult)
+      })),
+      metadata: {
+        requestId,
+        provider: 'OpenAI',
+        model: 'gpt-5-mini-2025-08-07',
+        totalMs: Date.now() - functionStart,
+        ragMs: Date.now() - ragStart,
+        aiMs: Date.now() - aiStart,
+        pricingItems: finalPricingResults?.length || 0,
+        practicalWorkItems: practicalWorkResults?.length || 0,
+        contextSources,
+        receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none'
       }
     });
 
