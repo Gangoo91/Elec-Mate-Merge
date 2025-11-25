@@ -43,7 +43,7 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm leading-relaxed text-muted-foreground">
+          <p className="text-sm leading-relaxed text-foreground">
             {guidance.executiveSummary}
           </p>
         </CardContent>
@@ -52,8 +52,8 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
       {/* Safety Considerations */}
       <Collapsible open={openSections.safety} onOpenChange={() => toggleSection('safety')}>
         <Card>
-          <CardHeader className="cursor-pointer" onClick={() => toggleSection('safety')}>
-            <CollapsibleTrigger className="w-full">
+          <CollapsibleTrigger asChild>
+            <CardHeader className="cursor-pointer hover:bg-accent/5 transition-colors min-h-[48px] touch-manipulation">
               <CardTitle className="flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <AlertTriangle className="h-5 w-5 text-red-500" />
@@ -61,8 +61,8 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                 </span>
                 <ChevronDown className={`h-5 w-5 transition-transform ${openSections.safety ? 'rotate-180' : ''}`} />
               </CardTitle>
-            </CollapsibleTrigger>
-          </CardHeader>
+            </CardHeader>
+          </CollapsibleTrigger>
           <CollapsibleContent>
             <CardContent className="space-y-3">
               {guidance.safetyConsiderations?.map((safety, idx) => (
@@ -71,15 +71,15 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                     <Badge variant="outline" className={getPriorityColor(safety.priority)}>
                       {safety.priority}
                     </Badge>
-                    <p className="text-sm font-medium flex-1">{safety.consideration}</p>
+                    <p className="text-sm font-medium flex-1 text-foreground">{safety.consideration}</p>
                   </div>
                   {safety.bsReference && (
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-foreground/70 mt-1">
                       BS 7671: {safety.bsReference}
                     </p>
                   )}
                   {safety.toolsRequired && safety.toolsRequired.length > 0 && (
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-foreground/70 mt-1">
                       Tools: {safety.toolsRequired.join(', ')}
                     </p>
                   )}
@@ -93,8 +93,8 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
       {/* Materials Required */}
       <Collapsible open={openSections.materials} onOpenChange={() => toggleSection('materials')}>
         <Card>
-          <CardHeader className="cursor-pointer" onClick={() => toggleSection('materials')}>
-            <CollapsibleTrigger className="w-full">
+          <CollapsibleTrigger asChild>
+            <CardHeader className="cursor-pointer hover:bg-accent/5 transition-colors min-h-[48px] touch-manipulation">
               <CardTitle className="flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <Package className="h-5 w-5 text-blue-500" />
@@ -102,19 +102,19 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                 </span>
                 <ChevronDown className={`h-5 w-5 transition-transform ${openSections.materials ? 'rotate-180' : ''}`} />
               </CardTitle>
-            </CollapsibleTrigger>
-          </CardHeader>
+            </CardHeader>
+          </CollapsibleTrigger>
           <CollapsibleContent>
             <CardContent className="space-y-2">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {guidance.materialsRequired?.map((material, idx) => (
                   <div key={idx} className="border rounded-lg p-3">
-                    <p className="text-sm font-medium">{material.item}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{material.specification}</p>
+                    <p className="text-sm font-medium text-foreground">{material.item}</p>
+                    <p className="text-xs text-foreground/80 mt-1">{material.specification}</p>
                     <div className="flex items-center justify-between mt-2">
-                      <span className="text-xs font-medium">Qty: {material.quantity}</span>
+                      <span className="text-xs font-medium text-foreground">Qty: {material.quantity}</span>
                       {material.source && (
-                        <span className="text-xs text-muted-foreground">{material.source}</span>
+                        <span className="text-xs text-foreground/70">{material.source}</span>
                       )}
                     </div>
                   </div>
@@ -128,8 +128,8 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
       {/* Tools Required */}
       <Collapsible open={openSections.tools} onOpenChange={() => toggleSection('tools')}>
         <Card>
-          <CardHeader className="cursor-pointer" onClick={() => toggleSection('tools')}>
-            <CollapsibleTrigger className="w-full">
+          <CollapsibleTrigger asChild>
+            <CardHeader className="cursor-pointer hover:bg-accent/5 transition-colors min-h-[48px] touch-manipulation">
               <CardTitle className="flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <Wrench className="h-5 w-5 text-purple-500" />
@@ -137,15 +137,15 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                 </span>
                 <ChevronDown className={`h-5 w-5 transition-transform ${openSections.tools ? 'rotate-180' : ''}`} />
               </CardTitle>
-            </CollapsibleTrigger>
-          </CardHeader>
+            </CardHeader>
+          </CollapsibleTrigger>
           <CollapsibleContent>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                 {guidance.toolsRequired?.map((tool, idx) => (
-                  <div key={idx} className="border rounded-lg p-2">
-                    <p className="text-sm font-medium">{tool.tool}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{tool.purpose}</p>
+                <div key={idx} className="border rounded-lg p-2">
+                    <p className="text-sm font-medium text-foreground">{tool.tool}</p>
+                    <p className="text-xs text-foreground/80 mt-1">{tool.purpose}</p>
                     <Badge variant="secondary" className="mt-2 text-xs">
                       {tool.category}
                     </Badge>
@@ -160,8 +160,8 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
       {/* Installation Procedure */}
       <Collapsible open={openSections.procedure} onOpenChange={() => toggleSection('procedure')}>
         <Card>
-          <CardHeader className="cursor-pointer" onClick={() => toggleSection('procedure')}>
-            <CollapsibleTrigger className="w-full">
+          <CollapsibleTrigger asChild>
+            <CardHeader className="cursor-pointer hover:bg-accent/5 transition-colors min-h-[48px] touch-manipulation">
               <CardTitle className="flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <CheckCircle2 className="h-5 w-5 text-green-500" />
@@ -169,17 +169,17 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                 </span>
                 <ChevronDown className={`h-5 w-5 transition-transform ${openSections.procedure ? 'rotate-180' : ''}`} />
               </CardTitle>
-            </CollapsibleTrigger>
-          </CardHeader>
+            </CardHeader>
+          </CollapsibleTrigger>
           <CollapsibleContent>
             <CardContent className="space-y-3">
               {guidance.installationProcedure?.map((step, idx) => (
                 <div key={idx} className="border rounded-lg p-3">
                   <div className="flex items-start gap-2 mb-2">
                     <Badge variant="outline" className="shrink-0">Step {step.stepNumber}</Badge>
-                    <p className="text-sm font-medium">{step.title}</p>
+                    <p className="text-sm font-medium text-foreground">{step.title}</p>
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed ml-12">
+                  <p className="text-sm text-foreground leading-relaxed ml-12">
                     {step.description}
                   </p>
                   {step.toolsForStep && step.toolsForStep.length > 0 && (
@@ -192,7 +192,7 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                     </div>
                   )}
                   {step.bsReferences && step.bsReferences.length > 0 && (
-                    <p className="text-xs text-muted-foreground ml-12 mt-2">
+                    <p className="text-xs text-foreground/70 ml-12 mt-2">
                       BS 7671: {step.bsReferences.join(', ')}
                     </p>
                   )}
@@ -206,8 +206,8 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
       {/* Testing Requirements */}
       <Collapsible open={openSections.testing} onOpenChange={() => toggleSection('testing')}>
         <Card>
-          <CardHeader className="cursor-pointer" onClick={() => toggleSection('testing')}>
-            <CollapsibleTrigger className="w-full">
+          <CollapsibleTrigger asChild>
+            <CardHeader className="cursor-pointer hover:bg-accent/5 transition-colors min-h-[48px] touch-manipulation">
               <CardTitle className="flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <TestTube2 className="h-5 w-5 text-teal-500" />
@@ -215,13 +215,13 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                 </span>
                 <ChevronDown className={`h-5 w-5 transition-transform ${openSections.testing ? 'rotate-180' : ''}`} />
               </CardTitle>
-            </CollapsibleTrigger>
-          </CardHeader>
+            </CardHeader>
+          </CollapsibleTrigger>
           <CollapsibleContent>
             <CardContent className="space-y-3">
               {guidance.testingRequirements?.intro && (
                 <>
-                  <p className="text-sm text-muted-foreground">{guidance.testingRequirements.intro}</p>
+                  <p className="text-sm text-foreground">{guidance.testingRequirements.intro}</p>
                   <Separator />
                 </>
               )}
@@ -230,21 +230,21 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                   <div className="flex items-start gap-2 mb-2">
                     <Badge variant="outline">{idx + 1}</Badge>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">{test.testName}</p>
-                      <p className="text-xs text-muted-foreground">{test.regulation}</p>
+                      <p className="text-sm font-medium text-foreground">{test.testName}</p>
+                      <p className="text-xs text-foreground/70">{test.regulation}</p>
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground mt-2">{test.procedure}</p>
+                  <p className="text-sm text-foreground mt-2">{test.procedure}</p>
                   {test.expectedReading && (
-                    <p className="text-xs mt-2"><strong>Expected:</strong> {test.expectedReading}</p>
+                    <p className="text-xs mt-2 text-foreground"><strong>Expected:</strong> {test.expectedReading}</p>
                   )}
-                  <p className="text-xs mt-1"><strong>Pass Criteria:</strong> {test.acceptanceCriteria}</p>
+                  <p className="text-xs mt-1 text-foreground"><strong>Pass Criteria:</strong> {test.acceptanceCriteria}</p>
                 </div>
               ))}
               {guidance.testingRequirements?.recordingNote && (
                 <>
                   <Separator />
-                  <p className="text-xs text-muted-foreground italic">
+                  <p className="text-xs text-foreground/70 italic">
                     {guidance.testingRequirements.recordingNote}
                   </p>
                 </>

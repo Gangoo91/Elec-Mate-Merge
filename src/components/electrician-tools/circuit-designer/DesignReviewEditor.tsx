@@ -1940,31 +1940,31 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   </Badge>
                 </div>
                 
-                <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
+                <div className="space-y-3">
                   {/* R1+R2 - Blue gradient */}
                   <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 p-4 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-colors">
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                        <span className="text-blue-400 font-bold text-xs">R₁+R₂</span>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center shrink-0">
+                          <span className="text-blue-400 font-bold text-sm">R₁+R₂</span>
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-white">Earth Continuity</p>
+                          <p className="text-xs text-white/50">BS 7671:2018+A3:2024 Reg 643.2.2</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-sm font-semibold text-white">Earth Continuity</p>
-                        <p className="text-xs text-white/50">BS 7671:2018+A3:2024 Reg 643.2.2</p>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3 mb-2">
-                      <div className="bg-blue-500/5 p-2 rounded">
-                        <p className="text-xs text-blue-300/80 mb-1">At 20°C</p>
-                        <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.r1r2.at20C}</p>
-                      </div>
-                      <div className="bg-blue-500/5 p-2 rounded">
-                        <p className="text-xs text-blue-300/80 mb-1">At 70°C</p>
-                        <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.r1r2.at70C}</p>
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <Badge className="bg-blue-500/20 text-white border-blue-500/30 hover:bg-blue-500/30">
+                          At 20°C: {currentCircuit.expectedTestResults.r1r2.at20C}
+                        </Badge>
+                        <Badge className="bg-blue-500/20 text-white border-blue-500/30 hover:bg-blue-500/30">
+                          At 70°C: {currentCircuit.expectedTestResults.r1r2.at70C}
+                        </Badge>
                       </div>
                     </div>
                     {currentCircuit.expectedTestResults.r1r2.calculation && (
                       <Collapsible>
-                        <CollapsibleTrigger className="text-xs text-blue-400 hover:text-blue-300 underline cursor-pointer">
+                        <CollapsibleTrigger className="text-xs text-blue-400 hover:text-blue-300 underline cursor-pointer mt-2">
                           Show calculation
                         </CollapsibleTrigger>
                         <CollapsibleContent>
@@ -1982,124 +1982,114 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       ? 'from-green-500/10 to-green-600/5 border-green-500/20 hover:border-green-500/40' 
                       : 'from-red-500/10 to-red-600/5 border-red-500/20 hover:border-red-500/40'
                   }`}>
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                        currentCircuit.expectedTestResults.zs.compliant 
-                          ? 'bg-green-500/20' 
-                          : 'bg-red-500/20'
-                      }`}>
-                        <span className={`font-bold text-xs ${
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
                           currentCircuit.expectedTestResults.zs.compliant 
-                            ? 'text-green-400' 
-                            : 'text-red-400'
-                        }`}>Zs</span>
+                            ? 'bg-green-500/20' 
+                            : 'bg-red-500/20'
+                        }`}>
+                          <span className={`font-bold text-sm ${
+                            currentCircuit.expectedTestResults.zs.compliant 
+                              ? 'text-green-400' 
+                              : 'text-red-400'
+                          }`}>Zs</span>
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-white">Earth Fault Loop Impedance</p>
+                          <p className="text-xs text-white/50">BS 7671:2018+A3:2024 Reg 411.4.4</p>
+                        </div>
+                        {currentCircuit.expectedTestResults.zs.compliant ? (
+                          <CheckCircle2 className="h-5 w-5 text-green-400" />
+                        ) : (
+                          <AlertTriangle className="h-5 w-5 text-red-400" />
+                        )}
                       </div>
-                      <div className="flex-1">
-                        <p className="text-sm font-semibold text-white">Earth Fault Loop Impedance</p>
-                        <p className="text-xs text-white/50">BS 7671:2018+A3:2024 Reg 411.4.4</p>
-                      </div>
-                      {currentCircuit.expectedTestResults.zs.compliant ? (
-                        <CheckCircle2 className="h-5 w-5 text-green-400" />
-                      ) : (
-                        <AlertTriangle className="h-5 w-5 text-red-400" />
-                      )}
-                    </div>
-                    <div className="grid grid-cols-2 gap-3 mb-2">
-                      <div className={`p-2 rounded ${
-                        currentCircuit.expectedTestResults.zs.compliant 
-                          ? 'bg-green-500/5' 
-                          : 'bg-red-500/5'
-                      }`}>
-                        <p className={`text-xs mb-1 ${
-                          currentCircuit.expectedTestResults.zs.compliant 
-                            ? 'text-green-300/80' 
-                            : 'text-red-300/80'
-                        }`}>Calculated</p>
-                        <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.zs.calculated}</p>
-                      </div>
-                      <div className={`p-2 rounded ${
-                        currentCircuit.expectedTestResults.zs.compliant 
-                          ? 'bg-green-500/5' 
-                          : 'bg-red-500/5'
-                      }`}>
-                        <p className={`text-xs mb-1 ${
-                          currentCircuit.expectedTestResults.zs.compliant 
-                            ? 'text-green-300/80' 
-                            : 'text-red-300/80'
-                        }`}>Max Permitted</p>
-                        <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.zs.maxPermitted}</p>
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <Badge className={currentCircuit.expectedTestResults.zs.compliant 
+                          ? 'bg-green-500/20 text-white border-green-500/30 hover:bg-green-500/30' 
+                          : 'bg-red-500/20 text-white border-red-500/30 hover:bg-red-500/30'
+                        }>
+                          Calculated: {currentCircuit.expectedTestResults.zs.calculated}
+                        </Badge>
+                        <Badge className={currentCircuit.expectedTestResults.zs.compliant 
+                          ? 'bg-green-500/20 text-white border-green-500/30 hover:bg-green-500/30' 
+                          : 'bg-red-500/20 text-white border-red-500/30 hover:bg-red-500/30'
+                        }>
+                          Max: {currentCircuit.expectedTestResults.zs.maxPermitted}
+                        </Badge>
                       </div>
                     </div>
-                    <div className={`text-xs font-semibold ${
+                    <div className={`text-xs font-semibold mt-3 ${
                       currentCircuit.expectedTestResults.zs.compliant 
                         ? 'text-green-400' 
                         : 'text-red-400'
                     }`}>
                       {currentCircuit.expectedTestResults.zs.compliant 
-                        ? '✓ Compliant - Disconnection time \u003c0.4s achieved' 
+                        ? '✓ Compliant - Disconnection time <0.4s achieved' 
                         : '✗ Non-compliant - Review cable size or Ze'}
                     </div>
                   </div>
 
                   {/* Insulation Resistance - Purple gradient */}
                   <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 p-4 rounded-lg border border-purple-500/20 hover:border-purple-500/40 transition-colors">
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center">
-                        <span className="text-purple-400 font-bold text-xs">IR</span>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center shrink-0">
+                          <span className="text-purple-400 font-bold text-sm">IR</span>
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-white">Insulation Resistance</p>
+                          <p className="text-xs text-white/50">BS 7671:2018+A3:2024 Reg 643.3.1</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-sm font-semibold text-white">Insulation Resistance</p>
-                        <p className="text-xs text-white/50">BS 7671:2018+A3:2024 Reg 643.3.1</p>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="bg-purple-500/5 p-2 rounded">
-                        <p className="text-xs text-purple-300/80 mb-1">Test Voltage</p>
-                        <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.insulationResistance.testVoltage}</p>
-                      </div>
-                      <div className="bg-purple-500/5 p-2 rounded">
-                        <p className="text-xs text-purple-300/80 mb-1">Min Required</p>
-                        <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.insulationResistance.minResistance}</p>
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <Badge className="bg-purple-500/20 text-white border-purple-500/30 hover:bg-purple-500/30">
+                          Test: {currentCircuit.expectedTestResults.insulationResistance.testVoltage}
+                        </Badge>
+                        <Badge className="bg-purple-500/20 text-white border-purple-500/30 hover:bg-purple-500/30">
+                          Min: {currentCircuit.expectedTestResults.insulationResistance.minResistance}
+                        </Badge>
                       </div>
                     </div>
                   </div>
 
                   {/* Polarity - Amber gradient */}
                   <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 p-4 rounded-lg border border-amber-500/20 hover:border-amber-500/40 transition-colors">
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
-                        <span className="text-amber-400 font-bold text-xs">P</span>
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center shrink-0">
+                        <span className="text-amber-400 font-bold text-sm">P</span>
                       </div>
-                      <div>
-                        <p className="text-sm font-semibold text-white">Polarity Test</p>
-                        <p className="text-xs text-white/50">BS 7671:2018+A3:2024 Reg 643.4</p>
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-white mb-1">Polarity Test</p>
+                        <p className="text-xs text-white/50 mb-2">BS 7671:2018+A3:2024 Reg 643.4</p>
+                        <p className="text-sm text-white/90 leading-relaxed">
+                          {currentCircuit.expectedTestResults.polarity}
+                        </p>
                       </div>
                     </div>
-                    <p className="text-sm text-white/90 leading-relaxed bg-amber-500/5 p-2 rounded">
-                      {currentCircuit.expectedTestResults.polarity}
-                    </p>
                   </div>
 
                   {/* RCD Test - Cyan gradient */}
                   {currentCircuit.rcdProtected && currentCircuit.expectedTestResults.rcdTest && (
-                    <div className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 p-4 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 transition-colors lg:col-span-2 xl:col-span-3">
-                      <div className="flex items-center gap-2 mb-3">
-                        <div className="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center">
-                          <span className="text-cyan-400 font-bold text-xs">RCD</span>
+                    <div className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 p-4 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 transition-colors">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center shrink-0">
+                            <span className="text-cyan-400 font-bold text-sm">RCD</span>
+                          </div>
+                          <div>
+                            <p className="text-sm font-semibold text-white">RCD Trip Times</p>
+                            <p className="text-xs text-white/60">{currentCircuit.expectedTestResults.rcdTest.regulation}</p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="text-sm font-semibold text-white">RCD Trip Times</p>
-                          <p className="text-xs text-white/60">{currentCircuit.expectedTestResults.rcdTest.regulation}</p>
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="bg-cyan-500/5 p-2 rounded">
-                          <p className="text-xs text-cyan-300/80 mb-1">At 1× IΔn (no-trip limit)</p>
-                          <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.rcdTest.at1x}</p>
-                        </div>
-                        <div className="bg-cyan-500/5 p-2 rounded">
-                          <p className="text-xs text-cyan-300/80 mb-1">At 5× IΔn (must trip)</p>
-                          <p className="text-base font-bold text-white">{currentCircuit.expectedTestResults.rcdTest.at5x}</p>
+                        <div className="flex items-center gap-3 flex-wrap">
+                          <Badge className="bg-cyan-500/20 text-white border-cyan-500/30 hover:bg-cyan-500/30">
+                            At 1× IΔn: {currentCircuit.expectedTestResults.rcdTest.at1x}
+                          </Badge>
+                          <Badge className="bg-cyan-500/20 text-white border-cyan-500/30 hover:bg-cyan-500/30">
+                            At 5× IΔn: {currentCircuit.expectedTestResults.rcdTest.at5x}
+                          </Badge>
                         </div>
                       </div>
                     </div>
