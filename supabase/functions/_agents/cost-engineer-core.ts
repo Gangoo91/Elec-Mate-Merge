@@ -222,10 +222,42 @@ function extractCostKeywords(query: string, projectContext?: any): Set<string> {
   return keywords;
 }
 
+/**
+ * Detect whether this is a domestic, commercial, or industrial project
+ */
+function detectProjectType(query: string): 'domestic' | 'commercial' | 'industrial' {
+  const q = query.toLowerCase();
+  
+  // Commercial indicators
+  if (q.includes('restaurant') || (q.includes('kitchen') && q.includes('commercial')) ||
+      q.includes('cold room') || q.includes('3-phase') || q.includes('3 phase') ||
+      q.includes('extraction') || q.includes('emergency lighting') ||
+      q.includes('bar') || q.includes('café') || q.includes('cafe') ||
+      q.includes('shop') || q.includes('office') || q.includes('warehouse') ||
+      q.includes('retail') || q.includes('gym') || q.includes('hotel')) {
+    return 'commercial';
+  }
+  
+  // Industrial indicators
+  if (q.includes('factory') || q.includes('industrial') || q.includes('manufacturing') ||
+      q.includes('plant') || q.includes('production') || q.includes('workshop') ||
+      q.includes('cnc') || q.includes('welding') || q.includes('compressor') ||
+      q.includes('conveyor') || q.includes('crane') || q.includes('spray booth')) {
+    return 'industrial';
+  }
+  
+  return 'domestic';
+}
+
 async function callCostEstimationAI(
   request: CostEngineerRequest,
   ragContext: any
 ): Promise<CostEstimate> {
+  // Detect project type from query if not specified
+  const projectType = request.projectContext?.projectType || detectProjectType(request.query);
+  
+  console.log(`🏗️ Detected project type: ${projectType}`);
+  
   // Get accurate trade pricing prompt
   const tradePricingPrompt = formatTradePricingPrompt();
 
