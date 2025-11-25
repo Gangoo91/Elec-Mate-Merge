@@ -4,8 +4,9 @@
  * Pattern: Same as installation-method-core.ts
  */
 
-import { searchPricingIntelligence } from '../_shared/rag-pricing.ts';
+import { searchPricingKnowledge, formatPricingContext } from '../_shared/rag-cost-engineer.ts';
 import { searchPracticalWorkIntelligence } from '../_shared/rag-practical-work.ts';
+import { createLogger } from '../_shared/logger.ts';
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
 
@@ -118,14 +119,20 @@ export async function generateCostEstimate(
   const keywords = extractCostKeywords(request.query, request.projectContext);
   console.log(`📝 Extracted ${keywords.size} keywords`);
 
-  // STEP 2: Parallel RAG searches
+  // STEP 2: Generate embedding for query
+  const logger = createLogger('cost-engineer-core');
+  const embedding = await generateEmbedding(request.query);
+  
+  // STEP 3: Parallel RAG searches
   const ragStart = Date.now();
-  const [pricingResult, practicalWork] = await Promise.all([
-    searchPricingIntelligence(supabase, {
-      query: request.query,
-      categories: ['cables', 'protection', 'accessories', 'consumer_units'],
-      matchCount: 30
-    }),
+  const [pricingResults, practicalWork] = await Promise.all([
+    searchPricingKnowledge(
+      request.query,
+      embedding,
+      supabase,
+      logger,
+      request.projectContext?.projectType
+    ),
     searchPracticalWorkIntelligence(supabase, {
       query: request.query,
       tradeFilter: 'installer',
@@ -135,23 +142,23 @@ export async function generateCostEstimate(
 
   const ragTime = Date.now() - ragStart;
   console.log(`⚡ RAG complete in ${ragTime}ms:`, {
-    pricingHits: pricingResult.results.length,
+    pricingHits: pricingResults.length,
     practicalWorkHits: practicalWork.results.length
   });
 
-  // STEP 3: Call OpenAI for cost estimation
+  // STEP 4: Call OpenAI for cost estimation
   const aiStart = Date.now();
   const costEstimate = await callCostEstimationAI(
     request,
     {
-      pricing: pricingResult.results,
+      pricing: pricingResults,
       practicalWork: practicalWork.results,
       keywords: Array.from(keywords)
     }
   );
   const aiTime = Date.now() - aiStart;
 
-  // STEP 4: Calculate profitability if requested
+  // STEP 5: Calculate profitability if requested
   if (!request.skipProfitability) {
     costEstimate.profitability = calculateProfitability(
       costEstimate,
@@ -163,6 +170,27 @@ export async function generateCostEstimate(
   console.log(`✅ Cost Engineer complete in ${totalTime}ms (RAG: ${ragTime}ms, AI: ${aiTime}ms)`);
 
   return costEstimate;
+}
+
+async function generateEmbedding(text: string): Promise<number[]> {
+  const response = await fetch('https://api.openai.com/v1/embeddings', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${OPENAI_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      model: 'text-embedding-3-small',
+      input: text
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`Embedding API error: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.data[0].embedding;
 }
 
 function extractCostKeywords(query: string, projectContext?: any): Set<string> {
@@ -272,7 +300,7 @@ PROJECT DETAILS:
 
 PRICING INTELLIGENCE (Top 15):
 ${ragContext.pricing.slice(0, 15).map((p: any, i: number) => 
-  `${i + 1}. ${p.product_name}: £${p.price_gbp} (${p.supplier})`
+  `${i + 1}. ${p.item_name}: £${p.base_cost} (${p.wholesaler})`
 ).join('\n')}
 
 PRACTICAL WORK INTELLIGENCE (Top 10):
