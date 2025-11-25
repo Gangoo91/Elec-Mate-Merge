@@ -5,7 +5,7 @@ import { ParsedCostAnalysis } from "@/utils/cost-analysis-parser";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
-import { Copy, Download, Save, Eye, ChevronRight, Send } from "lucide-react";
+import { Copy, Download, Eye, ChevronRight, Send } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { transformCostOutputToQuoteItems, CostEngineerOutput } from "@/utils/cost-to-quote-transformer";
 import ComprehensiveResultsView from "./comprehensive/ComprehensiveResultsView";
@@ -640,13 +640,6 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
     }
   };
 
-  const handleSaveToLibrary = () => {
-    toast({
-      title: "Save to Library",
-      description: "Library feature coming soon",
-    });
-  };
-
   const handleSendToQuoteHub = () => {
     if (!structuredData) {
       toast({
@@ -755,14 +748,6 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
         >
           <Download className="h-4 w-4 mr-2" />
           {isGeneratingPDF ? 'Generating PDF...' : 'Export PDF'}
-        </Button>
-        <Button 
-          onClick={handleSaveToLibrary}
-          variant="outline"
-          className="flex-1 touch-manipulation"
-        >
-          <Save className="h-4 w-4 mr-2" />
-          Save to Library
         </Button>
       </div>
 
