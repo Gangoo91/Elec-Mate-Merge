@@ -5,7 +5,9 @@ import { ParsedCostAnalysis } from "@/utils/cost-analysis-parser";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
-import { Copy, Download, Save, Eye, ChevronRight } from "lucide-react";
+import { Copy, Download, Save, Eye, ChevronRight, Send } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { transformCostOutputToQuoteItems, CostEngineerOutput } from "@/utils/cost-to-quote-transformer";
 import ComprehensiveResultsView from "./comprehensive/ComprehensiveResultsView";
 
 interface CostAnalysisResultsProps {
@@ -26,6 +28,7 @@ interface CostAnalysisResultsProps {
 const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalysis, structuredData, projectContext }: CostAnalysisResultsProps) => {
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [showPayloadPreview, setShowPayloadPreview] = useState(false);
+  const navigate = useNavigate();
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-GB', {
@@ -644,6 +647,70 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
     });
   };
 
+  const handleSendToQuoteHub = () => {
+    if (!structuredData) {
+      toast({
+        title: "No Data Available",
+        description: "Unable to transfer to Quote Hub. Please generate a new cost estimate.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      // Transform structured data to CostEngineerOutput format
+      const costOutput: CostEngineerOutput = {
+        materials: (structuredData.materials?.items || []).map((item: any) => ({
+          item: item.description || item.item || 'Material',
+          quantity: item.quantity || 1,
+          unitPrice: item.unitPrice || 0,
+          supplier: item.supplier || 'TBC',
+          total: item.total || (item.quantity * item.unitPrice) || 0
+        })),
+        labour: {
+          hours: structuredData.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0,
+          rate: structuredData.labour?.tasks?.[0]?.rate || 45,
+          total: structuredData.labour?.subtotal || 0
+        },
+        totalCost: structuredData.profitabilityAnalysis?.breakEvenPoint || analysis.totalCost || 0,
+        vatAmount: structuredData.summary?.vat || analysis.vatAmount,
+        breakdown: {
+          materialsTotal: structuredData.materials?.subtotal || analysis.materialsTotal || 0,
+          labourTotal: structuredData.labour?.subtotal || analysis.labourTotal || 0
+        },
+        valueEngineering: structuredData.alternatives?.map((alt: any) => alt.description) || []
+      };
+
+      // Store in sessionStorage with a unique ID
+      const sessionId = `cost-transfer-${Date.now()}`;
+      sessionStorage.setItem(sessionId, JSON.stringify({
+        costData: costOutput,
+        projectContext: {
+          projectName: projectContext?.projectName || projectName || 'Cost Engineer Project',
+          description: originalQuery || '',
+          location: projectContext?.location || '',
+          projectType: projectContext?.projectType || 'domestic'
+        }
+      }));
+
+      toast({
+        title: "Transferring to Quote Hub",
+        description: "Opening Quote Builder with cost data...",
+      });
+
+      // Navigate to Quote Builder with session ID
+      navigate(`/electrician/quote-builder/create?costSessionId=${sessionId}`);
+      
+    } catch (error) {
+      console.error('Error transferring to Quote Hub:', error);
+      toast({
+        title: "Transfer Failed",
+        description: "Unable to transfer data to Quote Hub. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <div className="mobile-safe-area mobile-section-spacing animate-fade-in">
       {/* Comprehensive Results View */}
@@ -657,6 +724,13 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
 
       {/* Action Buttons */}
       <div className="flex flex-col sm:flex-row gap-3">
+        <Button 
+          onClick={handleSendToQuoteHub}
+          className="flex-1 touch-manipulation bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold"
+        >
+          <Send className="h-4 w-4 mr-2" />
+          Send to Quote Hub
+        </Button>
         <Button 
           onClick={handleCopyToClipboard}
           variant="outline"
