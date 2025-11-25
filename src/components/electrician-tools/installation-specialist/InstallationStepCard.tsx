@@ -60,7 +60,7 @@ export const InstallationStepCard = ({
       isExpanded && "ring-2 ring-primary/30 shadow-2xl shadow-primary/20"
     )}>
       {/* Timeline connector (vertical line with gradient) */}
-      <div className="absolute left-6 top-12 bottom-0 w-1 bg-gradient-to-b from-elec-yellow via-primary/60 to-transparent rounded-full" />
+      <div className="absolute left-6 top-12 h-8 w-1 bg-gradient-to-b from-elec-yellow/80 to-transparent rounded-full" />
       
       <div className={cn("p-4", isMobile ? "sm:p-5" : "sm:p-6 lg:p-8")}>
         <div className="flex items-start gap-4">
