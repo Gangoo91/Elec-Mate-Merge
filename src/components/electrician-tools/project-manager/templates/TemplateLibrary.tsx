@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 interface TemplateLibraryProps {
   projectType: 'domestic' | 'commercial' | 'industrial';
-  onSelectTemplate: (plan: Partial<EditableProjectPlan>) => void;
+  onSelectTemplate: (plan: Partial<EditableProjectPlan>, template: any) => void;
 }
 
 export const TemplateLibrary = ({ projectType, onSelectTemplate }: TemplateLibraryProps) => {
@@ -81,7 +81,8 @@ export const TemplateLibrary = ({ projectType, onSelectTemplate }: TemplateLibra
       .eq('id', template.id)
       .then();
 
-    onSelectTemplate(templatePlan);
+    // Pass both template plan AND original template to parent
+    onSelectTemplate(templatePlan, template);
   };
 
   if (isLoading) {

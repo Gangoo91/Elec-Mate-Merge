@@ -29,6 +29,7 @@ import { ExampleProjectsGrid } from "./ExampleProjectsGrid";
 import { TemplateLibrary } from "./templates/TemplateLibrary";
 import { ScopeChecklist } from "./input/ScopeChecklist";
 import { ConstraintsSection, ProjectConstraints } from "./input/ConstraintsSection";
+import { ProjectReviewStep } from "./ProjectReviewStep";
 
 interface ExampleScenario {
   title: string;
@@ -78,9 +79,11 @@ const ProjectManagerInterface = () => {
   const [startDate, setStartDate] = useState("");
   const [duration, setDuration] = useState("");
   const [showResults, setShowResults] = useState(false);
+  const [showReview, setShowReview] = useState(false);
   const [results, setResults] = useState<any>(null);
   const [generationStartTime, setGenerationStartTime] = useState<number>(0);
   const [selectedScope, setSelectedScope] = useState<string[]>([]);
+  const [templateName, setTemplateName] = useState<string>();
   const [constraints, setConstraints] = useState<ProjectConstraints>({
     accessRestrictions: '',
     workingHours: '',
@@ -127,18 +130,63 @@ const ProjectManagerInterface = () => {
     });
   };
 
-  const handleTemplateSelect = (templatePlan: Partial<any>) => {
-    // Pre-fill form with template data
-    if (templatePlan.phases && templatePlan.phases.length > 0) {
-      const firstPhase = templatePlan.phases[0];
-      setPrompt(`Use template with ${templatePlan.phases.length} phases: ${firstPhase.phaseName || 'Phase 1'}`);
+  const handleTemplateSelect = (templatePlan: Partial<any>, template: any) => {
+    // Pre-fill duration
+    if (template.typical_duration_days) {
+      setDuration(`${template.typical_duration_days} days`);
     }
+    
+    // Pre-fill scope from template phases
+    const scopeItems: string[] = [];
+    if (templatePlan.phases) {
+      templatePlan.phases.forEach((phase: any) => {
+        // Map phase names to scope items
+        const phaseName = phase.phaseName?.toLowerCase() || '';
+        if (phaseName.includes('consumer unit') || phaseName.includes('distribution')) {
+          scopeItems.push('Consumer unit / Distribution board');
+        }
+        if (phaseName.includes('lighting')) {
+          scopeItems.push('Lighting circuits');
+        }
+        if (phaseName.includes('socket') || phaseName.includes('power')) {
+          scopeItems.push('Socket circuits');
+        }
+        if (phaseName.includes('cable') || phaseName.includes('containment')) {
+          scopeItems.push('Cable installation');
+        }
+        if (phaseName.includes('test') || phaseName.includes('certification')) {
+          scopeItems.push('Testing & certification');
+        }
+      });
+    }
+    if (scopeItems.length > 0) {
+      setSelectedScope([...new Set(scopeItems)]); // Remove duplicates
+    }
+    
+    // Build enhanced prompt from template
+    const phaseNames = templatePlan.phases?.map((p: any) => p.phaseName).join(', ') || '';
+    const enhancedPrompt = template.description 
+      ? `${template.description}. Project phases: ${phaseNames}`
+      : `${template.title || 'Template project'} with ${templatePlan.phases?.length || 0} phases: ${phaseNames}`;
+    
+    setPrompt(enhancedPrompt);
+    setTemplateName(template.title);
+    
     toast.success("Template loaded", {
-      description: "You can modify the scope and generate a customized plan"
+      description: "Form pre-filled with template data - review and customize"
     });
   };
 
+  const handleReviewClick = () => {
+    setShowReview(true);
+  };
+
+  const handleBackFromReview = () => {
+    setShowReview(false);
+  };
+
   const handleGenerate = async () => {
+    setShowReview(false);
     setShowResults(true);
     setResults(null);
     setGenerationStartTime(Date.now());
@@ -158,7 +206,7 @@ const ProjectManagerInterface = () => {
     const request = {
       query: enhancedQuery,
       projectType: selectedType,
-      scope: selectedScope,
+      scope: selectedScope.length > 0 ? selectedScope.join(', ') : undefined,
       constraints,
       timeline: duration || undefined,
       projectName: projectName || undefined,
@@ -178,6 +226,26 @@ const ProjectManagerInterface = () => {
   };
 
 
+  // Show review step
+  if (showReview) {
+    return (
+      <ProjectReviewStep
+        projectType={selectedType}
+        prompt={prompt}
+        projectName={projectName}
+        location={location}
+        clientName={clientName}
+        startDate={startDate}
+        duration={duration}
+        selectedScope={selectedScope}
+        constraints={constraints}
+        templateName={templateName}
+        onBack={handleBackFromReview}
+        onGenerate={handleGenerate}
+      />
+    );
+  }
+
   // Show loading view when generating
   if (showResults && isLoading) {
     return <ProjectManagerProcessingView progress={progress} startTime={generationStartTime} />;
@@ -195,6 +263,7 @@ const ProjectManagerInterface = () => {
         onStartOver={() => {
           setShowResults(false);
           setResults(null);
+          setShowReview(false);
         }}
       />
     );
@@ -349,18 +418,13 @@ const ProjectManagerInterface = () => {
           size="lg"
           disabled={!prompt.trim() || isLoading}
           className="w-full bg-gradient-to-r from-pink-400 to-pink-600 hover:from-pink-500 hover:to-pink-700 text-white h-12 sm:h-14 touch-manipulation text-base sm:text-lg font-semibold"
+          onClick={(e) => {
+            e.preventDefault();
+            handleReviewClick();
+          }}
         >
-          {isLoading ? (
-            <>
-              <Loader2 className="h-5 w-5 animate-spin mr-2" />
-              Generating Plan...
-            </>
-          ) : (
-            <>
-              <Clipboard className="h-5 w-5 mr-2" />
-              Generate Project Plan
-            </>
-          )}
+          <Clipboard className="h-5 w-5 mr-2" />
+          Review & Generate Plan
         </Button>
       </FormSection>
     </form>
