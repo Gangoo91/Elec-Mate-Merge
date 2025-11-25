@@ -85,8 +85,26 @@ const CostEngineerInterface = () => {
       skipProfitability: false
     });
 
+    // Handle failure case - return to input state
+    if (!response?.success) {
+      setViewState('input');
+      // Error toast is already shown by useSimpleAgent
+      return;
+    }
+
+    // Handle empty data case
+    if (!response.data) {
+      setViewState('input');
+      toast({
+        title: "No data returned",
+        description: "The cost engineer returned no results. Please try again.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     // Handle response - same pattern as all other working agents
-    if (response?.success && response.data) {
+    if (response.data) {
       const data = response.data;
 
       // Store original query from response
