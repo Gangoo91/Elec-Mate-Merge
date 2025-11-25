@@ -159,6 +159,16 @@
     padding-bottom: max(1rem, env(safe-area-inset-bottom));
   }
   
+  /* Hide scrollbars */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+  
   .pt-safe {
     padding-top: max(1rem, env(safe-area-inset-top));
   }
