@@ -430,7 +430,7 @@ ${ragContext.practicalWork.slice(0, 10).map((pw: any, i: number) => {
           { role: 'user', content: userPrompt }
         ],
         response_format: { type: 'json_object' },
-        max_completion_tokens: 8000
+        max_completion_tokens: 16000 // Increased for complex multi-circuit estimates
       }),
       signal: controller.signal
     });
@@ -470,10 +470,14 @@ ${ragContext.practicalWork.slice(0, 10).map((pw: any, i: number) => {
   const content = message.content;
 
   if (!content || content.trim().length === 0) {
+    if (data.choices[0].finish_reason === 'length') {
+      throw new Error('Response too long - try simplifying your query or breaking it into smaller estimates');
+    }
     throw new Error(`Empty response from OpenAI (finish_reason: ${data.choices[0].finish_reason})`);
   }
 
   console.log(`✅ OpenAI response: ${content.length} chars`);
+  console.log(`📊 Token usage: ${data.usage?.completion_tokens || 'N/A'} completion, ${data.usage?.prompt_tokens || 'N/A'} prompt`);
 
   // Parse JSON
   let parsedEstimate;
