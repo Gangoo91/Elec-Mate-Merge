@@ -26,33 +26,33 @@ export const InstallationStepCard = ({
   onMoveUp,
   onMoveDown
 }: InstallationStepCardProps) => {
-  const [isEditingTitle, setIsEditingTitle] = useState(false);
-  const [isEditingDescription, setIsEditingDescription] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(step.title);
   const [editedDescription, setEditedDescription] = useState(step.content || '');
   const { isMobile } = useMobileEnhanced();
 
   const [sectionsExpanded, setSectionsExpanded] = useState({
-    safety: false,
-    tools: false,
-    materials: false,
-    checkpoints: false,
-    qualifications: false,
-    references: false
+    safety: true,
+    tools: true,
+    materials: true,
+    checkpoints: true,
+    qualifications: true,
+    references: true
   });
 
   const toggleSection = (section: keyof typeof sectionsExpanded) => {
     setSectionsExpanded(prev => ({ ...prev, [section]: !prev[section] }));
   };
 
-  const handleSaveTitle = () => {
-    onUpdate({ ...step, title: editedTitle });
-    setIsEditingTitle(false);
+  const handleSave = () => {
+    onUpdate({ ...step, title: editedTitle, content: editedDescription });
+    setIsEditing(false);
   };
 
-  const handleSaveDescription = () => {
-    onUpdate({ ...step, content: editedDescription });
-    setIsEditingDescription(false);
+  const handleCancel = () => {
+    setEditedTitle(step.title);
+    setEditedDescription(step.content || '');
+    setIsEditing(false);
   };
 
   const riskColors = {
@@ -88,46 +88,20 @@ export const InstallationStepCard = ({
 
           <div className="flex-1 w-full min-w-0">
             <div className="space-y-4">
-              {/* Title - Inline editing */}
-              <div className="flex items-start gap-2">
-                {isEditingTitle ? (
-                  <div className="flex-1 flex items-center gap-2">
-                    <Input
-                      value={editedTitle}
-                      onChange={(e) => setEditedTitle(e.target.value)}
-                      placeholder="Step title"
-                      className={cn("font-semibold text-lg", isMobile && "text-base min-h-[48px]")}
-                      autoFocus
-                    />
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      onClick={handleSaveTitle}
-                      className={cn("shrink-0", isMobile && "min-w-[48px] min-h-[48px]")}
-                    >
-                      <Save className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      onClick={() => {
-                        setEditedTitle(step.title);
-                        setIsEditingTitle(false);
-                      }}
-                      className={cn("shrink-0", isMobile && "min-w-[48px] min-h-[48px]")}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ) : (
-                  <h3 
-                    className="text-xl sm:text-2xl font-bold text-foreground leading-tight cursor-pointer hover:text-elec-yellow transition-colors flex-1"
-                    onClick={() => setIsEditingTitle(true)}
-                  >
-                    {step.title}
-                  </h3>
-                )}
-              </div>
+              {/* Title */}
+              {isEditing ? (
+                <Input
+                  value={editedTitle}
+                  onChange={(e) => setEditedTitle(e.target.value)}
+                  placeholder="Step title"
+                  className={cn("font-semibold text-lg", isMobile && "text-base min-h-[48px]")}
+                  autoFocus
+                />
+              ) : (
+                <h3 className="text-xl sm:text-2xl font-bold text-foreground leading-tight">
+                  {step.title}
+                </h3>
+              )}
 
               {/* Metadata badges */}
               <div className="flex flex-wrap gap-2 items-center">
@@ -147,45 +121,40 @@ export const InstallationStepCard = ({
                 )}
               </div>
 
-              {/* Description - Inline editing */}
-              {isEditingDescription ? (
-                <div className="space-y-2">
-                  <Textarea
-                    value={editedDescription}
-                    onChange={(e) => setEditedDescription(e.target.value)}
-                    placeholder="Step description"
-                    className={cn("min-h-[120px]", isMobile && "min-h-[160px] text-base")}
-                    autoFocus
-                  />
-                  <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      onClick={handleSaveDescription}
-                      className={cn(isMobile && "min-h-[48px]")}
-                    >
-                      <Save className="h-4 w-4 mr-2" />
-                      Save
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => {
-                        setEditedDescription(step.content || '');
-                        setIsEditingDescription(false);
-                      }}
-                      className={cn(isMobile && "min-h-[48px]")}
-                    >
-                      <X className="h-4 w-4 mr-2" />
-                      Cancel
-                    </Button>
-                  </div>
-                </div>
+              {/* Description */}
+              {isEditing ? (
+                <Textarea
+                  value={editedDescription}
+                  onChange={(e) => setEditedDescription(e.target.value)}
+                  placeholder="Step description"
+                  className={cn("min-h-[120px]", isMobile && "min-h-[160px] text-base")}
+                />
               ) : (
-                <div 
-                  className="text-base leading-relaxed text-foreground/90 bg-muted/30 p-4 rounded-lg border border-border/50 cursor-pointer hover:border-elec-yellow/40 transition-colors"
-                  onClick={() => setIsEditingDescription(true)}
-                >
+                <div className="text-base leading-relaxed text-foreground/90 bg-muted/30 p-4 rounded-lg border border-border/50">
                   <EnhancedStepContent content={step.content || (step as any).description || ''} />
+                </div>
+              )}
+
+              {/* Save/Cancel buttons in edit mode */}
+              {isEditing && (
+                <div className="flex gap-2 pt-2">
+                  <Button 
+                    size="sm" 
+                    onClick={handleSave}
+                    className={cn("bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90", isMobile && "min-h-[48px]")}
+                  >
+                    <Save className="h-4 w-4 mr-2" />
+                    Save Changes
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    onClick={handleCancel}
+                    className={cn(isMobile && "min-h-[48px]")}
+                  >
+                    <X className="h-4 w-4 mr-2" />
+                    Cancel
+                  </Button>
                 </div>
               )}
 
@@ -448,25 +417,28 @@ export const InstallationStepCard = ({
 
               {/* Action Buttons - Touch optimized */}
               <div className="flex flex-wrap gap-2 pt-5 border-t-2 border-border/50">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={onDelete}
-                  className={cn(
-                    "text-destructive hover:bg-destructive/10 hover:text-destructive transition-colors active:scale-95",
-                    isMobile && "min-h-[48px] px-4"
-                  )}
-                >
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete
-                </Button>
+                {!isEditing && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsEditing(true)}
+                    className={cn(
+                      "border-elec-yellow/30 hover:bg-elec-yellow/10 hover:text-elec-yellow transition-colors active:scale-95",
+                      isMobile && "min-h-[48px] px-4"
+                    )}
+                  >
+                    <Edit2 className="h-4 w-4 mr-2" />
+                    Edit
+                  </Button>
+                )}
                 {onMoveUp && (
                   <Button 
                     variant="ghost" 
                     size="sm"
                     onClick={onMoveUp}
+                    disabled={isEditing}
                     className={cn(
-                      "hover:bg-accent transition-colors active:scale-95",
+                      "hover:bg-accent transition-colors active:scale-95 disabled:opacity-50",
                       isMobile && "min-h-[48px] px-4"
                     )}
                   >
@@ -479,8 +451,9 @@ export const InstallationStepCard = ({
                     variant="ghost" 
                     size="sm"
                     onClick={onMoveDown}
+                    disabled={isEditing}
                     className={cn(
-                      "hover:bg-accent transition-colors active:scale-95",
+                      "hover:bg-accent transition-colors active:scale-95 disabled:opacity-50",
                       isMobile && "min-h-[48px] px-4"
                     )}
                   >
@@ -488,6 +461,19 @@ export const InstallationStepCard = ({
                     Move Down
                   </Button>
                 )}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onDelete}
+                  disabled={isEditing}
+                  className={cn(
+                    "text-destructive hover:bg-destructive/10 hover:text-destructive transition-colors active:scale-95 disabled:opacity-50 ml-auto",
+                    isMobile && "min-h-[48px] px-4"
+                  )}
+                >
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Delete
+                </Button>
               </div>
             </div>
           </div>
