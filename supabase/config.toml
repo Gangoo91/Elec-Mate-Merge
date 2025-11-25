@@ -39,7 +39,7 @@ timeout_sec = 30
 
 [functions.process-installation-method-job]
 verify_jwt = false
-timeout_sec = 30
+timeout_sec = 180
 
 # Commissioning & Testing Specialist V3
 [functions.commissioning-v3]
