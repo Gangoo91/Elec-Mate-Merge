@@ -135,6 +135,7 @@ export interface CircuitDesign {
     tableReferences: string;
   };
   installationGuidance?: EnhancedInstallationGuidance;
+  installationGuidanceStructured?: any; // Raw structured guidance object for PDF consumption
   testingRequirements?: TestingRequirements;
   installationNotes?: string; // New context-aware installation guidance field
   specialLocationCompliance?: {
