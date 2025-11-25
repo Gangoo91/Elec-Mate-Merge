@@ -101,17 +101,17 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
     if (jobStatus === 'complete' && jobMethodData && !celebrationShown) {
       console.log('✅ Setting method data and showing celebration');
       
-      // Map backend field names to frontend format with defensive fallbacks
+      // Map backend field names - pass through exact field names from backend
       const mappedData = {
         ...jobMethodData,
         steps: jobMethodData.steps?.map((step: any) => ({
-          stepNumber: step.step,
+          stepNumber: step.stepNumber || step.step,
           title: step.title,
-          content: step.description,
-          safety: step.safetyNotes,
-          toolsRequired: step.tools || step.equipmentNeeded || [], // ✅ Defensive mapping
-          materialsNeeded: step.materials || step.materialsNeeded || [], // ✅ Defensive mapping
-          estimatedDuration: step.estimatedTime ? `${step.estimatedTime} mins` : undefined,
+          content: step.content || step.description,
+          safety: step.safety || step.safetyNotes || [],
+          toolsRequired: step.toolsRequired || step.tools || step.equipmentNeeded || [],
+          materialsNeeded: step.materialsNeeded || step.materials || [],
+          estimatedDuration: step.estimatedDuration || (step.estimatedTime ? `${step.estimatedTime} mins` : undefined),
           riskLevel: step.riskLevel || 'medium',
           qualifications: step.qualifications,
           linkedHazards: step.linkedHazards,
@@ -120,7 +120,7 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
           bsReferences: step.bsReferences,
           inspectionCheckpoints: step.inspectionCheckpoints
         })) || [],
-        _fullMethodStatement: jobMethodData // ✅ Preserve complete backend response for JSON Schema Viewer
+        _fullMethodStatement: jobMethodData
       };
 
       console.log('✅ Mapped method data:', mappedData);

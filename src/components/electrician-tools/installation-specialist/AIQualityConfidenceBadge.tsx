@@ -63,7 +63,7 @@ export const AIQualityConfidenceBadge = ({ metrics, isGenerating }: AIQualityCon
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Shield className={`h-5 w-5 ${getConfidenceColor(metrics.overallConfidence)}`} />
-            <span className="font-semibold text-sm">AI Quality Monitor</span>
+            <span className="font-semibold text-sm">Quality Monitor</span>
           </div>
           <Badge variant="outline" className={getRAGQualityColor(metrics.ragDataQuality)}>
             {getRAGQualityIcon()}
@@ -143,7 +143,7 @@ export const AIQualityConfidenceBadge = ({ metrics, isGenerating }: AIQualityCon
           <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" />
           <span>
             {metrics.stage === 'rag' && 'Searching knowledge base...'}
-            {metrics.stage === 'ai' && 'AI analyzing requirements...'}
+            {metrics.stage === 'ai' && 'Analysing requirements...'}
             {metrics.stage === 'generation' && 'Generating installation steps...'}
             {metrics.stage === 'validation' && 'Validating compliance...'}
             {metrics.stage === 'complete' && 'Quality check complete'}

@@ -158,7 +158,7 @@ export const RAGExtractionBreakdown = ({ extractionBreakdown }: RAGExtractionBre
         <div className="mt-4 flex items-start gap-2 bg-blue-500/5 rounded-lg p-3 border border-blue-500/20">
           <AlertCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
           <p className="text-xs text-muted-foreground leading-relaxed">
-            <strong className="text-foreground">Data Quality:</strong> Higher extraction counts indicate more comprehensive AI-generated steps. 
+            <strong className="text-foreground">Data Quality:</strong> Higher extraction counts indicate more comprehensive generated steps. 
             Tools and materials are sourced from practical work database ({practicalWork.documentsUsed} procedures analyzed). 
             Regulatory compliance verified against {bs7671.documentsUsed} BS 7671 regulation{bs7671.documentsUsed !== 1 ? 's' : ''}.
           </p>
