@@ -217,7 +217,7 @@ ${ragContext.regulations.slice(0, 10).map((reg: any, i: number) =>
         { role: 'user', content: userPrompt }
       ],
       response_format: { type: 'json_object' },
-      max_completion_tokens: 4000
+      max_completion_tokens: 12000  // Increased for GPT-5 reasoning + output
     })
   });
 
