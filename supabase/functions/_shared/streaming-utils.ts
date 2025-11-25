@@ -35,6 +35,18 @@ export class StreamingResponseBuilder {
     this.sendChunk({ type: 'done' });
   }
 
+  sendHeartbeat(message?: string) {
+    this.sendChunk({ type: 'heartbeat', content: message });
+  }
+
+  sendProgress(message: string, data?: any) {
+    this.sendChunk({ type: 'progress', content: message, data });
+  }
+
+  sendResult(data: any) {
+    this.sendChunk({ type: 'result', data });
+  }
+
   private sendChunk(chunk: StreamChunk) {
     const message = `data: ${JSON.stringify(chunk)}\n\n`;
     this.controller.enqueue(this.encoder.encode(message));
