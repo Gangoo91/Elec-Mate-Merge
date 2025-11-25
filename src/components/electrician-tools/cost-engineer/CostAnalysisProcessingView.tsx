@@ -138,13 +138,8 @@ const CostAnalysisProcessingView = ({ progress: agentProgress, onCancel }: CostA
               Searching 45,000+ UK pricing items for accurate quotes
             </p>
             
-            {agentProgress?.message && (
-              <p className="text-sm sm:text-base text-elec-yellow font-medium mt-3 animate-fade-in">
-                {agentProgress.message}
-              </p>
-            )}
-            {!agentProgress?.message && progressMessage && (
-              <p className="text-sm sm:text-base text-elec-yellow font-medium mt-3 animate-fade-in">
+            {progressMessage && (
+              <p className="text-sm sm:text-base text-elec-yellow font-medium mt-3">
                 {progressMessage}
               </p>
             )}

@@ -308,22 +308,46 @@ ${ragContext.practicalWork.slice(0, 10).map((pw: any, i: number) =>
   `${i + 1}. ${pw.activity_description || pw.task_name} - ${pw.duration_hours}hrs`
 ).join('\n')}`;
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${OPENAI_API_KEY}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      model: 'gpt-5-mini-2025-08-07',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt }
-      ],
-      response_format: { type: 'json_object' },
-      max_completion_tokens: 8000
-    })
-  });
+  console.log('🤖 Calling OpenAI for cost estimation...');
+
+  // Add timeout protection (2 minutes)
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => {
+    console.error('⏱️ OpenAI call timeout after 120 seconds');
+    controller.abort();
+  }, 120000);
+
+  let response;
+  try {
+    response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: 'gpt-5-mini-2025-08-07',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        response_format: { type: 'json_object' },
+        max_completion_tokens: 8000
+      }),
+      signal: controller.signal
+    });
+  } catch (fetchError: any) {
+    clearTimeout(timeoutId);
+    if (fetchError.name === 'AbortError') {
+      console.error('❌ OpenAI fetch aborted (timeout)');
+      throw new Error('OpenAI request timed out after 2 minutes');
+    }
+    console.error('❌ OpenAI fetch error:', fetchError.message);
+    throw new Error(`OpenAI fetch failed: ${fetchError.message}`);
+  }
+
+  clearTimeout(timeoutId);
+  console.log(`📡 OpenAI response status: ${response.status}`);
 
   if (!response.ok) {
     const errorText = await response.text();
