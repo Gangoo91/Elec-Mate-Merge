@@ -239,8 +239,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       pscc: (design.consumerUnit?.incomingSupply?.incomingPFC || 3.2).toFixed(1),
       
       totalConnectedLoad: totalConnectedLoad.toLocaleString(),
-      diversityFactor: (design.diversityFactor || design.diversityBreakdown?.overallDiversityFactor || 1.0).toFixed(2),
-      diversifiedLoad: ((design.diversityBreakdown?.diversifiedLoad || totalConnectedLoad) * (design.diversityFactor || 1.0)).toLocaleString(),
+      diversityFactor: `${((design.diversityBreakdown?.overallDiversityFactor || design.diversityFactor || 1.0) * 100).toFixed(0)}%`,
+      diversifiedLoad: (design.diversityBreakdown?.diversifiedLoad || totalConnectedLoad).toLocaleString(),
       totalDesignCurrent: totalDesignCurrent,
       
       consumerUnitType: design.consumerUnit?.type || '17th Edition RCBO Board',
@@ -250,6 +250,14 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       
       // Circuits with all fields including new display fields
       circuits: (design.circuits || []).map((circuit, idx) => {
+        // Debug logging for design current values
+        console.log('[PDF Export] Circuit design currents:', {
+          name: circuit.name,
+          designCurrent: circuit.designCurrent,
+          calculatedIb: circuit.calculations?.Ib,
+          loadPower: circuit.loadPower,
+          voltage: circuit.voltage
+        });
         const zsCompliant = circuit.calculations?.zs ? circuit.calculations.zs <= (circuit.calculations?.maxZs || 999) : true;
         const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
         
@@ -264,6 +272,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           
           cableSize: circuit.cableSize?.toString() || '0',
           cpcSize: circuit.cpcSize?.toString() || '0',
+          cableType: circuit.cableType || `${circuit.cableSize}mm² twin and earth`,
           cableLength: circuit.cableLength || 0,
           installationMethod: circuit.installationMethod || 'Method C (Clipped Direct)',
           
