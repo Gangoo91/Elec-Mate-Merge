@@ -75,10 +75,10 @@ Deno.serve(async (req) => {
       await supabase
         .from('installation_method_jobs')
         .update({
-          status: 'completed',
+          status: 'complete',
           progress: 100,
-          installation_data: result.installationMethod,
-          raw_response: result,
+          method_data: result.installationMethod,
+          quality_metrics: result.metadata || null,
           completed_at: new Date().toISOString()
         })
         .eq('id', jobId);
