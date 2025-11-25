@@ -269,8 +269,22 @@ ${tradePricingPrompt}
 
 KNOWLEDGE BASE PROVIDED:
 - ${ragContext.pricing.length} pricing intelligence results (use for specialist items only)
-- ${ragContext.practicalWork.length} practical work intelligence results
+- ${ragContext.practicalWork.length} practical work intelligence results WITH TIMING DATA
 - Keywords: ${ragContext.keywords.slice(0, 15).join(', ')}
+
+⚠️ CRITICAL: Use the practical work timing data below to ensure realistic labour hours. These are based on real UK electrician job data.
+
+RAG TIMING BENCHMARKS:
+${ragContext.practicalWork.slice(0, 10).map((pw: any, i: number) => {
+  const durationHours = pw.typical_duration_minutes 
+    ? (pw.typical_duration_minutes / 60).toFixed(1) 
+    : (pw.duration_hours || 'N/A');
+  const teamSize = pw.team_size || 1;
+  const taskName = pw.primary_topic || pw.activity_description || 'Task';
+  return `  • ${taskName}: ${durationHours} hours (${teamSize} person${teamSize > 1 ? 's' : ''})`;
+}).join('\n')}
+
+💡 CROSS-REFERENCE your labour estimates against these benchmarks. If your estimate differs by >30%, explain why in valueEngineering.
 
 OUTPUT STRUCTURE (JSON):
 {
@@ -363,7 +377,7 @@ REQUIREMENTS:
 - UK English spelling (metres, colour, earthing)
 - All prices in GBP (£)
 - Compare your total against the benchmarks provided - if significantly higher, review your pricing!
-- ALWAYS include 2-3 upsells (immediate add-ons), payment terms with deposit structure, and 1-2 future pipeline opportunities
+- 🔥 MANDATORY: ALWAYS include 2-3 upsells (immediate add-ons), payment terms with deposit structure, and 1-2 future pipeline opportunities - these fields are REQUIRED
 - ${projectType === 'commercial' ? 'COMMERCIAL PROJECT: Include phased payment milestones (typically 30% deposit, 40% at first fix, 30% completion). Upsells should focus on efficiency upgrades (LED lighting, smart controls). Future work: maintenance contracts, expansion.' : 'DOMESTIC PROJECT: Standard deposit is 30-50%. Upsells: surge protection, USB sockets, outdoor lighting. Future work: EV charger, solar panels, security systems.'}
 - Respond in valid JSON only`;
 
@@ -498,6 +512,62 @@ ${ragContext.practicalWork.slice(0, 10).map((pw: any, i: number) => {
         parsedEstimate.valueEngineering.push(warning);
       }
     });
+  }
+
+  // FALLBACK: Ensure required fields exist
+  if (!parsedEstimate.upsells || parsedEstimate.upsells.length === 0) {
+    console.warn('⚠️ No upsells returned by AI - adding fallback');
+    parsedEstimate.upsells = [
+      {
+        opportunity: "Surge protection device",
+        price: 180,
+        winRate: 45,
+        isHot: false,
+        timing: "During quote discussion",
+        script: "I'd recommend adding surge protection to your consumer unit for £180. It protects all your expensive appliances from voltage spikes - especially important with all the electronics we have these days."
+      },
+      {
+        opportunity: "USB charging sockets",
+        price: 120,
+        winRate: 55,
+        isHot: false,
+        timing: "When discussing sockets",
+        script: "While we're upgrading sockets, I can install USB charging points for £120. Much more convenient than using plug adapters, and they're very popular right now."
+      }
+    ];
+  }
+
+  if (!parsedEstimate.paymentTerms) {
+    console.warn('⚠️ No payment terms returned by AI - adding fallback');
+    const grandTotal = parsedEstimate.summary.grandTotal;
+    const depositAmount = grandTotal * 0.3;
+    const balanceAmount = grandTotal - depositAmount;
+    parsedEstimate.paymentTerms = {
+      depositPercent: 30,
+      depositAmount: depositAmount,
+      balanceAmount: balanceAmount,
+      terms: "30% deposit before work starts, balance on completion",
+      lateFeePolicy: "Interest charged at 4% above base rate after 30 days",
+      paymentMilestones: [
+        { stage: "Deposit", percentage: 30, amount: depositAmount, trigger: "Before work starts" },
+        { stage: "Completion", percentage: 70, amount: balanceAmount, trigger: "On completion" }
+      ]
+    };
+  }
+
+  if (!parsedEstimate.pipeline || parsedEstimate.pipeline.length === 0) {
+    console.warn('⚠️ No pipeline returned by AI - adding fallback');
+    parsedEstimate.pipeline = [
+      {
+        opportunity: "EV Charger Installation",
+        description: "7kW home charger with app control",
+        timeframe: "6-12 months",
+        estimatedValue: 1200,
+        priority: "medium",
+        trigger: "When they mention new electric car",
+        timing: "6-12 months"
+      }
+    ];
   }
 
   return parsedEstimate;
