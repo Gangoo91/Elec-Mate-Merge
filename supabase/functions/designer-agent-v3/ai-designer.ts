@@ -5,6 +5,12 @@
 
 import { callOpenAI } from '../_shared/ai-providers.ts';
 import type { NormalizedInputs, RAGContext, Design, DesignedCircuit } from './types.ts';
+import {
+  getRecommendedCableTypes,
+  getRecommendedEnclosure,
+  detectFireEmergencyCircuit,
+  detectSpecialLocation
+} from '../_shared/cable-enclosure-rules.ts';
 
 export class AIDesigner {
   private openAiKey: string;
@@ -104,7 +110,7 @@ export class AIDesigner {
       parts.push('✅ Internal circuits: Twin & Earth (T&E) ONLY');
       parts.push('✅ External/buried circuits: SWA (Steel Wire Armoured) ONLY');
       parts.push('✅ Outdoor circuits: SWA with appropriate glands');
-      parts.push('❌ NEVER use: PVC singles, LSZH singles, conduit systems, FP200/FP400');
+      parts.push('❌ NEVER use: PVC singles, LSZH singles, conduit systems');
       parts.push('NOTE: T&E has REDUCED CPC size per BS 7671 Table 54.7 (e.g., 2.5mm² T&E = 1.5mm² CPC)');
       parts.push('');
     } else if (type === 'commercial') {
@@ -140,6 +146,33 @@ export class AIDesigner {
       parts.push('NOTE: CPC size EQUALS live conductor size for SWA/singles (NOT reduced like T&E)');
       parts.push('');
     }
+    
+    // PRIORITY 1: Fire and Emergency Circuit Rules (OVERRIDE ALL ENVIRONMENT RULES)
+    parts.push('=== PRIORITY 1: FIRE & EMERGENCY CIRCUIT RULES (MANDATORY - OVERRIDE ENVIRONMENT) ===');
+    parts.push('🔥 EMERGENCY LIGHTING: MUST use FP200, FP400, or MICC (BS 5266-1)');
+    parts.push('🔥 FIRE ALARM SYSTEMS: MUST use FP200, FP400, or MICC (BS 5839-1)');
+    parts.push('🔥 SMOKE DETECTION: MUST use FP200 or FP400 (BS 5839-1)');
+    parts.push('🔥 SPRINKLER SYSTEMS: MUST use FP200, FP400, or MICC (BS EN 12845)');
+    parts.push('🔥 FIRE SUPPRESSION: MUST use FP200, FP400, or MICC (BS 7671 Reg 560.8)');
+    parts.push('These circuits require fire-rated cables REGARDLESS of environment (domestic/commercial/industrial).');
+    parts.push('');
+    
+    // PRIORITY 2: Special Location Rules
+    parts.push('=== PRIORITY 2: SPECIAL LOCATION RULES ===');
+    parts.push('🌍 OUTDOOR/EXTERNAL: MUST use SWA (BS 7671 Reg 522.8)');
+    parts.push('🌍 UNDERGROUND/BURIED: MUST use SWA with warning tape and marker posts (BS 7671 Reg 522.8.10)');
+    parts.push('💧 BATHROOM: Use appropriate cable for environment, avoid zones, supplementary bonding (BS 7671 Section 701)');
+    parts.push('🔥 HIGH TEMPERATURE: Use XLPE, MICC, or SWA-XLPE rated to 90°C+ (BS 7671 Reg 523.1)');
+    parts.push('🏊 SWIMMING POOL: LSZH singles in steel conduit or SWA, zone restrictions apply (BS 7671 Section 702)');
+    parts.push('');
+    
+    // Enclosure Selection Rules
+    parts.push('=== ENCLOSURE/INSTALLATION METHOD RULES ===');
+    parts.push('🔧 SWA cables: Clipped direct or on cable tray - NO CONDUIT/TRUNKING NEEDED (armour provides protection)');
+    parts.push('🔧 LSZH singles: MUST be in steel conduit, metal trunking, or cable basket (Reg 521.5.1)');
+    parts.push('🔧 Twin & Earth: Clipped direct, in PVC conduit, or in mini trunking for domestic');
+    parts.push('🔧 FP200/FP400: Clipped direct with fire-rated clips or in steel trunking');
+    parts.push('🔧 MICC: Clipped direct with pyrotenax clips (self-supporting, inherently fire-rated)');
     parts.push('');
 
     // Inject Regulations Intelligence (Phase 5: Increased to 25 from 5)
@@ -576,7 +609,7 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
                   },
                   installationMethod: {
                     type: 'string',
-                    description: 'Installation method reference (e.g., "Method C - clipped direct", "Method B - enclosed in conduit")'
+                    description: 'Installation method reference. IMPORTANT: SWA cables = "clipped direct" or "on cable tray" (NO conduit needed). LSZH singles = "in steel conduit" or "in metal trunking" (MUST be enclosed). T&E = "clipped direct" or "in PVC conduit". FP cables = "clipped direct with fire-rated clips". Format: "Method C - clipped direct" or "Method B - in steel conduit"'
                   },
                   cableType: {
                     type: 'string',
@@ -829,15 +862,21 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
 
 
   /**
-   * Get allowed cable types based on installation environment (LAYER 2: Dynamic Schema Constraint)
+   * Get allowed cable types based on installation environment with circuit-type-specific rules
+   * LAYER 2: Dynamic Schema Constraint - now with priority-based rules
    */
   private getAllowedCableTypes(installationType: string): string[] {
     const cableSizes = ['1.5mm²', '2.5mm²', '4mm²', '6mm²', '10mm²', '16mm²', '25mm²', '35mm²', '50mm²', '70mm²', '95mm²'];
     
+    // Enhanced rules include fire-rated cables for ALL environments
+    // Fire/emergency circuits will be enforced at system prompt level
     if (installationType === 'domestic') {
       return [
         ...cableSizes.map(size => `${size} twin and earth`),
-        ...cableSizes.map(size => `${size} SWA`)
+        ...cableSizes.map(size => `${size} SWA`),
+        // Add fire-rated options for emergency circuits in domestic (rare but possible)
+        ...cableSizes.map(size => `${size} FP200`),
+        ...cableSizes.map(size => `${size} FP400`)
       ];
     }
     
@@ -846,7 +885,8 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
         ...cableSizes.map(size => `${size} LSZH single`),
         ...cableSizes.map(size => `${size} SWA`),
         ...cableSizes.map(size => `${size} FP200`),
-        ...cableSizes.map(size => `${size} FP400`)
+        ...cableSizes.map(size => `${size} FP400`),
+        ...cableSizes.map(size => `${size} MICC`)
       ];
     }
     
@@ -855,7 +895,9 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
         ...cableSizes.map(size => `${size} SWA`),
         ...cableSizes.map(size => `${size} LSZH single`),
         ...cableSizes.map(size => `${size} FP200`),
-        ...cableSizes.map(size => `${size} armoured flex`)
+        ...cableSizes.map(size => `${size} FP400`),
+        ...cableSizes.map(size => `${size} armoured flex`),
+        ...cableSizes.map(size => `${size} XLPE`)
       ];
     }
     
@@ -863,27 +905,29 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
     return [
       ...cableSizes.map(size => `${size} twin and earth`),
       ...cableSizes.map(size => `${size} SWA`),
-      ...cableSizes.map(size => `${size} LSZH single`)
+      ...cableSizes.map(size => `${size} LSZH single`),
+      ...cableSizes.map(size => `${size} FP200`)
     ];
   }
 
   /**
-   * Get cable type description based on installation environment (LAYER 2: Dynamic Schema Constraint)
+   * Get cable type description based on installation environment with enhanced rules
+   * LAYER 2: Dynamic Schema Constraint
    */
   private getCableTypeDescription(installationType: string): string {
     if (installationType === 'domestic') {
-      return 'DOMESTIC: Use twin & earth for internal, SWA for external/buried. Format: "2.5mm² twin and earth" or "6mm² SWA"';
+      return 'DOMESTIC: Twin & earth for internal, SWA for external/buried. PRIORITY: Fire/emergency circuits MUST use FP200/FP400. Format: "2.5mm² twin and earth" or "6mm² SWA" or "1.5mm² FP200"';
     }
     
     if (installationType === 'commercial') {
-      return 'COMMERCIAL: Use LSZH singles in conduit, SWA for sub-mains, FP200/FP400 for fire circuits. Format: "2.5mm² LSZH single" or "10mm² SWA"';
+      return 'COMMERCIAL: LSZH singles in conduit/trunking, SWA for sub-mains. PRIORITY: Fire/emergency circuits MUST use FP200/FP400/MICC. Outdoor MUST use SWA. Format: "2.5mm² LSZH single" or "10mm² SWA" or "1.5mm² FP200"';
     }
     
     if (installationType === 'industrial') {
-      return 'INDUSTRIAL: Use SWA as standard, LSZH singles in heavy conduit, FP200/FP400 for fire systems. Format: "10mm² SWA" or "6mm² LSZH single"';
+      return 'INDUSTRIAL: SWA standard for most circuits, LSZH singles in heavy conduit. PRIORITY: Fire/emergency circuits MUST use FP200/FP400. High temp use XLPE. Format: "10mm² SWA" or "6mm² LSZH single" or "2.5mm² FP200"';
     }
     
-    return 'Cable type: size + type (e.g., "2.5mm² twin and earth", "6mm² SWA")';
+    return 'Cable type: size + type. PRIORITY: Fire/emergency MUST use FP200/FP400, outdoor MUST use SWA. Format: "2.5mm² twin and earth" or "6mm² SWA" or "1.5mm² FP200"';
   }
 
   /**
