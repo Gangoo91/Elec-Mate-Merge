@@ -149,7 +149,7 @@ const PricingOptionsTiers = ({
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <CardTitle className="text-2xl sm:text-xl font-bold text-white">Pricing Options</CardTitle>
+        <CardTitle className="text-xl sm:text-lg font-bold text-white">Pricing Options</CardTitle>
         {explanation && (
           <p className="text-base sm:text-sm text-white mt-2">{explanation}</p>
         )}
@@ -179,7 +179,7 @@ const PricingOptionsTiers = ({
                 {normalPrice >= benchmark.min && normalPrice <= benchmark.max && ' ✅ Within range'}
               </span>
             </div>
-            <div className="text-sm sm:text-xs text-white/90 mt-3 sm:mt-2">
+            <div className="text-sm sm:text-xs text-white mt-3 sm:mt-2">
               {normalPrice < benchmark.min && 'Consider if materials or labour are underestimated'}
               {normalPrice > benchmark.max && 'Review for over-specification or excessive margins'}
               {normalPrice >= benchmark.min && normalPrice <= benchmark.max && 'Competitive pricing for your region'}
@@ -199,7 +199,7 @@ const PricingOptionsTiers = ({
                 Work Sparse
               </Badge>
               <div className="text-5xl sm:text-4xl font-bold text-white">£{sparsePrice.toFixed(0)}</div>
-              <div className="text-sm sm:text-xs text-white/90 mt-1">Low margin</div>
+              <div className="text-sm sm:text-xs text-white mt-1">Low margin</div>
             </div>
             
             <div className="space-y-2 text-base sm:text-sm">
@@ -229,7 +229,7 @@ const PricingOptionsTiers = ({
                 Normal ⭐
               </Badge>
               <div className="text-5xl sm:text-4xl font-bold text-elec-yellow">£{normalPrice.toFixed(0)}</div>
-              <div className="text-sm sm:text-xs text-white/90 mt-1">Target pricing</div>
+              <div className="text-sm sm:text-xs text-white mt-1">Target pricing</div>
             </div>
             
             <div className="space-y-2 text-base sm:text-sm">
@@ -259,7 +259,7 @@ const PricingOptionsTiers = ({
                 Busy Period
               </Badge>
               <div className="text-5xl sm:text-4xl font-bold text-white">£{busyPrice.toFixed(0)}</div>
-              <div className="text-sm sm:text-xs text-white/90 mt-1">High margin</div>
+              <div className="text-sm sm:text-xs text-white mt-1">High margin</div>
             </div>
             
             <div className="space-y-2 text-base sm:text-sm">

@@ -30,7 +30,7 @@ const RiskAssessmentTable = ({ risks }: RiskAssessmentTableProps) => {
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <CardTitle className="text-2xl sm:text-xl font-bold text-white flex items-center gap-2">
+        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
           <AlertTriangle className="h-5 w-5 text-elec-yellow" />
           Risk Assessment
         </CardTitle>
@@ -76,7 +76,7 @@ const RiskAssessmentTable = ({ risks }: RiskAssessmentTableProps) => {
             </Table>
           </div>
         </div>
-        <div className="text-xs text-center text-white/60 mt-2 sm:hidden">
+        <div className="text-xs text-center text-white mt-2 sm:hidden">
           ← Swipe to see more →
         </div>
       </CardContent>

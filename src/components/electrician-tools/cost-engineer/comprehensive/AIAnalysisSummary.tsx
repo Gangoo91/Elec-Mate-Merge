@@ -20,7 +20,7 @@ const AIAnalysisSummary = ({ jobDescription }: AIAnalysisSummaryProps) => {
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5 bg-gradient-to-r from-elec-yellow/10 to-transparent border-b border-elec-yellow/20">
         <div className="flex items-center gap-3">
           <Brain className="h-6 w-6 text-elec-yellow" />
-          <CardTitle className="text-2xl sm:text-xl font-bold text-white">
+          <CardTitle className="text-xl sm:text-lg font-bold text-white">
             📋 Analysis & Reasoning
           </CardTitle>
         </div>

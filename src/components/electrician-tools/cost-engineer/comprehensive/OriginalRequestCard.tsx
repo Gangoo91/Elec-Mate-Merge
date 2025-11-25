@@ -30,7 +30,7 @@ const OriginalRequestCard = ({ query, projectContext, timestamp }: OriginalReque
       <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6 space-y-4">
         {/* Project Context Meta */}
         {(projectContext?.projectName || projectContext?.clientInfo || projectContext?.location) && (
-          <div className="flex flex-wrap gap-3 text-sm text-white/90 pb-2 border-b border-border/50">
+          <div className="flex flex-wrap gap-3 text-sm text-white pb-2 border-b border-border/50">
             {projectContext.projectName && (
               <div className="flex items-center gap-1.5">
                 <User className="h-3.5 w-3.5 text-blue-400" />

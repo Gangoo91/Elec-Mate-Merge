@@ -35,7 +35,7 @@ const QuickMetricsCard = ({
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl bg-gradient-to-br from-elec-card to-elec-dark/50">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5 bg-gradient-to-r from-blue-500/10 to-transparent border-b border-blue-500/20">
-        <CardTitle className="text-2xl sm:text-xl font-bold text-white">
+        <CardTitle className="text-xl sm:text-lg font-bold text-white">
           📊 Job Snapshot
         </CardTitle>
       </CardHeader>
@@ -46,7 +46,7 @@ const QuickMetricsCard = ({
           {complexity && (
             <div className="p-4 rounded-lg bg-background/30 border border-border/30 text-center">
               <div className="flex items-center justify-center gap-2 mb-3">
-                <TrendingUp className="h-5 w-5 text-white/90" />
+                <TrendingUp className="h-5 w-5 text-white" />
                 <span className="text-base sm:text-sm text-white font-semibold">Complexity</span>
               </div>
               <div className="flex flex-col items-center gap-2">
@@ -62,7 +62,7 @@ const QuickMetricsCard = ({
           {confidence && (
             <div className="p-4 rounded-lg bg-background/30 border border-border/30 text-center">
               <div className="flex items-center justify-center gap-2 mb-3">
-                <CheckCircle2 className="h-5 w-5 text-white/90" />
+                <CheckCircle2 className="h-5 w-5 text-white" />
                 <span className="text-base sm:text-sm text-white font-semibold">Confidence</span>
               </div>
               <div className="flex flex-col items-center gap-2">
@@ -78,7 +78,7 @@ const QuickMetricsCard = ({
           {riskAssessment && (
             <div className="p-4 rounded-lg bg-background/30 border border-border/30 text-center">
               <div className="flex items-center justify-center gap-2 mb-3">
-                <AlertTriangle className="h-5 w-5 text-white/90" />
+                <AlertTriangle className="h-5 w-5 text-white" />
                 <span className="text-base sm:text-sm text-white font-semibold">Risk Level</span>
               </div>
               <div className="flex flex-col items-center gap-2">

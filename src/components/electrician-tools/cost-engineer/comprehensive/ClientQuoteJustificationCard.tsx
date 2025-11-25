@@ -98,7 +98,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <CardTitle className="text-2xl sm:text-xl font-bold text-white flex items-center gap-2">
+        <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
           <MessageSquare className="h-5 w-5 text-blue-400" />
           How to Present & Defend This Quote
         </CardTitle>
@@ -161,23 +161,23 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-white space-y-2">
                       <p>"I understand it might seem high at first glance. Let me break down exactly what's included:"</p>
                       
-                      <div className="pl-3 space-y-1 text-base sm:text-sm">
+                      <div className="pl-3 space-y-1 text-base sm:text-sm text-white">
                         <p><strong>Materials: {formatCurrency(materialsTotal)}</strong></p>
-                        <p className="text-white">
+                        <p>
                           • Trade supplier materials at net cost {formatCurrency(materialsNet)}<br/>
                           • Plus {materialsMarkup.toFixed(0)}% markup ({formatCurrency(markupAmount)}) to cover waste, collection time, warranty support<br/>
                           • Industry standard markup: 15-25% (we're at {materialsMarkup.toFixed(0)}%)
                         </p>
                         
                         <p className="pt-2"><strong>Labour: {formatCurrency(labourTotal)} ({Math.round(labourHours)} hours)</strong></p>
-                        <p className="text-white">
+                        <p>
                           • Qualified electrician rate: {formatCurrency(labourRate)}/hour<br/>
                           • UK market rate for qualified: £{marketRate.min}-{marketRate.max}/hour (we're competitive)<br/>
                           • {region} regional adjustment: {regionalMultiplier}x
                         </p>
                         
                         <p className="pt-2"><strong>Business Costs: {formatCurrency(overheads)}</strong></p>
-                        <p className="text-white">
+                        <p>
                           • Van, tools, insurance, certifications<br/>
                           • Every electrician must cover these costs<br/>
                           • Allocated fairly: {formatCurrency(dailyOverheadRate)}/day × {jobDays} days
@@ -218,7 +218,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     
                     <div>
                       <p className="font-medium text-amber-400 mb-1">⚠️ Questions to ask the cheaper quote:</p>
-                      <ul className="text-sm space-y-1 pl-4 text-white/80">
+                      <ul className="text-sm space-y-1 pl-4 text-white">
                         <li>• Are they 18th Edition qualified and registered?</li>
                         <li>• Do they have £2M public liability insurance?</li>
                         <li>• Will they provide BS 7671 certification?</li>
@@ -241,7 +241,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     
                     <div>
                       <p className="font-medium text-destructive mb-1">❌ Lower quotes may:</p>
-                      <ul className="text-sm space-y-1 pl-4 text-white/80">
+                      <ul className="text-sm space-y-1 pl-4 text-white">
                         <li>• Use unqualified labour</li>
                         <li>• Source cheap materials</li>
                         <li>• Skip proper testing</li>
@@ -282,9 +282,9 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     <p>"I appreciate you asking, but let me explain why this price is already fair:"</p>
                     
                     <div className="bg-destructive/10 border border-destructive/20 p-2 rounded">
-                      <p className="font-medium text-xs mb-1">Break-even Point: {formatCurrency(breakEven)}</p>
-                      <p className="text-xs text-white/80">This is the absolute minimum to cover:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white/80 mt-1">
+                      <p className="font-medium text-xs mb-1 text-white">Break-even Point: {formatCurrency(breakEven)}</p>
+                      <p className="text-xs text-white">This is the absolute minimum to cover:</p>
+                      <ul className="text-xs space-y-0.5 pl-4 text-white mt-1">
                         <li>• Materials: {formatCurrency(materialsTotal)}</li>
                         <li>• Labour: {formatCurrency(labourTotal)}</li>
                         <li>• Overheads: {formatCurrency(overheads)}</li>

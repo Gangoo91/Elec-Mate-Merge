@@ -65,7 +65,7 @@ const CostBreakdownCard = ({
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
-        <CardTitle className="text-2xl sm:text-xl font-bold text-white">Cost Breakdown</CardTitle>
+        <CardTitle className="text-xl sm:text-lg font-bold text-white">Cost Breakdown</CardTitle>
         <p className="text-base sm:text-sm text-white mt-1">Tap any section to see detailed justification</p>
       </CardHeader>
       <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6">
@@ -113,18 +113,18 @@ const CostBreakdownCard = ({
                   </div>
                   
                   <div className="p-3 rounded-lg bg-muted/30">
-                    <div className="font-medium mb-2">Industry Standards</div>
-                    <div className="space-y-1 text-xs">
+                    <div className="font-medium mb-2 text-white">Industry Standards</div>
+                    <div className="space-y-1 text-xs text-white">
                       <div className="flex justify-between">
-                        <span className="text-white/80">Budget electricians:</span>
+                        <span>Budget electricians:</span>
                         <span>10-15% markup</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-white/80">Professional tradespeople:</span>
+                        <span>Professional tradespeople:</span>
                         <span>15-25% markup</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-white/80">Specialist contractors:</span>
+                        <span>Specialist contractors:</span>
                         <span>20-30% markup</span>
                       </div>
                       <div className="flex justify-between pt-1 border-t border-border mt-2">
@@ -136,7 +136,7 @@ const CostBreakdownCard = ({
                   
                   <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20">
                     <div className="font-medium mb-1 text-destructive">⚠️ Why NOT to reduce this</div>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       If you only charge net material costs, you're paying out of pocket for waste, your time collecting, and storage. A 0% markup means you lose money on materials.
                     </p>
                   </div>
@@ -173,18 +173,18 @@ const CostBreakdownCard = ({
               <CollapsibleContent>
                 <div className="px-3 pb-3 space-y-3 text-sm">
                   <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
-                    <div className="font-medium mb-2">Your Labour Rate: £{calculatedLabourRate.toFixed(2)}/hour</div>
-                    <div className="text-xs space-y-1">
+                    <div className="font-medium mb-2 text-white">Your Labour Rate: £{calculatedLabourRate.toFixed(2)}/hour</div>
+                    <div className="text-xs space-y-1 text-white">
                       <div className="flex justify-between">
-                        <span className="text-white/80">UK Market Range ({experienceLevel}):</span>
+                        <span>UK Market Range ({experienceLevel}):</span>
                         <span>£{marketRate.min}-{marketRate.max}/hr</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-white/80">Typical Rate:</span>
+                        <span>Typical Rate:</span>
                         <span>£{marketRate.typical}/hr</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-white/80">Regional Adjustment ({region}):</span>
+                        <span>Regional Adjustment ({region}):</span>
                         <span>{regionalMultiplier}x</span>
                       </div>
                     </div>
@@ -232,7 +232,7 @@ const CostBreakdownCard = ({
                     </div>
                   </div>
                   
-                  <p className="text-xs text-white/80 italic">
+                  <p className="text-xs text-white italic">
                     Your rate of £{calculatedLabourRate.toFixed(2)}/hour is competitive for a {experienceLevel} professional in the {region} region. Charging less means undervaluing your skills and certifications.
                   </p>
                 </div>
@@ -269,10 +269,10 @@ const CostBreakdownCard = ({
                 <CollapsibleContent>
                   <div className="px-3 pb-3 space-y-3 text-sm">
                     <div className="p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
-                      <div className="font-medium mb-2">Typical Monthly Business Costs</div>
-                      <div className="space-y-1 text-xs">
+                      <div className="font-medium mb-2 text-white">Typical Monthly Business Costs</div>
+                      <div className="space-y-1 text-xs text-white">
                         <div className="flex justify-between">
-                          <span className="text-white/80">Van (fuel, insurance, tax):</span>
+                          <span>Van (fuel, insurance, tax):</span>
                           <span>£{(MARKET_RATES_2025.businessCosts.fuel + MARKET_RATES_2025.businessCosts.commercialInsurance + MARKET_RATES_2025.businessCosts.maintenance) / 12}/mo</span>
                         </div>
                         <div className="flex justify-between">
@@ -318,7 +318,7 @@ const CostBreakdownCard = ({
                     
                     <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20">
                       <div className="font-medium mb-1 text-destructive">⚠️ Why This Matters</div>
-                      <p className="text-xs text-white/80 mb-2">
+                      <p className="text-xs text-white mb-2">
                         Every job must cover its proportional share of business costs. If you don't include overheads, you're effectively working for free to cover your van, tools, and insurance.
                       </p>
                       <div className="text-xs font-medium text-destructive">
