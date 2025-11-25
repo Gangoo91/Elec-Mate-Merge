@@ -951,6 +951,22 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           circuitDiversity: []
         },
         
+        // CRITICAL: Pre-formatted fields for PDF template
+        diversityFactor: design.diversityBreakdown?.overallDiversityFactor 
+          ? `${(design.diversityBreakdown.overallDiversityFactor * 100).toFixed(0)}%`
+          : '65%',
+        
+        diversifiedLoad: (design.diversityBreakdown?.diversifiedLoad || calculatedTotalLoad * 0.65).toLocaleString('en-GB'),
+        
+        totalDesignCurrent: (() => {
+          const diversifiedLoadW = design.diversityBreakdown?.diversifiedLoad || calculatedTotalLoad * 0.65;
+          const voltage = design.consumerUnit?.incomingSupply?.voltage || 230;
+          const isThreePhase = design.consumerUnit?.incomingSupply?.phases === 'three';
+          return isThreePhase 
+            ? (diversifiedLoadW / (Math.sqrt(3) * voltage)).toFixed(1)
+            : (diversifiedLoadW / voltage).toFixed(1);
+        })(),
+        
         // Compliance checks summary
         complianceChecks: {
           allCircuitsCompliant: design.circuits?.every(c => 
