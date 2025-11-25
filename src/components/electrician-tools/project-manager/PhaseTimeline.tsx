@@ -65,10 +65,10 @@ const PhaseTimeline = ({ phases, startDate, criticalPath = [] }: PhaseTimelinePr
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 sm:space-y-3">
-        {/* Day ruler - visible on larger screens */}
-        <div className="hidden sm:flex justify-between text-xs text-muted-foreground mb-2 px-1">
+        {/* Day ruler - visible on all screens */}
+        <div className="flex justify-between text-xs text-white/60 mb-2 px-1 overflow-x-auto">
           {Array.from({ length: Math.ceil(maxDay / 5) + 1 }).map((_, i) => (
-            <div key={i}>Day {i * 5}</div>
+            <div key={i} className="flex-shrink-0">Day {i * 5}</div>
           ))}
         </div>
 
@@ -91,7 +91,7 @@ const PhaseTimeline = ({ phases, startDate, criticalPath = [] }: PhaseTimelinePr
                     {idx + 1}
                   </div>
                   <span className={`font-semibold text-base sm:text-sm ${
-                    phase.isCritical ? 'text-pink-400' : 'text-gray-100'
+                    phase.isCritical ? 'text-pink-400' : 'text-white'
                   }`}>
                     {phase.phaseName || phase.phase || `Phase ${idx + 1}`}
                   </span>
@@ -101,7 +101,7 @@ const PhaseTimeline = ({ phases, startDate, criticalPath = [] }: PhaseTimelinePr
                     </Badge>
                   )}
                 </div>
-                <div className="flex items-center gap-3 text-sm text-gray-400">
+                <div className="flex items-center gap-3 text-sm text-white/80">
                   <span className="font-semibold text-base sm:text-sm">{phase.duration}{phase.durationUnit?.[0] || 'd'}</span>
                   <span className="hidden sm:inline text-xs">
                     {format(phase.startDate, 'dd MMM')} → {format(phase.endDate, 'dd MMM')}
@@ -143,7 +143,7 @@ const PhaseTimeline = ({ phases, startDate, criticalPath = [] }: PhaseTimelinePr
                 </div>
                 
                 {/* Progress percentage indicator */}
-                <div className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-muted-foreground font-medium">
+                <div className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-white/60 font-medium">
                   {Math.round(progress + width)}%
                 </div>
               </div>
@@ -162,13 +162,13 @@ const PhaseTimeline = ({ phases, startDate, criticalPath = [] }: PhaseTimelinePr
                     {phase.tasks.slice(0, 5).map((task, taskIdx) => {
                       const taskText = typeof task === 'string' ? task : task.task || task.name || '';
                       return (
-                        <div key={taskIdx} className="text-xs sm:text-sm text-gray-400 pl-4 border-l-2 border-pink-400/30 py-1 leading-relaxed">
+                        <div key={taskIdx} className="text-xs sm:text-sm text-white/80 pl-4 border-l-2 border-pink-400/30 py-1 leading-relaxed">
                           • {taskText}
                         </div>
                       );
                     })}
                     {phase.tasks.length > 5 && (
-                      <div className="text-xs text-muted-foreground pl-4 italic">
+                      <div className="text-xs text-white/60 pl-4 italic">
                         +{phase.tasks.length - 5} more tasks...
                       </div>
                     )}
@@ -180,7 +180,7 @@ const PhaseTimeline = ({ phases, startDate, criticalPath = [] }: PhaseTimelinePr
         })}
 
         {/* Legend */}
-        <div className="flex items-center gap-4 pt-3 border-t border-border/30 text-xs text-muted-foreground">
+        <div className="flex items-center gap-4 pt-3 border-t border-border/30 text-xs text-white/80">
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 rounded bg-gradient-to-r from-pink-400 to-pink-500" />
             <span>Critical Path</span>

@@ -5,16 +5,8 @@ import { Copy, Download, Calendar as CalendarIcon, RotateCcw } from "lucide-reac
 import { toast } from "sonner";
 import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
 import CriticalActionsCard from "./CriticalActionsCard";
-import PhaseTimeline from "./PhaseTimeline";
-import MaterialProcurementCard from "./MaterialProcurementCard";
-import ComplianceChecklist from "./ComplianceChecklist";
-import ClientImpactCard from "./ClientImpactCard";
-import PhasesSection from "./PhasesSection";
-import ResourcesSection from "./ResourcesSection";
-import RisksSection from "./RisksSection";
-import MilestonesSection from "./MilestonesSection";
-import ProjectOverviewSection from "./ProjectOverviewSection";
 import { MobilePhaseResults } from "./MobilePhaseResults";
+import ProjectResultsTabs from "./ProjectResultsTabs";
 
 interface ProjectManagerResultsProps {
   results: any;
@@ -162,16 +154,16 @@ const ProjectManagerResults = ({
           onStartOver={onStartOver}
         />
       ) : (
-        /* Desktop: Enhanced Card Layout (>= 768px) */
+        /* Desktop: Tabbed Layout (>= 768px) */
         <div className="space-y-4 pb-6">
           {/* Header Actions */}
           <Card className="p-4">
-            <h4 className="font-semibold text-lg mb-3">Project Plan Results</h4>
+            <h4 className="font-semibold text-lg mb-3 text-white">Project Plan Results</h4>
             
             {/* Progress Bar */}
             <div className="mb-4 pb-4 border-b border-border/30">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-muted-foreground">
+                <span className="text-sm font-medium text-white/80">
                   Overall Progress
                 </span>
                 <span className="text-base font-bold text-pink-400">
@@ -214,7 +206,7 @@ const ProjectManagerResults = ({
                   size="sm" 
                   variant="ghost"
                   onClick={handleCopy}
-                  className="text-xs text-muted-foreground"
+                  className="text-xs text-white/70"
                 >
                   <Copy className="h-3.5 w-3.5 mr-1.5" />
                   Copy Data
@@ -238,62 +230,15 @@ const ProjectManagerResults = ({
             startDate={startDate}
           />
 
-          {/* Project Overview */}
-          <ProjectOverviewSection response={results.response} />
-
-          {/* Visual Timeline */}
-          <PhaseTimeline 
-            phases={results.projectPlan?.phases || []}
+          {/* Tabbed Content */}
+          <ProjectResultsTabs
+            results={results}
             startDate={startDate}
-            criticalPath={results.projectPlan?.criticalPath || []}
-          />
-
-          {/* Material Procurement */}
-          {results.materialProcurement && (
-            <MaterialProcurementCard 
-              materialProcurement={results.materialProcurement}
-              materialProgress={materialProgress}
-              onToggleMaterial={toggleMaterialOrdered}
-            />
-          )}
-
-          {/* Client Impact */}
-          {results.clientImpact && results.clientImpact.length > 0 && (
-            <ClientImpactCard clientImpact={results.clientImpact} />
-          )}
-
-          {/* Compliance Checklist */}
-          {results.complianceTimeline && (
-            <ComplianceChecklist 
-              complianceTimeline={results.complianceTimeline}
-              compliance={results.compliance}
-            />
-          )}
-
-          {/* Phases */}
-          <PhasesSection 
-            phases={results.projectPlan?.phases || []}
-            totalDuration={results.projectPlan?.totalDuration}
-            totalDurationUnit={results.projectPlan?.totalDurationUnit}
             phaseProgress={phaseProgress}
+            materialProgress={materialProgress}
             onTogglePhase={togglePhaseComplete}
-            startDate={startDate}
+            onToggleMaterial={toggleMaterialOrdered}
           />
-
-          {/* Resources */}
-          {results.projectPlan?.resources && (
-            <ResourcesSection resources={results.projectPlan.resources} />
-          )}
-
-          {/* Risks */}
-          {results.projectPlan?.risks && results.projectPlan.risks.length > 0 && (
-            <RisksSection risks={results.projectPlan.risks} />
-          )}
-
-          {/* Milestones */}
-          {results.projectPlan?.milestones && results.projectPlan.milestones.length > 0 && (
-            <MilestonesSection milestones={results.projectPlan.milestones} />
-          )}
 
           {/* Start Over Button */}
           <Button 

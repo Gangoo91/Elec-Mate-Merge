@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, Target, ListChecks, AlertCircle, Zap, Shield, AlertTriangle, CheckSquare } from "lucide-react";
+import { FileText, Target, ListChecks, AlertCircle, Zap, Shield, AlertTriangle, CheckSquare, ChevronDown } from "lucide-react";
 import { LucideIcon } from "lucide-react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 interface ProjectOverviewSectionProps {
   response?: string;
@@ -49,54 +50,59 @@ const colorClasses = {
   },
 };
 
+// Utility function to clean text and remove stray "?" characters
+const cleanText = (text: string): string => {
+  return text
+    .replace(/^\?\s*/gm, '') // Remove ? at start of lines
+    .replace(/\s+\?(?=\s|$)/g, '') // Remove stray ? with spaces
+    .replace(/\?\s*([A-Z])/g, '. $1') // Replace ? before capital letters with period
+    .trim();
+};
+
 const parseStructuredCriticalPath = (text: string): CriticalPathBlock[] => {
   if (!text) return [];
   
-  // Split by double newlines for paragraphs
-  const paragraphs = text.split(/\n\n+/).filter(p => p.trim());
+  const cleanedText = cleanText(text);
+  const paragraphs = cleanedText.split(/\n\n+/).filter(p => p.trim());
   
   return paragraphs.map(para => {
     const trimmed = para.trim();
     
-    // Detect phase headers: "Day X-Y:" or "Phase X:"
     if (/(?:Day \d+-\d+|Phase \d+):/i.test(trimmed)) {
-      return { type: 'phase-header' as const, content: trimmed };
+      return { type: 'phase-header' as const, content: cleanText(trimmed) };
     }
     
-    // Detect list items (multiple lines starting with -, *, or •)
     const lines = trimmed.split('\n');
     if (lines.length > 1 && lines.some(l => /^[-*•]\s/.test(l.trim()))) {
       const items = lines
         .filter(l => /^[-*•]\s/.test(l.trim()))
-        .map(l => l.replace(/^[-*•]\s+/, '').trim());
+        .map(l => cleanText(l.replace(/^[-*•]\s+/, '').trim()));
       return { type: 'list' as const, items };
     }
     
-    // Regular paragraph
-    return { type: 'paragraph' as const, content: trimmed };
+    return { type: 'paragraph' as const, content: cleanText(trimmed) };
   });
 };
 
 const parseProjectOverview = (text: string): Section[] => {
   const sections: Section[] = [];
+  const cleanedText = cleanText(text);
 
-  // Business case section
-  const businessCaseMatch = text.match(/Business case:([^.]*(?:\.[^.]*){0,2})/i);
+  const businessCaseMatch = cleanedText.match(/Business case:([^.]*(?:\.[^.]*){0,2})/i);
   if (businessCaseMatch) {
     sections.push({
       title: 'Business Case',
       icon: Target,
-      content: businessCaseMatch[1].trim(),
+      content: cleanText(businessCaseMatch[1]),
       color: 'blue',
       type: 'text'
     });
   }
 
-  // Work breakdown
-  const workMatch = text.match(/Work breakdown:([^]*?)(?=Critical path|Acceleration|Compliance|Risk register|$)/i);
+  const workMatch = cleanedText.match(/Work breakdown:([^]*?)(?=Critical path|Acceleration|Compliance|Risk register|$)/i);
   if (workMatch) {
     const workText = workMatch[1].trim();
-    const phases = workText.split(/[,;]/).map(p => p.trim()).filter(p => p.length > 0 && !p.toLowerCase().includes('critical path'));
+    const phases = workText.split(/[,;]/).map(p => cleanText(p)).filter(p => p.length > 0 && !p.toLowerCase().includes('critical path'));
     sections.push({
       title: 'Work Breakdown',
       icon: ListChecks,
@@ -106,10 +112,9 @@ const parseProjectOverview = (text: string): Section[] => {
     });
   }
 
-  // Critical path
-  const criticalMatch = text.match(/Critical path:([^]*?)(?=Acceleration|Compliance|Risk register|$)/i);
+  const criticalMatch = cleanedText.match(/Critical path:([^]*?)(?=Acceleration|Compliance|Risk register|$)/i);
   if (criticalMatch) {
-    const criticalText = criticalMatch[1].trim().replace(/Acceleration.*$/i, '').trim();
+    const criticalText = cleanText(criticalMatch[1].replace(/Acceleration.*$/i, '').trim());
     sections.push({
       title: 'Critical Path',
       icon: AlertCircle,
@@ -119,10 +124,9 @@ const parseProjectOverview = (text: string): Section[] => {
     });
   }
 
-  // Acceleration tips
-  const accelMatch = text.match(/Acceleration tips?:([^]*?)(?=Compliance|Risk register|$)/i);
+  const accelMatch = cleanedText.match(/Acceleration tips?:([^]*?)(?=Compliance|Risk register|$)/i);
   if (accelMatch) {
-    const tips = accelMatch[1].trim().split(/[,;]/).map(t => t.trim()).filter(t => t.length > 0 && !t.toLowerCase().includes('compliance'));
+    const tips = accelMatch[1].trim().split(/[,;]/).map(t => cleanText(t)).filter(t => t.length > 0 && !t.toLowerCase().includes('compliance'));
     sections.push({
       title: 'Acceleration Tips',
       icon: Zap,
@@ -132,10 +136,9 @@ const parseProjectOverview = (text: string): Section[] => {
     });
   }
 
-  // Compliance milestones
-  const complianceMatch = text.match(/Compliance milestones?:([^]*?)(?=Risk register|$)/i);
+  const complianceMatch = cleanedText.match(/Compliance milestones?:([^]*?)(?=Risk register|$)/i);
   if (complianceMatch) {
-    const milestones = complianceMatch[1].trim().split(/[,;]/).map(m => m.trim()).filter(m => m.length > 0 && !m.toLowerCase().includes('risk register'));
+    const milestones = complianceMatch[1].trim().split(/[,;]/).map(m => cleanText(m)).filter(m => m.length > 0 && !m.toLowerCase().includes('risk register'));
     sections.push({
       title: 'Compliance Milestones',
       icon: Shield,
@@ -145,10 +148,9 @@ const parseProjectOverview = (text: string): Section[] => {
     });
   }
 
-  // Risk register
-  const riskMatch = text.match(/Risk register(?:\s+high)?\s*items?:([^]*?)$/i);
+  const riskMatch = cleanedText.match(/Risk register(?:\s+high)?\s*items?:([^]*?)$/i);
   if (riskMatch) {
-    const risks = riskMatch[1].trim().split(/[,;]/).map(r => r.trim()).filter(r => r.length > 0);
+    const risks = riskMatch[1].trim().split(/[,;]/).map(r => cleanText(r)).filter(r => r.length > 0);
     sections.push({
       title: 'Risk Register',
       icon: AlertTriangle,
@@ -162,146 +164,125 @@ const parseProjectOverview = (text: string): Section[] => {
 };
 
 const ProjectOverviewSection = ({ response }: ProjectOverviewSectionProps) => {
+  const [openSections, setOpenSections] = useState<Record<number, boolean>>({ 0: true });
+
   if (!response) return null;
 
-  const sections = parseProjectOverview(response);
+  const cleanedResponse = cleanText(response);
+  const sections = parseProjectOverview(cleanedResponse);
+  
   const businessCase = useMemo(() => {
-    const match = response.match(/(?:business case|project overview|scope)[:\s]*(.+?)(?=\n\n[A-Z][a-z]+:|$)/is);
+    const match = cleanedResponse.match(/(?:business case|project overview|scope)[:\s]*(.+?)(?=\n\n[A-Z][a-z]+:|$)/is);
     if (match) {
-      return match[1].trim();
+      return cleanText(match[1]);
     }
-    const paragraphs = response.split('\n\n').filter(p => p.trim().length > 50);
-    return paragraphs[0] || response.substring(0, 300);
-  }, [response]);
+    const paragraphs = cleanedResponse.split('\n\n').filter(p => p.trim().length > 50);
+    return cleanText(paragraphs[0] || cleanedResponse.substring(0, 300));
+  }, [cleanedResponse]);
 
   return (
     <div className="space-y-4">
-      {/* Business Case - FULL CONTENT */}
-      <Card>
+      {/* Executive Summary - Always visible */}
+      <Card className="border-l-4 border-elec-yellow">
         <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <FileText className="h-5 w-5 text-pink-400" />
-            Business Case & Overview
+          <CardTitle className="flex items-center gap-2 text-lg text-white">
+            <Target className="h-5 w-5 text-elec-yellow" />
+            Executive Summary
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-sm sm:text-base text-gray-300 leading-relaxed space-y-3 whitespace-pre-wrap">
-            {businessCase.split('\n').map((paragraph, idx) => (
-              paragraph.trim() && <p key={idx}>{paragraph.trim()}</p>
-            ))}
-          </div>
+          <p className="text-base leading-relaxed text-white text-left">{businessCase}</p>
         </CardContent>
       </Card>
 
-      {/* Structured Sections */}
-      {sections.length > 0 && (
-        <Card className="bg-muted/30">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <FileText className="h-5 w-5 text-pink-400" />
-              Project Details
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4 p-4 sm:p-6">
-        {sections.length > 0 ? (
-          sections.map((section, idx) => {
-            const Icon = section.icon;
-            const colors = colorClasses[section.color];
-            
-            return (
-              <div 
-                key={idx}
-                className={`${colors.border} ${colors.bg} rounded-lg p-4 sm:p-5`}
-              >
-                {/* Header */}
-                <div className="flex items-center gap-2 mb-3">
-                  <Icon className={`h-4 w-4 ${colors.icon}`} />
-                  <span className="text-sm font-semibold uppercase tracking-wide text-gray-100">
-                    {section.title}
-                  </span>
-                </div>
-                
-                {/* Content */}
-                {section.type === 'critical-path' ? (
-                  <div className="space-y-4">
-                    {parseStructuredCriticalPath(section.content as string).map((block, i) => {
-                      if (block.type === 'phase-header') {
+      {/* Collapsible Sections */}
+      {sections.map((section, idx) => {
+        const Icon = section.icon;
+        const colors = colorClasses[section.color];
+        const isOpen = openSections[idx];
+        
+        return (
+          <Collapsible
+            key={idx}
+            open={isOpen}
+            onOpenChange={(open) => setOpenSections(prev => ({ ...prev, [idx]: open }))}
+          >
+            <Card className={`${colors.border} ${colors.bg}`}>
+              <CollapsibleTrigger className="w-full text-left">
+                <CardHeader className="pb-3 cursor-pointer hover:bg-white/5 transition-colors rounded-t-lg">
+                  <CardTitle className="flex items-center gap-2 text-base text-white justify-between">
+                    <div className="flex items-center gap-2">
+                      <Icon className={`h-5 w-5 ${colors.icon}`} />
+                      {section.title}
+                    </div>
+                    <ChevronDown className={`h-4 w-4 text-white transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                  </CardTitle>
+                </CardHeader>
+              </CollapsibleTrigger>
+              
+              <CollapsibleContent>
+                <CardContent className="pt-0">
+                  {/* Content */}
+                  {section.type === 'critical-path' ? (
+                    <div className="space-y-4 text-left">
+                      {parseStructuredCriticalPath(section.content as string).map((block, i) => {
+                        if (block.type === 'phase-header') {
+                          return (
+                            <div key={i} className="bg-red-500/10 rounded-md p-3 border border-red-500/20">
+                              <h4 className="font-semibold text-sm text-white leading-relaxed">
+                                {block.content}
+                              </h4>
+                            </div>
+                          );
+                        }
+                        
+                        if (block.type === 'list' && block.items) {
+                          return (
+                            <ul key={i} className="space-y-2">
+                              {block.items.map((item, itemIdx) => (
+                                <li key={itemIdx} className="text-sm text-white leading-relaxed flex items-start gap-2">
+                                  <span className="text-red-400 text-lg leading-none mt-0.5">•</span>
+                                  <span className="flex-1">{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          );
+                        }
+                        
                         return (
-                          <div key={i} className="bg-red-500/5 rounded-md p-3 border border-red-500/20">
-                            <h4 className="font-semibold text-sm text-red-100 leading-relaxed">
-                              {block.content}
-                            </h4>
-                          </div>
+                          <p key={i} className="text-sm text-white leading-relaxed">
+                            {block.content}
+                          </p>
                         );
-                      }
-                      
-                      if (block.type === 'list' && block.items) {
-                        return (
-                          <ul key={i} className="space-y-2 ml-4">
-                            {block.items.map((item, itemIdx) => (
-                              <li key={itemIdx} className="text-sm text-gray-300 leading-relaxed flex items-start gap-2">
-                                <span className="text-red-400 text-lg leading-none mt-0.5">•</span>
-                                <span className="flex-1">{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        );
-                      }
-                      
-                      return (
-                        <p key={i} className="text-sm text-gray-300 leading-relaxed">
-                          {block.content}
-                        </p>
-                      );
-                    })}
-                  </div>
-                ) : section.type === 'list' ? (
-                  <ul className="space-y-2">
-                    {(section.content as string[]).map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm leading-relaxed">
-                        <span className={`${colors.icon} text-lg leading-none mt-0.5`}>•</span>
-                        <span className="flex-1 text-gray-300">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : section.type === 'checklist' ? (
-                  <div className="space-y-2">
-                    {(section.content as string[]).map((item, i) => (
-                      <div key={i} className="flex items-start gap-2">
-                        <CheckSquare className={`h-3.5 w-3.5 ${colors.icon} mt-0.5 flex-shrink-0`} />
-                        <span className="text-sm leading-relaxed flex-1 text-gray-300">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-sm leading-relaxed text-gray-300">{section.content as string}</p>
-                )}
-              </div>
-            );
-          })
-        ) : (
-          <p className="text-sm whitespace-pre-wrap leading-relaxed text-gray-300">{response}</p>
-        )}
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Full AI Response */}
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
-            <FileText className="h-5 w-5 text-pink-400" />
-            Complete Project Analysis
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-sm sm:text-base text-gray-300 leading-relaxed space-y-4 whitespace-pre-wrap">
-            {response.split('\n\n').map((paragraph, idx) => (
-              paragraph.trim() && <p key={idx}>{paragraph.trim()}</p>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+                      })}
+                    </div>
+                  ) : section.type === 'list' ? (
+                    <ul className="space-y-2 text-left">
+                      {(section.content as string[]).map((item, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm leading-relaxed">
+                          <span className={`${colors.icon} text-lg leading-none mt-0.5`}>•</span>
+                          <span className="flex-1 text-white">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : section.type === 'checklist' ? (
+                    <div className="space-y-2 text-left">
+                      {(section.content as string[]).map((item, i) => (
+                        <div key={i} className="flex items-start gap-2">
+                          <CheckSquare className={`h-4 w-4 ${colors.icon} mt-0.5 flex-shrink-0`} />
+                          <span className="text-sm leading-relaxed flex-1 text-white">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm leading-relaxed text-white text-left">{section.content as string}</p>
+                  )}
+                </CardContent>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
+        );
+      })}
     </div>
   );
 };
