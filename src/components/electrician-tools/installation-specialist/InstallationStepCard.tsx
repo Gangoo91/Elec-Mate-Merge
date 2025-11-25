@@ -137,13 +137,13 @@ export const InstallationStepCard = ({
                         {step.title}
                       </h3>
                       
-                      {/* Compact metadata badges */}
-                      <div className="flex flex-wrap items-center gap-2">
-                        {/* Risk Badge - More subtle */}
+                      {/* Compact metadata badges - forced single line */}
+                      <div className="flex items-center gap-2 flex-nowrap overflow-x-auto scrollbar-hide">
+                        {/* Risk Badge */}
                         <Badge 
                           variant="outline"
                           className={cn(
-                            "font-semibold text-xs px-2.5 py-0.5",
+                            "font-semibold text-xs px-2.5 py-0.5 whitespace-nowrap flex-shrink-0",
                             step.riskLevel === 'low' && "bg-success/10 text-success border-success/30",
                             step.riskLevel === 'medium' && "bg-warning/10 text-warning border-warning/30",
                             step.riskLevel === 'high' && "bg-destructive/10 text-destructive border-destructive/30"
@@ -154,7 +154,7 @@ export const InstallationStepCard = ({
 
                         {/* Duration if available */}
                         {step.estimatedDuration && (
-                          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                          <div className="flex items-center gap-1.5 text-xs text-muted-foreground whitespace-nowrap flex-shrink-0">
                             <Clock className="h-3.5 w-3.5" />
                             <span>{step.estimatedDuration}</span>
                           </div>
@@ -162,7 +162,7 @@ export const InstallationStepCard = ({
 
                         {/* Hazard count if any */}
                         {linkedHazards.length > 0 && (
-                          <div className="flex items-center gap-1.5 text-xs text-destructive">
+                          <div className="flex items-center gap-1.5 text-xs text-destructive whitespace-nowrap flex-shrink-0">
                             <ShieldAlert className="h-3.5 w-3.5" />
                             <span>{linkedHazards.length} hazard{linkedHazards.length !== 1 ? 's' : ''}</span>
                           </div>
