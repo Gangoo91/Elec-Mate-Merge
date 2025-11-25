@@ -1,30 +1,25 @@
-// Deployed: 2025-11-24 - Modular Architecture V2 - Syntax Errors Eliminated
-import { serve } from '../_shared/deps.ts';
-import {
-  corsHeaders,
-  createLogger,
-  generateRequestId,
-  handleError,
-  ValidationError,
-  createClient,
-  generateEmbeddingWithRetry,
-  callLovableAIWithTimeout,
-  parseJsonWithRepair
-} from '../_shared/v3-core.ts';
-import { parseQueryEntities, type ParsedEntities } from '../_shared/query-parser.ts';
-import { searchPricingKnowledge, formatPricingContext } from '../_shared/rag-cost-engineer.ts';
-import { enrichResponse } from '../_shared/response-enricher.ts';
-import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
-import { sanitizeAIJson, safeJsonParse } from '../_shared/json-sanitizer.ts';
-import { createStreamingResponse, StreamingResponseBuilder } from '../_shared/streaming-utils.ts';
+// Deployed: 2025-11-25 - Modular Architecture V3 - Simplified Dependencies
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
-// ===== MODULAR PROFITABILITY HELPERS =====
+// Modular profitability helpers
 import { 
   calculateProfitabilityAnalysis, 
   createFallbackProfitability,
-  type ProfitabilityAnalysis,
-  type QuoteOption
+  type ProfitabilityAnalysis
 } from './profitability-helpers.ts';
+
+// CORS headers
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
+// Simple logger
+const createLogger = (requestId: string) => ({
+  info: (msg: string, data?: any) => console.log(`[${requestId}] ${msg}`, data || ''),
+  error: (msg: string, data?: any) => console.error(`[${requestId}] ${msg}`, data || ''),
+  warn: (msg: string, data?: any) => console.warn(`[${requestId}] ${msg}`, data || '')
+});
 
 // ===== COST ENGINEER PRICING CONSTANTS =====
 const COST_ENGINEER_PRICING = {
