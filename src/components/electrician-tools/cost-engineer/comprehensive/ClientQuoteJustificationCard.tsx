@@ -489,7 +489,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                     
                     <div className="bg-destructive/10 border border-destructive/20 p-2 rounded">
                       <p className="font-medium text-xs text-destructive mb-1">❌ Why I can't do cash-in-hand:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-muted-foreground">
+                      <ul className="text-xs space-y-0.5 pl-4 text-white">
                         <li>• It's illegal tax evasion (fines up to £20,000)</li>
                         <li>• Voids your building insurance</li>
                         <li>• No legal recourse if issues arise</li>
@@ -541,7 +541,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
           <div className="grid gap-3 text-sm">
             <div>
               <p className="font-medium text-xs text-green-400 mb-1">✅ What You Get:</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-muted-foreground pl-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-white pl-3">
                 <div>
                   <p className="font-medium text-foreground">Professional Standards:</p>
                   <ul className="space-y-0.5">
@@ -579,7 +579,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
             
             <div className="border-t border-border pt-3">
               <p className="font-medium text-xs text-destructive mb-1">⚠️ What Budget Quotes Often Cut:</p>
-              <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-xs text-muted-foreground pl-3">
+              <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-xs text-white pl-3">
                 <div>❌ Unqualified labour</div>
                 <div>❌ Cheap materials</div>
                 <div>❌ No insurance</div>
@@ -622,12 +622,12 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
             </CollapsibleTrigger>
             <CollapsibleContent>
               <div className="p-4 pt-2 space-y-3 border-t border-border">
-                <p className="text-sm text-muted-foreground">Help clients properly evaluate quotes with this checklist:</p>
+                <p className="text-sm text-white">Help clients properly evaluate quotes with this checklist:</p>
                 
                 <div className="bg-accent/30 p-3 rounded text-xs space-y-2">
                   <div>
                     <p className="font-medium mb-1">□ Qualifications</p>
-                    <ul className="pl-4 space-y-0.5 text-muted-foreground">
+                    <ul className="pl-4 space-y-0.5 text-white">
                       <li>- 18th Edition certified?</li>
                       <li>- NICEIC/NAPIT/scheme registered?</li>
                       <li>- Years of experience?</li>
@@ -636,7 +636,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   
                   <div>
                     <p className="font-medium mb-1">□ Insurance</p>
-                    <ul className="pl-4 space-y-0.5 text-muted-foreground">
+                    <ul className="pl-4 space-y-0.5 text-white">
                       <li>- Public liability (min £2M)?</li>
                       <li>- Professional indemnity?</li>
                       <li>- Proof available?</li>
@@ -645,7 +645,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   
                   <div>
                     <p className="font-medium mb-1">□ Materials</p>
-                    <ul className="pl-4 space-y-0.5 text-muted-foreground">
+                    <ul className="pl-4 space-y-0.5 text-white">
                       <li>- Supplier specified?</li>
                       <li>- Brand names listed?</li>
                       <li>- Warranties included?</li>
@@ -654,7 +654,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   
                   <div>
                     <p className="font-medium mb-1">□ Certification</p>
-                    <ul className="pl-4 space-y-0.5 text-muted-foreground">
+                    <ul className="pl-4 space-y-0.5 text-white">
                       <li>- EIC provided?</li>
                       <li>- Building Control notification?</li>
                       <li>- Test certificates?</li>
@@ -663,7 +663,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   
                   <div>
                     <p className="font-medium mb-1">□ Pricing</p>
-                    <ul className="pl-4 space-y-0.5 text-muted-foreground">
+                    <ul className="pl-4 space-y-0.5 text-white">
                       <li>- Itemized breakdown?</li>
                       <li>- Materials + labour separated?</li>
                       <li>- VAT clearly shown?</li>
@@ -673,7 +673,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   
                   <div>
                     <p className="font-medium mb-1">□ Guarantees</p>
-                    <ul className="pl-4 space-y-0.5 text-muted-foreground">
+                    <ul className="pl-4 space-y-0.5 text-white">
                       <li>- Workmanship guarantee period?</li>
                       <li>- What's covered?</li>
                       <li>- Insurance-backed?</li>
@@ -682,7 +682,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   
                   <div className="border-t border-destructive/20 pt-2 mt-2">
                     <p className="font-medium text-destructive mb-1">🚨 Red Flags:</p>
-                    <ul className="pl-4 space-y-0.5 text-muted-foreground">
+                    <ul className="pl-4 space-y-0.5 text-white">
                       <li>- "Cash only, no invoice"</li>
                       <li>- No qualifications mentioned</li>
                       <li>- Too cheap (below market)</li>
@@ -696,7 +696,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   
                   <div className="bg-green-500/10 border border-green-500/20 p-2 rounded mt-2">
                     <p className="font-medium text-green-400 text-xs">✅ This Quote Checklist:</p>
-                    <p className="text-muted-foreground">All boxes ticked above ✓</p>
+                    <p className="text-white">All boxes ticked above ✓</p>
                   </div>
                 </div>
                 
@@ -717,7 +717,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
         {/* Info Footer */}
         <div className="flex items-start gap-2 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg text-xs">
           <Info className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
-          <p className="text-muted-foreground">
+          <p className="text-white">
             These responses use your actual quote data to provide evidence-based justification. 
             Copy individual responses or the full summary to use in client conversations, emails, or printed quotes.
           </p>

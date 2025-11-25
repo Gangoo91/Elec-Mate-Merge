@@ -29,7 +29,7 @@ export const CollapsibleSection = ({
           <div className="flex items-center gap-3 flex-1 text-left">
             <ChevronDown 
               className={cn(
-                "h-5 w-5 text-muted-foreground transition-transform shrink-0",
+                "h-5 w-5 text-white transition-transform shrink-0",
                 isOpen && "rotate-180"
               )} 
             />
@@ -41,14 +41,14 @@ export const CollapsibleSection = ({
                     "text-xs px-2 py-0.5 rounded-full font-medium",
                     badgeVariant === 'configured' 
                       ? "bg-green-500/20 text-green-500 border border-green-500/30" 
-                      : "bg-muted text-muted-foreground"
+                      : "bg-muted text-white"
                   )}>
                     {badge}
                   </span>
                 )}
               </div>
               {subtitle && (
-                <p className="text-sm text-muted-foreground mt-0.5">{subtitle}</p>
+                <p className="text-sm text-white mt-0.5">{subtitle}</p>
               )}
             </div>
           </div>

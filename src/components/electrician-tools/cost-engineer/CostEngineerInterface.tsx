@@ -215,7 +215,7 @@ const CostEngineerInterface = () => {
               prompt.length >= 100 && prompt.length <= 300 
                 ? 'text-green-500 bg-green-500/10' 
                 : prompt.length < 100 
-                ? 'text-muted-foreground bg-muted' 
+                ? 'text-white bg-muted' 
                 : 'text-orange-500 bg-orange-500/10'
             }`}>
               {prompt.length} chars {prompt.length >= 100 ? '✓' : ''}
@@ -232,7 +232,7 @@ const CostEngineerInterface = () => {
             spellCheck={true}
             style={{ fontSize: '16px' }}
           />
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             💡 100+ characters recommended for accurate pricing
           </p>
         </div>
