@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Copy, Download, Calendar as CalendarIcon } from "lucide-react";
+import { Copy, Download, Calendar as CalendarIcon, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
 import CriticalActionsCard from "./CriticalActionsCard";
@@ -14,6 +14,7 @@ import ResourcesSection from "./ResourcesSection";
 import RisksSection from "./RisksSection";
 import MilestonesSection from "./MilestonesSection";
 import ProjectOverviewSection from "./ProjectOverviewSection";
+import { MobilePhaseResults } from "./MobilePhaseResults";
 
 interface ProjectManagerResultsProps {
   results: any;
@@ -34,11 +35,21 @@ const ProjectManagerResults = ({
 }: ProjectManagerResultsProps) => {
   const [phaseProgress, setPhaseProgress] = useState<Record<string, boolean>>({});
   const [materialProgress, setMaterialProgress] = useState<Record<string, { ordered: boolean; date?: string }>>({});
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleCopy = () => {
     if (results) {
       navigator.clipboard.writeText(JSON.stringify(results, null, 2));
-      toast.success("Copied to clipboard");
+      toast.success("Copied to clipboard", {
+        description: "Project plan copied to clipboard"
+      });
     }
   };
 
@@ -139,148 +150,164 @@ const ProjectManagerResults = ({
   };
 
   return (
-    <div className="space-y-4 pb-6">
-      {/* Header Actions */}
-      <Card className="p-3 sm:p-4">
-        <h4 className="font-semibold text-lg mb-3">Project Plan Results</h4>
-        
-        {/* Progress Bar - Full Width Mobile */}
-        <div className="mb-3 pb-3 border-b border-border/30">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium text-muted-foreground">
-              Overall Progress
-            </span>
-            <span className="text-sm font-bold text-pink-400">
-              {calculateProgress()}%
-            </span>
-          </div>
-          <div className="w-full bg-muted rounded-full h-2.5">
-            <div 
-              className="bg-gradient-to-r from-pink-400 to-pink-600 h-2.5 rounded-full transition-all duration-300"
-              style={{ width: `${calculateProgress()}%` }}
-            />
-          </div>
-        </div>
-        
-        {/* Action Buttons - Grid Layout Mobile */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <Button 
-            type="button"
-            size="sm" 
-            variant="outline"
-            onClick={handleCopy}
-            className="touch-manipulation h-11 text-xs"
-          >
-            <Copy className="h-3.5 w-3.5 mr-1.5" />
-            Copy
-          </Button>
-          
-          <Button 
-            type="button"
-            size="sm" 
-            variant="outline"
-            onClick={handleExportCalendar}
-            className="touch-manipulation h-11 text-xs"
-          >
-            <CalendarIcon className="h-3.5 w-3.5 mr-1.5" />
-            Export iCal
-          </Button>
-          
-          <Button 
-            type="button"
-            size="sm" 
-            variant="outline"
-            onClick={handleExportPDF}
-            className="touch-manipulation h-11 text-xs"
-          >
-            <Download className="h-3.5 w-3.5 mr-1.5" />
-            Export PDF
-          </Button>
-          
-          <div className="col-span-2 sm:col-span-1">
-            <SendToAgentDropdown 
-              currentAgent="project-manager" 
-              currentOutput={{ prompt, selectedType, projectName, results }} 
-            />
-          </div>
-        </div>
-      </Card>
-
-      {/* Critical Actions Dashboard */}
-      <CriticalActionsCard 
-        materialProcurement={results.materialProcurement}
-        complianceTimeline={results.complianceTimeline}
-        clientImpact={results.clientImpact}
-        startDate={startDate}
-      />
-
-      {/* Project Overview */}
-      <ProjectOverviewSection response={results.response} />
-
-      {/* Visual Timeline */}
-      <PhaseTimeline 
-        phases={results.projectPlan?.phases || []}
-        startDate={startDate}
-        criticalPath={results.projectPlan?.criticalPath || []}
-      />
-
-      {/* Material Procurement */}
-      {results.materialProcurement && (
-        <MaterialProcurementCard 
-          materialProcurement={results.materialProcurement}
-          materialProgress={materialProgress}
-          onToggleMaterial={toggleMaterialOrdered}
+    <>
+      {/* Mobile-First: Phase-by-Phase Navigation (< 768px) */}
+      {isMobile ? (
+        <MobilePhaseResults
+          results={results}
+          projectName={projectName}
+          startDate={startDate}
+          onExportPDF={handleExportPDF}
+          onExportCalendar={handleExportCalendar}
+          onStartOver={onStartOver}
         />
+      ) : (
+        /* Desktop: Enhanced Card Layout (>= 768px) */
+        <div className="space-y-4 pb-6">
+          {/* Header Actions */}
+          <Card className="p-4">
+            <h4 className="font-semibold text-lg mb-3">Project Plan Results</h4>
+            
+            {/* Progress Bar */}
+            <div className="mb-4 pb-4 border-b border-border/30">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-muted-foreground">
+                  Overall Progress
+                </span>
+                <span className="text-base font-bold text-pink-400">
+                  {calculateProgress()}%
+                </span>
+              </div>
+              <div className="w-full bg-muted rounded-full h-3">
+                <div 
+                  className="bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 h-3 rounded-full transition-all duration-500 shadow-lg"
+                  style={{ width: `${calculateProgress()}%` }}
+                />
+              </div>
+            </div>
+            
+            {/* Action Buttons - Primary & Secondary */}
+            <div className="space-y-3">
+              <div className="grid grid-cols-2 gap-3">
+                <Button 
+                  type="button"
+                  onClick={handleExportPDF}
+                  className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold h-11"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  Export PDF
+                </Button>
+                <Button 
+                  type="button"
+                  variant="outline"
+                  onClick={handleExportCalendar}
+                  className="h-11"
+                >
+                  <CalendarIcon className="h-4 w-4 mr-2" />
+                  Export Calendar
+                </Button>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <Button 
+                  type="button"
+                  size="sm" 
+                  variant="ghost"
+                  onClick={handleCopy}
+                  className="text-xs text-muted-foreground"
+                >
+                  <Copy className="h-3.5 w-3.5 mr-1.5" />
+                  Copy Data
+                </Button>
+                
+                <div>
+                  <SendToAgentDropdown 
+                    currentAgent="project-manager" 
+                    currentOutput={{ prompt, selectedType, projectName, results }} 
+                  />
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* Critical Actions Dashboard */}
+          <CriticalActionsCard 
+            materialProcurement={results.materialProcurement}
+            complianceTimeline={results.complianceTimeline}
+            clientImpact={results.clientImpact}
+            startDate={startDate}
+          />
+
+          {/* Project Overview */}
+          <ProjectOverviewSection response={results.response} />
+
+          {/* Visual Timeline */}
+          <PhaseTimeline 
+            phases={results.projectPlan?.phases || []}
+            startDate={startDate}
+            criticalPath={results.projectPlan?.criticalPath || []}
+          />
+
+          {/* Material Procurement */}
+          {results.materialProcurement && (
+            <MaterialProcurementCard 
+              materialProcurement={results.materialProcurement}
+              materialProgress={materialProgress}
+              onToggleMaterial={toggleMaterialOrdered}
+            />
+          )}
+
+          {/* Client Impact */}
+          {results.clientImpact && results.clientImpact.length > 0 && (
+            <ClientImpactCard clientImpact={results.clientImpact} />
+          )}
+
+          {/* Compliance Checklist */}
+          {results.complianceTimeline && (
+            <ComplianceChecklist 
+              complianceTimeline={results.complianceTimeline}
+              compliance={results.compliance}
+            />
+          )}
+
+          {/* Phases */}
+          <PhasesSection 
+            phases={results.projectPlan?.phases || []}
+            totalDuration={results.projectPlan?.totalDuration}
+            totalDurationUnit={results.projectPlan?.totalDurationUnit}
+            phaseProgress={phaseProgress}
+            onTogglePhase={togglePhaseComplete}
+            startDate={startDate}
+          />
+
+          {/* Resources */}
+          {results.projectPlan?.resources && (
+            <ResourcesSection resources={results.projectPlan.resources} />
+          )}
+
+          {/* Risks */}
+          {results.projectPlan?.risks && results.projectPlan.risks.length > 0 && (
+            <RisksSection risks={results.projectPlan.risks} />
+          )}
+
+          {/* Milestones */}
+          {results.projectPlan?.milestones && results.projectPlan.milestones.length > 0 && (
+            <MilestonesSection milestones={results.projectPlan.milestones} />
+          )}
+
+          {/* Start Over Button */}
+          <Button 
+            type="button"
+            variant="outline"
+            onClick={onStartOver}
+            className="w-full touch-manipulation h-12"
+          >
+            <RotateCcw className="mr-2 h-4 w-4" />
+            Create New Plan
+          </Button>
+        </div>
       )}
-
-      {/* Client Impact */}
-      {results.clientImpact && results.clientImpact.length > 0 && (
-        <ClientImpactCard clientImpact={results.clientImpact} />
-      )}
-
-      {/* Compliance Checklist */}
-      {results.complianceTimeline && (
-        <ComplianceChecklist 
-          complianceTimeline={results.complianceTimeline}
-          compliance={results.compliance}
-        />
-      )}
-
-      {/* Phases */}
-      <PhasesSection 
-        phases={results.projectPlan?.phases || []}
-        totalDuration={results.projectPlan?.totalDuration}
-        totalDurationUnit={results.projectPlan?.totalDurationUnit}
-        phaseProgress={phaseProgress}
-        onTogglePhase={togglePhaseComplete}
-        startDate={startDate}
-      />
-
-      {/* Resources */}
-      {results.projectPlan?.resources && (
-        <ResourcesSection resources={results.projectPlan.resources} />
-      )}
-
-      {/* Risks */}
-      {results.projectPlan?.risks && results.projectPlan.risks.length > 0 && (
-        <RisksSection risks={results.projectPlan.risks} />
-      )}
-
-      {/* Milestones */}
-      {results.projectPlan?.milestones && results.projectPlan.milestones.length > 0 && (
-        <MilestonesSection milestones={results.projectPlan.milestones} />
-      )}
-
-      {/* Start Over Button */}
-      <Button 
-        type="button"
-        variant="outline"
-        onClick={onStartOver}
-        className="w-full touch-manipulation h-12"
-      >
-        Create New Plan
-      </Button>
-    </div>
+    </>
   );
 };
 

@@ -313,6 +313,119 @@ Suggest practical options in your response:
 - Detail material lead times and alternatives if items are out of stock
 - Provide contingency plans for common delays (weather, access issues, failed inspections)
 
+**EXAMPLE OF GREAT PHASE OUTPUT (LEARN FROM THIS STRUCTURE):**
+
+Phase 2: First Fix - Containment & Cables (Days 3-5, 3 days)
+
+**TASKS:**
+• Install 40m galvanised trunking along main routes (marked on approved drawings)
+• Pull 25mm² twin+earth for cooker circuit (Route: CU → Kitchen via loft space)
+• Pull 6mm² cables for shower circuit (Route: CU → Bathroom via stud wall cavity)
+• Mark all socket positions with chalk (living room: 8 doubles, kitchen: 6 doubles)
+• Drill cable entry holes through joists (50mm diameter, deburr all edges - Reg 522.8.5)
+
+**WHY THIS ORDER?**
+You MUST complete first fix before plasterer boards up on Day 6. If you miss this deadline:
+→ Consequence 1: Plasterer delays project by 3-5 days (£300-500 lost revenue)
+→ Consequence 2: Cutting back plasterboard later costs £200+ in materials/labour and looks messy
+→ Consequence 3: Building Control can't inspect covered work = project halt until exposed
+
+**BEFORE THIS PHASE:**
+✅ Plasterer must finish stud walls (Day 2) - you can't cable walls that don't exist!
+✅ Plumber must rough in shower waste (Day 2) - coordinate cable routes to avoid pipe clashes
+✅ Materials delivered to site (Day 1) - starting without 25mm² cable means stopping mid-job
+
+**AFTER THIS PHASE:**
+⏸️ CRITICAL STOP POINT - First fix inspection MUST happen before plasterboard goes up
+   → Book Building Control NOW for Day 5 at 2pm (they need 48hr notice minimum)
+   → If fail: Fix issues, re-book (2-3 day wait), plasterer loses their slot = disaster
+   → Prevention: Do your own IR and continuity checks BEFORE official inspection
+
+⏸️ MANDATORY WAIT - Plasterboard drying time = 3 days minimum (Days 6-8)
+   → Use this time wisely: Order second fix accessories, prep consumer unit offsite, tidy van/tools
+   → DON'T rush plaster drying or decorator's paint will crack and client will blame you
+
+**MATERIAL ORDERING FOR THIS PHASE:**
+🔴 ALREADY ORDERED (Week -2, don't panic):
+   → 25mm² T+E cable (60m roll) from CEF Trade - £180 + VAT - Lead time: 2 weeks
+   → 40m galvanised trunking + accessories - £120 from Screwfix - Lead time: 1 week
+   → MK Logic Plus faceplates (14 whites) - £42 from Edmundson - Lead time: 3-5 days
+
+⚡ ORDER NOW FOR NEXT PHASE (Day 5 PM):
+   → 18-way Hager consumer unit (CRITICAL PATH ITEM) - £450 from CEF - If not here Day 9, project stops!
+   → RCBO breakers (8x Type B) - £240 from Edmundson - Match Hager consumer unit model
+   → Cooker control unit with 45A switch - £28 from Screwfix - Next day click & collect
+
+**TRADE COORDINATION TIMELINE:**
+Day 3 AM: YOU start installing trunking | WAIT for plasterer to mark final board positions
+Day 3 PM: YOU pull cables through trunking | PLUMBER installs shower tray (work separate areas)
+Day 4 AM: YOU drill joist holes | PLASTERER drops off boards ready for Day 6
+Day 5 PM: YOU finish + site clean | INSPECTOR arrives (2pm slot booked) | PLASTERER mobilises for Day 6 start
+
+**CLIENT IMPACT WARNINGS:**
+⚠️ Day 3 (9:00am - 11:00am): Mains power OFF for consumer unit installation (2 hours)
+   → Client preparation: Charge all devices, make hot drinks BEFORE 9am, work from coffee shop if WFH
+   → Pro tip: Schedule this on Thursday so they have the weekend to adjust to new circuits
+
+⚠️ Day 3-4: Noisy drilling and cable pulling (06:00am - 18:00pm)
+   → Courtesy: Warn neighbours 2 days ahead, offer your mobile number for concerns
+   → Client expectation: Some plaster dust unavoidable - dust sheets will protect furniture
+
+**LESSONS LEARNED FROM 784 REAL PROJECTS:**
+
+❌ Mistake #1: Not booking Building Control inspection early enough
+   → What happened: Inspector fully booked for 5 days, plasterer lost, client went ballistic, Google review bombed us
+   → Cost: £1,200 lost (plasterer cancellation fee + client compensation + reputation damage)
+   → Prevention: Book inspection BEFORE starting first fix, not when you're ready for it
+
+❌ Mistake #2: Ordered 16mm² cable instead of 25mm² for cooker circuit
+   → What happened: Arrived on site Day 3, wrong cable, 2-day delay to re-order, plasterer rescheduled, client complained
+   → Cost: £80 cable + £300 delay compensation + relationship damage
+   → Prevention: Check design specification TWICE before ordering - slow down for 5 minutes
+
+❌ Mistake #3: Drilled through joist without using cable/pipe detector
+   → What happened: Hit hidden plumbing, flooded house, insurance claim, project stopped 2 weeks, lost £8,000 in claims
+   → Cost: £10,000+ total (insurance excess + lost work + client legal threats)
+   → Prevention: Buy £40 Bosch detector - saves you tens of thousands in one avoided mistake
+
+**CONTINGENCY PLANNING - WHAT IF SCENARIOS:**
+
+🚨 SCENARIO 1: Consumer unit arrives damaged/wrong model
+   → Impact: Project stops until replacement delivered (3-7 days) - KILLS timeline
+   → Fix: Order TWO consumer units upfront, return unused one (£50 restocking vs £500+ delay cost)
+   → When to decide: If job value >£3,000 OR client has hard deadline (house sale, etc.)
+
+🚨 SCENARIO 2: Plasterer cancels on Day 6 morning
+   → Impact: First fix left exposed, Building Control may fail for "unprotected cables" (Reg 522.6.1)
+   → Fix: Have backup plasterer on retainer OR cover cables with protective tarpaulin + re-book inspection
+   → Prevention: Confirm with plasterer Day 5 morning: "Still good for tomorrow 8am start, mate?"
+
+🚨 SCENARIO 3: Inspector fails first fix for insufficient earth bonding
+   → Impact: +3 days minimum (fix issues, re-book, wait for next inspection slot)
+   → Fix: Always carry 10mm² earth bonding cable + clamps in van (£30) - fix same day
+   → Prevention: Do YOUR bonding checks before inspector arrives - use your IR tester
+
+**SUPPLIER PRICE COMPARISON (Sept 2025):**
+
+25mm² T+E Cable (60m roll):
+• CEF Trade: £180 + VAT (£216 total) - Best price with trade account (20% off list)
+• Edmundson: £220 + VAT - Will price match CEF if you ask nicely + show CEF quote
+• Screwfix: £245 + VAT - No trade discount but same-day click & collect if desperate
+• TLC Direct: £190 + VAT online - Cheapest BUT 3-day delivery (no good if you need it now)
+
+Hager 18-way Consumer Unit:
+• CEF: £450 - ALWAYS in stock, free delivery >£100 order
+• Edmundson: £480 - Match CEF price if you're a good customer
+• Screwfix: £520 - Overpriced but emergency backup if CEF sold out
+
+**EVERY PHASE YOU WRITE MUST MATCH THIS LEVEL OF PRACTICAL DETAIL**
+- Real consequences with costs (£) when things go wrong
+- Exact timing with trade coordination ("Day 3 AM: YOU do X | PLUMBER does Y")
+- Specific product codes and supplier comparisons with actual prices
+- Client-facing language they can understand ("power off 2 hours, charge devices first")
+- Prevention tips from actual project failures (not theoretical - REAL mistakes)
+- Contingency plans with decision criteria ("if job >£3k, order backup unit")
+
 **SPECIALIST OUTPUTS TO COORDINATE:**
 ${previousAgentOutputs?.length || 0} specialists have provided data
 
@@ -373,7 +486,7 @@ Include phases, resources, compliance requirements, and risk management.`;
       model: 'gpt-5-mini-2025-08-07',
       systemPrompt,
       userPrompt,
-      maxTokens: 18000,  // Allows 1200-1500 word responses with detailed examples
+      maxTokens: 24000,  // Increased for highly detailed PM plans with examples, contingencies, and real-world scenarios
       timeoutMs: 280000,  // 280 seconds = 4 min 40 sec (max safe timeout)
       tools: [{
         type: 'function',
