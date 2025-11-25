@@ -275,7 +275,7 @@ KNOWLEDGE BASE PROVIDED:
 ⚠️ CRITICAL: Use the practical work timing data below to ensure realistic labour hours. These are based on real UK electrician job data.
 
 RAG TIMING BENCHMARKS:
-${ragContext.practicalWork.slice(0, 10).map((pw: any, i: number) => {
+${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
   const durationHours = pw.typical_duration_minutes 
     ? (pw.typical_duration_minutes / 60).toFixed(1) 
     : (pw.duration_hours || 'N/A');
@@ -286,100 +286,28 @@ ${ragContext.practicalWork.slice(0, 10).map((pw: any, i: number) => {
 
 💡 CROSS-REFERENCE your labour estimates against these benchmarks. If your estimate differs by >30%, explain why in valueEngineering.
 
-OUTPUT STRUCTURE (JSON):
+OUTPUT (JSON):
 {
-  "materials": {
-    "items": [
-      {
-        "description": "Item name with specifications",
-        "quantity": number,
-        "unit": "metres|units|boxes",
-        "unitPrice": number,
-        "total": number,
-        "supplier": "CEF|TLC|RS",
-        "category": "cables|protection|accessories"
-      }
-    ],
-    "subtotal": number
-  },
-  "labour": {
-    "tasks": [
-      {
-        "description": "Task description",
-        "hours": number,
-        "rate": ${request.businessSettings?.labourRate || 45},
-        "total": number,
-        "workerType": "Qualified Electrician"
-      }
-    ],
-    "subtotal": number,
-    "totalHours": number
-  },
-  "timescales": {
-    "totalDays": number,
-    "breakdown": "Day-by-day breakdown"
-  },
-  "summary": {
-    "materialsSubtotal": number,
-    "labourSubtotal": number,
-    "subtotal": number,
-    "vat": number (20%),
-    "grandTotal": number
-  },
-  "upsells": [
-    {
-      "opportunity": "Smart lighting control system",
-      "price": 450,
-      "winRate": 65,
-      "isHot": true,
-      "timing": "During initial consultation",
-      "script": "While I'm here, I noticed your lighting could benefit from smart controls. For an extra £450, I can install motion sensors and dimming - it'll save you £200/year on electricity and add convenience."
-    }
-  ],
-  "paymentTerms": {
-    "depositPercent": 30,
-    "depositAmount": number,
-    "balanceAmount": number,
-    "terms": "30% deposit before work starts, balance on completion",
-    "lateFeePolicy": "Interest charged at 4% above base rate after 30 days",
-    "paymentMilestones": [
-      {
-        "stage": "Deposit",
-        "percentage": 30,
-        "amount": number,
-        "trigger": "Before work starts"
-      }
-    ]
-  },
-  "pipeline": [
-    {
-      "opportunity": "EV Charger Installation",
-      "description": "7kW home charger with app control",
-      "timeframe": "6-12 months",
-      "estimatedValue": 1200,
-      "priority": "medium",
-      "trigger": "When they mention new electric car",
-      "timing": "6-12 months"
-    }
-  ],
-  "valueEngineering": ["Suggestion 1", "Suggestion 2"]
+  "materials": {"items": [{"description": string, "quantity": number, "unit": string, "unitPrice": number, "total": number, "supplier": string, "category": string}], "subtotal": number},
+  "labour": {"tasks": [{"description": string, "hours": number, "rate": ${request.businessSettings?.labourRate || 45}, "total": number, "workerType": string}], "subtotal": number, "totalHours": number},
+  "timescales": {"totalDays": number, "breakdown": string},
+  "summary": {"materialsSubtotal": number, "labourSubtotal": number, "subtotal": number, "vat": number, "grandTotal": number},
+  "upsells": [{"opportunity": string, "price": number, "winRate": number, "isHot": boolean, "timing": string, "script": string}],
+  "paymentTerms": {"depositPercent": number, "depositAmount": number, "balanceAmount": number, "terms": string, "lateFeePolicy": string, "paymentMilestones": [{"stage": string, "percentage": number, "amount": number, "trigger": string}]},
+  "pipeline": [{"opportunity": string, "description": string, "timeframe": string, "estimatedValue": number, "priority": string, "trigger": string, "timing": string}],
+  "valueEngineering": [string]
 }
 
-REQUIREMENTS:
-- ⚠️ USE THE TRADE PRICES LISTED ABOVE - they are accurate 2025 trade prices
-- Only use database pricing intelligence for specialist/unusual items not in the list above
-- If using database prices, remember they are LIST prices - apply 20% trade discount
-- Include 10% cable waste and 5% materials contingency
-- Labour rates: Electrician £${request.businessSettings?.labourRate || 45}/hr
-- Regional multiplier: ${getRegionalMultiplier(request.region || 'other')}x
-- Include all fixings, accessories, and sundries
-- Realistic time estimates based on practical work intelligence
-- UK English spelling (metres, colour, earthing)
-- All prices in GBP (£)
-- Compare your total against the benchmarks provided - if significantly higher, review your pricing!
-- 🔥 MANDATORY: ALWAYS include 2-3 upsells (immediate add-ons), payment terms with deposit structure, and 1-2 future pipeline opportunities - these fields are REQUIRED
-- ${projectType === 'commercial' ? 'COMMERCIAL PROJECT: Include phased payment milestones (typically 30% deposit, 40% at first fix, 30% completion). Upsells should focus on efficiency upgrades (LED lighting, smart controls). Future work: maintenance contracts, expansion.' : 'DOMESTIC PROJECT: Standard deposit is 30-50%. Upsells: surge protection, USB sockets, outdoor lighting. Future work: EV charger, solar panels, security systems.'}
-- Respond in valid JSON only`;
+RULES:
+- USE trade prices listed above (accurate 2025 prices)
+- Database prices = LIST prices, apply 20% trade discount
+- Include 10% cable waste, 5% materials contingency
+- Labour: £${request.businessSettings?.labourRate || 45}/hr, regional multiplier: ${getRegionalMultiplier(request.region || 'other')}x
+- Cross-reference labour hours with timing benchmarks (flag if >30% different)
+- UK English (metres, colour, earthing), all prices in GBP
+- MANDATORY: Include 2-3 upsells, payment terms with deposit, 1-2 pipeline opportunities
+- ${projectType === 'commercial' ? 'COMMERCIAL: Phased payments (30% deposit, 40% first fix, 30% completion). Upsells: LED, smart controls. Pipeline: maintenance, expansion.' : 'DOMESTIC: 30-50% deposit. Upsells: surge protection, USB sockets, outdoor lighting. Pipeline: EV charger, solar, security.'}
+- Valid JSON only`;
 
   const userPrompt = `Generate cost estimate for: ${request.query}
 
@@ -391,13 +319,13 @@ PROJECT DETAILS:
 - Additional: ${request.projectContext.additionalInfo || 'N/A'}
 ` : ''}
 
-PRICING INTELLIGENCE (Top 15):
-${ragContext.pricing.slice(0, 15).map((p: any, i: number) => 
+PRICING INTELLIGENCE (Top 12):
+${ragContext.pricing.slice(0, 12).map((p: any, i: number) => 
   `${i + 1}. ${p.item_name}: £${p.base_cost} (${p.wholesaler})`
 ).join('\n')}
 
-PRACTICAL WORK INTELLIGENCE (Top 10):
-${ragContext.practicalWork.slice(0, 10).map((pw: any, i: number) => {
+PRACTICAL WORK INTELLIGENCE (Top 8):
+${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
   const durationHours = pw.typical_duration_minutes 
     ? (pw.typical_duration_minutes / 60).toFixed(1) 
     : (pw.duration_hours || 'N/A');
@@ -430,7 +358,7 @@ ${ragContext.practicalWork.slice(0, 10).map((pw: any, i: number) => {
           { role: 'user', content: userPrompt }
         ],
         response_format: { type: 'json_object' },
-        max_completion_tokens: 16000 // Increased for complex multi-circuit estimates
+        max_completion_tokens: 12000
       }),
       signal: controller.signal
     });
