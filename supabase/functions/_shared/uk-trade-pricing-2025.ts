@@ -404,18 +404,6 @@ export function validateTimescales(estimate: any, query: string): string[] {
         warnings.push(`⚠️ ${totalHours} labour hours seems high - typical commercial kitchen is 80-112 hours for restaurants`);
       }
     }
-      if (totalHours > 56) {
-        warnings.push(`⚠️ ${totalHours} labour hours seems high for 3-bed rewire - typical is 40-56 hours (1 electrician)`);
-      }
-    } else if (queryLower.includes('4 bed') || queryLower.includes('4-bed')) {
-      if (totalHours > 72) {
-        warnings.push(`⚠️ ${totalHours} labour hours seems high for 4-bed rewire - typical is 56-72 hours (1 electrician)`);
-      }
-    } else if (queryLower.includes('5 bed') || queryLower.includes('5-bed')) {
-      if (totalHours > 96) {
-        warnings.push(`⚠️ ${totalHours} labour hours seems high for 5-bed rewire - typical is 72-96 hours (1 electrician)`);
-      }
-    }
   }
   
   // Check consumer unit change
