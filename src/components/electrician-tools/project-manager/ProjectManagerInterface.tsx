@@ -12,7 +12,8 @@ import {
   FileCheck,
   FileText,
   Lightbulb,
-  Loader2
+  Loader2,
+  AlertCircle
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -25,6 +26,9 @@ import { FormSection } from "./FormSection";
 import { InlineProjectTypeSelector } from "./InlineProjectTypeSelector";
 import { CollapsibleFormSection } from "./CollapsibleFormSection";
 import { ExampleProjectsGrid } from "./ExampleProjectsGrid";
+import { TemplateLibrary } from "./templates/TemplateLibrary";
+import { ScopeChecklist } from "./input/ScopeChecklist";
+import { ConstraintsSection, ProjectConstraints } from "./input/ConstraintsSection";
 
 interface ExampleScenario {
   title: string;
@@ -76,6 +80,16 @@ const ProjectManagerInterface = () => {
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState<any>(null);
   const [generationStartTime, setGenerationStartTime] = useState<number>(0);
+  const [selectedScope, setSelectedScope] = useState<string[]>([]);
+  const [constraints, setConstraints] = useState<ProjectConstraints>({
+    accessRestrictions: '',
+    workingHours: '',
+    occupiedProperty: false,
+    medicalEquipment: false,
+    budgetLimit: undefined,
+    otherTrades: '',
+    specialRequirements: ''
+  });
   
   const { callAgent, isLoading, progress } = useSimpleAgent();
 
@@ -113,16 +127,44 @@ const ProjectManagerInterface = () => {
     });
   };
 
+  const handleTemplateSelect = (templatePlan: Partial<any>) => {
+    // Pre-fill form with template data
+    if (templatePlan.phases && templatePlan.phases.length > 0) {
+      const firstPhase = templatePlan.phases[0];
+      setPrompt(`Use template with ${templatePlan.phases.length} phases: ${firstPhase.phaseName || 'Phase 1'}`);
+    }
+    toast.success("Template loaded", {
+      description: "You can modify the scope and generate a customized plan"
+    });
+  };
+
   const handleGenerate = async () => {
     setShowResults(true);
     setResults(null);
     setGenerationStartTime(Date.now());
     
+    // Build enhanced request with scope and constraints
+    const scopeText = selectedScope.length > 0 
+      ? `\n\nScope items: ${selectedScope.join(', ')}`
+      : '';
+    
+    const constraintsText = Object.entries(constraints)
+      .filter(([_, value]) => value)
+      .map(([key, value]) => `${key}: ${value}`)
+      .join(', ');
+    
+    const enhancedQuery = `${prompt}${scopeText}${constraintsText ? `\n\nConstraints: ${constraintsText}` : ''}`;
+    
     const request = {
-      query: prompt,
+      query: enhancedQuery,
       projectType: selectedType,
-      scope: prompt,
-      timeline: duration || undefined
+      scope: selectedScope,
+      constraints,
+      timeline: duration || undefined,
+      projectName: projectName || undefined,
+      location: location || undefined,
+      clientName: clientName || undefined,
+      startDate: startDate || undefined
     };
     
     const response = await callAgent('project-manager', request);
@@ -247,6 +289,45 @@ const ProjectManagerInterface = () => {
         </div>
       </CollapsibleFormSection>
       
+      {/* Template Library - Collapsed */}
+      <CollapsibleFormSection 
+        title="Start from Template" 
+        subtitle="Pre-built project plans to customize"
+        badge="optional"
+        icon={<FileText className="h-5 w-5" />}
+        defaultOpen={false}
+      >
+        <TemplateLibrary onSelectTemplate={handleTemplateSelect} />
+      </CollapsibleFormSection>
+
+      {/* Scope Checklist - Collapsed */}
+      <CollapsibleFormSection 
+        title="Scope Checklist" 
+        subtitle="Select work items included in this project"
+        badge="optional"
+        icon={<Package className="h-5 w-5" />}
+        defaultOpen={false}
+      >
+        <ScopeChecklist 
+          onScopeChange={setSelectedScope}
+          initialScope={selectedScope}
+        />
+      </CollapsibleFormSection>
+
+      {/* Constraints - Collapsed */}
+      <CollapsibleFormSection 
+        title="Project Constraints" 
+        subtitle="Access, timing, and special requirements"
+        badge="optional"
+        icon={<AlertCircle className="h-5 w-5" />}
+        defaultOpen={false}
+      >
+        <ConstraintsSection 
+          onConstraintsChange={setConstraints}
+          initialConstraints={constraints}
+        />
+      </CollapsibleFormSection>
+
       {/* Example Project Requests - Collapsed */}
       <CollapsibleFormSection 
         title="Example Project Requests" 
