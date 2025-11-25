@@ -66,6 +66,91 @@ export const UK_TRADE_PRICING_2025 = {
       materials_max: 25,
       description: 'Single additional socket - materials only'
     }
+  },
+
+  /**
+   * UK Industry Standard Timescales (2-person team, 8-hour days)
+   * Based on NICEIC/NAPIT/JIB guidance and industry practice
+   */
+  timescaleBenchmarks: {
+    // Domestic rewires (full strip-out, first-fix, second-fix, testing)
+    rewire_1bed: { 
+      days: 2.5, 
+      labourHours: 40, 
+      pointsRange: '12-18',
+      description: '1-bed flat full rewire' 
+    },
+    rewire_2bed: { 
+      days: 3.5, 
+      labourHours: 56, 
+      pointsRange: '18-25',
+      description: '2-bed house full rewire' 
+    },
+    rewire_3bed: { 
+      days: 4.5, 
+      labourHours: 72, 
+      pointsRange: '25-35',
+      description: '3-bed house full rewire' 
+    },
+    rewire_4bed: { 
+      days: 6, 
+      labourHours: 96, 
+      pointsRange: '35-45',
+      description: '4-bed house full rewire' 
+    },
+    rewire_5bed: { 
+      days: 7.5, 
+      labourHours: 120, 
+      pointsRange: '45-60',
+      description: '5-bed house full rewire' 
+    },
+    
+    // Common individual jobs
+    consumer_unit_change: { 
+      days: 0.5, 
+      labourHours: 4, 
+      description: 'Consumer unit upgrade inc testing & certification' 
+    },
+    socket_add_surface: { 
+      hours: 1.5, 
+      labourHours: 1.5, 
+      description: 'Additional socket (surface-mounted run)' 
+    },
+    socket_add_chased: { 
+      hours: 2.5, 
+      labourHours: 2.5, 
+      description: 'Additional socket (chased into wall)' 
+    },
+    light_point_add: { 
+      hours: 2, 
+      labourHours: 2, 
+      description: 'Additional light point' 
+    },
+    cooker_circuit: { 
+      hours: 4, 
+      labourHours: 4, 
+      description: 'New cooker circuit from consumer unit' 
+    },
+    shower_circuit: { 
+      hours: 5, 
+      labourHours: 5, 
+      description: 'New shower circuit from consumer unit' 
+    },
+    ev_charger: { 
+      days: 0.5, 
+      labourHours: 4, 
+      description: 'EV charger installation (DNO notified)' 
+    },
+    outside_light: { 
+      hours: 3, 
+      labourHours: 3, 
+      description: 'External lighting circuit' 
+    },
+    smoke_alarm_system: { 
+      hours: 6, 
+      labourHours: 6, 
+      description: 'Interlinked smoke/heat alarm system (typical house)' 
+    }
   }
 };
 
@@ -121,7 +206,29 @@ export function formatTradePricingPrompt(): string {
 - New cooker circuit: £80-150
 - New shower circuit: £100-180
 
-If your estimate is significantly higher than these benchmarks, review your pricing!`;
+⏱️ UK INDUSTRY STANDARD TIMESCALES (2-person team, 8-hour days):
+
+DOMESTIC REWIRES (strip-out, first-fix, second-fix, testing):
+- 1-bed flat: 2.5 days (40 labour hours total)
+- 2-bed house: 3.5 days (56 labour hours total)
+- 3-bed house: 4-5 days (64-80 labour hours total)
+- 4-bed house: 5-6 days (80-96 labour hours total)
+- 5-bed house: 7-8 days (112-128 labour hours total)
+
+INDIVIDUAL JOBS:
+- Consumer unit change: 0.5 days (4 hours inc testing)
+- Additional socket (surface): 1.5 hours
+- Additional socket (chased): 2.5 hours
+- Additional light point: 2 hours
+- New cooker circuit: 4 hours
+- New shower circuit: 5 hours
+- EV charger install: 0.5 days (4 hours)
+- External lighting: 3 hours
+- Smoke alarm system: 6 hours
+
+⚠️ If your labour estimate exceeds these benchmarks by >20%, review your timescales!
+
+If your estimate is significantly higher than these benchmarks, review your pricing and timescales!`;
 }
 
 /**
@@ -164,6 +271,59 @@ export function validatePricing(estimate: any): string[] {
       warnings.push(`⚠️ RCBO price £${rcbo.unitPrice.toFixed(2)} is high - typical trade is £27.50-28.50`);
     }
   });
+  
+  return warnings;
+}
+
+/**
+ * Validate timescales against UK industry benchmarks
+ */
+export function validateTimescales(estimate: any, query: string): string[] {
+  const warnings: string[] = [];
+  const queryLower = query.toLowerCase();
+  const totalDays = estimate.timescales?.totalDays || 0;
+  const totalHours = estimate.labour?.totalHours || 0;
+  
+  // Check domestic rewires
+  if (queryLower.includes('rewire')) {
+    if (queryLower.includes('1 bed') || queryLower.includes('1-bed')) {
+      if (totalDays > 3) {
+        warnings.push(`⚠️ ${totalDays} days seems high for 1-bed rewire - typical is 2.5 days (40 hours)`);
+      }
+    } else if (queryLower.includes('2 bed') || queryLower.includes('2-bed')) {
+      if (totalDays > 4.5) {
+        warnings.push(`⚠️ ${totalDays} days seems high for 2-bed rewire - typical is 3.5 days (56 hours)`);
+      }
+    } else if (queryLower.includes('3 bed') || queryLower.includes('3-bed')) {
+      if (totalDays > 6) {
+        warnings.push(`⚠️ ${totalDays} days seems high for 3-bed rewire - typical is 4-5 days (64-80 hours)`);
+      }
+    } else if (queryLower.includes('4 bed') || queryLower.includes('4-bed')) {
+      if (totalDays > 7.5) {
+        warnings.push(`⚠️ ${totalDays} days seems high for 4-bed rewire - typical is 5-6 days (80-96 hours)`);
+      }
+    }
+  }
+  
+  // Check consumer unit change
+  if ((queryLower.includes('consumer unit') || queryLower.includes('cu change')) && 
+      !queryLower.includes('rewire')) {
+    if (totalDays > 1 || totalHours > 8) {
+      warnings.push(`⚠️ ${totalDays} days seems high for consumer unit change - typical is 0.5 days (4 hours)`);
+    }
+  }
+  
+  // Check labour hours vs days consistency (2-person team = 16 hours per day)
+  if (totalDays > 0 && totalHours > 0) {
+    const expectedHoursMin = totalDays * 14; // Allow some variation (7 hours/person/day)
+    const expectedHoursMax = totalDays * 18; // Allow some variation (9 hours/person/day)
+    
+    if (totalHours < expectedHoursMin) {
+      warnings.push(`⚠️ Labour hours (${totalHours}h) seem low for ${totalDays} days - check team size assumptions`);
+    } else if (totalHours > expectedHoursMax) {
+      warnings.push(`⚠️ Labour hours (${totalHours}h) seem high for ${totalDays} days - typical is 16 hours/day for 2-person team`);
+    }
+  }
   
   return warnings;
 }
