@@ -405,14 +405,15 @@ ${ragContext.practicalWork.slice(0, 10).map((pw: any, i: number) => {
   return `${i + 1}. ${pw.primary_topic || pw.activity_description || 'Task'} - ${durationHours}hrs (${teamSize} person team)`;
 }).join('\n')}`;
 
-  console.log('🤖 Calling OpenAI for cost estimation...');
+  console.log('🤖 Calling OpenAI for cost estimation (max 5 min timeout)...');
+  console.log('📊 Prompt size:', systemPrompt.length + userPrompt.length, 'chars');
 
-  // Add timeout protection (2 minutes)
+  // Add timeout protection (5 minutes for complex estimates)
   const controller = new AbortController();
   const timeoutId = setTimeout(() => {
-    console.error('⏱️ OpenAI call timeout after 120 seconds');
+    console.error('⏱️ OpenAI call timeout after 300 seconds');
     controller.abort();
-  }, 120000);
+  }, 300000);
 
   let response;
   try {
@@ -437,7 +438,7 @@ ${ragContext.practicalWork.slice(0, 10).map((pw: any, i: number) => {
     clearTimeout(timeoutId);
     if (fetchError.name === 'AbortError') {
       console.error('❌ OpenAI fetch aborted (timeout)');
-      throw new Error('OpenAI request timed out after 2 minutes');
+      throw new Error('OpenAI request timed out after 5 minutes');
     }
     console.error('❌ OpenAI fetch error:', fetchError.message);
     throw new Error(`OpenAI fetch failed: ${fetchError.message}`);
