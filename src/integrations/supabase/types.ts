@@ -5516,7 +5516,10 @@ export type Database = {
           confidence_score: number | null
           created_at: string | null
           deliverables: Json | null
+          description: string | null
+          difficulty: string | null
           enrichment_version: string | null
+          icon_name: string | null
           id: string
           phases: Json
           regulations_cited: string[] | null
@@ -5524,17 +5527,22 @@ export type Database = {
           risk_factors: Json | null
           source_hash: string | null
           source_id: string | null
+          tags: string[] | null
           team_roles: string[] | null
           template_type: string
           title: string
           typical_duration_days: number | null
           updated_at: string | null
+          usage_count: number | null
         }
         Insert: {
           confidence_score?: number | null
           created_at?: string | null
           deliverables?: Json | null
+          description?: string | null
+          difficulty?: string | null
           enrichment_version?: string | null
+          icon_name?: string | null
           id?: string
           phases?: Json
           regulations_cited?: string[] | null
@@ -5542,17 +5550,22 @@ export type Database = {
           risk_factors?: Json | null
           source_hash?: string | null
           source_id?: string | null
+          tags?: string[] | null
           team_roles?: string[] | null
           template_type: string
           title: string
           typical_duration_days?: number | null
           updated_at?: string | null
+          usage_count?: number | null
         }
         Update: {
           confidence_score?: number | null
           created_at?: string | null
           deliverables?: Json | null
+          description?: string | null
+          difficulty?: string | null
           enrichment_version?: string | null
+          icon_name?: string | null
           id?: string
           phases?: Json
           regulations_cited?: string[] | null
@@ -5560,11 +5573,13 @@ export type Database = {
           risk_factors?: Json | null
           source_hash?: string | null
           source_id?: string | null
+          tags?: string[] | null
           team_roles?: string[] | null
           template_type?: string
           title?: string
           typical_duration_days?: number | null
           updated_at?: string | null
+          usage_count?: number | null
         }
         Relationships: [
           {
@@ -8140,6 +8155,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_project_plans: {
+        Row: {
+          client_name: string | null
+          created_at: string | null
+          id: string
+          location: string | null
+          plan_data: Json
+          project_name: string
+          start_date: string | null
+          status: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          client_name?: string | null
+          created_at?: string | null
+          id?: string
+          location?: string | null
+          plan_data: Json
+          project_name: string
+          start_date?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          client_name?: string | null
+          created_at?: string | null
+          id?: string
+          location?: string | null
+          plan_data?: Json
+          project_name?: string
+          start_date?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
       }
       user_qualification_selections: {
         Row: {
