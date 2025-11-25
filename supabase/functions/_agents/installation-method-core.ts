@@ -222,12 +222,54 @@ ${ragContext.regulations.slice(0, 10).map((reg: any, i: number) =>
   });
 
   if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`OpenAI API error: ${error}`);
+    const errorText = await response.text();
+    console.error('❌ OpenAI API error:', response.status, errorText.substring(0, 500));
+    throw new Error(`OpenAI API error (${response.status}): ${errorText.substring(0, 200)}`);
   }
 
   const data = await response.json();
-  const content = data.choices[0].message.content;
-  
-  return JSON.parse(content);
+
+  // Debug: Log the raw response
+  console.log('📋 OpenAI Response:', {
+    hasChoices: !!data.choices,
+    choicesLength: data.choices?.length,
+    finishReason: data.choices?.[0]?.finish_reason,
+    hasContent: !!data.choices?.[0]?.message?.content,
+    contentLength: data.choices?.[0]?.message?.content?.length,
+    usage: data.usage
+  });
+
+  // Validate response structure
+  if (!data.choices || data.choices.length === 0) {
+    console.error('❌ No choices in OpenAI response:', JSON.stringify(data).substring(0, 500));
+    throw new Error('OpenAI returned no choices');
+  }
+
+  const message = data.choices[0].message;
+
+  // Check for refusal (GPT-5 safety feature)
+  if (message.refusal) {
+    console.error('❌ OpenAI refused:', message.refusal);
+    throw new Error(`OpenAI refused: ${message.refusal}`);
+  }
+
+  const content = message.content;
+
+  // Validate content exists
+  if (!content || content.trim().length === 0) {
+    console.error('❌ Empty content from OpenAI. Finish reason:', data.choices[0].finish_reason);
+    console.error('📊 Usage:', JSON.stringify(data.usage));
+    throw new Error(`Empty response from OpenAI (finish_reason: ${data.choices[0].finish_reason})`);
+  }
+
+  console.log(`✅ OpenAI response received: ${content.length} chars`);
+
+  // Parse with error handling
+  try {
+    return JSON.parse(content);
+  } catch (parseError: any) {
+    console.error('❌ JSON parse failed:', parseError.message);
+    console.error('📋 Raw content (first 500 chars):', content.substring(0, 500));
+    throw new Error(`Failed to parse OpenAI JSON: ${parseError.message}`);
+  }
 }
