@@ -198,7 +198,7 @@ export const InstallationStepCard = ({
                           {step.safety.map((note, i) => (
                             <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/90 bg-background/30 p-3 rounded-md">
                               <ShieldAlert className="h-4 w-4 text-destructive mt-0.5 flex-shrink-0" />
-                              <span className="leading-relaxed">{note}</span>
+                              <span className="leading-relaxed text-left">{note}</span>
                             </li>
                           ))}
                         </ul>
