@@ -439,7 +439,7 @@ export const InstallationResults = ({
         <ProjectMetadataCard metadata={fullMethodStatement.projectMetadata} />
       )}
 
-      {/* 🚀 AI Quality Metrics Display */}
+      {/* 🚀 Quality Metrics Display */}
       {qualityMetrics && (
         <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/5 to-background shadow-lg">
           <CardContent className="p-5">
@@ -448,7 +448,7 @@ export const InstallationResults = ({
                 <div className="p-2 rounded-lg bg-blue-500/10">
                   <Database className="h-5 w-5 text-blue-400" />
                 </div>
-                <h4 className="font-bold text-base">AI Generation Quality</h4>
+                <h4 className="font-bold text-base">Generation Quality</h4>
               </div>
               <Badge 
                 variant={qualityMetrics.overallScore >= 80 ? 'default' : qualityMetrics.overallScore >= 60 ? 'secondary' : 'destructive'}
@@ -505,7 +505,7 @@ export const InstallationResults = ({
         <RAGExtractionBreakdown extractionBreakdown={qualityMetrics.extractionBreakdown} />
       )}
 
-      {/* 🎯 NEW: Executive Summary - AI Generated Installation At-A-Glance */}
+      {/* 🎯 NEW: Executive Summary - Installation At-A-Glance */}
       {fullMethodStatement?.executiveSummary && (
         <ExecutiveSummaryCard executiveSummary={fullMethodStatement.executiveSummary} />
       )}
