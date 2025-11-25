@@ -56,29 +56,23 @@ export const InstallationStepCard = ({
 
   return (
     <Card className={cn(
-      "relative overflow-hidden transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-0.5 animate-fade-in",
-      isExpanded && "ring-2 ring-primary/30 shadow-2xl shadow-primary/20"
+      "relative overflow-hidden transition-all duration-300 border-2 animate-fade-in",
+      isExpanded 
+        ? "border-elec-yellow/60 shadow-2xl shadow-elec-yellow/20" 
+        : "border-border/40 hover:border-elec-yellow/40 hover:shadow-lg"
     )}>
-      {/* Timeline connector (vertical line with gradient) */}
-      <div className="absolute left-6 top-12 h-8 w-1 bg-gradient-to-b from-elec-yellow/80 to-transparent rounded-full" />
       
-      <div className={cn("p-4", isMobile ? "sm:p-5" : "sm:p-6 lg:p-8")}>
-        <div className="flex items-start gap-4">
-          {/* Step number with timeline dot and pulse effect */}
+      <div className={cn("p-6", isMobile && "p-4")}>
+        <div className="flex items-start gap-4 sm:gap-6">
+          {/* Step number */}
           <div className="relative flex-shrink-0">
             <div className={cn(
-              "rounded-full flex items-center justify-center font-black transition-all duration-300 touch-manipulation",
-              isMobile ? "w-12 h-12 text-xl" : "w-14 h-14 text-2xl lg:w-16 lg:h-16 lg:text-3xl",
-              isExpanded 
-                ? "bg-gradient-to-br from-elec-yellow to-primary text-black shadow-2xl shadow-elec-yellow/40 scale-110" 
-                : "bg-gradient-to-br from-primary/30 to-primary/10 text-primary shadow-md hover:scale-105 active:scale-95"
+              "rounded-full flex items-center justify-center font-black transition-all duration-200",
+              isMobile ? "w-14 h-14 text-xl" : "w-16 h-16 text-2xl",
+              "bg-elec-yellow text-black shadow-lg"
             )}>
               {step.stepNumber}
             </div>
-            {/* Animated pulse ring on active */}
-            {isExpanded && (
-              <div className="absolute inset-0 rounded-full bg-elec-yellow/20 animate-ping" />
-            )}
           </div>
 
           <div className="flex-1 min-w-0">
@@ -125,130 +119,111 @@ export const InstallationStepCard = ({
               </div>
             ) : (
               // VIEW MODE
-              <div className="space-y-4">
-                {/* Header with title and quick info */}
+              <div className="space-y-5">
+                {/* Header */}
                 <div className="flex items-start justify-between gap-3">
-                  {/* Mobile-optimised header */}
-                  <MobileStepHeader
-                    title={step.title}
-                    estimatedDuration={step.estimatedDuration}
-                    riskLevel={step.riskLevel}
-                    hazardCount={linkedHazards.length}
-                  />
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-3 leading-tight">
+                      {step.title}
+                    </h3>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      {step.estimatedDuration && (
+                        <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                          <Clock className="h-4 w-4" />
+                          <span className="font-medium">Duration: {step.estimatedDuration}</span>
+                        </div>
+                      )}
+                      {step.riskLevel && (
+                        <Badge className={cn(
+                          "font-semibold border",
+                          riskColors[step.riskLevel as keyof typeof riskColors]
+                        )}>
+                          Risk: {step.riskLevel.toUpperCase()}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
                   
-                  {/* Expand/Collapse button with improved touch target */}
                   <Button
                     variant="ghost"
-                    size={isMobile ? "default" : "sm"}
+                    size="sm"
                     onClick={() => setIsExpanded(!isExpanded)}
-                    className={cn(
-                      "shrink-0 gap-1.5 font-semibold hover:bg-primary/10 hover:text-primary transition-all touch-manipulation active:scale-95",
-                      isMobile ? "min-h-[44px] min-w-[44px] px-3" : "min-h-[36px]"
-                    )}
+                    className="shrink-0 hover:bg-accent"
                   >
                     {isExpanded ? (
                       <>
-                        <ChevronUp className={cn(isMobile ? "h-5 w-5" : "h-4 w-4", "transition-transform")} />
-                        {!isMobile && "Collapse"}
+                        <ChevronUp className="h-4 w-4 mr-1" />
+                        Collapse
                       </>
                     ) : (
                       <>
-                        <ChevronDown className={cn(isMobile ? "h-5 w-5" : "h-4 w-4", "transition-transform")} />
-                        {!isMobile && "Expand"}
+                        <ChevronDown className="h-4 w-4 mr-1" />
+                        Expand
                       </>
                     )}
                   </Button>
                 </div>
 
-                {/* Always visible: Description with improved readability */}
-                <div className={cn(
-                  "prose prose-sm max-w-none",
-                  isMobile && "text-[15px] leading-relaxed"
-                )}>
+                {/* Description */}
+                <div className="text-base leading-relaxed text-foreground/90 bg-muted/30 p-4 rounded-lg border border-border/50">
                   <EnhancedStepContent content={step.content || (step as any).description || ''} />
                 </div>
 
-                {/* Expandable section with slide-down animation */}
+                {/* Expandable section */}
                 {isExpanded && (
-                  <div className="space-y-4 pt-4 border-t border-border/50 animate-fade-in">
-                    {/* Linked Hazards with gradient background */}
-                    {linkedHazards.length > 0 && (
-                      <div className="p-4 bg-gradient-to-br from-red-500/10 to-orange-500/5 border border-destructive/30 rounded-xl shadow-sm hover:shadow-md transition-all">
-                        <div className="flex items-start gap-2.5 mb-3">
-                          <div className="p-1.5 bg-destructive/20 rounded-lg">
-                            <ShieldAlert className="h-5 w-5 text-destructive" />
-                          </div>
-                          <div className="font-bold text-base text-foreground">Linked Hazards ({linkedHazards.length})</div>
+                  <div className="space-y-5 animate-fade-in">
+                    {/* BS 7671 References */}
+                    {bsReferences.length > 0 && (
+                      <div className="bg-blue-500/10 border-2 border-blue-500/30 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          <BookOpen className="h-5 w-5 text-blue-400" />
+                          <h4 className="font-bold text-base text-foreground">Regulatory References</h4>
                         </div>
-                        <ul className="space-y-2 text-sm">
-                          {linkedHazards.map((hazard: string, i: number) => (
-                            <li key={i} className="flex items-start gap-2.5 p-2 bg-background/50 rounded-lg">
-                              <span className="text-destructive font-bold mt-0.5">⚠</span>
-                              <span className="text-foreground leading-relaxed">{hazard}</span>
-                            </li>
-                          ))}
-                        </ul>
+                        <div className="bg-blue-500/20 rounded-md p-3 text-center">
+                          <p className="text-sm text-blue-300 font-medium">
+                            {bsReferences.join(', ')}
+                          </p>
+                        </div>
                       </div>
                     )}
 
-                    {/* Safety Requirements with shield gradient */}
+                    {/* Safety Requirements */}
                     {step.safety && step.safety.length > 0 && (
-                      <div className="p-4 bg-gradient-to-br from-orange-500/10 to-yellow-500/5 border border-warning/40 rounded-xl shadow-sm hover:shadow-md transition-all">
-                        <div className="flex items-start gap-2.5 mb-3">
-                          <div className="p-1.5 bg-warning/20 rounded-lg">
-                            <AlertTriangle className="h-5 w-5 text-warning" />
-                          </div>
-                          <div className="font-bold text-base text-foreground">Safety Requirements</div>
+                      <div className="bg-destructive/10 border-2 border-destructive/30 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          <AlertTriangle className="h-5 w-5 text-destructive" />
+                          <h4 className="font-bold text-base text-foreground">Safety Requirements</h4>
                         </div>
-                        <ul className="space-y-2 text-sm">
+                        <ul className="space-y-2">
                           {step.safety.map((note, i) => (
-                            <li key={i} className="flex items-start gap-2.5 p-2 bg-background/50 rounded-lg">
-                              <span className="text-warning font-bold mt-0.5">🛡️</span>
-                              <span className="text-foreground leading-relaxed">{note}</span>
+                            <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/90 bg-background/30 p-3 rounded-md">
+                              <ShieldAlert className="h-4 w-4 text-destructive mt-0.5 flex-shrink-0" />
+                              <span className="leading-relaxed">{note}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
                     )}
 
-                    {/* Tools Required - Always show section with warnings for empty */}
-                    <div className="p-4 bg-gradient-to-br from-elec-yellow/10 to-blue-500/5 border border-primary/30 rounded-xl shadow-sm hover:shadow-md transition-all">
-                      <div className="flex items-start gap-2.5 mb-3">
-                        <div className="p-1.5 bg-elec-yellow/20 rounded-lg">
-                          <Wrench className="h-5 w-5 text-elec-yellow" />
-                        </div>
-                        <div className="font-bold text-base text-foreground">Tools Required ({toolsRequired.length})</div>
+                    {/* Tools Required */}
+                    <div className="bg-elec-yellow/10 border-2 border-elec-yellow/30 rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Wrench className="h-5 w-5 text-elec-yellow" />
+                        <h4 className="font-bold text-base text-foreground">Tools Required ({toolsRequired.length})</h4>
                       </div>
                       
                       {toolsRequired.length > 0 ? (
-                        <ul className="grid grid-cols-2 gap-2 text-sm">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                           {toolsRequired.map((tool: string, i: number) => (
-                            <li key={i} className="flex items-start gap-2 p-2 bg-background/50 rounded-lg">
-                              <span className="text-elec-yellow font-bold mt-0.5">🔧</span>
+                            <div key={i} className="flex items-start gap-2.5 text-sm bg-background/40 p-3 rounded-md border border-border/40">
+                              <Wrench className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                               <span className="text-foreground leading-relaxed">{tool}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <div className="p-3 bg-red-500/20 border border-red-500/40 rounded-lg">
-                          <div className="flex items-start gap-2">
-                            <AlertCircle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
-                            <div className="flex-1">
-                              <p className="text-sm font-semibold text-red-400">
-                                ⚠️ No Tools Identified - AI Generation Issue
-                              </p>
-                              <p className="text-xs text-red-300 mt-1">
-                                This step appears to be missing tool requirements. This may indicate insufficient RAG context or AI extraction failure.
-                                {(step.title.toLowerCase().includes('isolation') || 
-                                  step.title.toLowerCase().includes('verify dead') ||
-                                  step.title.toLowerCase().includes('test')) && (
-                                  <span className="block mt-1 font-semibold">
-                                    🚨 This is a SAFETY-CRITICAL step and must include specific tools (e.g., voltage indicators, proving units, lock-off kits).
-                                  </span>
-                                )}
-                              </p>
                             </div>
-                          </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="p-3 bg-red-500/20 border border-red-500/40 rounded-md">
+                          <p className="text-sm text-red-400">No tools identified</p>
                         </div>
                       )}
                     </div>
@@ -272,104 +247,73 @@ export const InstallationStepCard = ({
                       </div>
                     )}
 
-                    {/* Inspection Checkpoints with success gradient */}
+                    {/* Inspection Checkpoints */}
                     {inspectionCheckpoints.length > 0 && (
-                      <div className="p-4 bg-gradient-to-br from-green-500/10 to-emerald-500/5 border border-success/30 rounded-xl shadow-sm hover:shadow-md transition-all">
-                        <div className="flex items-start gap-2.5 mb-3">
-                          <div className="p-1.5 bg-success/20 rounded-lg">
-                            <CheckCircle2 className="h-5 w-5 text-success" />
-                          </div>
-                          <div className="font-bold text-base text-foreground">Inspection Checkpoints</div>
+                      <div className="bg-success/10 border-2 border-success/30 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          <CheckCircle2 className="h-5 w-5 text-success" />
+                          <h4 className="font-bold text-base text-foreground">Inspection Checkpoints</h4>
                         </div>
-                        <ul className="space-y-2 text-sm">
+                        <ul className="space-y-2">
                           {inspectionCheckpoints.map((checkpoint: string, i: number) => (
-                            <li key={i} className="flex items-start gap-2.5 p-2 bg-background/50 rounded-lg">
-                              <span className="text-success font-bold mt-0.5">✓</span>
-                              <span className="text-foreground leading-relaxed">{checkpoint}</span>
+                            <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/90 bg-background/30 p-3 rounded-md">
+                              <CheckCircle2 className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
+                              <span className="leading-relaxed">{checkpoint}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
                     )}
 
-                    {/* BS 7671 References - NEW */}
-                    {bsReferences.length > 0 && (
-                      <div className="p-4 bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/30 rounded-xl shadow-sm hover:shadow-md transition-all">
-                        <div className="flex items-start gap-2.5 mb-3">
-                          <div className="p-1.5 bg-blue-500/20 rounded-lg">
-                            <BookOpen className="h-5 w-5 text-blue-400" />
-                          </div>
-                          <div className="font-bold text-base text-foreground">BS 7671 Regulations</div>
+                    {/* Materials Needed */}
+                    {step.materialsNeeded && step.materialsNeeded.length > 0 && (
+                      <div className="bg-primary/10 border-2 border-primary/30 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Wrench className="h-5 w-5 text-primary" />
+                          <h4 className="font-bold text-base text-foreground">Materials Needed</h4>
                         </div>
-                        <div className="flex flex-wrap gap-2">
-                          {bsReferences.map((ref: string, i: number) => (
-                            <Badge 
-                              key={i} 
-                              variant="outline"
-                              className="bg-blue-500/10 border-blue-500/30 text-blue-400 font-mono text-xs px-3 py-1"
-                            >
-                              {ref}
-                            </Badge>
+                        <ul className="space-y-2">
+                          {step.materialsNeeded.map((material, i) => (
+                            <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/90 bg-background/30 p-3 rounded-md">
+                              <span className="text-primary mt-0.5">•</span>
+                              <span className="leading-relaxed">{material}</span>
+                            </li>
                           ))}
-                        </div>
+                        </ul>
                       </div>
                     )}
                   </div>
                 )}
 
                 {/* Action Buttons */}
-                <div className={cn(
-                  "flex flex-wrap gap-2 pt-4 border-t border-border/50",
-                  isMobile && "pt-5"
-                )}>
+                <div className="flex flex-wrap gap-2 pt-5 border-t-2 border-border/50">
                   <Button
                     variant="ghost"
-                    size={isMobile ? "default" : "sm"}
+                    size="sm"
                     onClick={() => setIsEditing(true)}
-                    className={cn(
-                      "hover:bg-primary/10 hover:text-primary font-medium touch-manipulation active:scale-95",
-                      isMobile ? "min-h-[44px] flex-1" : "min-h-[40px]"
-                    )}
+                    className="hover:bg-accent"
                   >
-                    <Edit2 className={cn(isMobile ? "h-5 w-5 mr-2" : "h-4 w-4 mr-2")} />
+                    <Edit2 className="h-4 w-4 mr-2" />
                     Edit Step
                   </Button>
-                  {onMoveUp && (
-                    <Button 
-                      variant="ghost" 
-                      size={isMobile ? "default" : "sm"}
-                      onClick={onMoveUp}
-                      className={cn(
-                        "hover:bg-primary/10 hover:text-primary touch-manipulation active:scale-95",
-                        isMobile ? "min-h-[44px] flex-1" : "min-h-[40px]"
-                      )}
-                    >
-                      ↑ Move Up
-                    </Button>
-                  )}
                   {onMoveDown && (
                     <Button 
                       variant="ghost" 
-                      size={isMobile ? "default" : "sm"}
+                      size="sm"
                       onClick={onMoveDown}
-                      className={cn(
-                        "hover:bg-primary/10 hover:text-primary touch-manipulation active:scale-95",
-                        isMobile ? "min-h-[44px] flex-1" : "min-h-[40px]"
-                      )}
+                      className="hover:bg-accent"
                     >
-                      ↓ Move Down
+                      <ChevronDown className="h-4 w-4 mr-2" />
+                      Move Down
                     </Button>
                   )}
                   <Button
                     variant="ghost"
-                    size={isMobile ? "default" : "sm"}
+                    size="sm"
                     onClick={onDelete}
-                    className={cn(
-                      "text-destructive hover:bg-destructive/10 hover:text-destructive touch-manipulation active:scale-95",
-                      isMobile ? "min-h-[44px] w-full mt-2" : "min-h-[40px] ml-auto"
-                    )}
+                    className="text-destructive hover:bg-destructive/10 hover:text-destructive ml-auto"
                   >
-                    <Trash2 className={cn(isMobile ? "h-5 w-5 mr-2" : "h-4 w-4 mr-2")} />
+                    <Trash2 className="h-4 w-4 mr-2" />
                     Delete
                   </Button>
                 </div>
