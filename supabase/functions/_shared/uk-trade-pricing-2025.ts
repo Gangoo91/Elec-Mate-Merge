@@ -151,6 +151,59 @@ export const UK_TRADE_PRICING_2025 = {
       labourHours: 6, 
       description: 'Interlinked smoke/heat alarm system (typical house)' 
     }
+  },
+
+  /**
+   * Commercial Project Timescales (1 electrician, 8-hour days)
+   * Based on commercial kitchen fit-outs and standard commercial tasks
+   */
+  commercialBenchmarks: {
+    // Commercial kitchen fit-outs (full installation)
+    kitchen_small: { 
+      days: 8, 
+      labourHours: 64, 
+      description: 'Small commercial kitchen (café/takeaway)' 
+    },
+    kitchen_medium: { 
+      days: 12, 
+      labourHours: 96, 
+      description: 'Medium commercial kitchen (restaurant)' 
+    },
+    kitchen_large: { 
+      days: 18, 
+      labourHours: 144, 
+      description: 'Large commercial kitchen (hotel/catering)' 
+    },
+    
+    // Individual commercial tasks
+    db_board_3phase: { 
+      hours: 12, 
+      labourHours: 12, 
+      description: '3-phase distribution board installation' 
+    },
+    swa_per_10m: { 
+      hours: 2, 
+      labourHours: 2, 
+      description: 'SWA installation per 10m (including glands)' 
+    },
+    motor_circuit_3phase: { 
+      hours: 4, 
+      labourHours: 4, 
+      description: '3-phase motor connection' 
+    },
+    cold_room_circuit: { 
+      hours: 5, 
+      labourHours: 5, 
+      description: 'Cold room circuit + control wiring' 
+    },
+    emergency_lighting: { 
+      hoursPerFitting: 0.75, 
+      description: 'Emergency light fitting installation' 
+    },
+    commercial_lighting_circuit: { 
+      hoursPerFitting: 1.5, 
+      description: 'Commercial lighting circuit per fitting' 
+    }
   }
 };
 
@@ -226,6 +279,24 @@ INDIVIDUAL JOBS (1 electrician):
 - External lighting: 3 hours
 - Smoke alarm system: 6 hours
 
+🏭 COMMERCIAL PROJECT TIMESCALES (1 electrician, 8-hour days):
+
+COMMERCIAL KITCHENS:
+- Small (café/takeaway): 6-8 days (48-64 hours)
+- Medium (restaurant): 10-14 days (80-112 hours)
+- Large (hotel/catering): 16-20 days (128-160 hours)
+
+COMMERCIAL INDIVIDUAL TASKS:
+- 3-phase DB board installation: 1-1.5 days (8-12 hours)
+- 30kW+ oven/cooker SWA circuit: 0.75-1 day (6-8 hours)
+- 3-phase motor circuit (extraction): 0.5-1 day (4-8 hours)
+- Cold room circuit + control: 0.5-0.75 day (4-6 hours) per unit
+- Commercial lighting circuit: 1-2 hours per fitting
+- Emergency lighting: 0.75 hours per fitting
+
+⚠️ COMMERCIAL ≠ DOMESTIC: Don't apply domestic timescales to commercial work.
+A restaurant kitchen is NOT 5× a domestic kitchen - it's different equipment, not more of the same.
+
 ⚠️ NOTE: If quoting for a 2-person team, halve the elapsed days but keep labour hours the same.
 Labour hours = what you charge for. Elapsed days = how long you're on site.
 
@@ -298,6 +369,41 @@ export function validateTimescales(estimate: any, query: string): string[] {
         warnings.push(`⚠️ ${totalHours} labour hours seems high for 2-bed rewire - typical is 32-40 hours (1 electrician)`);
       }
     } else if (queryLower.includes('3 bed') || queryLower.includes('3-bed')) {
+      if (totalHours > 56) {
+        warnings.push(`⚠️ ${totalHours} labour hours seems high for 3-bed rewire - typical is 40-56 hours (1 electrician)`);
+      }
+    } else if (queryLower.includes('4 bed') || queryLower.includes('4-bed')) {
+      if (totalHours > 72) {
+        warnings.push(`⚠️ ${totalHours} labour hours seems high for 4-bed rewire - typical is 56-72 hours (1 electrician)`);
+      }
+    } else if (queryLower.includes('5 bed') || queryLower.includes('5-bed')) {
+      if (totalHours > 96) {
+        warnings.push(`⚠️ ${totalHours} labour hours seems high for 5-bed rewire - typical is 72-96 hours (1 electrician)`);
+      }
+    }
+  }
+  
+  // Check commercial kitchen timescales (1 electrician benchmarks)
+  if ((queryLower.includes('kitchen') || queryLower.includes('restaurant') || queryLower.includes('café')) && 
+      (queryLower.includes('commercial') || queryLower.includes('3 phase') || queryLower.includes('extraction'))) {
+    if (queryLower.includes('small') || queryLower.includes('café') || queryLower.includes('takeaway')) {
+      if (totalHours > 64) {
+        warnings.push(`⚠️ ${totalHours} labour hours seems high for small commercial kitchen - typical is 48-64 hours`);
+      }
+    } else if (queryLower.includes('medium') || queryLower.includes('restaurant')) {
+      if (totalHours > 112) {
+        warnings.push(`⚠️ ${totalHours} labour hours seems high for medium commercial kitchen - typical is 80-112 hours`);
+      }
+    } else if (queryLower.includes('large') || queryLower.includes('hotel') || queryLower.includes('catering')) {
+      if (totalHours > 160) {
+        warnings.push(`⚠️ ${totalHours} labour hours seems high for large commercial kitchen - typical is 128-160 hours`);
+      }
+    } else {
+      // Generic commercial kitchen
+      if (totalHours > 112) {
+        warnings.push(`⚠️ ${totalHours} labour hours seems high - typical commercial kitchen is 80-112 hours for restaurants`);
+      }
+    }
       if (totalHours > 56) {
         warnings.push(`⚠️ ${totalHours} labour hours seems high for 3-bed rewire - typical is 40-56 hours (1 electrician)`);
       }
