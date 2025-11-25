@@ -46,7 +46,7 @@ const ClientQuoteSummary = ({
         <div className="space-y-6">
           {/* Quote Amount */}
           <div className="text-center p-6 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-            <div className="text-base sm:text-sm text-white/90 font-medium mb-1">Recommended Quote</div>
+            <div className="text-base sm:text-sm text-white font-medium mb-1">Recommended Quote</div>
             <div className="text-4xl sm:text-5xl font-bold text-elec-yellow mb-2">
               £{amount.toFixed(2)}
             </div>
@@ -60,7 +60,7 @@ const ClientQuoteSummary = ({
             <div className="p-4 rounded-lg bg-background/20">
               <div className="flex items-center gap-2 mb-2">
                 <Target className="h-5 w-5 text-blue-400" />
-                <span className="text-sm text-white/90 font-medium">Break-Even</span>
+                <span className="text-sm text-white font-medium">Break-Even</span>
               </div>
               <div className="text-2xl sm:text-xl font-bold text-white">£{breakEven.toFixed(2)}</div>
             </div>
@@ -68,7 +68,7 @@ const ClientQuoteSummary = ({
             <div className="p-4 rounded-lg bg-background/20">
               <div className="flex items-center gap-2 mb-2">
                 <TrendingUp className="h-5 w-5 text-green-400" />
-                <span className="text-sm text-white/90 font-medium">Margin</span>
+                <span className="text-sm text-white font-medium">Margin</span>
               </div>
               <div className="text-2xl sm:text-xl font-bold text-green-500">{margin.toFixed(1)}%</div>
             </div>
@@ -76,14 +76,14 @@ const ClientQuoteSummary = ({
             <div className="p-4 rounded-lg bg-background/20">
               <div className="flex items-center gap-2 mb-2">
                 <PoundSterling className="h-5 w-5 text-green-400" />
-                <span className="text-sm text-white/90 font-medium">Profit</span>
+                <span className="text-sm text-white font-medium">Profit</span>
               </div>
               <div className="text-2xl sm:text-xl font-bold text-green-500">£{profit.toFixed(0)}</div>
             </div>
 
             <div className="p-4 rounded-lg bg-background/20">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-sm text-white/90 font-medium">Profit/hour</span>
+                <span className="text-sm text-white font-medium">Profit/hour</span>
               </div>
               <div className="text-2xl sm:text-xl font-bold text-green-500">£{profitPerHour.toFixed(0)}/hr</div>
             </div>

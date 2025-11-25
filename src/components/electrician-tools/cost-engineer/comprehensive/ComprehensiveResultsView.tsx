@@ -70,7 +70,7 @@ const ComprehensiveResultsView = ({
     : 75;
 
   return (
-    <div className="space-y-6 pb-6 sm:space-y-4 sm:pb-8">
+    <div className="space-y-5 pb-6 sm:space-y-5 sm:pb-8">
       {/* 0. Original User Request */}
       {originalQuery && (
         <OriginalRequestCard 
@@ -177,22 +177,22 @@ const ComprehensiveResultsView = ({
 
       {/* 14. Immediate Upsells (Add to Current Job) */}
       {structuredData?.upsells?.length > 0 && (
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div className="flex items-center gap-2">
-            <h3 className="text-base sm:text-sm font-semibold text-green-400">💰 Immediate Upsells - Add to This Job</h3>
+            <h3 className="text-lg sm:text-base font-semibold text-green-400">💰 Immediate Upsells - Add to This Job</h3>
           </div>
-          <p className="text-sm text-white/80">Premium add-ons and upgrades the client is likely to accept</p>
+          <p className="text-sm text-white">Premium add-ons and upgrades the client is likely to accept</p>
           <UpsellOpportunitiesCard upsells={structuredData.upsells} />
         </div>
       )}
 
       {/* 15. Future Work Pipeline (Long-term Opportunities) */}
       {structuredData?.pipeline?.length > 0 && (
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div className="flex items-center gap-2">
-            <h3 className="text-base sm:text-sm font-semibold text-blue-400">🎯 Future Work Pipeline</h3>
+            <h3 className="text-lg sm:text-base font-semibold text-blue-400">🎯 Future Work Pipeline</h3>
           </div>
-          <p className="text-sm text-white/80">Potential future jobs based on property and client discussions</p>
+          <p className="text-sm text-white">Potential future jobs based on property and client discussions</p>
           <FutureWorkPipelineCard pipeline={structuredData.pipeline} />
         </div>
       )}

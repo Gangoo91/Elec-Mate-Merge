@@ -96,7 +96,7 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
           <Target className="h-6 w-6 text-elec-yellow" />
           Trade Intelligence - AI Self-Validation
         </CardTitle>
-        <CardDescription className="text-base sm:text-sm text-white/90 mt-2">
+        <CardDescription className="text-base sm:text-sm text-white mt-2">
           AI-powered quality check of materials, labour estimates, and value-add suggestions to ensure compliance with BS7671:2018+A3:2024
         </CardDescription>
       </CardHeader>
@@ -108,7 +108,7 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
             <CheckCircle className="h-6 w-6 text-green-400 flex-shrink-0 mt-0.5" />
             <div>
               <h4 className="text-base font-bold text-white mb-2">Overall Assessment</h4>
-              <p className="text-base text-white/90 leading-relaxed">
+              <p className="text-base text-white leading-relaxed">
                 {tradeIntelligence.overallAssessment.summary}
               </p>
             </div>
@@ -148,7 +148,7 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
             )}
           </div>
           
-          <p className="text-base sm:text-sm text-white/90 leading-relaxed">
+          <p className="text-base sm:text-sm text-white leading-relaxed">
             {tradeIntelligence.materialsCompleteness.commentary}
           </p>
 
@@ -222,13 +222,13 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
             )}
           </div>
           
-          <p className="text-base sm:text-sm text-white/90 leading-relaxed">
+          <p className="text-base sm:text-sm text-white leading-relaxed">
             {tradeIntelligence.labourRealism.commentary}
           </p>
 
           {tradeIntelligence.labourRealism.benchmarkComparison && (
             <div className="rounded-xl border-2 border-blue-500/30 bg-blue-500/10 p-4">
-              <p className="text-base sm:text-sm text-white/90">
+              <p className="text-base sm:text-sm text-white">
                 <span className="font-bold text-blue-300">Benchmark: </span>
                 {tradeIntelligence.labourRealism.benchmarkComparison}
               </p>
@@ -287,13 +287,13 @@ const TradeIntelligenceCard = ({ tradeIntelligence }: TradeIntelligenceProps) =>
             )}
           </div>
           
-          <p className="text-base sm:text-sm text-white/90 leading-relaxed">
+          <p className="text-base sm:text-sm text-white leading-relaxed">
             {tradeIntelligence.futureWorkLogic.commentary}
           </p>
 
           {tradeIntelligence.futureWorkLogic.relevanceCheck && (
             <div className="rounded-xl border-2 border-blue-500/30 bg-blue-500/10 p-4">
-              <p className="text-base sm:text-sm text-white/90">
+              <p className="text-base sm:text-sm text-white">
                 {tradeIntelligence.futureWorkLogic.relevanceCheck}
               </p>
             </div>

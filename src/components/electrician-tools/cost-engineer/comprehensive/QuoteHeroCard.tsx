@@ -68,7 +68,7 @@ const QuoteHeroCard = ({
             <div className="bg-background/30 rounded-lg p-3 sm:p-4 border border-green-500/30">
               <div className="flex items-center justify-center gap-2 mb-1">
                 <CheckCircle2 className="h-4 w-4 text-green-400" />
-                <span className="text-xs text-white/90">Profit</span>
+                <span className="text-xs text-white">Profit</span>
               </div>
               <p className="text-3xl sm:text-2xl font-bold text-green-400">
                 {formatCurrency(profit)}
@@ -79,7 +79,7 @@ const QuoteHeroCard = ({
             <div className="bg-background/30 rounded-lg p-3 sm:p-4 border border-elec-yellow/30">
               <div className="flex items-center justify-center gap-2 mb-1">
                 <TrendingUp className="h-4 w-4 text-elec-yellow" />
-                <span className="text-xs text-white/90">Margin</span>
+                <span className="text-xs text-white">Margin</span>
               </div>
               <p className="text-3xl sm:text-2xl font-bold text-elec-yellow">
                 {margin.toFixed(1)}%
@@ -89,7 +89,7 @@ const QuoteHeroCard = ({
             {/* Profit Per Hour */}
             <div className="bg-background/30 rounded-lg p-3 sm:p-4 border border-green-500/30">
               <div className="flex items-center justify-center gap-2 mb-1">
-                <span className="text-xs text-white/90">Per Hour</span>
+                <span className="text-xs text-white">Per Hour</span>
               </div>
               <p className="text-2xl sm:text-xl font-bold text-green-400">
                 {formatCurrency(profitPerHour)}/hr
@@ -99,7 +99,7 @@ const QuoteHeroCard = ({
             {/* Confidence */}
             <div className="bg-background/30 rounded-lg p-3 sm:p-4 border border-blue-500/30">
               <div className="flex items-center justify-center gap-2 mb-1">
-                <span className="text-xs text-white/90">Confidence</span>
+                <span className="text-xs text-white">Confidence</span>
               </div>
               <p className="text-2xl sm:text-xl font-bold text-blue-400">
                 {confidence}%

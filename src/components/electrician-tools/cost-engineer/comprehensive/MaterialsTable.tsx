@@ -146,7 +146,7 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
             </Table>
           </div>
         </div>
-        <div className="text-xs text-center text-white/60 mt-2 sm:hidden">
+        <div className="text-xs text-center text-white mt-2 sm:hidden">
           ← Swipe to see more →
         </div>
       </CardContent>

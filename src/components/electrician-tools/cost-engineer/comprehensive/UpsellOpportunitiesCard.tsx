@@ -14,7 +14,7 @@ const UpsellOpportunitiesCard = ({ upsells }: UpsellOpportunitiesCardProps) => {
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-5">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-2xl sm:text-xl font-bold text-white flex items-center gap-2">
+          <CardTitle className="text-xl sm:text-lg font-bold text-white flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-elec-yellow" />
             Upsell Opportunities
           </CardTitle>

@@ -312,6 +312,42 @@ OUTPUT STRUCTURE (JSON):
     "vat": number (20%),
     "grandTotal": number
   },
+  "upsells": [
+    {
+      "opportunity": "Smart lighting control system",
+      "price": 450,
+      "winRate": 65,
+      "isHot": true,
+      "timing": "During initial consultation",
+      "script": "While I'm here, I noticed your lighting could benefit from smart controls. For an extra £450, I can install motion sensors and dimming - it'll save you £200/year on electricity and add convenience."
+    }
+  ],
+  "paymentTerms": {
+    "depositPercent": 30,
+    "depositAmount": number,
+    "balanceAmount": number,
+    "terms": "30% deposit before work starts, balance on completion",
+    "lateFeePolicy": "Interest charged at 4% above base rate after 30 days",
+    "paymentMilestones": [
+      {
+        "stage": "Deposit",
+        "percentage": 30,
+        "amount": number,
+        "trigger": "Before work starts"
+      }
+    ]
+  },
+  "pipeline": [
+    {
+      "opportunity": "EV Charger Installation",
+      "description": "7kW home charger with app control",
+      "timeframe": "6-12 months",
+      "estimatedValue": 1200,
+      "priority": "medium",
+      "trigger": "When they mention new electric car",
+      "timing": "6-12 months"
+    }
+  ],
   "valueEngineering": ["Suggestion 1", "Suggestion 2"]
 }
 
@@ -327,6 +363,8 @@ REQUIREMENTS:
 - UK English spelling (metres, colour, earthing)
 - All prices in GBP (£)
 - Compare your total against the benchmarks provided - if significantly higher, review your pricing!
+- ALWAYS include 2-3 upsells (immediate add-ons), payment terms with deposit structure, and 1-2 future pipeline opportunities
+- ${projectType === 'commercial' ? 'COMMERCIAL PROJECT: Include phased payment milestones (typically 30% deposit, 40% at first fix, 30% completion). Upsells should focus on efficiency upgrades (LED lighting, smart controls). Future work: maintenance contracts, expansion.' : 'DOMESTIC PROJECT: Standard deposit is 30-50%. Upsells: surge protection, USB sockets, outdoor lighting. Future work: EV charger, solar panels, security systems.'}
 - Respond in valid JSON only`;
 
   const userPrompt = `Generate cost estimate for: ${request.query}
