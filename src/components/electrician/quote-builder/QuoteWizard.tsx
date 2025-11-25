@@ -14,6 +14,7 @@ import { SmartContinueButton } from "./SmartContinueButton";
 import { EmailStatusBanner } from "./EmailStatusBanner";
 import { AutoSaveIndicator } from "../shared/AutoSaveIndicator";
 import { FEATURES } from '@/config/features';
+import { transformCostOutputToQuoteItems } from '@/utils/cost-to-quote-transformer';
 
 const steps = [
   { title: "Client & Company", icon: User, description: "Customer and company details" },
@@ -52,7 +53,6 @@ const {
   // PHASE 1: Import cost data into quote items
   useEffect(() => {
     if (initialCostData && initialCostData.materials) {
-      const { transformCostOutputToQuoteItems } = require('@/utils/cost-to-quote-transformer');
       const items = transformCostOutputToQuoteItems(initialCostData);
       items.forEach(item => addItem(item));
     }
