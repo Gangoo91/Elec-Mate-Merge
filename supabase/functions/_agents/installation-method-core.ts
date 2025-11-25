@@ -136,6 +136,8 @@ async function callInstallationMethodAI(
 
 Generate a comprehensive, step-by-step installation method statement based on BS 7671:2018+A2:2024 and industry best practices.
 
+Respond with a valid JSON object following this exact structure:
+
 KNOWLEDGE BASE PROVIDED:
 - ${ragContext.practicalWork.length} practical work intelligence results
 - ${ragContext.regulations.length} BS 7671 regulations
@@ -175,7 +177,8 @@ REQUIREMENTS:
 - Highlight safety-critical steps
 - Include inspection checkpoints per step
 - Use metric measurements (mm, metres)
-- UK spelling throughout`;
+- UK English spelling throughout (metres, colour, earthing not grounding)
+- Respond in valid JSON format only`;
 
   const userPrompt = `Generate installation method for: ${request.query}
 
@@ -208,7 +211,7 @@ ${ragContext.regulations.slice(0, 10).map((reg: any, i: number) =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      model: 'gpt-4o-mini',
+      model: 'gpt-5-mini-2025-08-07',
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt }
