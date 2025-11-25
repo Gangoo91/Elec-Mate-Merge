@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Copy, Download, Calendar as CalendarIcon, RotateCcw } from "lucide-react";
+import { Copy, Download, Calendar as CalendarIcon, RotateCcw, Edit3, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
 import CriticalActionsCard from "./CriticalActionsCard";
 import { MobilePhaseResults } from "./MobilePhaseResults";
 import ProjectResultsTabs from "./ProjectResultsTabs";
+import { useProjectPlanState } from "@/hooks/useProjectPlanState";
+import { EditableProjectPlan } from "@/types/projectPlan";
+import { v4 as uuidv4 } from 'uuid';
 
 interface ProjectManagerResultsProps {
   results: any;
@@ -25,9 +28,94 @@ const ProjectManagerResults = ({
   startDate,
   onStartOver
 }: ProjectManagerResultsProps) => {
-  const [phaseProgress, setPhaseProgress] = useState<Record<string, boolean>>({});
-  const [materialProgress, setMaterialProgress] = useState<Record<string, { ordered: boolean; date?: string }>>({});
   const [isMobile, setIsMobile] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+
+  // Convert AI results to EditableProjectPlan format
+  const convertToEditablePlan = (aiResults: any): Partial<EditableProjectPlan> => {
+    const phases = (aiResults?.projectPlan?.phases || []).map((phase: any, idx: number) => ({
+      id: uuidv4(),
+      phaseName: phase.phaseName || phase.phase || `Phase ${idx + 1}`,
+      dayStart: phase.dayStart || phase.startDay || idx * 3 + 1,
+      dayEnd: phase.dayEnd || phase.endDay || idx * 3 + 3,
+      tasks: (phase.tasks || []).map((task: any) => ({
+        id: uuidv4(),
+        text: typeof task === 'string' ? task : task.text || task.task || '',
+        completed: false,
+        notes: task.notes || ''
+      })),
+      materials: (phase.materials || []).map((material: any) => ({
+        id: uuidv4(),
+        name: material.name || material.item || '',
+        quantity: material.quantity || 1,
+        unit: material.unit || '',
+        orderBy: material.orderBy || '',
+        ordered: false,
+        supplier: material.supplier || '',
+        unitCost: material.unitCost || 0
+      })),
+      holdPoints: phase.holdPoints || [],
+      tradeCoordination: (phase.tradeCoordination || []).map((coord: any) => ({
+        id: uuidv4(),
+        trade: coord.trade || '',
+        day: coord.day || 1,
+        note: coord.note || '',
+        contacted: false
+      })),
+      completed: false
+    }));
+
+    const risks = (aiResults?.projectPlan?.risks || []).map((risk: any) => ({
+      id: uuidv4(),
+      description: risk.description || risk.risk || '',
+      mitigation: risk.mitigation || risk.control || '',
+      status: 'open' as const,
+      severity: (risk.severity || 'medium') as 'low' | 'medium' | 'high'
+    }));
+
+    const milestones = (aiResults?.projectPlan?.milestones || []).map((milestone: any) => ({
+      id: uuidv4(),
+      name: milestone.name || milestone.milestone || '',
+      date: milestone.date || '',
+      completed: false,
+      description: milestone.description || ''
+    }));
+
+    return {
+      projectName: projectName || 'Untitled Project',
+      clientName: aiResults?.clientName || '',
+      location: aiResults?.location || '',
+      startDate: startDate || new Date().toISOString().split('T')[0],
+      phases,
+      risks,
+      milestones,
+      notes: aiResults?.notes || '',
+      metadata: {
+        estimatedDuration: phases.length * 3,
+        totalBudget: aiResults?.projectPlan?.resources?.totalCost || 0,
+        projectType: selectedType || 'domestic'
+      }
+    };
+  };
+
+  const editablePlan = convertToEditablePlan(results);
+  
+  const {
+    plan,
+    updatePhase,
+    deletePhase,
+    addTask,
+    updateTask,
+    deleteTask,
+    toggleTaskComplete,
+    addMaterial,
+    updateMaterial,
+    deleteMaterial,
+    addRisk,
+    updateRisk,
+    deleteRisk,
+    exportState
+  } = useProjectPlanState({ initialPlan: editablePlan });
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -37,35 +125,32 @@ const ProjectManagerResults = ({
   }, []);
 
   const handleCopy = () => {
-    if (results) {
-      navigator.clipboard.writeText(JSON.stringify(results, null, 2));
-      toast.success("Copied to clipboard", {
-        description: "Project plan copied to clipboard"
-      });
-    }
+    const exportData = exportState();
+    navigator.clipboard.writeText(exportData);
+    toast.success("Copied to clipboard", {
+      description: "Editable project plan copied as JSON"
+    });
   };
 
   const handleExportPDF = () => {
-    if (!results) return;
-    
     try {
       const { generateProjectExecutionPlanPDF } = require('@/utils/pdf-generators/project-execution-plan-pdf');
       
       const pdfData = {
-        projectName: projectName || 'Untitled Project',
+        projectName: plan.projectName || 'Untitled Project',
         projectManager: 'AI Project Manager',
-        startDate: startDate || new Date().toISOString().split('T')[0],
+        startDate: plan.startDate,
         endDate: results.endDate || 'TBC',
-        phases: results.projectPlan?.phases || [],
+        phases: plan.phases,
         resources: results.projectPlan?.resources || { materials: [], labour: [], totalCost: 0 },
-        risks: results.projectPlan?.risks || [],
-        milestones: results.projectPlan?.milestones || [],
+        risks: plan.risks,
+        milestones: plan.milestones,
         referencedDocuments: results.referencedDocuments || [],
-        notes: results.notes
+        notes: plan.notes
       };
       
       const pdf = generateProjectExecutionPlanPDF(pdfData);
-      pdf.save(`Project-Plan-${projectName || 'Document'}-${new Date().toISOString().split('T')[0]}.pdf`);
+      pdf.save(`Project-Plan-${plan.projectName}-${new Date().toISOString().split('T')[0]}.pdf`);
       
       toast.success("PDF exported", { description: "Project Execution Plan downloaded successfully" });
     } catch (error) {
@@ -75,29 +160,25 @@ const ProjectManagerResults = ({
   };
 
   const handleExportCalendar = () => {
-    if (!results?.projectPlan?.phases) return;
+    if (!plan.phases || plan.phases.length === 0) return;
     
     try {
-      const baseDate = startDate ? new Date(startDate) : new Date();
+      const baseDate = plan.startDate ? new Date(plan.startDate) : new Date();
       let icsContent = 'BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//AI Project Manager//EN\n';
       
-      results.projectPlan.phases.forEach((phase: any, idx: number) => {
-        const phaseName = (phase.phaseName || phase.phase || `Phase ${idx + 1}`).toString();
-        const phaseDescription = (phase.description || '').toString();
+      plan.phases.forEach((phase, idx) => {
+        const phaseName = phase.phaseName;
         
         const phaseStart = new Date(baseDate);
-        phaseStart.setDate(phaseStart.getDate() + (phase.startDay ? parseInt(phase.startDay.replace('Day ', '')) - 1 : idx * 3));
+        phaseStart.setDate(phaseStart.getDate() + (phase.dayStart - 1));
         
-        const phaseEnd = new Date(phaseStart);
-        phaseEnd.setDate(phaseEnd.getDate() + (phase.duration || 1));
+        const phaseEnd = new Date(baseDate);
+        phaseEnd.setDate(phaseEnd.getDate() + phase.dayEnd);
         
         icsContent += `BEGIN:VEVENT\n`;
         icsContent += `SUMMARY:${phaseName}\n`;
         icsContent += `DTSTART:${phaseStart.toISOString().replace(/[-:]/g, '').split('.')[0]}Z\n`;
         icsContent += `DTEND:${phaseEnd.toISOString().replace(/[-:]/g, '').split('.')[0]}Z\n`;
-        if (phaseDescription) {
-          icsContent += `DESCRIPTION:${phaseDescription.replace(/\n/g, '\\n')}\n`;
-        }
         icsContent += `END:VEVENT\n`;
       });
       
@@ -107,7 +188,7 @@ const ProjectManagerResults = ({
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${projectName || 'project'}-timeline.ics`;
+      a.download = `${plan.projectName}-timeline.ics`;
       a.click();
       
       toast.success("Calendar exported", { description: "Import to Google Calendar or Outlook" });
@@ -117,27 +198,10 @@ const ProjectManagerResults = ({
     }
   };
 
-  const togglePhaseComplete = (phaseId: string) => {
-    setPhaseProgress(prev => ({
-      ...prev,
-      [phaseId]: !prev[phaseId]
-    }));
-  };
-
-  const toggleMaterialOrdered = (materialId: string, date?: string) => {
-    setMaterialProgress(prev => ({
-      ...prev,
-      [materialId]: {
-        ordered: !prev[materialId]?.ordered,
-        date: date || new Date().toISOString().split('T')[0]
-      }
-    }));
-  };
-
   const calculateProgress = () => {
-    const totalPhases = results?.projectPlan?.phases?.length || 0;
+    const totalPhases = plan.phases.length;
     if (totalPhases === 0) return 0;
-    const completedPhases = Object.values(phaseProgress).filter(Boolean).length;
+    const completedPhases = plan.phases.filter(p => p.completed).length;
     return Math.round((completedPhases / totalPhases) * 100);
   };
 
@@ -146,19 +210,47 @@ const ProjectManagerResults = ({
       {/* Mobile-First: Phase-by-Phase Navigation (< 768px) */}
       {isMobile ? (
         <MobilePhaseResults
-          results={results}
-          projectName={projectName}
-          startDate={startDate}
+          plan={plan}
+          projectName={plan.projectName}
+          startDate={plan.startDate}
           onExportPDF={handleExportPDF}
           onExportCalendar={handleExportCalendar}
           onStartOver={onStartOver}
+          editMode={editMode}
+          onToggleEditMode={() => setEditMode(!editMode)}
+          onUpdatePhase={updatePhase}
+          onDeletePhase={deletePhase}
+          onAddTask={addTask}
+          onUpdateTask={updateTask}
+          onDeleteTask={deleteTask}
+          onToggleTask={toggleTaskComplete}
         />
       ) : (
         /* Desktop: Tabbed Layout (>= 768px) */
         <div className="space-y-4 pb-6">
           {/* Header Actions */}
           <Card className="p-4">
-            <h4 className="font-semibold text-lg mb-3 text-white">Project Plan Results</h4>
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="font-semibold text-lg text-white">Project Plan Results</h4>
+              <Button
+                variant={editMode ? "default" : "outline"}
+                size="sm"
+                onClick={() => setEditMode(!editMode)}
+                className="gap-2"
+              >
+                {editMode ? (
+                  <>
+                    <Eye className="h-4 w-4" />
+                    View Mode
+                  </>
+                ) : (
+                  <>
+                    <Edit3 className="h-4 w-4" />
+                    Edit Mode
+                  </>
+                )}
+              </Button>
+            </div>
             
             {/* Progress Bar */}
             <div className="mb-4 pb-4 border-b border-border/30">
@@ -215,7 +307,12 @@ const ProjectManagerResults = ({
                 <div>
                   <SendToAgentDropdown 
                     currentAgent="project-manager" 
-                    currentOutput={{ prompt, selectedType, projectName, results }} 
+                    currentOutput={{ 
+                      prompt, 
+                      selectedType, 
+                      projectName: plan.projectName, 
+                      plan: JSON.parse(exportState())
+                    }} 
                   />
                 </div>
               </div>
@@ -227,17 +324,23 @@ const ProjectManagerResults = ({
             materialProcurement={results.materialProcurement}
             complianceTimeline={results.complianceTimeline}
             clientImpact={results.clientImpact}
-            startDate={startDate}
+            startDate={plan.startDate}
           />
 
           {/* Tabbed Content */}
           <ProjectResultsTabs
-            results={results}
-            startDate={startDate}
-            phaseProgress={phaseProgress}
-            materialProgress={materialProgress}
-            onTogglePhase={togglePhaseComplete}
-            onToggleMaterial={toggleMaterialOrdered}
+            plan={plan}
+            editMode={editMode}
+            onUpdatePhase={updatePhase}
+            onDeletePhase={deletePhase}
+            onAddTask={addTask}
+            onUpdateTask={updateTask}
+            onDeleteTask={deleteTask}
+            onToggleTask={toggleTaskComplete}
+            onUpdateMaterial={updateMaterial}
+            onDeleteMaterial={deleteMaterial}
+            onUpdateRisk={updateRisk}
+            onDeleteRisk={deleteRisk}
           />
 
           {/* Start Over Button */}

@@ -1,30 +1,48 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Download, Calendar as CalendarIcon, RotateCcw } from "lucide-react";
+import { ChevronLeft, ChevronRight, Download, Calendar as CalendarIcon, RotateCcw, Edit3, Eye } from "lucide-react";
 import { PhaseCard } from "./PhaseCard";
+import { EditablePhaseCard } from "./editable/EditablePhaseCard";
 import { PhaseDetailsSheet } from "./PhaseDetailsSheet";
 import { Badge } from "@/components/ui/badge";
 import { useSwipeable } from "react-swipeable";
 import { motion, AnimatePresence } from "framer-motion";
+import { EditableProjectPlan, ProjectPhase } from "@/types/projectPlan";
 
 interface MobilePhaseResultsProps {
-  results: any;
+  plan: EditableProjectPlan;
   projectName: string;
   startDate: string;
   onExportPDF: () => void;
   onExportCalendar: () => void;
   onStartOver: () => void;
+  editMode: boolean;
+  onToggleEditMode: () => void;
+  onUpdatePhase: (phaseId: string, updates: Partial<ProjectPhase>) => void;
+  onDeletePhase: (phaseId: string) => void;
+  onAddTask: (phaseId: string, taskText: string) => void;
+  onUpdateTask: (phaseId: string, taskId: string, updates: any) => void;
+  onDeleteTask: (phaseId: string, taskId: string) => void;
+  onToggleTask: (phaseId: string, taskId: string) => void;
 }
 
 export const MobilePhaseResults = ({
-  results,
+  plan,
   projectName,
   startDate,
   onExportPDF,
   onExportCalendar,
-  onStartOver
+  onStartOver,
+  editMode,
+  onToggleEditMode,
+  onUpdatePhase,
+  onDeletePhase,
+  onAddTask,
+  onUpdateTask,
+  onDeleteTask,
+  onToggleTask
 }: MobilePhaseResultsProps) => {
-  const phases = results?.projectPlan?.phases || [];
+  const phases = plan.phases || [];
   const [activePhaseIndex, setActivePhaseIndex] = useState(0);
   const [detailsSheetOpen, setDetailsSheetOpen] = useState(false);
   const [direction, setDirection] = useState(0);
@@ -60,7 +78,7 @@ export const MobilePhaseResults = ({
   }
 
   const activePhase = phases[activePhaseIndex];
-  const completedCount = activePhaseIndex;
+  const completedCount = phases.filter(p => p.completed).length;
   const totalPhases = phases.length;
   const progressPercent = (completedCount / totalPhases) * 100;
 
@@ -91,9 +109,19 @@ export const MobilePhaseResults = ({
                 Phase {activePhaseIndex + 1} of {totalPhases}
               </p>
             </div>
-            <Badge variant="outline" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40">
-              {Math.round(progressPercent)}% Complete
-            </Badge>
+            <div className="flex items-center gap-2">
+              <Badge variant="outline" className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40">
+                {Math.round(progressPercent)}%
+              </Badge>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onToggleEditMode}
+                className="h-8 w-8 p-0"
+              >
+                {editMode ? <Eye className="h-4 w-4" /> : <Edit3 className="h-4 w-4" />}
+              </Button>
+            </div>
           </div>
 
           {/* Progress Bar */}
@@ -110,21 +138,18 @@ export const MobilePhaseResults = ({
         {/* Phase Selector Pills */}
         <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-white/10 px-4 pt-3">
           <div className="flex gap-2 pb-2">
-            {phases.map((phase: any, idx: number) => {
+            {phases.map((phase, idx) => {
               const isActive = idx === activePhaseIndex;
-              const isCritical = phase.criticalPath || false;
               return (
                 <button
-                  key={idx}
+                  key={phase.id}
                   onClick={() => {
                     setDirection(idx > activePhaseIndex ? 1 : -1);
                     setActivePhaseIndex(idx);
                   }}
                   className={`flex-shrink-0 px-3 py-2 rounded-full text-xs font-semibold transition-all touch-manipulation ${
                     isActive
-                      ? isCritical
-                        ? 'bg-gradient-to-r from-pink-500 to-pink-600 text-white shadow-lg scale-105'
-                        : 'bg-gradient-to-r from-elec-yellow to-yellow-400 text-gray-900 shadow-lg scale-105'
+                      ? 'bg-gradient-to-r from-elec-yellow to-yellow-400 text-gray-900 shadow-lg scale-105'
                       : 'bg-muted/30 text-muted-foreground hover:bg-muted/50'
                   }`}
                 >
@@ -151,13 +176,25 @@ export const MobilePhaseResults = ({
               opacity: { duration: 0.2 }
             }}
           >
-            <PhaseCard
-              phase={activePhase}
-              phaseNumber={activePhaseIndex + 1}
-              startDate={startDate}
-              onViewDetails={() => setDetailsSheetOpen(true)}
-              isActive={true}
-            />
+            {editMode ? (
+              <EditablePhaseCard
+                phase={activePhase}
+                onUpdate={(updates) => onUpdatePhase(activePhase.id, updates)}
+                onDelete={() => onDeletePhase(activePhase.id)}
+                onAddTask={(taskText) => onAddTask(activePhase.id, taskText)}
+                onUpdateTask={(taskId, updates) => onUpdateTask(activePhase.id, taskId, updates)}
+                onDeleteTask={(taskId) => onDeleteTask(activePhase.id, taskId)}
+                onToggleTask={(taskId) => onToggleTask(activePhase.id, taskId)}
+              />
+            ) : (
+              <PhaseCard
+                phase={activePhase}
+                phaseNumber={activePhaseIndex + 1}
+                startDate={startDate}
+                onViewDetails={() => setDetailsSheetOpen(true)}
+                isActive={true}
+              />
+            )}
           </motion.div>
         </AnimatePresence>
 
