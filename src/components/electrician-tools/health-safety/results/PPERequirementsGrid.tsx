@@ -55,17 +55,17 @@ export const PPERequirementsGrid = ({ ppeItems, isEditing = false, onUpdate, onD
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 )}
-                <div className="flex items-start gap-3">
+                <div className="flex flex-col items-center gap-3 sm:flex-row sm:items-start">
                   <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 text-blue-500 flex items-center justify-center">
                     <IconComponent className="h-5 w-5" />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-sm mb-2 flex items-start gap-2">
+                  <div className="flex-1 min-w-0 w-full text-center sm:text-left">
+                    <div className="font-semibold text-sm mb-2 flex flex-col items-center gap-2 sm:flex-row sm:items-start">
                       {isEditing ? (
                         <Input
                           value={item.ppeType}
                           onChange={(e) => onUpdate?.(idx, 'ppeType', e.target.value)}
-                          className="flex-1"
+                          className="flex-1 w-full"
                         />
                       ) : (
                         <span className="flex-1">{item.ppeType}</span>
@@ -94,7 +94,7 @@ export const PPERequirementsGrid = ({ ppeItems, isEditing = false, onUpdate, onD
                       )}
                     </div>
                     <div className="space-y-2">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-center gap-2 sm:justify-start">
                         {isEditing ? (
                           <Input
                             value={item.standard}
