@@ -78,7 +78,22 @@ export class FormNormalizer {
       console.log(`Motor circuit FLC pre-calculated: ${calculatedIb.toFixed(2)}A for ${circuit.loadPower}W motor`);
     }
 
-    return {
+    // RING FINAL DETECTION & ENFORCEMENT
+    const isRingFinal = this.detectRingFinal(circuit);
+    let enforced: any = null;
+
+    if (isRingFinal) {
+      console.log(`Ring final circuit detected: ${circuit.name}`);
+      enforced = {
+        cableSize: 2.5,
+        cpcSize: 1.5,
+        mcbRating: 32,
+        protectionType: 'RCBO',
+        reason: 'BS 7671 standard ring final configuration'
+      };
+    }
+
+    const normalized: NormalizedCircuit = {
       name: circuit.name.trim(),
       loadType: circuit.loadType.toLowerCase().trim(),
       loadPower: Math.round(circuit.loadPower), // Round to integer
@@ -98,5 +113,30 @@ export class FormNormalizer {
       calculatedDiversity: circuit.calculatedDiversity || null,
       estimatedCableSize: circuit.estimatedCableSize || null
     };
+
+    // Add enforced constraints if ring final detected
+    if (enforced) {
+      (normalized as any).enforced = enforced;
+    }
+
+    return normalized;
+  }
+
+  /**
+   * Detect if a circuit is a ring final circuit
+   */
+  private detectRingFinal(circuit: any): boolean {
+    const nameLower = (circuit.name || '').toLowerCase();
+    const loadTypeLower = (circuit.loadType || '').toLowerCase();
+
+    // Check multiple indicators
+    return (
+      nameLower.includes('ring') ||
+      loadTypeLower.includes('ring') ||
+      // Typical ring final: socket circuit with power ≤ 7360W (32A × 230V)
+      (loadTypeLower.includes('socket') && circuit.loadPower <= 7360) ||
+      // Explicit ring final field
+      circuit.circuitTopology === 'ring'
+    );
   }
 }

@@ -43,6 +43,14 @@ export class AIDesigner {
     // Convert form to structured JSON
     const structuredInput = this.buildStructuredInput(inputs);
     
+    // Add ring final enforcement to system prompt if detected
+    const hasRingFinals = inputs.circuits.some(c => (c as any).enforced?.reason);
+    if (hasRingFinals) {
+      this.logger.info('Ring final circuits detected - AI constraints enforced', {
+        ringCircuits: inputs.circuits.filter(c => (c as any).enforced).map(c => c.name)
+      });
+    }
+    
     // Define tool schema with installation type for dynamic cable type constraints
     const tools = [this.buildDesignTool(installationType)];
     const tool_choice = { type: 'function', function: { name: 'design_circuits' } };
@@ -95,6 +103,15 @@ export class AIDesigner {
 
     // Enhanced core identity with installation type context
     parts.push('You are a BS 7671:2018+A3:2024 electrical circuit design expert. Design COMPLIANT circuits using the provided knowledge base. Use exact voltage/phase values from each request.');
+    parts.push('');
+    
+    // === RING FINAL CIRCUIT RULES (HIGHEST PRIORITY) ===
+    parts.push('=== RING FINAL CIRCUIT RULES (MANDATORY - HIGHEST PRIORITY) ===');
+    parts.push('🔴 RING FINAL SOCKETS: MUST use 2.5mm² cable + 1.5mm² CPC + 32A RCBO (BS 7671 standard)');
+    parts.push('🔴 If a circuit is marked as ring final (or socket power ≤7360W), enforce 2.5mm² + 32A RCBO');
+    parts.push('🔴 Ring finals serve max 100m² floor area with 32A protection (Reg 433.1.5)');
+    parts.push('🔴 Never use 1.5mm², 4mm², 6mm², or 10mm² for ring finals - always 2.5mm²');
+    parts.push('🔴 Ring final calculations use HALF the cable length (two parallel paths)');
     parts.push('');
     
     // Installation type context with MANDATORY cable type enforcement
@@ -550,7 +567,9 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
           suggestedMCB: c.suggestedMCB,
           calculatedDiversity: c.calculatedDiversity,
           estimatedCableSize: c.estimatedCableSize
-        }
+        },
+        // Ring final enforcement (if detected)
+        enforced: (c as any).enforced || null
       }))
     };
   }
@@ -622,8 +641,8 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
                   },
                   cableSize: {
                     type: 'number',
-                    enum: [1.0, 1.5, 2.5, 4.0, 6.0, 10.0, 16.0, 25.0, 35.0, 50.0, 70.0, 95.0],
-                    description: 'Live conductor CSA in mm². T&E: 1.5-16mm². SWA: 1.5-95mm². Must be standard size per BS 7671 Appendix 4.'
+                    enum: this.getCableSizeEnum(installationType),
+                    description: 'Live conductor CSA in mm². RING FINAL SOCKETS: MUST be 2.5mm² (BS 7671 standard). LIGHTING: Typically 1.5mm² or 2.5mm². SHOWERS/COOKERS: 6mm²-10mm². Must be standard size per BS 7671 Appendix 4.'
                   },
                   cpcSize: { 
                     type: 'number',
@@ -928,6 +947,16 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
     }
     
     return 'Cable type: size + type. PRIORITY: Fire/emergency MUST use FP200/FP400, outdoor MUST use SWA. Format: "2.5mm² twin and earth" or "6mm² SWA" or "1.5mm² FP200"';
+  }
+
+  /**
+   * Get cable size enum - all standard sizes available
+   * Circuit-type-specific guidance is provided in description field
+   */
+  private getCableSizeEnum(installationType: string): number[] {
+    // Return all standard sizes
+    // AI will select appropriate size based on pre-validation constraints and circuit type
+    return [1.0, 1.5, 2.5, 4.0, 6.0, 10.0, 16.0, 25.0, 35.0, 50.0, 70.0, 95.0];
   }
 
   /**
