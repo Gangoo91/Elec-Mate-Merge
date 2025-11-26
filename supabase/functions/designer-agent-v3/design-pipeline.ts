@@ -9,6 +9,8 @@ import { searchDesignIntelligence, searchRegulationsIntelligence } from '../_sha
 import { AIDesigner } from './ai-designer.ts';
 import { ValidationEngine } from './validation-engine.ts';
 import { DeterministicCalculator } from './deterministic-calculations.ts';
+import { PreValidationCalculator } from './pre-validation-calculator.ts';
+import { AutoFixEngine } from './auto-fix-engine.ts';
 import { safeAll, type ParallelTask } from '../_shared/safe-parallel.ts';
 import type { NormalizedInputs, DesignResult } from './types.ts';
 
@@ -18,6 +20,8 @@ export class DesignPipeline {
   private ai: AIDesigner;
   private validator: ValidationEngine;
   private calculator: DeterministicCalculator;
+  private preValidator: PreValidationCalculator;
+  private autoFix: AutoFixEngine;
   private progressCallback?: (msg: string) => void;
 
   constructor(
@@ -30,6 +34,8 @@ export class DesignPipeline {
     this.ai = new AIDesigner(logger);
     this.validator = new ValidationEngine(logger);
     this.calculator = new DeterministicCalculator(logger);
+    this.preValidator = new PreValidationCalculator(logger);
+    this.autoFix = new AutoFixEngine(logger);
     this.progressCallback = progressCallback;
   }
 
@@ -45,6 +51,27 @@ export class DesignPipeline {
       voltage: normalized.supply.voltage,
       phases: normalized.supply.phases,
       earthing: normalized.supply.earthing
+    });
+
+    // ========================================
+    // PHASE 1.5: Pre-Validation Constraints Calculator (NEW)
+    // Calculate minimum cable sizes and protection requirements BEFORE AI
+    // ========================================
+    const preValidationConstraints = this.preValidator.calculateAll(
+      normalized.circuits,
+      normalized.supply
+    );
+
+    this.logger.info('Pre-validation constraints calculated', {
+      constraintsCount: preValidationConstraints.size,
+      sampleConstraints: Array.from(preValidationConstraints.entries())
+        .slice(0, 2)
+        .map(([key, val]) => ({
+          key,
+          minCable: val.minimumCableSize,
+          mcb: val.recommendedMCB,
+          rcbo: val.mustUseRCBO
+        }))
     });
 
     // ========================================
@@ -361,6 +388,16 @@ export class DesignPipeline {
     design.circuits = this.calculator.applyToCircuits(design.circuits, normalized.supply);
     
     this.logger.info('Deterministic calculations applied to all circuits');
+
+    // ========================================
+    // PHASE 4.7: Auto-Fix Engine (NEW - BEFORE validation)
+    // Apply deterministic fixes to resolve common compliance issues
+    // ========================================
+    design.circuits = this.autoFix.fixAll(design.circuits, normalized.supply);
+
+    this.logger.info('Auto-fix engine complete', {
+      circuits: design.circuits.length
+    });
 
     // ========================================
     // PHASE 5: Validation (with voltage context)

@@ -125,6 +125,18 @@ export class DeterministicCalculator {
         maxZs: `${zsResult.maxZs.toFixed(3)}Ω`,
         compliant: zsResult.compliant
       });
+
+      // POST-GENERATION ZS AUTO-UPGRADE
+      if (!zsResult.compliant && zsResult.calculatedZs > zsResult.maxZs) {
+        this.logger.warn('Zs non-compliant, attempting cable upgrade', {
+          circuit: circuit.name,
+          currentSize: circuit.cableSize,
+          currentZs: zsResult.calculatedZs.toFixed(3),
+          maxZs: zsResult.maxZs.toFixed(3)
+        });
+
+        circuit = this.autoUpgradeCableForZs(circuit, supply, cableType, effectiveLength);
+      }
     }
 
     // 3. Generate expected test values
@@ -251,6 +263,66 @@ export class DeterministicCalculator {
     if ((circuit.specialLocation || '').toLowerCase().includes('buried')) return 'swa';
 
     return 'pvc-twin-earth'; // Default for domestic
+  }
+
+  /**
+   * Auto-upgrade cable for Zs compliance (used after deterministic calculation)
+   */
+  private autoUpgradeCableForZs(
+    circuit: DesignedCircuit,
+    supply: NormalizedSupply,
+    cableType: CableType,
+    effectiveLength: number
+  ): DesignedCircuit {
+    const standardSizes = [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95];
+    const currentIndex = standardSizes.indexOf(circuit.cableSize);
+
+    if (currentIndex === -1 || currentIndex === standardSizes.length - 1) {
+      this.logger.warn('Cannot upgrade cable: at max size or invalid size', {
+        circuit: circuit.name,
+        currentSize: circuit.cableSize
+      });
+      return circuit;
+    }
+
+    const upgradedSize = standardSizes[currentIndex + 1];
+    this.logger.info('Upgrading cable for Zs compliance', {
+      circuit: circuit.name,
+      from: circuit.cableSize,
+      to: upgradedSize
+    });
+
+    // Update cable size and CPC
+    circuit.cableSize = upgradedSize;
+    circuit.cpcSize = getCpcSize((circuit as any).cableType || 'twin and earth', upgradedSize);
+
+    // Recalculate Zs with new cable size
+    const newZsResult = calculateEarthFaultLoop({
+      externalZe: supply.ze,
+      cableType,
+      cableSize: upgradedSize,
+      cpcSize: circuit.cpcSize,
+      length: effectiveLength,
+      temperature: 70,
+      protectiveDevice: {
+        type: circuit.protectionDevice.curve,
+        rating: circuit.protectionDevice.rating
+      }
+    });
+
+    if (newZsResult) {
+      circuit.calculations.zs = newZsResult.calculatedZs;
+      (circuit.calculations as any).r1r2 = newZsResult.r1PlusR2;
+
+      this.logger.info('Cable upgraded - new Zs calculated', {
+        circuit: circuit.name,
+        newZs: `${newZsResult.calculatedZs.toFixed(3)}Ω`,
+        maxZs: `${newZsResult.maxZs.toFixed(3)}Ω`,
+        nowCompliant: newZsResult.compliant
+      });
+    }
+
+    return circuit;
   }
 }
 
