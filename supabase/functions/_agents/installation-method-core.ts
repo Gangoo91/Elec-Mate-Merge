@@ -337,7 +337,8 @@ OUTPUT STRUCTURE:
       "title": "Step title",
       "content": "Detailed step description",
       "safety": [
-        "Ensure fire barriers reinstated using fire-rated clips and wraps (Reg 521.10.202)",
+        "Support cables using steel containment or fire-resistant fixings to prevent collapse in fire (Reg 521.10.202)",
+        "Reinstate fire barriers at all penetrations through fire-rated walls/floors (Reg 527.2)",
         "Verify safe isolation before working on live equipment (Reg 132.10)"
       ],
       "toolsRequired": ["Tool 1", "Tool 2"],
@@ -378,7 +379,8 @@ REQUIREMENTS:
 - CRITICAL: Each safety consideration MUST include the relevant BS 7671 regulation reference in brackets at the end
 - Use the format: "Safety instruction text (Reg XXX.XX.XXX)" or "Safety instruction text (Reg XXX.XX)"
 - Common regulation references to include in safety notes:
-  * Fire barriers/fire stopping: (Reg 521.10.202), (Reg 527.2)
+  * Cable support for fire resistance: (Reg 521.10.202) - wiring systems must not collapse in fire
+  * Fire barriers/sealing at penetrations: (Reg 527.2) - maintain compartmentation
   * Safe isolation: (Reg 132.10), (Reg 132.15)
   * Cable routing/support: (Reg 521.5), (Reg 522.8.3)
   * Earth connections: (Reg 544.1)
