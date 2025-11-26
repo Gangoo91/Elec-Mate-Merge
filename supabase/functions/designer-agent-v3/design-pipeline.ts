@@ -112,134 +112,332 @@ export class DesignPipeline {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
     
-    // Extract search keywords from circuits (targeting ~50 keywords for comprehensive RAG)
+    // ========================================
+    // COMPREHENSIVE KEYWORD EXTRACTION (500+ keywords)
+    // ========================================
     const keywords = new Set<string>();
     const loadTypes = new Set<string>();
     const cableSizes = new Set<number>();
     
-    // Circuit type keyword mappings for precise RAG matches
-    const circuitTypeKeywords: Record<string, string[]> = {
-      'socket': ['ring final', 'radial circuit', '13 A socket-outlet', '2.5mm', '32A', '433-02-01', 'ring circuit'],
-      'ring': ['ring final', '2.5mm', '32A', '433-02-01', 'ring circuit', 'socket-outlet'],
-      'lighting': ['lighting circuit', '1.5mm', '6A', 'B6', 'Type B', 'radial', 'lighting point'],
-      'cooker': ['cooker circuit', '6mm', '10mm', '32A', '45A', 'cooker control unit', 'diversity'],
-      'shower': ['shower circuit', 'instantaneous water heater', '40A', '45A', '6mm', '10mm', 'bathroom'],
-      'immersion': ['immersion heater', '16A', '3kW', '2.5mm', 'hot water'],
-      'ev_charger': ['electric vehicle', 'EV charger', '32A', '6mm', '7kW', 'car charging'],
-      'oven': ['cooker circuit', '32A', '6mm', 'oven', 'diversity'],
-      'hob': ['cooker circuit', '32A', '6mm', 'hob', 'diversity'],
-      'motor': ['motor circuit', 'Type D', 'starting current', 'inrush']
+    // ====== 1. CIRCUIT TYPE KEYWORDS (30+ types) ======
+    const CIRCUIT_TYPE_KEYWORDS: Record<string, string[]> = {
+      // DOMESTIC
+      'socket': ['ring final', 'radial circuit', '13A socket-outlet', '2.5mm²', '32A', '433-02-01', 'ring circuit', 'socket outlet', 'double socket', 'single socket', 'fused spur', '20A radial'],
+      'ring': ['ring final', '2.5mm²', '32A', '433-02-01', 'ring circuit', 'socket-outlet', 'floor area', '100m²', 'twin and earth', 'loop', 'r1+r2', 'figure of eight', 'end-to-end test'],
+      'lighting': ['lighting circuit', '1.5mm²', '6A', '10A', 'B6', 'B10', 'Type B', 'radial', 'lighting point', 'switch drop', 'ceiling rose', 'loop-in', 'junction box', 'lighting load'],
+      'cooker': ['cooker circuit', '6mm²', '10mm²', '32A', '40A', '45A', '50A', 'cooker control unit', 'diversity', 'Table 4A', 'cooking appliance', 'hob', 'oven', 'cooker switch'],
+      'shower': ['shower circuit', 'instantaneous water heater', '40A', '45A', '50A', '6mm²', '10mm²', 'bathroom', 'electric shower', '8.5kW', '9.5kW', '10.5kW', 'dedicated circuit', 'pull cord'],
+      'immersion': ['immersion heater', '16A', '3kW', '2.5mm²', 'hot water', 'cylinder', 'dual element', 'off-peak', 'water heating'],
+      'ev_charger': ['electric vehicle', 'EV charger', '32A', '6mm²', '7kW', '7.4kW', '22kW', 'Mode 3', 'EVCP', 'charge point', 'IET Code of Practice', 'PME', 'car charging', 'EV installation'],
+      'smoke_alarm': ['smoke alarm', 'fire alarm', 'domestic alarm', 'interlinked', 'mains powered', 'battery backup', 'smoke detector'],
+      'outdoor': ['outdoor circuit', 'garden lighting', 'pond pump', 'IP65', 'IP66', 'weatherproof', 'external', 'outside socket', 'outdoor installation'],
+      'underfloor_heating': ['underfloor heating', 'UFH', 'heating mat', 'thermostat', 'floor heating', 'electric heating'],
+      'boiler': ['boiler', 'central heating', 'programmer', 'room thermostat', 'heating system', 'FCU'],
+      
+      // COMMERCIAL
+      'distribution': ['distribution board', 'sub-distribution', 'busbar', 'TP&N', 'split load', 'consumer unit', 'panelboard', 'DB', 'switchgear'],
+      'submain': ['submain', 'sub-main', 'feeder', 'SWA', 'XLPE', 'armoured cable', 'diversity', 'maximum demand', 'sub-main cable'],
+      'commercial_lighting': ['commercial lighting', 'emergency lighting', 'maintained', 'non-maintained', '3-hour', 'central battery', 'self-contained', 'BS 5266'],
+      'commercial_socket': ['commercial socket', 'industrial socket', '16A', '32A', '63A', '125A', 'BS EN 60309', 'blue', 'red', 'CEE form', 'commando socket'],
+      'data': ['data circuit', 'structured cabling', 'Cat5e', 'Cat6', 'Cat6a', 'fibre', 'containment', 'segregation', 'network cable'],
+      'fire_alarm': ['fire alarm', 'detection', 'sounders', 'call points', 'BS 5839', 'fire detection', 'alarm system'],
+      'ups': ['UPS', 'uninterruptible', 'battery backup', 'online', 'line-interactive', 'standby power'],
+      
+      // INDUSTRIAL
+      'motor': ['motor circuit', 'DOL', 'star-delta', 'soft start', 'VSD', 'VFD', 'Type D', 'starting current', 'inrush', 'locked rotor', 'full load current', 'overload relay', 'motor protection'],
+      'three_phase': ['three-phase', '3-phase', '400V', '230V line-neutral', 'phase rotation', 'line voltage', 'phase voltage', '√3', '1.732', 'L1 L2 L3', 'balanced load', 'unbalanced', 'neutral current'],
+      'hvac': ['HVAC', 'air conditioning', 'heat pump', 'compressor', 'fan motor', 'chiller', 'FCU', 'AHU', 'air handling'],
+      'industrial_socket': ['industrial socket', 'BS EN 60309', 'CEE form', 'blue', 'red', '16A', '32A', '63A', '125A', 'panel socket'],
+      
+      // RENEWABLE/SPECIAL
+      'solar_pv': ['solar PV', 'photovoltaic', 'inverter', 'DC isolator', 'string', 'array', 'MCS', 'G98', 'G99', 'Section 712', 'solar panels', 'PV system'],
+      'battery_storage': ['battery storage', 'BESS', 'lithium', 'inverter', 'hybrid', 'AC coupled', 'DC coupled', 'energy storage'],
+      'generator': ['generator', 'standby', 'changeover', 'ATS', 'automatic transfer', 'backup supply', 'gen set'],
     };
     
+    // ====== 2. PROTECTION DEVICE KEYWORDS ======
+    const PROTECTION_KEYWORDS = [
+      // MCBs
+      'MCB', 'miniature circuit breaker', 'Type B', 'Type C', 'Type D',
+      'B6', 'B10', 'B16', 'B20', 'B32', 'B40', 'B50', 'B63',
+      'C6', 'C10', 'C16', 'C20', 'C32', 'C40', 'C50', 'C63',
+      'D6', 'D10', 'D16', 'D20', 'D32', 'D40', 'D50', 'D63',
+      'breaking capacity', 'kA', '6kA', '10kA', '16kA', 'curve type',
+      
+      // RCDs/RCBOs
+      'RCD', 'RCBO', 'residual current', '30mA', '100mA', '300mA',
+      'Type A', 'Type AC', 'Type F', 'Type B RCD', 'Type S',
+      'time delayed', 'selective', 'discrimination', 'IΔn', 'I delta n',
+      'trip time', '40ms', '200ms', '300ms', 'no trip', 'ramp test',
+      
+      // Fuses
+      'fuse', 'BS 88', 'BS 1361', 'BS 1362', 'BS 3036',
+      'cartridge fuse', 'HRC', 'semi-enclosed', 'rewirable',
+      '5A', '13A', '20A', '30A', '45A', '60A', '80A', '100A', 'I²t', 'I2t',
+      
+      // Isolators & SPD
+      'isolator', 'switch disconnector', 'main switch', 'DP switch',
+      'rotary isolator', 'fireman switch', 'emergency stop',
+      'AFDD', 'arc fault', 'arc detection',
+      'SPD', 'surge protection', 'Type 1', 'Type 2', 'Type 3', 'lightning'
+    ];
+    
+    // ====== 3. TESTING & VERIFICATION KEYWORDS ======
+    const TESTING_KEYWORDS = [
+      // Loop impedance
+      'Zs', 'Ze', 'Zdb', 'earth fault loop', 'loop impedance', 'external earth fault',
+      '0.35Ω', '0.8Ω', '1.44Ω', 'maximum Zs', 'measured Zs',
+      'Table 41.2', 'Table 41.3', 'Table 41.4', 'disconnection time', '0.4s', '5s',
+      
+      // Continuity
+      'R1+R2', 'continuity', 'protective conductor', 'ring final continuity',
+      'figure of eight', 'end-to-end', 'CPC continuity', 'low resistance ohmmeter',
+      
+      // Insulation
+      'insulation resistance', 'IR test', 'megger', '500V test', '250V test', '1000V test',
+      '1 MΩ', '2 MΩ', '0.5 MΩ', 'minimum insulation', 'between live conductors',
+      
+      // RCD testing
+      'RCD test', 'trip time', '0.5×IΔn', '1×IΔn', '5×IΔn', '40ms', '200ms', '300ms',
+      'no trip test', 'trip test', 'ramp test',
+      
+      // Other tests
+      'polarity', 'correct polarity', 'phase sequence', 'phase rotation', '1-2-3',
+      'PFC', 'PSCC', 'prospective fault current', 'prospective short circuit',
+      'earth electrode resistance', 'Ra', 'rod electrode', '200Ω',
+      'dead testing', 'live testing', 'safe isolation', 'proving unit',
+      'functional testing', 'interlocks', 'switchgear operation'
+    ];
+    
+    // ====== 4. CABLE & INSTALLATION KEYWORDS ======
+    const CABLE_KEYWORDS = [
+      // Types
+      'twin and earth', 'T&E', '6242Y', 'SWA', 'armoured', 'XLPE', 'PVC', 'LSF', 'LSZH',
+      'flex', 'H07RN-F', 'multicore', 'singles', 'MICC', 'fire resistant', 'FP200',
+      
+      // Sizes
+      '1mm²', '1.5mm²', '2.5mm²', '4mm²', '6mm²', '10mm²', '16mm²', '25mm²', '35mm²',
+      '50mm²', '70mm²', '95mm²', '120mm²', '150mm²', '185mm²', '240mm²', '300mm²',
+      
+      // Installation
+      'clipped direct', 'conduit', 'trunking', 'cable tray', 'cable ladder',
+      'enclosed', 'surface', 'concealed', 'buried',
+      'Reference Method A', 'Reference Method B', 'Reference Method C',
+      'Reference Method D', 'Reference Method E', 'Reference Method F',
+      'Reference Method 100', 'Reference Method 101', 'Reference Method 102', 'Reference Method 103',
+      
+      // Containment
+      '20mm conduit', '25mm conduit', '32mm conduit', 'mini trunking', 'dado trunking',
+      'floor trunking', 'basket tray', 'ladder rack', 'cable gland', 'CW gland', 'BW gland',
+      'termination', 'crimping', 'compression', 'cable lug'
+    ];
+    
+    // ====== 5. EARTHING & BONDING KEYWORDS ======
+    const EARTHING_KEYWORDS = [
+      // Systems
+      'TN-S', 'TN-C-S', 'TT', 'IT', 'PME', 'SNE', 'PEN conductor',
+      'protective earth', 'earthing system',
+      
+      // Electrode
+      'earth electrode', 'rod electrode', 'Ra', 'earth resistance', '200Ω',
+      'mat electrode', 'tape electrode', 'earth pit',
+      
+      // Bonding
+      'main bonding', 'supplementary bonding', 'protective bonding', 'equipotential',
+      'extraneous conductive part', 'exposed conductive part',
+      '10mm² bonding', '6mm² bonding', '4mm² bonding',
+      'bonding conductor', 'main earthing terminal', 'MET',
+      
+      // Fault path
+      'fault path', 'earth fault', 'protective conductor', 'CPC',
+      'adiabatic equation', 'k²S²', 'let-through energy', 'fault current'
+    ];
+    
+    // ====== 6. CALCULATION KEYWORDS ======
+    const CALCULATION_KEYWORDS = [
+      // Voltage drop
+      'voltage drop', 'mV/A/m', '3%', '5%', 'Table 4D1B', 'Table 4D2B', 'Table 4D4B',
+      'permissible voltage drop', 'VD calculation',
+      
+      // Current
+      'design current', 'Ib', 'In', 'Iz', 'It', 'I²t', 'I2t',
+      'full load current', 'starting current', 'diversity', 'maximum demand',
+      'demand factor', 'utilisation factor', 'coincidence factor',
+      
+      // Derating
+      'derating', 'Cg', 'Ca', 'Ci', 'Cc', 'Cd', 'Cf', 'correction factor',
+      'grouping factor', 'ambient temperature', 'thermal insulation',
+      'Table 4B1', 'Table 4B2', 'Table 4B3', 'Table 4C1', 'Table 4C2',
+      
+      // Short circuit
+      'short circuit', 'fault current', 'breaking capacity',
+      'adiabatic', 'withstand', 'let-through', 'Ipf', 'fault level',
+      
+      // Formulas
+      'I = Uo/Zs', 'Ib ≤ In ≤ Iz', 'I2 ≤ 1.45 × Iz', 'k²S² ≥ I²t',
+      '√3', '1.732', 'P = IV', 'P = I²R', 'V = IR'
+    ];
+    
+    // ====== 7. SECTOR & LOCATION KEYWORDS ======
+    const SECTOR_KEYWORDS = {
+      domestic: ['domestic', 'dwelling', 'house', 'flat', 'bungalow', 'Part P', 'consumer unit', 'Amendment 2', 'Amendment 3', 'home', 'residential'],
+      commercial: ['commercial', 'office', 'shop', 'retail', 'warehouse', 'distribution board', 'maximum demand', 'MD calculation'],
+      industrial: ['industrial', 'factory', 'workshop', 'manufacturing', 'machinery', 'isolation', 'ATEX', 'hazardous area'],
+      agricultural: ['agricultural', 'farm', 'barn', 'livestock', 'Section 705', 'equipotential zone', 'IP rating outdoor'],
+      construction: ['construction site', 'temporary', 'Section 704', '110V', 'reduced voltage', 'portable', 'temporary installation'],
+      marina: ['marina', 'boat', 'Section 709', 'shore connection', 'yacht'],
+    };
+    
+    // ====== 8. SPECIAL LOCATIONS KEYWORDS ======
+    const SPECIAL_LOCATION_KEYWORDS = {
+      bathroom: ['bathroom', 'Zone 0', 'Zone 1', 'Zone 2', 'outside zones', 'IP rating', 'SELV', 'Section 701', 'supplementary bonding', 'shaver socket', 'IPX4', 'IPX5', 'bathroom zones'],
+      swimming_pool: ['swimming pool', 'Section 702', 'SELV only', 'Zone A', 'Zone B', 'Zone C', 'fountain', 'spa', 'hot tub'],
+      sauna: ['sauna', 'Section 703', 'high temperature', 'heat resistant', '170°C'],
+      construction_site: ['construction site', 'Section 704', '110V', 'centre-tapped', 'reduced low voltage', 'SELV tools'],
+      agricultural: ['agricultural', 'Section 705', 'livestock', 'equipotential zone', 'fire hazard', 'IP44 minimum'],
+      caravan_park: ['caravan park', 'Section 708', 'pitch supply', 'hook-up post', 'RCD 30mA', 'caravan'],
+      marina: ['marina', 'Section 709', 'shore supply', 'boat', 'RCD 30mA'],
+      solar_pv: ['solar PV', 'Section 712', 'photovoltaic', 'array', 'string', 'DC side', 'inverter'],
+    };
+    
+    // ====== 9. TOOLS & EQUIPMENT KEYWORDS ======
+    const TOOLS_KEYWORDS = [
+      'multifunction tester', 'MFT', 'loop tester', 'RCD tester', 'insulation tester',
+      'megger', 'low resistance ohmmeter', 'proving unit', 'voltage indicator', 'GS38',
+      'two-pole tester', 'clamp meter', 'multimeter', 'socket tester',
+      'crimping tool', 'cable stripper', 'wire stripper', 'conduit bender',
+      'torque screwdriver', 'SDS drill', 'impact driver'
+    ];
+    
+    // ====== 10. REGULATIONS & STANDARDS KEYWORDS ======
+    const REGULATIONS_KEYWORDS = [
+      'BS 7671', '18th Edition', 'Amendment 1', 'Amendment 2', 'Amendment 3',
+      'Wiring Regulations', 'Part 1', 'Part 2', 'Part 3', 'Part 4', 'Part 5', 'Part 6', 'Part 7',
+      'GN1', 'GN2', 'GN3', 'GN4', 'GN5', 'GN6', 'GN7', 'GN8',
+      'On-Site Guide', 'OSG', 'BS 5839', 'BS 5266', 'BS EN 62305',
+      'Part P', 'Building Regulations', 'EAWR', 'notifiable work',
+      'EIC', 'EICR', 'Minor Works', 'C1', 'C2', 'C3', 'FI'
+    ];
+    
+    // ========================================
+    // EXTRACT KEYWORDS FROM CIRCUITS
+    // ========================================
     normalized.circuits.forEach(circuit => {
-      // Add load type
       const loadTypeLower = circuit.loadType.toLowerCase();
       loadTypes.add(loadTypeLower);
       
-      // Add voltage keywords
-      keywords.add(`${normalized.supply.voltage}v`);
-      keywords.add(normalized.supply.phases === 3 ? 'three-phase' : 'single-phase');
+      // Add circuit-type-specific keywords
+      Object.keys(CIRCUIT_TYPE_KEYWORDS).forEach(typeKey => {
+        if (loadTypeLower.includes(typeKey) || circuit.name.toLowerCase().includes(typeKey)) {
+          CIRCUIT_TYPE_KEYWORDS[typeKey].forEach(kw => keywords.add(kw));
+        }
+      });
       
-      // Add circuit-specific keywords
+      // Add core keywords
       keywords.add(loadTypeLower);
       keywords.add('cable sizing');
       keywords.add('voltage drop');
       keywords.add('protection');
-      
-      // Add circuit-type-specific keywords for precise RAG matching
-      Object.keys(circuitTypeKeywords).forEach(typeKey => {
-        if (loadTypeLower.includes(typeKey) || circuit.name.toLowerCase().includes(typeKey)) {
-          circuitTypeKeywords[typeKey].forEach(kw => keywords.add(kw));
-        }
-      });
-      
-      // Detect ring finals from name/description OR power
-      const isLikelyRingFinal = 
-        circuit.name.toLowerCase().includes('ring') || 
-        (loadTypeLower === 'socket' && circuit.loadPower <= 7360);
-      
-      if (isLikelyRingFinal) {
-        keywords.add('ring final');
-        keywords.add('32A');
-        keywords.add('2.5mm');
-        keywords.add('433-02-01');
-        keywords.add('ring circuit');
-        keywords.add('13 A socket-outlet');
-      }
-      
-      // Power-based keyword inference for specific circuit types
-      if (circuit.loadPower >= 7000 && circuit.loadPower <= 10500) {
-        keywords.add('shower');
-        keywords.add('instantaneous water heater');
-        keywords.add('40A');
-        keywords.add('45A');
-        keywords.add('10mm');
-        keywords.add('high power bathroom');
-      }
-      
-      if (circuit.loadPower >= 5000 && circuit.loadPower <= 15000) {
-        if (circuit.name.toLowerCase().includes('cooker') || 
-            circuit.name.toLowerCase().includes('oven') ||
-            circuit.name.toLowerCase().includes('hob')) {
-          keywords.add('cooker circuit');
-          keywords.add('32A');
-          keywords.add('45A');
-          keywords.add('6mm');
-          keywords.add('10mm');
-          keywords.add('diversity');
-        }
-      }
-      
-      if (circuit.loadPower >= 7000 && (circuit.name.toLowerCase().includes('ev') || circuit.name.toLowerCase().includes('charger'))) {
-        keywords.add('electric vehicle');
-        keywords.add('EV charger');
-        keywords.add('32A');
-        keywords.add('6mm');
-        keywords.add('Mode 3');
-      }
-      
-      // Design-specific keywords (cable sizing, protection, compliance)
-      keywords.add('diversity factor');
-      keywords.add('derating factors');
-      keywords.add('grouping factor');
-      keywords.add('ambient temperature');
-      keywords.add('buried depth');
+      keywords.add('earthing');
       
       // Special location keywords
-      if (circuit.specialLocation) {
-        keywords.add(circuit.specialLocation.toLowerCase());
+      if (circuit.specialLocation && circuit.specialLocation !== 'none') {
+        const location = circuit.specialLocation.toLowerCase();
+        keywords.add(location);
+        if (SPECIAL_LOCATION_KEYWORDS[location as keyof typeof SPECIAL_LOCATION_KEYWORDS]) {
+          SPECIAL_LOCATION_KEYWORDS[location as keyof typeof SPECIAL_LOCATION_KEYWORDS].forEach(kw => keywords.add(kw));
+        }
       }
       
-      // Common cable sizes for filtering
+      // Common cable sizes
       [1.5, 2.5, 4, 6, 10, 16, 25, 35].forEach(size => cableSizes.add(size));
     });
     
-    this.logger.info('RAG search parameters', {
-      keywords: Array.from(keywords),
+    // ========================================
+    // ADD COMPREHENSIVE KEYWORD CATEGORIES
+    // ========================================
+    PROTECTION_KEYWORDS.forEach(kw => keywords.add(kw));
+    TESTING_KEYWORDS.forEach(kw => keywords.add(kw));
+    CABLE_KEYWORDS.forEach(kw => keywords.add(kw));
+    EARTHING_KEYWORDS.forEach(kw => keywords.add(kw));
+    CALCULATION_KEYWORDS.forEach(kw => keywords.add(kw));
+    TOOLS_KEYWORDS.forEach(kw => keywords.add(kw));
+    REGULATIONS_KEYWORDS.forEach(kw => keywords.add(kw));
+    
+    // ========================================
+    // DYNAMIC KEYWORD INFERENCE
+    // ========================================
+    
+    // Infer from supply characteristics
+    if (normalized.supply.phases === 3) {
+      ['three-phase', '400V', 'phase rotation', 'L1 L2 L3', 'balanced', '√3', '1.732', 'line voltage', 'phase voltage', 'neutral current'].forEach(kw => keywords.add(kw));
+    }
+    if (normalized.supply.voltage === 230) {
+      ['230V', 'single-phase', '1-phase', 'line to neutral'].forEach(kw => keywords.add(kw));
+    }
+    if (normalized.supply.earthing === 'TN-C-S') {
+      ['PME', 'PEN', 'TN-C-S', 'combined neutral earth', 'protective multiple earthing'].forEach(kw => keywords.add(kw));
+    }
+    if (normalized.supply.earthing === 'TT') {
+      ['TT', 'earth electrode', 'Ra', '200Ω', 'RCD essential'].forEach(kw => keywords.add(kw));
+    }
+    
+    // Infer from property type
+    const propertyType = normalized.property?.type?.toLowerCase() || 'domestic';
+    if (SECTOR_KEYWORDS[propertyType as keyof typeof SECTOR_KEYWORDS]) {
+      SECTOR_KEYWORDS[propertyType as keyof typeof SECTOR_KEYWORDS].forEach(kw => keywords.add(kw));
+    }
+    
+    this.logger.info('Comprehensive RAG search parameters', {
+      totalKeywords: keywords.size,
       loadTypes: Array.from(loadTypes),
       cableSizes: Array.from(cableSizes),
-      keywordCount: keywords.size,
-      sampleKeywords: Array.from(keywords).slice(0, 10)
+      circuitCount: normalized.circuits.length,
+      sampleKeywords: {
+        circuits: Array.from(keywords).filter(k => k.includes('circuit') || k.includes('ring') || k.includes('lighting')).slice(0, 5),
+        protection: Array.from(keywords).filter(k => k.includes('MCB') || k.includes('RCD') || k.includes('fuse')).slice(0, 5),
+        testing: Array.from(keywords).filter(k => k.includes('Zs') || k.includes('test') || k.includes('IR')).slice(0, 5),
+        calculations: Array.from(keywords).filter(k => k.includes('voltage drop') || k.includes('diversity') || k.includes('derating')).slice(0, 5),
+      }
     });
     
-    // PARALLEL: Search design and regulations intelligence tables (installation guidance handled by separate agent)
+    // PARALLEL: Search all 3 intelligence tables with comprehensive categories
     let designIntelligence: any[] = [];
     let regulationsIntelligence: any[] = [];
+    let practicalIntelligence: any[] = [];
     
     try {
-      [designIntelligence, regulationsIntelligence] = await Promise.all([
+      [designIntelligence, regulationsIntelligence, practicalIntelligence] = await Promise.all([
         searchDesignIntelligence(supabase, {
           keywords: Array.from(keywords),
           loadTypes: Array.from(loadTypes),
           cableSizes: Array.from(cableSizes),
-          categories: ['cable_sizing', 'voltage_drop', 'protection'],
-          limit: 20  // Increased from 15 since we removed practical work
+          categories: [
+            'cable_sizing', 'voltage_drop', 'protection', 'earthing',
+            'special_locations'
+          ],
+          facetTypes: ['concept', 'formula', 'table', 'example', 'regulation'],
+          limit: 50  // Increased for comprehensive coverage
         }),
         searchRegulationsIntelligence(supabase, {
           keywords: Array.from(keywords),
           appliesTo: Array.from(loadTypes),
-          limit: 15  // Increased from 10 since we removed practical work
-        })
+          categories: [
+            'Cables', 'Circuits', 'Protection', 'Earthing', 'Testing', 'Safety',
+            'Special Locations', 'Industrial', 'Design', 'Installation'
+          ],
+          limit: 35  // Increased for comprehensive regulation coverage
+        }),
+        (async () => {
+          const { searchPracticalWorkIntelligence } = await import('../_shared/intelligence-search.ts');
+          return searchPracticalWorkIntelligence(supabase, {
+            keywords: Array.from(keywords),
+            appliesTo: Array.from(loadTypes),
+            cableSizes: Array.from(cableSizes).map(String),
+            activityTypes: ['design', 'installation', 'testing', 'fault_finding', 'maintenance'],
+            limit: 30  // Increased for comprehensive practical guidance
+          });
+        })()
       ]);
     } catch (ragError) {
       this.logger.error('RAG search failed', {
@@ -249,11 +447,12 @@ export class DesignPipeline {
       // Continue with empty results rather than failing
       designIntelligence = [];
       regulationsIntelligence = [];
+      practicalIntelligence = [];
     }
     
     const ragTime = Date.now() - ragStart;
     
-    // ENHANCED LOGGING: Verify RAG returns circuit-specific data
+    // COMPREHENSIVE LOGGING: Verify RAG returns circuit-specific data
     const ringFinalMatches = designIntelligence.filter((d: any) => 
       d.keywords?.some((k: string) => k.toLowerCase().includes('ring final') || k.toLowerCase().includes('ring circuit'))
     ).length;
@@ -266,35 +465,61 @@ export class DesignPipeline {
     const lightingMatches = designIntelligence.filter((d: any) => 
       d.keywords?.some((k: string) => k.toLowerCase().includes('lighting'))
     ).length;
+    const testingMatches = designIntelligence.filter((d: any) => 
+      d.keywords?.some((k: string) => k.toLowerCase().includes('zs') || k.toLowerCase().includes('test'))
+    ).length;
+    const protectionMatches = designIntelligence.filter((d: any) => 
+      d.keywords?.some((k: string) => k.toLowerCase().includes('mcb') || k.toLowerCase().includes('rcd'))
+    ).length;
     
-    this.logger.info('Fast RAG complete (2-layer design focus)', {
+    // Analyze design facet types
+    const facetTypes = designIntelligence.reduce((acc: any, d: any) => {
+      acc[d.facet_type] = (acc[d.facet_type] || 0) + 1;
+      return acc;
+    }, {});
+    
+    // Analyze regulation categories
+    const regCategories = regulationsIntelligence.reduce((acc: any, r: any) => {
+      acc[r.category] = (acc[r.category] || 0) + 1;
+      return acc;
+    }, {});
+    
+    this.logger.info('Comprehensive RAG complete (3-layer intelligence)', {
       designIntelligence: designIntelligence.length,
       regulationsIntelligence: regulationsIntelligence.length,
+      practicalIntelligence: practicalIntelligence.length,
+      totalResults: designIntelligence.length + regulationsIntelligence.length + practicalIntelligence.length,
       searchTime: ragTime,
-      note: 'Installation guidance handled by Design Installation Agent',
       circuitSpecificMatches: {
         ringFinals: ringFinalMatches,
         cookers: cookerMatches,
         showers: showerMatches,
-        lighting: lightingMatches
+        lighting: lightingMatches,
+        testing: testingMatches,
+        protection: protectionMatches
       },
-      sampleDesignKeywords: designIntelligence.slice(0, 3).map((d: any) => d.keywords?.slice(0, 3)).flat(),
-      sampleRegulations: regulationsIntelligence.slice(0, 3).map((r: any) => r.regulation_number)
+      designFacetTypes: facetTypes,
+      regulationCategories: regCategories,
+      sampleDesignTopics: designIntelligence.slice(0, 5).map((d: any) => d.primary_topic),
+      sampleRegulations: regulationsIntelligence.slice(0, 5).map((r: any) => r.regulation_number),
+      samplePractical: practicalIntelligence.slice(0, 3).map((p: any) => p.primary_topic)
     });
     
     // CRITICAL CHECK: Verify RAG returned results
-    if (designIntelligence.length === 0 && regulationsIntelligence.length === 0) {
+    if (designIntelligence.length === 0 && regulationsIntelligence.length === 0 && practicalIntelligence.length === 0) {
       this.logger.warn('RAG returned ZERO results - AI will use general knowledge only', {
-        keywords: Array.from(keywords).slice(0, 10),
+        keywordsSent: keywords.size,
+        sampleKeywords: Array.from(keywords).slice(0, 20),
         possibleCauses: [
           'Keywords do not match database entries',
-          'Database table is empty',
-          'RAG search query syntax issue'
+          'Database tables are empty',
+          'RAG search query syntax issue',
+          'GIN indexes not properly created'
         ]
       });
     }
     
-    // Build RAG context for AI (pure design focus - no practical work)
+    // Build comprehensive RAG context for AI (3-layer intelligence)
     const ragContext = {
       regulations: regulationsIntelligence.map((r: any) => ({
         regulation_number: r.regulation_number,
@@ -303,15 +528,22 @@ export class DesignPipeline {
         source: 'regulations_intelligence'
       })),
       designKnowledge: designIntelligence,
-      totalResults: designIntelligence.length + regulationsIntelligence.length,
+      practicalGuidance: practicalIntelligence,
+      totalResults: designIntelligence.length + regulationsIntelligence.length + practicalIntelligence.length,
       searchTime: ragTime
     };
     
-    this.logger.info('RAG context built', {
+    this.logger.info('Comprehensive RAG context built', {
       totalResults: ragContext.totalResults,
       hasRegulations: ragContext.regulations.length > 0,
       hasDesignKnowledge: ragContext.designKnowledge.length > 0,
-      isEmpty: ragContext.totalResults === 0
+      hasPracticalGuidance: ragContext.practicalGuidance.length > 0,
+      isEmpty: ragContext.totalResults === 0,
+      breakdown: {
+        regulations: ragContext.regulations.length,
+        design: ragContext.designKnowledge.length,
+        practical: ragContext.practicalGuidance.length
+      }
     });
 
     // ========================================
