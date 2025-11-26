@@ -172,7 +172,15 @@ const HealthSafetyInterface = () => {
       
       {status === 'complete' && !showCelebration && outputData && (
         <HealthSafetyResults 
-          data={outputData}
+          data={{
+            ...outputData,
+            projectName: job?.project_info?.projectName || outputData.projectName,
+            location: job?.project_info?.location || outputData.location,
+            clientName: job?.project_info?.clientName || outputData.clientName,
+            workType: job?.work_type || outputData.workType,
+            assessmentDate: new Date().toISOString().split('T')[0],
+            reviewDate: new Date(Date.now() + 6 * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+          }}
           onStartOver={handleStartOver}
         />
       )}

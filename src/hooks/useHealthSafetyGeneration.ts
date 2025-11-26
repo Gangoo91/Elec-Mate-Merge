@@ -12,6 +12,8 @@ interface HealthSafetyJob {
   created_at: string;
   started_at: string | null;
   completed_at: string | null;
+  project_info: any;
+  work_type: string;
 }
 
 interface UseHealthSafetyGenerationReturn {
