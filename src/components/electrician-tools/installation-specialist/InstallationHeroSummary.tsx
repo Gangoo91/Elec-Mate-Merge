@@ -1,8 +1,6 @@
-import { useSwipeable } from 'react-swipeable';
-import { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Clock, Wrench, ShieldCheck, GraduationCap, MapPin, Circle } from "lucide-react";
+import { Wrench, Clock, Hammer, AlertTriangle, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface HeroSummaryProps {
@@ -11,20 +9,32 @@ interface HeroSummaryProps {
   riskLevel: 'low' | 'medium' | 'high';
   toolsCount: number;
   hazardsCount: number;
-  competency?: {
-    competencyRequirements?: string;
-    trainingRequired?: string;
-  };
-  siteLogistics?: {
-    vehicleAccess?: string;
-    restrictions?: string[];
-  };
 }
 
 const riskColors = {
-  low: 'bg-success/20 text-success border-success/40',
-  medium: 'bg-warning/20 text-warning border-warning/40',
-  high: 'bg-destructive/20 text-destructive border-destructive/40'
+  low: 'bg-success/10 text-success border-success/20',
+  medium: 'bg-warning/10 text-warning border-warning/20',
+  high: 'bg-destructive/10 text-destructive border-destructive/20'
+};
+
+// Parse duration intelligently - extract primary value
+const parseDuration = (duration: string): string => {
+  if (!duration) return 'N/A';
+  
+  // Extract patterns like "8-24 hours" from "8-24 hours (typical: 1-2 working days...)"
+  const match = duration.match(/(\d+(?:-\d+)?)\s*(hours?|hrs?|minutes?|mins?|days?)/i);
+  if (match) {
+    const value = match[1];
+    const unit = match[2].toLowerCase();
+    // Abbreviate unit
+    if (unit.startsWith('hour') || unit.startsWith('hr')) return `${value} hrs`;
+    if (unit.startsWith('minute') || unit.startsWith('min')) return `${value} mins`;
+    if (unit.startsWith('day')) return `${value} days`;
+  }
+  
+  // Fallback: take first part before parenthesis
+  const firstPart = duration.split('(')[0].trim();
+  return firstPart || duration;
 };
 
 export const InstallationHeroSummary = ({
@@ -32,166 +42,136 @@ export const InstallationHeroSummary = ({
   duration,
   riskLevel,
   toolsCount,
-  hazardsCount,
-  competency,
-  siteLogistics
+  hazardsCount
 }: HeroSummaryProps) => {
-  const [currentCard, setCurrentCard] = useState(0);
+  const displayDuration = parseDuration(duration);
   
-  const cards = [
-    {
-      title: "Overview",
-      icon: CheckCircle2,
-      content: (
-        <div className="grid grid-cols-2 gap-5">
-          <div className="text-center p-3 rounded-xl bg-gradient-to-br from-primary/10 to-transparent hover:from-primary/20 transition-all">
-            <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br from-elec-yellow to-primary mb-2">{steps}</div>
-            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Installation Steps</div>
-          </div>
-          <div className="text-center p-3 rounded-xl bg-gradient-to-br from-blue-500/10 to-transparent hover:from-blue-500/20 transition-all">
-            <div className="text-3xl font-bold text-foreground mb-2">{duration}</div>
-            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Est. Duration</div>
-          </div>
-          <div className="text-center p-3 rounded-xl bg-gradient-to-br from-primary/10 to-transparent hover:from-primary/20 transition-all">
-            <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br from-elec-yellow to-primary mb-2">{toolsCount}</div>
-            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Tools Required</div>
-          </div>
-          <div className="text-center p-3 rounded-xl bg-gradient-to-br from-destructive/10 to-transparent hover:from-destructive/20 transition-all">
-            <div className="text-5xl font-black text-destructive mb-2 drop-shadow-lg">{hazardsCount}</div>
-            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Hazards Identified</div>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Risk Profile",
-      icon: ShieldCheck,
-      content: (
-        <div className="text-center space-y-5">
-          <Badge className={cn("text-2xl px-8 py-4 font-black shadow-xl animate-pulse", riskColors[riskLevel])}>
-            {(riskLevel || 'medium').toUpperCase()} RISK
-          </Badge>
-          <div className="flex justify-center gap-1.5 mt-5">
-            {[...Array(10)].map((_, i) => (
-              <Circle
-                key={i}
-                className={cn(
-                  "h-4 w-4 transition-all",
-                  i < (riskLevel === 'high' ? 8 : riskLevel === 'medium' ? 5 : 2)
-                    ? "fill-current text-elec-yellow drop-shadow-md"
-                    : "text-muted"
-                )}
-              />
-            ))}
-          </div>
-          <p className="text-base font-semibold text-muted-foreground mt-3">
-            {hazardsCount} control measures required
-          </p>
-        </div>
-      )
-    },
-    {
-      title: "Competency Required",
-      icon: GraduationCap,
-      content: (
-        <div className="space-y-3">
-          <div>
-            <div className="text-xs text-muted-foreground mb-1">Minimum Qualifications</div>
-            <div className="text-sm font-medium text-foreground">
-              {competency?.competencyRequirements || '18th Edition BS 7671'}
-            </div>
-          </div>
-          {competency?.trainingRequired && (
-            <div>
-              <div className="text-xs text-muted-foreground mb-1">Training Required</div>
-              <div className="text-sm font-medium text-foreground">
-                {competency.trainingRequired}
-              </div>
-            </div>
-          )}
-        </div>
-      )
-    },
-    {
-      title: "Site Information",
-      icon: MapPin,
-      content: (
-        <div className="space-y-3">
-          {siteLogistics?.vehicleAccess && (
-            <div>
-              <div className="text-xs text-muted-foreground mb-1">Vehicle Access</div>
-              <div className="text-sm font-medium text-foreground">
-                {siteLogistics.vehicleAccess}
-              </div>
-            </div>
-          )}
-          {siteLogistics?.restrictions && siteLogistics.restrictions.length > 0 && (
-            <div>
-              <div className="text-xs text-muted-foreground mb-1">Site Restrictions</div>
-              <ul className="text-sm space-y-1">
-                {siteLogistics.restrictions.slice(0, 2).map((r, i) => (
-                  <li key={i} className="text-foreground">• {r}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-      )
-    }
-  ];
-
-  const handlers = useSwipeable({
-    onSwipedLeft: () => setCurrentCard((prev) => Math.min(prev + 1, cards.length - 1)),
-    onSwipedRight: () => setCurrentCard((prev) => Math.max(prev - 1, 0)),
-    trackMouse: true
-  });
-
   return (
-    <div className="space-y-4">
-      <div {...handlers} className="relative overflow-hidden">
-        <div 
-          className="flex transition-transform duration-300 ease-out"
-          style={{ transform: `translateX(-${currentCard * 100}%)` }}
-        >
-          {cards.map((card, index) => {
-            const Icon = card.icon;
-            return (
-              <div key={index} className="min-w-full px-1">
-                <Card className="p-6 bg-gradient-to-br from-elec-yellow/5 via-blue-500/5 to-background border-primary/30 shadow-lg shadow-primary/10 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 animate-fade-in">
-                  <div className="flex items-center gap-3 mb-5">
-                    <div className="p-2.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-primary/20 shadow-md">
-                      <Icon className="h-6 w-6 text-elec-yellow" />
-                    </div>
-                    <h3 className="text-xl font-bold text-foreground">{card.title}</h3>
-                  </div>
-                  {card.content}
-                </Card>
+    <Card className="p-4 sm:p-6 bg-gradient-to-br from-blue-500/5 via-background to-background border-blue-500/20 shadow-lg hover:shadow-xl transition-shadow">
+      <div className="space-y-4">
+        <div className="flex items-center gap-2">
+          <Wrench className="h-5 w-5 text-blue-400" />
+          <h3 className="text-lg font-semibold text-foreground">Installation Overview</h3>
+        </div>
+        
+        {/* Desktop Layout - 5 columns */}
+        <div className="hidden sm:grid sm:grid-cols-5 gap-4">
+          {/* Steps */}
+          <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 rounded-lg p-4 border border-blue-500/20 hover:border-blue-500/30 transition-colors">
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2 text-muted-foreground text-left">
+                <Wrench className="h-4 w-4" />
+                <span className="text-xs font-medium">Steps</span>
               </div>
-            );
-          })}
+              <div className="text-3xl font-black text-foreground text-center">{steps}</div>
+            </div>
+          </div>
+
+          {/* Duration */}
+          <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 rounded-lg p-4 border border-blue-500/20 hover:border-blue-500/30 transition-colors">
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2 text-muted-foreground text-left">
+                <Clock className="h-4 w-4" />
+                <span className="text-xs font-medium">Duration</span>
+              </div>
+              <div className="text-xl font-black text-foreground text-center truncate" title={duration}>
+                {displayDuration}
+              </div>
+            </div>
+          </div>
+
+          {/* Tools */}
+          <div className="bg-gradient-to-br from-green-500/10 to-green-600/5 rounded-lg p-4 border border-green-500/20 hover:border-green-500/30 transition-colors">
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2 text-muted-foreground text-left">
+                <Hammer className="h-4 w-4" />
+                <span className="text-xs font-medium">Tools</span>
+              </div>
+              <div className="text-3xl font-black text-foreground text-center">{toolsCount}</div>
+            </div>
+          </div>
+
+          {/* Hazards */}
+          <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 rounded-lg p-4 border border-amber-500/20 hover:border-amber-500/30 transition-colors">
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2 text-muted-foreground text-left">
+                <AlertTriangle className="h-4 w-4" />
+                <span className="text-xs font-medium">Hazards</span>
+              </div>
+              <div className="text-3xl font-black text-foreground text-center">{hazardsCount}</div>
+            </div>
+          </div>
+
+          {/* Risk Level */}
+          <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 rounded-lg p-4 border border-purple-500/20 hover:border-purple-500/30 transition-colors">
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2 text-muted-foreground text-left">
+                <Shield className="h-4 w-4" />
+                <span className="text-xs font-medium">Risk</span>
+              </div>
+              <Badge className={cn(riskColors[riskLevel], "text-sm font-bold uppercase w-full justify-center")}>
+                {riskLevel}
+              </Badge>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Layout - 2 columns + full-width risk */}
+        <div className="sm:hidden space-y-3">
+          <div className="grid grid-cols-2 gap-3">
+            {/* Steps */}
+            <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 rounded-lg p-4 border border-blue-500/20 min-h-[100px] flex flex-col justify-between touch-manipulation">
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Wrench className="h-5 w-5" />
+                <span className="text-xs font-medium">STEPS</span>
+              </div>
+              <div className="text-4xl font-black text-foreground text-center">{steps}</div>
+            </div>
+
+            {/* Duration */}
+            <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 rounded-lg p-4 border border-blue-500/20 min-h-[100px] flex flex-col justify-between touch-manipulation">
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Clock className="h-5 w-5" />
+                <span className="text-xs font-medium">DURATION</span>
+              </div>
+              <div className="text-2xl font-black text-foreground text-center truncate" title={duration}>
+                {displayDuration}
+              </div>
+            </div>
+
+            {/* Tools */}
+            <div className="bg-gradient-to-br from-green-500/10 to-green-600/5 rounded-lg p-4 border border-green-500/20 min-h-[100px] flex flex-col justify-between touch-manipulation">
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Hammer className="h-5 w-5" />
+                <span className="text-xs font-medium">TOOLS</span>
+              </div>
+              <div className="text-4xl font-black text-foreground text-center">{toolsCount}</div>
+            </div>
+
+            {/* Hazards */}
+            <div className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 rounded-lg p-4 border border-amber-500/20 min-h-[100px] flex flex-col justify-between touch-manipulation">
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <AlertTriangle className="h-5 w-5" />
+                <span className="text-xs font-medium">HAZARDS</span>
+              </div>
+              <div className="text-4xl font-black text-foreground text-center">{hazardsCount}</div>
+            </div>
+          </div>
+
+          {/* Risk Level - Full Width on Mobile */}
+          <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 rounded-lg p-4 border border-purple-500/20 touch-manipulation">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Shield className="h-5 w-5" />
+                <span className="text-sm font-medium">RISK LEVEL</span>
+              </div>
+              <Badge className={cn(riskColors[riskLevel], "text-lg font-bold uppercase px-6 py-2")}>
+                {riskLevel}
+              </Badge>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Indicator dots with glow effect */}
-      <div className="flex justify-center gap-2.5">
-        {cards.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentCard(index)}
-            className={cn(
-              "h-2.5 rounded-full transition-all touch-manipulation min-h-[44px] min-w-[44px] flex items-center justify-center",
-              currentCard === index 
-                ? "w-10 bg-gradient-to-r from-elec-yellow to-primary shadow-lg shadow-elec-yellow/40" 
-                : "w-2.5 bg-muted-foreground/30 hover:bg-muted-foreground/50"
-            )}
-            aria-label={`Go to card ${index + 1}`}
-          />
-        ))}
-      </div>
-
-      <p className="text-sm text-center text-muted-foreground font-medium animate-fade-in">
-        ← Swipe or tap dots to explore →
-      </p>
-    </div>
+    </Card>
   );
 };

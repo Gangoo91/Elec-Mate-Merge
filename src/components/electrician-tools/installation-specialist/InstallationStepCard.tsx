@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Edit2, Save, X, Plus, Trash2, ChevronUp, ChevronDown, AlertTriangle, Clock, Wrench, CheckCircle2, ShieldAlert, BookOpen, Package, GraduationCap } from "lucide-react";
-import { InstallationStep } from "@/types/installation-method";
+import { InstallationStep, SafetyNote } from "@/types/installation-method";
 import { cn } from "@/lib/utils";
 import { EnhancedStepContent } from "./EnhancedStepContent";
 import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
@@ -29,7 +29,9 @@ export const InstallationStepCard = ({
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(step.title);
   const [editedDescription, setEditedDescription] = useState(step.content || '');
-  const [editedSafety, setEditedSafety] = useState<string[]>(step.safety || []);
+  const [editedSafety, setEditedSafety] = useState<string[]>(
+    (step.safety || []).map(s => typeof s === 'string' ? s : s.note)
+  );
   const [editedTools, setEditedTools] = useState<string[]>(step.toolsRequired || []);
   const [editedMaterials, setEditedMaterials] = useState<string[]>(step.materialsNeeded || []);
   const [editedCheckpoints, setEditedCheckpoints] = useState<string[]>((step as any).inspectionCheckpoints || []);
@@ -40,16 +42,34 @@ export const InstallationStepCard = ({
   const { isMobile } = useMobileEnhanced();
 
   const [sectionsExpanded, setSectionsExpanded] = useState({
-    safety: true,
-    tools: true,
-    materials: true,
-    checkpoints: true,
-    qualifications: true,
-    references: true
+    safety: !isMobile,
+    tools: !isMobile,
+    materials: !isMobile,
+    checkpoints: !isMobile,
+    qualifications: !isMobile,
+    references: !isMobile
   });
 
   const toggleSection = (section: keyof typeof sectionsExpanded) => {
     setSectionsExpanded(prev => ({ ...prev, [section]: !prev[section] }));
+  };
+
+  // Helper to parse regulation from safety note
+  const parseRegulationFromSafety = (safetyItem: string | SafetyNote): { text: string; regulation?: string } => {
+    if (typeof safetyItem === 'object') {
+      return { text: safetyItem.note, regulation: safetyItem.regulation };
+    }
+    
+    // Extract regulation pattern like "(Reg 521.10.202)" or "(BS 7671 Section 521)"
+    const match = safetyItem.match(/\((?:Reg\s*|BS\s*7671\s*(?:Section)?\s*)(\d+(?:\.\d+)*)\)/i);
+    if (match) {
+      return {
+        text: safetyItem.replace(match[0], '').trim(),
+        regulation: match[1]
+      };
+    }
+    
+    return { text: safetyItem };
   };
 
   const handleSave = () => {
@@ -72,7 +92,7 @@ export const InstallationStepCard = ({
   const handleCancel = () => {
     setEditedTitle(step.title);
     setEditedDescription(step.content || '');
-    setEditedSafety(step.safety || []);
+    setEditedSafety((step.safety || []).map(s => typeof s === 'string' ? s : s.note));
     setEditedTools(step.toolsRequired || []);
     setEditedMaterials(step.materialsNeeded || []);
     setEditedCheckpoints((step as any).inspectionCheckpoints || []);
@@ -108,7 +128,7 @@ export const InstallationStepCard = ({
   const bsReferences = (step as any).bsReferences || [];
 
   return (
-    <Card className={cn(
+    <Card id={`step-${step.stepNumber - 1}`} className={cn(
       "relative overflow-hidden transition-all duration-300 border-2 animate-fade-in hover:shadow-lg",
       "border-border/40 hover:border-elec-yellow/40"
     )}>
@@ -303,7 +323,7 @@ export const InstallationStepCard = ({
                   </div>
                 )}
 
-                {/* Safety Requirements */}
+                {/* Safety Requirements with BS Regulation Badges */}
                 {((step.safety && step.safety.length > 0) || isEditing) && (
                   <div className="border-2 border-destructive/30 rounded-lg overflow-hidden">
                     <button
@@ -338,7 +358,7 @@ export const InstallationStepCard = ({
                                     <Input
                                       value={item}
                                       onChange={(e) => updateItem(setEditedSafety, idx, e.target.value)}
-                                      placeholder="Safety requirement"
+                                      placeholder="Safety requirement (Reg XXX.XX.XXX)"
                                       className={cn("flex-1", isMobile && "min-h-[48px]")}
                                     />
                                     <Button
@@ -363,12 +383,22 @@ export const InstallationStepCard = ({
                               </div>
                             ) : (
                               <ul className="space-y-0 divide-y divide-border/20">
-                                {step.safety.map((note, i) => (
-                                  <li key={i} className="flex items-start gap-3 text-sm py-3 first:pt-0 last:pb-0">
-                                    <ShieldAlert className="h-4 w-4 text-destructive mt-0.5 flex-shrink-0" />
-                                    <span className="text-foreground/90 leading-relaxed text-left">{note}</span>
-                                  </li>
-                                ))}
+                                {(step.safety || []).map((note, i) => {
+                                  const parsed = parseRegulationFromSafety(note);
+                                  return (
+                                    <li key={i} className="flex items-start gap-3 text-sm py-3 first:pt-0 last:pb-0">
+                                      <ShieldAlert className="h-4 w-4 text-destructive mt-0.5 flex-shrink-0" />
+                                      <div className="flex-1">
+                                        <span className="text-foreground/90 leading-relaxed text-left">{parsed.text}</span>
+                                        {parsed.regulation && (
+                                          <Badge className="ml-2 bg-blue-500/10 text-blue-400 border-blue-500/20 text-xs font-mono">
+                                            Reg {parsed.regulation}
+                                          </Badge>
+                                        )}
+                                      </div>
+                                    </li>
+                                  );
+                                })}
                               </ul>
                             )}
                           </div>
@@ -390,7 +420,7 @@ export const InstallationStepCard = ({
                     >
                       <div className="flex items-center gap-2">
                         <Wrench className="h-5 w-5 text-elec-yellow" />
-                        <h4 className="font-bold text-base text-foreground">Tools Required ({toolsRequired.length})</h4>
+                        <h4 className="font-bold text-base text-foreground">Tools Required</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -413,7 +443,7 @@ export const InstallationStepCard = ({
                                     <Input
                                       value={item}
                                       onChange={(e) => updateItem(setEditedTools, idx, e.target.value)}
-                                      placeholder="Tool required"
+                                      placeholder="Tool name"
                                       className={cn("flex-1", isMobile && "min-h-[48px]")}
                                     />
                                     <Button
@@ -437,13 +467,14 @@ export const InstallationStepCard = ({
                                 </Button>
                               </div>
                             ) : (
-                              <div className="flex flex-wrap gap-2">
-                                {toolsRequired.map((tool: string, i: number) => (
-                                  <Badge key={i} variant="outline" className="bg-elec-yellow/10 text-foreground border-elec-yellow/30 px-3 py-1.5 text-left">
-                                    {tool}
-                                  </Badge>
+                              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                                {toolsRequired.map((tool, i) => (
+                                  <li key={i} className="flex items-center gap-2 text-foreground/90">
+                                    <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
+                                    <span className="text-left">{tool}</span>
+                                  </li>
                                 ))}
-                              </div>
+                              </ul>
                             )}
                           </div>
                         </motion.div>
@@ -454,16 +485,16 @@ export const InstallationStepCard = ({
 
                 {/* Materials Needed */}
                 {((step.materialsNeeded && step.materialsNeeded.length > 0) || isEditing) && (
-                  <div className="border-2 border-primary/30 rounded-lg overflow-hidden">
+                  <div className="border-2 border-green-500/30 rounded-lg overflow-hidden">
                     <button
                       onClick={() => toggleSection('materials')}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 bg-primary/10 transition-colors",
+                        "w-full flex items-center justify-between p-4 bg-green-500/10 transition-colors",
                         isMobile && "min-h-[56px]"
                       )}
                     >
                       <div className="flex items-center gap-2">
-                        <Package className="h-5 w-5 text-primary" />
+                        <Package className="h-5 w-5 text-green-400" />
                         <h4 className="font-bold text-base text-foreground">Materials Needed</h4>
                       </div>
                       <ChevronDown className={cn(
@@ -479,7 +510,7 @@ export const InstallationStepCard = ({
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <div className="p-4 bg-primary/5">
+                          <div className="p-4 bg-green-500/5">
                             {isEditing ? (
                               <div className="space-y-2">
                                 {editedMaterials.map((item, idx) => (
@@ -487,7 +518,7 @@ export const InstallationStepCard = ({
                                     <Input
                                       value={item}
                                       onChange={(e) => updateItem(setEditedMaterials, idx, e.target.value)}
-                                      placeholder="Material needed"
+                                      placeholder="Material name"
                                       className={cn("flex-1", isMobile && "min-h-[48px]")}
                                     />
                                     <Button
@@ -511,13 +542,14 @@ export const InstallationStepCard = ({
                                 </Button>
                               </div>
                             ) : (
-                              <div className="flex flex-wrap gap-2">
+                              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                                 {step.materialsNeeded.map((material, i) => (
-                                  <Badge key={i} variant="outline" className="bg-primary/10 text-foreground border-primary/30 px-3 py-1.5 text-left">
-                                    {material}
-                                  </Badge>
+                                  <li key={i} className="flex items-center gap-2 text-foreground/90">
+                                    <CheckCircle2 className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
+                                    <span className="text-left">{material}</span>
+                                  </li>
                                 ))}
-                              </div>
+                              </ul>
                             )}
                           </div>
                         </motion.div>
@@ -528,16 +560,16 @@ export const InstallationStepCard = ({
 
                 {/* Inspection Checkpoints */}
                 {(inspectionCheckpoints.length > 0 || isEditing) && (
-                  <div className="border-2 border-success/30 rounded-lg overflow-hidden">
+                  <div className="border-2 border-purple-500/30 rounded-lg overflow-hidden">
                     <button
                       onClick={() => toggleSection('checkpoints')}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 bg-success/10 transition-colors",
+                        "w-full flex items-center justify-between p-4 bg-purple-500/10 transition-colors",
                         isMobile && "min-h-[56px]"
                       )}
                     >
                       <div className="flex items-center gap-2">
-                        <CheckCircle2 className="h-5 w-5 text-success" />
+                        <CheckCircle2 className="h-5 w-5 text-purple-400" />
                         <h4 className="font-bold text-base text-foreground">Inspection Checkpoints</h4>
                       </div>
                       <ChevronDown className={cn(
@@ -553,7 +585,7 @@ export const InstallationStepCard = ({
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <div className="p-4 bg-success/5">
+                          <div className="p-4 bg-purple-500/5">
                             {isEditing ? (
                               <div className="space-y-2">
                                 {editedCheckpoints.map((item, idx) => (
@@ -586,9 +618,9 @@ export const InstallationStepCard = ({
                               </div>
                             ) : (
                               <ul className="space-y-0 divide-y divide-border/20">
-                                {inspectionCheckpoints.map((checkpoint: string, i: number) => (
+                                {inspectionCheckpoints.map((checkpoint, i) => (
                                   <li key={i} className="flex items-start gap-3 text-sm py-3 first:pt-0 last:pb-0">
-                                    <CheckCircle2 className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
+                                    <CheckCircle2 className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
                                     <span className="text-foreground/90 leading-relaxed text-left">{checkpoint}</span>
                                   </li>
                                 ))}
@@ -601,19 +633,19 @@ export const InstallationStepCard = ({
                   </div>
                 )}
 
-                {/* Required Qualifications */}
+                {/* Competency Requirements */}
                 {(qualifications.length > 0 || isEditing) && (
-                  <div className="border-2 border-purple-400/30 rounded-lg overflow-hidden">
+                  <div className="border-2 border-amber-500/30 rounded-lg overflow-hidden">
                     <button
                       onClick={() => toggleSection('qualifications')}
                       className={cn(
-                        "w-full flex items-center justify-between p-4 bg-purple-500/10 transition-colors",
+                        "w-full flex items-center justify-between p-4 bg-amber-500/10 transition-colors",
                         isMobile && "min-h-[56px]"
                       )}
                     >
                       <div className="flex items-center gap-2">
-                        <GraduationCap className="h-5 w-5 text-purple-400" />
-                        <h4 className="font-bold text-base text-foreground">Required Qualifications</h4>
+                        <GraduationCap className="h-5 w-5 text-amber-400" />
+                        <h4 className="font-bold text-base text-foreground">Competency Requirements</h4>
                       </div>
                       <ChevronDown className={cn(
                         "h-5 w-5 transition-transform",
@@ -628,7 +660,7 @@ export const InstallationStepCard = ({
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <div className="p-4 bg-purple-500/5">
+                          <div className="p-4 bg-amber-500/5">
                             {isEditing ? (
                               <div className="space-y-2">
                                 {editedQualifications.map((item, idx) => (
@@ -636,7 +668,7 @@ export const InstallationStepCard = ({
                                     <Input
                                       value={item}
                                       onChange={(e) => updateItem(setEditedQualifications, idx, e.target.value)}
-                                      placeholder="Required qualification"
+                                      placeholder="Qualification required"
                                       className={cn("flex-1", isMobile && "min-h-[48px]")}
                                     />
                                     <Button
@@ -660,13 +692,14 @@ export const InstallationStepCard = ({
                                 </Button>
                               </div>
                             ) : (
-                              <div className="flex flex-wrap gap-2">
-                                {qualifications.map((qual: string, i: number) => (
-                                  <Badge key={i} className="bg-purple-500/20 text-purple-100 border-purple-400/30 px-3 py-1">
-                                    {qual}
-                                  </Badge>
+                              <ul className="grid grid-cols-1 gap-2 text-sm">
+                                {qualifications.map((qual, i) => (
+                                  <li key={i} className="flex items-center gap-2 text-foreground/90">
+                                    <GraduationCap className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />
+                                    <span className="text-left">{qual}</span>
+                                  </li>
                                 ))}
-                              </div>
+                              </ul>
                             )}
                           </div>
                         </motion.div>
@@ -675,71 +708,74 @@ export const InstallationStepCard = ({
                   </div>
                 )}
               </div>
+            </div>
+          </div>
+        </div>
 
-              {/* Action Buttons - Touch optimized */}
-              <div className="flex flex-wrap gap-2 pt-5 border-t-2 border-border/50">
-                {!isEditing && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setIsEditing(true)}
-                    className={cn(
-                      "border-elec-yellow/30 hover:bg-elec-yellow/10 hover:text-elec-yellow transition-colors active:scale-95",
-                      isMobile && "min-h-[48px] px-4"
-                    )}
-                  >
-                    <Edit2 className="h-4 w-4 mr-2" />
-                    Edit
-                  </Button>
+        {/* Action buttons - Bottom anchored on mobile */}
+        <div className={cn(
+          "flex justify-end gap-2 mt-6 pt-6 border-t",
+          isMobile && "flex-col"
+        )}>
+          {!isEditing && (
+            <>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsEditing(true)}
+                className={cn(
+                  "gap-2",
+                  isMobile && "min-h-[48px] w-full"
                 )}
-                {onMoveUp && (
-                  <Button 
-                    variant="ghost" 
-                    size="sm"
-                    onClick={onMoveUp}
-                    disabled={isEditing}
-                    className={cn(
-                      "hover:bg-accent transition-colors active:scale-95 disabled:opacity-50",
-                      isMobile && "min-h-[48px] px-4"
-                    )}
-                  >
-                    <ChevronUp className="h-4 w-4 mr-2" />
-                    Move Up
-                  </Button>
-                )}
-                {onMoveDown && (
-                  <Button 
-                    variant="ghost" 
-                    size="sm"
-                    onClick={onMoveDown}
-                    disabled={isEditing}
-                    className={cn(
-                      "hover:bg-accent transition-colors active:scale-95 disabled:opacity-50",
-                      isMobile && "min-h-[48px] px-4"
-                    )}
-                  >
-                    <ChevronDown className="h-4 w-4 mr-2" />
-                    Move Down
-                  </Button>
-                )}
+              >
+                <Edit2 className="h-4 w-4" />
+                Edit Step
+              </Button>
+              {onMoveUp && (
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={onDelete}
-                  disabled={isEditing}
+                  onClick={onMoveUp}
                   className={cn(
-                    "text-destructive hover:bg-destructive/10 hover:text-destructive transition-colors active:scale-95 disabled:opacity-50 ml-auto",
-                    isMobile && "min-h-[48px] px-4"
+                    "gap-2",
+                    isMobile && "min-h-[48px] w-full"
                   )}
                 >
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete
+                  <ChevronUp className="h-4 w-4" />
+                  Move Up
                 </Button>
-              </div>
-            </div>
-          </div>
+              )}
+              {onMoveDown && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onMoveDown}
+                  className={cn(
+                    "gap-2",
+                    isMobile && "min-h-[48px] w-full"
+                  )}
+                >
+                  <ChevronDown className="h-4 w-4" />
+                  Move Down
+                </Button>
+              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onDelete}
+                className={cn(
+                  "text-destructive hover:text-destructive gap-2",
+                  isMobile && "min-h-[48px] w-full"
+                )}
+              >
+                <Trash2 className="h-4 w-4" />
+                Delete
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </Card>
   );
 };
+
