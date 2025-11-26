@@ -77,12 +77,9 @@ Deno.serve(async (req) => {
 
       // Format response to match expected structure
       const outputData = {
-        success: true,
-        data: {
-          originalQuery: job.query,
-          structuredData: result,
-          response: formatTextSummary(result)
-        }
+        originalQuery: job.query,
+        structuredData: result,
+        response: formatTextSummary(result)
       };
 
       // Progress: 100% - Complete
