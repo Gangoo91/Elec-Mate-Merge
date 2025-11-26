@@ -13,7 +13,6 @@ interface StructuredDesignSectionsProps {
     protectiveDeviceSelection: string;
     complianceConfirmation: string;
     designJustification: string;
-    installationGuidance: string;
     safetyNotes: string;
     testingCommissioningGuidance: string;
   };
@@ -33,9 +32,8 @@ export const StructuredDesignSections = ({ sections }: StructuredDesignSectionsP
     { key: 'protectiveDeviceSelection', title: '4. Protective Device Selection', icon: Shield },
     { key: 'complianceConfirmation', title: '5. Compliance Confirmation', icon: CheckCircle2 },
     { key: 'designJustification', title: '6. Design Justification', icon: MessageSquare },
-    { key: 'installationGuidance', title: '7. Installation Guidance', icon: Wrench },
-    { key: 'testingCommissioningGuidance', title: '8. Testing & Commissioning', icon: ClipboardCheck },
-    { key: 'safetyNotes', title: '9. Safety Notes', icon: AlertTriangle }
+    { key: 'testingCommissioningGuidance', title: '7. Testing & Commissioning', icon: ClipboardCheck },
+    { key: 'safetyNotes', title: '8. Safety Notes', icon: AlertTriangle }
   ];
 
   return (

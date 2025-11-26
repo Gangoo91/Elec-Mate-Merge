@@ -38,14 +38,7 @@ export const MobileJustificationAccordion = ({ sections }: MobileJustificationAc
               icon={section.icon}
               className="bg-elec-gray/50 hover:bg-elec-gray/70"
             >
-              <div className="flex items-center justify-between w-full pr-8">
-                <span className="text-sm font-medium">{section.title}</span>
-                {section.badge && (
-                  <Badge variant="outline" className="ml-2 text-xs bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
-                    {section.badge}
-                  </Badge>
-                )}
-              </div>
+              <span className="text-sm font-medium">{section.title}</span>
             </MobileAccordionTrigger>
             <MobileAccordionContent>
               <div className="p-4 bg-elec-dark/60 border-t border-elec-yellow/10">
