@@ -345,7 +345,7 @@ OUTPUT STRUCTURE:
     }
   ],
   "summary": {
-    "totalSteps": 5,
+    "totalSteps": 12,
     "estimatedDuration": "2-3 hours",
     "requiredQualifications": ["Qualification 1"],
     "toolsRequired": ["All tools needed"],
@@ -355,12 +355,27 @@ OUTPUT STRUCTURE:
 }
 
 REQUIREMENTS:
-- Cover FULL installation lifecycle: preparation → installation → testing → inspection
-- Include specific BS 7671 regulation references
-- Provide realistic time estimates
-- List ALL tools and materials needed
-- Highlight safety-critical steps
-- Include inspection checkpoints per step
+- Generate MINIMUM 12-15 detailed installation steps covering the FULL lifecycle:
+  * Steps 1-3: Preparation (site survey, risk assessment, safe isolation, permits)
+  * Steps 4-6: First fix work (containment installation, cable routing, supports)
+  * Steps 7-10: Second fix work (terminations, connections, accessories, labelling)
+  * Steps 11-13: Testing and verification (continuity, IR, Zs, RCD tests)
+  * Steps 14-15: Commissioning, final inspection, and handover documentation
+
+- Each step MUST include:
+  * 100-150 word detailed description with specific technical guidance
+  * 2-4 safety considerations specific to that step
+  * 3-5 tools required for that specific step
+  * 2-4 materials needed for that step
+  * Specific BS 7671 regulation reference where applicable
+  * Realistic time estimate (e.g., "20-30 minutes", "1-2 hours")
+  * Risk level assessment (low/medium/high)
+  * 1-3 inspection checkpoints to verify proper completion
+
+- Include specific BS 7671 regulation references throughout
+- Provide realistic time estimates for each step
+- List ALL tools and materials needed per step
+- Highlight safety-critical steps with detailed precautions
 - Use metric measurements (mm, metres)
 - UK English spelling throughout (metres, colour, earthing not grounding)
 - Respond in valid JSON format only`;
@@ -402,7 +417,7 @@ ${ragContext.regulations.slice(0, 10).map((reg: any, i: number) =>
         { role: 'user', content: userPrompt }
       ],
       response_format: { type: 'json_object' },
-      max_completion_tokens: 12000  // Increased for GPT-5 reasoning + output
+      max_completion_tokens: 16000  // Increased for comprehensive 12-15 step output
     })
   });
 

@@ -114,7 +114,7 @@ export const InstallationStepCard = ({
     )}>
       
       <div className={cn("p-6", isMobile && "p-4")}>
-        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 text-center sm:text-left">
           {/* Step number - Touch optimized */}
           <div className="relative flex-shrink-0">
             <div className={cn(
@@ -138,7 +138,7 @@ export const InstallationStepCard = ({
                   autoFocus
                 />
               ) : (
-                <h3 className="text-xl sm:text-2xl font-bold text-foreground leading-tight">
+                <h3 className="text-xl sm:text-2xl font-bold text-foreground leading-tight text-left">
                   {step.title}
                 </h3>
               )}
@@ -362,11 +362,11 @@ export const InstallationStepCard = ({
                                 </Button>
                               </div>
                             ) : (
-                              <ul className="space-y-2">
+                              <ul className="space-y-0 divide-y divide-border/20">
                                 {step.safety.map((note, i) => (
-                                  <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/90 bg-background/30 p-3 rounded-md">
+                                  <li key={i} className="flex items-start gap-3 text-sm py-3 first:pt-0 last:pb-0">
                                     <ShieldAlert className="h-4 w-4 text-destructive mt-0.5 flex-shrink-0" />
-                                    <span className="leading-relaxed text-left">{note}</span>
+                                    <span className="text-foreground/90 leading-relaxed text-left">{note}</span>
                                   </li>
                                 ))}
                               </ul>
@@ -437,12 +437,11 @@ export const InstallationStepCard = ({
                                 </Button>
                               </div>
                             ) : (
-                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                              <div className="flex flex-wrap gap-2">
                                 {toolsRequired.map((tool: string, i: number) => (
-                                  <div key={i} className="flex items-start gap-2.5 text-sm bg-background/40 p-3 rounded-md border border-border/40">
-                                    <Wrench className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                                    <span className="text-foreground leading-relaxed">{tool}</span>
-                                  </div>
+                                  <Badge key={i} variant="outline" className="bg-elec-yellow/10 text-foreground border-elec-yellow/30 px-3 py-1.5 text-left">
+                                    {tool}
+                                  </Badge>
                                 ))}
                               </div>
                             )}
@@ -512,14 +511,13 @@ export const InstallationStepCard = ({
                                 </Button>
                               </div>
                             ) : (
-                              <ul className="space-y-2">
+                              <div className="flex flex-wrap gap-2">
                                 {step.materialsNeeded.map((material, i) => (
-                                  <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/90 bg-background/30 p-3 rounded-md">
-                                    <span className="text-primary mt-0.5">•</span>
-                                    <span className="leading-relaxed">{material}</span>
-                                  </li>
+                                  <Badge key={i} variant="outline" className="bg-primary/10 text-foreground border-primary/30 px-3 py-1.5 text-left">
+                                    {material}
+                                  </Badge>
                                 ))}
-                              </ul>
+                              </div>
                             )}
                           </div>
                         </motion.div>
@@ -587,11 +585,11 @@ export const InstallationStepCard = ({
                                 </Button>
                               </div>
                             ) : (
-                              <ul className="space-y-2">
+                              <ul className="space-y-0 divide-y divide-border/20">
                                 {inspectionCheckpoints.map((checkpoint: string, i: number) => (
-                                  <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/90 bg-background/30 p-3 rounded-md">
+                                  <li key={i} className="flex items-start gap-3 text-sm py-3 first:pt-0 last:pb-0">
                                     <CheckCircle2 className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
-                                    <span className="leading-relaxed">{checkpoint}</span>
+                                    <span className="text-foreground/90 leading-relaxed text-left">{checkpoint}</span>
                                   </li>
                                 ))}
                               </ul>
