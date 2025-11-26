@@ -244,7 +244,7 @@ export class DesignPipeline {
         circuit: normalized.circuits[0].name,
         timeout: '90s'
       });
-      design = await this.ai.generate(normalized, ragContext);
+      design = await this.ai.generate(normalized, ragContext, preValidationConstraints);
       
       this.logger.info('AI design complete', {
         circuits: design.circuits.length
@@ -279,7 +279,8 @@ export class DesignPipeline {
           // Generate design for this single circuit (reuse RAG context)
           const circuitDesign = await this.ai.generate(
             singleCircuitInputs,
-            ragContext
+            ragContext,
+            preValidationConstraints
           );
 
           this.logger.info(`Circuit ${i + 1}/${normalized.circuits.length} complete`, {
