@@ -56,8 +56,8 @@ export const Timeouts = {
   /** Critical timeout (2 minutes) - batch processing */
   CRITICAL: 120000,
   
-  /** AI call timeout (30s) - Fast failure detection for Gemini/GPT */
-  AI_CALL: 30000,
+  /** AI call timeout (150s) - Allows for large RAG context with complex designs */
+  AI_CALL: 150000,
   
   /** Super extended (4 min 40 sec) - complex multi-circuit designs with RAG */
   SUPER_EXTENDED: 280000,

@@ -95,7 +95,7 @@ export class DesignPipeline {
     });
 
     // ========================================
-    // Regular path: 1-5 circuits → full RAG + complete prompt (90s timeout)
+    // Regular path: 1-5 circuits → full RAG + complete prompt (150s timeout)
     // Batch path: 6+ circuits → parallel batch processing
     // ========================================
 
@@ -547,6 +547,71 @@ export class DesignPipeline {
     });
 
     // ========================================
+    // RETRY WRAPPER: Handle Transient OpenAI Timeouts
+    // ========================================
+    const designCircuitWithRetry = async (
+      inputs: NormalizedInputs,
+      context: any,
+      constraints: Map<string, any>,
+      circuitIndex?: number,
+      totalCircuits?: number,
+      maxRetries: number = 2
+    ): Promise<any> => {
+      let lastError: Error | null = null;
+      
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          const circuitLabel = circuitIndex !== undefined 
+            ? `Circuit ${circuitIndex + 1}/${totalCircuits}: ${inputs.circuits[0]?.name}`
+            : 'Design';
+          
+          if (attempt > 1) {
+            this.logger.warn(`${circuitLabel} - Retry attempt ${attempt}/${maxRetries}`, {
+              previousError: lastError?.message
+            });
+          }
+          
+          const result = await this.ai.generate(inputs, context, constraints);
+          
+          if (attempt > 1) {
+            this.logger.info(`✅ ${circuitLabel} succeeded on retry attempt ${attempt}`);
+          }
+          
+          return result;
+        } catch (error: any) {
+          lastError = error;
+          
+          // Check if error is timeout-related
+          const isTimeout = 
+            error.message?.toLowerCase().includes('timeout') ||
+            error.message?.toLowerCase().includes('timed out') ||
+            error.statusCode === 408 ||
+            error.name === 'TimeoutError';
+          
+          if (isTimeout && attempt < maxRetries) {
+            const circuitLabel = circuitIndex !== undefined 
+              ? `Circuit ${circuitIndex + 1}/${totalCircuits}: ${inputs.circuits[0]?.name}`
+              : 'Design';
+            
+            this.logger.warn(`⚠️ ${circuitLabel} timed out (${attempt}/${maxRetries})`, {
+              error: error.message,
+              willRetry: true
+            });
+            
+            // Brief pause before retry (2 seconds)
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            continue;
+          }
+          
+          // Not a timeout or out of retries - throw the error
+          throw error;
+        }
+      }
+      
+      throw lastError || new Error('Circuit design failed after retries');
+    };
+
+    // ========================================
     // PHASE 4: AI Design Generation (with batch processing)
     // ========================================
     let design: any;
@@ -559,12 +624,13 @@ export class DesignPipeline {
     
     // PER-CIRCUIT PARALLEL PROCESSING for all circuit counts
     if (normalized.circuits.length === 1) {
-      // Single circuit: use regular generation
+      // Single circuit: use regular generation with retry logic
       this.logger.info('Single circuit mode', {
         circuit: normalized.circuits[0].name,
-        timeout: '90s'
+        timeout: '150s',
+        maxRetries: 2
       });
-      design = await this.ai.generate(normalized, ragContext, preValidationConstraints);
+      design = await designCircuitWithRetry(normalized, ragContext, preValidationConstraints);
       
       this.logger.info('AI design complete', {
         circuits: design.circuits.length
@@ -575,7 +641,9 @@ export class DesignPipeline {
       
       this.logger.info('Per-circuit parallel processing enabled', {
         totalCircuits: normalized.circuits.length,
-        estimatedTime: '40-60s (all circuits in parallel)'
+        estimatedTime: '40-60s (all circuits in parallel)',
+        timeout: '150s per circuit',
+        maxRetries: 2
       });
 
       // Create parallel tasks for each individual circuit
@@ -596,11 +664,13 @@ export class DesignPipeline {
             circuits: [circuit]
           };
 
-          // Generate design for this single circuit (reuse RAG context)
-          const circuitDesign = await this.ai.generate(
+          // Generate design for this single circuit with retry logic
+          const circuitDesign = await designCircuitWithRetry(
             singleCircuitInputs,
             ragContext,
-            preValidationConstraints
+            preValidationConstraints,
+            i,
+            normalized.circuits.length
           );
 
           this.logger.info(`Circuit ${i + 1}/${normalized.circuits.length} complete`, {
