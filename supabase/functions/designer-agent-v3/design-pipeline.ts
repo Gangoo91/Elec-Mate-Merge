@@ -767,6 +767,38 @@ export class DesignPipeline {
     });
 
     // ========================================
+    // PHASE 4.8: Post-Calculation Safety Check - Enforce Ib ≤ In
+    // ========================================
+    // If deterministic calculations changed Ib, we must re-check and upgrade MCBs if needed
+    design.circuits = design.circuits.map((circuit: any) => {
+      const Ib = circuit.calculations?.Ib || 0;
+      const In = circuit.protectionDevice?.rating || 0;
+      
+      if (Ib > In) {
+        const standardMCBs = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
+        const requiredRating = Ib * 1.05;
+        const newRating = standardMCBs.find(r => r >= requiredRating) || 100;
+        
+        this.logger.info('POST-CALC SAFETY FIX: MCB upgraded after calculations', {
+          circuit: circuit.name,
+          Ib: Ib.toFixed(1),
+          from: In,
+          to: newRating,
+          reason: 'Design current increased after deterministic calculations'
+        });
+        
+        circuit.protectionDevice.rating = newRating;
+        if (circuit.calculations) {
+          circuit.calculations.In = newRating;
+        }
+      }
+      
+      return circuit;
+    });
+    
+    this.logger.info('Post-calculation safety check complete');
+
+    // ========================================
     // PHASE 5: Validation (with voltage context)
     // ========================================
     let validationResult = this.validator.validate(design, normalized.supply.voltage);
