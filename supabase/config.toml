@@ -188,3 +188,16 @@ timeout_sec = 300
 verify_jwt = false
 timeout_sec = 360
 
+# Cost Engineer Job Queue Architecture
+[functions.create-cost-engineer-job]
+verify_jwt = false
+timeout_sec = 30
+
+[functions.process-cost-engineer-job]
+verify_jwt = false
+timeout_sec = 600
+
+[functions.cancel-cost-engineer-job]
+verify_jwt = false
+timeout_sec = 30
+

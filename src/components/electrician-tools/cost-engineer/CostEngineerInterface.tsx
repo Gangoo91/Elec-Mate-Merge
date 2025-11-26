@@ -6,7 +6,8 @@ import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { MobileButton } from "@/components/ui/mobile-button";
 
 import { toast } from "@/hooks/use-toast";
-import { useSimpleAgent } from "@/hooks/useSimpleAgent";
+import { supabase } from "@/integrations/supabase/client";
+import { useCostEngineerGeneration } from "@/hooks/useCostEngineerGeneration";
 import CostAnalysisProcessingView from "./CostAnalysisProcessingView";
 import CostAnalysisResults from "./CostAnalysisResults";
 import { parseCostAnalysis, ParsedCostAnalysis } from "@/utils/cost-analysis-parser";
@@ -32,9 +33,23 @@ const CostEngineerInterface = () => {
   const [additionalInfo, setAdditionalInfo] = useState("");
   const [businessSettings, setBusinessSettings] = useState<BusinessSettings>(DEFAULT_BUSINESS_SETTINGS);
   const [showExamples, setShowExamples] = useState(false);
+  const [jobId, setJobId] = useState<string | null>(null);
 
-  // Use the proven useSimpleAgent hook (same as all other working agents)
-  const { callAgent, isLoading, progress } = useSimpleAgent();
+  // Use job queue pattern with polling
+  const { job, isPolling, cancelJob } = useCostEngineerGeneration({
+    jobId,
+    onComplete: (data) => {
+      handleJobComplete(data);
+    },
+    onError: (error) => {
+      setViewState('input');
+      toast({
+        title: "Generation failed",
+        description: error,
+        variant: "destructive"
+      });
+    }
+  });
 
   const handleExampleSelect = (example: string) => {
     setPrompt(example);
@@ -59,6 +74,51 @@ const CostEngineerInterface = () => {
     });
   };
 
+  const handleJobComplete = (data: any) => {
+    // Store original query from response
+    if (data.originalQuery) {
+      setOriginalQueryFromResponse(data.originalQuery);
+    }
+
+    // Store structured data
+    const coreStructuredData = data.structuredData;
+    setStructuredData(coreStructuredData);
+
+    // Parse results
+    if (coreStructuredData && coreStructuredData.summary) {
+      setParsedResults({
+        totalCost: coreStructuredData.summary.grandTotal,
+        materialsTotal: coreStructuredData.materials?.subtotal || 0,
+        labourTotal: coreStructuredData.labour?.subtotal || 0,
+        materials: coreStructuredData.materials?.items?.map((m: any) => ({
+          item: m.description || m.item || 'Unknown item',
+          quantity: m.quantity,
+          unit: m.unit,
+          unitPrice: m.unitPrice,
+          total: m.total,
+          supplier: m.supplier
+        })) || [],
+        labour: {
+          hours: coreStructuredData.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0,
+          rate: 50,
+          total: coreStructuredData.labour?.subtotal || 0,
+          description: coreStructuredData.labour?.tasks?.[0]?.description || 'Installation labour'
+        },
+        additionalCosts: [],
+        vatAmount: coreStructuredData.summary.vat,
+        vatRate: 20,
+        subtotal: coreStructuredData.summary.subtotal,
+        rawText: data.response
+      });
+    } else {
+      // Fallback to text parsing
+      const parsed = parseCostAnalysis(data.response);
+      setParsedResults(parsed);
+    }
+
+    setViewState('results');
+  };
+
   const handleGenerate = async () => {
     if (!prompt.trim()) {
       toast({
@@ -71,99 +131,48 @@ const CostEngineerInterface = () => {
 
     setViewState('processing');
 
-    // Simple call using the proven useSimpleAgent pattern
-    const response = await callAgent('cost-engineer', {
-      query: prompt,
-      region: location || 'UK',
-      projectContext: {
-        projectType: projectType,
-        projectName: projectName,
-        clientInfo: clientInfo,
-        additionalInfo: additionalInfo
-      },
-      businessSettings: businessSettings,
-      skipProfitability: false
-    });
+    try {
+      // Create job using new job queue pattern
+      const { data, error } = await supabase.functions.invoke('create-cost-engineer-job', {
+        body: {
+          query: prompt,
+          region: location || 'UK',
+          projectContext: {
+            projectType: projectType,
+            projectName: projectName,
+            clientInfo: clientInfo,
+            additionalInfo: additionalInfo
+          },
+          businessSettings: businessSettings
+        }
+      });
 
-    // Handle failure case - return to input state
-    if (!response?.success) {
-      setViewState('input');
-      // Error toast is already shown by useSimpleAgent
-      return;
-    }
+      if (error) throw error;
 
-    // Handle empty data case
-    if (!response.data) {
+      // Set job ID to start polling
+      setJobId(data.jobId);
+
+      toast({
+        title: "Analysis started",
+        description: "Generating cost estimate...",
+      });
+    } catch (error: any) {
+      console.error('Error creating job:', error);
       setViewState('input');
       toast({
-        title: "No data returned",
-        description: "The cost engineer returned no results. Please try again.",
+        title: "Failed to start analysis",
+        description: error.message,
         variant: "destructive"
       });
-      return;
-    }
-
-    // Handle response - same pattern as all other working agents
-    if (response.data) {
-      const data = response.data;
-
-      // Store original query from response
-      if (data.originalQuery) {
-        setOriginalQueryFromResponse(data.originalQuery);
-      }
-
-      // Store structured data
-      const coreStructuredData = data.structuredData;
-      setStructuredData(coreStructuredData);
-
-      // Parse results
-      if (coreStructuredData && coreStructuredData.summary) {
-        setParsedResults({
-          totalCost: coreStructuredData.summary.grandTotal,
-          materialsTotal: coreStructuredData.materials?.subtotal || 0,
-          labourTotal: coreStructuredData.labour?.subtotal || 0,
-          materials: coreStructuredData.materials?.items?.map((m: any) => ({
-            item: m.description || m.item || 'Unknown item',
-            quantity: m.quantity,
-            unit: m.unit,
-            unitPrice: m.unitPrice,
-            total: m.total,
-            supplier: m.supplier
-          })) || [],
-          labour: {
-            hours: coreStructuredData.labour?.tasks?.reduce((sum: number, t: any) => sum + (t.hours || 0), 0) || 0,
-            rate: 50,
-            total: coreStructuredData.labour?.subtotal || 0,
-            description: coreStructuredData.labour?.tasks?.[0]?.description || 'Installation labour'
-          },
-          additionalCosts: [],
-          vatAmount: coreStructuredData.summary.vat,
-          vatRate: 20,
-          subtotal: coreStructuredData.summary.subtotal,
-          rawText: data.response
-        });
-      } else {
-        // Fallback to text parsing
-        const parsed = parseCostAnalysis(data.response);
-        setParsedResults(parsed);
-      }
-
-      setTimeout(() => {
-        setViewState('results');
-        toast({
-          title: "Analysis complete!",
-          description: "Cost estimate ready to view",
-        });
-      }, 0);
     }
   };
 
-  const handleCancel = () => {
+  const handleCancel = async () => {
+    if (jobId) {
+      await cancelJob();
+    }
     setViewState('input');
-    toast({
-      title: "Analysis cancelled",
-      description: "You can start a new analysis anytime",
-    });
+    setJobId(null);
   };
 
   const handleNewAnalysis = () => {
@@ -174,10 +183,28 @@ const CostEngineerInterface = () => {
     setClientInfo("");
     setLocation("");
     setAdditionalInfo("");
+    setJobId(null);
   };
 
-  if (viewState === 'processing' && isLoading) {
-    return <CostAnalysisProcessingView progress={progress} onCancel={handleCancel} />;
+  if (viewState === 'processing' && isPolling) {
+    // Map job status to stage
+    let stage: 'initializing' | 'rag' | 'ai' | 'validation' | 'complete' = 'initializing';
+    if (job) {
+      if (job.progress < 25) stage = 'initializing';
+      else if (job.progress < 70) stage = 'rag';
+      else if (job.progress < 100) stage = 'ai';
+      else stage = 'complete';
+    }
+
+    return (
+      <CostAnalysisProcessingView 
+        progress={{
+          stage,
+          message: job?.current_step || 'Initializing...'
+        }}
+        onCancel={handleCancel}
+      />
+    );
   }
 
   if (viewState === 'results' && parsedResults) {
