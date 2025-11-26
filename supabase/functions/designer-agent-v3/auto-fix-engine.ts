@@ -42,7 +42,11 @@ export class AutoFixEngine {
     const originalCable = circuit.cableSize;
     const originalProtection = circuit.protectionDevice.type;
 
-    // FIX 0: UPGRADE undersized selections FIRST (SAFETY CRITICAL - NEW)
+    // FIX -1: SAFETY CRITICAL - Enforce Ib ≤ In (Design current ≤ MCB rating)
+    // Must run FIRST before all other fixes
+    circuit = this.autoUpgradeMcbForDesignCurrent(circuit);
+
+    // FIX 0: UPGRADE undersized selections (SAFETY CRITICAL)
     circuit = this.autoUpgradeToMinimum(circuit);
 
     // FIX 1: Downgrade oversized selections (existing)
@@ -361,6 +365,38 @@ export class AutoFixEngine {
     if (type.includes('ev') || name.includes('ev') || name.includes('charger')) return 'ev_charger';
     
     return 'default';
+  }
+
+  /**
+   * FIX -1: SAFETY CRITICAL - Enforce Ib ≤ In (Design current ≤ MCB rating)
+   * This MUST run BEFORE all other fixes to prevent dangerous undersized MCBs
+   */
+  private autoUpgradeMcbForDesignCurrent(circuit: DesignedCircuit): DesignedCircuit {
+    const Ib = circuit.calculations?.Ib || 0;
+    const currentRating = circuit.protectionDevice.rating;
+    
+    // If design current exceeds MCB rating, this is DANGEROUS - BS 7671 Reg 433.1.1
+    if (Ib > currentRating) {
+      const standardMCBs = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
+      // Find smallest MCB that covers the design current (with 5% margin)
+      const requiredRating = Ib * 1.05;
+      const newRating = standardMCBs.find(r => r >= requiredRating) || 100;
+      
+      this.logger.info('SAFETY FIX: MCB upgraded to cover design current', {
+        circuit: circuit.name,
+        Ib: Ib.toFixed(1),
+        from: currentRating,
+        to: newRating,
+        reason: 'BS 7671 Reg 433.1.1: In must be ≥ Ib'
+      });
+      
+      circuit.protectionDevice.rating = newRating;
+      if (circuit.calculations) {
+        circuit.calculations.In = newRating;
+      }
+    }
+    
+    return circuit;
   }
 
   /**
