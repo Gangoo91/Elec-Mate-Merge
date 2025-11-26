@@ -60,6 +60,9 @@ export class AutoFixEngine {
     // FIX 6: Correct CPC size for cable type
     circuit = this.autoFixCpcSize(circuit);
 
+    // FIX 8: Switch cable type for T&E availability (NEW - before sync)
+    circuit = this.autoSwitchCableTypeForAvailability(circuit, supply);
+
     // FIX 7: Sync cableType string with cableSize (CRITICAL - must be LAST)
     circuit = this.syncCableType(circuit);
 
@@ -372,5 +375,61 @@ export class AutoFixEngine {
     
     // If no suitable rating found, use the maximum allowed for this type
     return maxRating;
+  }
+
+  /**
+   * FIX 8: Auto-switch cable type when T&E exceeds practical availability
+   * T&E commonly available: ≤10mm², rare: 16mm², doesn't exist: ≥25mm²
+   */
+  private autoSwitchCableTypeForAvailability(
+    circuit: DesignedCircuit,
+    supply: NormalizedSupply
+  ): DesignedCircuit {
+    const cableTypeLower = ((circuit as any).cableType || '').toLowerCase();
+    const isTwinEarth = cableTypeLower.includes('twin') || 
+                         cableTypeLower.includes('t&e') || 
+                         cableTypeLower.includes('t & e');
+    
+    if (!isTwinEarth) return circuit; // Not T&E, no action needed
+    
+    const cableSize = circuit.cableSize;
+    
+    // 25mm²+ T&E doesn't exist - MUST switch to SWA
+    if (cableSize >= 25) {
+      this.logger.info('T&E ≥25mm² not available - switching to SWA', {
+        circuit: circuit.name,
+        size: cableSize
+      });
+      
+      (circuit as any).cableType = `${cableSize}mm² SWA (3-core)`;
+      circuit.cpcSize = cableSize; // SWA has equal CPC size
+      (circuit as any).cableAvailabilityNote = 
+        `⚠️ Switched from T&E (unavailable at ${cableSize}mm²) to SWA - T&E doesn't exist above 16mm²`;
+      
+      return circuit;
+    }
+    
+    // 16mm² T&E is rare/expensive - flag it
+    if (cableSize === 16) {
+      (circuit as any).cableAvailabilityNote = 
+        '⚠️ 16mm² T&E is rare and expensive - consider SWA or singles in conduit for better availability';
+    }
+    
+    // Above 10mm² in domestic - suggest alternatives
+    if (cableSize > 10 && supply.installationType === 'domestic') {
+      (circuit as any).cableAvailabilityNote = 
+        (circuit as any).cableAvailabilityNote || 
+        `ℹ️ ${cableSize}mm² T&E may be hard to source locally - SWA is more readily available at this size`;
+    }
+    
+    return circuit;
+  }
+
+  /**
+   * Helper: Check if cable type is Twin & Earth
+   */
+  private isTwinEarth(cableType: string): boolean {
+    const lower = cableType.toLowerCase();
+    return lower.includes('twin') || lower.includes('t&e') || lower.includes('t & e');
   }
 }

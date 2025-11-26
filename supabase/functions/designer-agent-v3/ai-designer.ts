@@ -139,6 +139,13 @@ export class AIDesigner {
       parts.push('❌ NEVER use: PVC singles, LSZH singles, conduit systems');
       parts.push('NOTE: T&E has REDUCED CPC size per BS 7671 Table 54.7 (e.g., 2.5mm² T&E = 1.5mm² CPC)');
       parts.push('');
+      parts.push('=== TWIN & EARTH AVAILABILITY (CRITICAL) ===');
+      parts.push('⚠️ T&E commonly available: 1.0, 1.5, 2.5, 4, 6, 10mm² (widely stocked)');
+      parts.push('⚠️ T&E rare/expensive: 16mm² (exists but hard to source, expensive)');
+      parts.push('❌ T&E DOES NOT EXIST: 25mm² and above (not manufactured)');
+      parts.push('🔄 If circuit needs >10mm² T&E capacity, SWITCH to SWA or singles in conduit');
+      parts.push('🔄 For 16mm² requirements, strongly consider SWA for better availability');
+      parts.push('');
     } else if (type === 'commercial') {
       parts.push('=== COMMERCIAL INSTALLATION CONTEXT ===');
       parts.push('- Often three-phase 400V supply for larger loads');

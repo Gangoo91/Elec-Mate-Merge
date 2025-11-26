@@ -260,7 +260,56 @@ export class ValidationEngine {
       });
     }
 
+    // RULE 14-16: Twin & Earth availability validation
+    if (this.isTwinEarth(cableType)) {
+      if (circuit.cableSize >= 25) {
+        issues.push({
+          circuitIndex: index,
+          circuitName: circuit.name,
+          rule: 'twin_earth_unavailable',
+          regulation: 'Cable Availability',
+          severity: 'error',
+          message: `${circuit.cableSize}mm² twin & earth does not exist (not manufactured above 16mm²). Use SWA or singles in conduit instead.`,
+          currentValue: circuit.cableSize,
+          expectedValue: 'SWA',
+          fieldAffected: 'cableType'
+        });
+      } else if (circuit.cableSize === 16) {
+        issues.push({
+          circuitIndex: index,
+          circuitName: circuit.name,
+          rule: 'twin_earth_rare',
+          regulation: 'Cable Availability',
+          severity: 'warning',
+          message: `16mm² twin & earth is rare and expensive. Consider SWA or singles in conduit for better availability and cost.`,
+          currentValue: circuit.cableSize,
+          expectedValue: 'Consider SWA',
+          fieldAffected: 'cableType'
+        });
+      } else if (circuit.cableSize > 10) {
+        issues.push({
+          circuitIndex: index,
+          circuitName: circuit.name,
+          rule: 'twin_earth_uncommon',
+          regulation: 'Cable Availability',
+          severity: 'info',
+          message: `${circuit.cableSize}mm² T&E may be harder to source than smaller sizes or SWA. Verify local availability before ordering.`,
+          currentValue: circuit.cableSize,
+          expectedValue: 'Verify availability',
+          fieldAffected: 'cableType'
+        });
+      }
+    }
+
     return issues;
+  }
+
+  /**
+   * Helper: Check if cable type is Twin & Earth
+   */
+  private isTwinEarth(cableType: string): boolean {
+    const lower = cableType.toLowerCase();
+    return lower.includes('twin') || lower.includes('t&e') || lower.includes('t & e');
   }
 
   /**
