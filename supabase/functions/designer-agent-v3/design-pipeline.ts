@@ -904,6 +904,53 @@ export class DesignPipeline {
       validationPassed: isValidAfterCalculations
     });
 
+    // ========================================
+    // PHASE 7: FINAL RING FINAL ENFORCEMENT (Last Safety Net)
+    // ========================================
+    // This is the FINAL hard pass to catch any ring finals that slipped through
+    // and ensure they are ALWAYS 2.5mm² + 1.5mm² CPC + 32A RCBO
+    let ringFinalEnforcementCount = 0;
+    design.circuits = design.circuits.map((circuit: any) => {
+      const name = circuit.name?.toLowerCase() || '';
+      const loadType = circuit.loadType?.toLowerCase() || '';
+      
+      // Detect ring finals (cable-agnostic)
+      const isRing = name.includes('ring') || 
+                     loadType.includes('ring') || 
+                     loadType.includes('socket_ring') ||
+                     (loadType.includes('socket') && circuit.protectionDevice?.rating === 32);
+      
+      if (isRing && circuit.cableSize !== 2.5) {
+        this.logger.warn('FINAL ENFORCEMENT: Forcing ring final to standard 2.5mm² configuration', {
+          circuit: circuit.name,
+          loadType: circuit.loadType,
+          wasCableSize: circuit.cableSize,
+          wasCpcSize: circuit.cpcSize,
+          wasProtection: circuit.protectionDevice?.rating,
+          reason: 'BS 7671 Appendix 15 - Ring finals are ALWAYS 2.5mm² + 1.5mm² CPC + 32A RCBO'
+        });
+        
+        circuit.cableSize = 2.5;
+        circuit.cpcSize = 1.5;
+        circuit.protectionDevice = {
+          ...circuit.protectionDevice,
+          rating: 32,
+          type: 'RCBO'
+        };
+        
+        ringFinalEnforcementCount++;
+      }
+      
+      return circuit;
+    });
+    
+    if (ringFinalEnforcementCount > 0) {
+      this.logger.info('Ring final enforcement applied', {
+        circuitsEnforced: ringFinalEnforcementCount,
+        message: 'Ring finals forced to BS 7671 standard: 2.5mm² + 1.5mm² CPC + 32A RCBO'
+      });
+    }
+
     return {
       success: true,
       circuits: design.circuits,

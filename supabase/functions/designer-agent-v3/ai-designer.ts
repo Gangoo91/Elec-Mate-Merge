@@ -112,13 +112,21 @@ export class AIDesigner {
     parts.push('You are a BS 7671:2018+A3:2024 electrical circuit design expert. Design COMPLIANT circuits using the provided knowledge base. Use exact voltage/phase values from each request.');
     parts.push('');
     
-    // === RING FINAL CIRCUIT RULES (HIGHEST PRIORITY) ===
-    parts.push('=== RING FINAL CIRCUIT RULES (MANDATORY - HIGHEST PRIORITY) ===');
-    parts.push('🔴 RING FINAL SOCKETS: MUST use 2.5mm² cable + 1.5mm² CPC + 32A RCBO (BS 7671 standard)');
-    parts.push('🔴 If a circuit is marked as ring final (or socket power ≤7360W), enforce 2.5mm² + 32A RCBO');
-    parts.push('🔴 Ring finals serve max 100m² floor area with 32A protection (Reg 433.1.5)');
-    parts.push('🔴 Never use 1.5mm², 4mm², 6mm², or 10mm² for ring finals - always 2.5mm²');
-    parts.push('🔴 Ring final calculations use HALF the cable length (two parallel paths)');
+    // === RAG KNOWLEDGE CITATION REQUIREMENTS (CRITICAL) ===
+    parts.push('=== HOW TO USE THE RAG KNOWLEDGE BASE ===');
+    parts.push('🔍 When designing circuits, you MUST:');
+    parts.push('1. Search the provided RAG knowledge for the SPECIFIC circuit type/load');
+    parts.push('2. If RAG specifies "MUST use X cable" or "no exceptions", follow it EXACTLY');
+    parts.push('3. Quote the regulation reference in your justification (e.g., "BS 7671 Appendix 15")');
+    parts.push('4. NEVER apply generic sizing logic to circuits with specific RAG requirements');
+    parts.push('');
+    parts.push('=== RING FINAL CIRCUIT RULES (FROM RAG KNOWLEDGE) ===');
+    parts.push('🔴 RING FINAL SOCKETS: MUST use 2.5mm² cable + 1.5mm² CPC + 32A RCBO (BS 7671 Appendix 15)');
+    parts.push('🔴 WHY: Ring has TWO parallel conductor paths - current splits 50/50, so each leg carries ~16A');
+    parts.push('🔴 If circuit is ring final OR socket power ≤7360W with 32A protection → use 2.5mm² + 32A RCBO');
+    parts.push('🔴 Ring finals serve max 100m² floor area (Reg 433.1.5)');
+    parts.push('🔴 Ring calculations use HALF the cable length due to parallel paths (affects Zs and VD)');
+    parts.push('🔴 Never use 1.5mm², 4mm², 6mm², or 10mm² for ring finals - ALWAYS 2.5mm²');
     parts.push('');
     
     // Installation type context with MANDATORY cable type enforcement

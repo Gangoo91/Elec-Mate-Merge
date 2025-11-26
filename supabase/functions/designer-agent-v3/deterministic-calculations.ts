@@ -194,21 +194,29 @@ export class DeterministicCalculator {
 
   /**
    * Detect if a circuit is a ring final circuit
+   * FIXED: Detection is now cable-size-agnostic to prevent circular dependency
    */
   private isRingFinal(circuit: DesignedCircuit): boolean {
     const name = circuit.name?.toLowerCase() || '';
     const loadType = circuit.loadType?.toLowerCase() || '';
     const justification = circuit.justifications?.cableSize?.toLowerCase() || '';
     
-    // Check multiple indicators
-    return (
-      name.includes('ring') ||
-      loadType.includes('ring') ||
-      justification.includes('ring final') ||
-      justification.includes('ring circuit') ||
-      // Typical ring final: 32A sockets on 2.5mm²
-      (loadType.includes('socket') && circuit.protectionDevice.rating === 32 && circuit.cableSize === 2.5)
-    );
+    // Check name and loadType FIRST (cable-agnostic detection)
+    if (name.includes('ring') || 
+        loadType.includes('ring') || 
+        loadType.includes('socket_ring') ||
+        justification.includes('ring final') ||
+        justification.includes('ring circuit')) {
+      return true;
+    }
+    
+    // Socket circuit with 32A protection = likely ring final (regardless of cable size)
+    // This catches rings that weren't explicitly labeled as such
+    if (loadType.includes('socket') && circuit.protectionDevice.rating === 32) {
+      return true;
+    }
+    
+    return false;
   }
 
   /**
@@ -267,6 +275,7 @@ export class DeterministicCalculator {
 
   /**
    * Auto-upgrade cable for Zs compliance (used after deterministic calculation)
+   * FIXED: NEVER upgrades ring finals - they MUST stay 2.5mm²
    */
   private autoUpgradeCableForZs(
     circuit: DesignedCircuit,
@@ -274,6 +283,24 @@ export class DeterministicCalculator {
     cableType: CableType,
     effectiveLength: number
   ): DesignedCircuit {
+    // CRITICAL: Ring finals MUST NOT be upgraded - they must stay 2.5mm²
+    if (this.isRingFinal(circuit)) {
+      this.logger.warn('Zs non-compliant on ring final - CANNOT upgrade cable (must stay 2.5mm²)', {
+        circuit: circuit.name,
+        currentCable: `${circuit.cableSize}mm²`,
+        recommendation: 'Reduce cable length or split into two rings',
+        regulation: 'BS 7671 Appendix 15 - Ring finals are 2.5mm² + 32A RCBO standard'
+      });
+      
+      // Add warning to circuit but don't upgrade
+      (circuit as any).warnings = [
+        ...((circuit as any).warnings || []),
+        'Ring final Zs exceeds limit - consider splitting into two rings or reducing cable length'
+      ];
+      
+      return circuit; // Return unchanged - ring finals stay 2.5mm²
+    }
+    
     const standardSizes = [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95];
     const currentIndex = standardSizes.indexOf(circuit.cableSize);
 
