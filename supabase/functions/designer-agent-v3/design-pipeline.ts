@@ -12,6 +12,7 @@ import { DeterministicCalculator } from './deterministic-calculations.ts';
 import { AutoFixEngine } from './auto-fix-engine.ts';
 import { safeAll, type ParallelTask } from '../_shared/safe-parallel.ts';
 import { calculateDiversity, calculateCircuitDiversity, type CircuitType } from '../_shared/bs7671-unified-calculations.ts';
+import { parseDesignJustification, logParsedValues } from './justification-parser.ts';
 import type { NormalizedInputs, DesignResult } from './types.ts';
 
 export class DesignPipeline {
@@ -746,6 +747,80 @@ export class DesignPipeline {
     });
 
     this.logger.info('Safety net applied - all calculations validated');
+
+    // ========================================
+    // PHASE 4.55: JUSTIFICATION SYNC - Make Prose the Single Source of Truth
+    // Extract structured values from AI's prose text and overwrite numeric fields
+    // ========================================
+    this.logger.info('🔄 Starting justification sync - parsing AI prose to extract values');
+    
+    design.circuits = design.circuits.map((circuit: any, idx: number) => {
+      if (!circuit.structuredOutput?.sections) {
+        this.logger.warn('Circuit missing structured output sections, skipping justification sync', {
+          circuit: circuit.name || `Circuit ${idx + 1}`
+        });
+        return circuit;
+      }
+
+      // Parse the prose justification to extract structured values
+      const parsed = parseDesignJustification(circuit.structuredOutput.sections);
+      
+      // Log what was extracted for debugging
+      logParsedValues(circuit.name, parsed, this.logger);
+
+      // Build the synced circuit with parsed values overwriting existing numeric fields
+      const syncedCircuit = {
+        ...circuit,
+        // Cable sizing: use parsed values if available, otherwise keep original
+        cableSize: parsed.cableSize ?? circuit.cableSize,
+        cpcSize: parsed.cpcSize ?? circuit.cpcSize,
+        cableType: parsed.cableType ?? circuit.cableType,
+        
+        // Protection device: sync from parsed values
+        protectionDevice: {
+          ...circuit.protectionDevice,
+          type: parsed.mcbType ?? circuit.protectionDevice?.type ?? 'MCB',
+          rating: parsed.mcbRating ?? circuit.protectionDevice?.rating ?? 0,
+          curve: parsed.mcbCurve ?? circuit.protectionDevice?.curve ?? 'B',
+          kaRating: parsed.mcbKaRating ?? circuit.protectionDevice?.kaRating ?? 6,
+        },
+        
+        // Calculations: sync all current values from prose
+        calculations: {
+          ...circuit.calculations,
+          Ib: parsed.Ib ?? circuit.calculations?.Ib ?? 0,
+          Id: parsed.Id ?? circuit.calculations?.Id ?? (parsed.Ib ?? circuit.calculations?.Ib ?? 0),
+          In: parsed.In ?? (parsed.mcbRating ?? circuit.calculations?.In ?? 0),
+          Iz: parsed.Iz ?? circuit.calculations?.Iz ?? 0,
+          diversityFactor: parsed.diversityFactor ?? circuit.calculations?.diversityFactor ?? 1.0,
+          voltageDrop: parsed.voltageDrop ? {
+            volts: parsed.voltageDrop.volts,
+            percent: parsed.voltageDrop.percent,
+            limit: circuit.calculations?.voltageDrop?.limit ?? 5,
+            compliant: parsed.voltageDrop.percent <= (circuit.calculations?.voltageDrop?.limit ?? 5)
+          } : circuit.calculations?.voltageDrop,
+          zs: parsed.zs ?? circuit.calculations?.zs ?? 0,
+          maxZs: parsed.maxZs ?? circuit.calculations?.maxZs ?? 0,
+        }
+      };
+
+      this.logger.info('✅ Justification sync applied', {
+        circuit: circuit.name,
+        changes: {
+          cableSize: `${circuit.cableSize}mm² → ${syncedCircuit.cableSize}mm²`,
+          mcbRating: `${circuit.protectionDevice?.rating}A → ${syncedCircuit.protectionDevice.rating}A`,
+          Ib: `${circuit.calculations?.Ib}A → ${syncedCircuit.calculations.Ib}A`,
+          Id: parsed.Id ? `${circuit.calculations?.Id}A → ${syncedCircuit.calculations.Id}A` : 'unchanged',
+          diversityFactor: parsed.diversityFactor ? `${circuit.calculations?.diversityFactor} → ${syncedCircuit.calculations.diversityFactor}` : 'unchanged'
+        }
+      });
+
+      return syncedCircuit;
+    });
+
+    this.logger.info('🎯 Justification sync complete - all numeric fields now match AI prose', {
+      circuits: design.circuits.length
+    });
 
     // ========================================
     // PHASE 4.6: Auto-Fix Engine (BEFORE calculations - CRITICAL ORDER)
