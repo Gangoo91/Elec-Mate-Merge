@@ -11,7 +11,7 @@ import { ValidationEngine } from './validation-engine.ts';
 import { DeterministicCalculator } from './deterministic-calculations.ts';
 import { AutoFixEngine } from './auto-fix-engine.ts';
 import { safeAll, type ParallelTask } from '../_shared/safe-parallel.ts';
-import { calculateDiversity } from '../_shared/bs7671-unified-calculations.ts';
+import { calculateDiversity, calculateCircuitDiversity, type CircuitType } from '../_shared/bs7671-unified-calculations.ts';
 import type { NormalizedInputs, DesignResult } from './types.ts';
 
 export class DesignPipeline {
@@ -765,6 +765,74 @@ export class DesignPipeline {
     
     this.logger.info('Deterministic calculations applied to corrected circuit designs', {
       circuits: design.circuits.length
+    });
+
+    // ========================================
+    // PHASE 4.75: Apply Circuit-Level Diversity (Id calculation)
+    // ========================================
+    // Calculate diversified current (Id) for each circuit based on installation type
+    const mapLoadTypeToDiversityCircuitType = (loadType: string): CircuitType => {
+      const type = loadType.toLowerCase();
+      if (type.includes('ring')) return 'socket_ring';
+      if (type.includes('socket') || type.includes('radial')) return 'socket_radial';
+      if (type.includes('lighting') || type.includes('light')) return 'lighting';
+      if (type.includes('cooker')) return 'cooker';
+      if (type.includes('shower')) return 'shower';
+      if (type.includes('immersion')) return 'immersion';
+      if (type.includes('ev') || type.includes('charger')) return 'ev';
+      if (type.includes('heating') || type.includes('heat')) return 'heating';
+      return 'other';
+    };
+
+    design.circuits = design.circuits.map((circuit: any) => {
+      const Ib = circuit.calculations?.Ib || 0;
+      const connectedLoad = Ib * (normalized.supply.voltage || 230);
+      
+      try {
+        const diversityResult = calculateCircuitDiversity({
+          circuitType: mapLoadTypeToDiversityCircuitType(circuit.loadType),
+          connectedLoad,
+          voltage: normalized.supply.voltage || 230,
+          installationType: normalized.supply.installationType as 'domestic' | 'commercial' | 'industrial' || 'domestic'
+        });
+        
+        // Apply diversity to circuit
+        return {
+          ...circuit,
+          calculations: {
+            ...circuit.calculations,
+            Id: diversityResult.diversifiedCurrent,
+            diversityFactor: diversityResult.diversityFactor,
+            diversifiedLoad: diversityResult.diversifiedLoad,
+            connectedLoad: diversityResult.connectedLoad
+          },
+          justifications: {
+            ...circuit.justifications,
+            diversityApplied: diversityResult.justification
+          }
+        };
+      } catch (error) {
+        this.logger.warn('Failed to calculate circuit diversity', {
+          circuit: circuit.name,
+          error: error.message
+        });
+        // Fallback: no diversity applied
+        return {
+          ...circuit,
+          calculations: {
+            ...circuit.calculations,
+            Id: Ib,
+            diversityFactor: 1.0,
+            diversifiedLoad: connectedLoad,
+            connectedLoad
+          }
+        };
+      }
+    });
+    
+    this.logger.info('Circuit-level diversity applied', {
+      circuits: design.circuits.length,
+      installationType: normalized.supply.installationType
     });
 
     // ========================================
