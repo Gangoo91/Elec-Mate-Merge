@@ -9,7 +9,6 @@ import { searchDesignIntelligence, searchRegulationsIntelligence } from '../_sha
 import { AIDesigner } from './ai-designer.ts';
 import { ValidationEngine } from './validation-engine.ts';
 import { DeterministicCalculator } from './deterministic-calculations.ts';
-import { PreValidationCalculator } from './pre-validation-calculator.ts';
 import { AutoFixEngine } from './auto-fix-engine.ts';
 import { safeAll, type ParallelTask } from '../_shared/safe-parallel.ts';
 import type { NormalizedInputs, DesignResult } from './types.ts';
@@ -20,7 +19,6 @@ export class DesignPipeline {
   private ai: AIDesigner;
   private validator: ValidationEngine;
   private calculator: DeterministicCalculator;
-  private preValidator: PreValidationCalculator;
   private autoFix: AutoFixEngine;
   private progressCallback?: (msg: string) => void;
 
@@ -34,7 +32,6 @@ export class DesignPipeline {
     this.ai = new AIDesigner(logger);
     this.validator = new ValidationEngine(logger);
     this.calculator = new DeterministicCalculator(logger);
-    this.preValidator = new PreValidationCalculator(logger);
     this.autoFix = new AutoFixEngine(logger);
     this.progressCallback = progressCallback;
   }
@@ -51,27 +48,6 @@ export class DesignPipeline {
       voltage: normalized.supply.voltage,
       phases: normalized.supply.phases,
       earthing: normalized.supply.earthing
-    });
-
-    // ========================================
-    // PHASE 1.5: Pre-Validation Constraints Calculator (NEW)
-    // Calculate minimum cable sizes and protection requirements BEFORE AI
-    // ========================================
-    const preValidationConstraints = this.preValidator.calculateAll(
-      normalized.circuits,
-      normalized.supply
-    );
-
-    this.logger.info('Pre-validation constraints calculated', {
-      constraintsCount: preValidationConstraints.size,
-      sampleConstraints: Array.from(preValidationConstraints.entries())
-        .slice(0, 2)
-        .map(([key, val]) => ({
-          key,
-          minCable: val.minimumCableSize,
-          mcb: val.recommendedMCB,
-          rcbo: val.mustUseRCBO
-        }))
     });
 
     // ========================================
@@ -552,7 +528,6 @@ export class DesignPipeline {
     const designCircuitWithRetry = async (
       inputs: NormalizedInputs,
       context: any,
-      constraints: Map<string, any>,
       circuitIndex?: number,
       totalCircuits?: number,
       maxRetries: number = 2
@@ -571,7 +546,7 @@ export class DesignPipeline {
             });
           }
           
-          const result = await this.ai.generate(inputs, context, constraints);
+          const result = await this.ai.generate(inputs, context);
           
           if (attempt > 1) {
             this.logger.info(`✅ ${circuitLabel} succeeded on retry attempt ${attempt}`);
@@ -630,7 +605,7 @@ export class DesignPipeline {
         timeout: '150s',
         maxRetries: 2
       });
-      design = await designCircuitWithRetry(normalized, ragContext, preValidationConstraints);
+      design = await designCircuitWithRetry(normalized, ragContext);
       
       this.logger.info('AI design complete', {
         circuits: design.circuits.length
@@ -668,7 +643,6 @@ export class DesignPipeline {
           const circuitDesign = await designCircuitWithRetry(
             singleCircuitInputs,
             ragContext,
-            preValidationConstraints,
             i,
             normalized.circuits.length
           );
