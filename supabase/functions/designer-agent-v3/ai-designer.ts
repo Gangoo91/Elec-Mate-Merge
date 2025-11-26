@@ -135,6 +135,9 @@ export class AIDesigner {
     parts.push('🎯 Use Id (diversified current) for MCB selection: Id ≤ In ≤ Iz');
     parts.push('');
     
+    // Determine installation type for diversity rules
+    const type = installationType || 'general';
+    
     // Installation-type-specific diversity factors
     if (type === 'domestic') {
       parts.push('📊 DOMESTIC DIVERSITY (BS 7671 Appendix A):');
@@ -228,7 +231,6 @@ export class AIDesigner {
     parts.push('');
     
     // Installation type context with MANDATORY cable type enforcement
-    const type = installationType || 'general';
     if (type === 'domestic') {
       parts.push('=== DOMESTIC INSTALLATION CONTEXT ===');
       parts.push('- Typically single-phase 230V supply, rarely three-phase');
