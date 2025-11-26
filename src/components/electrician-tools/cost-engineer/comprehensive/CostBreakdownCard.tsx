@@ -102,13 +102,31 @@ const CostBreakdownCard = ({
                       <CheckCircle className="h-4 w-4 text-blue-500" />
                       Why This Markup is Necessary
                     </div>
-                    <ul className="space-y-1 text-xs">
-                      <li>✓ Covers waste and offcuts (5-10%)</li>
-                      <li>✓ Damaged or faulty items replacement</li>
-                      <li>✓ Time sourcing and collecting materials</li>
-                      <li>✓ Storage, handling and transport costs</li>
-                      <li>✓ Returns processing and warranty admin</li>
-                      <li>✓ Holding stock for immediate repairs</li>
+                    <ul className="space-y-2 text-xs text-white text-left">
+                      <li className="flex items-start gap-2">
+                        <span className="text-blue-500 flex-shrink-0">✓</span>
+                        <span>Covers waste and offcuts (5-10%)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-blue-500 flex-shrink-0">✓</span>
+                        <span>Damaged or faulty items replacement</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-blue-500 flex-shrink-0">✓</span>
+                        <span>Time sourcing and collecting materials</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-blue-500 flex-shrink-0">✓</span>
+                        <span>Storage, handling and transport costs</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-blue-500 flex-shrink-0">✓</span>
+                        <span>Returns processing and warranty admin</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-blue-500 flex-shrink-0">✓</span>
+                        <span>Holding stock for immediate repairs</span>
+                      </li>
                     </ul>
                   </div>
                   
@@ -195,14 +213,35 @@ const CostBreakdownCard = ({
                       <CheckCircle className="h-4 w-4 text-orange-500" />
                       What You Bring
                     </div>
-                    <ul className="space-y-1 text-xs text-white">
-                      <li>✓ 18th Edition BS7671:2018+A3:2024 qualified</li>
-                      <li>✓ Years of experience and expertise</li>
-                      <li>✓ Professional liability insurance coverage</li>
-                      <li>✓ Ongoing training and CPD (annual £{MARKET_RATES_2025.businessCosts.continuousTraining}+)</li>
-                      <li>✓ NICEIC/NAPIT membership (£{MARKET_RATES_2025.businessCosts.niceicMembership}-{MARKET_RATES_2025.businessCosts.ecaMembership}/year)</li>
-                      <li>✓ Quality workmanship with guarantees</li>
-                      <li>✓ Legal compliance and certification</li>
+                    <ul className="space-y-2 text-xs text-white text-left">
+                      <li className="flex items-start gap-2">
+                        <span className="text-orange-500 flex-shrink-0">✓</span>
+                        <span>18th Edition BS7671:2018+A3:2024 qualified</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-orange-500 flex-shrink-0">✓</span>
+                        <span>Years of experience and expertise</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-orange-500 flex-shrink-0">✓</span>
+                        <span>Professional liability insurance coverage</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-orange-500 flex-shrink-0">✓</span>
+                        <span>Ongoing training and CPD (annual £{MARKET_RATES_2025.businessCosts.continuousTraining}+)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-orange-500 flex-shrink-0">✓</span>
+                        <span>NICEIC/NAPIT membership (£{MARKET_RATES_2025.businessCosts.niceicMembership}-{MARKET_RATES_2025.businessCosts.ecaMembership}/year)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-orange-500 flex-shrink-0">✓</span>
+                        <span>Quality workmanship with guarantees</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-orange-500 flex-shrink-0">✓</span>
+                        <span>Legal compliance and certification</span>
+                      </li>
                     </ul>
                   </div>
                   
@@ -324,11 +363,23 @@ const CostBreakdownCard = ({
                       <div className="text-xs font-medium text-destructive">
                         What happens if you don't charge this:
                       </div>
-                      <ul className="text-xs text-white space-y-0.5 mt-1">
-                        <li>• Your business runs at a loss</li>
-                        <li>• Can't afford to maintain equipment</li>
-                        <li>• Can't reinvest in training or tools</li>
-                        <li>• Eventually forced to close down</li>
+                      <ul className="text-xs text-white space-y-2 mt-1 text-left">
+                        <li className="flex items-start gap-2">
+                          <span className="text-red-500 flex-shrink-0">•</span>
+                          <span>Your business runs at a loss</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-red-500 flex-shrink-0">•</span>
+                          <span>Can't afford to maintain equipment</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-red-500 flex-shrink-0">•</span>
+                          <span>Can't reinvest in training or tools</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-red-500 flex-shrink-0">•</span>
+                          <span>Eventually forced to close down</span>
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -369,14 +420,35 @@ const CostBreakdownCard = ({
                       <CheckCircle className="h-4 w-4 text-yellow-500" />
                       What Contingency Covers
                     </div>
-                    <ul className="space-y-1 text-xs text-white">
-                      <li>✓ Hidden problems discovered on-site</li>
-                      <li>✓ Additional materials needed unexpectedly</li>
-                      <li>✓ Unforeseen complications (old wiring, asbestos)</li>
-                      <li>✓ Client change requests mid-project</li>
-                      <li>✓ Weather delays (outdoor work)</li>
-                      <li>✓ Access issues or working restrictions</li>
-                      <li>✓ Required upgrades for code compliance</li>
+                    <ul className="space-y-2 text-xs text-white text-left">
+                      <li className="flex items-start gap-2">
+                        <span className="text-yellow-500 flex-shrink-0">✓</span>
+                        <span>Hidden problems discovered on-site</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-yellow-500 flex-shrink-0">✓</span>
+                        <span>Additional materials needed unexpectedly</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-yellow-500 flex-shrink-0">✓</span>
+                        <span>Unforeseen complications (old wiring, asbestos)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-yellow-500 flex-shrink-0">✓</span>
+                        <span>Client change requests mid-project</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-yellow-500 flex-shrink-0">✓</span>
+                        <span>Weather delays (outdoor work)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-yellow-500 flex-shrink-0">✓</span>
+                        <span>Access issues or working restrictions</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-yellow-500 flex-shrink-0">✓</span>
+                        <span>Required upgrades for code compliance</span>
+                      </li>
                     </ul>
                   </div>
                   
@@ -413,15 +485,30 @@ const CostBreakdownCard = ({
                     </p>
                   </div>
                   
-                  <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20">
-                    <div className="font-medium mb-1 text-destructive">Without Contingency:</div>
-                    <ul className="text-xs text-white space-y-0.5">
-                      <li>• Every surprise becomes an argument</li>
-                      <li>• You absorb costs or look unprofessional</li>
-                      <li>• Client trust is damaged by price increases</li>
-                      <li>• Projects run over budget causing disputes</li>
+                  <div className="p-4 rounded-lg bg-gradient-to-r from-red-500/20 to-amber-500/15 border border-red-400/40">
+                    <div className="font-semibold mb-2 text-red-400 flex items-center gap-2">
+                      <AlertTriangle className="h-4 w-4" />
+                      Without Contingency:
+                    </div>
+                    <ul className="text-sm text-white space-y-2 text-left">
+                      <li className="flex items-start gap-2">
+                        <span className="text-red-400 flex-shrink-0">•</span>
+                        <span>Every surprise becomes an argument</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-red-400 flex-shrink-0">•</span>
+                        <span>You absorb costs or look unprofessional</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-red-400 flex-shrink-0">•</span>
+                        <span>Client trust is damaged by price increases</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-red-400 flex-shrink-0">•</span>
+                        <span>Projects run over budget causing disputes</span>
+                      </li>
                     </ul>
-                    <p className="text-xs text-white mt-2 italic">
+                    <p className="text-sm text-white mt-3 italic">
                       A contingency protects BOTH parties and maintains professional standards.
                     </p>
                   </div>
@@ -432,41 +519,41 @@ const CostBreakdownCard = ({
 
           {/* Your Minimum Quote */}
           <div className="rounded-lg bg-primary/10 border-2 border-primary/30 mt-4">
-            <div className="p-3">
-              <div className="flex items-center justify-between mb-2">
+            <div className="p-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
                 <div className="flex items-center gap-2">
-                  <Target className="h-4 w-4 text-primary" />
-                  <div className="font-medium text-white">Your Minimum Quote</div>
+                  <Target className="h-5 w-5 text-primary" />
+                  <span className="font-semibold text-lg text-white">Your Minimum Quote</span>
                 </div>
-                <Badge variant="outline" className="bg-primary/20 text-primary border-primary/50 text-xs">
+                <Badge variant="outline" className="self-start sm:self-auto bg-primary/20 text-primary border-primary/50 text-xs">
                   Floor Price
                 </Badge>
               </div>
               
-              <div className="text-2xl sm:text-xl font-bold text-primary mb-2">
+              <div className="text-3xl font-bold text-primary mb-4">
                 £{breakEven.toFixed(2)}
               </div>
               
-              <div className="text-base sm:text-sm space-y-1 text-white">
-                <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
+              <div className="space-y-2 text-base text-white">
+                <div className="grid grid-cols-[1fr_auto] gap-x-4 items-baseline">
                   <span>Materials with markup:</span>
-                  <span className="whitespace-nowrap">£{materialsWithMarkup.toFixed(2)}</span>
+                  <span className="font-medium whitespace-nowrap">£{materialsWithMarkup.toFixed(2)}</span>
                 </div>
-                <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
+                <div className="grid grid-cols-[1fr_auto] gap-x-4 items-baseline">
                   <span>Labour (includes overheads):</span>
-                  <span className="whitespace-nowrap">£{labourTotal.toFixed(2)}</span>
+                  <span className="font-medium whitespace-nowrap">£{labourTotal.toFixed(2)}</span>
                 </div>
-                <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
+                <div className="grid grid-cols-[1fr_auto] gap-x-4 items-baseline">
                   <span>Contingency ({contingencyPercent}%):</span>
-                  <span className="whitespace-nowrap">£{contingencyAmount.toFixed(2)}</span>
+                  <span className="font-medium whitespace-nowrap">£{contingencyAmount.toFixed(2)}</span>
                 </div>
               </div>
               
-              <div className="mt-3 pt-3 border-t border-primary/30">
-                <p className="text-base sm:text-sm text-white mb-2">
+              <div className="mt-4 pt-4 border-t border-primary/30">
+                <p className="text-base text-white mb-2">
                   <strong>This is your floor price.</strong> Your £{calculatedLabourRate.toFixed(2)}/hr rate already covers your take-home pay AND business overheads.
                 </p>
-                <p className="text-xs text-white italic">
+                <p className="text-sm text-white italic">
                   Quote above this for profit. Below this = losing money.
                 </p>
               </div>
