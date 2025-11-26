@@ -879,22 +879,6 @@ CRITICAL: Include diversityApplied justification explaining diversity per Append
                     },
                     required: ['cableSize', 'protection', 'diversityApplied']
                   },
-                      },
-                      protection: { 
-                        type: 'string',
-                        description: 'Why this MCB/RCBO? (curve selection, rating, Zs compliance)'
-                      },
-                      rcd: { 
-                        type: 'string',
-                        description: 'If RCBO used, justify why RCD is required (location, load type)'
-                      },
-                      corrections: {
-                        type: 'string',
-                        description: 'PHASE 2: If in correction mode, explain what was changed and why'
-                      }
-                    },
-                    required: ['cableSize', 'protection']
-                  },
                   installationNotes: {
                     type: 'string',
                     description: 'Circuit-specific installation guidance (2-4 sentences). CRITICAL: Must reference THIS circuit\'s exact specifications: load type, power, cable size, length, location, and protection. Example for 9.5kW shower, 10mm² cable, 18m run: "This 9.5kW shower requires 10mm² cable over 18m. Use 25mm PVC conduit where exposed. All connections must use heat-resistant terminals rated for 40A continuous load. Install RCD spur at shower pull-cord location for local isolation."'

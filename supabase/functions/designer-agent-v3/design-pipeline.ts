@@ -1006,6 +1006,13 @@ export class DesignPipeline {
       propertyType: normalized.supply.installationType || 'domestic'
     });
 
+    console.log('📊 Installation Diversity Calculation:', {
+      totalConnectedLoad: diversityResult.totalConnected,
+      diversifiedLoad: diversityResult.diversifiedDemand,
+      diversityFactor: diversityResult.diversityFactor,
+      breakdown: diversityResult.breakdown
+    });
+    
     this.logger.info('Installation-wide diversity calculated', {
       totalConnected: diversityResult.totalConnected,
       diversifiedDemand: diversityResult.diversifiedDemand,

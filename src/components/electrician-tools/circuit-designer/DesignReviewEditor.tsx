@@ -1413,14 +1413,16 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             <div className="flex items-center gap-4 sm:gap-6 text-sm flex-wrap">
               <div className="flex items-center gap-2">
                 <Zap className="h-4 w-4 text-primary" />
-                <span className="font-semibold">{design.totalLoad / 1000}kW Total</span>
+                <span className="font-semibold">{fmt(design.totalLoad / 1000, 2)}kW Connected</span>
               </div>
               <div className="flex items-center gap-2">
                 <TrendingDown className="h-4 w-4 text-green-500" />
                 <span className="font-semibold">
-                  {design.diversityBreakdown 
-                    ? `${fmt(design.diversityBreakdown.diversifiedLoad, 1)}kW`
-                    : `${design.totalLoad / 1000}kW`} Diversified
+                  {design.diversifiedLoad 
+                    ? `${fmt(design.diversifiedLoad / 1000, 2)}kW`
+                    : design.diversityBreakdown?.diversifiedLoad 
+                      ? `${fmt(design.diversityBreakdown.diversifiedLoad, 2)}kW`
+                      : `${fmt(design.totalLoad / 1000, 2)}kW`} Diversified
                 </span>
               </div>
               <div className="flex items-center gap-2">
