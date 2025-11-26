@@ -15,7 +15,6 @@ import { EquipmentScheduleSection } from "./EquipmentScheduleSection";
 import { SiteLogisticsSection } from "./SiteLogisticsSection";
 import { ConditionalProceduresSection } from "./ConditionalProceduresSection";
 import { MobileButton } from "@/components/ui/mobile-button";
-import { InstallationSummaryStats } from "./InstallationSummaryStats";
 import { RAGExtractionBreakdown } from "./RAGExtractionBreakdown";
 import { CompetencyRequirementsCard } from "./CompetencyRequirementsCard";
 import { SiteLogisticsCard } from "./SiteLogisticsCard";
@@ -536,15 +535,6 @@ export const InstallationResults = ({
       {fullMethodStatement?.executiveSummary && (
         <ExecutiveSummaryCard executiveSummary={fullMethodStatement.executiveSummary} />
       )}
-
-      {/* Summary Stats */}
-      <InstallationSummaryStats
-        totalSteps={steps.length}
-        estimatedDuration={summary.estimatedDuration}
-        riskLevel={summary.overallRiskLevel}
-        hazardsCount={totalHazards}
-        toolsCount={summary.toolsRequired?.length || 0}
-      />
 
       {/* Hero Summary */}
       <InstallationHeroSummary
