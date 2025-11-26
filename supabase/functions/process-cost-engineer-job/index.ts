@@ -1,4 +1,5 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { generateCostEstimate } from '../_agents/cost-engineer-core.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -56,29 +57,14 @@ Deno.serve(async (req) => {
         })
         .eq('id', jobId);
 
-      // Call the actual cost-engineer-v3 function
-      console.log('[PROCESS-COST] Calling cost-engineer-v3...');
-      const costEngineerUrl = `${Deno.env.get('SUPABASE_URL')}/functions/v1/cost-engineer-v3`;
-      const costResponse = await fetch(costEngineerUrl, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          query: job.query,
-          region: job.region,
-          projectContext: job.project_context,
-          businessSettings: job.business_settings
-        })
+      // Call the core cost estimation logic directly
+      console.log('[PROCESS-COST] Generating cost estimate...');
+      const result = await generateCostEstimate(supabase, {
+        query: job.query,
+        region: job.region,
+        projectContext: job.project_context,
+        businessSettings: job.business_settings
       });
-
-      if (!costResponse.ok) {
-        const errorText = await costResponse.text();
-        throw new Error(`Cost engineer failed: ${costResponse.status} - ${errorText}`);
-      }
-
-      const costData = await costResponse.json();
 
       // Progress: 70% - Analyzing results
       await supabase
@@ -89,6 +75,16 @@ Deno.serve(async (req) => {
         })
         .eq('id', jobId);
 
+      // Format response to match expected structure
+      const outputData = {
+        success: true,
+        data: {
+          originalQuery: job.query,
+          structuredData: result,
+          response: formatTextSummary(result)
+        }
+      };
+
       // Progress: 100% - Complete
       await supabase
         .from('cost_engineer_jobs')
@@ -96,8 +92,8 @@ Deno.serve(async (req) => {
           status: 'complete',
           progress: 100,
           current_step: 'Cost analysis complete',
-          output_data: costData,
-          raw_response: costData,
+          output_data: outputData,
+          raw_response: result,
           completed_at: new Date().toISOString()
         })
         .eq('id', jobId);
@@ -136,3 +132,31 @@ Deno.serve(async (req) => {
     );
   }
 });
+
+/**
+ * Format structured data into text summary
+ */
+function formatTextSummary(result: any): string {
+  let text = '# COST ESTIMATE\n\n';
+  
+  text += '## MATERIALS\n';
+  result.materials.items.forEach((item: any) => {
+    text += `• ${item.description} (${item.quantity} ${item.unit}) - £${item.total.toFixed(2)} from ${item.supplier}\n`;
+  });
+  text += `\nSubtotal Materials: £${result.materials.subtotal.toFixed(2)}\n\n`;
+  
+  text += '## LABOUR\n';
+  result.labour.tasks.forEach((task: any) => {
+    text += `• ${task.description} - ${task.hours} hours @ £${task.rate}/hr = £${task.total.toFixed(2)}\n`;
+  });
+  text += `\nSubtotal Labour: £${result.labour.subtotal.toFixed(2)}\n\n`;
+  
+  text += '## PROJECT TOTAL\n';
+  text += `Materials: £${result.summary.materialsSubtotal.toFixed(2)}\n`;
+  text += `Labour: £${result.summary.labourSubtotal.toFixed(2)}\n`;
+  text += `Subtotal: £${result.summary.subtotal.toFixed(2)}\n`;
+  text += `VAT (20%): £${result.summary.vat.toFixed(2)}\n`;
+  text += `**FINAL QUOTE: £${result.summary.grandTotal.toFixed(2)}**\n`;
+  
+  return text;
+}
