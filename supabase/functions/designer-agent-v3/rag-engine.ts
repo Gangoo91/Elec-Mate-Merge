@@ -27,8 +27,8 @@ export class RAGEngine {
   async search(normalized: NormalizedInputs, isBatch = false): Promise<RAGContext> {
     const startTime = Date.now();
 
-    // Phase 5: Increased to 50 items for comprehensive context (25 for batches)
-    const matchCount = isBatch ? 25 : 50;
+    // Phase 5: Reduced to 30 items to prevent timeouts (20 for batches)
+    const matchCount = isBatch ? 20 : 30;
 
     // Build search queries from form fields (NOT text prompts)
     const queries = {
