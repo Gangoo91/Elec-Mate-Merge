@@ -50,8 +50,8 @@ export const InstallationGuidanceDisplay = ({
                     )}
                   />
                   <div className="space-y-2 text-left flex-1">
-                    <p className="font-semibold text-sm text-left">{safety.consideration}</p>
-                    <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                    <p className="font-semibold text-sm text-left text-white">{safety.consideration}</p>
+                    <div className="flex flex-wrap gap-2 text-xs text-white/70">
                       {safety.bsReference && (
                         <span className="inline-flex items-center gap-1">
                           <FileText className="h-3 w-3" /> BS 7671: {safety.bsReference}
@@ -92,12 +92,12 @@ export const InstallationGuidanceDisplay = ({
                   <Package className="h-4 w-4 text-blue-500" />
                 </div>
                 <div className="flex-1 min-w-0 text-left">
-                  <p className="font-medium text-sm text-left">{material.item}</p>
-                  <p className="text-xs text-muted-foreground text-left mt-0.5">
+                  <p className="font-medium text-sm text-left text-white">{material.item}</p>
+                  <p className="text-xs text-white/70 text-left mt-0.5">
                     {material.specification}
                   </p>
                   {material.source && (
-                    <p className="text-xs text-muted-foreground text-left mt-0.5">
+                    <p className="text-xs text-white/70 text-left mt-0.5">
                       Source: {material.source}
                     </p>
                   )}
@@ -133,8 +133,8 @@ export const InstallationGuidanceDisplay = ({
                 >
                   <Wrench className="h-4 w-4 text-purple-500 shrink-0 mt-0.5" />
                   <div className="flex-1 text-left">
-                    <p className="font-medium text-sm text-left">{tool.tool}</p>
-                    <p className="text-xs text-muted-foreground text-left">{tool.purpose}</p>
+                    <p className="font-medium text-sm text-left text-white">{tool.tool}</p>
+                    <p className="text-xs text-white/70 text-left">{tool.purpose}</p>
                     <Badge variant="secondary" className="mt-1.5 text-xs">
                       {tool.category}
                     </Badge>
@@ -250,12 +250,12 @@ export const InstallationGuidanceDisplay = ({
                     {step.stepNumber}
                   </div>
 
-                  {/* Content */}
-                  <div className="flex-1 pb-4 text-left">
-                    <p className="font-semibold text-sm text-left">{step.title}</p>
-                    <p className="text-sm text-muted-foreground mt-1 leading-relaxed text-left">
-                      {step.description}
-                    </p>
+                    {/* Content */}
+                    <div className="flex-1 pb-4 text-left">
+                      <p className="font-semibold text-sm text-left text-white">{step.title}</p>
+                      <p className="text-sm text-white/70 mt-1 leading-relaxed text-left">
+                        {step.description}
+                      </p>
 
                     {/* Tools as inline badges */}
                     {step.toolsForStep && step.toolsForStep.length > 0 && (
@@ -295,7 +295,7 @@ export const InstallationGuidanceDisplay = ({
               Testing Requirements
             </CardTitle>
             {testingRequirements.intro && (
-              <p className="text-sm text-muted-foreground text-left">{testingRequirements.intro}</p>
+              <p className="text-sm text-white/70 text-left">{testingRequirements.intro}</p>
             )}
           </CardHeader>
           <CardContent className="space-y-3">
@@ -310,12 +310,12 @@ export const InstallationGuidanceDisplay = ({
                   </div>
                   <div className="flex-1 text-left">
                     <div className="flex items-start justify-between gap-2">
-                      <p className="font-semibold text-sm text-left">{test.testName}</p>
+                      <p className="font-semibold text-sm text-left text-white">{test.testName}</p>
                       <Badge variant="outline" className="text-xs shrink-0">
                         {test.regulation}
                       </Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground mt-1 text-left">{test.procedure}</p>
+                    <p className="text-sm text-white/70 mt-1 text-left">{test.procedure}</p>
 
                     <div className="mt-3 p-2 rounded bg-background/50 text-left">
                       <div className="grid grid-cols-1 gap-1 text-xs">
