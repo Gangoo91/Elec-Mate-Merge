@@ -54,6 +54,12 @@ serve(async (req) => {
           date: new Date().toISOString().split('T')[0],
           assessor: 'AI Health & Safety Advisor',
           projectType: healthSafetyData.workType || 'general',
+          // Additional required fields for PDF template
+          assessmentType: healthSafetyData.workType || 'General Assessment',
+          siteAddress: healthSafetyData.location || 'Not specified',
+          principalContractor: healthSafetyData.clientName || 'Not specified',
+          assessmentDate: healthSafetyData.assessmentDate || new Date().toISOString().split('T')[0],
+          reviewDate: healthSafetyData.reviewDate || new Date(Date.now() + 6 * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
           // Sort hazards by risk score (highest first)
           hazards: [...(healthSafetyData.hazards || [])].sort((a: any, b: any) => (b.riskScore || 0) - (a.riskScore || 0)).map((hazard: any) => {
             const rawControlMeasures = hazard.controlMeasures || hazard.controlMeasure || 'Control measures to be determined on site';
