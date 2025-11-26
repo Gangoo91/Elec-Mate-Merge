@@ -72,7 +72,7 @@ export class AIDesigner {
         tool_choice
       },
       this.openAiKey,
-      90000 // 90s timeout (increased from 30s for complex designs)
+      150000 // 150s timeout - allows for large RAG context with complex designs
     );
 
     const duration = Date.now() - startTime;
