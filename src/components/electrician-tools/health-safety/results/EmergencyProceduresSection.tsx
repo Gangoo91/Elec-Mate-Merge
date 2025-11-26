@@ -35,13 +35,13 @@ export const EmergencyProceduresSection = ({
           {procedures.map((procedure, idx) => (
             <div
               key={idx}
-              className="flex items-start gap-3 p-4 bg-white/50 dark:bg-elec-card/50 rounded-lg border border-red-500/20 hover:border-red-500/40 transition-all relative"
+              className="flex flex-col items-center gap-3 p-4 bg-white/50 dark:bg-elec-card/50 rounded-lg border border-red-500/20 hover:border-red-500/40 transition-all relative sm:flex-row sm:items-start"
             >
               <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-orange-500 text-white flex items-center justify-center font-bold text-sm shadow-lg">
                 {idx + 1}
               </div>
               {isEditing ? (
-                <div className="flex-1 space-y-2">
+                <div className="flex-1 w-full space-y-2">
                   <Textarea
                     value={procedure}
                     onChange={(e) => onUpdate?.(idx, e.target.value)}
@@ -77,7 +77,7 @@ export const EmergencyProceduresSection = ({
                   </div>
                 </div>
               ) : (
-                <p className="flex-1 text-sm leading-relaxed pt-1">{procedure}</p>
+                <p className="flex-1 w-full text-sm leading-relaxed pt-1 text-center sm:text-left">{procedure}</p>
               )}
             </div>
           ))}
