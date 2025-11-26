@@ -97,7 +97,7 @@ export const EmergencyProceduresSection = ({
         <div className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
           <div className="flex items-start gap-2">
             <AlertCircle className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-foreground">
               <span className="font-semibold text-foreground">Important:</span> Ensure all team members are familiar with emergency procedures and know the location of first aid equipment and emergency exits.
             </p>
           </div>
