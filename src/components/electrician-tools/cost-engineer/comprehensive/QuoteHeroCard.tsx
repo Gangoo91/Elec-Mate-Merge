@@ -32,15 +32,14 @@ const QuoteHeroCard = ({
 
   const getTierBadgeColor = (tier: string) => {
     switch(tier.toLowerCase()) {
-      case 'sparse': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      case 'normal': return 'bg-elec-yellow text-elec-dark border-elec-yellow';
+      case 'standard': return 'bg-primary/30 text-primary border-primary/50';
       case 'busy': return 'bg-green-500/20 text-green-400 border-green-500/30';
-      default: return 'bg-elec-yellow text-elec-dark border-elec-yellow';
+      default: return 'bg-primary/30 text-primary border-primary/50';
     }
   };
 
   return (
-    <Card className="border-0 sm:border-2 border-elec-yellow/30 rounded-none sm:rounded-xl bg-gradient-to-br from-elec-yellow/20 via-elec-yellow/10 to-green-500/10 shadow-none sm:shadow-2xl overflow-hidden animate-scale-in">
+    <Card className="border-0 sm:border-2 border-primary/30 rounded-none sm:rounded-xl bg-gradient-to-br from-primary/20 via-primary/10 to-green-500/10 shadow-none sm:shadow-2xl overflow-hidden animate-scale-in">
       <CardContent className="p-6 sm:p-8">
         <div className="text-center space-y-6">
           {/* Header */}
@@ -76,12 +75,12 @@ const QuoteHeroCard = ({
             </div>
 
             {/* Margin */}
-            <div className="bg-background/30 rounded-lg p-3 sm:p-4 border border-elec-yellow/30">
+            <div className="bg-background/30 rounded-lg p-3 sm:p-4 border border-primary/30">
               <div className="flex items-center justify-center gap-2 mb-1">
-                <TrendingUp className="h-4 w-4 text-elec-yellow" />
+                <TrendingUp className="h-4 w-4 text-primary" />
                 <span className="text-xs text-white">Margin</span>
               </div>
-              <p className="text-3xl sm:text-2xl font-bold text-elec-yellow">
+              <p className="text-3xl sm:text-2xl font-bold text-primary">
                 {margin.toFixed(1)}%
               </p>
             </div>
@@ -110,7 +109,7 @@ const QuoteHeroCard = ({
           {/* Quick Explanation */}
           <div className="pt-2">
             <p className="text-base sm:text-sm text-white leading-relaxed">
-              Based on <span className="font-bold text-elec-yellow">{totalLabourHours.toFixed(1)} hours</span> labour + materials
+              Based on <span className="font-bold text-primary">{totalLabourHours.toFixed(1)} hours</span> labour + materials
             </p>
           </div>
         </div>

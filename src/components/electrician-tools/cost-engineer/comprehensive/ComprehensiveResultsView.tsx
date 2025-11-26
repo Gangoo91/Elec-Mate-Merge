@@ -39,8 +39,11 @@ const ComprehensiveResultsView = ({
 }: ComprehensiveResultsViewProps) => {
   
   const profitability = structuredData?.profitabilityAnalysis;
-  const selectedTier = structuredData?.recommendedQuote?.tier || 'normal';
-  const selectedAmount = structuredData?.recommendedQuote?.amount || analysis.totalCost;
+  const selectedTier = structuredData?.recommendedQuote?.tier || 'standard';
+  const selectedAmount = profitability?.quoteTiers?.standard?.price 
+    || structuredData?.recommendedQuote?.amount 
+    || profitability?.quoteTiers?.target?.price  // Fallback to old tier name if exists
+    || analysis.totalCost;
 
   // Calculate derived metrics
   const totalLabourHours = structuredData?.labour?.tasks?.reduce((sum: number, t: any) => 
@@ -60,7 +63,7 @@ const ComprehensiveResultsView = ({
     return profit / hours;
   };
 
-  const breakEven = profitability?.breakEvenPoint || analysis.subtotal;
+  const breakEven = profitability?.breakEvenPoint || profitability?.baseQuote?.subtotal || analysis.subtotal;
   const margin = calculateMargin(selectedAmount, breakEven);
   const profit = calculateProfit(selectedAmount, breakEven);
   const profitPerHour = calculateProfitPerHour(profit, totalLabourHours);
