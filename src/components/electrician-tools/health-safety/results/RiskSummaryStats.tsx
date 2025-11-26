@@ -66,7 +66,7 @@ export const RiskSummaryStats = ({ hazards, ppeItems, emergencyProcedures }: Ris
                 <div className="flex flex-col items-center gap-2 text-center">
                   <Icon className={`h-6 w-6 ${stat.color}`} />
                   <div className="text-2xl sm:text-3xl font-bold">{stat.value}</div>
-                  <div className="text-xs sm:text-sm text-muted-foreground font-medium">
+                  <div className="text-xs sm:text-sm text-foreground font-medium">
                     {stat.label}
                   </div>
                   {stat.badge && (

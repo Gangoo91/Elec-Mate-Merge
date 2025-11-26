@@ -114,7 +114,7 @@ export const EnhancedHazardCard = ({ hazard, index, isEditing = false, onUpdate,
               {/* Likelihood & Severity */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <div className="text-xs font-medium text-muted-foreground mb-2">
+                  <div className="text-xs font-medium text-foreground mb-2">
                     Likelihood
                   </div>
                   {isEditing ? (
@@ -141,7 +141,7 @@ export const EnhancedHazardCard = ({ hazard, index, isEditing = false, onUpdate,
                   )}
                 </div>
                 <div>
-                  <div className="text-xs font-medium text-muted-foreground mb-2">
+                  <div className="text-xs font-medium text-foreground mb-2">
                     Severity
                   </div>
                   {isEditing ? (

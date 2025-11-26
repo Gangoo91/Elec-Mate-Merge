@@ -341,7 +341,7 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
                 className="min-h-[100px]"
               />
             ) : (
-              <p className="text-sm text-muted-foreground whitespace-pre-wrap">{editableData.notes}</p>
+              <p className="text-sm text-foreground whitespace-pre-wrap">{editableData.notes}</p>
             )}
           </CardContent>
         </Card>

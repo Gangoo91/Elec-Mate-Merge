@@ -108,7 +108,7 @@ export const PPERequirementsGrid = ({ ppeItems, isEditing = false, onUpdate, onD
                           </Badge>
                         )}
                       </div>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-xs text-foreground">
                         <span className="font-medium">Purpose:</span>{' '}
                         {isEditing ? (
                           <Input
@@ -143,7 +143,7 @@ export const PPERequirementsGrid = ({ ppeItems, isEditing = false, onUpdate, onD
         <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
           <div className="flex items-start gap-2">
             <AlertTriangle className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-foreground">
               <span className="font-semibold text-foreground">Safety Note:</span> All mandatory PPE must be worn before commencing work. Ensure all equipment meets the specified standards and is in good condition.
             </p>
           </div>
