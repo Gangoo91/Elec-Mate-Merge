@@ -160,13 +160,13 @@ const PricingOptionsTiers = ({
             Industry Benchmark Check
           </h4>
           <div className="space-y-2 sm:space-y-1 text-base sm:text-sm">
-            <div className="flex justify-between">
+            <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
               <span className="text-white">{benchmark.name} typical range:</span>
-              <span className="font-medium text-white">{benchmark.range}</span>
+              <span className="font-medium text-white whitespace-nowrap">{benchmark.range}</span>
             </div>
-            <div className="flex justify-between">
+            <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
               <span className="text-white">This quote (Standard tier):</span>
-              <span className={`font-bold ${
+              <span className={`font-bold whitespace-nowrap ${
                 standardPrice < benchmark.min ? 'text-red-500' : 
                 standardPrice > benchmark.max ? 'text-red-500' : 
                 'text-green-600'
@@ -201,17 +201,17 @@ const PricingOptionsTiers = ({
             </div>
             
             <div className="space-y-2 text-base sm:text-sm">
-              <div className="flex justify-between">
+              <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                 <span className="text-white">Profit Margin:</span>
-                <span className="font-medium text-white">{standard.margin.toFixed(0)}%</span>
+                <span className="font-medium text-white whitespace-nowrap">{standard.margin.toFixed(0)}%</span>
               </div>
-              <div className="flex justify-between">
+              <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                 <span className="text-white">Your Profit:</span>
-                <span className="font-medium text-green-500">£{standard.profit.toFixed(0)}</span>
+                <span className="font-medium text-green-500 whitespace-nowrap">£{standard.profit.toFixed(0)}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                 <span className="text-white">Profit/hour:</span>
-                <span className="font-medium text-white">£{standard.profitPerHour.toFixed(0)}</span>
+                <span className="font-medium text-white whitespace-nowrap">£{standard.profitPerHour.toFixed(0)}</span>
               </div>
             </div>
           </div>
@@ -231,17 +231,17 @@ const PricingOptionsTiers = ({
             </div>
             
             <div className="space-y-2 text-base sm:text-sm">
-              <div className="flex justify-between">
+              <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                 <span className="text-white">Profit Margin:</span>
-                <span className="font-medium text-white">{busy.margin.toFixed(0)}%</span>
+                <span className="font-medium text-white whitespace-nowrap">{busy.margin.toFixed(0)}%</span>
               </div>
-              <div className="flex justify-between">
+              <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                 <span className="text-white">Your Profit:</span>
-                <span className="font-medium text-green-500">£{busy.profit.toFixed(0)}</span>
+                <span className="font-medium text-green-500 whitespace-nowrap">£{busy.profit.toFixed(0)}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                 <span className="text-white">Profit/hour:</span>
-                <span className="font-medium text-white">£{busy.profitPerHour.toFixed(0)}</span>
+                <span className="font-medium text-white whitespace-nowrap">£{busy.profitPerHour.toFixed(0)}</span>
               </div>
             </div>
           </div>
