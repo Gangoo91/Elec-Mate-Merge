@@ -2061,7 +2061,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             )}
 
             {/* 7. Expected Test Results */}
-            {currentCircuit.expectedTestResults && (
+            {currentCircuit.expectedTests && (
               <div className="space-y-4 bg-card/50 p-4 rounded-lg border border-primary/10">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -2089,78 +2089,69 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       </div>
                       <div className="flex items-center gap-3 flex-wrap">
                         <Badge className="bg-blue-500/20 text-white border-blue-500/30 hover:bg-blue-500/30">
-                          At 20°C: {currentCircuit.expectedTestResults.r1r2.at20C}
+                          At 20°C: {currentCircuit.expectedTests.r1r2?.at20C?.toFixed(4)}Ω
                         </Badge>
                         <Badge className="bg-blue-500/20 text-white border-blue-500/30 hover:bg-blue-500/30">
-                          At 70°C: {currentCircuit.expectedTestResults.r1r2.at70C}
+                          At 70°C: {currentCircuit.expectedTests.r1r2?.at70C?.toFixed(4)}Ω
                         </Badge>
                       </div>
                     </div>
-                    {currentCircuit.expectedTestResults.r1r2.calculation && (
-                      <Collapsible>
-                        <CollapsibleTrigger className="text-xs text-blue-400 hover:text-blue-300 underline cursor-pointer mt-2">
-                          Show calculation
-                        </CollapsibleTrigger>
-                        <CollapsibleContent>
-                          <div className="text-xs text-white/50 leading-relaxed border-t border-blue-500/10 pt-2 mt-2">
-                            {currentCircuit.expectedTestResults.r1r2.calculation}
-                          </div>
-                        </CollapsibleContent>
-                      </Collapsible>
-                    )}
+                    <p className="text-xs text-white/60 mt-2">
+                      {currentCircuit.expectedTests.r1r2?.regulation}
+                    </p>
                   </div>
 
                   {/* Zs - Green/Red based on compliance */}
                   <div className={`bg-gradient-to-br p-4 rounded-lg border hover:border-opacity-60 transition-colors ${
-                    currentCircuit.expectedTestResults.zs.compliant 
+                    currentCircuit.expectedTests.zs?.compliant 
                       ? 'from-green-500/10 to-green-600/5 border-green-500/20 hover:border-green-500/40' 
                       : 'from-red-500/10 to-red-600/5 border-red-500/20 hover:border-red-500/40'
                   }`}>
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div className="flex items-center gap-3">
                         <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
-                          currentCircuit.expectedTestResults.zs.compliant 
+                          currentCircuit.expectedTests.zs?.compliant 
                             ? 'bg-green-500/20' 
                             : 'bg-red-500/20'
                         }`}>
                           <span className={`font-bold text-sm ${
-                            currentCircuit.expectedTestResults.zs.compliant 
+                            currentCircuit.expectedTests.zs?.compliant 
                               ? 'text-green-400' 
                               : 'text-red-400'
                           }`}>Zs</span>
                         </div>
                         <div>
                           <p className="text-sm font-semibold text-white">Earth Fault Loop Impedance</p>
-                          <p className="text-xs text-white/50">BS 7671:2018+A3:2024 Reg 411.4.4</p>
+                          <p className="text-xs text-white/50">{currentCircuit.expectedTests.zs?.regulation}</p>
                         </div>
-                        {currentCircuit.expectedTestResults.zs.compliant ? (
+                        {currentCircuit.expectedTests.zs?.compliant ? (
                           <CheckCircle2 className="h-5 w-5 text-green-400" />
                         ) : (
                           <AlertTriangle className="h-5 w-5 text-red-400" />
                         )}
                       </div>
                       <div className="flex items-center gap-3 flex-wrap">
-                        <Badge className={currentCircuit.expectedTestResults.zs.compliant 
+                        <Badge className={currentCircuit.expectedTests.zs?.compliant 
                           ? 'bg-green-500/20 text-white border-green-500/30 hover:bg-green-500/30' 
                           : 'bg-red-500/20 text-white border-red-500/30 hover:bg-red-500/30'
                         }>
-                          Calculated: {currentCircuit.expectedTestResults.zs.calculated}
+                          Calculated: {currentCircuit.expectedTests.zs?.expected?.toFixed(3)}Ω
                         </Badge>
-                        <Badge className={currentCircuit.expectedTestResults.zs.compliant 
+                        <Badge className={currentCircuit.expectedTests.zs?.compliant 
                           ? 'bg-green-500/20 text-white border-green-500/30 hover:bg-green-500/30' 
                           : 'bg-red-500/20 text-white border-red-500/30 hover:bg-red-500/30'
                         }>
-                          Max: {currentCircuit.expectedTestResults.zs.maxPermitted}
+                          Max: {currentCircuit.expectedTests.zs?.maxPermitted?.toFixed(3)}Ω
                         </Badge>
                       </div>
                     </div>
                     <div className={`text-xs font-semibold mt-3 ${
-                      currentCircuit.expectedTestResults.zs.compliant 
+                      currentCircuit.expectedTests.zs?.compliant 
                         ? 'text-green-400' 
                         : 'text-red-400'
                     }`}>
-                      {currentCircuit.expectedTestResults.zs.compliant 
-                        ? '✓ Compliant - Disconnection time <0.4s achieved' 
+                      {currentCircuit.expectedTests.zs?.compliant 
+                        ? `✓ Compliant - ${currentCircuit.expectedTests.zs?.marginPercent?.toFixed(1)}% safety margin` 
                         : '✗ Non-compliant - Review cable size or Ze'}
                     </div>
                   </div>
@@ -2179,10 +2170,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                       </div>
                       <div className="flex items-center gap-3 flex-wrap">
                         <Badge className="bg-purple-500/20 text-white border-purple-500/30 hover:bg-purple-500/30">
-                          Test: {currentCircuit.expectedTestResults.insulationResistance.testVoltage}
+                          Test: {currentCircuit.expectedTests.insulationResistance?.testVoltage}
                         </Badge>
                         <Badge className="bg-purple-500/20 text-white border-purple-500/30 hover:bg-purple-500/30">
-                          Min: {currentCircuit.expectedTestResults.insulationResistance.minResistance}
+                          Min: {currentCircuit.expectedTests.insulationResistance?.minResistance}
                         </Badge>
                       </div>
                     </div>
@@ -2198,14 +2189,14 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                         <p className="text-sm font-semibold text-white mb-1">Polarity Test</p>
                         <p className="text-xs text-white/50 mb-2">BS 7671:2018+A3:2024 Reg 643.4</p>
                         <p className="text-sm text-white/90 leading-relaxed">
-                          {currentCircuit.expectedTestResults.polarity}
+                          Verify correct polarity - all single-pole switching and protective devices in phase conductor only
                         </p>
                       </div>
                     </div>
                   </div>
 
                   {/* RCD Test - Cyan gradient */}
-                  {currentCircuit.rcdProtected && currentCircuit.expectedTestResults.rcdTest && (
+                  {currentCircuit.rcdProtected && currentCircuit.expectedTests.rcd && (
                     <div className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 p-4 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 transition-colors">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
@@ -2214,15 +2205,15 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                           </div>
                           <div>
                             <p className="text-sm font-semibold text-white">RCD Trip Times</p>
-                            <p className="text-xs text-white/60">{currentCircuit.expectedTestResults.rcdTest.regulation}</p>
+                            <p className="text-xs text-white/60">{currentCircuit.expectedTests.rcd?.regulation}</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-3 flex-wrap">
                           <Badge className="bg-cyan-500/20 text-white border-cyan-500/30 hover:bg-cyan-500/30">
-                            At 1× IΔn: {currentCircuit.expectedTestResults.rcdTest.at1x}
+                            Rating: {currentCircuit.expectedTests.rcd?.ratingmA}mA
                           </Badge>
                           <Badge className="bg-cyan-500/20 text-white border-cyan-500/30 hover:bg-cyan-500/30">
-                            At 5× IΔn: {currentCircuit.expectedTestResults.rcdTest.at5x}
+                            Max Trip: &lt;{currentCircuit.expectedTests.rcd?.maxTripTimeMs}ms at 1×IΔn
                           </Badge>
                         </div>
                       </div>

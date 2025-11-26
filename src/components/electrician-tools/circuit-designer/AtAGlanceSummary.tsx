@@ -12,6 +12,27 @@ interface AtAGlanceSummaryProps {
     complianceTick: boolean;
     notes: string;
   };
+  circuit?: {
+    cableSize: number;
+    cpcSize: number;
+    cableType?: string;
+    protectionDevice: {
+      type: string;
+      rating: number;
+      curve: string;
+      rcdRating?: number;
+    };
+    calculations: {
+      zs: number;
+      maxZs: number;
+      voltageDrop: {
+        percent: number;
+        compliant: boolean;
+        limit: number;
+      };
+    };
+    rcdProtected: boolean;
+  };
 }
 
 const SummaryField = ({ label, value }: { label: string; value: string }) => (
@@ -21,15 +42,32 @@ const SummaryField = ({ label, value }: { label: string; value: string }) => (
   </div>
 );
 
-export const AtAGlanceSummary = ({ summary }: AtAGlanceSummaryProps) => {
+export const AtAGlanceSummary = ({ summary, circuit }: AtAGlanceSummaryProps) => {
   // Defensive checks for missing/undefined values
   const safeLoadKw = summary?.loadKw ?? 0;
   const safeLoadIb = summary?.loadIb || 'N/A';
-  const safeCable = summary?.cable || 'Not specified';
-  const safeProtectiveDevice = summary?.protectiveDevice || 'Not specified';
-  const safeVoltageDrop = summary?.voltageDrop || 'N/A';
-  const safeZs = summary?.zs || 'N/A';
-  const safeComplianceTick = summary?.complianceTick ?? false;
+  
+  // Use calculated values when available, fall back to AI prose
+  const safeCable = circuit 
+    ? `${circuit.cableSize}mm² / ${circuit.cpcSize}mm² CPC ${circuit.cableType || 'T&E'}`
+    : (summary?.cable || 'Not specified');
+  
+  const safeProtectiveDevice = circuit
+    ? `${circuit.protectionDevice.rating}A Type ${circuit.protectionDevice.curve} ${circuit.protectionDevice.type}${circuit.rcdProtected ? ` + ${circuit.protectionDevice.rcdRating || 30}mA RCD` : ''}`
+    : (summary?.protectiveDevice || 'Not specified');
+  
+  const safeVoltageDrop = circuit
+    ? `${circuit.calculations.voltageDrop.percent.toFixed(2)}% ${circuit.calculations.voltageDrop.compliant ? '✓' : '✗'} (Limit: ${circuit.calculations.voltageDrop.limit}%)`
+    : (summary?.voltageDrop || 'N/A');
+  
+  const safeZs = circuit
+    ? `${circuit.calculations.zs.toFixed(3)}Ω ${circuit.calculations.zs <= circuit.calculations.maxZs ? '✓' : '✗'} (Max: ${circuit.calculations.maxZs.toFixed(3)}Ω)`
+    : (summary?.zs || 'N/A');
+  
+  const safeComplianceTick = circuit 
+    ? (circuit.calculations.voltageDrop.compliant && circuit.calculations.zs <= circuit.calculations.maxZs)
+    : (summary?.complianceTick ?? false);
+  
   const safeNotes = summary?.notes || '';
 
   return (
