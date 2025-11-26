@@ -524,18 +524,18 @@ function calculateProfitability(
   // This covers all costs because labour rate already includes overheads
   const baseQuote = materialsTotal + labourTotal + contingency;
   
-  // Quote tiers: Add profit margin on top of base quote
-  const minimumMargin = 0.15;  // 15% profit
-  const targetMargin = 0.25;   // 25% profit
-  const premiumMargin = 0.40;  // 40% profit
+  // SIMPLIFIED: 2 pricing tiers only - Standard and Busy Period
+  const standardMargin = 0.20;  // 20% profit - your normal healthy margin
+  const busyMargin = 0.35;      // 35% profit - when demand is high
   
-  return {
+  const result = {
     directCosts: { 
       materials: materialsTotal, 
       labour: labourTotal, 
       contingency: contingency,
       total: materialsTotal + labourTotal + contingency
     },
+    breakEvenPoint: baseQuote, // ADD: What frontend expects for "Your Minimum Quote"
     baseQuote: {
       subtotal: baseQuote,
       vat: baseQuote * 0.20,
@@ -543,35 +543,32 @@ function calculateProfitability(
       explanation: 'Your minimum quote - covers materials, labour, and contingency. Labour rate already includes your overheads.'
     },
     quoteTiers: {
-      minimum: {
-        margin: minimumMargin,
-        subtotal: baseQuote * (1 + minimumMargin),
-        vat: (baseQuote * (1 + minimumMargin)) * 0.20,
-        total: (baseQuote * (1 + minimumMargin)) * 1.20,
-        profit: baseQuote * minimumMargin,
-        price: (baseQuote * (1 + minimumMargin)) * 1.20,
-        explanation: 'Minimum 15% profit - for slow periods'
+      standard: {
+        margin: standardMargin,
+        subtotal: baseQuote * (1 + standardMargin),
+        vat: (baseQuote * (1 + standardMargin)) * 0.20,
+        total: (baseQuote * (1 + standardMargin)) * 1.20,
+        profit: baseQuote * standardMargin,
+        price: (baseQuote * (1 + standardMargin)) * 1.20,
+        explanation: 'Standard 20% profit - healthy business margin for normal periods'
       },
-      target: {
-        margin: targetMargin,
-        subtotal: baseQuote * (1 + targetMargin),
-        vat: (baseQuote * (1 + targetMargin)) * 0.20,
-        total: (baseQuote * (1 + targetMargin)) * 1.20,
-        profit: baseQuote * targetMargin,
-        price: (baseQuote * (1 + targetMargin)) * 1.20,
-        explanation: 'Target 25% profit - healthy business standard'
-      },
-      premium: {
-        margin: premiumMargin,
-        subtotal: baseQuote * (1 + premiumMargin),
-        vat: (baseQuote * (1 + premiumMargin)) * 0.20,
-        total: (baseQuote * (1 + premiumMargin)) * 1.20,
-        profit: baseQuote * premiumMargin,
-        price: (baseQuote * (1 + premiumMargin)) * 1.20,
-        explanation: 'Premium 40% profit - busy periods or specialist work'
+      busy: {
+        margin: busyMargin,
+        subtotal: baseQuote * (1 + busyMargin),
+        vat: (baseQuote * (1 + busyMargin)) * 0.20,
+        total: (baseQuote * (1 + busyMargin)) * 1.20,
+        profit: baseQuote * busyMargin,
+        price: (baseQuote * (1 + busyMargin)) * 1.20,
+        explanation: 'Busy Period 35% profit - when you\'re in high demand'
       }
+    },
+    recommendedQuote: {  // ADD: Default recommendation for frontend
+      tier: 'standard',
+      amount: (baseQuote * (1 + standardMargin)) * 1.20
     }
   };
+  
+  return result;
 }
 
 function getRegionalMultiplier(region: string): number {
