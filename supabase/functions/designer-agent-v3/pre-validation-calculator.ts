@@ -6,6 +6,14 @@
 
 import type { NormalizedCircuit, NormalizedSupply } from './types.ts';
 
+// Real-world Twin & Earth cable availability constraints
+const TWIN_EARTH_AVAILABILITY = {
+  commonMax: 10,      // 10mm² is the largest commonly stocked T&E
+  rareMax: 16,        // 16mm² exists but is rare/expensive
+  absoluteMax: 16,    // 25mm²+ T&E doesn't exist in practice
+  switchThreshold: 10 // Above this, recommend switching cable type
+};
+
 export interface PreValidationConstraints {
   minimumCableSize: number;
   recommendedMCB: number;
