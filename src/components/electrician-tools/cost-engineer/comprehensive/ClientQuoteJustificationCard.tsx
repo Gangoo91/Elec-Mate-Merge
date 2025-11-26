@@ -590,7 +590,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                       <p className="font-semibold text-blue-400">Labour: {formatCurrency(labourTotal)} ({Math.round(labourHours)} hours @ {formatCurrency(labourRate)}/hour)</p>
                     </div>
                     
-                    <div className="bg-accent/20 border border-primary/20 p-3 rounded-lg">
+                    <div className="bg-accent/20 border border-primary/20 p-3 rounded-lg text-left">
                       <p className="font-semibold text-sm mb-3">✓ What this rate covers:</p>
                       <ul className="space-y-2">
                         <li className="flex items-start gap-2 text-sm text-white">
@@ -624,7 +624,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                       </ul>
                     </div>
                     
-                    <div className="bg-purple-500/10 border border-purple-500/30 p-3 rounded-lg">
+                    <div className="bg-purple-500/10 border border-purple-500/30 p-3 rounded-lg text-left">
                       <p className="font-semibold text-sm mb-3 text-purple-400">UK Market Rates 2025:</p>
                       <ul className="space-y-2">
                         <li className="flex items-start gap-2 text-sm text-white">
@@ -651,7 +651,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                       <p className="text-sm mt-3 text-white">My rate: {formatCurrency(labourRate)}/hour (competitive for qualified work)</p>
                     </div>
                     
-                    <div className="bg-cyan-500/10 border border-cyan-500/30 p-3 rounded-lg">
+                    <div className="bg-cyan-500/10 border border-cyan-500/30 p-3 rounded-lg text-left">
                       <p className="font-semibold text-sm mb-3 text-cyan-400">Compare to other trades:</p>
                       <ul className="space-y-2">
                         <li className="flex items-start gap-2 text-sm text-white">
@@ -706,7 +706,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   <div className="bg-accent/30 p-4 sm:p-3 rounded text-sm space-y-4 text-left">
                     <p>"I appreciate you asking, but I run a legitimate, registered business:"</p>
                     
-                    <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg">
+                    <div className="bg-red-400/20 border border-red-400/30 p-3 rounded-lg text-left">
                       <p className="font-semibold text-red-400 mb-3">❌ Why I can't do cash-in-hand:</p>
                       <ul className="space-y-2">
                         <li className="flex items-start gap-2 text-sm text-white">
@@ -736,7 +736,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                       </ul>
                     </div>
                     
-                    <div className="bg-green-500/10 border border-green-500/30 p-3 rounded-lg">
+                    <div className="bg-green-500/10 border border-green-500/30 p-3 rounded-lg text-left">
                       <p className="font-semibold text-green-400 mb-3">✓ What you get with a proper invoice:</p>
                       <ul className="space-y-2">
                         <li className="flex items-start gap-2 text-sm text-white">
@@ -868,10 +868,19 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   <CheckCircle2 className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
                   <h4 className="font-medium text-sm text-white">Guarantees</h4>
                 </div>
-                <ul className="space-y-1 text-xs text-white pl-6">
-                  <li>• 12-month workmanship</li>
-                  <li>• Material warranties</li>
-                  <li>• Insurance-backed work</li>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2 text-xs text-white">
+                    <span className="text-amber-400 flex-shrink-0">•</span>
+                    <span>12-month workmanship</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-xs text-white">
+                    <span className="text-amber-400 flex-shrink-0">•</span>
+                    <span>Material warranties</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-xs text-white">
+                    <span className="text-amber-400 flex-shrink-0">•</span>
+                    <span>Insurance-backed work</span>
+                  </li>
                 </ul>
               </div>
             </div>
