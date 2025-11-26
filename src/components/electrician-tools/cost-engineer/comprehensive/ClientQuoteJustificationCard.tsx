@@ -130,7 +130,7 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
               <Copy className="h-3 w-3" />
             </Button>
           </div>
-          <pre className="text-base sm:text-sm whitespace-pre-wrap font-sans text-white leading-relaxed">
+          <pre className="text-base sm:text-sm whitespace-pre-wrap font-sans text-white leading-relaxed text-left">
             {valueProposition}
           </pre>
         </div>
@@ -161,30 +161,63 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                       <MessageSquare className="h-3 w-3 text-blue-400" />
                       Your Response:
                     </h4>
-                    <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-white space-y-2">
+                    <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-white space-y-3 text-left">
                       <p>"I understand it might seem high at first glance. Let me break down exactly what's included:"</p>
                       
-                      <div className="pl-3 space-y-1 text-base sm:text-sm text-white">
-                        <p><strong>Materials: {formatCurrency(materialsTotal)}</strong></p>
-                        <p>
-                          • Trade supplier materials at net cost {formatCurrency(materialsNet)}<br/>
-                          • Plus {materialsMarkup.toFixed(0)}% markup ({formatCurrency(markupAmount)}) to cover waste, collection time, warranty support<br/>
-                          • Industry standard markup: 15-25% (we're at {materialsMarkup.toFixed(0)}%)
-                        </p>
+                      <div className="space-y-3">
+                        <div>
+                          <p className="font-semibold mb-2">Materials: {formatCurrency(materialsTotal)}</p>
+                          <ul className="space-y-2">
+                            <li className="flex items-start gap-2 text-sm">
+                              <span className="text-amber-400 flex-shrink-0">•</span>
+                              <span>Trade supplier materials at net cost {formatCurrency(materialsNet)}</span>
+                            </li>
+                            <li className="flex items-start gap-2 text-sm">
+                              <span className="text-amber-400 flex-shrink-0">•</span>
+                              <span>Plus {materialsMarkup.toFixed(0)}% markup ({formatCurrency(markupAmount)}) to cover waste, collection time, warranty support</span>
+                            </li>
+                            <li className="flex items-start gap-2 text-sm">
+                              <span className="text-amber-400 flex-shrink-0">•</span>
+                              <span>Industry standard markup: 15-25% (we're at {materialsMarkup.toFixed(0)}%)</span>
+                            </li>
+                          </ul>
+                        </div>
                         
-                        <p className="pt-2"><strong>Labour: {formatCurrency(labourTotal)} ({Math.round(labourHours)} hours)</strong></p>
-                        <p>
-                          • Qualified electrician rate: {formatCurrency(labourRate)}/hour<br/>
-                          • UK market rate for qualified: £{marketRate.min}-{marketRate.max}/hour (we're competitive)<br/>
-                          • {region} regional adjustment: {regionalMultiplier}x
-                        </p>
+                        <div>
+                          <p className="font-semibold mb-2">Labour: {formatCurrency(labourTotal)} ({Math.round(labourHours)} hours)</p>
+                          <ul className="space-y-2">
+                            <li className="flex items-start gap-2 text-sm">
+                              <span className="text-amber-400 flex-shrink-0">•</span>
+                              <span>Qualified electrician rate: {formatCurrency(labourRate)}/hour</span>
+                            </li>
+                            <li className="flex items-start gap-2 text-sm">
+                              <span className="text-amber-400 flex-shrink-0">•</span>
+                              <span>UK market rate for qualified: £{marketRate.min}-{marketRate.max}/hour (we're competitive)</span>
+                            </li>
+                            <li className="flex items-start gap-2 text-sm">
+                              <span className="text-amber-400 flex-shrink-0">•</span>
+                              <span>{region} regional adjustment: {regionalMultiplier}x</span>
+                            </li>
+                          </ul>
+                        </div>
                         
-                        <p className="pt-2"><strong>Business Costs: {formatCurrency(overheads)}</strong></p>
-                        <p>
-                          • Van, tools, insurance, certifications<br/>
-                          • Every electrician must cover these costs<br/>
-                          • Allocated fairly: {formatCurrency(dailyOverheadRate)}/day × {jobDays} days
-                        </p>
+                        <div>
+                          <p className="font-semibold mb-2">Business Costs: {formatCurrency(overheads)}</p>
+                          <ul className="space-y-2">
+                            <li className="flex items-start gap-2 text-sm">
+                              <span className="text-amber-400 flex-shrink-0">•</span>
+                              <span>Van, tools, insurance, certifications</span>
+                            </li>
+                            <li className="flex items-start gap-2 text-sm">
+                              <span className="text-amber-400 flex-shrink-0">•</span>
+                              <span>Every electrician must cover these costs</span>
+                            </li>
+                            <li className="flex items-start gap-2 text-sm">
+                              <span className="text-amber-400 flex-shrink-0">•</span>
+                              <span>Allocated fairly: {formatCurrency(dailyOverheadRate)}/day × {jobDays} days</span>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                       
                       <p className="pt-2">"This quote reflects professional work that will last 20+ years and keep your family safe."</p>
@@ -218,40 +251,88 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
-                  <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-white space-y-3">
+                  <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-white space-y-4 text-left">
                     <p>"That's a valid concern. Lower quotes often cut corners in these areas:"</p>
                     
-                    <div>
-                      <p className="font-medium text-amber-400 mb-1">⚠️ Questions to ask the cheaper quote:</p>
-                      <ul className="text-sm space-y-1 pl-4 text-white">
-                        <li>• Are they 18th Edition qualified and registered?</li>
-                        <li>• Do they have £2M public liability insurance?</li>
-                        <li>• Will they provide BS 7671 certification?</li>
-                        <li>• Are materials from reputable UK suppliers?</li>
-                        <li>• What's their markup on materials? (Ours: {materialsMarkup.toFixed(0)}%)</li>
-                        <li>• Is their rate realistic? (Ours: {formatCurrency(labourRate)}/hr vs market £{marketRate.min}-{marketRate.max}/hr)</li>
+                    <div className="bg-yellow-500/10 border border-yellow-500/30 p-3 rounded-lg">
+                      <p className="font-medium text-amber-400 mb-3">⚠️ Questions to ask the cheaper quote:</p>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Are they 18th Edition qualified and registered?</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Do they have £2M public liability insurance?</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Will they provide BS 7671 certification?</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Are materials from reputable UK suppliers?</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>What's their markup on materials? (Ours: {materialsMarkup.toFixed(0)}%)</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Is their rate realistic? (Ours: {formatCurrency(labourRate)}/hr vs market £{marketRate.min}-{marketRate.max}/hr)</span>
+                        </li>
                       </ul>
                     </div>
                     
-                    <div>
-                      <p className="font-medium text-green-400 mb-1">✓ Our quote includes:</p>
-                      <ul className="text-sm space-y-1 pl-4 text-white">
-                        <li>• Qualified, insured electrician</li>
-                        <li>• Quality materials with warranties</li>
-                        <li>• Full compliance and certification</li>
-                        <li>• 12-month workmanship guarantee</li>
-                        <li>• No hidden extras</li>
+                    <div className="bg-green-500/10 border border-green-500/30 p-3 rounded-lg">
+                      <p className="font-medium text-green-400 mb-3">✓ Our quote includes:</p>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Qualified, insured electrician</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Quality materials with warranties</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Full compliance and certification</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>12-month workmanship guarantee</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>No hidden extras</span>
+                        </li>
                       </ul>
                     </div>
                     
-                    <div>
-                      <p className="font-medium text-destructive mb-1">❌ Lower quotes may:</p>
-                      <ul className="text-sm space-y-1 pl-4 text-white">
-                        <li>• Use unqualified labour</li>
-                        <li>• Source cheap materials</li>
-                        <li>• Skip proper testing</li>
-                        <li>• Add 'extras' later</li>
-                        <li>• Not provide certification</li>
+                    <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg">
+                      <p className="font-medium text-destructive mb-3">❌ Lower quotes may:</p>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>Use unqualified labour</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>Source cheap materials</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>Skip proper testing</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>Add 'extras' later</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>Not provide certification</span>
+                        </li>
                       </ul>
                     </div>
                     
@@ -285,50 +366,92 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
-                  <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-white space-y-3">
+                  <div className="bg-accent/30 p-4 sm:p-3 rounded text-base sm:text-sm text-white space-y-4 text-left">
                     <p>"I appreciate you asking, but let me explain why this price is already fair:"</p>
                     
-                    <div className="bg-destructive/10 border border-destructive/20 p-2 rounded">
-                      <p className="font-medium text-xs mb-1 text-white">Break-even Point: {formatCurrency(breakEven)}</p>
-                      <p className="text-xs text-white">This is the absolute minimum to cover:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white mt-1">
-                        <li>• Materials: {formatCurrency(materialsTotal)}</li>
-                        <li>• Labour: {formatCurrency(labourTotal)}</li>
-                        <li>• Overheads: {formatCurrency(overheads)}</li>
-                        <li>• Contingency: {formatCurrency(contingency)}</li>
+                    <div className="bg-blue-500/10 border border-blue-500/30 p-3 rounded-lg">
+                      <p className="font-semibold mb-2 text-blue-400">Break-even Point: {formatCurrency(breakEven)}</p>
+                      <p className="text-sm text-white mb-2">This is the absolute minimum to cover:</p>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Materials: {formatCurrency(materialsTotal)}</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Labour: {formatCurrency(labourTotal)}</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Overheads: {formatCurrency(overheads)}</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Contingency: {formatCurrency(contingency)}</span>
+                        </li>
                       </ul>
                     </div>
                     
                     <div>
-                      <p className="font-medium text-xs">Current Quote: {formatCurrency(recommendedPrice)}</p>
-                      <p className="text-xs text-white">Profit: {formatCurrency(profit)} ({margin.toFixed(1)}% margin)</p>
-                      <p className="text-xs text-white mt-2">
+                      <p className="font-semibold text-sm">Current Quote: {formatCurrency(recommendedPrice)}</p>
+                      <p className="text-sm text-white mt-1">Profit: {formatCurrency(profit)} ({margin.toFixed(1)}% margin)</p>
+                      <p className="text-sm text-white mt-2">
                         This {margin.toFixed(1)}% margin is my business income for living expenses, tool replacement, and ongoing training.
                       </p>
                     </div>
                     
-                    <div>
-                      <p className="font-medium text-xs mb-1">Industry standard margins:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white">
-                        <li>• Budget work: 10-15% (tight)</li>
-                        <li>• Professional work: 20-30% (healthy)</li>
-                        <li>• Specialist work: 30-40% (premium)</li>
+                    <div className="bg-accent/20 border border-primary/20 p-3 rounded-lg">
+                      <p className="font-semibold text-sm mb-2">Industry standard margins:</p>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Budget work: 10-15% (tight)</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Professional work: 20-30% (healthy)</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Specialist work: 30-40% (premium)</span>
+                        </li>
                       </ul>
-                      <p className="text-xs mt-2">At {margin.toFixed(1)}%, I'm already competitive.</p>
+                      <p className="text-sm mt-2">At {margin.toFixed(1)}%, I'm already competitive.</p>
                     </div>
                     
-                    <div className="border-t border-border pt-2">
-                      <p className="font-medium text-xs text-green-400 mb-1">What I CAN do:</p>
-                      <ul className="text-xs space-y-0.5 pl-4">
-                        <li>• Phase the work across multiple visits</li>
-                        <li>• Adjust scope (remove non-essential items)</li>
-                        <li>• Offer payment terms</li>
+                    <div className="bg-green-500/10 border border-green-500/30 p-3 rounded-lg">
+                      <p className="font-semibold text-sm text-green-400 mb-2">What I CAN do:</p>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Phase the work across multiple visits</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Adjust scope (remove non-essential items)</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Offer payment terms</span>
+                        </li>
                       </ul>
-                      <p className="font-medium text-xs text-destructive mt-2 mb-1">What I can't do:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white">
-                        <li>• Work below break-even (I'd lose money)</li>
-                        <li>• Cut corners on safety</li>
-                        <li>• Use substandard materials</li>
+                    </div>
+                    
+                    <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg">
+                      <p className="font-semibold text-sm text-red-400 mb-2">What I can't do:</p>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>Work below break-even (I'd lose money)</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>Cut corners on safety</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>Use substandard materials</span>
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -360,42 +483,77 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
-                  <div className="bg-accent/30 p-3 rounded text-sm space-y-3">
+                  <div className="bg-accent/30 p-4 sm:p-3 rounded text-sm space-y-4 text-left">
                     <p>"I understand the thought, but here's why that rarely works well:"</p>
                     
-                    <div>
-                      <p className="font-medium text-destructive mb-1">❌ If you supply materials:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white">
-                        <li>• No warranty if materials are faulty</li>
-                        <li>• No guarantee they're correct for the job</li>
-                        <li>• Delays if wrong items or missing parts</li>
-                        <li>• Risk of non-compliant/counterfeit items</li>
+                    <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg">
+                      <p className="font-semibold text-red-400 mb-3">❌ If you supply materials:</p>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>No warranty if materials are faulty</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>No guarantee they're correct for the job</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>Delays if wrong items or missing parts</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>Risk of non-compliant/counterfeit items</span>
+                        </li>
                       </ul>
                     </div>
                     
-                    <div className="bg-blue-500/10 border border-blue-500/20 p-2 rounded">
-                      <p className="font-medium text-xs mb-1">Current materials breakdown:</p>
-                      <p className="text-xs">Net cost: {formatCurrency(materialsNet)} (what I pay)</p>
-                      <p className="text-xs">Markup: {formatCurrency(markupAmount)} ({materialsMarkup.toFixed(0)}%)</p>
+                    <div className="bg-blue-500/10 border border-blue-500/30 p-3 rounded-lg">
+                      <p className="font-semibold text-blue-400 mb-2">Current materials breakdown:</p>
+                      <div className="space-y-1 text-sm text-white">
+                        <div className="grid grid-cols-[1fr_auto] gap-x-4 items-baseline">
+                          <span>Net cost (what I pay):</span>
+                          <span className="font-medium whitespace-nowrap">{formatCurrency(materialsNet)}</span>
+                        </div>
+                        <div className="grid grid-cols-[1fr_auto] gap-x-4 items-baseline">
+                          <span>Markup ({materialsMarkup.toFixed(0)}%):</span>
+                          <span className="font-medium whitespace-nowrap">{formatCurrency(markupAmount)}</span>
+                        </div>
+                      </div>
                     </div>
                     
-                    <div>
-                      <p className="font-medium text-xs mb-1">The {materialsMarkup.toFixed(0)}% markup covers:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white">
-                        <li>• Expertise selecting correct items</li>
-                        <li>• Trade supplier access</li>
-                        <li>• Warranty and returns handling</li>
-                        <li>• Waste and offcuts (5-10%)</li>
-                        <li>• Collection time and checking</li>
+                    <div className="bg-accent/20 border border-primary/20 p-3 rounded-lg">
+                      <p className="font-semibold text-sm mb-3">The {materialsMarkup.toFixed(0)}% markup covers:</p>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Expertise selecting correct items</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Trade supplier access</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Warranty and returns handling</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Waste and offcuts (5-10%)</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Collection time and checking</span>
+                        </li>
                       </ul>
                     </div>
                     
-                    <div className="bg-green-500/10 border border-green-500/20 p-2 rounded">
-                      <p className="font-medium text-xs mb-1">Trade pricing benefit:</p>
-                      <p className="text-xs text-white">My trade accounts get 25-40% off retail prices. You'd likely pay MORE buying retail yourself.</p>
+                    <div className="bg-green-500/10 border border-green-500/30 p-3 rounded-lg">
+                      <p className="font-semibold text-green-400 mb-2">Trade pricing benefit:</p>
+                      <p className="text-sm text-white">My trade accounts get 25-40% off retail prices. You'd likely pay MORE buying retail yourself.</p>
                     </div>
                     
-                    <p className="pt-2 font-medium text-xs">"Recommendation: Keep materials included for warranty protection and to avoid delays. This protects both of us."</p>
+                    <p className="pt-2 font-medium text-sm">"Recommendation: Keep materials included for warranty protection and to avoid delays. This protects both of us."</p>
                   </div>
                   <Button
                     size="sm"
@@ -425,49 +583,97 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
-                  <div className="bg-accent/30 p-3 rounded text-sm space-y-3">
+                  <div className="bg-accent/30 p-4 sm:p-3 rounded text-sm space-y-4 text-left">
                     <p>"Great question. Let me break down what you're paying for:"</p>
                     
-                    <div className="bg-blue-500/10 border border-blue-500/20 p-2 rounded">
-                      <p className="font-medium text-xs">Labour: {formatCurrency(labourTotal)} ({Math.round(labourHours)} hours @ {formatCurrency(labourRate)}/hour)</p>
+                    <div className="bg-blue-500/10 border border-blue-500/30 p-3 rounded-lg">
+                      <p className="font-semibold text-blue-400">Labour: {formatCurrency(labourTotal)} ({Math.round(labourHours)} hours @ {formatCurrency(labourRate)}/hour)</p>
                     </div>
                     
-                    <div>
-                      <p className="font-medium text-xs mb-1">✓ What this rate covers:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white">
-                        <li>• Years of training and apprenticeship</li>
-                        <li>• 18th Edition BS7671:2018+A3:2024 qualification</li>
-                        <li>• NICEIC/NAPIT membership (£450-520/year)</li>
-                        <li>• Ongoing CPD training (£400/year)</li>
-                        <li>• Professional liability insurance (£850/year)</li>
-                        <li>• Experience preventing costly mistakes</li>
-                        <li>• Legal compliance knowledge</li>
+                    <div className="bg-accent/20 border border-primary/20 p-3 rounded-lg">
+                      <p className="font-semibold text-sm mb-3">✓ What this rate covers:</p>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Years of training and apprenticeship</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>18th Edition BS7671:2018+A3:2024 qualification</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>NICEIC/NAPIT membership (£450-520/year)</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Ongoing CPD training (£400/year)</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Professional liability insurance (£850/year)</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Experience preventing costly mistakes</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Legal compliance knowledge</span>
+                        </li>
                       </ul>
                     </div>
                     
-                    <div>
-                      <p className="font-medium text-xs mb-1">UK Market Rates 2025:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white">
-                        <li>• Apprentice: £{marketRate.min - 12}-{marketRate.min - 6}/hour</li>
-                        <li>• Improver: £{marketRate.min - 6}-{marketRate.min}/hour</li>
-                        <li>• Qualified: £{marketRate.min}-{marketRate.max}/hour ← You're here</li>
-                        <li>• Experienced: £{marketRate.max + 5}-{marketRate.max + 10}/hour</li>
-                        <li>• Specialist: £{marketRate.max + 15}-{marketRate.max + 30}/hour</li>
+                    <div className="bg-purple-500/10 border border-purple-500/30 p-3 rounded-lg">
+                      <p className="font-semibold text-sm mb-3 text-purple-400">UK Market Rates 2025:</p>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Apprentice: £{marketRate.min - 12}-{marketRate.min - 6}/hour</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Improver: £{marketRate.min - 6}-{marketRate.min}/hour</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Qualified: £{marketRate.min}-{marketRate.max}/hour ← You're here</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Experienced: £{marketRate.max + 5}-{marketRate.max + 10}/hour</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Specialist: £{marketRate.max + 15}-{marketRate.max + 30}/hour</span>
+                        </li>
                       </ul>
-                      <p className="text-xs mt-2">My rate: {formatCurrency(labourRate)}/hour (competitive for qualified work)</p>
+                      <p className="text-sm mt-3 text-white">My rate: {formatCurrency(labourRate)}/hour (competitive for qualified work)</p>
                     </div>
                     
-                    <div>
-                      <p className="font-medium text-xs mb-1">Compare to other trades:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white">
-                        <li>• Plumber: £40-80/hour</li>
-                        <li>• Gas engineer: £50-90/hour</li>
-                        <li>• Builder: £35-60/hour</li>
-                        <li>• Electrician: £{marketRate.min}-{marketRate.max}/hour ← Best value</li>
+                    <div className="bg-cyan-500/10 border border-cyan-500/30 p-3 rounded-lg">
+                      <p className="font-semibold text-sm mb-3 text-cyan-400">Compare to other trades:</p>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Plumber: £40-80/hour</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Gas engineer: £50-90/hour</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Builder: £35-60/hour</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-amber-400 flex-shrink-0">•</span>
+                          <span>Electrician: £{marketRate.min}-{marketRate.max}/hour ← Best value</span>
+                        </li>
                       </ul>
                     </div>
                     
-                    <p className="pt-2 text-xs">"You're not just paying for time on-site. You're paying for knowledge to do it right first time, safety for your family, and years of expertise."</p>
+                    <p className="pt-2 text-sm">"You're not just paying for time on-site. You're paying for knowledge to do it right first time, safety for your family, and years of expertise."</p>
                   </div>
                   <Button
                     size="sm"
@@ -497,35 +703,74 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
-                  <div className="bg-accent/30 p-3 rounded text-sm space-y-3">
+                  <div className="bg-accent/30 p-4 sm:p-3 rounded text-sm space-y-4 text-left">
                     <p>"I appreciate you asking, but I run a legitimate, registered business:"</p>
                     
-                    <div className="bg-destructive/10 border border-destructive/20 p-2 rounded">
-                      <p className="font-medium text-xs text-destructive mb-1">❌ Why I can't do cash-in-hand:</p>
-                      <ul className="text-xs space-y-0.5 pl-4 text-white">
-                        <li>• It's illegal tax evasion (fines up to £20,000)</li>
-                        <li>• Voids your building insurance</li>
-                        <li>• No legal recourse if issues arise</li>
-                        <li>• Can't provide proper certification</li>
-                        <li>• Risk my NICEIC/NAPIT registration</li>
-                        <li>• Jeopardizes professional reputation</li>
+                    <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg">
+                      <p className="font-semibold text-red-400 mb-3">❌ Why I can't do cash-in-hand:</p>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>It's illegal tax evasion (fines up to £20,000)</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>Voids your building insurance</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>No legal recourse if issues arise</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>Can't provide proper certification</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>Risk my NICEIC/NAPIT registration</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-red-400 flex-shrink-0">•</span>
+                          <span>Jeopardizes professional reputation</span>
+                        </li>
                       </ul>
                     </div>
                     
-                    <div>
-                      <p className="font-medium text-xs text-green-400 mb-1">✓ What you get with a proper invoice:</p>
-                      <ul className="text-xs space-y-0.5 pl-4">
-                        <li>• Legal proof of professional work</li>
-                        <li>• Building Control notification</li>
-                        <li>• Electrical Installation Certificate</li>
-                        <li>• Insurance coverage maintained</li>
-                        <li>• Warranty protection</li>
-                        <li>• Legal guarantee rights</li>
-                        <li>• Tax-deductible if rental property</li>
+                    <div className="bg-green-500/10 border border-green-500/30 p-3 rounded-lg">
+                      <p className="font-semibold text-green-400 mb-3">✓ What you get with a proper invoice:</p>
+                      <ul className="space-y-2">
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Legal proof of professional work</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Building Control notification</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Electrical Installation Certificate</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Insurance coverage maintained</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Warranty protection</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Legal guarantee rights</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-sm text-white">
+                          <span className="text-green-400 flex-shrink-0">•</span>
+                          <span>Tax-deductible if rental property</span>
+                        </li>
                       </ul>
                     </div>
                     
-                    <p className="text-xs border-t border-border pt-2 mt-2">
+                    <p className="text-sm border-t border-border pt-3 mt-3 text-white">
                       "VAT-registered businesses must charge VAT by law. This protects you with proper documentation and certification. Professional electrical work requires proper records for safety and legal compliance."
                     </p>
                   </div>
@@ -560,10 +805,19 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   <Shield className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
                   <h4 className="font-medium text-sm text-white">Professional Standards</h4>
                 </div>
-                <ul className="space-y-1 text-xs text-white pl-6">
-                  <li>• 18th Edition qualified</li>
-                  <li>• NICEIC/NAPIT registered</li>
-                  <li>• £2M liability insurance</li>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2 text-xs text-white">
+                    <span className="text-green-400 flex-shrink-0">•</span>
+                    <span>18th Edition qualified</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-xs text-white">
+                    <span className="text-green-400 flex-shrink-0">•</span>
+                    <span>NICEIC/NAPIT registered</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-xs text-white">
+                    <span className="text-green-400 flex-shrink-0">•</span>
+                    <span>£2M liability insurance</span>
+                  </li>
                 </ul>
               </div>
               
@@ -572,10 +826,19 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   <Package className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
                   <h4 className="font-medium text-sm text-white">Quality Materials</h4>
                 </div>
-                <ul className="space-y-1 text-xs text-white pl-6">
-                  <li>• Trade supplier materials</li>
-                  <li>• Manufacturer warranties</li>
-                  <li>• BS/EU compliance</li>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2 text-xs text-white">
+                    <span className="text-blue-400 flex-shrink-0">•</span>
+                    <span>Trade supplier materials</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-xs text-white">
+                    <span className="text-blue-400 flex-shrink-0">•</span>
+                    <span>Manufacturer warranties</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-xs text-white">
+                    <span className="text-blue-400 flex-shrink-0">•</span>
+                    <span>BS/EU compliance</span>
+                  </li>
                 </ul>
               </div>
               
@@ -584,10 +847,19 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
                   <FileText className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
                   <h4 className="font-medium text-sm text-white">Legal Compliance</h4>
                 </div>
-                <ul className="space-y-1 text-xs text-white pl-6">
-                  <li>• BS7671:2018+A3:2024</li>
-                  <li>• Building Control notification</li>
-                  <li>• EIC certification</li>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2 text-xs text-white">
+                    <span className="text-purple-400 flex-shrink-0">•</span>
+                    <span>BS7671:2018+A3:2024</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-xs text-white">
+                    <span className="text-purple-400 flex-shrink-0">•</span>
+                    <span>Building Control notification</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-xs text-white">
+                    <span className="text-purple-400 flex-shrink-0">•</span>
+                    <span>EIC certification</span>
+                  </li>
                 </ul>
               </div>
               
