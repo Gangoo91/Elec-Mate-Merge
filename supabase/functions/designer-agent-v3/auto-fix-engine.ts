@@ -368,26 +368,39 @@ export class AutoFixEngine {
   }
 
   /**
-   * FIX -1: SAFETY CRITICAL - Enforce Ib ≤ In (Design current ≤ MCB rating)
+   * FIX -1: SAFETY CRITICAL - Enforce Id ≤ In (Diversified current ≤ MCB rating)
    * This MUST run BEFORE all other fixes to prevent dangerous undersized MCBs
+   * RING FINALS: ALWAYS skip - they are ALWAYS 32A regardless of load
    */
   private autoUpgradeMcbForDesignCurrent(circuit: DesignedCircuit): DesignedCircuit {
-    const Ib = circuit.calculations?.Ib || 0;
+    // RING FINALS: Always 32A - diversity is inherent in topology
+    const isRing = circuit.name?.toLowerCase().includes('ring') || 
+                   circuit.loadType?.toLowerCase().includes('ring');
+    if (isRing) {
+      circuit.protectionDevice.rating = 32; // Always 32A for rings
+      if (circuit.calculations) {
+        circuit.calculations.In = 32;
+      }
+      return circuit;
+    }
+    
+    // For other circuits, use DIVERSIFIED current (Id) if available, else Ib
+    const Id = circuit.calculations?.Id || circuit.calculations?.Ib || 0;
     const currentRating = circuit.protectionDevice.rating;
     
-    // If design current exceeds MCB rating, this is DANGEROUS - BS 7671 Reg 433.1.1
-    if (Ib > currentRating) {
+    // If diversified current exceeds MCB rating, this is DANGEROUS - BS 7671 Reg 433.1.1
+    if (Id > currentRating) {
       const standardMCBs = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
-      // Find smallest MCB that covers the design current (with 5% margin)
-      const requiredRating = Ib * 1.05;
+      // Find smallest MCB that covers the diversified current (with 5% margin)
+      const requiredRating = Id * 1.05;
       const newRating = standardMCBs.find(r => r >= requiredRating) || 100;
       
-      this.logger.info('SAFETY FIX: MCB upgraded to cover design current', {
+      this.logger.info('SAFETY FIX: MCB upgraded to cover diversified current', {
         circuit: circuit.name,
-        Ib: Ib.toFixed(1),
+        Id: Id.toFixed(1),
         from: currentRating,
         to: newRating,
-        reason: 'BS 7671 Reg 433.1.1: In must be ≥ Ib'
+        reason: 'BS 7671 Reg 433.1.1: In must be ≥ Id (diversified current)'
       });
       
       circuit.protectionDevice.rating = newRating;

@@ -364,6 +364,131 @@ export interface DiversityResult {
   }>;
 }
 
+// ============================================
+// 4. CIRCUIT-LEVEL DIVERSITY (BS 7671 Appendix A)
+// Applies diversity to individual circuits for realistic MCB sizing
+// ============================================
+
+export type CircuitType = 
+  | 'lighting' 
+  | 'socket_ring' 
+  | 'socket_radial' 
+  | 'cooker' 
+  | 'shower' 
+  | 'immersion' 
+  | 'heating' 
+  | 'ev' 
+  | 'other';
+
+export interface CircuitDiversityParams {
+  circuitType: CircuitType;
+  connectedLoad: number; // Watts
+  voltage: number;
+}
+
+export interface CircuitDiversityResult {
+  connectedLoad: number;
+  diversifiedLoad: number;
+  diversityFactor: number;
+  diversifiedCurrent: number; // Id - for MCB selection
+  maxMcb: number; // Circuit type maximum
+  justification: string;
+}
+
+export function calculateCircuitDiversity(params: CircuitDiversityParams): CircuitDiversityResult {
+  const { circuitType, connectedLoad, voltage } = params;
+  
+  let diversifiedLoad = connectedLoad;
+  let diversityFactor = 1.0;
+  let maxMcb = 63;
+  let justification = '';
+  
+  switch (circuitType) {
+    case 'lighting':
+      // BS 7671 Appendix A: 66% diversity for lighting
+      diversifiedLoad = connectedLoad * 0.66;
+      diversityFactor = 0.66;
+      maxMcb = 16;
+      justification = `Lighting: 66% diversity per BS 7671 Appendix A. ${(connectedLoad/1000).toFixed(1)}kW connected × 0.66 = ${(diversifiedLoad/1000).toFixed(1)}kW diversified`;
+      break;
+      
+    case 'socket_ring':
+      // Ring finals: ALWAYS 32A, diversity inherent in ring topology
+      diversifiedLoad = connectedLoad; // No reduction - ring handles it
+      diversityFactor = 1.0;
+      maxMcb = 32;
+      justification = `Ring final: 32A fixed per BS 7671 Appendix 15. Ring topology provides inherent load diversity across two parallel paths.`;
+      break;
+      
+    case 'socket_radial':
+      // Radial sockets: 100% first 7360W (32A), then 40% of remainder
+      if (connectedLoad <= 7360) {
+        diversifiedLoad = connectedLoad;
+        diversityFactor = 1.0;
+        justification = `Radial socket: 100% of ${(connectedLoad/1000).toFixed(1)}kW (below 7.36kW threshold per BS 7671 Appendix A)`;
+      } else {
+        diversifiedLoad = 7360 + (connectedLoad - 7360) * 0.40;
+        diversityFactor = diversifiedLoad / connectedLoad;
+        justification = `Radial socket: 7.36kW + 40% of ${((connectedLoad-7360)/1000).toFixed(1)}kW = ${(diversifiedLoad/1000).toFixed(1)}kW per BS 7671 Appendix A`;
+      }
+      maxMcb = 32;
+      break;
+      
+    case 'cooker':
+      // BS 7671 Appendix A Table A1: 10A + 30% of first 10A + 60% of remainder
+      if (connectedLoad <= 2300) {
+        diversifiedLoad = 2300; // Minimum 10A
+        diversityFactor = diversifiedLoad / connectedLoad;
+        justification = `Cooker: Minimum 10A (2.3kW) per BS 7671 Appendix A Table A1`;
+      } else if (connectedLoad <= 4600) {
+        diversifiedLoad = 2300 + (connectedLoad - 2300) * 0.30;
+        diversityFactor = diversifiedLoad / connectedLoad;
+        justification = `Cooker: 2.3kW + 30% of ${((connectedLoad-2300)/1000).toFixed(1)}kW = ${(diversifiedLoad/1000).toFixed(1)}kW per BS 7671 Appendix A`;
+      } else {
+        diversifiedLoad = 2300 + 690 + (connectedLoad - 4600) * 0.60; // 690 = 30% of 2300
+        diversityFactor = diversifiedLoad / connectedLoad;
+        justification = `Cooker: 2.3kW + 0.69kW + 60% of ${((connectedLoad-4600)/1000).toFixed(1)}kW = ${(diversifiedLoad/1000).toFixed(1)}kW per BS 7671 Appendix A`;
+      }
+      maxMcb = 50;
+      break;
+      
+    case 'shower':
+    case 'immersion':
+    case 'ev':
+      // No diversity for fixed high-power loads
+      diversifiedLoad = connectedLoad;
+      diversityFactor = 1.0;
+      maxMcb = circuitType === 'ev' ? 40 : 50;
+      justification = `${circuitType === 'shower' ? 'Shower' : circuitType === 'immersion' ? 'Immersion heater' : 'EV charger'}: 100% load - no diversity applicable (continuous fixed load)`;
+      break;
+      
+    case 'heating':
+      // No diversity for heating
+      diversifiedLoad = connectedLoad;
+      diversityFactor = 1.0;
+      maxMcb = 40;
+      justification = `Heating: 100% load - no diversity (thermostatically controlled but assume simultaneous operation)`;
+      break;
+      
+    default:
+      diversifiedLoad = connectedLoad;
+      diversityFactor = 1.0;
+      maxMcb = 63;
+      justification = `General load: 100% (no specific diversity factor in BS 7671 Appendix A)`;
+  }
+  
+  const diversifiedCurrent = diversifiedLoad / voltage;
+  
+  return {
+    connectedLoad: Math.round(connectedLoad),
+    diversifiedLoad: Math.round(diversifiedLoad),
+    diversityFactor: Math.round(diversityFactor * 100) / 100,
+    diversifiedCurrent: Math.round(diversifiedCurrent * 100) / 100,
+    maxMcb,
+    justification
+  };
+}
+
 export function calculateDiversity(params: DiversityParams): DiversityResult {
   const { circuits, propertyType } = params;
   

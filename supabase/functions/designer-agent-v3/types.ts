@@ -145,18 +145,22 @@ export interface VoltageDropCalculation {
 }
 
 export interface CircuitCalculations {
-  Ib: number;
+  Ib: number; // Raw design current (connected load)
+  Id?: number; // Diversified design current (for MCB selection)
   In: number;
   Iz: number;
   voltageDrop: VoltageDropCalculation;
   zs: number;
   maxZs: number;
+  diversityFactor?: number;
+  diversifiedLoad?: number;
 }
 
 export interface CircuitJustifications {
   cableSize: string;
   protection: string;
   rcd?: string;
+  diversityApplied?: string; // Diversity calculation explanation
   corrections?: string; // PHASE 2: Track what was corrected
 }
 
@@ -307,4 +311,9 @@ export interface DesignResult {
   validationPassed?: boolean;
   validationIssues?: ValidationIssue[];
   autoFixSuggestions?: string[];
+  // Installation-wide diversity
+  totalLoad?: number;
+  diversifiedLoad?: number;
+  diversityFactor?: number;
+  diversityBreakdown?: any;
 }

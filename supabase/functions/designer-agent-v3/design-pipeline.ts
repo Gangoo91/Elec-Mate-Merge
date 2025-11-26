@@ -11,6 +11,7 @@ import { ValidationEngine } from './validation-engine.ts';
 import { DeterministicCalculator } from './deterministic-calculations.ts';
 import { AutoFixEngine } from './auto-fix-engine.ts';
 import { safeAll, type ParallelTask } from '../_shared/safe-parallel.ts';
+import { calculateDiversity } from '../_shared/bs7671-unified-calculations.ts';
 import type { NormalizedInputs, DesignResult } from './types.ts';
 
 export class DesignPipeline {
@@ -952,8 +953,8 @@ export class DesignPipeline {
                      loadType.includes('socket_ring') ||
                      (loadType.includes('socket') && circuit.protectionDevice?.rating === 32);
       
-      if (isRing && circuit.cableSize !== 2.5) {
-        this.logger.warn('FINAL ENFORCEMENT: Forcing ring final to standard 2.5mm² configuration', {
+      if (isRing && (circuit.cableSize !== 2.5 || circuit.protectionDevice?.rating !== 32)) {
+        this.logger.warn('FINAL ENFORCEMENT: Forcing ring final to standard 2.5mm² + 32A configuration', {
           circuit: circuit.name,
           loadType: circuit.loadType,
           wasCableSize: circuit.cableSize,
@@ -983,6 +984,34 @@ export class DesignPipeline {
       });
     }
 
+    // ========================================
+    // PHASE 8: CALCULATE INSTALLATION-WIDE DIVERSITY
+    // ========================================
+    // Map load types to diversity categories
+    const mapLoadTypeToDiversityCategory = (loadType: string): 'lighting' | 'sockets' | 'cooker' | 'immersion' | 'heating' | 'other' => {
+      const type = loadType.toLowerCase();
+      if (type.includes('lighting') || type.includes('light')) return 'lighting';
+      if (type.includes('socket') || type.includes('ring')) return 'sockets';
+      if (type.includes('cooker')) return 'cooker';
+      if (type.includes('immersion')) return 'immersion';
+      if (type.includes('heating') || type.includes('heat')) return 'heating';
+      return 'other';
+    };
+
+    const diversityResult = calculateDiversity({
+      circuits: design.circuits.map((c: any) => ({
+        type: mapLoadTypeToDiversityCategory(c.loadType),
+        load: c.calculations?.connectedLoad || (c.calculations?.Ib || 0) * (normalized.supply.voltage || 230)
+      })),
+      propertyType: normalized.supply.installationType || 'domestic'
+    });
+
+    this.logger.info('Installation-wide diversity calculated', {
+      totalConnected: diversityResult.totalConnected,
+      diversifiedDemand: diversityResult.diversifiedDemand,
+      diversityFactor: diversityResult.diversityFactor
+    });
+
     return {
       success: true,
       circuits: design.circuits,
@@ -994,7 +1023,18 @@ export class DesignPipeline {
       reasoning: design.reasoning,
       // Surface validation results to frontend
       validationIssues: validationResult.issues,
-      autoFixSuggestions: validationResult.autoFixSuggestions
+      autoFixSuggestions: validationResult.autoFixSuggestions,
+      // Installation-wide diversity
+      totalLoad: diversityResult.totalConnected,
+      diversifiedLoad: diversityResult.diversifiedDemand,
+      diversityFactor: diversityResult.diversityFactor,
+      diversityBreakdown: {
+        totalConnectedLoad: diversityResult.totalConnected,
+        diversifiedLoad: diversityResult.diversifiedDemand,
+        overallDiversityFactor: diversityResult.diversityFactor,
+        byCategory: diversityResult.breakdown,
+        reasoning: 'Calculated per BS 7671 Appendix A'
+      }
     };
   }
 }
