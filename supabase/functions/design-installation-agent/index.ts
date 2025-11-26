@@ -730,7 +730,7 @@ ${hasRCD ? `
 - Use ONLY UK English spelling and British electrical terminology
 - Generate detailed test procedures with expected readings for ${cableSpec} and ${protectionStr}
 - Include ring final tests if applicable, RCD tests if applicable
-- All materials, tools, and procedures must be specific to ${cableSpec}, not generic
+- All materials, tools, and procedures must be specific to ${cableSpec}, not generic`;
 
   const userPrompt = `Generate detailed installation guidance for this single ${cableSpec} circuit using UK English.`;
 
