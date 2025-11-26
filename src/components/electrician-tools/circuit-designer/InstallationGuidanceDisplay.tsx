@@ -320,11 +320,11 @@ export const InstallationGuidanceDisplay = ({
                     <div className="mt-3 p-2 rounded bg-background/50 text-left">
                       <div className="grid grid-cols-1 gap-1 text-xs">
                         {test.expectedReading && (
-                          <p className="text-left">
-                            <span className="font-medium">Expected:</span> {test.expectedReading}
+                          <p className="text-left text-white/80">
+                            <span className="font-medium text-white">Expected:</span> {test.expectedReading}
                           </p>
                         )}
-                        <p className="text-left">
+                        <p className="text-left text-white/80">
                           <span className="font-medium text-green-500">Pass:</span>{' '}
                           {test.acceptanceCriteria}
                         </p>
