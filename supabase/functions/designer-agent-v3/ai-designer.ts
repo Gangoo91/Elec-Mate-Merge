@@ -266,11 +266,12 @@ export class AIDesigner {
     // Practical Work Intelligence removed - handled by Design Installation Agent running in parallel
 
     // === PRE-VALIDATION CONSTRAINTS (MANDATORY) ===
-    // Inject per-circuit constraints calculated from Zs/VD/protection requirements
+    // Inject per-circuit FIXED constraints (not minimums - these are the CORRECT values)
     if (inputs && constraintsMap && constraintsMap.size > 0) {
-      parts.push('=== PRE-VALIDATION CONSTRAINTS (MANDATORY FOR COMPLIANCE) ===');
-      parts.push('The following constraints have been calculated from BS 7671 requirements.');
-      parts.push('These are MINIMUM requirements - you MUST meet or exceed these values.');
+      parts.push('=== PRE-VALIDATION CONSTRAINTS (FIXED VALUES - NOT OPTIONAL) ===');
+      parts.push('The following values have been calculated from BS 7671 and circuit type standards.');
+      parts.push('These are NOT minimums - these are the CORRECT and ONLY acceptable values.');
+      parts.push('⚠️ CRITICAL: Selecting larger values would be DANGEROUS and wasteful.');
       parts.push('');
       
       inputs.circuits.forEach((circuit, idx) => {
@@ -278,20 +279,36 @@ export class AIDesigner {
         const constraints = constraintsMap.get(circuitKey);
         
         if (constraints) {
-          parts.push(`🔒 CIRCUIT ${idx + 1}: ${circuit.name}`);
-          parts.push(`   ⚡ Minimum cable size: ${constraints.minimumCableSize}mm² (required for Zs/VD compliance)`);
-          parts.push(`   ⚡ Recommended MCB: ${constraints.recommendedMCB}A (based on design current × 1.1)`);
+          const circuitType = this.detectCircuitTypeFromName(circuit.name, circuit.loadType);
+          
+          parts.push(`🔒 CIRCUIT ${idx + 1}: ${circuit.name} [${circuitType.toUpperCase()}]`);
+          
+          // For well-known circuit types, make values FIXED not MINIMUM
+          if (circuitType === 'lighting') {
+            parts.push(`   ⚡ FIXED cable size: ${constraints.minimumCableSize}mm² twin and earth (DO NOT CHANGE)`);
+            parts.push(`   ⚡ FIXED MCB rating: ${constraints.recommendedMCB}A Type B (DO NOT CHANGE)`);
+            parts.push(`   ❌ DO NOT select 6mm² or 40A - this would be dangerously oversized for lighting!`);
+          } else if (circuitType === 'socket_ring') {
+            parts.push(`   ⚡ FIXED cable size: 2.5mm² twin and earth (ring final standard - DO NOT CHANGE)`);
+            parts.push(`   ⚡ FIXED MCB rating: 32A Type B or C RCBO (BS 7671 requirement - DO NOT CHANGE)`);
+            parts.push(`   ❌ Ring finals MUST use these exact values per BS 7671`);
+          } else {
+            // For other types, provide constraints as before
+            parts.push(`   ⚡ FIXED cable size: ${constraints.minimumCableSize}mm² (correct for this circuit type)`);
+            parts.push(`   ⚡ FIXED MCB rating: ${constraints.recommendedMCB}A (correct for load and type)`);
+          }
+          
           if (constraints.mustUseRCBO) {
             parts.push(`   ⚡ Protection: MUST use RCBO (socket/bathroom circuit per BS 7671 Reg 411.3.3)`);
           }
-          parts.push(`   ⚡ Max cable length for ${constraints.maxCableLength < 1000 ? 'voltage drop' : 'compliance'}: ${constraints.maxCableLength}m`);
-          parts.push(`   📋 Reasoning: ${constraints.reasons.join('; ')}`);
+          parts.push(`   📋 Calculation basis: ${constraints.reasons.join('; ')}`);
           parts.push('');
         }
       });
       
-      parts.push('⚠️ WARNING: Selecting cables smaller than minimum size will result in Zs/VD failures.');
-      parts.push('⚠️ WARNING: Using MCB instead of RCBO where required will fail BS 7671 compliance.');
+      parts.push('⚠️ CRITICAL WARNING: Do NOT select cables or MCBs larger than specified!');
+      parts.push('⚠️ Oversizing lighting circuits (e.g., 6mm²/40A instead of 1.5mm²/6A) is DANGEROUS.');
+      parts.push('⚠️ Use EXACTLY the values specified above - they are calculated to be correct and safe.');
       parts.push('');
     }
 
@@ -1031,5 +1048,21 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
     }
     
     return 'domestic';
+  }
+
+  /**
+   * Detect circuit type from name and load type
+   */
+  private detectCircuitTypeFromName(name: string, loadType: string): string {
+    const nameLower = name.toLowerCase();
+    const typeLower = loadType.toLowerCase();
+    
+    if (nameLower.includes('ring') || typeLower.includes('ring')) return 'socket_ring';
+    if (typeLower.includes('lighting') || nameLower.includes('lighting') || nameLower.includes('light')) return 'lighting';
+    if (typeLower.includes('socket') || nameLower.includes('socket')) return 'socket';
+    if (typeLower.includes('cooker') || nameLower.includes('cooker')) return 'cooker';
+    if (typeLower.includes('shower') || nameLower.includes('shower')) return 'shower';
+    
+    return 'other';
   }
 }

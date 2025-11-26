@@ -210,11 +210,114 @@ export class ValidationEngine {
       });
     }
 
-    // PHASE 5: Voltage-specific validation removed
-    // AI designer handles all electrical calculations (Ohm's Law, power calculations, etc.) via RAG
-    // Validation should only check BS7671 regulation compliance, not perform electrical engineering calculations
+    // RULE 11: Cable type and cable size consistency check (CRITICAL)
+    const cableType = (circuit as any).cableType || '';
+    const sizeFromType = this.extractSizeFromCableType(cableType);
+    if (sizeFromType && sizeFromType !== circuit.cableSize) {
+      issues.push({
+        circuitIndex: index,
+        circuitName: circuit.name,
+        rule: 'cable_type_size_mismatch',
+        regulation: 'Data Integrity',
+        severity: 'error',
+        message: `Cable type "${cableType}" shows ${sizeFromType}mm² but cableSize field is ${circuit.cableSize}mm². These MUST match!`,
+        currentValue: `${cableType} vs ${circuit.cableSize}mm²`,
+        expectedValue: `Both should be ${circuit.cableSize}mm²`,
+        fieldAffected: 'cableType'
+      });
+    }
+
+    // RULE 12: MCB appropriate for circuit type (SAFETY CRITICAL)
+    const circuitType = this.detectCircuitType(circuit);
+    const maxMcbForType = this.getMaxMCBForType(circuitType);
+    if (circuit.protectionDevice.rating > maxMcbForType) {
+      issues.push({
+        circuitIndex: index,
+        circuitName: circuit.name,
+        rule: 'mcb_oversized_for_type',
+        regulation: 'Best Practice / Safety',
+        severity: 'error',
+        message: `${circuitType} circuits should not exceed ${maxMcbForType}A MCB. Current ${circuit.protectionDevice.rating}A is DANGEROUSLY oversized and could mask faults!`,
+        currentValue: circuit.protectionDevice.rating,
+        expectedValue: maxMcbForType,
+        fieldAffected: 'protectionDevice.rating'
+      });
+    }
+
+    // RULE 13: Cable size appropriate for circuit type (SAFETY WARNING)
+    const maxCableForType = this.getMaxCableForType(circuitType);
+    if (circuit.cableSize > maxCableForType) {
+      issues.push({
+        circuitIndex: index,
+        circuitName: circuit.name,
+        rule: 'cable_oversized_for_type',
+        regulation: 'Best Practice',
+        severity: 'warning',
+        message: `${circuitType} circuits typically use max ${maxCableForType}mm². ${circuit.cableSize}mm² is oversized and wasteful (unless required for Zs/VD).`,
+        currentValue: circuit.cableSize,
+        expectedValue: maxCableForType,
+        fieldAffected: 'cableSize'
+      });
+    }
 
     return issues;
+  }
+
+  /**
+   * Extract cable size from cableType string (e.g., "2.5mm² twin and earth" → 2.5)
+   */
+  private extractSizeFromCableType(cableType: string): number | null {
+    const match = cableType.match(/(\d+\.?\d*)mm²/);
+    return match ? parseFloat(match[1]) : null;
+  }
+
+  /**
+   * Detect circuit type from circuit data
+   */
+  private detectCircuitType(circuit: DesignedCircuit): string {
+    const name = circuit.name.toLowerCase();
+    const type = circuit.loadType.toLowerCase();
+    
+    if (name.includes('ring') || type.includes('ring')) return 'socket_ring';
+    if (type.includes('lighting') || name.includes('lighting') || name.includes('light')) return 'lighting';
+    if (type.includes('socket') || name.includes('socket')) return 'socket';
+    if (type.includes('cooker') || name.includes('cooker')) return 'cooker';
+    if (type.includes('shower') || name.includes('shower')) return 'shower';
+    if (type.includes('ev') || name.includes('ev')) return 'ev_charger';
+    
+    return 'other';
+  }
+
+  /**
+   * Get maximum appropriate MCB rating for circuit type
+   */
+  private getMaxMCBForType(circuitType: string): number {
+    const maxMcb: Record<string, number> = {
+      'lighting': 16,
+      'socket_ring': 32,
+      'socket': 32,
+      'cooker': 50,
+      'shower': 50,
+      'ev_charger': 40,
+      'other': 63
+    };
+    return maxMcb[circuitType] || 63;
+  }
+
+  /**
+   * Get maximum appropriate cable size for circuit type
+   */
+  private getMaxCableForType(circuitType: string): number {
+    const maxCable: Record<string, number> = {
+      'lighting': 2.5,
+      'socket_ring': 2.5,
+      'socket': 6,
+      'cooker': 16,
+      'shower': 16,
+      'ev_charger': 16,
+      'other': 50
+    };
+    return maxCable[circuitType] || 50;
   }
 
   /**
