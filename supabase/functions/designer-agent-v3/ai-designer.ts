@@ -71,7 +71,7 @@ export class AIDesigner {
         tool_choice
       },
       this.openAiKey,
-      150000 // 150s timeout - allows for large RAG context with complex designs
+      120000 // 120s timeout - optimized for 30-item RAG context
     );
 
     const duration = Date.now() - startTime;
@@ -214,20 +214,20 @@ export class AIDesigner {
     parts.push('🔧 MICC: Clipped direct with pyrotenax clips (self-supporting, inherently fire-rated)');
     parts.push('');
 
-    // Inject Regulations Intelligence (Phase 5: Increased to 25 from 5)
+    // Inject Regulations Intelligence (Phase 5: Reduced to 15 for performance)
     if (context.regulations && context.regulations.length > 0) {
       parts.push('=== REGULATIONS INTELLIGENCE ===');
-      context.regulations.slice(0, 25).forEach(reg => {
+      context.regulations.slice(0, 15).forEach(reg => {
         parts.push(`${reg.regulation_number}: ${reg.content}`);
       });
       parts.push('');
     }
 
-    // Inject Design Knowledge Intelligence (Phase 5: Increased to 25 from 6)
+    // Inject Design Knowledge Intelligence (Phase 5: Reduced to 15 for performance)
     if (context.designKnowledge && context.designKnowledge.length > 0) {
       parts.push('=== DESIGN KNOWLEDGE INTELLIGENCE ===');
       
-      context.designKnowledge.slice(0, 25).forEach(facet => {
+      context.designKnowledge.slice(0, 15).forEach(facet => {
         parts.push(`\n[${facet.facet_type.toUpperCase()}] ${facet.primary_topic}`);
         
         // Core content
