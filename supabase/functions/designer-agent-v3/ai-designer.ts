@@ -352,6 +352,16 @@ export class AIDesigner {
     parts.push('Incorrect CPC sizing will result in wrong expected test values and installation failures.');
     parts.push('');
     
+    // === JUSTIFICATION REQUIREMENTS (CIRCUIT-SPECIFIC) ===
+    parts.push('=== JUSTIFICATION REQUIREMENTS ===');
+    parts.push('Each circuit MUST have a unique, circuit-specific justification that references:');
+    parts.push('1. The specific BS 7671 regulation for THIS circuit type from RAG (e.g., ring final: Reg 433-02-01)');
+    parts.push('2. The cable sizing calculation from Design Knowledge Intelligence for THIS circuit');
+    parts.push('3. Why THIS specific circuit requires THIS cable size and THIS protection rating');
+    parts.push('4. Reference specific RAG entries (regulation numbers, table references) that apply to THIS circuit');
+    parts.push('DO NOT use generic justifications across multiple circuits - each must be unique and specific!');
+    parts.push('');
+    
     // === OUTPUT REQUIREMENTS ===
     parts.push('=== OUTPUT REQUIREMENTS ===');
     parts.push('1. Design circuits that comply with BS 7671 regulations found in knowledge base');

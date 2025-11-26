@@ -117,19 +117,86 @@ export class DesignPipeline {
     const loadTypes = new Set<string>();
     const cableSizes = new Set<number>();
     
+    // Circuit type keyword mappings for precise RAG matches
+    const circuitTypeKeywords: Record<string, string[]> = {
+      'socket': ['ring final', 'radial circuit', '13 A socket-outlet', '2.5mm', '32A', '433-02-01', 'ring circuit'],
+      'ring': ['ring final', '2.5mm', '32A', '433-02-01', 'ring circuit', 'socket-outlet'],
+      'lighting': ['lighting circuit', '1.5mm', '6A', 'B6', 'Type B', 'radial', 'lighting point'],
+      'cooker': ['cooker circuit', '6mm', '10mm', '32A', '45A', 'cooker control unit', 'diversity'],
+      'shower': ['shower circuit', 'instantaneous water heater', '40A', '45A', '6mm', '10mm', 'bathroom'],
+      'immersion': ['immersion heater', '16A', '3kW', '2.5mm', 'hot water'],
+      'ev_charger': ['electric vehicle', 'EV charger', '32A', '6mm', '7kW', 'car charging'],
+      'oven': ['cooker circuit', '32A', '6mm', 'oven', 'diversity'],
+      'hob': ['cooker circuit', '32A', '6mm', 'hob', 'diversity'],
+      'motor': ['motor circuit', 'Type D', 'starting current', 'inrush']
+    };
+    
     normalized.circuits.forEach(circuit => {
       // Add load type
-      loadTypes.add(circuit.loadType.toLowerCase());
+      const loadTypeLower = circuit.loadType.toLowerCase();
+      loadTypes.add(loadTypeLower);
       
       // Add voltage keywords
       keywords.add(`${normalized.supply.voltage}v`);
       keywords.add(normalized.supply.phases === 3 ? 'three-phase' : 'single-phase');
       
       // Add circuit-specific keywords
-      keywords.add(circuit.loadType.toLowerCase());
+      keywords.add(loadTypeLower);
       keywords.add('cable sizing');
       keywords.add('voltage drop');
       keywords.add('protection');
+      
+      // Add circuit-type-specific keywords for precise RAG matching
+      Object.keys(circuitTypeKeywords).forEach(typeKey => {
+        if (loadTypeLower.includes(typeKey) || circuit.name.toLowerCase().includes(typeKey)) {
+          circuitTypeKeywords[typeKey].forEach(kw => keywords.add(kw));
+        }
+      });
+      
+      // Detect ring finals from name/description OR power
+      const isLikelyRingFinal = 
+        circuit.name.toLowerCase().includes('ring') || 
+        (loadTypeLower === 'socket' && circuit.loadPower <= 7360);
+      
+      if (isLikelyRingFinal) {
+        keywords.add('ring final');
+        keywords.add('32A');
+        keywords.add('2.5mm');
+        keywords.add('433-02-01');
+        keywords.add('ring circuit');
+        keywords.add('13 A socket-outlet');
+      }
+      
+      // Power-based keyword inference for specific circuit types
+      if (circuit.loadPower >= 7000 && circuit.loadPower <= 10500) {
+        keywords.add('shower');
+        keywords.add('instantaneous water heater');
+        keywords.add('40A');
+        keywords.add('45A');
+        keywords.add('10mm');
+        keywords.add('high power bathroom');
+      }
+      
+      if (circuit.loadPower >= 5000 && circuit.loadPower <= 15000) {
+        if (circuit.name.toLowerCase().includes('cooker') || 
+            circuit.name.toLowerCase().includes('oven') ||
+            circuit.name.toLowerCase().includes('hob')) {
+          keywords.add('cooker circuit');
+          keywords.add('32A');
+          keywords.add('45A');
+          keywords.add('6mm');
+          keywords.add('10mm');
+          keywords.add('diversity');
+        }
+      }
+      
+      if (circuit.loadPower >= 7000 && (circuit.name.toLowerCase().includes('ev') || circuit.name.toLowerCase().includes('charger'))) {
+        keywords.add('electric vehicle');
+        keywords.add('EV charger');
+        keywords.add('32A');
+        keywords.add('6mm');
+        keywords.add('Mode 3');
+      }
       
       // Design-specific keywords (cable sizing, protection, compliance)
       keywords.add('diversity factor');
@@ -185,11 +252,32 @@ export class DesignPipeline {
     }
     
     const ragTime = Date.now() - ragStart;
+    
+    // ENHANCED LOGGING: Verify RAG returns circuit-specific data
+    const ringFinalMatches = designIntelligence.filter((d: any) => 
+      d.keywords?.some((k: string) => k.toLowerCase().includes('ring final') || k.toLowerCase().includes('ring circuit'))
+    ).length;
+    const cookerMatches = designIntelligence.filter((d: any) => 
+      d.keywords?.some((k: string) => k.toLowerCase().includes('cooker'))
+    ).length;
+    const showerMatches = designIntelligence.filter((d: any) => 
+      d.keywords?.some((k: string) => k.toLowerCase().includes('shower'))
+    ).length;
+    const lightingMatches = designIntelligence.filter((d: any) => 
+      d.keywords?.some((k: string) => k.toLowerCase().includes('lighting'))
+    ).length;
+    
     this.logger.info('Fast RAG complete (2-layer design focus)', {
       designIntelligence: designIntelligence.length,
       regulationsIntelligence: regulationsIntelligence.length,
       searchTime: ragTime,
       note: 'Installation guidance handled by Design Installation Agent',
+      circuitSpecificMatches: {
+        ringFinals: ringFinalMatches,
+        cookers: cookerMatches,
+        showers: showerMatches,
+        lighting: lightingMatches
+      },
       sampleDesignKeywords: designIntelligence.slice(0, 3).map((d: any) => d.keywords?.slice(0, 3)).flat(),
       sampleRegulations: regulationsIntelligence.slice(0, 3).map((r: any) => r.regulation_number)
     });
