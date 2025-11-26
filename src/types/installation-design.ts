@@ -224,6 +224,7 @@ export interface InstallationDesign {
   electricianName?: string;
   installationType: 'domestic' | 'commercial' | 'industrial';
   totalLoad: number;
+  diversifiedLoad?: number; // Top-level diversified load from backend
   diversityApplied: boolean;
   diversityFactor?: number;
   circuits?: CircuitDesign[]; // Optional - may be undefined in error states
