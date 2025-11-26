@@ -13,7 +13,7 @@ export const EnhancedStepContent = ({ content }: EnhancedStepContentProps) => {
     <div className="space-y-4">
       {/* Overview */}
       {sections.overview && (
-        <p className="text-base text-foreground leading-relaxed font-medium">
+        <p className="text-base text-foreground leading-relaxed font-medium text-left">
           {highlightMeasurements(sections.overview)}
         </p>
       )}
