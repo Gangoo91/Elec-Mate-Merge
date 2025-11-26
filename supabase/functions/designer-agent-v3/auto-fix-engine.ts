@@ -45,6 +45,9 @@ export class AutoFixEngine {
     // FIX 1: Downgrade oversized selections FIRST (SAFETY CRITICAL)
     circuit = this.autoDowngradeForType(circuit);
 
+    // FIX 1.5: Verify cable can support MCB after downgrade (NEW)
+    circuit = this.verifyCableCapacity(circuit);
+
     // FIX 2: Upgrade cable for Zs compliance
     circuit = this.autoUpgradeCableForZs(circuit, supply);
 
@@ -249,6 +252,9 @@ export class AutoFixEngine {
     const circuitType = this.detectCircuitType(circuit);
     const constraints = this.getLoadTypeConstraints(circuitType);
     
+    const originalCableSize = circuit.cableSize;
+    const originalMCBRating = circuit.protectionDevice.rating;
+    
     // Downgrade oversized MCB
     if (circuit.protectionDevice.rating > constraints.maxMCB) {
       const Ib = circuit.calculations?.Ib || 1;
@@ -287,6 +293,18 @@ export class AutoFixEngine {
           circuit: circuit.name,
           currentSize: circuit.cableSize
         });
+      }
+    }
+    
+    // Flag for recalculation if anything changed
+    if (circuit.cableSize !== originalCableSize || circuit.protectionDevice.rating !== originalMCBRating) {
+      (circuit as any).requiresRecalculation = true;
+      
+      // Update In if MCB changed
+      if (circuit.protectionDevice.rating !== originalMCBRating) {
+        if (circuit.calculations) {
+          circuit.calculations.In = circuit.protectionDevice.rating;
+        }
       }
     }
     
@@ -361,13 +379,15 @@ export class AutoFixEngine {
 
   /**
    * Helper: Get appropriate MCB rating for design current within type maximum
+   * Only selects MCBs with valid Zs values in BS 7671 Table 41.3
    */
   private getAppropriateRating(Ib: number, maxRating: number): number {
-    const standardMCBs = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100];
+    // Standard MCB ratings that have Zs values in Table 41.3
+    const validMCBsForZs = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
     const requiredRating = Ib * 1.1; // Add 10% margin
     
-    // Find smallest MCB that covers load, but doesn't exceed type maximum
-    for (const rating of standardMCBs) {
+    // Find smallest MCB that covers load, has valid Zs, and doesn't exceed type maximum
+    for (const rating of validMCBsForZs) {
       if (rating >= requiredRating && rating <= maxRating) {
         return rating;
       }
@@ -431,5 +451,44 @@ export class AutoFixEngine {
   private isTwinEarth(cableType: string): boolean {
     const lower = cableType.toLowerCase();
     return lower.includes('twin') || lower.includes('t&e') || lower.includes('t & e');
+  }
+
+  /**
+   * FIX 1.5: Verify cable capacity can support MCB rating (In ≤ Iz)
+   * Run after downgrades to ensure coordination between MCB and cable
+   */
+  private verifyCableCapacity(circuit: DesignedCircuit): DesignedCircuit {
+    const In = circuit.protectionDevice.rating;
+    const Iz = circuit.calculations?.Iz || 0;
+    
+    // If no Iz calculated yet, skip (will be calculated later)
+    if (Iz === 0) return circuit;
+    
+    // Check if MCB is too large for cable capacity
+    if (In > Iz) {
+      this.logger.warn('MCB exceeds cable capacity after downgrade - reducing MCB', {
+        circuit: circuit.name,
+        In,
+        Iz: Iz.toFixed(1),
+        violation: 'In > Iz (BS 7671 Reg 433.1)'
+      });
+      
+      // Find largest MCB that fits cable capacity (with 10% safety margin)
+      const validMCBs = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100];
+      const appropriateMCB = validMCBs.filter(r => r <= Iz * 0.9).pop() || 6;
+      
+      circuit.protectionDevice.rating = appropriateMCB;
+      if (circuit.calculations) {
+        circuit.calculations.In = appropriateMCB;
+      }
+      
+      this.logger.info('MCB reduced to match cable capacity', {
+        circuit: circuit.name,
+        newMCB: appropriateMCB,
+        reason: `Cable Iz=${Iz.toFixed(1)}A can support max ${appropriateMCB}A MCB`
+      });
+    }
+    
+    return circuit;
   }
 }
