@@ -135,7 +135,32 @@ export const InstallationResults = ({
   const [showMetadataForm, setShowMetadataForm] = useState(false);
   const [projectMetadata, setProjectMetadata] = useState<ProjectMetadata | undefined>(initialMetadata);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const { isMobile } = useMobileEnhanced();
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  // Scroll tracking for "scroll to top" button
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 500);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const scrollToStep = (index: number) => {
+    const stepElement = document.getElementById(`step-${index}`);
+    if (stepElement) {
+      stepElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setCurrentStepIndex(index);
+    }
+  };
 
   // Extract comprehensive data - prioritize props over fullMethodStatement
   const testingProcedures = propTestingProcedures || fullMethodStatement?.testingProcedures || [];
@@ -365,7 +390,7 @@ export const InstallationResults = ({
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div ref={contentRef} className="space-y-6 animate-fade-in pb-24 sm:pb-6">
       {/* Hero Banner */}
       {jobTitle && (
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 via-primary/10 to-background border border-blue-500/30 p-6 sm:p-8 shadow-xl">
@@ -528,6 +553,7 @@ export const InstallationResults = ({
         riskLevel={summary.overallRiskLevel}
         toolsCount={summary.toolsRequired?.length || 0}
         hazardsCount={totalHazards}
+      />
         competency={competencyRequirements}
         siteLogistics={siteLogistics}
       />
@@ -739,6 +765,37 @@ export const InstallationResults = ({
             onChange={(updated) => setProjectMetadata(updated)}
           />
         )
+      )}
+      {/* Mobile Bottom Action Bar - Sticky */}
+      {isMobile && (
+        <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border p-3 z-40 flex gap-2 shadow-lg">
+          <Button
+            onClick={handleExportPDF}
+            disabled={isGeneratingPDF}
+            className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 min-h-[48px]"
+          >
+            <Download className="h-4 w-4 mr-2" />
+            {isGeneratingPDF ? "Generating..." : "Export PDF"}
+          </Button>
+          <Button
+            onClick={addNewStep}
+            variant="outline"
+            className="min-h-[48px]"
+          >
+            <Plus className="h-4 w-4" />
+          </Button>
+        </div>
+      )}
+
+      {/* Scroll to Top Button */}
+      {showScrollTop && (
+        <Button
+          onClick={scrollToTop}
+          className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 rounded-full w-12 h-12 shadow-lg z-40 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+          size="icon"
+        >
+          <ChevronUp className="h-5 w-5" />
+        </Button>
       )}
     </div>
   );

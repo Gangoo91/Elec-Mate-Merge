@@ -1,10 +1,17 @@
 // Installation Method Types - For Installation Specialist Agent
 
+// Structured safety note with optional BS regulation reference
+export interface SafetyNote {
+  note: string;
+  regulation?: string;  // e.g., "521.10.202"
+  severity?: 'info' | 'warning' | 'critical';
+}
+
 export interface InstallationStep {
   stepNumber: number;
   title: string;
   content: string;
-  safety?: string[];
+  safety?: (string | SafetyNote)[];  // Backward compatible with strings or structured SafetyNote
   toolsRequired?: string[];
   materialsNeeded?: string[];
   estimatedDuration?: string;

@@ -294,8 +294,6 @@ export const InstallationResultsEditor = ({
         riskLevel={summary.overallRiskLevel}
         toolsCount={summary.toolsRequired?.length || 0}
         hazardsCount={totalHazards}
-        competency={competencyRequirements}
-        siteLogistics={siteLogistics}
       />
 
       {/* Enhanced Metadata Call-to-Action Banner */}
