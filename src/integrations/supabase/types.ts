@@ -1337,6 +1337,63 @@ export type Database = {
         }
         Relationships: []
       }
+      cost_engineer_jobs: {
+        Row: {
+          business_settings: Json | null
+          completed_at: string | null
+          created_at: string
+          current_step: string | null
+          error_message: string | null
+          id: string
+          output_data: Json | null
+          progress: number
+          project_context: Json | null
+          query: string
+          raw_response: Json | null
+          region: string | null
+          started_at: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          business_settings?: Json | null
+          completed_at?: string | null
+          created_at?: string
+          current_step?: string | null
+          error_message?: string | null
+          id?: string
+          output_data?: Json | null
+          progress?: number
+          project_context?: Json | null
+          query: string
+          raw_response?: Json | null
+          region?: string | null
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          business_settings?: Json | null
+          completed_at?: string | null
+          created_at?: string
+          current_step?: string | null
+          error_message?: string | null
+          id?: string
+          output_data?: Json | null
+          progress?: number
+          project_context?: Json | null
+          query?: string
+          raw_response?: Json | null
+          region?: string | null
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       cost_query_cache: {
         Row: {
           created_at: string | null
