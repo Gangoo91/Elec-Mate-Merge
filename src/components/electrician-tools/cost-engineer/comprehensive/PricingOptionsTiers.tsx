@@ -22,9 +22,9 @@ const PricingOptionsTiers = ({
   jobDescription
 }: PricingOptionsTiersProps) => {
   
-  const sparsePrice = profitability?.quoteTiers?.minimum?.price || breakEven * 1.2;
-  const normalPrice = profitability?.quoteTiers?.target?.price || breakEven * 1.3;
-  const busyPrice = profitability?.quoteTiers?.premium?.price || breakEven * 1.4;
+  const minimumPrice = profitability?.quoteTiers?.minimum?.price || breakEven * 1.15;
+  const targetPrice = profitability?.quoteTiers?.target?.price || breakEven * 1.25;
+  const premiumPrice = profitability?.quoteTiers?.premium?.price || breakEven * 1.40;
 
   const calculateTierMetrics = (price: number) => {
     const profit = price - breakEven;
@@ -39,7 +39,7 @@ const PricingOptionsTiers = ({
   };
 
   // Intelligent benchmark detection
-  const getBenchmark = (projectType?: string, jobDescription?: string, normalPrice?: number) => {
+  const getBenchmark = (projectType?: string, jobDescription?: string, targetPrice?: number) => {
     const desc = jobDescription?.toLowerCase() || '';
     
     // Domestic benchmarks
@@ -123,7 +123,7 @@ const PricingOptionsTiers = ({
     }
     
     // Default fallback based on price
-    if (normalPrice && normalPrice < 2000) {
+    if (targetPrice && targetPrice < 2000) {
       return {
         name: 'Small electrical job',
         range: '£200-2,000',
@@ -140,11 +140,11 @@ const PricingOptionsTiers = ({
     };
   };
 
-  const benchmark = getBenchmark(projectType, jobDescription, normalPrice);
+  const benchmark = getBenchmark(projectType, jobDescription, targetPrice);
 
-  const sparse = calculateTierMetrics(sparsePrice);
-  const normal = calculateTierMetrics(normalPrice);
-  const busy = calculateTierMetrics(busyPrice);
+  const minimum = calculateTierMetrics(minimumPrice);
+  const target = calculateTierMetrics(targetPrice);
+  const premium = calculateTierMetrics(premiumPrice);
 
   return (
     <Card className="border-0 sm:border border-elec-yellow/20 rounded-none sm:rounded-xl">
@@ -167,113 +167,113 @@ const PricingOptionsTiers = ({
               <span className="font-medium text-white">{benchmark.range}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-white">This quote (Normal tier):</span>
+              <span className="text-white">This quote (Target tier):</span>
               <span className={`font-bold ${
-                normalPrice < benchmark.min ? 'text-red-500' : 
-                normalPrice > benchmark.max ? 'text-red-500' : 
+                targetPrice < benchmark.min ? 'text-red-500' : 
+                targetPrice > benchmark.max ? 'text-red-500' : 
                 'text-green-600'
               }`}>
-                £{normalPrice.toFixed(0)}
-                {normalPrice < benchmark.min && ' ⚠️ Below market rate'}
-                {normalPrice > benchmark.max && ' ⚠️ Above market rate'}
-                {normalPrice >= benchmark.min && normalPrice <= benchmark.max && ' ✅ Within range'}
+                £{targetPrice.toFixed(0)}
+                {targetPrice < benchmark.min && ' ⚠️ Below market rate'}
+                {targetPrice > benchmark.max && ' ⚠️ Above market rate'}
+                {targetPrice >= benchmark.min && targetPrice <= benchmark.max && ' ✅ Within range'}
               </span>
             </div>
             <div className="text-sm sm:text-xs text-white mt-3 sm:mt-2">
-              {normalPrice < benchmark.min && 'Consider if materials or labour are underestimated'}
-              {normalPrice > benchmark.max && 'Review for over-specification or excessive margins'}
-              {normalPrice >= benchmark.min && normalPrice <= benchmark.max && 'Competitive pricing for your region'}
+              {targetPrice < benchmark.min && 'Consider if materials or labour are underestimated'}
+              {targetPrice > benchmark.max && 'Review for over-specification or excessive margins'}
+              {targetPrice >= benchmark.min && targetPrice <= benchmark.max && 'Competitive pricing for your region'}
             </div>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {/* Work Sparse */}
+          {/* Minimum */}
           <div className={`p-5 sm:p-4 rounded-xl border-2 ${
-            selectedTier === 'sparse' 
-              ? 'border-elec-yellow bg-elec-yellow/10' 
+            selectedTier === 'minimum' 
+              ? 'border-primary bg-primary/10' 
               : 'border-border/50 bg-background/30'
           }`}>
             <div className="text-center mb-4 sm:mb-3">
-              <Badge className="bg-blue-500/20 text-blue-500 border-blue-500/30 mb-2">
-                Work Sparse
+              <Badge className="bg-amber-500/20 text-amber-500 border-amber-500/30 mb-2">
+                Minimum (15%)
               </Badge>
-              <div className="text-5xl sm:text-4xl font-bold text-white">£{sparsePrice.toFixed(0)}</div>
-              <div className="text-sm sm:text-xs text-white mt-1">Low margin</div>
+              <div className="text-5xl sm:text-4xl font-bold text-white">£{minimumPrice.toFixed(0)}</div>
+              <div className="text-sm sm:text-xs text-white mt-1">For slow periods</div>
             </div>
             
             <div className="space-y-2 text-base sm:text-sm">
               <div className="flex justify-between">
-                <span className="text-white">Margin:</span>
-                <span className="font-medium text-white">{sparse.margin.toFixed(0)}%</span>
+                <span className="text-white">Profit Margin:</span>
+                <span className="font-medium text-white">{minimum.margin.toFixed(0)}%</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white">Profit:</span>
-                <span className="font-medium text-green-500">£{sparse.profit.toFixed(0)}</span>
+                <span className="text-white">Your Profit:</span>
+                <span className="font-medium text-green-500">£{minimum.profit.toFixed(0)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white">Per hour:</span>
-                <span className="font-medium text-white">£{sparse.profitPerHour.toFixed(0)}</span>
+                <span className="text-white">Profit/hour:</span>
+                <span className="font-medium text-white">£{minimum.profitPerHour.toFixed(0)}</span>
               </div>
             </div>
           </div>
 
-          {/* Normal */}
+          {/* Target */}
           <div className={`p-5 sm:p-4 rounded-xl border-2 ${
-            selectedTier === 'normal' 
-              ? 'border-elec-yellow bg-elec-yellow/10' 
+            selectedTier === 'target' 
+              ? 'border-primary bg-primary/10' 
               : 'border-border/50 bg-background/30'
           }`}>
             <div className="text-center mb-4 sm:mb-3">
-              <Badge className="bg-elec-yellow/30 text-elec-yellow border-elec-yellow/50 mb-2">
-                Normal ⭐
+              <Badge className="bg-primary/30 text-primary border-primary/50 mb-2">
+                Target (25%) ⭐
               </Badge>
-              <div className="text-5xl sm:text-4xl font-bold text-elec-yellow">£{normalPrice.toFixed(0)}</div>
-              <div className="text-sm sm:text-xs text-white mt-1">Target pricing</div>
+              <div className="text-5xl sm:text-4xl font-bold text-primary">£{targetPrice.toFixed(0)}</div>
+              <div className="text-sm sm:text-xs text-white mt-1">Healthy standard</div>
             </div>
             
             <div className="space-y-2 text-base sm:text-sm">
               <div className="flex justify-between">
-                <span className="text-white">Margin:</span>
-                <span className="font-medium text-white">{normal.margin.toFixed(0)}%</span>
+                <span className="text-white">Profit Margin:</span>
+                <span className="font-medium text-white">{target.margin.toFixed(0)}%</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white">Profit:</span>
-                <span className="font-medium text-green-500">£{normal.profit.toFixed(0)}</span>
+                <span className="text-white">Your Profit:</span>
+                <span className="font-medium text-green-500">£{target.profit.toFixed(0)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white">Per hour:</span>
-                <span className="font-medium text-white">£{normal.profitPerHour.toFixed(0)}</span>
+                <span className="text-white">Profit/hour:</span>
+                <span className="font-medium text-white">£{target.profitPerHour.toFixed(0)}</span>
               </div>
             </div>
           </div>
 
-          {/* Busy */}
+          {/* Premium */}
           <div className={`p-5 sm:p-4 rounded-xl border-2 ${
-            selectedTier === 'busy' 
-              ? 'border-elec-yellow bg-elec-yellow/10' 
+            selectedTier === 'premium' 
+              ? 'border-primary bg-primary/10' 
               : 'border-border/50 bg-background/30'
           }`}>
             <div className="text-center mb-4 sm:mb-3">
               <Badge className="bg-green-500/20 text-green-500 border-green-500/30 mb-2">
-                Busy Period
+                Premium (40%)
               </Badge>
-              <div className="text-5xl sm:text-4xl font-bold text-white">£{busyPrice.toFixed(0)}</div>
-              <div className="text-sm sm:text-xs text-white mt-1">High margin</div>
+              <div className="text-5xl sm:text-4xl font-bold text-white">£{premiumPrice.toFixed(0)}</div>
+              <div className="text-sm sm:text-xs text-white mt-1">Busy/specialist</div>
             </div>
             
             <div className="space-y-2 text-base sm:text-sm">
               <div className="flex justify-between">
-                <span className="text-white">Margin:</span>
-                <span className="font-medium text-white">{busy.margin.toFixed(0)}%</span>
+                <span className="text-white">Profit Margin:</span>
+                <span className="font-medium text-white">{premium.margin.toFixed(0)}%</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white">Profit:</span>
-                <span className="font-medium text-green-500">£{busy.profit.toFixed(0)}</span>
+                <span className="text-white">Your Profit:</span>
+                <span className="font-medium text-green-500">£{premium.profit.toFixed(0)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white">Per hour:</span>
-                <span className="font-medium text-white">£{busy.profitPerHour.toFixed(0)}</span>
+                <span className="text-white">Profit/hour:</span>
+                <span className="font-medium text-white">£{premium.profitPerHour.toFixed(0)}</span>
               </div>
             </div>
           </div>
