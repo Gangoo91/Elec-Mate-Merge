@@ -24,61 +24,62 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
   const buildTestResults = (): TestResult[] => {
     const results: TestResult[] = [];
 
-    // Continuity (R1+R2)
-    if (circuit.calculations?.r1r2 != null) {
+    // Continuity (R1+R2) - Use expectedTests
+    if (circuit.expectedTests?.r1r2) {
       results.push({
         test: 'Continuity (R1+R2)',
-        expectedValue: `${circuit.calculations.r1r2.toFixed(3)}Ω`,
-        passCriteria: 'Value recorded and consistent',
-        regulation: 'BS 7671 Part 6',
+        expectedValue: `At 20°C: ${circuit.expectedTests.r1r2.at20C.toFixed(4)}Ω / At 70°C: ${circuit.expectedTests.r1r2.at70C.toFixed(4)}Ω`,
+        passCriteria: 'Value recorded and consistent with cable length',
+        regulation: circuit.expectedTests.r1r2.regulation,
         status: 'pass',
         colorClass: 'border-blue-500/50 bg-blue-500/10'
       });
     }
 
-    // Earth Fault Loop Impedance (Zs)
-    if (circuit.calculations?.zs != null && circuit.calculations?.maxZs != null) {
-      const zs = circuit.calculations.zs;
-      const maxZs = circuit.calculations.maxZs;
-      const status = zs <= maxZs ? 'pass' : 'fail';
+    // Earth Fault Loop Impedance (Zs) - Use expectedTests
+    if (circuit.expectedTests?.zs) {
+      const { expected, maxPermitted, compliant, marginPercent } = circuit.expectedTests.zs;
+      const status = compliant ? 'pass' : 'fail';
       
       results.push({
         test: 'Earth Fault Loop (Zs)',
-        expectedValue: `${zs.toFixed(2)}Ω (Max: ${maxZs.toFixed(2)}Ω)`,
-        passCriteria: `Zs ≤ ${maxZs.toFixed(2)}Ω`,
-        regulation: 'BS 7671:411.4.5',
+        expectedValue: `${expected.toFixed(3)}Ω (Max: ${maxPermitted.toFixed(3)}Ω) - ${marginPercent.toFixed(1)}% margin`,
+        passCriteria: `Zs ≤ ${maxPermitted.toFixed(3)}Ω for disconnection time compliance`,
+        regulation: circuit.expectedTests.zs.regulation,
         status,
         colorClass: status === 'pass' ? 'border-green-500/50 bg-green-500/10' : 'border-red-500/50 bg-red-500/10'
       });
     }
 
-    // Insulation Resistance
-    results.push({
-      test: 'Insulation Resistance',
-      expectedValue: '≥1MΩ (500V DC)',
-      passCriteria: 'Min 1MΩ between live conductors and earth',
-      regulation: 'BS 7671:612.3.2',
-      status: 'pass',
-      colorClass: 'border-purple-500/50 bg-purple-500/10'
-    });
+    // Insulation Resistance - Use expectedTests
+    if (circuit.expectedTests?.insulationResistance) {
+      results.push({
+        test: 'Insulation Resistance',
+        expectedValue: `${circuit.expectedTests.insulationResistance.minResistance} at ${circuit.expectedTests.insulationResistance.testVoltage}`,
+        passCriteria: `Minimum ${circuit.expectedTests.insulationResistance.minResistance} between live conductors and earth`,
+        regulation: circuit.expectedTests.insulationResistance.regulation,
+        status: 'pass',
+        colorClass: 'border-purple-500/50 bg-purple-500/10'
+      });
+    }
 
     // Polarity
     results.push({
       test: 'Polarity',
       expectedValue: 'Correct',
-      passCriteria: 'All single-pole devices in phase conductor',
-      regulation: 'BS 7671:612.6',
+      passCriteria: 'All single-pole devices in phase conductor only',
+      regulation: 'BS 7671 Reg 643.4',
       status: 'pass',
       colorClass: 'border-amber-500/50 bg-amber-500/10'
     });
 
-    // RCD Test (if applicable)
-    if (circuit.rcdProtection) {
+    // RCD Test - Use expectedTests
+    if (circuit.rcdProtected && circuit.expectedTests?.rcd) {
       results.push({
         test: 'RCD Trip Time',
-        expectedValue: `≤40ms @ ${circuit.rcdRating || 30}mA`,
-        passCriteria: `Trip within 40ms at rated current`,
-        regulation: 'BS 7671:411.4.9',
+        expectedValue: `Rating: ${circuit.expectedTests.rcd.ratingmA}mA, Max trip: <${circuit.expectedTests.rcd.maxTripTimeMs}ms`,
+        passCriteria: `Trip within ${circuit.expectedTests.rcd.maxTripTimeMs}ms at rated current`,
+        regulation: circuit.expectedTests.rcd.regulation,
         status: 'pass',
         colorClass: 'border-cyan-500/50 bg-cyan-500/10'
       });

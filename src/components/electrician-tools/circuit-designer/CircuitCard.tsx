@@ -75,7 +75,10 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
         {circuit.structuredOutput ? (
           <>
             {/* At a Glance Summary */}
-            <AtAGlanceSummary summary={circuit.structuredOutput.atAGlanceSummary} />
+            <AtAGlanceSummary 
+              summary={circuit.structuredOutput.atAGlanceSummary}
+              circuit={circuit}
+            />
             
             {/* 9 Structured Sections */}
             <StructuredDesignSections sections={circuit.structuredOutput.sections} />
