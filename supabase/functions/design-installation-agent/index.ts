@@ -61,7 +61,7 @@ Deno.serve(async (req) => {
       searchPracticalWorkIntelligence(supabase, {
         query: Array.from(keywords).slice(0, 40).join(' '),
         tradeFilter: 'installer',
-        matchCount: 40  // Increased from 20
+        matchCount: 60  // Enhanced from 40 for 30% more context
       }),
       searchRegulationsIntelligence(supabase, {
         keywords: Array.from(keywords),
@@ -72,7 +72,7 @@ Deno.serve(async (req) => {
           'special locations', 'isolation', 'verification', 'certification',
           'safety', 'tools', 'commissioning', 'fault finding'
         ],  // Expanded from 5 to 17 categories
-        limit: 30  // Increased from 15
+        limit: 50  // Enhanced from 30 for richer RAG context
       })
     ]);
 
@@ -530,9 +530,9 @@ async function generateInstallationGuidancePerCircuit(
   allPracticalWork: any[],
   allRegulations: any[]
 ) {
-  // Filter RAG results for this specific circuit
-  const relevantPracticalWork = filterRagForCircuit(allPracticalWork, circuit).slice(0, 8);
-  const relevantRegulations = filterRagForCircuit(allRegulations, circuit).slice(0, 6);
+  // Filter RAG results for this specific circuit (enhanced limits for 30% more detail)
+  const relevantPracticalWork = filterRagForCircuit(allPracticalWork, circuit).slice(0, 15);
+  const relevantRegulations = filterRagForCircuit(allRegulations, circuit).slice(0, 12);
   
   const protectionStr = circuit.protectionDevice 
     ? `${circuit.protectionDevice.rating}A Type ${circuit.protectionDevice.curve} ${circuit.protectionDevice.type}`
@@ -684,8 +684,11 @@ ${hasRCD ? `
 4. **Earth Fault Loop Impedance (Zs)** - BS 7671 Regulation 643.7
 5. **Functional Testing** - BS 7671 Regulation 643.10
 
-## CRITICAL REQUIREMENTS:
-- Generate 6-10 installation steps SPECIFIC to ${cableSpec}
+## CRITICAL REQUIREMENTS (Enhanced for 30% more detail):
+
+**Installation Steps (MINIMUM 7-10 steps):**
+- Generate 7-10 comprehensive installation steps SPECIFIC to ${cableSpec}
+- Each step must be 150-200 words with exact measurements, torques, stripping lengths, fixing centres
 - MANDATORY: FOLLOW FIRST FIX → SECOND FIX WORKFLOW ORDER:
   * Step 1: Preparation & Planning (isolation, tools, materials, route marking, safety)
   * Step 2: FIRST FIX - Cable Installation (install backboxes, conduit/trunking, pull ALL cables, fix cables to structure, label cables at both ends)
@@ -693,14 +696,41 @@ ${hasRCD ? `
   * Step N: SECOND FIX - All Terminations (strip and prepare cable ends, terminate at consumer unit, terminate at accessories/devices, torque settings)
   * Final Step(s): Testing & Commissioning
 - DO NOT put cable pulling/installation after terminations - ALL cable installation MUST happen in Step 2 (First Fix)
-- Include EXACT torque settings for this cable gauge
-- Include EXACT cable stripping lengths for ${cableSpec}
-- Include specific bending radius for this cable diameter
+
+**Tools Required (MINIMUM 8 tools across categories):**
+- **Safe Isolation (minimum 3):** Voltage indicator (GS38 compliant), proving unit, lock-off devices
+- **Preparation (minimum 2):** Cable stripper, side cutters, cable knife, junior hacksaw
+- **Installation (minimum 2):** Drill/SDS, spirit level, tape measure, cable clips/ties
+- **Termination (minimum 2):** Torque screwdriver with EXACT settings for ${cableSpec}, ferrule crimper
+- **Testing (minimum 2):** MFT (multifunction tester), loop impedance tester, RCD tester
+
+**Materials Required (MINIMUM 5-6 items with full specifications):**
+- Each material must include: item name, full technical specification, exact quantity with wastage allowance, catalogue reference, UK supplier
+- Example: "6242Y 2.5mm² T+E, brown outer sheath, BASEC approved, ${circuit.cableLength}m + 10% wastage, Ref: TLC6242Y2.5, CEF/Edmundson/Screwfix"
+
+**Cable Routing (MINIMUM 3 detailed steps):**
+- Preparation step (marking routes, checking zones)
+- Routing step (installation method, support spacing, protection)
+- Securing step (fixing centres, bend radius, labelling)
+
+**Termination Requirements (MINIMUM 3 detailed procedures):**
+- Consumer unit termination (stripping lengths, torque settings, labelling)
+- Accessory termination (device connections, torque specifications)
+- Earth connections (bonding, CPC terminations, earth bar connections)
+
+**Safety Considerations (MINIMUM 3 specific requirements):**
+- Each with specific toolsRequired, bsReference, and priority level
+- Must include PPE requirements and safe isolation procedure
+
+**Testing Requirements (MINIMUM 4-6 tests):**
+- Include EXACT torque settings for this cable gauge (e.g., 1.5mm²: 1.2Nm, 2.5mm²: 1.5Nm, 10mm²: 3.5Nm)
+- Include EXACT cable stripping lengths for ${cableSpec} (e.g., 2.5mm²: 12mm for terminals, 15mm for MCBs)
+- Include specific bending radius for this cable diameter (minimum 8× cable diameter)
 - Provide hands-on technical details an installer needs on-site
 - Use ONLY UK English spelling and British electrical terminology
-- Generate 4-6 circuit-specific tests (include ring final tests if applicable, RCD tests if applicable)
-- Provide detailed test procedures with expected readings for ${cableSpec} and ${protectionStr}
-- Materials, tools, and procedures must be specific to ${cableSpec}, not generic`;
+- Generate detailed test procedures with expected readings for ${cableSpec} and ${protectionStr}
+- Include ring final tests if applicable, RCD tests if applicable
+- All materials, tools, and procedures must be specific to ${cableSpec}, not generic
 
   const userPrompt = `Generate detailed installation guidance for this single ${cableSpec} circuit using UK English.`;
 
@@ -718,7 +748,7 @@ ${hasRCD ? `
       ],
       response_format: { type: 'json_object' },
       temperature: 0.3,
-      max_tokens: 3000
+      max_tokens: 4500  // Enhanced from 3000 for 30% more detailed output
     }),
   });
 
