@@ -1,10 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Wrench, Cable, CheckSquare, AlertTriangle, HardHat, Hammer } from "lucide-react";
+import { Wrench, Cable, CheckSquare, AlertTriangle, HardHat, Hammer, Package, FileText } from "lucide-react";
 import type { 
   EnhancedInstallationGuidance, 
   TestingRequirements 
 } from "@/types/circuit-design";
+import { cn } from "@/lib/utils";
 
 interface InstallationGuidanceDisplayProps {
   installationGuidance: EnhancedInstallationGuidance;
@@ -30,21 +31,38 @@ export const InstallationGuidanceDisplay = ({
           </CardHeader>
           <CardContent className="space-y-3">
             {installationGuidance.safetyConsiderations.map((safety, idx) => (
-              <div key={idx} className="p-3 bg-destructive/10 rounded-lg border border-destructive/20">
+              <div
+                key={idx}
+                className={cn(
+                  "rounded-lg p-4 text-left border-l-4",
+                  safety.priority === 'critical' && "border-l-red-500 bg-red-500/10",
+                  safety.priority === 'high' && "border-l-orange-500 bg-orange-500/10",
+                  safety.priority === 'medium' && "border-l-yellow-500 bg-yellow-500/10"
+                )}
+              >
                 <div className="flex items-start gap-3">
-                  <Badge variant={safety.priority === 'critical' ? 'destructive' : 'secondary'} className="mt-0.5">
-                    {safety.priority}
-                  </Badge>
-                  <div className="flex-1 space-y-1">
-                    <p className="text-sm font-medium">{safety.consideration}</p>
-                    {safety.toolsRequired && safety.toolsRequired.length > 0 && (
-                      <p className="text-xs text-muted-foreground">
-                        Tools: {safety.toolsRequired.join(', ')}
-                      </p>
+                  <AlertTriangle
+                    className={cn(
+                      "h-5 w-5 shrink-0 mt-0.5",
+                      safety.priority === 'critical' && "text-red-500",
+                      safety.priority === 'high' && "text-orange-500",
+                      safety.priority === 'medium' && "text-yellow-500"
                     )}
-                    {safety.bsReference && (
-                      <p className="text-xs text-muted-foreground">Ref: {safety.bsReference}</p>
-                    )}
+                  />
+                  <div className="space-y-2 text-left flex-1">
+                    <p className="font-semibold text-sm text-left">{safety.consideration}</p>
+                    <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                      {safety.bsReference && (
+                        <span className="inline-flex items-center gap-1">
+                          <FileText className="h-3 w-3" /> BS 7671: {safety.bsReference}
+                        </span>
+                      )}
+                      {safety.toolsRequired && safety.toolsRequired.length > 0 && (
+                        <span className="inline-flex items-center gap-1">
+                          <Wrench className="h-3 w-3" /> {safety.toolsRequired.join(', ')}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -60,23 +78,37 @@ export const InstallationGuidanceDisplay = ({
         <Card className="bg-card/30 border-white/10">
           <CardHeader className="pb-3">
             <CardTitle className="text-base sm:text-lg flex items-center gap-2">
-              <Hammer className="h-5 w-5 text-primary" />
+              <Package className="h-5 w-5 text-blue-500" />
               Materials Required
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {installationGuidance.materialsRequired.map((material, idx) => (
-                <div key={idx} className="flex items-start gap-3 p-2 bg-background/30 rounded">
-                  <CheckSquare className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
-                  <div className="flex-1 text-sm">
-                    <p className="font-medium">{material.item}</p>
-                    <p className="text-xs text-muted-foreground">{material.specification}</p>
-                    <p className="text-xs text-muted-foreground">Quantity: {material.quantity}</p>
-                  </div>
+          <CardContent className="space-y-2">
+            {installationGuidance.materialsRequired.map((material, idx) => (
+              <div
+                key={idx}
+                className="flex items-start gap-3 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors text-left"
+              >
+                <div className="shrink-0 w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+                  <Package className="h-4 w-4 text-blue-500" />
                 </div>
-              ))}
-            </div>
+                <div className="flex-1 min-w-0 text-left">
+                  <p className="font-medium text-sm text-left">{material.item}</p>
+                  <p className="text-xs text-muted-foreground text-left mt-0.5">
+                    {material.specification}
+                  </p>
+                  {material.source && (
+                    <p className="text-xs text-muted-foreground text-left mt-0.5">
+                      Source: {material.source}
+                    </p>
+                  )}
+                </div>
+                <div className="shrink-0 text-right">
+                  <Badge variant="secondary" className="font-mono">
+                    {material.quantity}
+                  </Badge>
+                </div>
+              </div>
+            ))}
           </CardContent>
         </Card>
       )}
@@ -88,16 +120,25 @@ export const InstallationGuidanceDisplay = ({
         <Card className="bg-card/30 border-white/10">
           <CardHeader className="pb-3">
             <CardTitle className="text-base sm:text-lg flex items-center gap-2">
-              <Wrench className="h-5 w-5 text-primary" />
+              <Wrench className="h-5 w-5 text-purple-500" />
               Tools Required
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {installationGuidance.toolsRequired.map((tool, idx) => (
-                <div key={idx} className="p-2 bg-background/30 rounded text-sm">
-                  <p className="font-medium">{tool.tool}</p>
-                  <p className="text-xs text-muted-foreground">{tool.purpose}</p>
+                <div
+                  key={idx}
+                  className="flex items-start gap-3 p-3 rounded-lg border bg-card/50 text-left"
+                >
+                  <Wrench className="h-4 w-4 text-purple-500 shrink-0 mt-0.5" />
+                  <div className="flex-1 text-left">
+                    <p className="font-medium text-sm text-left">{tool.tool}</p>
+                    <p className="text-xs text-muted-foreground text-left">{tool.purpose}</p>
+                    <Badge variant="secondary" className="mt-1.5 text-xs">
+                      {tool.category}
+                    </Badge>
+                  </div>
                 </div>
               ))}
             </div>
@@ -190,36 +231,50 @@ export const InstallationGuidanceDisplay = ({
        installationGuidance.installationProcedure.length > 0 && (
         <Card className="bg-card/30 border-white/10">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base sm:text-lg">
+            <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+              <CheckSquare className="h-5 w-5 text-green-500" />
               Installation Procedure
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
+          <CardContent className="relative">
+            {/* Vertical timeline line */}
+            {installationGuidance.installationProcedure.length > 1 && (
+              <div className="absolute left-4 top-8 bottom-4 w-0.5 bg-primary/20" />
+            )}
+
+            <div className="space-y-4">
               {installationGuidance.installationProcedure.map((step, idx) => (
-                <div key={idx} className="p-3 bg-background/30 rounded-lg">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center font-bold text-primary">
-                      {step.stepNumber}
-                    </div>
-                    <div className="flex-1 space-y-2">
-                      <p className="font-semibold text-sm">{step.title}</p>
-                      <p className="text-sm text-muted-foreground">{step.description}</p>
-                      {step.toolsForStep && step.toolsForStep.length > 0 && (
-                        <div className="flex flex-wrap gap-1">
-                          {step.toolsForStep.map((tool, toolIdx) => (
-                            <Badge key={toolIdx} variant="outline" className="text-xs">
-                              {tool}
-                            </Badge>
-                          ))}
-                        </div>
-                      )}
-                      {step.bsReferences && step.bsReferences.length > 0 && (
-                        <p className="text-xs text-muted-foreground">
-                          Refs: {step.bsReferences.join(', ')}
-                        </p>
-                      )}
-                    </div>
+                <div key={idx} className="relative flex gap-4 text-left">
+                  {/* Step number circle */}
+                  <div className="shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold z-10">
+                    {step.stepNumber}
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 pb-4 text-left">
+                    <p className="font-semibold text-sm text-left">{step.title}</p>
+                    <p className="text-sm text-muted-foreground mt-1 leading-relaxed text-left">
+                      {step.description}
+                    </p>
+
+                    {/* Tools as inline badges */}
+                    {step.toolsForStep && step.toolsForStep.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mt-2 justify-start">
+                        {step.toolsForStep.map((tool, toolIdx) => (
+                          <Badge key={toolIdx} variant="outline" className="text-xs">
+                            <Wrench className="h-3 w-3 mr-1" />
+                            {tool}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* BS Reference */}
+                    {step.bsReferences && step.bsReferences.length > 0 && (
+                      <p className="text-xs text-primary/70 mt-2 text-left">
+                        📋 {step.bsReferences.join(' • ')}
+                      </p>
+                    )}
                   </div>
                 </div>
               ))}
@@ -235,44 +290,62 @@ export const InstallationGuidanceDisplay = ({
        testingRequirements.tests.length > 0 && (
         <Card className="bg-card/30 border-white/10">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base sm:text-lg">
+            <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+              <CheckSquare className="h-5 w-5 text-teal-500" />
               Testing Requirements
             </CardTitle>
             {testingRequirements.intro && (
-              <p className="text-sm text-muted-foreground">{testingRequirements.intro}</p>
+              <p className="text-sm text-muted-foreground text-left">{testingRequirements.intro}</p>
             )}
           </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {testingRequirements.tests.map((test, idx) => (
-                <div key={idx} className="p-3 bg-background/30 rounded-lg">
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <p className="font-semibold text-sm">{test.testName}</p>
-                    <Badge variant="outline" className="text-xs">
-                      {test.regulation}
-                    </Badge>
+          <CardContent className="space-y-3">
+            {testingRequirements.tests.map((test, idx) => (
+              <div
+                key={idx}
+                className="p-4 rounded-lg border border-teal-500/30 bg-teal-500/5 text-left"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="shrink-0 w-6 h-6 rounded-full border-2 border-teal-500 flex items-center justify-center">
+                    <span className="text-xs font-bold text-teal-500">{idx + 1}</span>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-2">{test.procedure}</p>
-                  {test.expectedReading && (
-                    <p className="text-xs text-muted-foreground mb-1">
-                      Expected: {test.expectedReading}
-                    </p>
-                  )}
-                  <p className="text-xs text-muted-foreground mb-2">
-                    Acceptance: {test.acceptanceCriteria}
-                  </p>
-                  <div className="flex flex-wrap gap-1">
-                    {test.toolsRequired.map((tool, toolIdx) => (
-                      <Badge key={toolIdx} variant="secondary" className="text-xs">
-                        {tool}
+                  <div className="flex-1 text-left">
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="font-semibold text-sm text-left">{test.testName}</p>
+                      <Badge variant="outline" className="text-xs shrink-0">
+                        {test.regulation}
                       </Badge>
-                    ))}
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-1 text-left">{test.procedure}</p>
+
+                    <div className="mt-3 p-2 rounded bg-background/50 text-left">
+                      <div className="grid grid-cols-1 gap-1 text-xs">
+                        {test.expectedReading && (
+                          <p className="text-left">
+                            <span className="font-medium">Expected:</span> {test.expectedReading}
+                          </p>
+                        )}
+                        <p className="text-left">
+                          <span className="font-medium text-green-500">Pass:</span>{' '}
+                          {test.acceptanceCriteria}
+                        </p>
+                      </div>
+                    </div>
+
+                    {test.toolsRequired && test.toolsRequired.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-2 justify-start">
+                        {test.toolsRequired.map((tool, toolIdx) => (
+                          <Badge key={toolIdx} variant="secondary" className="text-xs">
+                            {tool}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
             {testingRequirements.recordingNote && (
-              <p className="text-xs text-muted-foreground mt-3 p-2 bg-primary/10 rounded">
+              <p className="text-xs text-muted-foreground italic text-left p-2 bg-primary/10 rounded mt-3">
                 {testingRequirements.recordingNote}
               </p>
             )}
