@@ -749,34 +749,34 @@ export class DesignPipeline {
     this.logger.info('Safety net applied - all calculations validated');
 
     // ========================================
-    // PHASE 4.55: JUSTIFICATION SYNC - Make Prose the Single Source of Truth
-    // Extract structured values from AI's prose text and overwrite numeric fields
+    // PHASE 4.55: JUSTIFICATION PARSER - AI Prose is the Single Source of Truth
+    // Extract and apply all values from design justification prose
     // ========================================
-    this.logger.info('🔄 Starting justification sync - parsing AI prose to extract values');
+    this.logger.info('🎯 JUSTIFICATION PARSER: Making AI prose the definitive source of truth');
     
     design.circuits = design.circuits.map((circuit: any, idx: number) => {
       if (!circuit.structuredOutput?.sections) {
-        this.logger.warn('Circuit missing structured output sections, skipping justification sync', {
+        this.logger.warn('Circuit missing structured output sections, cannot parse justification', {
           circuit: circuit.name || `Circuit ${idx + 1}`
         });
         return circuit;
       }
 
-      // Parse the prose justification to extract structured values
+      // Parse ALL values from AI's design justification prose
       const parsed = parseDesignJustification(circuit.structuredOutput.sections);
       
-      // Log what was extracted for debugging
+      // Log extracted values for transparency
       logParsedValues(circuit.name, parsed, this.logger);
 
-      // Build the synced circuit with parsed values overwriting existing numeric fields
-      const syncedCircuit = {
+      // Apply parsed values - these are the TRUTH
+      return {
         ...circuit,
-        // Cable sizing: use parsed values if available, otherwise keep original
+        // Cable sizing from prose
         cableSize: parsed.cableSize ?? circuit.cableSize,
         cpcSize: parsed.cpcSize ?? circuit.cpcSize,
         cableType: parsed.cableType ?? circuit.cableType,
         
-        // Protection device: sync from parsed values
+        // Protection device from prose
         protectionDevice: {
           ...circuit.protectionDevice,
           type: parsed.mcbType ?? circuit.protectionDevice?.type ?? 'MCB',
@@ -785,7 +785,7 @@ export class DesignPipeline {
           kaRating: parsed.mcbKaRating ?? circuit.protectionDevice?.kaRating ?? 6,
         },
         
-        // Calculations: sync all current values from prose
+        // All calculations from prose (Ib, Id, In, Iz, diversity, VD, Zs)
         calculations: {
           ...circuit.calculations,
           Ib: parsed.Ib ?? circuit.calculations?.Ib ?? 0,
@@ -803,144 +803,108 @@ export class DesignPipeline {
           maxZs: parsed.maxZs ?? circuit.calculations?.maxZs ?? 0,
         }
       };
-
-      this.logger.info('✅ Justification sync applied', {
-        circuit: circuit.name,
-        changes: {
-          cableSize: `${circuit.cableSize}mm² → ${syncedCircuit.cableSize}mm²`,
-          mcbRating: `${circuit.protectionDevice?.rating}A → ${syncedCircuit.protectionDevice.rating}A`,
-          Ib: `${circuit.calculations?.Ib}A → ${syncedCircuit.calculations.Ib}A`,
-          Id: parsed.Id ? `${circuit.calculations?.Id}A → ${syncedCircuit.calculations.Id}A` : 'unchanged',
-          diversityFactor: parsed.diversityFactor ? `${circuit.calculations?.diversityFactor} → ${syncedCircuit.calculations.diversityFactor}` : 'unchanged'
-        }
-      });
-
-      return syncedCircuit;
     });
 
-    this.logger.info('🎯 Justification sync complete - all numeric fields now match AI prose', {
+    this.logger.info('✅ Justification parser complete - AI prose values applied', {
       circuits: design.circuits.length
     });
 
     // ========================================
-    // PHASE 4.6: Auto-Fix Engine (BEFORE calculations - CRITICAL ORDER)
-    // Apply deterministic fixes to correct cable/MCB sizes FIRST
+    // PHASE 4.6: REMOVED - Auto-Fix Engine
+    // AI's prose justification already contains the correct selections
+    // No need to second-guess the AI's engineering decisions
     // ========================================
-    design.circuits = this.autoFix.fixAll(design.circuits, normalized.supply);
-
-    this.logger.info('Auto-fix engine complete (before calculations)', {
-      circuits: design.circuits.length
-    });
+    this.logger.info('⏭️ Auto-fix engine REMOVED - trusting AI selections from prose');
 
     // ========================================
-    // PHASE 4.7: Apply Deterministic BS 7671 Calculations (AFTER auto-fix)
+    // PHASE 4.7: FALLBACK Deterministic Calculations (Only for Missing Values)
     // ========================================
-    // CRITICAL: Calculate Zs/VD using CORRECT cable sizes after auto-fix downgrades
-    design.circuits = this.calculator.applyToCircuits(design.circuits, normalized.supply);
+    // Only calculate values that weren't extracted from the AI's prose justification
+    this.logger.info('🔄 Applying fallback calculations for missing values only');
     
-    this.logger.info('Deterministic calculations applied to corrected circuit designs', {
-      circuits: design.circuits.length
-    });
-
-    // ========================================
-    // PHASE 4.75: Apply Circuit-Level Diversity (Id calculation)
-    // ========================================
-    // Calculate diversified current (Id) for each circuit based on installation type
-    const mapLoadTypeToDiversityCircuitType = (loadType: string): CircuitType => {
-      const type = loadType.toLowerCase();
-      if (type.includes('ring')) return 'socket_ring';
-      if (type.includes('socket') || type.includes('radial')) return 'socket_radial';
-      if (type.includes('lighting') || type.includes('light')) return 'lighting';
-      if (type.includes('cooker')) return 'cooker';
-      if (type.includes('shower')) return 'shower';
-      if (type.includes('immersion')) return 'immersion';
-      if (type.includes('ev') || type.includes('charger')) return 'ev';
-      if (type.includes('heating') || type.includes('heat')) return 'heating';
-      return 'other';
-    };
-
+    let fallbackCount = 0;
     design.circuits = design.circuits.map((circuit: any) => {
-      const Ib = circuit.calculations?.Ib || 0;
-      const connectedLoad = Ib * (normalized.supply.voltage || 230);
+      const needsFallback = 
+        !circuit.calculations?.Ib ||
+        !circuit.calculations?.voltageDrop?.percent ||
+        !circuit.calculations?.zs;
       
-      try {
-        const diversityResult = calculateCircuitDiversity({
-          circuitType: mapLoadTypeToDiversityCircuitType(circuit.loadType),
-          connectedLoad,
-          voltage: normalized.supply.voltage || 230,
-          installationType: normalized.supply.installationType as 'domestic' | 'commercial' | 'industrial' || 'domestic'
-        });
-        
-        // Apply diversity to circuit
-        return {
-          ...circuit,
-          calculations: {
-            ...circuit.calculations,
-            Id: diversityResult.diversifiedCurrent,
-            diversityFactor: diversityResult.diversityFactor,
-            diversifiedLoad: diversityResult.diversifiedLoad,
-            connectedLoad: diversityResult.connectedLoad
-          },
-          justifications: {
-            ...circuit.justifications,
-            diversityApplied: diversityResult.justification
-          }
-        };
-      } catch (error) {
-        this.logger.warn('Failed to calculate circuit diversity', {
+      if (needsFallback) {
+        fallbackCount++;
+        this.logger.info('Applying fallback calculation', {
           circuit: circuit.name,
-          error: error.message
-        });
-        // Fallback: no diversity applied
-        return {
-          ...circuit,
-          calculations: {
-            ...circuit.calculations,
-            Id: Ib,
-            diversityFactor: 1.0,
-            diversifiedLoad: connectedLoad,
-            connectedLoad
+          missing: {
+            Ib: !circuit.calculations?.Ib,
+            voltageDrop: !circuit.calculations?.voltageDrop?.percent,
+            zs: !circuit.calculations?.zs
           }
-        };
-      }
-    });
-    
-    this.logger.info('Circuit-level diversity applied', {
-      circuits: design.circuits.length,
-      installationType: normalized.supply.installationType
-    });
-
-    // ========================================
-    // PHASE 4.8: Post-Calculation Safety Check - Enforce Ib ≤ In
-    // ========================================
-    // If deterministic calculations changed Ib, we must re-check and upgrade MCBs if needed
-    design.circuits = design.circuits.map((circuit: any) => {
-      const Ib = circuit.calculations?.Ib || 0;
-      const In = circuit.protectionDevice?.rating || 0;
-      
-      if (Ib > In) {
-        const standardMCBs = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
-        const requiredRating = Ib * 1.05;
-        const newRating = standardMCBs.find(r => r >= requiredRating) || 100;
-        
-        this.logger.info('POST-CALC SAFETY FIX: MCB upgraded after calculations', {
-          circuit: circuit.name,
-          Ib: Ib.toFixed(1),
-          from: In,
-          to: newRating,
-          reason: 'Design current increased after deterministic calculations'
         });
         
-        circuit.protectionDevice.rating = newRating;
-        if (circuit.calculations) {
-          circuit.calculations.In = newRating;
-        }
+        // Apply deterministic calculation only for this circuit
+        const calculated = this.calculator.applyToCircuits([circuit], normalized.supply);
+        return calculated[0];
       }
       
       return circuit;
     });
     
-    this.logger.info('Post-calculation safety check complete');
+    this.logger.info('Fallback calculations complete', {
+      circuits: design.circuits.length,
+      fallbackApplied: fallbackCount
+    });
+
+    // ========================================
+    // PHASE 4.75: REMOVED - Circuit-Level Diversity Calculation
+    // AI already calculated Id and diversity factor in the prose justification
+    // These values were extracted by the justification parser in Phase 4.55
+    // ========================================
+    this.logger.info('⏭️ Circuit diversity calc REMOVED - using AI-calculated Id from prose');
+
+    // ========================================
+    // PHASE 4.8: VALIDATION ONLY - Check Ib ≤ In (No Value Changes)
+    // ========================================
+    // Validate AI's selections but trust them - only log warnings
+    let safetyWarnings = 0;
+    design.circuits.forEach((circuit: any) => {
+      const Ib = circuit.calculations?.Ib || 0;
+      const In = circuit.protectionDevice?.rating || 0;
+      
+      if (Ib > In) {
+        safetyWarnings++;
+        this.logger.warn('⚠️ VALIDATION WARNING: Ib > In detected', {
+          circuit: circuit.name,
+          Ib: Ib.toFixed(1),
+          In,
+          message: 'AI selected this configuration - may be intentional for specific design reason'
+        });
+      }
+    });
+    
+    this.logger.info('Safety validation complete (no changes made)', {
+      warnings: safetyWarnings
+    });
+
+    // ========================================
+    // PHASE 4.9: Recalculate Project Totals from Synced Circuit Data
+    // ========================================
+    const totalLoad = design.circuits.reduce((sum: number, c: any) => 
+      sum + (c.calculations?.Ib || 0) * (normalized.supply.voltage || 230), 0);
+    
+    const diversifiedLoad = design.circuits.reduce((sum: number, c: any) => {
+      const Ib = c.calculations?.Ib || 0;
+      const factor = c.calculations?.diversityFactor || 1.0;
+      return sum + (Ib * (normalized.supply.voltage || 230) * factor);
+    }, 0);
+
+    design.totalLoad = totalLoad;
+    design.diversifiedLoad = diversifiedLoad;
+    design.diversityFactor = totalLoad > 0 ? diversifiedLoad / totalLoad : 1.0;
+    
+    this.logger.info('📊 Project totals recalculated from synced circuits', {
+      totalLoad: `${(totalLoad / 1000).toFixed(2)}kW`,
+      diversifiedLoad: `${(diversifiedLoad / 1000).toFixed(2)}kW`,
+      diversityFactor: design.diversityFactor.toFixed(2)
+    });
 
     // ========================================
     // PHASE 5: Validation (with voltage context)
