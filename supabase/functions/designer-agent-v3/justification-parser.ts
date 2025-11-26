@@ -71,28 +71,32 @@ export function parseDesignJustification(sections: DesignSections): ParsedDesign
   }
 
   // Extract Ib - Design Current (raw connected load)
-  // Patterns: "Ib = 24.3A", "design current of 32A", "Ib: 15.5A"
-  const ibMatch = combined.match(/(?:Ib|design current)\s*[=:]\s*(\d+(?:\.\d+)?)\s*A/i);
+  // Patterns: "Ib = 24.3A", "Ib ≈ 32A", "design current of 32A", "Ib: 15.5A"
+  const ibMatch = combined.match(/(?:Ib|design current)\s*[=:≈]\s*(\d+(?:\.\d+)?)\s*A/i);
   if (ibMatch) {
     parsed.Ib = parseFloat(ibMatch[1]);
   }
 
   // Extract Id - Diversified Current (for MCB selection)
-  // Patterns: "Id = 22.1A", "diversified current of 18.7A", "Id: 20A"
-  const idMatch = combined.match(/(?:Id|diversified current)\s*[=:]\s*(\d+(?:\.\d+)?)\s*A/i);
+  // Patterns: "Id = 22.1A", "Id = Ib = 32A", "diversified current of 18.7A", "Id: 20A"
+  let idMatch = combined.match(/(?:Id|diversified current)\s*[=:≈]\s*(\d+(?:\.\d+)?)\s*A/i);
+  if (!idMatch) {
+    // Fallback: match "Id = Ib = 32A" pattern
+    idMatch = combined.match(/Id\s*=\s*Ib\s*=\s*(\d+(?:\.\d+)?)\s*A/i);
+  }
   if (idMatch) {
     parsed.Id = parseFloat(idMatch[1]);
   }
 
   // Extract In - Nominal MCB Rating
-  const inMatch = combined.match(/In\s*[=:]\s*(\d+)\s*A/i);
+  const inMatch = combined.match(/In\s*[=:≈]\s*(\d+)\s*A/i);
   if (inMatch) {
     parsed.In = parseInt(inMatch[1]);
   }
 
   // Extract Iz - Cable Current Carrying Capacity
-  // Patterns: "Iz = 27A", "cable capacity of 32A", "Iz: 25A"
-  const izMatch = combined.match(/(?:Iz|cable capacity|current-carrying capacity)\s*[=:]\s*(\d+(?:\.\d+)?)\s*A/i);
+  // Patterns: "Iz = 27A", "Iz ≈ 27A", "cable capacity of 32A", "Iz: 25A"
+  const izMatch = combined.match(/(?:Iz|cable capacity|current-carrying capacity)\s*[=:≈]\s*(\d+(?:\.\d+)?)\s*A/i);
   if (izMatch) {
     parsed.Iz = parseFloat(izMatch[1]);
   }
@@ -107,25 +111,34 @@ export function parseDesignJustification(sections: DesignSections): ParsedDesign
   }
 
   // Extract Voltage Drop
-  // Patterns: "6.9V (3%)", "voltage drop of 5.2V (2.3%)", "VD = 8.1V (3.5%)"
-  const vdMatch = combined.match(/(?:voltage drop|VD)\s*[=:of]*\s*(\d+(?:\.\d+)?)\s*V\s*\((\d+(?:\.\d+)?)\s*%\)/i);
+  // Patterns: "6.9V (3%)", "voltage drop of 5.2V (2.3%)", "VD = 8.1V (3.5%)", "6.64V (2.89%)" without keyword
+  let vdMatch = combined.match(/(?:(?:voltage drop|VD)\s*[=:≈of]*\s*)?(\d+(?:\.\d+)?)\s*V\s*\((\d+(?:\.\d+)?)\s*%\)/i);
   if (vdMatch) {
     parsed.voltageDrop = {
       volts: parseFloat(vdMatch[1]),
       percent: parseFloat(vdMatch[2])
     };
+  } else {
+    // Fallback: match percentage-only like "VD 2.89%" or "voltage drop 2.89%"
+    const vdPercentMatch = combined.match(/(?:voltage drop|VD)[:\s]*(\d+(?:\.\d+)?)\s*%/i);
+    if (vdPercentMatch) {
+      parsed.voltageDrop = {
+        volts: 0, // Will need to be calculated
+        percent: parseFloat(vdPercentMatch[1])
+      };
+    }
   }
 
   // Extract Zs - Earth Fault Loop Impedance
-  // Patterns: "Zs = 1.15Ω", "loop impedance of 0.85Ω", "Zs: 1.2Ω"
-  const zsMatch = combined.match(/(?:Zs|loop impedance)\s*[=:of]*\s*(\d+(?:\.\d+)?)\s*[ΩΩohm]/i);
+  // Patterns: "Zs = 1.15Ω", "Zs ≈ 0.727Ω", "loop impedance of 0.85Ω", "Zs: 1.2Ω"
+  const zsMatch = combined.match(/(?:Zs|loop impedance)\s*[=:≈]?\s*(\d+(?:\.\d+)?)\s*[Ω\u03A9ohm]/i);
   if (zsMatch) {
     parsed.zs = parseFloat(zsMatch[1]);
   }
 
   // Extract Maximum Zs
-  // Patterns: "max Zs = 1.44Ω", "maximum permitted loop impedance of 1.15Ω"
-  const maxZsMatch = combined.match(/(?:max(?:imum)?\s+(?:permitted\s+)?(?:Zs|loop impedance))\s*[=:of]*\s*(\d+(?:\.\d+)?)\s*[ΩΩohm]/i);
+  // Patterns: "max Zs = 1.44Ω", "Zs ≈ 0.727Ω, below maximum Zs ≈ 0.775Ω", "maximum permitted loop impedance of 1.15Ω"
+  const maxZsMatch = combined.match(/(?:max(?:imum)?\s*(?:permitted\s+)?(?:Zs|loop impedance)|below\s+(?:maximum\s+)?Zs\s*[≈=]?)\s*(\d+(?:\.\d+)?)\s*[Ω\u03A9ohm]/i);
   if (maxZsMatch) {
     parsed.maxZs = parseFloat(maxZsMatch[1]);
   }
