@@ -166,15 +166,15 @@ export const InstallationGuidanceDisplay = ({
                       {idx + 1}
                     </div>
                     <div className="flex-1 space-y-1">
-                      <p className="text-sm font-medium">{route.step}</p>
-                      <p className="text-xs text-muted-foreground">Method: {route.method}</p>
+                      <p className="text-sm font-medium text-white">{route.step}</p>
+                      <p className="text-xs text-white/70">Method: {route.method}</p>
                       {route.bsReference && (
                         <Badge variant="outline" className="text-xs">
                           {route.bsReference}
                         </Badge>
                       )}
                       {route.notes && (
-                        <p className="text-xs text-muted-foreground italic">{route.notes}</p>
+                        <p className="text-xs text-white/70 italic">{route.notes}</p>
                       )}
                     </div>
                   </div>
@@ -200,10 +200,10 @@ export const InstallationGuidanceDisplay = ({
             <div className="space-y-3">
               {installationGuidance.terminationRequirements.map((term, idx) => (
                 <div key={idx} className="p-3 bg-background/30 rounded-lg">
-                  <p className="text-sm font-semibold mb-1">{term.location}</p>
-                  <p className="text-sm text-muted-foreground mb-2">{term.procedure}</p>
+                  <p className="text-sm font-semibold mb-1 text-white">{term.location}</p>
+                  <p className="text-sm text-white/70 mb-2">{term.procedure}</p>
                   <div className="flex flex-wrap gap-2 items-center">
-                    <span className="text-xs text-muted-foreground">Tools:</span>
+                    <span className="text-xs text-white/70">Tools:</span>
                     {term.toolsNeeded.map((tool, toolIdx) => (
                       <Badge key={toolIdx} variant="secondary" className="text-xs">
                         {tool}
@@ -211,12 +211,12 @@ export const InstallationGuidanceDisplay = ({
                     ))}
                   </div>
                   {term.torqueSettings && (
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-white/70 mt-1">
                       Torque: {term.torqueSettings}
                     </p>
                   )}
                   {term.bsReference && (
-                    <p className="text-xs text-muted-foreground mt-1">Ref: {term.bsReference}</p>
+                    <p className="text-xs text-white/70 mt-1">Ref: {term.bsReference}</p>
                   )}
                 </div>
               ))}
@@ -345,7 +345,7 @@ export const InstallationGuidanceDisplay = ({
               </div>
             ))}
             {testingRequirements.recordingNote && (
-              <p className="text-xs text-muted-foreground italic text-left p-2 bg-primary/10 rounded mt-3">
+              <p className="text-xs text-white/70 italic text-left p-2 bg-primary/10 rounded mt-3">
                 {testingRequirements.recordingNote}
               </p>
             )}

@@ -294,11 +294,11 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
                       <div className="mt-3 p-2 rounded bg-background/50 text-left">
                         <div className="grid grid-cols-1 gap-1 text-xs">
                           {test.expectedReading && (
-                            <p className="text-left">
+                            <p className="text-left text-white/80">
                               <span className="font-medium">Expected:</span> {test.expectedReading}
                             </p>
                           )}
-                          <p className="text-left">
+                          <p className="text-left text-white/80">
                             <span className="font-medium text-green-500">Pass:</span>{' '}
                             {test.acceptanceCriteria}
                           </p>
@@ -321,7 +321,7 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
               {guidance.testingRequirements?.recordingNote && (
                 <>
                   <Separator />
-                  <p className="text-xs text-muted-foreground italic text-left p-2 bg-primary/10 rounded">
+                  <p className="text-xs text-white/70 italic text-left p-2 bg-primary/10 rounded">
                     {guidance.testingRequirements.recordingNote}
                   </p>
                 </>
