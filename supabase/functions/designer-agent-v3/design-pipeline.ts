@@ -383,20 +383,22 @@ export class DesignPipeline {
     this.logger.info('Safety net applied - all calculations validated');
 
     // ========================================
-    // PHASE 4.6: Apply Deterministic BS 7671 Calculations
-    // ========================================
-    // CRITICAL: Use deterministic maths to overwrite AI-guessed values
-    design.circuits = this.calculator.applyToCircuits(design.circuits, normalized.supply);
-    
-    this.logger.info('Deterministic calculations applied to all circuits');
-
-    // ========================================
-    // PHASE 4.7: Auto-Fix Engine (NEW - BEFORE validation)
-    // Apply deterministic fixes to resolve common compliance issues
+    // PHASE 4.6: Auto-Fix Engine (BEFORE calculations - CRITICAL ORDER)
+    // Apply deterministic fixes to correct cable/MCB sizes FIRST
     // ========================================
     design.circuits = this.autoFix.fixAll(design.circuits, normalized.supply);
 
-    this.logger.info('Auto-fix engine complete', {
+    this.logger.info('Auto-fix engine complete (before calculations)', {
+      circuits: design.circuits.length
+    });
+
+    // ========================================
+    // PHASE 4.7: Apply Deterministic BS 7671 Calculations (AFTER auto-fix)
+    // ========================================
+    // CRITICAL: Calculate Zs/VD using CORRECT cable sizes after auto-fix downgrades
+    design.circuits = this.calculator.applyToCircuits(design.circuits, normalized.supply);
+    
+    this.logger.info('Deterministic calculations applied to corrected circuit designs', {
       circuits: design.circuits.length
     });
 
