@@ -115,19 +115,19 @@ const CostBreakdownCard = ({
                   <div className="p-3 rounded-lg bg-muted/30">
                     <div className="font-medium mb-2 text-white">Industry Standards</div>
                     <div className="space-y-1 text-xs text-white">
-                      <div className="flex justify-between">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                         <span>Budget electricians:</span>
-                        <span>10-15% markup</span>
+                        <span className="whitespace-nowrap">10-15% markup</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                         <span>Professional tradespeople:</span>
-                        <span>15-25% markup</span>
+                        <span className="whitespace-nowrap">15-25% markup</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                         <span>Specialist contractors:</span>
-                        <span>20-30% markup</span>
+                        <span className="whitespace-nowrap">20-30% markup</span>
                       </div>
-                      <div className="flex justify-between pt-1 border-t border-border mt-2">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline pt-1 border-t border-border mt-2">
                         <span className="font-medium">Your setting:</span>
                         <Badge variant="secondary" className="text-xs">{markupPercentage}%</Badge>
                       </div>
@@ -175,27 +175,27 @@ const CostBreakdownCard = ({
                   <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
                     <div className="font-medium mb-2 text-white">Your Labour Rate: £{calculatedLabourRate.toFixed(2)}/hour</div>
                     <div className="text-xs space-y-1 text-white">
-                      <div className="flex justify-between">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                         <span>UK Market Range ({experienceLevel}):</span>
-                        <span>£{marketRate.min}-{marketRate.max}/hr</span>
+                        <span className="whitespace-nowrap">£{marketRate.min}-{marketRate.max}/hr</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                         <span>Typical Rate:</span>
-                        <span>£{marketRate.typical}/hr</span>
+                        <span className="whitespace-nowrap">£{marketRate.typical}/hr</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                         <span>Regional Adjustment ({region}):</span>
-                        <span>{regionalMultiplier}x</span>
+                        <span className="whitespace-nowrap">{regionalMultiplier}x</span>
                       </div>
                     </div>
                   </div>
                   
                   <div className="p-3 rounded-lg bg-muted/30">
-                    <div className="font-medium mb-2 flex items-center gap-2">
+                    <div className="font-medium mb-2 flex items-center gap-2 text-white">
                       <CheckCircle className="h-4 w-4 text-orange-500" />
                       What You Bring
                     </div>
-                    <ul className="space-y-1 text-xs">
+                    <ul className="space-y-1 text-xs text-white">
                       <li>✓ 18th Edition BS7671:2018+A3:2024 qualified</li>
                       <li>✓ Years of experience and expertise</li>
                       <li>✓ Professional liability insurance coverage</li>
@@ -207,27 +207,27 @@ const CostBreakdownCard = ({
                   </div>
                   
                   <div className="p-3 rounded-lg bg-muted/30">
-                    <div className="font-medium mb-2">Comparison to Market</div>
-                    <div className="space-y-1 text-xs">
-                      <div className="flex justify-between opacity-90">
+                    <div className="font-medium mb-2 text-white">Comparison to Market</div>
+                    <div className="space-y-1 text-xs text-white">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline opacity-90">
                         <span>Apprentice rate:</span>
-                        <span>£{MARKET_RATES_2025.hourlyRates.apprentice.min}-{MARKET_RATES_2025.hourlyRates.apprentice.max}/hr</span>
+                        <span className="whitespace-nowrap">£{MARKET_RATES_2025.hourlyRates.apprentice.min}-{MARKET_RATES_2025.hourlyRates.apprentice.max}/hr</span>
                       </div>
-                      <div className="flex justify-between opacity-90">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline opacity-90">
                         <span>Improver rate:</span>
-                        <span>£{MARKET_RATES_2025.hourlyRates.improver.min}-{MARKET_RATES_2025.hourlyRates.improver.max}/hr</span>
+                        <span className="whitespace-nowrap">£{MARKET_RATES_2025.hourlyRates.improver.min}-{MARKET_RATES_2025.hourlyRates.improver.max}/hr</span>
                       </div>
-                      <div className="flex justify-between font-medium border-l-2 border-orange-500 pl-2">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline font-medium border-l-2 border-orange-500 pl-2">
                         <span>Qualified rate:</span>
-                        <span>£{MARKET_RATES_2025.hourlyRates.qualified.min}-{MARKET_RATES_2025.hourlyRates.qualified.max}/hr ✓</span>
+                        <span className="whitespace-nowrap">£{MARKET_RATES_2025.hourlyRates.qualified.min}-{MARKET_RATES_2025.hourlyRates.qualified.max}/hr ✓</span>
                       </div>
-                      <div className="flex justify-between opacity-90">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline opacity-90">
                         <span>Experienced:</span>
-                        <span>£{MARKET_RATES_2025.hourlyRates.experienced.min}-{MARKET_RATES_2025.hourlyRates.experienced.max}/hr</span>
+                        <span className="whitespace-nowrap">£{MARKET_RATES_2025.hourlyRates.experienced.min}-{MARKET_RATES_2025.hourlyRates.experienced.max}/hr</span>
                       </div>
-                      <div className="flex justify-between opacity-90">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline opacity-90">
                         <span>Specialist:</span>
-                        <span>£{MARKET_RATES_2025.hourlyRates.specialist.min}-{MARKET_RATES_2025.hourlyRates.specialist.max}/hr</span>
+                        <span className="whitespace-nowrap">£{MARKET_RATES_2025.hourlyRates.specialist.min}-{MARKET_RATES_2025.hourlyRates.specialist.max}/hr</span>
                       </div>
                     </div>
                   </div>
@@ -271,47 +271,47 @@ const CostBreakdownCard = ({
                     <div className="p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
                       <div className="font-medium mb-2 text-white">Typical Monthly Business Costs</div>
                       <div className="space-y-1 text-xs text-white">
-                        <div className="flex justify-between">
+                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                           <span>Van (fuel, insurance, tax):</span>
-                          <span>£{(MARKET_RATES_2025.businessCosts.fuel + MARKET_RATES_2025.businessCosts.commercialInsurance + MARKET_RATES_2025.businessCosts.maintenance) / 12}/mo</span>
+                          <span className="whitespace-nowrap">£{(MARKET_RATES_2025.businessCosts.fuel + MARKET_RATES_2025.businessCosts.commercialInsurance + MARKET_RATES_2025.businessCosts.maintenance) / 12}/mo</span>
                         </div>
-                        <div className="flex justify-between">
+                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                           <span>Tool maintenance & replacement:</span>
-                          <span>£{MARKET_RATES_2025.businessCosts.toolsReplacement / 12}/mo</span>
+                          <span className="whitespace-nowrap">£{MARKET_RATES_2025.businessCosts.toolsReplacement / 12}/mo</span>
                         </div>
-                        <div className="flex justify-between">
+                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                           <span>Public liability insurance:</span>
-                          <span>£{(MARKET_RATES_2025.businessCosts.publicLiabilityInsurance / 12).toFixed(0)}/mo</span>
+                          <span className="whitespace-nowrap">£{(MARKET_RATES_2025.businessCosts.publicLiabilityInsurance / 12).toFixed(0)}/mo</span>
                         </div>
-                        <div className="flex justify-between">
+                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                           <span>Professional memberships:</span>
-                          <span>£{(MARKET_RATES_2025.businessCosts.niceicMembership / 12).toFixed(0)}/mo</span>
+                          <span className="whitespace-nowrap">£{(MARKET_RATES_2025.businessCosts.niceicMembership / 12).toFixed(0)}/mo</span>
                         </div>
-                        <div className="flex justify-between">
+                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                           <span>Software & subscriptions:</span>
-                          <span>£{((MARKET_RATES_2025.businessCosts.eicrsoftware + MARKET_RATES_2025.businessCosts.cloudStorage + MARKET_RATES_2025.businessCosts.businessApps) / 12).toFixed(0)}/mo</span>
+                          <span className="whitespace-nowrap">£{((MARKET_RATES_2025.businessCosts.eicrsoftware + MARKET_RATES_2025.businessCosts.cloudStorage + MARKET_RATES_2025.businessCosts.businessApps) / 12).toFixed(0)}/mo</span>
                         </div>
-                        <div className="flex justify-between pt-1 border-t border-border mt-2 font-medium">
+                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline pt-1 border-t border-border mt-2 font-medium">
                           <span>Typical total per month:</span>
-                          <span>£900-1,200</span>
+                          <span className="whitespace-nowrap">£900-1,200</span>
                         </div>
                       </div>
                     </div>
                     
                     <div className="p-3 rounded-lg bg-muted/30">
-                      <div className="font-medium mb-2">This Job's Share</div>
-                      <div className="space-y-1 text-xs">
-                        <div className="flex justify-between">
+                      <div className="font-medium mb-2 text-white">This Job's Share</div>
+                      <div className="space-y-1 text-xs text-white">
+                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                           <span>Job duration:</span>
-                          <span>{calculatedJobDuration.toFixed(1)} days</span>
+                          <span className="whitespace-nowrap">{calculatedJobDuration.toFixed(1)} days</span>
                         </div>
-                        <div className="flex justify-between">
+                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                           <span>Daily overhead rate:</span>
-                          <span>£{(overheadTotal / calculatedJobDuration).toFixed(2)}/day</span>
+                          <span className="whitespace-nowrap">£{(overheadTotal / calculatedJobDuration).toFixed(2)}/day</span>
                         </div>
-                        <div className="flex justify-between pt-1 border-t border-border mt-2 font-medium">
+                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline pt-1 border-t border-border mt-2 font-medium">
                           <span>Job allocation:</span>
-                          <span>£{overheadTotal.toFixed(2)}</span>
+                          <span className="whitespace-nowrap">£{overheadTotal.toFixed(2)}</span>
                         </div>
                       </div>
                     </div>
@@ -343,20 +343,20 @@ const CostBreakdownCard = ({
               <div className="flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 text-yellow-500" />
                 <div>
-                  <div className="font-medium">Contingency</div>
+                  <div className="font-medium text-white">Contingency</div>
                   <div className="text-xs text-white">
                     {contingencyPercent}% buffer
                   </div>
                 </div>
               </div>
               <div className="text-right">
-                <div className="font-bold">£{contingencyAmount.toFixed(2)}</div>
+                <div className="font-bold text-white">£{contingencyAmount.toFixed(2)}</div>
               </div>
             </div>
             
             <Collapsible open={expandedSections.has('contingency')} onOpenChange={() => toggleSection('contingency')}>
-              <CollapsibleTrigger className="w-full px-3 pb-2">
-                <div className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors">
+              <CollapsibleTrigger className="w-full px-3 pb-2 touch-manipulation min-h-11">
+                <div className="flex items-center gap-2 text-base sm:text-sm text-primary hover:text-primary/80 transition-colors">
                   <Info className="h-3 w-3" />
                   <span>Why contingency protects everyone</span>
                   <ChevronDown className={`h-3 w-3 transition-transform ${expandedSections.has('contingency') ? 'rotate-180' : ''}`} />
@@ -365,11 +365,11 @@ const CostBreakdownCard = ({
               <CollapsibleContent>
                 <div className="px-3 pb-3 space-y-3 text-sm">
                   <div className="p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
-                    <div className="font-medium mb-2 flex items-center gap-2">
+                    <div className="font-medium mb-2 flex items-center gap-2 text-white">
                       <CheckCircle className="h-4 w-4 text-yellow-500" />
                       What Contingency Covers
                     </div>
-                    <ul className="space-y-1 text-xs">
+                    <ul className="space-y-1 text-xs text-white">
                       <li>✓ Hidden problems discovered on-site</li>
                       <li>✓ Additional materials needed unexpectedly</li>
                       <li>✓ Unforeseen complications (old wiring, asbestos)</li>
@@ -381,25 +381,25 @@ const CostBreakdownCard = ({
                   </div>
                   
                   <div className="p-3 rounded-lg bg-muted/30">
-                    <div className="font-medium mb-2">Industry Standards</div>
-                    <div className="space-y-1 text-xs">
-                      <div className="flex justify-between">
+                    <div className="font-medium mb-2 text-white">Industry Standards</div>
+                    <div className="space-y-1 text-xs text-white">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                         <span>Simple jobs (new build):</span>
-                        <span>3-5%</span>
+                        <span className="whitespace-nowrap">3-5%</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                         <span>Standard domestic:</span>
-                        <span>5-10%</span>
+                        <span className="whitespace-nowrap">5-10%</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                         <span>Renovation/older property:</span>
-                        <span>10-15%</span>
+                        <span className="whitespace-nowrap">10-15%</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                         <span>Complex commercial:</span>
-                        <span>15-20%</span>
+                        <span className="whitespace-nowrap">15-20%</span>
                       </div>
-                      <div className="flex justify-between pt-1 border-t border-border mt-2 font-medium">
+                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline pt-1 border-t border-border mt-2 font-medium">
                         <span>Your setting:</span>
                         <Badge variant="secondary" className="text-xs">{contingencyPercent}%</Badge>
                       </div>
@@ -448,17 +448,17 @@ const CostBreakdownCard = ({
               </div>
               
               <div className="text-base sm:text-sm space-y-1 text-white">
-                <div className="flex justify-between">
+                <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                   <span>Materials with markup:</span>
-                  <span>£{materialsWithMarkup.toFixed(2)}</span>
+                  <span className="whitespace-nowrap">£{materialsWithMarkup.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                   <span>Labour (includes overheads):</span>
-                  <span>£{labourTotal.toFixed(2)}</span>
+                  <span className="whitespace-nowrap">£{labourTotal.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
                   <span>Contingency ({contingencyPercent}%):</span>
-                  <span>£{contingencyAmount.toFixed(2)}</span>
+                  <span className="whitespace-nowrap">£{contingencyAmount.toFixed(2)}</span>
                 </div>
               </div>
               
@@ -466,7 +466,7 @@ const CostBreakdownCard = ({
                 <p className="text-base sm:text-sm text-white mb-2">
                   <strong>This is your floor price.</strong> Your £{calculatedLabourRate.toFixed(2)}/hr rate already covers your take-home pay AND business overheads.
                 </p>
-                <p className="text-xs text-muted-foreground italic">
+                <p className="text-xs text-white italic">
                   Quote above this for profit. Below this = losing money.
                 </p>
               </div>
