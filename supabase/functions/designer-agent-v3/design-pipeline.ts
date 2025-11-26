@@ -1092,38 +1092,15 @@ export class DesignPipeline {
     }
 
     // ========================================
-    // PHASE 8: CALCULATE INSTALLATION-WIDE DIVERSITY
+    // PHASE 8: REMOVED - Use Phase 4.9 synced values instead
     // ========================================
-    // Map load types to diversity categories
-    const mapLoadTypeToDiversityCategory = (loadType: string): 'lighting' | 'sockets' | 'cooker' | 'immersion' | 'heating' | 'other' => {
-      const type = loadType.toLowerCase();
-      if (type.includes('lighting') || type.includes('light')) return 'lighting';
-      if (type.includes('socket') || type.includes('ring')) return 'sockets';
-      if (type.includes('cooker')) return 'cooker';
-      if (type.includes('immersion')) return 'immersion';
-      if (type.includes('heating') || type.includes('heat')) return 'heating';
-      return 'other';
-    };
-
-    const diversityResult = calculateDiversity({
-      circuits: design.circuits.map((c: any) => ({
-        type: mapLoadTypeToDiversityCategory(c.loadType),
-        load: c.calculations?.connectedLoad || (c.calculations?.Ib || 0) * (normalized.supply.voltage || 230)
-      })),
-      propertyType: normalized.supply.installationType || 'domestic'
-    });
-
-    console.log('📊 Installation Diversity Calculation:', {
-      totalConnectedLoad: diversityResult.totalConnected,
-      diversifiedLoad: diversityResult.diversifiedDemand,
-      diversityFactor: diversityResult.diversityFactor,
-      breakdown: diversityResult.breakdown
-    });
+    // Phase 4.9 already calculated totalLoad, diversifiedLoad, and diversityFactor
+    // from the AI's prose justification. No need to recalculate here.
     
-    this.logger.info('Installation-wide diversity calculated', {
-      totalConnected: diversityResult.totalConnected,
-      diversifiedDemand: diversityResult.diversifiedDemand,
-      diversityFactor: diversityResult.diversityFactor
+    console.log('📊 Using Phase 4.9 synced values from AI prose:', {
+      totalLoad: design.totalLoad,
+      diversifiedLoad: design.diversifiedLoad,
+      diversityFactor: design.diversityFactor
     });
 
     return {
@@ -1138,16 +1115,16 @@ export class DesignPipeline {
       // Surface validation results to frontend
       validationIssues: validationResult.issues,
       autoFixSuggestions: validationResult.autoFixSuggestions,
-      // Installation-wide diversity
-      totalLoad: diversityResult.totalConnected,
-      diversifiedLoad: diversityResult.diversifiedDemand,
-      diversityFactor: diversityResult.diversityFactor,
+      // Installation-wide diversity - FROM PHASE 4.9 (AI prose synced values)
+      totalLoad: design.totalLoad,
+      diversifiedLoad: design.diversifiedLoad,
+      diversityFactor: design.diversityFactor,
       diversityBreakdown: {
-        totalConnectedLoad: diversityResult.totalConnected,
-        diversifiedLoad: diversityResult.diversifiedDemand,
-        overallDiversityFactor: diversityResult.diversityFactor,
-        byCategory: diversityResult.breakdown,
-        reasoning: 'Calculated per BS 7671 Appendix A'
+        totalConnectedLoad: design.totalLoad,
+        diversifiedLoad: design.diversifiedLoad,
+        overallDiversityFactor: design.diversityFactor,
+        byCategory: [], // No breakdown needed - AI provides the final values
+        reasoning: 'Derived from AI design justification - single source of truth'
       }
     };
   }
