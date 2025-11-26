@@ -887,35 +887,43 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
           </div>
           
           {/* What Budget Quotes Cut */}
-          <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
-            <p className="font-medium text-sm text-destructive mb-3 flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4" />
+          <div className="bg-red-400/20 border border-red-400/30 rounded-lg p-4 text-left">
+            <p className="font-medium text-sm text-red-400 mb-3 flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4 flex-shrink-0" />
               What Budget Quotes Often Cut:
             </p>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-white">
-              <div className="flex items-center gap-1.5">
-                <span className="text-destructive">❌</span> Unqualified labour
+            <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-xs text-white">
+              <div className="flex items-start gap-2">
+                <span className="text-red-400 flex-shrink-0">❌</span>
+                <span>Unqualified labour</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-destructive">❌</span> Cheap materials
+              <div className="flex items-start gap-2">
+                <span className="text-red-400 flex-shrink-0">❌</span>
+                <span>Cheap materials</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-destructive">❌</span> No insurance
+              <div className="flex items-start gap-2">
+                <span className="text-red-400 flex-shrink-0">❌</span>
+                <span>No insurance</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-destructive">❌</span> Missing certification
+              <div className="flex items-start gap-2">
+                <span className="text-red-400 flex-shrink-0">❌</span>
+                <span>Missing certification</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-destructive">❌</span> Corners on testing
+              <div className="flex items-start gap-2">
+                <span className="text-red-400 flex-shrink-0">❌</span>
+                <span>Corners on testing</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-destructive">❌</span> No guarantee
+              <div className="flex items-start gap-2">
+                <span className="text-red-400 flex-shrink-0">❌</span>
+                <span>No guarantee</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-destructive">❌</span> Hidden extras
+              <div className="flex items-start gap-2">
+                <span className="text-red-400 flex-shrink-0">❌</span>
+                <span>Hidden extras</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-destructive">❌</span> Non-compliant work
+              <div className="flex items-start gap-2">
+                <span className="text-red-400 flex-shrink-0">❌</span>
+                <span>Non-compliant work</span>
               </div>
             </div>
           </div>
@@ -946,78 +954,180 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
               <div className="p-4 pt-2 space-y-3 border-t border-border">
                 <p className="text-sm text-white">Help clients properly evaluate quotes with this checklist:</p>
                 
-                <div className="bg-accent/30 p-3 rounded text-xs space-y-2">
+                <div className="bg-accent/30 p-3 rounded text-xs space-y-3 text-left">
                   <div>
-                    <p className="font-medium mb-1">□ Qualifications</p>
-                    <ul className="pl-4 space-y-0.5 text-white">
-                      <li>- 18th Edition certified?</li>
-                      <li>- NICEIC/NAPIT/scheme registered?</li>
-                      <li>- Years of experience?</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <p className="font-medium mb-1">□ Insurance</p>
-                    <ul className="pl-4 space-y-0.5 text-white">
-                      <li>- Public liability (min £2M)?</li>
-                      <li>- Professional indemnity?</li>
-                      <li>- Proof available?</li>
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <p className="font-medium mb-1">□ Materials</p>
-                    <ul className="pl-4 space-y-0.5 text-white">
-                      <li>- Supplier specified?</li>
-                      <li>- Brand names listed?</li>
-                      <li>- Warranties included?</li>
+                    <p className="font-medium mb-1.5 flex items-start gap-2">
+                      <span className="text-amber-400">□</span>
+                      <span>Qualifications</span>
+                    </p>
+                    <ul className="space-y-1.5">
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>18th Edition certified?</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>NICEIC/NAPIT/scheme registered?</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>Years of experience?</span>
+                      </li>
                     </ul>
                   </div>
                   
                   <div>
-                    <p className="font-medium mb-1">□ Certification</p>
-                    <ul className="pl-4 space-y-0.5 text-white">
-                      <li>- EIC provided?</li>
-                      <li>- Building Control notification?</li>
-                      <li>- Test certificates?</li>
+                    <p className="font-medium mb-1.5 flex items-start gap-2">
+                      <span className="text-amber-400">□</span>
+                      <span>Insurance</span>
+                    </p>
+                    <ul className="space-y-1.5">
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>Public liability (min £2M)?</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>Professional indemnity?</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>Proof available?</span>
+                      </li>
                     </ul>
                   </div>
                   
                   <div>
-                    <p className="font-medium mb-1">□ Pricing</p>
-                    <ul className="pl-4 space-y-0.5 text-white">
-                      <li>- Itemized breakdown?</li>
-                      <li>- Materials + labour separated?</li>
-                      <li>- VAT clearly shown?</li>
-                      <li>- Payment terms defined?</li>
+                    <p className="font-medium mb-1.5 flex items-start gap-2">
+                      <span className="text-amber-400">□</span>
+                      <span>Materials</span>
+                    </p>
+                    <ul className="space-y-1.5">
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>Supplier specified?</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>Brand names listed?</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>Warranties included?</span>
+                      </li>
                     </ul>
                   </div>
                   
                   <div>
-                    <p className="font-medium mb-1">□ Guarantees</p>
-                    <ul className="pl-4 space-y-0.5 text-white">
-                      <li>- Workmanship guarantee period?</li>
-                      <li>- What's covered?</li>
-                      <li>- Insurance-backed?</li>
+                    <p className="font-medium mb-1.5 flex items-start gap-2">
+                      <span className="text-amber-400">□</span>
+                      <span>Certification</span>
+                    </p>
+                    <ul className="space-y-1.5">
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>EIC provided?</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>Building Control notification?</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>Test certificates?</span>
+                      </li>
                     </ul>
                   </div>
                   
-                  <div className="border-t border-destructive/20 pt-2 mt-2">
-                    <p className="font-medium text-destructive mb-1">🚨 Red Flags:</p>
-                    <ul className="pl-4 space-y-0.5 text-white">
-                      <li>- "Cash only, no invoice"</li>
-                      <li>- No qualifications mentioned</li>
-                      <li>- Too cheap (below market)</li>
-                      <li>- Vague pricing</li>
-                      <li>- No insurance proof</li>
-                      <li>- Pressure to decide immediately</li>
-                      <li>- No written quote</li>
-                      <li>- Payment upfront in full</li>
+                  <div>
+                    <p className="font-medium mb-1.5 flex items-start gap-2">
+                      <span className="text-amber-400">□</span>
+                      <span>Pricing</span>
+                    </p>
+                    <ul className="space-y-1.5">
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>Itemized breakdown?</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>Materials + labour separated?</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>VAT clearly shown?</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>Payment terms defined?</span>
+                      </li>
                     </ul>
                   </div>
                   
-                  <div className="bg-green-500/10 border border-green-500/20 p-2 rounded mt-2">
-                    <p className="font-medium text-green-400 text-xs">✅ This Quote Checklist:</p>
+                  <div>
+                    <p className="font-medium mb-1.5 flex items-start gap-2">
+                      <span className="text-amber-400">□</span>
+                      <span>Guarantees</span>
+                    </p>
+                    <ul className="space-y-1.5">
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>Workmanship guarantee period?</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>What's covered?</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-amber-400 flex-shrink-0">•</span>
+                        <span>Insurance-backed?</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div className="border-t border-red-400/30 pt-3 mt-1">
+                    <p className="font-medium text-red-400 mb-1.5 flex items-start gap-2">
+                      <span>🚨</span>
+                      <span>Red Flags:</span>
+                    </p>
+                    <ul className="space-y-1.5">
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-red-400 flex-shrink-0">•</span>
+                        <span>"Cash only, no invoice"</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-red-400 flex-shrink-0">•</span>
+                        <span>No qualifications mentioned</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-red-400 flex-shrink-0">•</span>
+                        <span>Too cheap (below market)</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-red-400 flex-shrink-0">•</span>
+                        <span>Vague pricing</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-red-400 flex-shrink-0">•</span>
+                        <span>No insurance proof</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-red-400 flex-shrink-0">•</span>
+                        <span>Pressure to decide immediately</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-red-400 flex-shrink-0">•</span>
+                        <span>No written quote</span>
+                      </li>
+                      <li className="flex items-start gap-2 text-white">
+                        <span className="text-red-400 flex-shrink-0">•</span>
+                        <span>Payment upfront in full</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-green-500/10 border border-green-500/20 p-3 rounded mt-2 text-left">
+                    <p className="font-medium text-green-400 text-xs mb-1">✅ This Quote Checklist:</p>
                     <p className="text-white">All boxes ticked above ✓</p>
                   </div>
                 </div>
