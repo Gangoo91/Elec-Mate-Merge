@@ -26,7 +26,11 @@ export class AIDesigner {
   /**
    * Generate circuit designs from normalized inputs and RAG context
    */
-  async generate(inputs: NormalizedInputs, context: RAGContext): Promise<Design> {
+  async generate(
+    inputs: NormalizedInputs, 
+    context: RAGContext,
+    constraintsMap?: Map<string, any>
+  ): Promise<Design> {
     this.logger.info('AI Designer starting', {
       circuits: inputs.circuits.length,
       ragResults: context.totalResults
@@ -37,8 +41,8 @@ export class AIDesigner {
     // Detect installation type from circuits
     const installationType = this.detectInstallationType(inputs);
 
-    // Build system prompt with RAG context and installation type
-    const systemPrompt = this.buildSystemPrompt(context, installationType);
+    // Build system prompt with RAG context, installation type, and pre-validation constraints
+    const systemPrompt = this.buildSystemPrompt(context, installationType, inputs, constraintsMap);
     
     // Convert form to structured JSON
     const structuredInput = this.buildStructuredInput(inputs);
@@ -98,7 +102,12 @@ export class AIDesigner {
   /**
    * Build system prompt with RAG context injection (OPTIMIZED - 50% reduction)
    */
-  private buildSystemPrompt(context: RAGContext, installationType?: string): string {
+  private buildSystemPrompt(
+    context: RAGContext, 
+    installationType?: string,
+    inputs?: NormalizedInputs,
+    constraintsMap?: Map<string, any>
+  ): string {
     const parts: string[] = [];
 
     // Enhanced core identity with installation type context
@@ -255,6 +264,36 @@ export class AIDesigner {
     }
 
     // Practical Work Intelligence removed - handled by Design Installation Agent running in parallel
+
+    // === PRE-VALIDATION CONSTRAINTS (MANDATORY) ===
+    // Inject per-circuit constraints calculated from Zs/VD/protection requirements
+    if (inputs && constraintsMap && constraintsMap.size > 0) {
+      parts.push('=== PRE-VALIDATION CONSTRAINTS (MANDATORY FOR COMPLIANCE) ===');
+      parts.push('The following constraints have been calculated from BS 7671 requirements.');
+      parts.push('These are MINIMUM requirements - you MUST meet or exceed these values.');
+      parts.push('');
+      
+      inputs.circuits.forEach((circuit, idx) => {
+        const circuitKey = `circuit_${idx}`;
+        const constraints = constraintsMap.get(circuitKey);
+        
+        if (constraints) {
+          parts.push(`🔒 CIRCUIT ${idx + 1}: ${circuit.name}`);
+          parts.push(`   ⚡ Minimum cable size: ${constraints.minimumCableSize}mm² (required for Zs/VD compliance)`);
+          parts.push(`   ⚡ Recommended MCB: ${constraints.recommendedMCB}A (based on design current × 1.1)`);
+          if (constraints.mustUseRCBO) {
+            parts.push(`   ⚡ Protection: MUST use RCBO (socket/bathroom circuit per BS 7671 Reg 411.3.3)`);
+          }
+          parts.push(`   ⚡ Max cable length for ${constraints.maxCableLength < 1000 ? 'voltage drop' : 'compliance'}: ${constraints.maxCableLength}m`);
+          parts.push(`   📋 Reasoning: ${constraints.reasons.join('; ')}`);
+          parts.push('');
+        }
+      });
+      
+      parts.push('⚠️ WARNING: Selecting cables smaller than minimum size will result in Zs/VD failures.');
+      parts.push('⚠️ WARNING: Using MCB instead of RCBO where required will fail BS 7671 compliance.');
+      parts.push('');
+    }
 
     // Output format (FOCUSED on electrical design - installation handled separately)
     parts.push('=== OUTPUT FORMAT ===');
