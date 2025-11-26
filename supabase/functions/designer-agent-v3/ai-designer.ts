@@ -28,8 +28,7 @@ export class AIDesigner {
    */
   async generate(
     inputs: NormalizedInputs, 
-    context: RAGContext,
-    constraintsMap?: Map<string, any>
+    context: RAGContext
   ): Promise<Design> {
     this.logger.info('AI Designer starting', {
       circuits: inputs.circuits.length,
@@ -41,8 +40,8 @@ export class AIDesigner {
     // Detect installation type from circuits
     const installationType = this.detectInstallationType(inputs);
 
-    // Build system prompt with RAG context, installation type, and pre-validation constraints
-    const systemPrompt = this.buildSystemPrompt(context, installationType, inputs, constraintsMap);
+    // Build system prompt with RAG context and installation type (NO guardrails)
+    const systemPrompt = this.buildSystemPrompt(context, installationType, inputs);
     
     // Convert form to structured JSON
     const structuredInput = this.buildStructuredInput(inputs);
@@ -105,8 +104,7 @@ export class AIDesigner {
   private buildSystemPrompt(
     context: RAGContext, 
     installationType?: string,
-    inputs?: NormalizedInputs,
-    constraintsMap?: Map<string, any>
+    inputs?: NormalizedInputs
   ): string {
     const parts: string[] = [];
 
@@ -272,52 +270,40 @@ export class AIDesigner {
 
     // Practical Work Intelligence removed - handled by Design Installation Agent running in parallel
 
-    // === PRE-VALIDATION CONSTRAINTS (MANDATORY) ===
-    // Inject per-circuit FIXED constraints (not minimums - these are the CORRECT values)
-    if (inputs && constraintsMap && constraintsMap.size > 0) {
-      parts.push('=== PRE-VALIDATION CONSTRAINTS (FIXED VALUES - NOT OPTIONAL) ===');
-      parts.push('The following values have been calculated from BS 7671 and circuit type standards.');
-      parts.push('These are NOT minimums - these are the CORRECT and ONLY acceptable values.');
-      parts.push('⚠️ CRITICAL: Selecting larger values would be DANGEROUS and wasteful.');
-      parts.push('');
-      
-      inputs.circuits.forEach((circuit, idx) => {
-        const circuitKey = `circuit_${idx}`;
-        const constraints = constraintsMap.get(circuitKey);
-        
-        if (constraints) {
-          const circuitType = this.detectCircuitTypeFromName(circuit.name, circuit.loadType);
-          
-          parts.push(`🔒 CIRCUIT ${idx + 1}: ${circuit.name} [${circuitType.toUpperCase()}]`);
-          
-          // For well-known circuit types, make values FIXED not MINIMUM
-          if (circuitType === 'lighting') {
-            parts.push(`   ⚡ FIXED cable size: ${constraints.minimumCableSize}mm² twin and earth (DO NOT CHANGE)`);
-            parts.push(`   ⚡ FIXED MCB rating: ${constraints.recommendedMCB}A Type B (DO NOT CHANGE)`);
-            parts.push(`   ❌ DO NOT select 6mm² or 40A - this would be dangerously oversized for lighting!`);
-          } else if (circuitType === 'socket_ring') {
-            parts.push(`   ⚡ FIXED cable size: 2.5mm² twin and earth (ring final standard - DO NOT CHANGE)`);
-            parts.push(`   ⚡ FIXED MCB rating: 32A Type B or C RCBO (BS 7671 requirement - DO NOT CHANGE)`);
-            parts.push(`   ❌ Ring finals MUST use these exact values per BS 7671`);
-          } else {
-            // For other types, provide constraints as before
-            parts.push(`   ⚡ FIXED cable size: ${constraints.minimumCableSize}mm² (correct for this circuit type)`);
-            parts.push(`   ⚡ FIXED MCB rating: ${constraints.recommendedMCB}A (correct for load and type)`);
-          }
-          
-          if (constraints.mustUseRCBO) {
-            parts.push(`   ⚡ Protection: MUST use RCBO (socket/bathroom circuit per BS 7671 Reg 411.3.3)`);
-          }
-          parts.push(`   📋 Calculation basis: ${constraints.reasons.join('; ')}`);
-          parts.push('');
-        }
-      });
-      
-      parts.push('⚠️ CRITICAL WARNING: Do NOT select cables or MCBs larger than specified!');
-      parts.push('⚠️ Oversizing lighting circuits (e.g., 6mm²/40A instead of 1.5mm²/6A) is DANGEROUS.');
-      parts.push('⚠️ Use EXACTLY the values specified above - they are calculated to be correct and safe.');
-      parts.push('');
-    }
+    // === DESIGN METHODOLOGY: USE RAG KNOWLEDGE ===
+    parts.push('=== DESIGN METHODOLOGY ===');
+    parts.push('Use the Knowledge Base sections above to design circuits. You MUST:');
+    parts.push('');
+    parts.push('1. **Reference BS 7671 Tables** for cable current ratings:');
+    parts.push('   - Table 4D1A (70°C thermoplastic single-core non-armoured in conduit)');
+    parts.push('   - Table 4D5 (70°C thermoplastic flat cable with protective conductor - Twin & Earth)');
+    parts.push('   - Table 4E4A (XLPE 90°C armoured cables - SWA)');
+    parts.push('   - Apply appropriate derating factors from Tables 4B1 (ambient temp), 4C1 (grouping)');
+    parts.push('');
+    parts.push('2. **Apply voltage drop calculations** using formulas from knowledge base:');
+    parts.push('   - Calculate mV/A/m values from Tables 4D1B, 4D5 (conductor + CPC resistance)');
+    parts.push('   - Voltage Drop (%) = (Current × Length × mV/A/m) / (Voltage × 1000)');
+    parts.push('   - Maximum: 3% for lighting, 5% for other circuits (Reg 525.1)');
+    parts.push('');
+    parts.push('3. **Follow circuit-specific requirements**:');
+    parts.push('   - EV Chargers: Section 722.531.3 (minimum 6mm², RCD protection, PME restrictions)');
+    parts.push('   - Showers: Typically 8.5-10.5kW → requires 40-50A protection, 6-10mm² cable');
+    parts.push('   - Socket rings: BS 7671 standard = 2.5mm² + 32A RCBO (serves max 100m² floor area)');
+    parts.push('   - Lighting: Typically 1.5mm² + 6A Type B MCB (rarely needs larger)');
+    parts.push('');
+    parts.push('4. **Select protection devices** based on:');
+    parts.push('   - Ib ≤ In ≤ Iz (Reg 433.1): Design current ≤ Device rating ≤ Cable capacity');
+    parts.push('   - Disconnection times from Table 41.3 (0.4s for socket circuits, 5s for distribution)');
+    parts.push('   - Use RCBO for sockets (Reg 411.3.3), bathrooms, and outdoor circuits');
+    parts.push('');
+    parts.push('5. **Calculate and verify Earth Fault Loop Impedance (Zs)**:');
+    parts.push('   - Use Zs = Ze + R1 + R2 formula from knowledge base');
+    parts.push('   - Compare against maximum Zs from Table 41.3 for disconnection compliance');
+    parts.push('   - For TN-S: typical Ze = 0.35Ω, TN-C-S: Ze = 0.35Ω, TT: up to 200Ω');
+    parts.push('');
+    parts.push('**CRITICAL: DO NOT GUESS - cite specific table values and regulation numbers from the RAG results.**');
+    parts.push('**EXAMPLE**: "Selected 6mm² cable: Table 4D5 shows Iz=47A (Method C), sufficient for 40A MCB"');
+    parts.push('');
 
     // Output format (FOCUSED on electrical design - installation handled separately)
     parts.push('=== OUTPUT FORMAT ===');
