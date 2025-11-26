@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Copy, Download, RotateCcw, Edit, Save, X, Shield } from 'lucide-react';
+import { Copy, Download, RotateCcw, Edit2, Save, X, Shield, AlertTriangle } from 'lucide-react';
 import { toast } from 'sonner';
 import { RiskSummaryStats } from './results/RiskSummaryStats';
 import { EnhancedHazardCard } from './results/EnhancedHazardCard';
@@ -15,18 +15,21 @@ interface HealthSafetyResultsProps {
 }
 
 export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsProps) => {
-  const [isEditing, setIsEditing] = useState(false);
   const [editableData, setEditableData] = useState(data);
   const originalData = useRef(data);
+  const [isEditingRiskAssessment, setIsEditingRiskAssessment] = useState(false);
 
-  const handleSave = () => {
-    setIsEditing(false);
-    toast.success("Changes saved");
+  const handleSaveRiskAssessment = () => {
+    setIsEditingRiskAssessment(false);
+    toast.success("Risk assessment changes saved");
   };
 
-  const handleCancel = () => {
-    setEditableData(originalData.current);
-    setIsEditing(false);
+  const handleCancelRiskAssessment = () => {
+    setEditableData((prev: any) => ({
+      ...prev,
+      hazards: originalData.current.hazards
+    }));
+    setIsEditingRiskAssessment(false);
     toast.info("Changes cancelled");
   };
 
@@ -208,57 +211,24 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
               <p className="text-sm text-muted-foreground">Comprehensive risk assessment and safety procedures</p>
             </div>
             <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
-              {!isEditing ? (
-                <>
-                  <Button 
-                    size="sm" 
-                    variant="outline"
-                    onClick={() => setIsEditing(true)}
-                    className="touch-manipulation"
-                  >
-                    <Edit className="h-4 w-4 mr-2" />
-                    Edit
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    variant="outline"
-                    onClick={handleCopy}
-                    className="touch-manipulation"
-                  >
-                    <Copy className="h-4 w-4 mr-2" />
-                    Copy
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    variant="ghost"
-                    onClick={onStartOver}
-                    className="touch-manipulation"
-                  >
-                    <RotateCcw className="h-4 w-4 mr-2" />
-                    Start Over
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button 
-                    size="sm" 
-                    onClick={handleSave}
-                    className="touch-manipulation"
-                  >
-                    <Save className="h-4 w-4 mr-2" />
-                    Save
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    variant="outline"
-                    onClick={handleCancel}
-                    className="touch-manipulation"
-                  >
-                    <X className="h-4 w-4 mr-2" />
-                    Cancel
-                  </Button>
-                </>
-              )}
+              <Button 
+                size="sm" 
+                variant="outline"
+                onClick={handleCopy}
+                className="touch-manipulation"
+              >
+                <Copy className="h-4 w-4 mr-2" />
+                Copy
+              </Button>
+              <Button 
+                size="sm" 
+                variant="ghost"
+                onClick={onStartOver}
+                className="touch-manipulation"
+              >
+                <RotateCcw className="h-4 w-4 mr-2" />
+                Start Over
+              </Button>
             </div>
           </div>
         </CardContent>
@@ -275,9 +245,41 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
       {editableData?.hazards && editableData.hazards.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              Risk Assessment
-            </CardTitle>
+            <div className="flex items-center justify-between gap-2">
+              <CardTitle className="flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 text-red-500" />
+                Risk Assessment
+              </CardTitle>
+              {isEditingRiskAssessment ? (
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    onClick={handleSaveRiskAssessment}
+                    className="bg-green-600 hover:bg-green-700 text-white"
+                  >
+                    <Save className="h-4 w-4 mr-1" />
+                    Save
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={handleCancelRiskAssessment}
+                  >
+                    <X className="h-4 w-4 mr-1" />
+                    Cancel
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setIsEditingRiskAssessment(true)}
+                >
+                  <Edit2 className="h-4 w-4 mr-1" />
+                  Edit
+                </Button>
+              )}
+            </div>
           </CardHeader>
           <CardContent className="space-y-3">
             {editableData.hazards.map((hazard: any, idx: number) => (
@@ -285,12 +287,11 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
                 key={idx} 
                 hazard={hazard} 
                 index={idx}
-                isEditing={isEditing}
                 onUpdate={handleUpdateHazard}
                 onDelete={handleDeleteHazard}
               />
             ))}
-            {isEditing && (
+            {isEditingRiskAssessment && (
               <Button 
                 onClick={handleAddHazard}
                 variant="outline"
@@ -306,16 +307,14 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
       {/* PPE Requirements - Enhanced Grid */}
       <PPERequirementsGrid 
         ppeItems={editableData?.ppe || []}
-        isEditing={isEditing}
-        onUpdate={handleUpdatePPE}
-        onDelete={handleDeletePPE}
-        onAdd={handleAddPPE}
+        onUpdate={(updatedPPE) => {
+          setEditableData((prev: any) => ({ ...prev, ppe: updatedPPE }));
+        }}
       />
 
       {/* Emergency Procedures - Enhanced Section */}
       <EmergencyProceduresSection 
         procedures={editableData?.emergencyProcedures || []}
-        isEditing={isEditing}
         onUpdate={handleUpdateProcedure}
         onDelete={handleDeleteProcedure}
         onMove={handleMoveProcedure}
@@ -323,22 +322,13 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
       />
 
       {/* Notes */}
-      {(editableData?.notes || isEditing) && (
+      {editableData?.notes && (
         <Card className="bg-muted/50">
           <CardHeader>
             <CardTitle>Additional Notes</CardTitle>
           </CardHeader>
           <CardContent>
-            {isEditing ? (
-              <Textarea
-                value={editableData.notes || ''}
-                onChange={(e) => handleUpdateNotes(e.target.value)}
-                placeholder="Add additional notes..."
-                className="min-h-[100px]"
-              />
-            ) : (
-              <p className="text-sm text-foreground whitespace-pre-wrap">{editableData.notes}</p>
-            )}
+            <p className="text-sm text-foreground whitespace-pre-wrap">{editableData.notes}</p>
           </CardContent>
         </Card>
       )}

@@ -1,20 +1,21 @@
-import { Shield, ChevronDown, Trash2 } from 'lucide-react';
+import { Shield, ChevronDown, Trash2, Edit2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from '@/components/ui/mobile-accordion';
 import { getRiskColors } from '@/utils/risk-level-helpers';
+import { useState } from 'react';
 
 interface EnhancedHazardCardProps {
   hazard: any;
   index: number;
-  isEditing?: boolean;
   onUpdate?: (index: number, field: string, value: any) => void;
   onDelete?: (index: number) => void;
 }
 
-export const EnhancedHazardCard = ({ hazard, index, isEditing = false, onUpdate, onDelete }: EnhancedHazardCardProps) => {
+export const EnhancedHazardCard = ({ hazard, index, onUpdate, onDelete }: EnhancedHazardCardProps) => {
+  const [isEditing, setIsEditing] = useState(false);
   const riskScore = hazard.riskScore || (hazard.likelihood * hazard.severity);
   const riskColors = getRiskColors(riskScore);
 
@@ -51,23 +52,34 @@ export const EnhancedHazardCard = ({ hazard, index, isEditing = false, onUpdate,
                 <div className="flex justify-center sm:justify-start">
                   <Badge className={riskColors.badge}>
                     Risk Score: {riskScore}
-                  </Badge>
-                </div>
-              </div>
-              {isEditing && (
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onDelete?.(index);
-                  }}
-                  className="text-red-500 hover:text-red-700 hover:bg-red-100"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              )}
-            </div>
+                   </Badge>
+                 </div>
+               </div>
+               <div className="absolute top-2 right-2 flex gap-1">
+                 <Button
+                   size="icon"
+                   variant="ghost"
+                   onClick={(e) => {
+                     e.stopPropagation();
+                     setIsEditing(!isEditing);
+                   }}
+                   className="h-8 w-8 touch-manipulation"
+                 >
+                   <Edit2 className="h-4 w-4" />
+                 </Button>
+                 <Button
+                   size="icon"
+                   variant="ghost"
+                   onClick={(e) => {
+                     e.stopPropagation();
+                     onDelete?.(index);
+                   }}
+                   className="h-8 w-8 text-red-500 hover:text-red-700 hover:bg-red-100 touch-manipulation"
+                 >
+                   <Trash2 className="h-4 w-4" />
+                 </Button>
+               </div>
+             </div>
           </MobileAccordionTrigger>
 
           <MobileAccordionContent>
