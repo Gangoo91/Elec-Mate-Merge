@@ -1421,9 +1421,16 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   {design.diversifiedLoad 
                     ? `${fmt(design.diversifiedLoad / 1000, 2)}kW`
                     : design.diversityBreakdown?.diversifiedLoad 
-                      ? `${fmt(design.diversityBreakdown.diversifiedLoad, 2)}kW`
+                      ? `${fmt(design.diversityBreakdown.diversifiedLoad / 1000, 2)}kW`
                       : `${fmt(design.totalLoad / 1000, 2)}kW`} Diversified
                 </span>
+                {design.installationType && (
+                  <Badge variant="outline" className="ml-2 text-xs">
+                    {design.installationType === 'domestic' ? 'BS 7671 Appendix A' : 
+                     design.installationType === 'commercial' ? 'Commercial Diversity' :
+                     'Industrial (Conservative)'}
+                  </Badge>
+                )}
               </div>
               <div className="flex items-center gap-2">
                 <Cable className="h-4 w-4 text-blue-400" />

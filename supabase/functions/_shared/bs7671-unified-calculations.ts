@@ -384,6 +384,7 @@ export interface CircuitDiversityParams {
   circuitType: CircuitType;
   connectedLoad: number; // Watts
   voltage: number;
+  installationType?: 'domestic' | 'commercial' | 'industrial';
 }
 
 export interface CircuitDiversityResult {
@@ -396,20 +397,54 @@ export interface CircuitDiversityResult {
 }
 
 export function calculateCircuitDiversity(params: CircuitDiversityParams): CircuitDiversityResult {
-  const { circuitType, connectedLoad, voltage } = params;
+  const { circuitType, connectedLoad, voltage, installationType = 'domestic' } = params;
   
   let diversifiedLoad = connectedLoad;
   let diversityFactor = 1.0;
   let maxMcb = 63;
   let justification = '';
   
+  // Installation-type-specific diversity factors
+  const diversityFactors = {
+    domestic: {
+      lighting: 0.66,
+      socket_radial: 0.40,  // For excess over 7.36kW
+      cooker: 'formula',
+    },
+    commercial: {
+      lighting: 0.80,       // Larger areas with more simultaneous use
+      socket_radial: 0.60,  // Office/commercial diversity
+      cooker: 1.0,          // Commercial kitchens - NO diversity!
+      heating: 0.90,        // Zone-controlled commercial heating
+    },
+    industrial: {
+      lighting: 0.90,       // Factory/warehouse - most lit at once
+      socket_radial: 0.80,  // Equipment running - less diversity
+      cooker: 1.0,
+      heating: 1.0,         // Process heating - no diversity
+    }
+  };
+  
   switch (circuitType) {
     case 'lighting':
-      // BS 7671 Appendix A: 66% diversity for lighting
-      diversifiedLoad = connectedLoad * 0.66;
-      diversityFactor = 0.66;
-      maxMcb = 16;
-      justification = `Lighting: 66% diversity per BS 7671 Appendix A. ${(connectedLoad/1000).toFixed(1)}kW connected × 0.66 = ${(diversifiedLoad/1000).toFixed(1)}kW diversified`;
+      // Apply installation-type-specific lighting diversity
+      if (installationType === 'commercial') {
+        diversifiedLoad = connectedLoad * 0.80;
+        diversityFactor = 0.80;
+        maxMcb = 16;
+        justification = `Lighting: 80% diversity applied (commercial installation - larger areas with simultaneous use). ${(connectedLoad/1000).toFixed(1)}kW × 0.80 = ${(diversifiedLoad/1000).toFixed(1)}kW`;
+      } else if (installationType === 'industrial') {
+        diversifiedLoad = connectedLoad * 0.90;
+        diversityFactor = 0.90;
+        maxMcb = 20;
+        justification = `Lighting: 90% diversity applied (industrial installation - warehouse/production area lighting). ${(connectedLoad/1000).toFixed(1)}kW × 0.90 = ${(diversifiedLoad/1000).toFixed(1)}kW`;
+      } else {
+        // Domestic - BS 7671 Appendix A
+        diversifiedLoad = connectedLoad * 0.66;
+        diversityFactor = 0.66;
+        maxMcb = 16;
+        justification = `Lighting: 66% diversity per BS 7671 Appendix A (domestic installation). ${(connectedLoad/1000).toFixed(1)}kW × 0.66 = ${(diversifiedLoad/1000).toFixed(1)}kW`;
+      }
       break;
       
     case 'socket_ring':
@@ -421,35 +456,69 @@ export function calculateCircuitDiversity(params: CircuitDiversityParams): Circu
       break;
       
     case 'socket_radial':
-      // Radial sockets: 100% first 7360W (32A), then 40% of remainder
-      if (connectedLoad <= 7360) {
-        diversifiedLoad = connectedLoad;
-        diversityFactor = 1.0;
-        justification = `Radial socket: 100% of ${(connectedLoad/1000).toFixed(1)}kW (below 7.36kW threshold per BS 7671 Appendix A)`;
+      // Radial sockets: Installation-type-specific diversity
+      if (installationType === 'commercial') {
+        // Commercial: 60% diversity for office/shop equipment
+        if (connectedLoad <= 7360) {
+          diversifiedLoad = connectedLoad;
+          diversityFactor = 1.0;
+          justification = `Radial socket: 100% of ${(connectedLoad/1000).toFixed(1)}kW (commercial - below 7.36kW threshold)`;
+        } else {
+          diversifiedLoad = 7360 + (connectedLoad - 7360) * 0.60;
+          diversityFactor = diversifiedLoad / connectedLoad;
+          justification = `Radial socket: 7.36kW + 60% of ${((connectedLoad-7360)/1000).toFixed(1)}kW = ${(diversifiedLoad/1000).toFixed(1)}kW (commercial diversity)`;
+        }
+      } else if (installationType === 'industrial') {
+        // Industrial: 80% diversity - equipment expected to run
+        if (connectedLoad <= 7360) {
+          diversifiedLoad = connectedLoad;
+          diversityFactor = 1.0;
+          justification = `Radial socket: 100% of ${(connectedLoad/1000).toFixed(1)}kW (industrial - below 7.36kW threshold)`;
+        } else {
+          diversifiedLoad = 7360 + (connectedLoad - 7360) * 0.80;
+          diversityFactor = diversifiedLoad / connectedLoad;
+          justification = `Radial socket: 7.36kW + 80% of ${((connectedLoad-7360)/1000).toFixed(1)}kW = ${(diversifiedLoad/1000).toFixed(1)}kW (industrial - conservative)`;
+        }
       } else {
-        diversifiedLoad = 7360 + (connectedLoad - 7360) * 0.40;
-        diversityFactor = diversifiedLoad / connectedLoad;
-        justification = `Radial socket: 7.36kW + 40% of ${((connectedLoad-7360)/1000).toFixed(1)}kW = ${(diversifiedLoad/1000).toFixed(1)}kW per BS 7671 Appendix A`;
+        // Domestic: BS 7671 Appendix A - 40% of remainder
+        if (connectedLoad <= 7360) {
+          diversifiedLoad = connectedLoad;
+          diversityFactor = 1.0;
+          justification = `Radial socket: 100% of ${(connectedLoad/1000).toFixed(1)}kW (below 7.36kW threshold per BS 7671 Appendix A)`;
+        } else {
+          diversifiedLoad = 7360 + (connectedLoad - 7360) * 0.40;
+          diversityFactor = diversifiedLoad / connectedLoad;
+          justification = `Radial socket: 7.36kW + 40% of ${((connectedLoad-7360)/1000).toFixed(1)}kW = ${(diversifiedLoad/1000).toFixed(1)}kW per BS 7671 Appendix A`;
+        }
       }
       maxMcb = 32;
       break;
       
     case 'cooker':
-      // BS 7671 Appendix A Table A1: 10A + 30% of first 10A + 60% of remainder
-      if (connectedLoad <= 2300) {
-        diversifiedLoad = 2300; // Minimum 10A
-        diversityFactor = diversifiedLoad / connectedLoad;
-        justification = `Cooker: Minimum 10A (2.3kW) per BS 7671 Appendix A Table A1`;
-      } else if (connectedLoad <= 4600) {
-        diversifiedLoad = 2300 + (connectedLoad - 2300) * 0.30;
-        diversityFactor = diversifiedLoad / connectedLoad;
-        justification = `Cooker: 2.3kW + 30% of ${((connectedLoad-2300)/1000).toFixed(1)}kW = ${(diversifiedLoad/1000).toFixed(1)}kW per BS 7671 Appendix A`;
+      // Cooker diversity depends on installation type
+      if (installationType === 'commercial' || installationType === 'industrial') {
+        // Commercial/Industrial kitchens: NO diversity - assume simultaneous use
+        diversifiedLoad = connectedLoad;
+        diversityFactor = 1.0;
+        maxMcb = 63;
+        justification = `Cooker: 100% load - no diversity (${installationType} kitchen assumes simultaneous equipment operation). ${(connectedLoad/1000).toFixed(1)}kW`;
       } else {
-        diversifiedLoad = 2300 + 690 + (connectedLoad - 4600) * 0.60; // 690 = 30% of 2300
-        diversityFactor = diversifiedLoad / connectedLoad;
-        justification = `Cooker: 2.3kW + 0.69kW + 60% of ${((connectedLoad-4600)/1000).toFixed(1)}kW = ${(diversifiedLoad/1000).toFixed(1)}kW per BS 7671 Appendix A`;
+        // Domestic: BS 7671 Appendix A Table A1: 10A + 30% of first 10A + 60% of remainder
+        if (connectedLoad <= 2300) {
+          diversifiedLoad = 2300; // Minimum 10A
+          diversityFactor = diversifiedLoad / connectedLoad;
+          justification = `Cooker: Minimum 10A (2.3kW) per BS 7671 Appendix A Table A1 (domestic)`;
+        } else if (connectedLoad <= 4600) {
+          diversifiedLoad = 2300 + (connectedLoad - 2300) * 0.30;
+          diversityFactor = diversifiedLoad / connectedLoad;
+          justification = `Cooker: 2.3kW + 30% of ${((connectedLoad-2300)/1000).toFixed(1)}kW = ${(diversifiedLoad/1000).toFixed(1)}kW per BS 7671 Appendix A (domestic)`;
+        } else {
+          diversifiedLoad = 2300 + 690 + (connectedLoad - 4600) * 0.60; // 690 = 30% of 2300
+          diversityFactor = diversifiedLoad / connectedLoad;
+          justification = `Cooker: 2.3kW + 0.69kW + 60% of ${((connectedLoad-4600)/1000).toFixed(1)}kW = ${(diversifiedLoad/1000).toFixed(1)}kW per BS 7671 Appendix A (domestic)`;
+        }
+        maxMcb = 50;
       }
-      maxMcb = 50;
       break;
       
     case 'shower':
@@ -463,11 +532,20 @@ export function calculateCircuitDiversity(params: CircuitDiversityParams): Circu
       break;
       
     case 'heating':
-      // No diversity for heating
-      diversifiedLoad = connectedLoad;
-      diversityFactor = 1.0;
-      maxMcb = 40;
-      justification = `Heating: 100% load - no diversity (thermostatically controlled but assume simultaneous operation)`;
+      // Heating diversity depends on installation type
+      if (installationType === 'commercial') {
+        // Commercial: 90% diversity for zone-controlled heating
+        diversifiedLoad = connectedLoad * 0.90;
+        diversityFactor = 0.90;
+        maxMcb = 50;
+        justification = `Heating: 90% diversity applied (commercial zone-controlled heating). ${(connectedLoad/1000).toFixed(1)}kW × 0.90 = ${(diversifiedLoad/1000).toFixed(1)}kW`;
+      } else {
+        // Domestic/Industrial: No diversity
+        diversifiedLoad = connectedLoad;
+        diversityFactor = 1.0;
+        maxMcb = 40;
+        justification = `Heating: 100% load - no diversity (${installationType === 'industrial' ? 'process heating' : 'thermostatically controlled but assume simultaneous operation'})`;
+      }
       break;
       
     default:
@@ -492,18 +570,7 @@ export function calculateCircuitDiversity(params: CircuitDiversityParams): Circu
 export function calculateDiversity(params: DiversityParams): DiversityResult {
   const { circuits, propertyType } = params;
   
-  if (propertyType !== 'domestic') {
-    // Commercial diversity is more complex - simplified for now
-    const total = circuits.reduce((sum, c) => sum + c.load, 0);
-    return {
-      totalConnected: total,
-      diversifiedDemand: total * 0.85, // 85% diversity approximation
-      diversityFactor: 0.85,
-      breakdown: []
-    };
-  }
-  
-  // BS 7671 Appendix A - Domestic diversity
+  // Group circuits by type
   const lighting = circuits.filter(c => c.type === 'lighting');
   const sockets = circuits.filter(c => c.type === 'sockets');
   const cookers = circuits.filter(c => c.type === 'cooker');
@@ -518,28 +585,66 @@ export function calculateDiversity(params: DiversityParams): DiversityResult {
   const heatingTotal = heating.reduce((sum, c) => sum + c.load, 0);
   const otherTotal = other.reduce((sum, c) => sum + c.load, 0);
   
-  // Apply BS 7671 Appendix A diversity factors
-  // Lighting: 66% of total, minimum 2300W (10A at 230V)
-  const lightingDiversified = Math.max(lightingTotal * 0.66, lightingTotal > 0 ? 2300 : 0);
+  let lightingDiversified: number;
+  let socketsDiversified: number;
+  let cookersDiversified: number;
+  let heatingDiversified: number;
   
-  // Socket outlets: 100% first 7360W (32A), then 40% of remainder
-  const socketsDiversified = socketsTotal <= 7360 
-    ? socketsTotal 
-    : 7360 + (socketsTotal - 7360) * 0.40;
+  if (propertyType === 'commercial') {
+    // ========== COMMERCIAL DIVERSITY ==========
+    // Lighting: 80% (larger areas with simultaneous use)
+    lightingDiversified = lightingTotal * 0.80;
+    
+    // Socket outlets: 100% first 7360W, then 60% of remainder (office/shop diversity)
+    socketsDiversified = socketsTotal <= 7360 
+      ? socketsTotal 
+      : 7360 + (socketsTotal - 7360) * 0.60;
+    
+    // Cookers/Kitchen: 100% - NO diversity! (commercial kitchens operate simultaneously)
+    cookersDiversified = cookersTotal;
+    
+    // Heating: 90% (zone-controlled commercial heating)
+    heatingDiversified = heatingTotal * 0.90;
+    
+  } else if (propertyType === 'industrial') {
+    // ========== INDUSTRIAL DIVERSITY ==========
+    // Lighting: 90% (warehouse/factory - most areas lit at once)
+    lightingDiversified = lightingTotal * 0.90;
+    
+    // Socket outlets: 100% first 7360W, then 80% of remainder (equipment expected to run)
+    socketsDiversified = socketsTotal <= 7360 
+      ? socketsTotal 
+      : 7360 + (socketsTotal - 7360) * 0.80;
+    
+    // Cookers/Process equipment: 100% - NO diversity!
+    cookersDiversified = cookersTotal;
+    
+    // Heating: 100% (process heating - no diversity)
+    heatingDiversified = heatingTotal;
+    
+  } else {
+    // ========== DOMESTIC DIVERSITY (BS 7671 Appendix A) ==========
+    // Lighting: 66% of total, minimum 2300W (10A at 230V)
+    lightingDiversified = Math.max(lightingTotal * 0.66, lightingTotal > 0 ? 2300 : 0);
+    
+    // Socket outlets: 100% first 7360W (32A), then 40% of remainder
+    socketsDiversified = socketsTotal <= 7360 
+      ? socketsTotal 
+      : 7360 + (socketsTotal - 7360) * 0.40;
+    
+    // Cookers: 10A (2300W) + 30% of first 10A + 60% of remainder (BS 7671 Appendix A Table A1)
+    cookersDiversified = cookersTotal > 0 
+      ? 2300 + Math.min(cookersTotal - 2300, 2300) * 0.30 + Math.max(0, cookersTotal - 4600) * 0.60 
+      : 0;
+    
+    // Space heating: 100% (no diversity - thermostatically controlled but assume simultaneous)
+    heatingDiversified = heatingTotal;
+  }
   
-  // Cookers: 10A (2300W) + 30% of first 10A (2300W) + 60% of remainder
-  // BS 7671 Appendix A Table A1
-  const cookersDiversified = cookersTotal > 0 
-    ? 2300 + Math.min(cookersTotal - 2300, 2300) * 0.30 + Math.max(0, cookersTotal - 4600) * 0.60 
-    : 0;
-  
-  // Immersion heaters: 100% (no diversity)
+  // Immersion heaters: 100% (no diversity across all installation types)
   const immersionDiversified = immersionTotal;
   
-  // Space heating: 100% (no diversity)
-  const heatingDiversified = heatingTotal;
-  
-  // Other loads: 100% (conservative)
+  // Other loads: 100% (conservative across all installation types)
   const otherDiversified = otherTotal;
   
   const totalConnected = lightingTotal + socketsTotal + cookersTotal + immersionTotal + heatingTotal + otherTotal;
@@ -555,7 +660,7 @@ export function calculateDiversity(params: DiversityParams): DiversityResult {
       { type: 'sockets', connected: socketsTotal, diversified: Math.round(socketsDiversified), factor: socketsTotal > 0 ? socketsDiversified/socketsTotal : 1 },
       { type: 'cookers', connected: cookersTotal, diversified: Math.round(cookersDiversified), factor: cookersTotal > 0 ? cookersDiversified/cookersTotal : 1 },
       { type: 'immersion', connected: immersionTotal, diversified: Math.round(immersionDiversified), factor: 1.0 },
-      { type: 'heating', connected: heatingTotal, diversified: Math.round(heatingDiversified), factor: 1.0 },
+      { type: 'heating', connected: heatingTotal, diversified: Math.round(heatingDiversified), factor: heatingTotal > 0 ? heatingDiversified/heatingTotal : 1 },
       { type: 'other', connected: otherTotal, diversified: Math.round(otherDiversified), factor: 1.0 }
     ].filter(b => b.connected > 0)
   };

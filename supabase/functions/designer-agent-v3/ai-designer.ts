@@ -130,42 +130,101 @@ export class AIDesigner {
     parts.push('🔴 Never use 1.5mm², 4mm², 6mm², or 10mm² for ring finals - ALWAYS 2.5mm²');
     parts.push('');
     
-    parts.push('=== DIVERSITY FACTORS (BS 7671 Appendix A) - MANDATORY ===');
+    parts.push('=== DIVERSITY FACTORS - MANDATORY ===');
     parts.push('🎯 CRITICAL: Calculate BOTH Ib (connected) AND Id (diversified) for every circuit');
     parts.push('🎯 Use Id (diversified current) for MCB selection: Id ≤ In ≤ Iz');
     parts.push('');
-    parts.push('📊 LIGHTING CIRCUITS:');
-    parts.push('  • Diversity: 66% of connected load (0.66 factor)');
-    parts.push('  • Example: 2400W connected × 0.66 = 1584W diversified (6.9A at 230V)');
-    parts.push('  • Justification: "Lighting: 66% diversity per BS 7671 Appendix A"');
-    parts.push('');
-    parts.push('📊 RADIAL SOCKET CIRCUITS:');
-    parts.push('  • Diversity: 100% first 7360W (32A) + 40% of remainder');
-    parts.push('  • Example: 10kW load → 7360W + (2640W × 0.4) = 8416W diversified');
-    parts.push('  • Justification: "Radial: 7.36kW + 40% of excess per Appendix A"');
-    parts.push('');
-    parts.push('📊 RING FINAL CIRCUITS:');
-    parts.push('  • Diversity: NONE - always 32A (topology provides diversity)');
-    parts.push('  • Ib = Id = connected load / 230V (no reduction)');
-    parts.push('  • MCB: ALWAYS 32A regardless of calculated current');
-    parts.push('  • Justification: "Ring final: 32A per Appendix 15, topology provides inherent diversity"');
-    parts.push('');
-    parts.push('📊 COOKER CIRCUITS:');
-    parts.push('  • Diversity: 10A + 30% of next 10A + 60% of remainder (Table A1)');
-    parts.push('  • Example: 12kW cooker → 2.3kW + (2.3kW × 0.3) + (7.4kW × 0.6) = 7.53kW');
-    parts.push('  • Justification: "Cooker: Appendix A Table A1 diversity applied"');
-    parts.push('');
-    parts.push('📊 FIXED HIGH-POWER LOADS (Showers, Immersion, EV):');
-    parts.push('  • Diversity: NONE (100% load assumed)');
-    parts.push('  • Ib = Id (no reduction)');
+    
+    // Installation-type-specific diversity factors
+    if (type === 'domestic') {
+      parts.push('📊 DOMESTIC DIVERSITY (BS 7671 Appendix A):');
+      parts.push('');
+      parts.push('  LIGHTING CIRCUITS:');
+      parts.push('  • Diversity: 66% of connected load (0.66 factor)');
+      parts.push('  • Example: 2400W × 0.66 = 1584W (6.9A at 230V)');
+      parts.push('  • Justification: "Lighting: 66% diversity per BS 7671 Appendix A (domestic)"');
+      parts.push('');
+      parts.push('  RADIAL SOCKET CIRCUITS:');
+      parts.push('  • Diversity: 100% first 7360W (32A) + 40% of remainder');
+      parts.push('  • Example: 10kW → 7360W + (2640W × 0.4) = 8416W');
+      parts.push('  • Justification: "Radial: 7.36kW + 40% of excess per BS 7671 Appendix A"');
+      parts.push('');
+      parts.push('  RING FINAL CIRCUITS:');
+      parts.push('  • Diversity: NONE - always 32A (topology provides diversity)');
+      parts.push('  • Ib = Id = connected load / 230V (no reduction)');
+      parts.push('  • MCB: ALWAYS 32A regardless of calculated current');
+      parts.push('  • Justification: "Ring final: 32A per Appendix 15 (domestic)"');
+      parts.push('');
+      parts.push('  COOKER CIRCUITS:');
+      parts.push('  • Diversity: 10A + 30% of next 10A + 60% of remainder (Table A1)');
+      parts.push('  • Example: 12kW → 2.3kW + (2.3kW × 0.3) + (7.4kW × 0.6) = 7.53kW');
+      parts.push('  • Justification: "Cooker: BS 7671 Appendix A Table A1 (domestic)"');
+      parts.push('');
+    } else if (type === 'commercial') {
+      parts.push('📊 COMMERCIAL DIVERSITY:');
+      parts.push('');
+      parts.push('  LIGHTING CIRCUITS:');
+      parts.push('  • Diversity: 80% of connected load (0.80 factor)');
+      parts.push('  • Higher than domestic - larger areas with simultaneous use');
+      parts.push('  • Example: 3000W × 0.80 = 2400W (10.4A at 230V)');
+      parts.push('  • Justification: "Lighting: 80% diversity (commercial - larger areas with simultaneous use)"');
+      parts.push('');
+      parts.push('  RADIAL SOCKET CIRCUITS:');
+      parts.push('  • Diversity: 100% first 7360W + 60% of remainder');
+      parts.push('  • Higher than domestic - office/shop equipment often running');
+      parts.push('  • Example: 10kW → 7360W + (2640W × 0.6) = 8944W');
+      parts.push('  • Justification: "Radial: 7.36kW + 60% of excess (commercial diversity)"');
+      parts.push('');
+      parts.push('  COOKER/KITCHEN CIRCUITS:');
+      parts.push('  • Diversity: NONE - 100% load (NO DIVERSITY!)');
+      parts.push('  • Commercial kitchens operate all equipment simultaneously');
+      parts.push('  • Ib = Id = connected load / voltage');
+      parts.push('  • Justification: "Commercial kitchen: 100% load - no diversity (simultaneous operation)"');
+      parts.push('');
+      parts.push('  HEATING CIRCUITS:');
+      parts.push('  • Diversity: 90% of connected load (zone-controlled)');
+      parts.push('  • Example: 10kW × 0.90 = 9kW');
+      parts.push('  • Justification: "Heating: 90% diversity (commercial zone-controlled)"');
+      parts.push('');
+    } else if (type === 'industrial') {
+      parts.push('📊 INDUSTRIAL DIVERSITY (CONSERVATIVE):');
+      parts.push('');
+      parts.push('  LIGHTING CIRCUITS:');
+      parts.push('  • Diversity: 90% of connected load (0.90 factor)');
+      parts.push('  • Factory/warehouse - most areas lit at once');
+      parts.push('  • Example: 5000W × 0.90 = 4500W (19.6A at 230V)');
+      parts.push('  • Justification: "Lighting: 90% diversity (industrial - warehouse/production area)"');
+      parts.push('');
+      parts.push('  RADIAL SOCKET CIRCUITS:');
+      parts.push('  • Diversity: 100% first 7360W + 80% of remainder');
+      parts.push('  • Equipment expected to run - less diversity');
+      parts.push('  • Example: 15kW → 7360W + (7640W × 0.8) = 13.47kW');
+      parts.push('  • Justification: "Radial: 7.36kW + 80% of excess (industrial - conservative)"');
+      parts.push('');
+      parts.push('  MOTORS/MACHINERY:');
+      parts.push('  • Diversity: NONE - 100% load');
+      parts.push('  • Assume simultaneous operation of equipment');
+      parts.push('  • Factor in starting currents for motors');
+      parts.push('  • Justification: "Motors: 100% load - no diversity (industrial equipment)"');
+      parts.push('');
+      parts.push('  HEATING/PROCESS:');
+      parts.push('  • Diversity: NONE - 100% load');
+      parts.push('  • Process heating runs continuously');
+      parts.push('  • Justification: "Process heating: 100% load - no diversity"');
+      parts.push('');
+    }
+    
+    parts.push('📊 FIXED HIGH-POWER LOADS (ALL INSTALLATIONS):');
+    parts.push('  • Showers, Immersion heaters, EV Chargers: 100% load (NO diversity)');
+    parts.push('  • Ib = Id (no reduction) - continuous fixed loads');
     parts.push('  • Justification: "No diversity - continuous fixed load"');
     parts.push('');
     parts.push('🎯 OUTPUT FORMAT: Always include in calculations object:');
     parts.push('  • Ib: Raw design current (connected load / voltage)');
     parts.push('  • Id: Diversified current (for MCB selection)');
-    parts.push('  • diversityFactor: Factor applied (e.g., 0.66 for lighting)');
+    parts.push('  • diversityFactor: Factor applied (e.g., 0.66 for domestic lighting)');
     parts.push('  • diversifiedLoad: Diversified load in watts');
-    parts.push('  • In justifications.diversityApplied: Explain what diversity was applied and why');
+    parts.push('  • In justifications.diversityApplied: Explain diversity with installation type');
     parts.push('');
     
     // Installation type context with MANDATORY cable type enforcement
@@ -442,16 +501,19 @@ export class AIDesigner {
     const startTime = Date.now();
     
     // MINIMAL PROMPT (2000 tokens max)
-    const systemPrompt = `BS 7671:2018+A3:2024 expert. Design ${inputs.circuits.length} compliant circuit(s) WITH DIVERSITY.
+    const diversityRules = installationType === 'commercial' 
+      ? `• Lighting: 80% | Radial sockets: 100% first 7.36kW + 60% | Cooker/Kitchen: 100% (NO diversity!) | Heating: 90%`
+      : installationType === 'industrial'
+      ? `• Lighting: 90% | Radial sockets: 100% first 7.36kW + 80% | Motors/Process: 100% (NO diversity)`
+      : `• Lighting: 66% | Radial sockets: 100% first 7.36kW + 40% | Cookers: 10A + 30% next 10A + 60% | Ring finals: 32A ALWAYS`;
+    
+    const systemPrompt = `BS 7671:2018+A3:2024 expert. Design ${inputs.circuits.length} compliant ${installationType || 'domestic'} circuit(s) WITH DIVERSITY.
 
 QUICK RULES:
-- Calculate Ib (connected load) AND Id (diversified current per BS 7671 Appendix A)
+- Calculate Ib (connected load) AND Id (diversified current)
 - Use Id for MCB selection: Id ≤ In ≤ Iz | VD ≤ 5% | Zs ≤ max
-- DIVERSITY FACTORS (BS 7671 Appendix A):
-  • Lighting: 66% (0.66 factor)
-  • Radial sockets: 100% first 7.36kW + 40% remainder
-  • Ring finals: 32A ALWAYS (diversity inherent in topology)
-  • Cookers: 10A + 30% next 10A + 60% remainder
+- DIVERSITY FACTORS (${installationType === 'domestic' ? 'BS 7671 Appendix A' : installationType === 'commercial' ? 'Commercial' : 'Industrial'}):
+  ${diversityRules}
   • Showers/Immersion/EV: 100% (no diversity)
 - RCBO for sockets/bathrooms | T&E/SWA standard sizes
 - Show: Ib, Id, diversity factor, key calculations | Cite regulations
@@ -460,7 +522,7 @@ ${context.designKnowledge.slice(0, 3).map(k =>
   `${k.primary_topic}: ${k.content.slice(0, 200)}`
 ).join('\n\n')}
 
-CRITICAL: Include diversityApplied justification explaining diversity per Appendix A.`;
+CRITICAL: Include diversityApplied justification with ${installationType || 'domestic'} context.`;
 
     const structuredInput = this.buildStructuredInput(inputs);
     const tools = [this.buildSimpleTool()];
