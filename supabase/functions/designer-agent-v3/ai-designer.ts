@@ -123,10 +123,49 @@ export class AIDesigner {
     parts.push('=== RING FINAL CIRCUIT RULES (FROM RAG KNOWLEDGE) ===');
     parts.push('🔴 RING FINAL SOCKETS: MUST use 2.5mm² cable + 1.5mm² CPC + 32A RCBO (BS 7671 Appendix 15)');
     parts.push('🔴 WHY: Ring has TWO parallel conductor paths - current splits 50/50, so each leg carries ~16A');
+    parts.push('🔴 NO DIVERSITY REDUCTION: Ring finals are ALWAYS 32A - the ring topology itself provides diversity');
     parts.push('🔴 If circuit is ring final OR socket power ≤7360W with 32A protection → use 2.5mm² + 32A RCBO');
     parts.push('🔴 Ring finals serve max 100m² floor area (Reg 433.1.5)');
     parts.push('🔴 Ring calculations use HALF the cable length due to parallel paths (affects Zs and VD)');
     parts.push('🔴 Never use 1.5mm², 4mm², 6mm², or 10mm² for ring finals - ALWAYS 2.5mm²');
+    parts.push('');
+    
+    parts.push('=== DIVERSITY FACTORS (BS 7671 Appendix A) - MANDATORY ===');
+    parts.push('🎯 CRITICAL: Calculate BOTH Ib (connected) AND Id (diversified) for every circuit');
+    parts.push('🎯 Use Id (diversified current) for MCB selection: Id ≤ In ≤ Iz');
+    parts.push('');
+    parts.push('📊 LIGHTING CIRCUITS:');
+    parts.push('  • Diversity: 66% of connected load (0.66 factor)');
+    parts.push('  • Example: 2400W connected × 0.66 = 1584W diversified (6.9A at 230V)');
+    parts.push('  • Justification: "Lighting: 66% diversity per BS 7671 Appendix A"');
+    parts.push('');
+    parts.push('📊 RADIAL SOCKET CIRCUITS:');
+    parts.push('  • Diversity: 100% first 7360W (32A) + 40% of remainder');
+    parts.push('  • Example: 10kW load → 7360W + (2640W × 0.4) = 8416W diversified');
+    parts.push('  • Justification: "Radial: 7.36kW + 40% of excess per Appendix A"');
+    parts.push('');
+    parts.push('📊 RING FINAL CIRCUITS:');
+    parts.push('  • Diversity: NONE - always 32A (topology provides diversity)');
+    parts.push('  • Ib = Id = connected load / 230V (no reduction)');
+    parts.push('  • MCB: ALWAYS 32A regardless of calculated current');
+    parts.push('  • Justification: "Ring final: 32A per Appendix 15, topology provides inherent diversity"');
+    parts.push('');
+    parts.push('📊 COOKER CIRCUITS:');
+    parts.push('  • Diversity: 10A + 30% of next 10A + 60% of remainder (Table A1)');
+    parts.push('  • Example: 12kW cooker → 2.3kW + (2.3kW × 0.3) + (7.4kW × 0.6) = 7.53kW');
+    parts.push('  • Justification: "Cooker: Appendix A Table A1 diversity applied"');
+    parts.push('');
+    parts.push('📊 FIXED HIGH-POWER LOADS (Showers, Immersion, EV):');
+    parts.push('  • Diversity: NONE (100% load assumed)');
+    parts.push('  • Ib = Id (no reduction)');
+    parts.push('  • Justification: "No diversity - continuous fixed load"');
+    parts.push('');
+    parts.push('🎯 OUTPUT FORMAT: Always include in calculations object:');
+    parts.push('  • Ib: Raw design current (connected load / voltage)');
+    parts.push('  • Id: Diversified current (for MCB selection)');
+    parts.push('  • diversityFactor: Factor applied (e.g., 0.66 for lighting)');
+    parts.push('  • diversifiedLoad: Diversified load in watts');
+    parts.push('  • In justifications.diversityApplied: Explain what diversity was applied and why');
     parts.push('');
     
     // Installation type context with MANDATORY cable type enforcement
@@ -403,18 +442,25 @@ export class AIDesigner {
     const startTime = Date.now();
     
     // MINIMAL PROMPT (2000 tokens max)
-    const systemPrompt = `BS 7671:2018+A3:2024 expert. Design ${inputs.circuits.length} compliant circuit(s).
+    const systemPrompt = `BS 7671:2018+A3:2024 expert. Design ${inputs.circuits.length} compliant circuit(s) WITH DIVERSITY.
 
 QUICK RULES:
-- Ib ≤ In ≤ Iz | VD ≤ 5% | Zs ≤ max
+- Calculate Ib (connected load) AND Id (diversified current per BS 7671 Appendix A)
+- Use Id for MCB selection: Id ≤ In ≤ Iz | VD ≤ 5% | Zs ≤ max
+- DIVERSITY FACTORS (BS 7671 Appendix A):
+  • Lighting: 66% (0.66 factor)
+  • Radial sockets: 100% first 7.36kW + 40% remainder
+  • Ring finals: 32A ALWAYS (diversity inherent in topology)
+  • Cookers: 10A + 30% next 10A + 60% remainder
+  • Showers/Immersion/EV: 100% (no diversity)
 - RCBO for sockets/bathrooms | T&E/SWA standard sizes
-- Show key calculations | Cite main regulations
+- Show: Ib, Id, diversity factor, key calculations | Cite regulations
 
 ${context.designKnowledge.slice(0, 3).map(k => 
   `${k.primary_topic}: ${k.content.slice(0, 200)}`
 ).join('\n\n')}
 
-Generate: cable size, MCB/RCBO, calculations only (installation handled separately).`;
+CRITICAL: Include diversityApplied justification explaining diversity per Appendix A.`;
 
     const structuredInput = this.buildStructuredInput(inputs);
     const tools = [this.buildSimpleTool()];
@@ -444,15 +490,12 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
     return design;
   }
 
-  /**
-   * Simplified tool schema for fast mode
-   */
   private buildSimpleTool(): object {
     return {
       type: 'function',
       function: {
         name: 'design_circuits_fast',
-        description: 'Quick BS 7671 circuit design',
+        description: 'Quick BS 7671 circuit design with diversity',
         parameters: {
           type: 'object',
           properties: {
@@ -474,17 +517,27 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
                   calculations: {
                     type: 'object',
                     properties: {
-                      Ib: { type: 'number' },
+                      Ib: { type: 'number', description: 'Raw design current (connected load)' },
+                      Id: { type: 'number', description: 'Diversified design current (for MCB selection) - apply BS 7671 Appendix A diversity' },
                       In: { type: 'number' },
                       Iz: { type: 'number' },
                       voltageDrop: { type: 'object' },
                       zs: { type: 'number' },
-                      maxZs: { type: 'number' }
+                      maxZs: { type: 'number' },
+                      diversityFactor: { type: 'number', description: 'Diversity factor applied (e.g., 0.66 for lighting)' },
+                      diversifiedLoad: { type: 'number', description: 'Diversified load in watts' }
                     }
                   },
-                  // installationNotes removed - handled by Design Installation Agent
+                  justifications: {
+                    type: 'object',
+                    properties: {
+                      cableSize: { type: 'string' },
+                      protection: { type: 'string' },
+                      diversityApplied: { type: 'string', description: 'Explanation of diversity applied per BS 7671 Appendix A' }
+                    }
+                  }
                 },
-                required: ['name', 'cableSize', 'protectionDevice', 'calculations']
+                required: ['name', 'cableSize', 'protectionDevice', 'calculations', 'justifications']
               }
             }
           },
@@ -744,19 +797,31 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
                   },
                   calculations: {
                     type: 'object',
-                    description: 'All BS 7671 calculations',
+                    description: 'All BS 7671 calculations WITH DIVERSITY',
                     properties: {
                       Ib: { 
                         type: 'number',
-                        description: 'Design current in Amps (load / voltage)'
+                        description: 'Raw design current in Amps (connected load / voltage) - BEFORE diversity'
+                      },
+                      Id: {
+                        type: 'number',
+                        description: 'Diversified design current in Amps (for MCB selection). Apply BS 7671 Appendix A diversity: Lighting 66%, Radial sockets 100%+40%, Cookers Table A1, Ring finals no reduction (topology handles it), Showers/Immersion/EV 100%'
                       },
                       In: { 
                         type: 'number',
-                        description: 'Nominal current of protection device in Amps'
+                        description: 'Nominal current of protection device in Amps (must be ≥ Id)'
                       },
                       Iz: { 
                         type: 'number',
                         description: 'Current carrying capacity of cable in Amps (from tables)'
+                      },
+                      diversityFactor: {
+                        type: 'number',
+                        description: 'Diversity factor applied (e.g., 0.66 for lighting, 1.0 for ring finals/showers)'
+                      },
+                      diversifiedLoad: {
+                        type: 'number',
+                        description: 'Diversified load in Watts (connected load × diversityFactor)'
                       },
                       voltageDrop: {
                         type: 'object',
@@ -789,7 +854,7 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
                         description: 'Maximum permitted Zs in Ohms (from tables)'
                       }
                     },
-                    required: ['Ib', 'In', 'Iz', 'voltageDrop', 'zs', 'maxZs']
+                    required: ['Ib', 'Id', 'In', 'Iz', 'diversityFactor', 'diversifiedLoad', 'voltageDrop', 'zs', 'maxZs']
                   },
                   justifications: {
                     type: 'object',
@@ -798,6 +863,22 @@ Generate: cable size, MCB/RCBO, calculations only (installation handled separate
                       cableSize: { 
                         type: 'string',
                         description: 'Why this cable size? (reference Iz table, method, Ib≤In≤Iz)'
+                      },
+                      protection: { 
+                        type: 'string',
+                        description: 'Why this MCB/RCBO rating and type? Include: Id (diversified) ≤ In ≤ Iz, curve justification'
+                      },
+                      rcd: { 
+                        type: 'string',
+                        description: 'Why RCBO or not? (Reg 411.3.3 for sockets, Reg 701 for bathrooms)'
+                      },
+                      diversityApplied: {
+                        type: 'string',
+                        description: 'Explain diversity applied per BS 7671 Appendix A. E.g., "Lighting: 66% diversity applied. 2400W connected × 0.66 = 1584W diversified (6.9A)" or "Ring final: 32A fixed per Appendix 15, ring topology provides inherent diversity"'
+                      }
+                    },
+                    required: ['cableSize', 'protection', 'diversityApplied']
+                  },
                       },
                       protection: { 
                         type: 'string',
