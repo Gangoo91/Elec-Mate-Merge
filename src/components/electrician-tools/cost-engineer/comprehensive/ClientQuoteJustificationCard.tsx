@@ -11,7 +11,8 @@ import {
   Info,
   Shield,
   TrendingUp,
-  FileText
+  FileText,
+  Package
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
@@ -143,13 +144,15 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
 
           {/* Objection 1: Too Expensive */}
           <Collapsible open={expandedSections.has('objection1')} onOpenChange={() => toggleSection('objection1')}>
-            <div className="border border-border rounded-lg">
-              <CollapsibleTrigger className="w-full p-4 sm:p-3 flex items-center justify-between hover:bg-accent/50 active:bg-accent/70 transition-colors touch-manipulation min-h-12">
-                <div className="flex items-center gap-2 text-left">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
-                  <span className="font-medium text-base sm:text-sm text-white">"This seems expensive / too high"</span>
+            <div className="border-2 border-border/50 bg-card rounded-xl overflow-hidden hover:border-primary/30 transition-colors">
+              <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-accent/30 active:bg-accent/50 transition-colors touch-manipulation min-h-14">
+                <div className="flex items-center gap-3 text-left">
+                  <div className="p-2 rounded-lg bg-amber-500/10">
+                    <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
+                  </div>
+                  <span className="font-medium text-base text-white">"This seems expensive / too high"</span>
                 </div>
-                <ChevronDown className={`h-4 w-4 transition-transform shrink-0 ${expandedSections.has('objection1') ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform shrink-0 ${expandedSections.has('objection1') ? 'rotate-180' : ''}`} />
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
@@ -203,13 +206,15 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
 
           {/* Objection 2: Cheaper Quote */}
           <Collapsible open={expandedSections.has('objection2')} onOpenChange={() => toggleSection('objection2')}>
-            <div className="border border-border rounded-lg">
-              <CollapsibleTrigger className="w-full p-4 sm:p-3 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
-                <div className="flex items-center gap-2 text-left">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
-                  <span className="font-medium text-base sm:text-sm text-white">"I got a cheaper quote from someone else"</span>
+            <div className="border-2 border-border/50 bg-card rounded-xl overflow-hidden hover:border-primary/30 transition-colors">
+              <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-accent/30 transition-colors touch-manipulation min-h-14">
+                <div className="flex items-center gap-3 text-left">
+                  <div className="p-2 rounded-lg bg-amber-500/10">
+                    <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
+                  </div>
+                  <span className="font-medium text-base text-white">"I got a cheaper quote from someone else"</span>
                 </div>
-                <ChevronDown className={`h-4 w-4 transition-transform shrink-0 ${expandedSections.has('objection2') ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform shrink-0 ${expandedSections.has('objection2') ? 'rotate-180' : ''}`} />
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
@@ -268,13 +273,15 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
 
           {/* Objection 3: Discount Request */}
           <Collapsible open={expandedSections.has('objection3')} onOpenChange={() => toggleSection('objection3')}>
-            <div className="border border-border rounded-lg">
-              <CollapsibleTrigger className="w-full p-4 sm:p-3 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
-                <div className="flex items-center gap-2 text-left">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
-                  <span className="font-medium text-base sm:text-sm text-white">"Can you do it for less / Give me a discount?"</span>
+            <div className="border-2 border-border/50 bg-card rounded-xl overflow-hidden hover:border-primary/30 transition-colors">
+              <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-accent/30 transition-colors touch-manipulation min-h-14">
+                <div className="flex items-center gap-3 text-left">
+                  <div className="p-2 rounded-lg bg-amber-500/10">
+                    <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
+                  </div>
+                  <span className="font-medium text-base text-white">"Can you do it for less / Give me a discount?"</span>
                 </div>
-                <ChevronDown className={`h-4 w-4 transition-transform shrink-0 ${expandedSections.has('objection3') ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform shrink-0 ${expandedSections.has('objection3') ? 'rotate-180' : ''}`} />
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
@@ -341,13 +348,15 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
 
           {/* Objection 4: Supply Materials */}
           <Collapsible open={expandedSections.has('objection4')} onOpenChange={() => toggleSection('objection4')}>
-            <div className="border border-border rounded-lg">
-              <CollapsibleTrigger className="w-full p-3 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
-                <div className="flex items-center gap-2 text-left">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
-                  <span className="font-medium text-sm">"What if I supply the materials?"</span>
+            <div className="border-2 border-border/50 bg-card rounded-xl overflow-hidden hover:border-primary/30 transition-colors">
+              <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-accent/30 transition-colors touch-manipulation min-h-14">
+                <div className="flex items-center gap-3 text-left">
+                  <div className="p-2 rounded-lg bg-amber-500/10">
+                    <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
+                  </div>
+                  <span className="font-medium text-base text-white">"What if I supply the materials?"</span>
                 </div>
-                <ChevronDown className={`h-4 w-4 transition-transform shrink-0 ${expandedSections.has('objection4') ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform shrink-0 ${expandedSections.has('objection4') ? 'rotate-180' : ''}`} />
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
@@ -404,13 +413,15 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
 
           {/* Objection 5: Labour Costs */}
           <Collapsible open={expandedSections.has('objection5')} onOpenChange={() => toggleSection('objection5')}>
-            <div className="border border-border rounded-lg">
-              <CollapsibleTrigger className="w-full p-3 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
-                <div className="flex items-center gap-2 text-left">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
-                  <span className="font-medium text-sm">"Why does labour cost so much?"</span>
+            <div className="border-2 border-border/50 bg-card rounded-xl overflow-hidden hover:border-primary/30 transition-colors">
+              <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-accent/30 transition-colors touch-manipulation min-h-14">
+                <div className="flex items-center gap-3 text-left">
+                  <div className="p-2 rounded-lg bg-amber-500/10">
+                    <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
+                  </div>
+                  <span className="font-medium text-base text-white">"Why does labour cost so much?"</span>
                 </div>
-                <ChevronDown className={`h-4 w-4 transition-transform shrink-0 ${expandedSections.has('objection5') ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform shrink-0 ${expandedSections.has('objection5') ? 'rotate-180' : ''}`} />
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
@@ -474,13 +485,15 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
 
           {/* Objection 6: Cash Discount */}
           <Collapsible open={expandedSections.has('objection6')} onOpenChange={() => toggleSection('objection6')}>
-            <div className="border border-border rounded-lg">
-              <CollapsibleTrigger className="w-full p-3 flex items-center justify-between hover:bg-accent/50 transition-colors touch-manipulation">
-                <div className="flex items-center gap-2 text-left">
-                  <AlertTriangle className="h-4 w-4 text-destructive shrink-0" />
-                  <span className="font-medium text-sm">"Can't you just do it cash for less?"</span>
+            <div className="border-2 border-destructive/50 bg-card rounded-xl overflow-hidden hover:border-destructive/70 transition-colors">
+              <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-destructive/10 transition-colors touch-manipulation min-h-14">
+                <div className="flex items-center gap-3 text-left">
+                  <div className="p-2 rounded-lg bg-destructive/10">
+                    <AlertTriangle className="h-5 w-5 text-destructive shrink-0" />
+                  </div>
+                  <span className="font-medium text-base text-white">"Can't you just do it cash for less?"</span>
                 </div>
-                <ChevronDown className={`h-4 w-4 transition-transform shrink-0 ${expandedSections.has('objection6') ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform shrink-0 ${expandedSections.has('objection6') ? 'rotate-180' : ''}`} />
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <div className="p-4 pt-2 space-y-3 border-t border-border">
@@ -531,83 +544,111 @@ This is transparent, competitive pricing that covers all costs while ensuring sa
           </Collapsible>
         </div>
 
-        {/* Why Choose Summary */}
-        <div className="p-4 bg-accent/30 border border-border rounded-lg space-y-3">
-          <h3 className="font-semibold text-base flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-green-400" />
+        {/* Why Choose Summary - Card Grid */}
+        <div className="space-y-4">
+          <h3 className="font-semibold text-lg flex items-center gap-2">
+            <CheckCircle2 className="h-5 w-5 text-green-400" />
             Why Choose This Quote
           </h3>
           
-          <div className="grid gap-3 text-sm">
-            <div>
-              <p className="font-medium text-xs text-green-400 mb-1">✅ What You Get:</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-white pl-3">
-                <div>
-                  <p className="font-medium text-foreground">Professional Standards:</p>
-                  <ul className="space-y-0.5">
-                    <li>• 18th Edition qualified</li>
-                    <li>• NICEIC/NAPIT registered</li>
-                    <li>• £2M liability insurance</li>
-                  </ul>
+          {/* What You Get - Card Grid */}
+          <div>
+            <p className="font-medium text-sm text-green-400 mb-3">✅ What You Get:</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
+                <div className="flex items-start gap-2 mb-2">
+                  <Shield className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+                  <h4 className="font-medium text-sm text-white">Professional Standards</h4>
                 </div>
-                <div>
-                  <p className="font-medium text-foreground">Quality Materials:</p>
-                  <ul className="space-y-0.5">
-                    <li>• Trade supplier materials</li>
-                    <li>• Manufacturer warranties</li>
-                    <li>• BS/EU compliance</li>
-                  </ul>
+                <ul className="space-y-1 text-xs text-white pl-6">
+                  <li>• 18th Edition qualified</li>
+                  <li>• NICEIC/NAPIT registered</li>
+                  <li>• £2M liability insurance</li>
+                </ul>
+              </div>
+              
+              <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+                <div className="flex items-start gap-2 mb-2">
+                  <Package className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                  <h4 className="font-medium text-sm text-white">Quality Materials</h4>
                 </div>
-                <div>
-                  <p className="font-medium text-foreground">Legal Compliance:</p>
-                  <ul className="space-y-0.5">
-                    <li>• BS7671:2018+A3:2024</li>
-                    <li>• Building Control notification</li>
-                    <li>• EIC certification</li>
-                  </ul>
+                <ul className="space-y-1 text-xs text-white pl-6">
+                  <li>• Trade supplier materials</li>
+                  <li>• Manufacturer warranties</li>
+                  <li>• BS/EU compliance</li>
+                </ul>
+              </div>
+              
+              <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
+                <div className="flex items-start gap-2 mb-2">
+                  <FileText className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
+                  <h4 className="font-medium text-sm text-white">Legal Compliance</h4>
                 </div>
-                <div>
-                  <p className="font-medium text-foreground">Guarantees:</p>
-                  <ul className="space-y-0.5">
-                    <li>• 12-month workmanship</li>
-                    <li>• Material warranties</li>
-                    <li>• Insurance-backed work</li>
-                  </ul>
+                <ul className="space-y-1 text-xs text-white pl-6">
+                  <li>• BS7671:2018+A3:2024</li>
+                  <li>• Building Control notification</li>
+                  <li>• EIC certification</li>
+                </ul>
+              </div>
+              
+              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
+                <div className="flex items-start gap-2 mb-2">
+                  <CheckCircle2 className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
+                  <h4 className="font-medium text-sm text-white">Guarantees</h4>
                 </div>
+                <ul className="space-y-1 text-xs text-white pl-6">
+                  <li>• 12-month workmanship</li>
+                  <li>• Material warranties</li>
+                  <li>• Insurance-backed work</li>
+                </ul>
               </div>
             </div>
-            
-            <div className="border-t border-border pt-3">
-              <p className="font-medium text-xs text-destructive mb-1">⚠️ What Budget Quotes Often Cut:</p>
-              <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-xs text-white pl-3">
-                <div>❌ Unqualified labour</div>
-                <div>❌ Cheap materials</div>
-                <div>❌ No insurance</div>
-                <div>❌ Missing certification</div>
-                <div>❌ Corners on testing</div>
-                <div>❌ No guarantee</div>
-                <div>❌ Hidden extras</div>
-                <div>❌ Non-compliant work</div>
+          </div>
+          
+          {/* What Budget Quotes Cut */}
+          <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
+            <p className="font-medium text-sm text-destructive mb-3 flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4" />
+              What Budget Quotes Often Cut:
+            </p>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-white">
+              <div className="flex items-center gap-1.5">
+                <span className="text-destructive">❌</span> Unqualified labour
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-destructive">❌</span> Cheap materials
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-destructive">❌</span> No insurance
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-destructive">❌</span> Missing certification
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-destructive">❌</span> Corners on testing
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-destructive">❌</span> No guarantee
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-destructive">❌</span> Hidden extras
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-destructive">❌</span> Non-compliant work
               </div>
             </div>
-            
-            <div className="bg-blue-500/10 border border-blue-500/20 p-2 rounded">
-              <p className="text-xs">
-                <strong>Your Investment:</strong> {formatCurrency(recommendedPrice)} for professional electrical work 
+          </div>
+          
+          {/* Investment Summary */}
+          <div className="bg-primary/10 border-2 border-primary/30 rounded-lg p-4">
+            <div className="flex items-start gap-2">
+              <TrendingUp className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+              <p className="text-sm text-white">
+                <strong className="text-primary">Your Investment:</strong> {formatCurrency(recommendedPrice)} for professional electrical work 
                 that will last 20+ years and keep your property safe, legal, and insurable.
               </p>
             </div>
           </div>
-          
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={() => copyToClipboard(`Why Choose This Quote:\n\n✅ What You Get:\n\nProfessional Standards:\n• 18th Edition qualified electrician\n• NICEIC/NAPIT registered\n• £2M public liability insurance\n\nQuality Materials:\n• Trade supplier materials (CEF, TLC)\n• Manufacturer warranties\n• BS/EU standard compliance\n\nLegal Compliance:\n• BS7671:2018+A3:2024 compliant\n• Building Control notification\n• Electrical Installation Certificate\n\nGuarantees:\n• 12-month workmanship guarantee\n• Material manufacturer warranties\n• Insurance-backed work\n\nFair Pricing:\n• Materials at trade + ${materialsMarkup.toFixed(0)}% (industry standard)\n• Labour ${formatCurrency(labourRate)}/hr (UK market rate)\n• ${margin.toFixed(1)}% margin (competitive)\n\n⚠️ Budget Quotes Often Cut:\n❌ Qualified labour\n❌ Quality materials\n❌ Insurance\n❌ Certification\n❌ Testing\n❌ Guarantees\n\nInvestment: ${formatCurrency(recommendedPrice)} for professional work lasting 20+ years.`, "Why choose summary")}
-            className="w-full"
-          >
-            <Copy className="h-3 w-3 mr-2" />
-            Copy Summary
-          </Button>
         </div>
 
         {/* Quote Comparison Checklist */}

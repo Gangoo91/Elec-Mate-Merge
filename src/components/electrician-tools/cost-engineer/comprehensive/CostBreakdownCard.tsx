@@ -430,118 +430,47 @@ const CostBreakdownCard = ({
             </Collapsible>
           </div>
 
-          {/* Break-even Total */}
-          <div className="rounded-lg bg-elec-yellow/10 border-2 border-elec-yellow/30 mt-4">
-            <div className="flex items-center justify-between p-4">
-              <div className="flex items-center gap-2">
-                <Target className="h-5 w-5 text-elec-yellow" />
-                <div>
-                  <div className="font-bold text-lg">Break-even Point</div>
-                  <div className="text-xs text-white">
-                    Minimum to cover costs
-                  </div>
+          {/* Your Minimum Quote */}
+          <div className="rounded-lg bg-primary/10 border-2 border-primary/30 mt-4">
+            <div className="p-3">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Target className="h-4 w-4 text-primary" />
+                  <div className="font-medium text-white">Your Minimum Quote</div>
+                </div>
+                <Badge variant="outline" className="bg-primary/20 text-primary border-primary/50 text-xs">
+                  Floor Price
+                </Badge>
+              </div>
+              
+              <div className="text-2xl sm:text-xl font-bold text-primary mb-2">
+                £{breakEven.toFixed(2)}
+              </div>
+              
+              <div className="text-base sm:text-sm space-y-1 text-white">
+                <div className="flex justify-between">
+                  <span>Materials with markup:</span>
+                  <span>£{materialsWithMarkup.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Labour (includes overheads):</span>
+                  <span>£{labourTotal.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Contingency ({contingencyPercent}%):</span>
+                  <span>£{contingencyAmount.toFixed(2)}</span>
                 </div>
               </div>
-              <div className="text-right">
-                <div className="text-2xl font-bold text-elec-yellow">£{breakEven.toFixed(2)}</div>
+              
+              <div className="mt-3 pt-3 border-t border-primary/30">
+                <p className="text-base sm:text-sm text-white mb-2">
+                  <strong>This is your floor price.</strong> Your £{calculatedLabourRate.toFixed(2)}/hr rate already covers your take-home pay AND business overheads.
+                </p>
+                <p className="text-xs text-muted-foreground italic">
+                  Quote above this for profit. Below this = losing money.
+                </p>
               </div>
             </div>
-            
-            <Collapsible open={expandedSections.has('breakeven')} onOpenChange={() => toggleSection('breakeven')}>
-              <CollapsibleTrigger className="w-full px-4 pb-2">
-                <div className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors">
-                  <Info className="h-3 w-3" />
-                  <span>Understanding break-even</span>
-                  <ChevronDown className={`h-3 w-3 transition-transform ${expandedSections.has('breakeven') ? 'rotate-180' : ''}`} />
-                </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <div className="px-4 pb-4 space-y-3 text-sm">
-                  <div className="p-3 rounded-lg bg-destructive/10 border-2 border-destructive/30">
-                    <div className="font-bold mb-1 text-destructive flex items-center gap-2">
-                      <AlertTriangle className="h-4 w-4" />
-                      CRITICAL WARNING
-                    </div>
-                    <p className="text-xs font-medium mb-2">
-                      This is the ABSOLUTE MINIMUM you must charge to cover all costs. There is ZERO profit at this point.
-                    </p>
-                    <div className="space-y-0.5 text-xs">
-                      <div>⚠️ Quoting below break-even = guaranteed loss</div>
-                      <div>⚠️ This is NOT profit - just covering costs</div>
-                      <div>⚠️ You still need profit margin for income</div>
-                    </div>
-                  </div>
-                  
-                  <div className="p-3 rounded-lg bg-muted/30">
-                    <div className="font-medium mb-2">What's Included</div>
-                    <div className="space-y-1 text-xs">
-                        <div className="flex justify-between">
-                        <span>All materials:</span>
-                        <span>£{materialsWithMarkup.toFixed(2)}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>All labour costs:</span>
-                        <span>£{labourTotal.toFixed(2)}</span>
-                      </div>
-                      {overheadTotal > 0 && (
-                        <div className="flex justify-between">
-                          <span>Business overheads:</span>
-                          <span>£{overheadTotal.toFixed(2)}</span>
-                        </div>
-                      )}
-                      <div className="flex justify-between">
-                        <span>Contingency buffer:</span>
-                        <span>£{contingencyAmount.toFixed(2)}</span>
-                      </div>
-                      <div className="flex justify-between pt-1 border-t border-border mt-2 font-bold">
-                        <span>Total Break-even:</span>
-                        <span className="text-elec-yellow">£{breakEven.toFixed(2)}</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-                    <div className="font-medium mb-2">To Make a Living</div>
-                    <div className="space-y-1 text-xs">
-                      <div className="flex justify-between opacity-90">
-                        <span>Break-even (0% profit):</span>
-                        <span>£{breakEven.toFixed(2)} ❌</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>+10% profit (work sparse):</span>
-                        <span>£{(breakEven * 1.1).toFixed(2)}</span>
-                      </div>
-                      <div className="flex justify-between font-medium border-l-2 border-elec-yellow pl-2">
-                        <span>+25% profit (normal):</span>
-                        <span>£{(breakEven * 1.25).toFixed(2)} ✓</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>+40% profit (busy):</span>
-                        <span>£{(breakEven * 1.4).toFixed(2)}</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                    <div className="font-medium mb-1 text-blue-500">💡 Why Profit Matters</div>
-                    <p className="text-xs text-white mb-2">
-                      Profit is your personal income, business growth fund, and financial security. Without profit, you're just moving money around while working for your suppliers and landlords.
-                    </p>
-                    <div className="text-xs font-medium">Industry Reality:</div>
-                    <p className="text-xs text-white mt-1">
-                      Many electricians undercharge and work below break-even without realizing it. This leads to burnout, inability to pay yourself, no training budget, and business failure within 2-3 years.
-                    </p>
-                  </div>
-                  
-                  <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
-                    <div className="font-bold text-green-500 mb-1">✓ Always quote ABOVE break-even</div>
-                    <p className="text-xs text-white">
-                      Add appropriate profit margin for your market, circumstances, and business sustainability. Your expertise and professional service deserve fair compensation.
-                    </p>
-                  </div>
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
           </div>
         </div>
       </CardContent>

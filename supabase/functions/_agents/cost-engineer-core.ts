@@ -510,56 +510,65 @@ function calculateProfitability(
   costEstimate: CostEstimate,
   businessSettings?: any
 ): any {
+  // IMPORTANT: Labour rate (£45/hr) ALREADY includes overheads
+  // Don't double-count by adding overheads separately!
+  
   const jobDuration = costEstimate.timescales?.totalDays || 1;
   const materialsTotal = costEstimate.summary.materialsSubtotal;
   const labourTotal = costEstimate.summary.labourSubtotal;
-  const directTotal = materialsTotal + labourTotal;
   
-  const dailyOverheads = businessSettings?.dailyOverheads || AUTO_OVERHEADS_2025.perJobDay;
-  const overheadAllocation = jobDuration * dailyOverheads;
-  const breakEvenSubtotal = directTotal + overheadAllocation;
+  // Calculate 5% contingency for materials & labour
+  const contingency = (materialsTotal + labourTotal) * 0.05;
+  
+  // Base Quote = Your absolute minimum (materials + labour + contingency)
+  // This covers all costs because labour rate already includes overheads
+  const baseQuote = materialsTotal + labourTotal + contingency;
+  
+  // Quote tiers: Add profit margin on top of base quote
+  const minimumMargin = 0.15;  // 15% profit
+  const targetMargin = 0.25;   // 25% profit
+  const premiumMargin = 0.40;  // 40% profit
   
   return {
     directCosts: { 
       materials: materialsTotal, 
       labour: labourTotal, 
-      total: directTotal 
+      contingency: contingency,
+      total: materialsTotal + labourTotal + contingency
     },
-    jobOverheads: {
-      estimatedDuration: `${jobDuration} days`,
-      overheadAllocation,
-      total: overheadAllocation
+    baseQuote: {
+      subtotal: baseQuote,
+      vat: baseQuote * 0.20,
+      total: baseQuote * 1.20,
+      explanation: 'Your minimum quote - covers materials, labour, and contingency. Labour rate already includes your overheads.'
     },
-    breakEven: {
-      subtotal: breakEvenSubtotal,
-      vat: breakEvenSubtotal * 0.20,
-      total: breakEvenSubtotal * 1.20,
-      explanation: 'Break-even covers direct costs plus overhead allocation'
-    },
-    quotingGuidance: {
+    quoteTiers: {
       minimum: {
-        margin: 15,
-        subtotal: breakEvenSubtotal * 1.15,
-        vat: (breakEvenSubtotal * 1.15) * 0.20,
-        total: (breakEvenSubtotal * 1.15) * 1.20,
-        profit: breakEvenSubtotal * 0.15,
-        explanation: 'Minimum 15% margin - covers costs with modest profit'
+        margin: minimumMargin,
+        subtotal: baseQuote * (1 + minimumMargin),
+        vat: (baseQuote * (1 + minimumMargin)) * 0.20,
+        total: (baseQuote * (1 + minimumMargin)) * 1.20,
+        profit: baseQuote * minimumMargin,
+        price: (baseQuote * (1 + minimumMargin)) * 1.20,
+        explanation: 'Minimum 15% profit - for slow periods'
       },
       target: {
-        margin: 25,
-        subtotal: breakEvenSubtotal * 1.25,
-        vat: (breakEvenSubtotal * 1.25) * 0.20,
-        total: (breakEvenSubtotal * 1.25) * 1.20,
-        profit: breakEvenSubtotal * 0.25,
-        explanation: 'Target 25% margin - recommended for healthy profit'
+        margin: targetMargin,
+        subtotal: baseQuote * (1 + targetMargin),
+        vat: (baseQuote * (1 + targetMargin)) * 0.20,
+        total: (baseQuote * (1 + targetMargin)) * 1.20,
+        profit: baseQuote * targetMargin,
+        price: (baseQuote * (1 + targetMargin)) * 1.20,
+        explanation: 'Target 25% profit - healthy business standard'
       },
       premium: {
-        margin: 35,
-        subtotal: breakEvenSubtotal * 1.35,
-        vat: (breakEvenSubtotal * 1.35) * 0.20,
-        total: (breakEvenSubtotal * 1.35) * 1.20,
-        profit: breakEvenSubtotal * 0.35,
-        explanation: 'Premium 35% margin - for specialist/complex work'
+        margin: premiumMargin,
+        subtotal: baseQuote * (1 + premiumMargin),
+        vat: (baseQuote * (1 + premiumMargin)) * 0.20,
+        total: (baseQuote * (1 + premiumMargin)) * 1.20,
+        profit: baseQuote * premiumMargin,
+        price: (baseQuote * (1 + premiumMargin)) * 1.20,
+        explanation: 'Premium 40% profit - busy periods or specialist work'
       }
     }
   };
