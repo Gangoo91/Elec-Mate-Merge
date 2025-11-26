@@ -8,8 +8,8 @@ export function buildOptimizedSystemPrompt(
   structuredHazards: string,
   installKnowledge: string
 ): string {
-  // Limit RAG context to 5KB max
-  const limitedRAGContext = (hsContext + structuredHazards).slice(0, 5000);
+  // Limit RAG context to 8KB max
+  const limitedRAGContext = (hsContext + structuredHazards).slice(0, 8000);
   
   return `You are a UK electrical safety expert specialising in BS 7671:2018+A3:2024.
 
@@ -21,7 +21,7 @@ export function buildOptimizedSystemPrompt(
 
 **CORE REQUIREMENTS:**
 - Use UK English exclusively (realise, analyse, authorised, recognised, utilise, earthing, metres)
-- Generate 8-12 hazards for domestic, 15-20 for commercial/industrial
+- Generate 15-20 hazards for domestic, 20-30 for commercial/industrial
 - Each hazard: description, likelihood (1-5), severity (1-5), controls
 - Include 5-8 PPE items and 4-6 emergency procedures
 
@@ -31,7 +31,7 @@ export function buildOptimizedSystemPrompt(
 - Use UK measurements: metres, millimetres, litres (not meters, millimeters, liters)
 - Reference UK standards: BS 7671, BS EN ISO, HSE guidance, CDM Regulations
 
-- Generate 8-12 hazards for domestic, 15-20 for commercial/industrial
+- Generate 15-20 hazards for domestic, 20-30 for commercial/industrial
 - Each hazard needs: description, likelihood (1-5), severity (1-5), controls
 - Link hazards to installation steps when relevant (linkedToStep field)
 - Include 5-8 PPE items (standard electrical work)
@@ -114,7 +114,7 @@ ${installKnowledge}
 - Add generic PPE not specified per hazard (use only what's required)
 - Duplicate hazards with slightly different wording
 
-⚠️ **ONLY IF** knowledge base has <3 hazards: Generate 8-12 hazards using BS 7671 best practices.
+⚠️ **ONLY IF** knowledge base has <3 hazards: Generate 15-20 hazards (domestic) or 20-30 hazards (commercial/industrial) using BS 7671 best practices.
 
 **RISK MATRIX (5x5):**
 Likelihood (1-5) × Severity (1-5) = Risk Score (1-25)

@@ -345,7 +345,7 @@ serve(async (req) => {
           const { data, error } = await supabase.rpc('search_health_safety_hybrid', {
             query_embedding: queryEmbedding,  // REQUIRED for vector search
             query_text: effectiveQuery,        // For keyword search
-            match_count: 12,
+            match_count: 20,
             scale_filter: null                 // Optional: filter by scale
           });
           
@@ -391,7 +391,7 @@ serve(async (req) => {
         try {
           const { data, error } = await supabase.rpc('search_regulations_intelligence_hybrid', {
             query_text: query,
-            match_count: 10
+            match_count: 15
           });
           
           if (error) {
@@ -589,7 +589,7 @@ serve(async (req) => {
         
         // Condensed context for backward compatibility
         hsContext = structuredHazards
-          .slice(0, 10) // Top 10 for context
+          .slice(0, 25) // Top 25 for context
           .map(h => `${h.hazard_category}: ${h.hazard_description} | Controls: ${h.control_measures.join(', ')}`)
           .join('\n\n');
           

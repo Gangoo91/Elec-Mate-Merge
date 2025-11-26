@@ -105,7 +105,7 @@ export async function retrieveStructuredHazards(
         relevance: calculateRelevance(h, params, location, equipment, phases)
       }))
       .sort((a, b) => (b.relevance || 0) - (a.relevance || 0))
-      .slice(0, 20); // Top 20 most relevant
+      .slice(0, 30); // Top 30 most relevant
     
     const retrievalTime = performance.now() - startTime;
     console.log(`✅ Retrieved ${rankedHazards.length} pre-structured hazards in ${retrievalTime.toFixed(0)}ms`);
@@ -138,7 +138,7 @@ async function semanticHazardSearch(
     const { data, error } = await supabase.rpc('match_extracted_hazards', {
       query_embedding: embedding,
       match_threshold: 0.70,
-      match_count: 15
+      match_count: 25
     });
     
     if (error) {
@@ -183,7 +183,7 @@ async function filterHazardsByContext(
     const { data, error } = await query
       .order('confidence_score', { ascending: false })
       .order('usage_count', { ascending: false })
-      .limit(15);
+      .limit(20);
     
     if (error) {
       console.error('Context filter error:', error);
