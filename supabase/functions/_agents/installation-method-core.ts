@@ -336,7 +336,10 @@ OUTPUT STRUCTURE:
       "stepNumber": 1,
       "title": "Step title",
       "content": "Detailed step description",
-      "safety": ["Safety point 1", "Safety point 2"],
+      "safety": [
+        "Ensure fire barriers reinstated using fire-rated clips and wraps (Reg 521.10.202)",
+        "Verify safe isolation before working on live equipment (Reg 132.10)"
+      ],
       "toolsRequired": ["Tool 1", "Tool 2"],
       "materialsNeeded": ["Material 1", "Material 2"],
       "estimatedDuration": "15-30 minutes",
@@ -371,6 +374,20 @@ REQUIREMENTS:
   * Realistic time estimate (e.g., "20-30 minutes", "1-2 hours")
   * Risk level assessment (low/medium/high)
   * 1-3 inspection checkpoints to verify proper completion
+
+- CRITICAL: Each safety consideration MUST include the relevant BS 7671 regulation reference in brackets at the end
+- Use the format: "Safety instruction text (Reg XXX.XX.XXX)" or "Safety instruction text (Reg XXX.XX)"
+- Common regulation references to include in safety notes:
+  * Fire barriers/fire stopping: (Reg 521.10.202), (Reg 527.2)
+  * Safe isolation: (Reg 132.10), (Reg 132.15)
+  * Cable routing/support: (Reg 521.5), (Reg 522.8.3)
+  * Earth connections: (Reg 544.1)
+  * RCD protection: (Reg 411.3.3)
+  * Cable bending radius: (Reg 522.8.3)
+  * External influences: (Reg 522.6)
+  * IP ratings: (Reg 512.2)
+  * Circuit arrangement: (Reg 314.1)
+  * Protective bonding: (Reg 411.3.1.2)
 
 - Include specific BS 7671 regulation references throughout
 - Provide realistic time estimates for each step
