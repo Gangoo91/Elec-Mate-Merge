@@ -42,7 +42,10 @@ export class AutoFixEngine {
     const originalCable = circuit.cableSize;
     const originalProtection = circuit.protectionDevice.type;
 
-    // FIX 1: Downgrade oversized selections FIRST (SAFETY CRITICAL)
+    // FIX 0: UPGRADE undersized selections FIRST (SAFETY CRITICAL - NEW)
+    circuit = this.autoUpgradeToMinimum(circuit);
+
+    // FIX 1: Downgrade oversized selections (existing)
     circuit = this.autoDowngradeForType(circuit);
 
     // FIX 1.5: Verify cable can support MCB after downgrade (NEW)
@@ -361,20 +364,61 @@ export class AutoFixEngine {
   }
 
   /**
-   * Helper: Get load type constraints
+   * Helper: Get load type constraints (with MINIMUM enforcement)
    */
-  private getLoadTypeConstraints(circuitType: string): { maxMCB: number, maxCable: number, typicalCable: number } {
-    const constraints: Record<string, { maxMCB: number, maxCable: number, typicalCable: number }> = {
-      'lighting': { maxMCB: 16, maxCable: 2.5, typicalCable: 1.5 },
-      'socket_ring': { maxMCB: 32, maxCable: 2.5, typicalCable: 2.5 },
-      'socket': { maxMCB: 32, maxCable: 6, typicalCable: 2.5 },
-      'cooker': { maxMCB: 50, maxCable: 16, typicalCable: 10 },
-      'shower': { maxMCB: 50, maxCable: 16, typicalCable: 10 },
-      'ev_charger': { maxMCB: 40, maxCable: 16, typicalCable: 10 },
-      'default': { maxMCB: 63, maxCable: 50, typicalCable: 2.5 }
+  private getLoadTypeConstraints(circuitType: string): { minMCB: number, maxMCB: number, minCable: number, maxCable: number, typicalCable: number } {
+    const constraints: Record<string, { minMCB: number, maxMCB: number, minCable: number, maxCable: number, typicalCable: number }> = {
+      'lighting': { minMCB: 6, maxMCB: 16, minCable: 1.5, maxCable: 2.5, typicalCable: 1.5 },
+      'socket_ring': { minMCB: 32, maxMCB: 32, minCable: 2.5, maxCable: 2.5, typicalCable: 2.5 }, // FIXED values
+      'socket': { minMCB: 16, maxMCB: 32, minCable: 2.5, maxCable: 6, typicalCable: 2.5 },
+      'cooker': { minMCB: 32, maxMCB: 50, minCable: 6, maxCable: 16, typicalCable: 10 },
+      'shower': { minMCB: 32, maxMCB: 50, minCable: 6, maxCable: 16, typicalCable: 10 },
+      'ev_charger': { minMCB: 32, maxMCB: 40, minCable: 6, maxCable: 16, typicalCable: 10 },
+      'default': { minMCB: 6, maxMCB: 63, minCable: 1.5, maxCable: 50, typicalCable: 2.5 }
     };
     
     return constraints[circuitType] || constraints['default'];
+  }
+  
+  /**
+   * FIX 0: Auto-UPGRADE undersized cable/MCB to meet minimum standards (NEW)
+   * This runs BEFORE downgrade to ensure BS 7671 minimum compliance
+   */
+  private autoUpgradeToMinimum(circuit: DesignedCircuit): DesignedCircuit {
+    const circuitType = this.detectCircuitType(circuit);
+    const constraints = this.getLoadTypeConstraints(circuitType);
+    
+    // UPGRADE undersized MCB
+    if (circuit.protectionDevice.rating < constraints.minMCB) {
+      this.logger.info('Auto-UPGRADING undersized MCB', {
+        circuit: circuit.name,
+        type: circuitType,
+        from: circuit.protectionDevice.rating,
+        to: constraints.minMCB,
+        reason: `${circuitType} circuits REQUIRE minimum ${constraints.minMCB}A protection per BS 7671`
+      });
+      circuit.protectionDevice.rating = constraints.minMCB;
+      
+      // Update In if calculations exist
+      if (circuit.calculations) {
+        circuit.calculations.In = constraints.minMCB;
+      }
+    }
+    
+    // UPGRADE undersized cable
+    if (circuit.cableSize < constraints.minCable) {
+      this.logger.info('Auto-UPGRADING undersized cable', {
+        circuit: circuit.name,
+        type: circuitType,
+        from: circuit.cableSize,
+        to: constraints.minCable,
+        reason: `${circuitType} circuits REQUIRE minimum ${constraints.minCable}mm² per BS 7671`
+      });
+      circuit.cableSize = constraints.minCable;
+      circuit.cpcSize = getCpcSize((circuit as any).cableType || 'twin and earth', constraints.minCable);
+    }
+    
+    return circuit;
   }
 
   /**
