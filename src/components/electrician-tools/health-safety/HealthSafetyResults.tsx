@@ -2,9 +2,8 @@ import { useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Copy, Download, RotateCcw, Edit, Save, X } from 'lucide-react';
+import { Copy, Download, RotateCcw, Edit, Save, X, Shield } from 'lucide-react';
 import { toast } from 'sonner';
-import { SendToAgentDropdown } from '@/components/install-planner-v2/SendToAgentDropdown';
 import { RiskSummaryStats } from './results/RiskSummaryStats';
 import { EnhancedHazardCard } from './results/EnhancedHazardCard';
 import { PPERequirementsGrid } from './results/PPERequirementsGrid';
@@ -197,76 +196,73 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      {/* Header Actions */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <h3 className="text-xl font-semibold">Safety Documentation Results</h3>
-        <div className="flex items-center gap-2 flex-wrap">
-          {!isEditing ? (
-            <>
-              <Button 
-                size="sm" 
-                variant="outline"
-                onClick={() => setIsEditing(true)}
-                className="touch-manipulation"
-              >
-                <Edit className="h-4 w-4 mr-2" />
-                Edit
-              </Button>
-              <Button 
-                size="sm" 
-                variant="outline"
-                onClick={handleCopy}
-                className="touch-manipulation"
-              >
-                <Copy className="h-4 w-4 mr-2" />
-                Copy
-              </Button>
-              <Button 
-                size="sm" 
-                variant="outline"
-                onClick={handleExportPDF}
-                className="touch-manipulation"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Export PDF
-              </Button>
-              <SendToAgentDropdown 
-                currentAgent="health-safety" 
-                currentOutput={editableData} 
-              />
-              <Button 
-                size="sm" 
-                variant="ghost"
-                onClick={onStartOver}
-                className="touch-manipulation"
-              >
-                <RotateCcw className="h-4 w-4 mr-2" />
-                Start Over
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button 
-                size="sm" 
-                onClick={handleSave}
-                className="touch-manipulation"
-              >
-                <Save className="h-4 w-4 mr-2" />
-                Save
-              </Button>
-              <Button 
-                size="sm" 
-                variant="outline"
-                onClick={handleCancel}
-                className="touch-manipulation"
-              >
-                <X className="h-4 w-4 mr-2" />
-                Cancel
-              </Button>
-            </>
-          )}
-        </div>
-      </div>
+      {/* Header Section with Gradient */}
+      <Card className="bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 border-blue-500/20">
+        <CardContent className="pt-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex-shrink-0 w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg">
+              <Shield className="h-7 w-7 text-white" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-2xl font-bold text-foreground mb-1">Safety Documentation Results</h3>
+              <p className="text-sm text-muted-foreground">Comprehensive risk assessment and safety procedures</p>
+            </div>
+            <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
+              {!isEditing ? (
+                <>
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    onClick={() => setIsEditing(true)}
+                    className="touch-manipulation"
+                  >
+                    <Edit className="h-4 w-4 mr-2" />
+                    Edit
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    onClick={handleCopy}
+                    className="touch-manipulation"
+                  >
+                    <Copy className="h-4 w-4 mr-2" />
+                    Copy
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    variant="ghost"
+                    onClick={onStartOver}
+                    className="touch-manipulation"
+                  >
+                    <RotateCcw className="h-4 w-4 mr-2" />
+                    Start Over
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button 
+                    size="sm" 
+                    onClick={handleSave}
+                    className="touch-manipulation"
+                  >
+                    <Save className="h-4 w-4 mr-2" />
+                    Save
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    onClick={handleCancel}
+                    className="touch-manipulation"
+                  >
+                    <X className="h-4 w-4 mr-2" />
+                    Cancel
+                  </Button>
+                </>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Summary Statistics */}
       <RiskSummaryStats
@@ -346,6 +342,18 @@ export const HealthSafetyResults = ({ data, onStartOver }: HealthSafetyResultsPr
           </CardContent>
         </Card>
       )}
+
+      {/* Generate PDF Button at Bottom */}
+      <div className="pt-4 border-t">
+        <Button 
+          onClick={handleExportPDF}
+          className="w-full h-12 text-base font-semibold"
+          size="lg"
+        >
+          <Download className="h-5 w-5 mr-2" />
+          Generate PDF
+        </Button>
+      </div>
     </div>
   );
 };
