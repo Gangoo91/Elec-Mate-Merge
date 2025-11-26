@@ -322,7 +322,17 @@ export const AIInstallationDesigner = () => {
         clientName: jobInputs?.projectInfo?.clientName,
         electricianName: jobInputs?.projectInfo?.electricianName,
         installationType: (jobInputs?.projectInfo?.installationType as 'domestic' | 'commercial' | 'industrial') || 'domestic',
-        totalLoad: jobDesignData?.circuits?.reduce((sum, c) => sum + (c.loadPower || 0), 0) || 0,
+        // ✅ Pass through diversity values from backend (Phase 4.9 synced values)
+        totalLoad: jobDesignData.totalLoad || jobDesignData?.circuits?.reduce((sum, c) => sum + (c.loadPower || 0), 0) || 0,
+        diversifiedLoad: jobDesignData.diversifiedLoad || 0,
+        diversityFactor: jobDesignData.diversityFactor || 0.65,
+        diversityBreakdown: jobDesignData.diversityBreakdown || {
+          totalConnectedLoad: jobDesignData.totalLoad || 0,
+          diversifiedLoad: jobDesignData.diversifiedLoad || 0,
+          overallDiversityFactor: jobDesignData.diversityFactor || 0.65,
+          byCategory: [],
+          reasoning: 'Calculated per BS 7671'
+        },
         diversityApplied: false,
         materials: [],
         // CRITICAL: Add installation guidance from Design Installation Agent

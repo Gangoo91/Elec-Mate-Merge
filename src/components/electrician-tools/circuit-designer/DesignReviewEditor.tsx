@@ -1472,7 +1472,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   <div className="text-left">
                     <h3 className="text-sm sm:text-base font-semibold text-white">Load Diversity Breakdown</h3>
                     <p className="text-xs sm:text-sm text-white/70 mt-0.5">
-                      {fmt(design.diversityBreakdown.totalConnectedLoad, 1)}kW → {fmt(design.diversityBreakdown.diversifiedLoad, 1)}kW 
+                      {fmt(design.diversityBreakdown.totalConnectedLoad / 1000, 1)}kW → {fmt(design.diversityBreakdown.diversifiedLoad / 1000, 1)}kW 
                       <Badge variant="secondary" className="ml-2">{fmt(design.diversityBreakdown.overallDiversityFactor * 100, 0)}% applied</Badge>
                     </p>
                   </div>
@@ -1483,7 +1483,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   {/* Overall Calculation */}
                   <div className="flex items-center justify-between py-2 px-3 bg-primary/10 rounded-lg">
                     <span className="text-sm text-white/80">Total Connected Load:</span>
-                    <span className="font-bold text-white">{fmt(design.diversityBreakdown.totalConnectedLoad, 1)}kW</span>
+                    <span className="font-bold text-white">{fmt(design.diversityBreakdown.totalConnectedLoad / 1000, 1)}kW</span>
                   </div>
                   <div className="flex items-center justify-between py-2 px-3 bg-primary/10 rounded-lg">
                     <span className="text-sm text-white/80">Diversity Factor:</span>
@@ -1491,7 +1491,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   </div>
                   <div className="flex items-center justify-between py-2 px-3 bg-green-500/20 rounded-lg border border-green-500/30">
                     <span className="text-sm font-semibold text-white">After Diversity:</span>
-                    <span className="font-bold text-lg text-white">{fmt(design.diversityBreakdown.diversifiedLoad, 1)}kW</span>
+                    <span className="font-bold text-lg text-white">{fmt(design.diversityBreakdown.diversifiedLoad / 1000, 1)}kW</span>
                   </div>
 
                   {/* Per-Circuit Breakdown */}
