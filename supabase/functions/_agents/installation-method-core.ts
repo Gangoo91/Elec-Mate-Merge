@@ -493,6 +493,8 @@ ${ragContext.regulations.slice(0, 10).map((reg: any, i: number) =>
   `${i + 1}. ${reg.regulation_number}: ${reg.primary_topic}`
 ).join('\n')}`;
 
+  console.log('🤖 Starting GPT-5 Mini AI generation (16,000 max_completion_tokens, may take 4-5 minutes)...');
+  
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
