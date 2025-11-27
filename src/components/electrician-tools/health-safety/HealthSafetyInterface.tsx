@@ -112,6 +112,11 @@ const HealthSafetyInterface = () => {
 
   const handleCancel = async () => {
     if (!currentJobId) return;
+    
+    // Don't try to cancel if already cancelled or completed
+    if (status === 'cancelled' || status === 'complete' || status === 'failed') {
+      return;
+    }
 
     try {
       const { error } = await supabase.functions.invoke('cancel-health-safety-job', {
@@ -153,7 +158,7 @@ const HealthSafetyInterface = () => {
         />
       )}
       
-      {showResults && status !== 'complete' && (
+      {showResults && status !== 'complete' && status !== 'cancelled' && status !== 'failed' && (
         <HealthSafetyProcessingView 
           progress={progress}
           currentStep={currentStep}
