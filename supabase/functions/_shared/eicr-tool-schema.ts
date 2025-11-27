@@ -1,13 +1,13 @@
 /**
  * EICR Defect Coding Tool Schema
- * Complete 8-field structure for consistent defect coding
+ * Complete 8-field structure for consistent defect coding per Electrical Safety First Best Practice Guide 4
  */
 
 export const eicrDefectCodingTool = {
   type: 'function' as const,
   function: {
     name: 'provide_eicr_defect_coding',
-    description: 'Provide comprehensive EICR defect coding with all 8 mandatory fields: primary code, secondary code (if context-dependent), BS 7671 regulations, GN3 guidance, NAPIT reference, hazard explanation, rectification steps, and verification procedure.',
+    description: 'Provide comprehensive EICR defect coding with all 8 mandatory fields: primary code, secondary code (if context-dependent), BS 7671 regulations, GN3 guidance, Best Practice Guide 4 reference, hazard explanation, rectification steps, and verification procedure.',
     parameters: {
       type: 'object',
       properties: {
@@ -96,19 +96,23 @@ export const eicrDefectCodingTool = {
             }
           }
         },
-        napitReference: {
+        bpg4Reference: {
           type: 'object',
-          required: ['code', 'description'],
+          required: ['page', 'exampleDefect'],
           properties: {
-            code: {
+            page: {
               type: 'string',
-              pattern: '^C[1-3]-\\d{3}|FI-\\d{3}',
-              description: 'NAPIT Code Directory reference (e.g., "C2-002")'
+              pattern: '^(Page |BPG4 Page |Best Practice Guide 4, Page )\\d+(-\\d+)?',
+              description: 'Best Practice Guide 4 page reference (e.g., "Page 11", "BPG4 Page 13-14")'
             },
-            description: {
+            exampleDefect: {
               type: 'string',
               minLength: 20,
-              description: 'NAPIT description of this specific defect type'
+              description: 'Matching example defect from BPG4 that corresponds to this observation'
+            },
+            source: {
+              type: 'string',
+              description: 'Always: "Electrical Safety First Best Practice Guide 4 (Issue 4)"'
             }
           }
         },
@@ -231,7 +235,7 @@ export const eicrDefectCodingTool = {
         'primaryCode',
         'bs7671Regulations',
         'gn3Guidance',
-        'napitReference',
+        'bpg4Reference',
         'hazardExplanation',
         'rectification',
         'verificationProcedure',
