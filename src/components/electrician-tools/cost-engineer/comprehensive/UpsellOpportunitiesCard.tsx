@@ -27,15 +27,15 @@ const UpsellOpportunitiesCard = ({ upsells }: UpsellOpportunitiesCardProps) => {
         <Accordion type="single" collapsible className="w-full">
           {upsells.map((upsell, idx) => (
             <AccordionItem key={idx} value={`upsell-${idx}`}>
-              <AccordionTrigger className="hover:no-underline touch-manipulation min-h-[72px] py-3">
-                <div className="flex flex-col items-start gap-2 flex-1 text-left w-full pr-2">
+              <AccordionTrigger className="hover:no-underline touch-manipulation min-h-[80px] py-4 px-4 relative">
+                <div className="flex flex-col gap-3 flex-1 text-left w-full pr-8">
                   <div className="flex items-start gap-2 w-full">
                     {upsell.isHot && <Flame className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />}
                     <span className="font-medium text-white text-base leading-snug flex-1">
                       {upsell.opportunity}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 flex-wrap">
+                  <div className="flex items-center gap-2 justify-start">
                     <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs px-2 py-0.5">
                       +£{upsell.price}
                     </Badge>
