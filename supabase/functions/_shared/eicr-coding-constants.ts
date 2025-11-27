@@ -286,3 +286,7 @@ export const SOURCE_ATTRIBUTION = {
   regulation: 'BS 7671:2018+A3:2024 Requirements for Electrical Installations',
   website: 'https://www.electricalsafetyfirst.org.uk'
 };
+
+// Aliases for compatibility - BPG4 IS the NAPIT/EICR standard
+export const NAPIT_CODES = BPG4_DEFECT_EXAMPLES;
+export const EICR_CODE_DEFINITIONS = BPG4_CLASSIFICATION_CODES;
