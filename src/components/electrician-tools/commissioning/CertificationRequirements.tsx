@@ -34,7 +34,7 @@ const CertificationRequirements = ({ certification }: CertificationRequirementsP
             {certification.requiredSchedules.map((schedule, index) => (
               <li
                 key={index}
-                className="flex items-center justify-center sm:justify-start gap-3 sm:gap-2 p-4 sm:p-2 rounded-lg bg-elec-gray border-2 sm:border border-elec-yellow/20 text-base sm:text-sm text-muted-foreground text-center sm:text-left"
+                className="flex items-center justify-center sm:justify-start gap-3 sm:gap-2 p-4 sm:p-2 rounded-lg bg-elec-gray border-2 sm:border border-elec-yellow/20 text-base sm:text-sm text-white text-center sm:text-left"
               >
                 <div className="h-3 w-3 sm:h-2 sm:w-2 rounded-full bg-purple-400 shrink-0" />
                 {schedule}
@@ -64,7 +64,7 @@ const CertificationRequirements = ({ certification }: CertificationRequirementsP
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="px-4 pb-4 sm:pb-3 text-center sm:text-left">
-                  <p className="text-sm sm:text-xs text-muted-foreground">{data.description}</p>
+                  <p className="text-sm sm:text-xs text-white">{data.description}</p>
                 </AccordionContent>
               </AccordionItem>
             ))}
@@ -79,7 +79,7 @@ const CertificationRequirements = ({ certification }: CertificationRequirementsP
             <Info className="h-5 w-5 sm:h-4 sm:w-4" />
             Next Inspection
           </div>
-          <p className="text-sm sm:text-xs text-muted-foreground">{certification.nextInspection}</p>
+          <p className="text-sm sm:text-xs text-white">{certification.nextInspection}</p>
         </div>
       )}
 
@@ -88,13 +88,13 @@ const CertificationRequirements = ({ certification }: CertificationRequirementsP
         <div className="bg-amber-500/10 border-2 sm:border border-amber-500/20 rounded-lg p-4 sm:p-3 text-center sm:text-left">
           <div className="text-base sm:text-sm font-semibold sm:font-medium text-amber-300 mb-2">Additional Notes</div>
           {Array.isArray(certification.additionalNotes) ? (
-            <ul className="space-y-2 sm:space-y-1 text-sm sm:text-xs text-muted-foreground">
+            <ul className="space-y-2 sm:space-y-1 text-sm sm:text-xs text-white">
               {certification.additionalNotes.map((note, index) => (
                 <li key={index}>• {note}</li>
               ))}
             </ul>
           ) : (
-            <p className="text-sm sm:text-xs text-muted-foreground">{certification.additionalNotes}</p>
+            <p className="text-sm sm:text-xs text-white">{certification.additionalNotes}</p>
           )}
         </div>
       )}

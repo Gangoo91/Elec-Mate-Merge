@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Copy, Download, RotateCcw } from "lucide-react";
+import { Copy, Download, RotateCcw, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
 import TestingSummaryStats from "./results/TestingSummaryStats";
 import TestingProcedureDisplay from "./TestingProcedureDisplay";
 import CertificationRequirements from "./CertificationRequirements";
-import { RAGQualityBadge } from "./RAGQualityBadge";
 import { CalculationBreakdown } from "./CalculationBreakdown";
 import { TestSequenceValidator } from "./TestSequenceValidator";
 import type { CommissioningResponse } from "@/types/commissioning-response";
@@ -98,21 +97,40 @@ const CommissioningResults = ({
     }
   };
 
+  // Extract all BS 7671 regulations from tests
+  const allRegulations = new Set<string>();
+  
+  if (results.structuredData?.testingProcedure?.deadTests) {
+    results.structuredData.testingProcedure.deadTests.forEach((test: any) => {
+      if (test.regulation) {
+        allRegulations.add(test.regulation);
+      }
+    });
+  }
+  
+  if (results.structuredData?.testingProcedure?.liveTests) {
+    results.structuredData.testingProcedure.liveTests.forEach((test: any) => {
+      if (test.regulation) {
+        allRegulations.add(test.regulation);
+      }
+    });
+  }
+
+  const sortedRegulations = Array.from(allRegulations).sort();
+
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      {/* Summary Stats */}
+    <div className="space-y-4 sm:space-y-6 animate-fade-in pb-32 sm:pb-6">
+      {/* SECTION 1 — TESTING SUMMARY */}
+      <div className="mb-4">
+        <h2 className="text-lg sm:text-xl font-bold text-yellow-500 uppercase tracking-wide">
+          SECTION 1 — TESTING SUMMARY
+        </h2>
+        <div className="h-0.5 bg-gradient-to-r from-yellow-500/60 to-transparent mt-2" />
+      </div>
       <TestingSummaryStats results={results} />
 
-      {/* RAG Quality Indicator */}
-      {results.metadata?.ragQualityMetrics && (
-        <RAGQualityBadge 
-          gn3ProceduresFound={results.metadata.ragQualityMetrics.gn3ProceduresFound || 0}
-          regulationsFound={results.metadata.ragQualityMetrics.regulationsFound || 0}
-        />
-      )}
-
-      {/* Action Buttons */}
-      <Card className="p-4">
+      {/* Action Buttons - Desktop Only */}
+      <Card className="p-4 hidden sm:block">
         <div className="flex items-center gap-2 flex-wrap">
           <Button 
             size="sm" 
@@ -158,25 +176,98 @@ const CommissioningResults = ({
         </div>
       </Card>
 
+      {/* Sticky Mobile Action Bar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border p-4 z-50 sm:hidden">
+        <div className="flex gap-2 max-w-2xl mx-auto">
+          <Button 
+            className="flex-1 min-h-[56px]" 
+            size="lg"
+            variant="outline"
+            onClick={handleCopyChecklist}
+            disabled={!results?.structuredData}
+          >
+            <Copy className="h-5 w-5 mr-2" />
+            Copy Checklist
+          </Button>
+          <Button 
+            className="flex-1 min-h-[56px]" 
+            size="lg"
+            onClick={handleExportPDF}
+          >
+            <Download className="h-5 w-5 mr-2" />
+            Export PDF
+          </Button>
+        </div>
+      </div>
+
       {/* Testing Procedure */}
       {results.structuredData?.testingProcedure && (
-        <Card className="p-4 sm:p-6">
-          <TestingProcedureDisplay procedure={results.structuredData.testingProcedure} />
-        </Card>
+        <>
+          <div className="mb-4">
+            <h2 className="text-lg sm:text-xl font-bold text-yellow-500 uppercase tracking-wide">
+              SECTION 2 — TESTING PROCEDURES
+            </h2>
+            <div className="h-0.5 bg-gradient-to-r from-yellow-500/60 to-transparent mt-2" />
+          </div>
+          <Card className="p-4 sm:p-6">
+            <TestingProcedureDisplay procedure={results.structuredData.testingProcedure} />
+          </Card>
+        </>
+      )}
+
+      {/* Regulatory Compliance Section */}
+      {sortedRegulations.length > 0 && (
+        <>
+          <div className="mb-4">
+            <h2 className="text-lg sm:text-xl font-bold text-yellow-500 uppercase tracking-wide">
+              SECTION 3 — APPLICABLE BS 7671 REGULATIONS
+            </h2>
+            <div className="h-0.5 bg-gradient-to-r from-yellow-500/60 to-transparent mt-2" />
+          </div>
+          <Card className="p-4 sm:p-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {sortedRegulations.map((regulation, index) => (
+                <div
+                  key={index}
+                  className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 hover:bg-green-500/20 transition-colors"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="bg-green-500/20 rounded-full p-2 shrink-0">
+                      <CheckCircle2 className="h-5 w-5 text-green-400" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-semibold text-white text-sm">
+                        {regulation}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </>
       )}
 
       {/* Certification Requirements */}
       {results.structuredData?.certification && (
-        <Card className="p-4 sm:p-6">
-          <CertificationRequirements certification={results.structuredData.certification} />
-        </Card>
+        <>
+          <div className="mb-4">
+            <h2 className="text-lg sm:text-xl font-bold text-yellow-500 uppercase tracking-wide">
+              SECTION 4 — CERTIFICATION REQUIREMENTS
+            </h2>
+            <div className="h-0.5 bg-gradient-to-r from-yellow-500/60 to-transparent mt-2" />
+          </div>
+          <Card className="p-4 sm:p-6">
+            <CertificationRequirements certification={results.structuredData.certification} />
+          </Card>
+        </>
       )}
 
       {/* Raw Response (if no structured data) */}
       {!results.structuredData && results.response && (
         <Card className="p-4 sm:p-6">
           <div className="prose prose-invert prose-sm max-w-none">
-            <div className="whitespace-pre-wrap text-sm text-muted-foreground">
+            <div className="whitespace-pre-wrap text-sm text-white">
               {results.response}
             </div>
           </div>
