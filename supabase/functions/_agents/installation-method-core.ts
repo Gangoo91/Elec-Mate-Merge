@@ -377,7 +377,17 @@ OUTPUT STRUCTURE:
       "materialsNeeded": ["Material 1", "Material 2"],
       "estimatedDuration": "15-30 minutes",
       "riskLevel": "low|medium|high",
-      "inspectionCheckpoints": ["Check 1", "Check 2"]
+      "inspectionCheckpoints": ["Check 1", "Check 2"],
+      "linkedHazards": [
+        "Electric shock from live parts",
+        "Working at height when routing cables",
+        "Manual handling injury from heavy equipment"
+      ],
+      "bsReferences": [
+        "BS 7671 Reg 132.10 - Safe isolation procedure",
+        "BS 7671 Reg 521.10.202 - Fire-resistant cable support",
+        "BS 7671 Reg 411.3.3 - RCD protection"
+      ]
     }
   ],
   "summary": {
@@ -403,7 +413,8 @@ REQUIREMENTS:
   * 2-4 safety considerations specific to that step
   * 3-5 tools required for that specific step
   * 2-4 materials needed for that step
-  * Specific BS 7671 regulation reference where applicable
+  * 2-4 linkedHazards identifying specific risks (e.g., "Electric shock from exposed terminals", "Working at height above 2m", "Manual handling injury")
+  * 2-4 bsReferences with BS 7671 regulations (e.g., "BS 7671 Reg 521.10.202 - Cable support", "BS 7671 Reg 411.3.3 - RCD protection")
   * Realistic time estimate (e.g., "20-30 minutes", "1-2 hours")
   * Risk level assessment (low/medium/high)
   * 1-3 inspection checkpoints to verify proper completion

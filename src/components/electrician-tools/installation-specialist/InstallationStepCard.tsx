@@ -37,6 +37,7 @@ export const InstallationStepCard = ({
   const [editedCheckpoints, setEditedCheckpoints] = useState<string[]>((step as any).inspectionCheckpoints || []);
   const [editedQualifications, setEditedQualifications] = useState<string[]>(step.qualifications || []);
   const [editedReferences, setEditedReferences] = useState<string[]>((step as any).bsReferences || []);
+  const [editedHazards, setEditedHazards] = useState<string[]>((step as any).linkedHazards || []);
   const [editedDuration, setEditedDuration] = useState(step.estimatedDuration || '');
   const [editedRiskLevel, setEditedRiskLevel] = useState<'low' | 'medium' | 'high'>(step.riskLevel || 'low');
   const { isMobile } = useMobileEnhanced();
@@ -47,7 +48,8 @@ export const InstallationStepCard = ({
     materials: !isMobile,
     checkpoints: !isMobile,
     qualifications: !isMobile,
-    references: !isMobile
+    references: !isMobile,
+    hazards: !isMobile
   });
 
   const toggleSection = (section: keyof typeof sectionsExpanded) => {
@@ -83,6 +85,7 @@ export const InstallationStepCard = ({
       inspectionCheckpoints: editedCheckpoints.filter(c => c.trim()),
       qualifications: editedQualifications.filter(q => q.trim()),
       bsReferences: editedReferences.filter(r => r.trim()),
+      linkedHazards: editedHazards.filter(h => h.trim()),
       estimatedDuration: editedDuration,
       riskLevel: editedRiskLevel
     });
@@ -98,6 +101,7 @@ export const InstallationStepCard = ({
     setEditedCheckpoints((step as any).inspectionCheckpoints || []);
     setEditedQualifications(step.qualifications || []);
     setEditedReferences((step as any).bsReferences || []);
+    setEditedHazards((step as any).linkedHazards || []);
     setEditedDuration(step.estimatedDuration || '');
     setEditedRiskLevel(step.riskLevel || 'low');
     setIsEditing(false);
@@ -121,7 +125,7 @@ export const InstallationStepCard = ({
     high: 'bg-destructive/10 text-destructive border-destructive/20'
   };
 
-  const linkedHazards = step.linkedHazards || [];
+  const linkedHazards = (step as any).linkedHazards || [];
   const qualifications = step.qualifications || [];
   const inspectionCheckpoints = (step as any).inspectionCheckpoints || [];
   const toolsRequired = step.toolsRequired || [];
@@ -251,6 +255,81 @@ export const InstallationStepCard = ({
 
               {/* Collapsible Sections with Framer Motion */}
               <div className="space-y-3">
+                {/* Linked Hazards */}
+                {(linkedHazards.length > 0 || isEditing) && (
+                  <div className="border-2 border-amber-500/30 rounded-lg overflow-hidden">
+                    <button
+                      onClick={() => toggleSection('hazards')}
+                      className={cn(
+                        "w-full flex items-center justify-between p-4 bg-amber-500/10 transition-colors",
+                        isMobile && "min-h-[56px]"
+                      )}
+                    >
+                      <div className="flex items-center gap-2">
+                        <ShieldAlert className="h-5 w-5 text-amber-400" />
+                        <h4 className="font-bold text-base text-foreground">Identified Hazards</h4>
+                      </div>
+                      <ChevronDown className={cn(
+                        "h-5 w-5 transition-transform",
+                        sectionsExpanded.hazards && "rotate-180"
+                      )} />
+                    </button>
+                    <AnimatePresence>
+                      {sectionsExpanded.hazards && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <div className="p-4 bg-amber-500/5">
+                            {isEditing ? (
+                              <div className="space-y-2">
+                                {editedHazards.map((item, idx) => (
+                                  <div key={idx} className="flex gap-2">
+                                    <Input
+                                      value={item}
+                                      onChange={(e) => updateItem(setEditedHazards, idx, e.target.value)}
+                                      placeholder="Specific hazard (e.g., Electric shock from exposed terminals)"
+                                      className={cn("flex-1", isMobile && "min-h-[48px]")}
+                                    />
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      onClick={() => removeItem(setEditedHazards, idx)}
+                                      className={cn("h-auto", isMobile && "min-h-[48px]")}
+                                    >
+                                      <X className="h-4 w-4" />
+                                    </Button>
+                                  </div>
+                                ))}
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => addItem(setEditedHazards)}
+                                  className={cn("w-full", isMobile && "min-h-[48px]")}
+                                >
+                                  <Plus className="h-4 w-4 mr-2" />
+                                  Add Hazard
+                                </Button>
+                              </div>
+                            ) : (
+                              <div className="flex flex-wrap gap-2">
+                                {linkedHazards.map((hazard: string, idx: number) => (
+                                  <Badge key={idx} className="bg-amber-500/20 text-amber-200 border-amber-500/40 font-medium">
+                                    <AlertTriangle className="h-3 w-3 mr-1" />
+                                    {hazard}
+                                  </Badge>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                )}
+
                 {/* BS 7671 References */}
                 {(bsReferences.length > 0 || isEditing) && (
                   <div className="border-2 border-blue-500/30 rounded-lg overflow-hidden">

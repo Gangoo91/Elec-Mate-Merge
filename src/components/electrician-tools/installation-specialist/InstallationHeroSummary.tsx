@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Wrench, Clock, Hammer, AlertTriangle, Shield } from "lucide-react";
+import { Wrench, Clock, Hammer, AlertTriangle, Shield, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface HeroSummaryProps {
@@ -9,6 +9,7 @@ interface HeroSummaryProps {
   riskLevel: 'low' | 'medium' | 'high';
   toolsCount: number;
   hazardsCount: number;
+  regulationsCount: number;
 }
 
 const riskColors = {
@@ -42,7 +43,8 @@ export const InstallationHeroSummary = ({
   duration,
   riskLevel,
   toolsCount,
-  hazardsCount
+  hazardsCount,
+  regulationsCount
 }: HeroSummaryProps) => {
   const displayDuration = parseDuration(duration);
   
@@ -54,8 +56,8 @@ export const InstallationHeroSummary = ({
           <h3 className="text-lg font-semibold text-foreground">Installation Overview</h3>
         </div>
         
-        {/* Desktop Layout - 5 columns */}
-        <div className="hidden sm:grid sm:grid-cols-5 gap-4">
+        {/* Desktop Layout - 6 columns */}
+        <div className="hidden sm:grid sm:grid-cols-6 gap-4">
           {/* Steps */}
           <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 rounded-lg p-4 border border-blue-500/20 hover:border-blue-500/30 transition-colors">
             <div className="flex flex-col gap-1">
@@ -102,8 +104,19 @@ export const InstallationHeroSummary = ({
             </div>
           </div>
 
-          {/* Risk Level */}
+          {/* Regulations */}
           <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 rounded-lg p-4 border border-purple-500/20 hover:border-purple-500/30 transition-colors">
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2 text-muted-foreground text-left">
+                <BookOpen className="h-4 w-4" />
+                <span className="text-xs font-medium">Regulations</span>
+              </div>
+              <div className="text-3xl font-black text-foreground text-center">{regulationsCount}</div>
+            </div>
+          </div>
+
+          {/* Risk Level */}
+          <div className="bg-gradient-to-br from-red-500/10 to-red-600/5 rounded-lg p-4 border border-red-500/20 hover:border-red-500/30 transition-colors">
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-2 text-muted-foreground text-left">
                 <Shield className="h-4 w-4" />
@@ -116,7 +129,7 @@ export const InstallationHeroSummary = ({
           </div>
         </div>
 
-        {/* Mobile Layout - 2 columns + full-width risk */}
+        {/* Mobile Layout - 2 columns grid + full-width risk */}
         <div className="sm:hidden space-y-3">
           <div className="grid grid-cols-2 gap-3">
             {/* Steps */}
@@ -155,6 +168,15 @@ export const InstallationHeroSummary = ({
                 <span className="text-xs font-medium">HAZARDS</span>
               </div>
               <div className="text-4xl font-black text-foreground text-center">{hazardsCount}</div>
+            </div>
+
+            {/* Regulations */}
+            <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 rounded-lg p-4 border border-purple-500/20 min-h-[100px] flex flex-col justify-between touch-manipulation col-span-2">
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <BookOpen className="h-5 w-5" />
+                <span className="text-xs font-medium">BS 7671 REGULATIONS</span>
+              </div>
+              <div className="text-4xl font-black text-foreground text-center">{regulationsCount}</div>
             </div>
           </div>
 

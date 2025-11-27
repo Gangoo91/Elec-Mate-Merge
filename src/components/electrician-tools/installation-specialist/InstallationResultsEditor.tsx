@@ -77,10 +77,15 @@ export const InstallationResultsEditor = ({
   const competencyRequirements = fullMethodStatement?.competencyRequirements || {};
   const workAtHeightEquipment = fullMethodStatement?.workAtHeightEquipment || [];
 
-  // Count hazards from steps
+  // Count hazards and regulations from steps
   const totalHazards = steps.reduce((count, step) => {
     const linkedHazards = (step as any).linkedHazards || [];
     return count + linkedHazards.length;
+  }, 0);
+
+  const totalRegulations = steps.reduce((count, step) => {
+    const bsReferences = (step as any).bsReferences || [];
+    return count + bsReferences.length;
   }, 0);
 
   const riskColors = {
@@ -294,6 +299,7 @@ export const InstallationResultsEditor = ({
         riskLevel={summary.overallRiskLevel}
         toolsCount={summary.toolsRequired?.length || 0}
         hazardsCount={totalHazards}
+        regulationsCount={totalRegulations}
       />
 
       {/* Enhanced Metadata Call-to-Action Banner */}
