@@ -34,13 +34,14 @@ export const InlineInstallationTypeSelector = ({
               disabled={disabled}
               aria-label={label}
               className={cn(
-                "h-11 touch-manipulation transition-all font-medium",
+                "h-12 touch-manipulation transition-all font-medium gap-2",
                 isActive 
-                  ? "bg-gradient-to-r from-purple-400 to-purple-500 text-white hover:from-purple-500 hover:to-purple-600 shadow-md" 
-                  : "border-purple-400/30 text-purple-400 hover:bg-purple-400/10 hover:border-purple-400/50"
+                  ? "bg-elec-yellow/10 text-white border-elec-yellow hover:bg-elec-yellow/15 shadow-md border-2" 
+                  : "border-elec-yellow/20 text-white/70 hover:bg-elec-yellow/5 hover:border-elec-yellow/30 hover:text-white"
               )}
             >
-              <Icon className="h-6 w-6" />
+              <Icon className={cn("h-5 w-5", isActive && "text-elec-yellow")} />
+              <span className="text-sm">{label}</span>
             </Button>
           );
         })}
