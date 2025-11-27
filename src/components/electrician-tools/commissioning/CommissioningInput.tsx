@@ -12,14 +12,15 @@ import {
   AlertTriangle, 
   FileText, 
   Camera,
-  Loader2
+  Loader2,
+  Settings
 } from "lucide-react";
 import { toast } from "sonner";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 import PhotoUploadButton from "./PhotoUploadButton";
-import { FormSection } from "./FormSection";
 import { InlineInstallationTypeSelector } from "./InlineInstallationTypeSelector";
-import { CollapsibleFormSection } from "./CollapsibleFormSection";
+import { InputHeroBar } from "./redesign/InputHeroBar";
+import { InputCardSection } from "./redesign/InputCardSection";
 
 
 interface ExampleScenario {
@@ -138,170 +139,198 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
   };
 
   return (
-    <form className="space-y-0" onSubmit={handleSubmit}>
-      {/* Agent Inbox */}
-      <AgentInbox currentAgent="commissioning" onTaskAccept={handleTaskAccept} />
+    <div className="space-y-6">
+      {/* Hero Bar */}
+      <InputHeroBar />
 
-      {/* Hero Section - Testing Description */}
-      <FormSection className="border-t-0">
-        <div className="flex items-start gap-2 sm:gap-3 mb-3">
-          <div className="p-2 rounded-lg bg-purple-500/10 flex-shrink-0">
-            <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-purple-400" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <h3 className="text-lg sm:text-xl font-semibold">What needs testing?</h3>
-            <p className="text-xs sm:text-sm text-white">
-              Describe the installation and required tests
-            </p>
-          </div>
-        </div>
-        <Textarea 
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          placeholder="e.g., Testing procedure for new 18th Edition consumer unit with 12 circuits..."
-          className="min-h-[100px] sm:min-h-[120px] text-base resize-none focus:ring-2 focus:ring-purple-400"
-          maxLength={500}
-          autoComplete="off"
-          spellCheck={true}
-        />
-        <div className="text-xs text-white text-right mt-2">
-          {prompt.length}/500 {prompt.length < 50 && "• 50+ chars recommended"}
-        </div>
-      </FormSection>
+      <form className="space-y-6 px-4 sm:px-6" onSubmit={handleSubmit}>
+        {/* Agent Inbox */}
+        <AgentInbox currentAgent="commissioning" onTaskAccept={handleTaskAccept} />
 
-      {/* Installation Type - Inline Selector */}
-      <FormSection>
-        <InlineInstallationTypeSelector
-          selectedType={selectedType}
-          onChange={setSelectedType}
-          disabled={isProcessing}
-        />
-      </FormSection>
-
-      {/* Photo Upload - Collapsed */}
-      <CollapsibleFormSection
-        title="Upload Photo for Analysis"
-        subtitle="AI visual inspection for safety & compliance"
-        icon={Camera}
-        badge="optional"
-        defaultOpen={false}
-      >
-        <PhotoUploadButton 
-          onPhotoUploaded={handlePhotoUploaded}
-          disabled={isProcessing}
-        />
-        {imageUrl && (
-          <div className="mt-3 p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
-            <p className="text-xs text-purple-400 font-medium">✓ Photo uploaded - AI will analyse for safety issues and compliance</p>
-          </div>
-        )}
-      </CollapsibleFormSection>
-
-      {/* Project Information - Collapsed */}
-      <CollapsibleFormSection
-        title="Project Information"
-        subtitle="Add details for more accurate output"
-        icon={FileText}
-        badge="optional"
-        defaultOpen={false}
-      >
-        <div className="space-y-3">
-          <div className="space-y-2">
-            <Label htmlFor="projectName" className="text-sm font-medium">Project Name</Label>
-            <Input
-              id="projectName"
-              value={projectName}
-              onChange={(e) => setProjectName(e.target.value)}
-              placeholder="e.g., Office Refurbishment"
-              className="h-12 text-base"
-              inputMode="text"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="location" className="text-sm font-medium">Location</Label>
-            <Input
-              id="location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="e.g., Manchester, UK"
-              className="h-12 text-base"
-              inputMode="text"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="clientName" className="text-sm font-medium">Client Name</Label>
-            <Input
-              id="clientName"
-              value={clientName}
-              onChange={(e) => setClientName(e.target.value)}
-              placeholder="e.g., XYZ Properties Ltd"
-              className="h-12 text-base"
-              inputMode="text"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="installationDate" className="text-sm font-medium">Installation Date</Label>
-            <Input
-              id="installationDate"
-              type="date"
-              value={installationDate}
-              onChange={(e) => setInstallationDate(e.target.value)}
-              className="h-12 text-base"
-            />
-          </div>
-        </div>
-      </CollapsibleFormSection>
-
-      {/* Example Scenarios - Collapsed on mobile, open on desktop */}
-      <CollapsibleFormSection
-        title="Example Testing Requests"
-        icon={Lightbulb}
-        defaultOpen={false}
-      >
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
-          {EXAMPLE_SCENARIOS.map((scenario, idx) => {
-            const IconComponent = scenario.icon;
-            return (
-              <Card 
-                key={idx}
-                className="p-3 cursor-pointer hover:border-purple-400/40 transition-all hover:scale-[1.02] touch-manipulation active:scale-95"
-                onClick={() => handleExampleClick(scenario.prompt)}
-              >
-                <div className="flex items-start gap-2 mb-2">
-                  <IconComponent className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
-                  <h5 className="font-semibold text-sm">{scenario.title}</h5>
-                </div>
-                <p className="text-xs text-white line-clamp-3">
-                  {scenario.prompt}
+        {/* Main Testing Description Card */}
+        <Card className="bg-elec-card border-elec-yellow/20 hover:border-elec-yellow/30 transition-colors">
+          <div className="p-5">
+            <div className="flex items-start gap-3 mb-4">
+              <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex-shrink-0">
+                <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg sm:text-xl font-bold text-white">What needs testing?</h3>
+                <p className="text-xs sm:text-sm text-white/70 mt-1">
+                  Describe the installation and required tests
                 </p>
-              </Card>
-            );
-          })}
-        </div>
-      </CollapsibleFormSection>
+              </div>
+            </div>
+            
+            <div className="relative">
+              {/* Decorative grid overlay */}
+              <div 
+                className="absolute inset-0 opacity-[0.02] pointer-events-none rounded-lg"
+                style={{
+                  backgroundImage: `linear-gradient(to right, hsl(var(--elec-yellow)) 1px, transparent 1px),
+                                   linear-gradient(to bottom, hsl(var(--elec-yellow)) 1px, transparent 1px)`,
+                  backgroundSize: '20px 20px'
+                }}
+              />
+              
+              <Textarea 
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                placeholder="e.g., Testing procedure for new 18th Edition consumer unit with 12 circuits..."
+                className="min-h-[120px] sm:min-h-[140px] text-base resize-none focus:ring-2 focus:ring-elec-yellow border-elec-yellow/20 bg-elec-dark/40 relative"
+                maxLength={500}
+                autoComplete="off"
+                spellCheck={true}
+              />
+            </div>
+            
+            <div className="text-xs text-white/60 text-right mt-2">
+              <span className="text-elec-yellow font-medium">{prompt.length}</span>/500 
+              {prompt.length < 50 && <span className="ml-2 text-elec-yellow/70">• 50+ chars recommended</span>}
+            </div>
+          </div>
+        </Card>
 
-      {/* Generate Button */}
-      <FormSection>
-        <Button 
-          type="submit"
-          size="lg"
-          disabled={!prompt.trim() || isProcessing}
-          className="w-full bg-gradient-to-r from-purple-400 to-purple-500 hover:from-purple-500 hover:to-purple-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all"
+        {/* Installation Type Selector */}
+        <Card className="bg-elec-card border-elec-yellow/20">
+          <div className="p-5">
+            <InlineInstallationTypeSelector
+              selectedType={selectedType}
+              onChange={setSelectedType}
+              disabled={isProcessing}
+            />
+          </div>
+        </Card>
+
+        {/* Photo Upload Section */}
+        <InputCardSection
+          title="Upload Photo for Analysis"
+          subtitle="AI visual inspection for safety & compliance"
+          icon={Camera}
+          badge="optional"
+          defaultOpen={false}
         >
-          {isProcessing ? (
-            <>
-              <Loader2 className="h-5 w-5 animate-spin" />
-              Generating Testing Procedure...
-            </>
-          ) : (
-            <>
-              <CheckCircle2 className="h-5 w-5" />
-              Generate Testing Procedure
-            </>
+          <PhotoUploadButton 
+            onPhotoUploaded={handlePhotoUploaded}
+            disabled={isProcessing}
+          />
+          {imageUrl && (
+            <div className="mt-3 p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                <p className="text-xs text-white font-medium">Photo uploaded - AI will analyse for safety issues and compliance</p>
+              </div>
+            </div>
           )}
-        </Button>
-      </FormSection>
-    </form>
+        </InputCardSection>
+
+        {/* Project Information Section */}
+        <InputCardSection
+          title="Project Information"
+          subtitle="Add details for more accurate output"
+          icon={Settings}
+          badge="optional"
+          defaultOpen={false}
+        >
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="projectName" className="text-sm font-medium text-white">Project Name</Label>
+              <Input
+                id="projectName"
+                value={projectName}
+                onChange={(e) => setProjectName(e.target.value)}
+                placeholder="e.g., Office Refurbishment"
+                className="h-12 text-base border-elec-yellow/20 focus:border-elec-yellow"
+                inputMode="text"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="location" className="text-sm font-medium text-white">Location</Label>
+              <Input
+                id="location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="e.g., Manchester, UK"
+                className="h-12 text-base border-elec-yellow/20 focus:border-elec-yellow"
+                inputMode="text"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="clientName" className="text-sm font-medium text-white">Client Name</Label>
+              <Input
+                id="clientName"
+                value={clientName}
+                onChange={(e) => setClientName(e.target.value)}
+                placeholder="e.g., XYZ Properties Ltd"
+                className="h-12 text-base border-elec-yellow/20 focus:border-elec-yellow"
+                inputMode="text"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="installationDate" className="text-sm font-medium text-white">Installation Date</Label>
+              <Input
+                id="installationDate"
+                type="date"
+                value={installationDate}
+                onChange={(e) => setInstallationDate(e.target.value)}
+                className="h-12 text-base border-elec-yellow/20 focus:border-elec-yellow"
+              />
+            </div>
+          </div>
+        </InputCardSection>
+
+        {/* Example Scenarios Section */}
+        <InputCardSection
+          title="Example Testing Requests"
+          subtitle="Quick start templates"
+          icon={Lightbulb}
+          defaultOpen={false}
+        >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {EXAMPLE_SCENARIOS.map((scenario, idx) => {
+              const IconComponent = scenario.icon;
+              return (
+                <Card 
+                  key={idx}
+                  className="p-4 cursor-pointer border-elec-yellow/20 bg-elec-dark/40 hover:border-elec-yellow/40 hover:bg-elec-dark/60 transition-all hover:scale-[1.02] touch-manipulation active:scale-95"
+                  onClick={() => handleExampleClick(scenario.prompt)}
+                >
+                  <div className="flex items-start gap-2 mb-2">
+                    <IconComponent className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                    <h5 className="font-semibold text-sm text-white">{scenario.title}</h5>
+                  </div>
+                  <p className="text-xs text-white/70 line-clamp-3">
+                    {scenario.prompt}
+                  </p>
+                </Card>
+              );
+            })}
+          </div>
+        </InputCardSection>
+
+        {/* Generate Button */}
+        <div className="sticky bottom-0 pb-6 pt-4 bg-gradient-to-t from-elec-dark via-elec-dark to-transparent">
+          <Button 
+            type="submit"
+            size="lg"
+            disabled={!prompt.trim() || isProcessing}
+            className="w-full bg-gradient-to-r from-elec-yellow/90 to-elec-yellow hover:from-elec-yellow hover:to-elec-yellow/90 text-elec-dark font-bold shadow-lg hover:shadow-xl hover:shadow-elec-yellow/20 transition-all h-14"
+          >
+            {isProcessing ? (
+              <>
+                <Loader2 className="h-5 w-5 animate-spin" />
+                Generating Testing Procedure...
+              </>
+            ) : (
+              <>
+                <CheckCircle2 className="h-5 w-5" />
+                Generate Testing Procedure
+              </>
+            )}
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 };
 
