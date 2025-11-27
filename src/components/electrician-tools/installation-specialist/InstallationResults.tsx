@@ -169,10 +169,15 @@ export const InstallationResults = ({
   const conditionalFlags = fullMethodStatement?.conditionalFlags || {};
   const workAtHeightEquipment = fullMethodStatement?.workAtHeightEquipment || [];
 
-  // Count hazards
+  // Count hazards and regulations
   const totalHazards = steps.reduce((count, step) => {
     const linkedHazards = (step as any).linkedHazards || [];
     return count + linkedHazards.length;
+  }, 0);
+
+  const totalRegulations = steps.reduce((count, step) => {
+    const bsReferences = (step as any).bsReferences || [];
+    return count + bsReferences.length;
   }, 0);
 
   const updateStep = (index: number, updated: InstallationStep) => {
@@ -537,13 +542,14 @@ export const InstallationResults = ({
       )}
 
       {/* Hero Summary */}
-      <InstallationHeroSummary
-        steps={steps.length}
-        duration={summary.estimatedDuration}
-        riskLevel={summary.overallRiskLevel}
-        toolsCount={summary.toolsRequired?.length || 0}
-        hazardsCount={totalHazards}
-      />
+        <InstallationHeroSummary
+          steps={steps.length}
+          duration={summary.estimatedDuration}
+          riskLevel={summary.overallRiskLevel}
+          toolsCount={summary.toolsRequired?.length || 0}
+          hazardsCount={totalHazards}
+          regulationsCount={totalRegulations}
+        />
 
       {/* Metadata Call-to-Action */}
       {!projectMetadata?.siteManagerName && (
