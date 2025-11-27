@@ -5,7 +5,7 @@ import { ProgressHeroBar } from "./redesign/ProgressHeroBar";
 import { TestSection } from "./redesign/TestSection";
 import { ChecklistItem } from "./redesign/ChecklistItem";
 import { TestCard } from "./redesign/TestCard";
-import { Eye, Zap } from "lucide-react";
+import { Eye, Zap, AlertTriangle } from "lucide-react";
 import type { CommissioningResponse } from "@/types/commissioning-response";
 
 interface CommissioningResultsProps {
@@ -128,9 +128,9 @@ const CommissioningResults = ({
           variant="visual"
         >
           {results.structuredData.testingProcedure.visualInspection.safetyNotes && (
-            <div className="bg-amber-500/10 border-2 border-amber-500/30 rounded-lg p-4 mb-4">
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mb-4">
               <div className="flex items-start gap-3">
-                <div className="text-2xl">⚠️</div>
+                <AlertTriangle className="h-6 w-6 text-amber-400 shrink-0 mt-0.5" />
                 <div className="flex-1">
                   <div className="font-semibold text-amber-300 mb-2">Safety Notes</div>
                   <ul className="space-y-1 text-sm text-white">
