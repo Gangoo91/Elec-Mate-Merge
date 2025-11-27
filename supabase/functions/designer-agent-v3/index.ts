@@ -153,7 +153,7 @@ serve(async (req) => {
       jobMode: jobId ? 'async-job' : 'direct'
     });
 
-    // Job-aware mode: Update job - Phase 1 complete (keep processing for Phase 2)
+    // Job-aware mode: Update job - Phase 1 complete, trigger Phase 2
     if (jobId) {
       try {
         await supabase
@@ -170,9 +170,55 @@ serve(async (req) => {
           })
           .eq('id', jobId);
         
-        logger.info('Phase 1 (Designer) complete - waiting for Phase 2 (Installer)', { jobId });
+        logger.info('Phase 1 (Designer) complete - triggering Phase 2 (Installer)', { jobId });
+
+        // ============================================
+        // PHASE 2: Trigger Installation Agent
+        // ============================================
+        try {
+          const { data: installResult, error: installError } = await supabase.functions.invoke('design-installation-agent', {
+            body: {
+              jobId,
+              designedCircuits: result.circuits,
+              supply: body.supply,
+              projectInfo: body.projectInfo
+            }
+          });
+
+          if (installError) {
+            logger.warn('Installation Agent failed (non-critical)', { error: installError });
+            
+            // Designer succeeded, so mark job complete anyway
+            await supabase
+              .from('circuit_design_jobs')
+              .update({
+                status: 'complete',
+                progress: 100,
+                current_step: 'Design complete (installation guidance unavailable)',
+                installation_agent_status: 'failed',
+                completed_at: new Date().toISOString()
+              })
+              .eq('id', jobId);
+          } else {
+            logger.info('Phase 2 (Installer) complete', { jobId });
+          }
+        } catch (installError: any) {
+          logger.warn('Installation Agent invocation error (non-critical)', { error: installError });
+          
+          // Designer succeeded, so mark job complete anyway
+          await supabase
+            .from('circuit_design_jobs')
+            .update({
+              status: 'complete',
+              progress: 100,
+              current_step: 'Design complete (installation guidance unavailable)',
+              installation_agent_status: 'failed',
+              completed_at: new Date().toISOString()
+            })
+            .eq('id', jobId);
+        }
       } catch (err) {
-        logger.error('Failed to update job after design phase', { error: err });
+        logger.error('Failed to update job or trigger installer', { error: err });
       }
     }
 
