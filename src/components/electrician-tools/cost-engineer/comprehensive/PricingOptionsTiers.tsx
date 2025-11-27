@@ -159,14 +159,14 @@ const PricingOptionsTiers = ({
             <TrendingUp className="h-5 w-5 sm:h-4 sm:w-4 text-blue-400" />
             Industry Benchmark Check
           </h4>
-          <div className="space-y-2 sm:space-y-1 text-base sm:text-sm">
-            <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-              <span className="text-white">{benchmark.name} typical range:</span>
-              <span className="font-medium text-white whitespace-nowrap">{benchmark.range}</span>
+          <div className="space-y-4 text-base sm:text-sm text-left">
+            <div className="space-y-1">
+              <span className="text-white/70 text-sm">{benchmark.name} typical range:</span>
+              <div className="font-medium text-white text-lg">{benchmark.range}</div>
             </div>
-            <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-              <span className="text-white">This quote (Standard tier):</span>
-              <span className={`font-bold whitespace-nowrap ${
+            <div className="space-y-1">
+              <span className="text-white/70 text-sm">This quote (Standard tier):</span>
+              <div className={`font-bold text-lg ${
                 standardPrice < benchmark.min ? 'text-red-500' : 
                 standardPrice > benchmark.max ? 'text-red-500' : 
                 'text-green-600'
@@ -175,9 +175,9 @@ const PricingOptionsTiers = ({
                 {standardPrice < benchmark.min && ' ⚠️ Below market rate'}
                 {standardPrice > benchmark.max && ' ⚠️ Above market rate'}
                 {standardPrice >= benchmark.min && standardPrice <= benchmark.max && ' ✅ Within range'}
-              </span>
+              </div>
             </div>
-            <div className="text-sm sm:text-xs text-white mt-3 sm:mt-2">
+            <div className="text-sm text-white mt-3 pt-3 border-t border-blue-500/20">
               {standardPrice < benchmark.min && 'Consider if materials or labour are underestimated'}
               {standardPrice > benchmark.max && 'Review for over-specification or excessive margins'}
               {standardPrice >= benchmark.min && standardPrice <= benchmark.max && 'Competitive pricing for your region'}

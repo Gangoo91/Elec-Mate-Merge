@@ -132,21 +132,21 @@ const CostBreakdownCard = ({
                   
                   <div className="p-3 rounded-lg bg-muted/30">
                     <div className="font-medium mb-2 text-white">Industry Standards</div>
-                    <div className="space-y-1 text-xs text-white">
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                        <span>Budget electricians:</span>
-                        <span className="whitespace-nowrap">10-15% markup</span>
+                    <div className="flex flex-col space-y-3 text-xs text-white text-left">
+                      <div className="space-y-0.5">
+                        <span className="text-white/70">Budget electricians:</span>
+                        <div className="text-sm font-semibold">10-15% markup</div>
                       </div>
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                        <span>Professional tradespeople:</span>
-                        <span className="whitespace-nowrap">15-25% markup</span>
+                      <div className="space-y-0.5">
+                        <span className="text-white/70">Professional tradespeople:</span>
+                        <div className="text-sm font-semibold">15-25% markup</div>
                       </div>
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                        <span>Specialist contractors:</span>
-                        <span className="whitespace-nowrap">20-30% markup</span>
+                      <div className="space-y-0.5">
+                        <span className="text-white/70">Specialist contractors:</span>
+                        <div className="text-sm font-semibold">20-30% markup</div>
                       </div>
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline pt-1 border-t border-border mt-2">
-                        <span className="font-medium">Your setting:</span>
+                      <div className="space-y-0.5 pt-1 border-t border-border mt-2">
+                        <span className="font-medium text-white/70">Your setting:</span>
                         <Badge variant="secondary" className="text-xs">{markupPercentage}%</Badge>
                       </div>
                     </div>
@@ -192,18 +192,18 @@ const CostBreakdownCard = ({
                 <div className="px-3 pb-3 space-y-3 text-sm">
                   <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
                     <div className="font-medium mb-2 text-white">Your Labour Rate: £{calculatedLabourRate.toFixed(2)}/hour</div>
-                    <div className="text-xs space-y-1 text-white">
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                        <span>UK Market Range ({experienceLevel}):</span>
-                        <span className="whitespace-nowrap">£{marketRate.min}-{marketRate.max}/hr</span>
+                    <div className="flex flex-col space-y-3 text-xs text-white text-left">
+                      <div className="space-y-0.5">
+                        <span className="text-white/70">UK Market Range ({experienceLevel}):</span>
+                        <div className="text-sm font-semibold">£{marketRate.min}-{marketRate.max}/hr</div>
                       </div>
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                        <span>Typical Rate:</span>
-                        <span className="whitespace-nowrap">£{marketRate.typical}/hr</span>
+                      <div className="space-y-0.5">
+                        <span className="text-white/70">Typical Rate:</span>
+                        <div className="text-sm font-semibold">£{marketRate.typical}/hr</div>
                       </div>
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                        <span>Regional Adjustment ({region}):</span>
-                        <span className="whitespace-nowrap">{regionalMultiplier}x</span>
+                      <div className="space-y-0.5">
+                        <span className="text-white/70">Regional Adjustment ({region}):</span>
+                        <div className="text-sm font-semibold">{regionalMultiplier}x</div>
                       </div>
                     </div>
                   </div>
@@ -247,26 +247,26 @@ const CostBreakdownCard = ({
                   
                   <div className="p-3 rounded-lg bg-muted/30">
                     <div className="font-medium mb-2 text-white">Comparison to Market</div>
-                    <div className="space-y-1 text-xs text-white">
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline opacity-90">
-                        <span>Apprentice rate:</span>
-                        <span className="whitespace-nowrap">£{MARKET_RATES_2025.hourlyRates.apprentice.min}-{MARKET_RATES_2025.hourlyRates.apprentice.max}/hr</span>
+                    <div className="flex flex-col space-y-3 text-xs text-white text-left">
+                      <div className="space-y-0.5 opacity-90">
+                        <span className="text-white/70">Apprentice rate:</span>
+                        <div className="text-sm font-semibold">£{MARKET_RATES_2025.hourlyRates.apprentice.min}-{MARKET_RATES_2025.hourlyRates.apprentice.max}/hr</div>
                       </div>
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline opacity-90">
-                        <span>Improver rate:</span>
-                        <span className="whitespace-nowrap">£{MARKET_RATES_2025.hourlyRates.improver.min}-{MARKET_RATES_2025.hourlyRates.improver.max}/hr</span>
+                      <div className="space-y-0.5 opacity-90">
+                        <span className="text-white/70">Improver rate:</span>
+                        <div className="text-sm font-semibold">£{MARKET_RATES_2025.hourlyRates.improver.min}-{MARKET_RATES_2025.hourlyRates.improver.max}/hr</div>
                       </div>
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline font-medium border-l-2 border-orange-500 pl-2">
-                        <span>Qualified rate:</span>
-                        <span className="whitespace-nowrap">£{MARKET_RATES_2025.hourlyRates.qualified.min}-{MARKET_RATES_2025.hourlyRates.qualified.max}/hr ✓</span>
+                      <div className="space-y-0.5 border-l-2 border-orange-500 pl-2">
+                        <span className="text-white/70">Qualified rate:</span>
+                        <div className="text-sm font-semibold">£{MARKET_RATES_2025.hourlyRates.qualified.min}-{MARKET_RATES_2025.hourlyRates.qualified.max}/hr ✓</div>
                       </div>
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline opacity-90">
-                        <span>Experienced:</span>
-                        <span className="whitespace-nowrap">£{MARKET_RATES_2025.hourlyRates.experienced.min}-{MARKET_RATES_2025.hourlyRates.experienced.max}/hr</span>
+                      <div className="space-y-0.5 opacity-90">
+                        <span className="text-white/70">Experienced:</span>
+                        <div className="text-sm font-semibold">£{MARKET_RATES_2025.hourlyRates.experienced.min}-{MARKET_RATES_2025.hourlyRates.experienced.max}/hr</div>
                       </div>
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline opacity-90">
-                        <span>Specialist:</span>
-                        <span className="whitespace-nowrap">£{MARKET_RATES_2025.hourlyRates.specialist.min}-{MARKET_RATES_2025.hourlyRates.specialist.max}/hr</span>
+                      <div className="space-y-0.5 opacity-90">
+                        <span className="text-white/70">Specialist:</span>
+                        <div className="text-sm font-semibold">£{MARKET_RATES_2025.hourlyRates.specialist.min}-{MARKET_RATES_2025.hourlyRates.specialist.max}/hr</div>
                       </div>
                     </div>
                   </div>
@@ -309,48 +309,48 @@ const CostBreakdownCard = ({
                   <div className="px-3 pb-3 space-y-3 text-sm">
                     <div className="p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
                       <div className="font-medium mb-2 text-white">Typical Monthly Business Costs</div>
-                      <div className="space-y-1 text-xs text-white">
-                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                          <span>Van (fuel, insurance, tax):</span>
-                          <span className="whitespace-nowrap">£{(MARKET_RATES_2025.businessCosts.fuel + MARKET_RATES_2025.businessCosts.commercialInsurance + MARKET_RATES_2025.businessCosts.maintenance) / 12}/mo</span>
+                      <div className="flex flex-col space-y-3 text-xs text-white text-left">
+                        <div className="space-y-0.5">
+                          <span className="text-white/70">Van (fuel, insurance, tax):</span>
+                          <div className="text-sm font-semibold">£{(MARKET_RATES_2025.businessCosts.fuel + MARKET_RATES_2025.businessCosts.commercialInsurance + MARKET_RATES_2025.businessCosts.maintenance) / 12}/mo</div>
                         </div>
-                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                          <span>Tool maintenance & replacement:</span>
-                          <span className="whitespace-nowrap">£{MARKET_RATES_2025.businessCosts.toolsReplacement / 12}/mo</span>
+                        <div className="space-y-0.5">
+                          <span className="text-white/70">Tool maintenance & replacement:</span>
+                          <div className="text-sm font-semibold">£{MARKET_RATES_2025.businessCosts.toolsReplacement / 12}/mo</div>
                         </div>
-                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                          <span>Public liability insurance:</span>
-                          <span className="whitespace-nowrap">£{(MARKET_RATES_2025.businessCosts.publicLiabilityInsurance / 12).toFixed(0)}/mo</span>
+                        <div className="space-y-0.5">
+                          <span className="text-white/70">Public liability insurance:</span>
+                          <div className="text-sm font-semibold">£{(MARKET_RATES_2025.businessCosts.publicLiabilityInsurance / 12).toFixed(0)}/mo</div>
                         </div>
-                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                          <span>Professional memberships:</span>
-                          <span className="whitespace-nowrap">£{(MARKET_RATES_2025.businessCosts.niceicMembership / 12).toFixed(0)}/mo</span>
+                        <div className="space-y-0.5">
+                          <span className="text-white/70">Professional memberships:</span>
+                          <div className="text-sm font-semibold">£{(MARKET_RATES_2025.businessCosts.niceicMembership / 12).toFixed(0)}/mo</div>
                         </div>
-                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                          <span>Software & subscriptions:</span>
-                          <span className="whitespace-nowrap">£{((MARKET_RATES_2025.businessCosts.eicrsoftware + MARKET_RATES_2025.businessCosts.cloudStorage + MARKET_RATES_2025.businessCosts.businessApps) / 12).toFixed(0)}/mo</span>
+                        <div className="space-y-0.5">
+                          <span className="text-white/70">Software & subscriptions:</span>
+                          <div className="text-sm font-semibold">£{((MARKET_RATES_2025.businessCosts.eicrsoftware + MARKET_RATES_2025.businessCosts.cloudStorage + MARKET_RATES_2025.businessCosts.businessApps) / 12).toFixed(0)}/mo</div>
                         </div>
-                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline pt-1 border-t border-border mt-2 font-medium">
-                          <span>Typical total per month:</span>
-                          <span className="whitespace-nowrap">£900-1,200</span>
+                        <div className="space-y-0.5 pt-1 border-t border-border mt-2">
+                          <span className="text-white/70">Typical total per month:</span>
+                          <div className="text-sm font-semibold">£900-1,200</div>
                         </div>
                       </div>
                     </div>
                     
                     <div className="p-3 rounded-lg bg-muted/30">
                       <div className="font-medium mb-2 text-white">This Job's Share</div>
-                      <div className="space-y-1 text-xs text-white">
-                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                          <span>Job duration:</span>
-                          <span className="whitespace-nowrap">{calculatedJobDuration.toFixed(1)} days</span>
+                      <div className="flex flex-col space-y-3 text-xs text-white text-left">
+                        <div className="space-y-0.5">
+                          <span className="text-white/70">Job duration:</span>
+                          <div className="text-sm font-semibold">{calculatedJobDuration.toFixed(1)} days</div>
                         </div>
-                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                          <span>Daily overhead rate:</span>
-                          <span className="whitespace-nowrap">£{(overheadTotal / calculatedJobDuration).toFixed(2)}/day</span>
+                        <div className="space-y-0.5">
+                          <span className="text-white/70">Daily overhead rate:</span>
+                          <div className="text-sm font-semibold">£{(overheadTotal / calculatedJobDuration).toFixed(2)}/day</div>
                         </div>
-                        <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline pt-1 border-t border-border mt-2 font-medium">
-                          <span>Job allocation:</span>
-                          <span className="whitespace-nowrap">£{overheadTotal.toFixed(2)}</span>
+                        <div className="space-y-0.5 pt-1 border-t border-border mt-2">
+                          <span className="text-white/70">Job allocation:</span>
+                          <div className="text-sm font-semibold">£{overheadTotal.toFixed(2)}</div>
                         </div>
                       </div>
                     </div>
@@ -454,25 +454,25 @@ const CostBreakdownCard = ({
                   
                   <div className="p-3 rounded-lg bg-muted/30">
                     <div className="font-medium mb-2 text-white">Industry Standards</div>
-                    <div className="space-y-1 text-xs text-white">
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                        <span>Simple jobs (new build):</span>
-                        <span className="whitespace-nowrap">3-5%</span>
+                    <div className="flex flex-col space-y-3 text-xs text-white text-left">
+                      <div className="space-y-0.5">
+                        <span className="text-white/70">Simple jobs (new build):</span>
+                        <div className="text-sm font-semibold">3-5%</div>
                       </div>
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                        <span>Standard domestic:</span>
-                        <span className="whitespace-nowrap">5-10%</span>
+                      <div className="space-y-0.5">
+                        <span className="text-white/70">Standard domestic:</span>
+                        <div className="text-sm font-semibold">5-10%</div>
                       </div>
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                        <span>Renovation/older property:</span>
-                        <span className="whitespace-nowrap">10-15%</span>
+                      <div className="space-y-0.5">
+                        <span className="text-white/70">Renovation/older property:</span>
+                        <div className="text-sm font-semibold">10-15%</div>
                       </div>
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline">
-                        <span>Complex commercial:</span>
-                        <span className="whitespace-nowrap">15-20%</span>
+                      <div className="space-y-0.5">
+                        <span className="text-white/70">Complex commercial:</span>
+                        <div className="text-sm font-semibold">15-20%</div>
                       </div>
-                      <div className="grid grid-cols-[1fr_auto] gap-x-3 items-baseline pt-1 border-t border-border mt-2 font-medium">
-                        <span>Your setting:</span>
+                      <div className="space-y-0.5 pt-1 border-t border-border mt-2">
+                        <span className="text-white/70">Your setting:</span>
                         <Badge variant="secondary" className="text-xs">{contingencyPercent}%</Badge>
                       </div>
                     </div>

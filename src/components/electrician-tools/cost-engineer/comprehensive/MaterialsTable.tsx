@@ -96,7 +96,7 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="text-white font-semibold text-base sm:text-sm">Description</TableHead>
+                  <TableHead className="text-left text-white font-semibold text-base sm:text-sm">Description</TableHead>
                   <TableHead className="text-right text-white font-semibold text-base sm:text-sm">Qty</TableHead>
                   <TableHead className="text-right text-white font-semibold text-base sm:text-sm">Unit Price</TableHead>
                   <TableHead className="text-right text-white font-semibold text-base sm:text-sm">Total</TableHead>
@@ -105,10 +105,10 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
               <TableBody>
                 {currentItems.map((item, idx) => (
                   <TableRow key={idx}>
-                    <TableCell className="font-medium text-base sm:text-sm text-white">
+                    <TableCell className="font-medium text-base sm:text-sm text-white text-left py-4">
                       {item.item || item.description}
                       {item.supplier && (
-                        <div className="text-sm text-white">
+                        <div className="text-sm text-white text-left">
                           {item.supplier}
                         </div>
                       )}
