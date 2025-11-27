@@ -204,10 +204,9 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
 
         {/* Photo Upload Section */}
         <InputCardSection
-          title="Upload Photo for Analysis"
-          subtitle="AI visual inspection for safety & compliance"
+          title="Upload Photos for EICR Coding"
+          subtitle="Add photos of distribution boards, equipment, or circuits"
           icon={Camera}
-          badge="optional"
           defaultOpen={false}
         >
           <PhotoUploadButton 
@@ -229,7 +228,6 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
           title="Project Information"
           subtitle="Add details for more accurate output"
           icon={Settings}
-          badge="optional"
           defaultOpen={false}
         >
           <div className="space-y-4">
