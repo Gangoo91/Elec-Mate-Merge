@@ -29,7 +29,7 @@ export const InputCardSection = ({
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="w-full p-5 text-left"
+          className="w-full p-3 sm:p-4 text-left"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3 flex-1">
@@ -46,7 +46,7 @@ export const InputCardSection = ({
                   )}
                 </div>
                 {subtitle && (
-                  <p className="text-xs sm:text-sm text-white/70 mt-0.5">
+                  <p className="text-xs sm:text-sm text-white/80 mt-0.5">
                     {subtitle}
                   </p>
                 )}
@@ -62,8 +62,8 @@ export const InputCardSection = ({
         </button>
         
         {isOpen && (
-          <div className="px-5 pb-5 border-t border-elec-yellow/10">
-            <div className="pt-4">
+          <div className="px-3 pb-3 sm:px-4 sm:pb-4 border-t border-elec-yellow/10">
+            <div className="pt-3 sm:pt-4">
               {children}
             </div>
           </div>

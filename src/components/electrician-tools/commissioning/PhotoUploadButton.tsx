@@ -74,7 +74,7 @@ const PhotoUploadButton = ({ onPhotoUploaded, disabled, className }: PhotoUpload
   return (
     <div className={className}>
       {preview ? (
-        <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-purple-500/20 bg-elec-dark">
+        <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-elec-yellow/20 bg-elec-dark">
           <img 
             src={preview} 
             alt="Upload preview" 
@@ -121,7 +121,7 @@ const PhotoUploadButton = ({ onPhotoUploaded, disabled, className }: PhotoUpload
           <Button
             type="button"
             variant="outline"
-            className="flex-1 h-12 text-purple-400 border-purple-400/40 hover:bg-purple-400/10 touch-manipulation"
+            className="flex-1 h-12 text-elec-yellow border-elec-yellow/40 hover:bg-elec-yellow/10 touch-manipulation"
             onClick={() => cameraInputRef.current?.click()}
             disabled={disabled || isUploading}
           >
@@ -132,7 +132,7 @@ const PhotoUploadButton = ({ onPhotoUploaded, disabled, className }: PhotoUpload
           <Button
             type="button"
             variant="outline"
-            className="flex-1 h-12 text-purple-400 border-purple-400/40 hover:bg-purple-400/10 touch-manipulation"
+            className="flex-1 h-12 text-elec-yellow border-elec-yellow/40 hover:bg-elec-yellow/10 touch-manipulation"
             onClick={() => fileInputRef.current?.click()}
             disabled={disabled || isUploading}
           >
