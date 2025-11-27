@@ -119,18 +119,17 @@ const CommissioningResults = ({
   const sortedRegulations = Array.from(allRegulations).sort();
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in pb-32 sm:pb-6">
-      {/* SECTION 1 — TESTING SUMMARY */}
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
+      {/* Testing Summary */}
       <div className="mb-4">
-        <h2 className="text-lg sm:text-xl font-bold text-yellow-500 uppercase tracking-wide">
-          SECTION 1 — TESTING SUMMARY
+        <h2 className="text-lg sm:text-xl font-semibold text-white">
+          Testing Summary
         </h2>
-        <div className="h-0.5 bg-gradient-to-r from-yellow-500/60 to-transparent mt-2" />
       </div>
       <TestingSummaryStats results={results} />
 
-      {/* Action Buttons - Desktop Only */}
-      <Card className="p-4 hidden sm:block">
+      {/* Action Buttons - Visible on all devices */}
+      <Card className="p-4">
         <div className="flex items-center gap-2 flex-wrap">
           <Button 
             size="sm" 
@@ -176,38 +175,13 @@ const CommissioningResults = ({
         </div>
       </Card>
 
-      {/* Sticky Mobile Action Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border p-4 z-50 sm:hidden">
-        <div className="flex gap-2 max-w-2xl mx-auto">
-          <Button 
-            className="flex-1 min-h-[56px]" 
-            size="lg"
-            variant="outline"
-            onClick={handleCopyChecklist}
-            disabled={!results?.structuredData}
-          >
-            <Copy className="h-5 w-5 mr-2" />
-            Copy Checklist
-          </Button>
-          <Button 
-            className="flex-1 min-h-[56px]" 
-            size="lg"
-            onClick={handleExportPDF}
-          >
-            <Download className="h-5 w-5 mr-2" />
-            Export PDF
-          </Button>
-        </div>
-      </div>
-
       {/* Testing Procedure */}
       {results.structuredData?.testingProcedure && (
         <>
           <div className="mb-4">
-            <h2 className="text-lg sm:text-xl font-bold text-yellow-500 uppercase tracking-wide">
-              SECTION 2 — TESTING PROCEDURES
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              Testing Procedures
             </h2>
-            <div className="h-0.5 bg-gradient-to-r from-yellow-500/60 to-transparent mt-2" />
           </div>
           <Card className="p-4 sm:p-6">
             <TestingProcedureDisplay procedure={results.structuredData.testingProcedure} />
@@ -219,10 +193,9 @@ const CommissioningResults = ({
       {sortedRegulations.length > 0 && (
         <>
           <div className="mb-4">
-            <h2 className="text-lg sm:text-xl font-bold text-yellow-500 uppercase tracking-wide">
-              SECTION 3 — APPLICABLE BS 7671 REGULATIONS
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              Applicable BS 7671 Regulations
             </h2>
-            <div className="h-0.5 bg-gradient-to-r from-yellow-500/60 to-transparent mt-2" />
           </div>
           <Card className="p-4 sm:p-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -252,10 +225,9 @@ const CommissioningResults = ({
       {results.structuredData?.certification && (
         <>
           <div className="mb-4">
-            <h2 className="text-lg sm:text-xl font-bold text-yellow-500 uppercase tracking-wide">
-              SECTION 4 — CERTIFICATION REQUIREMENTS
+            <h2 className="text-lg sm:text-xl font-semibold text-white">
+              Certification Requirements
             </h2>
-            <div className="h-0.5 bg-gradient-to-r from-yellow-500/60 to-transparent mt-2" />
           </div>
           <Card className="p-4 sm:p-6">
             <CertificationRequirements certification={results.structuredData.certification} />

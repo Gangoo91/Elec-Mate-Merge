@@ -9,7 +9,7 @@ const CommissioningPage = () => {
 
   return (
     <div className="min-h-screen bg-elec-dark">
-      <div className="container mx-auto px-3 sm:px-6 lg:px-12 py-3 sm:py-6 max-w-4xl">
+      <div className="container mx-auto px-3 sm:px-6 lg:px-12 py-3 sm:py-6 max-w-6xl">
         <div className="space-y-3 sm:space-y-4 animate-fade-in">
           {/* Back Button - Mobile optimised */}
           <Link to={fromAgentSelector ? "/electrician/agent-selector" : "/electrician"}>
