@@ -31,7 +31,7 @@ const CommissioningProcessingView = ({ progress, startTime }: CommissioningProce
   }, [startTime]);
 
   const percentage = progress ? STAGE_PERCENTAGES[progress.stage] : 0;
-  const estimatedTotal = 90; // seconds
+  const estimatedTotal = 180; // seconds (3:00)
   const remaining = Math.max(0, estimatedTotal - elapsedTime);
 
   const formatTime = (seconds: number) => {
@@ -105,7 +105,7 @@ const CommissioningProcessingView = ({ progress, startTime }: CommissioningProce
                 ? 'text-purple-400'
                 : 'text-white'
             }`} />
-            <div>
+            <div className="text-left">
               <div className="font-medium text-sm">Searching BS 7671 testing requirements</div>
               <div className="text-xs text-white mt-1">
                 Finding relevant test procedures, acceptance criteria, and regulations
@@ -123,7 +123,7 @@ const CommissioningProcessingView = ({ progress, startTime }: CommissioningProce
                 ? 'text-purple-400'
                 : 'text-white'
             }`} />
-            <div>
+            <div className="text-left">
               <div className="font-medium text-sm">Calculating expected Zs values and test criteria</div>
               <div className="text-xs text-white mt-1">
                 Generating expected results and maximum permitted values
@@ -141,7 +141,7 @@ const CommissioningProcessingView = ({ progress, startTime }: CommissioningProce
                 ? 'text-purple-400'
                 : 'text-white'
             }`} />
-            <div>
+            <div className="text-left">
               <div className="font-medium text-sm">Generating step-by-step procedures</div>
               <div className="text-xs text-white mt-1">
                 Creating detailed testing instructions with instrument setup
@@ -159,7 +159,7 @@ const CommissioningProcessingView = ({ progress, startTime }: CommissioningProce
                 ? 'text-purple-400'
                 : 'text-white'
             }`} />
-            <div>
+            <div className="text-left">
               <div className="font-medium text-sm">Verifying regulation compliance</div>
               <div className="text-xs text-white mt-1">
                 Cross-checking with BS 7671 requirements and certification needs
