@@ -1618,54 +1618,8 @@ Determine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehe
       }
 
       logger.info('✅ EICR analysis validation passed');
-          if (!eicrData.defectSummary) validationErrors.push('Missing defectSummary');
-          if (!eicrData.hazardExplanation) validationErrors.push('Missing hazardExplanation');
-          if (!eicrData.bs7671Regulations || eicrData.bs7671Regulations.length === 0) {
-            validationErrors.push('Missing bs7671Regulations');
-          }
-          if (!eicrData.confidenceAssessment) validationErrors.push('Missing confidenceAssessment');
-          if (!eicrData.contextFactors) validationErrors.push('Missing contextFactors');
-
-          // For defect classifications, require additional fields
-          if (['C1', 'C2', 'C3', 'FI'].includes(eicrData.classification)) {
-            if (!eicrData.makingSafe) validationErrors.push('Missing makingSafe for defect classification');
-            if (!eicrData.clientCommunication) validationErrors.push('Missing clientCommunication for defect classification');
-            if (!eicrData.rectification) validationErrors.push('Missing rectification for defect classification');
-            if (!eicrData.verificationProcedure) validationErrors.push('Missing verificationProcedure for defect classification');
-            if (!eicrData.gn3Guidance) validationErrors.push('Missing gn3Guidance for defect classification');
-          }
-
-          // For NONE classification, require compliant fields
-          if (eicrData.classification === 'NONE') {
-            if (!eicrData.compliantSummary) validationErrors.push('Missing compliantSummary for NONE classification');
-            if (!eicrData.goodPracticeNotes || eicrData.goodPracticeNotes.length === 0) {
-              validationErrors.push('Missing goodPracticeNotes for NONE classification');
-            }
-          }
-
-          if (validationErrors.length > 0) {
-            logger.error('❌ AI response validation failed:', validationErrors);
-            if (attempts < maxAttempts) {
-              logger.warn(`⚠️ Incomplete response, retrying... (${attempts}/${maxAttempts})`);
-              continue;
-            }
-            throw new Error(`Incomplete AI response after ${maxAttempts} attempts: ${validationErrors.join(', ')}`);
-          }
-
-          logger.info('✅ AI response validation passed');
-          break; // Success - exit retry loop
-
-        } catch (parseError) {
-          logger.error('❌ Failed to parse AI response:', parseError);
-          if (attempts < maxAttempts) {
-            logger.warn('⚠️ Parse error, retrying...');
-            continue;
-          }
-          throw parseError;
-        }
-      }
       
-      // eicrData is already validated and parsed from retry loop
+      // Transform EICR data for response
       logger.info('✅ Parsed EICR defect data', {
         classification: eicrData.classification,
         confidence: eicrData.confidenceAssessment?.level,
