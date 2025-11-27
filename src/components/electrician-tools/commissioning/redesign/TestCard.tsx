@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { ChevronDown, ChevronUp, Copy, CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { toast } from "sonner";
+import { ChevronDown, ChevronUp, CheckCircle2, Copy, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { InstrumentSetupPanel } from "../../commissioning/testing-results/InstrumentSetupPanel";
 import { ProcedureStepper } from "./ProcedureStepper";
-import { TroubleshootingPanel } from "../testing-results/TroubleshootingPanel";
-import { InstrumentSetupPanel } from "../testing-results/InstrumentSetupPanel";
+import { TroubleshootingPanel } from "../../commissioning/testing-results/TroubleshootingPanel";
+import { toast } from "sonner";
 import type { TestProcedure } from "@/types/commissioning-response";
 
 interface TestCardProps {
@@ -36,76 +36,65 @@ ${test.acceptanceCriteria}`;
   };
 
   return (
-    <div className="border-2 border-border/40 rounded-xl overflow-hidden bg-background/40 hover:border-border/60 transition-colors">
+    <Card className="bg-card border-elec-yellow/20 hover:border-elec-yellow/30 overflow-hidden transition-all">
       {/* Header - Always Visible */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full px-6 py-4 flex items-center justify-between hover:bg-accent/5 transition-colors text-left touch-manipulation"
+        className="w-full p-5 text-left hover:bg-elec-yellow/5 transition-colors touch-manipulation"
       >
-        <div className="flex items-center gap-4 flex-1">
-          <Badge 
-            variant="outline" 
-            className={cn(
-              "text-lg px-3 py-1 shrink-0",
-              variant === "dead" && "border-red-500/50 text-red-400",
-              variant === "live" && "border-yellow-500/50 text-yellow-400"
-            )}
-          >
-            {index + 1}
-          </Badge>
+        <div className="flex items-center justify-between gap-4">
           <div className="flex-1">
-            <div className="font-semibold text-white text-base mb-1">{test.testName}</div>
-            <div className="text-sm text-muted-foreground">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center">
+                <span className="text-sm font-bold text-elec-yellow">
+                  {index + 1}
+                </span>
+              </div>
+              <h3 className="text-lg font-bold text-white">{test.testName}</h3>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-white/70">
+              <BookOpen className="h-3 w-3 text-elec-yellow" />
               {test.regulation}
-              {test.testDuration && ` • ${test.testDuration}`}
             </div>
           </div>
+          {expanded ? (
+            <ChevronUp className="h-5 w-5 text-elec-yellow shrink-0" />
+          ) : (
+            <ChevronDown className="h-5 w-5 text-white/50 shrink-0" />
+          )}
         </div>
-        {expanded ? (
-          <ChevronUp className="h-5 w-5 text-muted-foreground shrink-0" />
-        ) : (
-          <ChevronDown className="h-5 w-5 text-muted-foreground shrink-0" />
-        )}
       </button>
 
       {/* Expanded Content */}
       {expanded && (
-        <div className="px-6 py-5 space-y-6 border-t border-border/40">
+        <div className="px-5 pb-5 space-y-5 border-t border-elec-yellow/20">
           {/* Acceptance Criteria */}
-          <div className="bg-green-500/10 border-2 border-green-500/30 rounded-lg p-4">
-            <div className="flex items-center gap-2 text-green-300 text-base font-semibold mb-3">
-              <CheckCircle2 className="h-5 w-5" />
+          <div className="pt-5">
+            <div className="flex items-center gap-2 text-white text-base font-semibold mb-3">
+              <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
               Acceptance Criteria
             </div>
-            <p className="text-sm text-white leading-relaxed">{test.acceptanceCriteria}</p>
-            {test.expectedResult && typeof test.expectedResult === 'object' && (
-              <div className="mt-3 space-y-2">
-                {test.expectedResult.calculated && (
-                  <p className="text-sm text-white">
-                    <span className="font-semibold">Calculated:</span> {test.expectedResult.calculated}
-                  </p>
-                )}
-                {test.expectedResult.measured && (
-                  <p className="text-sm text-green-300">
-                    <span className="font-semibold">Measured:</span> {test.expectedResult.measured}
-                  </p>
-                )}
-              </div>
-            )}
+            <p className="text-sm text-white/90 leading-relaxed bg-elec-yellow/5 border-l-4 border-elec-yellow/50 p-4 rounded-lg">
+              {test.acceptanceCriteria}
+            </p>
           </div>
 
           {/* Instrument Setup */}
-          <InstrumentSetupPanel instrumentSetup={test.instrumentSetup} />
+          {test.instrumentSetup && (
+            <InstrumentSetupPanel instrumentSetup={test.instrumentSetup} />
+          )}
 
-          {/* Procedure Stepper */}
-          {test.procedure && Array.isArray(test.procedure) && (
-            <div className="space-y-3">
-              <div className="text-base font-semibold text-white">📋 Procedure</div>
+          {/* Procedure Steps */}
+          {test.procedure && test.procedure.length > 0 && (
+            <div>
+              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+                <span className="text-elec-yellow">Test Procedure</span>
+              </h4>
               <ProcedureStepper steps={test.procedure} />
             </div>
           )}
 
-          {/* Troubleshooting & Pro Tips */}
+          {/* Troubleshooting & Tips */}
           <TroubleshootingPanel
             troubleshooting={test.troubleshooting}
             commonMistakes={test.commonMistakes}
@@ -116,13 +105,13 @@ ${test.acceptanceCriteria}`;
           <Button
             variant="outline"
             onClick={copyTestProcedure}
-            className="w-full touch-manipulation"
+            className="w-full touch-manipulation border-elec-yellow/30 hover:bg-elec-yellow/10"
           >
             <Copy className="h-4 w-4 mr-2" />
             Copy Procedure
           </Button>
         </div>
       )}
-    </div>
+    </Card>
   );
 };
