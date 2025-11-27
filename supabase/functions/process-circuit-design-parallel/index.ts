@@ -10,8 +10,11 @@ Deno.serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  let jobId: string | undefined; // Store outside try block to avoid body consumed error
+
   try {
-    const { jobId } = await req.json();
+    const body = await req.json();
+    jobId = body.jobId;
 
     if (!jobId) {
       return new Response(
@@ -53,115 +56,46 @@ Deno.serve(async (req) => {
       })
       .eq('id', jobId);
 
-    console.log('📋 Job data retrieved, launching SEQUENTIAL agent pipeline');
+    console.log('📋 Job data retrieved, launching Designer agent in fire-and-forget mode');
 
     // ============================================
-    // PHASE 1: Circuit Designer (generates actual specs)
+    // PHASE 1: Circuit Designer (fire-and-forget)
+    // Designer will trigger Installation Agent when complete
     // ============================================
-    console.log('🔌 PHASE 1/2: Launching Circuit Designer...');
+    console.log('🔌 Launching Circuit Designer (fire-and-forget)...');
     
-    try {
-      const { data: designerResult, error: designerError } = await supabase.functions.invoke('designer-agent-v3', {
-        body: {
-          jobId,
-          mode: 'direct-design',
-          projectInfo: job.job_inputs.projectInfo,
-          supply: job.job_inputs.supply,
-          circuits: job.job_inputs.circuits,
-          additionalPrompt: job.job_inputs.additionalPrompt || '',
-          specialRequirements: job.job_inputs.specialRequirements || [],
-          installationConstraints: job.job_inputs.installationConstraints || {}
-        }
-      });
-
-      if (designerError) {
-        console.error('❌ Circuit Designer failed:', designerError);
-        throw new Error(`Circuit Designer failed: ${designerError.message}`);
+    // Fire-and-forget: Designer runs in background, triggers installer when done
+    const designerTask = supabase.functions.invoke('designer-agent-v3', {
+      body: {
+        jobId,
+        mode: 'direct-design',
+        projectInfo: job.job_inputs.projectInfo,
+        supply: job.job_inputs.supply,
+        circuits: job.job_inputs.circuits,
+        additionalPrompt: job.job_inputs.additionalPrompt || '',
+        specialRequirements: job.job_inputs.specialRequirements || [],
+        installationConstraints: job.job_inputs.installationConstraints || {}
       }
+    }).then(() => {
+      console.log('✅ Designer HTTP response received (ignoring status)');
+    }).catch((error) => {
+      console.log('ℹ️ Designer HTTP connection closed:', error.message);
+      // This is expected for long-running jobs - designer updates DB directly
+    });
 
-      console.log('✅ Circuit Designer complete');
-    } catch (designerError: any) {
-      console.error('❌ Designer invocation error:', designerError);
-      throw new Error(`Designer failed: ${designerError.message}`);
-    }
+    // Keep function alive until designer completes
+    EdgeRuntime.waitUntil(designerTask);
 
-    // ============================================
-    // PHASE 1.5: Retrieve designed circuits from DB
-    // ============================================
-    console.log('📊 Retrieving designed circuits from database...');
-    
-    const { data: jobWithDesign, error: fetchError } = await supabase
-      .from('circuit_design_jobs')
-      .select('design_data')
-      .eq('id', jobId)
-      .single();
+    console.log('✅ Designer launched in background (HTTP response sent immediately)');
 
-    if (fetchError || !jobWithDesign?.design_data?.circuits) {
-      console.error('❌ Failed to retrieve designed circuits:', fetchError);
-      throw new Error('Failed to retrieve designed circuits from database');
-    }
-
-    const designedCircuits = jobWithDesign.design_data.circuits;
-    console.log(`✅ Retrieved ${designedCircuits.length} designed circuits`);
-
-    // ============================================
-    // PHASE 2: Installation Agent (uses actual designed specs)
-    // ============================================
-    console.log('🔧 PHASE 2/2: Launching Installation Agent with ACTUAL designed specs...');
-    
-    try {
-      const { data: installResult, error: installError } = await supabase.functions.invoke('design-installation-agent', {
-        body: {
-          jobId,
-          designedCircuits: designedCircuits, // ✅ Pass DESIGNED circuits with actual specs
-          supply: job.job_inputs.supply,
-          projectInfo: job.job_inputs.projectInfo
-        }
-      });
-
-      if (installError) {
-        console.warn('⚠️ Installation Agent failed (non-critical):', installError);
-        
-        // Designer succeeded, so mark job complete anyway
-        await supabase
-          .from('circuit_design_jobs')
-          .update({
-            status: 'complete',
-            progress: 100,
-            current_step: 'Design complete (installation guidance unavailable)',
-            installation_agent_status: 'failed',
-            completed_at: new Date().toISOString()
-          })
-          .eq('id', jobId);
-      } else {
-        console.log('✅ Installation Agent complete');
-      }
-    } catch (installError: any) {
-      console.warn('⚠️ Installation Agent invocation error (non-critical):', installError);
-      
-      // Designer succeeded, so mark job complete anyway
-      await supabase
-        .from('circuit_design_jobs')
-        .update({
-          status: 'complete',
-          progress: 100,
-          current_step: 'Design complete (installation guidance unavailable)',
-          installation_agent_status: 'failed',
-          completed_at: new Date().toISOString()
-        })
-        .eq('id', jobId);
-    }
-
-    console.log('🚀 Sequential pipeline complete (Designer → Installer)');
-
-    // Return immediately - sequential execution launched
+    // Return immediately - designer runs in background
     return new Response(
       JSON.stringify({ 
         success: true,
         jobId,
-        message: 'Sequential pipeline launched (Designer → Installer)',
+        message: 'Designer launched (fire-and-forget mode)',
         status: 'processing',
-        executionMode: 'sequential'
+        executionMode: 'fire-and-forget'
       }),
       { 
         status: 202, // Accepted
@@ -170,12 +104,11 @@ Deno.serve(async (req) => {
     );
 
   } catch (error: any) {
-    console.error('❌ Parallel orchestrator error:', error);
+    console.error('❌ Orchestrator error:', error);
     
-    // Try to update job with error
-    try {
-      const { jobId } = await req.json();
-      if (jobId) {
+    // Try to update job with error (jobId already extracted at top of handler)
+    if (jobId) {
+      try {
         const supabase = createClient(
           Deno.env.get('SUPABASE_URL')!,
           Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
@@ -189,9 +122,9 @@ Deno.serve(async (req) => {
             current_step: `Orchestrator failed: ${error.message}`
           })
           .eq('id', jobId);
+      } catch (updateError) {
+        console.error('Failed to update job with error:', updateError);
       }
-    } catch (updateError) {
-      console.error('Failed to update job with error:', updateError);
     }
 
     return new Response(

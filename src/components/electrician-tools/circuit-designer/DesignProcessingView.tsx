@@ -142,21 +142,21 @@ export const DesignProcessingView = ({
       <Card className="border-elec-yellow/20 bg-elec-card max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto w-full">
         <CardContent className="p-4 sm:p-6">
           {/* Header Section */}
-          <div className="flex items-center gap-3 mb-3">
+          <div className="flex items-center gap-3 mb-3 text-left">
             <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center shrink-0">
               <Loader2 className="w-5 h-5 text-elec-yellow animate-spin" />
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="text-lg font-semibold text-foreground">Designing Your Installation</h2>
-              <p className="text-xs text-muted-foreground">BS 7671 compliant circuit design in progress</p>
+              <h2 className="text-lg font-semibold text-foreground text-left">Designing Your Installation</h2>
+              <p className="text-xs text-muted-foreground text-left">BS 7671 compliant circuit design in progress</p>
             </div>
           </div>
 
           {/* Overall Progress */}
-          <div className="mb-4">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-muted-foreground">Overall Progress</span>
-              <span className="text-2xl font-bold text-elec-yellow">{Math.round(displayPercent)}%</span>
+          <div className="mb-4 text-left">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+              <span className="text-sm text-muted-foreground text-left">Overall Progress</span>
+              <span className="text-2xl font-bold text-elec-yellow text-left">{Math.round(displayPercent)}%</span>
             </div>
             <div className="w-full bg-muted/20 rounded-full h-3 overflow-hidden">
               <div 
@@ -167,16 +167,16 @@ export const DesignProcessingView = ({
           </div>
 
           {/* Current Activity */}
-          <div className="bg-muted/10 rounded-lg p-4 mb-4">
+          <div className="bg-muted/10 rounded-lg p-4 mb-4 text-left">
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 rounded-full bg-elec-yellow/10 flex items-center justify-center shrink-0 mt-0.5">
                 <span className="text-lg">{stageDetails[currentStage].icon}</span>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground mb-1">
+                <p className="text-sm font-medium text-foreground mb-1 text-left">
                   {stageDetails[currentStage].name}
                 </p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-muted-foreground text-left">
                   {stageDetails[currentStage].description}
                 </p>
               </div>
@@ -184,22 +184,22 @@ export const DesignProcessingView = ({
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="grid grid-cols-2 gap-3 mb-4 text-left">
             <div className="bg-muted/10 rounded-lg p-3">
               <div className="flex items-center gap-2 mb-2">
                 <Clock className="w-4 h-4 text-muted-foreground" />
-                <span className="text-xs text-muted-foreground">Time</span>
+                <span className="text-xs text-muted-foreground text-left">Time</span>
               </div>
-              <p className="text-lg font-semibold text-foreground">{formatTime(elapsedTime)}</p>
+              <p className="text-lg font-semibold text-foreground text-left">{formatTime(elapsedTime)}</p>
             </div>
             
             {totalCircuits > 0 && (
               <div className="bg-muted/10 rounded-lg p-3">
                 <div className="flex items-center gap-2 mb-2">
                   <Zap className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-xs text-muted-foreground">Circuits</span>
+                  <span className="text-xs text-muted-foreground text-left">Circuits</span>
                 </div>
-                <p className="text-lg font-semibold text-foreground">
+                <p className="text-lg font-semibold text-foreground text-left">
                   {estimatedCompleted}<span className="text-muted-foreground">/{totalCircuits}</span>
                 </p>
               </div>
@@ -208,9 +208,9 @@ export const DesignProcessingView = ({
 
 
           {/* Estimated Time Remaining */}
-          <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground pt-4 border-t border-border/20">
+          <div className="flex items-center justify-start gap-2 text-xs text-muted-foreground pt-4 border-t border-border/20">
             <Clock className="w-3.5 h-3.5" />
-            <span>Estimated time remaining: ~{formatTime(estimatedTimeRemaining)}</span>
+            <span className="text-left">Estimated time remaining: ~{formatTime(estimatedTimeRemaining)}</span>
           </div>
 
           {/* Retry Message */}
