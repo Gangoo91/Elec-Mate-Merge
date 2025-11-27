@@ -140,6 +140,34 @@ const transformTestingRequirements = (testingReqs: any): any => {
   return result;
 };
 
+// Transform backend expectedTests to frontend expectedTestResults format
+const transformExpectedTests = (expectedTests: any): any => {
+  if (!expectedTests) return undefined;
+  
+  return {
+    r1r2: {
+      at20C: expectedTests.r1r2?.at20C?.toFixed(3) || 'N/A',
+      at70C: expectedTests.r1r2?.at70C?.toFixed(3) || 'N/A',
+      calculation: expectedTests.r1r2?.value || 'R1+R2 = (mΩ/m × length) / 1000'
+    },
+    zs: {
+      calculated: expectedTests.zs?.expected ? `${expectedTests.zs.expected.toFixed(2)}Ω` : 'N/A',
+      maxPermitted: expectedTests.zs?.maxPermitted ? `${expectedTests.zs.maxPermitted.toFixed(2)}Ω` : 'N/A',
+      compliant: expectedTests.zs?.compliant ?? true
+    },
+    insulationResistance: {
+      testVoltage: expectedTests.insulationResistance?.testVoltage || '500V DC',
+      minResistance: expectedTests.insulationResistance?.minResistance || '≥1.0MΩ'
+    },
+    polarity: 'Verify correct polarity at all terminations',
+    rcdTest: expectedTests.rcd ? {
+      at1x: `≤${expectedTests.rcd.maxTripTimeMs}ms @ ${expectedTests.rcd.ratingmA}mA`,
+      at5x: `≤40ms @ ${expectedTests.rcd.ratingmA * 5}mA`,
+      regulation: expectedTests.rcd.regulation || 'BS 7671 Reg 612.13.2'
+    } : undefined
+  };
+};
+
 export const AIInstallationDesigner = () => {
   const [currentView, setCurrentView] = useState<'input' | 'processing' | 'results'>('input');
   const [userRequest, setUserRequest] = useState<string>('');
@@ -268,10 +296,12 @@ export const AIInstallationDesigner = () => {
               undefined,
             // Pass structured guidance object for PDF consumption
             installationGuidanceStructured: circuitGuidance?.guidance || undefined,
-            // Transform testingRequirements from Installation Agent into expectedTestResults format
-            ...(circuitGuidance?.guidance?.testingRequirements && {
-              expectedTestResults: transformTestingRequirements(circuitGuidance.guidance.testingRequirements)
-            }),
+            // Use backend expectedTests as primary source, fallback to installation guidance transform
+            expectedTestResults: circuit.expectedTests 
+              ? transformExpectedTests(circuit.expectedTests)
+              : (circuitGuidance?.guidance?.testingRequirements 
+                  ? transformTestingRequirements(circuitGuidance.guidance.testingRequirements) 
+                  : undefined),
             reasoning: circuit.reasoning,
             rcdProtected: circuit.rcdProtected,
             circuitNumber: circuit.circuitNumber,
