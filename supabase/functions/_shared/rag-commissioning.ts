@@ -80,6 +80,30 @@ function extractCommissioningKeywords(query: string): string[] {
     'eicr': ['condition report', 'observation code', 'classification', 'defect', 'observation', 'EICR', 'periodic inspection'],
     'observation': ['observation code', 'defect', 'C1', 'C2', 'C3', 'FI', 'EICR observation'],
     
+    // EICR DEFECT-SPECIFIC KEYWORDS (for precise classification)
+    'exposed': ['exposed live', 'exposed conductor', 'bare wire', 'accessible live parts', 'touchable conductor', 'live parts accessible'],
+    'missing': ['missing earth', 'no earth', 'missing bonding', 'no bonding', 'absent protection', 'no protective conductor'],
+    'damaged': ['damaged cable', 'damaged insulation', 'burnt', 'melted', 'cracked', 'deteriorated', 'thermal damage'],
+    'overheating': ['overheating', 'discoloured', 'burnt terminal', 'hot spot', 'thermal damage', 'scorch marks', 'heat damage'],
+    'inadequate': ['inadequate bonding', 'insufficient protection', 'undersized', 'incorrect rating', 'undersized cable'],
+    'reversed': ['reversed polarity', 'polarity incorrect', 'L-N swap', 'swapped conductors', 'polarity fault'],
+    'zone': ['zone 0', 'zone 1', 'zone 2', 'bathroom zone', 'ip rating', 'special location', 'wet room'],
+    
+    // NAPIT CODE TERM EXPANSIONS (map codes to searchable terms)
+    'c1-001': ['exposed live', 'accessible live parts', 'shock risk', 'live conductor exposed'],
+    'c1-002': ['no earth', 'missing earth', 'no bonding', 'unearth', 'no protective earthing'],
+    'c1-003': ['damaged cable', 'exposed conductors', 'severely damaged', 'conductor damage'],
+    'c1-004': ['reversed polarity', 'L-N swap', 'polarity reversed', 'wrong polarity'],
+    'c2-001': ['inadequate bonding', 'missing supplementary bonding', 'bathroom bonding', 'bonding missing'],
+    'c2-002': ['no rcd', 'missing rcd', 'socket without rcd', 'no RCD protection'],
+    'c2-003': ['high zs', 'zs exceeded', 'disconnection time exceeded', 'earth fault loop high'],
+    'c2-004': ['overloaded circuit', 'cable undersized', 'overload', 'circuit overload'],
+    'c2-005': ['bathroom zone', 'equipment in zones', 'zone breach', 'special location breach'],
+    'c3-001': ['no spd', 'missing spd', 'surge protection', 'SPD absent'],
+    'c3-002': ['no afdd', 'missing afdd', 'arc fault', 'AFDD absent'],
+    'c3-003': ['old wiring colours', 'old colours', 'red black', 'colour identification'],
+    'c3-004': ['inadequate labelling', 'poor labelling', 'no labels', 'missing schedules'],
+    
     // EQUIPMENT KEYWORDS
     'consumer': ['consumer unit', 'distribution board', 'CU', 'DB', 'main switch', 'consumer unit', 'fuseboard'],
     'mcb': ['circuit breaker', 'MCB', 'RCBO', 'Type B', 'Type C', 'overcurrent', 'miniature circuit breaker'],

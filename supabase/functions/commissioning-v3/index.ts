@@ -15,6 +15,7 @@ import {
 import { callOpenAI } from '../_shared/ai-providers.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
+import { NAPIT_CODES, EICR_CODE_DEFINITIONS } from '../_shared/eicr-coding-constants.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -1205,6 +1206,11 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
         }
       };
       
+      // Build NAPIT code reference dynamically from constants
+      const napitCodeReference = Object.entries(NAPIT_CODES)
+        .map(([key, value]) => `• ${value.code}: ${value.description} (Reg ${value.regulation})`)
+        .join('\n');
+      
       const photoAnalysisPrompt = `You are a BS 7671:2018+A3:2024 certified EICR Inspector with 30 years experience.
 
 Write all responses in UK English (British spelling and terminology).
@@ -1213,12 +1219,53 @@ Write all responses in UK English (British spelling and terminology).
 
 You MUST analyse this installation photo against BS 7671:2018+A3:2024, Guidance Note 3 (GN3), and Best Practice Guide 4.
 
-**CLASSIFICATION CODES:**
-- **C1 (Danger Present)**: Immediate danger to persons or property. Requires immediate remedial action. Examples: Exposed live parts, lack of earthing, reversed polarity.
-- **C2 (Potentially Dangerous)**: Potentially dangerous - urgent remedial action required. Examples: Socket without RCD, high Zs reading, inadequate bonding.
-- **C3 (Improvement Recommended)**: Improvement recommended. Does not comply with current BS 7671 but not immediately dangerous. Examples: Old wiring colours, lack of SPD, inadequate labelling.
-- **FI (Further Investigation)**: Cannot confirm safety without further investigation. Examples: Concealed wiring cannot be verified, inaccessible distribution board.
-- **NONE**: Installation appears compliant with BS 7671. No defects observed. This is a VALID and IMPORTANT classification - use it when appropriate.
+**NAPIT CODE REFERENCE - CLASSIFY USING THESE SPECIFIC CODES:**
+
+**C1 - DANGER PRESENT (Requires immediate isolation):**
+${Object.entries(NAPIT_CODES).filter(([k, v]) => v.category === 'C1').map(([k, v]) => `• ${v.code}: ${v.description} (Reg ${v.regulation})`).join('\n')}
+
+**C2 - POTENTIALLY DANGEROUS (Urgent action required):**
+${Object.entries(NAPIT_CODES).filter(([k, v]) => v.category === 'C2').map(([k, v]) => `• ${v.code}: ${v.description} (Reg ${v.regulation})`).join('\n')}
+
+**C3 - IMPROVEMENT RECOMMENDED:**
+${Object.entries(NAPIT_CODES).filter(([k, v]) => v.category === 'C3').map(([k, v]) => `• ${v.code}: ${v.description} (Reg ${v.regulation})`).join('\n')}
+
+**FI - FURTHER INVESTIGATION:**
+${Object.entries(NAPIT_CODES).filter(([k, v]) => v.category === 'FI').map(([k, v]) => `• ${v.code}: ${v.description} (Reg ${v.regulation})`).join('\n')}
+
+**NONE**: Installation appears compliant with BS 7671. No defects observed. This is a VALID and IMPORTANT classification - use it when appropriate.
+
+**ENVIRONMENTAL CONTEXT - THINK THROUGH:**
+
+Before classifying, assess the LOCATION:
+
+🛁 **BATHROOM/WET ROOM:**
+- Zone 0: Only SELV ≤12V AC allowed
+- Zone 1: IPX4 minimum, only fixed equipment, 30mA RCD mandatory
+- Zone 2: IPX4 minimum, switches allowed if shaver socket, 30mA RCD mandatory
+- Check Reg 701 requirements - violations are typically C2
+
+🏠 **CONSUMER UNIT AREA:**
+- Non-combustible enclosure required for domestic (Reg 421.1.201)
+- Correct labelling essential (Reg 514.9.1)
+- Check RCD/SPD presence for 18th Edition compliance
+
+🌧️ **OUTDOOR/EXTERNAL:**
+- IP65/IP66 minimum for equipment exposed to rain
+- All circuits must have 30mA RCD protection (Reg 411.3.3)
+- Weather-resistant enclosures required
+
+📅 **INSTALLATION AGE CONTEXT:**
+- Pre-2008: Old colours acceptable (brown/blue) - C3 if no identification
+- Post-2018 (18th Edition): SPD required - absence is C3
+- Post-2024 (Amendment 3): AFDD recommended - absence is C3 for new installations
+
+**CLASSIFICATION DECISION FLOW:**
+1. Is there immediate shock/fire risk? → C1 (use specific C1-xxx code)
+2. Could it become dangerous under foreseeable conditions? → C2 (use specific C2-xxx code)
+3. Non-compliant with current BS 7671 but not dangerous? → C3 (use specific C3-xxx code)
+4. Cannot determine without further testing/access? → FI (use specific FI-xxx code)
+5. Compliant and safe? → NONE
 
 **CRITICAL: The "NONE" classification adds credibility to your analysis.** If you classify everything as a defect, electricians will not trust you. Be honest and accurate.
 
