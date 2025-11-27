@@ -20,11 +20,11 @@ const ClientConversationsCard = ({ conversations }: ClientConversationsCardProps
           {/* Opening Script */}
           {conversations.opening && (
             <AccordionItem value="opening">
-              <AccordionTrigger className="hover:no-underline touch-manipulation">
-                <span className="font-medium text-white text-base sm:text-sm">Opening Pitch</span>
+              <AccordionTrigger className="hover:no-underline touch-manipulation min-h-[56px]">
+                <span className="font-medium text-white text-base sm:text-sm">💬 Opening Pitch</span>
               </AccordionTrigger>
               <AccordionContent>
-                <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30">
+                <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30 text-left">
                   <p className="text-base sm:text-sm text-white/90 italic leading-relaxed whitespace-pre-line">
                     {conversations.opening}
                   </p>
@@ -36,11 +36,11 @@ const ClientConversationsCard = ({ conversations }: ClientConversationsCardProps
           {/* Too Expensive Objection */}
           {conversations.tooExpensive && (
             <AccordionItem value="too-expensive">
-              <AccordionTrigger className="hover:no-underline touch-manipulation">
-                <span className="font-medium text-white text-base sm:text-sm">"That seems high" Objection</span>
+              <AccordionTrigger className="hover:no-underline touch-manipulation min-h-[56px]">
+                <span className="font-medium text-white text-base sm:text-sm">💰 "That seems high" Objection</span>
               </AccordionTrigger>
               <AccordionContent>
-                <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30">
+                <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30 text-left">
                   <p className="text-base sm:text-sm text-white/90 italic leading-relaxed whitespace-pre-line">
                     {conversations.tooExpensive}
                   </p>
@@ -52,11 +52,11 @@ const ClientConversationsCard = ({ conversations }: ClientConversationsCardProps
           {/* Discount Request */}
           {conversations.discountRequest && (
             <AccordionItem value="discount">
-              <AccordionTrigger className="hover:no-underline touch-manipulation">
-                <span className="font-medium text-white text-base sm:text-sm">"Can you do cheaper?" Negotiation</span>
+              <AccordionTrigger className="hover:no-underline touch-manipulation min-h-[56px]">
+                <span className="font-medium text-white text-base sm:text-sm">🤝 "Can you do cheaper?" Negotiation</span>
               </AccordionTrigger>
               <AccordionContent>
-                <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30">
+                <div className="p-4 sm:p-3 rounded-lg bg-background/50 border border-border/30 text-left">
                   <p className="text-base sm:text-sm text-white/90 italic leading-relaxed whitespace-pre-line">
                     {conversations.discountRequest}
                   </p>

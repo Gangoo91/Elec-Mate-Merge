@@ -44,28 +44,55 @@ const PaymentTermsCard = ({ paymentTerms, totalAmount }: PaymentTermsCardProps) 
         {paymentTerms.paymentMilestones && paymentTerms.paymentMilestones.length > 0 && (
           <div>
             <div className="text-base sm:text-sm font-medium text-white mb-2">Payment Milestones</div>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Stage</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
-                  <TableHead>Trigger</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {paymentTerms.paymentMilestones.map((milestone: any, idx: number) => (
-                  <TableRow key={idx}>
-                    <TableCell className="font-medium text-white text-base sm:text-sm">{milestone.stage}</TableCell>
-                    <TableCell className="text-right font-mono text-white text-base sm:text-sm">
+            
+            {/* Mobile: Stacked Cards */}
+            <div className="space-y-3 sm:hidden">
+              {paymentTerms.paymentMilestones.map((milestone: any, idx: number) => (
+                <div key={idx} className="p-4 rounded-lg bg-background/50 border border-border/30 text-left space-y-2">
+                  <div className="font-medium text-white text-base">
+                    {milestone.stage}
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-white/70 text-sm">Amount:</span>
+                    <span className="font-mono text-white text-base font-medium">
                       £{milestone.amount.toFixed(2)} ({milestone.percentage}%)
-                    </TableCell>
-                    <TableCell className="text-base sm:text-sm text-white">
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-white/70 text-sm">Trigger:</span>
+                    <span className="text-white text-sm flex-1">
                       {milestone.trigger}
-                    </TableCell>
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop: Table */}
+            <div className="hidden sm:block">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Stage</TableHead>
+                    <TableHead className="text-right">Amount</TableHead>
+                    <TableHead>Trigger</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {paymentTerms.paymentMilestones.map((milestone: any, idx: number) => (
+                    <TableRow key={idx}>
+                      <TableCell className="font-medium text-white text-base sm:text-sm">{milestone.stage}</TableCell>
+                      <TableCell className="text-right font-mono text-white text-base sm:text-sm">
+                        £{milestone.amount.toFixed(2)} ({milestone.percentage}%)
+                      </TableCell>
+                      <TableCell className="text-base sm:text-sm text-white">
+                        {milestone.trigger}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </div>
         )}
 

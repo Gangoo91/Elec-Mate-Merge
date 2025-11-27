@@ -63,7 +63,7 @@ const JobComplexityCard = ({ complexity }: JobComplexityCardProps) => {
         {complexity.factors && complexity.factors.length > 0 && (
           <div>
             <div className="text-lg sm:text-base font-medium text-white mb-2">Contributing Factors:</div>
-            <ul className="space-y-1">
+            <ul className="space-y-2">
               {complexity.factors.map((factor: string, idx: number) => (
                 <li key={idx} className="text-base sm:text-sm text-white flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>

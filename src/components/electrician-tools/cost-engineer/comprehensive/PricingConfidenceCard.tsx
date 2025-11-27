@@ -42,10 +42,10 @@ const PricingConfidenceCard = ({ confidence }: PricingConfidenceCardProps) => {
               {confidence.materials.reason}
             </p>
             {confidence.materials.factors && (
-              <ul className="mt-2 space-y-0.5">
+              <ul className="mt-2 space-y-2 text-left">
                 {confidence.materials.factors.map((factor: string, idx: number) => (
-                  <li key={idx} className="text-base sm:text-sm text-white flex items-start gap-1">
-                    <span>•</span>
+                  <li key={idx} className="text-base sm:text-sm text-white flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
                     <span>{factor}</span>
                   </li>
                 ))}
@@ -68,10 +68,10 @@ const PricingConfidenceCard = ({ confidence }: PricingConfidenceCardProps) => {
               {confidence.labour.reason}
             </p>
             {confidence.labour.factors && (
-              <ul className="mt-2 space-y-0.5">
+              <ul className="mt-2 space-y-2 text-left">
                 {confidence.labour.factors.map((factor: string, idx: number) => (
-                  <li key={idx} className="text-base sm:text-sm text-white flex items-start gap-1">
-                    <span>•</span>
+                  <li key={idx} className="text-base sm:text-sm text-white flex items-start gap-2">
+                    <span className="text-elec-yellow">•</span>
                     <span>{factor}</span>
                   </li>
                 ))}
