@@ -13,28 +13,28 @@ export const InputHeroBar = () => {
         }}
       />
       
-      <div className="relative px-4 sm:px-6 py-6">
+      <div className="relative px-3 sm:px-4 py-4 sm:py-6">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex items-start gap-3 flex-1">
-              <div className="p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-                <Zap className="h-6 w-6 text-elec-yellow" />
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-start gap-2 sm:gap-3 flex-1">
+              <div className="p-2 sm:p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
+                <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
               </div>
               <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <h1 className="text-2xl sm:text-3xl font-bold text-white">
+                <div className="flex items-center gap-2 mb-0.5">
+                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
                     Commissioning Specialist
                   </h1>
                 </div>
-                <p className="text-sm text-white/70 mt-1">
+                <p className="text-xs sm:text-sm text-white/80 mt-0.5 hidden sm:block">
                   Expert testing procedures for safe, compliant installations
                 </p>
               </div>
             </div>
             
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">
-              <Shield className="h-3.5 w-3.5 text-elec-yellow" />
-              <span className="text-xs font-semibold text-elec-yellow">BS 7671</span>
+            <div className="flex items-center gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">
+              <Shield className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-elec-yellow" />
+              <span className="text-[10px] sm:text-xs font-semibold text-elec-yellow">BS 7671</span>
             </div>
           </div>
         </div>

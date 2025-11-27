@@ -143,20 +143,20 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
       {/* Hero Bar */}
       <InputHeroBar />
 
-      <form className="space-y-6 px-4 sm:px-6" onSubmit={handleSubmit}>
+      <form className="space-y-4 px-2 sm:px-4" onSubmit={handleSubmit}>
         {/* Agent Inbox */}
         <AgentInbox currentAgent="commissioning" onTaskAccept={handleTaskAccept} />
 
         {/* Main Testing Description Card */}
         <Card className="bg-elec-card border-elec-yellow/20 hover:border-elec-yellow/30 transition-colors">
-          <div className="p-5">
-            <div className="flex items-start gap-3 mb-4">
+          <div className="p-3 sm:p-4">
+            <div className="flex items-start gap-2 sm:gap-3 mb-3">
               <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex-shrink-0">
                 <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-lg sm:text-xl font-bold text-white">What needs testing?</h3>
-                <p className="text-xs sm:text-sm text-white/70 mt-1">
+                <h3 className="text-base sm:text-lg font-bold text-white">What needs testing?</h3>
+                <p className="text-xs sm:text-sm text-white/80 mt-0.5">
                   Describe the installation and required tests
                 </p>
               </div>
@@ -177,23 +177,23 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="e.g., Testing procedure for new 18th Edition consumer unit with 12 circuits..."
-                className="min-h-[120px] sm:min-h-[140px] text-base resize-none focus:ring-2 focus:ring-elec-yellow border-elec-yellow/20 bg-elec-dark/40 relative"
+                className="min-h-[140px] sm:min-h-[120px] text-base resize-none focus:ring-2 focus:ring-elec-yellow border-elec-yellow/20 bg-elec-dark/40 relative"
                 maxLength={500}
                 autoComplete="off"
                 spellCheck={true}
               />
             </div>
             
-            <div className="text-xs text-white/60 text-right mt-2">
+            <div className="text-xs text-white/70 text-right mt-2">
               <span className="text-elec-yellow font-medium">{prompt.length}</span>/500 
-              {prompt.length < 50 && <span className="ml-2 text-elec-yellow/70">• 50+ chars recommended</span>}
+              {prompt.length < 50 && <span className="ml-2 text-elec-yellow/80">• 50+ chars recommended</span>}
             </div>
           </div>
         </Card>
 
         {/* Installation Type Selector */}
         <Card className="bg-elec-card border-elec-yellow/20">
-          <div className="p-5">
+          <div className="p-3 sm:p-4">
             <InlineInstallationTypeSelector
               selectedType={selectedType}
               onChange={setSelectedType}
@@ -218,7 +218,7 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
             <div className="mt-3 p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                <p className="text-xs text-white font-medium">Photo uploaded - AI will analyse for safety issues and compliance</p>
+                <p className="text-xs text-white/90 font-medium">Photo uploaded - AI will analyse for safety issues and compliance</p>
               </div>
             </div>
           )}
@@ -299,7 +299,7 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
                     <IconComponent className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <h5 className="font-semibold text-sm text-white">{scenario.title}</h5>
                   </div>
-                  <p className="text-xs text-white/70 line-clamp-3">
+                   <p className="text-xs text-white/80 line-clamp-3">
                     {scenario.prompt}
                   </p>
                 </Card>
@@ -309,7 +309,7 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
         </InputCardSection>
 
         {/* Generate Button */}
-        <div className="sticky bottom-0 pb-6 pt-4 bg-gradient-to-t from-elec-dark via-elec-dark to-transparent">
+        <div className="sticky bottom-0 pb-4 sm:pb-6 pt-3 sm:pt-4 bg-gradient-to-t from-elec-dark via-elec-dark to-transparent">
           <Button 
             type="submit"
             size="lg"
