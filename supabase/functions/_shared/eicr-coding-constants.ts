@@ -281,12 +281,11 @@ export const CONTEXT_ESCALATION_RULES = {
  * Source attribution for compliance and traceability
  */
 export const SOURCE_ATTRIBUTION = {
-  primary: 'Electrical Safety First Best Practice Guide 4 (Issue 4)',
-  secondary: 'IET Guidance Note 3: Inspection & Testing (BS 7671:2018+A3:2024)',
-  regulation: 'BS 7671:2018+A3:2024 Requirements for Electrical Installations',
-  website: 'https://www.electricalsafetyfirst.org.uk'
+  primary: 'BS 7671:2018+A3:2024 Requirements for Electrical Installations',
+  secondary: 'Electrical Safety First Best Practice Guide 4 (Issue 4)',
+  website: 'https://electrical.theiet.org'
 };
 
-// Aliases for compatibility - BPG4 IS the NAPIT/EICR standard
-export const NAPIT_CODES = BPG4_DEFECT_EXAMPLES;
+// Aliases for compatibility
 export const EICR_CODE_DEFINITIONS = BPG4_CLASSIFICATION_CODES;
+export const BS7671_DEFECT_EXAMPLES = BPG4_DEFECT_EXAMPLES;

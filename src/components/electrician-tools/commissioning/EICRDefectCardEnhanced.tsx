@@ -70,25 +70,25 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
       color: 'bg-red-500',
       textColor: 'text-red-100',
       borderColor: 'border-red-500',
-      bgLight: 'bg-red-500/10'
+      bgLight: 'bg-elec-dark'
     },
     C2: {
       color: 'bg-orange-500',
       textColor: 'text-orange-100',
       borderColor: 'border-orange-500',
-      bgLight: 'bg-orange-500/10'
+      bgLight: 'bg-elec-dark'
     },
     C3: {
       color: 'bg-amber-500',
       textColor: 'text-amber-100',
       borderColor: 'border-amber-500',
-      bgLight: 'bg-amber-500/10'
+      bgLight: 'bg-elec-dark'
     },
     FI: {
-      color: 'bg-purple-500/50',
-      textColor: 'text-purple-100',
-      borderColor: 'border-purple-500/30',
-      bgLight: 'bg-purple-500/5'
+      color: 'bg-elec-yellow',
+      textColor: 'text-black',
+      borderColor: 'border-elec-yellow',
+      bgLight: 'bg-elec-dark'
     }
   };
 
@@ -184,19 +184,19 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
 
       {/* ALWAYS EXPANDED: Make Safe Now */}
       {defect.makingSafe && (
-        <div className="px-5 sm:px-6 pb-5">
-          <div className="bg-gradient-to-r from-red-500/20 to-red-600/20 border-2 border-red-500 rounded-lg p-5 sm:p-6 space-y-4 shadow-xl">
+        <div className="px-2 sm:px-4 pb-5">
+          <div className="bg-elec-dark border-2 border-elec-yellow rounded-lg p-4 sm:p-5 space-y-4">
             <div className="flex items-center gap-3">
               <AlertTriangle className="h-7 w-7 text-red-400" />
-              <h3 className="text-2xl font-semibold text-white">🚨 Make Safe Now</h3>
+              <h3 className="text-xl sm:text-2xl font-semibold text-white text-left">🚨 Make Safe Now</h3>
             </div>
             <div className="space-y-3">
               {defect.makingSafe.immediateSteps.map((step, idx) => (
-                <div key={idx} className="flex flex-col sm:flex-row items-center sm:items-start gap-3 bg-elec-dark/80 p-5 rounded-lg backdrop-blur-sm min-h-[60px]">
+                <div key={idx} className="flex items-start gap-3 bg-elec-dark/50 p-4 sm:p-5 rounded-lg min-h-[56px]">
                   <span className="flex-shrink-0 w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center text-base font-bold">
                     {idx + 1}
                   </span>
-                  <p className="text-lg text-white leading-loose flex-1 text-center sm:text-left">{step}</p>
+                  <p className="text-base sm:text-lg text-white leading-relaxed flex-1 text-left">{step}</p>
                 </div>
               ))}
             </div>
@@ -206,7 +206,7 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
               </Badge>
             )}
             {defect.makingSafe.signageRequired && (
-              <p className="text-lg text-white leading-relaxed">
+              <p className="text-base sm:text-lg text-white leading-relaxed text-left">
                 <span className="font-semibold">Signage: </span>{defect.makingSafe.signageRequired}
               </p>
             )}
@@ -216,34 +216,34 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
 
       {/* ALWAYS EXPANDED: Client Communication */}
       {defect.clientCommunication && (
-        <div className="px-5 sm:px-6 pb-5">
-          <div className="bg-gradient-to-r from-blue-500/20 to-blue-600/20 border-2 border-blue-500 rounded-lg p-5 sm:p-6 space-y-4 shadow-xl">
+        <div className="px-2 sm:px-4 pb-5">
+          <div className="bg-elec-dark border-2 border-elec-yellow rounded-lg p-4 sm:p-5 space-y-4">
             <div className="flex items-center gap-3">
-              <MessageSquare className="h-7 w-7 text-blue-400" />
-              <h3 className="text-2xl font-semibold text-white">💬 Tell the Client</h3>
+              <MessageSquare className="h-7 w-7 text-elec-yellow" />
+              <h3 className="text-xl sm:text-2xl font-semibold text-white text-left">💬 Tell the Client</h3>
             </div>
             
-            <div className="space-y-5 bg-elec-dark/80 p-5 rounded-lg backdrop-blur-sm">
+            <div className="space-y-5">
               {defect.clientCommunication.plainLanguage && (
                 <div>
-                  <p className="text-base text-white font-semibold mb-2">What's wrong:</p>
-                  <p className="text-lg text-white leading-loose">{defect.clientCommunication.plainLanguage}</p>
+                  <p className="text-base text-white font-semibold mb-2 text-left">What's wrong:</p>
+                  <p className="text-base sm:text-lg text-white leading-relaxed text-left">{defect.clientCommunication.plainLanguage}</p>
                 </div>
               )}
               
               {defect.clientCommunication.severityExplanation && (
                 <div>
-                  <p className="text-base text-white font-semibold mb-2">Why it matters:</p>
-                  <p className="text-lg text-white leading-loose">{defect.clientCommunication.severityExplanation}</p>
+                  <p className="text-base text-white font-semibold mb-2 text-left">Why it matters:</p>
+                  <p className="text-base sm:text-lg text-white leading-relaxed text-left">{defect.clientCommunication.severityExplanation}</p>
                 </div>
               )}
               
               {defect.clientCommunication.risksIfUnfixed && defect.clientCommunication.risksIfUnfixed.length > 0 && (
                 <div>
-                  <p className="text-base text-white font-semibold mb-2">If not fixed:</p>
+                  <p className="text-base text-white font-semibold mb-2 text-left">If not fixed:</p>
                   <ul className="space-y-2">
                     {defect.clientCommunication.risksIfUnfixed.map((risk, idx) => (
-                      <li key={idx} className="text-lg text-white flex items-start gap-2 leading-loose">
+                      <li key={idx} className="text-base sm:text-lg text-white flex items-start gap-2 leading-relaxed text-left">
                         <span className="text-orange-400 text-xl">⚠</span>
                         <span>{risk}</span>
                       </li>
@@ -254,11 +254,11 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
             </div>
             
             <div className="flex flex-wrap items-center gap-3">
-              <Badge className="bg-blue-500 text-white border-none text-base px-4 py-2">
+              <Badge className="bg-elec-yellow text-black border-none text-base px-4 py-2">
                 Urgency: {defect.clientCommunication.urgencyLevel.replace('_', ' ')}
               </Badge>
               {defect.clientCommunication.estimatedCost && (
-                <Badge variant="outline" className="text-white text-base px-4 py-2">
+                <Badge variant="outline" className="text-white border-elec-yellow/50 text-base px-4 py-2">
                   Est. Cost: {defect.clientCommunication.estimatedCost}
                 </Badge>
               )}

@@ -15,7 +15,7 @@ import {
 import { callOpenAI } from '../_shared/ai-providers.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
-import { NAPIT_CODES, EICR_CODE_DEFINITIONS } from '../_shared/eicr-coding-constants.ts';
+import { EICR_CODE_DEFINITIONS, BS7671_DEFECT_EXAMPLES } from '../_shared/eicr-coding-constants.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -97,6 +97,11 @@ serve(async (req) => {
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
     if (!OPENAI_API_KEY) {
       throw new Error('OPENAI_API_KEY not configured');
+    }
+
+    const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
+    if (!GEMINI_API_KEY) {
+      throw new Error('GEMINI_API_KEY not configured');
     }
 
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
@@ -1364,10 +1369,6 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
         }
       };
       
-      // Build NAPIT code reference dynamically from constants
-      const napitCodeReference = Object.entries(NAPIT_CODES)
-        .map(([key, value]) => `• ${value.code}: ${value.description} (Reg ${value.regulation})`)
-        .join('\n');
       
       const photoAnalysisPrompt = `You are a BS 7671:2018+A3:2024 certified EICR Inspector with 30 years experience.
 
@@ -1375,21 +1376,37 @@ Write all responses in UK English (British spelling and terminology).
 
 📸 EICR PHOTO ANALYSIS INSTRUCTIONS:
 
-You MUST analyse this installation photo against BS 7671:2018+A3:2024, Guidance Note 3 (GN3), and Best Practice Guide 4.
+You MUST analyse this installation photo against BS 7671:2018+A3:2024.
 
-**NAPIT CODE REFERENCE - CLASSIFY USING THESE SPECIFIC CODES:**
+**BS 7671 CLASSIFICATION CODES:**
 
 **C1 - DANGER PRESENT (Requires immediate isolation):**
-${Object.entries(NAPIT_CODES).filter(([k, v]) => v.category === 'C1').map(([k, v]) => `• ${v.code}: ${v.description} (Reg ${v.regulation})`).join('\n')}
+- Exposed live parts accessible to touch (Reg 416.2.1)
+- Conductive parts have become live (Reg 411.3.1.1)
+- Incorrect polarity (Reg 612.6)
+- Missing basic protection (Reg 416.2)
+- Overheating connections causing fire risk (Reg 526.1)
 
 **C2 - POTENTIALLY DANGEROUS (Urgent action required):**
-${Object.entries(NAPIT_CODES).filter(([k, v]) => v.category === 'C2').map(([k, v]) => `• ${v.code}: ${v.description} (Reg ${v.regulation})`).join('\n')}
+- Absence of reliable earthing (Reg 411.3.1.1, 542.1.1)
+- Earth fault loop impedance (Zs) exceeds maximum (Reg 411.4.4, Table 41.3)
+- Insulation resistance less than 1 MΩ (Reg 612.3.2)
+- Absence of RCD protection for bathroom circuits (Reg 701.512.3)
+- Inappropriate IP rating for location (Reg 416.2, Section 701)
+- Circuit overloaded - cable undersized (Reg 433.1.1)
 
 **C3 - IMPROVEMENT RECOMMENDED:**
-${Object.entries(NAPIT_CODES).filter(([k, v]) => v.category === 'C3').map(([k, v]) => `• ${v.code}: ${v.description} (Reg ${v.regulation})`).join('\n')}
+- Absence of RCD protection for general sockets (Reg 411.3.3)
+- Absence of RCD for cables <50mm depth (Reg 522.6.202, 522.6.203)
+- Old wiring colours without identification (Reg 514.3.1)
+- No surge protection device (SPD) (Reg 443.4)
+- Inadequate circuit labelling (Reg 514.8.1, 514.9.1)
 
 **FI - FURTHER INVESTIGATION:**
-${Object.entries(NAPIT_CODES).filter(([k, v]) => v.category === 'FI').map(([k, v]) => `• ${v.code}: ${v.description} (Reg ${v.regulation})`).join('\n')}
+- Supply characteristics unknown (Reg 313.1)
+- Cannot verify concealed wiring (Reg 611.3)
+- Earth electrode resistance unknown (Reg 542.2.3)
+- Inaccessible for testing (Reg 132.12)
 
 **NONE**: Installation appears compliant with BS 7671. No defects observed. This is a VALID and IMPORTANT classification - use it when appropriate.
 
@@ -1419,10 +1436,10 @@ Before classifying, assess the LOCATION:
 - Post-2024 (Amendment 3): AFDD recommended - absence is C3 for new installations
 
 **CLASSIFICATION DECISION FLOW:**
-1. Is there immediate shock/fire risk? → C1 (use specific C1-xxx code)
-2. Could it become dangerous under foreseeable conditions? → C2 (use specific C2-xxx code)
-3. Non-compliant with current BS 7671 but not dangerous? → C3 (use specific C3-xxx code)
-4. Cannot determine without further testing/access? → FI (use specific FI-xxx code)
+1. Is there immediate shock/fire risk? → C1
+2. Could it become dangerous under foreseeable conditions? → C2
+3. Non-compliant with current BS 7671 but not dangerous? → C3
+4. Cannot determine without further testing/access? → FI
 5. Compliant and safe? → NONE
 
 **CRITICAL: The "NONE" classification adds credibility to your analysis.** If you classify everything as a defect, electricians will not trust you. Be honest and accurate.
@@ -1449,8 +1466,6 @@ ${testContext}
 
 **OUTPUT REQUIREMENTS:**
 - Reference specific BS 7671 regulation numbers (e.g., "411.3.3", "701.512.2")
-- Reference GN3 sections where applicable (e.g., "GN3 Section 2.7.2")
-- Reference Best Practice Guide 4 recommendations where relevant
 - Distinguish between "making safe" (immediate isolation/barriers) and "rectification" (proper fix)
 - Provide client communication in plain language
 - **RECTIFICATION MUST BE HIGHLY TECHNICAL:**
@@ -1462,22 +1477,22 @@ ${testContext}
   * Reference manufacturer datasheets or standards where relevant
 - Include verification tests with specific acceptance criteria
 - Be explicit about confidence level and reasoning
+- Include "Why C2?" reasoning with bullet points citing specific BS 7671 regulations
 
 **MANDATORY FIELDS - YOU MUST COMPLETE ALL OF THESE:**
 
 FOR ALL CLASSIFICATIONS (including NONE):
 ✅ classification
-✅ classificationReasoning (with specific BS 7671 reg numbers)
+✅ classificationReasoningBullets (array of strings explaining WHY this classification, cite BS 7671 regs)
 ✅ defectSummary (or compliant summary for NONE)
 ✅ hazardExplanation (or safety confirmation for NONE)
-✅ bs7671Regulations (array with at least 2 regulations)
+✅ bs7671Regulations (array with at least 2 regulations: { regulation: "411.3.3", explanation: "Why this applies" })
 ✅ confidenceAssessment (level, score 0-100, reasoning)
 ✅ contextFactors (location, RCD status, cable size if visible, IP rating, zones)
 
 FOR C1, C2, C3, FI CLASSIFICATIONS (defects found):
 ✅ makingSafe (immediateSteps array, isolationRequired boolean, signageRequired string)
 ✅ clientCommunication (plainLanguage, severityExplanation, risksIfUnfixed array, urgencyLevel, estimatedCost)
-✅ gn3Guidance (section, content)
 ✅ rectification (steps array with min 3 items, requiredMaterials array, estimatedTime)
 ✅ verificationProcedure (tests array min 2 items, acceptanceCriteria array min 2 items)
 
@@ -1509,45 +1524,100 @@ Determine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehe
         }
       ];
 
-      // Retry logic for incomplete responses
-      let aiResponse;
-      let eicrData;
-      let attempts = 0;
-      const maxAttempts = 2;
-
-      while (attempts < maxAttempts) {
-        attempts++;
-        logger.info(`🔄 EICR Analysis attempt ${attempts}/${maxAttempts}`);
-
-        aiResponse = await callOpenAI(
-          {
-            messages: photoMessages,
-            model: 'gpt-4o-mini', // Vision model required
-            tools: [eicrPhotoAnalysisTool],
-            tool_choice: { type: 'function', function: { name: 'provide_eicr_photo_analysis' } }
-          },
-          OPENAI_API_KEY!,
-          120000
-        );
-
-        const toolCall = aiResponse.toolCalls?.[0];
-        
-        if (!toolCall?.function?.arguments) {
-          if (attempts < maxAttempts) {
-            logger.warn('⚠️ No tool call response, retrying...');
-            continue;
+      // Call Gemini Flash 2.5 for photo analysis (better at vision than GPT-4o-mini)
+      logger.info('🔮 Calling Gemini Flash 2.5 for photo analysis...');
+      const geminiResponse = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': GEMINI_API_KEY!
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [
+              { text: `${photoAnalysisPrompt}\n\nAnalyse this electrical installation photo and provide EICR defect coding:\n\n${effectiveQuery}\n\nDetermine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehensive details.` },
+              {
+                inline_data: {
+                  mime_type: imageUrl.startsWith('data:') 
+                    ? imageUrl.split(',')[0].split(':')[1].split(';')[0]
+                    : 'image/jpeg',
+                  data: imageUrl.startsWith('data:') 
+                    ? imageUrl.split(',')[1] 
+                    : await (await fetch(imageUrl)).arrayBuffer().then(b => btoa(String.fromCharCode(...new Uint8Array(b))))
+                }
+              }
+            ]
+          }],
+          generationConfig: {
+            temperature: 0.2,
+            topK: 40,
+            topP: 0.95,
+            maxOutputTokens: 4096,
           }
-          throw new Error('No EICR analysis tool call returned from AI');
-        }
+        })
+      });
 
-        try {
-          eicrData = JSON.parse(toolCall.function.arguments);
+      if (!geminiResponse.ok) {
+        const errorText = await geminiResponse.text();
+        logger.error('❌ Gemini API error:', errorText);
+        throw new Error(`Gemini API error: ${geminiResponse.status} - ${errorText}`);
+      }
 
-          // Validate completeness
-          const validationErrors: string[] = [];
+      const geminiData = await geminiResponse.json();
+      const geminiText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
+      
+      if (!geminiText) {
+        throw new Error('No response from Gemini API');
+      }
 
-          if (!eicrData.classification) validationErrors.push('Missing classification');
-          if (!eicrData.classificationReasoning) validationErrors.push('Missing classificationReasoning');
+      logger.info('✅ Gemini analysis complete, parsing response...');
+
+      // Extract JSON from Gemini response (may be wrapped in markdown code blocks)
+      let eicrData;
+      try {
+        const jsonMatch = geminiText.match(/```json\n([\s\S]*?)\n```/) || geminiText.match(/\{[\s\S]*\}/);
+        const jsonText = jsonMatch ? (jsonMatch[1] || jsonMatch[0]) : geminiText;
+        eicrData = JSON.parse(jsonText);
+      } catch (parseError) {
+        logger.error('❌ Failed to parse Gemini response:', geminiText.substring(0, 500));
+        throw new Error('Failed to parse Gemini response as JSON');
+      }
+
+      // Validate completeness
+      const validationErrors: string[] = [];
+
+      if (!eicrData.classification) validationErrors.push('Missing classification');
+      if (!eicrData.classificationReasoningBullets || !Array.isArray(eicrData.classificationReasoningBullets)) {
+        validationErrors.push('Missing classificationReasoningBullets array');
+      }
+      if (!eicrData.defectSummary && !eicrData.compliantSummary) validationErrors.push('Missing defectSummary or compliantSummary');
+      if (!eicrData.hazardExplanation) validationErrors.push('Missing hazardExplanation');
+      if (!eicrData.bs7671Regulations || !Array.isArray(eicrData.bs7671Regulations) || eicrData.bs7671Regulations.length < 1) {
+        validationErrors.push('Missing or insufficient bs7671Regulations');
+      }
+      if (!eicrData.confidenceAssessment) validationErrors.push('Missing confidenceAssessment');
+
+      // Additional validation for defect classifications (not NONE)
+      if (eicrData.classification !== 'NONE') {
+        if (!eicrData.makingSafe) validationErrors.push('Missing makingSafe (required for defects)');
+        if (!eicrData.clientCommunication) validationErrors.push('Missing clientCommunication (required for defects)');
+        if (!eicrData.rectification) validationErrors.push('Missing rectification (required for defects)');
+        if (!eicrData.verificationProcedure) validationErrors.push('Missing verificationProcedure (required for defects)');
+      }
+
+      // Validation for NONE (compliant)
+      if (eicrData.classification === 'NONE') {
+        if (!eicrData.compliantSummary) validationErrors.push('Missing compliantSummary (required for NONE)');
+        if (!eicrData.goodPracticeNotes) validationErrors.push('Missing goodPracticeNotes (required for NONE)');
+      }
+
+      if (validationErrors.length > 0) {
+        logger.error('❌ Validation errors:', validationErrors);
+        logger.error('Received data:', JSON.stringify(eicrData, null, 2).substring(0, 1000));
+        throw new Error(`Incomplete EICR analysis: ${validationErrors.join(', ')}`);
+      }
+
+      logger.info('✅ EICR analysis validation passed');
           if (!eicrData.defectSummary) validationErrors.push('Missing defectSummary');
           if (!eicrData.hazardExplanation) validationErrors.push('Missing hazardExplanation');
           if (!eicrData.bs7671Regulations || eicrData.bs7671Regulations.length === 0) {
@@ -1637,7 +1707,7 @@ Determine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehe
             }[eicrData.classification] || 'UNKNOWN'
           },
           bs7671Regulations: eicrData.bs7671Regulations || [],
-          gn3Guidance: eicrData.gn3Guidance || { section: 'N/A', content: '' },
+          classificationReasoningBullets: eicrData.classificationReasoningBullets || [],
           hazardExplanation: eicrData.hazardExplanation,
           makingSafe: eicrData.makingSafe,
           clientCommunication: eicrData.clientCommunication,

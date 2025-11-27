@@ -40,13 +40,13 @@ const ConfidenceMeter = ({ level, score, reasoning }: ConfidenceMeterProps) => {
   const displayScore = score || (level === 'high' ? 90 : level === 'medium' ? 70 : 50);
 
   return (
-    <div className={`bg-elec-dark/50 border-2 ${conf.borderColor} rounded-lg p-5 shadow-lg`}>
-      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+    <div className={`bg-elec-dark/50 border-2 ${conf.borderColor} rounded-lg p-4 sm:p-5 shadow-lg`}>
+      <div className="flex items-start gap-4">
         <div className={`p-3 rounded-lg ${conf.color}/20`}>
           <Icon className={`h-6 w-6 ${conf.textColor}`} />
         </div>
         <div className="flex-1 space-y-3 w-full">
-          <div className="flex items-center justify-center sm:justify-start gap-3 flex-wrap">
+          <div className="flex items-center justify-start gap-3 flex-wrap">
             <Badge className={`${conf.color} text-white border-none text-base px-3 py-1.5`}>
               {conf.label}
             </Badge>
@@ -54,9 +54,9 @@ const ConfidenceMeter = ({ level, score, reasoning }: ConfidenceMeterProps) => {
               {displayScore}%
             </span>
           </div>
-          <p className="text-base text-white leading-relaxed">{conf.description}</p>
+          <p className="text-base text-white leading-relaxed text-left">{conf.description}</p>
           {reasoning && (
-            <p className="text-base text-white bg-elec-dark/80 rounded p-4 mt-3 leading-relaxed">
+            <p className="text-base text-white bg-elec-dark/80 rounded p-4 mt-3 leading-relaxed text-left">
               {reasoning}
             </p>
           )}

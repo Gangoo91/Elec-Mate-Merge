@@ -22,8 +22,8 @@ const EICRCriticalAlertBanner = ({
 
   const config = {
     C1: {
-      bg: 'bg-gradient-to-r from-red-500/20 to-red-600/20',
-      border: 'border-red-500',
+      bg: 'bg-elec-dark/80',
+      border: 'border-elec-yellow',
       icon: AlertTriangle,
       iconColor: 'text-red-400',
       label: 'DANGER',
@@ -31,8 +31,8 @@ const EICRCriticalAlertBanner = ({
       textColor: 'text-red-400'
     },
     C2: {
-      bg: 'bg-gradient-to-r from-orange-500/20 to-orange-600/20',
-      border: 'border-orange-500',
+      bg: 'bg-elec-dark/80',
+      border: 'border-elec-yellow',
       icon: Zap,
       iconColor: 'text-orange-400',
       label: 'URGENT',
@@ -40,8 +40,8 @@ const EICRCriticalAlertBanner = ({
       textColor: 'text-orange-400'
     },
     C3: {
-      bg: 'bg-gradient-to-r from-amber-500/20 to-amber-600/20',
-      border: 'border-amber-500',
+      bg: 'bg-elec-dark/80',
+      border: 'border-elec-yellow',
       icon: AlertCircle,
       iconColor: 'text-amber-400',
       label: 'IMPROVEMENT',
@@ -49,13 +49,13 @@ const EICRCriticalAlertBanner = ({
       textColor: 'text-amber-400'
     },
     FI: {
-      bg: 'bg-gradient-to-r from-purple-500/20 to-purple-600/20',
-      border: 'border-purple-500',
+      bg: 'bg-elec-dark/80',
+      border: 'border-elec-yellow',
       icon: Info,
-      iconColor: 'text-purple-400',
+      iconColor: 'text-elec-yellow',
       label: 'INVESTIGATION',
-      ringColor: 'stroke-purple-500',
-      textColor: 'text-purple-400'
+      ringColor: 'stroke-elec-yellow',
+      textColor: 'text-elec-yellow'
     }
   };
 
