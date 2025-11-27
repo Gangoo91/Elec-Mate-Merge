@@ -15,6 +15,7 @@ import { EquipmentScheduleSection } from "./EquipmentScheduleSection";
 import { SiteLogisticsSection } from "./SiteLogisticsSection";
 import { ConditionalProceduresSection } from "./ConditionalProceduresSection";
 import { MobileButton } from "@/components/ui/mobile-button";
+import { RegulatoryComplianceSection } from "./RegulatoryComplianceSection";
 
 interface ProjectMetadata {
   documentRef: string;
@@ -87,6 +88,12 @@ export const InstallationResultsEditor = ({
     const bsReferences = (step as any).bsReferences || [];
     return count + bsReferences.length;
   }, 0);
+
+  // Aggregate all unique BS references from steps
+  const allStepBsReferences = steps.flatMap((step: any) => 
+    (step.bsReferences || [])
+  );
+  const uniqueStepBsReferences = [...new Set(allStepBsReferences)];
 
   const riskColors = {
     low: 'bg-success/10 text-success border-success/20',
@@ -398,6 +405,13 @@ export const InstallationResultsEditor = ({
       <SiteLogisticsSection
         logistics={siteLogistics}
         competency={competencyRequirements}
+      />
+
+      {/* 📖 BS 7671 Regulatory Compliance Section */}
+      <RegulatoryComplianceSection 
+        regulatoryReferences={fullMethodStatement?.regulatoryReferences}
+        stepBsReferences={uniqueStepBsReferences}
+        sectionNumber={6}
       />
 
       {/* Enhanced Action Buttons - Frosted glass sticky footer */}

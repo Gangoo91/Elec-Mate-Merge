@@ -20,6 +20,7 @@ import { CompetencyRequirementsCard } from "./CompetencyRequirementsCard";
 import { SiteLogisticsCard } from "./SiteLogisticsCard";
 import { RegulatoryCitationsPanel } from "./RegulatoryCitationsPanel";
 import { ExecutiveSummaryCard } from "./ExecutiveSummaryCard";
+import { RegulatoryComplianceSection } from "./RegulatoryComplianceSection";
 import { MaterialsListTable } from "./MaterialsListTable";
 import { TestingRequirementsTable } from "./TestingRequirementsTable";
 import { JSONSchemaViewer } from "./JSONSchemaViewer";
@@ -179,6 +180,12 @@ export const InstallationResults = ({
     const bsReferences = (step as any).bsReferences || [];
     return count + bsReferences.length;
   }, 0);
+
+  // Aggregate all unique BS references from steps
+  const allStepBsReferences = steps.flatMap((step: any) => 
+    (step.bsReferences || [])
+  );
+  const uniqueStepBsReferences = [...new Set(allStepBsReferences)];
 
   const updateStep = (index: number, updated: InstallationStep) => {
     const newSteps = [...steps];
@@ -658,15 +665,12 @@ export const InstallationResults = ({
         )}
       </div>
 
-      {/* 📖 BS 7671 Regulatory References - Enhanced for both formats */}
-      <div id="compliance">
-        {fullMethodStatement?.regulatoryReferences && fullMethodStatement.regulatoryReferences.length > 0 && (
-          <RegulatoryCitationsPanel regulatoryCitations={fullMethodStatement.regulatoryReferences} />
-        )}
-        {regulatoryCitations && regulatoryCitations.length > 0 && !fullMethodStatement?.regulatoryReferences && (
-          <RegulatoryCitationsPanel regulatoryCitations={regulatoryCitations} />
-        )}
-      </div>
+      {/* 📖 BS 7671 Regulatory Compliance Section */}
+      <RegulatoryComplianceSection 
+        regulatoryReferences={fullMethodStatement?.regulatoryReferences}
+        stepBsReferences={uniqueStepBsReferences}
+        sectionNumber={6}
+      />
 
       {/* Equipment Schedule */}
       <EquipmentScheduleSection equipment={equipmentSchedule} />
