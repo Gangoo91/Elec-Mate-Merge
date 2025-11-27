@@ -159,6 +159,29 @@ export const InstallationResultsEditor = ({
         description: "Creating your installation method document...",
       });
 
+      // Parse step bsReferences into structured format
+      // Format: "BS 7671 Reg 132.10 - Safe isolation" → { number: "132.10", description: "Safe isolation" }
+      const parsedStepReferences = uniqueStepBsReferences
+        .map(ref => {
+          const match = ref.match(/(?:BS 7671 Reg |Regulation )?(\d+\.?\d*\.?\d*\.?\d*)\s*[-–—]\s*(.+)/i);
+          if (match) {
+            return { number: match[1], description: match[2].trim() };
+          }
+          return null;
+        })
+        .filter(Boolean) as Array<{ number: string; description: string }>;
+
+      // Merge with existing regulatoryReferences and deduplicate by number
+      const existingRefs = fullMethodStatement?.regulatoryReferences || [];
+      const allRefs = [...existingRefs, ...parsedStepReferences];
+      const mergedRegulatoryReferences = Array.from(
+        new Map(allRefs.map(ref => [ref.number, ref])).values()
+      ).sort((a, b) => {
+        const aNum = parseFloat(a.number) || 0;
+        const bNum = parseFloat(b.number) || 0;
+        return aNum - bNum;
+      });
+
       // Build comprehensive method statement payload with ALL 3-agent data
       const methodStatementPayload = {
         jobTitle: `Installation Method: ${projectDetails?.installationType || 'General Installation'}`,
@@ -209,6 +232,9 @@ export const InstallationResultsEditor = ({
           additionalCertifications: 'N/A'
         },
         workAtHeightEquipment: fullMethodStatement?.workAtHeightEquipment || [],
+        
+        // Regulatory References - merged from AI + per-step references
+        regulatoryReferences: mergedRegulatoryReferences,
         
         // User-provided metadata
         projectMetadata: projectMetadata ? {
