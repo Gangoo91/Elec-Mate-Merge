@@ -7,6 +7,8 @@ import { toast } from "@/hooks/use-toast";
 import { CalculationBreakdown } from "./CalculationBreakdown";
 import { TestSequenceValidator } from "./TestSequenceValidator";
 import { InstrumentSetupPanel } from "./testing-results/InstrumentSetupPanel";
+import { ProcedureStepCard } from "./testing-results/ProcedureStepCard";
+import { TroubleshootingPanel } from "./testing-results/TroubleshootingPanel";
 import type { TestingProcedure } from "@/types/commissioning-response";
 
 interface TestingProcedureDisplayProps {
@@ -186,45 +188,24 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
 
                 {/* Procedure Steps */}
                 {test.procedure && Array.isArray(test.procedure) && (
-                  <div>
+                  <div className="space-y-3">
                     <div className="text-base font-semibold text-white mb-3">Procedure</div>
-                    <ol className="space-y-2 text-sm text-white leading-relaxed list-decimal list-inside">
-                      {test.procedure.map((step, i) => (
-                        <li key={i} className="text-left">{step}</li>
-                      ))}
-                    </ol>
+                    {test.procedure.map((step, i) => (
+                      <ProcedureStepCard
+                        key={i}
+                        step={step}
+                        stepNumber={i + 1}
+                      />
+                    ))}
                   </div>
                 )}
 
-                {/* Troubleshooting */}
-                {test.troubleshooting && Array.isArray(test.troubleshooting) && test.troubleshooting.length > 0 && (
-                  <div className="bg-amber-500/10 border-2 border-amber-500/30 rounded-lg p-4">
-                    <div className="flex items-center gap-2 text-amber-300 text-base font-semibold mb-2">
-                      <AlertTriangle className="h-5 w-5" />
-                      Troubleshooting
-                    </div>
-                    <ul className="space-y-2 text-sm text-white leading-relaxed">
-                      {test.troubleshooting.map((tip, i) => (
-                        <li key={i} className="text-left">• {tip}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Pro Tips */}
-                {test.proTips && Array.isArray(test.proTips) && test.proTips.length > 0 && (
-                  <div className="bg-blue-500/10 border-2 border-blue-500/30 rounded-lg p-4">
-                    <div className="flex items-center gap-2 text-blue-300 text-base font-semibold mb-2">
-                      <CheckCircle2 className="h-5 w-5" />
-                      Pro Tips
-                    </div>
-                    <ul className="space-y-2 text-sm text-white leading-relaxed">
-                      {test.proTips.map((tip, i) => (
-                        <li key={i} className="text-left">• {tip}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                {/* Troubleshooting & Pro Tips */}
+                <TroubleshootingPanel
+                  troubleshooting={test.troubleshooting}
+                  commonMistakes={test.commonMistakes}
+                  proTips={test.proTips}
+                />
 
                 {/* Test Duration */}
                 {test.testDuration && (
@@ -325,45 +306,24 @@ ${test.troubleshooting ? `\n## Troubleshooting\n${test.troubleshooting.map((t: s
 
                 {/* Procedure Steps */}
                 {test.procedure && Array.isArray(test.procedure) && (
-                  <div>
+                  <div className="space-y-3">
                     <div className="text-base font-semibold text-white mb-3">Procedure</div>
-                    <ol className="space-y-2 text-sm text-white leading-relaxed list-decimal list-inside">
-                      {test.procedure.map((step, i) => (
-                        <li key={i} className="text-left">{step}</li>
-                      ))}
-                    </ol>
+                    {test.procedure.map((step, i) => (
+                      <ProcedureStepCard
+                        key={i}
+                        step={step}
+                        stepNumber={i + 1}
+                      />
+                    ))}
                   </div>
                 )}
 
-                {/* Troubleshooting */}
-                {test.troubleshooting && Array.isArray(test.troubleshooting) && test.troubleshooting.length > 0 && (
-                  <div className="bg-amber-500/10 border-2 border-amber-500/30 rounded-lg p-4">
-                    <div className="flex items-center gap-2 text-amber-300 text-base font-semibold mb-2">
-                      <AlertTriangle className="h-5 w-5" />
-                      Troubleshooting
-                    </div>
-                    <ul className="space-y-2 text-sm text-white leading-relaxed">
-                      {test.troubleshooting.map((tip, i) => (
-                        <li key={i} className="text-left">• {tip}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Pro Tips */}
-                {test.proTips && Array.isArray(test.proTips) && test.proTips.length > 0 && (
-                  <div className="bg-blue-500/10 border-2 border-blue-500/30 rounded-lg p-4">
-                    <div className="flex items-center gap-2 text-blue-300 text-base font-semibold mb-2">
-                      <CheckCircle2 className="h-5 w-5" />
-                      Pro Tips
-                    </div>
-                    <ul className="space-y-2 text-sm text-white leading-relaxed">
-                      {test.proTips.map((tip, i) => (
-                        <li key={i} className="text-left">• {tip}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                {/* Troubleshooting & Pro Tips */}
+                <TroubleshootingPanel
+                  troubleshooting={test.troubleshooting}
+                  commonMistakes={test.commonMistakes}
+                  proTips={test.proTips}
+                />
 
                 {/* Test Duration */}
                 {test.testDuration && (
