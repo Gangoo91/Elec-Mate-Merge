@@ -27,13 +27,13 @@ export const CalculationBreakdown = ({ calculation }: CalculationBreakdownProps)
       <div className="space-y-4 sm:space-y-3">
         {/* Formula */}
         <div className="bg-white/80 dark:bg-elec-dark/80 p-4 sm:p-3 rounded border-2 sm:border border-blue-200 dark:border-blue-800">
-          <p className="text-base sm:text-sm text-muted-foreground mb-2 sm:mb-1 text-center sm:text-left">Formula:</p>
+          <p className="text-base sm:text-sm text-white mb-2 sm:mb-1 text-center sm:text-left">Formula:</p>
           <p className="font-mono font-semibold text-xl sm:text-lg text-blue-900 dark:text-blue-100 text-center sm:text-left break-all">{calculation.formula}</p>
         </div>
 
         {/* Components */}
         <div className="bg-white/80 dark:bg-elec-dark/80 p-4 sm:p-3 rounded border-2 sm:border border-blue-200 dark:border-blue-800">
-          <p className="text-base sm:text-sm text-muted-foreground mb-3 sm:mb-2 text-center sm:text-left font-semibold">Components:</p>
+          <p className="text-base sm:text-sm text-white mb-3 sm:mb-2 text-center sm:text-left font-semibold">Components:</p>
           <div className="grid grid-cols-1 gap-3 sm:gap-2">
             {calculation.components && typeof calculation.components === 'object' && 
               Object.entries(calculation.components).map(([key, value]) => (
@@ -48,7 +48,7 @@ export const CalculationBreakdown = ({ calculation }: CalculationBreakdownProps)
 
         {/* Expected Result */}
         <div className="bg-white/80 dark:bg-elec-dark/80 p-4 sm:p-3 rounded border-2 sm:border border-blue-200 dark:border-blue-800">
-          <p className="text-base sm:text-sm text-muted-foreground mb-2 sm:mb-1 text-center sm:text-left">Expected Result:</p>
+          <p className="text-base sm:text-sm text-white mb-2 sm:mb-1 text-center sm:text-left">Expected Result:</p>
           <p className="font-mono text-3xl sm:text-2xl font-bold text-blue-900 dark:text-blue-100 text-center sm:text-left break-all">{calculation.expectedResult}</p>
         </div>
 

@@ -5,7 +5,7 @@ import { CheckCircle2, Search, Zap, Shield } from "lucide-react";
 
 interface CommissioningProcessingViewProps {
   progress: {
-    stage: 'initializing' | 'parsing' | 'rag' | 'ai' | 'validation' | 'complete';
+    stage: 'initializing' | 'parsing' | 'ai' | 'validation' | 'complete';
     message: string;
   } | null;
   startTime: number;
@@ -13,8 +13,7 @@ interface CommissioningProcessingViewProps {
 
 const STAGE_PERCENTAGES = {
   initializing: 0,
-  parsing: 10,
-  rag: 25,
+  parsing: 20,
   ai: 50,
   validation: 75,
   complete: 100
@@ -50,7 +49,7 @@ const CommissioningProcessingView = ({ progress, startTime }: CommissioningProce
           </div>
           <div className="flex-1">
             <h3 className="text-xl font-semibold mb-1">AI Testing & Commissioning Specialist</h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               {progress?.message || 'Analysing testing requirements...'}
             </p>
           </div>
@@ -59,14 +58,13 @@ const CommissioningProcessingView = ({ progress, startTime }: CommissioningProce
         {/* Progress Bar */}
         <div className="space-y-2 mb-6">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Progress</span>
+            <span className="text-white">Progress</span>
             <span className="font-semibold text-purple-400">{percentage}%</span>
           </div>
           <Progress value={percentage} className="h-2" />
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-white">
             • {progress?.stage === 'initializing' && 'Starting up...'}
             {progress?.stage === 'parsing' && 'Understanding your testing requirements...'}
-            {progress?.stage === 'rag' && 'Searching BS 7671 testing procedures...'}
             {progress?.stage === 'ai' && 'Generating detailed test procedures...'}
             {progress?.stage === 'validation' && 'Verifying regulation compliance...'}
             {progress?.stage === 'complete' && 'Complete!'}
@@ -76,16 +74,16 @@ const CommissioningProcessingView = ({ progress, startTime }: CommissioningProce
         {/* Generation Timeline */}
         <div className="grid grid-cols-3 gap-4 p-4 bg-elec-gray/50 rounded-lg border border-purple-500/10">
           <div className="text-center">
-            <div className="text-xs text-muted-foreground mb-1">Elapsed Time</div>
+            <div className="text-xs text-white mb-1">Elapsed Time</div>
             <div className="text-lg font-semibold text-purple-400">{formatTime(elapsedTime)}</div>
           </div>
           <div className="text-center border-x border-purple-500/10">
-            <div className="text-xs text-muted-foreground mb-1">Estimated Remaining</div>
+            <div className="text-xs text-white mb-1">Estimated Remaining</div>
             <div className="text-lg font-semibold text-foreground">{formatTime(remaining)}</div>
           </div>
           <div className="text-center">
-            <div className="text-xs text-muted-foreground mb-1">Total Estimate</div>
-            <div className="text-lg font-semibold text-muted-foreground">{formatTime(estimatedTotal)}</div>
+            <div className="text-xs text-white mb-1">Total Estimate</div>
+            <div className="text-lg font-semibold text-white">{formatTime(estimatedTotal)}</div>
           </div>
         </div>
       </Card>
@@ -98,18 +96,18 @@ const CommissioningProcessingView = ({ progress, startTime }: CommissioningProce
         </h4>
         <div className="space-y-3">
           <div className={`flex items-start gap-3 p-3 rounded-lg transition-all ${
-            progress?.stage === 'parsing' || progress?.stage === 'rag' || progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete'
+            progress?.stage === 'parsing' || progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete'
               ? 'bg-purple-500/10 border border-purple-500/20'
               : 'bg-elec-gray/30 border border-transparent'
           }`}>
             <Search className={`h-4 w-4 mt-0.5 ${
-              progress?.stage === 'parsing' || progress?.stage === 'rag' || progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete'
+              progress?.stage === 'parsing' || progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete'
                 ? 'text-purple-400'
-                : 'text-muted-foreground'
+                : 'text-white'
             }`} />
             <div>
               <div className="font-medium text-sm">Searching BS 7671 testing requirements</div>
-              <div className="text-xs text-muted-foreground mt-1">
+              <div className="text-xs text-white mt-1">
                 Finding relevant test procedures, acceptance criteria, and regulations
               </div>
             </div>
@@ -123,11 +121,11 @@ const CommissioningProcessingView = ({ progress, startTime }: CommissioningProce
             <Zap className={`h-4 w-4 mt-0.5 ${
               progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete'
                 ? 'text-purple-400'
-                : 'text-muted-foreground'
+                : 'text-white'
             }`} />
             <div>
               <div className="font-medium text-sm">Calculating expected Zs values and test criteria</div>
-              <div className="text-xs text-muted-foreground mt-1">
+              <div className="text-xs text-white mt-1">
                 Generating expected results and maximum permitted values
               </div>
             </div>
@@ -141,11 +139,11 @@ const CommissioningProcessingView = ({ progress, startTime }: CommissioningProce
             <CheckCircle2 className={`h-4 w-4 mt-0.5 ${
               progress?.stage === 'validation' || progress?.stage === 'complete'
                 ? 'text-purple-400'
-                : 'text-muted-foreground'
+                : 'text-white'
             }`} />
             <div>
               <div className="font-medium text-sm">Generating step-by-step procedures</div>
-              <div className="text-xs text-muted-foreground mt-1">
+              <div className="text-xs text-white mt-1">
                 Creating detailed testing instructions with instrument setup
               </div>
             </div>
@@ -159,11 +157,11 @@ const CommissioningProcessingView = ({ progress, startTime }: CommissioningProce
             <Shield className={`h-4 w-4 mt-0.5 ${
               progress?.stage === 'complete'
                 ? 'text-purple-400'
-                : 'text-muted-foreground'
+                : 'text-white'
             }`} />
             <div>
               <div className="font-medium text-sm">Verifying regulation compliance</div>
-              <div className="text-xs text-muted-foreground mt-1">
+              <div className="text-xs text-white mt-1">
                 Cross-checking with BS 7671 requirements and certification needs
               </div>
             </div>

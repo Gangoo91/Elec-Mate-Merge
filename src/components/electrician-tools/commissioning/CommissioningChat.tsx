@@ -49,7 +49,7 @@ const CommissioningChat = ({
               <Wrench className="h-6 w-6 sm:h-7 sm:w-7 text-purple-400 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-purple-300 text-base sm:text-lg">Troubleshooting Mode</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">Diagnostic advice and fault-finding guidance</p>
+                <p className="text-xs sm:text-sm text-white">Diagnostic advice and fault-finding guidance</p>
               </div>
             </>
           ) : (
@@ -57,7 +57,7 @@ const CommissioningChat = ({
               <HelpCircle className="h-6 w-6 sm:h-7 sm:w-7 text-purple-400 flex-shrink-0" />
               <div>
                 <h3 className="font-semibold text-purple-300 text-base sm:text-lg">Question & Answer Mode</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">Quick reference and clarification</p>
+                <p className="text-xs sm:text-sm text-white">Quick reference and clarification</p>
               </div>
             </>
           )}
@@ -73,7 +73,7 @@ const CommissioningChat = ({
         {/* Citations */}
         {citations && citations.length > 0 && (
           <div className="mt-6 pt-6 border-t border-border">
-            <h4 className="text-sm font-semibold text-muted-foreground mb-3">
+            <h4 className="text-sm font-semibold text-white mb-3">
               📚 Referenced Regulations ({citations.length})
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -125,7 +125,7 @@ const CommissioningChat = ({
       {/* Quick Actions */}
       <Card className="p-4 sm:p-6 bg-muted/30">
         <h4 className="text-sm font-semibold mb-3">Need a full procedure instead?</h4>
-        <p className="text-xs text-muted-foreground mb-3">
+        <p className="text-xs text-white mb-3">
           For structured testing procedures with step-by-step guides, use a detailed request.
         </p>
         <Button 

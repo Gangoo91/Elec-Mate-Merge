@@ -150,7 +150,7 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="text-lg sm:text-xl font-semibold">What needs testing?</h3>
-            <p className="text-xs sm:text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-white">
               Describe the installation and required tests
             </p>
           </div>
@@ -164,7 +164,7 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
           autoComplete="off"
           spellCheck={true}
         />
-        <div className="text-xs text-muted-foreground text-right mt-2">
+        <div className="text-xs text-white text-right mt-2">
           {prompt.length}/500 {prompt.length < 50 && "• 50+ chars recommended"}
         </div>
       </FormSection>
@@ -271,7 +271,7 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
                   <IconComponent className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
                   <h5 className="font-semibold text-sm">{scenario.title}</h5>
                 </div>
-                <p className="text-xs text-muted-foreground line-clamp-3">
+                <p className="text-xs text-white line-clamp-3">
                   {scenario.prompt}
                 </p>
               </Card>
