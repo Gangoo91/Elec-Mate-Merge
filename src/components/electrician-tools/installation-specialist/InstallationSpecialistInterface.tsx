@@ -28,6 +28,7 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
     installationType: 'domestic'
   });
   const [currentJobId, setCurrentJobId] = useState<string | null>(null);
+  const [isCancelling, setIsCancelling] = useState(false);
   
   const { 
     job, 
@@ -131,9 +132,9 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
         setShowCelebration(true);
         setCelebrationShown(true);
       }
-    } else if (jobStatus === 'failed') {
-      toast.error("Generation Failed", {
-        description: jobError || "An unexpected error occurred"
+    } else if (jobStatus === 'failed' || jobStatus === 'cancelled') {
+      toast.error(jobStatus === 'cancelled' ? "Generation Cancelled" : "Generation Failed", {
+        description: jobError || (jobStatus === 'cancelled' ? "You cancelled the generation" : "An unexpected error occurred")
       });
       setIsGenerating(false);
       setShowResults(false);
@@ -156,6 +157,32 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
       setShowResults(true);
     }
   }, [jobStatus, jobMethodData]);
+
+  const handleCancelGeneration = async () => {
+    if (!currentJobId) return;
+    
+    setIsCancelling(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('cancel-installation-method-job', {
+        body: { jobId: currentJobId }
+      });
+
+      if (error) throw error;
+
+      stopPolling();
+      setIsGenerating(false);
+      setShowResults(false);
+      setCurrentJobId(null);
+      toast.info("Generation cancelled");
+    } catch (error: any) {
+      console.error('Cancel error:', error);
+      toast.error("Failed to cancel generation", {
+        description: error.message
+      });
+    } finally {
+      setIsCancelling(false);
+    }
+  };
 
   const handleRegenerate = () => {
     if (lastProjectRef.current) {
@@ -194,6 +221,8 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
           }}
           startTime={generationStartTime}
           qualityMetrics={jobQualityMetrics}
+          onCancel={handleCancelGeneration}
+          isCancelling={isCancelling}
         />
       ) : methodData ? (
         <InstallationResults

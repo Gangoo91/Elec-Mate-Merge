@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Wrench, X, CheckCircle2, Search, Zap, Clock, ShieldCheck, FileText } from 'lucide-react';
+import { Wrench, X, CheckCircle2, Search, Zap, Clock, ShieldCheck, FileText, Loader2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { InstallationProjectDetails } from "@/types/installation-method";
 import { AIQualityConfidenceBadge } from "./AIQualityConfidenceBadge";
@@ -15,6 +15,7 @@ interface InstallationProcessingViewProps {
   } | null;
   startTime: number;
   onCancel?: () => void;
+  isCancelling?: boolean;
   onQuickMode?: () => void;
   qualityMetrics?: {
     overallConfidence: number;
@@ -25,7 +26,7 @@ interface InstallationProcessingViewProps {
   };
 }
 
-export const InstallationProcessingView = ({ originalQuery, projectDetails, progress, startTime, onCancel, onQuickMode, qualityMetrics }: InstallationProcessingViewProps) => {
+export const InstallationProcessingView = ({ originalQuery, projectDetails, progress, startTime, onCancel, isCancelling, onQuickMode, qualityMetrics }: InstallationProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [simulatedProgress, setSimulatedProgress] = useState<{
     stage: 'initializing' | 'rag' | 'ai' | 'generation' | 'validation' | 'complete';
@@ -149,12 +150,23 @@ export const InstallationProcessingView = ({ originalQuery, projectDetails, prog
             </div>
             {onCancel && (
               <Button
-                variant="ghost"
+                variant="outline"
                 size="sm"
                 onClick={onCancel}
-                className="text-muted-foreground hover:text-destructive touch-manipulation"
+                disabled={isCancelling}
+                className="border-red-500/30 hover:bg-red-500/10 text-red-400 hover:text-red-300 min-h-[44px] touch-manipulation"
               >
-                <X className="h-4 w-4" />
+                {isCancelling ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Cancelling...
+                  </>
+                ) : (
+                  <>
+                    <X className="h-4 w-4 mr-2" />
+                    Cancel
+                  </>
+                )}
               </Button>
             )}
           </div>

@@ -41,6 +41,9 @@ timeout_sec = 30
 verify_jwt = false
 timeout_sec = 600
 
+[functions.cancel-installation-method-job]
+verify_jwt = true
+
 # Commissioning & Testing Specialist V3
 [functions.commissioning-v3]
 verify_jwt = false
