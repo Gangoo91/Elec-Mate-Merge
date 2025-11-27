@@ -26,7 +26,7 @@ const LabourPlanTable = ({ tasks }: LabourPlanTableProps) => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="text-white font-semibold text-base sm:text-sm">Task</TableHead>
+                  <TableHead className="text-left text-white font-semibold text-base sm:text-sm">Task</TableHead>
                   <TableHead className="text-right text-white font-semibold text-base sm:text-sm">Hours</TableHead>
                   <TableHead className="text-right text-white font-semibold text-base sm:text-sm">Rate</TableHead>
                   <TableHead className="text-right text-white font-semibold text-base sm:text-sm">Total</TableHead>
@@ -35,10 +35,10 @@ const LabourPlanTable = ({ tasks }: LabourPlanTableProps) => {
               <TableBody>
                 {tasks.map((task, idx) => (
                   <TableRow key={idx}>
-                    <TableCell className="font-medium text-base sm:text-sm text-white">
+                    <TableCell className="font-medium text-base sm:text-sm text-white text-left py-4">
                       {task.description}
                       {(task.electricianHours || task.apprenticeHours) && (
-                        <div className="text-sm text-white">
+                        <div className="text-sm text-white text-left">
                           {task.electricianHours && `Electrician: ${task.electricianHours.toFixed(2)}h `}
                           {task.apprenticeHours && `Apprentice: ${task.apprenticeHours.toFixed(2)}h`}
                         </div>
