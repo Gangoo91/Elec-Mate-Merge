@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CheckCircle2, Circle } from "lucide-react";
+import { CheckCircle2, Circle, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ChecklistItemProps {
@@ -27,51 +27,52 @@ export const ChecklistItem = ({
     <button
       onClick={handleClick}
       className={cn(
-        "w-full text-left p-5 rounded-xl border-2 transition-all touch-manipulation",
-        "hover:scale-[1.02] active:scale-[0.98]",
+        "w-full text-left p-4 rounded-lg border transition-all touch-manipulation",
+        "hover:border-elec-yellow/40 active:scale-[0.99]",
         checked 
-          ? "bg-green-500/10 border-green-500/50" 
-          : "bg-background/40 border-border/40 hover:border-border/60"
+          ? "bg-elec-yellow/10 border-elec-yellow/40" 
+          : "bg-elec-dark/40 border-elec-yellow/20"
       )}
     >
       <div className="flex items-start gap-4">
         {/* Checkbox Circle */}
         <div className={cn(
-          "shrink-0 mt-1",
-          checked ? "text-green-400" : "text-muted-foreground"
+          "shrink-0 mt-0.5",
+          checked ? "text-elec-yellow" : "text-white/40"
         )}>
           {checked ? (
-            <CheckCircle2 className="h-8 w-8" />
+            <CheckCircle2 className="h-6 w-6" />
           ) : (
-            <Circle className="h-8 w-8" />
+            <Circle className="h-6 w-6" />
           )}
         </div>
 
         {/* Content */}
-        <div className="flex-1 space-y-2">
+        <div className="flex-1 space-y-1.5">
           <div className={cn(
             "text-base font-semibold",
-            checked ? "text-white line-through" : "text-white"
+            checked ? "text-white/70 line-through" : "text-white"
           )}>
             {item}
           </div>
           <div className={cn(
-            "text-sm",
-            checked ? "text-muted-foreground line-through" : "text-white/90"
+            "text-sm leading-relaxed",
+            checked ? "text-white/50 line-through" : "text-white/90"
           )}>
             {requirement}
           </div>
           {reference && (
-            <div className="text-sm text-purple-400">
-              📖 {reference}
+            <div className="flex items-center gap-1.5 text-xs text-elec-yellow/80 mt-2">
+              <BookOpen className="h-3 w-3" />
+              {reference}
             </div>
           )}
         </div>
 
         {/* Done Badge */}
         {checked && (
-          <div className="shrink-0 bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm font-semibold">
-            ✓ Done
+          <div className="shrink-0 bg-elec-yellow/20 text-elec-yellow px-3 py-1 rounded-full text-xs font-semibold">
+            Complete
           </div>
         )}
       </div>

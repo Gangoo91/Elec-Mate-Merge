@@ -10,90 +10,79 @@ export const ProcedureStepper = ({ steps }: ProcedureStepperProps) => {
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
 
   const toggleStep = (index: number) => {
-    setCompletedSteps(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(index)) {
-        newSet.delete(index);
-      } else {
-        newSet.add(index);
-      }
-      return newSet;
-    });
+    const newCompleted = new Set(completedSteps);
+    if (newCompleted.has(index)) {
+      newCompleted.delete(index);
+    } else {
+      newCompleted.add(index);
+    }
+    setCompletedSteps(newCompleted);
   };
 
   const isSafetyCritical = (step: string) => {
-    const keywords = ['isolate', 'live', 'shock', 'danger', 'warning', 'ppe', 'lock out', 'lockout'];
-    return keywords.some(keyword => step.toLowerCase().includes(keyword));
+    const safetyKeywords = ['isolated', 'isolation', 'dead', 'lock off', 'safe', 'danger', 'warning', 'ppe'];
+    return safetyKeywords.some(keyword => step.toLowerCase().includes(keyword));
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {steps.map((step, index) => {
         const isCompleted = completedSteps.has(index);
-        const isCritical = isSafetyCritical(step);
-        const isLast = index === steps.length - 1;
-
+        const isSafety = isSafetyCritical(step);
+        
         return (
-          <div key={index} className="relative">
-            {/* Connector Line */}
-            {!isLast && (
-              <div 
-                className={cn(
-                  "absolute left-4 top-10 w-0.5 h-full -ml-px",
-                  isCompleted ? "bg-green-500/50" : "bg-border/40"
-                )}
-              />
+          <button
+            key={index}
+            onClick={() => toggleStep(index)}
+            className={cn(
+              "w-full text-left p-3 rounded-lg border transition-all touch-manipulation",
+              "hover:border-elec-yellow/40 active:scale-[0.99]",
+              isCompleted 
+                ? "bg-elec-yellow/10 border-elec-yellow/40" 
+                : "bg-elec-dark/40 border-elec-yellow/20"
             )}
-
-            {/* Step Card */}
-            <button
-              onClick={() => toggleStep(index)}
-              className={cn(
-                "w-full flex items-start gap-4 p-4 rounded-lg border-2 text-left transition-all touch-manipulation",
-                "hover:scale-[1.01] active:scale-[0.99]",
-                isCompleted 
-                  ? "bg-green-500/10 border-green-500/50" 
-                  : isCritical
-                  ? "bg-amber-500/10 border-amber-500/50"
-                  : "bg-background/40 border-border/40 hover:border-border/60"
-              )}
-            >
+          >
+            <div className="flex items-start gap-3">
               {/* Step Number / Checkbox */}
               <div className={cn(
-                "shrink-0 mt-1",
-                isCompleted ? "text-green-400" : isCritical ? "text-amber-400" : "text-muted-foreground"
+                "shrink-0 w-7 h-7 rounded-full flex items-center justify-center font-bold text-sm",
+                isCompleted 
+                  ? "bg-elec-yellow/30 text-elec-yellow" 
+                  : isSafety 
+                  ? "bg-amber-500/20 text-amber-400"
+                  : "bg-elec-yellow/10 text-elec-yellow/70"
               )}>
                 {isCompleted ? (
-                  <CheckCircle2 className="h-6 w-6" />
+                  <CheckCircle2 className="h-4 w-4" />
                 ) : (
-                  <div className={cn(
-                    "h-6 w-6 rounded-full border-2 flex items-center justify-center text-xs font-bold",
-                    isCritical 
-                      ? "border-amber-400 text-amber-400" 
-                      : "border-border text-muted-foreground"
-                  )}>
-                    {index + 1}
-                  </div>
+                  <span>{index + 1}</span>
                 )}
               </div>
 
               {/* Step Content */}
-              <div className="flex-1 space-y-1">
-                <div className={cn(
+              <div className="flex-1 space-y-2">
+                <p className={cn(
                   "text-sm leading-relaxed",
-                  isCompleted ? "text-white/80 line-through" : "text-white"
+                  isCompleted ? "text-white/60 line-through" : "text-white"
                 )}>
                   {step}
-                </div>
-                {isCritical && !isCompleted && (
-                  <div className="flex items-center gap-2 text-amber-400 text-xs font-semibold">
+                </p>
+                
+                {/* Safety Warning Badge */}
+                {isSafety && !isCompleted && (
+                  <div className="flex items-center gap-1.5 text-amber-400 text-xs">
                     <AlertTriangle className="h-3 w-3" />
-                    Safety Critical
+                    <span className="font-semibold">Safety Critical Step</span>
                   </div>
                 )}
               </div>
-            </button>
-          </div>
+
+              {/* Completion Indicator */}
+              {!isCompleted && (
+                <Circle className="h-5 w-5 text-white/30 shrink-0 mt-0.5" />
+              )}
+            </div>
+          </button>
         );
       })}
     </div>
