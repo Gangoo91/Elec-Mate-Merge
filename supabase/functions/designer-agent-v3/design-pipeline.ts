@@ -854,7 +854,70 @@ export class DesignPipeline {
     });
 
     // ========================================
-    // PHASE 4.75: REMOVED - Circuit-Level Diversity Calculation
+    // PHASE 4.75: Generate Expected Test Values for ALL Circuits
+    // ========================================
+    // expectedTests must be generated for every circuit for EIC/testing display
+    // This runs AFTER fallback calculations to use the latest Zs/R1+R2 values
+    this.logger.info('🧪 Generating expected test values for all circuits');
+
+    design.circuits = design.circuits.map((circuit: any) => {
+      // Skip if expectedTests already exists (from fallback calc)
+      if (circuit.expectedTests) {
+        return circuit;
+      }
+      
+      // Generate expected tests using existing calculation values
+      const zsResult = {
+        r1PlusR2: circuit.calculations?.r1r2 || 0,
+        calculatedZs: circuit.calculations?.zs || 0,
+        maxZs: circuit.calculations?.maxZs || 0,
+        compliant: (circuit.calculations?.zs || 0) <= (circuit.calculations?.maxZs || 1)
+      };
+      
+      const isRing = circuit.name?.toLowerCase()?.includes('ring') || 
+                     circuit.loadType?.toLowerCase()?.includes('ring');
+      
+      circuit.expectedTests = {
+        r1r2: {
+          at20C: zsResult.r1PlusR2 / 1.2,
+          at70C: zsResult.r1PlusR2,
+          value: `${zsResult.r1PlusR2.toFixed(3)}Ω${isRing ? ' (ring final)' : ''}`,
+          regulation: 'BS 7671 Reg 612.2'
+        },
+        zs: {
+          expected: zsResult.calculatedZs,
+          maxPermitted: zsResult.maxZs,
+          marginPercent: zsResult.maxZs > 0 ? ((zsResult.maxZs - zsResult.calculatedZs) / zsResult.maxZs) * 100 : 0,
+          compliant: zsResult.compliant,
+          regulation: `BS 7671 Reg 612.9 & Table 41.3 (Type ${circuit.protectionDevice?.curve || 'B'} ${circuit.protectionDevice?.rating || 0}A)`
+        },
+        insulationResistance: {
+          testVoltage: (normalized.supply.voltage || 230) <= 500 ? '500V DC' : '1000V DC',
+          minResistance: '≥1.0 MΩ',
+          regulation: 'BS 7671 Table 61 (LV)'
+        }
+      };
+      
+      // Add RCD test if RCD protected
+      if (circuit.protectionDevice?.type === 'RCBO' || circuit.rcdProtected) {
+        circuit.expectedTests.rcd = {
+          ratingmA: 30,
+          maxTripTimeMs: 300,
+          testCurrentMultiple: 1,
+          regulation: 'BS 7671 Reg 612.13.2'
+        };
+      }
+      
+      return circuit;
+    });
+
+    this.logger.info('Expected test values generated', {
+      circuits: design.circuits.length,
+      withExpectedTests: design.circuits.filter((c: any) => c.expectedTests).length
+    });
+
+    // ========================================
+    // PHASE 4.76: REMOVED - Circuit-Level Diversity Calculation
     // AI already calculated Id and diversity factor in the prose justification
     // These values were extracted by the justification parser in Phase 4.55
     // ========================================
