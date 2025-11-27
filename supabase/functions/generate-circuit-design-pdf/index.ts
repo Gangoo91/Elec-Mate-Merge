@@ -356,30 +356,37 @@ serve(async (req) => {
           specialLocationRegulation: c.specialLocationCompliance?.regulation || '',
           specialLocationZones: c.specialLocationCompliance?.zonesApplicable || '',
 
-          // Expected Test Results
-          expectedR1R2: c.expectedTestResults?.r1r2?.at70C || c.calculations?.zs?.toFixed(2) || 'Calculate on site',
-          expectedZs: c.calculations?.zs?.toFixed(2) || c.calculations?.maxZs?.toFixed(2) || 'Test on site',
-          expectedInsulation: '>1MΩ',
-          expectedTestResults: c.expectedTestResults ? {
+          // Expected Test Results (Phase 4.75: read from expectedTests first, fallback to expectedTestResults)
+          expectedR1R2: c.expectedTests?.r1r2?.at70C || c.expectedTestResults?.r1r2?.at70C || c.calculations?.zs?.toFixed(2) || 'Calculate on site',
+          expectedZs: c.expectedTests?.zs?.expected?.toFixed(2) || c.calculations?.zs?.toFixed(2) || c.calculations?.maxZs?.toFixed(2) || 'Test on site',
+          expectedInsulation: c.expectedTests?.insulationResistance?.minResistance || '>1MΩ',
+          expectedTestResults: c.expectedTests || c.expectedTestResults ? {
             r1r2: {
-              at20C: c.expectedTestResults.r1r2?.at20C || 'Calculate based on cable length',
-              at70C: c.expectedTestResults.r1r2?.at70C || 'Calculate based on cable length',
-              calculation: c.expectedTestResults.r1r2?.calculation || 'R1+R2 = (mΩ/m × length) / 1000'
+              at20C: c.expectedTests?.r1r2?.at20C?.toFixed(3) || c.expectedTestResults?.r1r2?.at20C || 'Calculate based on cable length',
+              at70C: c.expectedTests?.r1r2?.at70C?.toFixed(3) || c.expectedTestResults?.r1r2?.at70C || 'Calculate based on cable length',
+              value: c.expectedTests?.r1r2?.value || `${c.expectedTests?.r1r2?.at70C?.toFixed(3) || 'N/A'}Ω`,
+              regulation: c.expectedTests?.r1r2?.regulation || c.expectedTestResults?.r1r2?.regulation || 'BS 7671 Reg 612.2',
+              calculation: c.expectedTestResults?.r1r2?.calculation || 'R1+R2 = (mΩ/m × length) / 1000'
             },
             zs: {
-              calculated: c.expectedTestResults.zs?.calculated || c.calculations?.zs?.toFixed(2) || 'Test required',
-              maxPermitted: c.expectedTestResults.zs?.maxPermitted || c.calculations?.maxZs?.toFixed(2) || 'See BS 7671',
-              compliant: c.expectedTestResults.zs?.compliant !== false ? 'Yes' : 'No'
+              expected: c.expectedTests?.zs?.expected?.toFixed(2) || c.calculations?.zs?.toFixed(2) || 'Test required',
+              maxPermitted: c.expectedTests?.zs?.maxPermitted?.toFixed(2) || c.expectedTestResults?.zs?.maxPermitted || c.calculations?.maxZs?.toFixed(2) || 'See BS 7671',
+              marginPercent: c.expectedTests?.zs?.marginPercent?.toFixed(1) || null,
+              compliant: c.expectedTests?.zs?.compliant !== false && c.expectedTestResults?.zs?.compliant !== false ? 'Yes' : 'No',
+              regulation: c.expectedTests?.zs?.regulation || c.expectedTestResults?.zs?.regulation || 'BS 7671 Reg 612.9'
             },
             insulationResistance: {
-              testVoltage: c.expectedTestResults.insulationResistance?.testVoltage || '500V DC',
-              minResistance: c.expectedTestResults.insulationResistance?.minResistance || '≥1.0MΩ'
+              testVoltage: c.expectedTests?.insulationResistance?.testVoltage || c.expectedTestResults?.insulationResistance?.testVoltage || '500V DC',
+              minResistance: c.expectedTests?.insulationResistance?.minResistance || c.expectedTestResults?.insulationResistance?.minResistance || '≥1.0MΩ',
+              regulation: c.expectedTests?.insulationResistance?.regulation || c.expectedTestResults?.insulationResistance?.regulation || 'BS 7671 Table 61'
             },
             polarity: c.expectedTestResults?.polarity || 'Correct at all points',
-            rcdTest: (c.rcdProtected && c.expectedTestResults?.rcdTest) || c.rcdProtected ? {
-              at1x: c.expectedTestResults?.rcdTest?.at1x || '≤300ms @ 30mA',
+            rcdTest: (c.rcdProtected && (c.expectedTests?.rcd || c.expectedTestResults?.rcdTest)) || c.rcdProtected ? {
+              ratingmA: c.expectedTests?.rcd?.ratingmA || 30,
+              maxTripTimeMs: c.expectedTests?.rcd?.maxTripTimeMs || 300,
+              at1x: c.expectedTestResults?.rcdTest?.at1x || `≤${c.expectedTests?.rcd?.maxTripTimeMs || 300}ms @ ${c.expectedTests?.rcd?.ratingmA || 30}mA`,
               at5x: c.expectedTestResults?.rcdTest?.at5x || '≤40ms @ 150mA',
-              regulation: c.expectedTestResults?.rcdTest?.regulation || 'BS 7671 Regulation 643.2.2'
+              regulation: c.expectedTests?.rcd?.regulation || c.expectedTestResults?.rcdTest?.regulation || 'BS 7671 Reg 612.13.2'
             } : {
               at1x: 'Not applicable',
               at5x: 'Not applicable',

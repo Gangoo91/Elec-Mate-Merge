@@ -1081,11 +1081,13 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           const circuitGuidanceData = design.installationGuidance?.[circuitKey]?.guidance;
           
           // Merge expectedTests from Circuit Designer with testingRequirements from Installation Agent
+          // Priority: circuit.expectedTests (Phase 4.75) > circuit.expectedTestResults > transformed testingRequirements
           const mergedExpectedTests = {
-            ...(circuit.expectedTests || circuit.expectedTestResults || {}),
+            ...(circuit.expectedTestResults || {}),
             ...(circuitGuidanceData?.testingRequirements 
               ? transformInstallationTestingToExpectedResults(circuitGuidanceData.testingRequirements)
-              : {})
+              : {}),
+            ...(circuit.expectedTests || {}) // Phase 4.75 data takes highest priority
           };
           
           return {
@@ -1133,6 +1135,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             justifications: circuit.justifications || {},
             calculations: circuit.calculations || {},
             protectionDevice: circuit.protectionDevice || {},
+            expectedTests: circuit.expectedTests || null, // Phase 4.75 structured test data
             expectedTestResults: mergedExpectedTests,
             deratingFactors: circuit.deratingFactors || {},
             faultCurrentAnalysis: circuit.faultCurrentAnalysis || {},
