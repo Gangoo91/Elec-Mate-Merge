@@ -331,6 +331,38 @@ KNOWLEDGE BASE PROVIDED:
 OUTPUT STRUCTURE:
 {
   "installationGuide": "High-level overview paragraph",
+  
+  "executiveSummary": {
+    "cableType": "e.g. Twin & Earth, SWA, LSZH Singles in Conduit",
+    "cableSize": "e.g. 2.5mm², 4mm², 6mm²",
+    "runLength": "e.g. 25m, 15m total run length",
+    "installationMethod": "e.g. Clipped direct to masonry, In steel conduit, In trunking",
+    "supplyType": "e.g. Single phase 230V, Three phase 400V",
+    "protectiveDevice": "e.g. 32A Type B MCB, 40A 30mA RCBO",
+    "voltageDrop": "PASS/FAIL with calculation (e.g. PASS - 3.2V drop)",
+    "zsRequirement": "e.g. 1.44Ω max per BS 7671 Table 41.3",
+    "purpose": "Brief description of installation purpose and context"
+  },
+  
+  "materialsList": [
+    {
+      "description": "Material name (e.g. Twin and Earth Cable)",
+      "specification": "Technical specification (e.g. 6242Y 2.5mm², BS EN 60898)",
+      "quantity": "Numeric quantity (e.g. 30)",
+      "unit": "Unit of measure (m/sets/pcs/boxes)",
+      "notes": "Any special notes or alternatives"
+    }
+  ],
+  
+  "testingRequirements": [
+    {
+      "description": "Test name (e.g. Continuity of protective conductors)",
+      "regulation": "BS 7671 regulation reference (e.g. Reg 643.2.2)",
+      "expectedReading": "Expected test result (e.g. <0.5Ω)",
+      "passRange": "Acceptable range or pass criteria"
+    }
+  ],
+  
   "steps": [
     {
       "stepNumber": 1,
@@ -390,6 +422,33 @@ REQUIREMENTS:
   * IP ratings: (Reg 512.2)
   * Circuit arrangement: (Reg 314.1)
   * Protective bonding: (Reg 411.3.1.2)
+
+- EXECUTIVE SUMMARY: Must extract key design specifications from query/context:
+  * cableType: Exact cable description (e.g., "2.5mm² Twin & Earth 6242Y")
+  * cableSize: Cable conductor size (e.g., "2.5mm²")
+  * runLength: Total cable run distance (e.g., "25m")
+  * installationMethod: Installation technique (e.g., "Clipped direct to masonry")
+  * supplyType: Supply configuration (e.g., "Single phase 230V")
+  * protectiveDevice: Protection device specification (e.g., "32A Type B MCB")
+  * voltageDrop: Compliance status with calculation
+  * zsRequirement: Maximum Zs value per BS 7671 tables
+  * purpose: Brief context of what's being installed
+
+- MATERIALS LIST: Generate comprehensive materials with structured data:
+  * description: Clear material name (e.g., "Twin and Earth Cable", "32A MCB Type B")
+  * specification: Technical spec (e.g., "6242Y 2.5mm²", "BS EN 60898")
+  * quantity: Numeric value extracted from context (e.g., 30, 5, 1)
+  * unit: Appropriate unit (metres, sets, pcs, boxes, rolls)
+  * notes: Any special requirements or alternatives
+  * Include cables, protection devices, accessories, fixings, consumables
+
+- TESTING REQUIREMENTS: Generate BS 7671 Part 6 test requirements:
+  * description: Test name (e.g., "Continuity of protective conductors", "Insulation resistance")
+  * regulation: Specific BS 7671 regulation (e.g., "Reg 643.2.2", "Reg 643.3")
+  * expectedReading: Expected result based on installation (e.g., "<0.5Ω", ">1MΩ at 500V")
+  * passRange: Pass criteria (e.g., "R1+R2 must be less than maximum Zs", "Minimum 1MΩ")
+  * Include: continuity, insulation resistance, polarity, Zs, RCD tests as applicable
+
 
 - Include specific BS 7671 regulation references throughout
 - Provide realistic time estimates for each step
