@@ -194,6 +194,15 @@ export interface CircuitDesign {
     };
   };
   warnings: string[];
+  // Phase 5.5: Compliance Status Mapping
+  complianceStatus?: 'pass' | 'warning' | 'fail';
+  validationIssues?: Array<{
+    type: string;
+    severity: 'error' | 'warning' | 'info';
+    message: string;
+    regulation?: string;
+    circuitIndex?: number;
+  }>;
 }
 
 export interface ConsumerUnit {
