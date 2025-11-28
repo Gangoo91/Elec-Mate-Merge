@@ -55,6 +55,23 @@
     --primary-muted: 47 85% 42%;
     --primary-subtle: 47 70% 38%;
     --primary-bg-muted: 47 80% 15%;
+    
+    /* EICR Classification Colors - Muted for professional appearance */
+    --eicr-c1-bg: 0 45% 15%;
+    --eicr-c1-border: 0 55% 35%;
+    --eicr-c1-text: 0 50% 75%;
+    
+    --eicr-c2-bg: 25 45% 15%;
+    --eicr-c2-border: 25 60% 40%;
+    --eicr-c2-text: 25 55% 75%;
+    
+    --eicr-c3-bg: 40 45% 15%;
+    --eicr-c3-border: 40 60% 45%;
+    --eicr-c3-text: 40 55% 80%;
+    
+    --eicr-fi-bg: 47 40% 15%;
+    --eicr-fi-border: 47 60% 45%;
+    --eicr-fi-text: 47 50% 80%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -111,6 +128,23 @@
     --primary-muted: 47 75% 45%;
     --primary-subtle: 47 60% 40%;
     --primary-bg-muted: 47 60% 20%;
+    
+    /* EICR Classification Colors - Muted for professional appearance */
+    --eicr-c1-bg: 0 45% 15%;
+    --eicr-c1-border: 0 55% 38%;
+    --eicr-c1-text: 0 50% 78%;
+    
+    --eicr-c2-bg: 25 45% 15%;
+    --eicr-c2-border: 25 60% 42%;
+    --eicr-c2-text: 25 55% 78%;
+    
+    --eicr-c3-bg: 40 45% 15%;
+    --eicr-c3-border: 40 60% 48%;
+    --eicr-c3-text: 40 55% 82%;
+    
+    --eicr-fi-bg: 47 40% 15%;
+    --eicr-fi-border: 47 60% 48%;
+    --eicr-fi-text: 47 50% 82%;
     
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
