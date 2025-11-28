@@ -64,6 +64,32 @@ function extractCommissioningKeywords(query: string): string[] {
     'earth': ['earthing', 'earth fault loop impedance', 'Zs', 'PEFC', 'fault loop', 'protective conductor', 'earth electrode'],
     'psc': ['prospective short circuit current', 'fault level', 'PSCC', 'PFC', 'prospective fault current'],
     
+    // UK WIRING COLOURS - SINGLE PHASE (Current)
+    'brown': ['brown conductor', 'live wire', 'line conductor', 'L terminal', 'live terminal', 'phase conductor', 'brown cable', 'brown wire'],
+    'blue': ['blue conductor', 'neutral wire', 'neutral conductor', 'N terminal', 'neutral terminal', 'return conductor', 'blue cable', 'blue wire'],
+    
+    // UK WIRING COLOURS - THREE PHASE (Current)  
+    'L1': ['phase 1', 'line 1', 'brown phase', 'first phase', 'L1 terminal', 'L1 conductor'],
+    'L2': ['phase 2', 'line 2', 'black phase', 'second phase', 'L2 terminal', 'L2 conductor'],
+    'L3': ['phase 3', 'line 3', 'grey phase', 'third phase', 'L3 terminal', 'L3 conductor'],
+    'black': ['black conductor', 'L2 wire', 'phase 2 conductor', 'black cable', 'black wire', 'black phase'],
+    'grey': ['grey conductor', 'L3 wire', 'phase 3 conductor', 'grey cable', 'grey wire', 'grey phase'],
+    
+    // OLD COLOURS (Pre-2004)
+    'red': ['red conductor', 'old live', 'red phase', 'L1 old', 'red cable', 'red wire', 'old line'],
+    'yellow': ['yellow conductor', 'old L2', 'yellow phase', 'old phase 2', 'yellow cable', 'yellow wire'],
+    
+    // EARTH
+    'green': ['green yellow', 'earth conductor', 'CPC', 'protective conductor', 'earth wire', 'E terminal', 'earthing', 'earth terminal'],
+    
+    // PHOTO ANALYSIS VISUAL INDICATORS
+    'burnt': ['burning', 'scorched', 'charred', 'heat damage', 'thermal damage', 'discoloured', 'overheated', 'blackened', 'burnt marks'],
+    'discolour': ['discolouration', 'brown staining', 'heat marks', 'scorch marks', 'burnt marks', 'charring', 'heat discolouration'],
+    'socket': ['socket outlet', 'power socket', 'twin socket', 'double socket', 'single socket', 'BS 1363', 'plug socket', 'power point'],
+    'arcing': ['arc damage', 'arc marks', 'flashover', 'arc fault', 'electrical arc', 'spark damage', 'arc tracking'],
+    'loose': ['loose connection', 'loose terminal', 'high resistance joint', 'poor termination', 'loose wire', 'untight connection'],
+    'terminal': ['terminal connection', 'screw terminal', 'pillar terminal', 'socket terminal', 'termination point', 'connection point', 'terminal block'],
+    
     // FAULT FINDING KEYWORDS  
     'fault': ['fault finding', 'troubleshooting', 'diagnosis', 'diagnostic', 'failure', 'defect', 'fault diagnosis', 'fault location'],
     'trip': ['nuisance trip', 'RCD trip', 'MCB trip', 'spurious trip', 'earth leakage', 'tripping', 'circuit breaker trip'],

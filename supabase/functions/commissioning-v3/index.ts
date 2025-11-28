@@ -1470,6 +1470,76 @@ Before classifying, assess the LOCATION:
 
 **CRITICAL: The "NONE" classification adds credibility to your analysis.** If you classify everything as a defect, electricians will not trust you. Be honest and accurate.
 
+**UK WIRING COLOUR IDENTIFICATION (BS 7671 Standards):**
+
+═══════════════════════════════════════════════════════════════
+SINGLE-PHASE (Post-March 2004 - Current Standard)
+═══════════════════════════════════════════════════════════════
+🟤 BROWN = LIVE (Line Conductor)
+   - Carries current TO the load
+   - Socket outlets (BS 1363): RIGHT terminal (viewed from front)
+   - Overheating = High current, loose termination, or damaged connection
+
+🔵 BLUE = NEUTRAL (Return Conductor)
+   - Carries current FROM load back to source
+   - Socket outlets: LEFT terminal
+   - Overheating = Broken neutral, high-resistance joint, unbalanced load
+
+🟢🟡 GREEN/YELLOW = EARTH (CPC - Circuit Protective Conductor)
+   - Protective conductor, NO current except during fault
+   - Socket outlets: TOP terminal (marked ⏚ or E)
+   - Overheating = Earth fault current flowing (SERIOUS)
+
+═══════════════════════════════════════════════════════════════
+THREE-PHASE (Post-March 2004 - Current Standard)
+═══════════════════════════════════════════════════════════════
+🟤 BROWN = L1 (Phase 1 / Line 1)
+⚫ BLACK = L2 (Phase 2 / Line 2)  
+🔘 GREY = L3 (Phase 3 / Line 3)
+🔵 BLUE = NEUTRAL
+🟢🟡 GREEN/YELLOW = EARTH (CPC)
+
+Three-Phase Terminal Positions:
+- Distribution boards: L1, L2, L3 busbars typically top-to-bottom or left-to-right
+- Motors/equipment: Check terminal markings (U, V, W or L1, L2, L3)
+- Phase sequence: L1→L2→L3 for correct motor rotation
+
+═══════════════════════════════════════════════════════════════
+OLD COLOURS (Pre-March 2004 - May Still Be Found)
+═══════════════════════════════════════════════════════════════
+Single-Phase Old:
+🔴 RED = LIVE
+⚫ BLACK = NEUTRAL  
+🟢 GREEN = EARTH (or bare copper)
+
+Three-Phase Old:
+🔴 RED = L1 (Phase 1)
+🟡 YELLOW = L2 (Phase 2)
+🔵 BLUE = L3 (Phase 3)
+⚫ BLACK = NEUTRAL
+🟢 GREEN = EARTH
+
+⚠️ MIXED COLOUR INSTALLATIONS: If you see RED/YELLOW/BLUE phases with 
+BROWN switched lives - this is a mixed-era installation requiring extra care.
+
+═══════════════════════════════════════════════════════════════
+CRITICAL COLOUR IDENTIFICATION RULES
+═══════════════════════════════════════════════════════════════
+1. ALWAYS identify which colour conductor enters the affected terminal
+2. Brown wire at scorched terminal = LIVE (L1) terminal affected
+3. Black wire at scorched terminal = Could be L2 (new) OR NEUTRAL (old) - CHECK CONTEXT
+4. Grey wire at scorched terminal = L3 terminal affected (three-phase only)
+5. Blue wire at scorched terminal = NEUTRAL (new) OR L3 (old three-phase)
+6. NEVER say "neutral terminal burning" if BROWN conductor is visibly damaged
+
+**THERMAL DAMAGE PATTERN RECOGNITION:**
+- Light brown/caramel discolouration = Mild overheating (may be C2)
+- Dark brown/black scorching = Sustained high-resistance joint (likely C1 - fire risk)
+- Melted plastic around terminal = Severe arcing (DEFINITELY C1 - immediate isolation)
+- Discolouration on ONE terminal only = Loose connection at THAT specific terminal
+- Discolouration on MULTIPLE terminals = Circuit overload or aged accessory
+- Three-phase: Check ALL THREE phase connections if one shows damage
+
 **PHOTO ANALYSIS CHECKLIST:**
 1. What can you see clearly? (cables, accessories, terminations, enclosures, signage)
 2. What is the location context? (bathroom, kitchen, outdoor, consumer unit, etc.)
