@@ -52,7 +52,7 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver, onA
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              {isCompliantPhoto ? '📸 Photo Analysis' : eicrDefects && eicrDefects.length > 0 ? '📸 EICR Photo Analysis' : 'Fault Diagnosis'}
+              {isCompliantPhoto ? 'Photo Analysis' : eicrDefects && eicrDefects.length > 0 ? 'EICR Photo Analysis' : 'Fault Diagnosis'}
             </h1>
             <p className="text-base text-white/90">
               {isCompliantPhoto ? 'Installation appears compliant' : eicrDefects && eicrDefects.length > 0 ? 'EICR defect coding with BS 7671 compliance' : 'Structured troubleshooting workflow'}
@@ -134,7 +134,7 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver, onA
                     <ul className="space-y-2">
                       {eicrDefects[0].goodPracticeNotes.map((note: string, idx: number) => (
                         <li key={idx} className="text-base text-white flex items-start gap-2 text-left leading-relaxed">
-                          <span className="text-green-300 text-xl">✓</span>
+                          <CheckCircle2 className="h-5 w-5 text-green-300 flex-shrink-0 mt-0.5" />
                           <span>{note}</span>
                         </li>
                       ))}
@@ -315,7 +315,7 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver, onA
                   <ul className="space-y-3 pt-2">
                     {diagnosis.additionalContext.proTips.map((tip, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-base text-white leading-relaxed">
-                        <span className="text-blue-400 text-xl">💡</span>
+                        <Lightbulb className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                         <span className="text-left">{tip}</span>
                       </li>
                     ))}
