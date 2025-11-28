@@ -136,7 +136,7 @@ export const InstallationProcessingView = ({ originalQuery, projectDetails, prog
       {/* Agent Card */}
       <Card className="overflow-hidden border-blue-500/20 bg-gradient-to-br from-blue-500/10 via-background to-background">
         <CardContent className="p-6">
-          <div className="flex items-start justify-between mb-4">
+          <div className="flex items-start mb-4">
             <div className="flex items-center gap-3">
               <div className={`p-3 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 ${progressValue < 100 ? 'animate-pulse' : ''}`}>
                 <Wrench className="h-6 w-6 text-white" />
@@ -148,27 +148,6 @@ export const InstallationProcessingView = ({ originalQuery, projectDetails, prog
                 </p>
               </div>
             </div>
-            {onCancel && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={onCancel}
-                disabled={isCancelling}
-                className="border-red-500/30 hover:bg-red-500/10 text-red-400 hover:text-red-300 min-h-[44px] touch-manipulation"
-              >
-                {isCancelling ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Cancelling...
-                  </>
-                ) : (
-                  <>
-                    <X className="h-4 w-4 mr-2" />
-                    Cancel
-                  </>
-                )}
-              </Button>
-            )}
           </div>
 
           <div className="space-y-4">
@@ -331,6 +310,31 @@ export const InstallationProcessingView = ({ originalQuery, projectDetails, prog
             className="min-h-[44px] touch-manipulation"
           >
             Switch to Quick Mode
+          </Button>
+        </div>
+      )}
+
+      {/* Cancel Button at Bottom */}
+      {onCancel && (
+        <div className="flex justify-center pt-4">
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={onCancel}
+            disabled={isCancelling}
+            className="border-red-500/30 hover:bg-red-500/10 text-red-400 hover:text-red-300 min-h-[44px] touch-manipulation w-full sm:w-auto"
+          >
+            {isCancelling ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                Cancelling...
+              </>
+            ) : (
+              <>
+                <X className="h-4 w-4 mr-2" />
+                Cancel Generation
+              </>
+            )}
           </Button>
         </div>
       )}
