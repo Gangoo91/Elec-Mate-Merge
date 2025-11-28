@@ -1161,7 +1161,8 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           ? `${(design.diversityBreakdown.overallDiversityFactor * 100).toFixed(0)}%`
           : '65%',
         
-        diversifiedLoad: (design.diversityBreakdown?.diversifiedLoad || calculatedTotalLoad * 0.65).toLocaleString('en-GB'),
+        // Send raw number (not locale-formatted) for edge function to process
+        diversifiedLoad: design.diversityBreakdown?.diversifiedLoad || calculatedTotalLoad * 0.65,
         
         totalDesignCurrent: (() => {
           const diversifiedLoadW = design.diversityBreakdown?.diversifiedLoad || calculatedTotalLoad * 0.65;
