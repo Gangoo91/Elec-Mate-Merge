@@ -3180,6 +3180,7 @@ export type Database = {
           created_at: string
           current_step: string | null
           designer_context: Json | null
+          detail_level: string | null
           error_message: string | null
           id: string
           method_data: Json | null
@@ -3197,6 +3198,7 @@ export type Database = {
           created_at?: string
           current_step?: string | null
           designer_context?: Json | null
+          detail_level?: string | null
           error_message?: string | null
           id?: string
           method_data?: Json | null
@@ -3214,6 +3216,7 @@ export type Database = {
           created_at?: string
           current_step?: string | null
           designer_context?: Json | null
+          detail_level?: string | null
           error_message?: string | null
           id?: string
           method_data?: Json | null
