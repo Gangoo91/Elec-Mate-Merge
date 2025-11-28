@@ -63,7 +63,8 @@ Deno.serve(async (req) => {
       const result = await generateInstallationMethod(supabase, {
         query: job.query,
         projectDetails: job.project_details,
-        designerContext: job.designer_context
+        designerContext: job.designer_context,
+        detailLevel: job.detail_level || 'normal'
       });
 
       await supabase

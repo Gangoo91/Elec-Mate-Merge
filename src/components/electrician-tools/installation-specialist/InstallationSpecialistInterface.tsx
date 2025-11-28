@@ -45,7 +45,7 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
   
   const lastProjectRef = useRef<{details: ProjectDetailsType, description: string} | null>(null);
 
-  const handleGenerate = async (projectDetails: ProjectDetailsType, description: string, useFullMode: boolean) => {
+  const handleGenerate = async (projectDetails: ProjectDetailsType, description: string, useFullMode: boolean, detailLevel: 'normal' | 'detailed') => {
     setGenerationStartTime(Date.now());
     setShowResults(true);
     setCelebrationShown(false);
@@ -69,7 +69,8 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
         body: {
           query: description,
           projectDetails,
-          designerContext: designerContext || null
+          designerContext: designerContext || null,
+          detailLevel
         }
       });
 
@@ -186,7 +187,7 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
 
   const handleRegenerate = () => {
     if (lastProjectRef.current) {
-      handleGenerate(lastProjectRef.current.details, lastProjectRef.current.description, true);
+      handleGenerate(lastProjectRef.current.details, lastProjectRef.current.description, true, 'normal');
     }
   };
 
