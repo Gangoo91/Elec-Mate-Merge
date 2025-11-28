@@ -76,28 +76,28 @@ interface EICRDefectCardProps {
 const EICRDefectCard = ({ defect }: EICRDefectCardProps) => {
   const codeConfig = {
     C1: {
-      color: 'bg-red-500',
+      color: 'bg-red-500/30',
       textColor: 'text-red-100',
       borderColor: 'border-red-500',
-      bgLight: 'bg-red-500/10'
+      bgLight: 'bg-elec-dark'
     },
     C2: {
-      color: 'bg-orange-500',
+      color: 'bg-orange-500/30',
       textColor: 'text-orange-100',
       borderColor: 'border-orange-500',
-      bgLight: 'bg-orange-500/10'
+      bgLight: 'bg-elec-dark'
     },
     C3: {
-      color: 'bg-amber-500',
+      color: 'bg-amber-500/30',
       textColor: 'text-amber-100',
       borderColor: 'border-amber-500',
-      bgLight: 'bg-amber-500/10'
+      bgLight: 'bg-elec-dark'
     },
     FI: {
-      color: 'bg-purple-500',
+      color: 'bg-purple-500/30',
       textColor: 'text-purple-100',
       borderColor: 'border-purple-500',
-      bgLight: 'bg-purple-500/10'
+      bgLight: 'bg-elec-dark'
     }
   };
 

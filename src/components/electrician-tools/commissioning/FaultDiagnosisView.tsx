@@ -103,10 +103,10 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
 
         {/* Compliant Installation Banner (NONE classification) */}
         {isCompliantPhoto && eicrDefects[0] && (
-          <Card className="bg-green-500 border-none p-6 sm:p-7 shadow-xl">
+          <Card className="bg-green-500/20 border-2 border-green-500/50 p-6 sm:p-7 shadow-xl">
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 p-4 bg-white/20 rounded-lg">
-                <CheckCircle2 className="h-8 w-8 sm:h-10 sm:w-10 text-green-100" />
+              <div className="flex-shrink-0 p-4 bg-white/10 rounded-lg">
+                <CheckCircle2 className="h-8 w-8 sm:h-10 sm:w-10 text-green-400/80" />
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-3">
@@ -143,12 +143,12 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
 
         {/* Safety Alert Banner */}
         {diagnosis && risk && (diagnosis.faultSummary.safetyRisk === 'HIGH' || diagnosis.faultSummary.safetyRisk === 'CRITICAL') && (
-          <Card className={`${risk.color} border-none p-6 sm:p-7 shadow-xl`}>
+          <Card className="bg-red-500/20 border-2 border-red-500/50 p-6 sm:p-7 shadow-xl">
             <div className="space-y-4">
               {/* Mobile: Icon centered on top, Desktop: Icon on left */}
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
-                <div className="flex-shrink-0 p-5 sm:p-4 bg-white/20 rounded-2xl sm:rounded-lg">
-                  <RiskIcon className={`h-12 w-12 sm:h-8 sm:w-8 ${risk.textColor}`} />
+              <div className="flex-shrink-0 p-5 sm:p-4 bg-white/10 rounded-2xl sm:rounded-lg">
+                  <RiskIcon className="h-12 w-12 sm:h-8 sm:w-8 text-red-400/80" />
                 </div>
                 <div className="flex-1 w-full text-center sm:text-left">
                   <div className="flex flex-col sm:flex-row items-center sm:items-center gap-3 sm:gap-2 mb-4 sm:mb-3">
@@ -284,7 +284,7 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
                   <ul className="space-y-3 pt-2">
                     {diagnosis.additionalContext.commonMistakes.map((mistake, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-base text-white leading-relaxed">
-                        <span className="text-amber-400 text-xl">•</span>
+                        <span className="text-amber-500/70 text-xl">•</span>
                         <span className="text-left">{mistake}</span>
                       </li>
                     ))}
