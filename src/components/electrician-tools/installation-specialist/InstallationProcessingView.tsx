@@ -17,6 +17,7 @@ interface InstallationProcessingViewProps {
   onCancel?: () => void;
   isCancelling?: boolean;
   onQuickMode?: () => void;
+  detailLevel?: 'normal' | 'detailed';
   qualityMetrics?: {
     overallConfidence: number;
     ragDataQuality: 'excellent' | 'good' | 'fair' | 'poor';
@@ -26,7 +27,7 @@ interface InstallationProcessingViewProps {
   };
 }
 
-export const InstallationProcessingView = ({ originalQuery, projectDetails, progress, startTime, onCancel, isCancelling, onQuickMode, qualityMetrics }: InstallationProcessingViewProps) => {
+export const InstallationProcessingView = ({ originalQuery, projectDetails, progress, startTime, onCancel, isCancelling, onQuickMode, detailLevel = 'normal', qualityMetrics }: InstallationProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [simulatedProgress, setSimulatedProgress] = useState<{
     stage: 'initializing' | 'rag' | 'ai' | 'generation' | 'validation' | 'complete';
@@ -81,7 +82,8 @@ export const InstallationProcessingView = ({ originalQuery, projectDetails, prog
   const progressValue = displayProgress ? progressMap[displayProgress.stage] : 0;
   const currentStep = displayProgress?.message || 'Initializing...';
 
-  const estimatedTotal = 180; // 3 minutes estimate
+  // Dynamic timer based on detail level: 3:30 for normal, 7:00 for detailed
+  const estimatedTotal = detailLevel === 'detailed' ? 420 : 210; // 7 min or 3 min 30 sec
   const estimatedRemaining = Math.max(0, estimatedTotal - elapsedTime);
 
   // Define all stages with their labels
@@ -102,16 +104,27 @@ export const InstallationProcessingView = ({ originalQuery, projectDetails, prog
       {/* Original Request Display */}
       {originalQuery && (
         <Card className="border-blue-500/20 bg-muted/30">
-          <CardContent className="p-4 sm:p-6">
-            <h4 className="font-semibold text-sm text-muted-foreground mb-2 flex items-center gap-2">
-              <FileText className="h-4 w-4" />
-              What You Asked For
-            </h4>
-            <p className="text-base text-foreground font-medium leading-relaxed">
+          <CardContent className="p-3 sm:p-6">
+            <div className="flex items-center justify-between gap-2 mb-2">
+              <h4 className="font-semibold text-sm text-muted-foreground flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                What You Asked For
+              </h4>
+              {/* Mode Badge */}
+              <div className={cn(
+                "px-2 py-1 rounded-full text-xs font-semibold whitespace-nowrap",
+                detailLevel === 'detailed' 
+                  ? "bg-purple-500/20 text-purple-300 border border-purple-500/30" 
+                  : "bg-blue-500/20 text-blue-300 border border-blue-500/30"
+              )}>
+                {detailLevel === 'detailed' ? 'Detailed Mode (~7 mins)' : 'Normal Mode (~3½ mins)'}
+              </div>
+            </div>
+            <p className="text-base text-foreground font-medium leading-relaxed text-left">
               {originalQuery}
             </p>
             {projectDetails && (
-              <div className="mt-3 pt-3 border-t border-border text-xs text-muted-foreground space-y-1">
+              <div className="mt-3 pt-3 border-t border-border text-xs text-muted-foreground space-y-1 text-left">
                 {projectDetails.projectName && (
                   <p>Project: <span className="text-foreground">{projectDetails.projectName}</span></p>
                 )}
