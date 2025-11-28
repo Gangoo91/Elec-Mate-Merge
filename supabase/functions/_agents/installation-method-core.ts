@@ -414,17 +414,17 @@ OUTPUT STRUCTURE:
   }
 }
 
-REQUIREMENTS (ENHANCED MODE - 15-18 DETAILED STEPS):
+REQUIREMENTS (ENHANCED MODE - 12-15 DETAILED STEPS):
 
-- Generate 15-18 detailed installation steps covering the FULL lifecycle:
-  * Steps 1-3: Preparation (site survey, risk assessment, safe isolation, permits)
-  * Steps 4-7: First fix work (containment installation, cable routing, supports)
-  * Steps 8-13: Second fix work (terminations, connections, accessories, labelling)
-  * Steps 14-16: Testing and verification (continuity, IR, Zs, RCD tests)
-  * Steps 17-18: Commissioning, final inspection, and handover documentation
+- Generate 12-15 detailed installation steps covering the FULL lifecycle:
+  * Steps 1-2: Preparation (site survey, risk assessment, safe isolation, permits)
+  * Steps 3-6: First fix work (containment installation, cable routing, supports)
+  * Steps 7-11: Second fix work (terminations, connections, accessories, labelling)
+  * Steps 12-13: Testing and verification (continuity, IR, Zs, RCD tests)
+  * Steps 14-15: Commissioning, final inspection, and handover documentation
 
 - Each step MUST include:
-  * 150-200 word detailed description with specific technical guidance
+  * 100-150 word detailed description with specific technical guidance
   * All measurements, tool settings, torque values, test readings
   * Step-by-step procedural instructions within the content
   * 2-4 safety considerations specific to that step
@@ -514,8 +514,8 @@ ${ragContext.regulations.slice(0, 10).map((reg: any, i: number) =>
   `${i + 1}. ${reg.regulation_number}: ${reg.primary_topic}`
 ).join('\n')}`;
 
-  const maxTokens = 16000;  // Sufficient for 15-18 steps at 150-200 words each
-  console.log(`🤖 Starting GPT-5 Mini AI generation (${maxTokens} max_completion_tokens, ~4 minutes)...`);
+  const maxTokens = 14000;  // Sufficient for 12-15 steps at 100-150 words each
+  console.log(`🤖 Starting GPT-5 Mini AI generation (${maxTokens} max_completion_tokens, ~3-4 minutes)...`);
   
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
