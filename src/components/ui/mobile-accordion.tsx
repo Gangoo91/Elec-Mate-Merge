@@ -28,14 +28,14 @@ const MobileAccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "flex flex-1 items-center justify-center py-4 px-4 text-sm font-medium transition-all hover:underline relative",
+        "flex flex-1 items-center justify-start py-4 px-4 text-sm font-medium transition-all hover:underline relative",
         "bg-elec-gray border border-elec-yellow/20 rounded-t-lg [&[data-state=open]]:rounded-b-none",
         "touch-manipulation min-h-[48px] text-white",
         className
       )}
       {...props}
     >
-      <div className="flex flex-col items-center gap-2 text-center w-full">
+      <div className="flex items-center gap-3 text-left">
         {icon}
         {children}
       </div>

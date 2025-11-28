@@ -70,7 +70,7 @@ const EICRCriticalAlertBanner = ({
       <div className="flex items-center gap-4">
         {/* Confidence Ring */}
         <div className="relative flex-shrink-0">
-          <svg className="w-24 h-24 sm:w-28 sm:h-28 transform -rotate-90">
+          <svg className="w-24 h-24 sm:w-28 sm:h-28 transform -rotate-90" viewBox="0 0 96 96">
             {/* Background circle */}
             <circle
               cx="48"
