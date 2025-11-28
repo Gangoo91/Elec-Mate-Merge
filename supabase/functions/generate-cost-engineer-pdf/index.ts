@@ -27,126 +27,21 @@ serve(async (req) => {
     // Parse request body - pass comprehensive nested payload directly
     const payload = await req.json();
 
-    console.log('[COST-PDF] New payload structure received:', {
-      hasOriginalRequest: !!payload.originalRequest,
-      hasQuoteHero: !!payload.quoteHero,
-      materialsCount: payload.materials?.length || 0,
-      labourTasksCount: payload.labourTasks?.length || 0,
-      hasCostBreakdown: !!payload.costBreakdown,
-      hasPricingTiers: !!payload.pricingTiers,
-      hasRisks: !!payload.risks,
-      hasUpsells: !!payload.upsells
+    console.log('[COST-PDF] Payload structure being sent to PDF Monkey:', {
+      hasProjectContext: !!payload.projectContext,
+      hasProjectName: !!payload.projectContext?.projectName,
+      hasCostAnalysis: !!payload.costAnalysis,
+      materialsCount: payload.costAnalysis?.materials?.items?.length || 0,
+      labourTasksCount: payload.costAnalysis?.labour?.tasks?.length || 0,
+      hasTimescales: !!payload.costAnalysis?.timescales,
+      hasAlternatives: !!payload.costAnalysis?.alternatives,
+      hasOrderList: !!payload.costAnalysis?.orderList
     });
-
-    // Transform new clean payload structure to PDF Monkey template format
-    const pdfPayload = {
-      // Section 1: Original Request
-      projectContext: {
-        projectName: payload.originalRequest?.projectName || 'Cost Engineer Project',
-        clientInfo: payload.originalRequest?.clientInfo || '',
-        location: payload.originalRequest?.location || '',
-        projectType: payload.originalRequest?.projectType || 'domestic',
-        query: payload.originalRequest?.query || '',
-        additionalInfo: payload.originalRequest?.additionalInfo || '',
-        timestamp: payload.originalRequest?.timestamp || new Date().toISOString()
-      },
-
-      // Section 2 & 7: Quote Hero + Pricing Tiers
-      quoteRecommendation: {
-        recommendedPrice: payload.quoteHero?.recommendedPrice || 0,
-        tier: payload.quoteHero?.tier || 'normal',
-        profit: payload.quoteHero?.profit || 0,
-        marginPercent: payload.quoteHero?.marginPercent || 0,
-        profitPerHour: payload.quoteHero?.profitPerHour || 0,
-        confidencePercent: payload.quoteHero?.confidencePercent || 0,
-        totalLabourHours: payload.quoteHero?.totalLabourHours || 0
-      },
-
-      pricingTiers: {
-        workSparse: payload.pricingTiers?.workSparse || {},
-        normal: payload.pricingTiers?.normal || {},
-        busyPeriod: payload.pricingTiers?.busyPeriod || {}
-      },
-
-      // Section 3: AI Analysis Summary
-      aiSummary: payload.aiSummary || '',
-
-      // Section 4: Quick Metrics
-      quickMetrics: payload.quickMetrics || {},
-
-      // Section 5: Key Actions
-      keyActions: payload.keyActions || [],
-
-      // Section 6: Trade Intelligence
-      tradeIntelligence: payload.tradeIntelligence || {},
-
-      // Section 8: Cost Breakdown
-      costBreakdown: {
-        materials: payload.costBreakdown?.materials || {},
-        labour: payload.costBreakdown?.labour || {},
-        overheads: payload.costBreakdown?.overheads || {},
-        contingency: payload.costBreakdown?.contingency || {},
-        breakEvenPoint: payload.costBreakdown?.breakEvenPoint || 0,
-        subtotal: payload.costBreakdown?.subtotal || 0
-      },
-
-      // Section 9: Client Justification
-      clientJustification: payload.clientJustification || {},
-
-      // Section 10: Materials List
-      costAnalysis: {
-        materials: {
-          items: payload.materials || [],
-          subtotal: payload.costBreakdown?.materials?.total || 0
-        },
-        // Section 11: Labour Tasks
-        labour: {
-          tasks: payload.labourTasks || [],
-          subtotal: payload.costBreakdown?.labour?.total || 0,
-          totalHours: payload.quoteHero?.totalLabourHours || 0,
-          rate: payload.costBreakdown?.labour?.rate || 0
-        }
-      },
-
-      // Section 12: Job Complexity
-      jobComplexity: payload.jobComplexity || {},
-
-      // Section 13: Risk Assessment
-      risks: payload.risks || [],
-
-      // Section 14: Pricing Confidence
-      pricingConfidence: payload.pricingConfidence || {},
-
-      // Section 15: Immediate Upsells
-      upsells: payload.upsells || [],
-
-      // Section 16: Future Work Pipeline
-      futurePipeline: payload.futurePipeline || [],
-
-      // Section 17: Client Conversations
-      clientConversations: payload.clientConversations || {},
-
-      // Section 18: Site Arrival Checklist
-      siteChecklist: payload.siteChecklist || {},
-
-      // Section 19: Payment Terms
-      paymentTerms: payload.paymentTerms || {},
-
-      // Section 20: Post-Job Review
-      postJobReview: payload.postJobReview || {},
-
-      // Metadata
-      metadata: payload.metadata || {
-        generatedAt: new Date().toISOString(),
-        version: '3.1',
-        pdfTemplate: 'cost-engineer-comprehensive'
-      }
-    };
-
-    console.log('[COST-PDF] Transformed payload for PDF Monkey (first 500 chars):', JSON.stringify(pdfPayload).substring(0, 500));
+    
+    console.log('[COST-PDF] Full payload (first 500 chars):', JSON.stringify(payload).substring(0, 500));
 
     // Generate unique filename with project name
-    const projectName = payload.originalRequest?.projectName || 'Job';
+    const projectName = payload.projectContext?.projectName || 'Job';
     const uniqueId = crypto.randomUUID().split('-')[0].toUpperCase();
     const filename = `AI Cost Engineer - ${projectName} - ${uniqueId}.pdf`;
     
@@ -162,7 +57,7 @@ serve(async (req) => {
       body: JSON.stringify({
         document: {
           document_template_id: COST_ENGINEER_TEMPLATE_ID,
-          payload: pdfPayload,
+          payload: payload,
           filename: filename,
           status: 'pending'
         }
