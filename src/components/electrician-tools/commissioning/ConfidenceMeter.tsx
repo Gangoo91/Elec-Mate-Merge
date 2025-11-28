@@ -35,7 +35,8 @@ const ConfidenceMeter = ({ level, score, reasoning }: ConfidenceMeterProps) => {
     }
   };
 
-  const conf = config[level];
+  const normalizedLevel = (level?.toLowerCase() || 'medium') as 'high' | 'medium' | 'low';
+  const conf = config[normalizedLevel];
   const Icon = conf.icon;
   const displayScore = score || (level === 'high' ? 90 : level === 'medium' ? 70 : 50);
 
