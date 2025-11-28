@@ -29,6 +29,7 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
   });
   const [currentJobId, setCurrentJobId] = useState<string | null>(null);
   const [isCancelling, setIsCancelling] = useState(false);
+  const [detailLevel, setDetailLevel] = useState<'normal' | 'detailed'>('normal');
   
   const { 
     job, 
@@ -52,6 +53,7 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
     setIsGenerating(true);
     setOriginalQuery(description);
     setProjectInfo(projectDetails);
+    setDetailLevel(detailLevel); // Store detail level
     lastProjectRef.current = { details: projectDetails, description };
 
     try {
@@ -187,7 +189,7 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
 
   const handleRegenerate = () => {
     if (lastProjectRef.current) {
-      handleGenerate(lastProjectRef.current.details, lastProjectRef.current.description, true, 'normal');
+      handleGenerate(lastProjectRef.current.details, lastProjectRef.current.description, true, detailLevel);
     }
   };
 
@@ -224,6 +226,7 @@ const InstallationSpecialistInterface = ({ designerContext }: InstallationSpecia
           qualityMetrics={jobQualityMetrics}
           onCancel={handleCancelGeneration}
           isCancelling={isCancelling}
+          detailLevel={detailLevel}
         />
       ) : methodData ? (
         <InstallationResults
