@@ -9,13 +9,12 @@ import { InstallationTemplate } from "@/lib/installation-templates";
 import { InstallationTemplateGrid } from "./InstallationTemplateGrid";
 import { FormSection } from "./FormSection";
 import { InlineInstallationTypeSelector } from "./InlineInstallationTypeSelector";
-import { InlineDetailLevelSelector } from "./InlineDetailLevelSelector";
 import { CollapsibleFormSection } from "./CollapsibleFormSection";
 import { cn } from "@/lib/utils";
 import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
 
 interface InstallationInputProps {
-  onGenerate: (projectDetails: ProjectDetailsType, description: string, useFullMode: boolean, detailLevel: 'normal' | 'detailed') => void;
+  onGenerate: (projectDetails: ProjectDetailsType, description: string, useFullMode: boolean) => void;
   isProcessing: boolean;
 }
 
@@ -23,7 +22,6 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
   const [description, setDescription] = useState("");
   const [generateFullMethodStatement, setGenerateFullMethodStatement] = useState(true);
   const [installationType, setInstallationType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
-  const [detailLevel, setDetailLevel] = useState<'normal' | 'detailed'>('normal');
   const [projectDetails, setProjectDetails] = useState<ProjectDetailsType>({
     projectName: '',
     location: '',
@@ -45,7 +43,7 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
     if (!description.trim()) {
       return;
     }
-    onGenerate(projectDetails, description, generateFullMethodStatement, detailLevel);
+    onGenerate(projectDetails, description, generateFullMethodStatement);
   };
 
   const isValid = description.trim().length > 0;
@@ -112,14 +110,6 @@ export const InstallationInput = ({ onGenerate, isProcessing }: InstallationInpu
           selectedType={installationType}
           onChange={setInstallationType}
           disabled={isProcessing}
-        />
-      </FormSection>
-
-      {/* Detail Level - Inline Selector */}
-      <FormSection>
-        <InlineDetailLevelSelector 
-          selectedLevel={detailLevel}
-          onChange={setDetailLevel}
         />
       </FormSection>
 

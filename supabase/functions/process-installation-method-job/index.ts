@@ -61,20 +61,17 @@ Deno.serve(async (req) => {
         .update({ progress: 30 })
         .eq('id', jobId);
 
-      // Use extended timeout for detailed mode (8 minutes), standard for normal mode (6 minutes)
-      const timeoutMs = job.detail_level === 'detailed' 
-        ? Timeouts.DETAILED_INSTALLATION  // 8 minutes for 24k tokens
-        : Timeouts.PRACTICAL_WORK;        // 6 minutes for 16k tokens
+      // Use standard timeout for enhanced normal mode (6 minutes provides headroom)
+      const timeoutMs = Timeouts.PRACTICAL_WORK;  // 6 minutes for 16k tokens
 
       const result = await withTimeout(
         generateInstallationMethod(supabase, {
           query: job.query,
           projectDetails: job.project_details,
-          designerContext: job.designer_context,
-          detailLevel: job.detail_level || 'normal'
+          designerContext: job.designer_context
         }),
         timeoutMs,
-        `Installation method generation (${job.detail_level || 'normal'} mode)`
+        `Installation method generation (enhanced mode)`
       );
 
       await supabase

@@ -17,7 +17,6 @@ interface InstallationProcessingViewProps {
   onCancel?: () => void;
   isCancelling?: boolean;
   onQuickMode?: () => void;
-  detailLevel?: 'normal' | 'detailed';
   qualityMetrics?: {
     overallConfidence: number;
     ragDataQuality: 'excellent' | 'good' | 'fair' | 'poor';
@@ -27,7 +26,7 @@ interface InstallationProcessingViewProps {
   };
 }
 
-export const InstallationProcessingView = ({ originalQuery, projectDetails, progress, startTime, onCancel, isCancelling, onQuickMode, detailLevel = 'normal', qualityMetrics }: InstallationProcessingViewProps) => {
+export const InstallationProcessingView = ({ originalQuery, projectDetails, progress, startTime, onCancel, isCancelling, onQuickMode, qualityMetrics }: InstallationProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [simulatedProgress, setSimulatedProgress] = useState<{
     stage: 'initializing' | 'rag' | 'ai' | 'generation' | 'validation' | 'complete';
@@ -82,8 +81,8 @@ export const InstallationProcessingView = ({ originalQuery, projectDetails, prog
   const progressValue = displayProgress ? progressMap[displayProgress.stage] : 0;
   const currentStep = displayProgress?.message || 'Initializing...';
 
-  // Dynamic timer based on detail level: 3:30 for normal, 7:00 for detailed
-  const estimatedTotal = detailLevel === 'detailed' ? 420 : 210; // 7 min or 3 min 30 sec
+  // Enhanced timer: 4 minutes for detailed 15-18 steps at 150-200 words
+  const estimatedTotal = 240; // 4 minutes
   const estimatedRemaining = Math.max(0, estimatedTotal - elapsedTime);
 
   // Define all stages with their labels
@@ -111,13 +110,8 @@ export const InstallationProcessingView = ({ originalQuery, projectDetails, prog
                 What You Asked For
               </h4>
               {/* Mode Badge */}
-              <div className={cn(
-                "px-2 py-1 rounded-full text-xs font-semibold whitespace-nowrap",
-                detailLevel === 'detailed' 
-                  ? "bg-purple-500/20 text-purple-300 border border-purple-500/30" 
-                  : "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-              )}>
-                {detailLevel === 'detailed' ? 'Detailed Mode (~7 mins)' : 'Normal Mode (~3½ mins)'}
+              <div className="px-2 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                Enhanced Mode (~4 mins)
               </div>
             </div>
             <p className="text-base text-foreground font-medium leading-relaxed text-left">

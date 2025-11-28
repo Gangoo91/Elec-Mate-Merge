@@ -1,13 +1,11 @@
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, Clock, Wrench } from "lucide-react";
-import { SubStep } from "@/types/installation-method";
+import { BookOpen } from "lucide-react";
 
 interface EnhancedStepContentProps {
   content: string;
-  subSteps?: SubStep[];
 }
 
-export const EnhancedStepContent = ({ content, subSteps }: EnhancedStepContentProps) => {
+export const EnhancedStepContent = ({ content }: EnhancedStepContentProps) => {
   // Parse content into sections (for backwards compatibility with flat content)
   const sections = parseStepContent(content);
   
@@ -20,43 +18,8 @@ export const EnhancedStepContent = ({ content, subSteps }: EnhancedStepContentPr
         </p>
       )}
       
-      {/* Nested Sub-Steps (new structured format) */}
-      {subSteps && subSteps.length > 0 && (
-        <div className="space-y-2 pl-2 border-l-2 border-elec-yellow/50">
-          {subSteps.map((subStep) => (
-            <div key={subStep.subStepNumber} className="pl-4">
-              <div className="flex items-start gap-2 mb-1">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-elec-yellow/20 text-elec-yellow flex items-center justify-center text-xs font-bold">
-                  {subStep.subStepNumber}
-                </span>
-                <div className="flex-1">
-                  <div className="font-semibold text-foreground mb-1">{subStep.title}</div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {highlightMeasurements(subStep.content)}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {subStep.estimatedDuration && (
-                      <Badge variant="outline" className="text-xs bg-muted/50">
-                        <Clock className="h-3 w-3 mr-1" />
-                        {subStep.estimatedDuration}
-                      </Badge>
-                    )}
-                    {subStep.toolsRequired && subStep.toolsRequired.length > 0 && (
-                      <Badge variant="outline" className="text-xs bg-muted/50">
-                        <Wrench className="h-3 w-3 mr-1" />
-                        {subStep.toolsRequired.length} tool{subStep.toolsRequired.length !== 1 ? 's' : ''}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-      
-      {/* Detailed Sub-Steps (legacy flat format for backwards compatibility) */}
-      {!subSteps && sections.subSteps.length > 0 && (
+      {/* Detailed Sub-Steps (flat format) */}
+      {sections.subSteps.length > 0 && (
         <div className="space-y-3 pl-2 border-l-2 border-primary/30">
           {sections.subSteps.map((subStep, idx) => (
             <div key={idx} className="pl-4">

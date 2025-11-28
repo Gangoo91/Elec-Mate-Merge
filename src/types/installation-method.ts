@@ -7,21 +7,10 @@ export interface SafetyNote {
   severity?: 'info' | 'warning' | 'critical';
 }
 
-// Sub-step for detailed mode - numbered micro-steps (e.g., "1.1", "1.2")
-export interface SubStep {
-  subStepNumber: string;  // "1.1", "1.2", etc.
-  title: string;
-  content: string;  // 20-40 word action instruction
-  toolsRequired?: string[];
-  estimatedDuration?: string;
-  safetyNote?: string;
-}
-
 export interface InstallationStep {
   stepNumber: number;
   title: string;
   content: string;
-  subSteps?: SubStep[];  // 10-15 micro-steps in detailed mode
   safety?: (string | SafetyNote)[];  // Backward compatible with strings or structured SafetyNote
   toolsRequired?: string[];
   materialsNeeded?: string[];
