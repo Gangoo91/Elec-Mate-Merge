@@ -13,7 +13,6 @@ interface InstallationMethodRequest {
   query: string;
   projectDetails?: any;
   designerContext?: any;
-  detailLevel?: 'normal' | 'detailed';
 }
 
 export async function generateInstallationMethod(
@@ -25,8 +24,7 @@ export async function generateInstallationMethod(
   console.log('🔧 Installation Method Agent START', {
     query: request.query,
     hasProjectDetails: !!request.projectDetails,
-    hasDesignerContext: !!request.designerContext,
-    detailLevel: request.detailLevel || 'normal'
+    hasDesignerContext: !!request.designerContext
   });
 
   // STEP 1: Extract keywords from query (50 keywords target)
@@ -416,46 +414,20 @@ OUTPUT STRUCTURE:
   }
 }
 
-REQUIREMENTS ${request.detailLevel === 'detailed' ? '(DETAILED MODE - NESTED SUB-STEPS)' : '(NORMAL MODE - OVERVIEW)'}:
+REQUIREMENTS (ENHANCED MODE - 15-18 DETAILED STEPS):
 
-${request.detailLevel === 'detailed' ? `
-- Generate 12-15 main installation PHASES covering the FULL lifecycle:
-  * Phases 1-3: Preparation (site survey, risk assessment, safe isolation procedures, permits)
-  * Phases 4-6: First fix work (containment installation, cable routing, supports)
-  * Phases 7-10: Second fix work (cable terminations, connections, accessories, labelling)
-  * Phases 11-13: Testing and verification (continuity, IR, polarity, Zs, RCD tests)
-  * Phases 14-15: Commissioning, final inspection, and handover documentation
-
-- Each main phase MUST include a "subSteps" array with 10-15 micro-steps:
-  * Simple phases (e.g., single isolation): 10 sub-steps minimum
-  * Complex phases (e.g., multi-circuit terminations): 15 sub-steps maximum
-  * Sub-steps numbered as "1.1", "1.2"... "1.15", "2.1", "2.2"... etc.
-
-- Each sub-step should be a SINGLE ACTION instruction:
-  * 20-40 word description with exact measurements
-  * Include tool settings, torque values, test readings where applicable
-  * Example: "Strip 10mm insulation from cable end using rotary stripper. Do not nick conductors."
-  * Example: "Torque terminal screw to 2.5Nm using calibrated torque screwdriver. Verify conductor secure."
-
-- Sub-step JSON structure:
-  {
-    "subStepNumber": "3.7",
-    "title": "Tighten terminal connections",
-    "content": "Insert conductor fully into terminal. Torque to 2.5Nm using calibrated torque screwdriver. Verify conductor secure with gentle pull test.",
-    "toolsRequired": ["Torque screwdriver (2.5Nm)", "Terminal screwdriver"],
-    "estimatedDuration": "30-60 seconds per connection"
-  }
-` : `
-- Generate MINIMUM 12-15 detailed installation steps covering the FULL lifecycle:
+- Generate 15-18 detailed installation steps covering the FULL lifecycle:
   * Steps 1-3: Preparation (site survey, risk assessment, safe isolation, permits)
-  * Steps 4-6: First fix work (containment installation, cable routing, supports)
-  * Steps 7-10: Second fix work (terminations, connections, accessories, labelling)
-  * Steps 11-13: Testing and verification (continuity, IR, Zs, RCD tests)
-  * Steps 14-15: Commissioning, final inspection, and handover documentation
-`}
+  * Steps 4-7: First fix work (containment installation, cable routing, supports)
+  * Steps 8-13: Second fix work (terminations, connections, accessories, labelling)
+  * Steps 14-16: Testing and verification (continuity, IR, Zs, RCD tests)
+  * Steps 17-18: Commissioning, final inspection, and handover documentation
 
 - Each step MUST include:
-  * ${request.detailLevel === 'detailed' ? '80-100 word overview description of the phase' : '100-150 word detailed description with specific technical guidance'}
+  * 150-200 word detailed description with specific technical guidance
+  * All measurements, tool settings, torque values, test readings
+  * Step-by-step procedural instructions within the content
+  * 2-4 safety considerations specific to that step
   * 2-4 safety considerations specific to that step
   * 3-5 tools required for that specific step
   * 2-4 materials needed for that step
@@ -542,8 +514,8 @@ ${ragContext.regulations.slice(0, 10).map((reg: any, i: number) =>
   `${i + 1}. ${reg.regulation_number}: ${reg.primary_topic}`
 ).join('\n')}`;
 
-  const maxTokens = request.detailLevel === 'detailed' ? 24000 : 16000;
-  console.log(`🤖 Starting GPT-5 Mini AI generation (${maxTokens} max_completion_tokens, ${request.detailLevel === 'detailed' ? '6-8 minutes' : '4-5 minutes'})...`);
+  const maxTokens = 16000;  // Sufficient for 15-18 steps at 150-200 words each
+  console.log(`🤖 Starting GPT-5 Mini AI generation (${maxTokens} max_completion_tokens, ~4 minutes)...`);
   
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
