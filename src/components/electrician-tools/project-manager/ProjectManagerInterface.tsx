@@ -11,12 +11,9 @@ import {
   MessageSquare, 
   FileCheck,
   FileText,
-  Lightbulb,
-  Loader2,
-  AlertCircle
+  Lightbulb
 } from "lucide-react";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 import { useSimpleAgent } from "@/hooks/useSimpleAgent";
@@ -27,9 +24,7 @@ import { InlineProjectTypeSelector } from "./InlineProjectTypeSelector";
 import { CollapsibleFormSection } from "./CollapsibleFormSection";
 import { ExampleProjectsGrid } from "./ExampleProjectsGrid";
 import { TemplateLibrary } from "./templates/TemplateLibrary";
-import { ScopeChecklist } from "./input/ScopeChecklist";
-import { ConstraintsSection, ProjectConstraints } from "./input/ConstraintsSection";
-import { ProjectReviewStep } from "./ProjectReviewStep";
+import { ProjectConstraints } from "./input/ConstraintsSection";
 
 interface ExampleScenario {
   title: string;
@@ -79,11 +74,8 @@ const ProjectManagerInterface = () => {
   const [startDate, setStartDate] = useState("");
   const [duration, setDuration] = useState("");
   const [showResults, setShowResults] = useState(false);
-  const [showReview, setShowReview] = useState(false);
   const [results, setResults] = useState<any>(null);
   const [generationStartTime, setGenerationStartTime] = useState<number>(0);
-  const [selectedScope, setSelectedScope] = useState<string[]>([]);
-  const [templateName, setTemplateName] = useState<string>();
   const [constraints, setConstraints] = useState<ProjectConstraints>({
     accessRestrictions: '',
     workingHours: '',
@@ -136,33 +128,6 @@ const ProjectManagerInterface = () => {
       setDuration(`${template.typical_duration_days} days`);
     }
     
-    // Pre-fill scope from template phases
-    const scopeItems: string[] = [];
-    if (templatePlan.phases) {
-      templatePlan.phases.forEach((phase: any) => {
-        // Map phase names to scope items
-        const phaseName = phase.phaseName?.toLowerCase() || '';
-        if (phaseName.includes('consumer unit') || phaseName.includes('distribution')) {
-          scopeItems.push('Consumer unit / Distribution board');
-        }
-        if (phaseName.includes('lighting')) {
-          scopeItems.push('Lighting circuits');
-        }
-        if (phaseName.includes('socket') || phaseName.includes('power')) {
-          scopeItems.push('Socket circuits');
-        }
-        if (phaseName.includes('cable') || phaseName.includes('containment')) {
-          scopeItems.push('Cable installation');
-        }
-        if (phaseName.includes('test') || phaseName.includes('certification')) {
-          scopeItems.push('Testing & certification');
-        }
-      });
-    }
-    if (scopeItems.length > 0) {
-      setSelectedScope([...new Set(scopeItems)]); // Remove duplicates
-    }
-    
     // Build enhanced prompt from template
     const phaseNames = templatePlan.phases?.map((p: any) => p.phaseName).join(', ') || '';
     const enhancedPrompt = template.description 
@@ -170,43 +135,28 @@ const ProjectManagerInterface = () => {
       : `${template.title || 'Template project'} with ${templatePlan.phases?.length || 0} phases: ${phaseNames}`;
     
     setPrompt(enhancedPrompt);
-    setTemplateName(template.title);
     
     toast.success("Template loaded", {
       description: "Form pre-filled with template data - review and customize"
     });
   };
 
-  const handleReviewClick = () => {
-    setShowReview(true);
-  };
-
-  const handleBackFromReview = () => {
-    setShowReview(false);
-  };
-
   const handleGenerate = async () => {
-    setShowReview(false);
     setShowResults(true);
     setResults(null);
     setGenerationStartTime(Date.now());
     
-    // Build enhanced request with scope and constraints
-    const scopeText = selectedScope.length > 0 
-      ? `\n\nScope items: ${selectedScope.join(', ')}`
-      : '';
-    
+    // Build enhanced request with constraints
     const constraintsText = Object.entries(constraints)
       .filter(([_, value]) => value)
       .map(([key, value]) => `${key}: ${value}`)
       .join(', ');
     
-    const enhancedQuery = `${prompt}${scopeText}${constraintsText ? `\n\nConstraints: ${constraintsText}` : ''}`;
+    const enhancedQuery = `${prompt}${constraintsText ? `\n\nConstraints: ${constraintsText}` : ''}`;
     
     const request = {
       query: enhancedQuery,
       projectType: selectedType,
-      scope: selectedScope.length > 0 ? selectedScope.join(', ') : undefined,
       constraints,
       timeline: duration || undefined,
       projectName: projectName || undefined,
@@ -225,27 +175,6 @@ const ProjectManagerInterface = () => {
     }
   };
 
-
-  // Show review step
-  if (showReview) {
-    return (
-      <ProjectReviewStep
-        projectType={selectedType}
-        prompt={prompt}
-        projectName={projectName}
-        location={location}
-        clientName={clientName}
-        startDate={startDate}
-        duration={duration}
-        selectedScope={selectedScope}
-        constraints={constraints}
-        templateName={templateName}
-        onBack={handleBackFromReview}
-        onGenerate={handleGenerate}
-      />
-    );
-  }
-
   // Show loading view when generating
   if (showResults && isLoading) {
     return <ProjectManagerProcessingView progress={progress} startTime={generationStartTime} />;
@@ -263,7 +192,6 @@ const ProjectManagerInterface = () => {
         onStartOver={() => {
           setShowResults(false);
           setResults(null);
-          setShowReview(false);
         }}
       />
     );
@@ -275,15 +203,7 @@ const ProjectManagerInterface = () => {
       {/* Agent Inbox */}
       <AgentInbox currentAgent="project-manager" onTaskAccept={handleTaskAccept} />
       
-      {/* Project Type - Inline Selector */}
-      <FormSection>
-        <InlineProjectTypeSelector 
-          selectedType={selectedType}
-          onChange={setSelectedType}
-        />
-      </FormSection>
-      
-      {/* Project Scope - Primary Section */}
+      {/* Hero Textarea - FIRST */}
       <FormSection>
         <div className="space-y-3">
           <Label className="text-base font-semibold">
@@ -298,26 +218,60 @@ const ProjectManagerInterface = () => {
             style={{ fontSize: '16px' }}
             maxLength={500}
           />
-          <div className="flex justify-between items-center text-xs">
-            <p className="text-muted-foreground">
-              Include scope, timeline, and key deliverables
-            </p>
-            <p className={cn(
-              "font-medium",
-              prompt.length > 100 
-                ? "text-pink-400" 
-                : "text-muted-foreground"
-            )}>
-              {prompt.length} chars
-            </p>
-          </div>
+          <p className="text-xs text-muted-foreground">
+            Include scope, timeline, and key deliverables
+          </p>
         </div>
       </FormSection>
       
-      {/* Project Information - Collapsed */}
+      {/* Project Type - Inline Selector */}
+      <FormSection>
+        <InlineProjectTypeSelector 
+          selectedType={selectedType}
+          onChange={setSelectedType}
+        />
+      </FormSection>
+      
+      {/* Quick Start - Collapsed (Templates + Examples merged) */}
       <CollapsibleFormSection 
-        title="Project Information" 
-        subtitle="Add project details for comprehensive planning"
+        title="Quick Start" 
+        subtitle="Templates and examples to get started quickly"
+        badge="optional"
+        icon={<Lightbulb className="h-5 w-5" />}
+        defaultOpen={false}
+      >
+        <div className="space-y-4">
+          {/* Templates */}
+          <div className="space-y-2">
+            <h4 className="text-sm font-semibold text-white">Start from Template</h4>
+            <TemplateLibrary projectType={selectedType} onSelectTemplate={handleTemplateSelect} />
+          </div>
+          
+          {/* Divider */}
+          <div className="relative py-2">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-border/40"></div>
+            </div>
+            <div className="relative flex justify-center">
+              <span className="bg-background px-3 text-xs text-muted-foreground">or use an example</span>
+            </div>
+          </div>
+          
+          {/* Examples */}
+          <div className="space-y-2">
+            <h4 className="text-sm font-semibold text-white">Example Requests</h4>
+            <ExampleProjectsGrid 
+              examples={EXAMPLE_SCENARIOS}
+              onSelect={handleExampleClick}
+            />
+          </div>
+        </div>
+      </CollapsibleFormSection>
+
+      {/* Project Details - Collapsed (Simplified) */}
+      <CollapsibleFormSection 
+        title="Project Details" 
+        subtitle="Add project information for comprehensive planning"
         badge="optional"
         icon={<FileText className="h-5 w-5" />}
         defaultOpen={false}
@@ -355,76 +309,44 @@ const ProjectManagerInterface = () => {
               placeholder="e.g., 5 days"
             />
           </div>
+          
+          {/* Key Constraints (only critical checkboxes) */}
+          <div className="space-y-2 pt-2">
+            <Label className="text-sm font-medium">Key Constraints</Label>
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={constraints.occupiedProperty}
+                  onChange={(e) => setConstraints(prev => ({ ...prev, occupiedProperty: e.target.checked }))}
+                  className="rounded border-border text-pink-400 focus:ring-pink-400"
+                />
+                <span className="text-sm text-white">Occupied property (tenants/staff present)</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={constraints.medicalEquipment}
+                  onChange={(e) => setConstraints(prev => ({ ...prev, medicalEquipment: e.target.checked }))}
+                  className="rounded border-border text-pink-400 focus:ring-pink-400"
+                />
+                <span className="text-sm text-white">Medical equipment / critical loads</span>
+              </label>
+            </div>
+          </div>
         </div>
       </CollapsibleFormSection>
       
-      {/* Template Library - Collapsed */}
-      <CollapsibleFormSection 
-        title="Start from Template" 
-        subtitle="Pre-built project plans to customise"
-        badge="optional"
-        icon={<FileText className="h-5 w-5" />}
-        defaultOpen={false}
-      >
-        <TemplateLibrary projectType={selectedType} onSelectTemplate={handleTemplateSelect} />
-      </CollapsibleFormSection>
-
-      {/* Scope Checklist - Collapsed */}
-      <CollapsibleFormSection 
-        title="Scope Checklist" 
-        subtitle="Select work items included in this project"
-        badge="optional"
-        icon={<Package className="h-5 w-5" />}
-        defaultOpen={false}
-      >
-        <ScopeChecklist 
-          onScopeChange={setSelectedScope}
-          initialScope={selectedScope}
-        />
-      </CollapsibleFormSection>
-
-      {/* Constraints - Collapsed */}
-      <CollapsibleFormSection 
-        title="Project Constraints" 
-        subtitle="Access, timing, and special requirements"
-        badge="optional"
-        icon={<AlertCircle className="h-5 w-5" />}
-        defaultOpen={false}
-      >
-        <ConstraintsSection 
-          onConstraintsChange={setConstraints}
-          initialConstraints={constraints}
-        />
-      </CollapsibleFormSection>
-
-      {/* Example Project Requests - Collapsed */}
-      <CollapsibleFormSection 
-        title="Example Project Requests" 
-        subtitle="Common scenarios to get started quickly"
-        badge="optional"
-        icon={<Lightbulb className="h-5 w-5" />}
-        defaultOpen={false}
-      >
-        <ExampleProjectsGrid 
-          examples={EXAMPLE_SCENARIOS}
-          onSelect={handleExampleClick}
-        />
-      </CollapsibleFormSection>
-      
-      {/* Generate Button - Inline */}
+      {/* Generate Button */}
       <FormSection>
         <Button 
           type="submit"
           size="lg"
           disabled={!prompt.trim() || isLoading}
           className="w-full bg-gradient-to-r from-pink-400 to-pink-600 hover:from-pink-500 hover:to-pink-700 text-white h-12 sm:h-14 touch-manipulation text-base sm:text-lg font-semibold"
-          onClick={(e) => {
-            e.preventDefault();
-            handleReviewClick();
-          }}
         >
           <Clipboard className="h-5 w-5 mr-2" />
-          Review & Generate Plan
+          Generate Project Plan
         </Button>
       </FormSection>
     </form>
