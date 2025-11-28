@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Copy, Download, Calendar as CalendarIcon, RotateCcw, Edit3, Eye } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
 import CriticalActionsCard from "./CriticalActionsCard";
 import { MobilePhaseResults } from "./MobilePhaseResults";
@@ -30,6 +31,7 @@ const ProjectManagerResults = ({
 }: ProjectManagerResultsProps) => {
   const [isMobile, setIsMobile] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
 
   // Convert AI results to EditableProjectPlan format
   const convertToEditablePlan = (aiResults: any): Partial<EditableProjectPlan> => {
@@ -132,30 +134,82 @@ const ProjectManagerResults = ({
     });
   };
 
-  const handleExportPDF = () => {
+  const buildPdfPayload = () => {
+    const baseDate = plan.startDate ? new Date(plan.startDate) : new Date();
+    
+    return {
+      projectName: plan.projectName || 'Untitled Project',
+      location: plan.location || '',
+      clientName: plan.clientName || '',
+      startDate: plan.startDate || '',
+      totalDuration: `${plan.phases.length * 3} days`,
+      projectType: selectedType || 'domestic',
+      generatedDate: new Date().toLocaleDateString('en-GB'),
+      
+      phases: plan.phases.map((phase) => ({
+        phaseName: phase.phaseName,
+        dayStart: phase.dayStart,
+        dayEnd: phase.dayEnd,
+        duration: `${phase.dayEnd - phase.dayStart + 1} days`,
+        tasks: phase.tasks.map(t => t.text),
+        dependencies: phase.holdPoints || [],
+        milestones: [],
+        criticalPath: false,
+        practicalNotes: phase.tasks.map(t => t.notes).filter(Boolean).join('. ')
+      })),
+      
+      materialProcurement: results.materialProcurement || { orderNow: [], orderWeek1: [] },
+      tradeCoordination: results.tradeCoordination || [],
+      clientImpact: results.clientImpact || [],
+      complianceTimeline: results.complianceTimeline || { beforeWork: [], duringWork: [], afterWork: [] },
+      contingencies: results.contingencies || [],
+      
+      resources: {
+        team: results.projectPlan?.resources?.labour?.map((l: any) => ({
+          role: l.role,
+          quantity: 1,
+          duration: `${l.hours}h`
+        })) || [],
+        equipment: results.projectPlan?.resources?.materials?.map((m: any) => m.item) || []
+      },
+      
+      risks: plan.risks.map(r => ({
+        risk: r.description,
+        mitigation: r.mitigation,
+        severity: r.severity
+      })),
+      
+      recommendations: results.recommendations || [],
+      summaryText: results.response || ''
+    };
+  };
+
+  const handleExportPDF = async () => {
     try {
-      const { generateProjectExecutionPlanPDF } = require('@/utils/pdf-generators/project-execution-plan-pdf');
+      setIsExporting(true);
       
-      const pdfData = {
-        projectName: plan.projectName || 'Untitled Project',
-        projectManager: 'AI Project Manager',
-        startDate: plan.startDate,
-        endDate: results.endDate || 'TBC',
-        phases: plan.phases,
-        resources: results.projectPlan?.resources || { materials: [], labour: [], totalCost: 0 },
-        risks: plan.risks,
-        milestones: plan.milestones,
-        referencedDocuments: results.referencedDocuments || [],
-        notes: plan.notes
-      };
+      const pdfPayload = buildPdfPayload();
+      console.log('📤 Sending PDF payload:', pdfPayload);
       
-      const pdf = generateProjectExecutionPlanPDF(pdfData);
-      pdf.save(`Project-Plan-${plan.projectName}-${new Date().toISOString().split('T')[0]}.pdf`);
-      
-      toast.success("PDF exported", { description: "Project Execution Plan downloaded successfully" });
+      const { data, error } = await supabase.functions.invoke('generate-project-management-pdf', {
+        body: { projectData: pdfPayload }
+      });
+
+      if (error) throw error;
+
+      if (data?.success && data.downloadUrl) {
+        window.open(data.downloadUrl, '_blank');
+        toast.success("PDF generated", { description: "Project Execution Plan ready" });
+      } else {
+        throw new Error('PDF generation failed');
+      }
     } catch (error) {
       console.error('PDF generation error:', error);
-      toast.error("Export failed", { description: "Could not generate PDF" });
+      toast.error("Export failed", { 
+        description: error instanceof Error ? error.message : "Could not generate PDF" 
+      });
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -276,10 +330,11 @@ const ProjectManagerResults = ({
                 <Button 
                   type="button"
                   onClick={handleExportPDF}
+                  disabled={isExporting}
                   className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold h-11"
                 >
                   <Download className="h-4 w-4 mr-2" />
-                  Export PDF
+                  {isExporting ? 'Generating...' : 'Export PDF'}
                 </Button>
                 <Button 
                   type="button"
