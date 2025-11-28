@@ -1092,6 +1092,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           
           return {
             ...circuit,
+            // Compliance status from Phase 5.5
+            complianceStatus: circuit.complianceStatus || 'pass',
+            validationIssues: circuit.validationIssues || [],
+            
             // Ensure critical fields are present with proper fallbacks
             cableType: circuit.cableType || getDefaultCableType(
               design.installationType || 'domestic',

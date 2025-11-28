@@ -150,6 +150,14 @@ serve(async (req) => {
       complianceStatus: design.circuits.every((c: any) => 
         c.calculations.voltageDrop.compliant && c.calculations.zs < c.calculations.maxZs
       ) ? 'All Compliant' : 'Issues Found',
+      
+      // Compliance summary counts
+      complianceSummary: {
+        passCount: design.circuits.filter((c: any) => c.complianceStatus === 'pass').length,
+        warningCount: design.circuits.filter((c: any) => c.complianceStatus === 'warning').length,
+        failCount: design.circuits.filter((c: any) => c.complianceStatus === 'fail').length,
+        totalCircuits: design.circuits.length
+      },
 
       // Diversity Breakdown
       diversityBreakdown: design.diversityBreakdown ? {
@@ -256,6 +264,26 @@ serve(async (req) => {
           installationMethod: installationMethod,
           protectionDevice: `${c.protectionDevice.rating}A Type ${c.protectionDevice.curve} ${c.protectionDevice.type}`,
           protectionType: c.protectionDevice.type,
+          
+          // Compliance status from Phase 5.5
+          complianceStatus: c.complianceStatus || 'pass',
+          complianceStatusText: c.complianceStatus === 'pass' 
+            ? '✓ Compliant' 
+            : c.complianceStatus === 'warning' 
+              ? '⚠ Review Required' 
+              : '✗ Non-Compliant',
+          complianceStatusColour: c.complianceStatus === 'pass' 
+            ? 'green' 
+            : c.complianceStatus === 'warning' 
+              ? 'amber' 
+              : 'red',
+          validationIssues: (c.validationIssues || []).map((issue: any) => ({
+            type: issue.type,
+            severity: issue.severity,
+            message: issue.message,
+            regulation: issue.regulation
+          })),
+          hasValidationIssues: (c.validationIssues || []).length > 0,
           
           // ✨ ADD: Full installation guidance from Installation Agent
           fullInstallationGuidance: c.fullInstallationGuidance ? {
