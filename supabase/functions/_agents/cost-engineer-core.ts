@@ -293,6 +293,8 @@ OUTPUT (JSON):
   "timescales": {"totalDays": number, "breakdown": string},
   "summary": {"materialsSubtotal": number, "labourSubtotal": number, "subtotal": number, "vat": number, "grandTotal": number},
   "complexity": {"rating": number, "label": string, "factors": [string], "estimatedHours": number, "reasoning": string},
+  "riskAssessment": {"risks": [{"title": string, "severity": "low" | "medium" | "high" | "critical", "likelihood": "low" | "medium" | "high", "mitigation": string, "contingencyPercent": number}]},
+  "siteChecklist": {"critical": [string], "important": [string], "documentation": [string]},
   "upsells": [{"opportunity": string, "price": number, "winRate": number, "isHot": boolean, "timing": string, "script": string}],
   "paymentTerms": {"depositPercent": number, "depositAmount": number, "balanceAmount": number, "terms": string, "lateFeePolicy": string, "paymentMilestones": [{"stage": string, "percentage": number, "amount": number, "trigger": string}]},
   "pipeline": [{"opportunity": string, "description": string, "timeframe": string, "estimatedValue": number, "priority": string, "trigger": string, "timing": string}],
@@ -307,6 +309,18 @@ COMPLEXITY RATING GUIDE (1-10 scale):
 - 9-10 (Very High): Industrial installations, specialist certifications, major infrastructure projects
 
 Consider: labour hours, technical difficulty, access constraints, regulatory complexity, materials complexity
+
+RISK ASSESSMENT GUIDE:
+- Identify 3-7 project-specific risks relevant to this job
+- severity: "critical" (immediate safety/compliance threat), "high" (significant cost/delay risk), "medium" (manageable impact), "low" (minor inconvenience)
+- likelihood: "high" (>60% chance), "medium" (30-60%), "low" (<30%)
+- Always include practical mitigation strategy and contingency percentage (0-15%)
+- Consider: unforeseen site conditions, access difficulties, existing installation issues, client availability, weather (outdoor work)
+
+SITE CHECKLIST GUIDE:
+- critical: Must-do items before starting work (isolation verification, access confirmation, safety checks, asbestos survey if pre-2000 building)
+- important: Items affecting efficiency (furniture clearance, parking arrangements, client availability, tool access)
+- documentation: Required paperwork (EIC certificate, Part P notification, building control, warranties, insurance certificates)
 
 RULES:
 - USE trade prices listed above (accurate 2025 prices)
@@ -527,6 +541,62 @@ ${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
       factors: ['Based on estimated labour hours', `${totalHours} total hours required`],
       estimatedHours: totalHours,
       reasoning: `Complexity rating of ${rating}/10 (${label}) estimated from ${totalHours} hours of total labour time.`
+    };
+  }
+
+  // FALLBACK: Add riskAssessment if AI didn't return it
+  if (!parsedEstimate.riskAssessment || !parsedEstimate.riskAssessment.risks?.length) {
+    console.warn('⚠️ No riskAssessment returned by AI - adding fallback');
+    parsedEstimate.riskAssessment = {
+      risks: [
+        { 
+          title: 'Unforeseen site conditions', 
+          severity: 'medium', 
+          likelihood: 'medium', 
+          mitigation: 'Allow contingency time and budget for unexpected issues', 
+          contingencyPercent: 5 
+        },
+        { 
+          title: 'Access difficulties', 
+          severity: 'low', 
+          likelihood: 'medium', 
+          mitigation: 'Pre-survey site access and confirm arrangements with client', 
+          contingencyPercent: 2 
+        },
+        { 
+          title: 'Existing installation issues', 
+          severity: 'medium', 
+          likelihood: 'medium', 
+          mitigation: 'Conduct thorough inspection before quoting final price', 
+          contingencyPercent: 3 
+        }
+      ]
+    };
+  }
+
+  // FALLBACK: Add siteChecklist if AI didn't return it
+  if (!parsedEstimate.siteChecklist) {
+    console.warn('⚠️ No siteChecklist returned by AI - adding fallback');
+    parsedEstimate.siteChecklist = {
+      critical: [
+        'Isolate electrical supply and verify dead before work starts',
+        'Verify safe access to work areas',
+        'Confirm asbestos survey if building pre-2000',
+        'Check existing earthing system adequacy'
+      ],
+      important: [
+        'Clear work area of furniture and obstructions',
+        'Arrange parking for van near property',
+        'Confirm client or keyholder available during work',
+        'Ensure adequate lighting in work areas'
+      ],
+      documentation: [
+        'Electrical Installation Certificate (EIC) required on completion',
+        'Part P Building Regulations notification if applicable',
+        'Test certificates and schedules',
+        'Manufacturer warranties for installed equipment',
+        'Public liability insurance certificate if requested'
+      ]
     };
   }
 
