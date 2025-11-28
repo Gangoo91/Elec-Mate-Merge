@@ -17,6 +17,20 @@ import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
 import { EICR_CODE_DEFINITIONS, BS7671_DEFECT_EXAMPLES } from '../_shared/eicr-coding-constants.ts';
 
+// Safe JSON stringification to prevent circular reference errors
+function safeStringify(obj: any): string {
+  const seen = new WeakSet();
+  return JSON.stringify(obj, (key, value) => {
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return '[Circular]';
+      }
+      seen.add(value);
+    }
+    return value;
+  });
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -1684,7 +1698,7 @@ Determine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehe
       }
       
       return new Response(
-        JSON.stringify({
+        safeStringify({
           success: true,
           mode: 'eicr-photo-analysis',
           queryType: 'photo-analysis',
@@ -1861,7 +1875,7 @@ Analyse this installation photo and provide structured fault diagnosis with RAG 
           }));
           
           return new Response(
-            JSON.stringify({
+            safeStringify({
               success: true,
               mode: 'fault-diagnosis',
               queryType: 'troubleshooting',
@@ -1964,7 +1978,7 @@ Analyse this installation photo and provide structured fault diagnosis with RAG 
     }));
     
     return new Response(
-      JSON.stringify({
+      safeStringify({
         success: true,
         mode: 'conversational',
         queryType: classification.mode,
