@@ -226,7 +226,19 @@ export const InstallationStepCard = ({
                 />
               ) : (
                 <div className="text-base leading-relaxed text-foreground/90 bg-muted/30 p-4 rounded-lg border border-border/50">
-                  <EnhancedStepContent content={step.content || (step as any).description || ''} />
+                  <EnhancedStepContent 
+                    content={step.content || (step as any).description || ''} 
+                    subSteps={step.subSteps}
+                  />
+                </div>
+              )}
+
+              {/* Sub-Steps Badge (when collapsed in detailed mode) */}
+              {!isEditing && step.subSteps && step.subSteps.length > 0 && (
+                <div className="flex items-center gap-2">
+                  <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40">
+                    {step.subSteps.length} detailed micro-steps
+                  </Badge>
                 </div>
               )}
 
