@@ -109,10 +109,6 @@ export const InstallationProcessingView = ({ originalQuery, projectDetails, prog
                 <FileText className="h-4 w-4" />
                 What You Asked For
               </h4>
-              {/* Mode Badge */}
-              <div className="px-2 py-1 rounded-full text-xs font-semibold whitespace-nowrap bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                Enhanced Mode (~4 mins)
-              </div>
             </div>
             <p className="text-base text-foreground font-medium leading-relaxed text-left">
               {originalQuery}
