@@ -140,9 +140,9 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
           score: round2dp(structuredData.complexity.score || 0)
         } : null,
         confidence: {
-          average: avgConfidence,
-          materials: materialsConfidence,
-          labour: labourConfidence
+          average: round2dp(avgConfidence / 100),
+          materials: round2dp(materialsConfidence / 100),
+          labour: round2dp(labourConfidence / 100)
         },
         riskLevel: {
           level: highRisks.length > 0 ? 'high' : 'low',
@@ -200,7 +200,8 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
           status: structuredData.tradeIntelligence.futureWorkLogic?.status || 'unknown',
           score: round2dp(structuredData.tradeIntelligence.futureWorkLogic?.score || 0),
           commentary: structuredData.tradeIntelligence.futureWorkLogic?.commentary || '',
-          concerns: structuredData.tradeIntelligence.futureWorkLogic?.concerns || []
+          concerns: structuredData.tradeIntelligence.futureWorkLogic?.concerns || [],
+          recommendations: structuredData.tradeIntelligence.futureWorkLogic?.recommendations || []
         },
         overallAssessment: {
           readyToQuote: structuredData.tradeIntelligence.overallAssessment?.readyToQuote || false,
@@ -320,11 +321,11 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
       // Section 13: Pricing Confidence
       pricingConfidence: structuredData?.confidence ? {
         materials: {
-          level: materialsConfidence,
+          level: round2dp(materialsConfidence / 100),
           reasoning: structuredData.confidence.materials?.reason || ''
         },
         labour: {
-          level: labourConfidence,
+          level: round2dp(labourConfidence / 100),
           reasoning: structuredData.confidence.labour?.reason || ''
         },
         contingency: {
@@ -337,7 +338,7 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
       upsells: (structuredData?.upsells || []).map((upsell: any) => ({
         opportunity: upsell.opportunity || '',
         price: round2dp(upsell.price || 0),
-        winRate: round2dp(upsell.winRate || 0),
+        winRate: round2dp(upsell.winRate > 1 ? upsell.winRate / 100 : upsell.winRate),
         isHot: upsell.isHot || false,
         timing: upsell.timing || 'now',
         script: upsell.script || ''
@@ -376,7 +377,7 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
         balanceAmount: round2dp(structuredData.paymentTerms.balanceAmount || 0),
         terms: structuredData.paymentTerms.terms || '',
         lateFeePolicy: structuredData.paymentTerms.lateFeePolicy || '',
-        milestones: (structuredData.paymentTerms.paymentMilestones || []).map((milestone: any) => ({
+        milestones: (structuredData.paymentTerms.milestones || structuredData.paymentTerms.paymentMilestones || []).map((milestone: any) => ({
           stage: milestone.stage || '',
           percentage: round2dp(milestone.percentage || 0),
           amount: round2dp(milestone.amount || 0),
@@ -406,7 +407,7 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
 
       // Section 20: Post-Job Review (tracking placeholders)
       postJobReview: {
-        estimatedCost: round2dp(selectedAmount),
+        estimatedCost: breakEven,
         estimatedHours: totalLabourHours,
         estimatedProfit: profit,
         actualCost: null,
