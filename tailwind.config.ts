@@ -82,6 +82,27 @@ export default {
 				'elec-light': 'hsl(var(--elec-light))',
 				'elec-card': 'hsl(var(--elec-card))',
 				'elec-slate': 'hsl(var(--elec-slate))',
+				// EICR Classification colors
+				'eicr-c1': {
+					bg: 'hsl(var(--eicr-c1-bg))',
+					border: 'hsl(var(--eicr-c1-border))',
+					text: 'hsl(var(--eicr-c1-text))',
+				},
+				'eicr-c2': {
+					bg: 'hsl(var(--eicr-c2-bg))',
+					border: 'hsl(var(--eicr-c2-border))',
+					text: 'hsl(var(--eicr-c2-text))',
+				},
+				'eicr-c3': {
+					bg: 'hsl(var(--eicr-c3-bg))',
+					border: 'hsl(var(--eicr-c3-border))',
+					text: 'hsl(var(--eicr-c3-text))',
+				},
+				'eicr-fi': {
+					bg: 'hsl(var(--eicr-fi-bg))',
+					border: 'hsl(var(--eicr-fi-border))',
+					text: 'hsl(var(--eicr-fi-text))',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
