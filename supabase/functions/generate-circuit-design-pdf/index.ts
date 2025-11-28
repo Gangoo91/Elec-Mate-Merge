@@ -9,6 +9,23 @@ const corsHeaders = {
 const PDF_MONKEY_API_KEY = Deno.env.get('PDF_MONKEY_API_KEY');
 const CIRCUIT_DESIGN_TEMPLATE_ID = 'DF1DE972-30B4-45F9-83C0-4CEB4DE90E70'; // Placeholder - user will create template
 
+/**
+ * Helper to safely parse load values that may be:
+ * - Numbers
+ * - Locale-formatted strings (e.g., "19,500")
+ * - Strings with kW suffix (e.g., "19.5 kW")
+ */
+function parseLoadValue(value: any): number {
+  if (typeof value === 'number') return value;
+  if (typeof value === 'string') {
+    // Remove "kW", commas, and whitespace, then parse
+    const cleaned = value.replace(/kW/gi, '').replace(/,/g, '').trim();
+    const parsed = parseFloat(cleaned);
+    return isNaN(parsed) ? 0 : parsed;
+  }
+  return 0;
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -96,12 +113,15 @@ serve(async (req) => {
       totalLoad: design.totalLoad / 1000, // Convert to kW
       totalLoadKW: `${(design.totalLoad / 1000).toFixed(1)} kW`,
       diversifiedLoad: (() => {
-        const divLoad = Number(design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || design.totalLoad || 0);
-        return (divLoad / 1000).toFixed(1);
+        const divLoad = parseLoadValue(design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || design.totalLoad || 0);
+        // If value > 100, assume it's in Watts and convert to kW; otherwise already in kW
+        const loadInKW = divLoad > 100 ? divLoad / 1000 : divLoad;
+        return loadInKW.toFixed(1);
       })(),
       diversifiedLoadKW: (() => {
-        const divLoad = Number(design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || design.totalLoad || 0);
-        return `${(divLoad / 1000).toFixed(1)} kW`;
+        const divLoad = parseLoadValue(design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || design.totalLoad || 0);
+        const loadInKW = divLoad > 100 ? divLoad / 1000 : divLoad;
+        return `${loadInKW.toFixed(1)} kW`;
       })(),
       diversityFactorPercent: design.diversityFactor || (design.diversityBreakdown?.overallDiversityFactor 
         ? (design.diversityBreakdown.overallDiversityFactor * 100).toFixed(0) + '%' 
@@ -133,24 +153,47 @@ serve(async (req) => {
 
       // Diversity Breakdown
       diversityBreakdown: design.diversityBreakdown ? {
-        totalConnectedLoad: (Number(design.totalConnectedLoad || design.diversityBreakdown.totalConnectedLoad || design.totalLoad || 0) / 1000).toFixed(1),
-        totalConnectedLoadKW: `${(Number(design.totalConnectedLoad || design.diversityBreakdown.totalConnectedLoad || design.totalLoad || 0) / 1000).toFixed(1)} kW`,
-        diversifiedLoad: (Number(design.diversifiedLoad || design.diversityBreakdown.diversifiedLoad || design.totalLoad * 0.65 || 0) / 1000).toFixed(1),
-        diversifiedLoadKW: `${(Number(design.diversifiedLoad || design.diversityBreakdown.diversifiedLoad || design.totalLoad * 0.65 || 0) / 1000).toFixed(1)} kW`,
+        totalConnectedLoad: (() => {
+          const load = parseLoadValue(design.totalConnectedLoad || design.diversityBreakdown.totalConnectedLoad || design.totalLoad || 0);
+          const loadInKW = load > 100 ? load / 1000 : load;
+          return loadInKW.toFixed(1);
+        })(),
+        totalConnectedLoadKW: (() => {
+          const load = parseLoadValue(design.totalConnectedLoad || design.diversityBreakdown.totalConnectedLoad || design.totalLoad || 0);
+          const loadInKW = load > 100 ? load / 1000 : load;
+          return `${loadInKW.toFixed(1)} kW`;
+        })(),
+        diversifiedLoad: (() => {
+          const load = parseLoadValue(design.diversifiedLoad || design.diversityBreakdown.diversifiedLoad || design.totalLoad * 0.65 || 0);
+          const loadInKW = load > 100 ? load / 1000 : load;
+          return loadInKW.toFixed(1);
+        })(),
+        diversifiedLoadKW: (() => {
+          const load = parseLoadValue(design.diversifiedLoad || design.diversityBreakdown.diversifiedLoad || design.totalLoad * 0.65 || 0);
+          const loadInKW = load > 100 ? load / 1000 : load;
+          return `${loadInKW.toFixed(1)} kW`;
+        })(),
         overallDiversityFactor: design.diversityFactor || (design.diversityBreakdown.overallDiversityFactor 
           ? (design.diversityBreakdown.overallDiversityFactor * 100).toFixed(0) + '%' 
           : '65%'),
         reasoning: design.diversityBreakdown.reasoning || 'Standard diversity applied per IET On-Site Guide',
         bs7671Reference: design.diversityBreakdown.bs7671Reference || 'Appendix 15',
-        circuitDiversity: (design.diversityBreakdown.circuitDiversity || []).map((cd: any) => ({
-          circuitName: cd.circuitName || 'Unknown',
-          connectedLoad: (Number(cd.connectedLoad || 0) / 1000).toFixed(2),
-          connectedLoadKW: `${(Number(cd.connectedLoad || 0) / 1000).toFixed(2)} kW`,
-          diversityFactor: cd.diversityFactorApplied ? (cd.diversityFactorApplied * 100).toFixed(0) + '%' : '100%',
-          diversifiedLoad: (Number(cd.diversifiedLoad || 0) / 1000).toFixed(2),
-          diversifiedLoadKW: `${(Number(cd.diversifiedLoad || 0) / 1000).toFixed(2)} kW`,
-          justification: cd.justification || 'No diversity applied'
-        }))
+        circuitDiversity: (design.diversityBreakdown.circuitDiversity || []).map((cd: any) => {
+          const connLoad = parseLoadValue(cd.connectedLoad || 0);
+          const connLoadInKW = connLoad > 100 ? connLoad / 1000 : connLoad;
+          const divLoad = parseLoadValue(cd.diversifiedLoad || 0);
+          const divLoadInKW = divLoad > 100 ? divLoad / 1000 : divLoad;
+          
+          return {
+            circuitName: cd.circuitName || 'Unknown',
+            connectedLoad: connLoadInKW.toFixed(2),
+            connectedLoadKW: `${connLoadInKW.toFixed(2)} kW`,
+            diversityFactor: cd.diversityFactorApplied ? (cd.diversityFactorApplied * 100).toFixed(0) + '%' : '100%',
+            diversifiedLoad: divLoadInKW.toFixed(2),
+            diversifiedLoadKW: `${divLoadInKW.toFixed(2)} kW`,
+            justification: cd.justification || 'No diversity applied'
+          };
+        })
       } : {
         totalConnectedLoad: (design.totalLoad / 1000).toFixed(1),
         totalConnectedLoadKW: `${(design.totalLoad / 1000).toFixed(1)} kW`,
