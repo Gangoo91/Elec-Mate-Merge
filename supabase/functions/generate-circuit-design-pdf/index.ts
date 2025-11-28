@@ -95,8 +95,14 @@ serve(async (req) => {
       pscc: design.consumerUnit.incomingSupply.pscc || '16',
       totalLoad: design.totalLoad / 1000, // Convert to kW
       totalLoadKW: `${(design.totalLoad / 1000).toFixed(1)} kW`,
-      diversifiedLoad: ((design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || design.totalLoad) / 1000).toFixed(1),
-      diversifiedLoadKW: `${((design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || design.totalLoad) / 1000).toFixed(1)} kW`,
+      diversifiedLoad: (() => {
+        const divLoad = Number(design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || design.totalLoad || 0);
+        return (divLoad / 1000).toFixed(1);
+      })(),
+      diversifiedLoadKW: (() => {
+        const divLoad = Number(design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || design.totalLoad || 0);
+        return `${(divLoad / 1000).toFixed(1)} kW`;
+      })(),
       diversityFactorPercent: design.diversityFactor || (design.diversityBreakdown?.overallDiversityFactor 
         ? (design.diversityBreakdown.overallDiversityFactor * 100).toFixed(0) + '%' 
         : '65%'),
@@ -127,10 +133,10 @@ serve(async (req) => {
 
       // Diversity Breakdown
       diversityBreakdown: design.diversityBreakdown ? {
-        totalConnectedLoad: ((design.totalConnectedLoad || design.diversityBreakdown.totalConnectedLoad || design.totalLoad) / 1000).toFixed(1),
-        totalConnectedLoadKW: `${((design.totalConnectedLoad || design.diversityBreakdown.totalConnectedLoad || design.totalLoad) / 1000).toFixed(1)} kW`,
-        diversifiedLoad: ((design.diversifiedLoad || design.diversityBreakdown.diversifiedLoad || design.totalLoad * 0.65) / 1000).toFixed(1),
-        diversifiedLoadKW: `${((design.diversifiedLoad || design.diversityBreakdown.diversifiedLoad || design.totalLoad * 0.65) / 1000).toFixed(1)} kW`,
+        totalConnectedLoad: (Number(design.totalConnectedLoad || design.diversityBreakdown.totalConnectedLoad || design.totalLoad || 0) / 1000).toFixed(1),
+        totalConnectedLoadKW: `${(Number(design.totalConnectedLoad || design.diversityBreakdown.totalConnectedLoad || design.totalLoad || 0) / 1000).toFixed(1)} kW`,
+        diversifiedLoad: (Number(design.diversifiedLoad || design.diversityBreakdown.diversifiedLoad || design.totalLoad * 0.65 || 0) / 1000).toFixed(1),
+        diversifiedLoadKW: `${(Number(design.diversifiedLoad || design.diversityBreakdown.diversifiedLoad || design.totalLoad * 0.65 || 0) / 1000).toFixed(1)} kW`,
         overallDiversityFactor: design.diversityFactor || (design.diversityBreakdown.overallDiversityFactor 
           ? (design.diversityBreakdown.overallDiversityFactor * 100).toFixed(0) + '%' 
           : '65%'),
@@ -138,11 +144,11 @@ serve(async (req) => {
         bs7671Reference: design.diversityBreakdown.bs7671Reference || 'Appendix 15',
         circuitDiversity: (design.diversityBreakdown.circuitDiversity || []).map((cd: any) => ({
           circuitName: cd.circuitName || 'Unknown',
-          connectedLoad: ((cd.connectedLoad || 0) / 1000).toFixed(2),
-          connectedLoadKW: `${((cd.connectedLoad || 0) / 1000).toFixed(2)} kW`,
+          connectedLoad: (Number(cd.connectedLoad || 0) / 1000).toFixed(2),
+          connectedLoadKW: `${(Number(cd.connectedLoad || 0) / 1000).toFixed(2)} kW`,
           diversityFactor: cd.diversityFactorApplied ? (cd.diversityFactorApplied * 100).toFixed(0) + '%' : '100%',
-          diversifiedLoad: ((cd.diversifiedLoad || 0) / 1000).toFixed(2),
-          diversifiedLoadKW: `${((cd.diversifiedLoad || 0) / 1000).toFixed(2)} kW`,
+          diversifiedLoad: (Number(cd.diversifiedLoad || 0) / 1000).toFixed(2),
+          diversifiedLoadKW: `${(Number(cd.diversifiedLoad || 0) / 1000).toFixed(2)} kW`,
           justification: cd.justification || 'No diversity applied'
         }))
       } : {
