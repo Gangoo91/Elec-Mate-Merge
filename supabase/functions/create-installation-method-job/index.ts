@@ -35,7 +35,7 @@ Deno.serve(async (req) => {
       );
     }
 
-    const { query, projectDetails, designerContext } = await req.json();
+    const { query, projectDetails, designerContext, detailLevel } = await req.json();
 
     // Create job record
     const { data: job, error } = await supabase
@@ -45,6 +45,7 @@ Deno.serve(async (req) => {
         query,
         project_details: projectDetails,
         designer_context: designerContext || null,
+        detail_level: detailLevel || 'normal',
         status: 'pending',
         progress: 0
       })
