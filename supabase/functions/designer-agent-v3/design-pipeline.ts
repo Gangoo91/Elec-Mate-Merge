@@ -1145,14 +1145,12 @@ export class DesignPipeline {
         complianceStatus = 'warning';
       }
       
-      // Also check calculations for pass/fail
+      // Also check calculations for pass/fail - Zs or VD non-compliance is a FAILURE per BS 7671
       const zsCompliant = circuit.calculations?.zs <= circuit.calculations?.maxZs;
       const vdCompliant = circuit.calculations?.voltageDrop?.compliant !== false;
       
       if (!zsCompliant || !vdCompliant) {
-        if (complianceStatus === 'pass') {
-          complianceStatus = 'warning'; // At minimum, flag calculation issues
-        }
+        complianceStatus = 'fail'; // Per BS 7671, exceeding Zs max or VD max is non-compliant
       }
       
       return {
