@@ -106,22 +106,7 @@ function parseStepContent(content: string) {
   return { overview, subSteps, regulations: [...new Set(regulations)] };
 }
 
-// Helper: Highlight measurements and technical terms
+// Helper: Return plain text without highlighting (removed yellow badges)
 function highlightMeasurements(text: string) {
-  const parts = text.split(/(\d+(?:\.\d+)?(?:mm|m|A|V|W|kW|Ω|MΩ|mA|°C|Hz))/g);
-  
-  return (
-    <>
-      {parts.map((part, idx) => {
-        if (part.match(/\d+(?:\.\d+)?(?:mm|m|A|V|W|kW|Ω|MΩ|mA|°C|Hz)/)) {
-          return (
-            <Badge key={idx} variant="outline" className="mx-1 bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-mono">
-              {part}
-            </Badge>
-          );
-        }
-        return <span key={idx}>{part}</span>;
-      })}
-    </>
-  );
+  return text;
 }
