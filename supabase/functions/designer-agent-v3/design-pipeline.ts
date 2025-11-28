@@ -1124,6 +1124,51 @@ export class DesignPipeline {
     });
 
     // ========================================
+    // PHASE 5.5: Map Validation Issues to Circuit complianceStatus
+    // ========================================
+    this.logger.info('Mapping validation issues to circuit complianceStatus');
+
+    design.circuits = design.circuits.map((circuit: any, index: number) => {
+      // Find all validation issues for this circuit
+      const circuitIssues = validationResult.issues.filter(
+        (issue: any) => issue.circuitIndex === index
+      );
+      
+      const hasErrors = circuitIssues.some((i: any) => i.severity === 'error');
+      const hasWarnings = circuitIssues.some((i: any) => i.severity === 'warning');
+      
+      // Determine complianceStatus based on worst issue
+      let complianceStatus: 'pass' | 'warning' | 'fail' = 'pass';
+      if (hasErrors) {
+        complianceStatus = 'fail';
+      } else if (hasWarnings) {
+        complianceStatus = 'warning';
+      }
+      
+      // Also check calculations for pass/fail
+      const zsCompliant = circuit.calculations?.zs <= circuit.calculations?.maxZs;
+      const vdCompliant = circuit.calculations?.voltageDrop?.compliant !== false;
+      
+      if (!zsCompliant || !vdCompliant) {
+        if (complianceStatus === 'pass') {
+          complianceStatus = 'warning'; // At minimum, flag calculation issues
+        }
+      }
+      
+      return {
+        ...circuit,
+        complianceStatus,
+        validationIssues: circuitIssues // Attach issues to circuit for frontend display
+      };
+    });
+
+    this.logger.info('complianceStatus mapping complete', {
+      passCount: design.circuits.filter((c: any) => c.complianceStatus === 'pass').length,
+      warningCount: design.circuits.filter((c: any) => c.complianceStatus === 'warning').length,
+      failCount: design.circuits.filter((c: any) => c.complianceStatus === 'fail').length
+    });
+
+    // ========================================
     // PHASE 6: Cache Storage (DISABLED FOR TESTING RING FINAL FIX)
     // ========================================
     // TEMPORARILY DISABLED - Don't cache during ring final testing
