@@ -1626,6 +1626,17 @@ Determine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehe
         hasRectification: !!eicrData.rectification,
         hasMakingSafe: !!eicrData.makingSafe
       });
+      
+      // Sanitize ragResults to prevent circular reference issues during JSON.stringify
+      const safeCitations = (ragResults || []).map((result: any) => ({
+        source: result.source || '',
+        section: result.section || '',
+        regulation_number: result.regulation_number || '',
+        title: result.title || '',
+        content: result.content || '',
+        excerpt: result.excerpt || '',
+        relevance: result.relevance || 0
+      }));
           
       // Transform into EICRDefect format for frontend
       const eicrDefects = [];
@@ -1678,7 +1689,7 @@ Determine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehe
           mode: 'eicr-photo-analysis',
           queryType: 'photo-analysis',
           eicrDefects,
-          citations: ragResults || [],
+          citations: safeCitations,
           metadata: {
             classification: { mode: 'photo-analysis', confidence: eicrData.confidenceAssessment.score / 100 },
             ragQualityMetrics: {
@@ -1838,13 +1849,24 @@ Analyse this installation photo and provide structured fault diagnosis with RAG 
             hasSummary: !!diagnosisData.faultSummary
           });
           
+          // Sanitize ragResults to prevent circular reference issues during JSON.stringify
+          const safeCitations = (ragResults || []).map((result: any) => ({
+            source: result.source || '',
+            section: result.section || '',
+            regulation_number: result.regulation_number || '',
+            title: result.title || '',
+            content: result.content || '',
+            excerpt: result.excerpt || '',
+            relevance: result.relevance || 0
+          }));
+          
           return new Response(
             JSON.stringify({
               success: true,
               mode: 'fault-diagnosis',
               queryType: 'troubleshooting',
               structuredDiagnosis: diagnosisData,
-              citations: ragResults || [],
+              citations: safeCitations,
               metadata: {
                 classification,
                 ragQualityMetrics: {
@@ -1930,13 +1952,24 @@ Analyse this installation photo and provide structured fault diagnosis with RAG 
     
     const conversationalResponse = aiResponse.content || 'Unable to generate response';
     
+    // Sanitize ragResults to prevent circular reference issues during JSON.stringify
+    const safeCitations = (ragResults || []).map((result: any) => ({
+      source: result.source || '',
+      section: result.section || '',
+      regulation_number: result.regulation_number || '',
+      title: result.title || '',
+      content: result.content || '',
+      excerpt: result.excerpt || '',
+      relevance: result.relevance || 0
+    }));
+    
     return new Response(
       JSON.stringify({
         success: true,
         mode: 'conversational',
         queryType: classification.mode,
         response: conversationalResponse,
-        citations: ragResults || [],
+        citations: safeCitations,
         metadata: {
           classification,
           ragQualityMetrics: {
