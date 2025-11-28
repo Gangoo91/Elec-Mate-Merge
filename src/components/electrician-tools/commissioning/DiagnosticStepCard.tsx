@@ -132,7 +132,7 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
                   {step.safetyWarnings.map((warning, idx) => (
                     <li key={idx} className="text-sm text-red-200 flex items-start gap-2">
                       <span className="text-red-400">•</span>
-                      <span>{warning}</span>
+                      <span className="text-left">{warning}</span>
                     </li>
                   ))}
                 </ul>

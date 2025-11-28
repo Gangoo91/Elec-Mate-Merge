@@ -29,7 +29,7 @@ const CorrectiveActionCard = ({ action, index }: CorrectiveActionCardProps) => {
 
         {/* Action */}
         <div className="space-y-2">
-          <p className="text-sm text-white/80 leading-relaxed">
+          <p className="text-sm text-white/80 leading-relaxed text-left">
             {action.action}
           </p>
         </div>

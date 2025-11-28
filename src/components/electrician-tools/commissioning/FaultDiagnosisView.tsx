@@ -109,7 +109,7 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
                 <CheckCircle2 className="h-8 w-8 sm:h-10 sm:w-10 text-green-400/80" />
               </div>
               <div className="flex-1">
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 mb-3">
                   <Badge className="bg-white/30 text-white border-none text-base px-4 py-1.5">
                     NO DEFECTS FOUND
                   </Badge>
