@@ -292,11 +292,21 @@ OUTPUT (JSON):
   "labour": {"tasks": [{"description": string, "hours": number, "rate": ${request.businessSettings?.labourRate || 45}, "total": number, "workerType": string}], "subtotal": number, "totalHours": number},
   "timescales": {"totalDays": number, "breakdown": string},
   "summary": {"materialsSubtotal": number, "labourSubtotal": number, "subtotal": number, "vat": number, "grandTotal": number},
+  "complexity": {"rating": number, "label": string, "factors": [string], "estimatedHours": number, "reasoning": string},
   "upsells": [{"opportunity": string, "price": number, "winRate": number, "isHot": boolean, "timing": string, "script": string}],
   "paymentTerms": {"depositPercent": number, "depositAmount": number, "balanceAmount": number, "terms": string, "lateFeePolicy": string, "paymentMilestones": [{"stage": string, "percentage": number, "amount": number, "trigger": string}]},
   "pipeline": [{"opportunity": string, "description": string, "timeframe": string, "estimatedValue": number, "priority": string, "trigger": string, "timing": string}],
   "valueEngineering": [string]
 }
+
+COMPLEXITY RATING GUIDE (1-10 scale):
+- 1-2 (Low): Simple socket/light swaps, single circuit additions, basic repairs
+- 3-4 (Moderate): Small rewires, consumer unit upgrades, basic outdoor installations
+- 5-6 (Moderate-High): Full house rewires, multiple circuits, fire alarm systems, EV chargers
+- 7-8 (High): Commercial fit-outs, 3-phase installations, complex access constraints
+- 9-10 (Very High): Industrial installations, specialist certifications, major infrastructure projects
+
+Consider: labour hours, technical difficulty, access constraints, regulatory complexity, materials complexity
 
 RULES:
 - USE trade prices listed above (accurate 2025 prices)
@@ -485,6 +495,38 @@ ${ragContext.practicalWork.slice(0, 8).map((pw: any, i: number) => {
         { stage: "Deposit", percentage: 30, amount: depositAmount, trigger: "Before work starts" },
         { stage: "Completion", percentage: 70, amount: balanceAmount, trigger: "On completion" }
       ]
+    };
+  }
+
+  // FALLBACK: Add complexity if AI didn't return it
+  if (!parsedEstimate.complexity) {
+    console.warn('⚠️ No complexity returned by AI - adding fallback');
+    const totalHours = parsedEstimate.labour?.totalHours || 8;
+    
+    // Calculate rating based on hours: 1-8hrs=Low, 9-24hrs=Moderate, 25-48hrs=Moderate-High, 49+hrs=High
+    let rating = 1;
+    let label = 'Low';
+    
+    if (totalHours <= 8) {
+      rating = Math.min(2, Math.max(1, Math.ceil(totalHours / 4)));
+      label = 'Low';
+    } else if (totalHours <= 24) {
+      rating = Math.min(4, Math.max(3, Math.ceil(totalHours / 6)));
+      label = 'Moderate';
+    } else if (totalHours <= 48) {
+      rating = Math.min(6, Math.max(5, Math.ceil(totalHours / 8)));
+      label = 'Moderate–High';
+    } else {
+      rating = Math.min(10, Math.max(7, Math.ceil(totalHours / 10)));
+      label = totalHours > 80 ? 'Very High' : 'High';
+    }
+    
+    parsedEstimate.complexity = {
+      rating: rating,
+      label: label,
+      factors: ['Based on estimated labour hours', `${totalHours} total hours required`],
+      estimatedHours: totalHours,
+      reasoning: `Complexity rating of ${rating}/10 (${label}) estimated from ${totalHours} hours of total labour time.`
     };
   }
 
