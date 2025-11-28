@@ -4,17 +4,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { 
   Clipboard, 
-  Calendar, 
-  Building2, 
-  Users, 
-  Package, 
-  MessageSquare, 
-  FileCheck,
   FileText,
   Lightbulb
 } from "lucide-react";
 import { toast } from "sonner";
-import { MobileInput } from "@/components/ui/mobile-input";
 import { AgentInbox } from "@/components/install-planner-v2/AgentInbox";
 import { useSimpleAgent } from "@/hooks/useSimpleAgent";
 import ProjectManagerProcessingView from "./ProjectManagerProcessingView";
@@ -22,48 +15,11 @@ import ProjectManagerResults from "./ProjectManagerResults";
 import { FormSection } from "./FormSection";
 import { InlineProjectTypeSelector } from "./InlineProjectTypeSelector";
 import { CollapsibleFormSection } from "./CollapsibleFormSection";
-import { ExampleProjectsGrid } from "./ExampleProjectsGrid";
-import { TemplateLibrary } from "./templates/TemplateLibrary";
+import { ProjectTemplateGrid } from "./ProjectTemplateGrid";
+import { ProjectTemplate } from "@/lib/project-templates";
 import { ProjectConstraints } from "./input/ConstraintsSection";
-
-interface ExampleScenario {
-  title: string;
-  icon: React.ComponentType<{ className?: string }>;
-  prompt: string;
-}
-
-const EXAMPLE_SCENARIOS: ExampleScenario[] = [
-  {
-    title: "Domestic Rewire Schedule",
-    icon: Calendar,
-    prompt: "Create a project plan for full 3-bedroom house rewire with timeline, labour requirements, and coordination with plasterer and decorator"
-  },
-  {
-    title: "Commercial Fit-Out",
-    icon: Building2,
-    prompt: "Project management plan for office fit-out with 60 LED panels, 4 distribution boards, data cabling, and access control - client wants phased handover"
-  },
-  {
-    title: "Multi-Trade Coordination",
-    icon: Users,
-    prompt: "Coordination plan for new build house where electrical first fix must work around plumber, HVAC, and timber frame contractor schedules"
-  },
-  {
-    title: "Material Procurement",
-    icon: Package,
-    prompt: "Material ordering schedule for hotel refurbishment project - 120 rooms over 6 weeks, need to manage deliveries to avoid storage issues"
-  },
-  {
-    title: "Client Communication",
-    icon: MessageSquare,
-    prompt: "What information should I include in weekly progress reports to client for commercial retail unit electrical installation?"
-  },
-  {
-    title: "Handover Documentation",
-    icon: FileCheck,
-    prompt: "What documentation is required for handover of industrial factory electrical installation including O&M manuals and as-built drawings?"
-  }
-];
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const ProjectManagerInterface = () => {
   const [prompt, setPrompt] = useState("");
@@ -115,29 +71,12 @@ const ProjectManagerInterface = () => {
     }
   };
 
-  const handleExampleClick = (examplePrompt: string) => {
-    setPrompt(examplePrompt);
-    toast.success("Example loaded", {
-      description: "Query filled in - ready to generate"
-    });
-  };
-
-  const handleTemplateSelect = (templatePlan: Partial<any>, template: any) => {
-    // Pre-fill duration
-    if (template.typical_duration_days) {
-      setDuration(`${template.typical_duration_days} days`);
-    }
+  const handleTemplateSelect = (template: ProjectTemplate) => {
+    setPrompt(template.promptTemplate);
+    setDuration(template.estimatedDuration);
     
-    // Build enhanced prompt from template
-    const phaseNames = templatePlan.phases?.map((p: any) => p.phaseName).join(', ') || '';
-    const enhancedPrompt = template.description 
-      ? `${template.description}. Project phases: ${phaseNames}`
-      : `${template.title || 'Template project'} with ${templatePlan.phases?.length || 0} phases: ${phaseNames}`;
-    
-    setPrompt(enhancedPrompt);
-    
-    toast.success("Template loaded", {
-      description: "Form pre-filled with template data - review and customize"
+    toast.success("Template Applied", {
+      description: "Template loaded. You can now edit and generate your plan."
     });
   };
 
@@ -232,40 +171,18 @@ const ProjectManagerInterface = () => {
         />
       </FormSection>
       
-      {/* Quick Start - Collapsed (Templates + Examples merged) */}
+      {/* Quick Start - Collapsed */}
       <CollapsibleFormSection 
         title="Quick Start" 
-        subtitle="Templates and examples to get started quickly"
+        subtitle="Start from a template"
         badge="optional"
         icon={<Lightbulb className="h-5 w-5" />}
         defaultOpen={false}
       >
-        <div className="space-y-4">
-          {/* Templates */}
-          <div className="space-y-2">
-            <h4 className="text-sm font-semibold text-white">Start from Template</h4>
-            <TemplateLibrary projectType={selectedType} onSelectTemplate={handleTemplateSelect} />
-          </div>
-          
-          {/* Divider */}
-          <div className="relative py-2">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-border/40"></div>
-            </div>
-            <div className="relative flex justify-center">
-              <span className="bg-background px-3 text-xs text-muted-foreground">or use an example</span>
-            </div>
-          </div>
-          
-          {/* Examples */}
-          <div className="space-y-2">
-            <h4 className="text-sm font-semibold text-white">Example Requests</h4>
-            <ExampleProjectsGrid 
-              examples={EXAMPLE_SCENARIOS}
-              onSelect={handleExampleClick}
-            />
-          </div>
-        </div>
+        <ProjectTemplateGrid
+          selectedCategory={selectedType}
+          onSelectTemplate={handleTemplateSelect}
+        />
       </CollapsibleFormSection>
 
       {/* Project Details - Collapsed (Simplified) */}
@@ -276,62 +193,98 @@ const ProjectManagerInterface = () => {
         icon={<FileText className="h-5 w-5" />}
         defaultOpen={false}
       >
-        <div className="space-y-3">
-          <MobileInput
-            label="Project Name"
-            value={projectName}
-            onChange={(e) => setProjectName(e.target.value)}
-            placeholder="e.g., Retail Unit Fit-Out"
-          />
-          <MobileInput
-            label="Location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            placeholder="e.g., Birmingham, UK"
-          />
-          <MobileInput
-            label="Client Name"
-            value={clientName}
-            onChange={(e) => setClientName(e.target.value)}
-            placeholder="e.g., Retail Corp Ltd"
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <MobileInput
-              label="Start Date"
-              type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-            />
-            <MobileInput
-              label="Duration"
-              value={duration}
-              onChange={(e) => setDuration(e.target.value)}
-              placeholder="e.g., 5 days"
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="projectName" className="text-sm font-medium text-left">Project Name</Label>
+            <Input
+              id="projectName"
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+              placeholder="e.g., Retail Unit Fit-Out"
+              className="h-11"
             />
           </div>
-          
-          {/* Key Constraints (only critical checkboxes) */}
-          <div className="space-y-2 pt-2">
-            <Label className="text-sm font-medium">Key Constraints</Label>
+
+          <div className="space-y-2">
+            <Label htmlFor="location" className="text-sm font-medium text-left">Location/Address</Label>
+            <Input
+              id="location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="e.g., Birmingham, UK"
+              className="h-11"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="clientName" className="text-sm font-medium text-left">Client Name</Label>
+            <Input
+              id="clientName"
+              value={clientName}
+              onChange={(e) => setClientName(e.target.value)}
+              placeholder="e.g., Retail Corp Ltd"
+              className="h-11"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
+              <Label htmlFor="startDate" className="text-sm font-medium text-left">Start Date (Optional)</Label>
+              <Input
+                id="startDate"
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="h-11"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="duration" className="text-sm font-medium text-left">Duration (Optional)</Label>
+              <Input
+                id="duration"
+                value={duration}
+                onChange={(e) => setDuration(e.target.value)}
+                placeholder="e.g., 5 days"
+                className="h-11"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-3 pt-2">
+            <Label className="text-sm font-medium text-left">Key Constraints</Label>
+            <div className="space-y-2">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="occupiedProperty"
                   checked={constraints.occupiedProperty}
-                  onChange={(e) => setConstraints(prev => ({ ...prev, occupiedProperty: e.target.checked }))}
-                  className="rounded border-border text-pink-400 focus:ring-pink-400"
+                  onCheckedChange={(checked) => 
+                    setConstraints(prev => ({ ...prev, occupiedProperty: checked as boolean }))
+                  }
                 />
-                <span className="text-sm text-white">Occupied property (tenants/staff present)</span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
+                <label
+                  htmlFor="occupiedProperty"
+                  className="text-sm leading-none cursor-pointer text-left"
+                >
+                  Property will be occupied during work
+                </label>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="medicalEquipment"
                   checked={constraints.medicalEquipment}
-                  onChange={(e) => setConstraints(prev => ({ ...prev, medicalEquipment: e.target.checked }))}
-                  className="rounded border-border text-pink-400 focus:ring-pink-400"
+                  onCheckedChange={(checked) => 
+                    setConstraints(prev => ({ ...prev, medicalEquipment: checked as boolean }))
+                  }
                 />
-                <span className="text-sm text-white">Medical equipment / critical loads</span>
-              </label>
+                <label
+                  htmlFor="medicalEquipment"
+                  className="text-sm leading-none cursor-pointer text-left"
+                >
+                  Medical or critical equipment present
+                </label>
+              </div>
             </div>
           </div>
         </div>
