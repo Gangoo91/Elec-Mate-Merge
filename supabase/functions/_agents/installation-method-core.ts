@@ -414,14 +414,14 @@ OUTPUT STRUCTURE:
   }
 }
 
-REQUIREMENTS (ENHANCED MODE - 12-15 DETAILED STEPS):
+REQUIREMENTS (ENHANCED MODE - EXACTLY 15 STEPS):
 
-- Generate 12-15 detailed installation steps covering the FULL lifecycle:
+- Generate exactly 15 detailed installation steps covering the FULL lifecycle:
   * Steps 1-2: Preparation (site survey, risk assessment, safe isolation, permits)
   * Steps 3-6: First fix work (containment installation, cable routing, supports)
   * Steps 7-11: Second fix work (terminations, connections, accessories, labelling)
-  * Steps 12-13: Testing and verification (continuity, IR, Zs, RCD tests)
-  * Steps 14-15: Commissioning, final inspection, and handover documentation
+  * Steps 12-14: Testing and verification (continuity, IR, Zs, RCD tests)
+  * Step 15: Commissioning, final inspection, and handover documentation
 
 - Each step MUST include:
   * 100-150 word detailed description with specific technical guidance
@@ -451,6 +451,8 @@ REQUIREMENTS (ENHANCED MODE - 12-15 DETAILED STEPS):
   * IP ratings: (Reg 512.2)
   * Circuit arrangement: (Reg 314.1)
   * Protective bonding: (Reg 411.3.1.2)
+
+⚠️ OUTDOOR CABLE REQUIREMENT: For ANY outdoor installation (EV chargers, external garages, sheds, summerhouses, outbuildings) - ALWAYS use SWA (Steel Wire Armoured) cable, NOT Twin & Earth. SWA is required for mechanical protection and direct burial capability. Include installation depth (450mm minimum), warning tape, and proper gland termination in installation steps.
 
 - EXECUTIVE SUMMARY: Must extract key design specifications from query/context:
   * cableType: Exact cable description (e.g., "2.5mm² Twin & Earth 6242Y")
@@ -514,8 +516,8 @@ ${ragContext.regulations.slice(0, 10).map((reg: any, i: number) =>
   `${i + 1}. ${reg.regulation_number}: ${reg.primary_topic}`
 ).join('\n')}`;
 
-  const maxTokens = 14000;  // Sufficient for 12-15 steps at 100-150 words each
-  console.log(`🤖 Starting GPT-5 Mini AI generation (${maxTokens} max_completion_tokens, ~3-4 minutes)...`);
+  const maxTokens = 14000;  // Sufficient for exactly 15 steps at 100-150 words each
+  console.log(`🤖 Starting GPT-5 Mini AI generation (${maxTokens} max_completion_tokens for 15 steps, ~4 minutes)...`);
   
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
