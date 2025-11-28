@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Shield, X } from 'lucide-react';
@@ -30,97 +30,93 @@ export const HealthSafetyProcessingView = ({
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const estimatedTotal = 120; // 2 minutes estimate
-  const estimatedRemaining = Math.max(0, estimatedTotal - elapsedTime);
+  const getStatusMessage = () => {
+    if (elapsedTime < 30) return { emoji: '📊', text: 'Analysing project requirements...' };
+    if (elapsedTime < 60) return { emoji: '⚠️', text: 'Identifying electrical hazards...' };
+    if (elapsedTime < 120) return { emoji: '🦺', text: 'Generating control measures...' };
+    if (elapsedTime < 180) return { emoji: '📋', text: 'Creating safety documentation...' };
+    return { emoji: '✅', text: 'Finalising... (complex assessments take longer)' };
+  };
+
+  const { emoji: statusEmoji, text: statusMessage } = getStatusMessage();
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      {/* Agent Card */}
-      <Card className="overflow-hidden border-orange-500/20 bg-gradient-to-br from-orange-500/10 via-background to-background">
-        <CardContent className="p-6">
-          <div className="flex items-start justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className={`p-3 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 ${progress < 100 ? 'animate-pulse' : ''}`}>
-                <Shield className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg">Health & Safety Advisor</h3>
-                <p className="text-sm text-muted-foreground">
-                  {progress < 100 ? 'Analysing safety requirements...' : 'Complete'}
-                </p>
-              </div>
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onCancel}
-              className="text-muted-foreground hover:text-destructive touch-manipulation"
-            >
-              <X className="h-4 w-4" />
-            </Button>
+    <div className="animate-fade-in">
+      <Card className="p-6 sm:p-8 bg-card border-border">
+        {/* Animated Shield Icon with Glow */}
+        <div className="flex justify-center mb-6 sm:mb-8">
+          <div className="relative">
+            <div className="absolute inset-0 bg-orange-500/20 rounded-full blur-xl animate-pulse" />
+            <Shield className="w-16 h-16 sm:w-20 sm:h-20 text-orange-400 animate-pulse relative z-10" />
           </div>
+        </div>
 
-          <div className="space-y-3">
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Progress</span>
-              <span className="font-medium">{progress}%</span>
-            </div>
-            <Progress value={progress} className="h-2" />
-            
-            <div className="pt-2 text-sm text-muted-foreground">
-              <p className="flex items-center gap-2">
-                <span className="inline-block w-2 h-2 bg-orange-400 rounded-full animate-pulse"></span>
-                {currentStep || 'Processing...'}
-              </p>
-            </div>
+        {/* Dynamic Status Message with Emoji */}
+        <div className="text-center mb-4 sm:mb-6">
+          <div className="text-3xl sm:text-4xl mb-3 animate-pulse">{statusEmoji}</div>
+          <h2 className="text-lg sm:text-2xl font-bold text-foreground mb-2 px-2">
+            {statusMessage}
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Generating safety documentation
+          </p>
+        </div>
+
+        {/* Elapsed Time in Pill Badge */}
+        <div className="text-center mb-4 sm:mb-6">
+          <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-orange-500/10 rounded-full">
+            <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse" />
+            <p className="text-base sm:text-lg font-semibold text-foreground">
+              Elapsed: {formatTime(elapsedTime)}
+            </p>
           </div>
-        </CardContent>
-      </Card>
+        </div>
 
-      {/* Timeline Card */}
-      <Card>
-        <CardContent className="p-6">
-          <h4 className="font-semibold mb-4">Generation Timeline</h4>
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Elapsed Time</span>
-              <span className="font-mono">{formatTime(elapsedTime)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Estimated Remaining</span>
-              <span className="font-mono">{formatTime(estimatedRemaining)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Total Estimate</span>
-              <span className="font-mono">{formatTime(estimatedTotal)}</span>
-            </div>
+        {/* Progress Bar */}
+        <div className="mb-4 sm:mb-6 px-2">
+          <div className="flex justify-between text-xs text-muted-foreground mb-1">
+            <span>Progress</span>
+            <span>{progress}%</span>
           </div>
-        </CardContent>
-      </Card>
+          <Progress value={progress} className="h-2" />
+        </div>
 
-      {/* What's Happening */}
-      <Card className="bg-muted/50">
-        <CardContent className="p-6">
-          <h4 className="font-semibold mb-3">What's Happening?</h4>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li className="flex items-start gap-2">
-              <span className="text-orange-400 mt-1">•</span>
-              <span>Analysing your project requirements against BS 7671 and HSE regulations</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-orange-400 mt-1">•</span>
-              <span>Identifying electrical hazards and calculating risk scores</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-orange-400 mt-1">•</span>
-              <span>Generating control measures and safe systems of work</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-orange-400 mt-1">•</span>
-              <span>Creating PPE requirements and emergency procedures</span>
-            </li>
-          </ul>
-        </CardContent>
+        {/* Pulsing Loader Dots */}
+        <div className="flex justify-center mb-4 sm:mb-6">
+          <div className="flex gap-2">
+            <div 
+              className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-orange-400 rounded-full animate-pulse" 
+              style={{ animationDelay: '0ms' }} 
+            />
+            <div 
+              className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-orange-400 rounded-full animate-pulse" 
+              style={{ animationDelay: '200ms' }} 
+            />
+            <div 
+              className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-orange-400 rounded-full animate-pulse" 
+              style={{ animationDelay: '400ms' }} 
+            />
+          </div>
+        </div>
+
+        {/* Single Info Tip */}
+        <div className="p-3 sm:p-4 bg-muted/50 rounded-lg mb-4 sm:mb-6">
+          <p className="text-xs sm:text-sm text-muted-foreground text-center text-left">
+            🦺 Analysing BS 7671 requirements and generating hazard assessments
+          </p>
+        </div>
+
+        {/* Cancel Button */}
+        <div className="text-center">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={onCancel} 
+            className="text-muted-foreground hover:text-destructive touch-manipulation"
+          >
+            <X className="h-4 w-4 mr-2" /> Cancel
+          </Button>
+        </div>
       </Card>
     </div>
   );
