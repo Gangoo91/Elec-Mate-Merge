@@ -866,20 +866,51 @@ export class DesignPipeline {
         return circuit;
       }
       
-      // Generate expected tests using existing calculation values
-      const zsResult = {
-        r1PlusR2: circuit.calculations?.r1r2 || 0,
-        calculatedZs: circuit.calculations?.zs || 0,
-        maxZs: circuit.calculations?.maxZs || 0,
-        compliant: (circuit.calculations?.zs || 0) <= (circuit.calculations?.maxZs || 1)
+      // Calculate R1+R2 directly from cable specs (don't rely on fallback having run)
+      // BS 7671 Table 9A - Conductor resistance (mΩ/m at 20°C)
+      const CONDUCTOR_RESISTANCE: Record<number, number> = {
+        1.0: 18.1, 1.5: 12.1, 2.5: 7.41, 4: 4.61, 6: 3.08, 10: 1.83,
+        16: 1.15, 25: 0.727, 35: 0.524, 50: 0.387, 70: 0.268, 95: 0.193,
+        120: 0.153, 150: 0.124, 185: 0.0991, 240: 0.0754, 300: 0.0601
       };
       
+      const cableSize = circuit.cableSize || 2.5;
+      const cpcSize = circuit.cpcSize || 1.5;
+      const cableLength = circuit.cableLength || 0;
+      const ze = normalized.supply.ze || 0.35;
+      
+      // Get resistance values (mΩ/m)
+      const r1Resistance = CONDUCTOR_RESISTANCE[cableSize] || 7.41;
+      const r2Resistance = CONDUCTOR_RESISTANCE[cpcSize] || 12.1;
+      
+      // Detect ring final circuits (parallel paths = half effective length)
       const isRing = circuit.name?.toLowerCase()?.includes('ring') || 
-                     circuit.loadType?.toLowerCase()?.includes('ring');
+                     circuit.loadType?.toLowerCase()?.includes('ring') ||
+                     (circuit.loadType?.toLowerCase()?.includes('socket') && circuit.protectionDevice?.rating === 32);
+      
+      const effectiveLength = isRing ? cableLength / 2 : cableLength;
+      
+      // Calculate R1+R2 at 20°C (mΩ/m × m ÷ 1000 = Ω)
+      const r1PlusR2At20C = ((r1Resistance + r2Resistance) * effectiveLength) / 1000;
+      
+      // Apply temperature correction factor for 70°C (1.2 for PVC thermoplastic)
+      const r1PlusR2At70C = r1PlusR2At20C * 1.2;
+      
+      // Calculate Zs (use calculated value or compute from Ze + R1+R2)
+      const calculatedZs = circuit.calculations?.zs || (ze + r1PlusR2At70C);
+      const maxZs = circuit.calculations?.maxZs || 1.44; // Default for 32A Type B
+      
+      const zsResult = {
+        r1PlusR2: r1PlusR2At70C,
+        r1PlusR2At20C: r1PlusR2At20C,
+        calculatedZs,
+        maxZs,
+        compliant: calculatedZs <= maxZs
+      };
       
       circuit.expectedTests = {
         r1r2: {
-          at20C: zsResult.r1PlusR2 / 1.2,
+          at20C: zsResult.r1PlusR2At20C,
           at70C: zsResult.r1PlusR2,
           value: `${zsResult.r1PlusR2.toFixed(3)}Ω${isRing ? ' (ring final)' : ''}`,
           regulation: 'BS 7671 Reg 612.2'
