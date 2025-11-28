@@ -12,6 +12,7 @@ export interface EICRDefectEnhanced {
     title: string;
     urgency: string;
   };
+  classificationReasoningBullets?: string[]; // Why this classification was assigned (with reg citations)
   bs7671Regulations?: Array<{
     regulation: string;
     description: string;
@@ -123,6 +124,52 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
         </div>
       )}
 
+      {/* Classification Justification - PROMINENTLY DISPLAYED */}
+      {defect.classificationReasoningBullets && defect.classificationReasoningBullets.length > 0 && defect.primaryCode && (
+        <div className="p-5 sm:p-6 border-b-2 border-white/10">
+          <div className="space-y-4">
+            <h3 className="text-xl font-semibold text-white flex items-center gap-2">
+              <Shield className="h-6 w-6 text-elec-yellow" />
+              Classification Justification
+            </h3>
+            
+            <div className="bg-elec-dark/50 rounded-lg p-4 space-y-3">
+              <p className="text-base font-semibold text-white">
+                Why {defect.primaryCode.code} ({defect.primaryCode.title}):
+              </p>
+              <ul className="space-y-2">
+                {defect.classificationReasoningBullets.map((bullet, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-base text-white leading-relaxed">
+                    <span className="text-elec-yellow mt-1">•</span>
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Supporting Regulations Table - PROMINENT */}
+            {defect.bs7671Regulations && defect.bs7671Regulations.length > 0 && (
+              <div className="bg-elec-dark/50 rounded-lg p-4 space-y-3">
+                <p className="text-base font-semibold text-white flex items-center gap-2">
+                  <BookOpen className="h-5 w-5 text-blue-400" />
+                  Supporting Regulations:
+                </p>
+                <div className="space-y-2">
+                  {defect.bs7671Regulations.map((reg, idx) => (
+                    <div key={idx} className="flex items-start gap-3 p-3 bg-elec-dark/50 rounded border border-blue-500/20">
+                      <Badge variant="outline" className="text-blue-300 border-blue-500/50 flex-shrink-0 text-sm px-2 py-1">
+                        {reg.regulation}
+                      </Badge>
+                      <span className="text-sm text-white leading-relaxed flex-1">{reg.description}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Confidence Meter */}
       <div className="p-5 sm:p-6">
         <div className="space-y-2">
@@ -188,7 +235,7 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
           <div className="bg-elec-dark border-2 border-elec-yellow rounded-lg p-4 sm:p-5 space-y-4">
             <div className="flex items-center gap-3">
               <AlertTriangle className="h-7 w-7 text-red-400" />
-              <h3 className="text-xl sm:text-2xl font-semibold text-white text-left">🚨 Make Safe Now</h3>
+              <h3 className="text-xl sm:text-2xl font-semibold text-white text-left">Make Safe Now</h3>
             </div>
             <div className="space-y-3">
               {defect.makingSafe.immediateSteps.map((step, idx) => (
@@ -201,8 +248,9 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
               ))}
             </div>
             {defect.makingSafe.isolationRequired && (
-              <Badge className="bg-red-500/40 text-white border-none text-base px-4 py-2">
-                ⚡ Isolation Required
+              <Badge className="bg-red-500/40 text-white border-none text-base px-4 py-2 flex items-center gap-2 w-fit">
+                <AlertTriangle className="h-4 w-4" />
+                Isolation Required
               </Badge>
             )}
             {defect.makingSafe.signageRequired && (
@@ -220,7 +268,7 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
           <div className="bg-elec-dark border-2 border-elec-yellow rounded-lg p-4 sm:p-5 space-y-4">
             <div className="flex items-center gap-3">
               <MessageSquare className="h-7 w-7 text-elec-yellow" />
-              <h3 className="text-xl sm:text-2xl font-semibold text-white text-left">💬 Tell the Client</h3>
+              <h3 className="text-xl sm:text-2xl font-semibold text-white text-left">Client Communication</h3>
             </div>
             
             <div className="space-y-5">
@@ -244,7 +292,7 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
                   <ul className="space-y-2">
                     {defect.clientCommunication.risksIfUnfixed.map((risk, idx) => (
                       <li key={idx} className="text-base sm:text-lg text-white flex items-start gap-2 leading-relaxed text-left">
-                        <span className="text-orange-400 text-xl">⚠</span>
+                        <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                         <span>{risk}</span>
                       </li>
                     ))}
@@ -286,29 +334,6 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
           </AccordionItem>
         )}
 
-        {/* Regulations */}
-        {defect.bs7671Regulations && defect.bs7671Regulations.length > 0 && (
-          <AccordionItem value="regulations" className="border-white/10">
-            <AccordionTrigger className="text-white hover:text-white/80 py-4 min-h-[56px]">
-              <div className="flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-blue-400" />
-                <span className="font-semibold text-base">BS 7671 Regulations</span>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="pt-2">
-              <div className="space-y-3">
-                {defect.bs7671Regulations.map((reg, idx) => (
-                  <div key={idx} className="flex flex-col sm:flex-row items-center sm:items-start gap-3 text-left">
-                    <Badge variant="outline" className="text-blue-300 border-blue-500/50 flex-shrink-0 text-base px-3 py-1.5">
-                      {reg.regulation}
-                    </Badge>
-                    <span className="text-base text-white leading-relaxed text-center sm:text-left">{reg.description}</span>
-                  </div>
-                ))}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        )}
 
         {/* BS 7671 & Guidance References */}
         {defect.gn3Guidance && (
@@ -338,7 +363,7 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
             <AccordionTrigger className="text-white hover:text-white/80 py-4 min-h-[56px]">
               <div className="flex items-center gap-2">
                 <Wrench className="h-5 w-5 text-amber-400" />
-                <span className="font-semibold text-base">🔧 Proper Fix (Rectification)</span>
+                <span className="font-semibold text-base">Rectification Procedure</span>
               </div>
             </AccordionTrigger>
             <AccordionContent className="pt-2">
@@ -381,7 +406,7 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
             <AccordionTrigger className="text-white hover:text-white/80 py-4 min-h-[56px]">
               <div className="flex items-center gap-2">
                 <ClipboardCheck className="h-5 w-5 text-blue-400" />
-                <span className="font-semibold text-base">✓ Verify the Fix</span>
+                <span className="font-semibold text-base">Verification Procedure</span>
               </div>
             </AccordionTrigger>
             <AccordionContent className="pt-2">

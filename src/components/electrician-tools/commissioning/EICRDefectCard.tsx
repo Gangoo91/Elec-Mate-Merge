@@ -12,6 +12,7 @@ export interface EICRDefect {
     title: string;
     urgency: string;
   };
+  classificationReasoningBullets?: string[]; // Why this classification was assigned (with reg citations)
   secondaryCode?: {
     code: 'C1' | 'C2' | 'C3' | 'FI';
     condition: string;
