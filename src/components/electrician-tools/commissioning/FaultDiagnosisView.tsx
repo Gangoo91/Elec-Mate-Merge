@@ -1,8 +1,9 @@
-import { AlertTriangle, AlertCircle, CheckCircle2, Lightbulb, XCircle, BookOpen, ArrowLeft, FileText, Image as ImageIcon } from "lucide-react";
+import { AlertTriangle, AlertCircle, CheckCircle2, Lightbulb, XCircle, BookOpen, ArrowLeft, FileText, Image as ImageIcon, MessageCircle, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import DiagnosticStepCard from "./DiagnosticStepCard";
 import CorrectiveActionCard from "./CorrectiveActionCard";
@@ -17,10 +18,12 @@ interface FaultDiagnosisViewProps {
   eicrDefects?: EICRDefect[];
   imageUrl?: string | null;
   onStartOver: () => void;
+  onAskFollowUp: (query: string) => void;
 }
 
-const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: FaultDiagnosisViewProps) => {
+const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver, onAskFollowUp }: FaultDiagnosisViewProps) => {
   const [showEICRCodes, setShowEICRCodes] = useState(true);
+  const [followUpQuery, setFollowUpQuery] = useState("");
   
   // Check if this is a NONE classification (compliant installation)
   const isCompliantPhoto = eicrDefects?.length === 1 && eicrDefects[0].classification === 'NONE';
@@ -34,6 +37,13 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
 
   const risk = diagnosis ? riskConfig[diagnosis.faultSummary.safetyRisk] : null;
   const RiskIcon = risk?.icon;
+
+  const handleFollowUpSubmit = () => {
+    if (followUpQuery.trim()) {
+      onAskFollowUp(followUpQuery);
+      setFollowUpQuery("");
+    }
+  };
 
   return (
     <div className="min-h-screen sm:bg-elec-gray py-4 px-0 sm:p-6 lg:p-8">
@@ -335,6 +345,36 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
             )}
           </Accordion>
         )}
+
+        {/* Follow-Up Question Input */}
+        <Card className="p-4 sm:p-6 bg-elec-dark/80 border-2 border-blue-500/30">
+          <div className="flex items-center gap-2 mb-3">
+            <MessageCircle className="h-5 w-5 text-blue-400" />
+            <h4 className="font-semibold text-sm sm:text-base text-white">Ask a Follow-Up Question</h4>
+          </div>
+          <div className="flex flex-col gap-2">
+            <Textarea
+              value={followUpQuery}
+              onChange={(e) => setFollowUpQuery(e.target.value)}
+              placeholder="e.g., What if the fault persists after replacing the MCB?"
+              className="min-h-[80px] resize-none text-sm sm:text-base"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleFollowUpSubmit();
+                }
+              }}
+            />
+            <Button 
+              onClick={handleFollowUpSubmit}
+              disabled={!followUpQuery.trim()}
+              className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 h-10 sm:h-11"
+            >
+              <Send className="h-4 w-4 mr-2" />
+              Send
+            </Button>
+          </div>
+        </Card>
 
         {/* Footer */}
         <div className="flex justify-center pt-6">

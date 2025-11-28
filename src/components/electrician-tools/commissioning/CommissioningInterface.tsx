@@ -170,6 +170,17 @@ const CommissioningInterface = () => {
         eicrDefects={eicrDefects}
         imageUrl={uploadedImageUrl}
         onStartOver={handleStartOver}
+        onAskFollowUp={(followUpQuery) => {
+          handleGenerate({
+            prompt: followUpQuery,
+            selectedType: projectInfo.selectedType,
+            projectName: projectInfo.projectName,
+            location: projectInfo.location,
+            clientName: projectInfo.clientName,
+            installationDate: projectInfo.installationDate,
+            imageUrl: uploadedImageUrl || undefined
+          });
+        }}
       />
     );
   }
