@@ -151,13 +151,24 @@ serve(async (req) => {
         c.calculations.voltageDrop.compliant && c.calculations.zs < c.calculations.maxZs
       ) ? 'All Compliant' : 'Issues Found',
       
-      // Compliance summary counts
-      complianceSummary: {
-        passCount: design.circuits.filter((c: any) => c.complianceStatus === 'pass').length,
-        warningCount: design.circuits.filter((c: any) => c.complianceStatus === 'warning').length,
-        failCount: design.circuits.filter((c: any) => c.complianceStatus === 'fail').length,
-        totalCircuits: design.circuits.length
-      },
+      // Compliance summary counts - calculated dynamically using CircuitCard.tsx logic
+      complianceSummary: (() => {
+        const calculateStatus = (c: any) => {
+          const vdCompliant = c.calculations?.voltageDrop?.compliant ?? true;
+          const zsCompliant = (c.calculations?.zs ?? 0) <= (c.calculations?.maxZs ?? 999);
+          const hasWarnings = c.warnings && c.warnings.length > 0;
+          const isCompliant = vdCompliant && zsCompliant;
+          return !isCompliant ? 'fail' : hasWarnings ? 'warning' : 'pass';
+        };
+        
+        const statuses = design.circuits.map(calculateStatus);
+        return {
+          passCount: statuses.filter((s: string) => s === 'pass').length,
+          warningCount: statuses.filter((s: string) => s === 'warning').length,
+          failCount: statuses.filter((s: string) => s === 'fail').length,
+          totalCircuits: design.circuits.length
+        };
+      })(),
 
       // Diversity Breakdown
       diversityBreakdown: design.diversityBreakdown ? {
@@ -215,6 +226,15 @@ serve(async (req) => {
 
       // Circuits
       circuits: design.circuits.map((c: any) => {
+        // Calculate compliance status dynamically using CircuitCard.tsx logic
+        const calculateComplianceStatus = (circuit: any) => {
+          const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
+          const zsCompliant = (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999);
+          const hasWarnings = circuit.warnings && circuit.warnings.length > 0;
+          const isCompliant = vdCompliant && zsCompliant;
+          return !isCompliant ? 'fail' : hasWarnings ? 'warning' : 'pass';
+        };
+        
         // Determine cable type with installation-aware fallback
         const getCableTypeFallback = () => {
           const installationType = design.installationType || 'domestic';
@@ -265,18 +285,24 @@ serve(async (req) => {
           protectionDevice: `${c.protectionDevice.rating}A Type ${c.protectionDevice.curve} ${c.protectionDevice.type}`,
           protectionType: c.protectionDevice.type,
           
-          // Compliance status from Phase 5.5
-          complianceStatus: c.complianceStatus || 'pass',
-          complianceStatusText: c.complianceStatus === 'pass' 
-            ? '✓ Compliant' 
-            : c.complianceStatus === 'warning' 
-              ? '⚠ Review Required' 
-              : '✗ Non-Compliant',
-          complianceStatusColour: c.complianceStatus === 'pass' 
-            ? 'green' 
-            : c.complianceStatus === 'warning' 
-              ? 'amber' 
-              : 'red',
+          // Compliance status - calculated dynamically to match CircuitCard.tsx
+          complianceStatus: calculateComplianceStatus(c),
+          complianceStatusText: (() => {
+            const status = calculateComplianceStatus(c);
+            return status === 'pass' 
+              ? '✓ PASS' 
+              : status === 'warning' 
+                ? '⚠ REVIEW' 
+                : '✗ FAIL';
+          })(),
+          complianceStatusColour: (() => {
+            const status = calculateComplianceStatus(c);
+            return status === 'pass' 
+              ? 'green' 
+              : status === 'warning' 
+                ? 'amber' 
+                : 'red';
+          })(),
           validationIssues: (c.validationIssues || []).map((issue: any) => ({
             type: issue.type,
             severity: issue.severity,
