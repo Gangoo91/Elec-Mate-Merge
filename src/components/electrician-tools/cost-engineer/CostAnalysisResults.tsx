@@ -48,44 +48,12 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
   };
 
   const buildPdfPayload = () => {
-    // Debug logging: Check what data we have
-    console.log('📦 Building PDF payload from structuredData:', {
-      hasStructuredData: !!structuredData,
-      hasResponse: !!structuredData?.response,
-      hasComplexity: !!structuredData?.complexity,
-      hasConfidence: !!structuredData?.confidence,
-      confidenceFields: structuredData?.confidence ? Object.keys(structuredData.confidence) : [],
-      materialsConfidence: structuredData?.confidence?.materials,
-      labourConfidence: structuredData?.confidence?.labour,
-      hasRiskAssessment: !!structuredData?.riskAssessment,
-      hasMaterials: !!structuredData?.materials,
-      hasLabour: !!structuredData?.labour,
-      hasUpsells: !!structuredData?.upsells,
-      hasProfitability: !!structuredData?.profitabilityAnalysis
-    });
+    console.log('📦 Building clean 20-section PDF payload');
 
     // Helper to round to 2 decimal places
     const round2dp = (value: number) => Math.round((value || 0) * 100) / 100;
 
-    // Recursive helper to round all numbers in nested objects/arrays
-    const roundNumbers = (obj: any): any => {
-      if (typeof obj === 'number') {
-        return round2dp(obj);
-      }
-      if (Array.isArray(obj)) {
-        return obj.map(item => roundNumbers(item));
-      }
-      if (obj !== null && typeof obj === 'object') {
-        const rounded: any = {};
-        for (const key in obj) {
-          rounded[key] = roundNumbers(obj[key]);
-        }
-        return rounded;
-      }
-      return obj;
-    };
-
-    // Calculate derived metrics (matching ComprehensiveResultsView.tsx)
+    // Calculate core metrics
     const totalLabourHours = round2dp(structuredData?.labour?.tasks?.reduce(
       (sum: number, t: any) => sum + (t.hours || 0), 0
     ) || 0);
@@ -98,411 +66,325 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
     const margin = round2dp(breakEven > 0 ? ((selectedAmount - breakEven) / selectedAmount) * 100 : 0);
     const profitPerHour = round2dp(totalLabourHours > 0 ? profit / totalLabourHours : 0);
 
-    // Calculate tier prices (matching PricingOptionsTiers.tsx logic)
-    const sparsePrice = structuredData?.profitabilityAnalysis?.quoteTiers?.minimum?.price || breakEven * 1.2;
-    const normalPrice = structuredData?.profitabilityAnalysis?.quoteTiers?.target?.price || breakEven * 1.3;
-    const busyPrice = structuredData?.profitabilityAnalysis?.quoteTiers?.premium?.price || breakEven * 1.4;
+    // Calculate tier prices
+    const sparsePrice = round2dp(structuredData?.profitabilityAnalysis?.quoteTiers?.minimum?.price || breakEven * 1.2);
+    const normalPrice = round2dp(structuredData?.profitabilityAnalysis?.quoteTiers?.target?.price || breakEven * 1.3);
+    const busyPrice = round2dp(structuredData?.profitabilityAnalysis?.quoteTiers?.premium?.price || breakEven * 1.4);
 
-    // Helper function to calculate tier metrics
-    const calculateTierMetrics = (price: number) => {
-      const profit = price - breakEven;
-      const margin = price > 0 ? ((profit / price) * 100) : 0;
-      const profitPerHour = totalLabourHours > 0 ? profit / totalLabourHours : 0;
-      
-      return { 
-        price: round2dp(Math.max(0, price)),
-        margin: round2dp(Math.max(0, margin)),
-        profit: round2dp(Math.max(0, profit)),
-        profitPerHour: round2dp(Math.max(0, profitPerHour))
-      };
-    };
+    // Helper: calculate tier metrics
+    const calculateTier = (price: number) => ({
+      price: round2dp(price),
+      profit: round2dp(price - breakEven),
+      marginPercent: round2dp(price > 0 ? ((price - breakEven) / price) * 100 : 0),
+      profitPerHour: round2dp(totalLabourHours > 0 ? (price - breakEven) / totalLabourHours : 0)
+    });
 
-    // Calculate all three tiers
-    const sparseTier = calculateTierMetrics(sparsePrice);
-    const normalTier = calculateTierMetrics(normalPrice);
-    const busyTier = calculateTierMetrics(busyPrice);
-
-    // Calculate cost breakdown components
-    const materialsSubtotal = round2dp(structuredData?.materials?.subtotal || analysis.materialsTotal || 0);
+    // Materials & Labour
+    const materialsNet = round2dp(structuredData?.materials?.subtotal || analysis.materialsTotal || 0);
     const materialsMarkup = round2dp(structuredData?.materials?.markup || 15);
-    const labourSubtotal = round2dp(structuredData?.labour?.subtotal || analysis.labourTotal || 0);
+    const labourTotal = round2dp(structuredData?.labour?.subtotal || analysis.labourTotal || 0);
+    const labourRate = round2dp(totalLabourHours > 0 ? labourTotal / totalLabourHours : 0);
+    
+    // Overheads
+    const overheadsTravel = round2dp(structuredData?.profitabilityAnalysis?.jobOverheads?.travel || 0);
+    const overheadsPermits = round2dp(structuredData?.profitabilityAnalysis?.jobOverheads?.permitsAndFees || 0);
+    const overheadsWaste = round2dp(structuredData?.profitabilityAnalysis?.jobOverheads?.wasteDisposal || 0);
+    const overheadsBusiness = round2dp(structuredData?.profitabilityAnalysis?.jobOverheads?.allocatedBusinessOverheads || 0);
     const overheadsTotal = round2dp(structuredData?.profitabilityAnalysis?.jobOverheads?.total || 0);
-    const contingencyPercentage = round2dp(structuredData?.confidence?.contingency?.percentage || 5);
-    const contingencyAmount = round2dp((materialsSubtotal + labourSubtotal) * (contingencyPercentage / 100));
+    
+    // Contingency
+    const contingencyPercent = round2dp(structuredData?.confidence?.contingency?.percentage || 5);
+    const contingencyAmount = round2dp((materialsNet + labourTotal) * (contingencyPercent / 100));
 
+    // Confidence
+    const materialsConfidence = structuredData?.confidence?.materials?.level || 75;
+    const labourConfidence = structuredData?.confidence?.labour?.level || 75;
+    const avgConfidence = Math.round((materialsConfidence + labourConfidence) / 2);
+
+    // Risk assessment
+    const risks = structuredData?.riskAssessment?.risks || [];
+    const highRisks = risks.filter((r: any) => r.severity === 'critical' || r.severity === 'high');
+
+    // Build clean payload matching 20 frontend sections
     const payload = {
-      // 0. Original User Request
+      // Section 0: Original Request
       originalRequest: {
         query: originalQuery || '',
-        timestamp: new Date().toISOString(),
-        projectContext: {
-          projectName: projectContext?.projectName || '',
-          clientInfo: projectContext?.clientInfo || '',
-          location: projectContext?.location || '',
-          additionalInfo: projectContext?.additionalInfo || ''
-        }
+        projectName: projectContext?.projectName || '',
+        clientInfo: projectContext?.clientInfo || '',
+        location: projectContext?.location || '',
+        projectType: projectContext?.projectType || 'domestic',
+        additionalInfo: projectContext?.additionalInfo || '',
+        timestamp: new Date().toISOString()
       },
-      
-      // 1. AI Analysis Header
-      aiAnalysisHeader: {
-        jobDescription: structuredData?.response || '',
+
+      // Section 1: Quote Hero
+      quoteHero: {
+        recommendedPrice: selectedAmount,
+        tier: selectedTier,
+        profit: profit,
+        marginPercent: margin,
+        profitPerHour: profitPerHour,
+        confidencePercent: avgConfidence,
+        totalLabourHours: totalLabourHours
+      },
+
+      // Section 2: AI Analysis Summary
+      aiSummary: structuredData?.response || analysis.rawText || '',
+
+      // Section 3: Quick Metrics Snapshot
+      quickMetrics: {
         complexity: structuredData?.complexity ? {
           rating: structuredData.complexity.rating || 0,
           label: structuredData.complexity.label || 'Unknown',
           score: round2dp(structuredData.complexity.score || 0)
         } : null,
-        confidence: (() => {
-          if (!structuredData?.confidence) return null;
-          const materialsLevel = structuredData.confidence.materials?.level || 0;
-          const labourLevel = structuredData.confidence.labour?.level || 0;
-          const avgConfidence = Math.round((materialsLevel + labourLevel) / 2);
-          
-          return {
-            averagePercentage: avgConfidence,
-            materials: {
-              level: materialsLevel,
-              reasoning: structuredData.confidence.materials?.reason || ''
-            },
-            labour: {
-              level: labourLevel,
-              reasoning: structuredData.confidence.labour?.reason || ''
-            }
-          };
-        })(),
-        riskAssessment: (() => {
-          if (!structuredData?.riskAssessment?.risks) return null;
-          const highRisks = structuredData.riskAssessment.risks.filter((r: any) => 
-            r.severity === 'critical' || r.severity === 'high'
-          );
-          
-          return {
-            highRiskCount: highRisks.length,
-            totalRiskCount: structuredData.riskAssessment.risks.length,
-            level: highRisks.length > 0 ? 'high' : 'low',
-            highRisks: highRisks.map((r: any) => ({
-              title: r.title || r.risk,
-              severity: r.severity,
-              mitigation: r.mitigation || ''
-            }))
-          };
-        })(),
-        recommendedTier: structuredData?.recommendedQuote?.tier?.toUpperCase() || 'NORMAL',
-        keyActionItems: (() => {
-          const actions: Array<{text: string, priority: string}> = [];
-          
-          // Action 1: Critical site checks
-          if (structuredData?.siteChecklist?.critical?.[0]) {
-            actions.push({
-              text: structuredData.siteChecklist.critical[0],
-              priority: 'critical'
-            });
-          }
-          
-          // Action 2: Payment terms
-          if (structuredData?.paymentTerms) {
-            actions.push({
-              text: `Secure ${structuredData.paymentTerms.depositPercent}% deposit (£${round2dp(structuredData.paymentTerms.depositAmount || 0)}) before starting`,
-              priority: 'high'
-            });
-          }
-          
-          // Action 3: High-value upsell or risk mitigation
-          const hotUpsell = structuredData?.upsells?.find((u: any) => u.isHot);
-          if (hotUpsell) {
-            actions.push({
-              text: `Offer ${hotUpsell.opportunity} (+£${round2dp(hotUpsell.price || 0)}) - ${hotUpsell.winRate}% win rate`,
-              priority: 'medium'
-            });
-          } else if (structuredData?.riskAssessment?.risks?.[0]) {
-            const topRisk = structuredData.riskAssessment.risks[0];
-            actions.push({
-              text: topRisk.mitigation,
-              priority: 'high'
-            });
-          }
-          
-          return actions.slice(0, 3);
-        })()
+        confidence: {
+          average: avgConfidence,
+          materials: materialsConfidence,
+          labour: labourConfidence
+        },
+        riskLevel: {
+          level: highRisks.length > 0 ? 'high' : 'low',
+          highRiskCount: highRisks.length,
+          totalCount: risks.length
+        }
       },
-      
-      // 1. Project Context
-      projectContext: {
-        projectName: projectContext?.projectName || projectName || 'Electrical Project',
-        clientInfo: projectContext?.clientInfo || '',
-        location: projectContext?.location || '',
-        additionalInfo: projectContext?.additionalInfo || '',
-        projectType: projectContext?.projectType || 'domestic'
+
+      // Section 4: Key Action Items
+      keyActions: (() => {
+        const actions: Array<{text: string, priority: 'critical' | 'high' | 'medium'}> = [];
+        
+        if (structuredData?.siteChecklist?.critical?.[0]) {
+          actions.push({
+            text: structuredData.siteChecklist.critical[0],
+            priority: 'critical'
+          });
+        }
+        
+        if (structuredData?.paymentTerms) {
+          actions.push({
+            text: `Secure ${structuredData.paymentTerms.depositPercent}% deposit (£${round2dp(structuredData.paymentTerms.depositAmount || 0)}) before starting`,
+            priority: 'high'
+          });
+        }
+        
+        const hotUpsell = structuredData?.upsells?.find((u: any) => u.isHot);
+        if (hotUpsell) {
+          actions.push({
+            text: `Offer ${hotUpsell.opportunity} (+£${round2dp(hotUpsell.price || 0)}) - ${hotUpsell.winRate}% win rate`,
+            priority: 'medium'
+          });
+        }
+        
+        return actions.slice(0, 3);
+      })(),
+
+      // Section 5: Trade Intelligence (RAG Validation)
+      tradeIntelligence: structuredData?.tradeIntelligence ? {
+        materialsCompleteness: {
+          status: structuredData.tradeIntelligence.materialsCompleteness?.status || 'unknown',
+          score: round2dp(structuredData.tradeIntelligence.materialsCompleteness?.score || 0),
+          commentary: structuredData.tradeIntelligence.materialsCompleteness?.commentary || '',
+          missingItems: structuredData.tradeIntelligence.materialsCompleteness?.missingItems || [],
+          recommendations: structuredData.tradeIntelligence.materialsCompleteness?.recommendations || []
+        },
+        labourRealism: {
+          status: structuredData.tradeIntelligence.labourRealism?.status || 'unknown',
+          score: round2dp(structuredData.tradeIntelligence.labourRealism?.score || 0),
+          commentary: structuredData.tradeIntelligence.labourRealism?.commentary || '',
+          concerns: structuredData.tradeIntelligence.labourRealism?.concerns || [],
+          recommendations: structuredData.tradeIntelligence.labourRealism?.recommendations || []
+        },
+        futureWorkLogic: {
+          status: structuredData.tradeIntelligence.futureWorkLogic?.status || 'unknown',
+          score: round2dp(structuredData.tradeIntelligence.futureWorkLogic?.score || 0),
+          commentary: structuredData.tradeIntelligence.futureWorkLogic?.commentary || '',
+          concerns: structuredData.tradeIntelligence.futureWorkLogic?.concerns || []
+        },
+        overallAssessment: {
+          readyToQuote: structuredData.tradeIntelligence.overallAssessment?.readyToQuote || false,
+          summary: structuredData.tradeIntelligence.overallAssessment?.summary || '',
+          criticalIssues: structuredData.tradeIntelligence.overallAssessment?.criticalIssues || []
+        }
+      } : null,
+
+      // Section 6: Pricing Tiers (3 Options)
+      pricingTiers: {
+        workSparse: calculateTier(sparsePrice),
+        normal: { ...calculateTier(normalPrice), recommended: true },
+        busyPeriod: calculateTier(busyPrice)
       },
-      
-      // 2. Cost Breakdown Summary
+
+      // Section 7: Cost Breakdown
       costBreakdown: {
         materials: {
-          percentage: materialsMarkup,
-          amount: round2dp(materialsSubtotal * (materialsMarkup / 100)),
-          material: materialsSubtotal,
-          total: round2dp(materialsSubtotal + (materialsSubtotal * (materialsMarkup / 100)))
+          net: materialsNet,
+          markupPercent: materialsMarkup,
+          total: round2dp(materialsNet * (1 + materialsMarkup / 100))
         },
-        labour: labourSubtotal,
-        overheads: overheadsTotal,
+        labour: {
+          hours: totalLabourHours,
+          rate: labourRate,
+          total: labourTotal
+        },
+        overheads: {
+          travel: overheadsTravel,
+          permits: overheadsPermits,
+          waste: overheadsWaste,
+          business: overheadsBusiness,
+          total: overheadsTotal
+        },
         contingency: {
-          percentage: contingencyPercentage,
+          percent: contingencyPercent,
           amount: contingencyAmount
         },
-        subtotal: round2dp(materialsSubtotal + labourSubtotal + overheadsTotal + contingencyAmount),
-        breakEvenPoint: round2dp(breakEven)
+        breakEvenPoint: breakEven,
+        subtotal: round2dp(materialsNet + labourTotal + overheadsTotal + contingencyAmount)
       },
-      
-      // 2. Core Cost Analysis (enhanced with all V3 data)
-      costAnalysis: {
-        response: structuredData?.response || analysis.rawText,
-        materials: structuredData?.materials ? {
-          ...structuredData.materials,
-          items: (structuredData.materials.items || []).map((item: any) => ({
-            ...item,
-            quantity: round2dp(item.quantity || 0),
-            unitPrice: round2dp(item.unitPrice || 0),
-            total: round2dp(item.total || 0)
-          })),
-          subtotal: round2dp(structuredData.materials.subtotal || 0),
-          markup: round2dp(structuredData.materials.markup || 0)
-        } : {
-          items: analysis.materials.map((item: any) => ({
-            ...item,
-            quantity: round2dp(item.quantity || 0),
-            unitPrice: round2dp(item.unitPrice || 0),
-            total: round2dp(item.total || 0)
-          })),
-          subtotal: round2dp(analysis.materialsTotal || 0),
-          markup: round2dp(0)
+
+      // Section 8: Client Quote Justification
+      clientJustification: {
+        valueProposition: `Professional electrical work completed to BS 7671 standards by qualified electricians`,
+        objectionResponses: [
+          {
+            objection: "Price seems high",
+            response: "Our quote reflects professional standards, quality materials, and proper certification",
+            details: `Materials: £${materialsNet}, Labour: ${totalLabourHours}hrs @ £${labourRate}/hr, Overheads: £${overheadsTotal}`
+          },
+          {
+            objection: "I got a cheaper quote",
+            response: "Lower quotes often cut corners on qualifications, insurance, or materials",
+            details: "Ask if they're 18th Edition qualified, fully insured, and providing certification"
+          },
+          {
+            objection: "Can you discount?",
+            response: "Our pricing is already competitive for professional work",
+            details: `Break-even: £${breakEven}, Quote: £${selectedAmount}, Margin: ${margin.toFixed(1)}%`
+          }
+        ],
+        comparisonChecklist: [
+          "18th Edition certified",
+          "NICEIC/NAPIT registered",
+          "£2M public liability insurance",
+          "Quality materials included",
+          "Full EIC certification",
+          "12-month workmanship guarantee"
+        ],
+        whyChoosePoints: [
+          `${totalLabourHours} hours of qualified electrical work`,
+          "All materials sourced from reputable suppliers",
+          "Full BS 7671 compliance guaranteed",
+          "Professional insurance and warranties included"
+        ]
+      },
+
+      // Section 9: Materials List
+      materials: (structuredData?.materials?.items || analysis.materials || []).map((item: any) => ({
+        description: item.description || item.item || '',
+        quantity: round2dp(item.quantity || 0),
+        unit: item.unit || 'units',
+        unitPrice: round2dp(item.unitPrice || 0),
+        total: round2dp(item.total || 0),
+        supplier: item.supplier || 'TBC',
+        category: item.category || 'General'
+      })),
+
+      // Section 10: Labour Tasks
+      labourTasks: (structuredData?.labour?.tasks || []).map((task: any) => ({
+        description: task.description || '',
+        hours: round2dp(task.hours || 0),
+        rate: round2dp(task.rate || 0),
+        total: round2dp(task.total || 0),
+        workerType: task.workerType || 'Qualified Electrician'
+      })),
+
+      // Section 11: Job Complexity
+      jobComplexity: structuredData?.complexity ? {
+        rating: structuredData.complexity.rating || 0,
+        label: structuredData.complexity.label || 'Unknown',
+        factors: structuredData.complexity.factors || [],
+        estimatedHours: round2dp(structuredData.complexity.estimatedHours || 0),
+        reasoning: structuredData.complexity.reasoning || ''
+      } : null,
+
+      // Section 12: Risk Assessment
+      risks: risks.map((risk: any) => ({
+        title: risk.title || risk.risk || '',
+        severity: risk.severity || 'medium',
+        likelihood: risk.likelihood || 'possible',
+        mitigation: risk.mitigation || '',
+        contingencyPercent: round2dp(risk.contingencyPercent || 0)
+      })),
+
+      // Section 13: Pricing Confidence
+      pricingConfidence: structuredData?.confidence ? {
+        materials: {
+          level: materialsConfidence,
+          reasoning: structuredData.confidence.materials?.reason || ''
         },
-        labour: structuredData?.labour ? {
-          ...structuredData.labour,
-          tasks: (structuredData.labour.tasks || []).map((task: any) => ({
-            ...task,
-            hours: round2dp(task.hours || 0),
-            rate: round2dp(task.rate || 0),
-            total: round2dp(task.total || 0),
-            electricianHours: task.electricianHours ? round2dp(task.electricianHours) : undefined,
-            apprenticeHours: task.apprenticeHours ? round2dp(task.apprenticeHours) : undefined
-          })),
-          subtotal: round2dp(structuredData.labour.subtotal || 0)
-        } : {
-          tasks: [{
-            description: analysis.labour.description,
-            hours: round2dp(analysis.labour.hours || 0),
-            rate: round2dp(analysis.labour.rate || 0),
-            total: round2dp(analysis.labour.total || 0)
-          }],
-          subtotal: round2dp(analysis.labourTotal || 0)
-        },
-        summary: structuredData?.summary || {
-          subtotal: round2dp(analysis.subtotal || 0),
-          vat: round2dp(analysis.vatAmount || 0),
-          grandTotal: round2dp(analysis.totalCost || 0)
+        labour: {
+          level: labourConfidence,
+          reasoning: structuredData.confidence.labour?.reason || ''
         },
         contingency: {
-          percentage: round2dp(structuredData?.confidence?.contingency?.percentage || 5),
-          amount: round2dp((analysis.materialsTotal + analysis.labourTotal) * ((structuredData?.confidence?.contingency?.percentage || 5) / 100)),
-          reasoning: structuredData?.confidence?.contingency?.reasoning || 'Standard contingency buffer for unforeseen issues'
-        },
-        timescales: structuredData?.timescales || null,
-        alternatives: structuredData?.alternatives || null,
-        orderList: structuredData?.orderList || null,
-        compliance: structuredData?.compliance || null
-      },
-      
-      // 3. Job Assessment
-      complexity: structuredData?.complexity ? {
-        ...structuredData.complexity,
-        score: round2dp(structuredData.complexity.score || 0),
-        estimatedHours: round2dp(structuredData.complexity.estimatedHours || 0)
+          percent: contingencyPercent,
+          reasoning: structuredData.confidence.contingency?.reasoning || 'Standard contingency buffer'
+        }
       } : null,
-      confidence: structuredData?.confidence ? {
-        ...structuredData.confidence,
-        score: round2dp(structuredData.confidence.score || 0),
-        contingency: structuredData.confidence.contingency ? {
-          percentage: round2dp(structuredData.confidence.contingency.percentage || 0),
-          reasoning: structuredData.confidence.contingency.reasoning
-        } : undefined
-      } : null,
-      riskAssessment: roundNumbers(structuredData?.riskAssessment || null),
-      
-      // 4. Pricing & Profitability
-      recommendedQuote: structuredData?.recommendedQuote || null,
-      profitabilityAnalysis: structuredData?.profitabilityAnalysis ? {
-        ...structuredData.profitabilityAnalysis,
-        breakEvenPoint: round2dp(structuredData.profitabilityAnalysis.breakEvenPoint || 0),
-        directCosts: structuredData.profitabilityAnalysis.directCosts ? {
-          materials: round2dp(structuredData.profitabilityAnalysis.directCosts.materials || 0),
-          labour: round2dp(structuredData.profitabilityAnalysis.directCosts.labour || 0),
-          total: round2dp(structuredData.profitabilityAnalysis.directCosts.total || 0)
-        } : undefined,
-        jobOverheads: structuredData.profitabilityAnalysis.jobOverheads ? {
-          allocatedBusinessOverheads: round2dp(structuredData.profitabilityAnalysis.jobOverheads.allocatedBusinessOverheads || 0),
-          travel: round2dp(structuredData.profitabilityAnalysis.jobOverheads.travel || 0),
-          permitsAndFees: round2dp(structuredData.profitabilityAnalysis.jobOverheads.permitsAndFees || 0),
-          wasteDisposal: round2dp(structuredData.profitabilityAnalysis.jobOverheads.wasteDisposal || 0),
-          total: round2dp(structuredData.profitabilityAnalysis.jobOverheads.total || 0)
-        } : undefined,
-        quoteTiers: structuredData.profitabilityAnalysis.quoteTiers ? {
-          minimum: {
-            price: round2dp(structuredData.profitabilityAnalysis.quoteTiers.minimum.price || 0),
-            margin: round2dp(structuredData.profitabilityAnalysis.quoteTiers.minimum.margin || 0),
-            marginPercent: round2dp(structuredData.profitabilityAnalysis.quoteTiers.minimum.marginPercent || 0)
-          },
-          target: {
-            price: round2dp(structuredData.profitabilityAnalysis.quoteTiers.target.price || 0),
-            margin: round2dp(structuredData.profitabilityAnalysis.quoteTiers.target.margin || 0),
-            marginPercent: round2dp(structuredData.profitabilityAnalysis.quoteTiers.target.marginPercent || 0)
-          },
-          premium: {
-            price: round2dp(structuredData.profitabilityAnalysis.quoteTiers.premium.price || 0),
-            margin: round2dp(structuredData.profitabilityAnalysis.quoteTiers.premium.margin || 0),
-            marginPercent: round2dp(structuredData.profitabilityAnalysis.quoteTiers.premium.marginPercent || 0)
-          }
-        } : undefined,
-        recommendations: structuredData.profitabilityAnalysis.recommendations || []
-      } : null,
-      
-      // 4.5 Pricing Options (Calculated Tiers)
-      pricingOptions: {
-        explanation: structuredData?.recommendedQuote?.reasoning || null,
-        rawTierPrices: {
-          sparse: round2dp(sparsePrice),
-          normal: round2dp(normalPrice),
-          busy: round2dp(busyPrice)
-        },
-        tiers: {
-          workSparse: {
-            name: 'Work Sparse',
-            description: 'Low margin pricing for when work is scarce',
-            price: sparseTier.price,
-            margin: sparseTier.margin,
-            profit: sparseTier.profit,
-            profitPerHour: sparseTier.profitPerHour
-          },
-          normal: {
-            name: 'Normal',
-            description: 'Target pricing - recommended',
-            price: normalTier.price,
-            margin: normalTier.margin,
-            profit: normalTier.profit,
-            profitPerHour: normalTier.profitPerHour,
-            recommended: true
-          },
-          busyPeriod: {
-            name: 'Busy Period',
-            description: 'High margin pricing when demand is high',
-            price: busyTier.price,
-            margin: busyTier.margin,
-            profit: busyTier.profit,
-            profitPerHour: busyTier.profitPerHour
-          }
-        },
-        selectedTier: selectedTier,
-        breakEven: round2dp(breakEven),
-        totalLabourHours: round2dp(totalLabourHours)
-      },
-      
-      // 5. Calculated Metrics (for easy PDF access)
-      calculatedMetrics: {
-        totalLabourHours: round2dp(totalLabourHours),
-        breakEven: round2dp(breakEven),
-        selectedTier,
-        selectedAmount: round2dp(selectedAmount),
-        profit: round2dp(profit),
-        margin: round2dp(margin),
-        profitPerHour: round2dp(profitPerHour),
-        vatAmount: round2dp(analysis.vatAmount || 0),
-        totalIncVat: round2dp(analysis.totalCost || 0)
-      },
-      
-      // 6. Client-facing Elements
+
+      // Section 14: Immediate Upsells
       upsells: (structuredData?.upsells || []).map((upsell: any) => ({
-        ...upsell,
+        opportunity: upsell.opportunity || '',
         price: round2dp(upsell.price || 0),
-        winRate: round2dp(upsell.winRate || 0)
+        winRate: round2dp(upsell.winRate || 0),
+        isHot: upsell.isHot || false,
+        timing: upsell.timing || 'now',
+        script: upsell.script || ''
       })),
-      pipeline: (structuredData?.pipeline || []).map((item: any) => ({
-        ...item,
+
+      // Section 15: Future Work Pipeline
+      futurePipeline: (structuredData?.pipeline || []).map((item: any) => ({
+        opportunity: item.opportunity || '',
+        description: item.description || '',
+        timeframe: item.timeframe || 'TBC',
         estimatedValue: round2dp(item.estimatedValue || 0),
-        probability: round2dp(item.probability || 0)
+        priority: item.priority || 'medium',
+        trigger: item.trigger || ''
       })),
-      conversations: structuredData?.conversations || null,
+
+      // Section 16: Client Conversations
+      clientConversations: structuredData?.conversations ? {
+        topics: (structuredData.conversations.topics || []).map((topic: any) => ({
+          topic: topic.topic || '',
+          script: topic.script || ''
+        })),
+        closingScript: structuredData.conversations.closingScript || ''
+      } : null,
+
+      // Section 17: Site Arrival Checklist
+      siteChecklist: structuredData?.siteChecklist ? {
+        critical: structuredData.siteChecklist.critical || [],
+        important: structuredData.siteChecklist.important || [],
+        documentation: structuredData.siteChecklist.documentation || []
+      } : null,
+
+      // Section 18: Payment Terms
       paymentTerms: structuredData?.paymentTerms ? {
         depositPercent: round2dp(structuredData.paymentTerms.depositPercent || 0),
         depositAmount: round2dp(structuredData.paymentTerms.depositAmount || 0),
         balanceAmount: round2dp(structuredData.paymentTerms.balanceAmount || 0),
-        paymentMilestones: (structuredData.paymentTerms.paymentMilestones || []).map((milestone: any) => ({
+        terms: structuredData.paymentTerms.terms || '',
+        lateFeePolicy: structuredData.paymentTerms.lateFeePolicy || '',
+        milestones: (structuredData.paymentTerms.paymentMilestones || []).map((milestone: any) => ({
           stage: milestone.stage || '',
           percentage: round2dp(milestone.percentage || 0),
           amount: round2dp(milestone.amount || 0),
           trigger: milestone.trigger || ''
-        })),
-        terms: structuredData.paymentTerms.terms || '',
-        milestones: [] // Deprecated, kept for backward compatibility
+        }))
       } : null,
-      
-      // 6.5. Client Quote Justification
-      clientJustification: {
-        valueProposition: `Professional Electrical Quote - ${formatCurrency(selectedAmount)}\n\nI'm a qualified electrician with 18th Edition certification and full NICEIC/NAPIT registration. This quote covers ${Math.round(totalLabourHours)} hours of professional work using quality materials from trusted UK suppliers.\n\nWhat's Included:\n✓ Quality materials: ${formatCurrency(materialsSubtotal * (1 + (materialsMarkup / 100)))}\n✓ Professional labour: ${formatCurrency(labourSubtotal)} (${Math.round(totalLabourHours)} hours)\n✓ Full BS7671:2018+A3:2024 compliance\n✓ Electrical Installation Certificate\n✓ £2M public liability insurance\n✓ 12-month workmanship guarantee\n\nThis is transparent, competitive pricing ensuring safety, compliance, and quality workmanship lasting 20+ years.`,
-        keyNumbers: {
-          materialsNet: round2dp(materialsSubtotal),
-          materialsMarkup: round2dp(materialsMarkup),
-          materialsTotal: round2dp(materialsSubtotal * (1 + (materialsMarkup / 100))),
-          labourHours: round2dp(totalLabourHours),
-          labourRate: round2dp(totalLabourHours > 0 ? labourSubtotal / totalLabourHours : 0),
-          labourTotal: round2dp(labourSubtotal),
-          overheads: round2dp(overheadsTotal),
-          contingency: round2dp(contingencyAmount),
-          breakEven: round2dp(breakEven),
-          recommendedPrice: round2dp(selectedAmount),
-          profit: round2dp(profit),
-          margin: round2dp(margin),
-          region: projectContext?.location || 'other'
-        },
-        objectionResponses: [
-          {
-            objection: "This seems expensive / too high",
-            response: "I understand. Let me break down what's included:",
-            details: `Materials: ${formatCurrency(materialsSubtotal * (1 + (materialsMarkup / 100)))}\n• Net cost ${formatCurrency(materialsSubtotal)} + ${materialsMarkup.toFixed(0)}% markup\n• Industry standard: 15-25%\n\nLabour: ${formatCurrency(labourSubtotal)} (${Math.round(totalLabourHours)} hours)\n• Rate: ${formatCurrency(totalLabourHours > 0 ? labourSubtotal / totalLabourHours : 0)}/hour\n• UK qualified rate: £24-35/hour\n\nBusiness Costs: ${formatCurrency(overheadsTotal)}\n• Van, tools, insurance, certifications\n\nThis reflects professional work lasting 20+ years.`
-          },
-          {
-            objection: "I got a cheaper quote",
-            response: "Lower quotes often cut corners. Questions to ask:",
-            details: "⚠️ Are they:\n• 18th Edition qualified?\n• Fully insured (£2M)?\n• Providing certification?\n• Using quality materials?\n\n✓ Our quote includes all professional standards, warranties, and guarantees.\n\n❌ Budget quotes may:\n• Use unqualified labour\n• Skip testing\n• Add hidden extras\n\nYour safety isn't worth the risk."
-          },
-          {
-            objection: "Can you discount?",
-            response: "This price is already fair:",
-            details: `Break-even: ${formatCurrency(breakEven)}\nQuote: ${formatCurrency(selectedAmount)}\nProfit: ${formatCurrency(profit)} (${margin.toFixed(1)}% margin)\n\nIndustry margins:\n• Budget: 10-15%\n• Professional: 20-30%\n• Specialist: 30-40%\n\nWhat I CAN do:\n• Phase the work\n• Adjust scope\n• Payment terms\n\nWhat I can't do:\n• Work below break-even\n• Cut safety corners`
-          }
-        ],
-        comparisonChecklist: [
-          "□ 18th Edition certified?",
-          "□ NICEIC/NAPIT registered?",
-          "□ £2M public liability insurance?",
-          "□ Materials from trusted suppliers?",
-          "□ Full EIC certification?",
-          "□ Itemized quote breakdown?",
-          "□ 12-month workmanship guarantee?",
-          "□ Transparent pricing (no hidden extras)?"
-        ],
-        whyChoosePoints: [
-          "✓ Qualified, insured electrician",
-          "✓ Quality materials with warranties",
-          "✓ Full compliance & certification",
-          "✓ Professional standards throughout",
-          "✓ Fair, transparent pricing",
-          "✓ 12-month guarantee"
-        ]
-      },
-      
-      // 7. Project Execution
-      siteChecklist: structuredData?.siteChecklist || null,
-      valueEngineering: structuredData?.valueEngineering || [],
-      
-      // 8. Job Notes (User Input)
+
+      // Section 19: Job Notes (optional user input)
       jobNotes: (() => {
         const projectNameKey = projectContext?.projectName || projectName;
         if (!projectNameKey) return null;
@@ -521,75 +403,33 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
           return null;
         }
       })(),
-      
-      // 9. Post-Job Review (Tracking)
+
+      // Section 20: Post-Job Review (tracking placeholders)
       postJobReview: {
-        estimatedCost: round2dp(analysis.totalCost || 0),
-        estimatedHours: round2dp(totalLabourHours),
-        estimatedProfit: round2dp(profit)
+        estimatedCost: round2dp(selectedAmount),
+        estimatedHours: totalLabourHours,
+        estimatedProfit: profit,
+        actualCost: null,
+        actualHours: null,
+        actualProfit: null,
+        notes: null
       },
-      
-      // 10. Trade Intelligence (RAG Self-Validation)
-      tradeIntelligence: structuredData?.tradeIntelligence ? {
-        materialsCompleteness: {
-          status: structuredData.tradeIntelligence.materialsCompleteness.status,
-          score: round2dp(structuredData.tradeIntelligence.materialsCompleteness.score || 0),
-          commentary: structuredData.tradeIntelligence.materialsCompleteness.commentary,
-          missingItems: structuredData.tradeIntelligence.materialsCompleteness.missingItems || [],
-          recommendations: structuredData.tradeIntelligence.materialsCompleteness.recommendations || []
-        },
-        labourRealism: {
-          status: structuredData.tradeIntelligence.labourRealism.status,
-          score: round2dp(structuredData.tradeIntelligence.labourRealism.score || 0),
-          commentary: structuredData.tradeIntelligence.labourRealism.commentary,
-          benchmarkComparison: structuredData.tradeIntelligence.labourRealism.benchmarkComparison || '',
-          concerns: structuredData.tradeIntelligence.labourRealism.concerns || [],
-          recommendations: structuredData.tradeIntelligence.labourRealism.recommendations || []
-        },
-        futureWorkLogic: {
-          status: structuredData.tradeIntelligence.futureWorkLogic.status,
-          score: round2dp(structuredData.tradeIntelligence.futureWorkLogic.score || 0),
-          commentary: structuredData.tradeIntelligence.futureWorkLogic.commentary,
-          relevanceCheck: structuredData.tradeIntelligence.futureWorkLogic.relevanceCheck || '',
-          concerns: structuredData.tradeIntelligence.futureWorkLogic.concerns || [],
-          recommendations: structuredData.tradeIntelligence.futureWorkLogic.recommendations || []
-        },
-        overallAssessment: {
-          readyToQuote: structuredData.tradeIntelligence.overallAssessment.readyToQuote,
-          summary: structuredData.tradeIntelligence.overallAssessment.summary,
-          criticalIssues: structuredData.tradeIntelligence.overallAssessment.criticalIssues || []
-        }
-      } : null,
-      
-      // 11. Metadata
-      generatedAt: new Date().toISOString(),
-      version: '3.0'
+
+      // Metadata
+      metadata: {
+        generatedAt: new Date().toISOString(),
+        version: '3.1',
+        pdfTemplate: 'cost-engineer-comprehensive'
+      }
     };
     
-    // Debug logging: Verify payload completeness
-    console.log('📦 Generated PDF payload:', {
-      hasAiAnalysisHeader: !!payload.aiAnalysisHeader,
-      aiAnalysisHeaderFields: payload.aiAnalysisHeader ? Object.keys(payload.aiAnalysisHeader) : [],
-      hasJobDescription: !!payload.aiAnalysisHeader?.jobDescription,
-      jobDescriptionLength: payload.aiAnalysisHeader?.jobDescription?.length || 0,
-      hasComplexity: !!payload.aiAnalysisHeader?.complexity,
-      complexityRating: payload.aiAnalysisHeader?.complexity?.rating,
-      hasConfidence: !!payload.aiAnalysisHeader?.confidence,
-      confidenceAvg: payload.aiAnalysisHeader?.confidence?.averagePercentage,
-      materialsReasoning: payload.aiAnalysisHeader?.confidence?.materials?.reasoning?.substring(0, 50),
-      labourReasoning: payload.aiAnalysisHeader?.confidence?.labour?.reasoning?.substring(0, 50),
-      hasRiskAssessment: !!payload.aiAnalysisHeader?.riskAssessment,
-      keyActionItemsCount: payload.aiAnalysisHeader?.keyActionItems?.length || 0,
-      hasCostBreakdown: !!payload.costBreakdown,
-      hasPricingOptions: !!payload.pricingOptions,
-      hasMaterials: !!(payload.costAnalysis?.materials?.items?.length),
-      materialsCount: payload.costAnalysis?.materials?.items?.length || 0,
-      hasLabour: !!(payload.costAnalysis?.labour?.tasks?.length),
-      labourCount: payload.costAnalysis?.labour?.tasks?.length || 0,
-      hasUpsells: !!(payload.upsells?.length),
-      upsellsCount: payload.upsells?.length || 0,
-      hasPipeline: !!(payload.pipeline?.length),
-      pipelineCount: payload.pipeline?.length || 0
+    console.log('✅ Clean 20-section PDF payload built:', {
+      sections: Object.keys(payload).length,
+      materialsCount: payload.materials.length,
+      labourTasksCount: payload.labourTasks.length,
+      risksCount: payload.risks.length,
+      upsellsCount: payload.upsells.length,
+      futureOpportunitiesCount: payload.futurePipeline.length
     });
     
     return payload;
@@ -789,37 +629,14 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
               This is the exact JSON payload that will be sent to the PDF generator
             </DialogDescription>
           </DialogHeader>
-          
-          <ScrollArea className="h-[500px] w-full rounded-lg border border-elec-yellow/20 bg-elec-dark/60 p-4">
-            <pre className="text-xs text-foreground font-mono leading-relaxed">
+          <ScrollArea className="h-[60vh] w-full rounded-md border p-4">
+            <pre className="text-xs">
               {JSON.stringify(buildPdfPayload(), null, 2)}
             </pre>
           </ScrollArea>
-
-          <DialogFooter className="gap-2 sm:gap-3">
-            <Button
-              variant="outline"
-              onClick={() => {
-                navigator.clipboard.writeText(JSON.stringify(buildPdfPayload(), null, 2));
-                toast({
-                  title: "Payload copied",
-                  description: "JSON payload copied to clipboard",
-                });
-              }}
-            >
-              <Copy className="h-4 w-4 mr-2" />
-              Copy JSON
-            </Button>
-            <Button
-              onClick={() => {
-                setShowPayloadPreview(false);
-                handleExportPDF();
-              }}
-              disabled={isGeneratingPDF}
-              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-            >
-              <Download className="h-4 w-4 mr-2" />
-              {isGeneratingPDF ? 'Generating...' : 'Generate PDF'}
+          <DialogFooter>
+            <Button onClick={() => setShowPayloadPreview(false)}>
+              Close
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -829,11 +646,11 @@ const CostAnalysisResults = ({ analysis, projectName, originalQuery, onNewAnalys
       <ConfirmationDialog
         open={showQuoteHubConfirm}
         onOpenChange={setShowQuoteHubConfirm}
-        title="Send to Quote Hub?"
-        description="This will take you to the Quote Builder. Make sure you've generated any internal PDFs you need first, as you'll leave this results page."
-        confirmText="Continue to Quote Hub"
-        cancelText="Stay Here"
         onConfirm={confirmSendToQuoteHub}
+        title="Send to Quote Hub?"
+        description="This will transfer the cost analysis data to Quote Builder where you can create a formal quotation. The current data will be preserved."
+        confirmText="Continue to Quote Hub"
+        cancelText="Cancel"
       />
     </div>
   );
