@@ -72,19 +72,17 @@ function transformPayloadForTemplate(payload: any): any {
       contingencyReason: payload.pricingConfidence?.contingency?.reasoning || ''
     },
     
-    // RISK ASSESSMENT - Section 13
-    riskAssessment: {
-      level: payload.quickMetrics?.riskLevel?.level || 'low',
-      highRiskCount: payload.quickMetrics?.riskLevel?.highRiskCount || 0,
-      totalCount: payload.quickMetrics?.riskLevel?.totalCount || 0,
-      risks: (payload.risks || []).map((r: any) => ({
-        title: r.title,
-        severity: r.severity,
-        likelihood: r.likelihood,
-        mitigation: r.mitigation,
-        contingencyPercent: r.contingencyPercent
-      }))
-    },
+    // RISK ASSESSMENT - Section 13 (FLATTENED)
+    riskLevel: payload.quickMetrics?.riskLevel?.level || 'low',
+    highRiskCount: payload.quickMetrics?.riskLevel?.highRiskCount || 0,
+    totalRiskCount: payload.quickMetrics?.riskLevel?.totalCount || 0,
+    risks: (payload.risks || []).map((r: any) => ({
+      title: r.title,
+      severity: r.severity,
+      likelihood: r.likelihood,
+      mitigation: r.mitigation,
+      contingencyPercent: r.contingencyPercent
+    })),
     
     // PRICING TIERS - Section 7
     pricingTiers: {
@@ -138,57 +136,51 @@ function transformPayloadForTemplate(payload: any): any {
     
     breakEvenPoint: payload.costBreakdown?.breakEvenPoint || 0,
     
-    // MATERIALS - Section 10
-    materials: {
-      items: (payload.materials || []).map((m: any) => ({
-        description: m.description,
-        quantity: m.quantity,
-        qty: m.quantity,
-        unit: m.unit,
-        unitPrice: m.unitPrice,
-        total: m.total,
-        lineTotal: m.total,
-        supplier: m.supplier,
-        category: m.category
-      })),
-      subtotal: payload.costBreakdown?.materials?.net || 0,
-      markup: payload.costBreakdown?.materials?.markupPercent || 15,
-      total: payload.costBreakdown?.materials?.total || 0
-    },
+    // MATERIALS - Section 10 (FLAT ARRAY)
+    materials: (payload.materials || []).map((m: any) => ({
+      description: m.description,
+      quantity: m.quantity,
+      qty: m.quantity,
+      unit: m.unit,
+      unitPrice: m.unitPrice,
+      total: m.total,
+      lineTotal: m.total,
+      supplier: m.supplier,
+      category: m.category
+    })),
+    materialsSubtotal: payload.costBreakdown?.materials?.net || 0,
+    materialsMarkup: payload.costBreakdown?.materials?.markupPercent || 15,
+    materialsTotal: payload.costBreakdown?.materials?.total || 0,
     
-    // LABOUR - Section 11
-    labour: {
-      tasks: (payload.labourTasks || []).map((t: any) => ({
-        description: t.description,
-        hours: t.hours,
-        rate: t.rate,
-        total: t.total,
-        workerType: t.workerType
-      })),
-      subtotal: payload.costBreakdown?.labour?.total || 0,
-      hours: payload.costBreakdown?.labour?.hours || 0,
-      rate: payload.costBreakdown?.labour?.rate || 0
-    },
+    // LABOUR - Section 11 (FLAT ARRAY)
+    labour: (payload.labourTasks || []).map((t: any) => ({
+      description: t.description,
+      hours: t.hours,
+      rate: t.rate,
+      total: t.total,
+      workerType: t.workerType
+    })),
+    labourSubtotal: payload.costBreakdown?.labour?.total || 0,
+    labourHours: payload.costBreakdown?.labour?.hours || 0,
+    labourRate: payload.costBreakdown?.labour?.rate || 0,
     
-    // KEY ACTIONS - Section 5
+    // KEY ACTIONS - Section 5 (FLAT ARRAY)
     keyActions: (payload.keyActions || []).map((a: any) => ({
       text: a.text,
       priority: a.priority
     })),
     
-    // CLIENT JUSTIFICATION - Section 9
-    clientJustification: {
-      valueProposition: payload.clientJustification?.valueProposition || '',
-      objectionResponses: (payload.clientJustification?.objectionResponses || []).map((o: any) => ({
-        objection: o.objection,
-        response: o.response,
-        details: o.details
-      })),
-      comparisonChecklist: payload.clientJustification?.comparisonChecklist || [],
-      whyChoosePoints: payload.clientJustification?.whyChoosePoints || []
-    },
+    // CLIENT JUSTIFICATION - Section 9 (FLATTENED)
+    valueProposition: payload.clientJustification?.valueProposition || '',
+    objectionResponses: (payload.clientJustification?.objectionResponses || []).map((o: any) => ({
+      objection: o.objection,
+      response: o.response,
+      details: o.details
+    })),
+    comparisonChecklist: payload.clientJustification?.comparisonChecklist || [],
+    whyChoosePoints: payload.clientJustification?.whyChoosePoints || [],
     
-    // UPSELLS - Section 15
+    // UPSELLS - Section 15 (FLAT ARRAY)
     upsells: (payload.upsells || []).map((u: any) => ({
       opportunity: u.opportunity,
       price: u.price,
@@ -198,7 +190,7 @@ function transformPayloadForTemplate(payload: any): any {
       script: u.script
     })),
     
-    // FUTURE PIPELINE - Section 16
+    // FUTURE PIPELINE - Section 16 (FLAT ARRAY)
     pipeline: (payload.futurePipeline || []).map((p: any) => ({
       opportunity: p.opportunity,
       description: p.description,
@@ -208,36 +200,30 @@ function transformPayloadForTemplate(payload: any): any {
       trigger: p.trigger
     })),
     
-    // CLIENT CONVERSATIONS - Section 17
-    conversations: {
-      topics: (payload.clientConversations?.topics || []).map((t: any) => ({
-        topic: t.topic,
-        script: t.script
-      })),
-      closingScript: payload.clientConversations?.closingScript || ''
-    },
+    // CLIENT CONVERSATIONS - Section 17 (FLATTENED)
+    conversationTopics: (payload.clientConversations?.topics || []).map((t: any) => ({
+      topic: t.topic,
+      script: t.script
+    })),
+    closingScript: payload.clientConversations?.closingScript || '',
     
-    // SITE CHECKLIST - Section 18
-    siteChecklist: {
-      critical: payload.siteChecklist?.critical || [],
-      important: payload.siteChecklist?.important || [],
-      documentation: payload.siteChecklist?.documentation || []
-    },
+    // SITE CHECKLIST - Section 18 (FLATTENED)
+    checklistCritical: payload.siteChecklist?.critical || [],
+    checklistImportant: payload.siteChecklist?.important || [],
+    checklistDocumentation: payload.siteChecklist?.documentation || [],
     
-    // PAYMENT TERMS - Section 19
-    paymentTerms: {
-      depositPercent: payload.paymentTerms?.depositPercent || 0,
-      depositAmount: payload.paymentTerms?.depositAmount || 0,
-      balanceAmount: payload.paymentTerms?.balanceAmount || 0,
-      terms: payload.paymentTerms?.terms || '',
-      lateFeePolicy: payload.paymentTerms?.lateFeePolicy || '',
-      milestones: (payload.paymentTerms?.milestones || []).map((m: any) => ({
-        stage: m.stage,
-        percentage: m.percentage,
-        amount: m.amount,
-        trigger: m.trigger
-      }))
-    },
+    // PAYMENT TERMS - Section 19 (FLATTENED)
+    depositPercent: payload.paymentTerms?.depositPercent || 0,
+    depositAmount: payload.paymentTerms?.depositAmount || 0,
+    balanceAmount: payload.paymentTerms?.balanceAmount || 0,
+    paymentTerms: payload.paymentTerms?.terms || '',
+    lateFeePolicy: payload.paymentTerms?.lateFeePolicy || '',
+    milestones: (payload.paymentTerms?.milestones || []).map((m: any) => ({
+      stage: m.stage,
+      percentage: m.percentage,
+      amount: m.amount,
+      trigger: m.trigger
+    })),
     
     // AI SUMMARY - Section 3
     aiSummary: payload.aiSummary || '',
@@ -308,18 +294,17 @@ serve(async (req) => {
       hasProjectContext: !!transformedPayload.projectContext,
       hasProjectName: !!transformedPayload.projectContext?.projectName,
       hasRecommendedQuote: !!transformedPayload.recommendedQuote,
-      materialsCount: transformedPayload.materials?.items?.length || 0,
-      labourTasksCount: transformedPayload.labour?.tasks?.length || 0,
+      materialsCount: transformedPayload.materials?.length || 0,
+      labourTasksCount: transformedPayload.labour?.length || 0,
       hasComplexity: !!transformedPayload.complexity,
       hasConfidence: !!transformedPayload.confidence,
-      risksCount: transformedPayload.riskAssessment?.risks?.length || 0,
+      risksCount: transformedPayload.risks?.length || 0,
       keyActionsCount: transformedPayload.keyActions?.length || 0,
       upsellsCount: transformedPayload.upsells?.length || 0,
       pipelineCount: transformedPayload.pipeline?.length || 0
     });
     
-    console.log('[COST-PDF] Transformed payload preview (first 800 chars):', 
-      JSON.stringify(transformedPayload).substring(0, 800));
+    console.log('[COST-PDF] FULL transformed payload:', JSON.stringify(transformedPayload, null, 2));
 
     // Generate unique filename with project name
     const projectName = transformedPayload.projectContext?.projectName || 'Job';
