@@ -157,7 +157,7 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
               )}
             </div>
             
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+            <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
               <SummaryField 
                 label="Classification" 
                 value={defect.primaryCode?.code || 'NONE'} 
@@ -169,10 +169,6 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
               <SummaryField 
                 label="Confidence" 
                 value={`${defect.confidenceAssessment.score}%`} 
-              />
-              <SummaryField 
-                label="Level" 
-                value={defect.confidenceAssessment.level.toUpperCase()} 
               />
             </div>
 
@@ -213,7 +209,7 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
             <p className="text-sm font-semibold text-white/90 mb-2">
               Why {defect.primaryCode.code} ({defect.primaryCode.title}):
             </p>
-            <ul className="space-y-2 mb-4">
+            <ul className="space-y-2 mb-4 text-left">
               {defect.classificationReasoningBullets.map((bullet, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-sm text-white/90 leading-relaxed">
                   <span className="text-elec-yellow mt-1">•</span>
