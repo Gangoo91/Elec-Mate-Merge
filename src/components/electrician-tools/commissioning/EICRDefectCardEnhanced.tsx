@@ -67,25 +67,25 @@ interface EICRDefectCardEnhancedProps {
 const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
   const codeConfig = {
     C1: {
-      color: 'bg-red-500',
+      color: 'bg-red-500/30',
       textColor: 'text-red-100',
       borderColor: 'border-red-500',
       bgLight: 'bg-elec-dark'
     },
     C2: {
-      color: 'bg-orange-500',
+      color: 'bg-orange-500/30',
       textColor: 'text-orange-100',
       borderColor: 'border-orange-500',
       bgLight: 'bg-elec-dark'
     },
     C3: {
-      color: 'bg-amber-500',
+      color: 'bg-amber-500/30',
       textColor: 'text-amber-100',
       borderColor: 'border-amber-500',
       bgLight: 'bg-elec-dark'
     },
     FI: {
-      color: 'bg-elec-yellow',
+      color: 'bg-elec-yellow/30',
       textColor: 'text-black',
       borderColor: 'border-elec-yellow',
       bgLight: 'bg-elec-dark'
@@ -201,7 +201,7 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
               ))}
             </div>
             {defect.makingSafe.isolationRequired && (
-              <Badge className="bg-red-500 text-white border-none text-base px-4 py-2">
+              <Badge className="bg-red-500/40 text-white border-none text-base px-4 py-2">
                 ⚡ Isolation Required
               </Badge>
             )}
@@ -254,7 +254,7 @@ const EICRDefectCardEnhanced = ({ defect }: EICRDefectCardEnhancedProps) => {
             </div>
             
             <div className="flex flex-wrap items-center gap-3">
-              <Badge className="bg-elec-yellow text-black border-none text-base px-4 py-2">
+              <Badge className="bg-elec-yellow/60 text-black border-none text-base px-4 py-2">
                 Urgency: {defect.clientCommunication.urgencyLevel.replace('_', ' ')}
               </Badge>
               {defect.clientCommunication.estimatedCost && (

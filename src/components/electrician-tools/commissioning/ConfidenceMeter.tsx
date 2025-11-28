@@ -10,24 +10,24 @@ interface ConfidenceMeterProps {
 const ConfidenceMeter = ({ level, score, reasoning }: ConfidenceMeterProps) => {
   const config = {
     high: {
-      color: 'bg-green-500',
-      textColor: 'text-green-300',
+      color: 'bg-green-500/60',
+      textColor: 'text-green-400/90',
       borderColor: 'border-green-500',
       icon: CheckCircle2,
       label: 'High Confidence',
       description: 'Clear defect - single interpretation'
     },
     medium: {
-      color: 'bg-amber-500',
-      textColor: 'text-amber-300',
+      color: 'bg-amber-500/60',
+      textColor: 'text-amber-400/90',
       borderColor: 'border-amber-500',
       icon: AlertCircle,
       label: 'Medium Confidence',
       description: 'Code depends on installation context'
     },
     low: {
-      color: 'bg-red-500',
-      textColor: 'text-red-300',
+      color: 'bg-red-500/60',
+      textColor: 'text-red-400/90',
       borderColor: 'border-red-500',
       icon: HelpCircle,
       label: 'Low Confidence',
