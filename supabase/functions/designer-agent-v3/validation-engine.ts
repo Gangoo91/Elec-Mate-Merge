@@ -352,7 +352,15 @@ export class ValidationEngine {
     const name = circuit.name.toLowerCase();
     const type = circuit.loadType.toLowerCase();
     
+    // EXPLICIT ring keyword check first
     if (name.includes('ring') || type.includes('ring')) return 'socket_ring';
+    
+    // IMPLICIT ring final detection: 32A socket circuit on 2.5mm² is ALWAYS a ring final
+    // (UK standard practice - radial sockets use max 20A on 2.5mm²)
+    const is32ASocket = circuit.protectionDevice.rating === 32 && circuit.cableSize === 2.5;
+    const isSocketCircuit = type.includes('socket') || name.includes('socket');
+    if (is32ASocket && isSocketCircuit) return 'socket_ring';
+    
     if (type.includes('lighting') || name.includes('lighting') || name.includes('light')) return 'lighting';
     if (type.includes('socket') || name.includes('socket')) return 'socket';
     if (type.includes('cooker') || name.includes('cooker')) return 'cooker';
