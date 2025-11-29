@@ -389,21 +389,25 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       clientName: design.clientName || 'Client Name',
       electricianName: design.electricianName || 'Electrical Contractor',
       
-      // Installation summary
+      // Installation summary (null-safe with proper defaults)
       voltage: design.consumerUnit?.incomingSupply?.voltage || 230,
       phases: (design.consumerUnit?.incomingSupply?.phases === 'single') ? 'Single Phase' : 'Three Phase',
-      earthingSystem: design.consumerUnit?.incomingSupply?.earthingSystem || 'TN-S',
-      ze: (design.consumerUnit?.incomingSupply?.Ze || 0.35).toFixed(2),
-      pscc: (design.consumerUnit?.incomingSupply?.incomingPFC || 3.2).toFixed(1),
+      earthingSystem: design.consumerUnit?.incomingSupply?.earthingSystem || 'Not specified',
+      ze: design.consumerUnit?.incomingSupply?.Ze ? (design.consumerUnit.incomingSupply.Ze).toFixed(2) : 'Not specified',
+      pscc: design.consumerUnit?.incomingSupply?.incomingPFC ? ((design.consumerUnit.incomingSupply.incomingPFC) / 1000).toFixed(1) : 'Not specified',
       
-      totalConnectedLoad: totalConnectedLoad.toLocaleString(),
-      diversityFactor: `${((design.diversityBreakdown?.overallDiversityFactor || design.diversityFactor || 1.0) * 100).toFixed(0)}%`,
-      diversifiedLoad: (design.diversityBreakdown?.diversifiedLoad || totalConnectedLoad).toLocaleString(),
-      totalDesignCurrent: totalDesignCurrent,
+      totalConnectedLoad: totalConnectedLoad ? totalConnectedLoad.toLocaleString() : 'Not specified',
+      diversityFactor: (design.diversityBreakdown?.overallDiversityFactor || design.diversityFactor) 
+        ? `${((design.diversityBreakdown?.overallDiversityFactor || design.diversityFactor) * 100).toFixed(1)}%`
+        : 'Not specified',
+      diversifiedLoad: (design.diversityBreakdown?.diversifiedLoad || totalConnectedLoad) 
+        ? (design.diversityBreakdown?.diversifiedLoad || totalConnectedLoad).toLocaleString()
+        : 'Not specified',
+      totalDesignCurrent: totalDesignCurrent || 'Not specified',
       
-      consumerUnitType: design.consumerUnit?.type || '17th Edition RCBO Board',
-      mainSwitchRating: design.consumerUnit?.mainSwitchRating || 100,
-      consumerUnitWays: design.circuits?.length || 0,
+      consumerUnitType: design.consumerUnit?.type || 'Not specified',
+      mainSwitchRating: design.consumerUnit?.mainSwitchRating || 'Not specified',
+      consumerUnitWays: (design.consumerUnit as any)?.ways || design.circuits?.length || 0,
       totalCircuits: design.circuits?.length || 0,
       
       // Circuits with all fields including new display fields
@@ -1377,7 +1381,9 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             <div className="flex items-center gap-4 sm:gap-6 text-sm flex-wrap">
               <div className="flex items-center gap-2">
                 <Zap className="h-4 w-4 text-primary" />
-                <span className="font-semibold">{fmt(design.totalLoad / 1000, 2)}kW Connected</span>
+                <span className="font-semibold">
+                  {design.totalLoad ? `${fmt(design.totalLoad / 1000, 2)}kW` : 'Not specified'} Connected
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <TrendingDown className="h-4 w-4 text-green-500" />
@@ -1386,13 +1392,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     ? `${fmt(design.diversifiedLoad / 1000, 2)}kW`
                     : design.diversityBreakdown?.diversifiedLoad 
                       ? `${fmt(design.diversityBreakdown.diversifiedLoad / 1000, 2)}kW`
-                      : `${fmt(design.totalLoad / 1000, 2)}kW`} Diversified
+                      : 'Not specified'} Diversified
                 </span>
-                {design.installationType && (
+                {design.installationType && design.diversityFactor && (
                   <Badge variant="outline" className="ml-2 text-xs">
-                    {design.installationType === 'domestic' ? 'BS 7671 Appendix A' : 
-                     design.installationType === 'commercial' ? 'Commercial Diversity' :
-                     'Industrial (Conservative)'}
+                    {`${(design.diversityFactor * 100).toFixed(1)}%`}
                   </Badge>
                 )}
               </div>
@@ -1421,6 +1425,31 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
             <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
               {design.consumerUnit?.mainSwitchRating || 100}A Main Switch
             </Badge>
+            {design.consumerUnit?.incomingSupply?.Ze && (
+              <Badge variant="outline" className="border-green-500/30 text-green-400">
+                Ze: {design.consumerUnit.incomingSupply.Ze.toFixed(2)}Ω
+              </Badge>
+            )}
+            {design.consumerUnit?.incomingSupply?.incomingPFC && (
+              <Badge variant="outline" className="border-red-500/30 text-red-400">
+                PSCC: {(design.consumerUnit.incomingSupply.incomingPFC / 1000).toFixed(1)}kA
+              </Badge>
+            )}
+            {design.consumerUnit?.incomingSupply?.earthingSystem && (
+              <Badge variant="outline" className="border-amber-500/30 text-amber-400">
+                {design.consumerUnit.incomingSupply.earthingSystem}
+              </Badge>
+            )}
+            {(design as any).totalDesignCurrent && (
+              <Badge variant="outline" className="border-cyan-500/30 text-cyan-400">
+                Total Design Ib: {fmt((design as any).totalDesignCurrent, 1)}A
+              </Badge>
+            )}
+            {(design.consumerUnit as any)?.ways && (
+              <Badge variant="outline" className="border-indigo-500/30 text-indigo-400">
+                {(design.consumerUnit as any).ways} Ways
+              </Badge>
+            )}
           </div>
         </div>
       </Card>
@@ -1437,7 +1466,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     <h3 className="text-sm sm:text-base font-semibold text-white">Load Diversity Breakdown</h3>
                     <p className="text-xs sm:text-sm text-white/70 mt-0.5">
                       {fmt(design.diversityBreakdown.totalConnectedLoad / 1000, 1)}kW → {fmt(design.diversityBreakdown.diversifiedLoad / 1000, 1)}kW 
-                      <Badge variant="secondary" className="ml-2">{fmt(design.diversityBreakdown.overallDiversityFactor * 100, 0)}% applied</Badge>
+                      <Badge variant="secondary" className="ml-2">
+                        {design.diversityBreakdown.overallDiversityFactor 
+                          ? `${(design.diversityBreakdown.overallDiversityFactor * 100).toFixed(1)}%`
+                          : 'Not specified'} applied
+                      </Badge>
                     </p>
                   </div>
                 </div>
@@ -1451,7 +1484,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   </div>
                   <div className="flex items-center justify-between py-2 px-3 bg-primary/10 rounded-lg">
                     <span className="text-sm text-white/80">Diversity Factor:</span>
-                    <span className="font-bold text-white">{fmt(design.diversityBreakdown.overallDiversityFactor * 100, 0)}%</span>
+                    <span className="font-bold text-white">
+                      {design.diversityBreakdown.overallDiversityFactor 
+                        ? `${(design.diversityBreakdown.overallDiversityFactor * 100).toFixed(1)}%`
+                        : 'Not specified'}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between py-2 px-3 bg-green-500/20 rounded-lg border border-green-500/30">
                     <span className="text-sm font-semibold text-white">After Diversity:</span>

@@ -335,16 +335,17 @@ export const AIInstallationDesigner = () => {
           ze: 0.35,
           earthingSystem: 'TN-C-S'
         },
-        // Transform supply into consumerUnit format for mobile compatibility
+        // Transform supply into consumerUnit format with complete data mapping
         consumerUnit: {
           type: (jobInputs?.supply?.consumerUnitType as 'split-load' | 'high-integrity' | 'main-switch') || 'split-load',
           mainSwitchRating: jobInputs?.supply?.mainSwitchRating || 100,
+          ways: jobDesignData.circuits?.length || 0,
           incomingSupply: {
             voltage: jobInputs?.supply?.voltage || 230,
             phases: (jobInputs?.supply?.phases as 'single' | 'three') || 'single',
-            incomingPFC: jobInputs?.supply?.pfc || 16000,
+            incomingPFC: jobInputs?.supply?.pfc || jobInputs?.supply?.pscc || 16,
             Ze: jobInputs?.supply?.ze || 0.35,
-            earthingSystem: (jobInputs?.supply?.earthingSystem as 'TN-S' | 'TN-C-S' | 'TT') || 'TN-C-S'
+            earthingSystem: (jobInputs?.supply?.earthingSystem || jobInputs?.supply?.earthing as 'TN-S' | 'TN-C-S' | 'TT') || 'TN-C-S'
           }
         },
         projectName: jobInputs?.projectInfo?.projectName || 'Untitled Project',
@@ -356,6 +357,8 @@ export const AIInstallationDesigner = () => {
         totalLoad: jobDesignData.totalLoad || jobDesignData?.circuits?.reduce((sum, c) => sum + (c.loadPower || 0), 0) || 0,
         diversifiedLoad: jobDesignData.diversifiedLoad || 0,
         diversityFactor: jobDesignData.diversityFactor || 0.65,
+        // ✅ Calculate Total Design Ib from all circuits
+        totalDesignCurrent: jobDesignData.circuits?.reduce((sum: number, c: any) => sum + (c.calculations?.Ib || c.designCurrent || 0), 0) || 0,
         diversityBreakdown: jobDesignData.diversityBreakdown || {
           totalConnectedLoad: jobDesignData.totalLoad || 0,
           diversifiedLoad: jobDesignData.diversifiedLoad || 0,
