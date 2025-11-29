@@ -7,7 +7,7 @@
 export interface IntelligenceSearchParams {
   keywords: string[];
   loadTypes?: string[];
-  cableSizes?: number[];
+  cableSizes?: string[];  // Cable sizes with units (e.g., '2.5mm²', '10mm²')
   categories?: ('cable_sizing' | 'voltage_drop' | 'protection' | 'earthing' | 'special_locations')[];
   facetTypes?: ('concept' | 'formula' | 'table' | 'example' | 'regulation' | 'general')[];
   limit?: number;
@@ -73,7 +73,7 @@ export async function searchDesignIntelligence(
   
   // CABLE SIZE FILTER (uses idx_dki_cable_sizes_gin)
   if (cableSizes.length > 0) {
-    query = query.overlaps('cable_sizes', cableSizes.map(String));
+    query = query.overlaps('cable_sizes', cableSizes);  // Already strings with units
   }
   
   // CATEGORY FILTER (uses idx_dki_category B-tree)
