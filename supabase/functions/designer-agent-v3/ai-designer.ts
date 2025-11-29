@@ -84,7 +84,7 @@ export class AIDesigner {
     const duration = Date.now() - startTime;
     this.logger.info('AI Designer PARALLEL complete', { 
       duration,
-      successCount: successes.length,
+      successCount: circuits.length,
       failureCount: failures.length,
       avgTimePerCircuit: Math.round(duration / inputs.circuits.length)
     });
@@ -92,7 +92,7 @@ export class AIDesigner {
     return { 
       circuits,
       reasoning: {
-        voltageContext: `Parallel design mode: ${successes.length}/${inputs.circuits.length} circuits successful`,
+        voltageContext: `Parallel design mode: ${circuits.length}/${inputs.circuits.length} circuits successful`,
         cableSelectionLogic: 'Each circuit designed independently with RAG context',
         protectionLogic: 'Per-circuit protection device selection',
         complianceChecks: 'Independent BS 7671 compliance verification per circuit'
