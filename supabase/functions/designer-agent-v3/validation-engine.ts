@@ -53,6 +53,9 @@ export class ValidationEngine {
    */
   private validateCircuit(circuit: DesignedCircuit, index: number, voltage?: number): ValidationIssue[] {
     const issues: ValidationIssue[] = [];
+    
+    // Extract cable type early - needed for multiple rules
+    const cableType = (circuit as any).cableType || '';
 
     // RULE 1: Ib ≤ In (Design current must not exceed protection device rating)
     if (circuit.calculations.Ib > circuit.calculations.In) {
@@ -233,7 +236,7 @@ export class ValidationEngine {
     }
 
     // RULE 11: Cable type and cable size consistency check (CRITICAL)
-    const cableType = (circuit as any).cableType || '';
+    // cableType already declared at function start
     const sizeFromType = this.extractSizeFromCableType(cableType);
     if (sizeFromType && sizeFromType !== circuit.cableSize) {
       issues.push({
