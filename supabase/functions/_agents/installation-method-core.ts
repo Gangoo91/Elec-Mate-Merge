@@ -1,11 +1,15 @@
 /**
  * Installation Method Agent Core Logic
  * STANDALONE TOOL VERSION (not used by circuit designer)
- * Uses ultra-fast practical work intelligence RAG
+ * Uses ultra-fast practical work intelligence RAG + 30-day semantic cache
  */
 
 import { searchPracticalWorkIntelligence } from '../_shared/rag-practical-work.ts';
 import { searchRegulationsIntelligence } from '../_shared/intelligence-search.ts';
+import { 
+  checkInstallationMethodCache, 
+  storeInstallationMethodCache 
+} from '../_shared/installation-method-cache.ts';
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
 
@@ -26,6 +30,34 @@ export async function generateInstallationMethod(
     hasProjectDetails: !!request.projectDetails,
     hasDesignerContext: !!request.designerContext
   });
+
+  // ⚡ STEP 0: Check semantic cache FIRST (30-day, 85% similarity)
+  const cacheResult = await checkInstallationMethodCache({
+    supabase,
+    query: request.query,
+    openAiKey: OPENAI_API_KEY!
+  });
+  
+  if (cacheResult.hit) {
+    const cacheTime = Date.now() - startTime;
+    console.log(`⚡ CACHE HIT! Returning in ${cacheTime}ms (similarity: ${(cacheResult.similarity! * 100).toFixed(1)}%, hits: ${cacheResult.hitCount})`);
+    return {
+      installationMethod: cacheResult.data,
+      metadata: {
+        totalTime: cacheTime,
+        ragTime: 0,
+        aiTime: 0,
+        practicalWorkHits: 0,
+        regulationHits: 0,
+        qualityScore: 1.0,
+        cached: true,
+        cacheHitCount: cacheResult.hitCount,
+        cacheSimilarity: cacheResult.similarity
+      }
+    };
+  }
+  
+  console.log('❌ Cache miss - proceeding with full RAG + AI pipeline');
 
   // STEP 1: Extract keywords from query (50 keywords target)
   const keywords = extractInstallationKeywords(request.query, request.designerContext);
@@ -82,6 +114,14 @@ export async function generateInstallationMethod(
   const totalTime = Date.now() - startTime;
   console.log(`✅ Installation Method complete in ${totalTime}ms (RAG: ${ragTime}ms, AI: ${aiTime}ms)`);
 
+  // ⚡ Store in 30-day semantic cache for future hits
+  await storeInstallationMethodCache({
+    supabase,
+    query: request.query,
+    installationMethod: installationMethod,
+    openAiKey: OPENAI_API_KEY!
+  });
+
   return {
     installationMethod,
     metadata: {
@@ -90,7 +130,8 @@ export async function generateInstallationMethod(
       aiTime,
       practicalWorkHits: practicalWorkResult.results.length,
       regulationHits: regulations.length,
-      qualityScore: practicalWorkResult.qualityScore
+      qualityScore: practicalWorkResult.qualityScore,
+      cached: false
     }
   };
 }
