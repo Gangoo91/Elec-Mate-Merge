@@ -23,13 +23,21 @@ interface CircuitCardProps {
 export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, className = '', showFullDetails = false }: CircuitCardProps) => {
   const isMobile = useIsMobile();
   
-  // Calculate compliance status
-  const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
-  const zsCompliant = (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999);
-  const hasWarnings = circuit.warnings && circuit.warnings.length > 0;
-  
-  const isCompliant = vdCompliant && zsCompliant;
-  const status = !isCompliant ? 'fail' : hasWarnings ? 'warning' : 'pass';
+  // Use backend complianceStatus when available (same as desktop)
+  // Fall back to simple calculation check for legacy data
+  let status: 'pass' | 'warning' | 'fail' = 'pass';
+
+  if ((circuit as any).complianceStatus) {
+    // Backend Phase 5.5 has determined status with all 14 validation rules
+    status = (circuit as any).complianceStatus;
+  } else {
+    // Fallback for legacy data without complianceStatus
+    const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
+    const zsCompliant = (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999);
+    const hasWarnings = circuit.warnings && circuit.warnings.length > 0;
+    const isCompliant = vdCompliant && zsCompliant;
+    status = !isCompliant ? 'fail' : hasWarnings ? 'warning' : 'pass';
+  }
 
   return (
     <Card className={`bg-card border-elec-yellow/30 overflow-hidden shadow-lg shadow-elec-yellow/5 transition-all duration-300 hover:shadow-elec-yellow/10 mx-auto max-w-2xl ${className}`}>

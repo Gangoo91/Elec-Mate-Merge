@@ -23,12 +23,15 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
 
   const selectedCircuit = design.circuits[selectedCircuitIndex];
 
-  // Calculate overall compliance status
-  const allCircuitsCompliant = design.circuits.every(c => 
-    c.calculations?.voltageDrop?.compliant && 
-    (c.calculations?.zs ?? 0) <= (c.calculations?.maxZs ?? 999)
-  );
-  const hasWarnings = design.circuits.some(c => c.warnings && c.warnings.length > 0);
+  // Use backend complianceStatus for consistent results
+  const allCircuitsCompliant = design.circuits.every(c => {
+    const status = (c as any).complianceStatus;
+    // Use backend status if available, fallback to calculation check
+    return status ? status === 'pass' : 
+      (c.calculations?.voltageDrop?.compliant && 
+       (c.calculations?.zs ?? 0) <= (c.calculations?.maxZs ?? 999));
+  });
+  const hasWarnings = design.circuits.some(c => (c as any).complianceStatus === 'warning' || (c.warnings && c.warnings.length > 0));
   const overallStatus = !allCircuitsCompliant ? 'fail' : hasWarnings ? 'warning' : 'pass';
 
   // Swipe handlers for circuit navigation
