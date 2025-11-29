@@ -22,6 +22,9 @@ export interface CircuitInput {
   specialLocation?: 'bathroom' | 'outdoor' | 'underground' | 'kitchen' | 'none';
   notes?: string;
   
+  // Circuit Topology (Ring vs Radial for socket circuits)
+  circuitTopology?: 'ring' | 'radial' | 'auto';
+  
   // NEW: Step 4 - Installation Details (per circuit)
   installMethod?: 'method_a' | 'method_b' | 'method_c' | 'method_d' | 'method_e' | 'method_f' | 'auto';
   protectionType?: 'auto' | 'MCB' | 'RCBO' | 'RCBO-TypeA' | 'RCBO-TypeB';
@@ -80,6 +83,7 @@ export interface CircuitDesign {
   cableType?: string; // Full cable description
   cableLength: number;
   installationMethod: string;
+  circuitTopology?: 'ring' | 'radial'; // Circuit topology for sockets
   protectionDevice: {
     type: 'MCB' | 'RCBO';
     rating: number;

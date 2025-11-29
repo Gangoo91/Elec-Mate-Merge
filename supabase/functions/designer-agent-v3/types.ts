@@ -31,6 +31,7 @@ export interface CircuitInput {
   suggestedMCB?: number | null;
   calculatedDiversity?: number | null;
   estimatedCableSize?: number | null;
+  circuitTopology?: 'ring' | 'radial' | 'auto';
 }
 
 // ========================================
@@ -60,6 +61,7 @@ export interface NormalizedCircuit {
   suggestedMCB: number | null;
   calculatedDiversity: number | null;
   estimatedCableSize: number | null;
+  circuitTopology: 'ring' | 'radial' | 'auto';
 }
 
 export interface NormalizedInputs {
@@ -247,6 +249,7 @@ export interface DesignedCircuit {
   protectionDevice: ProtectionDevice;
   calculations: CircuitCalculations;
   justifications: CircuitJustifications;
+  circuitTopology?: 'ring' | 'radial'; // Circuit topology for socket circuits
   // installationNotes and installationGuidance removed - handled by Design Installation Agent
   structuredOutput?: StructuredOutput; // PHASE 5
   expectedTests?: ExpectedTestValues; // Expected test values for EIC/testing

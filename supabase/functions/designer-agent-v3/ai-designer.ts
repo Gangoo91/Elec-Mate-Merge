@@ -131,6 +131,7 @@ export class AIDesigner {
         protectionType: circuit.protectionType,
         bathroomZone: circuit.bathroomZone,
         outdoorInstall: circuit.outdoorInstall,
+        circuitTopology: circuit.circuitTopology || 'auto',
         hints: {
           calculatedIb: circuit.calculatedIb,
           suggestedMCB: circuit.suggestedMCB,
@@ -220,13 +221,31 @@ export class AIDesigner {
     parts.push('- FP200/FP400: Clipped direct with fire-rated clips');
     parts.push('');
     parts.push('=== RING FINAL CIRCUIT RULES (FROM RAG KNOWLEDGE) ===');
-    parts.push('🔴 RING FINAL SOCKETS: MUST use 2.5mm² cable + 1.5mm² CPC + 32A RCBO (BS 7671 Appendix 15)');
-    parts.push('🔴 WHY: Ring has TWO parallel conductor paths - current splits 50/50, so each leg carries ~16A');
-    parts.push('🔴 NO DIVERSITY REDUCTION: Ring finals are ALWAYS 32A - the ring topology itself provides diversity');
-    parts.push('🔴 If circuit is ring final OR socket power ≤7360W with 32A protection → use 2.5mm² + 32A RCBO');
-    parts.push('🔴 Ring finals serve max 100m² floor area (Reg 433.1.5)');
-    parts.push('🔴 Ring calculations use HALF the cable length due to parallel paths (affects Zs and VD)');
-    parts.push('🔴 Never use 1.5mm², 4mm², 6mm², or 10mm² for ring finals - ALWAYS 2.5mm²');
+    parts.push('');
+    parts.push('🔴 CRITICAL: Check circuit.circuitTopology field to determine ring vs radial');
+    parts.push('🔴 If circuitTopology === "ring": ALWAYS 2.5mm² + 1.5mm² CPC + 32A RCBO (BS 7671 Appendix 15)');
+    parts.push('🔴 If circuitTopology === "radial" + 32A: MUST use 4mm² minimum (NOT 2.5mm²)');
+    parts.push('🔴 If circuitTopology === "radial" + 20A: 2.5mm² acceptable');
+    parts.push('🔴 If circuitTopology === "auto": Use load power heuristic (≤7360W suggests ring)');
+    parts.push('');
+    parts.push('📐 RING FINAL SPECIFICATIONS:');
+    parts.push('  • Cable: ALWAYS 2.5mm² + 1.5mm² CPC (BS 7671 Appendix 15)');
+    parts.push('  • Protection: ALWAYS 32A RCBO (sockets require RCD)');
+    parts.push('  • Max area: 100m² floor area (Reg 433.1.5)');
+    parts.push('  • Parallel paths: Current splits 50/50, each leg ~16A max');
+    parts.push('  • Calculations: Use HALF cable length (parallel paths affect Zs and VD)');
+    parts.push('  • Never use: 1.5mm², 4mm², 6mm², or 10mm² for rings');
+    parts.push('');
+    parts.push('📐 RADIAL SOCKET SPECIFICATIONS:');
+    parts.push('  • 20A radial: 2.5mm² cable acceptable (serves up to 50m²)');
+    parts.push('  • 32A radial: 4mm² minimum required (serves up to 75m²)');
+    parts.push('  • Protection: MCB/RCBO sized based on diversified load');
+    parts.push('  • Use full cable length in calculations (no parallel paths)');
+    parts.push('');
+    parts.push('💡 JUSTIFICATION FORMAT:');
+    parts.push('  • Ring: "Ring final circuit: 32A + 2.5mm² per BS 7671 Appendix 15"');
+    parts.push('  • Radial 20A: "Radial circuit: 20A + 2.5mm² per Table 4D1A"');
+    parts.push('  • Radial 32A: "Radial circuit: 32A + 4mm² per Table 4D1A"');
     parts.push('');
     
     parts.push('=== DIVERSITY FACTORS - MANDATORY ===');
@@ -844,6 +863,7 @@ CRITICAL: Include diversityApplied justification with ${installationType || 'dom
         protectionType: c.protectionType,
         bathroomZone: c.bathroomZone,
         outdoorInstall: c.outdoorInstall,
+        circuitTopology: c.circuitTopology || 'auto',
         // Frontend pre-calculations (use as hints)
         hints: {
           calculatedIb: c.calculatedIb,
@@ -884,6 +904,11 @@ CRITICAL: Include diversityApplied justification with ${installationType || 'dom
                 specialLocation: {
                   type: 'string',
                   description: 'Special location from input (bathroom, outdoor, none, etc.)'
+                },
+                circuitTopology: {
+                  type: 'string',
+                  enum: ['ring', 'radial', 'not_applicable'],
+                  description: 'Circuit topology for socket circuits. CRITICAL: ring = 32A + 2.5mm² always (BS 7671 Appendix 15), radial 32A = 4mm² minimum, radial 20A = 2.5mm² acceptable. Use from input if specified, otherwise infer from load characteristics.'
                 },
                 circuitNumber: {
                   type: 'number',
@@ -1036,6 +1061,10 @@ CRITICAL: Include diversityApplied justification with ${installationType || 'dom
                     diversityApplied: {
                       type: 'string',
                       description: 'Explain diversity applied per BS 7671 Appendix A. E.g., "Lighting: 66% diversity applied. 2400W connected × 0.66 = 1584W diversified (6.9A)" or "Ring final: 32A fixed per Appendix 15, ring topology provides inherent diversity"'
+                    },
+                    circuitTopology: {
+                      type: 'string',
+                      description: 'For socket circuits: Explain if ring or radial and cable sizing justification. E.g., "Ring final circuit: 32A + 2.5mm² per BS 7671 Appendix 15" or "Radial circuit: 32A + 4mm² per Table 4D1A (radials require larger cable than rings)"'
                     }
                   },
                   required: ['cableSize', 'protection', 'diversityApplied']

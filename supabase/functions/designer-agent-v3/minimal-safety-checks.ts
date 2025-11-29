@@ -29,42 +29,73 @@ export class MinimalSafetyChecks {
 
   /**
    * Ring finals MUST be 32A with 2.5mm² cable
+   * Radial 32A MUST be 4mm² minimum
    */
   private enforceRingFinal32A(circuit: DesignedCircuit, index: number): DesignedCircuit {
     const isRingFinal = this.detectRingFinal(circuit);
+    const isRadial32A = this.detectRadial32A(circuit);
     
-    if (!isRingFinal) return circuit;
+    if (isRingFinal) {
+      const needsFix = circuit.protectionDevice.rating !== 32 || circuit.cableSize !== 2.5;
 
-    const needsFix = circuit.protectionDevice.rating !== 32 || circuit.cableSize !== 2.5;
+      if (needsFix) {
+        this.logger.info('Ring final safety check applied', {
+          circuit: circuit.name,
+          index,
+          before: {
+            rating: circuit.protectionDevice.rating,
+            cable: circuit.cableSize
+          },
+          after: {
+            rating: 32,
+            cable: 2.5
+          }
+        });
 
-    if (needsFix) {
-      this.logger.info('Ring final safety check applied', {
-        circuit: circuit.name,
-        index,
-        before: {
-          rating: circuit.protectionDevice.rating,
-          cable: circuit.cableSize
-        },
-        after: {
-          rating: 32,
-          cable: 2.5
-        }
-      });
+        return {
+          ...circuit,
+          protectionDevice: {
+            ...circuit.protectionDevice,
+            rating: 32,
+            type: 'RCBO' // Sockets need RCD
+          },
+          cableSize: 2.5,
+          cpcSize: 1.5, // BS 7671 Table 54.7 for twin & earth
+          justifications: {
+            ...circuit.justifications,
+            safetyCheckApplied: 'Ring final: 32A + 2.5mm² per BS 7671 Appendix 15'
+          }
+        };
+      }
+    }
+    
+    if (isRadial32A) {
+      const needsFix = circuit.cableSize < 4.0;
+      
+      if (needsFix) {
+        this.logger.info('Radial 32A safety check applied', {
+          circuit: circuit.name,
+          index,
+          before: {
+            rating: circuit.protectionDevice.rating,
+            cable: circuit.cableSize
+          },
+          after: {
+            rating: 32,
+            cable: 4.0
+          }
+        });
 
-      return {
-        ...circuit,
-        protectionDevice: {
-          ...circuit.protectionDevice,
-          rating: 32,
-          type: 'RCBO' // Sockets need RCD
-        },
-        cableSize: 2.5,
-        cpcSize: 1.5, // BS 7671 Table 54.7 for twin & earth
-        justifications: {
-          ...circuit.justifications,
-          safetyCheckApplied: 'Ring final: 32A + 2.5mm² per BS 7671 Appendix 15'
-        }
-      };
+        return {
+          ...circuit,
+          cableSize: 4.0,
+          cpcSize: 4.0, // Equal for SWA/singles, or 2.5 for T&E
+          justifications: {
+            ...circuit.justifications,
+            safetyCheckApplied: 'Radial 32A: 4mm² minimum per BS 7671 Table 4D1A'
+          }
+        };
+      }
     }
 
     return circuit;
@@ -107,17 +138,30 @@ export class MinimalSafetyChecks {
   }
 
   /**
-   * Detect ring final circuits by characteristics
+   * Detect ring final circuits by explicit topology or characteristics
    */
   private detectRingFinal(circuit: DesignedCircuit): boolean {
+    // Check if there's an explicit topology marker in justifications
+    const hasRingJustification = circuit.justifications?.cableSize?.toLowerCase().includes('ring') ||
+                                  circuit.justifications?.protection?.toLowerCase().includes('ring');
+    
     const byKeyword = circuit.name?.toLowerCase().includes('ring') ||
                       circuit.loadType?.toLowerCase().includes('ring');
     
-    const byCharacteristics = (
-      (circuit.loadType?.toLowerCase().includes('socket') || circuit.name?.toLowerCase().includes('socket')) &&
-      circuit.cableSize === 2.5
-    );
+    return hasRingJustification || byKeyword;
+  }
 
-    return byKeyword || byCharacteristics;
+  /**
+   * Detect radial 32A circuits that need 4mm² minimum
+   */
+  private detectRadial32A(circuit: DesignedCircuit): boolean {
+    const isSocket = circuit.loadType?.toLowerCase().includes('socket') ||
+                     circuit.name?.toLowerCase().includes('socket');
+    
+    const is32A = circuit.protectionDevice.rating === 32;
+    
+    const isNotRing = !this.detectRingFinal(circuit);
+    
+    return isSocket && is32A && isNotRing;
   }
 }
