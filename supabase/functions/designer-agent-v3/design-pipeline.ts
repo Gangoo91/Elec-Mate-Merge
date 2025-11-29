@@ -136,7 +136,7 @@ export class DesignPipeline {
       searchDesignIntelligence(supabase, {
         keywords: Array.from(keywords),
         loadTypes: Array.from(loadTypes),
-        cableSizes: Array.from(cableSizes),
+        // cableSizes removed - only 1.6% database coverage causes near-zero results
         limit: 30  // 30 design knowledge items (formulas, tables, examples)
       }),
       searchRegulationsIntelligence(supabase, {
