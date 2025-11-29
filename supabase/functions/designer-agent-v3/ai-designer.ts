@@ -154,12 +154,12 @@ export class AIDesigner {
             { role: 'user', content: JSON.stringify(singleCircuitInput, null, 2) }
           ],
           model: 'gpt-5-mini-2025-08-07',
-          max_completion_tokens: 2000, // Sufficient for single circuit
+          max_completion_tokens: 4000, // Sufficient for single circuit
           tools,
           tool_choice
         },
         this.openAiKey,
-        45000 // 45 second timeout per circuit
+        90000 // 90 second timeout per circuit
       );
 
       const circuitDuration = Date.now() - circuitStart;
