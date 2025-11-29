@@ -91,7 +91,7 @@ export class DesignPipeline {
     // ========================================
     // PHASE 6: Cache Store
     // ========================================
-    await this.cache.store(cacheKey, design, normalized);
+    await this.cache.set(cacheKey, design);
 
     const result: DesignResult = {
       ...design,
