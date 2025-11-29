@@ -51,9 +51,11 @@ export class DesignPipeline {
     if (cached) {
       this.logger.info('Cache HIT', { key: cacheKey.slice(0, 12) });
       return {
-        ...cached,
+        ...cached.design,
         fromCache: true,
-        processingTime: Date.now() - startTime
+        processingTime: Date.now() - startTime,
+        cacheAgeSeconds: cached.ageSeconds,
+        cacheHitCount: cached.hitCount
       };
     }
 
