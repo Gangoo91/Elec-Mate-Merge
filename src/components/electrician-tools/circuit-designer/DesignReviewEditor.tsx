@@ -1608,8 +1608,16 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               </thead>
               <tbody>
                 {design.circuits.map((circuit, idx) => {
-                  const hasCompliance = circuit.calculations?.voltageDrop?.compliant && 
-                    (circuit.calculations?.zs ?? 0) < (circuit.calculations?.maxZs ?? 999);
+                  // Use backend complianceStatus directly (computed in Phase 5.5 with all 14 validation rules)
+                  // Fall back to calculation check only if complianceStatus not present
+                  const hasCompliance = circuit.complianceStatus 
+                    ? circuit.complianceStatus === 'pass'
+                    : (circuit.calculations?.voltageDrop?.compliant && 
+                       (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999)); // Fixed: <= not <
+                  
+                  // Determine status variant based on complianceStatus
+                  const statusVariant = circuit.complianceStatus === 'pass' ? 'success' :
+                                      circuit.complianceStatus === 'warning' ? 'warning' : 'destructive';
                   
                   return (
                     <tr 
@@ -1648,11 +1656,19 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                           <Badge variant="success" className="text-xs gap-1">
                             <CheckCircle2 className="h-3 w-3" />
                             Pass
+                            {circuit.complianceStatus === 'warning' && (
+                              <span className="text-xs ml-1">(⚠)</span>
+                            )}
                           </Badge>
                         ) : (
-                          <Badge variant="warning" className="text-xs gap-1">
+                          <Badge variant={statusVariant} className="text-xs gap-1">
                             <AlertTriangle className="h-3 w-3" />
                             Review
+                            {(circuit as any).validationIssues?.length > 0 && (
+                              <span className="ml-1">
+                                ({(circuit as any).validationIssues.length} issue{(circuit as any).validationIssues.length > 1 ? 's' : ''})
+                              </span>
+                            )}
                           </Badge>
                         )}
                       </td>
