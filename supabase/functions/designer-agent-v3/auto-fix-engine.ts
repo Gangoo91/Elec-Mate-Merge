@@ -567,6 +567,7 @@ export class AutoFixEngine {
   /**
    * FIX 1.5: Verify cable capacity can support MCB rating (In ≤ Iz)
    * Run after downgrades to ensure coordination between MCB and cable
+   * EXCEPTION: Ring finals are EXEMPT - 32A on 2.5mm² is correct per BS 7671 Appendix 15
    */
   private verifyCableCapacity(circuit: DesignedCircuit): DesignedCircuit {
     const In = circuit.protectionDevice.rating;
@@ -575,7 +576,27 @@ export class AutoFixEngine {
     // If no Iz calculated yet, skip (will be calculated later)
     if (Iz === 0) return circuit;
     
-    // Check if MCB is too large for cable capacity
+    // RING FINAL EXEMPTION: 32A on 2.5mm² is CORRECT per BS 7671 Appendix 15
+    // Ring topology provides ~54A effective capacity (2x 27A parallel paths)
+    const isRingByKeyword = circuit.name?.toLowerCase().includes('ring') || 
+                            circuit.loadType?.toLowerCase().includes('ring');
+    const isSocketCircuit = circuit.loadType?.toLowerCase().includes('socket') ||
+                            circuit.name?.toLowerCase().includes('socket');
+    const isRingByCharacteristics = isSocketCircuit && circuit.cableSize === 2.5;
+    const isRingFinal = isRingByKeyword || isRingByCharacteristics;
+    
+    // Ring finals are EXEMPT from In ≤ Iz check
+    if (isRingFinal) {
+      this.logger.info('Ring final exempt from In>Iz check (BS 7671 Appendix 15)', {
+        circuit: circuit.name,
+        In,
+        Iz: Iz.toFixed(1),
+        reason: 'Ring topology provides ~54A effective capacity from 2x 27A parallel paths'
+      });
+      return circuit;
+    }
+    
+    // Check if MCB is too large for cable capacity (non-ring circuits only)
     if (In > Iz) {
       this.logger.warn('MCB exceeds cable capacity after downgrade - reducing MCB', {
         circuit: circuit.name,
