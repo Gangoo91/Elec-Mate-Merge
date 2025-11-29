@@ -48,14 +48,14 @@ export async function searchInstallationMethodRAG(
     keywords,
     appliesTo: workType ? [workType, 'all installations'] : ['all installations'],
     categories: ['installation', 'testing', 'inspection', 'earthing', 'protection'],
-    limit
+    limit: 25  // Increased from 15 to 25 for richer context
   });
   
-  // QUERY 2: Practical Work Intelligence (hybrid RPC - still fast)
+  // QUERY 2: Practical Work Intelligence (ULTRA-FAST GIN keyword search)
   const practicalWorkPromise = searchPracticalWorkIntelligence(supabase, {
     query: keywords.join(' '),
     tradeFilter: 'installer',
-    matchCount: limit
+    matchCount: 25  // Increased from 15 to 25 for comprehensive guidance
   });
   
   // Run both in parallel
