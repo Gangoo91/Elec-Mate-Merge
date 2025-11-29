@@ -432,16 +432,26 @@ export class AIDesigner {
     parts.push('=== INDUSTRIAL INSTALLATION CONTEXT ===');
     parts.push('- Predominantly three-phase 400V, sometimes higher voltages');
     parts.push('- Large motor loads, heavy machinery, high-power equipment');
-    parts.push('- SWA cable standard for most circuits, often larger sizes (>16mm²)');
+    parts.push('- SWA cable standard for process areas, often larger sizes (>16mm²)');
     parts.push('- Type D MCBs common for motors, contactors, and DOL starters');
     parts.push('- Consider fault levels, discrimination, and starting currents');
     parts.push('');
     parts.push('=== INDUSTRIAL CABLE TYPE RULES (MANDATORY) ===');
     parts.push('❌ NEVER use Twin & Earth (T&E) - not suitable for industrial installations');
-    parts.push('✅ Standard for ALL circuits: SWA (Steel Wire Armoured)');
-    parts.push('✅ Heavy machinery: Flexible SWA or armoured flex for vibration/movement');
-    parts.push('✅ Fixed installations: LSZH singles in heavy-duty galvanised steel conduit');
-    parts.push('✅ Fire/emergency systems: FP200/FP400 or similar fire-rated');
+    parts.push('');
+    parts.push('📦 INDUSTRIAL PROCESS AREAS (production, machinery, warehousing):');
+    parts.push('✅ SWA (Steel Wire Armoured) - standard for ALL process area circuits');
+    parts.push('✅ Flexible SWA or armoured flex - for machinery with vibration/movement');
+    parts.push('✅ XLPE - for high temperature environments');
+    parts.push('');
+    parts.push('🏢 OFFICE/RECEPTION AREAS WITHIN INDUSTRIAL BUILDINGS:');
+    parts.push('✅ LSZH singles in galvanised steel trunking - clean office environments');
+    parts.push('✅ LSZH singles in steel conduit - visible runs, fire-rated routes');
+    parts.push('⚠️ SWA is overkill for internal office sockets - use LSZH singles in containment');
+    parts.push('');
+    parts.push('🔥 FIRE/EMERGENCY CIRCUITS (ALL AREAS):');
+    parts.push('✅ FP200/FP400 or MICC - MANDATORY regardless of location');
+    parts.push('');
     parts.push('NOTE: CPC size EQUALS live conductor size for SWA/singles (NOT reduced like T&E)');
     parts.push('');
     parts.push('=== INDUSTRIAL CONTAINMENT SELECTION (DETAILED) ===');
@@ -1058,7 +1068,7 @@ CRITICAL: Include diversityApplied justification with ${installationType || 'dom
                 cableSize: {
                   type: 'number',
                   enum: this.getCableSizeEnum(installationType),
-                  description: 'Live conductor CSA in mm². RING FINAL SOCKETS: MUST be 2.5mm² (BS 7671 standard). LIGHTING: Typically 1.5mm² or 2.5mm². SHOWERS/COOKERS: 6mm²-10mm². Must be standard size per BS 7671 Appendix 4.'
+                  description: 'Live conductor CSA in mm². CRITICAL CONSISTENCY: This value MUST match the cable size stated in cableSelectionBreakdown and designJustification sections - Design Justification is the single source of truth. RING FINAL SOCKETS: MUST be 2.5mm² (BS 7671 standard). LIGHTING: Typically 1.5mm² or 2.5mm². SHOWERS/COOKERS: 6mm²-10mm². Must be standard size per BS 7671 Appendix 4.'
                 },
                 cpcSize: { 
                   type: 'number',
@@ -1193,7 +1203,7 @@ CRITICAL: Include diversityApplied justification with ${installationType || 'dom
                       properties: {
                         loadKw: { type: 'number', description: 'Load in kW - CALCULATE from loadPower: loadPower/1000 (e.g., 7360W → 7.36)' },
                         loadIb: { type: 'string', description: 'Design current Ib with unit (e.g., "32A")' },
-                        cable: { type: 'string', description: 'Cable specification: Size and type only (e.g., "1.5mm² twin and earth" or "6mm² SWA"). DO NOT include CPC size here.' },
+                        cable: { type: 'string', description: 'Cable specification: Size and type only (e.g., "1.5mm² twin and earth" or "6mm² SWA"). DO NOT include CPC size here. CRITICAL: The size MUST match the cableSize numeric field exactly.' },
                         protectiveDevice: { type: 'string', description: 'Protection (e.g., "40A Type B MCB (6kA)")' },
                         voltageDrop: { type: 'string', description: 'VD result with compliance (e.g., "6.2V (2.7%) ✓ Compliant")' },
                         zs: { type: 'string', description: 'Zs with compliance (e.g., "0.68Ω ✓ Well within 1.37Ω limit")' },
@@ -1216,7 +1226,7 @@ CRITICAL: Include diversityApplied justification with ${installationType || 'dom
                         },
                         cableSelectionBreakdown: { 
                           type: 'string', 
-                          description: '3. Cable Selection & Calculation Breakdown: Full cable sizing logic with Iz tables, derating factors, and voltage drop calculations (150-200 words)' 
+                          description: '3. Cable Selection & Calculation Breakdown: Full cable sizing logic with Iz tables, derating factors, and voltage drop calculations. CRITICAL: The cable size stated here MUST match the cableSize numeric field exactly. (150-200 words)' 
                         },
                         protectiveDeviceSelection: { 
                           type: 'string', 
@@ -1228,7 +1238,7 @@ CRITICAL: Include diversityApplied justification with ${installationType || 'dom
                         },
                         designJustification: { 
                           type: 'string', 
-                          description: '6. Design Justification: Professional engineering rationale for design choices and safety margins (100-150 words)' 
+                          description: '6. Design Justification: Professional engineering rationale for design choices and safety margins. THIS SECTION IS THE SINGLE SOURCE OF TRUTH - the cableSize numeric field MUST match the cable size stated here. (100-150 words)' 
                         },
                         safetyNotes: { 
                           type: 'string', 
@@ -1664,7 +1674,23 @@ CRITICAL: Include diversityApplied justification with ${installationType || 'dom
     }
     
     if (installationType === 'industrial') {
-      return 'INDUSTRIAL: SWA standard for most circuits, LSZH singles in heavy conduit. PRIORITY: Fire/emergency circuits MUST use FP200/FP400. High temp use XLPE. Format: "10mm² SWA" or "6mm² LSZH single" or "2.5mm² FP200"';
+      return `INDUSTRIAL CABLE SELECTION:
+
+FOR OFFICE/RECEPTION AREAS WITHIN INDUSTRIAL BUILDINGS:
+- Use LSZH singles in galvanised steel trunking for clean office environments
+- SWA is overkill for internal office sockets, lighting, or data
+- Galvanised trunking provides containment and earthing
+
+FOR INDUSTRIAL PROCESS AREAS:
+- SWA standard for machinery, motors, and equipment
+- SWA REQUIRED for routes through harsh/washdown environments
+- SWA REQUIRED for external runs and buried cables
+- XLPE for high temperature environments
+- Armoured flex for machinery with vibration/movement
+
+PRIORITY: Fire/emergency circuits MUST use FP200/FP400.
+
+Format: "10mm² SWA" or "2.5mm² LSZH single" or "1.5mm² FP200"`;
     }
     
     return 'Cable type: size + type. PRIORITY: Fire/emergency MUST use FP200/FP400, outdoor MUST use SWA. Format: "2.5mm² twin and earth" or "6mm² SWA" or "1.5mm² FP200"';
