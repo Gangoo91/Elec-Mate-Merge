@@ -70,7 +70,26 @@ export class ValidationEngine {
     }
 
     // RULE 2: In ≤ Iz (Protection device rating must not exceed cable capacity)
-    if (circuit.calculations.In > circuit.calculations.Iz) {
+    // EXCEPTION: Ring final circuits per BS 7671 Appendix 15
+    const isRingFinal = this.detectCircuitType(circuit) === 'socket_ring';
+    const isStandardRingConfig = circuit.cableSize === 2.5 && circuit.calculations.In === 32;
+    
+    if (isRingFinal && isStandardRingConfig) {
+      // 32A on 2.5mm² ring final is CORRECT per BS 7671 Appendix 15
+      // Ring topology provides ~54A effective capacity (2x 27A parallel paths)
+      issues.push({
+        circuitIndex: index,
+        circuitName: circuit.name,
+        rule: 'ring_final_appendix_15',
+        regulation: 'BS 7671 Appendix 15',
+        severity: 'info',
+        message: 'Ring final correctly designed: 32A protection on 2.5mm² cable per BS 7671 Appendix 15 (ring topology provides adequate capacity)',
+        currentValue: circuit.calculations.In,
+        expectedValue: circuit.calculations.Iz,
+        fieldAffected: null
+      });
+    } else if (circuit.calculations.In > circuit.calculations.Iz) {
+      // Standard In ≤ Iz check for non-ring circuits
       issues.push({
         circuitIndex: index,
         circuitName: circuit.name,
