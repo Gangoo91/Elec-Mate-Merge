@@ -1129,38 +1129,34 @@ export class DesignPipeline {
     this.logger.info('Mapping validation issues to circuit complianceStatus');
 
     design.circuits = design.circuits.map((circuit: any, index: number) => {
-      // AI's complianceTick from structured output is the SINGLE SOURCE OF TRUTH
-      const aiComplianceTick = circuit.structuredOutput?.atAGlanceSummary?.complianceTick;
-      
-      // Only use validation engine for Zs and VD hard checks
-      // (These are deterministic calculations that can't be subjective)
-      const zsCompliant = circuit.calculations?.zs <= circuit.calculations?.maxZs;
-      const vdCompliant = circuit.calculations?.voltageDrop?.compliant !== false;
-      
-      // AI says pass AND calculations confirm → PASS
-      // AI says fail OR calculations fail → FAIL
-      let complianceStatus: 'pass' | 'warning' | 'fail' = 'pass';
-      
-      if (aiComplianceTick === false) {
-        complianceStatus = 'fail';
-        this.logger.info(`Circuit ${circuit.name}: AI marked as non-compliant`);
-      } else if (!zsCompliant || !vdCompliant) {
-        complianceStatus = 'fail';
-        this.logger.warn(`Circuit ${circuit.name}: Calculation check failed (Zs: ${zsCompliant}, VD: ${vdCompliant})`);
-      } else if (aiComplianceTick === true) {
-        complianceStatus = 'pass';
-        this.logger.info(`Circuit ${circuit.name}: AI confirmed compliant ✓`);
-      }
-      
-      // Keep validation issues for reference, but they don't determine pass/fail
+      // Find all validation issues for this circuit
       const circuitIssues = validationResult.issues.filter(
         (issue: any) => issue.circuitIndex === index
       );
       
+      const hasErrors = circuitIssues.some((i: any) => i.severity === 'error');
+      const hasWarnings = circuitIssues.some((i: any) => i.severity === 'warning');
+      
+      // Determine complianceStatus based on worst issue
+      let complianceStatus: 'pass' | 'warning' | 'fail' = 'pass';
+      if (hasErrors) {
+        complianceStatus = 'fail';
+      } else if (hasWarnings) {
+        complianceStatus = 'warning';
+      }
+      
+      // Also check calculations for pass/fail - Zs or VD non-compliance is a FAILURE per BS 7671
+      const zsCompliant = circuit.calculations?.zs <= circuit.calculations?.maxZs;
+      const vdCompliant = circuit.calculations?.voltageDrop?.compliant !== false;
+      
+      if (!zsCompliant || !vdCompliant) {
+        complianceStatus = 'fail'; // Per BS 7671, exceeding Zs max or VD max is non-compliant
+      }
+      
       return {
         ...circuit,
         complianceStatus,
-        validationIssues: circuitIssues // Advisory only - doesn't override AI's complianceTick
+        validationIssues: circuitIssues // Attach issues to circuit for frontend display
       };
     });
 
