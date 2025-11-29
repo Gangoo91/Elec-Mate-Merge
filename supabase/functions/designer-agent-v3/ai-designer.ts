@@ -25,12 +25,13 @@ export class AIDesigner {
 
   /**
    * Generate circuit designs from normalized inputs and RAG context
+   * PARALLELIZED: Each circuit is designed independently in parallel
    */
   async generate(
     inputs: NormalizedInputs, 
     context: RAGContext
   ): Promise<Design> {
-    this.logger.info('AI Designer starting', {
+    this.logger.info('AI Designer starting (PARALLEL)', {
       circuits: inputs.circuits.length,
       ragResults: context.totalResults
     });
@@ -40,63 +41,155 @@ export class AIDesigner {
     // Detect installation type from circuits
     const installationType = this.detectInstallationType(inputs);
 
-    // Build system prompt with RAG context and installation type (NO guardrails)
+    // Build system prompt ONCE with RAG context (shared across all circuits)
     const systemPrompt = this.buildSystemPrompt(context, installationType, inputs);
     
-    // Convert form to structured JSON
-    const structuredInput = this.buildStructuredInput(inputs);
+    // Create parallel promises for each circuit
+    const circuitPromises = inputs.circuits.map((circuit, index) => 
+      this.generateSingleCircuit(circuit, index, systemPrompt, installationType, inputs.supply)
+    );
     
-    // Add ring final enforcement to system prompt if detected
-    const hasRingFinals = inputs.circuits.some(c => (c as any).enforced?.reason);
-    if (hasRingFinals) {
-      this.logger.info('Ring final circuits detected - AI constraints enforced', {
-        ringCircuits: inputs.circuits.filter(c => (c as any).enforced).map(c => c.name)
+    // Execute ALL circuits in parallel
+    this.logger.info('Executing parallel AI calls', { count: circuitPromises.length });
+    const results = await Promise.allSettled(circuitPromises);
+    
+    // Separate successes from failures
+    const successes = results.filter(r => r.status === 'fulfilled') as PromiseFulfilledResult<DesignedCircuit>[];
+    const failures = results.filter(r => r.status === 'rejected') as PromiseRejectedResult[];
+    
+    if (failures.length > 0) {
+      this.logger.warn('Some circuits failed to design', {
+        failures: failures.length,
+        successes: successes.length,
+        errors: failures.map(f => f.reason.message || String(f.reason))
       });
     }
     
-    // Define tool schema with installation type for dynamic cable type constraints
-    const tools = [this.buildDesignTool(installationType)];
-    const tool_choice = { type: 'function', function: { name: 'design_circuits' } };
-
-    // Call OpenAI with timeout
-    const { Timeouts } = await import('../_shared/timeout.ts');
-    const response = await callOpenAI(
-      {
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: JSON.stringify(structuredInput, null, 2) }
-        ],
-        model: 'gpt-5-mini-2025-08-07',
-        max_completion_tokens: 8000, // Reduced from 12000 (Phase 1.1: saves 5-8s)
-        tools,
-        tool_choice
-      },
-      this.openAiKey,
-      Timeouts.EDGE_FUNCTION_MAX // 360000 (6 minutes) - handles complex industrial designs with RAG
-    );
+    if (successes.length === 0) {
+      throw new Error('All circuits failed to design. Check logs for details.');
+    }
+    
+    // Extract successful circuits
+    const circuits = successes.map(r => r.value);
 
     const duration = Date.now() - startTime;
-    this.logger.info('AI Designer complete', { 
+    this.logger.info('AI Designer PARALLEL complete', { 
       duration,
-      hasToolCalls: !!response.toolCalls 
+      successCount: successes.length,
+      failureCount: failures.length,
+      avgTimePerCircuit: Math.round(duration / inputs.circuits.length)
     });
 
-    // Parse tool call
-    if (!response.toolCalls || response.toolCalls.length === 0) {
-      throw new Error('No tool calls in AI response');
-    }
+    return { 
+      circuits,
+      reasoning: {
+        voltageContext: `Parallel design mode: ${successes.length}/${inputs.circuits.length} circuits successful`,
+        cableSelectionLogic: 'Each circuit designed independently with RAG context',
+        protectionLogic: 'Per-circuit protection device selection',
+        complianceChecks: 'Independent BS 7671 compliance verification per circuit'
+      }
+    };
+  }
 
-    const toolCall = response.toolCalls[0];
-    const design = JSON.parse(toolCall.function.arguments) as Design;
+  /**
+   * Generate design for a SINGLE circuit (called in parallel)
+   * Timeout: 45 seconds per circuit
+   * Tokens: 2000 per circuit
+   */
+  private async generateSingleCircuit(
+    circuit: any,
+    index: number,
+    systemPrompt: string,
+    installationType: string,
+    supply: any
+  ): Promise<DesignedCircuit> {
+    const circuitStart = Date.now();
+    
+    this.logger.info(`Circuit ${index + 1}: Starting parallel design`, {
+      name: circuit.name,
+      loadPower: circuit.loadPower
+    });
 
-    // Validate circuit count matches input
-    if (design.circuits.length !== inputs.circuits.length) {
-      throw new Error(
-        `Circuit count mismatch: expected ${inputs.circuits.length}, got ${design.circuits.length}`
+    // Build single-circuit input
+    const singleCircuitInput = {
+      supply: {
+        voltage: supply.voltage,
+        phases: supply.phases,
+        ze: supply.ze,
+        earthing: supply.earthing,
+        installationType: supply.installationType
+      },
+      circuit: {
+        index,
+        name: circuit.name,
+        loadType: circuit.loadType,
+        loadPower: circuit.loadPower,
+        cableLength: circuit.cableLength,
+        phases: circuit.phases,
+        specialLocation: circuit.specialLocation,
+        installMethod: circuit.installMethod,
+        protectionType: circuit.protectionType,
+        bathroomZone: circuit.bathroomZone,
+        outdoorInstall: circuit.outdoorInstall,
+        hints: {
+          calculatedIb: circuit.calculatedIb,
+          suggestedMCB: circuit.suggestedMCB,
+          calculatedDiversity: circuit.calculatedDiversity,
+          estimatedCableSize: circuit.estimatedCableSize
+        },
+        enforced: (circuit as any).enforced || null
+      }
+    };
+
+    // Define single-circuit tool schema
+    const tools = [this.buildSingleCircuitTool(installationType)];
+    const tool_choice = { type: 'function', function: { name: 'design_single_circuit' } };
+
+    try {
+      // Call OpenAI with 45-second timeout per circuit
+      const response = await callOpenAI(
+        {
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: JSON.stringify(singleCircuitInput, null, 2) }
+          ],
+          model: 'gpt-5-mini-2025-08-07',
+          max_completion_tokens: 2000, // Sufficient for single circuit
+          tools,
+          tool_choice
+        },
+        this.openAiKey,
+        45000 // 45 second timeout per circuit
       );
-    }
 
-    return design;
+      const circuitDuration = Date.now() - circuitStart;
+      
+      // Parse tool call
+      if (!response.toolCalls || response.toolCalls.length === 0) {
+        throw new Error(`No tool calls in AI response for circuit ${index + 1}`);
+      }
+
+      const toolCall = response.toolCalls[0];
+      const design = JSON.parse(toolCall.function.arguments) as { circuit: DesignedCircuit };
+
+      this.logger.info(`Circuit ${index + 1}: Complete`, {
+        name: circuit.name,
+        duration: circuitDuration,
+        cableSize: design.circuit.cableSize,
+        protection: design.circuit.protectionDevice?.rating
+      });
+
+      return design.circuit;
+
+    } catch (error) {
+      const circuitDuration = Date.now() - circuitStart;
+      this.logger.error(`Circuit ${index + 1}: Failed`, {
+        name: circuit.name,
+        duration: circuitDuration,
+        error: error.message
+      });
+      throw new Error(`Circuit ${index + 1} (${circuit.name}) design failed: ${error.message}`);
+    }
   }
 
   /**
@@ -765,7 +858,294 @@ CRITICAL: Include diversityApplied justification with ${installationType || 'dom
   }
 
   /**
-   * Build strict tool schema for design_circuits function
+   * Build tool schema for SINGLE circuit design (used in parallel execution)
+   */
+  private buildSingleCircuitTool(installationType?: string): object {
+    return {
+      type: 'function',
+      function: {
+        name: 'design_single_circuit',
+        description: 'Design a single BS 7671 compliant electrical circuit. CRITICAL AUTO-CORRECTIONS: (1) 3-phase = 400/415V only, (2) Socket circuits = RCBO (never MCB), (3) Bathroom circuits = RCBO, (4) Motor FLC calculations mandatory, (5) Cable sizes must be standard T&E/SWA, (6) CPC per Table 54.7.',
+        parameters: {
+          type: 'object',
+          properties: {
+            circuit: {
+              type: 'object',
+              description: 'Single designed circuit',
+              properties: {
+                name: { 
+                  type: 'string',
+                  description: 'Circuit name from input'
+                },
+                loadType: {
+                  type: 'string',
+                  description: 'Load type from input (e.g., socket_outlet, lighting, cooker, shower)'
+                },
+                specialLocation: {
+                  type: 'string',
+                  description: 'Special location from input (bathroom, outdoor, none, etc.)'
+                },
+                circuitNumber: {
+                  type: 'number',
+                  description: 'Circuit number (sequential from 1)'
+                },
+                loadPower: {
+                  type: 'number',
+                  description: 'Load power in Watts (use from input or calculate from Ib * voltage)'
+                },
+                phases: {
+                  type: 'string',
+                  enum: ['single', 'three'],
+                  description: 'Phase configuration from input (single or three)'
+                },
+                voltage: {
+                  type: 'number',
+                  enum: [110, 230, 400, 415],
+                  description: 'Operating voltage: 230V single-phase, 400V or 415V three-phase, 110V site supply. THREE-PHASE MUST USE 400V OR 415V ONLY.'
+                },
+                cableLength: {
+                  type: 'number',
+                  description: 'Cable length in meters (use from input)'
+                },
+                installationMethod: {
+                  type: 'string',
+                  description: 'Installation method reference. IMPORTANT: SWA cables = "clipped direct" or "on cable tray" (NO conduit needed). LSZH singles = "in steel conduit" or "in metal trunking" (MUST be enclosed). T&E = "clipped direct" or "in PVC conduit". FP cables = "clipped direct with fire-rated clips". Format: "Method C - clipped direct" or "Method B - in steel conduit"'
+                },
+                cableType: {
+                  type: 'string',
+                  enum: this.getAllowedCableTypes(installationType || 'general'),
+                  description: this.getCableTypeDescription(installationType || 'general')
+                },
+                rcdProtected: {
+                  type: 'boolean',
+                  description: 'Whether circuit requires RCD protection (true if RCBO or special location)'
+                },
+                cableSize: {
+                  type: 'number',
+                  enum: this.getCableSizeEnum(installationType),
+                  description: 'Live conductor CSA in mm². RING FINAL SOCKETS: MUST be 2.5mm² (BS 7671 standard). LIGHTING: Typically 1.5mm² or 2.5mm². SHOWERS/COOKERS: 6mm²-10mm². Must be standard size per BS 7671 Appendix 4.'
+                },
+                cpcSize: { 
+                  type: 'number',
+                  enum: [1.0, 1.5, 2.5, 4.0, 6.0, 10.0, 16.0, 25.0, 35.0, 50.0, 70.0, 95.0],
+                  description: 'CPC conductor CSA in mm² per BS 7671 Table 54.7. CRITICAL FOR TWIN & EARTH: CPC is SMALLER than live (1.5mm² T&E = 1.0mm² CPC, 2.5mm² T&E = 1.5mm² CPC, 4mm² T&E = 2.5mm² CPC, 6mm² T&E = 2.5mm² CPC, 10mm² T&E = 4mm² CPC, 16mm² T&E = 6mm² CPC). For single cores/SWA, CPC typically equals live size. This affects R1+R2 and Zs calculations.'
+                },
+                protectionDevice: {
+                  type: 'object',
+                  properties: {
+                    type: { 
+                      type: 'string',
+                      enum: ['MCB', 'RCBO'],
+                      description: 'Protection device type. IMPORTANT: Use RCBO for ALL socket circuits (Reg 411.3.3) and bathroom circuits (Reg 701.411.3.3). Use MCB only for lighting and fixed equipment.'
+                    },
+                    rating: { 
+                      type: 'number',
+                      enum: [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100],
+                      description: 'MCB/RCBO rating in Amps'
+                    },
+                    curve: { 
+                      type: 'string',
+                      enum: ['B', 'C', 'D'],
+                      description: 'B for resistive, C for general, D for motors'
+                    },
+                    kaRating: { 
+                      type: 'number',
+                      enum: [6, 10],
+                      description: 'Short circuit breaking capacity (6kA domestic, 10kA commercial)'
+                    }
+                  },
+                  required: ['type', 'rating', 'curve', 'kaRating']
+                },
+                calculations: {
+                  type: 'object',
+                  description: 'All BS 7671 calculations WITH DIVERSITY',
+                  properties: {
+                    Ib: { 
+                      type: 'number',
+                      description: 'Raw design current in Amps (connected load / voltage) - BEFORE diversity'
+                    },
+                    Id: {
+                      type: 'number',
+                      description: 'Diversified design current in Amps (for MCB selection). Apply BS 7671 Appendix A diversity: Lighting 66%, Radial sockets 100%+40%, Cookers Table A1, Ring finals no reduction (topology handles it), Showers/Immersion/EV 100%'
+                    },
+                    In: { 
+                      type: 'number',
+                      description: 'Nominal current of protection device in Amps (must be ≥ Id)'
+                    },
+                    Iz: { 
+                      type: 'number',
+                      description: 'Current carrying capacity of cable in Amps (from tables)'
+                    },
+                    diversityFactor: {
+                      type: 'number',
+                      description: 'Diversity factor applied (e.g., 0.66 for lighting, 1.0 for ring finals/showers)'
+                    },
+                    diversifiedLoad: {
+                      type: 'number',
+                      description: 'Diversified load in Watts (connected load × diversityFactor)'
+                    },
+                    voltageDrop: {
+                      type: 'object',
+                      properties: {
+                        volts: { 
+                          type: 'number',
+                          description: 'Voltage drop in Volts'
+                        },
+                        percent: { 
+                          type: 'number',
+                          description: 'Voltage drop as percentage'
+                        },
+                        limit: { 
+                          type: 'number',
+                          description: 'Permitted limit (3% or 5%)'
+                        },
+                        compliant: { 
+                          type: 'boolean',
+                          description: 'True if percent <= limit'
+                        }
+                      },
+                      required: ['volts', 'percent', 'limit', 'compliant']
+                    },
+                    zs: { 
+                      type: 'number',
+                      description: 'Earth fault loop impedance in Ohms'
+                    },
+                    maxZs: { 
+                      type: 'number',
+                      description: 'Maximum permitted Zs in Ohms (from tables)'
+                    }
+                  },
+                  required: ['Ib', 'Id', 'In', 'Iz', 'diversityFactor', 'diversifiedLoad', 'voltageDrop', 'zs', 'maxZs']
+                },
+                justifications: {
+                  type: 'object',
+                  description: 'Regulation-based justifications',
+                  properties: {
+                    cableSize: { 
+                      type: 'string',
+                      description: 'Why this cable size? (reference Iz table, method, Ib≤In≤Iz)'
+                    },
+                    protection: { 
+                      type: 'string',
+                      description: 'Why this MCB/RCBO rating and type? Include: Id (diversified) ≤ In ≤ Iz, curve justification'
+                    },
+                    rcd: { 
+                      type: 'string',
+                      description: 'Why RCBO or not? (Reg 411.3.3 for sockets, Reg 701 for bathrooms)'
+                    },
+                    diversityApplied: {
+                      type: 'string',
+                      description: 'Explain diversity applied per BS 7671 Appendix A. E.g., "Lighting: 66% diversity applied. 2400W connected × 0.66 = 1584W diversified (6.9A)" or "Ring final: 32A fixed per Appendix 15, ring topology provides inherent diversity"'
+                    }
+                  },
+                  required: ['cableSize', 'protection', 'diversityApplied']
+                },
+                installationNotes: {
+                  type: 'string',
+                  description: 'Circuit-specific installation guidance (2-4 sentences). CRITICAL: Must reference THIS circuit\'s exact specifications: load type, power, cable size, length, location, and protection. Example for 9.5kW shower, 10mm² cable, 18m run: "This 9.5kW shower requires 10mm² cable over 18m. Use 25mm PVC conduit where exposed. All connections must use heat-resistant terminals rated for 40A continuous load. Install RCD spur at shower pull-cord location for local isolation."'
+                },
+                structuredOutput: {
+                  type: 'object',
+                  description: 'MANDATORY structured output for professional engineering format',
+                  properties: {
+                    atAGlanceSummary: {
+                      type: 'object',
+                      description: 'Summary card with key design parameters',
+                      properties: {
+                        loadKw: { type: 'number', description: 'Load in kW - CALCULATE from loadPower: loadPower/1000 (e.g., 7360W → 7.36)' },
+                        loadIb: { type: 'string', description: 'Design current Ib with unit (e.g., "32A")' },
+                        cable: { type: 'string', description: 'Cable specification: Size and type only (e.g., "1.5mm² twin and earth" or "6mm² SWA"). DO NOT include CPC size here.' },
+                        protectiveDevice: { type: 'string', description: 'Protection (e.g., "40A Type B MCB (6kA)")' },
+                        voltageDrop: { type: 'string', description: 'VD result with compliance (e.g., "6.2V (2.7%) ✓ Compliant")' },
+                        zs: { type: 'string', description: 'Zs with compliance (e.g., "0.68Ω ✓ Well within 1.37Ω limit")' },
+                        complianceTick: { type: 'boolean', description: 'Overall compliance (true if all checks pass)' },
+                        notes: { type: 'string', description: 'Future-proofing or special conditions (e.g., "Designed with 20% safety margin for future EV charger upgrade")' }
+                      },
+                      required: ['loadKw', 'loadIb', 'cable', 'protectiveDevice', 'voltageDrop', 'zs', 'complianceTick', 'notes']
+                    },
+                    sections: {
+                      type: 'object',
+                      description: 'EXACTLY 8 sections in strict order',
+                      properties: {
+                        circuitSummary: { 
+                          type: 'string', 
+                          description: '1. Circuit Summary: Overview of the circuit purpose, load served, and installation context (100-150 words)' 
+                        },
+                        loadDetails: { 
+                          type: 'string', 
+                          description: '2. Load Details: Detailed load analysis including power factor, diversity, and current calculations (100-150 words)' 
+                        },
+                        cableSelectionBreakdown: { 
+                          type: 'string', 
+                          description: '3. Cable Selection & Calculation Breakdown: Full cable sizing logic with Iz tables, derating factors, and voltage drop calculations (150-200 words)' 
+                        },
+                        protectiveDeviceSelection: { 
+                          type: 'string', 
+                          description: '4. Protective Device Selection: MCB/RCBO selection with curve justification, Zs compliance, and fault current analysis (100-150 words)' 
+                        },
+                        complianceConfirmation: { 
+                          type: 'string', 
+                          description: '5. Compliance Confirmation: BS 7671 regulation verification with specific regulation numbers (411.3.2, 433.1, etc.) (100-150 words)' 
+                        },
+                        designJustification: { 
+                          type: 'string', 
+                          description: '6. Design Justification: Professional engineering rationale for design choices and safety margins (100-150 words)' 
+                        },
+                        safetyNotes: { 
+                          type: 'string', 
+                          description: '7. Safety Notes: Critical electrical safety warnings, isolation requirements, and safe working practices (100-150 words)' 
+                        },
+                        testingCommissioningGuidance: { 
+                          type: 'string', 
+                          description: '8. Testing & Commissioning Guidance: BS 7671 Part 6 electrical tests ONLY - continuity of protective conductors (R1+R2), earth fault loop impedance (Zs), insulation resistance between live conductors and earth, RCD trip time and residual current. Include expected numerical readings based on cable size and circuit parameters, and acceptance criteria per GN3. NO installation procedures (handled by Installation Agent). (150-200 words)' 
+                        }
+                      },
+                      required: [
+                        'circuitSummary', 
+                        'loadDetails', 
+                        'cableSelectionBreakdown', 
+                        'protectiveDeviceSelection', 
+                        'complianceConfirmation', 
+                        'designJustification', 
+                        'safetyNotes', 
+                        'testingCommissioningGuidance'
+                      ]
+                    }
+                  },
+                  required: ['atAGlanceSummary', 'sections']
+                }
+              },
+              required: [
+                'circuitNumber',
+                'name', 
+                'loadType', 
+                'loadPower',
+                'phases',
+                'voltage',
+                'cableLength',
+                'installationMethod',
+                'specialLocation', 
+                'cableSize', 
+                'cpcSize',
+                'cableType',
+                'protectionDevice',
+                'rcdProtected',
+                'calculations', 
+                'justifications', 
+                'installationNotes',
+                'structuredOutput'
+              ]
+            }
+          },
+          required: ['circuit'],
+          additionalProperties: false
+        }
+      }
+    };
+  }
+
+  /**
+   * Build strict tool schema for design_circuits function (BATCH MODE - legacy)
    */
   private buildDesignTool(installationType?: string): object {
     return {
