@@ -810,11 +810,13 @@ export class DesignPipeline {
     });
 
     // ========================================
-    // PHASE 4.6: REMOVED - Auto-Fix Engine
-    // AI's prose justification already contains the correct selections
-    // No need to second-guess the AI's engineering decisions
+    // PHASE 4.6: Auto-Fix Engine - Critical Safety Corrections
+    // AI is unreliable at following protection requirements (RCBOs for sockets)
+    // This catch-all ensures BS 7671 compliance for safety-critical items
     // ========================================
-    this.logger.info('⏭️ Auto-fix engine REMOVED - trusting AI selections from prose');
+    this.logger.info('🔧 Running Auto-Fix Engine for critical safety corrections');
+    design.circuits = this.autoFix.fixAll(design.circuits, normalized.supply);
+    this.logger.info('✅ Auto-Fix Engine complete');
 
     // ========================================
     // PHASE 4.7: FALLBACK Deterministic Calculations (Only for Missing Values)
