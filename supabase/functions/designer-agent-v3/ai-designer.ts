@@ -59,6 +59,7 @@ export class AIDesigner {
     const tool_choice = { type: 'function', function: { name: 'design_circuits' } };
 
     // Call OpenAI with timeout
+    const { Timeouts } = await import('../_shared/timeout.ts');
     const response = await callOpenAI(
       {
         messages: [
@@ -71,7 +72,7 @@ export class AIDesigner {
         tool_choice
       },
       this.openAiKey,
-      120000 // 120s timeout - optimized for 30-item RAG context
+      Timeouts.EDGE_FUNCTION_MAX // 360000 (6 minutes) - handles complex industrial designs with RAG
     );
 
     const duration = Date.now() - startTime;

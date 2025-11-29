@@ -103,7 +103,7 @@ export class DesignPipeline {
   }
 
   /**
-   * RAG Search using GIN-indexed keyword searches
+   * RAG Search using comprehensive keyword extraction (400+ keywords)
    */
   private async performRAGSearch(inputs: NormalizedInputs): Promise<RAGContext> {
     const ragStart = Date.now();
@@ -115,34 +115,34 @@ export class DesignPipeline {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
-    // Extract keywords from circuits
-    const keywords = new Set<string>();
-    const loadTypes = new Set<string>();
-    const cableSizes = new Set<number>();
+    // Import comprehensive keyword extractor
+    const { extractDesignKeywords } = await import('./design-keyword-extractor.ts');
 
-    inputs.circuits.forEach(circuit => {
-      keywords.add(circuit.loadType.toLowerCase());
-      keywords.add('cable sizing');
-      keywords.add('voltage drop');
-      keywords.add('protection');
-      keywords.add('earthing');
+    // Extract comprehensive keywords (50-150+ per job)
+    const { keywords, loadTypes, cableSizes } = extractDesignKeywords(
+      inputs.circuits,
+      inputs.supply,
+      inputs.projectInfo
+    );
 
-      loadTypes.add(circuit.loadType.toLowerCase());
-      [1.5, 2.5, 4, 6, 10, 16, 25].forEach(size => cableSizes.add(size));
+    this.logger.info('Keywords extracted', {
+      keywordCount: keywords.size,
+      loadTypes: Array.from(loadTypes),
+      cableSizes: Array.from(cableSizes)
     });
 
-    // Parallel RAG searches
+    // Parallel RAG searches with CORRECT database categories
     const [designKnowledge, regulations] = await Promise.all([
       searchDesignIntelligence(supabase, {
         keywords: Array.from(keywords),
         loadTypes: Array.from(loadTypes),
         cableSizes: Array.from(cableSizes),
-        limit: 25
+        limit: 30  // 30 design knowledge items (formulas, tables, examples)
       }),
       searchRegulationsIntelligence(supabase, {
         keywords: Array.from(keywords),
-        categories: ['cable_sizing', 'voltage_drop', 'protection', 'earthing'],
-        limit: 15
+        categories: ['Cables', 'Protection', 'Earthing', 'Design', 'Circuits', 'Safety', 'Special Locations'],
+        limit: 15  // 15 regulation items (BS 7671 compliance)
       })
     ]);
 
