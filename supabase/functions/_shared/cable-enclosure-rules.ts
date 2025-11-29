@@ -187,21 +187,39 @@ export const CABLE_ENCLOSURE_RULES: Record<string, CableEnclosureMapping> = {
     outdoorOptions: ['in PVC conduit (IP65)'],
     enclosureRequired: false,
     reason: 'T&E can be clipped direct in dry indoor locations',
-    notes: 'Should not be exposed to mechanical damage. Not recommended outdoors - use SWA instead.'
+    notes: 'Should not be exposed to mechanical damage. Not recommended outdoors - use SWA instead.',
+    additionalRequirements: ['Domestic installations only', 'Not suitable for commercial/industrial']
   },
   'SWA': {
-    indoorOptions: ['clipped direct', 'on cable tray', 'on cable ladder'],
-    outdoorOptions: ['clipped direct with cable glands', 'buried direct'],
+    indoorOptions: ['clipped direct', 'on heavy-duty perforated tray', 'on cable ladder', 'on cable basket'],
+    outdoorOptions: ['clipped direct with SWA glands', 'buried direct with warning tape', 'on cable tray'],
     enclosureRequired: false,
     reason: 'SWA provides its own mechanical protection via steel wire armour',
-    notes: 'No conduit or trunking needed. Armour provides earth continuity.'
+    notes: 'No conduit or trunking needed. Armour provides earth continuity and screening.',
+    additionalRequirements: ['Use cable ladder for grouped large cables (50mm²+)', 'Heavy-duty tray for industrial runs']
+  },
+  'Flexible SWA': {
+    indoorOptions: ['cable basket', 'clipped with flexible clips', 'on cable tray'],
+    outdoorOptions: ['clipped direct with flexible SWA glands'],
+    enclosureRequired: false,
+    reason: 'Flexible armoured cable for moving machinery and vibration areas',
+    notes: 'Industrial applications: machinery connections, conveyor systems, overhead cranes',
+    additionalRequirements: ['Use flexible glands rated for vibration', 'Regular inspection for flex fatigue']
   },
   'LSZH single': {
-    indoorOptions: ['in steel conduit', 'in metal trunking', 'on cable basket', 'on cable tray'],
-    outdoorOptions: ['in weatherproof steel conduit'],
+    indoorOptions: ['in steel conduit', 'in metal trunking (steel/aluminum)', 'on cable basket', 'on perforated cable tray'],
+    outdoorOptions: ['in weatherproof galvanised steel conduit'],
     enclosureRequired: true,
     reason: 'Single core cables must be enclosed together to prevent electromagnetic effects',
-    notes: 'BS 7671 Reg 521.5.1 - singles must be grouped together',
+    notes: 'BS 7671 Reg 521.5.1 - singles must be grouped together. Commercial/industrial standard.',
+    additionalRequirements: ['All phases and neutral must be enclosed together', 'Steel trunking for fire-rated routes', 'PVC trunking acceptable for office areas']
+  },
+  'PVC single': {
+    indoorOptions: ['in PVC conduit', 'in PVC trunking', 'on cable tray'],
+    outdoorOptions: ['in PVC conduit (UV-resistant, IP65)'],
+    enclosureRequired: true,
+    reason: 'Single core cables must be enclosed to prevent electromagnetic effects',
+    notes: 'Domestic applications only. Use LSZH singles for commercial/industrial.',
     additionalRequirements: ['All phases and neutral must be enclosed together']
   },
   'FP200': {
@@ -233,6 +251,22 @@ export const CABLE_ENCLOSURE_RULES: Record<string, CableEnclosureMapping> = {
     enclosureRequired: false,
     reason: 'XLPE insulation rated to 90°C, suitable for high-temperature applications',
     notes: 'Often used in industrial applications requiring higher operating temperatures'
+  },
+  'Cat6 data cable': {
+    indoorOptions: ['on cable basket', 'in plastic trunking (segregated)', 'on cable tray (separate from power)', 'in dado trunking'],
+    outdoorOptions: ['in weatherproof conduit', 'external-rated Cat6'],
+    enclosureRequired: false,
+    reason: 'Data cables require segregation from power cables to prevent EMI',
+    notes: 'Commercial data installations. Must maintain 300mm separation from power or use screened cable.',
+    additionalRequirements: ['Segregate 300mm from power cables', 'Use screened (FTP/STP) if close to power', 'Maintain bend radius (4× cable diameter)']
+  },
+  'Cat6a data cable': {
+    indoorOptions: ['on cable basket', 'in plastic trunking (segregated)', 'on cable tray (separate from power)'],
+    outdoorOptions: ['in weatherproof conduit', 'external-rated Cat6a'],
+    enclosureRequired: false,
+    reason: '10Gb Ethernet data cables require stricter segregation and EMI protection',
+    notes: 'Commercial/data centre installations. Higher performance requires better segregation.',
+    additionalRequirements: ['Segregate 300mm from power cables', 'Use screened (FTP/STP) mandatory for 10Gb', 'Maintain bend radius (4× cable diameter)', 'Avoid fluorescent lighting proximity']
   }
 };
 
@@ -259,25 +293,32 @@ export const ENVIRONMENT_ENCLOSURE_RULES: Record<string, EnvironmentEnclosureRul
     reason: 'Cost-effective methods suitable for domestic installations'
   },
   'commercial': {
-    preferredMethods: ['in steel trunking', 'on cable tray', 'in metal conduit'],
+    preferredMethods: ['steel trunking', 'perforated cable tray', 'steel conduit', 'cable basket'],
     officeFit: 'dado trunking for floor boxes and power distribution',
-    suspendedCeiling: 'cable tray above false ceiling with accessible drop rods',
-    reason: 'Fire-rated containment systems for commercial buildings'
+    suspendedCeiling: 'perforated cable tray above false ceiling with accessible drop rods',
+    ceilingVoid: 'cable basket for easy modification and cable management',
+    surface: 'steel trunking (fire-rated areas) or PVC trunking (office areas)',
+    highRisk: 'steel trunking with IP65 rating for high-traffic or fire-rated routes',
+    separation: 'Data cables segregated 300mm from power or use screened cable',
+    reason: 'Fire-rated containment systems for commercial buildings with flexibility for modifications'
   },
   'industrial': {
-    preferredMethods: ['cable tray', 'cable ladder', 'heavy-duty steel conduit'],
-    highRisk: 'galvanised steel trunking with IP54+ ratings',
-    reason: 'Robust containment for harsh industrial environments'
+    preferredMethods: ['cable ladder', 'heavy-duty perforated tray', 'galvanised steel conduit', 'clipped direct SWA'],
+    ceilingVoid: 'cable ladder for heavy grouped cables and easy access',
+    surface: 'clipped direct SWA or galvanised conduit for singles',
+    highRisk: 'galvanised steel conduit with IP65+ ratings for harsh/corrosive environments',
+    separation: 'Motor circuits separated from control/data circuits, 300mm minimum',
+    reason: 'Robust heavy-duty containment for harsh industrial environments with large cable loads'
   },
   'data-centre': {
-    preferredMethods: ['cable tray', 'cable basket', 'raised floor containment'],
-    separation: 'Power and data must be segregated per TIA-942 standards',
-    reason: 'High-density cable management with cooling considerations'
+    preferredMethods: ['cable basket', 'perforated cable tray', 'raised floor containment'],
+    separation: 'Power and data MUST be segregated per TIA-942: 300mm minimum or screened',
+    reason: 'High-density cable management with cooling considerations and EMC compliance'
   },
   'healthcare': {
-    preferredMethods: ['steel trunking', 'cable tray with covers'],
+    preferredMethods: ['steel trunking with covers', 'cable tray with covers'],
     reason: 'Cleanable containment systems for hygiene-critical areas',
-    separation: 'Medical equipment circuits segregated from general power'
+    separation: 'Medical equipment circuits segregated from general power per HTM 06-01'
   }
 };
 

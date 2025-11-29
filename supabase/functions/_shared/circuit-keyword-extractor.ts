@@ -7,12 +7,78 @@ export function extractIntelligenceKeywords(circuits: any[]): string[] {
   const keywords = new Set<string>();
   
   circuits.forEach(circuit => {
-    const { loadType, loadPower, cableLength, specialLocation, phases } = circuit;
+    const { loadType, loadPower, cableLength, specialLocation, phases, description, installMethod } = circuit;
     
     // Core load type keywords
     if (loadType) {
       keywords.add(loadType.toLowerCase());
       keywords.add(`${loadType} circuit`);
+      
+      // Data cable detection
+      if (loadType.toLowerCase().includes('data') || loadType.toLowerCase().includes('network')) {
+        keywords.add('structured cabling');
+        keywords.add('Cat6');
+        keywords.add('data segregation');
+        keywords.add('EMI protection');
+        keywords.add('TIA-942');
+      }
+    }
+    
+    // Description-based keywords for environment detection
+    if (description) {
+      const lowerDesc = description.toLowerCase();
+      
+      // Commercial environment indicators
+      if (lowerDesc.includes('office') || lowerDesc.includes('commercial') || lowerDesc.includes('retail')) {
+        keywords.add('commercial installation');
+        keywords.add('LSZH cable');
+        keywords.add('steel trunking');
+        keywords.add('cable tray');
+      }
+      
+      // Industrial environment indicators
+      if (lowerDesc.includes('industrial') || lowerDesc.includes('factory') || lowerDesc.includes('warehouse') || lowerDesc.includes('machinery')) {
+        keywords.add('industrial installation');
+        keywords.add('SWA cable');
+        keywords.add('cable ladder');
+        keywords.add('heavy-duty tray');
+        keywords.add('galvanised conduit');
+      }
+      
+      // Corrosive/harsh environment
+      if (lowerDesc.includes('corrosive') || lowerDesc.includes('chemical') || lowerDesc.includes('harsh')) {
+        keywords.add('corrosion protection');
+        keywords.add('galvanised');
+        keywords.add('IP65');
+      }
+      
+      // Fire-rated areas
+      if (lowerDesc.includes('fire') && !lowerDesc.includes('alarm')) {
+        keywords.add('fire compartmentation');
+        keywords.add('steel containment');
+        keywords.add('fire-rated route');
+      }
+    }
+    
+    // Installation method keywords for containment
+    if (installMethod) {
+      keywords.add(installMethod);
+      if (installMethod.includes('trunking')) {
+        keywords.add('trunking selection');
+        keywords.add('steel vs PVC trunking');
+      }
+      if (installMethod.includes('tray')) {
+        keywords.add('cable tray');
+        keywords.add('perforated tray');
+      }
+      if (installMethod.includes('ladder')) {
+        keywords.add('cable ladder');
+        keywords.add('heavy cables');
+      }
+      if (installMethod.includes('conduit')) {
+        keywords.add('conduit system');
+        keywords.add('singles in conduit');
+      }
     }
     
     // Power-based keywords
