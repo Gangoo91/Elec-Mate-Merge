@@ -1034,166 +1034,122 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
       // Get current user
       const { data: { user } } = await supabase.auth.getUser();
       
-      // Transform design data to match PDF edge function's expected format
-      // CRITICAL: Recalculate totalLoad from circuits to ensure accuracy
-      const calculatedTotalLoad = design.circuits?.reduce((sum, c) => sum + (c.loadPower || 0), 0) || 0;
-      
-      // Helper: Get default cable type for installation type
-      const getDefaultCableType = (installationType: string, cableSize: number, cpcSize: number) => {
-        if (installationType === 'industrial') return `${cableSize}mm² SWA`;
-        if (installationType === 'commercial') return `${cableSize}mm² LSZH singles`;
-        return `${cableSize}mm² / ${cpcSize}mm² CPC twin and earth`;
-      };
-      
-      // Helper: Get default installation method for installation type
-      const getDefaultInstallationMethod = (installationType: string) => {
-        if (installationType === 'industrial') return 'Method D (Buried direct in ground or SWA)';
-        if (installationType === 'commercial') return 'Method B (In conduit on or in wall)';
-        return 'Method C (Clipped direct)';
-      };
+      // ✨ DIRECT PASS-THROUGH: Send only real data from design object
+      // NO fallbacks, NO fake 65%, NO default cable types
+      // Edge function will log warnings for missing data but NOT generate fake values
       
       const transformedDesign = {
-        projectName: design.projectName || 'Untitled Project',
-        location: design.location || 'Not Specified',
-        clientName: design.clientName || 'Not Specified',
-        electricianName: design.electricianName || 'Not Specified',
-        installationType: design.installationType || 'domestic',
+        // Project Info (direct pass-through)
+        projectName: design.projectName,
+        location: design.location,
+        clientName: design.clientName,
+        electricianName: design.electricianName,
+        installationType: design.installationType,
         
-        // Add design reference for tracking
-        designReference: `REF-${new Date().toISOString().split('T')[0].replace(/-/g, '')}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`,
+        // Consumer Unit (direct pass-through)
+        consumerUnit: design.consumerUnit,
         
-        consumerUnit: design.consumerUnit || {
-          type: 'split-load',
-          mainSwitchRating: 100,
-          incomingSupply: {
-            voltage: 230,
-            phases: 'single',
-            incomingPFC: 6000,
-            Ze: 0.35,
-            earthingSystem: 'TN-S'
-          }
-        },
-        
-        // CRITICAL: Map circuits with all nested data explicitly preserved
+        // Circuits with ALL data preserved (NO FALLBACKS)
         circuits: (design.circuits || []).map((circuit, index) => {
-          // Get circuit-specific installation guidance from top-level installationGuidance
           const circuitKey = `circuit_${index}`;
           const circuitGuidanceData = design.installationGuidance?.[circuitKey]?.guidance;
           
-          // Merge expectedTests from Circuit Designer with testingRequirements from Installation Agent
-          // Priority: circuit.expectedTests (Phase 4.75) > circuit.expectedTestResults > transformed testingRequirements
-          const mergedExpectedTests = {
-            ...(circuit.expectedTestResults || {}),
-            ...(circuitGuidanceData?.testingRequirements 
-              ? transformInstallationTestingToExpectedResults(circuitGuidanceData.testingRequirements)
-              : {}),
-            ...(circuit.expectedTests || {}) // Phase 4.75 data takes highest priority
-          };
-          
           return {
-            ...circuit,
-            // Compliance status from Phase 5.5
-            complianceStatus: circuit.complianceStatus || 'pass',
-            validationIssues: circuit.validationIssues || [],
+            // Basic circuit data (direct pass-through)
+            circuitNumber: circuit.circuitNumber,
+            name: circuit.name,
+            loadType: circuit.loadType,
+            loadPower: circuit.loadPower,
+            phases: circuit.phases,
+            cableLength: circuit.cableLength,
             
-            // Ensure critical fields are present with proper fallbacks
-            cableType: circuit.cableType || getDefaultCableType(
-              design.installationType || 'domestic',
-              circuit.cableSize || 1.5,
-              circuit.cpcSize || 1.0
-            ),
-            installationMethod: circuit.installationMethod || 
-              circuitGuidanceData?.cableRouting?.[0]?.method ||
-              getDefaultInstallationMethod(design.installationType || 'domestic'),
+            // Cable spec - NO FALLBACKS (send actual data or null)
+            cableType: circuit.cableType,
+            cableSize: circuit.cableSize,
+            cpcSize: circuit.cpcSize,
+            installationMethod: circuit.installationMethod,
             
-            // Use structured guidance for PDF (not the formatted string)
-            installationGuidance: circuit.installationGuidanceStructured || circuitGuidanceData ? {
-              referenceMethod: circuitGuidanceData?.cableRouting?.[0]?.method || 
-                circuit.installationMethod || 
-                getDefaultInstallationMethod(design.installationType || 'domestic'),
-              description: circuitGuidanceData?.cableRouting?.[0]?.description || 
-                'Cable installed as per BS 7671 requirements',
-              clipSpacing: '300mm horizontal, 400mm vertical per manufacturer guidance',
-              practicalTips: circuitGuidanceData?.installationProcedure?.map((s: any) => 
-                s.description || s.title || ''
-              ).filter(Boolean) || [],
-              regulation: circuitGuidanceData?.cableRouting?.[0]?.bsReference || 'BS 7671 Appendix 4'
-            } : {},
+            // Protection device (direct pass-through)
+            protectionDevice: circuit.protectionDevice,
+            rcdProtected: circuit.rcdProtected,
+            afddRequired: circuit.afddRequired,
             
-            // ✨ ADD: Full installation guidance from Installation Agent
+            // Calculations (direct pass-through)
+            calculations: circuit.calculations,
+            
+            // Compliance status from Phase 5.5 (direct pass-through)
+            complianceStatus: circuit.complianceStatus,
+            validationIssues: circuit.validationIssues,
+            
+            // Justifications (direct pass-through)
+            justifications: circuit.justifications,
+            
+            // Expected test results from Phase 4.75 (direct pass-through)
+            expectedTests: circuit.expectedTests,
+            expectedTestResults: circuit.expectedTestResults,
+            
+            // Derating factors (direct pass-through)
+            deratingFactors: circuit.deratingFactors,
+            
+            // Fault current analysis (direct pass-through)
+            faultCurrentAnalysis: circuit.faultCurrentAnalysis,
+            
+            // Earthing requirements (direct pass-through)
+            earthingRequirements: circuit.earthingRequirements,
+            
+            // Special locations (direct pass-through)
+            specialLocationCompliance: circuit.specialLocationCompliance,
+            
+            // Installation guidance from Installation Agent (direct pass-through)
+            installationGuidance: circuit.installationGuidance,
             fullInstallationGuidance: circuitGuidanceData ? {
-              executiveSummary: circuitGuidanceData.executiveSummary || '',
-              safetyConsiderations: circuitGuidanceData.safetyConsiderations || [],
-              materialsRequired: circuitGuidanceData.materialsRequired || [],
-              toolsRequired: circuitGuidanceData.toolsRequired || [],
-              cableRouting: circuitGuidanceData.cableRouting || [],
-              terminationRequirements: circuitGuidanceData.terminationRequirements || [],
-              installationProcedure: circuitGuidanceData.installationProcedure || [],
-              testingRequirements: circuitGuidanceData.testingRequirements || {}
+              executiveSummary: circuitGuidanceData.executiveSummary,
+              safetyConsiderations: circuitGuidanceData.safetyConsiderations,
+              materialsRequired: circuitGuidanceData.materialsRequired,
+              toolsRequired: circuitGuidanceData.toolsRequired,
+              cableRouting: circuitGuidanceData.cableRouting,
+              terminationRequirements: circuitGuidanceData.terminationRequirements,
+              installationProcedure: circuitGuidanceData.installationProcedure,
+              testingRequirements: circuitGuidanceData.testingRequirements
             } : null,
+            guidanceQualityMetrics: design.installationGuidance?.[circuitKey]?.qualityMetrics,
             
-            // Quality metrics from Installation Agent
-            guidanceQualityMetrics: design.installationGuidance?.[circuitKey]?.qualityMetrics || null,
+            // Warnings (direct pass-through)
+            warnings: circuit.warnings,
             
-            // Preserve all nested objects with merged test results
-            justifications: circuit.justifications || {},
-            calculations: circuit.calculations || {},
-            protectionDevice: circuit.protectionDevice || {},
-            expectedTests: circuit.expectedTests || null, // Phase 4.75 structured test data
-            expectedTestResults: mergedExpectedTests,
-            deratingFactors: circuit.deratingFactors || {},
-            faultCurrentAnalysis: circuit.faultCurrentAnalysis || {},
-            earthingRequirements: circuit.earthingRequirements || {}
+            // Diversity (direct pass-through)
+            diversityFactor: circuit.diversityFactor,
+            diversityJustification: circuit.diversityJustification
           };
         }),
         
-        // CRITICAL: Use recalculated total load for accuracy
-        totalLoad: calculatedTotalLoad,
+        // Load assessment (direct pass-through - NO RECALCULATION)
+        totalLoad: design.totalLoad,
+        diversifiedLoad: (design as any).diversifiedLoad,
+        diversityFactor: design.diversityFactor,
+        totalDesignCurrent: (design as any).totalDesignCurrent,
         
-        // CRITICAL: Ensure diversity breakdown is passed or calculated
-        diversityBreakdown: design.diversityBreakdown || {
-          totalConnectedLoad: calculatedTotalLoad,
-          diversifiedLoad: calculatedTotalLoad * 0.65,
-          overallDiversityFactor: 0.65,
-          reasoning: 'Standard diversity applied',
-          bs7671Reference: 'Appendix 15',
-          circuitDiversity: []
-        },
+        // Diversity breakdown (direct pass-through - NO 65% FALLBACK)
+        diversityBreakdown: design.diversityBreakdown,
         
-        // CRITICAL: Pre-formatted fields for PDF template
-        diversityFactor: design.diversityBreakdown?.overallDiversityFactor 
-          ? `${(design.diversityBreakdown.overallDiversityFactor * 100).toFixed(0)}%`
-          : '65%',
-        
-        // Send raw number (not locale-formatted) for edge function to process
-        diversifiedLoad: design.diversityBreakdown?.diversifiedLoad || calculatedTotalLoad * 0.65,
-        
-        totalDesignCurrent: (() => {
-          const diversifiedLoadW = design.diversityBreakdown?.diversifiedLoad || calculatedTotalLoad * 0.65;
-          const voltage = design.consumerUnit?.incomingSupply?.voltage || 230;
-          const isThreePhase = design.consumerUnit?.incomingSupply?.phases === 'three';
-          return isThreePhase 
-            ? (diversifiedLoadW / (Math.sqrt(3) * voltage)).toFixed(1)
-            : (diversifiedLoadW / voltage).toFixed(1);
-        })(),
-        
-        // Compliance checks summary
+        // Compliance checks (direct pass-through)
         complianceChecks: {
           allCircuitsCompliant: design.circuits?.every(c => 
             c.calculations?.voltageDrop?.compliant && 
             c.calculations?.zs < c.calculations?.maxZs
-          ) || false,
-          totalWarnings: design.circuits?.reduce((sum, c) => sum + (c.warnings?.length || 0), 0) || 0,
+          ),
+          totalWarnings: design.circuits?.reduce((sum, c) => sum + (c.warnings?.length || 0), 0),
           criticalIssues: design.circuits?.filter(c => 
             !c.calculations?.voltageDrop?.compliant || 
             c.calculations?.zs >= c.calculations?.maxZs
-          ).length || 0
+          ).length
         },
         
-        // Additional fields the PDF template may need
-        materials: design.materials || [],
-        practicalGuidance: design.practicalGuidance || [],
-        installationGuidance: design.installationGuidance // Installation guidance per circuit
+        // Materials & guidance (direct pass-through)
+        materials: design.materials,
+        practicalGuidance: design.practicalGuidance,
+        designNotes: (design as any).designNotes,
+        installationGuidance: design.installationGuidance
       };
       
       // Detailed circuit data verification logging

@@ -7,24 +7,7 @@ const corsHeaders = {
 };
 
 const PDF_MONKEY_API_KEY = Deno.env.get('PDF_MONKEY_API_KEY');
-const CIRCUIT_DESIGN_TEMPLATE_ID = 'DF1DE972-30B4-45F9-83C0-4CEB4DE90E70'; // Placeholder - user will create template
-
-/**
- * Helper to safely parse load values that may be:
- * - Numbers
- * - Locale-formatted strings (e.g., "19,500")
- * - Strings with kW suffix (e.g., "19.5 kW")
- */
-function parseLoadValue(value: any): number {
-  if (typeof value === 'number') return value;
-  if (typeof value === 'string') {
-    // Remove "kW", commas, and whitespace, then parse
-    const cleaned = value.replace(/kW/gi, '').replace(/,/g, '').trim();
-    const parsed = parseFloat(cleaned);
-    return isNaN(parsed) ? 0 : parsed;
-  }
-  return 0;
-}
+const CIRCUIT_DESIGN_TEMPLATE_ID = 'DF1DE972-30B4-45F9-83C0-4CEB4DE90E70';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -63,7 +46,7 @@ serve(async (req) => {
 
     console.log('[CIRCUIT-PDF] Processing design:', design.projectName);
 
-    // Get user's custom template if they've configured one
+    // Get user's custom template if configured
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
@@ -85,15 +68,10 @@ serve(async (req) => {
       }
     }
 
-    // Transform design data to PDF-friendly format
+    // ✨ DIRECT PASS-THROUGH: No fallbacks, no computation, no transformation
+    // Frontend sends complete data, we just pass it to PDF Monkey with minimal metadata
     const payload = {
-      // Project Header
-      projectName: design.projectName || 'Untitled Project',
-      location: design.location || 'Not Specified',
-      clientName: design.clientName || 'Not Specified',
-      electricianName: design.electricianName || 'Not Specified',
-      designReference: `REF-${new Date().toISOString().split('T')[0].replace(/-/g, '')}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`,
-      installationType: design.installationType || 'domestic',
+      // === METADATA (only things we add) ===
       generatedDate: new Date().toLocaleDateString('en-GB', {
         day: '2-digit',
         month: '2-digit',
@@ -102,504 +80,188 @@ serve(async (req) => {
         minute: '2-digit'
       }),
       date: new Date().toLocaleDateString('en-GB'),
-
-      // Enhanced Summary
-      voltage: design.consumerUnit.incomingSupply.voltage,
-      phases: design.consumerUnit.incomingSupply.phases === 'single' ? 'Single Phase' : 'Three Phase',
-      voltageDisplay: `${design.consumerUnit.incomingSupply.voltage}V ${design.consumerUnit.incomingSupply.phases === 'single' ? 'Single Phase' : 'Three Phase'}`,
-      earthingSystem: design.consumerUnit.incomingSupply.earthingSystem || 'TN-C-S',
-      ze: design.consumerUnit.incomingSupply.ze || '0.35',
-      pscc: design.consumerUnit.incomingSupply.pscc || '16',
-      totalLoad: design.totalLoad / 1000, // Convert to kW
-      totalLoadKW: `${(design.totalLoad / 1000).toFixed(1)} kW`,
-      diversifiedLoad: (() => {
-        const divLoad = parseLoadValue(design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || design.totalLoad || 0);
-        // If value > 100, assume it's in Watts and convert to kW; otherwise already in kW
-        const loadInKW = divLoad > 100 ? divLoad / 1000 : divLoad;
-        return loadInKW.toFixed(1);
-      })(),
-      diversifiedLoadKW: (() => {
-        const divLoad = parseLoadValue(design.diversifiedLoad || design.diversityBreakdown?.diversifiedLoad || design.totalLoad || 0);
-        const loadInKW = divLoad > 100 ? divLoad / 1000 : divLoad;
-        return `${loadInKW.toFixed(1)} kW`;
-      })(),
-      diversityFactorPercent: design.diversityFactor || (design.diversityBreakdown?.overallDiversityFactor 
-        ? (design.diversityBreakdown.overallDiversityFactor * 100).toFixed(0) + '%' 
-        : '65%'),
-      totalConnectedLoad: (design.totalLoad / 1000).toFixed(1),
-      totalConnectedLoadKW: `${(design.totalLoad / 1000).toFixed(1)} kW`,
-      totalDesignCurrent: design.totalDesignCurrent || (() => {
-        const diversifiedLoadW = design.diversityBreakdown?.diversifiedLoad || design.totalLoad;
-        const voltage = design.consumerUnit.incomingSupply.voltage;
-        const isThreePhase = design.consumerUnit.incomingSupply.phases === 'three';
-        return isThreePhase 
-          ? (diversifiedLoadW / (Math.sqrt(3) * voltage)).toFixed(1)  // Three-phase: P / (√3 × V)
-          : (diversifiedLoadW / voltage).toFixed(1);                   // Single-phase: P / V
-      })(),
-      consumerUnitWays: Math.ceil(design.circuits.length * 1.5),
-      circuitCount: design.circuits.length,
-      totalCircuits: design.circuits.length,
-      consumerUnitRating: design.consumerUnit.mainSwitchRating,
-      compliantCircuits: design.circuits.filter((c: any) => 
-        c.calculations.voltageDrop.compliant && c.calculations.zs < c.calculations.maxZs
-      ).length,
-      warningCount: design.circuits.reduce((sum: number, c: any) => sum + (c.warnings?.length || 0), 0),
-      allCircuitsCompliant: design.circuits.every((c: any) => 
-        c.calculations.voltageDrop.compliant && c.calculations.zs < c.calculations.maxZs
-      ),
-      complianceStatus: design.circuits.every((c: any) => 
-        c.calculations.voltageDrop.compliant && c.calculations.zs < c.calculations.maxZs
-      ) ? 'All Compliant' : 'Issues Found',
+      designReference: `REF-${new Date().toISOString().split('T')[0].replace(/-/g, '')}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`,
       
-      // Compliance summary counts - calculated dynamically using CircuitCard.tsx logic
-      complianceSummary: (() => {
-        const calculateStatus = (c: any) => {
-          const vdCompliant = c.calculations?.voltageDrop?.compliant ?? true;
-          const zsCompliant = (c.calculations?.zs ?? 0) <= (c.calculations?.maxZs ?? 999);
-          const hasWarnings = c.warnings && c.warnings.length > 0;
-          const isCompliant = vdCompliant && zsCompliant;
-          return !isCompliant ? 'fail' : hasWarnings ? 'warning' : 'pass';
-        };
-        
-        const statuses = design.circuits.map(calculateStatus);
-        return {
-          passCount: statuses.filter((s: string) => s === 'pass').length,
-          warningCount: statuses.filter((s: string) => s === 'warning').length,
-          failCount: statuses.filter((s: string) => s === 'fail').length,
-          totalCircuits: design.circuits.length
-        };
-      })(),
-
-      // Diversity Breakdown
-      diversityBreakdown: design.diversityBreakdown ? {
-        totalConnectedLoad: (() => {
-          const load = parseLoadValue(design.totalConnectedLoad || design.diversityBreakdown.totalConnectedLoad || design.totalLoad || 0);
-          const loadInKW = load > 100 ? load / 1000 : load;
-          return loadInKW.toFixed(1);
-        })(),
-        totalConnectedLoadKW: (() => {
-          const load = parseLoadValue(design.totalConnectedLoad || design.diversityBreakdown.totalConnectedLoad || design.totalLoad || 0);
-          const loadInKW = load > 100 ? load / 1000 : load;
-          return `${loadInKW.toFixed(1)} kW`;
-        })(),
-        diversifiedLoad: (() => {
-          const load = parseLoadValue(design.diversifiedLoad || design.diversityBreakdown.diversifiedLoad || design.totalLoad * 0.65 || 0);
-          const loadInKW = load > 100 ? load / 1000 : load;
-          return loadInKW.toFixed(1);
-        })(),
-        diversifiedLoadKW: (() => {
-          const load = parseLoadValue(design.diversifiedLoad || design.diversityBreakdown.diversifiedLoad || design.totalLoad * 0.65 || 0);
-          const loadInKW = load > 100 ? load / 1000 : load;
-          return `${loadInKW.toFixed(1)} kW`;
-        })(),
-        overallDiversityFactor: design.diversityFactor || (design.diversityBreakdown.overallDiversityFactor 
-          ? (design.diversityBreakdown.overallDiversityFactor * 100).toFixed(0) + '%' 
-          : '65%'),
-        reasoning: design.diversityBreakdown.reasoning || 'Standard diversity applied per IET On-Site Guide',
-        bs7671Reference: design.diversityBreakdown.bs7671Reference || 'Appendix 15',
-        circuitDiversity: (design.diversityBreakdown.circuitDiversity || []).map((cd: any) => {
-          const connLoad = parseLoadValue(cd.connectedLoad || 0);
-          const connLoadInKW = connLoad > 100 ? connLoad / 1000 : connLoad;
-          const divLoad = parseLoadValue(cd.diversifiedLoad || 0);
-          const divLoadInKW = divLoad > 100 ? divLoad / 1000 : divLoad;
-          
-          return {
-            circuitName: cd.circuitName || 'Unknown',
-            connectedLoad: connLoadInKW.toFixed(2),
-            connectedLoadKW: `${connLoadInKW.toFixed(2)} kW`,
-            diversityFactor: cd.diversityFactorApplied ? (cd.diversityFactorApplied * 100).toFixed(0) + '%' : '100%',
-            diversifiedLoad: divLoadInKW.toFixed(2),
-            diversifiedLoadKW: `${divLoadInKW.toFixed(2)} kW`,
-            justification: cd.justification || 'No diversity applied'
-          };
-        })
-      } : {
-        totalConnectedLoad: (design.totalLoad / 1000).toFixed(1),
-        totalConnectedLoadKW: `${(design.totalLoad / 1000).toFixed(1)} kW`,
-        diversifiedLoad: (design.totalLoad * 0.65 / 1000).toFixed(1),
-        diversifiedLoadKW: `${(design.totalLoad * 0.65 / 1000).toFixed(1)} kW`,
-        overallDiversityFactor: '65%',
-        reasoning: 'Standard diversity applied per IET On-Site Guide',
-        bs7671Reference: 'Appendix 15',
-        circuitDiversity: []
-      },
-
-      // Circuits
-      circuits: design.circuits.map((c: any) => {
-        // Calculate compliance status dynamically using CircuitCard.tsx logic
-        const calculateComplianceStatus = (circuit: any) => {
-          const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
-          const zsCompliant = (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999);
-          const hasWarnings = circuit.warnings && circuit.warnings.length > 0;
-          const isCompliant = vdCompliant && zsCompliant;
-          return !isCompliant ? 'fail' : hasWarnings ? 'warning' : 'pass';
-        };
-        
-        // Determine cable type with installation-aware fallback
-        const getCableTypeFallback = () => {
-          const installationType = design.installationType || 'domestic';
-          if (installationType === 'industrial') return `${c.cableSize}mm² SWA`;
-          if (installationType === 'commercial') return `${c.cableSize}mm² LSZH singles`;
-          return `${c.cableSize}mm² / ${c.cpcSize}mm² CPC twin and earth`;
-        };
-        
-        // Determine installation method with better fallback
-        const getInstallationMethodFallback = () => {
-          const installationType = design.installationType || 'domestic';
-          if (installationType === 'industrial') return 'Method D (SWA buried direct)';
-          if (installationType === 'commercial') return 'Method B (In conduit on/in wall)';
-          return 'Method C (Clipped direct)';
-        };
-        
-        const cableType = c.cableType || getCableTypeFallback();
-        const installationMethod = c.installationMethod || 
-          c.installationGuidance?.referenceMethod || 
-          getInstallationMethodFallback();
-        
-        // Log if using fallbacks
-        const usingCableTypeFallback = !c.cableType;
-        const usingInstallationMethodFallback = !c.installationMethod && !c.installationGuidance?.referenceMethod;
-        
-        if (usingCableTypeFallback || usingInstallationMethodFallback) {
-          console.warn('[CIRCUIT-PDF] Using fallback for circuit', c.circuitNumber || c.name, {
-            usingCableTypeFallback,
-            usingInstallationMethodFallback,
-            fallbackCableType: usingCableTypeFallback ? cableType : null,
-            fallbackInstallationMethod: usingInstallationMethodFallback ? installationMethod : null
-          });
-        }
-        
-        return {
-          circuitNumber: c.circuitNumber,
-          name: c.name,
-          loadType: c.loadType,
-          loadPower: c.loadPower,
-          loadPowerKW: (c.loadPower / 1000).toFixed(1),
-          voltage: design.consumerUnit.incomingSupply.voltage,
-          phases: c.phases === 'single' ? 'Single Phase' : 'Three Phase',
-          cableType: cableType,
-          cableSize: c.cableSize,
-          cpcSize: c.cpcSize,
-          cableLength: c.cableLength,
-          installationMethod: installationMethod,
-          protectionDevice: `${c.protectionDevice.rating}A Type ${c.protectionDevice.curve} ${c.protectionDevice.type}`,
-          protectionType: c.protectionDevice.type,
-          
-          // Compliance status - calculated dynamically to match CircuitCard.tsx
-          complianceStatus: calculateComplianceStatus(c),
-          complianceStatusText: (() => {
-            const status = calculateComplianceStatus(c);
-            return status === 'pass' 
-              ? '✓ PASS' 
-              : status === 'warning' 
-                ? '⚠ REVIEW' 
-                : '✗ FAIL';
-          })(),
-          complianceStatusColour: (() => {
-            const status = calculateComplianceStatus(c);
-            return status === 'pass' 
-              ? 'green' 
-              : status === 'warning' 
-                ? 'amber' 
-                : 'red';
-          })(),
-          validationIssues: (c.validationIssues || []).map((issue: any) => ({
-            type: issue.type,
-            severity: issue.severity,
-            message: issue.message,
-            regulation: issue.regulation
-          })),
-          hasValidationIssues: (c.validationIssues || []).length > 0,
-          
-          // ✨ ADD: Full installation guidance from Installation Agent
-          fullInstallationGuidance: c.fullInstallationGuidance ? {
-            executiveSummary: c.fullInstallationGuidance.executiveSummary || '',
-            safetyConsiderations: (c.fullInstallationGuidance.safetyConsiderations || []).map((s: any) => ({
-              consideration: s.consideration,
-              priority: s.priority || 'medium',
-              bsReference: s.bsReference || '',
-              toolsRequired: (s.toolsRequired || []).join(', ')
-            })),
-            materialsRequired: (c.fullInstallationGuidance.materialsRequired || []).map((m: any) => ({
-              item: m.item,
-              specification: m.specification,
-              quantity: m.quantity,
-              source: m.source || ''
-            })),
-            toolsRequired: (c.fullInstallationGuidance.toolsRequired || []).map((t: any) => ({
-              tool: t.tool,
-              purpose: t.purpose,
-              category: t.category
-            })),
-            cableRouting: (c.fullInstallationGuidance.cableRouting || []).map((r: any) => ({
-              step: r.step,
-              method: r.method,
-              bsReference: r.bsReference || '',
-              notes: r.notes || ''
-            })),
-            terminationRequirements: (c.fullInstallationGuidance.terminationRequirements || []).map((t: any) => ({
-              location: t.location,
-              procedure: t.procedure,
-              toolsNeeded: (t.toolsNeeded || []).join(', '),
-              torqueSettings: t.torqueSettings || '',
-              bsReference: t.bsReference || ''
-            })),
-            installationProcedure: (c.fullInstallationGuidance.installationProcedure || []).map((step: any) => ({
-              stepNumber: step.stepNumber,
-              title: step.title,
-              description: step.description,
-              toolsForStep: (step.toolsForStep || []).join(', '),
-              materialsForStep: (step.materialsForStep || []).join(', '),
-              bsReferences: (step.bsReferences || []).join(', ')
-            })),
-            testingRequirements: c.fullInstallationGuidance.testingRequirements?.tests ? {
-              intro: c.fullInstallationGuidance.testingRequirements.intro || '',
-              tests: (c.fullInstallationGuidance.testingRequirements.tests || []).map((t: any) => ({
-                testName: t.testName,
-                procedure: t.procedure,
-                expectedReading: t.expectedReading || '',
-                acceptanceCriteria: t.acceptanceCriteria,
-                regulation: t.regulation,
-                toolsRequired: (t.toolsRequired || []).join(', ')
-              })),
-              recordingNote: c.fullInstallationGuidance.testingRequirements.recordingNote || ''
-            } : null
-          } : null,
-          protectionRating: c.protectionDevice.rating,
-          protectionCurve: c.protectionDevice.curve,
-          protectionKaRating: c.protectionDevice.kaRating,
-          rcdProtected: c.rcdProtected ? 'Yes' : 'No',
-          rcdProtectedText: c.rcdProtected ? `Yes (30mA)` : 'No',
-          afddRequired: c.afddRequired ? 'Yes' : 'No',
-
-          // Enhanced Calculations
-          designCurrent: c.calculations.Ib?.toFixed(1) || 'N/A',
-          designCurrentIb: c.calculations.Ib?.toFixed(1) || 'N/A',
-          nominalCurrentIn: c.protectionDevice.rating,
-          cableCapacityIz: c.calculations.Iz?.toFixed(0) || 'N/A',
-          deratedCapacity: c.calculations.deratedCapacity?.toFixed(0) || 'N/A',
-          safetyMargin: c.calculations.safetyMargin?.toFixed(0) || 'N/A',
-          voltageDrop: `${c.calculations.voltageDrop.volts?.toFixed(1) || 'N/A'}V (${c.calculations.voltageDrop.percent?.toFixed(1) || 'N/A'}%)`,
-          voltageDropVolts: c.calculations.voltageDrop.volts?.toFixed(1) || 'N/A',
-          voltageDropPercent: c.calculations.voltageDrop.percent?.toFixed(1) || 'N/A',
-          voltageDropCompliant: c.calculations.voltageDrop.compliant ? 'Yes' : 'No',
-          zsActual: c.calculations.zs?.toFixed(2) || 'N/A',
-          zsMax: c.calculations.maxZs?.toFixed(2) || 'N/A',
-          zsCompliant: c.calculations.zs < c.calculations.maxZs ? 'Yes' : 'No',
-
-          // Diversity
-          diversityFactor: c.diversityFactor ? `${(c.diversityFactor * 100).toFixed(0)}%` : '100%',
-          diversityJustification: c.diversityJustification || 'No diversity applied',
-
-          // Enhanced Justifications
-          justificationCable: c.justifications?.cableSize || `${c.cableSize}mm² cable selected based on design current`,
-          cableSizeJustification: c.justifications?.cableSize || `${c.cableSize}mm² cable selected based on design current`,
-          justificationProtection: c.justifications?.protection || `${c.protectionDevice.rating}A ${c.protectionDevice.curve} curve MCB selected`,
-          protectionJustification: c.justifications?.protection || `${c.protectionDevice.rating}A ${c.protectionDevice.curve} curve MCB selected`,
-          justificationRcd: c.justifications?.rcd || (c.rcdProtected ? '30mA RCD protection required' : 'RCD not required for this circuit'),
-          rcdJustification: c.justifications?.rcd || (c.rcdProtected ? '30mA RCD protection required' : 'RCD not required for this circuit'),
-
-          // Fault Current Analysis
-          faultCurrentAnalysis: c.faultCurrentAnalysis ? {
-          psccAtCircuit: `${c.faultCurrentAnalysis.psccAtCircuit || 'Not calculated'} kA`,
-          deviceBreakingCapacity: `${c.faultCurrentAnalysis.deviceBreakingCapacity || c.protectionDevice.kaRating} kA`,
-          compliant: c.faultCurrentAnalysis.compliant !== false ? 'Yes' : 'No',
-          marginOfSafety: c.faultCurrentAnalysis.marginOfSafety || 'Adequate',
-          regulation: c.faultCurrentAnalysis.regulation || 'BS 7671 434.5.2'
-        } : {
-          psccAtCircuit: 'Not calculated',
-          deviceBreakingCapacity: `${c.protectionDevice.kaRating} kA`,
-          compliant: 'Yes',
-          marginOfSafety: 'Device rated for prospective fault current',
-          regulation: 'BS 7671 434.5.2'
-        },
-
-          // Earthing Requirements
-          earthingRequirements: c.earthingRequirements ? {
-          cpcSize: c.earthingRequirements.cpcSize || `${c.cpcSize}mm²`,
-          supplementaryBonding: c.earthingRequirements.supplementaryBonding ? 'Yes' : 'No',
-          bondingConductorSize: c.earthingRequirements.bondingConductorSize || 'Not required',
-          justification: c.earthingRequirements.justification || `CPC sized per BS 7671 Table 54.7`,
-          regulation: c.earthingRequirements.regulation || 'BS 7671 Section 544'
-        } : {
-          cpcSize: `${c.cpcSize}mm²`,
-          supplementaryBonding: 'No',
-          bondingConductorSize: 'Not required',
-          justification: `CPC sized per BS 7671 Table 54.7`,
-          regulation: 'BS 7671 Section 544'
-        },
-
-          // Derating Factors
-          deratingFactors: c.deratingFactors ? {
-          Ca: c.deratingFactors.Ca || 1.0,
-          Cg: c.deratingFactors.Cg || 1.0,
-          Ci: c.deratingFactors.Ci || 1.0,
-          overall: c.deratingFactors.overall || 1.0,
-          explanation: c.deratingFactors.explanation || 'No derating factors applied',
-          tableReferences: c.deratingFactors.tableReferences || 'BS 7671 Appendix 4'
-        } : {
-          Ca: 1.0,
-          Cg: 1.0,
-          Ci: 1.0,
-          overall: 1.0,
-          explanation: 'Standard ambient temperature, no grouping, reference method C',
-          tableReferences: 'BS 7671 Table 4A2, 4B1, 4C1'
-        },
-
-          // Installation Guidance
-          installationGuidance: c.installationGuidance ? {
-          referenceMethod: c.installationGuidance.referenceMethod || 'Method C',
-          description: c.installationGuidance.description || 'Clipped direct to surface or in trunking',
-          clipSpacing: c.installationGuidance.clipSpacing || '300mm horizontal, 400mm vertical',
-          practicalTips: c.installationGuidance.practicalTips || ['Install cable clips at regular intervals', 'Avoid sharp bends', 'Maintain minimum bend radius'],
-          regulation: c.installationGuidance.regulation || 'BS 7671 Appendix 4'
-        } : {
-          referenceMethod: 'Method C',
-          description: 'Clipped direct to surface or in trunking',
-          clipSpacing: '300mm horizontal, 400mm vertical',
-          practicalTips: ['Install cable clips at regular intervals', 'Avoid sharp bends (minimum 3x cable diameter)', 'Support cables within 150mm of accessories'],
-          regulation: 'BS 7671 Appendix 4, Section 522'
-        },
-
-          // Special Location
-          isSpecialLocation: c.specialLocationCompliance?.isSpecialLocation || false,
-          specialLocationType: c.specialLocationCompliance?.locationType || '',
-          specialLocationRequirements: (c.specialLocationCompliance?.requirements || []).join('; '),
-          specialLocationRegulation: c.specialLocationCompliance?.regulation || '',
-          specialLocationZones: c.specialLocationCompliance?.zonesApplicable || '',
-
-          // Expected Test Results (Phase 4.75: read from expectedTests first, fallback to expectedTestResults)
-          expectedR1R2: c.expectedTests?.r1r2?.at70C || c.expectedTestResults?.r1r2?.at70C || c.calculations?.zs?.toFixed(2) || 'Calculate on site',
-          expectedZs: c.expectedTests?.zs?.expected?.toFixed(2) || c.calculations?.zs?.toFixed(2) || c.calculations?.maxZs?.toFixed(2) || 'Test on site',
-          expectedInsulation: c.expectedTests?.insulationResistance?.minResistance || '>1MΩ',
-          expectedTestResults: c.expectedTests || c.expectedTestResults ? {
-            r1r2: {
-              at20C: c.expectedTests?.r1r2?.at20C?.toFixed(3) || c.expectedTestResults?.r1r2?.at20C || 'Calculate based on cable length',
-              at70C: c.expectedTests?.r1r2?.at70C?.toFixed(3) || c.expectedTestResults?.r1r2?.at70C || 'Calculate based on cable length',
-              value: c.expectedTests?.r1r2?.value || `${c.expectedTests?.r1r2?.at70C?.toFixed(3) || 'N/A'}Ω`,
-              regulation: c.expectedTests?.r1r2?.regulation || c.expectedTestResults?.r1r2?.regulation || 'BS 7671 Reg 612.2',
-              calculation: c.expectedTestResults?.r1r2?.calculation || 'R1+R2 = (mΩ/m × length) / 1000'
-            },
-            zs: {
-              expected: c.expectedTests?.zs?.expected?.toFixed(2) || c.calculations?.zs?.toFixed(2) || 'Test required',
-              maxPermitted: c.expectedTests?.zs?.maxPermitted?.toFixed(2) || c.expectedTestResults?.zs?.maxPermitted || c.calculations?.maxZs?.toFixed(2) || 'See BS 7671',
-              marginPercent: c.expectedTests?.zs?.marginPercent?.toFixed(1) || null,
-              compliant: c.expectedTests?.zs?.compliant !== false && c.expectedTestResults?.zs?.compliant !== false ? 'Yes' : 'No',
-              regulation: c.expectedTests?.zs?.regulation || c.expectedTestResults?.zs?.regulation || 'BS 7671 Reg 612.9'
-            },
-            insulationResistance: {
-              testVoltage: c.expectedTests?.insulationResistance?.testVoltage || c.expectedTestResults?.insulationResistance?.testVoltage || '500V DC',
-              minResistance: c.expectedTests?.insulationResistance?.minResistance || c.expectedTestResults?.insulationResistance?.minResistance || '≥1.0MΩ',
-              regulation: c.expectedTests?.insulationResistance?.regulation || c.expectedTestResults?.insulationResistance?.regulation || 'BS 7671 Table 61'
-            },
-            polarity: c.expectedTestResults?.polarity || 'Correct at all points',
-            rcdTest: (c.rcdProtected && (c.expectedTests?.rcd || c.expectedTestResults?.rcdTest)) || c.rcdProtected ? {
-              ratingmA: c.expectedTests?.rcd?.ratingmA || 30,
-              maxTripTimeMs: c.expectedTests?.rcd?.maxTripTimeMs || 300,
-              at1x: c.expectedTestResults?.rcdTest?.at1x || `≤${c.expectedTests?.rcd?.maxTripTimeMs || 300}ms @ ${c.expectedTests?.rcd?.ratingmA || 30}mA`,
-              at5x: c.expectedTestResults?.rcdTest?.at5x || '≤40ms @ 150mA',
-              regulation: c.expectedTests?.rcd?.regulation || c.expectedTestResults?.rcdTest?.regulation || 'BS 7671 Reg 612.13.2'
-            } : {
-              at1x: 'Not applicable',
-              at5x: 'Not applicable',
-              regulation: 'Circuit not RCD protected'
-            }
-          } : {
-            r1r2: {
-              at20C: 'Calculate based on cable length and CSA',
-              at70C: 'Multiply 20°C value by 1.2',
-              calculation: 'R1+R2 = (mΩ/m for live + mΩ/m for CPC) × length / 1000'
-            },
-            zs: {
-              calculated: c.calculations?.zs?.toFixed(2) || 'Test on site',
-              maxPermitted: c.calculations?.maxZs?.toFixed(2) || 'See BS 7671 Appendix 3',
-              compliant: 'Test required'
-            },
-            insulationResistance: {
-              testVoltage: '500V DC',
-              minResistance: '≥1.0MΩ (≥2.0MΩ preferred)'
-            },
-            polarity: 'Verify correct polarity at all outlets',
-            rcdTest: c.rcdProtected ? {
-              at1x: '≤300ms @ 30mA (1 × IΔn)',
-              at5x: '≤40ms @ 150mA (5 × IΔn)',
-              regulation: 'BS 7671 Regulation 643.2.2'
-            } : {
-              at1x: 'Not applicable - no RCD',
-              at5x: 'Not applicable - no RCD',
-              regulation: 'Circuit not RCD protected'
-            }
-          },
-
-          // Warnings
-          warnings: (c.warnings || []).join('; '),
-          hasWarnings: (c.warnings?.length || 0) > 0
-        };
-      }),
-
-      // Materials
-      materials: (design.materials || []).map((m: any) => ({
-        item: m.name,
-        specification: m.specification,
-        quantity: m.quantity,
-        unit: m.unit,
-        notes: m.notes || ''
-      })),
-
+      // === PASS-THROUGH: Everything else comes directly from frontend ===
+      projectName: design.projectName,
+      location: design.location,
+      clientName: design.clientName,
+      electricianName: design.electricianName,
+      installationType: design.installationType,
+      
       // Consumer Unit
-      consumerUnit: {
-        type: design.consumerUnit.type,
-        mainSwitchRating: design.consumerUnit.mainSwitchRating,
-        earthingSystem: design.consumerUnit.incomingSupply.earthingSystem,
-        ze: design.consumerUnit.incomingSupply.Ze?.toFixed(2) || 'N/A',
-        pscc: design.consumerUnit.incomingSupply.incomingPFC || 'N/A'
-      },
-
-      // Design Warnings
-      designWarnings: design.practicalGuidance || [],
-
+      consumerUnit: design.consumerUnit,
+      voltage: design.consumerUnit?.incomingSupply?.voltage,
+      phases: design.consumerUnit?.incomingSupply?.phases === 'single' ? 'Single Phase' : 'Three Phase',
+      voltageDisplay: `${design.consumerUnit?.incomingSupply?.voltage}V ${design.consumerUnit?.incomingSupply?.phases === 'single' ? 'Single Phase' : 'Three Phase'}`,
+      earthingSystem: design.consumerUnit?.incomingSupply?.earthingSystem,
+      ze: design.consumerUnit?.incomingSupply?.Ze,
+      pscc: design.consumerUnit?.incomingSupply?.incomingPFC,
+      consumerUnitRating: design.consumerUnit?.mainSwitchRating,
+      
+      // Load Assessment (direct from frontend)
+      totalLoad: design.totalLoad,
+      totalLoadKW: design.totalLoad ? `${(design.totalLoad / 1000).toFixed(1)} kW` : null,
+      diversifiedLoad: design.diversifiedLoad,
+      diversifiedLoadKW: design.diversifiedLoad ? `${(design.diversifiedLoad / 1000).toFixed(1)} kW` : null,
+      diversityFactor: design.diversityFactor,
+      diversityFactorPercent: design.diversityFactor,
+      totalDesignCurrent: design.totalDesignCurrent,
+      
+      // Diversity Breakdown (direct pass-through)
+      diversityBreakdown: design.diversityBreakdown,
+      
+      // Circuit counts
+      circuitCount: design.circuits?.length || 0,
+      totalCircuits: design.circuits?.length || 0,
+      
+      // Compliance Status (direct from frontend calculations)
+      complianceChecks: design.complianceChecks,
+      allCircuitsCompliant: design.complianceChecks?.allCircuitsCompliant,
+      complianceStatus: design.complianceChecks?.allCircuitsCompliant ? 'All Compliant' : 'Issues Found',
+      warningCount: design.complianceChecks?.totalWarnings || 0,
+      compliantCircuits: (design.circuits?.length || 0) - (design.complianceChecks?.criticalIssues || 0),
+      
+      // Circuits (direct pass-through with no transformation)
+      circuits: (design.circuits || []).map((c: any) => ({
+        // Basic Info
+        circuitNumber: c.circuitNumber,
+        name: c.name,
+        loadType: c.loadType,
+        loadPower: c.loadPower,
+        loadPowerKW: c.loadPower ? (c.loadPower / 1000).toFixed(1) : null,
+        phases: c.phases === 'single' ? 'Single Phase' : 'Three Phase',
+        
+        // Cable Specification (direct from frontend - NO FALLBACKS)
+        cableType: c.cableType,
+        cableSize: c.cableSize,
+        cpcSize: c.cpcSize,
+        cableLength: c.cableLength,
+        installationMethod: c.installationMethod,
+        
+        // Protection Device
+        protectionDevice: c.protectionDevice ? 
+          `${c.protectionDevice.rating}A Type ${c.protectionDevice.curve} ${c.protectionDevice.type}` : null,
+        protectionRating: c.protectionDevice?.rating,
+        protectionCurve: c.protectionDevice?.curve,
+        protectionType: c.protectionDevice?.type,
+        protectionKaRating: c.protectionDevice?.kaRating,
+        rcdProtected: c.rcdProtected ? 'Yes' : 'No',
+        rcdProtectedText: c.rcdProtected ? 'Yes (30mA)' : 'No',
+        afddRequired: c.afddRequired ? 'Yes' : 'No',
+        
+        // Calculations (direct pass-through)
+        designCurrent: c.calculations?.Ib?.toFixed(1),
+        designCurrentIb: c.calculations?.Ib?.toFixed(1),
+        nominalCurrentIn: c.protectionDevice?.rating,
+        cableCapacityIz: c.calculations?.Iz?.toFixed(0),
+        deratedCapacity: c.calculations?.deratedCapacity?.toFixed(0),
+        safetyMargin: c.calculations?.safetyMargin?.toFixed(0),
+        voltageDrop: c.calculations?.voltageDrop ? 
+          `${c.calculations.voltageDrop.volts?.toFixed(1)}V (${c.calculations.voltageDrop.percent?.toFixed(1)}%)` : null,
+        voltageDropVolts: c.calculations?.voltageDrop?.volts?.toFixed(1),
+        voltageDropPercent: c.calculations?.voltageDrop?.percent?.toFixed(1),
+        voltageDropCompliant: c.calculations?.voltageDrop?.compliant ? 'Yes' : 'No',
+        zsActual: c.calculations?.zs?.toFixed(2),
+        zsMax: c.calculations?.maxZs?.toFixed(2),
+        zsCompliant: (c.calculations?.zs && c.calculations?.maxZs && c.calculations.zs < c.calculations.maxZs) ? 'Yes' : 'No',
+        calculations: c.calculations,
+        
+        // Compliance Status (direct from Phase 5.5)
+        complianceStatus: c.complianceStatus,
+        complianceStatusText: c.complianceStatus === 'pass' ? '✓ PASS' : 
+                             c.complianceStatus === 'warning' ? '⚠ REVIEW' : '✗ FAIL',
+        complianceStatusColour: c.complianceStatus === 'pass' ? 'green' : 
+                                c.complianceStatus === 'warning' ? 'amber' : 'red',
+        validationIssues: c.validationIssues || [],
+        hasValidationIssues: (c.validationIssues?.length || 0) > 0,
+        
+        // Justifications (direct pass-through)
+        justifications: c.justifications,
+        justificationCable: c.justifications?.cableSize,
+        cableSizeJustification: c.justifications?.cableSize,
+        justificationProtection: c.justifications?.protection,
+        protectionJustification: c.justifications?.protection,
+        justificationRcd: c.justifications?.rcd,
+        rcdJustification: c.justifications?.rcd,
+        
+        // Expected Test Results (direct pass-through)
+        expectedTests: c.expectedTests,
+        expectedTestResults: c.expectedTestResults,
+        expectedR1R2: c.expectedTests?.r1r2?.at70C?.toFixed(3) || c.expectedTestResults?.r1r2?.at70C,
+        expectedZs: c.expectedTests?.zs?.expected?.toFixed(2) || c.calculations?.zs?.toFixed(2),
+        expectedInsulation: c.expectedTests?.insulationResistance?.minResistance || c.expectedTestResults?.insulationResistance?.minResistance,
+        
+        // Derating Factors (direct pass-through)
+        deratingFactors: c.deratingFactors,
+        
+        // Fault Current Analysis (direct pass-through)
+        faultCurrentAnalysis: c.faultCurrentAnalysis,
+        
+        // Earthing Requirements (direct pass-through)
+        earthingRequirements: c.earthingRequirements,
+        
+        // Installation Guidance (direct pass-through)
+        installationGuidance: c.installationGuidance,
+        fullInstallationGuidance: c.fullInstallationGuidance,
+        guidanceQualityMetrics: c.guidanceQualityMetrics,
+        
+        // Special Locations (direct pass-through)
+        isSpecialLocation: c.specialLocationCompliance?.isSpecialLocation,
+        specialLocationType: c.specialLocationCompliance?.locationType,
+        specialLocationRequirements: c.specialLocationCompliance?.requirements?.join('; '),
+        specialLocationRegulation: c.specialLocationCompliance?.regulation,
+        
+        // Diversity
+        diversityFactor: c.diversityFactor ? `${(c.diversityFactor * 100).toFixed(0)}%` : null,
+        diversityJustification: c.diversityJustification,
+        
+        // Warnings
+        warnings: c.warnings?.join('; '),
+        hasWarnings: (c.warnings?.length || 0) > 0
+      })),
+      
+      // Materials (direct pass-through)
+      materials: design.materials,
+      
+      // Design Notes (direct pass-through)
+      designNotes: design.designNotes,
+      
+      // Practical Guidance (direct pass-through)
+      practicalGuidance: design.practicalGuidance,
+      
+      // Installation Guidance (direct pass-through)
+      installationGuidance: design.installationGuidance,
+      
       // Compliance
       complianceStatement: 'BS 7671:2018+A3:2024',
-      generationTimestamp: new Date().toISOString(),
-
-      // Design Notes
-      designNotes: {
-        general: "This design complies with BS 7671:2018+A3:2024 (18th Edition IET Wiring Regulations). All circuits designed for safe operation with adequate protection against overload, short circuit, and earth faults.",
-        diversity: `Diversity factors applied in accordance with IET On-Site Guide Appendix 15. Total diversified load: ${(design.diversityBreakdown?.diversifiedLoad || design.totalLoad / 1000).toFixed(1)}kW (${((design.diversityBreakdown?.diversifiedLoad || design.totalLoad / 1000) / design.consumerUnit.incomingSupply.voltage * 1000).toFixed(1)}A at ${design.consumerUnit.incomingSupply.voltage}V).`,
-        earthing: `${design.consumerUnit.incomingSupply.earthingSystem} earthing system. Main earthing conductor ${design.consumerUnit.incomingSupply.earthingSystem === 'TN-S' ? '16mm²' : '10mm²'} minimum. Main protective bonding to water, gas, oil, and structural steel required.`,
-        rcd: design.circuits.some((c: any) => c.rcdProtected) 
-          ? "Split-load consumer unit with 30mA RCD protecting socket circuits and bathroom. Non-RCD side protects fixed loads (cooker, immersion, lighting)." 
-          : "All circuits protected by individual RCBOs providing both overload and residual current protection.",
-        testing: "Installation must be inspected and tested per BS 7671 Part 6 before being put into service. Electrical Installation Certificate required.",
-        specialLocations: design.circuits.some((c: any) => c.specialLocationCompliance?.isSpecialLocation)
-          ? "Special locations identified (bathrooms/outdoor areas). Additional requirements apply including mandatory RCD protection and IP rating requirements per Section 701/702/703."
-          : "No special locations requiring additional protection measures."
-      }
+      generationTimestamp: new Date().toISOString()
     };
 
-    // Payload validation logging before sending to PDF Monkey
-    console.log('[CIRCUIT-PDF] Payload summary before API call:', {
+    // Log missing data warnings (but don't generate fake data)
+    const missingDataWarnings: string[] = [];
+    
+    payload.circuits.forEach((c: any, idx: number) => {
+      if (!c.cableType) missingDataWarnings.push(`Circuit ${idx + 1}: Missing cableType`);
+      if (!c.installationMethod) missingDataWarnings.push(`Circuit ${idx + 1}: Missing installationMethod`);
+      if (!c.expectedTests && !c.expectedTestResults) missingDataWarnings.push(`Circuit ${idx + 1}: Missing expected test results`);
+    });
+    
+    if (missingDataWarnings.length > 0) {
+      console.warn('[CIRCUIT-PDF] Missing data detected:', missingDataWarnings);
+    }
+
+    // Validation logging
+    console.log('[CIRCUIT-PDF] Payload summary:', {
       projectName: payload.projectName,
-      installationType: payload.installationType,
       circuitCount: payload.circuits.length,
       totalLoad: payload.totalLoad,
       diversifiedLoad: payload.diversifiedLoad,
-      allCircuitsHaveCableType: payload.circuits.every(c => c.cableType && !c.cableType.includes('undefined')),
-      allCircuitsHaveInstallationMethod: payload.circuits.every(c => c.installationMethod),
-      sampleCircuit: {
-        name: payload.circuits[0]?.name,
-        cableType: payload.circuits[0]?.cableType,
-        cableSize: payload.circuits[0]?.cableSize,
-        protectionDevice: payload.circuits[0]?.protectionDevice,
-        installationMethod: payload.circuits[0]?.installationMethod,
-        hasJustifications: !!payload.circuits[0]?.cableSizeJustification,
-        hasCalculations: !!payload.circuits[0]?.designCurrent
-      },
       complianceStatus: payload.complianceStatus,
-      warningCount: payload.warningCount
+      missingDataCount: missingDataWarnings.length
     });
 
-    console.log('[CIRCUIT-PDF] Payload prepared, calling PDF Monkey API');
+    console.log('[CIRCUIT-PDF] Calling PDF Monkey API');
 
     // Call PDF Monkey API
     const pdfMonkeyResponse = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
@@ -614,7 +276,7 @@ serve(async (req) => {
           status: 'pending',
           payload: payload,
           meta: {
-            _filename: `Circuit_Design_${design.projectName.replace(/\s+/g, '_')}.pdf`
+            _filename: `Circuit_Design_${design.projectName?.replace(/\s+/g, '_') || 'Export'}.pdf`
           }
         }
       })
@@ -647,10 +309,10 @@ serve(async (req) => {
     // Poll for completion
     const documentId = pdfData.document?.id;
     let attempts = 0;
-    const maxAttempts = 30; // 60 seconds max
+    const maxAttempts = 30;
 
     while (attempts < maxAttempts) {
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
+      await new Promise(resolve => setTimeout(resolve, 2000));
       attempts++;
 
       const statusResponse = await fetch(
