@@ -53,24 +53,33 @@ export class AIDesigner {
     this.logger.info('Executing parallel AI calls', { count: circuitPromises.length });
     const results = await Promise.allSettled(circuitPromises);
     
-    // Separate successes from failures
-    const successes = results.filter(r => r.status === 'fulfilled') as PromiseFulfilledResult<DesignedCircuit>[];
+    // Map results to preserve original array positions
+    // Set circuitNumber = index + 1 for consistency with frontend display
+    const circuitsWithPositions = results.map((result, index) => {
+      if (result.status === 'fulfilled') {
+        return {
+          ...result.value,
+          circuitNumber: index + 1 // Force circuitNumber to match array position
+        };
+      }
+      return null;
+    });
+    
+    // Filter out failures and extract successful circuits
+    const circuits = circuitsWithPositions.filter((c): c is DesignedCircuit => c !== null);
     const failures = results.filter(r => r.status === 'rejected') as PromiseRejectedResult[];
     
     if (failures.length > 0) {
       this.logger.warn('Some circuits failed to design', {
         failures: failures.length,
-        successes: successes.length,
+        successes: circuits.length,
         errors: failures.map(f => f.reason.message || String(f.reason))
       });
     }
     
-    if (successes.length === 0) {
+    if (circuits.length === 0) {
       throw new Error('All circuits failed to design. Check logs for details.');
     }
-    
-    // Extract successful circuits
-    const circuits = successes.map(r => r.value);
 
     const duration = Date.now() - startTime;
     this.logger.info('AI Designer PARALLEL complete', { 
@@ -205,6 +214,8 @@ export class AIDesigner {
 
     // Enhanced core identity - trust AI to reason with RAG
     parts.push('You are a BS 7671:2018+A3:2024 electrical circuit design expert.');
+    parts.push('');
+    parts.push('🔢 CRITICAL: Set circuitNumber = circuit.index + 1 from input (e.g., index 0 = Way 1, index 1 = Way 2)');
     parts.push('');
     parts.push('The RAG knowledge base contains all BS 7671 data (cable sizing tables, voltage drop formulas, Zs limits, protection requirements).');
     parts.push('Use this knowledge to design compliant circuits. Your design justifications should reference specific regulations and calculations from the RAG context.');
@@ -912,7 +923,7 @@ CRITICAL: Include diversityApplied justification with ${installationType || 'dom
                 },
                 circuitNumber: {
                   type: 'number',
-                  description: 'Circuit number (sequential from 1)'
+                  description: 'Circuit number - MUST be set to circuit.index + 1 from input (e.g., index 0 = Way 1, index 1 = Way 2)'
                 },
                 loadPower: {
                   type: 'number',
