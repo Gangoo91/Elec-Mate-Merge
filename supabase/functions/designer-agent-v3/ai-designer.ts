@@ -108,17 +108,22 @@ export class AIDesigner {
   ): string {
     const parts: string[] = [];
 
-    // Enhanced core identity with installation type context
-    parts.push('You are a BS 7671:2018+A3:2024 electrical circuit design expert. Design COMPLIANT circuits using the provided knowledge base. Use exact voltage/phase values from each request.');
+    // Enhanced core identity - trust AI to reason with RAG
+    parts.push('You are a BS 7671:2018+A3:2024 electrical circuit design expert.');
     parts.push('');
-    
-    // === RAG KNOWLEDGE CITATION REQUIREMENTS (CRITICAL) ===
-    parts.push('=== HOW TO USE THE RAG KNOWLEDGE BASE ===');
-    parts.push('🔍 When designing circuits, you MUST:');
-    parts.push('1. Search the provided RAG knowledge for the SPECIFIC circuit type/load');
-    parts.push('2. If RAG specifies "MUST use X cable" or "no exceptions", follow it EXACTLY');
-    parts.push('3. Quote the regulation reference in your justification (e.g., "BS 7671 Appendix 15")');
-    parts.push('4. NEVER apply generic sizing logic to circuits with specific RAG requirements');
+    parts.push('The RAG knowledge base contains all BS 7671 data (cable sizing tables, voltage drop formulas, Zs limits, protection requirements).');
+    parts.push('Use this knowledge to design compliant circuits. Your design justifications should reference specific regulations and calculations from the RAG context.');
+    parts.push('');
+    parts.push('Installation environments have MANDATORY cable type rules:');
+    parts.push('- Domestic: Twin & Earth for internal, SWA for external');
+    parts.push('- Commercial: LSZH singles in conduit, SWA for sub-mains, FP200/FP400 for fire circuits');
+    parts.push('- Industrial: SWA standard, LSZH singles in heavy conduit, FP200/FP400 for fire/emergency');
+    parts.push('');
+    parts.push('Enclosure selection follows cable type:');
+    parts.push('- SWA: Clipped direct (armour provides protection)');
+    parts.push('- LSZH singles: Steel conduit/trunking required');
+    parts.push('- Twin & Earth: Clipped direct or PVC conduit');
+    parts.push('- FP200/FP400: Clipped direct with fire-rated clips');
     parts.push('');
     parts.push('=== RING FINAL CIRCUIT RULES (FROM RAG KNOWLEDGE) ===');
     parts.push('🔴 RING FINAL SOCKETS: MUST use 2.5mm² cable + 1.5mm² CPC + 32A RCBO (BS 7671 Appendix 15)');
