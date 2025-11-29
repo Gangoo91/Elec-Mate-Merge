@@ -3174,6 +3174,39 @@ export type Database = {
         }
         Relationships: []
       }
+      installation_method_cache: {
+        Row: {
+          created_at: string | null
+          expires_at: string
+          hit_count: number | null
+          id: string
+          installation_method: Json
+          last_used_at: string | null
+          query_embedding: string
+          query_text: string
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at: string
+          hit_count?: number | null
+          id?: string
+          installation_method: Json
+          last_used_at?: string | null
+          query_embedding: string
+          query_text: string
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string
+          hit_count?: number | null
+          id?: string
+          installation_method?: Json
+          last_used_at?: string | null
+          query_embedding?: string
+          query_text?: string
+        }
+        Relationships: []
+      }
       installation_method_jobs: {
         Row: {
           completed_at: string | null
@@ -8558,6 +8591,7 @@ export type Database = {
       cleanup_expired_design_exports: { Args: never; Returns: undefined }
       cleanup_expired_education_cache: { Args: never; Returns: undefined }
       cleanup_expired_guide_cache: { Args: never; Returns: undefined }
+      cleanup_expired_installation_cache: { Args: never; Returns: undefined }
       cleanup_expired_market_insights_cache: { Args: never; Returns: undefined }
       cleanup_expired_materials_weekly_cache: {
         Args: never
@@ -8665,6 +8699,20 @@ export type Database = {
           severity: number
           similarity: number
           usage_count: number
+        }[]
+      }
+      match_installation_method_cache: {
+        Args: {
+          match_count?: number
+          query_embedding: string
+          similarity_threshold?: number
+        }
+        Returns: {
+          created_at: string
+          hit_count: number
+          id: string
+          installation_method: Json
+          similarity: number
         }[]
       }
       match_rams_cache: {
