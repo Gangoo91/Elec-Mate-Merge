@@ -9,7 +9,7 @@ import { createLogger } from '../_shared/logger.ts';
 import { DesignPipeline } from './design-pipeline.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
-const VERSION = 'v3.1.0-job-aware';
+const VERSION = 'v3.1.1-cable-consistency';
 
 serve(async (req) => {
   let requestId: string | undefined;
