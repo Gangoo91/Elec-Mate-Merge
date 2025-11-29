@@ -6,6 +6,44 @@
 import type { NormalizedInputs } from './types.ts';
 
 // ============================================================================
+// LOAD TYPE MAPPING (Frontend → Database)
+// ============================================================================
+
+// Map frontend loadType values to database load_types values
+const LOAD_TYPE_MAPPING: Record<string, string[]> = {
+  'cooker': ['general', 'heating', 'resistive'],
+  'shower': ['general', 'heating', 'resistive loads'],
+  'socket': ['socket', 'sockets', 'general'],
+  'socket-ring': ['socket', 'sockets', 'general'],
+  'ring': ['socket', 'sockets', 'general'],
+  'lighting': ['lighting', 'general'],
+  'ev': ['electric_vehicle_charger', 'electric vehicle charging'],
+  'ev-charger': ['electric_vehicle_charger', 'electric vehicle charging'],
+  'charger': ['electric_vehicle_charger', 'electric vehicle charging'],
+  'immersion': ['heating', 'general', 'resistive'],
+  'motor': ['motor', 'motors'],
+  'pump': ['motor', 'motors'],
+  'fan': ['motor', 'motors'],
+  'smoke': ['general', 'control circuits'],
+  'fire': ['general', 'control circuits'],
+  'general': ['general', 'general loads', 'general circuits'],
+};
+
+/**
+ * Map frontend loadType to database load_types values
+ */
+function mapLoadTypeToDatabase(frontendLoadType: string): string[] {
+  // Check each mapping key for partial match
+  for (const [key, dbValues] of Object.entries(LOAD_TYPE_MAPPING)) {
+    if (frontendLoadType.includes(key)) {
+      return dbValues;
+    }
+  }
+  // Fallback to general
+  return ['general', 'general loads'];
+}
+
+// ============================================================================
 // COMPREHENSIVE DESIGN KEYWORD MAPS (400+ keywords across 12 categories)
 // ============================================================================
 
@@ -177,11 +215,11 @@ export function extractDesignKeywords(
 ): {
   keywords: Set<string>;
   loadTypes: Set<string>;
-  cableSizes: Set<number>;
+  cableSizes: Set<string>;
 } {
   const keywords = new Set<string>();
   const loadTypes = new Set<string>();
-  const cableSizes = new Set<number>();
+  const cableSizes = new Set<string>();
 
   // Always include core calculation keywords
   Object.values(CALCULATION_KEYWORDS).forEach(group => 
@@ -239,7 +277,10 @@ export function extractDesignKeywords(
   // Process each circuit for load-specific keywords
   circuits.forEach(circuit => {
     const loadType = circuit.loadType?.toLowerCase() || '';
-    loadTypes.add(loadType);
+    
+    // Map frontend loadType to database values
+    const mappedTypes = mapLoadTypeToDatabase(loadType);
+    mappedTypes.forEach(dbType => loadTypes.add(dbType));
 
     // Load type specific keywords
     if (loadType.includes('cooker')) {
@@ -319,8 +360,9 @@ export function extractDesignKeywords(
     }
   });
 
-  // Add standard cable sizes for lookup
-  [1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240].forEach(size => 
+  // Add standard cable sizes with units for database matching
+  ['1.5mm²', '2.5mm²', '4mm²', '6mm²', '10mm²', '16mm²', '25mm²', '35mm²', 
+   '50mm²', '70mm²', '95mm²', '120mm²', '150mm²', '185mm²', '240mm²'].forEach(size => 
     cableSizes.add(size)
   );
 
