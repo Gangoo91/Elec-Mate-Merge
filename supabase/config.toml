@@ -171,6 +171,11 @@ timeout_sec = 600
 verify_jwt = false
 timeout_sec = 600
 
+# Design Intelligence Field Enrichment (populates cable_sizes/load_types)
+[functions.enrich-design-intelligence-fields]
+verify_jwt = false
+timeout_sec = 300
+
 # AI Room Diagram Generator
 [functions.room-diagram-generator]
 verify_jwt = false
