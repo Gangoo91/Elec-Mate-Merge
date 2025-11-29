@@ -47,7 +47,7 @@ export const enhancedAccreditationOptions: AccreditationOption[] = [
     category: "Competent Person Schemes",
     level: "Advanced",
     duration: "Initial assessment + ongoing",
-    cost: "£400-1200 annually",
+    cost: "£700-1,500 annually",
     description: "Premier electrical contracting scheme providing consumer confidence and industry recognition for electrical contractors.",
     benefits: [
       "Consumer trust and confidence",
@@ -85,7 +85,7 @@ export const enhancedAccreditationOptions: AccreditationOption[] = [
     category: "Competent Person Schemes",
     level: "Advanced",
     duration: "Initial assessment + ongoing",
-    cost: "£350-900 annually",
+    cost: "£500-1,000 annually",
     description: "Leading competent person scheme for electrical contractors, providing industry recognition and Building Regulations compliance.",
     benefits: [
       "Building Control notification rights",
@@ -123,7 +123,7 @@ export const enhancedAccreditationOptions: AccreditationOption[] = [
     category: "Competent Person Schemes",
     level: "Advanced",
     duration: "Initial assessment + ongoing",
-    cost: "£400-800 annually",
+    cost: "£500-900 annually",
     description: "Government-authorised competent person scheme for electrical contractors, enabling self-certification of electrical work.",
     benefits: [
       "Self-certification of electrical work",

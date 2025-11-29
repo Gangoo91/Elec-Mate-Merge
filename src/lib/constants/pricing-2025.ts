@@ -36,10 +36,11 @@ export const MARKET_RATES_2025 = {
 
   // Updated business costs for 2025
   businessCosts: {
-    // Professional fees (annual)
-    niceicMembership: 450, // Up from 350
-    ecaMembership: 520, // Up from 420
-    publicLiabilityInsurance: 850, // Up from 650
+    // Professional fees (annual) - UPDATED 2025 RATES
+    niceicMembership: 850, // Realistic for small contractor
+    napitMembership: 650, // NAPIT membership
+    ecaMembership: 750, // Realistic entry level
+    publicLiabilityInsurance: 950, // Up from 850
     toolInsurance: 180, // Up from 150
     
     // Vehicle costs (annual)

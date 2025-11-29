@@ -36,48 +36,73 @@ const RiskAssessmentTable = ({ risks }: RiskAssessmentTableProps) => {
         </CardTitle>
       </CardHeader>
       <CardContent className="px-4 pb-5 sm:px-6 sm:pb-6">
-        <div className="overflow-x-auto -mx-4 sm:mx-0">
-          <div className="min-w-[600px] px-4 sm:px-0">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-12 text-white font-semibold text-base sm:text-sm"></TableHead>
-                  <TableHead className="text-white font-semibold text-base sm:text-sm">Risk</TableHead>
-                  <TableHead className="text-white font-semibold text-base sm:text-sm">Category</TableHead>
-                  <TableHead className="text-white font-semibold text-base sm:text-sm">Mitigation</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {risks.map((risk, idx) => (
-                  <TableRow key={idx}>
-                    <TableCell className="text-center text-xl">
-                      {getRiskDot(risk.severity)}
-                    </TableCell>
-                    <TableCell className="font-medium text-white">
-                      <span className="text-base sm:text-sm">{risk.risk}</span>
-                      <div className="text-sm text-white mt-1">
-                        {risk.likelihood} likelihood
-                        {risk.contingency && risk.contingency > 0 && (
-                          <span> • +£{risk.contingency} if occurs</span>
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <span className={`px-2 py-1 rounded text-sm sm:text-xs ${getCategoryBadge(risk.category)}`}>
-                        {risk.category}
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-base sm:text-sm text-white">
-                      {risk.mitigation}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+        {/* Mobile: Stacked Cards */}
+        <div className="space-y-3 sm:hidden">
+          {risks.map((risk, idx) => (
+            <div key={idx} className="p-4 rounded-lg bg-background/50 border border-border/30">
+              <div className="flex items-start gap-3 mb-3">
+                <span className="text-2xl flex-shrink-0">{getRiskDot(risk.severity)}</span>
+                <div className="flex-1">
+                  <div className="font-medium text-white text-base leading-snug">{risk.risk}</div>
+                  <div className="flex flex-wrap items-center gap-2 mt-2">
+                    <span className={`px-2 py-0.5 rounded text-sm ${getCategoryBadge(risk.category)}`}>
+                      {risk.category}
+                    </span>
+                    <span className="text-sm text-white/70">{risk.likelihood} likelihood</span>
+                  </div>
+                </div>
+              </div>
+              <div className="pt-3 border-t border-border/30">
+                <div className="text-sm text-white/70 mb-1">Mitigation:</div>
+                <div className="text-base text-white leading-relaxed">{risk.mitigation}</div>
+                {risk.contingency && risk.contingency > 0 && (
+                  <div className="mt-2 text-sm text-orange-400 font-medium">
+                    +£{risk.contingency} contingency if occurs
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="text-xs text-center text-white mt-2 sm:hidden">
-          ← Swipe to see more →
+
+        {/* Desktop: Table */}
+        <div className="hidden sm:block overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-12 text-white font-semibold text-base sm:text-sm"></TableHead>
+                <TableHead className="text-white font-semibold text-base sm:text-sm">Risk</TableHead>
+                <TableHead className="text-white font-semibold text-base sm:text-sm">Category</TableHead>
+                <TableHead className="text-white font-semibold text-base sm:text-sm">Mitigation</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {risks.map((risk, idx) => (
+                <TableRow key={idx}>
+                  <TableCell className="text-center text-xl">
+                    {getRiskDot(risk.severity)}
+                  </TableCell>
+                  <TableCell className="font-medium text-white">
+                    <span className="text-base sm:text-sm">{risk.risk}</span>
+                    <div className="text-sm text-white mt-1">
+                      {risk.likelihood} likelihood
+                      {risk.contingency && risk.contingency > 0 && (
+                        <span> • +£{risk.contingency} if occurs</span>
+                      )}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <span className={`px-2 py-1 rounded text-sm sm:text-xs ${getCategoryBadge(risk.category)}`}>
+                      {risk.category}
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-base sm:text-sm text-white">
+                    {risk.mitigation}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </div>
       </CardContent>
     </Card>
