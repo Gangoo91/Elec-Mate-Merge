@@ -18,9 +18,10 @@ interface CircuitCardProps {
   onViewJustification?: () => void;
   className?: string;
   showFullDetails?: boolean; // New prop for mobile full details
+  displayNumber?: number; // Override circuit number display (for array index consistency)
 }
 
-export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, className = '', showFullDetails = false }: CircuitCardProps) => {
+export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, className = '', showFullDetails = false, displayNumber }: CircuitCardProps) => {
   const isMobile = useIsMobile();
   
   // Use backend complianceStatus when available (same as desktop)
@@ -48,7 +49,7 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
             <div className="flex items-center gap-2 mb-2">
               <Zap className="h-5 w-5 text-elec-yellow" />
               <h3 className="text-lg sm:text-xl font-bold text-elec-light">
-                Way {circuit.circuitNumber || 'N/A'}
+                Way {displayNumber ?? circuit.circuitNumber ?? 'N/A'}
                 {circuit.phases === 'three' && (
                   <span className="text-sm font-normal text-elec-yellow/80 ml-2">
                     (L1, L2, L3)

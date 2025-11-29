@@ -48,8 +48,15 @@ export const AtAGlanceSummary = ({ summary, circuit }: AtAGlanceSummaryProps) =>
   const safeLoadIb = summary?.loadIb || 'N/A';
   
   // Use calculated values when available, fall back to AI prose
+  // Parse cableType to remove any size prefix (e.g., "4mm² twin and earth" -> "twin and earth")
+  const parseCableType = (type?: string) => {
+    if (!type) return 'T&E';
+    // Remove leading size prefix like "2.5mm²", "4mm²", etc.
+    return type.replace(/^\d+(\.\d+)?mm²\s*/i, '').trim() || type;
+  };
+  
   const safeCable = circuit 
-    ? `${circuit.cableSize}mm² / ${circuit.cpcSize}mm² CPC ${circuit.cableType || 'T&E'}`
+    ? `${circuit.cableSize}mm² / ${circuit.cpcSize}mm² CPC, ${parseCableType(circuit.cableType)}`
     : (summary?.cable || 'Not specified');
   
   const safeProtectiveDevice = circuit

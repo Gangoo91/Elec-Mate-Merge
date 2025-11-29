@@ -162,6 +162,7 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
       <div {...swipeHandlers} className="px-3 sm:px-4 mb-4 sm:mb-6">
         <CircuitCard 
           circuit={selectedCircuit}
+          displayNumber={selectedCircuitIndex + 1}
           onViewWorkings={() => setShowWorkingsSheet(true)}
           showFullDetails={true}
         />
