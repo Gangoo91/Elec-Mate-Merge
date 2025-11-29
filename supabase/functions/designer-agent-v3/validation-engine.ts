@@ -197,16 +197,16 @@ export class ValidationEngine {
       });
     }
 
-    // RULE 9: CPC size validation (should be appropriate for cable size)
-    const expectedCPCSize = this.getMinimumCPCSize(circuit.cableSize);
+    // RULE 9: CPC size validation (BS 7671 Table 54.7 - cable-type aware)
+    const expectedCPCSize = this.getMinimumCPCSize(circuit.cableSize, cableType);
     if (circuit.cpcSize < expectedCPCSize) {
       issues.push({
         circuitIndex: index,
         circuitName: circuit.name,
         rule: 'cpc_sizing',
-        regulation: '543.1.1',
+        regulation: '543.1.1 / Table 54.7',
         severity: 'warning',
-        message: `CPC size ${circuit.cpcSize}mm² may be undersized for ${circuit.cableSize}mm² cable (minimum ${expectedCPCSize}mm²)`,
+        message: `CPC size ${circuit.cpcSize}mm² may be undersized for ${circuit.cableSize}mm² ${cableType} (minimum ${expectedCPCSize}mm² per Table 54.7)`,
         currentValue: circuit.cpcSize,
         expectedValue: expectedCPCSize,
         fieldAffected: 'cpcSize'
@@ -214,19 +214,22 @@ export class ValidationEngine {
     }
 
     // RULE 10: Safety margin check (warning if < 10%)
-    const safetyMargin = ((circuit.calculations.Iz - circuit.calculations.In) / circuit.calculations.In) * 100;
-    if (safetyMargin < 10) {
-      issues.push({
-        circuitIndex: index,
-        circuitName: circuit.name,
-        rule: 'safety_margin',
-        regulation: 'Best Practice',
-        severity: 'warning',
-        message: `Low safety margin (${safetyMargin.toFixed(1)}%). Consider larger cable for future capacity.`,
-        currentValue: safetyMargin,
-        expectedValue: 10,
-        fieldAffected: 'cableSize'
-      });
+    // EXEMPT: Ring finals - their safety comes from ring topology per BS 7671 Appendix 15
+    if (!isRingFinal) {
+      const safetyMargin = ((circuit.calculations.Iz - circuit.calculations.In) / circuit.calculations.In) * 100;
+      if (safetyMargin < 10) {
+        issues.push({
+          circuitIndex: index,
+          circuitName: circuit.name,
+          rule: 'safety_margin',
+          regulation: 'Best Practice',
+          severity: 'warning',
+          message: `Low safety margin (${safetyMargin.toFixed(1)}%). Consider larger cable for future capacity.`,
+          currentValue: safetyMargin,
+          expectedValue: 10,
+          fieldAffected: 'cableSize'
+        });
+      }
     }
 
     // RULE 11: Cable type and cable size consistency check (CRITICAL)
@@ -506,11 +509,29 @@ export class ValidationEngine {
   }
 
   /**
-   * Get minimum CPC size for given cable size (simplified BS 7671 Table 54.7)
+   * Get minimum CPC size per BS 7671 Table 54.7 (cable-type aware)
    */
-  private getMinimumCPCSize(cableSize: number): number {
-    if (cableSize <= 16) return cableSize; // Same as cable
-    if (cableSize <= 35) return 16; // 16mm² for cables up to 35mm²
-    return cableSize / 2; // Half the cable size for larger cables
+  private getMinimumCPCSize(cableSize: number, cableType?: string): number {
+    // Twin and earth uses REDUCED CPC per BS 7671 Table 54.7
+    const isTwinEarth = cableType && this.isTwinEarth(cableType);
+    
+    if (isTwinEarth) {
+      // BS 7671 Table 54.7 - Twin & Earth CPC sizes
+      const twinEarthCpc: Record<number, number> = {
+        1.0: 1.0,
+        1.5: 1.0,
+        2.5: 1.5,  // ← 1.5mm² CPC is CORRECT for 2.5mm² T&E!
+        4.0: 2.5,
+        6.0: 2.5,
+        10.0: 4.0,
+        16.0: 6.0
+      };
+      return twinEarthCpc[cableSize] || cableSize;
+    }
+    
+    // Singles, SWA, LSZH: CPC equals live conductor
+    if (cableSize <= 16) return cableSize;
+    if (cableSize <= 35) return 16;
+    return cableSize / 2;
   }
 }
