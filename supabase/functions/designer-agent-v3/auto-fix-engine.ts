@@ -374,9 +374,27 @@ export class AutoFixEngine {
    */
   private autoUpgradeMcbForDesignCurrent(circuit: DesignedCircuit): DesignedCircuit {
     // RING FINALS: Always 32A - diversity is inherent in topology
-    const isRing = circuit.name?.toLowerCase().includes('ring') || 
-                   circuit.loadType?.toLowerCase().includes('ring');
+    // Detect by keyword OR by characteristics (socket + 2.5mm² = ring final)
+    const isRingByKeyword = circuit.name?.toLowerCase().includes('ring') || 
+                            circuit.loadType?.toLowerCase().includes('ring');
+    
+    // IMPLICIT ring detection: Socket circuit on 2.5mm² is ALWAYS a ring final
+    // (UK standard practice - radial sockets use max 20A protection with 2.5mm²)
+    const isSocketCircuit = circuit.loadType?.toLowerCase().includes('socket') ||
+                            circuit.name?.toLowerCase().includes('socket');
+    const isRingByCharacteristics = isSocketCircuit && circuit.cableSize === 2.5;
+    
+    const isRing = isRingByKeyword || isRingByCharacteristics;
+    
     if (isRing) {
+      if (circuit.protectionDevice.rating !== 32) {
+        this.logger.info('RING FINAL FIX: Forcing 32A for ring final circuit', {
+          circuit: circuit.name,
+          from: circuit.protectionDevice.rating,
+          to: 32,
+          detectedBy: isRingByKeyword ? 'keyword' : 'characteristics'
+        });
+      }
       circuit.protectionDevice.rating = 32; // Always 32A for rings
       if (circuit.calculations) {
         circuit.calculations.In = 32;
