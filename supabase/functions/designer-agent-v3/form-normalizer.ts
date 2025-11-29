@@ -111,7 +111,10 @@ export class FormNormalizer {
       calculatedIb: calculatedIb,
       suggestedMCB: circuit.suggestedMCB || null,
       calculatedDiversity: circuit.calculatedDiversity || null,
-      estimatedCableSize: circuit.estimatedCableSize || null
+      estimatedCableSize: circuit.estimatedCableSize || null,
+      
+      // Circuit topology (ring vs radial)
+      circuitTopology: circuit.circuitTopology || 'auto'
     };
 
     // Add enforced constraints if ring final detected
@@ -126,6 +129,15 @@ export class FormNormalizer {
    * Detect if a circuit is a ring final circuit
    */
   private detectRingFinal(circuit: any): boolean {
+    // If explicit topology is set, use it
+    if (circuit.circuitTopology === 'ring') {
+      return true;
+    }
+    if (circuit.circuitTopology === 'radial') {
+      return false;
+    }
+    
+    // Auto-detect mode: use existing heuristics
     const nameLower = (circuit.name || '').toLowerCase();
     const loadTypeLower = (circuit.loadType || '').toLowerCase();
 
@@ -134,9 +146,7 @@ export class FormNormalizer {
       nameLower.includes('ring') ||
       loadTypeLower.includes('ring') ||
       // Typical ring final: socket circuit with power ≤ 7360W (32A × 230V)
-      (loadTypeLower.includes('socket') && circuit.loadPower <= 7360) ||
-      // Explicit ring final field
-      circuit.circuitTopology === 'ring'
+      (loadTypeLower.includes('socket') && circuit.loadPower <= 7360)
     );
   }
 }

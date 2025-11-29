@@ -165,6 +165,36 @@ export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDele
           </div>
         </div>
 
+        {/* Circuit Topology (Ring vs Radial) - Show only for socket circuits */}
+        {(circuit.loadType === 'socket' || circuit.loadType === 'office-sockets' || circuit.loadType === 'workshop-sockets') && (
+          <div className="space-y-1.5">
+            <Label className="text-xs sm:text-sm font-medium">Circuit Topology</Label>
+            <Select 
+              value={circuit.circuitTopology || 'auto'} 
+              onValueChange={(v: 'ring' | 'radial' | 'auto') => onUpdate({ circuitTopology: v })}
+            >
+              <SelectTrigger className="text-sm sm:text-base">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="auto">Auto-detect (AI decides)</SelectItem>
+                <SelectItem value="ring">Ring Final Circuit (32A, 2.5mm²)</SelectItem>
+                <SelectItem value="radial">Radial Circuit (MCB based on load)</SelectItem>
+              </SelectContent>
+            </Select>
+            {circuit.circuitTopology === 'ring' && (
+              <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">
+                Ring finals use 2.5mm² cable with 32A RCBO (BS 7671 Appendix 15)
+              </p>
+            )}
+            {circuit.circuitTopology === 'radial' && (
+              <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">
+                Radial circuits: 20A uses 2.5mm², 32A requires 4mm² minimum
+              </p>
+            )}
+          </div>
+        )}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
           {/* Load Power */}
           <div className="space-y-1.5">
