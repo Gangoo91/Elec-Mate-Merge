@@ -27,6 +27,10 @@ const TWIN_EARTH_CPC_SIZES: Record<number, number> = {
 /**
  * For single cores and SWA, CPC typically equals live conductor size
  * (or calculated per BS 7671 Reg 543 adiabatic equation)
+ * 
+ * RING FINALS SPECIAL CASE:
+ * - Twin & Earth rings: 2.5mm² live + 1.5mm² CPC (reduced per Table 54.7)
+ * - Singles in conduit/trunking: 2.5mm² live + 2.5mm² CPC (all same size for practicality)
  */
 export function getCpcSize(cableType: string, liveSize: number): number {
   const type = cableType.toLowerCase();
@@ -43,8 +47,9 @@ export function getCpcSize(cableType: string, liveSize: number): number {
     return liveSize >= 16 ? liveSize * 0.6 : liveSize * 0.67;
   }
   
-  // Single cores and SWA typically have CPC equal to live conductor
-  if (type.includes('swa') || type.includes('single') || type.includes('xlpe')) {
+  // Single cores and SWA: CPC equals live conductor size
+  // This includes ring finals with singles (2.5mm² + 2.5mm² CPC)
+  if (type.includes('swa') || type.includes('single') || type.includes('xlpe') || type.includes('lszh')) {
     return liveSize;
   }
   

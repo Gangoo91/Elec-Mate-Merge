@@ -29,6 +29,9 @@ export class MinimalSafetyChecks {
 
   /**
    * Ring finals MUST be 32A with 2.5mm² cable
+   * CPC sizing depends on cable type:
+   * - Twin & Earth: 1.5mm² CPC (reduced per Table 54.7)
+   * - Singles: 2.5mm² CPC (equal size for practicality)
    * Radial 32A MUST be 4mm² minimum
    */
   private enforceRingFinal32A(circuit: DesignedCircuit, index: number): DesignedCircuit {
@@ -39,16 +42,24 @@ export class MinimalSafetyChecks {
       const needsFix = circuit.protectionDevice.rating !== 32 || circuit.cableSize !== 2.5;
 
       if (needsFix) {
+        // Determine CPC size based on cable type
+        const cableType = circuit.cableType?.toLowerCase() || '';
+        const isTwinEarth = cableType.includes('twin') || cableType.includes('t&e');
+        const cpcSize = isTwinEarth ? 1.5 : 2.5; // T&E reduced, singles equal
+
         this.logger.info('Ring final safety check applied', {
           circuit: circuit.name,
           index,
+          cableType: circuit.cableType,
           before: {
             rating: circuit.protectionDevice.rating,
-            cable: circuit.cableSize
+            cable: circuit.cableSize,
+            cpc: circuit.cpcSize
           },
           after: {
             rating: 32,
-            cable: 2.5
+            cable: 2.5,
+            cpc: cpcSize
           }
         });
 
@@ -60,10 +71,10 @@ export class MinimalSafetyChecks {
             type: 'RCBO' // Sockets need RCD
           },
           cableSize: 2.5,
-          cpcSize: 1.5, // BS 7671 Table 54.7 for twin & earth
+          cpcSize: cpcSize,
           justifications: {
             ...circuit.justifications,
-            safetyCheckApplied: 'Ring final: 32A + 2.5mm² per BS 7671 Appendix 15'
+            safetyCheckApplied: `Ring final: 32A + 2.5mm² live + ${cpcSize}mm² CPC per BS 7671 Appendix 15`
           }
         };
       }
