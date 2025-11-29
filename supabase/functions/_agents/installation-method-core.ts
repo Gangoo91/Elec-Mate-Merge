@@ -31,13 +31,13 @@ export async function generateInstallationMethod(
   const keywords = extractInstallationKeywords(request.query, request.designerContext);
   console.log(`📝 Extracted ${keywords.size} keywords:`, Array.from(keywords).slice(0, 10));
 
-  // STEP 2: Ultra-fast parallel RAG search (INCREASED LIMITS + EXPANDED CATEGORIES)
+  // STEP 2: Ultra-fast parallel RAG search (OPTIMIZED LIMITS - 25 each for 3 min target)
   const ragStart = Date.now();
   const [practicalWorkResult, regulations] = await Promise.all([
     searchPracticalWorkIntelligence(supabase, {
       query: request.query,
       tradeFilter: 'installer',
-      matchCount: 40  // Increased from 25 for richer installation guidance
+      matchCount: 25  // Optimized from 40 to 25 for faster performance
     }),
     searchRegulationsIntelligence(supabase, {
       keywords: Array.from(keywords),
@@ -47,7 +47,7 @@ export async function generateInstallationMethod(
         'cables', 'wiring systems', 'special locations', 'isolation',
         'verification', 'certification', 'safety', 'bonding'
       ],
-      limit: 30  // Increased from 15 for comprehensive regulation coverage
+      limit: 25  // Optimized from 30 to 25 for faster performance
     })
   ]);
 
@@ -516,8 +516,8 @@ ${ragContext.regulations.slice(0, 10).map((reg: any, i: number) =>
   `${i + 1}. ${reg.regulation_number}: ${reg.primary_topic}`
 ).join('\n')}`;
 
-  const maxTokens = 14000;  // Sufficient for exactly 15 steps at 100-150 words each
-  console.log(`🤖 Starting GPT-5 Mini AI generation (${maxTokens} max_completion_tokens for 15 steps, ~4 minutes)...`);
+  const maxTokens = 12000;  // Optimized from 14000 to 12000 for 3 min target (15 steps at ~80-100 words each)
+  console.log(`🤖 Starting GPT-5 Mini AI generation (${maxTokens} max_completion_tokens for 15 steps, ~2.5 minutes)...`);
   
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',

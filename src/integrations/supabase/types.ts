@@ -8965,6 +8965,25 @@ export type Database = {
           topic: string
         }[]
       }
+      search_practical_work_fast: {
+        Args: { match_count?: number; query_text: string }
+        Returns: {
+          activity_types: string[]
+          applies_to: string[]
+          bs7671_refs: string[]
+          cable_sizes: string[]
+          confidence_score: number
+          content: string
+          id: string
+          keywords: string[]
+          practical_guidance: string
+          primary_topic: string
+          quality_score: number
+          safety_requirements: string[]
+          tools_required: string[]
+          worked_examples: Json
+        }[]
+      }
       search_practical_work_intelligence:
         | {
             Args: {

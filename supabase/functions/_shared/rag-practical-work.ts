@@ -52,13 +52,12 @@ export async function searchPracticalWorkIntelligence(
   });
 
   try {
-    // Call hybrid search RPC
+    // Call ULTRA-FAST keyword search (GIN index - <1s vs 21s for hybrid)
     const { data, error } = await supabase.rpc(
-      'search_practical_work_intelligence_hybrid',
+      'search_practical_work_fast',
       {
         query_text: query,
-        match_count: matchCount,
-        filter_trade: tradeFilter || null
+        match_count: matchCount
       }
     );
 
