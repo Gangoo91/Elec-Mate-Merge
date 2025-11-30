@@ -16,13 +16,14 @@ import {
   ShieldAlert,
   AlertCircle,
   BookOpen,
-  Scale
+  Scale,
+  Search
 } from "lucide-react";
 import VisualAnalysisResults from "./VisualAnalysisResults";
 import InstallationVerificationResults from "./InstallationVerificationResults";
 import ComponentIdentificationResults from "./ComponentIdentificationResults";
 import WiringGuidanceDisplay from "./WiringGuidanceDisplay";
-import WiringGuidanceSection from "./WiringGuidanceSection";
+import ModeGuidanceSection from "./ModeGuidanceSection";
 import ModeSelector, { AnalysisMode } from "./ModeSelector";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -877,38 +878,94 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
     }
   };
 
+  const getModeIcon = () => {
+    switch (selectedMode) {
+      case 'component_identify': return Search;
+      case 'wiring_instruction': return Sparkles;
+      case 'installation_verify': return CheckCircle2;
+      case 'fault_diagnosis':
+      default: return AlertTriangle;
+    }
+  };
+
+  const getModeAccentColour = () => {
+    switch (selectedMode) {
+      case 'component_identify': return 'bg-blue-500/10 border-blue-500/20';
+      case 'wiring_instruction': return 'bg-elec-yellow/10 border-elec-yellow/20';
+      case 'installation_verify': return 'bg-green-500/10 border-green-500/20';
+      case 'fault_diagnosis':
+      default: return 'bg-orange-500/10 border-orange-500/20';
+    }
+  };
+
+  const getModeIconColour = () => {
+    switch (selectedMode) {
+      case 'component_identify': return 'text-blue-500';
+      case 'wiring_instruction': return 'text-elec-yellow';
+      case 'installation_verify': return 'text-green-500';
+      case 'fault_diagnosis':
+      default: return 'text-orange-500';
+    }
+  };
+
+  const getModeQuickTags = () => {
+    switch (selectedMode) {
+      case 'component_identify':
+        return ['Consumer Unit', 'MCB', 'RCD', 'Socket', 'Switch', 'Isolator'];
+      case 'wiring_instruction':
+        return ['Consumer Unit', 'Cooker Circuit', 'EV Charger', 'Shower Circuit', 'Outdoor Socket', 'Immersion Heater'];
+      case 'installation_verify':
+        return ['New Installation', 'Alterations', 'Periodic Inspection', 'Minor Works'];
+      case 'fault_diagnosis':
+      default:
+        return ['EICR', 'Burning/Scorch', 'Exposed Cables', 'Missing Cover', 'Water Damage', 'Overloaded'];
+    }
+  };
+
+  const getUploadPlaceholder = () => {
+    switch (selectedMode) {
+      case 'component_identify': return 'Upload a photo of the component';
+      case 'wiring_instruction': return 'Upload component photos for wiring guide';
+      case 'installation_verify': return 'Upload installation photos';
+      case 'fault_diagnosis':
+      default: return 'Upload photos of the defect';
+    }
+  };
+
+  const ModeIcon = getModeIcon();
+
   return (
     <div className="space-y-3 sm:space-y-4 pb-20 sm:pb-6">
-      {/* Compact Header */}
-      <Card className="bg-gradient-to-br from-elec-card to-elec-grey/50 border-border">
-        <CardHeader className="p-3 sm:p-4">
-          <div className="flex items-center gap-2 flex-1 min-w-0">
-            <Sparkles className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-            <div className="min-w-0 flex-1">
-              <CardTitle className="text-sm sm:text-base text-foreground leading-tight">
+      {/* Enhanced Mode-Specific Header */}
+      <Card className={`border ${getModeAccentColour()}`}>
+        <CardHeader className="p-4 sm:p-5">
+          <div className="flex items-start gap-3 sm:gap-4">
+            <div className={`p-3 sm:p-4 rounded-xl ${getModeAccentColour()}`}>
+              <ModeIcon className={`h-8 w-8 sm:h-10 sm:w-10 ${getModeIconColour()}`} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <CardTitle className="text-lg sm:text-xl text-foreground leading-tight mb-1">
                 {getModeTitle()}
               </CardTitle>
+              <p className="text-sm sm:text-base text-muted-foreground">
+                {getModeDescription()}
+              </p>
             </div>
           </div>
         </CardHeader>
       </Card>
 
-      {/* Guidance Section - Only for wiring_instruction mode */}
-      {selectedMode === 'wiring_instruction' && !analysisResult && !isAnalyzing && (
-        <WiringGuidanceSection />
-      )}
-
-      {/* Context Tags for Wiring Mode */}
-      {selectedMode === 'wiring_instruction' && !analysisResult && !isAnalyzing && images.length > 0 && (
+      {/* Always-Visible Quick Context Tags */}
+      {!analysisResult && !isAnalyzing && (
         <Card className="bg-card border-border">
           <CardContent className="p-3 sm:p-4">
-            <p className="text-xs font-medium text-muted-foreground mb-2">Quick Context</p>
-            <div className="flex flex-wrap gap-1.5">
-              {['Consumer Unit', 'Cooker Circuit', 'EV Charger', 'Shower Circuit', 'Outdoor Socket', 'Immersion Heater'].map((tag) => (
+            <p className="text-xs font-medium text-muted-foreground mb-2.5">Quick Context (tap to add):</p>
+            <div className="flex flex-wrap gap-2">
+              {getModeQuickTags().map((tag) => (
                 <button
                   key={tag}
                   onClick={() => handleContextTagClick(tag)}
-                  className="px-2.5 py-1.5 text-xs bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow rounded border border-elec-yellow/30 transition-colors"
+                  className={`px-3 py-2 text-xs sm:text-sm font-medium ${getModeAccentColour()} ${getModeIconColour()} rounded-lg border transition-all hover:scale-105 active:scale-95`}
                 >
                   {tag}
                 </button>
@@ -916,6 +973,11 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
             </div>
           </CardContent>
         </Card>
+      )}
+
+      {/* Collapsible Guidance Section - ALL Modes */}
+      {!analysisResult && !isAnalyzing && (
+        <ModeGuidanceSection mode={selectedMode} />
       )}
 
       {/* Inline Loading State */}
@@ -962,45 +1024,42 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
       {!analysisResult && !isAnalyzing ? (
         <Card className="bg-card border-border">
           <CardContent className="p-3 sm:p-6 space-y-3 sm:space-y-4">
-            {/* Camera Button */}
-            <Button 
-              onClick={isCameraActive ? captureImage : startCamera}
-              className="w-full h-11 sm:h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
+            {/* Camera Button - Prominent */}
+            <Button
+              onClick={isCameraActive ? stopCamera : startCamera}
+              className="w-full h-12 sm:h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
             >
-              <Camera className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
-              {isCameraActive ? 'Capture Photo' : 'Use Camera'}
+              <Camera className="h-5 w-5 mr-2" />
+              {isCameraActive ? 'Close Camera' : '📸 Use Camera'}
             </Button>
-
-            {isCameraActive && (
-              <Button 
-                variant="outline" 
-                onClick={stopCamera}
-                className="w-full h-9"
-              >
-                <X className="h-4 w-4 mr-2" />
-                Close Camera
-              </Button>
-            )}
             
             {/* Camera View */}
             {isCameraActive && (
-              <div className="relative aspect-video bg-muted rounded-lg overflow-hidden border border-border animate-fade-in">
-                <video 
-                  ref={videoRef}
-                  autoPlay 
-                  playsInline 
-                  muted
-                  className="w-full h-full object-cover"
-                />
-                {/* Grid overlay for better framing */}
-                <div className="absolute inset-0 pointer-events-none">
-                  <div className="w-full h-full grid grid-cols-3 grid-rows-3">
-                    {[...Array(9)].map((_, i) => (
-                      <div key={i} className="border border-white/20" />
-                    ))}
+              <div className="space-y-3 animate-fade-in">
+                <div className="relative aspect-video bg-muted rounded-lg overflow-hidden border border-border">
+                  <video 
+                    ref={videoRef}
+                    autoPlay 
+                    playsInline 
+                    muted
+                    className="w-full h-full object-cover"
+                  />
+                  {/* Grid overlay for better framing */}
+                  <div className="absolute inset-0 pointer-events-none">
+                    <div className="w-full h-full grid grid-cols-3 grid-rows-3">
+                      {[...Array(9)].map((_, i) => (
+                        <div key={i} className="border border-white/20" />
+                      ))}
+                    </div>
                   </div>
+                  <canvas ref={canvasRef} className="hidden" />
                 </div>
-                <canvas ref={canvasRef} className="hidden" />
+                <Button 
+                  onClick={captureImage}
+                  className="w-full h-12 bg-green-600 text-white hover:bg-green-700 font-semibold"
+                >
+                  📸 Capture Photo
+                </Button>
               </div>
             )}
             
@@ -1019,9 +1078,12 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                 onChange={(e) => handleFileSelect(e.target.files)}
                 className="hidden"
               />
-              <Upload className="h-6 w-6 sm:h-8 sm:w-8 mx-auto mb-2 text-muted-foreground group-hover:text-elec-yellow transition-colors" />
-              <p className="text-xs sm:text-sm font-medium text-foreground">
-                Tap to upload images
+              <Upload className="h-8 w-8 sm:h-10 sm:w-10 mx-auto mb-2 text-muted-foreground group-hover:text-elec-yellow transition-colors" />
+              <p className="text-sm sm:text-base font-medium text-foreground mb-1">
+                {getUploadPlaceholder()}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Tap to browse or drag files here
               </p>
             </div>
             
@@ -1086,14 +1148,14 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                     Add
                   </Button>
                 </div>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
                   {images.map((image, index) => (
                     <div 
                       key={index} 
-                      className={`relative group cursor-pointer rounded-lg overflow-hidden border-2 transition-all ${
+                      className={`relative group cursor-pointer rounded-xl overflow-hidden border-2 transition-all ${
                         index === primaryImageIndex 
-                          ? 'border-elec-yellow' 
-                          : 'border-border'
+                          ? 'border-elec-yellow shadow-lg shadow-elec-yellow/20' 
+                          : 'border-border hover:border-elec-yellow/50'
                       }`}
                       onClick={() => setPrimaryImageIndex(index)}
                     >
@@ -1101,23 +1163,23 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                         <img
                           src={URL.createObjectURL(image)}
                           alt={`Upload ${index + 1}`}
-                          className="w-full h-full object-contain max-w-full"
+                          className="w-full h-full object-cover"
                         />
                       </div>
                       <Button
                         size="icon"
                         variant="destructive"
-                        className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="absolute top-2 right-2 h-8 w-8 sm:h-6 sm:w-6 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity shadow-lg"
                         onClick={(e) => {
                           e.stopPropagation();
                           removeImage(index);
                         }}
                       >
-                        <X className="h-3 w-3" />
+                        <X className="h-4 w-4 sm:h-3 sm:w-3" />
                       </Button>
                       {index === primaryImageIndex && (
-                        <div className="absolute bottom-1 left-1">
-                          <Badge className="bg-elec-yellow text-black text-xs px-1.5 py-0">
+                        <div className="absolute bottom-2 left-2">
+                          <Badge className="bg-elec-yellow text-black text-xs font-semibold px-2 py-0.5 shadow-lg">
                             Primary
                           </Badge>
                         </div>
