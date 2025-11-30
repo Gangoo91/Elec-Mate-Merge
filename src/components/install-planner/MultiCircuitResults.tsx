@@ -62,21 +62,28 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
   const totalSystemLoad = circuits.reduce((sum, circuit) => sum + circuit.totalLoad, 0);
   const totalDesignCurrent = circuitAnalysis.reduce((sum, analysis) => sum + analysis.designCurrent, 0);
 
-  // Enhanced diversity factor calculation based on load types and BS7671
-  const calculateDiversityFactor = () => {
-    const loadTypes = circuits.map(c => c.loadType);
-    const hasHeating = loadTypes.some(type => type.includes('heating'));
-    const hasLighting = loadTypes.some(type => type.includes('lighting'));
-    const hasSocket = loadTypes.some(type => type.includes('socket'));
+  // IET On-Site Guide Table 1B/H2 diversity calculation
+  const diversityCalculation = React.useMemo(() => {
+    const { calculateSystemDiversity } = require('@/utils/diversityCalculator');
     
-    if (hasHeating && hasLighting && hasSocket && circuits.length > 5) return 0.75;
-    if ((hasHeating || hasSocket) && circuits.length > 3) return 0.8;
-    return 0.85; // Conservative for smaller installations
-  };
+    const circuitsForDiversity = circuitAnalysis.map(analysis => ({
+      id: analysis.circuit.id,
+      name: analysis.circuit.name,
+      loadType: analysis.circuit.loadType,
+      totalLoad: analysis.circuit.totalLoad,
+      designCurrent: analysis.designCurrent,
+      voltage: analysis.circuit.voltage
+    }));
+    
+    // Default to domestic premises type (can be enhanced later with premises type selector)
+    const premisesType = 'domestic' as const;
+    
+    return calculateSystemDiversity(circuitsForDiversity, premisesType);
+  }, [circuitAnalysis]);
 
-  const diversityFactor = calculateDiversityFactor();
+  const diversityFactor = diversityCalculation.diversityFactor;
+  const diversifiedCurrent = diversityCalculation.diversifiedCurrent;
   const diversifiedLoad = totalSystemLoad * diversityFactor;
-  const diversifiedCurrent = totalDesignCurrent * diversityFactor;
 
   // Realistic UK main switch recommendations
   const getRecommendedMainSwitch = (current: number) => {
@@ -97,6 +104,58 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
         diversityFactor={diversityFactor}
         diversifiedLoad={diversifiedLoad}
       />
+
+      {/* Diversity Breakdown */}
+      {diversityCalculation.breakdown.length > 0 && (
+        <div className="bg-card border border-border rounded-lg p-4">
+          <h3 className="text-lg font-semibold text-foreground mb-4">
+            Diversity Applied (IET On-Site Guide Table 1B/H2)
+          </h3>
+          <div className="space-y-4">
+            {diversityCalculation.breakdown.map((group, index) => (
+              <div key={index} className="border-l-2 border-elec-yellow pl-4">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <p className="font-medium text-foreground capitalize">
+                      {group.type.replace(/([A-Z])/g, ' $1').trim()} 
+                      <span className="text-muted-foreground text-sm ml-2">
+                        ({group.count} circuit{group.count > 1 ? 's' : ''})
+                      </span>
+                    </p>
+                    <p className="text-sm text-muted-foreground">{group.formula}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm text-muted-foreground">
+                      {group.totalCurrent.toFixed(2)}A → {group.diversifiedCurrent.toFixed(2)}A
+                    </p>
+                    <p className="text-xs text-elec-yellow">
+                      {(group.diversityFactor * 100).toFixed(0)}% applied
+                    </p>
+                  </div>
+                </div>
+                <ul className="space-y-1">
+                  {group.details.map((detail, i) => (
+                    <li key={i} className="text-xs text-muted-foreground">• {detail}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+            <div className="border-t border-border pt-3 mt-4">
+              <div className="flex justify-between items-center">
+                <span className="font-semibold text-foreground">Total System Diversity:</span>
+                <div className="text-right">
+                  <p className="font-bold text-elec-yellow">
+                    {diversityCalculation.totalSystemCurrent.toFixed(2)}A → {diversityCalculation.diversifiedCurrent.toFixed(2)}A
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Overall factor: {(diversityCalculation.diversityFactor * 100).toFixed(1)}%
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Supply Requirements */}
       <SupplyRequirementsCard
