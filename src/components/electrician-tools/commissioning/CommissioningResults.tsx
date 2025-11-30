@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
 import { ProgressHeroBar } from "./redesign/ProgressHeroBar";
 import { TestSection } from "./redesign/TestSection";
 import { ChecklistItem } from "./redesign/ChecklistItem";
 import { TestCard } from "./redesign/TestCard";
-import { Eye, Zap, AlertTriangle } from "lucide-react";
+import { CertificateDataSection } from "./CertificateDataSection";
+import { Eye, Zap, AlertTriangle, Save, Trash2, Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useCommissioningProgress } from "@/hooks/useCommissioningProgress";
 import type { CommissioningResponse } from "@/types/commissioning-response";
 
 interface CommissioningResultsProps {
@@ -13,6 +16,7 @@ interface CommissioningResultsProps {
   projectName: string;
   location: string;
   installationDate: string;
+  installationType: string;
   onStartOver: () => void;
 }
 
@@ -21,9 +25,33 @@ const CommissioningResults = ({
   projectName, 
   location, 
   installationDate,
+  installationType,
   onStartOver 
 }: CommissioningResultsProps) => {
+  const {
+    progress,
+    hasExistingSession,
+    initializeSession,
+    resumeSession,
+    recordTestResult,
+    recordVisualCheck,
+    updateCompletionPercentage,
+    clearProgress,
+    exportProgress,
+    getTestResult,
+    getVisualCheck,
+  } = useCommissioningProgress(projectName, location, installationDate, installationType);
+
   const [completedVisual, setCompletedVisual] = useState<Set<number>>(new Set());
+
+  // Initialize or resume session
+  useEffect(() => {
+    if (!progress && !hasExistingSession) {
+      initializeSession();
+    } else if (hasExistingSession) {
+      resumeSession();
+    }
+  }, [progress, hasExistingSession, initializeSession, resumeSession]);
   
   const visualCount = results.structuredData?.testingProcedure?.visualInspection?.checkpoints?.length || 0;
   const deadCount = results.structuredData?.testingProcedure?.deadTests?.length || 0;
@@ -33,6 +61,11 @@ const CommissioningResults = ({
   const completionPercentage = totalItems > 0 
     ? Math.round((completedVisual.size / totalItems) * 100)
     : 0;
+
+  // Update completion percentage whenever it changes
+  useEffect(() => {
+    updateCompletionPercentage(completionPercentage);
+  }, [completionPercentage, updateCompletionPercentage]);
 
   const handleCopyChecklist = () => {
     if (!results?.structuredData?.testingProcedure) {
@@ -100,6 +133,29 @@ const CommissioningResults = ({
     }
   };
 
+  const handleClearProgress = () => {
+    if (confirm("Are you sure you want to clear all saved progress? This cannot be undone.")) {
+      clearProgress();
+      toast.success("Progress cleared", { description: "All test results have been removed" });
+    }
+  };
+
+  const handleExportProgress = () => {
+    const json = exportProgress();
+    if (json) {
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `commissioning-backup-${projectName.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      toast.success("Progress exported", { description: "Backup file downloaded" });
+    }
+  };
+
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Hero Progress Bar */}
@@ -109,6 +165,51 @@ const CommissioningResults = ({
         onExportPDF={handleExportPDF}
         onStartOver={onStartOver}
         completionPercentage={completionPercentage}
+      />
+
+      {/* Progress Status & Actions */}
+      {progress && (
+        <div className="bg-card border border-elec-yellow/20 rounded-lg p-4">
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <div className="flex items-center gap-3">
+              <Clock className="h-5 w-5 text-elec-yellow" />
+              <div>
+                <p className="text-sm font-semibold text-white">Progress Auto-Saved</p>
+                <p className="text-xs text-white/60">
+                  Last saved: {new Date(progress.lastSaved).toLocaleTimeString()}
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                onClick={handleExportProgress}
+                variant="outline"
+                size="sm"
+                className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+              >
+                <Save className="h-4 w-4 mr-2" />
+                Backup
+              </Button>
+              <Button
+                onClick={handleClearProgress}
+                variant="outline"
+                size="sm"
+                className="border-red-500/30 hover:bg-red-500/10 text-red-400"
+              >
+                <Trash2 className="h-4 w-4 mr-2" />
+                Clear
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Certificate Pre-Fill Data */}
+      <CertificateDataSection
+        progress={progress}
+        projectName={projectName}
+        location={location}
+        installationDate={installationDate}
       />
 
       {/* Send to Agent */}
@@ -142,25 +243,31 @@ const CommissioningResults = ({
               </div>
             </div>
           )}
-          {results.structuredData.testingProcedure.visualInspection.checkpoints.map((checkpoint, index) => (
-            <ChecklistItem
-              key={index}
-              item={checkpoint.item}
-              requirement={checkpoint.requirement}
-              reference={checkpoint.reference}
-              onToggle={(checked) => {
-                setCompletedVisual(prev => {
-                  const newSet = new Set(prev);
-                  if (checked) {
-                    newSet.add(index);
-                  } else {
-                    newSet.delete(index);
-                  }
-                  return newSet;
-                });
-              }}
-            />
-          ))}
+          {results.structuredData.testingProcedure.visualInspection.checkpoints.map((checkpoint, index) => {
+            const savedCheck = getVisualCheck(index);
+            return (
+              <ChecklistItem
+                key={index}
+                item={checkpoint.item}
+                requirement={checkpoint.requirement}
+                reference={checkpoint.reference}
+                initialChecked={savedCheck?.completed}
+                initialNotes={savedCheck?.notes}
+                onToggle={(checked, notes) => {
+                  setCompletedVisual(prev => {
+                    const newSet = new Set(prev);
+                    if (checked) {
+                      newSet.add(index);
+                    } else {
+                      newSet.delete(index);
+                    }
+                    return newSet;
+                  });
+                  recordVisualCheck(index, checked, notes);
+                }}
+              />
+            );
+          })}
         </TestSection>
       )}
 
@@ -172,14 +279,26 @@ const CommissioningResults = ({
           count={deadCount}
           variant="dead"
         >
-          {results.structuredData.testingProcedure.deadTests.map((test, index) => (
-            <TestCard
-              key={index}
-              test={test}
-              index={index}
-              variant="dead"
-            />
-          ))}
+          {results.structuredData.testingProcedure.deadTests.map((test, index) => {
+            const stepId = `dead-${index}`;
+            const savedResult = getTestResult(stepId);
+            return (
+              <TestCard
+                key={index}
+                test={test}
+                index={index}
+                variant="dead"
+                initialResult={savedResult}
+                onResultRecorded={(result) => {
+                  recordTestResult({
+                    stepId,
+                    testName: test.testName,
+                    ...result,
+                  });
+                }}
+              />
+            );
+          })}
         </TestSection>
       )}
 
@@ -191,14 +310,26 @@ const CommissioningResults = ({
           count={liveCount}
           variant="live"
         >
-          {results.structuredData.testingProcedure.liveTests.map((test, index) => (
-            <TestCard
-              key={index}
-              test={test}
-              index={index}
-              variant="live"
-            />
-          ))}
+          {results.structuredData.testingProcedure.liveTests.map((test, index) => {
+            const stepId = `live-${index}`;
+            const savedResult = getTestResult(stepId);
+            return (
+              <TestCard
+                key={index}
+                test={test}
+                index={index}
+                variant="live"
+                initialResult={savedResult}
+                onResultRecorded={(result) => {
+                  recordTestResult({
+                    stepId,
+                    testName: test.testName,
+                    ...result,
+                  });
+                }}
+              />
+            );
+          })}
         </TestSection>
       )}
 
