@@ -186,22 +186,22 @@ serve(async (req) => {
     ]);
     const ragDuration = Date.now() - ragStartTime;
 
-    // Results are already in correct format from GIN searches
-    const bs7671Results = regulationsResults || [];
-    const practicalResults = practicalResults.results || [];
-    const designResults = designResults || [];
+    // Process results from GIN searches
+    const bs7671Data = regulationsResults || [];
+    const practicalData = (practicalResults as any)?.results || practicalResults || [];
+    const designData = designResults || [];
 
-    console.log(`⚡ ULTRA-FAST RAG Complete (${ragDuration}ms) | Regulations: ${bs7671Results.length} | Practical: ${practicalResults.length} | Design: ${designResults.length}`);
+    console.log(`⚡ ULTRA-FAST RAG Complete (${ragDuration}ms) | Regulations: ${bs7671Data.length} | Practical: ${practicalData.length} | Design: ${designData.length}`);
 
     // STEP 3: RRF Fusion - merge results intelligently
     const fusionStartTime = Date.now();
     const sources = [
-      { data: bs7671Results, weight: classification.weights.bs7671, source: 'regulation' },
-      { data: practicalResults, weight: classification.weights.practical, source: 'practical' }
+      { data: bs7671Data, weight: classification.weights.bs7671, source: 'regulation' },
+      { data: practicalData, weight: classification.weights.practical, source: 'practical' }
     ];
 
-    if (classification.needsDesignKnowledge && designResults.length > 0) {
-      sources.push({ data: designResults, weight: classification.weights.design, source: 'design' });
+    if (classification.needsDesignKnowledge && designData.length > 0) {
+      sources.push({ data: designData, weight: classification.weights.design, source: 'design' });
     }
 
     const fusedResults = fuseResults(sources);
