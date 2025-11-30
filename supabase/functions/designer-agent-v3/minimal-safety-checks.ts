@@ -3,9 +3,11 @@
  * Only enforces UK-specific rules that AI often misses:
  * 1. Ring final circuits MUST be 32A
  * 2. Socket circuits MUST have RCD/RCBO protection
+ * 3. Fire/emergency circuits MUST use fire-rated cables
  */
 
 import type { DesignedCircuit } from './types.ts';
+import { detectFireEmergencyCircuit } from '../_shared/cable-enclosure-rules.ts';
 
 export class MinimalSafetyChecks {
   constructor(private logger: any) {}
@@ -22,6 +24,9 @@ export class MinimalSafetyChecks {
 
       // CHECK 2: Socket circuits MUST have RCD/RCBO (BS 7671 Reg 411.3.3)
       modified = this.enforceSocketRCD(modified, index);
+
+      // CHECK 3: Fire/emergency circuits MUST use fire-rated cables (BS 5266-1, BS 5839-1)
+      modified = this.enforceFireCircuitCables(modified, index);
 
       return modified;
     });
@@ -188,5 +193,76 @@ export class MinimalSafetyChecks {
     const isNotRing = !this.detectRingFinal(circuit);
     
     return isSocket && is32A && isNotRing;
+  }
+
+  /**
+   * Fire/emergency circuits MUST use fire-rated cables (FP200/FP400/MICC)
+   * BS 5266-1 (Emergency Lighting), BS 5839-1 (Fire Alarms)
+   */
+  private enforceFireCircuitCables(circuit: DesignedCircuit, index: number): DesignedCircuit {
+    // Detect if this is a fire/emergency circuit
+    const circuitType = detectFireEmergencyCircuit(
+      circuit.loadType || '',
+      circuit.name || ''
+    );
+
+    if (!circuitType) {
+      return circuit; // Not a fire circuit, no enforcement needed
+    }
+
+    // Check if current cable is NOT fire-rated
+    const cableType = circuit.cableType?.toLowerCase() || '';
+    const isFireRated = cableType.includes('fp200') || 
+                        cableType.includes('fp400') || 
+                        cableType.includes('micc');
+
+    if (isFireRated) {
+      return circuit; // Already using fire-rated cable, all good
+    }
+
+    // NON-COMPLIANT: Using non-fire-rated cable for fire circuit
+    // Override to FP200 (most common fire-rated cable)
+    const cableSize = circuit.cableSize || 1.5;
+    const correctedCableType = `${cableSize}mm² FP200`;
+
+    // Determine CPC size - FP200 typically has equal or slightly larger CPC
+    const cpcSize = cableSize >= 2.5 ? cableSize : 1.5;
+
+    // Map circuit type to BS reference
+    const bsReference = circuitType === 'emergency-lighting' ? 'BS 5266-1' :
+                        circuitType === 'fire-alarm' ? 'BS 5839-1' :
+                        circuitType === 'smoke-detection' ? 'BS 5839-1' :
+                        circuitType === 'sprinkler-system' ? 'BS EN 12845' :
+                        'BS 7671 Reg 560.8';
+
+    this.logger.info('Fire circuit cable enforcement applied', {
+      circuit: circuit.name,
+      index,
+      circuitType,
+      before: {
+        cableType: circuit.cableType,
+        cable: circuit.cableSize,
+        cpc: circuit.cpcSize
+      },
+      after: {
+        cableType: correctedCableType,
+        cable: cableSize,
+        cpc: cpcSize
+      },
+      standard: bsReference
+    });
+
+    return {
+      ...circuit,
+      cableType: correctedCableType,
+      cableSize: cableSize,
+      cpcSize: cpcSize,
+      installationMethod: 'clipped direct with fire-rated clips',
+      justifications: {
+        ...circuit.justifications,
+        safetyCheckApplied: `Fire/emergency circuit: ${correctedCableType} per ${bsReference} - fire-rated cable mandatory for circuit integrity during fire conditions`,
+        cableType: `${correctedCableType} - MANDATORY for ${circuitType.replace(/-/g, ' ')} circuits to maintain function during fire (${bsReference})`
+      }
+    };
   }
 }

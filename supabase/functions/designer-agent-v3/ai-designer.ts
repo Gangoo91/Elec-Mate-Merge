@@ -455,10 +455,17 @@ export class AIDesigner {
     parts.push('=== INDUSTRIAL CABLE TYPE RULES (MANDATORY) ===');
     parts.push('❌ NEVER use Twin & Earth (T&E) - not suitable for industrial installations');
     parts.push('');
-    parts.push('📦 INDUSTRIAL PROCESS AREAS (production, machinery, warehousing):');
-    parts.push('✅ SWA (Steel Wire Armoured) - standard for ALL process area circuits');
+    parts.push('📦 INDUSTRIAL SOCKET CIRCUITS (ring finals, radials):');
+    parts.push('✅ INTERNAL workshop/office (clean environment): LSZH singles in metal trunking/conduit');
+    parts.push('✅ INTERNAL workshop (harsh/dusty/wet): Consider SWA clipped direct OR singles in steel conduit');
+    parts.push('✅ EXTERNAL workshop supply: SWA clipped direct - mechanical protection required');
+    parts.push('⚠️ CRITICAL: For INTERNAL ring finals, trunking/conduit with singles is MORE practical than SWA');
+    parts.push('⚠️ Ask yourself: Is this internal or external? Is there mechanical damage risk?');
+    parts.push('');
+    parts.push('📦 INDUSTRIAL PROCESS AREAS (production, machinery, motors):');
+    parts.push('✅ SWA (Steel Wire Armoured) - standard for machinery, motors, and equipment');
     parts.push('✅ Flexible SWA or armoured flex - for machinery with vibration/movement');
-    parts.push('✅ XLPE - for high temperature environments');
+    parts.push('✅ XLPE - for high temperature environments (ovens, furnaces)');
     parts.push('');
     parts.push('🏢 OFFICE/RECEPTION AREAS WITHIN INDUSTRIAL BUILDINGS:');
     parts.push('✅ LSZH singles in galvanised steel trunking - clean office environments');
@@ -467,6 +474,7 @@ export class AIDesigner {
     parts.push('');
     parts.push('🔥 FIRE/EMERGENCY CIRCUITS (ALL AREAS):');
     parts.push('✅ FP200/FP400 or MICC - MANDATORY regardless of location');
+    parts.push('❌ NEVER use SWA, T&E, or LSZH singles for fire circuits');
     parts.push('');
     parts.push('(CPC sizing rules: See above - Singles/SWA use equal size, T&E uses reduced CPC per Table 54.7)');
     parts.push('');
