@@ -259,6 +259,7 @@ export const StructuredDesignWizard = ({ onGenerate, isProcessing }: StructuredD
           <InstallationDetailsStep 
             circuits={circuits}
             onUpdate={setCircuits}
+            installationType={installationType}
           />
         )}
 

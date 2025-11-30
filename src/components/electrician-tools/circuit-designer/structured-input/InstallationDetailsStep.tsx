@@ -14,9 +14,56 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 interface InstallationDetailsStepProps {
   circuits: CircuitInput[];
   onUpdate: (circuits: CircuitInput[]) => void;
+  installationType: 'domestic' | 'commercial' | 'industrial';
 }
 
-export const InstallationDetailsStep = ({ circuits, onUpdate }: InstallationDetailsStepProps) => {
+const DOMESTIC_INSTALL_METHODS = [
+  { value: 'auto', label: 'Auto (let AI decide)' },
+  { value: 'clipped_direct', label: 'Clipped Direct (most common)' },
+  { value: 'pvc_conduit', label: 'PVC Conduit (concealed)' },
+  { value: 'in_wall', label: 'In Wall (chased/buried)' },
+  { value: 'surface_pvc', label: 'Surface Mini Trunking' },
+  { value: 'loft_joists', label: 'Across Joists (loft)' },
+  { value: 'thermal_insulation', label: 'In Thermal Insulation' },
+];
+
+const COMMERCIAL_INSTALL_METHODS = [
+  { value: 'auto', label: 'Auto (let AI decide)' },
+  { value: 'dado_trunking', label: 'Dado Trunking (office desks)' },
+  { value: 'pvc_trunking', label: 'PVC Trunking (general office)' },
+  { value: 'steel_trunking', label: 'Steel Trunking (fire-rated)' },
+  { value: 'cable_basket', label: 'Cable Basket (ceiling void)' },
+  { value: 'perforated_tray', label: 'Perforated Cable Tray' },
+  { value: 'steel_conduit', label: 'Steel Conduit (visible areas)' },
+  { value: 'pvc_conduit', label: 'PVC Conduit (concealed)' },
+  { value: 'skirting_trunking', label: 'Skirting Trunking (perimeter)' },
+];
+
+const INDUSTRIAL_INSTALL_METHODS = [
+  { value: 'auto', label: 'Auto (let AI decide)' },
+  { value: 'cable_ladder', label: 'Cable Ladder (heavy cables)' },
+  { value: 'heavy_duty_tray', label: 'Heavy-Duty Tray' },
+  { value: 'galvanised_conduit', label: 'Galvanised Conduit' },
+  { value: 'flexible_conduit', label: 'Flexible Conduit (motors)' },
+  { value: 'swa_cleats', label: 'SWA Cleats (clipped direct)' },
+  { value: 'cable_basket', label: 'Cable Basket' },
+  { value: 'outdoor_tray', label: 'Outdoor Tray (galvanised)' },
+];
+
+export const InstallationDetailsStep = ({ circuits, onUpdate, installationType }: InstallationDetailsStepProps) => {
+  
+  const getInstallMethodOptions = () => {
+    switch (installationType) {
+      case 'domestic':
+        return DOMESTIC_INSTALL_METHODS;
+      case 'commercial':
+        return COMMERCIAL_INSTALL_METHODS;
+      case 'industrial':
+        return INDUSTRIAL_INSTALL_METHODS;
+      default:
+        return DOMESTIC_INSTALL_METHODS;
+    }
+  };
   
   const updateCircuit = (index: number, field: keyof CircuitInput, value: any) => {
     const updated = [...circuits];
@@ -63,15 +110,7 @@ export const InstallationDetailsStep = ({ circuits, onUpdate }: InstallationDeta
                 label="Cable Installation Method"
                 value={circuit.installMethod || 'auto'}
                 onValueChange={(value) => updateCircuit(index, 'installMethod', value)}
-                options={[
-                  { value: 'auto', label: 'Auto (let AI decide)' },
-                  { value: 'method_c', label: 'Method C - Clipped Direct' },
-                  { value: 'method_a', label: 'Method A - Enclosed in Conduit' },
-                  { value: 'method_b', label: 'Method B - In Trunking' },
-                  { value: 'method_d', label: 'Method D - Buried Direct' },
-                  { value: 'method_e', label: 'Method E - In Conduit/Trunking' },
-                  { value: 'method_f', label: 'Method F - In Thermal Insulation' },
-                ]}
+                options={getInstallMethodOptions()}
               />
 
               {/* Protection Device Type */}
