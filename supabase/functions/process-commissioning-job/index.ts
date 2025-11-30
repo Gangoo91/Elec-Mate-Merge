@@ -172,10 +172,23 @@ Deno.serve(async (req) => {
         throw new Error('Failed to parse AI response');
       }
 
-      // Add metadata
+      // Wrap AI response in proper CommissioningResponse structure
       const finalResult = {
-        ...parsedResult,
         success: true,
+        mode: 'procedure',
+        structuredData: {
+          testingProcedure: {
+            visualInspection: parsedResult.visualInspection,
+            deadTests: parsedResult.deadTests || [],
+            liveTests: parsedResult.liveTests || []
+          },
+          certification: parsedResult.certification
+        },
+        // Additional data at root level
+        clientCommunication: parsedResult.clientCommunication,
+        costEstimate: parsedResult.costEstimate,
+        commissioningCompletionChecks: parsedResult.commissioningCompletionChecks,
+        documentationRequirements: parsedResult.documentationRequirements,
         metadata: {
           ragQualityMetrics: {
             gn3ProceduresFound,
