@@ -6,6 +6,10 @@ const corsHeaders = {
 };
 
 Deno.serve(async (req) => {
+  // Store jobId and heartbeatInterval in outer scope for error handling
+  let jobId: string | undefined;
+  let heartbeatInterval: number | undefined;
+
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -16,7 +20,8 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
-    const { jobId } = await req.json();
+    const body = await req.json();
+    jobId = body.jobId; // Store in outer scope for error handler
 
     if (!jobId) {
       return new Response(
@@ -116,8 +121,8 @@ Deno.serve(async (req) => {
     console.log('🤖 Phase 3: AI Generation');
     await updateProgress(supabase, jobId, 50, 'Generating commissioning procedures...');
     
-    // Heartbeat interval to keep progress updating
-    const heartbeatInterval = setInterval(async () => {
+    // Heartbeat interval to keep progress updating (stored in outer scope)
+    heartbeatInterval = setInterval(async () => {
       const { data: currentJob } = await supabase
         .from('commissioning_jobs')
         .select('progress')
@@ -267,15 +272,20 @@ Deno.serve(async (req) => {
   } catch (error: any) {
     console.error('❌ Error in process-commissioning-job:', error);
     
-    // Try to update job status to failed
-    try {
-      const supabase = createClient(
-        Deno.env.get('SUPABASE_URL')!,
-        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-      );
-      
-      const { jobId } = await req.json().catch(() => ({}));
-      if (jobId) {
+    // Clear heartbeat interval if it exists
+    if (heartbeatInterval) {
+      clearInterval(heartbeatInterval);
+      console.log('🛑 Heartbeat interval cleared in error handler');
+    }
+    
+    // Try to update job status to failed (jobId now accessible from outer scope)
+    if (jobId) {
+      try {
+        const supabase = createClient(
+          Deno.env.get('SUPABASE_URL')!,
+          Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+        );
+        
         await supabase
           .from('commissioning_jobs')
           .update({
@@ -284,9 +294,13 @@ Deno.serve(async (req) => {
             completed_at: new Date().toISOString()
           })
           .eq('id', jobId);
+        
+        console.log(`✅ Marked job ${jobId} as failed`);
+      } catch (updateError) {
+        console.error('Failed to update job status:', updateError);
       }
-    } catch (updateError) {
-      console.error('Failed to update job status:', updateError);
+    } else {
+      console.warn('⚠️ No jobId available to mark as failed');
     }
     
     return new Response(
