@@ -1,6 +1,5 @@
 // One-time utility to generate missing embeddings in design_knowledge table
-import { corsHeaders, serve } from '../_shared/deps.ts';
-import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { corsHeaders, serve, createClient } from '../_shared/deps.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
