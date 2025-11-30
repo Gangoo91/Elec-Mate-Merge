@@ -97,6 +97,35 @@ export const MobileTestResultsCompact = ({ circuit }: MobileTestResultsCompactPr
         Expected Test Results
       </h3>
 
+      {/* Load Summary Card - Total Connected Load & After Diversity */}
+      <div className="p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <p className="text-xs text-white/60 mb-0.5">Total Connected Load</p>
+            <p className="text-lg font-bold text-white">
+              {circuit.loadPower ? `${circuit.loadPower.toLocaleString()}W` : '—'}
+            </p>
+          </div>
+          <div>
+            <p className="text-xs text-white/60 mb-0.5">After Diversity</p>
+            <p className="text-lg font-bold text-elec-yellow">
+              {circuit.calculations?.diversifiedLoad 
+                ? `${Math.round(circuit.calculations.diversifiedLoad).toLocaleString()}W` 
+                : circuit.loadPower 
+                  ? `${Math.round(circuit.loadPower * (circuit.calculations?.diversityFactor || 1)).toLocaleString()}W`
+                  : '—'}
+            </p>
+          </div>
+        </div>
+        {circuit.calculations?.diversityFactor && circuit.calculations.diversityFactor < 1 && (
+          <div className="mt-2 pt-2 border-t border-elec-yellow/20">
+            <p className="text-xs text-white/70">
+              Diversity factor: {(circuit.calculations.diversityFactor * 100).toFixed(0)}% applied per BS 7671 Appendix A
+            </p>
+          </div>
+        )}
+      </div>
+
       <MobileAccordion type="multiple" className="space-y-2">
         {testResults.map((result, idx) => (
           <MobileAccordionItem 

@@ -719,19 +719,54 @@ export class AIDesigner {
     parts.push('5. Use exact voltage/phase values from each circuit request');
     parts.push('');
     
-    // === CALCULATIONS SCHEMA ===
-    parts.push('=== CALCULATIONS SCHEMA ===');
-    parts.push('The "calculations" and "expectedTests" objects are NON-OPTIONAL.');
-    parts.push('Even if you provide values, they will be OVERWRITTEN by deterministic BS 7671 calculation engine.');
-    parts.push('YOUR values serve as HINTS only. The actual compliant values come from code.');
+    // === CALCULATIONS & EXPECTED TEST VALUES ===
+    parts.push('=== CALCULATIONS & EXPECTED TEST VALUES (MANDATORY) ===');
+    parts.push('Generate complete calculations and expectedTests objects using BS 7671 formulas from RAG context.');
     parts.push('');
     parts.push('REQUIRED calculations fields:');
-    parts.push('- Ib: Design current (find formula in RAG knowledge base)');
-    parts.push('- In: Protection device rating');
+    parts.push('- Ib: Design current (connected load / voltage)');
+    parts.push('- Id: Diversified current (for MCB selection)');
+    parts.push('- In: Protection device rating (Id ≤ In ≤ Iz)');
     parts.push('- Iz: Cable capacity after derating (from BS 7671 tables in RAG)');
-    parts.push('- voltageDrop: { volts, percent, limit, compliant } - will be recalculated deterministically');
-    parts.push('- zs: Earth fault loop impedance - will be recalculated deterministically');
-    parts.push('- maxZs: Maximum Zs from Table 41.3 - will be recalculated deterministically');
+    parts.push('- diversityFactor: Factor applied (e.g., 0.66 for domestic lighting)');
+    parts.push('- diversifiedLoad: Diversified load in watts (Ib × diversityFactor × voltage)');
+    parts.push('- voltageDrop: { volts, percent, limit, compliant }');
+    parts.push('- zs: Earth fault loop impedance in Ohms');
+    parts.push('- maxZs: Maximum permitted Zs in Ohms (from BS 7671 Table 41.3)');
+    parts.push('');
+    parts.push('=== EXPECTED TEST VALUES (BS 7671 PART 6) ===');
+    parts.push('Generate expectedTests object for every circuit with accurate BS 7671 test values:');
+    parts.push('');
+    parts.push('1. R1+R2 (Continuity of protective conductors - BS 7671 Reg 612.2):');
+    parts.push('   - Use BS 7671 Table 9A conductor resistance values (mΩ/m at 20°C)');
+    parts.push('   - Formula: R1+R2 = ((R_live + R_cpc) × cable_length) / 1000');
+    parts.push('   - Example: 2.5mm² live (7.41 mΩ/m) + 1.5mm² CPC (12.1 mΩ/m) × 20m = 0.39Ω at 20°C');
+    parts.push('   - Temperature correction: at70C = at20C × 1.2');
+    parts.push('   - Output format: { at20C: 0.39, at70C: 0.47, value: "0.47Ω", regulation: "BS 7671 Reg 612.2" }');
+    parts.push('');
+    parts.push('2. Zs (Earth fault loop impedance - BS 7671 Reg 612.9):');
+    parts.push('   - Formula: Zs = Ze + R1+R2 (at 70°C)');
+    parts.push('   - Get maxPermitted from BS 7671 Table 41.3 based on device type/rating');
+    parts.push('   - Calculate margin: marginPercent = ((maxPermitted - expected) / maxPermitted) × 100');
+    parts.push('   - Set compliant: expected ≤ maxPermitted');
+    parts.push('   - Example: Ze 0.35Ω + R1+R2 0.47Ω = 0.82Ω (max 1.37Ω for 32A Type B MCB)');
+    parts.push('   - Output format: { expected: 0.82, maxPermitted: 1.37, marginPercent: 40.1, compliant: true, regulation: "BS 7671 Reg 612.9" }');
+    parts.push('');
+    parts.push('3. Insulation Resistance (BS 7671 Table 61):');
+    parts.push('   - LV circuits up to 500V: testVoltage = "500V DC", minResistance = "≥1.0 MΩ"');
+    parts.push('   - SELV/PELV ≤50V: testVoltage = "250V DC", minResistance = "≥0.5 MΩ"');
+    parts.push('   - Output format: { testVoltage: "500V DC", minResistance: "≥1.0 MΩ", regulation: "BS 7671 Table 61" }');
+    parts.push('');
+    parts.push('4. RCD Test (if RCD/RCBO protected - BS 7671 Reg 612.13):');
+    parts.push('   - ratingmA: typically 30mA for socket/bathroom circuits');
+    parts.push('   - maxTripTimeMs: <300ms at 1×IΔn, <40ms at 5×IΔn');
+    parts.push('   - testCurrentMultiple: 1 or 5 (standard test procedure)');
+    parts.push('   - Output format: { ratingmA: 30, maxTripTimeMs: 300, testCurrentMultiple: 1, regulation: "BS 7671 Reg 612.13" }');
+    parts.push('   - Only include if circuit is RCD/RCBO protected');
+    parts.push('');
+    parts.push('📋 BS 7671 Table 9A - Common Conductor Resistances (mΩ/m at 20°C):');
+    parts.push('  • 1.0mm²: 18.1 | 1.5mm²: 12.1 | 2.5mm²: 7.41 | 4mm²: 4.61 | 6mm²: 3.08');
+    parts.push('  • 10mm²: 1.83 | 16mm²: 1.15 | 25mm²: 0.727 | 35mm²: 0.524 | 50mm²: 0.387');
     parts.push('');
     
     // Field requirements
@@ -1178,6 +1213,105 @@ CRITICAL: Include diversityApplied justification with ${installationType || 'dom
                   },
                   required: ['Ib', 'Id', 'In', 'Iz', 'diversityFactor', 'diversifiedLoad', 'voltageDrop', 'zs', 'maxZs']
                 },
+                expectedTests: {
+                  type: 'object',
+                  description: 'Expected test values for BS 7671 Part 6 verification',
+                  properties: {
+                    r1r2: {
+                      type: 'object',
+                      description: 'Continuity of protective conductors',
+                      properties: {
+                        at20C: { 
+                          type: 'number', 
+                          description: 'R1+R2 at 20°C in Ohms (from Table 9A)' 
+                        },
+                        at70C: { 
+                          type: 'number', 
+                          description: 'R1+R2 at 70°C in Ohms (×1.2 temperature correction)' 
+                        },
+                        value: { 
+                          type: 'string', 
+                          description: 'Formatted value e.g., "0.47Ω"' 
+                        },
+                        regulation: { 
+                          type: 'string', 
+                          description: 'BS 7671 Reg 612.2' 
+                        }
+                      },
+                      required: ['at20C', 'at70C', 'value', 'regulation']
+                    },
+                    zs: {
+                      type: 'object',
+                      description: 'Earth fault loop impedance',
+                      properties: {
+                        expected: { 
+                          type: 'number', 
+                          description: 'Expected Zs = Ze + R1+R2 at 70°C in Ohms' 
+                        },
+                        maxPermitted: { 
+                          type: 'number', 
+                          description: 'Maximum from BS 7671 Table 41.3 in Ohms' 
+                        },
+                        marginPercent: { 
+                          type: 'number', 
+                          description: 'Safety margin percentage' 
+                        },
+                        compliant: { 
+                          type: 'boolean', 
+                          description: 'True if expected ≤ maxPermitted' 
+                        },
+                        regulation: { 
+                          type: 'string', 
+                          description: 'BS 7671 Reg 612.9' 
+                        }
+                      },
+                      required: ['expected', 'maxPermitted', 'marginPercent', 'compliant', 'regulation']
+                    },
+                    insulationResistance: {
+                      type: 'object',
+                      description: 'Insulation resistance test',
+                      properties: {
+                        testVoltage: { 
+                          type: 'string', 
+                          description: '500V DC for LV, 250V DC for SELV' 
+                        },
+                        minResistance: { 
+                          type: 'string', 
+                          description: '≥1.0 MΩ for LV, ≥0.5 MΩ for SELV' 
+                        },
+                        regulation: { 
+                          type: 'string', 
+                          description: 'BS 7671 Table 61' 
+                        }
+                      },
+                      required: ['testVoltage', 'minResistance', 'regulation']
+                    },
+                    rcd: {
+                      type: 'object',
+                      description: 'RCD test (only for RCD/RCBO protected circuits)',
+                      properties: {
+                        ratingmA: { 
+                          type: 'number', 
+                          description: 'RCD rating in mA (typically 30)' 
+                        },
+                        maxTripTimeMs: { 
+                          type: 'number', 
+                          description: 'Max trip time at 1×IΔn (300ms)' 
+                        },
+                        testCurrentMultiple: { 
+                          type: 'number', 
+                          description: 'Test current multiple (1 or 5)' 
+                        },
+                        regulation: { 
+                          type: 'string', 
+                          description: 'BS 7671 Reg 612.13' 
+                        }
+                      },
+                      required: ['ratingmA', 'maxTripTimeMs', 'testCurrentMultiple', 'regulation']
+                    }
+                  },
+                  required: ['r1r2', 'zs', 'insulationResistance']
+                },
                 justifications: {
                   type: 'object',
                   description: 'Regulation-based justifications',
@@ -1295,7 +1429,8 @@ CRITICAL: Include diversityApplied justification with ${installationType || 'dom
                 'cableType',
                 'protectionDevice',
                 'rcdProtected',
-                'calculations', 
+                'calculations',
+                'expectedTests',
                 'justifications', 
                 'installationNotes',
                 'structuredOutput'
@@ -1471,6 +1606,105 @@ CRITICAL: Include diversityApplied justification with ${installationType || 'dom
                     },
                     required: ['Ib', 'Id', 'In', 'Iz', 'diversityFactor', 'diversifiedLoad', 'voltageDrop', 'zs', 'maxZs']
                   },
+                  expectedTests: {
+                    type: 'object',
+                    description: 'Expected test values for BS 7671 Part 6 verification',
+                    properties: {
+                      r1r2: {
+                        type: 'object',
+                        description: 'Continuity of protective conductors',
+                        properties: {
+                          at20C: { 
+                            type: 'number', 
+                            description: 'R1+R2 at 20°C in Ohms (from Table 9A)' 
+                          },
+                          at70C: { 
+                            type: 'number', 
+                            description: 'R1+R2 at 70°C in Ohms (×1.2 temperature correction)' 
+                          },
+                          value: { 
+                            type: 'string', 
+                            description: 'Formatted value e.g., "0.47Ω"' 
+                          },
+                          regulation: { 
+                            type: 'string', 
+                            description: 'BS 7671 Reg 612.2' 
+                          }
+                        },
+                        required: ['at20C', 'at70C', 'value', 'regulation']
+                      },
+                      zs: {
+                        type: 'object',
+                        description: 'Earth fault loop impedance',
+                        properties: {
+                          expected: { 
+                            type: 'number', 
+                            description: 'Expected Zs = Ze + R1+R2 at 70°C in Ohms' 
+                          },
+                          maxPermitted: { 
+                            type: 'number', 
+                            description: 'Maximum from BS 7671 Table 41.3 in Ohms' 
+                          },
+                          marginPercent: { 
+                            type: 'number', 
+                            description: 'Safety margin percentage' 
+                          },
+                          compliant: { 
+                            type: 'boolean', 
+                            description: 'True if expected ≤ maxPermitted' 
+                          },
+                          regulation: { 
+                            type: 'string', 
+                            description: 'BS 7671 Reg 612.9' 
+                          }
+                        },
+                        required: ['expected', 'maxPermitted', 'marginPercent', 'compliant', 'regulation']
+                      },
+                      insulationResistance: {
+                        type: 'object',
+                        description: 'Insulation resistance test',
+                        properties: {
+                          testVoltage: { 
+                            type: 'string', 
+                            description: '500V DC for LV, 250V DC for SELV' 
+                          },
+                          minResistance: { 
+                            type: 'string', 
+                            description: '≥1.0 MΩ for LV, ≥0.5 MΩ for SELV' 
+                          },
+                          regulation: { 
+                            type: 'string', 
+                            description: 'BS 7671 Table 61' 
+                          }
+                        },
+                        required: ['testVoltage', 'minResistance', 'regulation']
+                      },
+                      rcd: {
+                        type: 'object',
+                        description: 'RCD test (only for RCD/RCBO protected circuits)',
+                        properties: {
+                          ratingmA: { 
+                            type: 'number', 
+                            description: 'RCD rating in mA (typically 30)' 
+                          },
+                          maxTripTimeMs: { 
+                            type: 'number', 
+                            description: 'Max trip time at 1×IΔn (300ms)' 
+                          },
+                          testCurrentMultiple: { 
+                            type: 'number', 
+                            description: 'Test current multiple (1 or 5)' 
+                          },
+                          regulation: { 
+                            type: 'string', 
+                            description: 'BS 7671 Reg 612.13' 
+                          }
+                        },
+                        required: ['ratingmA', 'maxTripTimeMs', 'testCurrentMultiple', 'regulation']
+                      }
+                    },
+                    required: ['r1r2', 'zs', 'insulationResistance']
+                  },
                   justifications: {
                     type: 'object',
                     description: 'Regulation-based justifications',
@@ -1585,6 +1819,7 @@ CRITICAL: Include diversityApplied justification with ${installationType || 'dom
                   'protectionDevice',
                   'rcdProtected',
                   'calculations', 
+                  'expectedTests',
                   'justifications', 
                   'installationNotes',
                   'structuredOutput'
