@@ -207,7 +207,7 @@ ${test.acceptanceCriteria || 'Not specified'}`;
           )}
 
           {/* Instrument Setup */}
-          {test.instrumentSetup && (
+          {test.instrumentSetup && typeof test.instrumentSetup === 'string' && (
             <InstrumentSetupPanel instrumentSetup={test.instrumentSetup} />
           )}
 

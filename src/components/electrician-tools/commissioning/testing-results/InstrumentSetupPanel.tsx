@@ -6,6 +6,11 @@ interface InstrumentSetupPanelProps {
 }
 
 export const InstrumentSetupPanel = ({ instrumentSetup }: InstrumentSetupPanelProps) => {
+  // Defensive check: ensure instrumentSetup is a string
+  if (typeof instrumentSetup !== 'string' || !instrumentSetup) {
+    return null;
+  }
+
   // Try to parse structured setup instructions
   const lines = instrumentSetup.split('\n').filter(line => line.trim());
   const hasMultipleSteps = lines.length > 1;

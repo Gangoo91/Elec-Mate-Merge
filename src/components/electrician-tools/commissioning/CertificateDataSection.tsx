@@ -20,7 +20,8 @@ export const CertificateDataSection = ({
 }: CertificateDataSectionProps) => {
   const [showCertificateData, setShowCertificateData] = useState(false);
 
-  if (!progress || progress.testResults.length === 0) {
+  // Defensive checks: ensure data structure is valid
+  if (!progress || !Array.isArray(progress.testResults) || progress.testResults.length === 0) {
     return null;
   }
 
@@ -62,11 +63,14 @@ export const CertificateDataSection = ({
       }
     });
     
-    progress.visualChecks.forEach((check, index) => {
-      if (check.notes) {
-        observations.push(`Visual Check ${index + 1}: ${check.notes}`);
-      }
-    });
+    // Ensure visualChecks is an array before iterating
+    if (Array.isArray(progress.visualChecks)) {
+      progress.visualChecks.forEach((check, index) => {
+        if (check.notes) {
+          observations.push(`Visual Check ${index + 1}: ${check.notes}`);
+        }
+      });
+    }
     
     if (observations.length === 0) {
       observations.push('No observations - installation complies with BS 7671:2018+A2:2024');
