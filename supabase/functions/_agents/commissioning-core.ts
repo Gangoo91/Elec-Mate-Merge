@@ -33,6 +33,15 @@ interface CommissioningResult {
       liveTests: any[];
     };
     certification: any;
+    circuitSchedule?: Array<{
+      circuitNumber: number;
+      circuitName: string;
+      cableSize: string;
+      protectionDevice: string;
+      expectedR1R2?: string;
+      maxZs?: string;
+      testMethod?: string;
+    }>;
   };
   commissioningCompletionChecks?: any;
   documentationRequirements?: any;
@@ -106,39 +115,40 @@ export async function generateCommissioningProcedures(
   const aiTime = Date.now() - aiStart;
 
   // STEP 4: Build final result
-  const finalResult: CommissioningResult = {
-    success: true,
-    mode: 'procedure',
-    structuredData: {
-      testingProcedure: {
-        visualInspection: {
-          ...commissioningResult.visualInspection,
-          safetyNotes: Array.isArray(commissioningResult.visualInspection?.safetyNotes) 
-            ? commissioningResult.visualInspection.safetyNotes 
-            : [],
-          checkpoints: Array.isArray(commissioningResult.visualInspection?.checkpoints)
-            ? commissioningResult.visualInspection.checkpoints
-            : []
+    const finalResult: CommissioningResult = {
+      success: true,
+      mode: 'procedure',
+      structuredData: {
+        testingProcedure: {
+          visualInspection: {
+            ...commissioningResult.visualInspection,
+            safetyNotes: Array.isArray(commissioningResult.visualInspection?.safetyNotes) 
+              ? commissioningResult.visualInspection.safetyNotes 
+              : [],
+            checkpoints: Array.isArray(commissioningResult.visualInspection?.checkpoints)
+              ? commissioningResult.visualInspection.checkpoints
+              : []
+          },
+          deadTests: (commissioningResult.deadTests || [])
+            .map(transformTestProcedure)
+            .filter(Boolean),
+          liveTests: (commissioningResult.liveTests || [])
+            .map(transformTestProcedure)
+            .filter(Boolean)
         },
-        deadTests: (commissioningResult.deadTests || [])
-          .map(transformTestProcedure)
-          .filter(Boolean),
-        liveTests: (commissioningResult.liveTests || [])
-          .map(transformTestProcedure)
-          .filter(Boolean)
+        certification: commissioningResult.certification,
+        circuitSchedule: commissioningResult.circuitSchedule
       },
-      certification: commissioningResult.certification
-    },
-    commissioningCompletionChecks: commissioningResult.commissioningCompletionChecks,
-    documentationRequirements: commissioningResult.documentationRequirements,
-    metadata: {
-      ragQualityMetrics: {
-        gn3ProceduresFound,
-        regulationsFound,
-        totalSources: ragResults.length
+      commissioningCompletionChecks: commissioningResult.commissioningCompletionChecks,
+      documentationRequirements: commissioningResult.documentationRequirements,
+      metadata: {
+        ragQualityMetrics: {
+          gn3ProceduresFound,
+          regulationsFound,
+          totalSources: ragResults.length
+        }
       }
-    }
-  };
+    };
 
   const totalTime = Date.now() - startTime;
   console.log(`✅ Commissioning complete in ${totalTime}ms (RAG: ${ragTime}ms, AI: ${aiTime}ms)`);
@@ -204,48 +214,52 @@ ENHANCED RESPONSE REQUIREMENTS FOR TESTING PROCEDURES:
 - MANDATORY: Include deadTests procedures - MINIMUM 3-5 DEAD TESTS REQUIRED (continuity, insulation resistance, polarity, etc.) - THIS ARRAY MUST NEVER BE EMPTY
 - MANDATORY: Include liveTests procedures - MINIMUM 2-4 LIVE TESTS REQUIRED (earth fault loop, RCD, PFC, etc.) - THIS ARRAY MUST NEVER BE EMPTY
 
-**ENHANCED TEST PROCEDURE REQUIREMENTS:**
-Each test procedure MUST include ALL of:
-- testName: Clear descriptive name
-- regulation: Specific BS 7671 regulation reference
-- instrumentSetup: Detailed instrument configuration (settings, ranges, UK brand models like Megger MFT1741, Fluke 1664FC, Kewtech KT65DL)
-- procedure: (CRITICAL: Use field name "procedure", NOT "procedureSteps") Array of detailed step-by-step instructions (50-80 words per step)
-  * Each step should include:
-    - Exact lead placement (which terminals, colour coding)
-    - Expected readings with units
-    - What to look for (visual cues, meter readings)
-    - Common mistakes to avoid
-    - Time estimate for that step
-- acceptanceCriteria: Clear pass/fail criteria with numeric limits
-- expectedResult: Detailed expected readings with acceptable ranges
-- calculation: Calculation breakdown with formulas (where applicable)
-- troubleshooting: Array of troubleshooting scenarios with solutions (80-150 words each)
-  * Include real-world examples from 30 years experience
-  * Provide specific fault symptoms and diagnostic steps
-  * Give temperature compensation notes
-- commonMistakes: Array of 3-4 common errors electricians make during this test
-- proTips: Array of 3-4 professional tips from field experience
-- testDuration: Realistic time estimate (e.g., "5-8 minutes per circuit")
-- prerequisiteTests: Tests that must be completed before this one
-- instrumentNotes: Array of 2-3 notes about UK test instruments, brands, settings
-- clientExplanation: Plain English explanation for non-technical clients (50+ words)
-- realIncidentExample: Real-world story from 30 years experience showing why this test matters
-- leadPlacement: Exact description of where to connect test leads with colour coding
+## CRITICAL: REAL-WORLD PRACTICAL TESTING PROCEDURES
+
+**TEST METHOD SELECTION (MANDATORY):**
+For continuity tests, ALWAYS specify HOW to physically do the test:
+
+**LINK-OUT METHOD** (Preferred for final circuits):
+- Step 1 PREPARATION: Isolate circuit, lock off, remove CU cover
+- Step 2 SETUP: Use flying lead to link Line to CPC at distribution board
+- Step 3 LEAD PLACEMENT: Red lead to Line terminal, Black to Earth at furthest socket
+- Step 4 TEST: Take reading, check stable
+- Step 5 RECORD: Note highest reading, compare to max Zs
+
+**LONG LEAD METHOD** (For sub-mains):
+- Step 1 PREPARATION: Isolate, lock off
+- Step 2 SETUP: Run long test lead from CPC bar to far end of circuit
+- Step 3 LEAD PLACEMENT: Red to Earth bar, Black to wandering lead
+- Step 4 TEST: Take reading
+- Step 5 RECORD: Note reading, add lead resistance if needed
+
+**Each procedure step must be structured:**
+- PREPARATION: What to remove, identify, isolate
+- SETUP: Physical setup (link-out OR long lead method)
+- LEAD PLACEMENT: Exact terminals with wire colours
+- TEST: Take reading, what to expect
+- INTERPRET/RECORD: Compare to limits
+
+**Test procedure requirements:**
+- testName, regulation, instrumentSetup, acceptanceCriteria
+- procedure: Array of PREP/SETUP/LEAD/TEST/RECORD steps
+- leadPlacement: "Red lead to Line (brown), Black to Earth (green/yellow)"
+- expectedResult, calculation (if applicable)
+- instrumentNotes, troubleshooting, commonMistakes, proTips
+- testDuration, prerequisiteTests
 
 **ENHANCED SECTIONS:**
-- documentationRequirements: Certificate type needed (EIC, EICR, Minor Works), specific schedules required
-- commissioningCompletionChecks: Final verification checklist before sign-off
+- certification: Just certificate type (EIC/EICR/MWC) and schedules
+- circuitSchedule: If multiple circuits mentioned, list each with circuit number, name, cable size, protection device, expected R1+R2, max Zs, test method
+- commissioningCompletionChecks: Final verification
 
-**CRITICAL OUTPUT STRUCTURE (ALL FIELDS MANDATORY):**
+**OUTPUT STRUCTURE:**
 {
-  "visualInspection": { "checkpoints": [...MINIMUM 5-8 items...] },
-  "deadTests": [
-    // MINIMUM 3 TESTS REQUIRED - NEVER EMPTY
-    // Must include: continuity of protective conductors, insulation resistance, polarity
-  ],
-  "liveTests": [
-    // MINIMUM 2 TESTS REQUIRED - NEVER EMPTY
-    // Must include: earth fault loop impedance, RCD testing
+  "deadTests": [...3-5 tests with PRACTICAL methods...],
+  "liveTests": [...2-4 tests...],
+  "certification": { "certificateType": "EIC", "requiredSchedules": [...] },
+  "circuitSchedule": [
+    { "circuitNumber": 1, "circuitName": "Lighting", "cableSize": "1.0mm²", "protectionDevice": "B6", "expectedR1R2": "0.65Ω", "maxZs": "7.67Ω", "testMethod": "Link-out at board" }
   ]
 }
 

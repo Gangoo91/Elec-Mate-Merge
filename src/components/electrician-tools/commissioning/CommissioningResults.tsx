@@ -3,10 +3,10 @@ import { toast } from "sonner";
 import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
 import { ProgressHeroBar } from "./redesign/ProgressHeroBar";
 import { TestSection } from "./redesign/TestSection";
-import { ChecklistItem } from "./redesign/ChecklistItem";
 import { TestCard } from "./redesign/TestCard";
 import { CertificateDataSection } from "./CertificateDataSection";
-import { Eye, Zap, AlertTriangle, Save, Trash2, Clock } from "lucide-react";
+import { CircuitScheduleSection } from "./redesign/CircuitScheduleSection";
+import { Zap, Save, Trash2, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCommissioningProgress } from "@/hooks/useCommissioningProgress";
 import type { CommissioningResponse } from "@/types/commissioning-response";
@@ -42,8 +42,6 @@ const CommissioningResults = ({
     getVisualCheck,
   } = useCommissioningProgress(projectName, location, installationDate, installationType);
 
-  const [completedVisual, setCompletedVisual] = useState<Set<number>>(new Set());
-
   // Initialize or resume session
   useEffect(() => {
     if (!progress && !hasExistingSession) {
@@ -53,13 +51,14 @@ const CommissioningResults = ({
     }
   }, [progress, hasExistingSession, initializeSession, resumeSession]);
   
-  const visualCount = results.structuredData?.testingProcedure?.visualInspection?.checkpoints?.length || 0;
   const deadCount = results.structuredData?.testingProcedure?.deadTests?.length || 0;
   const liveCount = results.structuredData?.testingProcedure?.liveTests?.length || 0;
-  const totalItems = visualCount + deadCount + liveCount;
+  const totalItems = deadCount + liveCount;
   
+  // Calculate completion from saved test results
+  const completedTests = Object.keys(progress?.testResults || {}).length;
   const completionPercentage = totalItems > 0 
-    ? Math.round((completedVisual.size / totalItems) * 100)
+    ? Math.round((completedTests / totalItems) * 100)
     : 0;
 
   // Update completion percentage whenever it changes
@@ -76,14 +75,6 @@ const CommissioningResults = ({
     const { deadTests, liveTests, visualInspection } = results.structuredData.testingProcedure;
 
     let markdown = "# Testing Checklist\n\n";
-
-    if (visualInspection?.checkpoints && Array.isArray(visualInspection.checkpoints)) {
-      markdown += "## Visual Inspection\n";
-      visualInspection.checkpoints.forEach((c) => {
-        markdown += `- [ ] ${c.item} - ${c.requirement}\n`;
-      });
-      markdown += "\n";
-    }
 
     if (deadTests && Array.isArray(deadTests)) {
       markdown += "## Dead Tests (Isolation Required)\n";
@@ -220,57 +211,9 @@ const CommissioningResults = ({
         />
       </div>
 
-      {/* Visual Inspection Section */}
-      {results.structuredData?.testingProcedure?.visualInspection && (
-        <TestSection
-          title="Visual Inspection"
-          icon={<Eye />}
-          count={visualCount}
-          variant="visual"
-        >
-          {Array.isArray(results.structuredData.testingProcedure.visualInspection.safetyNotes) && 
-           results.structuredData.testingProcedure.visualInspection.safetyNotes.length > 0 && (
-            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mb-4">
-              <div className="flex items-start gap-3">
-                <AlertTriangle className="h-6 w-6 text-amber-400 shrink-0 mt-0.5" />
-                <div className="flex-1">
-                  <div className="font-semibold text-amber-300 mb-2">Safety Notes</div>
-                  <ul className="space-y-1 text-sm text-white">
-                    {results.structuredData.testingProcedure.visualInspection.safetyNotes.map((note, i) => (
-                      <li key={i}>• {note}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          )}
-          {Array.isArray(results.structuredData.testingProcedure.visualInspection.checkpoints) &&
-           results.structuredData.testingProcedure.visualInspection.checkpoints.map((checkpoint, index) => {
-            const savedCheck = getVisualCheck(index);
-            return (
-              <ChecklistItem
-                key={index}
-                item={checkpoint.item}
-                requirement={checkpoint.requirement}
-                reference={checkpoint.reference}
-                initialChecked={savedCheck?.completed}
-                initialNotes={savedCheck?.notes}
-                onToggle={(checked, notes) => {
-                  setCompletedVisual(prev => {
-                    const newSet = new Set(prev);
-                    if (checked) {
-                      newSet.add(index);
-                    } else {
-                      newSet.delete(index);
-                    }
-                    return newSet;
-                  });
-                  recordVisualCheck(index, checked, notes);
-                }}
-              />
-            );
-          })}
-        </TestSection>
+      {/* Circuit Schedule Section */}
+      {results.structuredData?.circuitSchedule && results.structuredData.circuitSchedule.length > 0 && (
+        <CircuitScheduleSection circuits={results.structuredData.circuitSchedule} />
       )}
 
       {/* Dead Tests Section */}
