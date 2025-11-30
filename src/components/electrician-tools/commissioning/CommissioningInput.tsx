@@ -71,6 +71,7 @@ interface CommissioningInputProps {
     clientName: string;
     installationDate: string;
     imageUrl?: string;
+    imageUrls?: string[];
   }) => void;
   isProcessing: boolean;
 }
@@ -82,14 +83,14 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
   const [location, setLocation] = useState("");
   const [clientName, setClientName] = useState("");
   const [installationDate, setInstallationDate] = useState("");
-  const [imageUrl, setImageUrl] = useState<string>("");
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
 
-  const handlePhotoUploaded = (url: string) => {
-    setImageUrl(url);
-    if (!prompt.trim()) {
-      setPrompt("Analyse this installation photo for safety issues, compliance problems, and testing requirements");
+  const handlePhotosUploaded = (urls: string[]) => {
+    setImageUrls(urls);
+    if (!prompt.trim() && urls.length > 0) {
+      setPrompt(`Analyse ${urls.length} installation photo${urls.length > 1 ? 's' : ''} for safety issues, compliance problems, and EICR defect coding`);
     }
-    toast.success("Photo ready for analysis");
+    toast.success(`${urls.length} photo${urls.length > 1 ? 's' : ''} ready for analysis`);
   };
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
@@ -134,7 +135,8 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
       location,
       clientName,
       installationDate,
-      imageUrl
+      imageUrl: imageUrls[0], // For backwards compatibility
+      imageUrls
     });
   };
 
@@ -205,19 +207,22 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
         {/* Photo Upload Section */}
         <InputCardSection
           title="Upload Photos for EICR Coding"
-          subtitle="Add photos of distribution boards, equipment, or circuits"
+          subtitle="Add up to 3 photos of distribution boards, equipment, or circuits"
           icon={Camera}
           defaultOpen={false}
         >
           <PhotoUploadButton 
-            onPhotoUploaded={handlePhotoUploaded}
+            onPhotosUploaded={handlePhotosUploaded}
+            maxPhotos={3}
             disabled={isProcessing}
           />
-          {imageUrl && (
+          {imageUrls.length > 0 && (
             <div className="mt-3 p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                <p className="text-xs text-white/90 font-medium">Photo uploaded - AI will analyse for safety issues and compliance</p>
+                <p className="text-xs text-white/90 font-medium">
+                  {imageUrls.length} photo{imageUrls.length > 1 ? 's' : ''} uploaded - AI will analyse for safety issues and EICR defect coding
+                </p>
               </div>
             </div>
           )}

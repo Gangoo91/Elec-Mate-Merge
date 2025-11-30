@@ -301,13 +301,57 @@ ${threePhaseGuidance}
 GN3 PRACTICAL TEST KNOWLEDGE (YOU MUST USE THIS DATA):
 ${testContext}
 
-RESPONSE REQUIREMENTS:
+ENHANCED RESPONSE REQUIREMENTS FOR TESTING PROCEDURES:
+
+**MANDATORY STRUCTURE:**
 - Generate structured commissioning procedures in JSON format
 - Include visualInspection checkpoints (minimum 8-12 items)
 - Include deadTests procedures (minimum 4-5 tests)
 - Include liveTests procedures (minimum 3-4 tests)
-- Each test must include: testName, regulation, instrumentSetup, procedure steps, acceptanceCriteria, expectedResult, troubleshooting
-- Include costEstimate, clientCommunication, and documentationRequirements sections
 
-Return valid JSON only.`;
+**ENHANCED TEST PROCEDURE REQUIREMENTS:**
+Each test procedure MUST include ALL of:
+- testName: Clear descriptive name
+- regulation: Specific BS 7671 regulation reference
+- instrumentSetup: Detailed instrument configuration (settings, ranges, UK brand models like Megger MFT1741, Fluke 1664FC, Kewtech KT65DL)
+- procedure: Array of detailed step-by-step instructions (minimum 4-6 steps, 100+ words per step)
+  * Each step should include:
+    - Exact lead placement (which terminals, colour coding)
+    - Expected readings with units
+    - What to look for (visual cues, meter readings)
+    - Common mistakes to avoid
+    - Time estimate for that step
+- acceptanceCriteria: Clear pass/fail criteria with numeric limits
+- expectedResult: Detailed expected readings with acceptable ranges
+- calculation: Calculation breakdown with formulas (where applicable)
+- troubleshooting: Array of 4-6 troubleshooting scenarios with solutions (150+ words each)
+  * Include real-world examples from 30 years experience
+  * Provide specific fault symptoms and diagnostic steps
+  * Give temperature compensation notes
+- commonMistakes: Array of 3-4 common errors electricians make during this test
+- proTips: Array of 3-4 professional tips from field experience
+- testDuration: Realistic time estimate (e.g., "5-8 minutes per circuit")
+- prerequisiteTests: Tests that must be completed before this one
+- instrumentNotes: Array of 2-3 notes about UK test instruments, brands, settings
+- clientExplanation: Plain English explanation for non-technical clients (50+ words)
+- realIncidentExample: Real-world story from 30 years experience showing why this test matters
+- leadPlacement: Exact description of where to connect test leads with colour coding
+
+**ENHANCED SECTIONS:**
+- costEstimate: Include itemised materials, labour breakdown, total range
+- clientCommunication: Plain English summary, urgency explanation, what to expect
+- documentationRequirements: Specific tests to record, certificates needed, notes for schedules
+- commissioningCompletionChecks: Final verification checklist before sign-off
+
+**CRITICAL QUALITY RULES:**
+- Minimum 100 words per procedure step explanation
+- Minimum 150 words per troubleshooting scenario
+- Include specific UK part numbers and brands where applicable
+- Provide exact numeric readings, not ranges like "check readings"
+- Reference real test instruments (Megger, Fluke, Kewtech, Di-Log)
+- Include temperature effects on readings where relevant
+- Cite specific BS 7671 table numbers and regulation clauses
+- Use field-tested troubleshooting from 30 years experience
+
+Return valid JSON only with enhanced detailed content.`;
 }

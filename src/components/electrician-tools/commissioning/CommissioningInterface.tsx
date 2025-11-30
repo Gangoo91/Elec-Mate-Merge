@@ -25,6 +25,7 @@ const CommissioningInterface = () => {
   const [faultDiagnosis, setFaultDiagnosis] = useState<FaultDiagnosis | null>(null);
   const [eicrDefects, setEicrDefects] = useState<any[]>([]);
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
+  const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
   const [projectInfo, setProjectInfo] = useState({
     projectName: "",
     location: "",
@@ -76,6 +77,7 @@ const CommissioningInterface = () => {
     clientName: string;
     installationDate: string;
     imageUrl?: string;
+    imageUrls?: string[];
   }) => {
     setGenerationStartTime(Date.now());
     setShowResults(true);
@@ -91,7 +93,9 @@ const CommissioningInterface = () => {
     });
     
     // Store uploaded image URL for results display
-    setUploadedImageUrl(data.imageUrl || null);
+    const imageUrlsArray = data.imageUrls || (data.imageUrl ? [data.imageUrl] : []);
+    setUploadedImageUrl(imageUrlsArray.length > 0 ? imageUrlsArray[0] : null);
+    setUploadedImageUrls(imageUrlsArray);
     
     try {
       await createJob({
@@ -104,7 +108,8 @@ const CommissioningInterface = () => {
         location: data.location,
         clientName: data.clientName,
         installationDate: data.installationDate,
-        imageUrl: data.imageUrl
+        imageUrl: data.imageUrl,
+        imageUrls: data.imageUrls
       });
     } catch (err) {
       console.error('Error creating commissioning job:', err);
@@ -127,6 +132,7 @@ const CommissioningInterface = () => {
     setFaultDiagnosis(null);
     setEicrDefects([]);
     setUploadedImageUrl(null);
+    setUploadedImageUrls([]);
   };
 
   const handleViewResults = () => {
@@ -233,6 +239,7 @@ const CommissioningInterface = () => {
         diagnosis={faultDiagnosis}
         eicrDefects={eicrDefects}
         imageUrl={uploadedImageUrl}
+        imageUrls={uploadedImageUrls}
         onStartOver={handleStartOver}
       />
     );
