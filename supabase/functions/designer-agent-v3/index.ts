@@ -211,50 +211,25 @@ serve(async (req) => {
         logger.info('Phase 1 (Designer) complete - triggering Phase 2 (Installer)', { jobId });
 
         // ============================================
-        // PHASE 2: Trigger Installation Agent
+        // PHASE 2: Trigger Installation Agent (FIRE-AND-FORGET)
         // ============================================
-        try {
-          const { data: installResult, error: installError } = await supabase.functions.invoke('design-installation-agent', {
-            body: {
-              jobId,
-              designedCircuits: result.circuits,
-              supply: body.supply,
-              projectInfo: body.projectInfo
-            }
-          });
-
-          if (installError) {
-            logger.warn('Installation Agent failed (non-critical)', { error: installError });
-            
-            // Designer succeeded, so mark job complete anyway
-            await supabase
-              .from('circuit_design_jobs')
-              .update({
-                status: 'complete',
-                progress: 100,
-                current_step: 'Design complete (installation guidance unavailable)',
-                installation_agent_status: 'failed',
-                completed_at: new Date().toISOString()
-              })
-              .eq('id', jobId);
-          } else {
-            logger.info('Phase 2 (Installer) complete', { jobId });
+        logger.info('🔧 Launching Installation Agent (fire-and-forget)...');
+        
+        // Fire-and-forget: Don't await, let it run independently
+        // Installation Agent will update job to 'complete' when it finishes
+        supabase.functions.invoke('design-installation-agent', {
+          body: {
+            jobId,
+            designedCircuits: result.circuits,
+            supply: body.supply,
+            projectInfo: body.projectInfo
           }
-        } catch (installError: any) {
-          logger.warn('Installation Agent invocation error (non-critical)', { error: installError });
-          
-          // Designer succeeded, so mark job complete anyway
-          await supabase
-            .from('circuit_design_jobs')
-            .update({
-              status: 'complete',
-              progress: 100,
-              current_step: 'Design complete (installation guidance unavailable)',
-              installation_agent_status: 'failed',
-              completed_at: new Date().toISOString()
-            })
-            .eq('id', jobId);
-        }
+        }).then(() => {
+          logger.info('✅ Installation Agent HTTP response received (ignoring status)');
+        }).catch((error) => {
+          logger.info('ℹ️ Installation Agent HTTP connection closed (expected for long jobs):', error.message);
+          // This is expected - installation agent updates DB directly
+        });
       } catch (err) {
         logger.error('Failed to update job or trigger installer', { error: err });
       }
