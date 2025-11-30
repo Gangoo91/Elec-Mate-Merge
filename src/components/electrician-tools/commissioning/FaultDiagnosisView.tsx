@@ -1,9 +1,11 @@
-import { AlertTriangle, AlertCircle, CheckCircle2, Lightbulb, XCircle, BookOpen, ArrowLeft, FileText, Image as ImageIcon, PoundSterling, MessageSquare, Clock } from "lucide-react";
+import { AlertTriangle, AlertCircle, CheckCircle2, Lightbulb, XCircle, BookOpen, ArrowLeft, FileText, Image as ImageIcon, PoundSterling, MessageSquare, Clock, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import DiagnosticStepCard from "./DiagnosticStepCard";
 import CorrectiveActionCard from "./CorrectiveActionCard";
 import LockoutTagoutPanel from "./LockoutTagoutPanel";
@@ -18,10 +20,26 @@ interface FaultDiagnosisViewProps {
   imageUrl?: string | null;
   imageUrls?: string[];
   onStartOver: () => void;
+  projectName?: string;
+  location?: string;
+  clientName?: string;
+  installationType?: string;
 }
 
-const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, imageUrls, onStartOver }: FaultDiagnosisViewProps) => {
+const FaultDiagnosisView = ({ 
+  diagnosis, 
+  eicrDefects, 
+  imageUrl, 
+  imageUrls, 
+  onStartOver,
+  projectName,
+  location,
+  clientName,
+  installationType
+}: FaultDiagnosisViewProps) => {
   const [showEICRCodes, setShowEICRCodes] = useState(true);
+  const [isExportingPDF, setIsExportingPDF] = useState(false);
+  const { toast } = useToast();
   
   // Check if this is a NONE classification (compliant installation)
   const isCompliantPhoto = eicrDefects?.length === 1 && eicrDefects[0].classification === 'NONE';
@@ -35,6 +53,60 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, imageUrls, onSta
 
   const risk = diagnosis ? riskConfig[diagnosis.faultSummary.safetyRisk] : null;
   const RiskIcon = risk?.icon;
+
+  const handleExportPDF = async () => {
+    if (!diagnosis) {
+      toast({
+        title: "No Data",
+        description: "Cannot export PDF without fault diagnosis data.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsExportingPDF(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-fault-diagnosis-pdf', {
+        body: {
+          faultDiagnosisData: {
+            projectName: projectName || 'Fault Diagnosis Report',
+            location: location || 'Not specified',
+            clientName: clientName || 'Not specified',
+            installationType: installationType || 'General',
+            structuredDiagnosis: diagnosis
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      if (data?.success && data?.downloadUrl) {
+        window.open(data.downloadUrl, '_blank');
+        toast({
+          title: "PDF Generated",
+          description: "Your fault diagnosis PDF has been generated successfully."
+        });
+      } else if (data?.useFallback) {
+        toast({
+          title: "PDF Service Unavailable",
+          description: data.message || "PDF generation service is not configured.",
+          variant: "destructive"
+        });
+      } else {
+        throw new Error('PDF generation failed');
+      }
+    } catch (error) {
+      console.error('PDF export error:', error);
+      toast({
+        title: "Export Failed",
+        description: error instanceof Error ? error.message : "Failed to generate PDF.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsExportingPDF(false);
+    }
+  };
 
   return (
     <div className="min-h-screen sm:bg-elec-gray py-4 px-0 sm:p-6 lg:p-8">
@@ -50,6 +122,18 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, imageUrls, onSta
             </p>
           </div>
           <div className="flex items-center gap-2">
+            {diagnosis && (
+              <Button 
+                onClick={handleExportPDF}
+                disabled={isExportingPDF}
+                variant="default"
+                size="lg" 
+                className="gap-2 min-h-[48px] bg-elec-yellow/20 hover:bg-elec-yellow/30 text-elec-yellow border-elec-yellow/30"
+              >
+                <Download className="h-5 w-5" />
+                <span className="hidden sm:inline">{isExportingPDF ? 'Generating...' : 'Export PDF'}</span>
+              </Button>
+            )}
             {eicrDefects && eicrDefects.length > 0 && (
               <Button 
                 onClick={() => setShowEICRCodes(!showEICRCodes)}

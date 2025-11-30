@@ -111,6 +111,11 @@ timeout_sec = 30
 verify_jwt = false
 timeout_sec = 180
 
+# Fault Diagnosis PDF Generation
+[functions.generate-fault-diagnosis-pdf]
+verify_jwt = false
+timeout_sec = 180
+
 # Unified Circuit Design V2 (parallel agents - mirrors AI RAMS architecture)
 [functions.process-circuit-design-v2]
 verify_jwt = false
