@@ -204,9 +204,9 @@ ENHANCED RESPONSE REQUIREMENTS FOR TESTING PROCEDURES:
 
 **MANDATORY STRUCTURE:**
 - Generate structured commissioning procedures in JSON format
-- Include comprehensive visualInspection checkpoints (as many as needed for thorough inspection)
-- Include detailed deadTests procedures (as many as needed with good detail)
-- Include detailed liveTests procedures (as many as needed with good detail)
+- Include visualInspection checkpoints (5-8 detailed items MINIMUM)
+- MANDATORY: Include deadTests procedures - MINIMUM 3-5 DEAD TESTS REQUIRED (continuity, insulation resistance, polarity, etc.) - THIS ARRAY MUST NEVER BE EMPTY
+- MANDATORY: Include liveTests procedures - MINIMUM 2-4 LIVE TESTS REQUIRED (earth fault loop, RCD, PFC, etc.) - THIS ARRAY MUST NEVER BE EMPTY
 
 **ENHANCED TEST PROCEDURE REQUIREMENTS:**
 Each test procedure MUST include ALL of:
@@ -242,6 +242,23 @@ Each test procedure MUST include ALL of:
 - documentationRequirements: Specific tests to record, certificates needed, notes for schedules
 - commissioningCompletionChecks: Final verification checklist before sign-off
 
+**CRITICAL OUTPUT STRUCTURE (ALL FIELDS MANDATORY):**
+{
+  "visualInspection": { "checkpoints": [...MINIMUM 5-8 items...] },
+  "deadTests": [
+    // MINIMUM 3 TESTS REQUIRED - NEVER EMPTY
+    // Must include: continuity of protective conductors, insulation resistance, polarity
+  ],
+  "liveTests": [
+    // MINIMUM 2 TESTS REQUIRED - NEVER EMPTY
+    // Must include: earth fault loop impedance, RCD testing
+  ]
+}
+
+⚠️ CRITICAL: Empty deadTests or liveTests arrays are UNACCEPTABLE and will be REJECTED.
+Every electrical commissioning job REQUIRES both dead and live tests.
+If you return empty arrays, your response will be discarded and regenerated.
+
 **CRITICAL QUALITY RULES:**
 - Procedure steps: 50-80 words per step, clear and detailed
 - Troubleshooting scenarios: 80-150 words each with comprehensive solutions
@@ -268,79 +285,87 @@ PROJECT DETAILS:
   console.log('🤖 Calling OpenAI for commissioning procedures (max 5 min timeout)...');
   console.log('📊 Prompt size:', systemPrompt.length + userPrompt.length, 'chars');
 
-  // Add timeout protection (5 minutes for commissioning - match cost engineer)
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => {
-    console.error('⏱️ OpenAI call timeout after 300 seconds');
-    controller.abort();
-  }, 300000); // 5 minutes (match cost engineer exactly)
+  // RETRY LOGIC: Retry up to 2 times if validation fails
+  const MAX_RETRIES = 2;
+  let lastError: Error | null = null;
 
-  let response;
-  try {
-    response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'gpt-5-mini-2025-08-07',
-        messages: [
-          { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
-        ],
-        response_format: { type: 'json_object' },
-        max_completion_tokens: 20000
-      }),
-      signal: controller.signal
-    });
-  } catch (fetchError: any) {
-    clearTimeout(timeoutId);
-    if (fetchError.name === 'AbortError') {
-      console.error('❌ OpenAI fetch aborted (timeout)');
-      throw new Error('OpenAI request timed out after 5 minutes');
-    }
-    console.error('❌ OpenAI fetch error:', fetchError.message);
-    throw new Error(`OpenAI fetch failed: ${fetchError.message}`);
-  }
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      console.log(`🔄 Attempt ${attempt}/${MAX_RETRIES}...`);
 
-  clearTimeout(timeoutId);
-  console.log(`📡 OpenAI response status: ${response.status}`);
+      // Add timeout protection (5 minutes for commissioning - match cost engineer)
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => {
+        console.error('⏱️ OpenAI call timeout after 300 seconds');
+        controller.abort();
+      }, 300000); // 5 minutes (match cost engineer exactly)
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error('❌ OpenAI API error:', response.status, errorText.substring(0, 500));
-    throw new Error(`OpenAI API error (${response.status}): ${errorText.substring(0, 200)}`);
-  }
+      let response;
+      try {
+        response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt }
+          ],
+          response_format: { type: 'json_object' },
+          max_completion_tokens: 20000
+        }),
+        signal: controller.signal
+      });
+      } catch (fetchError: any) {
+        clearTimeout(timeoutId);
+        if (fetchError.name === 'AbortError') {
+          console.error('❌ OpenAI fetch aborted (timeout)');
+          throw new Error('OpenAI request timed out after 5 minutes');
+        }
+        console.error('❌ OpenAI fetch error:', fetchError.message);
+        throw new Error(`OpenAI fetch failed: ${fetchError.message}`);
+      }
 
-  const data = await response.json();
+      clearTimeout(timeoutId);
+      console.log(`📡 OpenAI response status: ${response.status}`);
 
-  // Validate response
-  if (!data.choices || data.choices.length === 0) {
-    throw new Error('OpenAI returned no choices');
-  }
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('❌ OpenAI API error:', response.status, errorText.substring(0, 500));
+        throw new Error(`OpenAI API error (${response.status}): ${errorText.substring(0, 200)}`);
+      }
 
-  const message = data.choices[0].message;
+      const data = await response.json();
 
-  // Check for refusal
-  if (message.refusal) {
-    throw new Error(`OpenAI refused: ${message.refusal}`);
-  }
+      // Validate response
+      if (!data.choices || data.choices.length === 0) {
+        throw new Error('OpenAI returned no choices');
+      }
 
-  const content = message.content;
+      const message = data.choices[0].message;
 
-  if (!content || content.trim().length === 0) {
-    if (data.choices[0].finish_reason === 'length') {
-      throw new Error('Response too long - try simplifying your query');
-    }
-    throw new Error(`Empty response from OpenAI (finish_reason: ${data.choices[0].finish_reason})`);
-  }
+      // Check for refusal
+      if (message.refusal) {
+        throw new Error(`OpenAI refused: ${message.refusal}`);
+      }
 
-  console.log(`✅ OpenAI response: ${content.length} chars`);
-  console.log(`📊 Token usage: ${data.usage?.completion_tokens || 'N/A'} completion, ${data.usage?.prompt_tokens || 'N/A'} prompt`);
+      const content = message.content;
 
-  // Parse JSON
-  let parsedResult;
+      if (!content || content.trim().length === 0) {
+        if (data.choices[0].finish_reason === 'length') {
+          throw new Error('Response too long - try simplifying your query');
+        }
+        throw new Error(`Empty response from OpenAI (finish_reason: ${data.choices[0].finish_reason})`);
+      }
+
+      console.log(`✅ OpenAI response: ${content.length} chars`);
+      console.log(`📊 Token usage: ${data.usage?.completion_tokens || 'N/A'} completion, ${data.usage?.prompt_tokens || 'N/A'} prompt`);
+
+      // Parse JSON
+      let parsedResult;
   try {
     parsedResult = JSON.parse(content);
   } catch (parseError: any) {
@@ -349,5 +374,33 @@ PROJECT DETAILS:
     throw new Error(`Failed to parse OpenAI JSON: ${parseError.message}`);
   }
 
-  return parsedResult;
+  // VALIDATE: Ensure deadTests and liveTests are NOT empty
+  if (!parsedResult.deadTests || parsedResult.deadTests.length === 0) {
+    console.error('❌ VALIDATION FAILED: AI returned empty deadTests array');
+    throw new Error('Invalid response: deadTests cannot be empty - minimum 3 required');
+  }
+
+  if (!parsedResult.liveTests || parsedResult.liveTests.length === 0) {
+    console.error('❌ VALIDATION FAILED: AI returned empty liveTests array');
+    throw new Error('Invalid response: liveTests cannot be empty - minimum 2 required');
+  }
+
+      console.log(`✅ Validation passed: ${parsedResult.deadTests.length} dead tests, ${parsedResult.liveTests.length} live tests`);
+
+      return parsedResult; // SUCCESS - exit retry loop
+
+    } catch (error: any) {
+      lastError = error;
+      console.error(`❌ Attempt ${attempt}/${MAX_RETRIES} failed:`, error.message);
+      
+      if (attempt < MAX_RETRIES) {
+        console.log('🔄 Retrying with stronger emphasis on required fields...');
+        // Continue to next attempt
+      }
+    }
+  }
+
+  // All retries failed
+  console.error(`❌ All ${MAX_RETRIES} attempts failed`);
+  throw lastError || new Error('All retries failed to generate valid commissioning procedures');
 }

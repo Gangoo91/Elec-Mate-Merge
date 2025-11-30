@@ -161,7 +161,11 @@ const CommissioningInterface = () => {
 
     return (
       <div className="space-y-6">
-        <CommissioningProcessingView progress={progressStage} startTime={generationStartTime} />
+        <CommissioningProcessingView 
+          progress={progressStage} 
+          startTime={generationStartTime}
+          backendProgress={job?.progress || 0}
+        />
         
         {/* Progress Display with Cancel */}
         {job && (

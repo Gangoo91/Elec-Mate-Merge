@@ -9,17 +9,36 @@ interface CommissioningProcessingViewProps {
     message: string;
   } | null;
   startTime: number;
+  backendProgress?: number;
 }
 
-const STAGE_PERCENTAGES = {
-  initializing: 0,
-  parsing: 20,
-  ai: 50,
-  validation: 75,
-  complete: 100
+const TOTAL_ESTIMATED_TIME = 210; // 3 minutes 30 seconds
+
+// Calculate smooth progress based on elapsed time (0-95% over 3:30)
+const calculateAnimatedProgress = (elapsed: number, backendProgress: number = 0) => {
+  // If backend reports completion, use that
+  if (backendProgress >= 100) return 100;
+  
+  // Time-based progress with easing (slows down as it approaches 95%)
+  // Uses quadratic easing: starts fast, slows near the end
+  const normalised = Math.min(elapsed / TOTAL_ESTIMATED_TIME, 1);
+  const eased = 1 - Math.pow(1 - normalised, 2); // Ease-out quad
+  const timeBasedProgress = Math.min(95, eased * 95);
+  
+  // Use whichever is higher - backend or animated
+  return Math.max(Math.round(timeBasedProgress), backendProgress);
 };
 
-const CommissioningProcessingView = ({ progress, startTime }: CommissioningProcessingViewProps) => {
+// Get stage based on elapsed time, not backend progress
+const getTimeBasedStage = (elapsed: number) => {
+  if (elapsed < 10) return { stage: 'initializing', message: 'Starting up...' };
+  if (elapsed < 30) return { stage: 'parsing', message: 'Understanding your testing requirements...' };
+  if (elapsed < 180) return { stage: 'ai', message: 'Generating detailed test procedures...' };
+  if (elapsed < 200) return { stage: 'validation', message: 'Verifying regulation compliance...' };
+  return { stage: 'complete', message: 'Finalising...' };
+};
+
+const CommissioningProcessingView = ({ progress, startTime, backendProgress = 0 }: CommissioningProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
 
   useEffect(() => {
@@ -30,8 +49,9 @@ const CommissioningProcessingView = ({ progress, startTime }: CommissioningProce
     return () => clearInterval(interval);
   }, [startTime]);
 
-  const percentage = progress ? STAGE_PERCENTAGES[progress.stage] : 0;
-  const estimatedTotal = 180; // seconds (3:00)
+  const animatedProgress = calculateAnimatedProgress(elapsedTime, backendProgress);
+  const timeBasedStage = getTimeBasedStage(elapsedTime);
+  const estimatedTotal = TOTAL_ESTIMATED_TIME;
   const remaining = Math.max(0, estimatedTotal - elapsedTime);
 
   const formatTime = (seconds: number) => {
@@ -59,15 +79,14 @@ const CommissioningProcessingView = ({ progress, startTime }: CommissioningProce
         <div className="space-y-2 mb-6">
           <div className="flex items-center justify-between text-sm">
             <span className="text-white">Progress</span>
-            <span className="font-semibold text-purple-400">{percentage}%</span>
+            <span className="font-semibold text-purple-400">{animatedProgress}%</span>
           </div>
-          <Progress value={percentage} className="h-2" />
+          <Progress 
+            value={animatedProgress} 
+            className="h-2 transition-all duration-1000 ease-out"
+          />
           <p className="text-xs text-white">
-            • {progress?.stage === 'initializing' && 'Starting up...'}
-            {progress?.stage === 'parsing' && 'Understanding your testing requirements...'}
-            {progress?.stage === 'ai' && 'Generating detailed test procedures...'}
-            {progress?.stage === 'validation' && 'Verifying regulation compliance...'}
-            {progress?.stage === 'complete' && 'Complete!'}
+            • {timeBasedStage.message}
           </p>
         </div>
 
