@@ -75,11 +75,10 @@ Deno.serve(async (req) => {
         keywords: limitedKeywords, // Limited to 50 keywords
         appliesTo: ['all installations', 'installation work', 'electrician', 'installer', 'electrical contractor'],
         categories: [
-          'installation', 'testing', 'inspection', 'earthing', 'protection',
-          'cables', 'wiring systems', 'termination', 'containment',
-          'special locations', 'isolation', 'verification', 'certification',
-          'safety', 'tools', 'commissioning', 'fault finding'
-        ],  // Expanded from 5 to 17 categories
+          'Installation', 'Testing', 'Earthing', 'Protection',
+          'Cables', 'Safety', 'Design', 'Circuits', 'Equipment',
+          'Special Locations', 'Isolation', 'Documentation', 'Maintenance'
+        ],
         limit: 50  // Enhanced from 30 for richer RAG context
       })
     ]);
