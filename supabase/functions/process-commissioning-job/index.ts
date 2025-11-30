@@ -172,15 +172,53 @@ Deno.serve(async (req) => {
         throw new Error('Failed to parse AI response');
       }
 
+      // Transform test procedures to ensure correct field names and array types
+      const transformTestProcedure = (test: any): any => {
+        if (!test) return null;
+        return {
+          ...test,
+          // Ensure procedure is an array (rename procedureSteps if needed)
+          procedure: Array.isArray(test.procedure) 
+            ? test.procedure 
+            : Array.isArray(test.procedureSteps) 
+              ? test.procedureSteps 
+              : [],
+          // Ensure all other arrays are valid arrays
+          troubleshooting: Array.isArray(test.troubleshooting) ? test.troubleshooting : [],
+          commonMistakes: Array.isArray(test.commonMistakes) ? test.commonMistakes : [],
+          proTips: Array.isArray(test.proTips) ? test.proTips : [],
+          prerequisiteTests: Array.isArray(test.prerequisiteTests) ? test.prerequisiteTests : [],
+          siteRealityFactors: Array.isArray(test.siteRealityFactors) ? test.siteRealityFactors : [],
+          efficiencyTips: Array.isArray(test.efficiencyTips) ? test.efficiencyTips : [],
+          instrumentNotes: Array.isArray(test.instrumentNotes) ? test.instrumentNotes : [],
+        };
+      };
+
+      // Transform test arrays
+      const transformedDeadTests = (parsedResult.deadTests || [])
+        .map(transformTestProcedure)
+        .filter(Boolean);
+      const transformedLiveTests = (parsedResult.liveTests || [])
+        .map(transformTestProcedure)
+        .filter(Boolean);
+
       // Wrap AI response in proper CommissioningResponse structure
       const finalResult = {
         success: true,
         mode: 'procedure',
         structuredData: {
           testingProcedure: {
-            visualInspection: parsedResult.visualInspection,
-            deadTests: parsedResult.deadTests || [],
-            liveTests: parsedResult.liveTests || []
+            visualInspection: {
+              ...parsedResult.visualInspection,
+              safetyNotes: Array.isArray(parsedResult.visualInspection?.safetyNotes) 
+                ? parsedResult.visualInspection.safetyNotes 
+                : [],
+              checkpoints: Array.isArray(parsedResult.visualInspection?.checkpoints)
+                ? parsedResult.visualInspection.checkpoints
+                : []
+            },
+            deadTests: transformedDeadTests,
+            liveTests: transformedLiveTests
           },
           certification: parsedResult.certification
         },
@@ -314,7 +352,7 @@ Each test procedure MUST include ALL of:
 - testName: Clear descriptive name
 - regulation: Specific BS 7671 regulation reference
 - instrumentSetup: Detailed instrument configuration (settings, ranges, UK brand models like Megger MFT1741, Fluke 1664FC, Kewtech KT65DL)
-- procedure: Array of detailed step-by-step instructions (minimum 4-6 steps, 100+ words per step)
+- procedure: (CRITICAL: Use field name "procedure", NOT "procedureSteps") Array of detailed step-by-step instructions (minimum 4-6 steps, 100+ words per step)
   * Each step should include:
     - Exact lead placement (which terminals, colour coding)
     - Expected readings with units
