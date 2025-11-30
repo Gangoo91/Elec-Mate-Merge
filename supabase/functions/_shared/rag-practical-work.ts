@@ -71,24 +71,23 @@ export async function searchPracticalWorkIntelligence(
       };
     }
 
-    // Transform to PracticalWorkResult format
+    // Transform to PracticalWorkResult format with correct column mappings
     const results: PracticalWorkResult[] = (data || []).map((row: any) => ({
-      content: row.content || '',
+      content: row.description || row.primary_topic || '',
       primary_topic: row.primary_topic,
       keywords: row.keywords,
       equipment_category: row.equipment_category,
       tools_required: row.tools_required,
       bs7671_regulations: row.bs7671_regulations,
-      practical_work_id: row.practical_work_id,
-      hybrid_score: row.hybrid_score / 10, // Normalize to 0-1 range
+      practical_work_id: row.id,
+      hybrid_score: row.confidence_score || 0,
       confidence_score: row.confidence_score,
       source_table: 'practical_work_intelligence',
       applies_to: row.applies_to,
-      location_types: row.location_types,
-      power_ratings: row.power_ratings,
       cable_sizes: row.cable_sizes,
-      expected_results: row.expected_results,
-      maintenance_interval: row.maintenance_interval
+      test_procedures: row.test_procedures,
+      troubleshooting_steps: row.troubleshooting_steps,
+      common_failures: row.common_failures
     }));
 
     // Calculate quality metrics
@@ -169,12 +168,16 @@ export function formatForAIContext(results: PracticalWorkResult[]): string {
       formatted += `\nBS 7671: ${pw.bs7671_regulations.join(', ')}`;
     }
     
-    if (pw.expected_results) {
-      formatted += `\nExpected Results: ${pw.expected_results}`;
+    if (pw.test_procedures && pw.test_procedures.length > 0) {
+      formatted += `\nTest Procedures: ${pw.test_procedures.join(', ')}`;
     }
     
-    if (pw.maintenance_interval) {
-      formatted += `\nMaintenance Interval: ${pw.maintenance_interval}`;
+    if (pw.troubleshooting_steps && pw.troubleshooting_steps.length > 0) {
+      formatted += `\nTroubleshooting: ${pw.troubleshooting_steps.join('; ')}`;
+    }
+    
+    if (pw.common_failures && pw.common_failures.length > 0) {
+      formatted += `\nCommon Failures: ${pw.common_failures.join('; ')}`;
     }
     
     return formatted;
