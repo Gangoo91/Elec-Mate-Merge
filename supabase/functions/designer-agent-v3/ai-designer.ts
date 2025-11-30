@@ -795,29 +795,28 @@ export class AIDesigner {
     
     const startTime = Date.now();
     
-    // MINIMAL PROMPT (2000 tokens max)
+    // MINIMAL PROMPT (2000 tokens max) - IET On-Site Guide Table 1B/H2 Diversity Rules
     const diversityRules = installationType === 'commercial' 
-      ? `• Lighting: 80% | Radial sockets: 100% first 7.36kW + 60% | Cooker/Kitchen: 100% (NO diversity!) | Heating: 90%`
+      ? `• Lighting: 90% of total | Radial sockets: 100% up to 10A + 50% remainder | Ring finals: 32A per ring (100% largest + 50% others) | Showers: 100% largest + 80% second + 60% remainder | Heating: 90% | EV/Immersion: 100% (NO diversity)`
       : installationType === 'industrial'
-      ? `• Lighting: 90% | Radial sockets: 100% first 7.36kW + 80% | Motors/Process: 100% (NO diversity)`
-      : `• Lighting: 66% | Radial sockets: 100% first 7.36kW + 40% | Cookers: 10A + 30% next 10A + 60% | Ring finals: 32A ALWAYS`;
+      ? `• Lighting: 90% | Radial sockets: 100% up to 10A + 60% remainder | Motors/Process: 100% (NO diversity) | Heating: 100%`
+      : `• Lighting: 66% of total | Radial sockets: 100% up to 10A + 40% remainder | Ring finals: 32A per ring (100% largest + 40% others) | Cookers: 10A + 30% of excess (+ 5A if socket) | Showers: 100% largest + 100% second + 25% remainder | Heating: 100% | EV/Immersion/Floor warming/Storage heaters: 100% (NO diversity)`;
     
-    const systemPrompt = `BS 7671:2018+A3:2024 expert. Design ${inputs.circuits.length} compliant ${installationType || 'domestic'} circuit(s) WITH DIVERSITY.
+    const systemPrompt = `BS 7671:2018+A3:2024 expert. Design ${inputs.circuits.length} compliant ${installationType || 'domestic'} circuit(s) WITH DIVERSITY per IET On-Site Guide.
 
 QUICK RULES:
 - Calculate Ib (connected load) AND Id (diversified current)
 - Use Id for MCB selection: Id ≤ In ≤ Iz | VD ≤ 5% | Zs ≤ max
-- DIVERSITY FACTORS (${installationType === 'domestic' ? 'BS 7671 Appendix A' : installationType === 'commercial' ? 'Commercial' : 'Industrial'}):
+- IET ON-SITE GUIDE TABLE 1B/H2 DIVERSITY (${installationType === 'domestic' ? 'Domestic' : installationType === 'commercial' ? 'Commercial' : 'Industrial'}):
   ${diversityRules}
-  • Showers/Immersion/EV: 100% (no diversity)
 - RCBO for sockets/bathrooms | T&E/SWA standard sizes
-- Show: Ib, Id, diversity factor, key calculations | Cite regulations
+- Show: Ib, Id, diversity factor with formula, key calculations | Cite "IET On-Site Guide Table 1B" or "Table H2"
 
 ${context.designKnowledge.slice(0, 3).map(k => 
   `${k.primary_topic}: ${k.content.slice(0, 200)}`
 ).join('\n\n')}
 
-CRITICAL: Include diversityApplied justification with ${installationType || 'domestic'} context.`;
+CRITICAL: In diversityApplied justification, cite specific table item (e.g., "per IET On-Site Guide Table 1B item 1") and show calculation (e.g., "Ib 4.35A × 66% = Id 2.87A").`;
 
     const structuredInput = this.buildStructuredInput(inputs);
     const tools = [this.buildSimpleTool()];
