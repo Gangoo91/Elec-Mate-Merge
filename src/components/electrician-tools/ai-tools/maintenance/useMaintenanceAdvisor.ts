@@ -116,6 +116,7 @@ export interface MaintenanceResults {
   recommendations: string[];
   partial?: boolean;
   missingSections?: string[];
+  originalInput?: MaintenanceInput;
 }
 
 export const useMaintenanceAdvisor = () => {
@@ -269,7 +270,12 @@ export const useMaintenanceAdvisor = () => {
         return;
       }
 
-      setResults(data.schedule);
+      // Store original input with results for display
+      const resultsWithInput = {
+        ...data.schedule,
+        originalInput: input
+      };
+      setResults(resultsWithInput);
       setState('results');
       
       // ✅ PHASE 3: Safe property access with optional chaining
