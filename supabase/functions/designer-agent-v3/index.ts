@@ -153,6 +153,44 @@ serve(async (req) => {
       jobMode: jobId ? 'async-job' : 'direct'
     });
 
+    // ========================================
+    // Aggregate System-Level Diversity Totals
+    // ========================================
+    const totalLoad = result.circuits?.reduce(
+      (sum: number, c: any) => sum + (c.loadPower || 0),
+      0
+    ) || 0;
+
+    const diversifiedLoad = result.circuits?.reduce(
+      (sum: number, c: any) => sum + (c.calculations?.diversifiedLoad || c.loadPower || 0),
+      0
+    ) || 0;
+
+    const diversityFactor = totalLoad > 0 ? diversifiedLoad / totalLoad : 0.65;
+
+    // Add system-level totals to result
+    result.totalLoad = totalLoad;
+    result.diversifiedLoad = diversifiedLoad;
+    result.diversityFactor = diversityFactor;
+    result.diversityBreakdown = {
+      totalConnectedLoad: totalLoad,
+      diversifiedLoad: diversifiedLoad,
+      overallDiversityFactor: diversityFactor,
+      byCategory: result.circuits?.map((c: any) => ({
+        name: c.name,
+        connectedLoad: c.loadPower || 0,
+        diversifiedLoad: c.calculations?.diversifiedLoad || c.loadPower || 0,
+        factor: c.calculations?.diversityFactor || 1
+      })) || [],
+      reasoning: 'Calculated per BS 7671 Appendix A diversity factors'
+    };
+
+    logger.info('Diversity totals calculated', {
+      totalLoad,
+      diversifiedLoad,
+      diversityFactor: diversityFactor.toFixed(2)
+    });
+
     // Job-aware mode: Update job - Phase 1 complete, trigger Phase 2
     if (jobId) {
       try {
