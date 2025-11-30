@@ -1,6 +1,12 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from '../_shared/deps.ts';
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
+import { extractChatKeywords } from '../_shared/chat-keyword-extractor.ts';
+import { 
+  searchRegulationsIntelligence,
+  searchDesignIntelligence 
+} from '../_shared/intelligence-search.ts';
+import { searchPracticalWorkIntelligence } from '../_shared/rag-practical-work.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -147,50 +153,45 @@ serve(async (req) => {
     const classification = classifyQuery(queryText);
     console.log(`📊 Query Type: ${classification.type} | Needs Design: ${classification.needsDesignKnowledge}`);
 
-    // STEP 2: Parallel RAG Search (simplified - matches RAMS pattern)
-    const ragPromises: Array<Promise<any>> = [
-      // BS7671 Intelligence (keyword hybrid)
-      supabase.rpc('search_regulations_intelligence_hybrid', {
-        query_text: queryText,
-        match_count: 8
+    // STEP 2: ULTRA-FAST GIN-INDEXED KEYWORD SEARCH
+    // Extract keywords for ultra-fast GIN search (50-100ms total!)
+    const keywords = extractChatKeywords(queryText);
+    console.log(`🔑 Extracted ${keywords.length} keywords:`, keywords.slice(0, 15).join(', '));
+
+    // ULTRA-FAST PARALLEL GIN SEARCHES
+    const [regulationsResults, practicalResults, designResults] = await Promise.all([
+      // Regulations Intelligence - GIN indexed (20-50ms)
+      searchRegulationsIntelligence(supabase, {
+        keywords,
+        appliesTo: ['all installations', 'electrical installation'],
+        categories: ['installation', 'testing', 'protection', 'earthing', 'special locations'],
+        limit: 20
       }),
       
-      // Practical Work Intelligence (RPC generates embedding internally)
-      supabase.rpc('search_practical_work_intelligence_hybrid', {
-        query_text: queryText,
-        query_embedding: null,
-        match_count: 6,
-        filter_trade: null
-      })
-    ];
-
-    // Conditionally add Design Knowledge (RPC generates embedding internally)
-    if (classification.needsDesignKnowledge) {
-      ragPromises.push(
-        supabase.rpc('search_design_hybrid', {
-          query_text: queryText,
-          query_embedding: null,
-          match_count: 5
-        })
-      );
-      console.log('🎯 Including Design Knowledge (vector search)');
-    }
-
-    // Execute all searches in parallel
-    const ragResults = await Promise.all(ragPromises);
+      // Practical Work Intelligence - GIN indexed (20-50ms)
+      searchPracticalWorkIntelligence(supabase, {
+        query: keywords.join(' '),
+        tradeFilter: 'installer',
+        matchCount: 15
+      }),
+      
+      // Design Knowledge - GIN indexed (20-50ms) - conditionally fetched
+      classification.needsDesignKnowledge 
+        ? searchDesignIntelligence(supabase, {
+            keywords,
+            circuitTypes: ['general', 'final circuit', 'distribution'],
+            limit: 15
+          })
+        : Promise.resolve([])
+    ]);
     const ragDuration = Date.now() - ragStartTime;
 
-    // Extract results with error handling
-    const bs7671Results = ragResults[0]?.data || [];
-    const practicalResults = ragResults[1]?.data || [];
-    const designResults = classification.needsDesignKnowledge ? (ragResults[2]?.data || []) : [];
+    // Results are already in correct format from GIN searches
+    const bs7671Results = regulationsResults || [];
+    const practicalResults = practicalResults.results || [];
+    const designResults = designResults || [];
 
-    // Log any RAG errors
-    if (ragResults[0]?.error) console.error('BS7671 RAG error:', ragResults[0].error);
-    if (ragResults[1]?.error) console.error('Practical RAG error:', ragResults[1].error);
-    if (ragResults[2]?.error) console.error('Design RAG error:', ragResults[2].error);
-
-    console.log(`✅ RAG Complete (${ragDuration}ms) | BS7671: ${bs7671Results.length} | Practical: ${practicalResults.length} | Design: ${designResults.length}`);
+    console.log(`⚡ ULTRA-FAST RAG Complete (${ragDuration}ms) | Regulations: ${bs7671Results.length} | Practical: ${practicalResults.length} | Design: ${designResults.length}`);
 
     // STEP 3: RRF Fusion - merge results intelligently
     const fusionStartTime = Date.now();
