@@ -384,13 +384,17 @@ ${conversationContext}`;
    - 🟡 AMBER: Requires investigation or adjustment, not immediately dangerous
    - 🟢 GREEN: Normal verification checks, routine testing
    
-3. **Corrective Actions** (MINIMUM 2 ACTIONS)
-   Each action MUST include:
+3. **Corrective Actions** (MINIMUM 2 ACTIONS - ENHANCED WITH DETAILED PROCEDURE)
+   Each action MUST include ALL of:
    - Symptom that triggers this action
-   - Specific corrective procedure (step-by-step)
+   - Action overview (brief 1-2 sentences)
+   - **detailedProcedure**: Array of 3-5 detailed paragraphs (150+ words each) explaining the fix comprehensively
+   - **stepByStepFix**: Array of numbered steps with specific measurements, torque values, test points
+   - **whyThisWorks**: Technical explanation of why this fix resolves the fault (100+ words)
+   - **alternativeMethods**: Array of 2-3 alternative approaches to fix the same issue
    - Materials cost estimate (UK prices, e.g., "£15-25 for terminal blocks")
    - Skill level required (apprentice/qualified/specialist)
-   - Part numbers (UK suppliers: MK, Hager, Schneider, etc.)
+   - Part numbers (UK suppliers: MK, Hager, Schneider, Crabtree, etc.)
    - BS 7671 reference for this fix
    - Common brands to use
    - Safety notes for this specific fix

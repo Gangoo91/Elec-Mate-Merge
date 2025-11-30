@@ -16,10 +16,11 @@ interface FaultDiagnosisViewProps {
   diagnosis: FaultDiagnosis | null;
   eicrDefects?: EICRDefect[];
   imageUrl?: string | null;
+  imageUrls?: string[];
   onStartOver: () => void;
 }
 
-const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: FaultDiagnosisViewProps) => {
+const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, imageUrls, onStartOver }: FaultDiagnosisViewProps) => {
   const [showEICRCodes, setShowEICRCodes] = useState(true);
   
   // Check if this is a NONE classification (compliant installation)
@@ -82,24 +83,48 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
           />
         )}
 
-        {/* Uploaded Photo Display */}
-        {imageUrl && (
+        {/* Uploaded Photos Display */}
+        {(imageUrls && imageUrls.length > 0) || imageUrl ? (
           <Card className="bg-elec-dark/80 border-2 border-blue-500/30 p-5 sm:p-6">
             <div className="space-y-4">
               <h3 className="text-xl font-semibold text-white flex items-center gap-2 text-left">
                 <ImageIcon className="h-6 w-6 text-blue-400" />
-                Installation Photo
+                Installation Photo{(imageUrls && imageUrls.length > 1) ? 's' : ''}
+                {imageUrls && imageUrls.length > 0 && (
+                  <Badge className="ml-2 bg-blue-500/20 text-blue-300 border-blue-500/50">
+                    {imageUrls.length} Photo{imageUrls.length > 1 ? 's' : ''}
+                  </Badge>
+                )}
               </h3>
-              <div className="relative rounded-lg overflow-hidden bg-black/50">
-                <img 
-                  src={imageUrl} 
-                  alt="Installation photo" 
-                  className="w-full h-auto max-h-[300px] sm:max-h-[400px] object-contain"
-                />
-              </div>
+              
+              {/* Photo Gallery */}
+              {imageUrls && imageUrls.length > 1 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {imageUrls.map((url, index) => (
+                    <div key={index} className="relative rounded-lg overflow-hidden bg-black/50 border border-blue-500/20">
+                      <img 
+                        src={url} 
+                        alt={`Installation photo ${index + 1}`} 
+                        className="w-full h-auto aspect-video object-cover"
+                      />
+                      <div className="absolute bottom-2 left-2 bg-black/70 px-2 py-1 rounded text-xs text-white font-medium">
+                        Photo #{index + 1}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="relative rounded-lg overflow-hidden bg-black/50">
+                  <img 
+                    src={imageUrls?.[0] || imageUrl!} 
+                    alt="Installation photo" 
+                    className="w-full h-auto max-h-[300px] sm:max-h-[400px] object-contain"
+                  />
+                </div>
+              )}
             </div>
           </Card>
-        )}
+        ) : null}
 
         {/* Compliant Installation Banner (NONE classification) */}
         {isCompliantPhoto && eicrDefects[0] && (

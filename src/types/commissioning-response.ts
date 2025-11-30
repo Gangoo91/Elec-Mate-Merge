@@ -98,6 +98,10 @@ export interface DiagnosticStep {
 export interface CorrectiveAction {
   forSymptom: string;
   action: string;
+  detailedProcedure?: string[];  // NEW: 3-5 detailed paragraphs
+  stepByStepFix?: string[];      // NEW: Numbered steps with measurements
+  whyThisWorks?: string;         // NEW: Technical explanation
+  alternativeMethods?: string[]; // NEW: Other approaches
   tools?: string[];
   estimatedTime?: string;
   verificationTest?: string;
