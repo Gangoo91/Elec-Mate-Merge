@@ -265,15 +265,15 @@ PROJECT DETAILS:
 - Additional: ${request.projectContext.additionalInfo || 'N/A'}
 ` : ''}`;
 
-  console.log('🤖 Calling OpenAI for commissioning procedures (max 4 min timeout)...');
+  console.log('🤖 Calling OpenAI for commissioning procedures (max 5 min timeout)...');
   console.log('📊 Prompt size:', systemPrompt.length + userPrompt.length, 'chars');
 
-  // Add timeout protection (4 minutes for commissioning)
+  // Add timeout protection (5 minutes for commissioning - match cost engineer)
   const controller = new AbortController();
   const timeoutId = setTimeout(() => {
-    console.error('⏱️ OpenAI call timeout after 240 seconds');
+    console.error('⏱️ OpenAI call timeout after 300 seconds');
     controller.abort();
-  }, 240000); // 4 minutes
+  }, 300000); // 5 minutes (match cost engineer exactly)
 
   let response;
   try {
@@ -298,7 +298,7 @@ PROJECT DETAILS:
     clearTimeout(timeoutId);
     if (fetchError.name === 'AbortError') {
       console.error('❌ OpenAI fetch aborted (timeout)');
-      throw new Error('OpenAI request timed out after 4 minutes');
+      throw new Error('OpenAI request timed out after 5 minutes');
     }
     console.error('❌ OpenAI fetch error:', fetchError.message);
     throw new Error(`OpenAI fetch failed: ${fetchError.message}`);
