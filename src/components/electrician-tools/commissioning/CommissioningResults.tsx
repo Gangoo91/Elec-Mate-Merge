@@ -228,7 +228,8 @@ const CommissioningResults = ({
           count={visualCount}
           variant="visual"
         >
-          {results.structuredData.testingProcedure.visualInspection.safetyNotes && (
+          {Array.isArray(results.structuredData.testingProcedure.visualInspection.safetyNotes) && 
+           results.structuredData.testingProcedure.visualInspection.safetyNotes.length > 0 && (
             <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mb-4">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-6 w-6 text-amber-400 shrink-0 mt-0.5" />
@@ -243,7 +244,8 @@ const CommissioningResults = ({
               </div>
             </div>
           )}
-          {results.structuredData.testingProcedure.visualInspection.checkpoints.map((checkpoint, index) => {
+          {Array.isArray(results.structuredData.testingProcedure.visualInspection.checkpoints) &&
+           results.structuredData.testingProcedure.visualInspection.checkpoints.map((checkpoint, index) => {
             const savedCheck = getVisualCheck(index);
             return (
               <ChecklistItem

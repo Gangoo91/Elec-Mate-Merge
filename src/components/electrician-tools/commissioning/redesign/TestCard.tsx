@@ -110,7 +110,7 @@ ${test.acceptanceCriteria}`;
       {expanded && (
         <div className="px-5 pb-5 space-y-5 border-t border-elec-yellow/20">
           {/* Test Duration & Prerequisites */}
-          {(test.testDuration || test.prerequisiteTests?.length) && (
+          {(test.testDuration || (Array.isArray(test.prerequisiteTests) && test.prerequisiteTests.length > 0)) && (
             <div className="pt-5 flex flex-wrap gap-2">
               {test.testSequence && (
                 <div className="px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">
@@ -122,7 +122,7 @@ ${test.acceptanceCriteria}`;
                   <span className="text-xs text-white font-medium">⏱ {test.testDuration}</span>
                 </div>
               )}
-              {test.prerequisiteTests && test.prerequisiteTests.length > 0 && (
+              {Array.isArray(test.prerequisiteTests) && test.prerequisiteTests.length > 0 && (
                 <div className="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30">
                   <span className="text-xs text-white font-medium">⚠ Requires: {test.prerequisiteTests.join(', ')}</span>
                 </div>
@@ -147,7 +147,7 @@ ${test.acceptanceCriteria}`;
           )}
 
           {/* Procedure Steps */}
-          {test.procedure && test.procedure.length > 0 && (
+          {Array.isArray(test.procedure) && test.procedure.length > 0 && (
             <div>
               <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
                 <span className="text-elec-yellow">Test Procedure</span>
@@ -157,7 +157,7 @@ ${test.acceptanceCriteria}`;
           )}
 
           {/* Site Reality Factors */}
-          {test.siteRealityFactors && test.siteRealityFactors.length > 0 && (
+          {Array.isArray(test.siteRealityFactors) && test.siteRealityFactors.length > 0 && (
             <div>
               <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
                 <span className="text-amber-400">⚠️ Site Reality Factors</span>
@@ -173,7 +173,7 @@ ${test.acceptanceCriteria}`;
           )}
 
           {/* Efficiency Tips */}
-          {test.efficiencyTips && test.efficiencyTips.length > 0 && (
+          {Array.isArray(test.efficiencyTips) && test.efficiencyTips.length > 0 && (
             <div>
               <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
                 <span className="text-green-400">⚡ Efficiency Tips</span>
@@ -226,9 +226,9 @@ ${test.acceptanceCriteria}`;
 
           {/* Troubleshooting & Tips */}
           <TroubleshootingPanel
-            troubleshooting={test.troubleshooting}
-            commonMistakes={test.commonMistakes}
-            proTips={test.proTips}
+            troubleshooting={Array.isArray(test.troubleshooting) ? test.troubleshooting : []}
+            commonMistakes={Array.isArray(test.commonMistakes) ? test.commonMistakes : []}
+            proTips={Array.isArray(test.proTips) ? test.proTips : []}
           />
 
           {/* Test Calculator */}
