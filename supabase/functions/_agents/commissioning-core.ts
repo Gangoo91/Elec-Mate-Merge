@@ -34,8 +34,6 @@ interface CommissioningResult {
     };
     certification: any;
   };
-  clientCommunication?: any;
-  costEstimate?: any;
   commissioningCompletionChecks?: any;
   documentationRequirements?: any;
   metadata?: any;
@@ -131,8 +129,6 @@ export async function generateCommissioningProcedures(
       },
       certification: commissioningResult.certification
     },
-    clientCommunication: commissioningResult.clientCommunication,
-    costEstimate: commissioningResult.costEstimate,
     commissioningCompletionChecks: commissioningResult.commissioningCompletionChecks,
     documentationRequirements: commissioningResult.documentationRequirements,
     metadata: {
@@ -237,9 +233,7 @@ Each test procedure MUST include ALL of:
 - leadPlacement: Exact description of where to connect test leads with colour coding
 
 **ENHANCED SECTIONS:**
-- costEstimate: Include itemised materials, labour breakdown, total range
-- clientCommunication: Plain English summary, urgency explanation, what to expect
-- documentationRequirements: Specific tests to record, certificates needed, notes for schedules
+- documentationRequirements: Certificate type needed (EIC, EICR, Minor Works), specific schedules required
 - commissioningCompletionChecks: Final verification checklist before sign-off
 
 **CRITICAL OUTPUT STRUCTURE (ALL FIELDS MANDATORY):**
