@@ -17,7 +17,8 @@ import {
   AlertCircle,
   BookOpen,
   Scale,
-  Search
+  Search,
+  Check
 } from "lucide-react";
 import VisualAnalysisResults from "./VisualAnalysisResults";
 import InstallationVerificationResults from "./InstallationVerificationResults";
@@ -139,6 +140,8 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
   const [fastMode, setFastMode] = useState(true); // Default Quick mode
   const [inspectorModalOpen, setInspectorModalOpen] = useState(false);
   const [userContext, setUserContext] = useState("");
+  const [additionalNotes, setAdditionalNotes] = useState("");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [showContextField, setShowContextField] = useState(false);
   const [retryAttempts, setRetryAttempts] = useState(0);
   const [analyzedImageUrl, setAnalyzedImageUrl] = useState<string | null>(null);
@@ -769,9 +772,23 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
   };
 
   const handleContextTagClick = (tag: string) => {
+    setSelectedTags(prev => {
+      if (prev.includes(tag)) {
+        // Remove tag if already selected
+        return prev.filter(t => t !== tag);
+      } else {
+        // Add tag if not selected
+        return [...prev, tag];
+      }
+    });
+    
+    // Sync with userContext string
     setUserContext(prev => {
-      const current = prev.trim();
-      return current ? `${current}, ${tag}` : tag;
+      if (prev.includes(tag)) {
+        const tags = prev.split(', ').filter(t => t !== tag);
+        return tags.join(', ');
+      }
+      return prev ? `${prev}, ${tag}` : tag;
     });
   };
 
@@ -935,19 +952,19 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
   const ModeIcon = getModeIcon();
 
   return (
-    <div className="space-y-3 sm:space-y-4 pb-20 sm:pb-6">
-      {/* Enhanced Mode-Specific Header */}
+    <div className="space-y-3 pb-20 sm:pb-6">
+      {/* Enhanced Mode-Specific Header - Compact */}
       <Card className={`border ${getModeAccentColour()}`}>
-        <CardHeader className="p-4 sm:p-5">
-          <div className="flex items-start gap-3 sm:gap-4">
-            <div className={`p-3 sm:p-4 rounded-xl ${getModeAccentColour()}`}>
-              <ModeIcon className={`h-8 w-8 sm:h-10 sm:w-10 ${getModeIconColour()}`} />
+        <CardHeader className="p-3 sm:p-4">
+          <div className="flex items-start gap-3">
+            <div className={`p-2.5 sm:p-3 rounded-xl ${getModeAccentColour()}`}>
+              <ModeIcon className={`h-6 w-6 sm:h-8 sm:w-8 ${getModeIconColour()}`} />
             </div>
             <div className="flex-1 min-w-0">
-              <CardTitle className="text-lg sm:text-xl text-foreground leading-tight mb-1">
+              <CardTitle className="text-base sm:text-lg text-foreground leading-tight mb-0.5">
                 {getModeTitle()}
               </CardTitle>
-              <p className="text-sm sm:text-base text-muted-foreground">
+              <p className="text-xs sm:text-sm text-white/80">
                 {getModeDescription()}
               </p>
             </div>
@@ -955,44 +972,19 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
         </CardHeader>
       </Card>
 
-      {/* Always-Visible Quick Context Tags */}
-      {!analysisResult && !isAnalyzing && (
-        <Card className="bg-card border-border">
-          <CardContent className="p-3 sm:p-4">
-            <p className="text-xs font-medium text-muted-foreground mb-2.5">Quick Context (tap to add):</p>
-            <div className="flex flex-wrap gap-2">
-              {getModeQuickTags().map((tag) => (
-                <button
-                  key={tag}
-                  onClick={() => handleContextTagClick(tag)}
-                  className={`px-3 py-2 text-xs sm:text-sm font-medium ${getModeAccentColour()} ${getModeIconColour()} rounded-lg border transition-all hover:scale-105 active:scale-95`}
-                >
-                  {tag}
-                </button>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Collapsible Guidance Section - ALL Modes */}
-      {!analysisResult && !isAnalyzing && (
-        <ModeGuidanceSection mode={selectedMode} />
-      )}
-
       {/* Inline Loading State */}
       {isAnalyzing && (
         <Card className="bg-card border-border animate-fade-in">
           <CardContent className="p-4 sm:p-6">
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Loader className="h-5 w-5 animate-spin text-elec-yellow" />
-                  <div>
-                    <h3 className="font-semibold text-sm sm:text-base">Analysing Installation</h3>
-                    <p className="text-xs text-muted-foreground">Verifying against BS 7671...</p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Loader className="h-5 w-5 animate-spin text-elec-yellow" />
+                    <div>
+                      <h3 className="font-semibold text-sm sm:text-base text-white">Analysing Installation</h3>
+                      <p className="text-xs text-white/70">Verifying against BS 7671...</p>
+                    </div>
                   </div>
-                </div>
                 <Button
                   variant="ghost"
                   size="icon"
@@ -1009,7 +1001,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                     style={{ width: `${analysisProgress}%` }}
                   />
                 </div>
-                <p className="text-xs text-muted-foreground text-center">
+                <p className="text-xs text-white/70 text-center">
                   {analysisProgress < 30 && "Uploading images..."}
                   {analysisProgress >= 30 && analysisProgress < 70 && "Scanning components..."}
                   {analysisProgress >= 70 && "Generating report..."}
@@ -1023,11 +1015,11 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
       {/* Main Content */}
       {!analysisResult && !isAnalyzing ? (
         <Card className="bg-card border-border">
-          <CardContent className="p-3 sm:p-6 space-y-3 sm:space-y-4">
+          <CardContent className="p-3 space-y-3">
             {/* Camera Button - Prominent */}
             <Button
               onClick={isCameraActive ? stopCamera : startCamera}
-              className="w-full h-12 sm:h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
+              className="w-full h-12 sm:h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm sm:text-base"
             >
               <Camera className="h-5 w-5 mr-2" />
               {isCameraActive ? 'Close Camera' : '📸 Use Camera'}
@@ -1056,7 +1048,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                 </div>
                 <Button 
                   onClick={captureImage}
-                  className="w-full h-12 bg-green-600 text-white hover:bg-green-700 font-semibold"
+                  className="w-full h-11 bg-green-600 text-white hover:bg-green-700 font-semibold"
                 >
                   📸 Capture Photo
                 </Button>
@@ -1065,7 +1057,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
             
             {/* Upload Zone */}
             <div 
-              className="border-2 border-dashed border-border rounded-lg p-4 sm:p-6 text-center hover:border-elec-yellow/60 transition-colors cursor-pointer group"
+              className="border-2 border-dashed border-border rounded-lg p-4 text-center hover:border-elec-yellow/60 transition-colors cursor-pointer group"
               onDrop={handleDrop}
               onDragOver={(e) => e.preventDefault()}
               onClick={() => fileInputRef.current?.click()}
@@ -1078,71 +1070,67 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                 onChange={(e) => handleFileSelect(e.target.files)}
                 className="hidden"
               />
-              <Upload className="h-8 w-8 sm:h-10 sm:w-10 mx-auto mb-2 text-muted-foreground group-hover:text-elec-yellow transition-colors" />
-              <p className="text-sm sm:text-base font-medium text-foreground mb-1">
+              <Upload className="h-8 w-8 mx-auto mb-2 text-white/60 group-hover:text-elec-yellow transition-colors" />
+              <p className="text-sm font-medium text-foreground mb-1">
                 {getUploadPlaceholder()}
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/60">
                 Tap to browse or drag files here
               </p>
             </div>
             
-            
-            {/* Optional Context Field */}
-            {images.length > 0 && (
-              <div className="space-y-2 animate-fade-in">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowContextField(!showContextField)}
-                  className="w-full h-8 text-xs text-muted-foreground hover:text-foreground"
-                >
-                  <Lightbulb className="h-3 w-3 mr-1.5" />
-                  {showContextField ? 'Hide' : 'Add'} Context (Optional)
-                </Button>
-                
-                {showContextField && (
-                  <div className="space-y-2 p-3 bg-muted/30 rounded-lg border border-border/50">
-                    <textarea
-                      value={userContext}
-                      onChange={(e) => setUserContext(e.target.value.slice(0, 200))}
-                      placeholder="e.g., EICR inspection, fault occurred after storm, new installation..."
-                      className="w-full h-16 px-3 py-2 text-xs bg-background border border-border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 text-foreground placeholder:text-muted-foreground"
-                      maxLength={200}
-                    />
-                    <div className="flex items-center justify-between">
-                      <div className="flex flex-wrap gap-1.5">
-                        {['EICR', 'New Install', 'Fault', 'Upgrade', 'Rewire'].map((tag) => (
-                          <button
-                            key={tag}
-                            onClick={() => handleContextTagClick(tag)}
-                            className="px-2 py-0.5 text-xs bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow rounded border border-elec-yellow/30 transition-colors"
-                          >
-                            {tag}
-                          </button>
-                        ))}
-                      </div>
-                      <span className="text-xs text-muted-foreground">
-                        {userContext.length}/200
-                      </span>
-                    </div>
-                  </div>
+            {/* Quick Context - ALWAYS VISIBLE */}
+            <div className="space-y-3 pt-1">
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-medium text-white">Quick Context:</p>
+                {selectedTags.length > 0 && (
+                  <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs">
+                    {selectedTags.length} selected
+                  </Badge>
                 )}
               </div>
-            )}
+              
+              <div className="flex flex-wrap gap-2">
+                {getModeQuickTags().map((tag) => (
+                  <button
+                    key={tag}
+                    onClick={() => handleContextTagClick(tag)}
+                    className={`px-3 py-2.5 text-xs sm:text-sm font-medium rounded-xl border-2 transition-all flex items-center gap-1.5 min-h-[44px] ${
+                      selectedTags.includes(tag)
+                        ? "bg-elec-yellow text-black border-elec-yellow shadow-lg shadow-elec-yellow/20"
+                        : `${getModeAccentColour()} ${getModeIconColour()} border-border hover:scale-105 active:scale-95`
+                    }`}
+                  >
+                    {selectedTags.includes(tag) && <Check className="h-3.5 w-3.5" />}
+                    {tag}
+                  </button>
+                ))}
+              </div>
+              
+              {/* Additional Notes Input - Always Visible */}
+              <div className="pt-1">
+                <input
+                  type="text"
+                  placeholder="Additional notes (optional)..."
+                  value={additionalNotes}
+                  onChange={(e) => setAdditionalNotes(e.target.value)}
+                  className="flex h-11 w-full rounded-lg border border-border bg-background/50 px-3 py-2 text-sm placeholder:text-white/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 transition-all"
+                />
+              </div>
+            </div>
             
             {/* Image Gallery */}
             {images.length > 0 && (
-              <div className="space-y-2 animate-fade-in">
+              <div className="space-y-2 animate-fade-in pt-2">
                 <div className="flex items-center justify-between">
-                  <p className="text-xs sm:text-sm font-medium text-foreground">
+                  <p className="text-xs sm:text-sm font-medium text-white">
                     {images.length} image{images.length > 1 ? 's' : ''}
                   </p>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => fileInputRef.current?.click()}
-                    className="h-7 text-xs"
+                    className="h-7 text-xs text-white/80 hover:text-white"
                   >
                     <Plus className="h-3 w-3 mr-1" />
                     Add
@@ -1169,13 +1157,13 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                       <Button
                         size="icon"
                         variant="destructive"
-                        className="absolute top-2 right-2 h-8 w-8 sm:h-6 sm:w-6 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity shadow-lg"
+                        className="absolute top-2 right-2 h-8 w-8 opacity-100 transition-opacity shadow-lg"
                         onClick={(e) => {
                           e.stopPropagation();
                           removeImage(index);
                         }}
                       >
-                        <X className="h-4 w-4 sm:h-3 sm:w-3" />
+                        <X className="h-4 w-4" />
                       </Button>
                       {index === primaryImageIndex && (
                         <div className="absolute bottom-2 left-2">
@@ -1189,6 +1177,11 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
                 </div>
               </div>
             )}
+            
+            {/* Collapsible Guidance Section - Inside Card */}
+            <div className="pt-2">
+              <ModeGuidanceSection mode={selectedMode} />
+            </div>
           </CardContent>
         </Card>
       ) : null}
