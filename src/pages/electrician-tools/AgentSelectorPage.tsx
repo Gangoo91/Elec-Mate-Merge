@@ -42,8 +42,8 @@ const AGENTS: Agent[] = [
     name: 'Cost Engineer',
     icon: Calculator,
     color: 'text-green-400',
-    description: 'Material pricing and labour cost estimates',
-    expertise: ['Material pricing', 'Labour costs', 'Project estimates', 'Quote generation']
+    description: 'Full project quotes with materials, labour and timescales',
+    expertise: ['Material pricing', 'Labour estimates', 'Project timescales', 'Quote generation']
   },
   {
     id: 'installer',
@@ -58,8 +58,8 @@ const AGENTS: Agent[] = [
     name: 'Testing & Commissioning',
     icon: CheckCircle2,
     color: 'text-purple-400',
-    description: 'Test procedures, certification, compliance verification',
-    expertise: ['Testing procedures', 'EIC completion', 'Compliance checks', 'Fault diagnosis']
+    description: 'Test procedures, EICR defect coding and fault diagnosis',
+    expertise: ['Testing procedures', 'EICR photo analysis', 'Defect coding (C1-C3)', 'Fault diagnosis']
   },
   {
     id: 'maintenance',
@@ -74,8 +74,8 @@ const AGENTS: Agent[] = [
     name: 'Health & Safety',
     icon: Shield,
     color: 'text-orange-400',
-    description: 'Risk assessments, method statements, safety procedures',
-    expertise: ['Risk assessments', 'RAMS documents', 'PPE requirements', 'Safety procedures']
+    description: 'Risk assessments, PPE requirements and safety procedures',
+    expertise: ['Risk assessments', 'RAMS documents', 'PPE requirements', 'Emergency procedures']
   },
   {
     id: 'project-manager',
