@@ -60,7 +60,8 @@ export const TestCard = ({ test, index, variant, onResultRecorded, initialResult
     });
   };
 
-  const extractUnit = (criteria: string): string => {
+  const extractUnit = (criteria?: string): string => {
+    if (!criteria) return '';
     const unitMatch = criteria.match(/\b(Ω|A|V|ms|mA|%|mm²)\b/);
     return unitMatch ? unitMatch[0] : '';
   };

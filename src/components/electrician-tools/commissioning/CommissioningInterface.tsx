@@ -214,6 +214,15 @@ const CommissioningInterface = () => {
     );
   }
 
+  // Handle race condition: job complete but responseMode not yet set by useEffect
+  if (job?.status === 'complete' && !responseMode) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <div className="text-white">Preparing results...</div>
+      </div>
+    );
+  }
+
   // CONVERSATIONAL MODE: Show chat-style response
   if (responseMode === 'conversational' && conversationalResponse) {
     return (
