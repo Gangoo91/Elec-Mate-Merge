@@ -13,7 +13,7 @@ timeout_sec = 360
 # Design Installation Agent (generates installation guidance for circuits)
 [functions.design-installation-agent]
 verify_jwt = false
-timeout_sec = 180
+timeout_sec = 300
 
 [functions.project-mgmt-v3]
 verify_jwt = false
