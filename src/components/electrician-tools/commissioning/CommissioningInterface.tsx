@@ -145,8 +145,8 @@ const CommissioningInterface = () => {
   // Show processing view while loading
   if (isLoading) {
     const progressStage = {
-      stage: job?.progress && job.progress < 30 ? 'initializing' as const : 
-             job?.progress && job.progress < 60 ? 'ai' as const :
+      stage: job?.progress && job.progress < 25 ? 'initializing' as const : 
+             job?.progress && job.progress < 75 ? 'ai' as const :
              job?.progress && job.progress < 90 ? 'parsing' as const : 'validation' as const,
       message: job?.current_step || 'Processing...'
     };
