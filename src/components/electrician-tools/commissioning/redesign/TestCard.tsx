@@ -141,9 +141,79 @@ ${test.acceptanceCriteria}`;
             </p>
           </div>
 
+          {/* Expected Result */}
+          {test.expectedResult && (
+            <div>
+              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+                <span className="text-green-400">📊 Expected Result</span>
+              </h4>
+              <div className="text-sm text-white/80 bg-green-500/5 border-l-4 border-green-500/50 p-3 rounded-lg">
+                {typeof test.expectedResult === 'string' ? (
+                  <p>{test.expectedResult}</p>
+                ) : (
+                  <div className="space-y-1">
+                    {test.expectedResult.calculated && <p><strong>Calculated:</strong> {test.expectedResult.calculated}</p>}
+                    {test.expectedResult.measured && <p><strong>Measured:</strong> {test.expectedResult.measured}</p>}
+                    {test.expectedResult.maximumPermitted && <p><strong>Max Permitted:</strong> {test.expectedResult.maximumPermitted}</p>}
+                    {test.expectedResult.marginOfSafety && <p><strong>Margin of Safety:</strong> {test.expectedResult.marginOfSafety}</p>}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Calculation Breakdown */}
+          {test.calculation && (
+            <div>
+              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+                <span className="text-cyan-400">🧮 Calculation</span>
+              </h4>
+              <div className="text-sm text-white/80 bg-cyan-500/5 border-l-4 border-cyan-500/50 p-3 rounded-lg font-mono">
+                {typeof test.calculation === 'string' ? (
+                  <p>{test.calculation}</p>
+                ) : (
+                  <div className="space-y-2">
+                    {test.calculation.formula && <p><strong>Formula:</strong> {test.calculation.formula}</p>}
+                    {test.calculation.Ze && <p><strong>Ze:</strong> {test.calculation.Ze}</p>}
+                    {test.calculation.R1R2 && <p><strong>R1+R2:</strong> {test.calculation.R1R2}</p>}
+                    {test.calculation.expectedZs && <p><strong>Expected Zs:</strong> {test.calculation.expectedZs}</p>}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Lead Placement */}
+          {test.leadPlacement && (
+            <div>
+              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+                <span className="text-pink-400">🔌 Lead Placement</span>
+              </h4>
+              <p className="text-sm text-white/80 bg-pink-500/5 border-l-4 border-pink-500/50 p-3 rounded-lg">
+                {test.leadPlacement}
+              </p>
+            </div>
+          )}
+
           {/* Instrument Setup */}
           {test.instrumentSetup && (
             <InstrumentSetupPanel instrumentSetup={test.instrumentSetup} />
+          )}
+
+          {/* Instrument Notes */}
+          {Array.isArray(test.instrumentNotes) && test.instrumentNotes.length > 0 && (
+            <div>
+              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+                <span className="text-orange-400">🔧 Instrument Notes</span>
+              </h4>
+              <div className="space-y-2">
+                {test.instrumentNotes.map((note, idx) => (
+                  <div key={idx} className="text-sm text-white/80 bg-orange-500/5 border-l-4 border-orange-500/50 p-3 rounded-lg">
+                    {note}
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
 
           {/* Procedure Steps */}
