@@ -40,6 +40,17 @@ export const useCommissioningProgress = (
     if (stored) {
       try {
         const data = JSON.parse(stored) as CommissioningProgressData;
+        
+        // Validate and fix data structure to prevent crashes
+        if (!Array.isArray(data.testResults)) {
+          console.warn('Invalid testResults array, resetting to empty array');
+          data.testResults = [];
+        }
+        if (!Array.isArray(data.visualChecks)) {
+          console.warn('Invalid visualChecks array, resetting to empty array');
+          data.visualChecks = [];
+        }
+        
         setProgress(data);
         setHasExistingSession(true);
       } catch (error) {
