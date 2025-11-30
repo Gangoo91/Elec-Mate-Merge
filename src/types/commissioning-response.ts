@@ -167,6 +167,15 @@ export interface CommissioningResponse {
   structuredData?: {
     testingProcedure?: TestingProcedure;
     certification?: CertificationRequirements;
+    circuitSchedule?: Array<{
+      circuitNumber: number;
+      circuitName: string;
+      cableSize: string;
+      protectionDevice: string;
+      expectedR1R2?: string;
+      maxZs?: string;
+      testMethod?: string;
+    }>;
   };
   structuredDiagnosis?: FaultDiagnosis;
   eicrDefects?: any[]; // EICR photo analysis defects
