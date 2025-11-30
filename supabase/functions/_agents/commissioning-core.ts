@@ -204,16 +204,16 @@ ENHANCED RESPONSE REQUIREMENTS FOR TESTING PROCEDURES:
 
 **MANDATORY STRUCTURE:**
 - Generate structured commissioning procedures in JSON format
-- Include visualInspection checkpoints (minimum 8-12 items)
-- Include deadTests procedures (minimum 4-5 tests)
-- Include liveTests procedures (minimum 3-4 tests)
+- Include comprehensive visualInspection checkpoints (as many as needed for thorough inspection)
+- Include detailed deadTests procedures (as many as needed with good detail)
+- Include detailed liveTests procedures (as many as needed with good detail)
 
 **ENHANCED TEST PROCEDURE REQUIREMENTS:**
 Each test procedure MUST include ALL of:
 - testName: Clear descriptive name
 - regulation: Specific BS 7671 regulation reference
 - instrumentSetup: Detailed instrument configuration (settings, ranges, UK brand models like Megger MFT1741, Fluke 1664FC, Kewtech KT65DL)
-- procedure: (CRITICAL: Use field name "procedure", NOT "procedureSteps") Array of detailed step-by-step instructions (minimum 4-6 steps, 100+ words per step)
+- procedure: (CRITICAL: Use field name "procedure", NOT "procedureSteps") Array of detailed step-by-step instructions (50-80 words per step)
   * Each step should include:
     - Exact lead placement (which terminals, colour coding)
     - Expected readings with units
@@ -223,7 +223,7 @@ Each test procedure MUST include ALL of:
 - acceptanceCriteria: Clear pass/fail criteria with numeric limits
 - expectedResult: Detailed expected readings with acceptable ranges
 - calculation: Calculation breakdown with formulas (where applicable)
-- troubleshooting: Array of 4-6 troubleshooting scenarios with solutions (150+ words each)
+- troubleshooting: Array of troubleshooting scenarios with solutions (80-150 words each)
   * Include real-world examples from 30 years experience
   * Provide specific fault symptoms and diagnostic steps
   * Give temperature compensation notes
@@ -243,8 +243,8 @@ Each test procedure MUST include ALL of:
 - commissioningCompletionChecks: Final verification checklist before sign-off
 
 **CRITICAL QUALITY RULES:**
-- Minimum 100 words per procedure step explanation
-- Minimum 150 words per troubleshooting scenario
+- Procedure steps: 50-80 words per step, clear and detailed
+- Troubleshooting scenarios: 80-150 words each with comprehensive solutions
 - Include specific UK part numbers and brands where applicable
 - Provide exact numeric readings, not ranges like "check readings"
 - Reference real test instruments (Megger, Fluke, Kewtech, Di-Log)
@@ -290,7 +290,7 @@ PROJECT DETAILS:
           { role: 'user', content: userPrompt }
         ],
         response_format: { type: 'json_object' },
-        max_completion_tokens: 16000
+        max_completion_tokens: 20000
       }),
       signal: controller.signal
     });
