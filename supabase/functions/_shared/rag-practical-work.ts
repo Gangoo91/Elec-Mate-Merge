@@ -85,9 +85,13 @@ export async function searchPracticalWorkIntelligence(
       source_table: 'practical_work_intelligence',
       applies_to: row.applies_to,
       cable_sizes: row.cable_sizes,
-      test_procedures: row.test_procedures,
+      test_procedures: Array.isArray(row.test_procedures) 
+        ? row.test_procedures.map((t: any) => typeof t === 'string' ? t : JSON.stringify(t))
+        : [],
       troubleshooting_steps: row.troubleshooting_steps,
-      common_failures: row.common_failures
+      common_failures: Array.isArray(row.common_failures)
+        ? row.common_failures.map((f: any) => typeof f === 'string' ? f : JSON.stringify(f))
+        : []
     }));
 
     // Calculate quality metrics

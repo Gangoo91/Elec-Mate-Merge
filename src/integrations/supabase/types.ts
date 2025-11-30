@@ -9020,15 +9020,15 @@ export type Database = {
           applies_to: string[]
           bs7671_regulations: string[]
           cable_sizes: string[]
-          common_failures: string[]
+          common_failures: Json[]
           confidence_score: number
           description: string
           equipment_category: string
           id: string
           keywords: string[]
           primary_topic: string
-          safety_requirements: string[]
-          test_procedures: string[]
+          safety_requirements: Json
+          test_procedures: Json[]
           tools_required: string[]
           troubleshooting_steps: string[]
         }[]
