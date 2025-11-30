@@ -86,6 +86,13 @@ export interface DiagnosticStep {
   safetyWarnings?: string[];
   ifFailed?: string;
   regulation?: string;
+  leadPlacement?: string;
+  testDuration?: string;
+  temperatureNotes?: string;
+  troubleshootingSequence?: string[];
+  realWorldExample?: string;
+  instrumentModel?: string;
+  clientExplanation?: string;
 }
 
 export interface CorrectiveAction {
@@ -94,6 +101,12 @@ export interface CorrectiveAction {
   tools?: string[];
   estimatedTime?: string;
   verificationTest?: string;
+  materialsCost?: string;
+  skillLevel?: 'apprentice' | 'qualified' | 'specialist';
+  partNumbers?: string[];
+  bs7671Reference?: string;
+  commonBrands?: string[];
+  safetyNotes?: string[];
 }
 
 export interface LockoutTagout {
@@ -114,11 +127,32 @@ export interface FaultDiagnosis {
     likelyRootCauses: string[];
     safetyRisk: 'LOW' | 'MODERATE' | 'HIGH' | 'CRITICAL';
     immediateAction?: string;
+    secondarySymptoms?: string[];
+    riskToOccupants?: string;
+    riskToProperty?: string;
+    typicalRepairTime?: string;
   };
   diagnosticWorkflow: DiagnosticStep[];
   correctiveActions: CorrectiveAction[];
   lockoutTagout?: LockoutTagout;
   additionalContext?: AdditionalContext;
+  costEstimate?: {
+    materials: string;
+    labour: string;
+    total: string;
+    notes?: string;
+  };
+  clientCommunication?: {
+    summary: string;
+    urgencyExplanation: string;
+    whatToExpect: string;
+    quotationNotes?: string;
+  };
+  documentationRequirements?: {
+    testsToRecord: string[];
+    certificatesNeeded: string[];
+    notesForEIC?: string;
+  };
 }
 
 export interface CommissioningResponse {

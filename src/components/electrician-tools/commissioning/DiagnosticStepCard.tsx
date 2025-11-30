@@ -1,4 +1,4 @@
-import { AlertTriangle, CheckCircle2, AlertCircle, Wrench, ClipboardCheck } from "lucide-react";
+import { AlertTriangle, CheckCircle2, AlertCircle, Wrench, ClipboardCheck, Clock, Lightbulb, Zap, BookOpen } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -55,6 +55,12 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
                 <Badge variant="outline" className={`${config.textColor} ${config.borderColor}`}>
                   {config.label}
                 </Badge>
+                {step.testDuration && (
+                  <Badge variant="outline" className="text-blue-300 border-blue-500/50 flex items-center gap-1">
+                    <Clock className="h-3 w-3" />
+                    {step.testDuration}
+                  </Badge>
+                )}
               </div>
               <h4 className="text-base sm:text-lg font-semibold text-white mb-1">
                 {step.stepTitle}
@@ -86,6 +92,17 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
               <p className="text-sm text-white/80 ml-6">{step.whatToTest}</p>
             </div>
 
+            {/* Lead Placement */}
+            {step.leadPlacement && (
+              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <Zap className="h-4 w-4 text-blue-400" />
+                  <h5 className="text-sm font-semibold text-blue-300">Lead Placement</h5>
+                </div>
+                <p className="text-sm text-white/80">{step.leadPlacement}</p>
+              </div>
+            )}
+
             {/* Expected Readings */}
             {(step.whatToMeasure || step.expectedReading || step.acceptableRange) && (
               <div className="bg-elec-dark/50 rounded-lg p-4 space-y-2">
@@ -112,12 +129,62 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
             )}
 
             {/* Instrument Setup */}
-            {step.instrumentSetup && (
+            {(step.instrumentSetup || step.instrumentModel) && (
               <div className="space-y-2">
                 <h5 className="text-sm font-semibold text-white">Instrument Setup</h5>
-                <p className="text-sm text-white/80 bg-elec-dark/50 rounded-lg p-3 font-mono text-xs">
-                  {step.instrumentSetup}
-                </p>
+                {step.instrumentModel && (
+                  <Badge variant="outline" className="text-blue-300 border-blue-500/50 mb-2">
+                    {step.instrumentModel}
+                  </Badge>
+                )}
+                {step.instrumentSetup && (
+                  <p className="text-sm text-white/80 bg-elec-dark/50 rounded-lg p-3 font-mono text-xs">
+                    {step.instrumentSetup}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* Temperature Notes */}
+            {step.temperatureNotes && (
+              <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h5 className="text-xs font-semibold text-amber-300 mb-1">Temperature Effects</h5>
+                    <p className="text-xs text-white/80">{step.temperatureNotes}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Real World Example */}
+            {step.realWorldExample && (
+              <Collapsible>
+                <CollapsibleTrigger className="w-full bg-green-500/10 border border-green-500/30 rounded-lg p-3 hover:bg-green-500/15 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Lightbulb className="h-4 w-4 text-green-400" />
+                      <h5 className="text-sm font-semibold text-green-300">Real-World Example</h5>
+                    </div>
+                  </div>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="pt-2">
+                  <p className="text-sm text-white/80 italic">{step.realWorldExample}</p>
+                </CollapsibleContent>
+              </Collapsible>
+            )}
+
+            {/* Client Explanation */}
+            {step.clientExplanation && (
+              <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-4">
+                <div className="flex items-start gap-2">
+                  <BookOpen className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h5 className="text-xs font-semibold text-purple-300 mb-1">Client Explanation</h5>
+                    <p className="text-sm text-white/80">{step.clientExplanation}</p>
+                  </div>
+                </div>
               </div>
             )}
 
@@ -136,6 +203,21 @@ const DiagnosticStepCard = ({ step }: DiagnosticStepCardProps) => {
                     </li>
                   ))}
                 </ul>
+              </div>
+            )}
+
+            {/* Troubleshooting Sequence */}
+            {step.troubleshootingSequence && step.troubleshootingSequence.length > 0 && (
+              <div className="space-y-2">
+                <h5 className="text-sm font-semibold text-amber-300">If This Step Fails</h5>
+                <ol className="space-y-2 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
+                  {step.troubleshootingSequence.map((sequence, idx) => (
+                    <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                      <span className="text-amber-400 font-bold">{idx + 1}.</span>
+                      <span className="text-left">{sequence}</span>
+                    </li>
+                  ))}
+                </ol>
               </div>
             )}
 

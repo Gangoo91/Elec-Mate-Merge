@@ -1,4 +1,4 @@
-import { AlertTriangle, AlertCircle, CheckCircle2, Lightbulb, XCircle, BookOpen, ArrowLeft, FileText, Image as ImageIcon } from "lucide-react";
+import { AlertTriangle, AlertCircle, CheckCircle2, Lightbulb, XCircle, BookOpen, ArrowLeft, FileText, Image as ImageIcon, PoundSterling, MessageSquare, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -194,7 +194,7 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
           </div>
         )}
 
-        {/* Fault Summary - ALWAYS EXPANDED */}
+        {/* Fault Summary - ENHANCED */}
         {diagnosis && risk && (
           <Card className="bg-elec-dark/80 border-2 border-blue-500/30 p-5 sm:p-7 shadow-lg">
             <div className="space-y-6">
@@ -207,6 +207,21 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
                   <h3 className="text-2xl sm:text-xl font-bold text-white mb-4 sm:mb-3">Reported Symptom</h3>
                   <p className="text-lg sm:text-base text-white mb-6 sm:mb-5 leading-relaxed">{diagnosis.faultSummary.reportedSymptom}</p>
                   
+                  {/* Secondary Symptoms */}
+                  {diagnosis.faultSummary.secondarySymptoms && diagnosis.faultSummary.secondarySymptoms.length > 0 && (
+                    <div className="mb-6 sm:mb-5">
+                      <h4 className="text-base font-bold text-white mb-2">Also Look For:</h4>
+                      <ul className="space-y-1 text-left">
+                        {diagnosis.faultSummary.secondarySymptoms.map((symptom, idx) => (
+                          <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                            <span className="text-blue-400">•</span>
+                            <span>{symptom}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
                   <h4 className="text-xl sm:text-base font-bold text-white mb-5 sm:mb-3">Likely Root Causes</h4>
                   <ol className="space-y-4 sm:space-y-3 text-left">
                     {diagnosis.faultSummary.likelyRootCauses.map((cause, idx) => (
@@ -221,11 +236,36 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center sm:items-center justify-center sm:justify-start gap-3 pt-5 sm:pt-4 border-t-2 border-white/10">
-                <span className="text-lg sm:text-base text-white font-bold sm:font-medium">Safety Risk:</span>
-                <Badge className={`${risk.color} text-white border-none text-lg sm:text-base px-6 py-3 sm:px-4 sm:py-2 rounded-full`}>
-                  {diagnosis.faultSummary.safetyRisk}
-                </Badge>
+              {/* Risk Details */}
+              <div className="space-y-3 pt-5 sm:pt-4 border-t-2 border-white/10">
+                <div className="flex flex-col sm:flex-row items-center sm:items-center justify-center sm:justify-start gap-3">
+                  <span className="text-lg sm:text-base text-white font-bold sm:font-medium">Safety Risk:</span>
+                  <Badge className={`${risk.color} text-white border-none text-lg sm:text-base px-6 py-3 sm:px-4 sm:py-2 rounded-full`}>
+                    {diagnosis.faultSummary.safetyRisk}
+                  </Badge>
+                </div>
+
+                {diagnosis.faultSummary.riskToOccupants && (
+                  <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
+                    <h5 className="text-sm font-semibold text-red-300 mb-1">Risk to Occupants</h5>
+                    <p className="text-sm text-white/80">{diagnosis.faultSummary.riskToOccupants}</p>
+                  </div>
+                )}
+
+                {diagnosis.faultSummary.riskToProperty && (
+                  <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
+                    <h5 className="text-sm font-semibold text-amber-300 mb-1">Risk to Property</h5>
+                    <p className="text-sm text-white/80">{diagnosis.faultSummary.riskToProperty}</p>
+                  </div>
+                )}
+
+                {diagnosis.faultSummary.typicalRepairTime && (
+                  <div className="flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
+                    <Clock className="h-4 w-4 text-blue-400" />
+                    <span className="text-sm font-semibold text-blue-300">Typical Repair Time:</span>
+                    <span className="text-sm text-white/80">{diagnosis.faultSummary.typicalRepairTime}</span>
+                  </div>
+                )}
               </div>
             </div>
           </Card>
@@ -269,9 +309,109 @@ const FaultDiagnosisView = ({ diagnosis, eicrDefects, imageUrl, onStartOver }: F
           </div>
         )}
 
-        {/* Additional Context */}
+        {/* Cost Estimate */}
+        {diagnosis && diagnosis.costEstimate && (
+          <Card className="bg-elec-dark/80 border-2 border-green-500/30 p-5 sm:p-6">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2 mb-4">
+              <PoundSterling className="h-7 w-7 text-green-400" />
+              Cost Estimate
+            </h2>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-base text-white/70">Materials</span>
+                <span className="text-lg font-semibold text-white">{diagnosis.costEstimate.materials}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-base text-white/70">Labour</span>
+                <span className="text-lg font-semibold text-white">{diagnosis.costEstimate.labour}</span>
+              </div>
+              <div className="border-t border-white/20 pt-3 flex justify-between items-center">
+                <span className="text-lg font-bold text-white">Total</span>
+                <span className="text-xl font-bold text-green-400">{diagnosis.costEstimate.total}</span>
+              </div>
+              {diagnosis.costEstimate.notes && (
+                <p className="text-sm text-white/70 italic pt-2">{diagnosis.costEstimate.notes}</p>
+              )}
+            </div>
+          </Card>
+        )}
+
+        {/* Client Communication */}
+        {diagnosis && diagnosis.clientCommunication && (
+          <Card className="bg-elec-dark/80 border-2 border-purple-500/30 p-5 sm:p-6">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2 mb-4">
+              <MessageSquare className="h-7 w-7 text-purple-400" />
+              Client Communication
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <h4 className="text-sm font-semibold text-purple-300 mb-2">Summary for Client</h4>
+                <p className="text-base text-white/80 leading-relaxed">{diagnosis.clientCommunication.summary}</p>
+              </div>
+              <div>
+                <h4 className="text-sm font-semibold text-purple-300 mb-2">Why This Matters</h4>
+                <p className="text-base text-white/80 leading-relaxed">{diagnosis.clientCommunication.urgencyExplanation}</p>
+              </div>
+              <div>
+                <h4 className="text-sm font-semibold text-purple-300 mb-2">What to Expect</h4>
+                <p className="text-base text-white/80 leading-relaxed">{diagnosis.clientCommunication.whatToExpect}</p>
+              </div>
+              {diagnosis.clientCommunication.quotationNotes && (
+                <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-3">
+                  <h4 className="text-sm font-semibold text-purple-300 mb-1">Quotation Notes</h4>
+                  <p className="text-sm text-white/80">{diagnosis.clientCommunication.quotationNotes}</p>
+                </div>
+              )}
+            </div>
+          </Card>
+        )}
+
+        {/* Documentation Requirements */}
+        {diagnosis && diagnosis.documentationRequirements && (
+          <Card className="bg-elec-dark/80 border-2 border-blue-500/30 p-5 sm:p-6">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2 mb-4">
+              <FileText className="h-7 w-7 text-blue-400" />
+              Documentation Requirements
+            </h2>
+            <div className="space-y-4">
+              {diagnosis.documentationRequirements.testsToRecord && diagnosis.documentationRequirements.testsToRecord.length > 0 && (
+                <div>
+                  <h4 className="text-sm font-semibold text-blue-300 mb-2">Tests to Record</h4>
+                  <ul className="space-y-1">
+                    {diagnosis.documentationRequirements.testsToRecord.map((test, idx) => (
+                      <li key={idx} className="text-base text-white/80 flex items-start gap-2">
+                        <CheckCircle2 className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                        <span>{test}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {diagnosis.documentationRequirements.certificatesNeeded && diagnosis.documentationRequirements.certificatesNeeded.length > 0 && (
+                <div>
+                  <h4 className="text-sm font-semibold text-blue-300 mb-2">Certificates Needed</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {diagnosis.documentationRequirements.certificatesNeeded.map((cert, idx) => (
+                      <Badge key={idx} variant="outline" className="text-blue-300 border-blue-500/50">
+                        {cert}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {diagnosis.documentationRequirements.notesForEIC && (
+                <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
+                  <h4 className="text-sm font-semibold text-blue-300 mb-1">Notes for EIC/EICR</h4>
+                  <p className="text-sm text-white/80">{diagnosis.documentationRequirements.notesForEIC}</p>
+                </div>
+              )}
+            </div>
+          </Card>
+        )}
+
+        {/* Additional Context - DEFAULT EXPANDED */}
         {diagnosis && diagnosis.additionalContext && (
-          <Accordion type="single" collapsible className="space-y-3">
+          <Accordion type="single" collapsible defaultValue="mistakes" className="space-y-3">
             {diagnosis.additionalContext.commonMistakes && diagnosis.additionalContext.commonMistakes.length > 0 && (
               <AccordionItem value="mistakes" className="bg-elec-dark/80 border-2 border-amber-500/30 rounded-lg px-6">
                 <AccordionTrigger className="text-white hover:text-white/80 py-4 min-h-[56px]">

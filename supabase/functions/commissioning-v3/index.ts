@@ -354,65 +354,88 @@ ${conversationContext}`;
       if (mode === 'troubleshooting') {
         return `${basePersona}
 
-🔧 TROUBLESHOOTING MODE - STRUCTURED FAULT DIAGNOSIS
+🔧 TROUBLESHOOTING MODE - COMPREHENSIVE FAULT DIAGNOSIS
 
-You MUST provide a comprehensive fault diagnosis using the RAG safety status system:
+**MANDATORY OUTPUT REQUIREMENTS:**
 
-**RAG STATUS DEFINITIONS:**
-- 🔴 RED: Critical safety issue, unsafe condition, MUST be addressed before proceeding
-  Examples: Live exposed conductors, arcing, thermal damage, voltage on earth
-- 🟡 AMBER: Requires investigation or adjustment, not immediately dangerous but non-compliant
-  Examples: High Zs reading (but below 230V), low IR (0.5-1.0MΩ), loose terminals
-- 🟢 GREEN: Normal verification checks, routine testing, acceptable conditions
-  Examples: Visual inspection, continuity verification, polarity confirmation
-
-**RESPONSE STRUCTURE:**
-
-1. **Fault Summary** (30-50 words)
-   - What symptom the user reported
-   - 2-4 most likely root causes from experience
-   - Safety risk level (LOW/MODERATE/HIGH/CRITICAL)
+1. **Fault Summary** (ENHANCED - ALL FIELDS REQUIRED)
+   - Reported symptom (verbatim from user)
+   - 3-4 likely root causes from 30 years experience
+   - Secondary symptoms to look for (2-3 related indicators)
+   - Safety risk level with justification
+   - Risk to occupants (plain English)
+   - Risk to property (fire/damage assessment)
+   - Typical repair timeframe (e.g., "30 mins - 2 hours")
    - Immediate action required
 
-2. **Diagnostic Workflow** (minimum 3 steps, RAG-coded)
-   Each step must include:
-   - RAG status (RED/AMBER/GREEN)
-   - What to test/inspect/verify
-   - What to measure (voltage, resistance, current, etc.)
-   - Expected reading with unit (e.g., "230V ±10%", "<0.05Ω", ">1.0MΩ")
-   - Acceptable range with tolerance
-   - Instrument setup (mode, range, connections)
-   - Safety warnings (PPE, isolation, live working)
-   - What to do if check fails
-   - BS 7671 regulation reference
-
-3. **Corrective Actions**
-   For each potential fault:
+2. **Diagnostic Workflow** (MINIMUM 5 STEPS)
+   Each step MUST include ALL of:
+   - RAG status (RED/AMBER/GREEN) with justification
+   - Lead placement (exact terminal positions)
+   - Test duration estimate (e.g., "2-3 minutes")
+   - Instrument model recommendation (UK brands: Megger, Fluke, Kewtech)
+   - Temperature effects on readings (e.g., "Copper resistance changes 0.4% per °C")
+   - Real-world troubleshooting example from experience
+   - Client explanation (plain English for non-technical explanation)
+   - Troubleshooting sequence if step fails
+   
+   **RAG STATUS DEFINITIONS:**
+   - 🔴 RED: Critical safety issue, unsafe condition, MUST be addressed before proceeding
+   - 🟡 AMBER: Requires investigation or adjustment, not immediately dangerous
+   - 🟢 GREEN: Normal verification checks, routine testing
+   
+3. **Corrective Actions** (MINIMUM 2 ACTIONS)
+   Each action MUST include:
    - Symptom that triggers this action
-   - Specific corrective procedure
+   - Specific corrective procedure (step-by-step)
+   - Materials cost estimate (UK prices, e.g., "£15-25 for terminal blocks")
+   - Skill level required (apprentice/qualified/specialist)
+   - Part numbers (UK suppliers: MK, Hager, Schneider, etc.)
+   - BS 7671 reference for this fix
+   - Common brands to use
+   - Safety notes for this specific fix
    - Tools required
-   - Estimated repair time
-   - How to verify the fix worked
+   - Estimated time
+   - Verification test
 
-4. **Lockout/Tagout Requirements**
+4. **Cost Estimate** (NEW SECTION - REQUIRED)
+   - Materials breakdown (itemised)
+   - Labour estimate (hourly rate × estimated time)
+   - Total cost range (low-high)
+   - Notes on variations
+
+5. **Client Communication** (NEW SECTION - REQUIRED)
+   - Plain English summary for client (non-technical)
+   - Why urgent (or not) - explain risk clearly
+   - What to expect during repair
+   - Quotation notes (if applicable)
+
+6. **Documentation Requirements** (NEW SECTION - REQUIRED)
+   - Tests to record on certificate
+   - Certificates needed (EIC, EICR, Minor Works)
+   - Notes for EIC/EICR schedule
+
+7. **Lockout/Tagout Requirements**
    - Is LOTO required? (YES/NO)
    - Step-by-step isolation procedure
    - All isolation points to lock
 
-5. **Additional Context**
+8. **Additional Context**
    - Common mistakes that cause this fault
    - Pro tips from 30 years experience
    - Relevant BS 7671 regulations
 
 **CRITICAL RULES:**
 - Always start with safety (isolation, proving dead)
-- Give numeric expected readings, not vague descriptions
-- Reference specific instrument settings
-- Mention PPE requirements for live work
+- Give numeric expected readings with units
+- Reference specific instrument settings and models
+- Include temperature effects on readings
 - Cite BS 7671 regulation numbers
-- Use real-world fault scenarios from experience
+- Use real-world fault scenarios from 30 years experience
+- Provide UK-specific part numbers and pricing
+- Write client explanations in plain English
 
-TONE: Urgent but calm, safety-first, practical troubleshooting mentor`;
+TONE: Urgent but calm, safety-first, comprehensive troubleshooting mentor with cost awareness`;
       } else {
         return `${basePersona}
 
@@ -1857,11 +1880,15 @@ Determine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehe
                 type: 'object',
                 properties: {
                   reportedSymptom: { type: 'string' },
-                  likelyRootCauses: { type: 'array', items: { type: 'string' }, minItems: 2, maxItems: 4 },
+                  likelyRootCauses: { type: 'array', items: { type: 'string' }, minItems: 3, maxItems: 5 },
                   safetyRisk: { type: 'string', enum: ['LOW', 'MODERATE', 'HIGH', 'CRITICAL'] },
-                  immediateAction: { type: 'string' }
+                  immediateAction: { type: 'string' },
+                  secondarySymptoms: { type: 'array', items: { type: 'string' }, minItems: 2 },
+                  riskToOccupants: { type: 'string' },
+                  riskToProperty: { type: 'string' },
+                  typicalRepairTime: { type: 'string' }
                 },
-                required: ['reportedSymptom', 'likelyRootCauses', 'safetyRisk']
+                required: ['reportedSymptom', 'likelyRootCauses', 'safetyRisk', 'secondarySymptoms', 'riskToOccupants', 'typicalRepairTime']
               },
               diagnosticWorkflow: {
                 type: 'array',
@@ -1879,11 +1906,18 @@ Determine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehe
                     instrumentSetup: { type: 'string' },
                     safetyWarnings: { type: 'array', items: { type: 'string' } },
                     ifFailed: { type: 'string' },
-                    regulation: { type: 'string' }
+                    regulation: { type: 'string' },
+                    leadPlacement: { type: 'string' },
+                    testDuration: { type: 'string' },
+                    temperatureNotes: { type: 'string' },
+                    troubleshootingSequence: { type: 'array', items: { type: 'string' } },
+                    realWorldExample: { type: 'string' },
+                    instrumentModel: { type: 'string' },
+                    clientExplanation: { type: 'string' }
                   },
-                  required: ['stepNumber', 'ragStatus', 'stepTitle', 'action', 'whatToTest']
+                  required: ['stepNumber', 'ragStatus', 'stepTitle', 'action', 'whatToTest', 'leadPlacement', 'testDuration', 'instrumentModel']
                 },
-                minItems: 3
+                minItems: 5
               },
               correctiveActions: {
                 type: 'array',
@@ -1894,9 +1928,17 @@ Determine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehe
                     action: { type: 'string' },
                     tools: { type: 'array', items: { type: 'string' } },
                     estimatedTime: { type: 'string' },
-                    verificationTest: { type: 'string' }
-                  }
-                }
+                    verificationTest: { type: 'string' },
+                    materialsCost: { type: 'string' },
+                    skillLevel: { type: 'string', enum: ['apprentice', 'qualified', 'specialist'] },
+                    partNumbers: { type: 'array', items: { type: 'string' } },
+                    bs7671Reference: { type: 'string' },
+                    commonBrands: { type: 'array', items: { type: 'string' } },
+                    safetyNotes: { type: 'array', items: { type: 'string' } }
+                  },
+                  required: ['forSymptom', 'action', 'materialsCost', 'skillLevel']
+                },
+                minItems: 2
               },
               lockoutTagout: {
                 type: 'object',
@@ -1913,9 +1955,38 @@ Determine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehe
                   proTips: { type: 'array', items: { type: 'string' } },
                   regulations: { type: 'array', items: { type: 'string' } }
                 }
+              },
+              costEstimate: {
+                type: 'object',
+                properties: {
+                  materials: { type: 'string' },
+                  labour: { type: 'string' },
+                  total: { type: 'string' },
+                  notes: { type: 'string' }
+                },
+                required: ['materials', 'labour', 'total']
+              },
+              clientCommunication: {
+                type: 'object',
+                properties: {
+                  summary: { type: 'string' },
+                  urgencyExplanation: { type: 'string' },
+                  whatToExpect: { type: 'string' },
+                  quotationNotes: { type: 'string' }
+                },
+                required: ['summary', 'urgencyExplanation', 'whatToExpect']
+              },
+              documentationRequirements: {
+                type: 'object',
+                properties: {
+                  testsToRecord: { type: 'array', items: { type: 'string' } },
+                  certificatesNeeded: { type: 'array', items: { type: 'string' } },
+                  notesForEIC: { type: 'string' }
+                },
+                required: ['testsToRecord', 'certificatesNeeded']
               }
             },
-            required: ['faultSummary', 'diagnosticWorkflow', 'correctiveActions']
+            required: ['faultSummary', 'diagnosticWorkflow', 'correctiveActions', 'costEstimate', 'clientCommunication', 'documentationRequirements']
           }
         }
       };
@@ -1965,7 +2036,8 @@ Analyse this installation photo and provide structured fault diagnosis with RAG 
           messages: troubleshootingMessages,
           model: modelToUse,
           tools: [faultDiagnosisTool],
-          tool_choice: { type: 'function', function: { name: 'provide_fault_diagnosis' } }
+          tool_choice: { type: 'function', function: { name: 'provide_fault_diagnosis' } },
+          max_completion_tokens: 12000
         },
         OPENAI_API_KEY!,
         120000
