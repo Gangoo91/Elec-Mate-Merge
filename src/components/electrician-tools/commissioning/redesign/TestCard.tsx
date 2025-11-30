@@ -33,6 +33,12 @@ interface TestCardProps {
 }
 
 export const TestCard = ({ test, index, variant, onResultRecorded, initialResult }: TestCardProps) => {
+  // Defensive checks for test object
+  if (!test) {
+    console.error('TestCard received null/undefined test');
+    return null;
+  }
+
   const [expanded, setExpanded] = useState(false);
   const [showResultEntry, setShowResultEntry] = useState(false);
   const [measuredValue, setMeasuredValue] = useState(initialResult?.measuredValue || "");
@@ -60,17 +66,21 @@ export const TestCard = ({ test, index, variant, onResultRecorded, initialResult
   };
 
   const copyTestProcedure = () => {
-    const markdown = `# ${test.testName}
-**Regulation**: ${test.regulation}
+    const procedureSteps = Array.isArray(test.procedure) 
+      ? test.procedure.map((step: string, i: number) => `${i + 1}. ${step}`).join('\n')
+      : 'No procedure steps available';
+
+    const markdown = `# ${test.testName || 'Test Procedure'}
+**Regulation**: ${test.regulation || 'N/A'}
 
 ## Instrument Setup
-${test.instrumentSetup}
+${test.instrumentSetup || 'Not specified'}
 
 ## Procedure
-${test.procedure?.map((step: string, i: number) => `${i + 1}. ${step}`).join('\n') || ''}
+${procedureSteps}
 
 ## Acceptance Criteria
-${test.acceptanceCriteria}`;
+${test.acceptanceCriteria || 'Not specified'}`;
 
     navigator.clipboard.writeText(markdown);
     toast.success("Test procedure copied!", { description: "Paste into your notes app" });
@@ -87,16 +97,16 @@ ${test.acceptanceCriteria}`;
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-2">
               <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-                <span className="text-sm font-bold text-elec-yellow">
-                  {index + 1}
-                </span>
-              </div>
-              <h3 className="text-lg font-bold text-white">{test.testName}</h3>
+              <span className="text-sm font-bold text-elec-yellow">
+                {index + 1}
+              </span>
             </div>
-            <div className="flex items-center gap-2 text-sm text-white/70">
-              <BookOpen className="h-3 w-3 text-elec-yellow" />
-              {test.regulation}
-            </div>
+            <h3 className="text-lg font-bold text-white">{test.testName || 'Test Procedure'}</h3>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-white/70">
+            <BookOpen className="h-3 w-3 text-elec-yellow" />
+            {test.regulation || 'BS 7671'}
+          </div>
           </div>
           {expanded ? (
             <ChevronUp className="h-5 w-5 text-elec-yellow shrink-0" />

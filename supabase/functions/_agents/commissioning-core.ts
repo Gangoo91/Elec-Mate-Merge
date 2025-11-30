@@ -195,6 +195,35 @@ SAFE ISOLATION (Regulation 537.2):
 - Verify isolation at BOTH ends if long cable run
 `;
 
+  const cableTypeGuidance = `
+**CABLE TYPE REQUIREMENTS (MANDATORY - BS 7671:2018+A3:2024):**
+
+FIRE ALARM CIRCUITS (BS 5839-1):
+- MUST use FP200 or MICC (Mineral Insulated Copper Clad) cable
+- NEVER use twin-and-earth (T&E) for fire alarm circuits
+- Fire-resistant cable required to maintain circuit integrity during fire
+
+EMERGENCY LIGHTING CIRCUITS (BS 5266-1):
+- MUST use FP200 or fire-resistant cable
+- NEVER use twin-and-earth (T&E) for emergency lighting
+- Circuit must continue to function during fire for evacuation
+
+SMOKE VENTILATION SYSTEMS (BS 9999):
+- MUST use fire-resistant cable
+- Circuit integrity critical for life safety systems
+
+STANDARD FINAL CIRCUITS:
+- Socket outlets: Twin-and-earth (T&E) acceptable
+- General lighting: Twin-and-earth (T&E) acceptable
+- Standard circuits: 1.0mm², 1.5mm², 2.5mm² T&E as appropriate
+
+SUB-MAINS & DISTRIBUTION:
+- MUST use SWA (Steel Wire Armoured) or appropriate armoured cable
+- Never use T&E for sub-main circuits
+
+⚠️ CRITICAL: NEVER suggest twin-and-earth for fire systems, emergency lighting, or life safety circuits.
+`;
+
   const systemPrompt = `You are a GN3 PRACTICAL TESTING GURU - BS 7671:2018+A3:2024 Chapter 64 specialist.
 
 Write all responses in UK English (British spelling and terminology). Do not use American spellings.
@@ -202,6 +231,8 @@ Write all responses in UK English (British spelling and terminology). Do not use
 🔧 YOU ARE AN INSPECTION & TESTING SPECIALIST WITH 30 YEARS HANDS-ON EXPERIENCE
 
 ${threePhaseGuidance}
+
+${cableTypeGuidance}
 
 GN3 PRACTICAL TEST KNOWLEDGE (YOU MUST USE THIS DATA):
 ${testContext}
@@ -259,7 +290,9 @@ For continuity tests, ALWAYS specify HOW to physically do the test:
   "liveTests": [...2-4 tests...],
   "certification": { "certificateType": "EIC", "requiredSchedules": [...] },
   "circuitSchedule": [
-    { "circuitNumber": 1, "circuitName": "Lighting", "cableSize": "1.0mm²", "protectionDevice": "B6", "expectedR1R2": "0.65Ω", "maxZs": "7.67Ω", "testMethod": "Link-out at board" }
+    { "circuitNumber": 1, "circuitName": "General Lighting", "cableSize": "1.5mm² T&E", "protectionDevice": "B6", "expectedR1R2": "0.65Ω", "maxZs": "7.67Ω", "testMethod": "Link-out at board" },
+    { "circuitNumber": 2, "circuitName": "Fire Alarm", "cableSize": "1.5mm² FP200", "protectionDevice": "B6", "expectedR1R2": "0.58Ω", "maxZs": "7.67Ω", "testMethod": "Link-out at board - FIRE RESISTANT CABLE" },
+    { "circuitNumber": 3, "circuitName": "Emergency Lighting", "cableSize": "1.5mm² FP200", "protectionDevice": "B6", "expectedR1R2": "0.62Ω", "maxZs": "7.67Ω", "testMethod": "Link-out at board - FIRE RESISTANT CABLE" }
   ]
 }
 
