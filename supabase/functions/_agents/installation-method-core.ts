@@ -557,8 +557,8 @@ ${ragContext.regulations.slice(0, 10).map((reg: any, i: number) =>
   `${i + 1}. ${reg.regulation_number}: ${reg.primary_topic}`
 ).join('\n')}`;
 
-  const maxTokens = 12000;  // Optimized from 14000 to 12000 for 3 min target (15 steps at ~80-100 words each)
-  console.log(`🤖 Starting GPT-5 Mini AI generation (${maxTokens} max_completion_tokens for 15 steps, ~2.5 minutes)...`);
+  const maxTokens = 16000;  // Increased from 12000 to 16000 to handle complex queries with high reasoning_tokens
+  console.log(`🤖 Starting GPT-5 Mini AI generation (${maxTokens} max_completion_tokens, ~3-4 minutes for complex queries)...`);
   
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
@@ -585,15 +585,31 @@ ${ragContext.regulations.slice(0, 10).map((reg: any, i: number) =>
 
   const data = await response.json();
 
-  // Debug: Log the raw response
+  // Debug: Log the raw response with token analysis
+  const usage = data.usage;
+  const reasoningTokens = usage?.completion_tokens_details?.reasoning_tokens || 0;
+  const outputTokens = (usage?.completion_tokens || 0) - reasoningTokens;
+  const reasoningPercent = usage?.completion_tokens ? (reasoningTokens / usage.completion_tokens * 100).toFixed(1) : 0;
+  
   console.log('📋 OpenAI Response:', {
     hasChoices: !!data.choices,
     choicesLength: data.choices?.length,
     finishReason: data.choices?.[0]?.finish_reason,
     hasContent: !!data.choices?.[0]?.message?.content,
     contentLength: data.choices?.[0]?.message?.content?.length,
-    usage: data.usage
+    usage: {
+      totalTokens: usage?.total_tokens,
+      completionTokens: usage?.completion_tokens,
+      reasoningTokens,
+      outputTokens,
+      reasoningPercent: `${reasoningPercent}%`
+    }
   });
+  
+  // Warn if reasoning tokens are consuming too much
+  if (reasoningPercent > 80) {
+    console.warn(`⚠️ High reasoning token usage: ${reasoningPercent}% of completion tokens used for reasoning`);
+  }
 
   // Validate response structure
   if (!data.choices || data.choices.length === 0) {
@@ -613,9 +629,19 @@ ${ragContext.regulations.slice(0, 10).map((reg: any, i: number) =>
 
   // Validate content exists
   if (!content || content.trim().length === 0) {
-    console.error('❌ Empty content from OpenAI. Finish reason:', data.choices[0].finish_reason);
+    const finishReason = data.choices[0].finish_reason;
+    console.error('❌ Empty content from OpenAI. Finish reason:', finishReason);
     console.error('📊 Usage:', JSON.stringify(data.usage));
-    throw new Error(`Empty response from OpenAI (finish_reason: ${data.choices[0].finish_reason})`);
+    
+    // Special handling for finish_reason: length with empty content
+    if (finishReason === 'length') {
+      const reasoningTokens = data.usage?.completion_tokens_details?.reasoning_tokens || 0;
+      const completionTokens = data.usage?.completion_tokens || 0;
+      console.error(`⚠️ Token limit reached: ${reasoningTokens} reasoning tokens consumed all ${completionTokens} completion tokens, leaving 0 for output`);
+      throw new Error(`Installation method generation exhausted token limit during reasoning. The query may be too complex. Try simplifying or breaking into smaller tasks.`);
+    }
+    
+    throw new Error(`Empty response from OpenAI (finish_reason: ${finishReason})`);
   }
 
   console.log(`✅ OpenAI response received: ${content.length} chars`);
