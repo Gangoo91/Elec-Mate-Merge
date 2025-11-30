@@ -1,10 +1,11 @@
-import { useState, lazy, Suspense } from "react";
-import { useSimpleAgent } from "@/hooks/useSimpleAgent";
+import { useState, lazy, Suspense, useEffect } from "react";
+import { useCommissioningGeneration } from "@/hooks/useCommissioningGeneration";
 import CommissioningInput from "./CommissioningInput";
 import CommissioningProcessingView from "./CommissioningProcessingView";
 import CommissioningSuccess from "./CommissioningSuccess";
 import CommissioningResults from "./CommissioningResults";
 import FaultDiagnosisView from "./FaultDiagnosisView";
+import { Button } from "@/components/ui/button";
 import type { CommissioningResponse, FaultDiagnosis } from "@/types/commissioning-response";
 
 const CommissioningChat = lazy(() => import("./CommissioningChat"));
@@ -32,7 +33,40 @@ const CommissioningInterface = () => {
     selectedType: 'domestic' as 'domestic' | 'commercial' | 'industrial'
   });
   
-  const { callAgent, isLoading, progress } = useSimpleAgent();
+  const { job, isLoading, error, createJob, cancelJob } = useCommissioningGeneration();
+
+  // Update results when job completes
+  useEffect(() => {
+    if (job?.status === 'complete' && job.result_data) {
+      const typedResponse = job.result_data as CommissioningResponse;
+      if (typedResponse.mode === 'eicr-photo-analysis') {
+        setResponseMode('fault-diagnosis');
+        setEicrDefects(typedResponse.eicrDefects || []);
+        setFaultDiagnosis(null);
+        setShowCelebration(false);
+      } else if (typedResponse.mode === 'fault-diagnosis') {
+        setResponseMode('fault-diagnosis');
+        setFaultDiagnosis(typedResponse.structuredDiagnosis || null);
+        setEicrDefects([]);
+        setShowCelebration(false);
+      } else if (typedResponse.mode === 'conversational') {
+        setResponseMode('conversational');
+        setConversationalResponse({
+          text: typedResponse.response || '',
+          queryType: typedResponse.queryType || 'question',
+          citations: typedResponse.citations || []
+        });
+        setShowCelebration(false);
+      } else {
+        setResponseMode('procedure');
+        setResults(typedResponse);
+        if (!celebrationShown) {
+          setShowCelebration(true);
+          setCelebrationShown(true);
+        }
+      }
+    }
+  }, [job, celebrationShown]);
 
   const handleGenerate = async (data: {
     prompt: string;
@@ -59,52 +93,27 @@ const CommissioningInterface = () => {
     // Store uploaded image URL for results display
     setUploadedImageUrl(data.imageUrl || null);
     
-    const response = await callAgent('commissioning', {
-      query: data.prompt,
-      projectContext: {
-        projectType: data.selectedType,
-        buildingAge: 'modern',
-      },
-      projectName: data.projectName,
-      location: data.location,
-      clientName: data.clientName,
-      installationDate: data.installationDate,
-      imageUrl: data.imageUrl
-    });
-    
-    if (response?.success) {
-      const typedResponse = response as CommissioningResponse;
-      if (typedResponse.mode === 'eicr-photo-analysis') {
-        // EICR Photo Analysis response
-        setResponseMode('fault-diagnosis'); // Reuse fault-diagnosis view
-        setEicrDefects(typedResponse.eicrDefects || []);
-        setFaultDiagnosis(null); // Clear standard diagnosis
-        setShowCelebration(false);
-      } else if (typedResponse.mode === 'fault-diagnosis') {
-        // Fault diagnosis response
-        setResponseMode('fault-diagnosis');
-        setFaultDiagnosis(typedResponse.structuredDiagnosis || null);
-        setEicrDefects([]); // Clear EICR defects
-        setShowCelebration(false);
-      } else if (typedResponse.mode === 'conversational') {
-        // Conversational response
-        setResponseMode('conversational');
-        setConversationalResponse({
-          text: typedResponse.response || '',
-          queryType: typedResponse.queryType || 'question',
-          citations: typedResponse.citations || []
-        });
-        setShowCelebration(false);
-      } else {
-        // Structured procedure response
-        setResponseMode('procedure');
-        setResults(typedResponse);
-        
-        if (!celebrationShown) {
-          setShowCelebration(true);
-          setCelebrationShown(true);
-        }
-      }
+    try {
+      await createJob({
+        query: data.prompt,
+        projectContext: {
+          projectType: data.selectedType,
+          buildingAge: 'modern',
+        },
+        projectName: data.projectName,
+        location: data.location,
+        clientName: data.clientName,
+        installationDate: data.installationDate,
+        imageUrl: data.imageUrl
+      });
+    } catch (err) {
+      console.error('Error creating commissioning job:', err);
+    }
+  };
+
+  const handleCancel = () => {
+    if (job?.id) {
+      cancelJob(job.id);
     }
   };
 
@@ -135,13 +144,68 @@ const CommissioningInterface = () => {
 
   // Show processing view while loading
   if (isLoading) {
-    return <CommissioningProcessingView progress={progress} startTime={generationStartTime} />;
+    const progressStage = {
+      stage: job?.progress && job.progress < 30 ? 'initializing' as const : 
+             job?.progress && job.progress < 60 ? 'ai' as const :
+             job?.progress && job.progress < 90 ? 'parsing' as const : 'validation' as const,
+      message: job?.current_step || 'Processing...'
+    };
+
+    return (
+      <div className="space-y-6">
+        <CommissioningProcessingView progress={progressStage} startTime={generationStartTime} />
+        
+        {/* Progress Display with Cancel */}
+        {job && (
+          <div className="p-6 bg-card border border-border rounded-lg">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold text-white">Generating Procedures</h3>
+                  <p className="text-sm text-white/70 mt-1">
+                    {job.current_step || 'Processing...'}
+                  </p>
+                </div>
+                <Button
+                  onClick={handleCancel}
+                  variant="outline"
+                  size="sm"
+                  className="border-red-500/30 hover:bg-red-500/10 text-red-400"
+                >
+                  Cancel
+                </Button>
+              </div>
+              
+              {/* Progress Bar */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-white/70">Progress</span>
+                  <span className="text-white font-medium">{job.progress}%</span>
+                </div>
+                <div className="h-2 bg-muted rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-elec-yellow transition-all duration-500"
+                    style={{ width: `${job.progress}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {error && (
+          <div className="p-4 bg-destructive/10 border border-destructive/30 rounded-lg">
+            <p className="text-sm text-destructive">{error}</p>
+          </div>
+        )}
+      </div>
+    );
   }
 
   // CONVERSATIONAL MODE: Show chat-style response
   if (responseMode === 'conversational' && conversationalResponse) {
     return (
-      <Suspense fallback={<CommissioningProcessingView progress={progress} startTime={generationStartTime} />}>
+      <Suspense fallback={<CommissioningProcessingView progress={{ stage: 'ai', message: 'Loading...' }} startTime={generationStartTime} />}>
         <CommissioningChat
           response={conversationalResponse.text}
           queryType={conversationalResponse.queryType}
