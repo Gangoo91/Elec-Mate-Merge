@@ -183,6 +183,7 @@ const CommissioningInterface = () => {
           projectName={projectInfo.projectName}
           location={projectInfo.location}
           installationDate={projectInfo.installationDate}
+          installationType={projectInfo.selectedType}
           onStartOver={handleStartOver}
         />
         
