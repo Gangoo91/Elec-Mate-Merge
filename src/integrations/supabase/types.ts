@@ -9018,18 +9018,19 @@ export type Database = {
         Returns: {
           activity_types: string[]
           applies_to: string[]
-          bs7671_refs: string[]
+          bs7671_regulations: string[]
           cable_sizes: string[]
+          common_failures: string[]
           confidence_score: number
-          content: string
+          description: string
+          equipment_category: string
           id: string
           keywords: string[]
-          practical_guidance: string
           primary_topic: string
-          quality_score: number
           safety_requirements: string[]
+          test_procedures: string[]
           tools_required: string[]
-          worked_examples: Json
+          troubleshooting_steps: string[]
         }[]
       }
       search_practical_work_intelligence:
