@@ -154,6 +154,9 @@ const CommissioningInterface = () => {
           });
         }
         
+        // Clear fast path state so results display correctly
+        setIsFastPath(false);
+        
         toast.success('Photo analysis complete', {
           description: 'Results ready in ~' + Math.floor((Date.now() - generationStartTime) / 1000) + 's'
         });
