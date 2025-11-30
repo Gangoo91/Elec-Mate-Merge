@@ -20,7 +20,7 @@ interface CircuitCardProps {
   onDuplicate: () => void;
 }
 
-const DOMESTIC_LOADS: { value: DomesticLoadType; label: string }[] = [
+const DOMESTIC_LOADS: { value: DomesticLoadType | 'other'; label: string }[] = [
   { value: 'socket', label: 'Socket Outlet / Ring Main' },
   { value: 'lighting', label: 'Lighting Circuit' },
   { value: 'cooker', label: 'Cooker' },
@@ -30,10 +30,11 @@ const DOMESTIC_LOADS: { value: DomesticLoadType; label: string }[] = [
   { value: 'heating', label: 'Heating' },
   { value: 'smoke-alarm', label: 'Smoke Alarm' },
   { value: 'garage', label: 'Garage Supply' },
-  { value: 'outdoor', label: 'Outdoor Supply' }
+  { value: 'outdoor', label: 'Outdoor Supply' },
+  { value: 'other', label: 'Other (Solar, Metering, etc.)' }
 ];
 
-const COMMERCIAL_LOADS: { value: CommercialLoadType; label: string }[] = [
+const COMMERCIAL_LOADS: { value: CommercialLoadType | 'other'; label: string }[] = [
   { value: 'office-sockets', label: 'Office Sockets' },
   { value: 'emergency-lighting', label: 'Emergency Lighting' },
   { value: 'hvac', label: 'HVAC Unit' },
@@ -43,10 +44,11 @@ const COMMERCIAL_LOADS: { value: CommercialLoadType; label: string }[] = [
   { value: 'fire-alarm', label: 'Fire Alarm System' },
   { value: 'access-control', label: 'Access Control' },
   { value: 'cctv', label: 'CCTV System' },
-  { value: 'data-cabinet', label: 'Data Cabinet' }
+  { value: 'data-cabinet', label: 'Data Cabinet' },
+  { value: 'other', label: 'Other (Solar, Metering, etc.)' }
 ];
 
-const INDUSTRIAL_LOADS: { value: IndustrialLoadType; label: string }[] = [
+const INDUSTRIAL_LOADS: { value: IndustrialLoadType | 'other'; label: string }[] = [
   { value: 'three-phase-motor', label: 'Three Phase Motor' },
   { value: 'machine-tool', label: 'Machine Tool' },
   { value: 'welding', label: 'Welding Equipment' },
@@ -56,7 +58,8 @@ const INDUSTRIAL_LOADS: { value: IndustrialLoadType; label: string }[] = [
   { value: 'overhead-lighting', label: 'Overhead Lighting' },
   { value: 'workshop-sockets', label: 'Workshop Sockets' },
   { value: 'compressor', label: 'Air Compressor' },
-  { value: 'production-line', label: 'Production Line' }
+  { value: 'production-line', label: 'Production Line' },
+  { value: 'other', label: 'Other (Solar, Metering, etc.)' }
 ];
 
 export const CircuitCard = ({ circuit, index, installationType, onUpdate, onDelete, onDuplicate }: CircuitCardProps) => {
