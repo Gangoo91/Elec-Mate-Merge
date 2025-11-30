@@ -68,8 +68,29 @@ ${test.acceptanceCriteria}`;
       {/* Expanded Content */}
       {expanded && (
         <div className="px-5 pb-5 space-y-5 border-t border-elec-yellow/20">
+          {/* Test Duration & Prerequisites */}
+          {(test.testDuration || test.prerequisiteTests?.length) && (
+            <div className="pt-5 flex flex-wrap gap-2">
+              {test.testSequence && (
+                <div className="px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30">
+                  <span className="text-xs text-white font-medium">Test #{test.testSequence}</span>
+                </div>
+              )}
+              {test.testDuration && (
+                <div className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30">
+                  <span className="text-xs text-white font-medium">⏱ {test.testDuration}</span>
+                </div>
+              )}
+              {test.prerequisiteTests && test.prerequisiteTests.length > 0 && (
+                <div className="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30">
+                  <span className="text-xs text-white font-medium">⚠ Requires: {test.prerequisiteTests.join(', ')}</span>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Acceptance Criteria */}
-          <div className="pt-5">
+          <div className={test.testDuration || test.prerequisiteTests?.length ? "" : "pt-5"}>
             <div className="flex items-center gap-2 text-white text-base font-semibold mb-3">
               <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
               Acceptance Criteria
@@ -91,6 +112,74 @@ ${test.acceptanceCriteria}`;
                 <span className="text-elec-yellow">Test Procedure</span>
               </h4>
               <ProcedureStepper steps={test.procedure} />
+            </div>
+          )}
+
+          {/* Site Reality Factors */}
+          {test.siteRealityFactors && test.siteRealityFactors.length > 0 && (
+            <div>
+              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+                <span className="text-amber-400">⚠️ Site Reality Factors</span>
+              </h4>
+              <div className="space-y-2">
+                {test.siteRealityFactors.map((factor, idx) => (
+                  <div key={idx} className="text-sm text-white/80 bg-amber-500/5 border-l-4 border-amber-500/50 p-3 rounded-lg">
+                    {factor}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Efficiency Tips */}
+          {test.efficiencyTips && test.efficiencyTips.length > 0 && (
+            <div>
+              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+                <span className="text-green-400">⚡ Efficiency Tips</span>
+              </h4>
+              <div className="space-y-2">
+                {test.efficiencyTips.map((tip, idx) => (
+                  <div key={idx} className="text-sm text-white/80 bg-green-500/5 border-l-4 border-green-500/50 p-3 rounded-lg">
+                    {tip}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Temperature Notes */}
+          {test.temperatureNotes && (
+            <div>
+              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+                <span className="text-blue-400">🌡️ Temperature Considerations</span>
+              </h4>
+              <p className="text-sm text-white/80 bg-blue-500/5 border-l-4 border-blue-500/50 p-3 rounded-lg">
+                {test.temperatureNotes}
+              </p>
+            </div>
+          )}
+
+          {/* Client Explanation */}
+          {test.clientExplanation && (
+            <div>
+              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+                <span className="text-purple-400">💬 Client Explanation</span>
+              </h4>
+              <p className="text-sm text-white/80 bg-purple-500/5 border-l-4 border-purple-500/50 p-3 rounded-lg italic">
+                "{test.clientExplanation}"
+              </p>
+            </div>
+          )}
+
+          {/* Real Incident Example */}
+          {test.realIncidentExample && (
+            <div>
+              <h4 className="text-base font-semibold text-white mb-3 flex items-center gap-2">
+                <span className="text-red-400">📋 Case Study</span>
+              </h4>
+              <p className="text-sm text-white/80 bg-red-500/5 border-l-4 border-red-500/50 p-3 rounded-lg">
+                {test.realIncidentExample}
+              </p>
             </div>
           )}
 

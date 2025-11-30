@@ -700,6 +700,31 @@ Example for Zs test:
 
 🔴 CRITICAL: If RAG data provides GN3 procedural steps, YOU MUST incorporate them verbatim into your 'procedure' array. Do not summarise or paraphrase GN3 procedures.
 
+🔴 MANDATORY SECTION MINIMUMS - YOU MUST GENERATE:
+
+VISUAL INSPECTION (8-12 checkpoints):
+1. Cable entries and glands (condition, sealing, IP rating compliance)
+2. Terminations and connections (torque, corrosion, heat damage signs)
+3. Enclosure condition (damage, corrosion, accessibility, labelling)
+4. Labelling and documentation (circuit identification, warning notices, diagrams)
+5. Earthing arrangements (main earth terminal, bonding conductors, electrode if applicable)
+6. IP rating verification (zone compliance, ingress protection, gasket condition)
+7. Overcurrent device condition (rating, type, mechanical operation, no signs of arcing)
+8. RCD/RCBO presence and condition (test button operation, rating compliance, trip curve)
+
+DEAD TESTS (4-5 complete procedures):
+1. Continuity of protective conductors (R1+R2) - MANDATORY
+2. Continuity of ring final circuit conductors (if ring circuit present)
+3. Insulation resistance (minimum 1MΩ at 500V DC)
+4. Polarity verification (correct L-N-E connections throughout)
+5. Earth electrode resistance (if TT system, <200Ω maximum)
+
+LIVE TESTS (3-4 complete procedures):
+1. Earth fault loop impedance (Zs) with calculation breakdown - MANDATORY
+2. Prospective fault current (PFC/PSCC) at origin and furthest point
+3. RCD operation (1×IΔn ≤300ms, 5×IΔn ≤40ms, test button operation)
+4. Functional testing (all switches, controls, interlocks, indicator lights)
+
 ${contextSection}
 
 Respond ONLY with valid JSON in this exact format:
@@ -797,7 +822,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
       model: 'gpt-5-mini-2025-08-07',
       systemPrompt,
       userPrompt,
-      maxTokens: 10000,
+      maxTokens: 16000,  // Increased for more comprehensive outputs
       timeoutMs: 280000,  // 280 seconds = 4 min 40 sec (max safe timeout)
       tools: [{
         type: 'function',
@@ -819,21 +844,37 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
                     properties: {
                       checkpoints: {
                         type: 'array',
+                        minItems: 8,  // Minimum 8 checkpoints required
                         items: {
                           type: 'object',
                           properties: {
-                            item: { type: 'string' },
-                            procedure: { type: 'string' },
-                            passCriteria: { type: 'string' },
-                            expectedOutcome: { type: 'string' }
-                          }
+                            item: { type: 'string', minLength: 10 },
+                            requirement: { type: 'string', minLength: 30, description: 'Detailed requirement description with BS 7671 context' },
+                            reference: { type: 'string', description: 'BS 7671 regulation reference (e.g., "BS 7671:2018 134.1.1")' },
+                            passCriteria: { type: 'string', minLength: 20, description: 'Specific pass criteria with measurable outcomes' },
+                            regulation: { type: 'string', description: 'Specific regulation number' },
+                            commonFaults: { 
+                              type: 'array', 
+                              items: { type: 'string', minLength: 30 },
+                              minItems: 2,
+                              description: 'Common faults found during this inspection with real-world examples'
+                            }
+                          },
+                          required: ['item', 'requirement', 'passCriteria']
                         }
+                      },
+                      safetyNotes: {
+                        type: 'array',
+                        minItems: 3,
+                        items: { type: 'string', minLength: 30 },
+                        description: 'Critical safety warnings for visual inspection stage'
                       }
-                    }
+                    },
+                    required: ['checkpoints', 'safetyNotes']
                   },
                   deadTests: {
                     type: 'array',
-                    minItems: 3,
+                    minItems: 4,  // Minimum 4 dead tests required
                     items: {
                       type: 'object',
                       properties: {
@@ -942,6 +983,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
                   },
                   liveTests: {
                     type: 'array',
+                    minItems: 3,  // Minimum 3 live tests required
                     items: {
                       type: 'object',
                       properties: {
