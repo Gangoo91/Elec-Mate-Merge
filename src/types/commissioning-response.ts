@@ -2,6 +2,9 @@ export interface VisualInspectionCheckpoint {
   item: string;
   requirement: string;
   reference?: string;
+  passCriteria?: string;
+  regulation?: string;
+  commonFaults?: string[];
 }
 
 export interface TestResult {
@@ -40,6 +43,13 @@ export interface TestProcedure {
   prerequisiteTests?: string[];
   conflictingTests?: string[];
   testSequence?: number;
+  siteRealityFactors?: string[];
+  efficiencyTips?: string[];
+  temperatureNotes?: string;
+  instrumentNotes?: string[];
+  clientExplanation?: string;
+  realIncidentExample?: string;
+  leadPlacement?: string;
 }
 
 export interface TestingProcedure {
