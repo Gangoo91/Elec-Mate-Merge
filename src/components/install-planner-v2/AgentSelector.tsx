@@ -20,8 +20,8 @@ const AVAILABLE_AGENTS: Agent[] = [
     id: 'cost-engineer',
     name: 'Cost Engineer',
     emoji: '💷',
-    description: 'Material pricing & budget estimates',
-    expertise: 'Accurate costing, supplier comparisons, value engineering'
+    description: 'Full project quotes with materials, labour and timescales',
+    expertise: 'Material pricing, labour estimates, project timescales, quote generation'
   },
   {
     id: 'installer',
@@ -34,15 +34,15 @@ const AVAILABLE_AGENTS: Agent[] = [
     id: 'health-safety',
     name: 'Health & Safety Officer',
     emoji: '⚠️',
-    description: 'Site safety & compliance',
-    expertise: 'Risk assessments, PPE requirements, safe working practices'
+    description: 'Risk assessments, PPE requirements and safety procedures',
+    expertise: 'Risk assessments, RAMS documents, PPE requirements, emergency procedures'
   },
   {
     id: 'commissioning',
     name: 'Testing & Commissioning',
     emoji: '✅',
-    description: 'Testing procedures & certification',
-    expertise: 'Test sequences, acceptable values, certification requirements'
+    description: 'Test procedures, EICR defect coding and fault diagnosis',
+    expertise: 'Testing procedures, EICR photo analysis, defect coding (C1-C3)'
   },
   {
     id: 'project-manager',
