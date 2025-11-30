@@ -663,8 +663,8 @@ export class AIDesigner {
     parts.push('   - Compare against maximum Zs from Table 41.3 for disconnection compliance');
     parts.push('   - For TN-S: typical Ze = 0.35Ω, TN-C-S: Ze = 0.35Ω, TT: up to 200Ω');
     parts.push('');
-    parts.push('**CRITICAL: DO NOT GUESS - cite specific table values and regulation numbers from the RAG results.**');
-    parts.push('**EXAMPLE**: "Selected 6mm² cable: Table 4D5 shows Iz=47A (Method C), sufficient for 40A MCB"');
+    parts.push('**CRITICAL: NEVER mention "RAG" in justifications - cite BS 7671 regulation numbers and tables directly.**');
+    parts.push('**EXAMPLE**: "Selected 6mm² cable per BS 7671 Table 4D5: Iz=47A (Method C), sufficient for 40A MCB"');
     parts.push('');
 
     // Output format (FOCUSED on electrical design - installation handled separately)
@@ -680,7 +680,8 @@ export class AIDesigner {
     parts.push('USE THE KNOWLEDGE BASE ABOVE to design compliant circuits.');
     parts.push('APPLY the formulas, tables, regulations, and examples from the intelligence sections.');
     parts.push('SHOW YOUR WORKING using calculation steps from the knowledge base.');
-    parts.push('CITE specific regulation numbers and table references from the RAG results.');
+    parts.push('CITE BS 7671 regulation numbers (e.g., "per Reg 433.1.1") and table references (e.g., "Table 4D5") directly.');
+    parts.push('**NEVER mention "RAG" or "RAG results" in justifications - cite actual regulations only.**');
     parts.push('NOTE: Installation guidance (routing, fixing, testing procedures) is handled by a separate Installation Agent.');
     parts.push('');
 
@@ -702,11 +703,11 @@ export class AIDesigner {
     
     // === JUSTIFICATION REQUIREMENTS (CIRCUIT-SPECIFIC) ===
     parts.push('=== JUSTIFICATION REQUIREMENTS ===');
-    parts.push('Each circuit MUST have a unique, circuit-specific justification that references:');
-    parts.push('1. The specific BS 7671 regulation for THIS circuit type from RAG (e.g., ring final: Reg 433-02-01)');
-    parts.push('2. The cable sizing calculation from Design Knowledge Intelligence for THIS circuit');
+    parts.push('Each circuit MUST have a unique, circuit-specific justification that cites BS 7671 directly:');
+    parts.push('1. The specific BS 7671 regulation number for THIS circuit type (e.g., ring final: "per BS 7671 Appendix 15")');
+    parts.push('2. The BS 7671 table reference for cable sizing (e.g., "Table 4D5", "Table 4E4A")');
     parts.push('3. Why THIS specific circuit requires THIS cable size and THIS protection rating');
-    parts.push('4. Reference specific RAG entries (regulation numbers, table references) that apply to THIS circuit');
+    parts.push('4. **NEVER mention "RAG" - cite regulation numbers and tables directly (e.g., "per Reg 433.1.1", "Table 41.3")**');
     parts.push('DO NOT use generic justifications across multiple circuits - each must be unique and specific!');
     parts.push('');
     
@@ -734,8 +735,11 @@ export class AIDesigner {
     parts.push('- zs: Earth fault loop impedance in Ohms');
     parts.push('- maxZs: Maximum permitted Zs in Ohms (from BS 7671 Table 41.3)');
     parts.push('');
-    parts.push('=== EXPECTED TEST VALUES (BS 7671 PART 6) ===');
-    parts.push('Generate expectedTests object for every circuit with accurate BS 7671 test values:');
+    parts.push('=== EXPECTED TEST VALUES (BS 7671 PART 6) - MANDATORY NUMERICAL VALUES ===');
+    parts.push('Generate expectedTests object for EVERY circuit with NUMERICAL values calculated using BS 7671 formulas:');
+    parts.push('');
+    parts.push('🔴 CRITICAL: Use NUMERICAL VALUES, NOT placeholder text like "Less than 1Ω" or "Zs value within acceptable limits"');
+    parts.push('❌ WRONG: { value: "Less than 1Ω" } | ✅ CORRECT: { at20C: 0.39, at70C: 0.47, value: "0.47Ω" }');
     parts.push('');
     parts.push('1. R1+R2 (Continuity of protective conductors - BS 7671 Reg 612.2):');
     parts.push('   - Use BS 7671 Table 9A conductor resistance values (mΩ/m at 20°C)');

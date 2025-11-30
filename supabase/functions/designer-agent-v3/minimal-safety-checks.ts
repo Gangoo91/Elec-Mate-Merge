@@ -47,10 +47,15 @@ export class MinimalSafetyChecks {
         const isTwinEarth = cableType.includes('twin') || cableType.includes('t&e');
         const cpcSize = isTwinEarth ? 1.5 : 2.5; // T&E reduced, singles equal
 
+        // Fix cable type string to show consistent 2.5mm² for ring finals
+        const correctedCableType = circuit.cableType?.replace(/\d+(\.\d+)?mm²/, '2.5mm²') 
+          || '2.5mm² twin and earth';
+
         this.logger.info('Ring final safety check applied', {
           circuit: circuit.name,
           index,
           cableType: circuit.cableType,
+          correctedCableType,
           before: {
             rating: circuit.protectionDevice.rating,
             cable: circuit.cableSize,
@@ -72,9 +77,12 @@ export class MinimalSafetyChecks {
           },
           cableSize: 2.5,
           cpcSize: cpcSize,
+          cableType: correctedCableType,
+          circuitTopology: 'ring', // Explicitly mark as ring
           justifications: {
             ...circuit.justifications,
-            safetyCheckApplied: `Ring final: 32A + 2.5mm² live + ${cpcSize}mm² CPC per BS 7671 Appendix 15`
+            safetyCheckApplied: `Ring final: 32A + 2.5mm² live + ${cpcSize}mm² CPC per BS 7671 Appendix 15`,
+            cableSize: `Ring final circuit: 2.5mm² cable per BS 7671 Appendix 15 (${correctedCableType})`
           }
         };
       }
@@ -149,13 +157,19 @@ export class MinimalSafetyChecks {
   }
 
   /**
-   * Detect ring final circuits by explicit topology or characteristics
+   * Detect ring final circuits by explicit topology field or characteristics
    */
   private detectRingFinal(circuit: DesignedCircuit): boolean {
-    // Check if there's an explicit topology marker in justifications
+    // Priority 1: Check explicit circuitTopology field
+    if (circuit.circuitTopology === 'ring') {
+      return true;
+    }
+    
+    // Priority 2: Check justifications for ring markers
     const hasRingJustification = circuit.justifications?.cableSize?.toLowerCase().includes('ring') ||
                                   circuit.justifications?.protection?.toLowerCase().includes('ring');
     
+    // Priority 3: Check circuit name/load type
     const byKeyword = circuit.name?.toLowerCase().includes('ring') ||
                       circuit.loadType?.toLowerCase().includes('ring');
     

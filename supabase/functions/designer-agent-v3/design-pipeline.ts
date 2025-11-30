@@ -10,6 +10,7 @@ import { CacheManager } from './cache-manager.ts';
 import { searchDesignIntelligence, searchRegulationsIntelligence } from '../_shared/intelligence-search.ts';
 import { AIDesigner } from './ai-designer.ts';
 import { MinimalSafetyChecks } from './minimal-safety-checks.ts';
+import { ensureExpectedTestValues } from './test-value-calculator.ts';
 import type { NormalizedInputs, DesignResult, RAGContext } from './types.ts';
 
 export class DesignPipeline {
@@ -91,7 +92,19 @@ export class DesignPipeline {
     });
 
     // ========================================
-    // PHASE 6: Cache Store
+    // PHASE 6: Ensure Expected Test Values
+    // ========================================
+    const ze = normalized.supply.ze || 0.35;
+    design.circuits = design.circuits.map(circuit => 
+      ensureExpectedTestValues(circuit, ze, this.logger)
+    );
+
+    this.logger.info('Expected test values calculated', {
+      circuits: design.circuits.length
+    });
+
+    // ========================================
+    // PHASE 7: Cache Store
     // ========================================
     await this.cache.set(cacheKey, design);
 
