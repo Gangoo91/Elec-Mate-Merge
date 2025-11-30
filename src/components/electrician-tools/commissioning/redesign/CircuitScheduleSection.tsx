@@ -37,12 +37,17 @@ export const CircuitScheduleSection = ({ circuits }: CircuitScheduleSectionProps
       </Card>
 
       <div className="space-y-2">
-        {circuits.map((circuit) => {
+        {circuits.map((circuit, idx) => {
+          if (!circuit || typeof circuit.circuitNumber === 'undefined') {
+            console.warn('Invalid circuit data:', circuit);
+            return null;
+          }
+
           const isExpanded = expandedCircuit === circuit.circuitNumber;
           
           return (
             <Card
-              key={circuit.circuitNumber}
+              key={circuit.circuitNumber ?? idx}
               className={`transition-all ${
                 isExpanded
                   ? 'bg-card border-elec-yellow'
@@ -59,15 +64,19 @@ export const CircuitScheduleSection = ({ circuits }: CircuitScheduleSectionProps
                 
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-white text-sm sm:text-base">
-                    {circuit.circuitName}
+                    {circuit.circuitName || 'Unnamed Circuit'}
                   </h3>
                   <div className="flex flex-wrap gap-1.5 mt-1">
-                    <Badge variant="outline" className="text-xs">
-                      {circuit.cableSize}
-                    </Badge>
-                    <Badge variant="secondary" className="text-xs">
-                      {circuit.protectionDevice}
-                    </Badge>
+                    {circuit.cableSize && (
+                      <Badge variant="outline" className="text-xs">
+                        {circuit.cableSize}
+                      </Badge>
+                    )}
+                    {circuit.protectionDevice && (
+                      <Badge variant="secondary" className="text-xs">
+                        {circuit.protectionDevice}
+                      </Badge>
+                    )}
                   </div>
                 </div>
 
