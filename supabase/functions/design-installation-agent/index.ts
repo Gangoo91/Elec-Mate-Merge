@@ -14,6 +14,9 @@ Deno.serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Save jobId early for error handling
+  let savedJobId: string | null = null;
+  
   try {
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
@@ -21,6 +24,7 @@ Deno.serve(async (req) => {
     );
 
     const { jobId, designedCircuits, supply, projectInfo } = await req.json();
+    savedJobId = jobId; // Save for error handler
 
     if (!jobId || !designedCircuits) {
       return new Response(
@@ -55,16 +59,20 @@ Deno.serve(async (req) => {
       .update({ installation_agent_progress: 15 })
       .eq('id', jobId);
 
-    // STEP 2: Enhanced parallel RAG search with increased limits
+    // STEP 2: Enhanced parallel RAG search with LIMITED keywords to prevent array overflow
     const ragStart = Date.now();
+    const limitedKeywords = Array.from(keywords).slice(0, 50); // Limit to 50 to prevent malformed array errors
+    
+    console.log(`🔍 Using ${limitedKeywords.length} keywords for RAG search (limited from ${keywords.size})`);
+    
     const [practicalWorkResult, regulations] = await Promise.all([
       searchPracticalWorkIntelligence(supabase, {
-        query: Array.from(keywords).slice(0, 40).join(' '),
+        query: limitedKeywords.slice(0, 30).join(' '), // Top 30 for query string
         tradeFilter: 'installer',
         matchCount: 60  // Enhanced from 40 for 30% more context
       }),
       searchRegulationsIntelligence(supabase, {
-        keywords: Array.from(keywords),
+        keywords: limitedKeywords, // Limited to 50 keywords
         appliesTo: ['all installations', 'installation work', 'electrician', 'installer', 'electrical contractor'],
         categories: [
           'installation', 'testing', 'inspection', 'earthing', 'protection',
@@ -77,6 +85,12 @@ Deno.serve(async (req) => {
     ]);
 
     const ragTime = Date.now() - ragStart;
+    
+    // ⚠️ CRITICAL CHECK: Validate RAG results before proceeding
+    if (practicalWorkResult.results.length === 0 && regulations.length === 0) {
+      console.error('❌ No RAG results - both searches returned empty');
+      throw new Error('Failed to retrieve installation guidance context - RAG searches returned no results');
+    }
     
     // Enhanced RAG coverage logging
     const practicalTopics = practicalWorkResult.results.slice(0, 10).map(r => r.primary_topic || r.description).join(', ');
@@ -167,10 +181,9 @@ Deno.serve(async (req) => {
   } catch (error: any) {
     console.error('❌ Design Installation Agent failed:', error);
     
-    // Update job with failure
-    try {
-      const { jobId } = await req.json();
-      if (jobId) {
+    // ⚠️ CRITICAL: Always update job status on failure
+    if (savedJobId) {
+      try {
         const supabase = createClient(
           Deno.env.get('SUPABASE_URL')!,
           Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
@@ -180,12 +193,19 @@ Deno.serve(async (req) => {
           .from('circuit_design_jobs')
           .update({
             installation_agent_status: 'failed',
-            current_step: `Installation guidance failed: ${error.message}`
+            status: 'failed', // Mark ENTIRE job as failed
+            error_message: error.message,
+            current_step: `Installation guidance failed: ${error.message}`,
+            completed_at: new Date().toISOString()
           })
-          .eq('id', jobId);
+          .eq('id', savedJobId);
+          
+        console.log(`✅ Job ${savedJobId} marked as failed in database`);
+      } catch (updateError) {
+        console.error('❌ Failed to update job with error:', updateError);
       }
-    } catch (updateError) {
-      console.error('Failed to update job with error:', updateError);
+    } else {
+      console.error('⚠️ No savedJobId available to update job status');
     }
 
     return new Response(
