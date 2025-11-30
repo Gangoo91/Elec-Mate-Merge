@@ -1,5 +1,6 @@
 import { useState, lazy, Suspense, useEffect } from "react";
 import { useCommissioningGeneration } from "@/hooks/useCommissioningGeneration";
+import { supabase } from "@/integrations/supabase/client";
 import CommissioningInput from "./CommissioningInput";
 import CommissioningProcessingView from "./CommissioningProcessingView";
 import CommissioningSuccess from "./CommissioningSuccess";
@@ -7,6 +8,7 @@ import CommissioningResults from "./CommissioningResults";
 import FaultDiagnosisView from "./FaultDiagnosisView";
 import { Button } from "@/components/ui/button";
 import type { CommissioningResponse, FaultDiagnosis } from "@/types/commissioning-response";
+import { toast } from "sonner";
 
 const CommissioningChat = lazy(() => import("./CommissioningChat"));
 
@@ -26,6 +28,7 @@ const CommissioningInterface = () => {
   const [eicrDefects, setEicrDefects] = useState<any[]>([]);
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
   const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
+  const [isFastPath, setIsFastPath] = useState(false);
   const [projectInfo, setProjectInfo] = useState({
     projectName: "",
     location: "",
@@ -97,6 +100,80 @@ const CommissioningInterface = () => {
     setUploadedImageUrl(imageUrlsArray.length > 0 ? imageUrlsArray[0] : null);
     setUploadedImageUrls(imageUrlsArray);
     
+    // FAST PATH: Direct call to commissioning-v3 for EICR photo analysis
+    const hasPhotos = imageUrlsArray.length > 0;
+    
+    if (hasPhotos) {
+      console.log('🚀 Fast path: Calling commissioning-v3 directly for photo analysis');
+      setIsFastPath(true);
+      
+      try {
+        const { data: result, error: invokeError } = await supabase.functions.invoke('commissioning-v3', {
+          body: {
+            query: data.prompt,
+            imageUrl: imageUrlsArray[0],
+            imageUrls: imageUrlsArray,
+            projectContext: {
+              projectType: data.selectedType,
+              projectName: data.projectName,
+              location: data.location,
+              clientName: data.clientName,
+              installationDate: data.installationDate
+            }
+          }
+        });
+
+        if (invokeError) {
+          throw invokeError;
+        }
+
+        if (!result?.success) {
+          throw new Error(result?.error || 'Photo analysis failed');
+        }
+
+        console.log('✅ Fast path complete:', result);
+        
+        const typedResponse = result as CommissioningResponse;
+        
+        // Handle EICR photo analysis response
+        if (typedResponse.mode === 'eicr-photo-analysis') {
+          setResponseMode('fault-diagnosis');
+          setEicrDefects(typedResponse.eicrDefects || []);
+          setFaultDiagnosis(null);
+        } else if (typedResponse.mode === 'fault-diagnosis') {
+          setResponseMode('fault-diagnosis');
+          setFaultDiagnosis(typedResponse.structuredDiagnosis || null);
+          setEicrDefects([]);
+        } else {
+          // Fallback to other modes
+          setResponseMode(typedResponse.mode || 'conversational');
+          setConversationalResponse({
+            text: typedResponse.response || '',
+            queryType: typedResponse.queryType || 'photo-analysis',
+            citations: typedResponse.citations || []
+          });
+        }
+        
+        toast.success('Photo analysis complete', {
+          description: 'Results ready in ~' + Math.floor((Date.now() - generationStartTime) / 1000) + 's'
+        });
+        
+      } catch (err) {
+        console.error('❌ Fast path error:', err);
+        toast.error('Photo analysis failed', {
+          description: err instanceof Error ? err.message : 'Unknown error occurred'
+        });
+        setShowResults(false);
+        setIsFastPath(false);
+      }
+      
+      return;
+    }
+    
+    // SLOW PATH: Use job queue for detailed commissioning procedures
+    console.log('🐌 Slow path: Using job queue for commissioning procedures');
+    setIsFastPath(false);
+    
     try {
       await createJob({
         query: data.prompt,
@@ -133,6 +210,7 @@ const CommissioningInterface = () => {
     setEicrDefects([]);
     setUploadedImageUrl(null);
     setUploadedImageUrls([]);
+    setIsFastPath(false);
   };
 
   const handleViewResults = () => {
@@ -149,7 +227,23 @@ const CommissioningInterface = () => {
   }
 
   // Show processing view while loading
-  if (isLoading) {
+  if (isLoading || isFastPath) {
+    // Fast path: Simple loading message for photo analysis
+    if (isFastPath && !isLoading) {
+      return (
+        <div className="space-y-6">
+          <div className="flex flex-col items-center justify-center p-12 bg-card border border-border rounded-lg">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-elec-yellow mb-4" />
+            <h3 className="text-lg font-semibold text-white mb-2">Analyzing photo...</h3>
+            <p className="text-sm text-white/70 text-center max-w-md">
+              Using Gemini AI to analyze your EICR photo for defect codes
+            </p>
+          </div>
+        </div>
+      );
+    }
+    
+    // Slow path: Detailed progress for commissioning procedures
     const progressStage = {
       stage: 
         !job?.progress || job.progress < 20 ? 'initializing' as const :
