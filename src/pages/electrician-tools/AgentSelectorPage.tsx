@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, ArrowRight, Zap, Calculator, Wrench, Shield, CheckCircle2, Clipboard, Settings, GraduationCap, FileText } from "lucide-react";
+import { ArrowLeft, ArrowRight, Zap, Calculator, Wrench, Shield, CheckCircle2, Clipboard, Settings, GraduationCap } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 interface Agent {
@@ -62,6 +62,14 @@ const AGENTS: Agent[] = [
     expertise: ['Testing procedures', 'EIC completion', 'Compliance checks', 'Fault diagnosis']
   },
   {
+    id: 'maintenance',
+    name: 'Maintenance Specialist',
+    icon: Settings,
+    color: 'text-cyan-400',
+    description: 'Periodic inspections, preventive maintenance & fault diagnosis',
+    expertise: ['Periodic inspections', 'Preventive maintenance', 'Fault diagnosis', 'Equipment servicing']
+  },
+  {
     id: 'health-safety',
     name: 'Health & Safety',
     icon: Shield,
@@ -70,28 +78,13 @@ const AGENTS: Agent[] = [
     expertise: ['Risk assessments', 'RAMS documents', 'PPE requirements', 'Safety procedures']
   },
   {
-    id: 'method-statement',
-    name: 'Method Statement Generator',
-    icon: FileText,
-    color: 'text-emerald-400',
-    description: 'AI-generated step-by-step method statements with hazard integration',
-    expertise: ['Method statements', 'Step breakdown', 'Hazard linking', 'Safety procedures']
-  },
-  {
     id: 'project-manager',
     name: 'Project Manager',
     icon: Clipboard,
     color: 'text-pink-400',
     description: 'Scheduling, coordination, handover documentation',
-    expertise: ['Project planning', 'Coordination', 'Documentation', 'Client communication']
-  },
-  {
-    id: 'maintenance',
-    name: 'Maintenance Specialist',
-    icon: Settings,
-    color: 'text-cyan-400',
-    description: 'Periodic inspections, preventive maintenance & fault diagnosis',
-    expertise: ['Periodic inspections', 'Preventive maintenance', 'Fault diagnosis', 'Equipment servicing']
+    expertise: ['Project planning', 'Coordination', 'Documentation', 'Client communication'],
+    comingSoon: true
   },
   {
     id: 'tutor',
@@ -115,7 +108,6 @@ const AgentSelectorPage = () => {
       'cost-engineer': '/electrician/cost-engineer',
       'installer': '/electrician/installation-specialist',
       'health-safety': '/electrician/health-safety',
-      'method-statement': '/electrician/method-statement',
       'commissioning': '/electrician/commissioning',
       'project-manager': '/electrician/project-manager',
       'maintenance': '/electrician/maintenance',
@@ -180,7 +172,7 @@ const AgentSelectorPage = () => {
                     </div>
                   )}
 
-                  <CardHeader className="pb-3 space-y-2 sm:space-y-4 p-4 sm:p-6 lg:p-8">
+                  <CardHeader className="pb-3 space-y-2 sm:space-y-4 p-4 sm:p-6 lg:p-8 text-left">
                     {/* Large Gradient Icon Circle */}
                     <div className={`
                       w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full 
@@ -192,25 +184,25 @@ const AgentSelectorPage = () => {
                     </div>
 
                     {/* Agent Name */}
-                    <CardTitle className="text-lg sm:text-xl font-bold">
+                    <CardTitle className="text-lg sm:text-xl font-bold text-left">
                       {agent.name}
                     </CardTitle>
 
                     {/* Description */}
-                    <CardDescription className="text-sm leading-relaxed">
+                    <CardDescription className="text-sm leading-relaxed text-left text-white/90">
                       {agent.description}
                     </CardDescription>
                   </CardHeader>
 
                   <CardContent className="pt-0 px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6 lg:pb-8">
                     {/* Expertise List */}
-                    <div className="space-y-2">
-                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    <div className="space-y-2 text-left">
+                      <p className="text-xs font-semibold text-white/70 uppercase tracking-wider">
                         Expertise
                       </p>
                       <ul className="space-y-1">
                         {agent.expertise.slice(0, 3).map((item, idx) => (
-                          <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+                          <li key={idx} className="text-xs text-white/80 flex items-start gap-2">
                             <span className="text-elec-yellow mt-0.5 font-bold">→</span>
                             <span>{item}</span>
                           </li>
