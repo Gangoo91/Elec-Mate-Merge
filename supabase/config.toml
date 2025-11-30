@@ -49,6 +49,19 @@ verify_jwt = true
 verify_jwt = false
 timeout_sec = 360
 
+# Commissioning Job Queue Architecture
+[functions.create-commissioning-job]
+verify_jwt = false
+timeout_sec = 30
+
+[functions.process-commissioning-job]
+verify_jwt = false
+timeout_sec = 600
+
+[functions.cancel-commissioning-job]
+verify_jwt = false
+timeout_sec = 30
+
 [functions.visual-analysis-rag-enhanced]
 verify_jwt = false
 timeout_sec = 180
