@@ -1,0 +1,107 @@
+/**
+ * Consistency Validator - Ensures Overview Matches Design Justification
+ * 
+ * CRITICAL SAFETY ISSUE FIX:
+ * The AI sometimes generates inconsistent values between:
+ * - protectionDevice.rating (numeric field shown in "At a Glance")
+ * - The protection rating mentioned in the design justification prose
+ * 
+ * This validator treats the justification as the SINGLE SOURCE OF TRUTH
+ * and corrects any mismatches in the structured data.
+ */
+
+import type { DesignedCircuit } from './types.ts';
+
+/**
+ * Validate and correct consistency between overview and justification
+ * 
+ * @param circuit - The designed circuit to validate
+ * @param logger - Logger instance for debugging
+ * @returns Corrected circuit with consistent values
+ */
+export function validateCircuitConsistency(
+  circuit: DesignedCircuit, 
+  logger: any
+): DesignedCircuit {
+  
+  // Extract all justification text sections
+  const justificationSections = [
+    circuit.structuredOutput?.sections?.cableSelectionBreakdown || '',
+    circuit.structuredOutput?.sections?.protectiveDeviceSelection || '',
+    circuit.structuredOutput?.sections?.designJustification || '',
+    circuit.justifications?.protection || ''
+  ].join(' ');
+
+  // Multiple regex patterns to catch different justification formats
+  const patterns = [
+    // "protective device rating (20 A)" or "protective device rating of 20A"
+    /protective\s+device\s+rating\s*(?:of|\()\s*(\d+)\s*A/i,
+    
+    // "20A MCB" or "20A RCBO" or "20 A Type B MCB"
+    /(\d+)\s*A\s+(?:Type\s+[A-D]\s+)?(?:MCB|RCBO)/i,
+    
+    // "protected by a 20A" or "protected by 20 A"
+    /protected\s+by\s+(?:a\s+)?(\d+)\s*A/i,
+    
+    // "requires a 20A protective device"
+    /requires?\s+(?:a\s+)?(\d+)\s*A\s+protective\s+device/i,
+    
+    // "selected 20A" or "using 20A"
+    /(?:selected|using)\s+(?:a\s+)?(\d+)\s*A/i
+  ];
+
+  let justificationRating: number | null = null;
+
+  // Try each pattern until we find a match
+  for (const pattern of patterns) {
+    const match = justificationSections.match(pattern);
+    if (match) {
+      justificationRating = parseInt(match[1]);
+      break;
+    }
+  }
+
+  // If we found a rating in the justification, validate consistency
+  if (justificationRating !== null) {
+    const structuredRating = circuit.protectionDevice?.rating;
+
+    if (structuredRating && justificationRating !== structuredRating) {
+      logger.warn('🔴 CONSISTENCY FIX: Protection rating mismatch detected', {
+        circuit: circuit.name,
+        overviewRating: `${structuredRating}A (WRONG - shown in "At a Glance")`,
+        justificationRating: `${justificationRating}A (CORRECT - from design justification)`,
+        action: `Correcting overview from ${structuredRating}A to ${justificationRating}A`,
+        safetyImpact: 'CRITICAL - Could lead to incorrect protection device installation'
+      });
+
+      // Override with justification value (single source of truth)
+      return {
+        ...circuit,
+        protectionDevice: {
+          ...circuit.protectionDevice,
+          rating: justificationRating
+        },
+        calculations: {
+          ...circuit.calculations,
+          In: justificationRating // Also fix In (nominal current of protective device)
+        }
+      };
+    }
+
+    // Values match - log success
+    logger.info('✅ Consistency check passed', {
+      circuit: circuit.name,
+      rating: `${structuredRating}A`,
+      status: 'Overview and justification match'
+    });
+  } else {
+    // Could not extract rating from justification - log warning
+    logger.warn('⚠️ Could not extract protection rating from justification', {
+      circuit: circuit.name,
+      structuredRating: circuit.protectionDevice?.rating,
+      note: 'Manual review recommended'
+    });
+  }
+
+  return circuit;
+}

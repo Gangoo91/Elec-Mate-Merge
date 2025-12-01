@@ -105,6 +105,18 @@ export class DesignPipeline {
     });
 
     // ========================================
+    // PHASE 6.5: Consistency Validation (CRITICAL SAFETY)
+    // ========================================
+    const { validateCircuitConsistency } = await import('./consistency-validator.ts');
+    design.circuits = design.circuits.map(circuit => 
+      validateCircuitConsistency(circuit, this.logger)
+    );
+
+    this.logger.info('Consistency validation complete', {
+      circuits: design.circuits.length
+    });
+
+    // ========================================
     // PHASE 7: Cache Store
     // ========================================
     await this.cache.set(cacheKey, design);
