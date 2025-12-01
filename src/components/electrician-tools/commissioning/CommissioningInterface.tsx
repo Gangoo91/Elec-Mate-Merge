@@ -237,9 +237,9 @@ const CommissioningInterface = () => {
         <div className="space-y-6">
           <div className="flex flex-col items-center justify-center p-12 bg-card border border-border rounded-lg">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-elec-yellow mb-4" />
-            <h3 className="text-lg font-semibold text-white mb-2">Analyzing photo...</h3>
+            <h3 className="text-lg font-semibold text-white mb-2">Analysing photo...</h3>
             <p className="text-sm text-white/70 text-center max-w-md">
-              Using Gemini AI to analyze your EICR photo for defect codes
+              Scanning your EICR photo for defect codes
             </p>
           </div>
         </div>

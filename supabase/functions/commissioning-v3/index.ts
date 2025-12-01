@@ -1318,146 +1318,159 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
           parameters: {
             type: 'object',
             properties: {
-              classification: {
-                type: 'string',
-                enum: ['C1', 'C2', 'C3', 'FI', 'NONE'],
-                description: 'EICR classification code. Use NONE if installation is compliant and no defects are found.'
-              },
-              classificationReasoning: {
-                type: 'string',
-                description: 'Detailed reasoning for this classification with specific BS 7671 regulation references'
-              },
-              defectSummary: {
-                type: 'string',
-                description: 'Clear description of the defect observed (or compliant installation if NONE)'
-              },
-              hazardExplanation: {
-                type: 'string',
-                description: 'Why this is dangerous/concerning (or why it is safe if NONE). Include specific risks.'
-              },
-              bs7671Regulations: {
+              defects: {
                 type: 'array',
+                minItems: 1,
+                description: 'Array of ALL defects identified in the photo. Return multiple items if multiple issues are visible. Each defect must be a separate item.',
                 items: {
                   type: 'object',
+                  required: ['classification', 'classificationReasoning', 'defectSummary', 'hazardExplanation', 'bs7671Regulations', 'confidenceAssessment'],
                   properties: {
-                    regulation: { type: 'string', description: 'Regulation number (e.g., "411.3.3")' },
-                    description: { type: 'string', description: 'What this regulation requires' }
-                  },
-                  required: ['regulation', 'description']
-                },
-                description: 'Array of relevant BS 7671 regulations'
-              },
-              gn3Guidance: {
-                type: 'object',
-                properties: {
-                  section: { type: 'string', description: 'GN3 section reference' },
-                  content: { type: 'string', description: 'Guidance Notes content' }
-                },
-                required: ['section', 'content']
-              },
-              makingSafe: {
-                type: 'object',
-                properties: {
-                  immediateSteps: { 
-                    type: 'array', 
-                    items: { type: 'string' },
-                    description: 'IMMEDIATE steps to make safe (isolation, barriers, signage) - DISTINCT from fixing'
-                  },
-                  isolationRequired: { type: 'boolean' },
-                  signageRequired: { type: 'string', description: 'What warning signs to install' }
-                },
-                description: 'Immediate safety measures - NOT the permanent fix'
-              },
-              clientCommunication: {
-                type: 'object',
-                properties: {
-                  plainLanguage: { type: 'string', description: 'What to tell the owner/client in plain English' },
-                  severityExplanation: { type: 'string', description: 'How dangerous this is in everyday terms' },
-                  risksIfUnfixed: { type: 'array', items: { type: 'string' } },
-                  urgencyLevel: { type: 'string', enum: ['IMMEDIATE', 'WITHIN_48HRS', 'WITHIN_WEEK', 'PLANNED'] },
-                  estimatedCost: { type: 'string', description: 'Estimated cost bracket (e.g., "£150-£300")' }
-                },
-                required: ['plainLanguage', 'severityExplanation', 'urgencyLevel']
-              },
-              rectification: {
-                type: 'object',
-                properties: {
-                  steps: { 
-                    type: 'array', 
-                    items: { type: 'string' },
-                    minItems: 3,
-                    description: 'HIGHLY TECHNICAL step-by-step rectification with specific cable sizes (e.g., "2.5mm² T&E"), BS 7671 regulation numbers, testing values (e.g., "IR ≥1.0MΩ @500V DC"), and manufacturer references'
-                  },
-                  requiredMaterials: { 
-                    type: 'array', 
-                    items: { type: 'string' },
-                    description: 'List of materials needed for the fix'
-                  },
-                  estimatedTime: { type: 'string', description: 'Time to complete (e.g., "2-3 hours")' }
-                },
-                required: ['steps']
-              },
-              verificationProcedure: {
-                type: 'object',
-                properties: {
-                  tests: { 
-                    type: 'array', 
-                    items: { type: 'string' },
-                    minItems: 2,
-                    description: 'Tests required to verify the fix (e.g., "Insulation resistance test", "RCD trip time test")'
-                  },
-                  acceptanceCriteria: { 
-                    type: 'array', 
-                    items: { type: 'string' },
-                    minItems: 2,
-                    description: 'What constitutes a successful fix (e.g., "IR reading ≥1MΩ", "RCD trips in <300ms at 1×IΔn")'
+                    classification: {
+                      type: 'string',
+                      enum: ['C1', 'C2', 'C3', 'FI', 'NONE'],
+                      description: 'EICR classification code for THIS specific defect. Use NONE only if the entire installation is compliant.'
+                    },
+                    classificationReasoning: {
+                      type: 'string',
+                      description: 'Detailed reasoning for THIS defect classification with specific BS 7671 regulation references'
+                    },
+                    classificationReasoningBullets: {
+                      type: 'array',
+                      items: { type: 'string' },
+                      description: 'Bullet points explaining WHY this classification for THIS defect'
+                    },
+                    defectSummary: {
+                      type: 'string',
+                      description: 'Clear description of THIS specific defect (or compliant installation if NONE)'
+                    },
+                    hazardExplanation: {
+                      type: 'string',
+                      description: 'Why THIS defect is dangerous/concerning (or why it is safe if NONE). Include specific risks.'
+                    },
+                    bs7671Regulations: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          regulation: { type: 'string', description: 'Regulation number (e.g., "411.3.3")' },
+                          description: { type: 'string', description: 'What this regulation requires' }
+                        },
+                        required: ['regulation', 'description']
+                      },
+                      description: 'Array of relevant BS 7671 regulations for THIS defect'
+                    },
+                    gn3Guidance: {
+                      type: 'object',
+                      properties: {
+                        section: { type: 'string', description: 'GN3 section reference' },
+                        content: { type: 'string', description: 'Guidance Notes content' }
+                      }
+                    },
+                    makingSafe: {
+                      type: 'object',
+                      properties: {
+                        immediateSteps: { 
+                          type: 'array', 
+                          items: { type: 'string' },
+                          description: 'IMMEDIATE steps to make safe THIS defect (isolation, barriers, signage) - DISTINCT from fixing'
+                        },
+                        isolationRequired: { type: 'boolean' },
+                        signageRequired: { type: 'string', description: 'What warning signs to install' }
+                      },
+                      description: 'Immediate safety measures for THIS defect - NOT the permanent fix'
+                    },
+                    clientCommunication: {
+                      type: 'object',
+                      properties: {
+                        plainLanguage: { type: 'string', description: 'What to tell the owner/client about THIS defect in plain English' },
+                        severityExplanation: { type: 'string', description: 'How dangerous THIS defect is in everyday terms' },
+                        risksIfUnfixed: { type: 'array', items: { type: 'string' } },
+                        urgencyLevel: { type: 'string', enum: ['IMMEDIATE', 'WITHIN_48HRS', 'WITHIN_WEEK', 'PLANNED'] },
+                        estimatedCost: { type: 'string', description: 'Estimated cost bracket for THIS defect (e.g., "£150-£300")' }
+                      }
+                    },
+                    rectification: {
+                      type: 'object',
+                      properties: {
+                        steps: { 
+                          type: 'array', 
+                          items: { type: 'string' },
+                          minItems: 3,
+                          description: 'HIGHLY TECHNICAL step-by-step rectification for THIS defect with specific cable sizes (e.g., "2.5mm² T&E"), BS 7671 regulation numbers, testing values (e.g., "IR ≥1.0MΩ @500V DC"), and manufacturer references'
+                        },
+                        requiredMaterials: { 
+                          type: 'array', 
+                          items: { type: 'string' },
+                          description: 'List of materials needed to fix THIS defect'
+                        },
+                        estimatedTime: { type: 'string', description: 'Time to complete THIS fix (e.g., "2-3 hours")' }
+                      }
+                    },
+                    verificationProcedure: {
+                      type: 'object',
+                      properties: {
+                        tests: { 
+                          type: 'array', 
+                          items: { type: 'string' },
+                          minItems: 2,
+                          description: 'Tests required to verify THIS fix (e.g., "Insulation resistance test", "RCD trip time test")'
+                        },
+                        acceptanceCriteria: { 
+                          type: 'array', 
+                          items: { type: 'string' },
+                          minItems: 2,
+                          description: 'What constitutes a successful fix for THIS defect (e.g., "IR reading ≥1MΩ", "RCD trips in <300ms at 1×IΔn")'
+                        }
+                      }
+                    },
+                    confidenceAssessment: {
+                      type: 'object',
+                      properties: {
+                        level: { type: 'string', enum: ['high', 'medium', 'low'] },
+                        score: { type: 'number', minimum: 0, maximum: 100 },
+                        reasoning: { type: 'string', description: 'Why this confidence level for THIS defect (photo quality, visibility, clarity)' }
+                      },
+                      required: ['level', 'score', 'reasoning']
+                    },
+                    contextFactors: {
+                      type: 'object',
+                      properties: {
+                        bathroomZone: { type: 'string', description: 'Zone 0, 1, 2, or Outside zones' },
+                        outdoorLocation: { type: 'boolean' },
+                        rcdPresent: { type: 'boolean' },
+                        conductorSize: { type: 'string' },
+                        enclosureRating: { type: 'string', description: 'IP rating if visible' },
+                        supplementaryBonding: { type: 'boolean' }
+                      },
+                      description: 'Installation context visible in photo for THIS defect'
+                    },
+                    compliantSummary: {
+                      type: 'string',
+                      description: 'ONLY for NONE classification: What the photo shows is compliant (e.g., "Socket outlet correctly installed outside bathroom zones with RCD protection")'
+                    },
+                    goodPracticeNotes: {
+                      type: 'array',
+                      items: { type: 'string' },
+                      description: 'ONLY for NONE classification: Positive observations (e.g., "Good cable management", "Clear labelling", "Tidy terminations")'
+                    },
+                    noActionRequired: {
+                      type: 'boolean',
+                      description: 'Set to true for NONE classification'
+                    }
                   }
-                },
-                required: ['tests', 'acceptanceCriteria']
+                }
               },
-              confidenceAssessment: {
-                type: 'object',
-                properties: {
-                  level: { type: 'string', enum: ['high', 'medium', 'low'] },
-                  score: { type: 'number', minimum: 0, maximum: 100 },
-                  reasoning: { type: 'string', description: 'Why this confidence level (photo quality, visibility, clarity)' }
-                },
-                required: ['level', 'score', 'reasoning']
-              },
-              contextFactors: {
-                type: 'object',
-                properties: {
-                  bathroomZone: { type: 'string', description: 'Zone 0, 1, 2, or Outside zones' },
-                  outdoorLocation: { type: 'boolean' },
-                  rcdPresent: { type: 'boolean' },
-                  conductorSize: { type: 'string' },
-                  enclosureRating: { type: 'string', description: 'IP rating if visible' },
-                  supplementaryBonding: { type: 'boolean' }
-                },
-                description: 'Installation context visible in photo'
-              },
-              compliantSummary: {
+              overallSummary: {
                 type: 'string',
-                description: 'ONLY for NONE classification: What the photo shows is compliant (e.g., "Socket outlet correctly installed outside bathroom zones with RCD protection")'
+                description: 'Overall summary of all findings in the photo'
               },
-              goodPracticeNotes: {
-                type: 'array',
-                items: { type: 'string' },
-                description: 'ONLY for NONE classification: Positive observations (e.g., "Good cable management", "Clear labelling", "Tidy terminations")'
-              },
-              noActionRequired: {
+              installationCompliant: {
                 type: 'boolean',
-                description: 'Set to true for NONE classification'
+                description: 'true if NO defects found (only NONE classifications), false if any defects present'
               }
             },
-            required: [
-              'classification', 
-              'classificationReasoning', 
-              'defectSummary',
-              'hazardExplanation',
-              'bs7671Regulations',
-              'confidenceAssessment',
-              'contextFactors'
+            required: ['defects', 'overallSummary', 'installationCompliant'
             ],
             additionalProperties: false
           }
@@ -1675,11 +1688,30 @@ FOR NONE CLASSIFICATION (compliant installation):
           content: [
             {
               type: "text",
-              text: `Analyse this electrical installation photo and provide EICR defect coding:
+              text: `Analyse this electrical installation photo and identify ALL visible defects:
 
 ${effectiveQuery}
 
-Determine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehensive details.`
+**MULTI-DEFECT DETECTION INSTRUCTIONS:**
+You MUST systematically scan the ENTIRE photo and identify ALL visible defects, not just one. Return each defect as a separate item in the defects array.
+
+Common defects to look for (check ALL of these):
+- Cable entries without fire-rated grommets (C2)
+- Missing circuit identification labels (C3)
+- Exposed live conductors (C1)
+- Incorrect cable containment (C2/C3)
+- Missing RCD protection where required (C2)
+- Poor workmanship/cable dressing (C3)
+- Thermal damage at terminals (C1/C2)
+- Overcrowded enclosures (C3)
+- Non-compliant cable entries (C2)
+- Loose terminations (C1/C2)
+- Missing earth continuity (C1/C2)
+- Bathroom zone violations (C1/C2)
+
+**CRITICAL:** Scan systematically from top to bottom, left to right. Do not stop after finding the first defect. Each distinct issue must be reported separately in the defects array.
+
+Determine the appropriate classification (C1/C2/C3/FI/NONE) for EACH defect and provide comprehensive details for each one.`
             },
             {
               type: "image_url",
@@ -1803,49 +1835,64 @@ Determine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehe
         relevance: result.relevance || 0
       }));
           
-      // Transform into EICRDefect format for frontend
+      // Transform into EICRDefect format for frontend - handle multiple defects
       const eicrDefects = [];
       
-      if (eicrData.classification === 'NONE') {
-        // Special handling for NONE classification
+      if (eicrData.installationCompliant && (!eicrData.defects || eicrData.defects.length === 0)) {
+        // Compliant installation - no defects found
         eicrDefects.push({
           classification: 'NONE',
-          defectSummary: eicrData.defectSummary,
-          compliantSummary: eicrData.compliantSummary,
-          goodPracticeNotes: eicrData.goodPracticeNotes || [],
+          defectSummary: eicrData.overallSummary,
+          compliantSummary: eicrData.overallSummary,
+          goodPracticeNotes: [],
           noActionRequired: true,
-          confidenceAssessment: eicrData.confidenceAssessment,
-          contextFactors: eicrData.contextFactors
+          confidenceAssessment: { level: 'medium', score: 70, reasoning: 'No defects identified' }
         });
       } else {
-        // Standard defect
-        eicrDefects.push({
-          defectSummary: eicrData.defectSummary,
-          primaryCode: {
-            code: eicrData.classification,
-            title: {
-              'C1': 'Danger Present',
-              'C2': 'Potentially Dangerous',
-              'C3': 'Improvement Recommended',
-              'FI': 'Further Investigation'
-            }[eicrData.classification] || 'Unknown',
-            urgency: {
-              'C1': 'IMMEDIATE',
-              'C2': 'URGENT',
-              'C3': 'RECOMMENDED',
-              'FI': 'INVESTIGATE'
-            }[eicrData.classification] || 'UNKNOWN'
-          },
-          bs7671Regulations: eicrData.bs7671Regulations || [],
-          classificationReasoningBullets: eicrData.classificationReasoningBullets || [],
-          hazardExplanation: eicrData.hazardExplanation,
-          makingSafe: eicrData.makingSafe,
-          clientCommunication: eicrData.clientCommunication,
-          rectification: eicrData.rectification || { steps: [] },
-          verificationProcedure: eicrData.verificationProcedure || { tests: [], acceptanceCriteria: [] },
-          confidenceAssessment: eicrData.confidenceAssessment,
-          contextFactors: eicrData.contextFactors
-        });
+        // Process ALL defects from the array
+        for (const defect of eicrData.defects || []) {
+          if (defect.classification === 'NONE') {
+            // Handle NONE classification within multi-defect response
+            eicrDefects.push({
+              classification: 'NONE',
+              defectSummary: defect.defectSummary,
+              compliantSummary: defect.compliantSummary,
+              goodPracticeNotes: defect.goodPracticeNotes || [],
+              noActionRequired: true,
+              confidenceAssessment: defect.confidenceAssessment,
+              contextFactors: defect.contextFactors
+            });
+          } else {
+            // Standard defect
+            eicrDefects.push({
+              defectSummary: defect.defectSummary,
+              primaryCode: {
+                code: defect.classification,
+                title: {
+                  'C1': 'Danger Present',
+                  'C2': 'Potentially Dangerous',
+                  'C3': 'Improvement Recommended',
+                  'FI': 'Further Investigation'
+                }[defect.classification] || 'Unknown',
+                urgency: {
+                  'C1': 'IMMEDIATE',
+                  'C2': 'URGENT',
+                  'C3': 'RECOMMENDED',
+                  'FI': 'INVESTIGATE'
+                }[defect.classification] || 'UNKNOWN'
+              },
+              bs7671Regulations: defect.bs7671Regulations || [],
+              classificationReasoningBullets: defect.classificationReasoningBullets || [],
+              hazardExplanation: defect.hazardExplanation,
+              makingSafe: defect.makingSafe,
+              clientCommunication: defect.clientCommunication,
+              rectification: defect.rectification || { steps: [] },
+              verificationProcedure: defect.verificationProcedure || { tests: [], acceptanceCriteria: [] },
+              confidenceAssessment: defect.confidenceAssessment,
+              contextFactors: defect.contextFactors
+            });
+          }
+        }
       }
       
       return new Response(
