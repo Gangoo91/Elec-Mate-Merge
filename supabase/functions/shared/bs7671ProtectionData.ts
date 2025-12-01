@@ -63,6 +63,58 @@ export const MAX_ZS_MCB_TYPE_D_04S: MaxZsData[] = [
 ];
 
 /**
+ * Table 41.6 - Maximum Zs for MCBs (Circuit-Breakers) 
+ * For 5s disconnection time at 230V (Uo)
+ * 
+ * BS EN 60898 / BS EN 61009 MCBs and RCBOs
+ * Distribution circuits and fixed equipment (motors, conveyors, etc.)
+ * Per Regulation 411.3.2.3
+ */
+export const MAX_ZS_MCB_TYPE_B_5S: MaxZsData[] = [
+  { deviceType: 'B', deviceRating: 6, maxZs: 15.33, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'B', deviceRating: 10, maxZs: 9.20, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'B', deviceRating: 16, maxZs: 5.75, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'B', deviceRating: 20, maxZs: 4.60, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'B', deviceRating: 25, maxZs: 3.68, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'B', deviceRating: 32, maxZs: 2.87, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'B', deviceRating: 40, maxZs: 2.30, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'B', deviceRating: 50, maxZs: 1.84, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'B', deviceRating: 63, maxZs: 1.46, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'B', deviceRating: 80, maxZs: 1.15, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'B', deviceRating: 100, maxZs: 0.92, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'B', deviceRating: 125, maxZs: 0.74, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+];
+
+export const MAX_ZS_MCB_TYPE_C_5S: MaxZsData[] = [
+  { deviceType: 'C', deviceRating: 6, maxZs: 7.67, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'C', deviceRating: 10, maxZs: 4.60, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'C', deviceRating: 16, maxZs: 2.87, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'C', deviceRating: 20, maxZs: 2.30, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'C', deviceRating: 25, maxZs: 1.84, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'C', deviceRating: 32, maxZs: 1.44, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'C', deviceRating: 40, maxZs: 1.15, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'C', deviceRating: 50, maxZs: 0.92, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'C', deviceRating: 63, maxZs: 0.73, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'C', deviceRating: 80, maxZs: 0.57, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'C', deviceRating: 100, maxZs: 0.46, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'C', deviceRating: 125, maxZs: 0.37, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+];
+
+export const MAX_ZS_MCB_TYPE_D_5S: MaxZsData[] = [
+  { deviceType: 'D', deviceRating: 6, maxZs: 3.83, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'D', deviceRating: 10, maxZs: 2.30, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'D', deviceRating: 16, maxZs: 1.44, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'D', deviceRating: 20, maxZs: 1.15, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'D', deviceRating: 25, maxZs: 0.92, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'D', deviceRating: 32, maxZs: 0.72, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'D', deviceRating: 40, maxZs: 0.57, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'D', deviceRating: 50, maxZs: 0.46, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'D', deviceRating: 63, maxZs: 0.36, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'D', deviceRating: 80, maxZs: 0.29, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+  { deviceType: 'D', deviceRating: 100, maxZs: 0.23, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
+];
+
+/**
  * Get maximum Zs value for a protective device (legacy function for backwards compatibility)
  * 
  * @param deviceType - Type of protective device (MCB curves only)
@@ -294,17 +346,19 @@ export function getMaxZsForDevice(
 ): { maxZs: number; regulation: string } | null {
   let table: MaxZsData[];
   
+  // Select correct table based on device type AND disconnection time
   switch (deviceType) {
     case 'B':
-      table = MAX_ZS_MCB_TYPE_B_04S;
+      table = disconnectionTime === 5 ? MAX_ZS_MCB_TYPE_B_5S : MAX_ZS_MCB_TYPE_B_04S;
       break;
     case 'C':
-      table = MAX_ZS_MCB_TYPE_C_04S;
+      table = disconnectionTime === 5 ? MAX_ZS_MCB_TYPE_C_5S : MAX_ZS_MCB_TYPE_C_04S;
       break;
     case 'D':
-      table = MAX_ZS_MCB_TYPE_D_04S;
+      table = disconnectionTime === 5 ? MAX_ZS_MCB_TYPE_D_5S : MAX_ZS_MCB_TYPE_D_04S;
       break;
     case 'BS88':
+      // Fuses currently only have 0.4s tables
       table = MAX_ZS_BS88_GG_04S;
       break;
     case 'BS1361':

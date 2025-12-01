@@ -155,6 +155,7 @@ export interface CircuitCalculations {
   voltageDrop: VoltageDropCalculation;
   zs: number;
   maxZs: number;
+  disconnectionTime?: 0.4 | 5; // Required disconnection time (0.4s = final circuits, 5s = motors/distribution)
   diversityFactor?: number;
   diversifiedLoad?: number;
 }
