@@ -57,6 +57,48 @@ export const SupplyDetailsStep = ({
 }: SupplyDetailsStepProps) => {
   const [showAdvanced, setShowAdvanced] = React.useState(false);
 
+  // Get main switch rating options based on installation type
+  const mainSwitchOptions = React.useMemo(() => {
+    switch (installationType) {
+      case 'domestic':
+        return [
+          { value: "60", label: "60A" },
+          { value: "80", label: "80A" },
+          { value: "100", label: "100A (Standard)" },
+          { value: "125", label: "125A" },
+        ];
+      case 'commercial':
+        return [
+          { value: "100", label: "100A" },
+          { value: "125", label: "125A" },
+          { value: "160", label: "160A" },
+          { value: "200", label: "200A (Commercial Standard)" },
+          { value: "250", label: "250A" },
+          { value: "315", label: "315A" },
+          { value: "400", label: "400A" },
+        ];
+      case 'industrial':
+        return [
+          { value: "160", label: "160A" },
+          { value: "200", label: "200A" },
+          { value: "250", label: "250A" },
+          { value: "315", label: "315A" },
+          { value: "400", label: "400A (Industrial Standard)" },
+          { value: "500", label: "500A" },
+          { value: "630", label: "630A" },
+          { value: "800", label: "800A" },
+          { value: "1000", label: "1000A" },
+        ];
+      default:
+        return [
+          { value: "60", label: "60A" },
+          { value: "80", label: "80A" },
+          { value: "100", label: "100A (Standard)" },
+          { value: "125", label: "125A" },
+        ];
+    }
+  }, [installationType]);
+
   // Combined supply type (voltage + phases)
   const supplyType = phases === 'single' 
     ? (voltage === 110 ? '110-single' : '230-single')
@@ -188,10 +230,11 @@ export const SupplyDetailsStep = ({
                   <SelectValue placeholder="Auto" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="60">60A</SelectItem>
-                  <SelectItem value="80">80A</SelectItem>
-                  <SelectItem value="100">100A (Standard)</SelectItem>
-                  <SelectItem value="125">125A</SelectItem>
+                  {mainSwitchOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
