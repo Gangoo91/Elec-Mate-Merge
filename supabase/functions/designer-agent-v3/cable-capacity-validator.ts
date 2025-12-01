@@ -271,3 +271,157 @@ export function validateIndustrialProtection(
   
   return { valid: true };
 }
+
+// Standard protection device ratings per BS 7671
+const STANDARD_MCB_RATINGS = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
+const STANDARD_BS88_RATINGS = [16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630];
+
+/**
+ * Get next standard protection device rating above design current
+ */
+function getNextStandardRating(Ib: number, deviceType: string = 'MCB'): number {
+  const ratings = deviceType.includes('BS88') || deviceType.includes('MCCB') 
+    ? STANDARD_BS88_RATINGS 
+    : STANDARD_MCB_RATINGS;
+  
+  // Protection device must be ≥ design current (with small margin for motor starting)
+  return ratings.find(r => r >= Ib * 1.1) || ratings[ratings.length - 1];
+}
+
+/**
+ * Get largest standard rating that doesn't exceed cable capacity
+ */
+function getLargestRatingBelow(Iz: number, deviceType: string = 'MCB'): number {
+  const ratings = deviceType.includes('BS88') || deviceType.includes('MCCB')
+    ? STANDARD_BS88_RATINGS
+    : STANDARD_MCB_RATINGS;
+  
+  // Find largest rating that cable can handle
+  const suitableRatings = ratings.filter(r => r <= Iz);
+  return suitableRatings[suitableRatings.length - 1] || ratings[0];
+}
+
+/**
+ * Check if circuit is a motor circuit (requires higher starting current)
+ */
+function isMotorCircuit(circuit: DesignedCircuit): boolean {
+  const loadType = circuit.loadType?.toLowerCase() || '';
+  return loadType.includes('motor') || 
+         loadType.includes('machine') ||
+         loadType.includes('pump') ||
+         loadType.includes('compressor') ||
+         loadType.includes('fan');
+}
+
+interface ProtectionSizingResult {
+  valid: boolean;
+  correctedRating?: number;
+  reason?: string;
+}
+
+/**
+ * Validate protection device sizing against Ib ≤ In ≤ Iz rule
+ * Auto-correct massively oversized protection devices
+ */
+export function validateProtectionSizing(
+  circuit: DesignedCircuit,
+  logger: any
+): ProtectionSizingResult {
+  const { calculations, protectionDevice, cableSize, cableType } = circuit;
+  
+  if (!calculations || !protectionDevice || !cableSize || !cableType) {
+    return { valid: true }; // Skip validation if missing data
+  }
+  
+  const Ib = calculations.Ib || 0;
+  const In = protectionDevice.rating;
+  const deviceType = protectionDevice.type;
+  
+  // Get actual cable capacity from tables
+  let capacityTable: Record<number, number> | null = null;
+  
+  if (cableType.toLowerCase().includes('swa')) {
+    capacityTable = SWA_CAPACITIES_TABLE_4D4A;
+  } else if (cableType.toLowerCase().includes('twin') && cableType.toLowerCase().includes('pvc')) {
+    capacityTable = PVC_TWIN_EARTH_CAPACITIES;
+  } else if (cableType.toLowerCase().includes('twin') && cableType.toLowerCase().includes('xlpe')) {
+    capacityTable = XLPE_TWIN_EARTH_CAPACITIES;
+  } else if (cableType.toLowerCase().includes('single') && cableType.toLowerCase().includes('pvc')) {
+    capacityTable = PVC_SINGLE_CAPACITIES;
+  } else if (cableType.toLowerCase().includes('single') && cableType.toLowerCase().includes('xlpe')) {
+    capacityTable = XLPE_SINGLE_CAPACITIES;
+  }
+  
+  const Iz = capacityTable?.[cableSize] || calculations.Iz || 0;
+  
+  // CRITICAL CHECK 1: Is protection massively oversized for load?
+  // For non-motor circuits, In should not be >2.5x the design current
+  const isMotor = isMotorCircuit(circuit);
+  const maxAllowedMultiplier = isMotor ? 2.5 : 1.6; // Motors get higher multiplier for starting current
+  
+  if (In > Ib * maxAllowedMultiplier && Ib > 0) {
+    const correctIn = getNextStandardRating(Ib, deviceType);
+    
+    logger.warn('🟡 Protection oversized for load', {
+      circuit: circuit.name,
+      Ib,
+      In,
+      ratio: (In / Ib).toFixed(1),
+      correctIn,
+      isMotor
+    });
+    
+    return {
+      valid: false,
+      correctedRating: correctIn,
+      reason: `Protection ${In}A oversized for ${Ib.toFixed(1)}A load (${(In / Ib).toFixed(1)}x). Corrected to ${correctIn}A.`
+    };
+  }
+  
+  // CRITICAL CHECK 2: Is protection exceeding cable capacity (In > Iz)?
+  if (In > Iz && Iz > 0) {
+    const maxAllowedIn = getLargestRatingBelow(Iz, deviceType);
+    
+    logger.error('🔴 Protection exceeds cable capacity', {
+      circuit: circuit.name,
+      In,
+      Iz,
+      cableSize,
+      maxAllowedIn
+    });
+    
+    return {
+      valid: false,
+      correctedRating: maxAllowedIn,
+      reason: `Protection ${In}A exceeds cable capacity ${Iz}A (${cableSize}mm²). Corrected to ${maxAllowedIn}A.`
+    };
+  }
+  
+  // CRITICAL CHECK 3: Is protection below design current (dangerous undersizing)?
+  if (In < Ib) {
+    const correctIn = getNextStandardRating(Ib, deviceType);
+    
+    logger.error('🔴 Protection undersized for load', {
+      circuit: circuit.name,
+      Ib,
+      In,
+      correctIn
+    });
+    
+    return {
+      valid: false,
+      correctedRating: correctIn,
+      reason: `Protection ${In}A insufficient for ${Ib.toFixed(1)}A load. Corrected to ${correctIn}A.`
+    };
+  }
+  
+  logger.info('✅ Protection sizing validation passed', {
+    circuit: circuit.name,
+    Ib: Ib.toFixed(1),
+    In,
+    Iz,
+    ratio: (In / Ib).toFixed(2)
+  });
+  
+  return { valid: true };
+}
