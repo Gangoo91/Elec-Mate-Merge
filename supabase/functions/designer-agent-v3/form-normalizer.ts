@@ -118,8 +118,8 @@ export class FormNormalizer {
       calculatedDiversity: circuit.calculatedDiversity || null,
       estimatedCableSize: circuit.estimatedCableSize || null,
       
-      // Circuit topology (ring vs radial)
-      circuitTopology: circuit.circuitTopology || 'auto'
+      // Circuit topology (ring vs radial) - EXPLICITLY SET based on detection
+      circuitTopology: circuit.circuitTopology || (isRingFinal ? 'ring' : 'radial')
     };
 
     // Add enforced constraints if ring final detected
