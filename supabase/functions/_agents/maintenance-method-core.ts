@@ -45,11 +45,15 @@ export async function generateMaintenanceMethod(
     // Update progress: Regulation search
     await updateProgress(supabase, jobId, 25, 'Searching BS 7671 regulations');
 
-    // BS 7671 Regulations - Focus on Chapter 64 (Inspection & Testing) and Part 7
-    const { data: regulations } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
-      query_text: `${query} Chapter 64 inspection testing verification periodic maintenance Part 7 special locations`,
+    // BS 7671 Regulations - Simplified search for better results
+    const { data: regulations, error: regError } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
+      query_text: query,
       match_count: 15
     });
+
+    if (regError) {
+      console.error('⚠️ BS 7671 search failed:', regError);
+    }
 
     console.log(`📖 Regulations: ${regulations?.length || 0} relevant standards`);
 
@@ -79,7 +83,7 @@ export async function generateMaintenanceMethod(
         messages: [
           {
             role: 'system',
-            content: getMaintenanceSystemPrompt(detailLevel)
+            content: getMaintenanceSystemPrompt(detailLevel, query)
           },
           {
             role: 'user',
@@ -135,12 +139,46 @@ async function updateProgress(supabase: any, jobId: string, progress: number, st
     .eq('id', jobId);
 }
 
-function getMaintenanceSystemPrompt(detailLevel: string): string {
+function detectEquipmentCategory(query: string): string {
+  const lowerQuery = query.toLowerCase();
+  if (lowerQuery.includes('busbar') || lowerQuery.includes('bts') || lowerQuery.includes('bus bar')) return 'busbar_system';
+  if (lowerQuery.includes('motor') || lowerQuery.includes('mcc') || lowerQuery.includes('drive')) return 'motor_control';
+  if (lowerQuery.includes('consumer unit') || lowerQuery.includes('distribution board') || lowerQuery.includes('db')) return 'distribution';
+  if (lowerQuery.includes('emergency') && lowerQuery.includes('lighting')) return 'emergency_lighting';
+  if (lowerQuery.includes('transformer')) return 'transformer';
+  if (lowerQuery.includes('generator') || lowerQuery.includes('ups')) return 'standby_power';
+  if (lowerQuery.includes('switchgear') || lowerQuery.includes('panel')) return 'switchgear';
+  return 'general';
+}
+
+function getMaintenanceSystemPrompt(detailLevel: string, query: string): string {
   const stepCount = detailLevel === 'quick' ? '10-12' : detailLevel === 'comprehensive' ? '18-20' : '15-17';
+  const equipmentType = detectEquipmentCategory(query);
   
   return `You are an expert electrical maintenance engineer specialising in UK BS 7671 periodic inspection and preventive maintenance.
 
 Generate detailed maintenance instructions with ${stepCount} comprehensive steps covering the complete maintenance lifecycle.
+
+⚡ CRITICAL: EQUIPMENT-SPECIFIC STEPS REQUIRED ⚡
+Equipment Type Detected: ${equipmentType}
+
+You MUST generate steps that are SPECIFIC and UNIQUE to this equipment type.
+DO NOT generate generic EICR-style inspection steps unless the query explicitly asks for an EICR.
+The practical maintenance knowledge provided contains equipment-specific procedures - YOU MUST USE THEM.
+
+STEP GENERATION APPROACH:
+- Derive steps DIRECTLY from the equipment-specific RAG context provided below
+- Each step must be UNIQUE to the equipment being maintained
+- DO NOT use the same generic sequence for every equipment type
+- Adapt step count to equipment complexity (${stepCount} steps)
+- If RAG context mentions specific procedures (e.g., "busbar torque checks", "thermal imaging of joints", "contactor wear inspection"), these MUST appear as distinct steps
+
+EQUIPMENT-SPECIFIC EXAMPLES:
+• Busbar Systems: Joint torque verification, thermal imaging of connections, IP rating verification, phase-to-phase insulation resistance, dust/contamination inspection
+• Motor Control Centres: Contactor wear inspection, overload relay testing, DOL/Star-Delta functional checks, auxiliary contact verification, control circuit testing
+• Consumer Units: MCB/RCBO operation testing, busbar torque verification, RCD ramp testing, discrimination verification, surge protection device inspection
+• Emergency Lighting: Battery condition assessment, 3-hour duration test, charge circuit verification, lamp/LED function test, self-test facility check
+• Transformers: Oil quality testing, winding resistance measurement, turns ratio verification, temperature monitoring, cooling system inspection
 
 CRITICAL OUTPUT REQUIREMENTS:
 - Generate a valid JSON object (no markdown, no code blocks)
@@ -149,14 +187,6 @@ CRITICAL OUTPUT REQUIREMENTS:
 - Each step MUST reference 2-3 BS 7671 regulations (e.g., "BS 7671:2018+A3:2024 Reg 612.3; Chapter 64; Table 61")
 - Include GN3 (Guidance Note 3: Inspection & Testing) references where relevant
 - Include IET Guidance Note and HSE/CDM regulations for safety-critical tasks
-
-STEP STRUCTURE (${stepCount} steps):
-1-2: Pre-inspection safety checks & isolation procedures
-3-5: Visual inspection phases (external condition, internal components, terminations)
-6-9: Testing procedures (continuity, insulation resistance, earth loop impedance, RCD)
-10-12: Functional checks, thermal imaging, connection torque verification
-13-15: Component assessment, wear analysis, replacement recommendations
-16+: Remedial actions, documentation, EICR observations (if comprehensive)
 
 PROCEDURE STEP REQUIREMENTS:
 - 5-7 detailed sub-steps per main step
