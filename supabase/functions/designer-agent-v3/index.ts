@@ -194,7 +194,18 @@ serve(async (req) => {
     // Job-aware mode: Update job - Phase 1 complete, trigger Phase 2
     if (jobId) {
       try {
-        await supabase
+        // CRITICAL: Sanitize data before save to prevent Unicode errors
+        const { sanitizeForPostgres, aggressiveSanitize, isUnicodeError } = await import('../_shared/sanitize-json.ts');
+        const sanitizedResult = sanitizeForPostgres(result);
+        
+        logger.info('Saving design data to database', {
+          jobId,
+          dataSize: JSON.stringify(sanitizedResult).length,
+          circuitCount: sanitizedResult.circuits?.length
+        });
+
+        const saveStart = Date.now();
+        const { error: updateError } = await supabase
           .from('circuit_design_jobs')
           .update({
             status: 'processing', // Keep processing for Installation Agent (Phase 2)
@@ -202,11 +213,73 @@ serve(async (req) => {
             current_step: 'Circuit design complete. Generating installation guidance...',
             designer_status: 'complete',
             designer_progress: 100,
-            design_data: result,
-            raw_response: result
+            design_data: sanitizedResult,
+            raw_response: sanitizedResult
             // No completed_at yet - job still running Phase 2
           })
           .eq('id', jobId);
+        
+        const saveDuration = Date.now() - saveStart;
+        
+        // CRITICAL: Check for database save errors
+        if (updateError) {
+          logger.error('❌ CRITICAL: Failed to save design data to database', { 
+            error: updateError.message,
+            code: updateError.code,
+            hint: updateError.hint,
+            details: updateError.details,
+            saveDuration,
+            dataSize: JSON.stringify(sanitizedResult).length
+          });
+          
+          // Retry with aggressive sanitization if Unicode error
+          if (isUnicodeError(updateError)) {
+            logger.warn('🔄 Retrying with aggressive sanitization...');
+            const aggressivelySanitizedResult = aggressiveSanitize(result);
+            
+            const { error: retryError } = await supabase
+              .from('circuit_design_jobs')
+              .update({
+                status: 'processing',
+                progress: 50,
+                current_step: 'Circuit design complete. Generating installation guidance...',
+                designer_status: 'complete',
+                designer_progress: 100,
+                design_data: aggressivelySanitizedResult,
+                raw_response: aggressivelySanitizedResult
+              })
+              .eq('id', jobId);
+            
+            if (retryError) {
+              logger.error('❌ Retry failed - marking job as failed', { error: retryError.message });
+              // Mark job as failed with clear message
+              await supabase.from('circuit_design_jobs').update({
+                status: 'failed',
+                error_message: `Design completed but database save failed: ${retryError.message}. This is a system error, not a design error.`,
+                completed_at: new Date().toISOString()
+              }).eq('id', jobId);
+              
+              throw new Error(`Database save failed after retry: ${retryError.message}`);
+            } else {
+              logger.info('✅ Retry successful with aggressive sanitization');
+            }
+          } else {
+            // Non-Unicode error - mark job as failed immediately
+            await supabase.from('circuit_design_jobs').update({
+              status: 'failed',
+              error_message: `Design completed but database save failed: ${updateError.message}`,
+              completed_at: new Date().toISOString()
+            }).eq('id', jobId);
+            
+            throw new Error(`Database save failed: ${updateError.message}`);
+          }
+        } else {
+          logger.info('✅ Design data saved successfully', { 
+            jobId,
+            saveDuration,
+            dataSize: JSON.stringify(sanitizedResult).length
+          });
+        }
         
         logger.info('Phase 1 (Designer) complete - triggering Phase 2 (Installer)', { jobId });
 

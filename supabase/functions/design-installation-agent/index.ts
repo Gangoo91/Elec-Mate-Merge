@@ -144,18 +144,77 @@ Deno.serve(async (req) => {
       .eq('id', jobId);
 
     // STEP 4: Save to database and mark ENTIRE job complete
-    await supabase
+    // CRITICAL: Sanitize data before save to prevent Unicode errors
+    const { sanitizeForPostgres, aggressiveSanitize, isUnicodeError } = await import('../_shared/sanitize-json.ts');
+    const sanitizedGuidance = sanitizeForPostgres(installationGuidance);
+    
+    console.log('💾 Saving installation guidance to database', {
+      jobId,
+      dataSize: JSON.stringify(sanitizedGuidance).length
+    });
+
+    const saveStart = Date.now();
+    const { error: updateError } = await supabase
       .from('circuit_design_jobs')
       .update({
         installation_agent_status: 'complete',
         installation_agent_progress: 100,
-        installation_guidance: installationGuidance,
+        installation_guidance: sanitizedGuidance,
         status: 'complete', // Mark entire job complete (both phases done)
         progress: 100,
         current_step: 'Design and installation guidance complete!',
         completed_at: new Date().toISOString()
       })
       .eq('id', jobId);
+    
+    const saveDuration = Date.now() - saveStart;
+    
+    // CRITICAL: Check for database save errors
+    if (updateError) {
+      console.error('❌ CRITICAL: Failed to save installation guidance to database', { 
+        error: updateError.message,
+        code: updateError.code,
+        hint: updateError.hint,
+        details: updateError.details,
+        saveDuration,
+        dataSize: JSON.stringify(sanitizedGuidance).length
+      });
+      
+      // Retry with aggressive sanitization if Unicode error
+      if (isUnicodeError(updateError)) {
+        console.log('🔄 Retrying with aggressive sanitization...');
+        const aggressivelySanitizedGuidance = aggressiveSanitize(installationGuidance);
+        
+        const { error: retryError } = await supabase
+          .from('circuit_design_jobs')
+          .update({
+            installation_agent_status: 'complete',
+            installation_agent_progress: 100,
+            installation_guidance: aggressivelySanitizedGuidance,
+            status: 'complete',
+            progress: 100,
+            current_step: 'Design and installation guidance complete!',
+            completed_at: new Date().toISOString()
+          })
+          .eq('id', jobId);
+        
+        if (retryError) {
+          console.error('❌ Retry failed - marking job as failed');
+          throw new Error(`Installation guidance save failed after retry: ${retryError.message}`);
+        } else {
+          console.log('✅ Retry successful with aggressive sanitization');
+        }
+      } else {
+        // Non-Unicode error - fail immediately
+        throw new Error(`Installation guidance save failed: ${updateError.message}`);
+      }
+    } else {
+      console.log('✅ Installation guidance saved successfully', { 
+        jobId,
+        saveDuration,
+        dataSize: JSON.stringify(sanitizedGuidance).length
+      });
+    }
 
     console.log('✅ Design Installation Agent COMPLETE', { 
       jobId,
