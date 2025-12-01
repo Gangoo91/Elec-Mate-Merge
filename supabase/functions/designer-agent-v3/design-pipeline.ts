@@ -5,7 +5,8 @@
  * Trust the AI to reason with RAG context. No correcting the AI after the fact.
  */
 
-import { FormNormalizer } from './form-normalizer.ts';
+import { ConsistencyValidator } from './consistency-validator.ts';
+import { validateCableCapacity, validateIndustrialProtection } from './cable-capacity-validator.ts';
 import { CacheManager } from './cache-manager.ts';
 import { searchDesignIntelligence, searchRegulationsIntelligence } from '../_shared/intelligence-search.ts';
 import { AIDesigner } from './ai-designer.ts';
@@ -162,6 +163,68 @@ export class DesignPipeline {
         circuits: design.circuits.length
       });
     }
+
+    // ========================================
+    // PHASE 6.7: Cable Capacity Validation (CRITICAL SAFETY - PREVENT UNDERSIZING)
+    // ========================================
+    const cableCapacityErrors: any[] = [];
+    const industrialProtectionErrors: any[] = [];
+    
+    design.circuits.forEach((circuit, index) => {
+      // Validate cable capacity against BS 7671 tables
+      const capacityValidation = validateCableCapacity(circuit, this.logger);
+      if (!capacityValidation.valid) {
+        cableCapacityErrors.push({
+          circuitNumber: circuit.circuitNumber || index + 1,
+          circuitName: circuit.name,
+          error: capacityValidation.error,
+          recommendation: capacityValidation.recommendation,
+          severity: capacityValidation.recommendation?.includes('CRITICAL') ? 'error' : 'warning'
+        });
+      }
+      
+      // Validate industrial protection device selection (BS88/MCCB for >63A)
+      const protectionValidation = validateIndustrialProtection(
+        circuit,
+        normalized.supply.installationType || 'commercial',
+        this.logger
+      );
+      if (!protectionValidation.valid) {
+        industrialProtectionErrors.push({
+          circuitNumber: circuit.circuitNumber || index + 1,
+          circuitName: circuit.name,
+          error: protectionValidation.error,
+          recommendation: protectionValidation.recommendation,
+          severity: 'error'
+        });
+      }
+    });
+    
+    // Log validation results
+    if (cableCapacityErrors.length > 0) {
+      this.logger.error('🔴 Cable capacity validation FAILED', {
+        errorCount: cableCapacityErrors.length,
+        errors: cableCapacityErrors
+      });
+      (design as any).cableCapacityErrors = cableCapacityErrors;
+    } else {
+      this.logger.info('✅ Cable capacity validation passed', {
+        circuits: design.circuits.length
+      });
+    }
+    
+    if (industrialProtectionErrors.length > 0) {
+      this.logger.error('🔴 Industrial protection validation FAILED', {
+        errorCount: industrialProtectionErrors.length,
+        errors: industrialProtectionErrors
+      });
+      (design as any).industrialProtectionErrors = industrialProtectionErrors;
+    } else {
+      this.logger.info('✅ Industrial protection validation passed', {
+        circuits: design.circuits.length
+      });
+    }
+
 
     // ========================================
     // PHASE 7: Cache Store
