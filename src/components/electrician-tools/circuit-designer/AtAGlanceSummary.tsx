@@ -32,6 +32,13 @@ interface AtAGlanceSummaryProps {
       };
     };
     rcdProtected: boolean;
+    expectedTests?: {
+      zs?: {
+        expected?: number;
+        maxPermitted?: number;
+        compliant?: boolean;
+      };
+    };
   };
 }
 
@@ -68,11 +75,17 @@ export const AtAGlanceSummary = ({ summary, circuit }: AtAGlanceSummaryProps) =>
     : (summary?.voltageDrop || 'N/A');
   
   const safeZs = circuit
-    ? `${circuit.calculations.zs.toFixed(3)}Ω ${circuit.calculations.zs <= circuit.calculations.maxZs ? '✓' : '✗'} (Max: ${circuit.calculations.maxZs.toFixed(3)}Ω)`
+    ? (() => {
+        const zsValue = circuit.expectedTests?.zs?.expected ?? circuit.calculations.zs;
+        const maxZs = circuit.expectedTests?.zs?.maxPermitted ?? circuit.calculations.maxZs;
+        const compliant = circuit.expectedTests?.zs?.compliant ?? (zsValue <= maxZs);
+        return `${zsValue.toFixed(3)}Ω ${compliant ? '✓' : '✗'} (Max: ${maxZs.toFixed(3)}Ω)`;
+      })()
     : (summary?.zs || 'N/A');
   
   const safeComplianceTick = circuit 
-    ? (circuit.calculations.voltageDrop.compliant && circuit.calculations.zs <= circuit.calculations.maxZs)
+    ? (circuit.calculations.voltageDrop.compliant && 
+       (circuit.expectedTests?.zs?.compliant ?? (circuit.calculations.zs <= circuit.calculations.maxZs)))
     : (summary?.complianceTick ?? false);
   
   const safeNotes = summary?.notes || '';
