@@ -1026,10 +1026,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
     }
   };
 
-  const allCompliant = design.circuits.every(c => 
-    c.calculations.voltageDrop.compliant && 
-    c.calculations.zs < c.calculations.maxZs
-  );
+  const allCompliant = design.circuits.every(c => {
+    const zsMax = c.expectedTests?.zs?.maxPermitted ?? c.calculations?.maxZs ?? 999;
+    const zsCompliant = c.expectedTests?.zs?.compliant ?? (c.calculations?.zs <= zsMax);
+    return c.calculations.voltageDrop.compliant && zsCompliant;
+  });
 
   const handleExportPDF = async () => {
     setIsExporting(true);
@@ -1911,19 +1912,28 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                   </p>
                 </div>
 
-                <div className={`p-3 rounded-lg ${currentCircuit.calculations.zs < currentCircuit.calculations.maxZs ? 'bg-green-500/10' : 'bg-red-500/10'}`}>
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm font-medium">Earth Fault Loop (Zs)</span>
-                    {currentCircuit.calculations.zs < currentCircuit.calculations.maxZs ? 
-                      <CheckCircle2 className="h-4 w-4 text-green-600" /> : 
-                      <AlertTriangle className="h-4 w-4 text-red-600" />
-                    }
-                  </div>
-                  <p className="text-lg font-bold">{fmt(currentCircuit.calculations?.zs, 3)}Ω</p>
-                  <p className="text-xs text-white/60">
-                    Max: {fmt(currentCircuit.calculations?.maxZs, 3)}Ω
-                  </p>
-                </div>
+                {/* Use expectedTests as source of truth for Zs compliance */}
+                {(() => {
+                  const zsValue = currentCircuit.expectedTests?.zs?.expected ?? currentCircuit.calculations?.zs ?? 0;
+                  const maxZs = currentCircuit.expectedTests?.zs?.maxPermitted ?? currentCircuit.calculations?.maxZs ?? 999;
+                  const zsCompliant = currentCircuit.expectedTests?.zs?.compliant ?? (zsValue <= maxZs);
+                  
+                  return (
+                    <div className={`p-3 rounded-lg ${zsCompliant ? 'bg-green-500/10' : 'bg-red-500/10'}`}>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-sm font-medium">Earth Fault Loop (Zs)</span>
+                        {zsCompliant ? 
+                          <CheckCircle2 className="h-4 w-4 text-green-600" /> : 
+                          <AlertTriangle className="h-4 w-4 text-red-600" />
+                        }
+                      </div>
+                      <p className="text-lg font-bold">{fmt(zsValue, 3)}Ω</p>
+                      <p className="text-xs text-white/60">
+                        Max: {fmt(maxZs, 3)}Ω
+                      </p>
+                    </div>
+                  );
+                })()}
               </div>
             </div>
 

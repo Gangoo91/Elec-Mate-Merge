@@ -235,8 +235,8 @@ export function generateDesignSpecificationPDF(design: InstallationDesign): jsPD
       ["Voltage Drop", `${circuit.calculations.voltageDrop.volts.toFixed(2)}V (${circuit.calculations.voltageDrop.percent.toFixed(2)}%)`],
       ["Voltage Drop Limit", `${circuit.calculations.voltageDrop.limit}%`],
       ["Compliant", circuit.calculations.voltageDrop.compliant ? "✓ YES" : "✗ NO"],
-      ["Zs (Calculated)", `${circuit.calculations.zs.toFixed(3)}Ω`],
-      ["Max Zs Permitted", `${circuit.calculations.maxZs.toFixed(3)}Ω`],
+      ["Zs (Calculated)", `${(circuit.expectedTests?.zs?.expected ?? circuit.calculations.zs).toFixed(3)}Ω`],
+      ["Max Zs Permitted", `${(circuit.expectedTests?.zs?.maxPermitted ?? circuit.calculations.maxZs).toFixed(3)}Ω`],
       ["Expected R1+R2", calculateR1R2(circuit.cableSize, circuit.cpcSize, circuit.cableLength)]
     ];
     
