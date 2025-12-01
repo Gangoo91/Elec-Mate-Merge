@@ -88,8 +88,10 @@ export const xlpeTwinEarthCapacities: CableCapacity[] = [
   { size: 50, capacities: { A1: 135, A2: 148, B: 148, C: 188, E: 188, F: 188 }, resistance: 0.387, reactance: 0.082 }
 ];
 
-// BS 7671 Table 4D5A - SWA cables, multicore (70°C/90°C)
-// Reference Method D for buried, C for clipped
+// BS 7671 Table 4D4A - SWA cables, 3-core armoured, XLPE 90°C (clipped direct / on tray)
+// Reference Method C (clipped direct) - most common for industrial SWA
+// CRITICAL: These are the CORRECT values from BS 7671:2018+A3:2024 Table 4D4A
+// Use these for validation - AI outputs must match these values!
 export const swaCapacities: CableCapacity[] = [
   { size: 1.5, capacities: { C: 20, D: 19, E: 20, F: 20 }, resistance: 12.1, reactance: 0.13 },
   { size: 2.5, capacities: { C: 27, D: 26, E: 27, F: 27 }, resistance: 7.41, reactance: 0.12 },
@@ -111,6 +113,41 @@ export const swaCapacities: CableCapacity[] = [
   { size: 500, capacities: { C: 569, D: 538, E: 569, F: 569 }, resistance: 0.0366, reactance: 0.069 },
   { size: 630, capacities: { C: 640, D: 605, E: 640, F: 640 }, resistance: 0.0283, reactance: 0.068 }
 ];
+
+/**
+ * Validate cable capacity against BS 7671 tables
+ * Returns null if capacity matches table, error message if mismatch
+ */
+export function validateCableCapacity(
+  cableType: CableType,
+  size: number,
+  claimedIz: number,
+  installMethod: string = 'clipped-direct'
+): { valid: boolean; actualIz?: number; error?: string } {
+  const cable = getCableCapacity(cableType, size);
+  if (!cable) {
+    return { valid: false, error: `No cable data for ${cableType} ${size}mm²` };
+  }
+  
+  // Get reference method (default to C for clipped direct)
+  const refMethod = installMethod.includes('buried') ? 'D' : 'C';
+  const actualIz = cable.capacities[refMethod];
+  
+  if (!actualIz) {
+    return { valid: false, error: `No capacity data for method ${refMethod}` };
+  }
+  
+  // Allow 1A tolerance for rounding
+  if (Math.abs(claimedIz - actualIz) > 1) {
+    return {
+      valid: false,
+      actualIz,
+      error: `Cable capacity mismatch: claimed ${claimedIz}A but BS 7671 Table shows ${actualIz}A for ${size}mm² ${cableType} (Method ${refMethod})`
+    };
+  }
+  
+  return { valid: true, actualIz };
+}
 
 // MICC (Mineral Insulated) cables - 70°C/250°C depending on termination
 export const miccCapacities: CableCapacity[] = [
@@ -195,3 +232,29 @@ export const getNextCableSize = (
   
   return nextSize || null;
 };
+
+/**
+ * Get minimum cable size required for a given protection device rating
+ * Uses BS 7671 rule: Cable capacity (Iz) must be >= Protection device rating (In)
+ */
+export function getMinimumCableSizeForProtection(
+  cableType: CableType,
+  protectionRating: number,
+  referenceMethod: string = 'C'
+): { size: number; capacity: number } | null {
+  const data = cableCapacityData[cableType];
+  if (!data) return null;
+  
+  // Find smallest cable size where capacity >= protection rating
+  const suitableCable = data.find(cable => {
+    const capacity = cable.capacities[referenceMethod];
+    return capacity && capacity >= protectionRating;
+  });
+  
+  if (!suitableCable) return null;
+  
+  return {
+    size: suitableCable.size,
+    capacity: suitableCable.capacities[referenceMethod]
+  };
+}
