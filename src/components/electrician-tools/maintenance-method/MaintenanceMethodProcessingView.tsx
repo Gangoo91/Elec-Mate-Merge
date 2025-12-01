@@ -76,7 +76,7 @@ export const MaintenanceMethodProcessingView = ({
         <Card className="border-elec-yellow/20 bg-muted/30">
           <CardContent className="p-3 sm:p-6">
             <div className="flex items-center justify-between gap-2 mb-2">
-              <h4 className="font-semibold text-sm text-muted-foreground flex items-center gap-2">
+              <h4 className="font-semibold text-sm text-foreground flex items-center gap-2">
                 <FileText className="h-4 w-4" />
                 What You Asked For
               </h4>
@@ -85,7 +85,7 @@ export const MaintenanceMethodProcessingView = ({
               {originalQuery}
             </p>
             {equipmentDetails && (
-              <div className="mt-3 pt-3 border-t border-border text-xs text-muted-foreground space-y-1 text-left">
+              <div className="mt-3 pt-3 border-t border-border text-xs text-foreground space-y-1 text-left">
                 {equipmentDetails.equipmentType && (
                   <p>Equipment: <span className="text-foreground">{equipmentDetails.equipmentType}</span></p>
                 )}
@@ -111,7 +111,7 @@ export const MaintenanceMethodProcessingView = ({
               </div>
               <div>
                 <h3 className="font-semibold text-base sm:text-lg text-foreground">Maintenance Method Specialist</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">
+                <p className="text-xs sm:text-sm text-foreground">
                   {progress < 100 ? 'Generating maintenance instructions...' : 'Complete'}
                 </p>
               </div>
@@ -177,7 +177,7 @@ export const MaintenanceMethodProcessingView = ({
               {/* Current step message */}
               {currentStep && (
                 <div className="text-center px-2">
-                  <p className="text-xs sm:text-sm text-muted-foreground flex items-center justify-center gap-2">
+                  <p className="text-xs sm:text-sm text-foreground flex items-center justify-center gap-2">
                     <span className="inline-block w-2 h-2 bg-elec-yellow rounded-full animate-pulse"></span>
                     {currentStep}
                   </p>
@@ -188,7 +188,7 @@ export const MaintenanceMethodProcessingView = ({
             {/* Time Statistics */}
             <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-4 border-t border-border">
               <div className="text-center p-2 sm:p-3 bg-muted/30 rounded-lg">
-                <div className="text-xs text-muted-foreground mb-1">Elapsed</div>
+                <div className="text-xs text-foreground mb-1">Elapsed</div>
                 <div className={cn(
                   "text-2xl sm:text-3xl font-black transition-all",
                   "bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
@@ -197,7 +197,7 @@ export const MaintenanceMethodProcessingView = ({
                 </div>
               </div>
               <div className="text-center p-2 sm:p-3 bg-muted/30 rounded-lg">
-                <div className="text-xs text-muted-foreground mb-1">Remaining</div>
+                <div className="text-xs text-foreground mb-1">Remaining</div>
                 <div className={cn(
                   "text-2xl sm:text-3xl font-black transition-all",
                   "bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
@@ -229,7 +229,7 @@ export const MaintenanceMethodProcessingView = ({
               )}
               <div className="min-w-0">
                 <div className="font-medium text-foreground text-xs sm:text-sm">Searching BS 7671 maintenance requirements</div>
-                <div className="text-xs text-muted-foreground hidden sm:block">Finding relevant maintenance schedules and inspection procedures</div>
+                <div className="text-xs text-foreground hidden sm:block">Finding relevant maintenance schedules and inspection procedures</div>
               </div>
             </div>
             
@@ -247,7 +247,7 @@ export const MaintenanceMethodProcessingView = ({
               )}
               <div className="min-w-0">
                 <div className="font-medium text-foreground text-xs sm:text-sm">Analysing equipment specifications</div>
-                <div className="text-xs text-muted-foreground hidden sm:block">Determining maintenance intervals and safety requirements</div>
+                <div className="text-xs text-foreground hidden sm:block">Determining maintenance intervals and safety requirements</div>
               </div>
             </div>
             
@@ -265,7 +265,7 @@ export const MaintenanceMethodProcessingView = ({
               )}
               <div className="min-w-0">
                 <div className="font-medium text-foreground text-xs sm:text-sm">Generating step-by-step procedures</div>
-                <div className="text-xs text-muted-foreground hidden sm:block">Creating detailed maintenance instructions with safety notes</div>
+                <div className="text-xs text-foreground hidden sm:block">Creating detailed maintenance instructions with safety notes</div>
               </div>
             </div>
             
@@ -283,7 +283,7 @@ export const MaintenanceMethodProcessingView = ({
               )}
               <div className="min-w-0">
                 <div className="font-medium text-foreground text-xs sm:text-sm">Verifying regulation compliance</div>
-                <div className="text-xs text-muted-foreground hidden sm:block">Cross-checking with BS 7671 requirements and safety standards</div>
+                <div className="text-xs text-foreground hidden sm:block">Cross-checking with BS 7671 requirements and safety standards</div>
               </div>
             </div>
           </div>

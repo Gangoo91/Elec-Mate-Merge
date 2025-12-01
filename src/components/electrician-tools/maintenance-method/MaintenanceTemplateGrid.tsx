@@ -34,7 +34,7 @@ const TemplateCard = ({ template, onSelect }: { template: MaintenanceTemplate; o
               <Star className="h-3 w-3 sm:h-4 sm:w-4 text-amber-400 fill-amber-400 flex-shrink-0" />
             )}
           </h4>
-          <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">
+          <p className="text-xs sm:text-sm text-foreground line-clamp-2">
             {template.description}
           </p>
         </div>
