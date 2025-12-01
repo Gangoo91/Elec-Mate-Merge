@@ -218,7 +218,7 @@ serve(async (req) => {
     // Parallel RAG retrieval with regulations_intelligence
     const [maintenanceKnowledge, bs7671Regs, failureModes] = await Promise.all([
       supabase.rpc('search_maintenance_hybrid', {
-        query_text: `${equipmentType} maintenance schedule procedures testing`,
+        query_text: `${equipmentType} maintenance schedule procedures testing inspection EICR isolation verification functional checks thermal imaging torque`,
         query_embedding: queryEmbedding,
         equipment_filter: equipmentType,
         match_count: detailLevel === 'quick' ? 6 : 12
@@ -302,13 +302,17 @@ Return JSON with:
   "schedule": [
     {
       "interval": "string",
-      "task": "string",
-      "regulation": "BS 7671 ref",
+      "task": "Detailed task description (20-40 words with specific equipment targets)",
+      "regulation": "Primary BS 7671 ref; Secondary refs (e.g., 'BS 7671:2018+A3:2024 Chapter 64; Reg 753.511; Table F3')",
+      "additionalRegulations": ["Reg 612.3", "GN3 Section 7.2", "Table 41.3"],
       "priority": "high|medium|low",
       "estimatedDurationMinutes": number,
       "estimatedCost": {"min": number, "max": number},
-      "requiredQualifications": ["string"],
-      "toolsRequired": ["string"],
+      "requiredQualifications": ["18th Edition", "Competent Person", "ECS card type"],
+      "toolsRequired": ["Specific tool with settings", "Test instrument with mode"],
+      "procedure": ["Step 1: Specific action with values", "Step 2: Test procedure with expected results", "Step 3: Record measurements", "Step 4: Verify against criteria", "Step 5: Document findings"],
+      "safetyPrecautions": ["Isolation method", "PPE required", "Permit requirements"],
+      "acceptanceCriteria": "Specific pass/fail criteria with values (e.g., 'Zs < 0.87Ω for 32A Type B MCB')",
       "nextDue": "ISO date",
       "taskCategory": "inspection|testing|maintenance|replacement"
     }
@@ -318,7 +322,14 @@ Return JSON with:
   "recommendations": ["string"]
 }
 
-Generate ${buildingType === 'domestic' ? '3-5' : '5-7'} essential tasks. Keep concise.`,
+TASK GENERATION REQUIREMENTS:
+- Each task MUST reference 2-3 BS 7671 regulations in the 'regulation' field (semicolon separated)
+- Include applicable Table references (e.g., Table 41.3, Table 61, Table F3)
+- Include GN3 (Inspection & Testing) guidance note references
+- Procedure steps must include specific test instrument settings and expected values with units
+- Include pass/fail acceptance criteria for each test
+
+Generate ${buildingType === 'domestic' ? '6-8' : '6-8'} comprehensive tasks with detailed regulation references.`,
               2200,
               Timeouts.LONG
             );
@@ -482,13 +493,17 @@ Return JSON with:
   "schedule": [
     {
       "interval": "string",
-      "task": "detailed task name",
-      "regulation": "BS 7671 Reg X.X.X",
+      "task": "Comprehensive task description (30-50 words with specific equipment, tests, and criteria)",
+      "regulation": "Primary BS 7671 ref; Secondary refs; Table refs (e.g., 'BS 7671:2018+A3:2024 Chapter 64; Reg 753.511; Table F3; GN3 Section 7.2')",
+      "additionalRegulations": ["Reg 612.3", "Reg 643.7", "GN3 Section 7.2", "Table 41.3", "IET Guidance Note 3"],
       "priority": "high|medium|low",
       "estimatedDurationMinutes": number,
       "estimatedCost": {"min": number, "max": number},
-      "requiredQualifications": ["string"],
-      "toolsRequired": ["specific tools"],
+      "requiredQualifications": ["18th Edition", "Competent Person", "Inspection & Testing", "ECS card type"],
+      "toolsRequired": ["Specific tool with model/settings", "Test instrument with mode and range"],
+      "procedure": ["Step 1: Detailed action with specific values/criteria", "Step 2: Set instrument to specific mode/range", "Step 3: Perform test with expected values", "Step 4: Compare against acceptance criteria", "Step 5: Record and document findings", "Step 6: Additional verification if needed", "Step 7: Final checks and certification"],
+      "safetyPrecautions": ["Specific isolation method (e.g., 'Lock off at DB with unique padlock')", "PPE required with standards", "Permit-to-work requirements", "Risk assessments needed"],
+      "acceptanceCriteria": "Specific pass/fail criteria with values and units (e.g., 'Zs < 0.87Ω for 32A Type B MCB per Table 41.3; IR > 1MΩ per Reg 643.3')",
       "nextDue": "ISO date",
       "taskCategory": "inspection|testing|maintenance|replacement"
     }
@@ -498,7 +513,19 @@ Return JSON with:
   "recommendations": ["string"]
 }
 
-Generate ${buildingType === 'domestic' ? '5-7' : '8-12'} detailed tasks.`,
+CRITICAL TASK GENERATION REQUIREMENTS:
+1. Each task MUST reference at least 2-3 BS 7671 regulations in the 'regulation' field (semicolon separated)
+2. Each task MUST have 5-7 procedure steps with specific test values, tool settings, and acceptance criteria
+3. Include applicable Table references (e.g., Table 41.3, Table 61, Table F3)
+4. Include GN3 (Inspection & Testing) guidance note references where relevant
+5. Include IET Guidance Note references and HSE/CDM regulations for safety-critical tasks
+6. Procedure steps must include:
+   - Specific test instrument settings (e.g., "Set MFT to Loop Impedance, 2-wire mode")
+   - Expected values with units (e.g., "Zs should be <0.87Ω for 32A Type B MCB")
+   - Pass/fail criteria for each test
+   - Documentation requirements per step
+
+Generate ${buildingType === 'domestic' ? '10-15' : '10-15'} comprehensive detailed tasks with rich regulation references and procedures.`,
         1800,
         Timeouts.EXTENDED
       );
@@ -519,8 +546,8 @@ Generate ${buildingType === 'domestic' ? '5-7' : '8-12'} detailed tasks.`,
         {
           name: 'expand-tasks',
           execute: async () => {
-            // Expand first 4 tasks in detail
-            const tasksToExpand = schedule.schedule.slice(0, Math.min(4, schedule.schedule.length));
+            // Expand ALL tasks in detail for comprehensive output
+            const tasksToExpand = schedule.schedule;
             
             const response = await callOpenAI(
               openAIApiKey,
@@ -537,7 +564,13 @@ Return JSON array with each task having:
   "recordKeeping": "What to document"
 }
 
-Each task MUST have 5-8 detailed procedural steps with specific tools, test voltages, and pass/fail criteria.`,
+CRITICAL REQUIREMENTS for each task procedure:
+- 5-7 detailed procedural steps with specific values and settings
+- Include specific test instrument settings (e.g., "Set MFT to Loop Impedance, 2-wire mode, 230V nominal")
+- Include expected values with units (e.g., "Zs should be <0.87Ω for 32A Type B MCB per Table 41.3")
+- Include pass/fail criteria for each measurement
+- Reference specific BS 7671 regulations and Tables for each test
+- Include documentation requirements (what to record, where, in what format)`,
               1800,
               Timeouts.EXTENDED
             );
@@ -608,7 +641,16 @@ Return JSON:
   ]
 }
 
-Generate 6-10 regulations with excerpts and 5-8 compliance checklist items.`,
+CRITICAL REGULATIONS REQUIREMENTS:
+Generate 10-15 comprehensive regulations covering:
+- Chapter 64 (Inspection & Testing) requirements
+- Part 7 Special Locations if applicable
+- Table references (41.3, 41.4, 61, F3, etc.) with specific values
+- GN3 Guidance Note cross-references for practical testing procedures
+- Related HSE regulations (e.g., EAWR, CDM) where safety-critical
+- IET Guidance Note references for best practice
+
+Also provide 8-12 detailed compliance checklist items with specific criteria.`,
               1800,
               Timeouts.EXTENDED
             );
