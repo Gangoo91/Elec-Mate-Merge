@@ -169,6 +169,7 @@ export class DesignPipeline {
     // ========================================
     const cableCapacityErrors: any[] = [];
     const industrialProtectionErrors: any[] = [];
+    const protectionSizingErrors: any[] = [];
     
     design.circuits.forEach((circuit, index) => {
       // Validate cable capacity against BS 7671 tables
@@ -198,6 +199,19 @@ export class DesignPipeline {
           severity: 'error'
         });
       }
+      
+      // Validate protection sizing (Ib ≤ In ≤ Iz) - DO NOT correct here, just log
+      const { validateProtectionSizing } = await import('./cable-capacity-validator.ts');
+      const sizingValidation = validateProtectionSizing(circuit, this.logger);
+      if (!sizingValidation.valid) {
+        protectionSizingErrors.push({
+          circuitNumber: circuit.circuitNumber || index + 1,
+          circuitName: circuit.name,
+          reason: sizingValidation.reason,
+          correctedRating: sizingValidation.correctedRating,
+          severity: 'warning'
+        });
+      }
     });
     
     // Log validation results
@@ -222,6 +236,59 @@ export class DesignPipeline {
     } else {
       this.logger.info('✅ Industrial protection validation passed', {
         circuits: design.circuits.length
+      });
+    }
+    
+    if (protectionSizingErrors.length > 0) {
+      this.logger.warn('🟡 Protection sizing issues detected', {
+        issueCount: protectionSizingErrors.length,
+        issues: protectionSizingErrors
+      });
+      (design as any).protectionSizingWarnings = protectionSizingErrors;
+    } else {
+      this.logger.info('✅ Protection sizing validation passed', {
+        circuits: design.circuits.length
+      });
+    }
+
+    // ========================================
+    // PHASE 6.8: Protection Sizing Auto-Correction (Ib ≤ In ≤ Iz)
+    // ========================================
+    const { validateProtectionSizing: validateProtectionSizingFunc } = await import('./cable-capacity-validator.ts');
+    let correctionCount = 0;
+    
+    design.circuits = design.circuits.map(circuit => {
+      const validation = validateProtectionSizingFunc(circuit, this.logger);
+      
+      if (!validation.valid && validation.correctedRating) {
+        correctionCount++;
+        this.logger.info('🔧 Auto-correcting protection device', {
+          circuit: circuit.name,
+          originalRating: circuit.protectionDevice?.rating,
+          correctedRating: validation.correctedRating,
+          reason: validation.reason
+        });
+        
+        return {
+          ...circuit,
+          protectionDevice: {
+            ...circuit.protectionDevice,
+            rating: validation.correctedRating
+          },
+          calculations: {
+            ...circuit.calculations,
+            In: validation.correctedRating
+          }
+        };
+      }
+      
+      return circuit;
+    });
+    
+    if (correctionCount > 0) {
+      this.logger.info('✅ Protection sizing auto-correction complete', {
+        corrected: correctionCount,
+        total: design.circuits.length
       });
     }
 
