@@ -287,9 +287,8 @@ export class AIDesigner {
     parts.push('');
     parts.push('🔴 CRITICAL: Check circuit.circuitTopology field to determine ring vs radial');
     parts.push('🔴 If circuitTopology === "ring": ALWAYS 2.5mm² + 1.5mm² CPC + 32A RCBO (BS 7671 Appendix 15)');
-    parts.push('🔴 If circuitTopology === "radial" + 32A: MUST use 4mm² minimum (NOT 2.5mm²)');
-    parts.push('🔴 If circuitTopology === "radial" + 20A: 2.5mm² acceptable');
-    parts.push('🔴 If circuitTopology === "auto": Use load power heuristic (≤7360W suggests ring)');
+    parts.push('🔴 If circuitTopology === "radial": Size cable and MCB based on diversified load (Id)');
+    parts.push('🔴 Ring circuits require minimum 2kW load - low loads (<2kW) should use radials');
     parts.push('');
     parts.push('📐 RING FINAL SPECIFICATIONS:');
     parts.push('  • Cable: ALWAYS 2.5mm² + 1.5mm² CPC (BS 7671 Appendix 15)');
@@ -315,9 +314,9 @@ export class AIDesigner {
     
     // Add commercial radial vs ring decision guidance
     if (type === 'commercial' || type === 'industrial') {
-      parts.push('=== COMMERCIAL/INDUSTRIAL RADIAL vs RING DECISION ===');
+      parts.push('=== COMMERCIAL/INDUSTRIAL CIRCUIT DESIGN RULES ===');
       parts.push('');
-      parts.push('🏢 COMMERCIAL RULE: Use RADIALS for dedicated equipment circuits:');
+      parts.push('🏢 COMMERCIAL RADIALS (circuit.circuitTopology === "radial"):');
       parts.push('  • EPOS/Till stations: 20A radial (2.5mm²) - typically <2kW total');
       parts.push('  • Office workstations: 20A radial - dedicated desk clusters');
       parts.push('  • Server/IT equipment: 20A or 32A radial - dedicated feeds');
@@ -325,21 +324,31 @@ export class AIDesigner {
       parts.push('  • Printers/copiers: 20A radial - dedicated equipment');
       parts.push('  • Kitchen equipment: Dedicated radials per appliance');
       parts.push('');
-      parts.push('🏢 COMMERCIAL RULE: Use RINGS only for:');
-      parts.push('  • General-purpose socket outlets serving multiple unspecified loads');
+      parts.push('📊 LOAD-BASED MCB SELECTION (for radials):');
+      parts.push('  • Id <10A (2.3kW): 16A MCB + 2.5mm² cable');
+      parts.push('  • Id 10-16A (2.3-3.68kW): 20A MCB + 2.5mm² cable');
+      parts.push('  • Id 16-20A (3.68-4.6kW): 25A MCB + 4mm² cable');
+      parts.push('  • Id 20-32A (4.6-7.36kW): 32A MCB + 4mm² cable');
+      parts.push('  • Id >32A: Dedicated circuit sized to load');
+      parts.push('');
+      parts.push('🏢 COMMERCIAL RINGS (circuit.circuitTopology === "ring"):');
+      parts.push('  • Use ONLY for general-purpose socket outlets (multiple unspecified loads)');
       parts.push('  • Open-plan office areas with numerous socket points');
-      parts.push('  • Floor boxes where load distribution is unknown');
-      parts.push('  • Meeting rooms with variable equipment usage');
+      parts.push('  • Minimum load: 2kW (ring circuits for low loads are wasteful)');
+      parts.push('  • ALWAYS: 32A RCBO + 2.5mm² + 1.5mm² CPC');
       parts.push('');
-      parts.push('📊 LOAD-BASED DECISION:');
-      parts.push('  • <16A (3680W): Use 20A radial - 2.5mm² cable adequate');
-      parts.push('  • 16-32A (3680-7360W): Consider ring OR 32A radial (4mm²)');
-      parts.push('  • >32A: Dedicated circuit with appropriately sized cable');
+      parts.push('🔌 INSTALLATION METHODS (commercial):');
+      parts.push('  • Office sockets: Plastic dado trunking + LSZH singles (NOT steel conduit)');
+      parts.push('  • Server rooms: Steel trunking + LSZH singles');
+      parts.push('  • Plant rooms/workshops: Steel conduit + LSZH singles');
+      parts.push('  • Sub-mains: SWA armoured cable (clipped direct)');
+      parts.push('  • Fire circuits: FP200/FP400 with fire-rated clips');
       parts.push('');
-      parts.push('💡 PRACTICAL EXAMPLE:');
-      parts.push('  • 4x EPOS tills @ 250W each = 1kW total → 20A RADIAL (not 32A ring!)');
-      parts.push('  • ATM unit @ 2kW → 20A RADIAL (dedicated circuit)');
-      parts.push('  • General office sockets @ 6kW → Could be 32A RING (multiple users)');
+      parts.push('💡 PRACTICAL EXAMPLES:');
+      parts.push('  • Phone Booth Sockets (1kW/4.35A) → 16A RADIAL + 2.5mm² + plastic dado');
+      parts.push('  • Consultation Room Sockets (2kW/8.7A) → 20A RADIAL + 2.5mm² + plastic dado');
+      parts.push('  • X-Ray Suite (8kW/34.78A) → 40A RADIAL + 6mm² + steel conduit');
+      parts.push('  • Hot Desk Zone (5kW) → 32A RADIAL (4mm²) OR ring (2.5mm²) + plastic dado');
       parts.push('');
     }
     
