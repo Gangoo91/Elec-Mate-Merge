@@ -383,12 +383,53 @@ export class AIDesigner {
       parts.push('  • Sub-mains: SWA armoured cable (clipped direct)');
       parts.push('  • Fire circuits: FP200/FP400 with fire-rated clips');
       parts.push('');
-      parts.push('💡 PRACTICAL EXAMPLES:');
-      parts.push('  • Phone Booth Sockets (1kW/4.35A) → 16A RADIAL + 2.5mm² + plastic dado');
-      parts.push('  • Consultation Room Sockets (2kW/8.7A) → 20A RADIAL + 2.5mm² + plastic dado');
-      parts.push('  • X-Ray Suite (8kW/34.78A) → 40A RADIAL + 6mm² + steel conduit');
-      parts.push('  • Hot Desk Zone (5kW) → 32A RADIAL (4mm²) OR ring (2.5mm²) + plastic dado');
-      parts.push('');
+    parts.push('💡 PRACTICAL EXAMPLES:');
+    parts.push('  • Phone Booth Sockets (1kW/4.35A) → 16A RADIAL + 2.5mm² + plastic dado');
+    parts.push('  • Consultation Room Sockets (2kW/8.7A) → 20A RADIAL + 2.5mm² + plastic dado');
+    parts.push('  • X-Ray Suite (8kW/34.78A) → 40A RADIAL + 6mm² + steel conduit');
+    parts.push('  • Hot Desk Zone (5kW) → 32A RADIAL (4mm²) OR ring (2.5mm²) + plastic dado');
+    parts.push('');
+    
+    // Add industrial protective device guidance
+    parts.push('=== INDUSTRIAL PROTECTIVE DEVICE SELECTION ===');
+    parts.push('');
+    parts.push('🏭 INDUSTRIAL INSTALLATIONS - Device Selection Rules:');
+    parts.push('');
+    parts.push('📊 FAULT LEVEL BASED SELECTION:');
+    parts.push('  • PSCC > 16kA → BS88 HRC fuse MANDATORY (80kA breaking capacity)');
+    parts.push('  • PSCC 10-16kA → BS88 fuse or MCB with 25kA rating');
+    parts.push('  • PSCC <10kA → MCB with 25kA rating acceptable');
+    parts.push('  • Standard MCBs (6-10kA) INSUFFICIENT for industrial');
+    parts.push('');
+    parts.push('📊 CURRENT LEVEL BASED SELECTION:');
+    parts.push('  • Ib > 400A → MCCB required (adjustable trip settings)');
+    parts.push('  • Ib 125-400A → BS88 fuse or MCCB (80kA breaking capacity)');
+    parts.push('  • Ib 63-125A → BS88 fuse recommended (red-spot boards)');
+    parts.push('  • Ib <63A → MCB/RCBO with 25kA rating');
+    parts.push('');
+    parts.push('⚙️ MOTOR PROTECTION:');
+    parts.push('  • Motors >63A → BS88 aM-type fuse (motor starting duty)');
+    parts.push('  • Motors <63A → Type D MCB (tolerates 10-20× inrush)');
+    parts.push('  • Direct-on-line starters → BS88 aM fuse preferred');
+    parts.push('  • Soft-start motors → Type C MCB acceptable');
+    parts.push('');
+    parts.push('🔴 RED-SPOT BOARDS (Industrial Standard):');
+    parts.push('  • Distribution boards with BS88 HRC fuses');
+    parts.push('  • Breaking capacity: 80kA minimum');
+    parts.push('  • Fuse classes: gG (general purpose), aM (motor)');
+    parts.push('  • Sub-main protection: 100A-630A typical');
+    parts.push('');
+    parts.push('📐 MAX ZS VALUES FOR BS88 FUSES (Table 41.4):');
+    parts.push('  • 32A: 1.09Ω, 63A: 0.49Ω, 100A: 0.27Ω');
+    parts.push('  • 125A: 0.21Ω, 200A: 0.12Ω, 400A: 0.055Ω');
+    parts.push('  • 630A: 0.034Ω, 1000A: 0.021Ω');
+    parts.push('');
+    parts.push('💡 INDUSTRIAL EXAMPLES:');
+    parts.push('  • Machine Tool (15kW/65A, PSCC 18kA) → BS88 80A gG fuse + 16mm² SWA');
+    parts.push('  • Motor Circuit (11kW/49A, DOL) → BS88 63A aM fuse + 10mm² SWA');
+    parts.push('  • Sub-Main (100A, PSCC 20kA) → BS88 125A gG fuse + 25mm² SWA');
+    parts.push('  • Control Panel (5kW/22A) → 25A Type C MCB (25kA) + 4mm² SWA');
+    parts.push('');
     }
     
     parts.push('=== DIVERSITY FACTORS - MANDATORY ===');
@@ -1608,23 +1649,28 @@ CRITICAL: In diversityApplied justification, cite specific table item (e.g., "pe
                     properties: {
                       type: { 
                         type: 'string',
-                        enum: ['MCB', 'RCBO'],
-                        description: 'Protection device type. IMPORTANT: Use RCBO for ALL socket circuits (Reg 411.3.3) and bathroom circuits (Reg 701.411.3.3). Use MCB only for lighting and fixed equipment.'
+                        enum: ['MCB', 'RCBO', 'BS88', 'MCCB', 'BS1361', 'BS3036'],
+                        description: 'Protection device type. MCB/RCBO for domestic/commercial (up to 125A). BS88 HRC fuse for industrial high fault levels or high current (125A+). MCCB for industrial very high current (>400A). BS1361 for legacy cartridge fuse boards. BS3036 for old rewirable fuse boards (assessment only). IMPORTANT: Use RCBO for ALL socket circuits (Reg 411.3.3) and bathroom circuits (Reg 701.411.3.3).'
                       },
                       rating: { 
                         type: 'number',
-                        enum: [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100],
-                        description: 'MCB/RCBO rating in Amps'
+                        enum: [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250],
+                        description: 'Protection device rating in Amps. Standard MCB/RCBO: 6-125A. BS88 fuses: 6-1250A. MCCB: 125-1600A.'
                       },
                       curve: { 
                         type: 'string',
-                        enum: ['B', 'C', 'D'],
-                        description: 'B for resistive, C for general, D for motors'
+                        enum: ['B', 'C', 'D', 'gG', 'aM'],
+                        description: 'Trip curve/fuse class. MCB/RCBO: B (resistive), C (general), D (motors). BS88 fuses: gG (general purpose), aM (motor protection - tolerates high inrush). BS1361/BS3036: Not applicable (leave as B).'
                       },
                       kaRating: { 
                         type: 'number',
-                        enum: [6, 10],
-                        description: 'Short circuit breaking capacity (6kA domestic, 10kA commercial)'
+                        enum: [6, 10, 16, 25, 50, 80, 100],
+                        description: 'Short circuit breaking capacity in kA. Domestic MCB: 6-10kA. Commercial MCB: 10-16kA. Industrial MCB: 16-25kA. BS88 HRC fuse: 80kA (standard). MCCB: 50-100kA.'
+                      },
+                      fuseClass: {
+                        type: 'string',
+                        enum: ['gG', 'aM', 'gM'],
+                        description: 'Fuse class for BS88/BS1361/BS3036 only. gG = general purpose (full range), aM = motor (partial range - allows high inrush), gM = motor (full range). Leave empty for MCB/RCBO/MCCB.'
                       }
                     },
                     required: ['type', 'rating', 'curve', 'kaRating']

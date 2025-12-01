@@ -63,42 +63,20 @@ export const MAX_ZS_MCB_TYPE_D_04S: MaxZsData[] = [
 ];
 
 /**
- * Get maximum Zs value for a protective device
+ * Get maximum Zs value for a protective device (legacy function for backwards compatibility)
  * 
- * @param deviceType - Type of protective device
+ * @param deviceType - Type of protective device (MCB curves only)
  * @param deviceRating - Current rating in Amperes
  * @param disconnectionTime - Required disconnection time (default 0.4s for final circuits)
  * @returns Maximum Zs in ohms
+ * @deprecated Use getMaxZsForDevice() instead for industrial device support
  */
 export function getMaxZs(
   deviceType: 'B' | 'C' | 'D',
   deviceRating: number,
   disconnectionTime: 0.4 | 5 = 0.4
 ): { maxZs: number; regulation: string } | null {
-  let table: MaxZsData[];
-  
-  switch (deviceType) {
-    case 'B':
-      table = MAX_ZS_MCB_TYPE_B_04S;
-      break;
-    case 'C':
-      table = MAX_ZS_MCB_TYPE_C_04S;
-      break;
-    case 'D':
-      table = MAX_ZS_MCB_TYPE_D_04S;
-      break;
-    default:
-      return null;
-  }
-  
-  const match = table.find(z => z.deviceRating === deviceRating && z.disconnectionTime === disconnectionTime);
-  
-  if (!match) return null;
-  
-  return {
-    maxZs: match.maxZs,
-    regulation: match.regulation
-  };
+  return getMaxZsForDevice(deviceType, deviceRating, disconnectionTime);
 }
 
 /**
@@ -246,3 +224,105 @@ export const BREAKING_CAPACITY_REQUIREMENTS: BreakingCapacityRequirement[] = [
     regulation: '434.5.2'
   },
 ];
+
+/**
+ * BS 7671 Table 41.4 - Maximum Zs for BS 88-2 gG Fuses (HRC "Red-Spot")
+ * Industrial high rupturing capacity fuses for 0.4s disconnection at 230V (Uo)
+ * Breaking capacity: 80kA standard
+ */
+export const MAX_ZS_BS88_GG_04S: MaxZsData[] = [
+  { deviceType: 'BS88', deviceRating: 6, maxZs: 8.89, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 10, maxZs: 5.33, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 16, maxZs: 2.82, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 20, maxZs: 2.05, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 25, maxZs: 1.50, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 32, maxZs: 1.09, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 40, maxZs: 0.86, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 50, maxZs: 0.65, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 63, maxZs: 0.49, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 80, maxZs: 0.36, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 100, maxZs: 0.27, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 125, maxZs: 0.21, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 160, maxZs: 0.16, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 200, maxZs: 0.12, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 250, maxZs: 0.09, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 315, maxZs: 0.07, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 400, maxZs: 0.055, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 500, maxZs: 0.043, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 630, maxZs: 0.034, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 800, maxZs: 0.027, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 1000, maxZs: 0.021, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 1250, maxZs: 0.017, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+];
+
+/**
+ * BS 7671 Table 41.4 - Maximum Zs for BS 1361 Cartridge Fuses
+ * Domestic/commercial cartridge fuses for 0.4s disconnection at 230V (Uo)
+ */
+export const MAX_ZS_BS1361_04S: MaxZsData[] = [
+  { deviceType: 'BS1361', deviceRating: 5, maxZs: 10.9, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS1361', deviceRating: 15, maxZs: 3.43, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS1361', deviceRating: 20, maxZs: 2.55, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS1361', deviceRating: 30, maxZs: 1.60, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS1361', deviceRating: 45, maxZs: 0.96, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS1361', deviceRating: 60, maxZs: 0.68, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS1361', deviceRating: 80, maxZs: 0.47, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS1361', deviceRating: 100, maxZs: 0.35, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.4' },
+];
+
+/**
+ * BS 7671 Table 41.2 - Maximum Zs for BS 3036 Semi-Enclosed (Rewirable) Fuses
+ * Legacy fuses found in older installations for 0.4s disconnection at 230V (Uo)
+ * Note: No longer recommended for new installations
+ */
+export const MAX_ZS_BS3036_04S: MaxZsData[] = [
+  { deviceType: 'BS3036', deviceRating: 5, maxZs: 10.9, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.2' },
+  { deviceType: 'BS3036', deviceRating: 15, maxZs: 2.79, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.2' },
+  { deviceType: 'BS3036', deviceRating: 20, maxZs: 1.85, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.2' },
+  { deviceType: 'BS3036', deviceRating: 30, maxZs: 1.09, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.2' },
+  { deviceType: 'BS3036', deviceRating: 45, maxZs: 0.60, disconnectionTime: 0.4, voltage: 230, regulation: 'Table 41.2' },
+];
+
+/**
+ * Get maximum Zs value for any protective device type
+ * Extended to support industrial fuses (BS88, BS1361, BS3036)
+ */
+export function getMaxZsForDevice(
+  deviceType: 'B' | 'C' | 'D' | 'BS88' | 'BS1361' | 'BS3036',
+  deviceRating: number,
+  disconnectionTime: 0.4 | 5 = 0.4
+): { maxZs: number; regulation: string } | null {
+  let table: MaxZsData[];
+  
+  switch (deviceType) {
+    case 'B':
+      table = MAX_ZS_MCB_TYPE_B_04S;
+      break;
+    case 'C':
+      table = MAX_ZS_MCB_TYPE_C_04S;
+      break;
+    case 'D':
+      table = MAX_ZS_MCB_TYPE_D_04S;
+      break;
+    case 'BS88':
+      table = MAX_ZS_BS88_GG_04S;
+      break;
+    case 'BS1361':
+      table = MAX_ZS_BS1361_04S;
+      break;
+    case 'BS3036':
+      table = MAX_ZS_BS3036_04S;
+      break;
+    default:
+      return null;
+  }
+  
+  const match = table.find(z => z.deviceRating === deviceRating && z.disconnectionTime === disconnectionTime);
+  
+  if (!match) return null;
+  
+  return {
+    maxZs: match.maxZs,
+    regulation: match.regulation
+  };
+}

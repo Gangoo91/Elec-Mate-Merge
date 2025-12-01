@@ -133,10 +133,11 @@ export interface RAGContext {
 // ========================================
 
 export interface ProtectionDevice {
-  type: 'MCB' | 'RCBO';
+  type: 'MCB' | 'RCBO' | 'BS88' | 'MCCB' | 'BS1361' | 'BS3036';
   rating: number;
-  curve: 'B' | 'C' | 'D';
-  kaRating: number;
+  curve?: 'B' | 'C' | 'D' | 'gG' | 'aM'; // gG = general purpose fuse, aM = motor protection fuse
+  kaRating: number; // Breaking capacity in kA
+  fuseClass?: 'gG' | 'aM' | 'gM'; // For BS88/BS1361/BS3036 fuses
 }
 
 export interface VoltageDropCalculation {

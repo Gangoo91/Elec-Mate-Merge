@@ -8,9 +8,14 @@
  * 
  * This validator treats the justification as the SINGLE SOURCE OF TRUTH
  * and corrects any mismatches in the structured data.
+ * 
+ * PHASE 2: Industrial protective device support
+ * - Validates max Zs for BS88, BS1361, BS3036 fuses
+ * - Validates breaking capacity against PSCC
  */
 
 import type { DesignedCircuit } from './types.ts';
+import { getMaxZsForDevice } from '../shared/bs7671ProtectionData.ts';
 
 /**
  * Validate and correct consistency between overview and justification
@@ -104,4 +109,102 @@ export function validateCircuitConsistency(
   }
 
   return circuit;
+}
+
+/**
+ * Validate max Zs for industrial fuse types (BS88, BS1361, BS3036)
+ * Also validates MCB/RCBO types B, C, D
+ */
+export function validateMaxZs(
+  circuit: DesignedCircuit,
+  logger: any
+): { isValid: boolean; message?: string; correctedMaxZs?: number } {
+  const { protectionDevice, calculations } = circuit;
+  
+  if (!protectionDevice || !calculations) {
+    return { isValid: true };
+  }
+  
+  // Determine device type for max Zs lookup
+  let deviceTypeForLookup: 'B' | 'C' | 'D' | 'BS88' | 'BS1361' | 'BS3036' | null = null;
+  
+  if (protectionDevice.type === 'MCB' || protectionDevice.type === 'RCBO') {
+    // Use curve for MCB/RCBO
+    deviceTypeForLookup = protectionDevice.curve as 'B' | 'C' | 'D';
+  } else if (['BS88', 'BS1361', 'BS3036', 'MCCB'].includes(protectionDevice.type)) {
+    // Use device type directly for fuses
+    deviceTypeForLookup = protectionDevice.type as 'BS88' | 'BS1361' | 'BS3036';
+  }
+  
+  if (!deviceTypeForLookup) {
+    logger.warn('Unknown device type for max Zs validation', {
+      circuit: circuit.name,
+      deviceType: protectionDevice.type
+    });
+    return { isValid: true };
+  }
+  
+  // Skip MCCB as they don't have standard Zs tables (electronic trip)
+  if (protectionDevice.type === 'MCCB') {
+    logger.info('MCCB detected - skipping max Zs validation (electronic trip)', {
+      circuit: circuit.name
+    });
+    return { isValid: true };
+  }
+  
+  // Get correct max Zs from BS 7671 tables
+  const zsLookup = getMaxZsForDevice(deviceTypeForLookup, protectionDevice.rating);
+  
+  if (!zsLookup) {
+    logger.warn('No max Zs data available', {
+      circuit: circuit.name,
+      deviceType: deviceTypeForLookup,
+      rating: protectionDevice.rating
+    });
+    return { isValid: true };
+  }
+  
+  const correctMaxZs = zsLookup.maxZs;
+  const currentMaxZs = calculations.maxZs;
+  
+  // Check if max Zs is correct (allow 0.01Ω tolerance for rounding)
+  if (currentMaxZs && Math.abs(currentMaxZs - correctMaxZs) > 0.01) {
+    logger.warn('Max Zs correction applied', {
+      circuit: circuit.name,
+      deviceType: protectionDevice.type,
+      rating: protectionDevice.rating,
+      incorrectMaxZs: currentMaxZs,
+      correctMaxZs,
+      regulation: zsLookup.regulation
+    });
+    
+    return {
+      isValid: false,
+      message: `Max Zs corrected: ${currentMaxZs}Ω → ${correctMaxZs}Ω (${zsLookup.regulation})`,
+      correctedMaxZs: correctMaxZs
+    };
+  }
+  
+  // Check Zs compliance
+  const calculatedZs = calculations.zs;
+  if (calculatedZs > correctMaxZs) {
+    logger.error('Zs exceeds maximum permitted', {
+      circuit: circuit.name,
+      calculatedZs,
+      maxZs: correctMaxZs,
+      exceedance: ((calculatedZs - correctMaxZs) / correctMaxZs * 100).toFixed(1) + '%',
+      regulation: zsLookup.regulation
+    });
+  }
+  
+  logger.info('Max Zs validation passed', {
+    circuit: circuit.name,
+    deviceType: deviceTypeForLookup,
+    rating: protectionDevice.rating,
+    maxZs: correctMaxZs,
+    calculatedZs,
+    margin: ((correctMaxZs - calculatedZs) / correctMaxZs * 100).toFixed(1) + '%'
+  });
+  
+  return { isValid: true };
 }

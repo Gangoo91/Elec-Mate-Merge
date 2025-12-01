@@ -107,14 +107,61 @@ export class DesignPipeline {
     // ========================================
     // PHASE 6.5: Consistency Validation (CRITICAL SAFETY)
     // ========================================
-    const { validateCircuitConsistency } = await import('./consistency-validator.ts');
-    design.circuits = design.circuits.map(circuit => 
-      validateCircuitConsistency(circuit, this.logger)
-    );
+    const { validateCircuitConsistency, validateMaxZs } = await import('./consistency-validator.ts');
+    design.circuits = design.circuits.map(circuit => {
+      // Validate and fix protection device consistency
+      const consistentCircuit = validateCircuitConsistency(circuit, this.logger);
+      
+      // Validate max Zs for all device types (MCB, RCBO, BS88, BS1361, BS3036)
+      const zsValidation = validateMaxZs(consistentCircuit, this.logger);
+      if (!zsValidation.isValid && zsValidation.correctedMaxZs) {
+        return {
+          ...consistentCircuit,
+          calculations: {
+            ...consistentCircuit.calculations,
+            maxZs: zsValidation.correctedMaxZs
+          }
+        };
+      }
+      
+      return consistentCircuit;
+    });
 
     this.logger.info('Consistency validation complete', {
       circuits: design.circuits.length
     });
+    
+    // ========================================
+    // PHASE 6.6: Breaking Capacity Validation (INDUSTRIAL SAFETY)
+    // ========================================
+    const { validateBreakingCapacity } = await import('./breaking-capacity-validator.ts');
+    const breakingCapacityIssues = validateBreakingCapacity(
+      design.circuits,
+      normalized.supply,
+      this.logger
+    );
+    
+    if (breakingCapacityIssues.length > 0) {
+      const errorCount = breakingCapacityIssues.filter(i => i.severity === 'error').length;
+      const warningCount = breakingCapacityIssues.filter(i => i.severity === 'warning').length;
+      
+      this.logger.warn('Breaking capacity issues detected', {
+        errors: errorCount,
+        warnings: warningCount,
+        issues: breakingCapacityIssues.map(i => ({
+          circuit: i.circuitName,
+          severity: i.severity,
+          message: i.message
+        }))
+      });
+      
+      // Attach breaking capacity warnings to design result
+      (design as any).breakingCapacityIssues = breakingCapacityIssues;
+    } else {
+      this.logger.info('Breaking capacity validation passed', {
+        circuits: design.circuits.length
+      });
+    }
 
     // ========================================
     // PHASE 7: Cache Store
