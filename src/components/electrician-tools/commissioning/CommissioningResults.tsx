@@ -212,59 +212,6 @@ const CommissioningResults = ({
         </div>
       </div>
 
-      {/* Progress Actions */}
-      {progress && (
-        <div className="flex gap-2 flex-wrap">
-          <Button
-            onClick={handleExportProgress}
-            variant="outline"
-            size="sm"
-            className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-          >
-            <Save className="h-4 w-4 mr-2" />
-            Backup Progress
-          </Button>
-          <Button
-            onClick={handleClearProgress}
-            variant="outline"
-            size="sm"
-            className="border-red-500/30 hover:bg-red-500/10 text-red-400"
-          >
-            <Trash2 className="h-4 w-4 mr-2" />
-            Clear Progress
-          </Button>
-          <Button
-            onClick={handleCopyChecklist}
-            variant="outline"
-            size="sm"
-            className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-          >
-            Copy Checklist
-          </Button>
-        </div>
-      )}
-
-      {/* Certificate Pre-Fill Data */}
-      <CertificateDataSection
-        progress={progress}
-        projectName={projectName}
-        location={location}
-        installationDate={installationDate}
-      />
-
-      {/* Send to Agent */}
-      <div className="flex justify-end">
-        <SendToAgentDropdown 
-          currentAgent="commissioning"
-          currentOutput={results}
-        />
-      </div>
-
-      {/* Circuit Schedule Section */}
-      {results.structuredData?.circuitSchedule && results.structuredData.circuitSchedule.length > 0 && (
-        <CircuitScheduleSection circuits={results.structuredData.circuitSchedule} />
-      )}
-
       {/* Test Procedure Steps */}
       {results.structuredData?.testingProcedure && (
         <div className="space-y-6">

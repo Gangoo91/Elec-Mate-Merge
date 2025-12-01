@@ -66,6 +66,7 @@ interface CommissioningInputProps {
   onGenerate: (data: {
     prompt: string;
     selectedType: 'domestic' | 'commercial' | 'industrial';
+    queryMode: 'testing' | 'fault';
     projectName: string;
     location: string;
     clientName: string;
@@ -78,6 +79,7 @@ interface CommissioningInputProps {
 
 const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProps) => {
   const [prompt, setPrompt] = useState("");
+  const [queryMode, setQueryMode] = useState<'testing' | 'fault'>('testing');
   const [selectedType, setSelectedType] = useState<'domestic' | 'commercial' | 'industrial'>('domestic');
   const [projectName, setProjectName] = useState("");
   const [location, setLocation] = useState("");
@@ -131,6 +133,7 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
     onGenerate({
       prompt,
       selectedType,
+      queryMode,
       projectName,
       location,
       clientName,
@@ -152,14 +155,51 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
         {/* Main Testing Description Card */}
         <Card className="bg-elec-card border-elec-yellow/20 hover:border-elec-yellow/30 transition-colors">
           <div className="p-3 sm:p-4">
+            {/* Toggle: Testing Procedure / Fault Finding */}
+            <div className="flex gap-2 mb-4">
+              <Button
+                type="button"
+                onClick={() => setQueryMode('testing')}
+                className={`flex-1 h-11 font-semibold transition-all ${
+                  queryMode === 'testing'
+                    ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
+                    : 'bg-elec-dark/40 text-white/70 border border-elec-yellow/30 hover:bg-elec-dark/60'
+                }`}
+              >
+                <CheckCircle2 className="h-4 w-4 mr-2" />
+                Testing Procedure
+              </Button>
+              <Button
+                type="button"
+                onClick={() => setQueryMode('fault')}
+                className={`flex-1 h-11 font-semibold transition-all ${
+                  queryMode === 'fault'
+                    ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
+                    : 'bg-elec-dark/40 text-white/70 border border-elec-yellow/30 hover:bg-elec-dark/60'
+                }`}
+              >
+                <AlertTriangle className="h-4 w-4 mr-2" />
+                Fault Finding
+              </Button>
+            </div>
+
             <div className="flex items-start gap-2 sm:gap-3 mb-3">
               <div className="p-2 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex-shrink-0">
-                <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
+                {queryMode === 'testing' ? (
+                  <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
+                ) : (
+                  <AlertTriangle className="h-5 w-5 text-elec-yellow" />
+                )}
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-base sm:text-lg font-bold text-white">What needs testing?</h3>
+                <h3 className="text-base sm:text-lg font-bold text-white">
+                  {queryMode === 'testing' ? 'What needs testing?' : "What's the fault?"}
+                </h3>
                 <p className="text-xs sm:text-sm text-white/80 mt-0.5">
-                  Describe the installation and required tests
+                  {queryMode === 'testing' 
+                    ? 'Describe the installation and required tests'
+                    : "Describe the symptoms and what you've observed"
+                  }
                 </p>
               </div>
             </div>
@@ -178,7 +218,11 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
               <Textarea 
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                placeholder="e.g., Testing procedure for new 18th Edition consumer unit with 12 circuits..."
+                placeholder={
+                  queryMode === 'testing'
+                    ? "e.g., Testing procedure for new 18th Edition consumer unit with 12 circuits..."
+                    : "e.g., RCD keeps tripping on ring final circuit, intermittent issue over last 2 weeks..."
+                }
                 className="min-h-[140px] sm:min-h-[120px] text-base resize-none focus:ring-2 focus:ring-elec-yellow border-elec-yellow/20 bg-elec-dark/40 relative"
                 maxLength={500}
                 autoComplete="off"
@@ -326,8 +370,17 @@ const CommissioningInput = ({ onGenerate, isProcessing }: CommissioningInputProp
               </>
             ) : (
               <>
-                <CheckCircle2 className="h-5 w-5" />
-                Generate Testing Procedure
+                {queryMode === 'testing' ? (
+                  <>
+                    <CheckCircle2 className="h-5 w-5" />
+                    Generate Testing Procedure
+                  </>
+                ) : (
+                  <>
+                    <AlertTriangle className="h-5 w-5" />
+                    Diagnose Fault
+                  </>
+                )}
               </>
             )}
           </Button>

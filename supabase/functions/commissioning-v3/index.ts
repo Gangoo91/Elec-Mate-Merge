@@ -66,7 +66,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, circuitType, voltage, messages, previousAgentOutputs, sharedRegulations, currentDesign, projectDetails, imageUrl } = body;
+    const { query, queryMode, circuitType, voltage, messages, previousAgentOutputs, sharedRegulations, currentDesign, projectDetails, imageUrl } = body;
 
     // Track context sources
     const contextSources = {
@@ -111,12 +111,30 @@ serve(async (req) => {
       hasSharedRegs: !!sharedRegulations?.length
     });
 
-    // PHASE 0: Query Classification - Detect if user wants procedure vs troubleshooting/Q&A
-    const classification = classifyCommissioningQuery(effectiveQuery);
+    // PHASE 0: Query Classification - Respect user's explicit mode choice
+    let classification;
+    if (queryMode === 'fault') {
+      classification = { 
+        mode: 'fault-diagnosis' as const,
+        confidence: 1.0, 
+        reasoning: 'User explicitly selected fault-finding mode' 
+      };
+    } else if (queryMode === 'testing') {
+      classification = { 
+        mode: 'procedure' as const,
+        confidence: 1.0, 
+        reasoning: 'User explicitly selected testing procedure mode' 
+      };
+    } else {
+      // Fallback: Use auto-classification
+      classification = classifyCommissioningQuery(effectiveQuery);
+    }
+    
     logger.info('🧠 Query classified', { 
       mode: classification.mode,
       confidence: classification.confidence,
-      reasoning: classification.reasoning
+      reasoning: classification.reasoning,
+      userSelectedMode: queryMode || 'auto'
     });
 
     // Get API keys
@@ -192,16 +210,28 @@ serve(async (req) => {
       logger.warn('⚠️ RAG returned zero results', { query });
     }
 
-    // Query Classification Function
+    // Query Classification Function (Enhanced for better fault detection)
     function classifyCommissioningQuery(query: string): {
-      mode: 'procedure' | 'troubleshooting' | 'question';
+      mode: 'procedure' | 'fault-diagnosis' | 'question';
       confidence: number;
       reasoning: string;
     } {
       const lowerQuery = query.toLowerCase();
       
-      // TROUBLESHOOTING PATTERNS (user has a fault/problem)
-      const troubleshootingPatterns = [
+      // FAULT-FINDING PATTERNS (HIGHEST PRIORITY - SAFETY CRITICAL)
+      const faultFindingPatterns = [
+        /fault\s*find/i,
+        /find.*fault/i,
+        /diagnos/i,
+        /troubleshoot/i,
+        /why.*(?:tripping|failing|not working)/i,
+        /(?:rcd|mcb|rcbo).*trip/i,
+        /(?:keeps|won't stop).*trip/i,
+        /no\s*(?:power|supply|lights)/i,
+        /(?:intermittent|flickering)/i,
+        /(?:burning|burning smell|scorched)/i,
+        /(?:dead|not working|stopped)/i,
+        /(?:low|high)\s*(?:insulation|ir|reading)/i,
         /reading.*(?:showing|is|reads|getting)/i,
         /(?:fault|problem|issue|error).*(?:with|on|in)/i,
         /why.*(?:am i|is|does)/i,
@@ -234,17 +264,18 @@ serve(async (req) => {
         /new.*(?:consumer unit|distribution board|circuit)/i
       ];
       
-      const troubleshootingScore = troubleshootingPatterns.filter(p => p.test(query)).length;
+      const faultFindingScore = faultFindingPatterns.filter(p => p.test(query)).length;
       const questionScore = questionPatterns.filter(p => p.test(query)).length;
       const procedureScore = procedurePatterns.filter(p => p.test(query)).length;
       
       const isDetailedRequest = query.length > 80 && /\d+/.test(query);
       
-      if (troubleshootingScore > 0 && troubleshootingScore >= questionScore) {
+      // FAULT-FINDING has HIGHEST priority (safety-critical)
+      if (faultFindingScore > 0) {
         return {
-          mode: 'troubleshooting',
-          confidence: Math.min(0.95, 0.6 + (troubleshootingScore * 0.15)),
-          reasoning: `Detected fault/problem indicators`
+          mode: 'fault-diagnosis',
+          confidence: Math.min(0.95, 0.7 + (faultFindingScore * 0.1)),
+          reasoning: `Detected fault-finding request (${faultFindingScore} indicators)`
         };
       }
       
@@ -273,7 +304,7 @@ serve(async (req) => {
 
     // Conversational Prompt Builder
     function buildConversationalPrompt(
-      mode: 'troubleshooting' | 'question',
+      mode: 'fault-diagnosis' | 'question',
       ragContext: string,
       conversationContext: string
     ): string {
@@ -351,7 +382,7 @@ ${ragContext}
 
 ${conversationContext}`;
 
-      if (mode === 'troubleshooting') {
+      if (mode === 'fault-diagnosis') {
         return `${basePersona}
 
 🔧 TROUBLESHOOTING MODE - STEP-BASED FAULT DIAGNOSIS (MATCH INSTALLATION SPECIALIST GAMEPLAN)
@@ -1334,7 +1365,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
     
     // Use EICR Photo Analysis for photo uploads, otherwise use structured fault diagnosis
     const useEICRPhotoAnalysis = !!imageUrl;
-    const useStructuredDiagnosis = !imageUrl && classification.mode === 'troubleshooting';
+    const useStructuredDiagnosis = !imageUrl && classification.mode === 'fault-diagnosis';
     
     if (useEICRPhotoAnalysis) {
       logger.info('📸 Using EICR Photo Analysis tool for image');

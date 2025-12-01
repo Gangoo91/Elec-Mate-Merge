@@ -64,9 +64,12 @@ Deno.serve(async (req) => {
           })
           .eq('id', jobId);
 
-        // Call the core commissioning logic directly
-        console.log('[PROCESS-COMMISSIONING] Generating commissioning procedures...');
-        const result = await generateCommissioningProcedures(supabase, job.job_inputs);
+      // Call the core commissioning logic directly
+      console.log('[PROCESS-COMMISSIONING] Generating commissioning procedures...');
+      const result = await generateCommissioningProcedures(supabase, {
+        ...job.job_inputs,
+        queryMode: job.job_inputs.queryMode
+      });
 
         // Progress: 70% - Processing results
         await supabase
