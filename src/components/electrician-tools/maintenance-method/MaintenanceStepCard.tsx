@@ -322,7 +322,7 @@ export const MaintenanceStepCard = ({
         {/* Duration */}
         {(isEditing || step.estimatedDuration) && (
           <div className="flex items-center gap-2 text-sm text-left">
-            <Clock className="h-4 w-4 text-muted-foreground" />
+            <Clock className="h-4 w-4 text-elec-yellow" />
             <span className="font-medium text-foreground">Duration:</span>
             {isEditing ? (
               <Input

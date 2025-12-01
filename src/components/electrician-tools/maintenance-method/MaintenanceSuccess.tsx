@@ -64,7 +64,7 @@ export const MaintenanceSuccess = ({
             <h2 className="text-2xl sm:text-3xl font-bold">
               Maintenance Instructions Generated!
             </h2>
-            <p className="text-muted-foreground">
+            <p className="text-foreground">
               Your comprehensive maintenance method statement is ready
             </p>
           </div>
@@ -74,23 +74,23 @@ export const MaintenanceSuccess = ({
             <div className="space-y-1">
               <FileText className="h-6 w-6 text-blue-400 mx-auto" />
               <p className="text-2xl sm:text-3xl font-bold text-foreground">{stepCount}</p>
-              <p className="text-xs text-muted-foreground">Detailed Steps</p>
+              <p className="text-xs text-foreground">Detailed Steps</p>
             </div>
             <div className="space-y-1">
               <Clock className="h-6 w-6 text-amber-400 mx-auto" />
               <p className="text-2xl sm:text-3xl font-bold text-foreground">{generationTimeSeconds}s</p>
-              <p className="text-xs text-muted-foreground">Generation Time</p>
+              <p className="text-xs text-foreground">Generation Time</p>
             </div>
             <div className="space-y-1">
               <Wrench className="h-6 w-6 text-green-400 mx-auto" />
               <p className="text-2xl sm:text-3xl font-bold text-foreground">✓</p>
-              <p className="text-xs text-muted-foreground">BS 7671 Compliant</p>
+              <p className="text-xs text-foreground">BS 7671 Compliant</p>
             </div>
           </div>
 
           {/* Equipment Summary */}
           <div className="bg-muted/50 rounded-lg p-4">
-            <p className="text-sm text-muted-foreground mb-1">Equipment:</p>
+            <p className="text-sm text-foreground mb-1">Equipment:</p>
             <p className="font-medium text-foreground">{equipmentType}</p>
           </div>
 
