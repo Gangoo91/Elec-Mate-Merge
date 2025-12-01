@@ -137,7 +137,7 @@ export class AIDesigner {
     this.logger.info('AI Designer PARALLEL complete', { 
       duration,
       successCount: circuits.length,
-      failureCount: failures.length,
+      failureCount: finalFailures,
       avgTimePerCircuit: Math.round(duration / inputs.circuits.length)
     });
 
