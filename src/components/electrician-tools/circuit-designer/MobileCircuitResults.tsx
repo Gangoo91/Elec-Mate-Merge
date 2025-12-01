@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { CircuitWorkingsSheet } from './CircuitWorkingsSheet';
 import { CircuitCard } from './CircuitCard';
+import { MobileSystemSummary } from './mobile/MobileSystemSummary';
 
 interface MobileCircuitResultsProps {
   design: InstallationDesign;
@@ -33,6 +34,19 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
   });
   const hasWarnings = design.circuits.some(c => (c as any).complianceStatus === 'warning' || (c.warnings && c.warnings.length > 0));
   const overallStatus = !allCircuitsCompliant ? 'fail' : hasWarnings ? 'warning' : 'pass';
+
+  // Calculate compliance stats for MobileSystemSummary
+  const complianceStats = design.circuits.reduce((acc, circuit) => {
+    const status = (circuit as any).complianceStatus;
+    if (status === 'pass' || (!status && circuit.calculations?.voltageDrop?.compliant && (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999))) {
+      acc.compliant++;
+    } else if (status === 'warning' || circuit.warnings?.length > 0) {
+      acc.warnings++;
+    } else {
+      acc.fails++;
+    }
+    return acc;
+  }, { compliant: 0, warnings: 0, fails: 0 });
 
   // Swipe handlers for circuit navigation
   const swipeHandlers = useSwipeable({
@@ -88,15 +102,14 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
             {overallStatus === 'pass' ? 'Pass' : overallStatus === 'warning' ? 'Warning' : 'Review'}
           </Badge>
         </div>
-        
-        {/* Quick stats inline - minimal */}
-        <div className="flex items-center gap-3 sm:gap-4 mt-2 text-[10px] sm:text-xs text-elec-light/70">
-          <span>{design.circuits.length} circuits</span>
-          <span>•</span>
-          <span>{(design.totalLoad / 1000).toFixed(1)}kW</span>
-          <span>•</span>
-          <span>{design.consumerUnit?.mainSwitchRating || 100}A</span>
-        </div>
+      </div>
+
+      {/* Enhanced System Summary */}
+      <div className="px-3 sm:px-4 py-3 sm:py-4">
+        <MobileSystemSummary 
+          design={design} 
+          complianceStats={complianceStats}
+        />
       </div>
 
       {/* Enhanced Circuit Selector */}
