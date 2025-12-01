@@ -61,7 +61,7 @@ export const MaintenanceInput = ({
             <h2 className="text-xl sm:text-2xl font-bold">What equipment needs maintenance?</h2>
           </div>
           
-          <p className="text-sm text-muted-foreground mb-3">
+          <p className="text-sm text-foreground mb-3">
             Describe the equipment, its condition, any known issues, and the type of maintenance required. 
             Be specific to get detailed, step-by-step maintenance instructions.
           </p>
@@ -76,7 +76,7 @@ export const MaintenanceInput = ({
           />
 
             <div className="space-y-1.5">
-              <div className="flex justify-between text-xs text-muted-foreground">
+              <div className="flex justify-between text-xs text-foreground">
                 <span>{charCount} / {MAX_CHARS} characters</span>
                 <span className={charCount < 50 ? "text-amber-400" : "text-green-400"}>
                   {charCount < 50 ? `${50 - charCount} more needed` : "Ready"}
@@ -147,13 +147,13 @@ export const MaintenanceInput = ({
         </Button>
 
         {!canGenerate && (
-          <p className="text-xs text-muted-foreground text-center mt-3">
+          <p className="text-xs text-foreground text-center mt-3">
             {query.length < 50 && "Add at least 50 characters describing the maintenance work required. "}
             {(!equipmentDetails.equipmentType || !equipmentDetails.location) && "Provide equipment type and location."}
           </p>
         )}
 
-        <p className="text-xs text-muted-foreground text-center mt-3">
+        <p className="text-xs text-foreground text-center mt-3">
           This will generate 15+ detailed maintenance steps with safety procedures,
           tools required, inspection checkpoints, and BS 7671 references
         </p>
