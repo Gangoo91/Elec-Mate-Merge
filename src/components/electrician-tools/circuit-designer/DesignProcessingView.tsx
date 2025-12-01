@@ -115,7 +115,7 @@ export const DesignProcessingView = ({
     ? Math.floor((currentPercent / 100) * totalCircuits)
     : 0;
 
-  const EXPECTED_TOTAL_SECONDS = 210; // 3.5 minutes for unified agent
+  const EXPECTED_TOTAL_SECONDS = 240; // 4 minutes for unified agent
   const estimatedTimeRemaining = Math.max(0, EXPECTED_TOTAL_SECONDS - elapsedTime);
 
   const getStatusVariant = (status: string): "default" | "secondary" | "destructive" | "outline" => {

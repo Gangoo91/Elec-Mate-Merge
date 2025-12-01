@@ -76,6 +76,26 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
             {status === 'pass' ? 'Pass' : status === 'warning' ? 'Warning' : 'Review'}
           </Badge>
         </div>
+
+        {/* Show validation issues when status is not pass */}
+        {status !== 'pass' && (circuit as any).validationIssues && (circuit as any).validationIssues.length > 0 && (
+          <div className="mt-2 bg-red-500/10 border border-red-500/20 rounded-lg p-2">
+            {(circuit as any).validationIssues.map((issue: any, idx: number) => (
+              <p key={idx} className="text-[10px] text-red-300 mb-1">
+                • {issue.message} {issue.regulation && `(${issue.regulation})`}
+              </p>
+            ))}
+          </div>
+        )}
+
+        {/* Also show warnings if present */}
+        {status === 'warning' && circuit.warnings && circuit.warnings.length > 0 && !(circuit as any).validationIssues?.length && (
+          <div className="mt-2 bg-amber-500/10 border border-amber-500/20 rounded-lg p-2">
+            {circuit.warnings.map((warning: string, idx: number) => (
+              <p key={idx} className="text-[10px] text-amber-300 mb-1">• {warning}</p>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Content Area */}
