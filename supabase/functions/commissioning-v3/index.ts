@@ -1780,41 +1780,77 @@ Determine the appropriate classification (C1/C2/C3/FI/NONE) for EACH defect and 
         throw new Error('Failed to parse Gemini response as JSON');
       }
 
-      // Validate completeness
+      // Validate completeness for MULTI-DEFECT schema
       const validationErrors: string[] = [];
 
-      if (!eicrData.classification) validationErrors.push('Missing classification');
-      if (!eicrData.classificationReasoningBullets || !Array.isArray(eicrData.classificationReasoningBullets)) {
-        validationErrors.push('Missing classificationReasoningBullets array');
-      }
-      if (!eicrData.defectSummary && !eicrData.compliantSummary) validationErrors.push('Missing defectSummary or compliantSummary');
-      if (!eicrData.hazardExplanation) validationErrors.push('Missing hazardExplanation');
-      if (!eicrData.bs7671Regulations || !Array.isArray(eicrData.bs7671Regulations) || eicrData.bs7671Regulations.length < 1) {
-        validationErrors.push('Missing or insufficient bs7671Regulations');
-      }
-      if (!eicrData.confidenceAssessment) validationErrors.push('Missing confidenceAssessment');
-
-      // Additional validation for defect classifications (not NONE)
-      if (eicrData.classification !== 'NONE') {
-        if (!eicrData.makingSafe) validationErrors.push('Missing makingSafe (required for defects)');
-        if (!eicrData.clientCommunication) validationErrors.push('Missing clientCommunication (required for defects)');
-        if (!eicrData.rectification) validationErrors.push('Missing rectification (required for defects)');
-        if (!eicrData.verificationProcedure) validationErrors.push('Missing verificationProcedure (required for defects)');
+      // Top-level validation
+      if (!eicrData.defects || !Array.isArray(eicrData.defects) || eicrData.defects.length === 0) {
+        validationErrors.push('Missing or empty defects array');
       }
 
-      // Validation for NONE (compliant)
-      if (eicrData.classification === 'NONE') {
-        if (!eicrData.compliantSummary) validationErrors.push('Missing compliantSummary (required for NONE)');
-        if (!eicrData.goodPracticeNotes) validationErrors.push('Missing goodPracticeNotes (required for NONE)');
+      if (typeof eicrData.installationCompliant !== 'boolean') {
+        validationErrors.push('Missing installationCompliant boolean');
+      }
+
+      if (!eicrData.overallSummary) {
+        validationErrors.push('Missing overallSummary');
+      }
+
+      // Validate each defect in the array
+      if (eicrData.defects && Array.isArray(eicrData.defects)) {
+        eicrData.defects.forEach((defect: any, index: number) => {
+          const prefix = `Defect[${index}]`;
+          
+          if (!defect.classification) {
+            validationErrors.push(`${prefix}: Missing classification`);
+          }
+          
+          if (!defect.defectSummary && !defect.compliantSummary) {
+            validationErrors.push(`${prefix}: Missing defectSummary or compliantSummary`);
+          }
+          
+          if (!defect.hazardExplanation) {
+            validationErrors.push(`${prefix}: Missing hazardExplanation`);
+          }
+          
+          if (!defect.bs7671Regulations || !Array.isArray(defect.bs7671Regulations) || defect.bs7671Regulations.length < 1) {
+            validationErrors.push(`${prefix}: Missing or insufficient bs7671Regulations`);
+          }
+          
+          if (!defect.confidenceAssessment) {
+            validationErrors.push(`${prefix}: Missing confidenceAssessment`);
+          }
+          
+          // Additional validation for actual defects (not NONE)
+          if (defect.classification && defect.classification !== 'NONE') {
+            if (!defect.makingSafe) validationErrors.push(`${prefix}: Missing makingSafe (required for defects)`);
+            if (!defect.clientCommunication) validationErrors.push(`${prefix}: Missing clientCommunication (required for defects)`);
+            if (!defect.rectification) validationErrors.push(`${prefix}: Missing rectification (required for defects)`);
+            if (!defect.verificationProcedure) validationErrors.push(`${prefix}: Missing verificationProcedure (required for defects)`);
+          }
+          
+          // Validation for NONE classification
+          if (defect.classification === 'NONE') {
+            if (!defect.compliantSummary) validationErrors.push(`${prefix}: Missing compliantSummary (required for NONE)`);
+          }
+        });
       }
 
       if (validationErrors.length > 0) {
         logger.error('❌ Validation errors:', validationErrors);
-        logger.error('Received data:', JSON.stringify(eicrData, null, 2).substring(0, 1000));
+        logger.error('Received data structure:', JSON.stringify({
+          hasDefects: !!eicrData.defects,
+          defectsCount: eicrData.defects?.length || 0,
+          installationCompliant: eicrData.installationCompliant,
+          hasOverallSummary: !!eicrData.overallSummary
+        }));
         throw new Error(`Incomplete EICR analysis: ${validationErrors.join(', ')}`);
       }
 
-      logger.info('✅ EICR analysis validation passed');
+      logger.info('✅ EICR analysis validation passed', {
+        defectsCount: eicrData.defects?.length || 0,
+        installationCompliant: eicrData.installationCompliant
+      });
       
       // Transform EICR data for response
       logger.info('✅ Parsed EICR defect data', {
