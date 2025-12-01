@@ -20,6 +20,7 @@ export const MaintenanceMethodInterface = () => {
   });
   const [currentJobId, setCurrentJobId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCancelling, setIsCancelling] = useState(false);
   const [viewState, setViewState] = useState<ViewState>('input');
   const [startTime, setStartTime] = useState<number>(0);
 
@@ -79,13 +80,18 @@ export const MaintenanceMethodInterface = () => {
   };
 
   const handleCancel = async () => {
-    await cancelJob();
-    setViewState('input');
-    setCurrentJobId(null);
-    toast({
-      title: 'Cancelled',
-      description: 'Maintenance method generation cancelled'
-    });
+    setIsCancelling(true);
+    try {
+      await cancelJob();
+      setViewState('input');
+      setCurrentJobId(null);
+      toast({
+        title: 'Cancelled',
+        description: 'Maintenance method generation cancelled'
+      });
+    } finally {
+      setIsCancelling(false);
+    }
   };
 
   const handleReset = () => {
@@ -132,7 +138,11 @@ export const MaintenanceMethodInterface = () => {
       <MaintenanceMethodProcessingView
         progress={job.progress}
         currentStep={job.current_step}
+        originalQuery={query}
+        equipmentDetails={equipmentDetails}
+        startTime={startTime}
         onCancel={isPolling ? handleCancel : undefined}
+        isCancelling={isCancelling}
       />
     );
   }
