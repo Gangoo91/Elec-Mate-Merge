@@ -46,7 +46,7 @@ const WHAT_HAPPENING_STAGES = [
 export const MaintenanceProcessingView = ({ progress, detailLevel = 'quick', startTime }: MaintenanceProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   
-  const ESTIMATED_TIME = detailLevel === 'quick' ? 25 : 70; // seconds
+  const ESTIMATED_TIME = detailLevel === 'quick' ? 45 : 210; // seconds (3:30 for full mode)
 
   // Time tracking
   useEffect(() => {
