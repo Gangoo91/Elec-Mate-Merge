@@ -425,9 +425,18 @@ export class AIDesigner {
     parts.push('  • Example: 200A circuit → BS88-2 gG 250A fuse (max Zs: 0.09Ω per Table 41.4)');
     parts.push('');
     parts.push('📊 BS88 FUSE MAX Zs VALUES (Table 41.4) - USE THESE FOR INDUSTRIAL CIRCUITS:');
-    parts.push('  • 63A: 0.49Ω | 80A: 0.36Ω | 100A: 0.27Ω | 125A: 0.21Ω');
-    parts.push('  • 160A: 0.16Ω | 200A: 0.12Ω | 250A: 0.09Ω | 315A: 0.07Ω');
-    parts.push('  • 400A: 0.055Ω | 500A: 0.043Ω | 630A: 0.034Ω');
+    parts.push('');
+    parts.push('BS88 gG FUSE (0.4s disconnection - final circuits):');
+    parts.push('  • 6A: 8.89Ω | 10A: 5.33Ω | 16A: 2.82Ω | 20A: 2.05Ω | 25A: 1.50Ω | 32A: 1.09Ω');
+    parts.push('  • 40A: 0.86Ω | 50A: 0.65Ω | 63A: 0.49Ω | 80A: 0.36Ω | 100A: 0.27Ω | 125A: 0.21Ω');
+    parts.push('  • 160A: 0.16Ω | 200A: 0.12Ω | 250A: 0.09Ω | 315A: 0.07Ω | 400A: 0.055Ω | 500A: 0.043Ω | 630A: 0.034Ω');
+    parts.push('');
+    parts.push('BS88 gG FUSE (5s disconnection - MOTORS/FIXED EQUIPMENT ONLY):');
+    parts.push('  • 2A: 44Ω | 4A: 21Ω | 6A: 12Ω | 10A: 6.8Ω | 16A: 4.0Ω | 20A: 2.8Ω | 25A: 2.2Ω | 32A: 1.7Ω');
+    parts.push('  • 40A: 1.3Ω | 50A: 0.99Ω | 63A: 0.78Ω | 80A: 0.55Ω | 100A: 0.42Ω | 125A: 0.32Ω');
+    parts.push('  • 160A: 0.27Ω | 200A: 0.18Ω');
+    parts.push('');
+    parts.push('🔴 CRITICAL: Use 5s values for motors/fixed equipment with BS88 fuses (Table 41.4)');
     parts.push('');
     parts.push('📐 SWA CABLE CAPACITY (Table 4D4A) - CRITICAL FOR CORRECT SIZING:');
     parts.push('  • 16mm²: 85A | 25mm²: 112A | 35mm²: 137A | 50mm²: 164A');
@@ -1304,28 +1313,28 @@ CRITICAL: In diversityApplied justification, cite specific table item (e.g., "pe
                   enum: [1.0, 1.5, 2.5, 4.0, 6.0, 10.0, 16.0, 25.0, 35.0, 50.0, 70.0, 95.0],
                   description: 'CPC conductor CSA in mm² per BS 7671 Table 54.7. CRITICAL FOR TWIN & EARTH: CPC is SMALLER than live (1.5mm² T&E = 1.0mm² CPC, 2.5mm² T&E = 1.5mm² CPC, 4mm² T&E = 2.5mm² CPC, 6mm² T&E = 2.5mm² CPC, 10mm² T&E = 4mm² CPC, 16mm² T&E = 6mm² CPC). For single cores/SWA, CPC typically equals live size. This affects R1+R2 and Zs calculations.'
                 },
-                protectionDevice: {
+                  protectionDevice: {
                   type: 'object',
                   properties: {
                     type: { 
                       type: 'string',
-                      enum: ['MCB', 'RCBO'],
-                      description: 'Protection device type. IMPORTANT: Use RCBO for ALL socket circuits (Reg 411.3.3) and bathroom circuits (Reg 701.411.3.3). Use MCB only for lighting and fixed equipment.'
+                      enum: ['MCB', 'RCBO', 'BS88', 'MCCB', 'BS1361', 'BS3036'],
+                      description: 'Protection device type. MCB/RCBO for domestic/commercial (up to 125A). BS88 HRC fuse for industrial high fault levels or high current (125A+). MCCB for industrial very high current (>400A). BS1361 for legacy cartridge fuse boards. BS3036 for old rewirable fuse boards (assessment only). IMPORTANT: Use RCBO for ALL socket circuits (Reg 411.3.3) and bathroom circuits (Reg 701.411.3.3).'
                     },
                     rating: { 
                       type: 'number',
-                      enum: [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100],
-                      description: 'MCB/RCBO rating in Amps'
+                      enum: [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250],
+                      description: 'Protection device rating in Amps. Standard MCB/RCBO: 6-125A. BS88 fuses: 6-1250A. MCCB: 125-1600A.'
                     },
                     curve: { 
                       type: 'string',
-                      enum: ['B', 'C', 'D'],
-                      description: 'B for resistive, C for general, D for motors'
+                      enum: ['B', 'C', 'D', 'gG', 'aM'],
+                      description: 'Trip curve/fuse class. MCB/RCBO: B (resistive), C (general), D (motors). BS88 fuses: gG (general purpose), aM (motor protection - tolerates high inrush). BS1361/BS3036: Not applicable (leave as B).'
                     },
                     kaRating: { 
                       type: 'number',
-                      enum: [6, 10],
-                      description: 'Short circuit breaking capacity (6kA domestic, 10kA commercial)'
+                      enum: [6, 10, 16, 25, 50, 80, 100],
+                      description: 'Short circuit breaking capacity in kA. Domestic MCB: 6-10kA. Commercial MCB: 10-16kA. Industrial MCB: 16-25kA. BS88 HRC fuse: 80kA (standard). MCCB: 50-100kA.'
                     }
                   },
                   required: ['type', 'rating', 'curve', 'kaRating']

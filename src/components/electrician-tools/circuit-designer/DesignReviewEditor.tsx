@@ -465,7 +465,11 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           // Human-readable display fields
           voltageDropText: `${(circuit.calculations?.voltageDrop?.volts || 0).toFixed(2)}V (${(circuit.calculations?.voltageDrop?.percent || 0).toFixed(2)}%)`,
           earthFaultLoopText: `${(circuit.calculations?.zs || 0).toFixed(2)}Ω (max ${(circuit.calculations?.maxZs || 0).toFixed(2)}Ω)`,
-          protectionSummary: `${circuit.protectionDevice?.type || 'MCB'} ${circuit.protectionDevice?.rating || 6}A Type ${circuit.protectionDevice?.curve || 'B'} (${circuit.protectionDevice?.kaRating || 6}kA)`,
+          protectionSummary: circuit.protectionDevice?.type === 'BS88' 
+            ? `${circuit.protectionDevice.rating}A BS88 ${circuit.protectionDevice.curve || 'gG'} Fuse (${circuit.protectionDevice.kaRating || 80}kA)`
+            : circuit.protectionDevice?.type === 'MCCB'
+            ? `${circuit.protectionDevice.rating}A MCCB (${circuit.protectionDevice.kaRating || 50}kA)`
+            : `${circuit.protectionDevice?.type || 'MCB'} ${circuit.protectionDevice?.rating || 6}A Type ${circuit.protectionDevice?.curve || 'B'} (${circuit.protectionDevice?.kaRating || 6}kA)`,
           cableSummary: `${circuit.cableSize || 2.5}mm² / ${circuit.cpcSize || 1.5}mm² CPC`,
           complianceSummary: (zsCompliant && vdCompliant) ? 'Fully compliant' : 'Requires attention',
           

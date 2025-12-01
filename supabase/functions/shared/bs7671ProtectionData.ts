@@ -284,6 +284,30 @@ export const MAX_ZS_BS88_GG_04S: MaxZsData[] = [
 ];
 
 /**
+ * BS 7671 Table 41.4 - Maximum Zs for BS 88-2 gG Fuses (HRC "Red-Spot")
+ * For 5s disconnection time at 230V (Uo) - Motors/Fixed Equipment
+ * Using Cmin = 0.95 per BS 7671:2018+A2:2022
+ */
+export const MAX_ZS_BS88_GG_5S: MaxZsData[] = [
+  { deviceType: 'BS88', deviceRating: 2, maxZs: 44, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 4, maxZs: 21, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 6, maxZs: 12, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 10, maxZs: 6.8, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 16, maxZs: 4.0, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 20, maxZs: 2.8, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 25, maxZs: 2.2, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 32, maxZs: 1.7, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 40, maxZs: 1.3, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 50, maxZs: 0.99, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 63, maxZs: 0.78, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 80, maxZs: 0.55, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 100, maxZs: 0.42, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 125, maxZs: 0.32, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 160, maxZs: 0.27, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 200, maxZs: 0.18, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+];
+
+/**
  * BS 7671 Table 41.4 - Maximum Zs for BS 1361 Cartridge Fuses
  * Domestic/commercial cartridge fuses for 0.4s disconnection at 230V (Uo)
  */
@@ -344,8 +368,8 @@ export function getMaxZsForDevice(
       table = disconnectionTime === 5 ? MAX_ZS_MCB_TYPE_D_5S : MAX_ZS_MCB_TYPE_D_04S;
       break;
     case 'BS88':
-      // Fuses currently only have 0.4s tables
-      table = MAX_ZS_BS88_GG_04S;
+      // BS88 has both 0.4s (final circuits) and 5s (motors/fixed equipment) tables
+      table = disconnectionTime === 5 ? MAX_ZS_BS88_GG_5S : MAX_ZS_BS88_GG_04S;
       break;
     case 'BS1361':
       table = MAX_ZS_BS1361_04S;

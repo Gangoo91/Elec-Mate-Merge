@@ -85,11 +85,12 @@ export interface CircuitDesign {
   installationMethod: string;
   circuitTopology?: 'ring' | 'radial'; // Circuit topology for sockets
   protectionDevice: {
-    type: 'MCB' | 'RCBO';
+    type: 'MCB' | 'RCBO' | 'BS88' | 'MCCB' | 'BS1361' | 'BS3036';
     rating: number;
-    curve: 'B' | 'C' | 'D';
+    curve: 'B' | 'C' | 'D' | 'gG' | 'aM';
     kaRating: number;
     rcdRating?: number; // RCD sensitivity in mA (e.g., 30, 100, 300)
+    fuseClass?: 'gG' | 'aM' | 'gM'; // For fuses only
   };
   rcdProtected: boolean;
   afddRequired?: boolean;
