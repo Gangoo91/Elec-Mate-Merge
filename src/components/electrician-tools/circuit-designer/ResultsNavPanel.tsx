@@ -28,6 +28,15 @@ export const ResultsNavPanel = ({
   const getCircuitStatus = (circuit: CircuitDesign) => {
     const warnings = circuit.warnings?.length || 0;
     if (warnings > 0) return 'warning';
+    
+    // Check expected test results for Zs compliance
+    const zsCompliant = circuit.expectedTests?.zs?.compliant ?? 
+                        circuit.expectedTestResults?.zs?.compliant ?? 
+                        true;
+    const vdCompliant = circuit.calculations?.voltageDrop?.compliant ?? true;
+    
+    if (!zsCompliant || !vdCompliant) return 'warning';
+    
     return 'success';
   };
 
