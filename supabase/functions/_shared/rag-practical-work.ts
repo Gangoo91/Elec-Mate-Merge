@@ -155,7 +155,7 @@ export function filterByConfidence(
  * Format results for AI context
  */
 export function formatForAIContext(results: PracticalWorkResult[]): string {
-  return results.map(pw => {
+  return results.map((pw, index) => {
     let formatted = `**${pw.primary_topic || 'Practical Guidance'}**`;
     
     if (pw.equipment_category) {
@@ -163,6 +163,11 @@ export function formatForAIContext(results: PracticalWorkResult[]): string {
     }
     
     formatted += `\n${pw.content}\n`;
+    
+    // ⚡ PRIORITY: Flag equipment-specific test procedures prominently
+    if (pw.test_procedures && pw.test_procedures.length > 0) {
+      formatted += `\n⚡ SPECIFIC TEST PROCEDURES: ${pw.test_procedures.join('; ')}`;
+    }
     
     if (pw.tools_required && pw.tools_required.length > 0) {
       formatted += `\nTools Required: ${pw.tools_required.join(', ')}`;
@@ -172,8 +177,12 @@ export function formatForAIContext(results: PracticalWorkResult[]): string {
       formatted += `\nBS 7671: ${pw.bs7671_regulations.join(', ')}`;
     }
     
-    if (pw.test_procedures && pw.test_procedures.length > 0) {
-      formatted += `\nTest Procedures: ${pw.test_procedures.join(', ')}`;
+    if (pw.maintenance_interval) {
+      formatted += `\nMaintenance Interval: ${pw.maintenance_interval}`;
+    }
+    
+    if (pw.expected_results) {
+      formatted += `\nExpected Results: ${pw.expected_results}`;
     }
     
     if (pw.troubleshooting_steps && pw.troubleshooting_steps.length > 0) {
