@@ -54,14 +54,6 @@ const AGENTS: Agent[] = [
     expertise: ['Installation methods', 'Practical tips', 'Tool selection', 'Best practices']
   },
   {
-    id: 'commissioning',
-    name: 'Testing & Commissioning',
-    icon: CheckCircle2,
-    color: 'text-purple-400',
-    description: 'Test procedures, EICR defect coding and fault diagnosis',
-    expertise: ['Testing procedures', 'EICR photo analysis', 'Defect coding (C1-C3)', 'Fault diagnosis']
-  },
-  {
     id: 'maintenance',
     name: 'Maintenance Specialist',
     icon: Settings,
@@ -76,6 +68,15 @@ const AGENTS: Agent[] = [
     color: 'text-orange-400',
     description: 'Risk assessments, PPE requirements and safety procedures',
     expertise: ['Risk assessments', 'RAMS documents', 'PPE requirements', 'Emergency procedures']
+  },
+  {
+    id: 'commissioning',
+    name: 'Testing & Commissioning',
+    icon: CheckCircle2,
+    color: 'text-purple-400',
+    description: 'Test procedures, EICR defect coding and fault diagnosis',
+    expertise: ['Testing procedures', 'EICR photo analysis', 'Defect coding (C1-C3)', 'Fault diagnosis'],
+    comingSoon: true
   },
   {
     id: 'project-manager',
