@@ -15,7 +15,10 @@ import {
 export class AIDesigner {
   private openAiKey: string;
 
-  constructor(private logger: any) {
+  constructor(
+    private logger: any,
+    private circuitProgressCallback?: (completed: number, total: number, circuitName: string) => void
+  ) {
     this.openAiKey = Deno.env.get('OPENAI_API_KEY')!;
     
     if (!this.openAiKey) {
@@ -52,6 +55,12 @@ export class AIDesigner {
     // Execute ALL circuits in parallel
     this.logger.info('Executing parallel AI calls', { count: circuitPromises.length });
     const results = await Promise.allSettled(circuitPromises);
+    
+    // Report progress for successful circuits
+    const successfulCount = results.filter(r => r.status === 'fulfilled').length;
+    if (this.circuitProgressCallback) {
+      await this.circuitProgressCallback(successfulCount, inputs.circuits.length, 'Initial parallel batch');
+    }
     
     // Map results to preserve original array positions
     // Set circuitNumber = index + 1 for consistency with frontend display
@@ -106,6 +115,12 @@ export class AIDesigner {
               circuitNumber: failureIndex + 1
             };
             retrySuccess = true;
+            
+            // Report progress update
+            const currentSuccessCount = circuitsWithPositions.filter(c => c !== null).length;
+            if (this.circuitProgressCallback) {
+              await this.circuitProgressCallback(currentSuccessCount, inputs.circuits.length, circuit.name);
+            }
             
             this.logger.info(`Retry successful for circuit ${failureIndex + 1} on attempt ${attempt}`);
           } catch (error) {

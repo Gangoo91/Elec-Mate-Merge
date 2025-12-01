@@ -22,11 +22,12 @@ export class DesignPipeline {
   constructor(
     private logger: any,
     private requestId: string,
-    private progressCallback?: (msg: string) => void
+    private progressCallback?: (msg: string) => void,
+    private circuitProgressCallback?: (completed: number, total: number, circuitName: string) => void
   ) {
     this.normalizer = new FormNormalizer();
     this.cache = new CacheManager(logger);
-    this.ai = new AIDesigner(logger);
+    this.ai = new AIDesigner(logger, circuitProgressCallback);
     this.safetyChecks = new MinimalSafetyChecks(logger);
   }
 
