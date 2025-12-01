@@ -83,72 +83,47 @@ export class AIDesigner {
     // Track failed circuit names for user notification
     const failedCircuitNames: string[] = [];
     
-    // Retry failed circuits sequentially (up to 2 attempts with backoff)
+    // Calculate success rate and apply 80% threshold
+    const totalCircuits = inputs.circuits.length;
+    const successRate = successfulCount / totalCircuits;
+    
+    // Track failed circuits for user notification
     if (failureIndices.length > 0) {
-      this.logger.warn('Retrying failed circuits', {
-        failureCount: failureIndices.length,
-        indices: failureIndices
-      });
-      
       for (const failureIndex of failureIndices) {
         const circuit = inputs.circuits[failureIndex];
-        let retrySuccess = false;
+        const circuitName = circuit.name || `Circuit ${failureIndex + 1}`;
+        failedCircuitNames.push(circuitName);
         
-        for (let attempt = 1; attempt <= 2 && !retrySuccess; attempt++) {
-          const backoffMs = attempt * 3000; // 3s, 6s
-          this.logger.info(`Retry attempt ${attempt} for circuit ${failureIndex + 1} after ${backoffMs}ms backoff`);
+        const failureReason = results[failureIndex].status === 'rejected' 
+          ? (results[failureIndex] as PromiseRejectedResult).reason?.message || 'Unknown error'
+          : 'Unknown error';
           
-          await new Promise(resolve => setTimeout(resolve, backoffMs));
-          
-          try {
-            const result = await this.generateSingleCircuit(
-              circuit,
-              failureIndex,
-              systemPrompt,
-              installationType,
-              inputs.supply
-            );
-            
-            // Success - update the position
-            circuitsWithPositions[failureIndex] = {
-              ...result,
-              circuitNumber: failureIndex + 1
-            };
-            retrySuccess = true;
-            
-            // Report progress update
-            const currentSuccessCount = circuitsWithPositions.filter(c => c !== null).length;
-            if (this.circuitProgressCallback) {
-              await this.circuitProgressCallback(currentSuccessCount, inputs.circuits.length, circuit.name);
-            }
-            
-            this.logger.info(`Retry successful for circuit ${failureIndex + 1} on attempt ${attempt}`);
-          } catch (error) {
-            this.logger.warn(`Retry attempt ${attempt} failed for circuit ${failureIndex + 1}`, {
-              error: error.message
-            });
-          }
-        }
-        
-        if (!retrySuccess) {
-          // Track failed circuit name for user notification
-          const circuitName = circuit.name || `Circuit ${failureIndex + 1}`;
-          failedCircuitNames.push(circuitName);
-          this.logger.error(`All retry attempts exhausted for circuit ${failureIndex + 1}: ${circuitName}`);
-        }
+        this.logger.error(`Circuit ${failureIndex + 1} failed: ${circuitName}`, {
+          error: failureReason
+        });
       }
+    }
+    
+    // 80% threshold check - if less than 80% succeed, fail the entire job
+    if (successRate < 0.8) {
+      throw new Error(
+        `Only ${successfulCount}/${totalCircuits} circuits succeeded (${Math.round(successRate * 100)}%). ` +
+        `Minimum 80% success required. Failed circuits: ${failedCircuitNames.join(', ')}`
+      );
+    }
+    
+    // Log partial success if applicable (80-99% success)
+    if (failedCircuitNames.length > 0) {
+      this.logger.warn('Partial success - returning completed circuits', {
+        successCount: successfulCount,
+        failedCount: failedCircuitNames.length,
+        failedCircuits: failedCircuitNames,
+        successRate: `${Math.round(successRate * 100)}%`
+      });
     }
     
     // Filter out failures and extract successful circuits
     const circuits = circuitsWithPositions.filter((c): c is DesignedCircuit => c !== null);
-    const finalFailures = circuitsWithPositions.filter(c => c === null).length;
-    
-    if (finalFailures > 0) {
-      this.logger.warn('Some circuits still failed after retries', {
-        failures: finalFailures,
-        successes: circuits.length
-      });
-    }
     
     if (circuits.length === 0) {
       throw new Error('All circuits failed to design. Check logs for details.');
