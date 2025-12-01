@@ -2,6 +2,8 @@ import { MobileInput } from '@/components/ui/mobile-input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { MaintenanceEquipmentDetails } from '@/types/maintenance-method';
+import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
+import { cn } from '@/lib/utils';
 
 interface MaintenanceEquipmentDetailsFormProps {
   equipmentDetails: MaintenanceEquipmentDetails;
@@ -12,6 +14,8 @@ export const MaintenanceEquipmentDetailsForm = ({
   equipmentDetails,
   onChange
 }: MaintenanceEquipmentDetailsFormProps) => {
+  const { isMobile } = useMobileEnhanced();
+
   const handleChange = (field: keyof MaintenanceEquipmentDetails, value: string | number) => {
     onChange({
       ...equipmentDetails,
@@ -50,24 +54,30 @@ export const MaintenanceEquipmentDetailsForm = ({
       </div>
 
       <div className="space-y-2">
-        <Label>Known Issues or Observations</Label>
+        <Label className="text-foreground">Known Issues or Observations</Label>
         <Textarea
           value={equipmentDetails.knownIssues || ''}
           onChange={(e) => handleChange('knownIssues', e.target.value)}
           placeholder="Describe any known defects, wear, or concerns..."
-          className="min-h-[80px] sm:min-h-[100px] resize-none text-base"
-          rows={3}
+          className={cn(
+            "resize-none text-foreground placeholder:text-muted-foreground",
+            isMobile ? "min-h-[100px] text-base" : "min-h-[80px] text-sm"
+          )}
+          rows={isMobile ? 4 : 3}
         />
       </div>
 
       <div className="space-y-2">
-        <Label>Additional Requirements</Label>
+        <Label className="text-foreground">Additional Requirements</Label>
         <Textarea
           value={equipmentDetails.additionalNotes || ''}
           onChange={(e) => handleChange('additionalNotes', e.target.value)}
           placeholder="Any specific maintenance requirements or site constraints..."
-          className="min-h-[80px] sm:min-h-[100px] resize-none text-base"
-          rows={3}
+          className={cn(
+            "resize-none text-foreground placeholder:text-muted-foreground",
+            isMobile ? "min-h-[100px] text-base" : "min-h-[80px] text-sm"
+          )}
+          rows={isMobile ? 4 : 3}
         />
       </div>
     </div>
