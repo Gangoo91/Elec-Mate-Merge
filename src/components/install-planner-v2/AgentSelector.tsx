@@ -6,9 +6,11 @@ interface Agent {
   emoji: string;
   description: string;
   expertise: string;
+  comingSoon?: boolean;
 }
 
 const AVAILABLE_AGENTS: Agent[] = [
+  // Working Agents
   {
     id: 'designer',
     name: 'Circuit Designer',
@@ -31,25 +33,43 @@ const AVAILABLE_AGENTS: Agent[] = [
     expertise: 'Step-by-step procedures, tool requirements, time estimates'
   },
   {
+    id: 'maintenance',
+    name: 'Maintenance Specialist',
+    emoji: '🛠️',
+    description: 'Equipment maintenance procedures and testing schedules',
+    expertise: 'Preventive maintenance, testing procedures, equipment servicing'
+  },
+  {
     id: 'health-safety',
     name: 'Health & Safety Officer',
     emoji: '⚠️',
     description: 'Risk assessments, PPE requirements and safety procedures',
     expertise: 'Risk assessments, RAMS documents, PPE requirements, emergency procedures'
   },
+  // Coming Soon Agents
   {
     id: 'commissioning',
     name: 'Testing & Commissioning',
     emoji: '✅',
     description: 'Test procedures, EICR defect coding and fault diagnosis',
-    expertise: 'Testing procedures, EICR photo analysis, defect coding (C1-C3)'
+    expertise: 'Testing procedures, EICR photo analysis, defect coding (C1-C3)',
+    comingSoon: true
   },
   {
     id: 'project-manager',
     name: 'Project Manager',
     emoji: '📋',
     description: 'Project coordination & handover',
-    expertise: 'Scheduling, documentation, certification handover'
+    expertise: 'Scheduling, documentation, certification handover',
+    comingSoon: true
+  },
+  {
+    id: 'tutor',
+    name: 'Training Tutor',
+    emoji: '📚',
+    description: 'Exam preparation and concept explanations',
+    expertise: 'BS 7671 revision, exam techniques, practical demonstrations',
+    comingSoon: true
   }
 ];
 
@@ -74,15 +94,24 @@ export const AgentSelector = ({ onSelectAgent }: AgentSelectorProps) => {
         {AVAILABLE_AGENTS.map(agent => (
           <Card
             key={agent.id}
-            onClick={() => onSelectAgent(agent.id)}
-            className="group cursor-pointer p-4 md:p-6 hover:border-elec-yellow/50 hover:bg-elec-card/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+            onClick={() => !agent.comingSoon && onSelectAgent(agent.id)}
+            className={`group p-4 md:p-6 transition-all duration-200 ${
+              agent.comingSoon 
+                ? 'cursor-not-allowed opacity-60 border-dashed border-muted-foreground/30' 
+                : 'cursor-pointer hover:border-elec-yellow/50 hover:bg-elec-card/50 hover:scale-[1.02] active:scale-[0.98]'
+            }`}
           >
-            <div className="flex flex-col items-center text-center space-y-2 md:space-y-3">
-              <div className="text-4xl md:text-5xl lg:text-6xl transition-transform group-hover:scale-110">
+            <div className="flex flex-col items-center text-center space-y-2 md:space-y-3 relative">
+              {agent.comingSoon && (
+                <div className="absolute -top-2 -right-2 bg-amber-500 text-black text-[10px] font-bold px-2 py-0.5 rounded-full z-10">
+                  Coming Soon
+                </div>
+              )}
+              <div className={`text-4xl md:text-5xl lg:text-6xl transition-transform ${!agent.comingSoon && 'group-hover:scale-110'}`}>
                 {agent.emoji}
               </div>
               <div className="space-y-1">
-                <h3 className="text-base md:text-lg font-semibold text-foreground group-hover:text-elec-yellow transition-colors">
+                <h3 className={`text-base md:text-lg font-semibold text-foreground transition-colors ${!agent.comingSoon && 'group-hover:text-elec-yellow'}`}>
                   {agent.name}
                 </h3>
                 <p className="text-xs md:text-sm text-muted-foreground leading-tight truncate">
