@@ -46,6 +46,12 @@ export function validateCircuitConsistency(
     /(\d+)A?\s+(?:HRC\s+)?BS\s*88/i,
     /(\d+)A?\s+(?:gG|aM)\s+fuse/i,
     /red[\s-]?spot\s+fuse/i,
+    // Broader patterns for HRC fuses without explicit BS88 mention
+    /HRC\s+fuse/i,
+    /high\s+rupturing\s+capacity/i,
+    /industrial\s+fuse/i,
+    /(\d+)A?\s+fuse\s+(?:for\s+)?(?:high\s+)?fault/i,
+    /fuse\s+(?:rated\s+)?(?:at\s+)?(\d+)A/i,
   ];
 
   let justificationDeviceType: 'MCB' | 'RCBO' | 'BS88' | null = null;
@@ -72,6 +78,9 @@ export function validateCircuitConsistency(
     }
   }
 
+  // Store the corrected circuit to preserve device type fixes
+  let consistentCircuit = circuit;
+
   // If justification says BS88 but structured data says MCB/RCBO, correct it
   if (justificationDeviceType === 'BS88' && 
       circuit.protectionDevice?.type && 
@@ -84,8 +93,8 @@ export function validateCircuitConsistency(
       correction: 'Updating to BS88'
     });
     
-    // Correct device type and curve
-    circuit = {
+    // Correct device type and curve - store in consistentCircuit
+    consistentCircuit = {
       ...circuit,
       protectionDevice: {
         ...circuit.protectionDevice,
@@ -127,26 +136,26 @@ export function validateCircuitConsistency(
 
   // If we found a rating in the justification, validate consistency
   if (justificationRating !== null) {
-    const structuredRating = circuit.protectionDevice?.rating;
+    const structuredRating = consistentCircuit.protectionDevice?.rating;
 
     if (structuredRating && justificationRating !== structuredRating) {
       logger.warn('🔴 CONSISTENCY FIX: Protection rating mismatch detected', {
-        circuit: circuit.name,
+        circuit: consistentCircuit.name,
         overviewRating: `${structuredRating}A (WRONG - shown in "At a Glance")`,
         justificationRating: `${justificationRating}A (CORRECT - from design justification)`,
         action: `Correcting overview from ${structuredRating}A to ${justificationRating}A`,
         safetyImpact: 'CRITICAL - Could lead to incorrect protection device installation'
       });
 
-      // Override with justification value (single source of truth)
+      // Override with justification value - use consistentCircuit to preserve BS88 fix
       return {
-        ...circuit,
+        ...consistentCircuit,
         protectionDevice: {
-          ...circuit.protectionDevice,
+          ...consistentCircuit.protectionDevice,
           rating: justificationRating
         },
         calculations: {
-          ...circuit.calculations,
+          ...consistentCircuit.calculations,
           In: justificationRating // Also fix In (nominal current of protective device)
         }
       };
@@ -154,20 +163,20 @@ export function validateCircuitConsistency(
 
     // Values match - log success
     logger.info('✅ Consistency check passed', {
-      circuit: circuit.name,
+      circuit: consistentCircuit.name,
       rating: `${structuredRating}A`,
       status: 'Overview and justification match'
     });
   } else {
     // Could not extract rating from justification - log warning
     logger.warn('⚠️ Could not extract protection rating from justification', {
-      circuit: circuit.name,
-      structuredRating: circuit.protectionDevice?.rating,
+      circuit: consistentCircuit.name,
+      structuredRating: consistentCircuit.protectionDevice?.rating,
       note: 'Manual review recommended'
     });
   }
 
-  return circuit;
+  return consistentCircuit;
 }
 
 /**
@@ -195,8 +204,12 @@ function getDisconnectionTime(circuit: DesignedCircuit): 0.4 | 5 {
   const isMotorCircuit = motorKeywords.some(kw => circuitType.includes(kw) || name.includes(kw));
   
   if (isMotorCircuit) {
-    // Only Type D has 5s values - Types B and C must use 0.4s
+    // Type D MCBs have 5s values
     if (deviceCurve === 'D' || (deviceType === 'MCB' && deviceCurve === 'D')) {
+      return 5;
+    }
+    // BS88 HRC fuses also have 5s values for motors (industrial applications)
+    if (deviceType === 'BS88') {
       return 5;
     }
     // Type B or C motor circuit - must use 0.4s (no 5s table exists)
