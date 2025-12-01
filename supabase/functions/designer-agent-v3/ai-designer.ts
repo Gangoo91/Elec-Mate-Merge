@@ -258,6 +258,8 @@ export class AIDesigner {
     parts.push('  • Radial 20A: "Radial circuit: 20A + 2.5mm² per Table 4D1A"');
     parts.push('  • Radial 32A: "Radial circuit: 32A + 4mm² per Table 4D1A"');
     parts.push('');
+    // Determine installation type for diversity rules
+    const type = installationType || 'general';
     
     // Add commercial radial vs ring decision guidance
     if (type === 'commercial' || type === 'industrial') {
@@ -293,9 +295,6 @@ export class AIDesigner {
     parts.push('🎯 CRITICAL: Calculate BOTH Ib (connected) AND Id (diversified) for every circuit');
     parts.push('🎯 Use Id (diversified current) for MCB selection: Id ≤ In ≤ Iz');
     parts.push('');
-    
-    // Determine installation type for diversity rules
-    const type = installationType || 'general';
     
     // Installation-type-specific diversity factors
     if (type === 'domestic') {
