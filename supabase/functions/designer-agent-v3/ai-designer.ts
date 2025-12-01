@@ -156,7 +156,7 @@ export class AIDesigner {
     const tool_choice = { type: 'function', function: { name: 'design_single_circuit' } };
 
     try {
-      // Call OpenAI with 45-second timeout per circuit
+      // Call OpenAI with 180-second timeout per circuit
       const response = await callOpenAI(
         {
           messages: [
@@ -169,7 +169,7 @@ export class AIDesigner {
           tool_choice
         },
         this.openAiKey,
-        90000 // 90 second timeout per circuit
+        180000 // 180 second timeout per circuit
       );
 
       const circuitDuration = Date.now() - circuitStart;
