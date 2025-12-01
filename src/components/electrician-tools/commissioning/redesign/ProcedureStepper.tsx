@@ -19,16 +19,21 @@ export const ProcedureStepper = ({ steps }: ProcedureStepperProps) => {
     setCompletedSteps(newCompleted);
   };
 
-  const isSafetyCritical = (step: string) => {
+  const isSafetyCritical = (step: string | any) => {
+    // Defensive: ensure step is a string
+    const stepText = typeof step === 'string' ? step : JSON.stringify(step);
     const safetyKeywords = ['isolated', 'isolation', 'dead', 'lock off', 'safe', 'danger', 'warning', 'ppe'];
-    return safetyKeywords.some(keyword => step.toLowerCase().includes(keyword));
+    return safetyKeywords.some(keyword => stepText.toLowerCase().includes(keyword));
   };
 
   return (
     <div className="space-y-3">
       {steps.map((step, index) => {
+        // Defensive: ensure step is a string for rendering
+        const stepText = typeof step === 'string' ? step : 
+          (typeof step === 'object' ? Object.values(step).join(' - ') : String(step));
         const isCompleted = completedSteps.has(index);
-        const isSafety = isSafetyCritical(step);
+        const isSafety = isSafetyCritical(stepText);
         
         return (
           <button
@@ -65,7 +70,7 @@ export const ProcedureStepper = ({ steps }: ProcedureStepperProps) => {
                   "text-sm leading-relaxed",
                   isCompleted ? "text-white/60 line-through" : "text-white"
                 )}>
-                  {step}
+                  {stepText}
                 </p>
                 
                 {/* Safety Warning Badge */}

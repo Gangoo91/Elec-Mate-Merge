@@ -161,14 +161,36 @@ export async function generateCommissioningProcedures(
  */
 function transformTestProcedure(test: any): any {
   if (!test) return null;
+  
+  // Flatten procedure objects into string array
+  let procedureSteps: string[] = [];
+  const rawProcedure = test.procedure || test.procedureSteps || [];
+  
+  if (Array.isArray(rawProcedure)) {
+    rawProcedure.forEach((step: any) => {
+      if (typeof step === 'string') {
+        procedureSteps.push(step);
+      } else if (typeof step === 'object' && step !== null) {
+        // Convert structured object to ordered string steps
+        const orderedKeys = ['PREPARATION', 'SETUP', 'LEAD_PLACEMENT', 'TEST', 'INTERPRET/RECORD', 'RECORD'];
+        orderedKeys.forEach(key => {
+          if (step[key]) {
+            procedureSteps.push(`${key}: ${step[key]}`);
+          }
+        });
+        // Also handle any other keys not in our ordered list
+        Object.keys(step).forEach(key => {
+          if (!orderedKeys.includes(key) && step[key]) {
+            procedureSteps.push(`${key}: ${step[key]}`);
+          }
+        });
+      }
+    });
+  }
+  
   return {
     ...test,
-    // Ensure procedure is an array (rename procedureSteps if needed)
-    procedure: Array.isArray(test.procedure) 
-      ? test.procedure 
-      : Array.isArray(test.procedureSteps) 
-        ? test.procedureSteps 
-        : [],
+    procedure: procedureSteps,
     // Ensure all other arrays are valid arrays
     troubleshooting: Array.isArray(test.troubleshooting) ? test.troubleshooting : [],
     commonMistakes: Array.isArray(test.commonMistakes) ? test.commonMistakes : [],
