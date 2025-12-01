@@ -1623,12 +1623,20 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               </thead>
               <tbody>
                 {design.circuits.map((circuit, idx) => {
-                  // Use backend complianceStatus directly (computed in Phase 5.5 with all 14 validation rules)
-                  // Fall back to calculation check only if complianceStatus not present
+                  // Use expected test results as source of truth (AI-calculated with correct disconnection times)
                   const hasCompliance = circuit.complianceStatus 
                     ? circuit.complianceStatus === 'pass'
-                    : (circuit.calculations?.voltageDrop?.compliant && 
-                       (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999)); // Fixed: <= not <
+                    : (
+                        // Check expectedTests first (backend format)
+                        circuit.expectedTests?.zs?.compliant !== undefined 
+                          ? (circuit.expectedTests.zs.compliant && (circuit.calculations?.voltageDrop?.compliant ?? true))
+                          // Fall back to expectedTestResults (frontend format)
+                          : circuit.expectedTestResults?.zs?.compliant !== undefined
+                            ? (circuit.expectedTestResults.zs.compliant && (circuit.calculations?.voltageDrop?.compliant ?? true))
+                            // Final fallback: use calculations (shouldn't happen with proper AI output)
+                            : (circuit.calculations?.voltageDrop?.compliant && 
+                               (circuit.calculations?.zs ?? 0) <= (circuit.calculations?.maxZs ?? 999))
+                      );
                   
                   // Determine status variant based on complianceStatus
                   const statusVariant = circuit.complianceStatus === 'pass' ? 'success' :
