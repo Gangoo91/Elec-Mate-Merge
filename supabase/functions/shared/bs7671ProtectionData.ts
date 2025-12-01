@@ -67,44 +67,14 @@ export const MAX_ZS_MCB_TYPE_D_04S: MaxZsData[] = [
 ];
 
 /**
- * Table 41.6 - Maximum Zs for MCBs (Circuit-Breakers) 
- * For 5s disconnection time at 230V (Uo)
+ * Table 41.3 - Maximum Zs for Type D MCBs (5s disconnection time at 230V)
  * Using Cmin = 0.95 per BS 7671:2018+A2:2022
  * 
- * BS EN 60898 / BS EN 61009 MCBs and RCBOs
- * Distribution circuits and fixed equipment (motors, conveyors, etc.)
- * Per Regulation 411.3.2.3
+ * IMPORTANT: BS 7671 Table 41.3 specifies 5s values ONLY for Type D MCBs
+ * Types B and C do NOT have 5s disconnection times in the standard
+ * 
+ * For motors, conveyors, fixed equipment - per Regulation 411.3.2.3
  */
-export const MAX_ZS_MCB_TYPE_B_5S: MaxZsData[] = [
-  { deviceType: 'B', deviceRating: 6, maxZs: 14.57, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'B', deviceRating: 10, maxZs: 8.73, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'B', deviceRating: 16, maxZs: 5.46, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'B', deviceRating: 20, maxZs: 4.37, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'B', deviceRating: 25, maxZs: 3.50, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'B', deviceRating: 32, maxZs: 2.73, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'B', deviceRating: 40, maxZs: 2.19, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'B', deviceRating: 50, maxZs: 1.75, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'B', deviceRating: 63, maxZs: 1.39, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'B', deviceRating: 80, maxZs: 1.09, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'B', deviceRating: 100, maxZs: 0.87, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'B', deviceRating: 125, maxZs: 0.70, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-];
-
-export const MAX_ZS_MCB_TYPE_C_5S: MaxZsData[] = [
-  { deviceType: 'C', deviceRating: 6, maxZs: 7.28, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'C', deviceRating: 10, maxZs: 4.37, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'C', deviceRating: 16, maxZs: 2.73, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'C', deviceRating: 20, maxZs: 2.19, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'C', deviceRating: 25, maxZs: 1.75, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'C', deviceRating: 32, maxZs: 1.37, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'C', deviceRating: 40, maxZs: 1.09, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'C', deviceRating: 50, maxZs: 0.87, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'C', deviceRating: 63, maxZs: 0.69, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'C', deviceRating: 80, maxZs: 0.55, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'C', deviceRating: 100, maxZs: 0.44, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-  { deviceType: 'C', deviceRating: 125, maxZs: 0.35, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
-];
-
 export const MAX_ZS_MCB_TYPE_D_5S: MaxZsData[] = [
   { deviceType: 'D', deviceRating: 6, maxZs: 3.64, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
   { deviceType: 'D', deviceRating: 10, maxZs: 2.19, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.6' },
@@ -352,15 +322,25 @@ export function getMaxZsForDevice(
 ): { maxZs: number; regulation: string } | null {
   let table: MaxZsData[];
   
+  // CRITICAL: BS 7671 Table 41.3 only specifies 5s values for Type D
+  // Types B and C do NOT have 5s disconnection times in the standard
+  if (disconnectionTime === 5 && (deviceType === 'B' || deviceType === 'C')) {
+    // Return null for invalid combinations (5s + Type B/C)
+    return null;
+  }
+  
   // Select correct table based on device type AND disconnection time
   switch (deviceType) {
     case 'B':
-      table = disconnectionTime === 5 ? MAX_ZS_MCB_TYPE_B_5S : MAX_ZS_MCB_TYPE_B_04S;
+      // Type B only has 0.4s (already validated above)
+      table = MAX_ZS_MCB_TYPE_B_04S;
       break;
     case 'C':
-      table = disconnectionTime === 5 ? MAX_ZS_MCB_TYPE_C_5S : MAX_ZS_MCB_TYPE_C_04S;
+      // Type C only has 0.4s (already validated above)
+      table = MAX_ZS_MCB_TYPE_C_04S;
       break;
     case 'D':
+      // Type D has both 0.4s and 5s tables
       table = disconnectionTime === 5 ? MAX_ZS_MCB_TYPE_D_5S : MAX_ZS_MCB_TYPE_D_04S;
       break;
     case 'BS88':

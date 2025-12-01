@@ -115,31 +115,42 @@ export function validateCircuitConsistency(
  * Determine disconnection time based on circuit type
  * Per BS 7671 Regulation 411.3.2.3:
  * - Final circuits ≤32A (sockets, lighting): 0.4s (Table 41.3)
- * - Motors, conveyors, fixed equipment: 5s (Table 41.6)
+ * - Motors, conveyors, fixed equipment with Type D: 5s (Table 41.3)
  * - Distribution circuits: 5s (Table 41.6)
+ * 
+ * CRITICAL: Only Type D MCBs have 5s disconnection values in BS 7671
  */
 function getDisconnectionTime(circuit: DesignedCircuit): 0.4 | 5 {
   const circuitType = circuit.loadType?.toLowerCase() || '';
   const name = circuit.name?.toLowerCase() || '';
+  const deviceType = circuit.protectionDevice?.type;
+  const deviceCurve = circuit.protectionDevice?.curve;
   
-  // Motor/fixed equipment circuits = 5s
+  // Motor/fixed equipment circuits = 5s (ONLY if Type D)
   const motorKeywords = [
     'motor', 'compressor', 'chiller', 'conveyor', 'pump', 'fan',
     'auger', 'three-phase', 'machine', 'production', 'hvac',
     'air handler', 'ventilation', 'extraction', 'cooling tower'
   ];
   
-  if (motorKeywords.some(kw => circuitType.includes(kw) || name.includes(kw))) {
-    return 5;
+  const isMotorCircuit = motorKeywords.some(kw => circuitType.includes(kw) || name.includes(kw));
+  
+  if (isMotorCircuit) {
+    // Only Type D has 5s values - Types B and C must use 0.4s
+    if (deviceCurve === 'D' || (deviceType === 'MCB' && deviceCurve === 'D')) {
+      return 5;
+    }
+    // Type B or C motor circuit - must use 0.4s (no 5s table exists)
+    return 0.4;
   }
   
-  // Distribution circuits = 5s
+  // Distribution circuits = 5s (if Type D, otherwise 0.4s)
   if (circuitType.includes('distribution') || circuitType.includes('sub-main') || 
       name.includes('distribution') || name.includes('sub-main')) {
-    return 5;
+    return deviceCurve === 'D' ? 5 : 0.4;
   }
   
-  // Final circuits (sockets, lighting) = 0.4s (default)
+  // Final circuits (sockets, lighting) = 0.4s (always)
   return 0.4;
 }
 
@@ -161,8 +172,30 @@ export function validateMaxZs(
   let deviceTypeForLookup: 'B' | 'C' | 'D' | 'BS88' | 'BS1361' | 'BS3036' | null = null;
   
   if (protectionDevice.type === 'MCB' || protectionDevice.type === 'RCBO') {
-    // Use curve for MCB/RCBO
-    deviceTypeForLookup = protectionDevice.curve as 'B' | 'C' | 'D';
+    // Use curve if set, otherwise infer from circuit type
+    if (protectionDevice.curve) {
+      deviceTypeForLookup = protectionDevice.curve as 'B' | 'C' | 'D';
+    } else {
+      // Infer curve from circuit type: motors = D, commercial = C, domestic = B
+      const circuitType = circuit.loadType?.toLowerCase() || '';
+      const name = circuit.name?.toLowerCase() || '';
+      
+      if (circuitType.includes('motor') || circuitType.includes('compressor') || 
+          name.includes('motor') || name.includes('compressor')) {
+        deviceTypeForLookup = 'D';
+      } else if (circuitType.includes('commercial') || circuitType.includes('hvac') ||
+                 circuitType.includes('industrial')) {
+        deviceTypeForLookup = 'C';
+      } else {
+        deviceTypeForLookup = 'B'; // Default for domestic/lighting/sockets
+      }
+      
+      logger.warn('Curve not set, inferred from circuit type', {
+        circuit: circuit.name,
+        inferredCurve: deviceTypeForLookup,
+        circuitType
+      });
+    }
   } else if (['BS88', 'BS1361', 'BS3036', 'MCCB'].includes(protectionDevice.type)) {
     // Use device type directly for fuses
     deviceTypeForLookup = protectionDevice.type as 'BS88' | 'BS1361' | 'BS3036';
