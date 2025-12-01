@@ -9,7 +9,7 @@ import type { DiagnosticStep } from "@/types/commissioning-response";
 
 interface FaultDiagnosisStepCardProps {
   step: DiagnosticStep;
-  onToggleComplete?: (stepNumber: number, completed: boolean) => void;
+  onToggleComplete?: (stepId: string, completed: boolean) => void;
   isCompleted?: boolean;
 }
 
