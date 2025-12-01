@@ -3894,6 +3894,60 @@ export type Database = {
         }
         Relationships: []
       }
+      maintenance_method_jobs: {
+        Row: {
+          completed_at: string | null
+          created_at: string | null
+          current_step: string | null
+          detail_level: string | null
+          equipment_details: Json | null
+          error_message: string | null
+          id: string
+          method_data: Json | null
+          progress: number | null
+          quality_metrics: Json | null
+          query: string
+          started_at: string | null
+          status: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string | null
+          current_step?: string | null
+          detail_level?: string | null
+          equipment_details?: Json | null
+          error_message?: string | null
+          id?: string
+          method_data?: Json | null
+          progress?: number | null
+          quality_metrics?: Json | null
+          query: string
+          started_at?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string | null
+          current_step?: string | null
+          detail_level?: string | null
+          equipment_details?: Json | null
+          error_message?: string | null
+          id?: string
+          method_data?: Json | null
+          progress?: number | null
+          quality_metrics?: Json | null
+          query?: string
+          started_at?: string | null
+          status?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       maintenance_schedules: {
         Row: {
           confidence_score: number | null
