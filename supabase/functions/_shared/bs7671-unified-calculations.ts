@@ -270,10 +270,18 @@ export interface EarthFaultResult {
 }
 
 // BS 7671 Table 41.3 - Maximum Zs values for MCBs (0.4s disconnection, 230V)
+// Using Cmin = 0.95 per BS 7671:2018+A2:2022
 const MAX_ZS_VALUES: Record<string, Record<number, number>> = {
-  'B': { 6: 7.67, 10: 4.60, 16: 2.87, 20: 2.30, 25: 1.84, 32: 1.44, 40: 1.15, 50: 0.92, 63: 0.73, 80: 0.57, 100: 0.46, 125: 0.37 },
-  'C': { 6: 3.83, 10: 2.30, 16: 1.44, 20: 1.15, 25: 0.92, 32: 0.72, 40: 0.57, 50: 0.46, 63: 0.36, 80: 0.29, 100: 0.23, 125: 0.18 },
-  'D': { 6: 1.92, 10: 1.15, 16: 0.72, 20: 0.57, 25: 0.46, 32: 0.36, 40: 0.29, 50: 0.23, 63: 0.18, 80: 0.14, 100: 0.11, 125: 0.09 }
+  'B': { 6: 7.28, 10: 4.37, 16: 2.73, 20: 2.19, 25: 1.75, 32: 1.37, 40: 1.09, 50: 0.87, 63: 0.69, 80: 0.55, 100: 0.44, 125: 0.35 },
+  'C': { 6: 3.64, 10: 2.19, 16: 1.37, 20: 1.09, 25: 0.87, 32: 0.68, 40: 0.55, 50: 0.44, 63: 0.35, 80: 0.27, 100: 0.22, 125: 0.17 },
+  'D': { 6: 1.82, 10: 1.09, 16: 0.68, 20: 0.55, 25: 0.44, 32: 0.34, 40: 0.27, 50: 0.22, 63: 0.17, 80: 0.14, 100: 0.11, 125: 0.09 }
+};
+
+// BS 7671 Table 41.3 - Maximum Zs values for Type D MCBs (5s disconnection, 230V)
+// ONLY Type D has 5s values per BS 7671 - Types B and C do NOT have 5s tables
+// For motors, conveyors, fixed equipment - per Regulation 411.3.2.3
+const MAX_ZS_VALUES_5S: Record<string, Record<number, number>> = {
+  'D': { 6: 3.64, 10: 2.19, 16: 1.37, 20: 1.09, 25: 0.87, 32: 0.68, 40: 0.55, 50: 0.44, 63: 0.35, 80: 0.27, 100: 0.22, 125: 0.17 }
 };
 
 // Temperature factors for cable resistance at max operating temperature
@@ -290,7 +298,10 @@ function getConductorResistance(cableType: CableType, size: number): number | nu
   return data?.resistance || null;
 }
 
-export function calculateEarthFaultLoop(params: EarthFaultParams): EarthFaultResult | null {
+export function calculateEarthFaultLoop(
+  params: EarthFaultParams,
+  disconnectionTime: 0.4 | 5 = 0.4
+): EarthFaultResult | null {
   const { externalZe, cableType, cableSize, cpcSize, length, temperature, protectiveDevice } = params;
   
   // Get conductor resistances
@@ -312,8 +323,23 @@ export function calculateEarthFaultLoop(params: EarthFaultParams): EarthFaultRes
   // Calculate Zs: Zs = Ze + (R1 + R2)
   const calculatedZs = externalZe + r1PlusR2;
   
-  // Get max Zs from BS 7671 Table 41.3
-  const maxZs = MAX_ZS_VALUES[protectiveDevice.type]?.[protectiveDevice.rating];
+  // Get max Zs from BS 7671 tables based on disconnection time
+  // 5s disconnection only valid for Type D (motors/fixed equipment)
+  let maxZs: number | undefined;
+  
+  if (disconnectionTime === 5) {
+    // Only Type D has 5s values - Types B and C don't exist
+    if (protectiveDevice.type === 'D') {
+      maxZs = MAX_ZS_VALUES_5S['D']?.[protectiveDevice.rating];
+    } else {
+      // Error: 5s disconnection requested for Type B or C (invalid)
+      return null;
+    }
+  } else {
+    // 0.4s disconnection (standard for final circuits)
+    maxZs = MAX_ZS_VALUES[protectiveDevice.type]?.[protectiveDevice.rating];
+  }
+  
   if (!maxZs) return null;
   
   // Calculate fault current: If = U₀ / Zs
