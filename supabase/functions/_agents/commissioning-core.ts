@@ -7,6 +7,7 @@
 import { enhanceQuery } from '../_shared/query-enhancer.ts';
 import { retrieveCommissioningKnowledge } from '../_shared/rag-commissioning.ts';
 import { createLogger } from '../_shared/logger.ts';
+import { extractCommissioningKeywords } from '../_shared/commissioning-keywords.ts';
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
 
@@ -60,10 +61,14 @@ export async function generateCommissioningProcedures(
     circuitType: request.projectContext?.circuitType
   });
 
-  // STEP 1: Query Enhancement
+  // STEP 1: Query Enhancement & Keyword Extraction (match Installation Specialist gameplan)
   const enhancement = enhanceQuery(request.query || '', []);
   const effectiveQuery = enhancement.enhanced;
   console.log(`📝 Query enhanced: ${enhancement.addedContext.length} context items added`);
+
+  // STEP 1.5: Extract comprehensive keywords (50+ target for better RAG coverage)
+  const keywords = extractCommissioningKeywords(effectiveQuery, request.projectContext?.circuitType);
+  console.log(`🔑 Extracted ${keywords.size} keywords:`, Array.from(keywords).slice(0, 15));
 
   // STEP 2: RAG Search
   const ragStart = Date.now();
@@ -261,11 +266,13 @@ ${testContext}
 
 ENHANCED RESPONSE REQUIREMENTS FOR TESTING PROCEDURES:
 
-**MANDATORY STRUCTURE:**
+**MANDATORY STRUCTURE - STEP-BASED APPROACH:**
 - Generate structured commissioning procedures in JSON format
 - Include visualInspection checkpoints (5-8 detailed items MINIMUM)
 - MANDATORY: Include deadTests procedures - MINIMUM 3-5 DEAD TESTS REQUIRED (continuity, insulation resistance, polarity, etc.) - THIS ARRAY MUST NEVER BE EMPTY
 - MANDATORY: Include liveTests procedures - MINIMUM 2-4 LIVE TESTS REQUIRED (earth fault loop, RCD, PFC, etc.) - THIS ARRAY MUST NEVER BE EMPTY
+- CRITICAL: Think systematically about testing phases like Installation Specialist thinks about installation phases
+- Phase-based structure: Visual Inspection → Dead Tests (safe to do with power off) → Live Tests (require power on) → Documentation
 
 ## CRITICAL: REAL-WORLD PRACTICAL TESTING PROCEDURES
 
@@ -293,13 +300,26 @@ For continuity tests, ALWAYS specify HOW to physically do the test:
 - TEST: Take reading, what to expect
 - INTERPRET/RECORD: Compare to limits
 
-**Test procedure requirements:**
-- testName, regulation, instrumentSetup, acceptanceCriteria
-- procedure: Array of PREP/SETUP/LEAD/TEST/RECORD steps
-- leadPlacement: "Red lead to Line (brown), Black to Earth (green/yellow)"
-- expectedResult, calculation (if applicable)
-- instrumentNotes, troubleshooting, commonMistakes, proTips
-- testDuration, prerequisiteTests
+**Test procedure requirements (ENHANCED - match Installation Specialist step detail):**
+- testName (clear, descriptive - e.g., "Continuity of Protective Conductors (R1+R2)")
+- regulation (BS 7671 reference - e.g., "612.2.1, GN3 Section 10.3")
+- instrumentSetup (specific instrument model and settings - e.g., "Megger MFT1741 on CONTINUITY mode, 200mA test current, auto-null enabled")
+- procedure: Array of 5+ detailed PREP/SETUP/LEAD/TEST/RECORD steps (50-80 words each)
+  * PREPARATION: What to isolate, remove, disconnect (detailed steps)
+  * SETUP: Physical setup with specific details (link-out vs long lead method)
+  * LEAD PLACEMENT: Exact terminal positions with wire colours and photos if complex
+  * TEST: What to expect, instrument reading interpretation
+  * RECORD: Where to record, what value means, compliance check
+- leadPlacement: "Red lead to Line terminal (brown wire), Black lead to Earth terminal (green/yellow wire) at furthest socket"
+- expectedResult: Specific numeric value with units and range (e.g., "0.65Ω ±0.1Ω for 1.5mm² T&E over 25m")
+- calculation: If applicable, show formula breakdown with component values
+- instrumentNotes: Specific to test (e.g., "MFT will auto-null lead resistance. Expected 0.15-0.25Ω for 1m leads")
+- troubleshooting: Array of 3-5 practical scenarios with solutions (80-150 words each)
+- commonMistakes: Array of 2-3 pitfalls from 30 years experience
+- proTips: Array of 2-3 efficiency or accuracy tips
+- testDuration: Realistic time estimate (e.g., "3-5 minutes per circuit")
+- prerequisiteTests: Array of tests that MUST be done first (e.g., ["Safe isolation", "Prove dead"])
+- testSequence: Numeric order in overall testing workflow (1, 2, 3...)
 
 **ENHANCED SECTIONS:**
 - certification: Just certificate type (EIC/EICR/MWC) and schedules
