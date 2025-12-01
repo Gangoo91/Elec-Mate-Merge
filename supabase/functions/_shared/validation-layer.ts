@@ -275,34 +275,37 @@ function getMaxZsForMCB(rating: number, deviceType: string): number {
   const isTypeB = deviceType.toLowerCase().includes('type b') || !isTypeC;
   
   // BS 7671 Table 41.3 - Maximum Zs values for MCBs
+  // Using Cmin = 0.95 per BS 7671:2018+A2:2022
   // Type B values (5 x In for magnetic trip)
   const typeBMaxZs: Record<number, number> = {
-    6: 7.67,
-    10: 4.60,
-    16: 2.87,
-    20: 2.30,
-    25: 1.84,
-    32: 1.44,
-    40: 1.15,
-    50: 0.92,
-    63: 0.73,
-    80: 0.57,
-    100: 0.46
+    6: 7.28,
+    10: 4.37,
+    16: 2.73,
+    20: 2.19,
+    25: 1.75,
+    32: 1.37,
+    40: 1.09,
+    50: 0.87,
+    63: 0.69,
+    80: 0.55,
+    100: 0.44,
+    125: 0.35
   };
   
   // Type C values (10 x In for magnetic trip)
   const typeCMaxZs: Record<number, number> = {
-    6: 3.83,
-    10: 2.30,
-    16: 1.44,
-    20: 1.15,
-    25: 0.92,
-    32: 0.72,
-    40: 0.57,
-    50: 0.46,
-    63: 0.36,
-    80: 0.29,
-    100: 0.23
+    6: 3.64,
+    10: 2.19,
+    16: 1.37,
+    20: 1.09,
+    25: 0.87,
+    32: 0.68,
+    40: 0.55,
+    50: 0.44,
+    63: 0.35,
+    80: 0.27,
+    100: 0.22,
+    125: 0.17
   };
   
   const maxZsTable = isTypeB ? typeBMaxZs : typeCMaxZs;

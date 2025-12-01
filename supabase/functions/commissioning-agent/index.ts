@@ -166,9 +166,9 @@ THEN provide step-by-step testing procedures:
 2. Test at furthest circuit point for Zs: _____ Ω
 3. Verify: Zs ≈ Ze + R1+R2
 
-✅ Max Zs for B32 MCB: 1.44Ω (BS 7671 Table 41.3)
-✅ Max Zs for C32 MCB: 0.72Ω
-✅ Max Zs for B16 MCB: 2.87Ω
+✅ Max Zs for B32 MCB: 1.37Ω (BS 7671 Table 41.3)
+✅ Max Zs for C32 MCB: 0.68Ω
+✅ Max Zs for B16 MCB: 2.73Ω
 ⚠️ Fail if: >80% of maximum Zs
 
 Expected Reading: [calculated Ze] + [R1+R2] = [expected Zs]Ω
