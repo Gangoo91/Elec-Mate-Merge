@@ -45,19 +45,28 @@ const CONDUCTOR_RESISTANCE_20C: Record<number, number> = {
   300: 0.0601
 };
 
-// Appendix 3 - Maximum Zs (0.4s disconnection, 230V)
+/**
+ * BS 7671:2018+A2:2022 Table 41.3
+ * Maximum earth fault loop impedance (Zs) for 0.4s disconnection
+ * Based on Uo = 230V, Ia = In × trip multiplier
+ * Type B: 5 × In, Type C: 10 × In, Type D: 20 × In
+ * 
+ * CRITICAL: These values MUST match Table 41.3 exactly
+ * Previous values were ~5% lower (e.g., 32A Type B was 1.37Ω instead of 1.44Ω)
+ * which caused valid designs to be flagged as non-compliant
+ */
 const MAX_ZS_TABLE: Record<string, Record<number, number>> = {
   B: {
-    6: 7.28, 10: 4.37, 16: 2.73, 20: 2.19, 25: 1.75,
-    32: 1.37, 40: 1.09, 50: 0.87, 63: 0.69
+    6: 7.67, 10: 4.60, 16: 2.87, 20: 2.30, 25: 1.84,
+    32: 1.44, 40: 1.15, 50: 0.92, 63: 0.73, 80: 0.57, 100: 0.46, 125: 0.37
   },
   C: {
-    6: 3.64, 10: 2.19, 16: 1.37, 20: 1.09, 25: 0.87,
-    32: 0.69, 40: 0.55, 50: 0.44, 63: 0.35
+    6: 3.83, 10: 2.30, 16: 1.44, 20: 1.15, 25: 0.92,
+    32: 0.72, 40: 0.57, 50: 0.46, 63: 0.36, 80: 0.29, 100: 0.23, 125: 0.18
   },
   D: {
-    6: 1.82, 10: 1.09, 16: 0.69, 20: 0.55, 25: 0.44,
-    32: 0.34, 40: 0.27, 50: 0.22, 63: 0.17
+    6: 1.92, 10: 1.15, 16: 0.72, 20: 0.57, 25: 0.46,
+    32: 0.36, 40: 0.29, 50: 0.23, 63: 0.18, 80: 0.14, 100: 0.11, 125: 0.09
   }
 };
 
