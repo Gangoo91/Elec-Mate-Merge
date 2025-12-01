@@ -6,7 +6,7 @@
  */
 
 import { ConsistencyValidator } from './consistency-validator.ts';
-import { validateCableCapacity, validateIndustrialProtection } from './cable-capacity-validator.ts';
+import { validateCableCapacity, validateIndustrialProtection, validateProtectionSizing } from './cable-capacity-validator.ts';
 import { CacheManager } from './cache-manager.ts';
 import { searchDesignIntelligence, searchRegulationsIntelligence } from '../_shared/intelligence-search.ts';
 import { AIDesigner } from './ai-designer.ts';
@@ -201,7 +201,6 @@ export class DesignPipeline {
       }
       
       // Validate protection sizing (Ib ≤ In ≤ Iz) - DO NOT correct here, just log
-      const { validateProtectionSizing } = await import('./cable-capacity-validator.ts');
       const sizingValidation = validateProtectionSizing(circuit, this.logger);
       if (!sizingValidation.valid) {
         protectionSizingErrors.push({
@@ -254,11 +253,10 @@ export class DesignPipeline {
     // ========================================
     // PHASE 6.8: Protection Sizing Auto-Correction (Ib ≤ In ≤ Iz)
     // ========================================
-    const { validateProtectionSizing: validateProtectionSizingFunc } = await import('./cable-capacity-validator.ts');
     let correctionCount = 0;
     
     design.circuits = design.circuits.map(circuit => {
-      const validation = validateProtectionSizingFunc(circuit, this.logger);
+      const validation = validateProtectionSizing(circuit, this.logger);
       
       if (!validation.valid && validation.correctedRating) {
         correctionCount++;
