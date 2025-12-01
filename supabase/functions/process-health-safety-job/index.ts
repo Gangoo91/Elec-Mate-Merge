@@ -1,10 +1,16 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { generateHealthSafety } from '../_agents/health-safety-core.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+// Graceful shutdown logging
+addEventListener('beforeunload', (ev) => {
+  console.log('⚠️ Health-safety function shutdown:', ev.detail?.reason);
+});
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -14,156 +20,113 @@ Deno.serve(async (req) => {
   const requestId = generateRequestId();
   const logger = createLogger(requestId, { function: 'process-health-safety-job' });
 
-  let jobId: string | null = null;
+  const body = await req.json();
+  const jobId = body.jobId;
   
-  try {
+  if (!jobId) {
+    return new Response(
+      JSON.stringify({ error: 'Job ID is required' }),
+      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
+  }
+
+  logger.info('Job accepted for background processing', { jobId });
+
+  // Background processing with watchdog
+  const backgroundTask = async () => {
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
-    const body = await req.json();
-    jobId = body.jobId;
-    logger.info('Processing job', { jobId });
+    let watchdogTimeout: number | undefined;
 
-    // Get job details
-    const { data: job, error: jobError } = await supabase
-      .from('health_safety_jobs')
-      .select('*')
-      .eq('id', jobId)
-      .single();
+    try {
+      // Get job details
+      const { data: job, error: jobError } = await supabase
+        .from('health_safety_jobs')
+        .select('*')
+        .eq('id', jobId)
+        .single();
 
-    if (jobError || !job) {
-      logger.error('Job not found', { jobId, error: jobError });
-      return new Response(
-        JSON.stringify({ error: 'Job not found' }),
-        { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
+      if (jobError || !job) {
+        logger.error('Job not found', { jobId, error: jobError });
+        throw new Error('Job not found');
+      }
 
-    // Update to processing
-    await supabase
-      .from('health_safety_jobs')
-      .update({
-        status: 'processing',
-        started_at: new Date().toISOString(),
-        progress: 5,
-        current_step: 'Parsing safety requirements...'
-      })
-      .eq('id', jobId);
-
-    logger.info('Job status updated to processing');
-
-    // Step 1: Parsing requirements (5-25%)
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    await supabase
-      .from('health_safety_jobs')
-      .update({
-        progress: 25,
-        current_step: 'Searching health & safety regulations...'
-      })
-      .eq('id', jobId);
-
-    // Step 2: Call health-safety-v3 agent with heartbeat (25-70%)
-    logger.info('Calling health-safety-v3 agent');
-    
-    const startTime = Date.now();
-    let currentProgress = 25;
-    let heartbeatInterval: number | undefined;
-
-    // Start the AI call
-    const agentPromise = fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/health-safety-v3`, {
-      method: 'POST',
-      headers: {
-        'Authorization': req.headers.get('Authorization') || '',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        query: job.query,
-        workType: job.work_type,
-        projectInfo: job.project_info
-      })
-    });
-
-    // Heartbeat: Update progress every 8 seconds (25% → 70%)
-    heartbeatInterval = setInterval(async () => {
-      const elapsed = Date.now() - startTime;
-      
-      // Gradually increase from 25% to 70% over 120 seconds (2 minutes)
-      currentProgress = Math.min(70, 25 + Math.floor((elapsed / 120000) * 45));
-      
+      // Update to processing
       await supabase
         .from('health_safety_jobs')
         .update({
-          progress: currentProgress,
-          current_step: 'Analyzing regulations and generating risk assessment...'
+          status: 'processing',
+          started_at: new Date().toISOString(),
+          progress: 5,
+          current_step: 'Parsing safety requirements...'
         })
         .eq('id', jobId);
+
+      logger.info('Job status updated to processing');
+
+      // Watchdog timeout (4 minutes) - mark as failed if stuck
+      watchdogTimeout = setTimeout(async () => {
+        logger.error('⏱️ Watchdog timeout triggered', { jobId });
+        const { data: currentJob } = await supabase
+          .from('health_safety_jobs')
+          .select('status')
+          .eq('id', jobId)
+          .single();
         
-      logger.info('Heartbeat progress update', { progress: currentProgress, elapsed });
-    }, 8000);
+        if (currentJob?.status === 'processing') {
+          await supabase
+            .from('health_safety_jobs')
+            .update({
+              status: 'failed',
+              error_message: 'Request timed out after 4 minutes',
+              completed_at: new Date().toISOString()
+            })
+            .eq('id', jobId);
+        }
+      }, 240000); // 4 minutes
 
-    let agentResponse;
-    let agentData;
+      // Progress callback
+      const onProgress = async (progress: number, step: string) => {
+        await supabase
+          .from('health_safety_jobs')
+          .update({
+            progress: Math.min(95, progress),
+            current_step: step
+          })
+          .eq('id', jobId);
+        logger.info('Progress update', { progress, step });
+      };
 
-    try {
-      agentResponse = await agentPromise;
-      
-      if (!agentResponse.ok) {
-        const errorText = await agentResponse.text();
-        throw new Error(`Agent call failed: ${agentResponse.status} ${agentResponse.statusText} - ${errorText}`);
-      }
-
-      agentData = await agentResponse.json();
-      
-      logger.info('Agent call completed', { duration: Date.now() - startTime });
-      
-    } finally {
-      // Always clear the heartbeat interval
-      if (heartbeatInterval !== undefined) {
-        clearInterval(heartbeatInterval);
-      }
-    }
-
-    // Jump to 75%
-    await supabase
-      .from('health_safety_jobs')
-      .update({
-        progress: 75,
-        current_step: 'Finalising safety documentation...'
-      })
-      .eq('id', jobId);
-
-    await new Promise(resolve => setTimeout(resolve, 800));
-
-    // Step 3: Complete (75-100%)
-    await supabase
-      .from('health_safety_jobs')
-      .update({
-        status: 'complete',
-        progress: 100,
-        current_step: 'Complete',
-        output_data: agentData.data || agentData,
-        raw_response: agentData,
-        completed_at: new Date().toISOString()
-      })
-      .eq('id', jobId);
-
-    logger.info('Job completed successfully', { jobId });
-
-    return new Response(
-      JSON.stringify({ success: true, jobId }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
-  } catch (error: any) {
-    logger.error('Job processing failed', { error: error.message });
-
-    if (jobId) {
-      const supabase = createClient(
-        Deno.env.get('SUPABASE_URL')!,
-        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+      // Call the core agent directly
+      logger.info('Calling Health & Safety core agent');
+      const result = await generateHealthSafety(
+        job.query,
+        job.project_info || {},
+        onProgress
       );
+
+      logger.info('Agent call completed successfully');
+
+      // Complete the job
+      await supabase
+        .from('health_safety_jobs')
+        .update({
+          status: 'complete',
+          progress: 100,
+          current_step: 'Complete',
+          output_data: result,
+          raw_response: { data: result },
+          completed_at: new Date().toISOString()
+        })
+        .eq('id', jobId);
+
+      logger.info('Job completed successfully', { jobId });
+
+    } catch (error: any) {
+      logger.error('Job processing failed', { error: error.message });
 
       await supabase
         .from('health_safety_jobs')
@@ -173,11 +136,23 @@ Deno.serve(async (req) => {
           completed_at: new Date().toISOString()
         })
         .eq('id', jobId);
+    } finally {
+      // Clear watchdog
+      if (watchdogTimeout !== undefined) {
+        clearTimeout(watchdogTimeout);
+      }
     }
+  };
 
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-  }
+  // Start background processing (non-blocking)
+  EdgeRuntime.waitUntil(backgroundTask());
+
+  // Return immediate response
+  return new Response(
+    JSON.stringify({ success: true, jobId, status: 'processing' }),
+    { 
+      status: 202, // Accepted
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+    }
+  );
 });
