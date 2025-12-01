@@ -37,13 +37,72 @@ export function validateCircuitConsistency(
     circuit.justifications?.protection || ''
   ].join(' ');
 
+  // === DEVICE TYPE VALIDATION ===
+  // Check for BS88 fuse mentions in justification text
+  const bs88Patterns = [
+    /BS\s*88[^A-Za-z]/i,
+    /BS88\s+fuse/i,
+    /HRC\s+(?:BS\s*88\s+)?fuse/i,
+    /(\d+)A?\s+(?:HRC\s+)?BS\s*88/i,
+    /(\d+)A?\s+(?:gG|aM)\s+fuse/i,
+    /red[\s-]?spot\s+fuse/i,
+  ];
+
+  let justificationDeviceType: 'MCB' | 'RCBO' | 'BS88' | null = null;
+  let justificationFuseCurve: 'gG' | 'aM' | null = null;
+
+  // Detect BS88 mentions
+  for (const pattern of bs88Patterns) {
+    if (pattern.test(justificationSections)) {
+      justificationDeviceType = 'BS88';
+      
+      // Try to detect fuse class (gG or aM)
+      if (/\bgG\b/i.test(justificationSections)) {
+        justificationFuseCurve = 'gG';
+      } else if (/\baM\b/i.test(justificationSections)) {
+        justificationFuseCurve = 'aM';
+      }
+      
+      logger.info('Detected BS88 fuse in justification', {
+        circuit: circuit.name,
+        detectedType: 'BS88',
+        fuseCurve: justificationFuseCurve || 'gG (default)'
+      });
+      break;
+    }
+  }
+
+  // If justification says BS88 but structured data says MCB/RCBO, correct it
+  if (justificationDeviceType === 'BS88' && 
+      circuit.protectionDevice?.type && 
+      ['MCB', 'RCBO'].includes(circuit.protectionDevice.type)) {
+    
+    logger.warn('🔴 DEVICE TYPE MISMATCH: Justification says BS88 but structured data says ' + circuit.protectionDevice.type, {
+      circuit: circuit.name,
+      justificationSays: 'BS88 fuse',
+      structuredDataSays: circuit.protectionDevice.type,
+      correction: 'Updating to BS88'
+    });
+    
+    // Correct device type and curve
+    circuit = {
+      ...circuit,
+      protectionDevice: {
+        ...circuit.protectionDevice,
+        type: 'BS88',
+        curve: justificationFuseCurve || circuit.protectionDevice.curve || 'gG'
+      }
+    };
+  }
+
+  // === DEVICE RATING VALIDATION ===
   // Multiple regex patterns to catch different justification formats
   const patterns = [
     // "protective device rating (20 A)" or "protective device rating of 20A"
     /protective\s+device\s+rating\s*(?:of|\()\s*(\d+)\s*A/i,
     
-    // "20A MCB" or "20A RCBO" or "20 A Type B MCB"
-    /(\d+)\s*A\s+(?:Type\s+[A-D]\s+)?(?:MCB|RCBO)/i,
+    // "20A MCB" or "20A RCBO" or "20 A Type B MCB" or "20A BS88"
+    /(\d+)\s*A\s+(?:Type\s+[A-D]\s+)?(?:MCB|RCBO|BS\s*88|BS88|HRC)/i,
     
     // "protected by a 20A" or "protected by 20 A"
     /protected\s+by\s+(?:a\s+)?(\d+)\s*A/i,
