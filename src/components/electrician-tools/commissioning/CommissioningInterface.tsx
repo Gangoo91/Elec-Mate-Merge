@@ -29,6 +29,7 @@ const CommissioningInterface = () => {
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
   const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
   const [isFastPath, setIsFastPath] = useState(false);
+  const [originalQuery, setOriginalQuery] = useState<string>("");
   const [projectInfo, setProjectInfo] = useState({
     projectName: "",
     location: "",
@@ -86,7 +87,8 @@ const CommissioningInterface = () => {
     setShowResults(true);
     setCelebrationShown(false);
     
-    // Store project info for results page
+    // Store original query and project info for results page
+    setOriginalQuery(data.prompt);
     setProjectInfo({
       projectName: data.projectName,
       location: data.location,
@@ -314,6 +316,11 @@ const CommissioningInterface = () => {
         eicrDefects={eicrDefects}
         imageUrl={uploadedImageUrl}
         imageUrls={uploadedImageUrls}
+        originalQuery={originalQuery}
+        projectName={projectInfo.projectName}
+        location={projectInfo.location}
+        clientName={projectInfo.clientName}
+        installationType={projectInfo.selectedType}
         onStartOver={handleStartOver}
       />
     );
@@ -329,6 +336,7 @@ const CommissioningInterface = () => {
           location={projectInfo.location}
           installationDate={projectInfo.installationDate}
           installationType={projectInfo.selectedType}
+          originalQuery={originalQuery}
           onStartOver={handleStartOver}
         />
         

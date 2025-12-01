@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import DiagnosticStepCard from "./DiagnosticStepCard";
+import { FaultDiagnosisStepCard } from "./redesign/FaultDiagnosisStepCard";
 import CorrectiveActionCard from "./CorrectiveActionCard";
 import LockoutTagoutPanel from "./LockoutTagoutPanel";
 import EICRDefectCard, { type EICRDefect } from "./EICRDefectCard";
@@ -19,6 +20,7 @@ interface FaultDiagnosisViewProps {
   eicrDefects?: EICRDefect[];
   imageUrl?: string | null;
   imageUrls?: string[];
+  originalQuery?: string;
   onStartOver: () => void;
   projectName?: string;
   location?: string;
@@ -30,7 +32,8 @@ const FaultDiagnosisView = ({
   diagnosis, 
   eicrDefects, 
   imageUrl, 
-  imageUrls, 
+  imageUrls,
+  originalQuery, 
   onStartOver,
   projectName,
   location,
@@ -151,6 +154,23 @@ const FaultDiagnosisView = ({
             </Button>
           </div>
         </div>
+
+        {/* Original Query Display - For fault diagnosis mode */}
+        {originalQuery && diagnosis && !eicrDefects?.length && (
+          <Card className="bg-gradient-to-r from-red-500/10 to-red-500/5 border-2 border-red-500/30 p-5 sm:p-6">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="h-6 w-6 text-red-400 flex-shrink-0 mt-1" />
+              <div className="flex-1">
+                <h3 className="text-sm font-semibold text-white/70 mb-2 uppercase tracking-wide">
+                  Reported Fault
+                </h3>
+                <p className="text-lg text-white leading-relaxed">
+                  {originalQuery}
+                </p>
+              </div>
+            </div>
+          </Card>
+        )}
 
         {/* Critical Alert Banner */}
         {eicrDefects && eicrDefects.length > 0 && !isCompliantPhoto && eicrDefects[0].classification !== 'NONE' && (
@@ -380,7 +400,7 @@ const FaultDiagnosisView = ({
           </Card>
         )}
 
-        {/* Diagnostic Workflow - First Step EXPANDED */}
+        {/* Diagnostic Workflow - Step-based Design */}
         {diagnosis && diagnosis.diagnosticWorkflow && (
           <div className="space-y-5">
             <h2 className="text-2xl font-bold text-white flex items-center gap-2">
@@ -389,7 +409,7 @@ const FaultDiagnosisView = ({
             </h2>
             <div className="space-y-4">
               {diagnosis.diagnosticWorkflow.map((step) => (
-                <DiagnosticStepCard key={step.stepNumber} step={step} />
+                <FaultDiagnosisStepCard key={step.stepNumber} step={step} />
               ))}
             </div>
           </div>
