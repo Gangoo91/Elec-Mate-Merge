@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { SendToAgentDropdown } from "@/components/install-planner-v2/SendToAgentDropdown";
 import { ProgressHeroBar } from "./redesign/ProgressHeroBar";
-import { TestSection } from "./redesign/TestSection";
-import { TestCard } from "./redesign/TestCard";
+import { TestingOverviewSection } from "./redesign/TestingOverviewSection";
 import { CertificateDataSection } from "./CertificateDataSection";
 import { CircuitScheduleSection } from "./redesign/CircuitScheduleSection";
 import { Zap, Save, Trash2, Clock } from "lucide-react";
@@ -216,66 +215,12 @@ const CommissioningResults = ({
         <CircuitScheduleSection circuits={results.structuredData.circuitSchedule} />
       )}
 
-      {/* Dead Tests Section */}
-      {results.structuredData?.testingProcedure?.deadTests && deadCount > 0 && (
-        <TestSection
-          title="Dead Tests (Isolation Required)"
-          icon={<Zap />}
-          count={deadCount}
-          variant="dead"
-        >
-          {results.structuredData.testingProcedure.deadTests.map((test, index) => {
-            const stepId = `dead-${index}`;
-            const savedResult = getTestResult(stepId);
-            return (
-              <TestCard
-                key={index}
-                test={test}
-                index={index}
-                variant="dead"
-                initialResult={savedResult}
-                onResultRecorded={(result) => {
-                  recordTestResult({
-                    stepId,
-                    testName: test.testName,
-                    ...result,
-                  });
-                }}
-              />
-            );
-          })}
-        </TestSection>
-      )}
-
-      {/* Live Tests Section */}
-      {results.structuredData?.testingProcedure?.liveTests && liveCount > 0 && (
-        <TestSection
-          title="Live Tests"
-          icon={<Zap />}
-          count={liveCount}
-          variant="live"
-        >
-          {results.structuredData.testingProcedure.liveTests.map((test, index) => {
-            const stepId = `live-${index}`;
-            const savedResult = getTestResult(stepId);
-            return (
-              <TestCard
-                key={index}
-                test={test}
-                index={index}
-                variant="live"
-                initialResult={savedResult}
-                onResultRecorded={(result) => {
-                  recordTestResult({
-                    stepId,
-                    testName: test.testName,
-                    ...result,
-                  });
-                }}
-              />
-            );
-          })}
-        </TestSection>
+      {/* Testing Procedures */}
+      {results.structuredData?.testingProcedure && (
+        <TestingOverviewSection 
+          deadTests={results.structuredData.testingProcedure.deadTests}
+          liveTests={results.structuredData.testingProcedure.liveTests}
+        />
       )}
 
       {/* Raw Response (if no structured data) */}
