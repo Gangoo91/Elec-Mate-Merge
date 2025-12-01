@@ -76,15 +76,44 @@ serve(async (req) => {
       }
     };
 
+    // Per-circuit progress callback
+    const circuitProgressCallback = async (completed: number, total: number, circuitName: string) => {
+      if (!jobId) return;
+      const designerProgress = Math.round((completed / total) * 100);
+      try {
+        await supabase
+          .from('circuit_design_jobs')
+          .update({
+            designer_progress: designerProgress,
+            current_step: `Designing circuit ${completed}/${total}: ${circuitName}`,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', jobId);
+        logger.info('Circuit progress updated', { completed, total, designerProgress });
+      } catch (err) {
+        logger.error('Failed to update circuit progress', { error: err });
+      }
+    };
+
     // Single entry point - all logic delegated to pipeline
-    const pipeline = new DesignPipeline(logger, requestId, ragProgressCallback);
+    const pipeline = new DesignPipeline(logger, requestId, ragProgressCallback, circuitProgressCallback);
     
     // Progress heartbeat: AI generation phase
     await updateJobProgress(30, 'Generating circuit designs with AI...');
     
-    // Confirm agent started successfully (for watchdog detection)
-    await updateJobProgress(35, 'Design agent started - preparing AI context...');
-    logger.info('✅ Agent confirmed active', { jobId });
+    // CRITICAL: Update designer status immediately on startup
+    if (jobId) {
+      await supabase
+        .from('circuit_design_jobs')
+        .update({
+          designer_status: 'processing',
+          designer_progress: 0,
+          progress: 35,
+          current_step: 'Designer agent started - processing circuits...'
+        })
+        .eq('id', jobId);
+    }
+    logger.info('✅ Designer status set to processing', { jobId });
     
     // Watchdog: Auto-fail job if agent crashes without updating status
     const watchdogTimeout = setTimeout(async () => {
