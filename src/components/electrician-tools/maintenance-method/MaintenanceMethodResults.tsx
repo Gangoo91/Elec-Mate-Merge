@@ -15,11 +15,13 @@ import {
 interface MaintenanceMethodResultsProps {
   methodData: MaintenanceMethodData;
   onExportPDF?: () => void;
+  onReset?: () => void;
 }
 
 export const MaintenanceMethodResults = ({
   methodData,
-  onExportPDF
+  onExportPDF,
+  onReset
 }: MaintenanceMethodResultsProps) => {
   const { maintenanceGuide, executiveSummary, steps, summary, recommendations, eicrObservations } = methodData;
 
@@ -38,12 +40,19 @@ export const MaintenanceMethodResults = ({
                 {executiveSummary.equipmentType}
               </p>
             </div>
-            {onExportPDF && (
-              <Button onClick={onExportPDF} size="sm">
-                <Download className="h-4 w-4 mr-2" />
-                Export PDF
-              </Button>
-            )}
+            <div className="flex gap-2">
+              {onReset && (
+                <Button onClick={onReset} variant="outline" size="sm">
+                  Generate New
+                </Button>
+              )}
+              {onExportPDF && (
+                <Button onClick={onExportPDF} size="sm">
+                  <Download className="h-4 w-4 mr-2" />
+                  Export PDF
+                </Button>
+              )}
+            </div>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">

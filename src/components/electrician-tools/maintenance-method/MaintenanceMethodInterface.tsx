@@ -1,16 +1,14 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { MaintenanceEquipmentDetails } from '@/types/maintenance-method';
-import { MaintenanceMethodInput } from './MaintenanceMethodInput';
+import { MaintenanceInput } from './MaintenanceInput';
 import { MaintenanceMethodProcessingView } from './MaintenanceMethodProcessingView';
 import { MaintenanceMethodResults } from './MaintenanceMethodResults';
+import { MaintenanceSuccess } from './MaintenanceSuccess';
 import { useMaintenanceMethodJobPolling } from '@/hooks/useMaintenanceMethodJobPolling';
-import { Wrench } from 'lucide-react';
+
+type ViewState = 'input' | 'processing' | 'success' | 'results';
 
 export const MaintenanceMethodInterface = () => {
   const { toast } = useToast();
@@ -22,6 +20,8 @@ export const MaintenanceMethodInterface = () => {
   });
   const [currentJobId, setCurrentJobId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [viewState, setViewState] = useState<ViewState>('input');
+  const [startTime, setStartTime] = useState<number>(0);
 
   const { job, isPolling, cancelJob } = useMaintenanceMethodJobPolling(currentJobId);
 
@@ -46,6 +46,7 @@ export const MaintenanceMethodInterface = () => {
 
     try {
       setIsSubmitting(true);
+      setStartTime(Date.now());
 
       const { data, error } = await supabase.functions.invoke('create-maintenance-method-job', {
         body: {
@@ -58,6 +59,7 @@ export const MaintenanceMethodInterface = () => {
       if (error) throw error;
 
       setCurrentJobId(data.jobId);
+      setViewState('processing');
       
       toast({
         title: 'Generation Started',
@@ -70,6 +72,7 @@ export const MaintenanceMethodInterface = () => {
         description: error.message || 'Failed to start generation',
         variant: 'destructive'
       });
+      setViewState('input');
     } finally {
       setIsSubmitting(false);
     }
@@ -77,6 +80,8 @@ export const MaintenanceMethodInterface = () => {
 
   const handleCancel = async () => {
     await cancelJob();
+    setViewState('input');
+    setCurrentJobId(null);
     toast({
       title: 'Cancelled',
       description: 'Maintenance method generation cancelled'
@@ -91,25 +96,38 @@ export const MaintenanceMethodInterface = () => {
       location: '',
       installationType: 'commercial'
     });
+    setViewState('input');
   };
 
+  const handleViewResults = () => {
+    setViewState('results');
+  };
+
+  // Auto-transition to success when job completes
+  if (viewState === 'processing' && job?.status === 'completed' && job.method_data) {
+    setViewState('success');
+  }
+
   // Show results if completed
-  if (job?.status === 'completed' && job.method_data) {
+  if (viewState === 'results' && job?.status === 'completed' && job.method_data) {
+    return <MaintenanceMethodResults methodData={job.method_data} onReset={handleReset} />;
+  }
+
+  // Show success celebration
+  if (viewState === 'success' && job?.status === 'completed' && job.method_data) {
+    const generationTime = Date.now() - startTime;
     return (
-      <div className="space-y-4">
-        <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold">Maintenance Instructions</h2>
-          <Button onClick={handleReset} variant="outline">
-            Generate New Instructions
-          </Button>
-        </div>
-        <MaintenanceMethodResults methodData={job.method_data} />
-      </div>
+      <MaintenanceSuccess
+        stepCount={job.method_data.steps?.length || 0}
+        equipmentType={equipmentDetails.equipmentType}
+        generationTimeMs={generationTime}
+        onViewResults={handleViewResults}
+      />
     );
   }
 
   // Show processing if job is running
-  if (job && (job.status === 'pending' || job.status === 'processing')) {
+  if (viewState === 'processing' && job && (job.status === 'pending' || job.status === 'processing')) {
     return (
       <MaintenanceMethodProcessingView
         progress={job.progress}
@@ -119,69 +137,26 @@ export const MaintenanceMethodInterface = () => {
     );
   }
 
+  // Show error if failed
+  if (job?.status === 'failed') {
+    toast({
+      title: 'Generation Failed',
+      description: job.error_message || 'Failed to generate maintenance instructions',
+      variant: 'destructive'
+    });
+    setViewState('input');
+    setCurrentJobId(null);
+  }
+
   // Show input form
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Wrench className="h-5 w-5" />
-            Maintenance Method Specialist
-          </CardTitle>
-          <p className="text-sm text-muted-foreground">
-            Generate comprehensive step-by-step maintenance instructions for electrical equipment
-          </p>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Equipment Query */}
-          <div className="space-y-2">
-            <Label htmlFor="query">Equipment Description *</Label>
-            <Textarea
-              id="query"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Describe the equipment requiring maintenance (e.g., 'Three-phase distribution board serving commercial kitchen equipment, 15 years old with visible signs of corrosion')"
-              className="min-h-[100px] resize-none"
-              rows={4}
-            />
-            <p className="text-xs text-muted-foreground">
-              Be specific about equipment type, age, condition, and any known issues
-            </p>
-          </div>
-
-          {/* Equipment Details */}
-          <MaintenanceMethodInput
-            equipmentDetails={equipmentDetails}
-            onChange={setEquipmentDetails}
-          />
-
-          {/* Generate Button */}
-          <Button
-            onClick={handleGenerate}
-            disabled={isSubmitting || !query.trim()}
-            className="w-full"
-            size="lg"
-          >
-            {isSubmitting ? 'Starting Generation...' : 'Generate Maintenance Instructions'}
-          </Button>
-
-          <p className="text-xs text-muted-foreground text-center">
-            This will generate 15+ detailed maintenance steps with safety procedures,
-            tools required, inspection checkpoints, and BS 7671 references
-          </p>
-        </CardContent>
-      </Card>
-
-      {/* Show error if failed */}
-      {job?.status === 'failed' && (
-        <Card className="border-destructive">
-          <CardContent className="pt-6">
-            <p className="text-sm text-destructive">
-              {job.error_message || 'Generation failed. Please try again.'}
-            </p>
-          </CardContent>
-        </Card>
-      )}
-    </div>
+    <MaintenanceInput
+      query={query}
+      equipmentDetails={equipmentDetails}
+      onQueryChange={setQuery}
+      onEquipmentDetailsChange={setEquipmentDetails}
+      onGenerate={handleGenerate}
+      isProcessing={isSubmitting}
+    />
   );
 };
