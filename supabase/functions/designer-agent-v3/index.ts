@@ -213,7 +213,10 @@ serve(async (req) => {
             current_step: 'Circuit design complete. Generating installation guidance...',
             designer_status: 'complete',
             designer_progress: 100,
-            design_data: sanitizedResult,
+            design_data: {
+              ...sanitizedResult,
+              failedCircuits: result.failedCircuits || { count: 0, names: [] }
+            },
             raw_response: sanitizedResult
             // No completed_at yet - job still running Phase 2
           })

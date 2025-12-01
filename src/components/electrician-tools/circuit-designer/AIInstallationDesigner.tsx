@@ -390,15 +390,24 @@ export const AIInstallationDesigner = () => {
       sessionStorage.setItem('circuit-design-data', JSON.stringify(designWithMetadata));
       setCurrentView('results');
       
+      const failedCount = jobDesignData.failedCircuits?.count || 0;
+      const failedNames = jobDesignData.failedCircuits?.names || [];
       const cacheInfo = jobDesignData.fromCache ? ' (from cache)' : '';
       const autoFixInfo = jobDesignData.autoFixApplied ? ' (auto-fixed)' : '';
       const validationInfo = !jobDesignData.validationPassed 
         ? ` - ${jobDesignData.validationIssues?.length || 0} validation issue(s) found` 
         : '';
       
-      toast.success('Design generated successfully' + cacheInfo + autoFixInfo, {
-        description: `${jobDesignData.circuits?.length || 0} circuit${(jobDesignData.circuits?.length || 0) !== 1 ? 's' : ''} designed${validationInfo}`
-      });
+      if (failedCount > 0) {
+        toast.warning(`${failedCount} circuit${failedCount !== 1 ? 's' : ''} failed to generate`, {
+          description: `Completed: ${jobDesignData.circuits?.length || 0}. Failed: ${failedNames.join(', ')}`,
+          duration: 8000
+        });
+      } else {
+        toast.success('Design generated successfully' + cacheInfo + autoFixInfo, {
+          description: `${jobDesignData.circuits?.length || 0} circuit${(jobDesignData.circuits?.length || 0) !== 1 ? 's' : ''} designed${validationInfo}`
+        });
+      }
       
       // Mark toast as shown
       successToastShown.current = true;

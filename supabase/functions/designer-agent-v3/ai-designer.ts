@@ -71,6 +71,9 @@ export class AIDesigner {
       .filter(item => item.result.status === 'rejected')
       .map(item => item.index);
     
+    // Track failed circuit names for user notification
+    const failedCircuitNames: string[] = [];
+    
     // Retry failed circuits sequentially (up to 2 attempts with backoff)
     if (failureIndices.length > 0) {
       this.logger.warn('Retrying failed circuits', {
@@ -113,7 +116,10 @@ export class AIDesigner {
         }
         
         if (!retrySuccess) {
-          this.logger.error(`All retry attempts exhausted for circuit ${failureIndex + 1}`);
+          // Track failed circuit name for user notification
+          const circuitName = circuit.name || `Circuit ${failureIndex + 1}`;
+          failedCircuitNames.push(circuitName);
+          this.logger.error(`All retry attempts exhausted for circuit ${failureIndex + 1}: ${circuitName}`);
         }
       }
     }
@@ -143,6 +149,10 @@ export class AIDesigner {
 
     return { 
       circuits,
+      failedCircuits: {
+        count: failedCircuitNames.length,
+        names: failedCircuitNames
+      },
       reasoning: {
         voltageContext: `Parallel design mode: ${circuits.length}/${inputs.circuits.length} circuits successful`,
         cableSelectionLogic: 'Each circuit designed independently with RAG context',
