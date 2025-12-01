@@ -696,7 +696,7 @@ ${testContext}
     "• What is being tested: 'This test measures the earth path resistance - the safety wire that carries fault current if something goes wrong'
      • Why it matters: 'If there's an electrical fault, this path must have low enough resistance to allow enough current to flow and trip your circuit breaker within milliseconds, preventing electric shock'
      • What client will observe: 'You'll see me connecting test probes to terminals and watching the meter display. The meter will beep when measurement is complete. Circuit must be switched off for this test - no power disruption if planned correctly'
-     • Explaining acceptable results: 'Your reading of 0.45Ω is well within safe limits. BS 7671 requires less than 1.44Ω for this circuit, so you have good safety margin'
+     • Explaining acceptable results: 'Your reading of 0.45Ω is well within safe limits. BS 7671 requires less than 1.37Ω for this circuit, so you have good safety margin'
      • Explaining marginal/failed results: 'This reading is higher than ideal. It's not an immediate danger, but I need to investigate the terminations. This will add approximately 30 minutes to identify and resolve the issue'
      • Managing expectations: 'Once I've tightened the terminations, I'll re-test to confirm the reading has improved. This is routine maintenance - nothing to worry about, but important for your ongoing safety'"
 
@@ -736,7 +736,7 @@ For live tests requiring calculations (Zs, PSC, voltage drop):
   * R1+R2: State if measured or calculated from cable data
   * Cable details: Length in metres, CSA in mm²
 - Expected Result: Calculate to 2 decimal places with units
-- Limit Check: Show the comparison "0.89Ω < 1.44Ω (Table 41.3 for 32A Type B MCB) ✓"
+- Limit Check: Show the comparison "0.89Ω < 1.37Ω (Table 41.3 for 32A Type B MCB) ✓"
 
 Example for Zs test:
 {
@@ -748,7 +748,7 @@ Example for Zs test:
     "cableCsa": "2.5mm² twin & earth"
   },
   "expectedResult": "0.89Ω",
-  "limitCheck": "0.89Ω < 1.44Ω (BS 7671 Table 41.3 for 32A Type B MCB) ✓ COMPLIANT"
+  "limitCheck": "0.89Ω < 1.37Ω (BS 7671 Table 41.3 for 32A Type B MCB) ✓ COMPLIANT"
 }
 
 8. TEST DURATION (realistic timing)
@@ -844,8 +844,8 @@ Respond ONLY with valid JSON in this exact format:
         "expectedResult": {
           "calculated": "1.20Ω",
           "measured": "1.18Ω",
-          "maximumPermitted": "1.44Ω (63A Type B per Table 41.3)",
-          "marginOfSafety": "0.26Ω (18% margin)",
+          "maximumPermitted": "1.37Ω (63A Type B per Table 41.3)",
+          "marginOfSafety": "0.19Ω (14% margin)",
           "result": "PASS"
         },
         "interpretation": "Zs 1.18Ω ensures <0.4s disconnection per Reg 411.3.2",
@@ -1086,7 +1086,7 @@ Include instrument setup, lead placement, step-by-step procedures, expected resu
                 limitCheck: {
                   type: 'string',
                   minLength: 20,
-                  description: 'Comparison against maximum permitted value from BS 7671 (e.g., "0.89Ω < 1.44Ω (Table 41.3) ✓")'
+                  description: 'Comparison against maximum permitted value from BS 7671 (e.g., "0.89Ω < 1.37Ω (Table 41.3) ✓")'
                 }
               }
             },

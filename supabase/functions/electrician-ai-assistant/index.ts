@@ -442,7 +442,7 @@ Example: "Yes, 30mA RCD protection is required per **Regulation 701.411.3.3**. T
 - Use **bold** for key terms and regulation numbers
 - Use bullet points (- or •) for lists
 - Add line breaks between paragraphs (\n\n)
-Example: "## Voltage Drop Calculation\n\nFor a 32A ring circuit:\n\n**Cable sizing:** 2.5mm² twin & earth\n- Maximum run: 106m total loop\n- Voltage drop: 18mV/A/m\n- Result: 0.96V (compliant)\n\n**Zs earth fault loop:**\n- Maximum Zs: 1.44Ω (Type B 32A)\n- Measured: 0.85Ω (pass)"
+Example: "## Voltage Drop Calculation\n\nFor a 32A ring circuit:\n\n**Cable sizing:** 2.5mm² twin & earth\n- Maximum run: 106m total loop\n- Voltage drop: 18mV/A/m\n- Result: 0.96V (compliant)\n\n**Zs earth fault loop:**\n- Maximum Zs: 1.37Ω (Type B 32A)\n- Measured: 0.85Ω (pass)"
 
 **regulations** (formatted list):
 - One regulation per paragraph
