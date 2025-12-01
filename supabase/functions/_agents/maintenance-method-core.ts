@@ -6,6 +6,108 @@
 
 import { searchPracticalWorkIntelligence, formatForAIContext } from '../_shared/rag-practical-work.ts';
 
+// UK Electrical Qualifications - Proper Industry Standards
+const UK_ELECTRICAL_QUALIFICATIONS = {
+  wiring_regulations: {
+    name: 'City & Guilds 2382-22 (18th Edition BS 7671:2018+A2:2022)',
+    fullTitle: 'C&G 2382-22 Requirements for Electrical Installations',
+    level: 'Level 3'
+  },
+  inspection_testing: {
+    name: 'City & Guilds 2391-52 Inspection & Testing',
+    fullTitle: 'C&G 2391-52 Initial Verification and Periodic Inspection',
+    level: 'Level 3'
+  },
+  installation: {
+    name: 'City & Guilds 2365 / EAL Level 3 Electrical Installation',
+    fullTitle: 'Level 3 Diploma in Electrical Installations',
+    level: 'Level 3'
+  },
+  ecs_card: {
+    name: 'ECS Gold Card (JIB Registered Electrician)',
+    fullTitle: 'Electrotechnical Certification Scheme Gold Card',
+    requirement: 'Industry recognised competence'
+  },
+  site_safety: {
+    name: 'SSSTS/SMSTS Construction Site Safety',
+    fullTitle: 'Site Supervisor/Manager Safety Training Scheme',
+    requirement: 'Required for construction sites'
+  },
+  pat_testing: {
+    name: 'City & Guilds 2377 PAT Testing',
+    fullTitle: 'C&G 2377 Portable Appliance Testing',
+    level: 'Level 2'
+  },
+  am2: {
+    name: 'AM2 Practical Assessment',
+    fullTitle: 'Achievement Measurement 2 - JIB/ECS End Point Assessment',
+    requirement: 'Required for electrician registration'
+  },
+  hv_authorised: {
+    name: 'HV Authorised Person (AP)',
+    fullTitle: 'High Voltage Authorised Person Competency',
+    requirement: 'Required for HV work >1kV'
+  },
+  emergency_lighting: {
+    name: 'City & Guilds 2919 Emergency Lighting',
+    fullTitle: 'C&G 2919 Inspection, Testing & Commissioning of Emergency Lighting',
+    level: 'Level 3'
+  }
+};
+
+// Equipment-specific qualification mapping
+function getRequiredQualificationsForEquipment(equipmentType: string): string[] {
+  const baseQuals = [
+    'City & Guilds 2382-22 (18th Edition BS 7671:2018+A2:2022)',
+    'ECS Gold Card (JIB Registered Electrician)'
+  ];
+  
+  const equipmentQuals: Record<string, string[]> = {
+    busbar_system: [
+      ...baseQuals,
+      'City & Guilds 2391-52 Inspection & Testing',
+      'HV Authorised Person (if >1kV)',
+      'Manufacturer busbar system training (e.g., Schneider PowerPACT)'
+    ],
+    motor_control: [
+      ...baseQuals,
+      'City & Guilds 2391-52 Inspection & Testing',
+      'Industrial control systems training',
+      'VFD/Inverter manufacturer certification (e.g., ABB, Siemens)'
+    ],
+    emergency_lighting: [
+      ...baseQuals,
+      'City & Guilds 2919 Emergency Lighting Inspection & Testing',
+      'BS 5266 Emergency Lighting Standard training'
+    ],
+    distribution: [
+      ...baseQuals,
+      'City & Guilds 2391-52 Inspection & Testing',
+      'AM2 Practical Assessment'
+    ],
+    transformer: [
+      ...baseQuals,
+      'City & Guilds 2391-52 Inspection & Testing',
+      'HV Authorised Person (AP) for transformers >1kV',
+      'Oil sampling and analysis certification'
+    ],
+    standby_power: [
+      ...baseQuals,
+      'City & Guilds 2391-52 Inspection & Testing',
+      'Generator maintenance certification',
+      'UPS systems specialist training'
+    ],
+    switchgear: [
+      ...baseQuals,
+      'City & Guilds 2391-52 Inspection & Testing',
+      'HV switchgear competency (if applicable)',
+      'Arc flash safety training'
+    ]
+  };
+  
+  return equipmentQuals[equipmentType] || baseQuals;
+}
+
 interface GenerateMaintenanceMethodParams {
   supabase: any;
   jobId: string;
@@ -154,6 +256,7 @@ function detectEquipmentCategory(query: string): string {
 function getMaintenanceSystemPrompt(detailLevel: string, query: string): string {
   const stepCount = detailLevel === 'quick' ? '10-12' : detailLevel === 'comprehensive' ? '18-20' : '15-17';
   const equipmentType = detectEquipmentCategory(query);
+  const requiredQualifications = getRequiredQualificationsForEquipment(equipmentType);
   
   return `You are an expert electrical maintenance engineer specialising in UK BS 7671 periodic inspection and preventive maintenance.
 
@@ -161,6 +264,10 @@ Generate detailed maintenance instructions with ${stepCount} comprehensive steps
 
 ⚡ CRITICAL: EQUIPMENT-SPECIFIC STEPS REQUIRED ⚡
 Equipment Type Detected: ${equipmentType}
+
+REQUIRED QUALIFICATIONS FOR THIS EQUIPMENT:
+${requiredQualifications.map(q => `- ${q}`).join('\n')}
+Use these EXACT qualification names in your output. DO NOT use generic terms.
 
 You MUST generate steps that are SPECIFIC and UNIQUE to this equipment type.
 DO NOT generate generic EICR-style inspection steps unless the query explicitly asks for an EICR.
@@ -205,6 +312,28 @@ TOOLS & EQUIPMENT:
 - Exact model specifications (e.g., "Megger MFT1835 or equivalent GS38-compliant")
 - Calibration requirements (e.g., "Within 12-month calibration certificate")
 - Test lead specifications per GS38
+
+UK ELECTRICAL QUALIFICATIONS - USE EXACT NAMES:
+When specifying qualifications, use SPECIFIC UK industry qualifications:
+✅ CORRECT:
+- "City & Guilds 2382-22 (18th Edition BS 7671:2018+A2:2022)" NOT "18th Edition trained"
+- "City & Guilds 2391-52 Inspection & Testing" NOT "Inspection qualified"
+- "ECS Gold Card (JIB Registered Electrician)" NOT "Competent Person"
+- "AM2 Practical Assessment" for installation competence
+- "City & Guilds 2377 PAT Testing" for portable appliance testing
+- "SSSTS Construction Site Safety" for site work
+- "City & Guilds 2365 / EAL Level 3 Electrical Installation"
+
+❌ AVOID GENERIC TERMS:
+- "18th Edition trained" → Use "City & Guilds 2382-22"
+- "Competent Person" → Use "ECS Gold Card (JIB Registered)"
+- "Inspection qualified" → Use "City & Guilds 2391-52"
+
+EQUIPMENT-SPECIFIC QUALIFICATIONS:
+- Emergency Lighting: "City & Guilds 2919 Emergency Lighting"
+- HV Work: "HV Authorised Person (AP)" for equipment >1kV
+- Control Systems: Include manufacturer training (e.g., "Siemens PLC certification")
+- PAT Testing: "City & Guilds 2377 PAT Testing"
 
 UK ENGLISH: Use British English spelling and electrical terminology throughout.`;
 }
@@ -262,7 +391,11 @@ ${regulationsContext || 'BS 7671:2018+A3:2024 - General Requirements for Periodi
       ],
       "estimatedDuration": "15-20 minutes",
       "riskLevel": "high",
-      "qualifications": ["18th Edition Wiring Regulations", "Competent Person status"],
+      "qualifications": [
+        "City & Guilds 2382-22 (18th Edition BS 7671:2018+A2:2022)",
+        "City & Guilds 2391-52 Inspection & Testing",
+        "ECS Gold Card (JIB Registered Electrician)"
+      ],
       "inspectionCheckpoints": [
         "Supply successfully isolated at main switch",
         "Voltage absence proven on all phases",
@@ -286,9 +419,11 @@ ${regulationsContext || 'BS 7671:2018+A3:2024 - General Requirements for Periodi
     "totalSteps": ${getStepCount(equipmentDetails?.detailLevel)},
     "estimatedDuration": "3-5 hours",
     "requiredQualifications": [
-      "18th Edition Wiring Regulations (BS 7671:2018+A3:2024)",
-      "C&G 2391-52 Inspection & Testing",
-      "Competent Person (as defined by BS 7671)"
+      "City & Guilds 2382-22 (18th Edition BS 7671:2018+A2:2022)",
+      "City & Guilds 2391-52 Inspection & Testing",
+      "ECS Gold Card (JIB Registered Electrician)",
+      "AM2 Practical Assessment",
+      "SSSTS Construction Site Safety (if construction site)"
     ],
     "toolsRequired": [
       "Multifunction tester (MFT)",
