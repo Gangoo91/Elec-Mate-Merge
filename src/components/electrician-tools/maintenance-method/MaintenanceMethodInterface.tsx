@@ -105,6 +105,63 @@ export const MaintenanceMethodInterface = () => {
     setViewState('input');
   };
 
+  const handleExportPDF = async () => {
+    if (!job?.method_data) {
+      toast({
+        title: 'No Data',
+        description: 'No maintenance data available to export',
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      
+      toast({
+        title: 'Generating PDF',
+        description: 'Creating your maintenance instructions PDF...'
+      });
+
+      const payload = {
+        ...job.method_data,
+        equipmentDetails: {
+          equipmentType: equipmentDetails.equipmentType,
+          location: equipmentDetails.location,
+          installationType: equipmentDetails.installationType
+        },
+        reportDate: new Date().toLocaleDateString('en-GB')
+      };
+
+      const { data, error } = await supabase.functions.invoke('generate-maintenance-method-pdf', {
+        body: payload
+      });
+
+      if (error) throw error;
+
+      if (data.downloadUrl) {
+        // Open PDF in new tab
+        window.open(data.downloadUrl, '_blank');
+        
+        toast({
+          title: 'PDF Generated',
+          description: 'Your maintenance instructions PDF is ready'
+        });
+      } else {
+        throw new Error('No download URL returned');
+      }
+    } catch (error: any) {
+      console.error('Error generating PDF:', error);
+      toast({
+        title: 'Export Failed',
+        description: error.message || 'Failed to generate PDF',
+        variant: 'destructive'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const handleViewResults = () => {
     setViewState('results');
   };
@@ -116,7 +173,13 @@ export const MaintenanceMethodInterface = () => {
 
   // Show results if completed
   if (viewState === 'results' && job?.status === 'completed' && job.method_data) {
-    return <MaintenanceMethodResults methodData={job.method_data} onReset={handleReset} />;
+    return (
+      <MaintenanceMethodResults 
+        methodData={job.method_data} 
+        onReset={handleReset}
+        onExportPDF={handleExportPDF}
+      />
+    );
   }
 
   // Show success celebration

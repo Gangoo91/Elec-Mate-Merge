@@ -116,6 +116,11 @@ timeout_sec = 180
 verify_jwt = false
 timeout_sec = 180
 
+# Maintenance Method PDF Generation
+[functions.generate-maintenance-method-pdf]
+verify_jwt = false
+timeout_sec = 180
+
 # Unified Circuit Design V2 (parallel agents - mirrors AI RAMS architecture)
 [functions.process-circuit-design-v2]
 verify_jwt = false
