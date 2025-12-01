@@ -85,6 +85,7 @@ Deno.serve(async (req) => {
             progress: 100,
             current_step: 'Commissioning procedures complete',
             result_data: result,
+            error_message: null, // Clear any error messages on success
             completed_at: new Date().toISOString()
           })
           .eq('id', jobId);
@@ -115,8 +116,8 @@ Deno.serve(async (req) => {
           .eq('id', jobId)
           .single();
         
-        // If job is still processing and hasn't made significant progress, mark as failed
-        if (currentJob?.status === 'processing' && (currentJob?.progress || 0) < 70) {
+        // ONLY mark as failed if job is still processing - don't overwrite completed jobs
+        if (currentJob?.status === 'processing') {
           console.error(`[PROCESS-COMMISSIONING] ⏱️ Watchdog timeout for job ${jobId} at ${currentJob.progress}%`);
           await supabase
             .from('commissioning_jobs')

@@ -62,9 +62,9 @@ const CommissioningProcessingView = ({ progress, startTime, backendProgress = 0 
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <Card className="p-6 bg-gradient-to-br from-purple-500/5 via-background to-background border-purple-500/20">
+      <Card className="p-6 bg-gradient-to-br from-elec-yellow/10 via-background to-background border-elec-yellow/20">
         <div className="flex items-start gap-4 mb-6">
-          <div className="bg-gradient-to-br from-purple-400 to-purple-600 p-3 rounded-full animate-pulse">
+          <div className="bg-gradient-to-br from-amber-400 to-amber-600 p-3 rounded-full animate-pulse">
             <CheckCircle2 className="h-6 w-6 text-elec-dark" />
           </div>
           <div className="flex-1">
@@ -79,7 +79,7 @@ const CommissioningProcessingView = ({ progress, startTime, backendProgress = 0 
         <div className="space-y-2 mb-6">
           <div className="flex items-center justify-between text-sm">
             <span className="text-white">Progress</span>
-            <span className="font-semibold text-purple-400">{animatedProgress}%</span>
+            <span className="font-semibold text-elec-yellow">{animatedProgress}%</span>
           </div>
           <Progress 
             value={animatedProgress} 
@@ -91,12 +91,12 @@ const CommissioningProcessingView = ({ progress, startTime, backendProgress = 0 
         </div>
 
         {/* Generation Timeline */}
-        <div className="grid grid-cols-3 gap-4 p-4 bg-elec-gray/50 rounded-lg border border-purple-500/10">
+        <div className="grid grid-cols-3 gap-4 p-4 bg-elec-gray/50 rounded-lg border border-elec-yellow/10">
           <div className="text-center">
             <div className="text-xs text-white mb-1">Elapsed Time</div>
-            <div className="text-lg font-semibold text-purple-400">{formatTime(elapsedTime)}</div>
+            <div className="text-lg font-semibold text-elec-yellow">{formatTime(elapsedTime)}</div>
           </div>
-          <div className="text-center border-x border-purple-500/10">
+          <div className="text-center border-x border-elec-yellow/10">
             <div className="text-xs text-white mb-1">Estimated Remaining</div>
             <div className="text-lg font-semibold text-foreground">{formatTime(remaining)}</div>
           </div>
@@ -110,18 +110,18 @@ const CommissioningProcessingView = ({ progress, startTime, backendProgress = 0 
       {/* What's Happening Section */}
       <Card className="p-6">
         <h4 className="font-semibold mb-4 flex items-center gap-2">
-          <Shield className="h-5 w-5 text-purple-400" />
+          <Shield className="h-5 w-5 text-elec-yellow" />
           What's Happening?
         </h4>
         <div className="space-y-3">
           <div className={`flex items-start gap-3 p-3 rounded-lg transition-all ${
             progress?.stage === 'parsing' || progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete'
-              ? 'bg-purple-500/10 border border-purple-500/20'
+              ? 'bg-elec-yellow/10 border border-elec-yellow/20'
               : 'bg-elec-gray/30 border border-transparent'
           }`}>
             <Search className={`h-4 w-4 mt-0.5 ${
               progress?.stage === 'parsing' || progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete'
-                ? 'text-purple-400'
+                ? 'text-elec-yellow'
                 : 'text-white'
             }`} />
             <div className="text-left">
@@ -134,12 +134,12 @@ const CommissioningProcessingView = ({ progress, startTime, backendProgress = 0 
 
           <div className={`flex items-start gap-3 p-3 rounded-lg transition-all ${
             progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete'
-              ? 'bg-purple-500/10 border border-purple-500/20'
+              ? 'bg-elec-yellow/10 border border-elec-yellow/20'
               : 'bg-elec-gray/30 border border-transparent'
           }`}>
             <Zap className={`h-4 w-4 mt-0.5 ${
               progress?.stage === 'ai' || progress?.stage === 'validation' || progress?.stage === 'complete'
-                ? 'text-purple-400'
+                ? 'text-elec-yellow'
                 : 'text-white'
             }`} />
             <div className="text-left">
@@ -152,12 +152,12 @@ const CommissioningProcessingView = ({ progress, startTime, backendProgress = 0 
 
           <div className={`flex items-start gap-3 p-3 rounded-lg transition-all ${
             progress?.stage === 'validation' || progress?.stage === 'complete'
-              ? 'bg-purple-500/10 border border-purple-500/20'
+              ? 'bg-elec-yellow/10 border border-elec-yellow/20'
               : 'bg-elec-gray/30 border border-transparent'
           }`}>
             <CheckCircle2 className={`h-4 w-4 mt-0.5 ${
               progress?.stage === 'validation' || progress?.stage === 'complete'
-                ? 'text-purple-400'
+                ? 'text-elec-yellow'
                 : 'text-white'
             }`} />
             <div className="text-left">
@@ -170,12 +170,12 @@ const CommissioningProcessingView = ({ progress, startTime, backendProgress = 0 
 
           <div className={`flex items-start gap-3 p-3 rounded-lg transition-all ${
             progress?.stage === 'complete'
-              ? 'bg-purple-500/10 border border-purple-500/20'
+              ? 'bg-elec-yellow/10 border border-elec-yellow/20'
               : 'bg-elec-gray/30 border border-transparent'
           }`}>
             <Shield className={`h-4 w-4 mt-0.5 ${
               progress?.stage === 'complete'
-                ? 'text-purple-400'
+                ? 'text-elec-yellow'
                 : 'text-white'
             }`} />
             <div className="text-left">

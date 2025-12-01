@@ -263,44 +263,6 @@ const CommissioningInterface = () => {
           startTime={generationStartTime}
           backendProgress={job?.progress || 0}
         />
-        
-        {/* Progress Display with Cancel */}
-        {job && (
-          <div className="p-6 bg-card border border-border rounded-lg">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-lg font-semibold text-white">Generating Procedures</h3>
-                  <p className="text-sm text-white/70 mt-1">
-                    {job.current_step || 'Processing...'}
-                  </p>
-                </div>
-                <Button
-                  onClick={handleCancel}
-                  variant="outline"
-                  size="sm"
-                  className="border-red-500/30 hover:bg-red-500/10 text-red-400"
-                >
-                  Cancel
-                </Button>
-              </div>
-              
-              {/* Progress Bar */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-white/70">Progress</span>
-                  <span className="text-white font-medium">{job.progress}%</span>
-                </div>
-                <div className="h-2 bg-muted rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-elec-yellow transition-all duration-500"
-                    style={{ width: `${job.progress}%` }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
 
         {error && (
           <div className="p-4 bg-destructive/10 border border-destructive/30 rounded-lg">
