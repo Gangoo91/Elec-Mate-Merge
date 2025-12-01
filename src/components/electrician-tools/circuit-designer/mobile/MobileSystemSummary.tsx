@@ -86,33 +86,6 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
           </motion.div>
         </div>
 
-        {/* Main Switch Utilisation Bar */}
-        <div className="mb-3">
-          <div className="flex items-center justify-between text-xs mb-1.5">
-            <span className="text-white/60 flex items-center gap-1">
-              <Activity className="h-3 w-3" />
-              Main Switch Utilisation
-            </span>
-            <span className="text-white font-semibold">
-              {mainSwitchRating}A • {utilization.toFixed(0)}%
-            </span>
-          </div>
-          <Progress 
-            value={utilization} 
-            className={`h-2.5 ${
-              utilization > 80 ? 'bg-red-500/20' : 
-              utilization > 60 ? 'bg-amber-500/20' : 
-              'bg-green-500/20'
-            }`}
-          />
-          {utilization > 80 && (
-            <p className="text-[10px] text-red-400 flex items-center gap-1 mt-1">
-              <AlertTriangle className="h-3 w-3" />
-              High utilisation - consider upgrading
-            </p>
-          )}
-        </div>
-
         {/* Compliance Status Pills */}
         <div className="flex items-center gap-2 mb-3">
           {complianceStats.compliant > 0 && (
@@ -134,6 +107,21 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
             </Badge>
           )}
         </div>
+
+        {/* Review Reasons Summary */}
+        {complianceStats.fails > 0 && (
+          <div className="mt-2 bg-red-500/10 border border-red-500/20 rounded-lg p-2">
+            <p className="text-xs text-red-400 font-medium mb-1">Review Required:</p>
+            {design.circuits
+              .filter(c => (c as any).complianceStatus === 'fail' || (c as any).validationIssues?.length > 0)
+              .map((c, idx) => (
+                <div key={idx} className="text-[10px] text-white/80 mb-0.5">
+                  • {c.name}: {(c as any).validationIssues?.[0]?.message || (c as any).warnings?.[0] || 'Requires manual review'}
+                </div>
+              ))
+            }
+          </div>
+        )}
 
         {/* Expandable Details */}
         <Collapsible open={isExpanded} onOpenChange={handleToggle}>
