@@ -12,6 +12,7 @@ import { searchDesignIntelligence, searchRegulationsIntelligence } from '../_sha
 import { AIDesigner } from './ai-designer.ts';
 import { MinimalSafetyChecks } from './minimal-safety-checks.ts';
 import { ensureExpectedTestValues } from './test-value-calculator.ts';
+import { FormNormalizer } from './form-normalizer.ts';
 import type { NormalizedInputs, DesignResult, RAGContext } from './types.ts';
 
 export class DesignPipeline {
