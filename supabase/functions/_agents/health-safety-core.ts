@@ -29,7 +29,10 @@ const HEALTH_SAFETY_TOOL = {
               severity: { type: 'number', minimum: 1, maximum: 5 },
               riskScore: { type: 'number' },
               riskLevel: { type: 'string', enum: ['low', 'medium', 'high', 'very-high'] },
-              controlMeasure: { type: 'string' },
+              controlMeasure: { 
+                type: 'string',
+                description: 'MUST include sections: PRIMARY ACTION: ELIMINATE: SUBSTITUTE: ENGINEER CONTROLS: ADMINISTRATIVE CONTROLS: VERIFICATION: COMPETENCY REQUIREMENT: EQUIPMENT STANDARDS: REGULATION:'
+              },
               residualRisk: { type: 'number', minimum: 1, maximum: 25 },
               residualRiskLevel: { type: 'string' },
               linkedToStep: { type: 'number' },
@@ -76,8 +79,23 @@ CRITICAL REQUIREMENTS:
 3. Reference BS 7671, CDM Regulations 2015, Management of Health & Safety at Work Regulations 1999
 4. Calculate risk scores: likelihood (1-5) × severity (1-5)
 5. Risk levels: 1-5=low, 6-9=medium, 10-14=high, 15-25=very-high
-6. Provide specific control measures (hierarchy: eliminate → substitute → engineering → admin → PPE)
-7. Calculate residual risk after controls applied
+6. Calculate residual risk after controls applied
+
+CONTROL MEASURE FORMAT - MANDATORY:
+Each controlMeasure MUST use these EXACT section headers:
+
+PRIMARY ACTION: [The main action to control the hazard]
+ELIMINATE: [How to remove the hazard entirely, or "Not applicable" if cannot be eliminated]
+SUBSTITUTE: [Less hazardous alternatives, or "Not applicable"]
+ENGINEER CONTROLS: [Physical barriers, guards, ventilation, etc.]
+ADMINISTRATIVE CONTROLS: [Procedures, training, permits, signage]
+VERIFICATION: [How to verify controls are working - inspections, tests]
+COMPETENCY REQUIREMENT: [Required training, qualifications, experience]
+EQUIPMENT STANDARDS: [Relevant BS/EN standards for equipment]
+REGULATION: [Specific regulation reference e.g. "Regulation 14 of EAWR 1989"]
+
+Example controlMeasure:
+"PRIMARY ACTION: Isolate supply and prove dead before work commences. ELIMINATE: Not applicable - electrical work requires live systems. SUBSTITUTE: Use battery-powered tools where possible. ENGINEER CONTROLS: Install temporary barriers around work area. ADMINISTRATIVE CONTROLS: Implement permit to work system, toolbox talk. VERIFICATION: Use approved voltage indicator to confirm dead. COMPETENCY REQUIREMENT: Electrician must hold BS 7671 qualification. EQUIPMENT STANDARDS: EN 60900 insulated tools required. REGULATION: Regulation 14 of EAWR 1989"
 
 OUTPUT FORMAT:
 - 12-25 hazards covering ALL categories:
@@ -86,10 +104,10 @@ OUTPUT FORMAT:
   * Environmental hazards (weather, lighting, noise, temperature)
   * Health hazards (dust, fumes, vibration, repetitive strain)
   * Fire/explosion risks (flammable materials, hot work)
-- Each hazard MUST have specific control measures and calculated residual risk
+- Each hazard MUST have controlMeasure using the EXACT format above
 - Minimum 5 PPE items with EN/BS standards and specific purposes
-- 5+ emergency procedures specific to electrical work (shock treatment, fire, first aid)
-- Detailed compliance regulations list with specific regulation numbers
+- 5+ emergency procedures specific to electrical work
+- Detailed compliance regulations list
 
 Use the RAG context provided to ensure accuracy and compliance.`;
 
