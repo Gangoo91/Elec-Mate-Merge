@@ -1354,9 +1354,24 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
     );
   }
 
+  // Extract failed circuits info
+  const failedCircuitsCount = (design as any).failedCircuits?.count || 0;
+  const failedCircuitsNames = (design as any).failedCircuits?.names || [];
+
   // Desktop view
   return (
     <div className="space-y-4 sm:space-y-5 md:space-y-6 px-3 sm:px-4 pb-safe">
+      {/* Failed Circuits Warning Banner */}
+      {failedCircuitsCount > 0 && (
+        <Alert variant="destructive" className="animate-in fade-in duration-300">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertTitle>{failedCircuitsCount} circuit{failedCircuitsCount !== 1 ? 's' : ''} could not be generated</AlertTitle>
+          <AlertDescription>
+            {failedCircuitsNames.join(', ')} - These circuits may need to be regenerated or added manually.
+          </AlertDescription>
+        </Alert>
+      )}
+      
       {/* Unified Header Card - combines RequestSummaryHeader and Project Summary */}
       <Card className="p-4 sm:p-5 md:p-6 bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
         <div className="space-y-4">
