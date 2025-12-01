@@ -127,46 +127,82 @@ export const MaintenanceMethodResults = ({
       </Card>
 
       {/* Executive Summary */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg text-left">Executive Summary</CardTitle>
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card via-elec-card to-elec-card/50">
+        <CardHeader className="border-b border-elec-yellow/20 pb-4">
+          <CardTitle className="text-2xl font-bold text-left text-foreground">
+            {executiveSummary.equipmentType}
+          </CardTitle>
+          <div className="h-1 w-16 bg-elec-yellow rounded-full mt-2"></div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid gap-3 sm:grid-cols-2 text-left">
-            <div>
-              <span className="text-sm font-medium text-foreground">Equipment Type:</span>
-              <p className="text-sm text-foreground">{executiveSummary.equipmentType}</p>
+        <CardContent className="space-y-6 pt-6">
+          {/* Key Information Grid */}
+          <div className="grid gap-4 sm:grid-cols-2 text-left">
+            <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-500/5 border border-blue-500/20">
+              <div className="h-10 w-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                <Wrench className="h-5 w-5 text-blue-400" />
+              </div>
+              <div className="flex-1">
+                <span className="text-xs font-medium text-foreground/70 uppercase tracking-wide">Equipment Type</span>
+                <p className="text-sm font-semibold text-foreground mt-0.5">{executiveSummary.equipmentType}</p>
+              </div>
             </div>
-            <div>
-              <span className="text-sm font-medium text-foreground">Maintenance Type:</span>
-              <p className="text-sm text-foreground">{executiveSummary.maintenanceType}</p>
+
+            <div className="flex items-start gap-3 p-3 rounded-lg bg-purple-500/5 border border-purple-500/20">
+              <div className="h-10 w-10 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                <FileText className="h-5 w-5 text-purple-400" />
+              </div>
+              <div className="flex-1">
+                <span className="text-xs font-medium text-foreground/70 uppercase tracking-wide">Maintenance Type</span>
+                <p className="text-sm font-semibold text-foreground mt-0.5">{executiveSummary.maintenanceType}</p>
+              </div>
             </div>
-            <div>
-              <span className="text-sm font-medium text-foreground">Recommended Frequency:</span>
-              <p className="text-sm text-foreground">{executiveSummary.recommendedFrequency}</p>
+
+            <div className="flex items-start gap-3 p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
+              <div className="h-10 w-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                <Clock className="h-5 w-5 text-amber-400" />
+              </div>
+              <div className="flex-1">
+                <span className="text-xs font-medium text-foreground/70 uppercase tracking-wide">Frequency</span>
+                <p className="text-sm font-semibold text-foreground mt-0.5">{executiveSummary.recommendedFrequency}</p>
+              </div>
             </div>
-            <div>
-              <span className="text-sm font-medium text-foreground">Overall Condition:</span>
-              <p className="text-sm text-foreground">{executiveSummary.overallCondition}</p>
+
+            <div className="flex items-start gap-3 p-3 rounded-lg bg-green-500/5 border border-green-500/20">
+              <div className="h-10 w-10 rounded-lg bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                <ShieldAlert className="h-5 w-5 text-green-400" />
+              </div>
+              <div className="flex-1">
+                <span className="text-xs font-medium text-foreground/70 uppercase tracking-wide">Condition</span>
+                <p className="text-sm font-semibold text-foreground mt-0.5">{executiveSummary.overallCondition}</p>
+              </div>
             </div>
+
             {executiveSummary.estimatedAge && (
-              <div>
-                <span className="text-sm font-medium text-foreground">Estimated Age:</span>
-                <p className="text-sm text-foreground">{executiveSummary.estimatedAge}</p>
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-cyan-500/5 border border-cyan-500/20">
+                <div className="h-10 w-10 rounded-lg bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
+                  <Clock className="h-5 w-5 text-cyan-400" />
+                </div>
+                <div className="flex-1">
+                  <span className="text-xs font-medium text-foreground/70 uppercase tracking-wide">Estimated Age</span>
+                  <p className="text-sm font-semibold text-foreground mt-0.5">{executiveSummary.estimatedAge}</p>
+                </div>
               </div>
             )}
           </div>
 
+          {/* Critical Findings */}
           {executiveSummary.criticalFindings && executiveSummary.criticalFindings.length > 0 && (
-            <div className="space-y-2 pt-2 border-t text-left">
-              <div className="flex items-center gap-2 text-sm font-medium text-destructive">
-                <AlertTriangle className="h-4 w-4" />
-                Critical Findings
+            <div className="space-y-3 p-4 rounded-lg bg-destructive/5 border-2 border-destructive/30 text-left">
+              <div className="flex items-center gap-2">
+                <div className="h-8 w-8 rounded-lg bg-destructive/20 flex items-center justify-center">
+                  <AlertTriangle className="h-4 w-4 text-destructive" />
+                </div>
+                <span className="text-sm font-bold text-destructive uppercase tracking-wide">Critical Findings</span>
               </div>
-              <ul className="space-y-1.5 ml-6">
+              <ul className="space-y-2">
                 {executiveSummary.criticalFindings.map((finding, idx) => (
-                  <li key={idx} className="text-sm text-foreground flex items-start gap-2">
-                    <span className="text-destructive mt-0.5">•</span>
+                  <li key={idx} className="text-sm text-foreground flex items-start gap-2 bg-background/50 p-2 rounded">
+                    <span className="text-destructive mt-0.5 font-bold">•</span>
                     <span>{finding}</span>
                   </li>
                 ))}
