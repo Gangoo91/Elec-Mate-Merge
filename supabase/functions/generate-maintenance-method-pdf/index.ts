@@ -1,12 +1,7 @@
-import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { serve, corsHeaders } from '../_shared/deps.ts';
 
 const PDF_MONKEY_API_KEY = Deno.env.get('PDF_MONKEY_API_KEY');
 const MAINTENANCE_METHOD_TEMPLATE_ID = '5B71875B-D774-448A-8DB6-841975B0564C';
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
 
 /**
  * Format date to DD/MM/YYYY
