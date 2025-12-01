@@ -65,15 +65,67 @@ export class AIDesigner {
       return null;
     });
     
+    // Identify failures for retry
+    const failureIndices = results
+      .map((r, idx) => ({ result: r, index: idx }))
+      .filter(item => item.result.status === 'rejected')
+      .map(item => item.index);
+    
+    // Retry failed circuits sequentially (up to 2 attempts with backoff)
+    if (failureIndices.length > 0) {
+      this.logger.warn('Retrying failed circuits', {
+        failureCount: failureIndices.length,
+        indices: failureIndices
+      });
+      
+      for (const failureIndex of failureIndices) {
+        const circuit = inputs.circuits[failureIndex];
+        let retrySuccess = false;
+        
+        for (let attempt = 1; attempt <= 2 && !retrySuccess; attempt++) {
+          const backoffMs = attempt * 3000; // 3s, 6s
+          this.logger.info(`Retry attempt ${attempt} for circuit ${failureIndex + 1} after ${backoffMs}ms backoff`);
+          
+          await new Promise(resolve => setTimeout(resolve, backoffMs));
+          
+          try {
+            const result = await this.generateSingleCircuit(
+              circuit,
+              failureIndex,
+              systemPrompt,
+              installationType,
+              inputs.supply
+            );
+            
+            // Success - update the position
+            circuitsWithPositions[failureIndex] = {
+              ...result,
+              circuitNumber: failureIndex + 1
+            };
+            retrySuccess = true;
+            
+            this.logger.info(`Retry successful for circuit ${failureIndex + 1} on attempt ${attempt}`);
+          } catch (error) {
+            this.logger.warn(`Retry attempt ${attempt} failed for circuit ${failureIndex + 1}`, {
+              error: error.message
+            });
+          }
+        }
+        
+        if (!retrySuccess) {
+          this.logger.error(`All retry attempts exhausted for circuit ${failureIndex + 1}`);
+        }
+      }
+    }
+    
     // Filter out failures and extract successful circuits
     const circuits = circuitsWithPositions.filter((c): c is DesignedCircuit => c !== null);
-    const failures = results.filter(r => r.status === 'rejected') as PromiseRejectedResult[];
+    const finalFailures = circuitsWithPositions.filter(c => c === null).length;
     
-    if (failures.length > 0) {
-      this.logger.warn('Some circuits failed to design', {
-        failures: failures.length,
-        successes: circuits.length,
-        errors: failures.map(f => f.reason.message || String(f.reason))
+    if (finalFailures > 0) {
+      this.logger.warn('Some circuits still failed after retries', {
+        failures: finalFailures,
+        successes: circuits.length
       });
     }
     
@@ -444,54 +496,13 @@ export class AIDesigner {
     parts.push('  • 4mm² SWA → 4mm² CPC');
     parts.push('');
     parts.push('=== COMMERCIAL CONTAINMENT - LOAD-BASED SELECTION ===');
-    parts.push('');
-    parts.push('🔧 LOW-LOAD CIRCUITS (<20A / office sockets, EPOS, lighting):');
-    parts.push('  • PREFERRED: PVC/plastic trunking - cost-effective for office environments');
-    parts.push('  • ALTERNATIVE: Dado trunking - ideal for perimeter distribution');
-    parts.push('  • Cable type: LSZH singles (still required) but in plastic containment');
-    parts.push('  • Steel conduit is OVERKILL for low-load office circuits');
-    parts.push('  • Examples: EPOS circuits (1-2kW), office workstations, LED lighting');
-    parts.push('');
-    parts.push('🔧 MEDIUM-LOAD CIRCUITS (20-63A / general distribution):');
-    parts.push('  • PREFERRED: Steel trunking for main routes');
-    parts.push('  • ALTERNATIVE: Cable basket in ceiling voids');
-    parts.push('  • Consider: Perforated tray for grouped runs');
-    parts.push('  • Examples: Socket ring finals, small sub-mains, general distribution');
-    parts.push('');
-    parts.push('🔧 HIGH-LOAD CIRCUITS (>63A / sub-mains, distribution):');
-    parts.push('  • PREFERRED: Heavy-duty cable tray or ladder');
-    parts.push('  • SWA clipped direct for individual heavy runs');
-    parts.push('  • Examples: Three-phase sub-mains, large machinery feeds');
-    parts.push('');
-    parts.push('🔧 FIRE-RATED AREAS (escape routes, fire compartments):');
-    parts.push('  • MANDATORY: Steel trunking (contributes to fire compartmentation)');
-    parts.push('  • Alternative: FP200/FP400 clipped direct with fire-rated clips');
-    parts.push('  • NEVER use PVC trunking in fire escape routes');
-    parts.push('');
-    parts.push('🔧 CEILING VOIDS / SUSPENDED CEILINGS:');
-    parts.push('  • Preferred: Perforated cable tray (excellent cooling and access)');
-    parts.push('  • Alternative: Cable basket (lightweight, easy modifications)');
-    parts.push('  • Drop rods: For accessible connections through ceiling');
-    parts.push('');
-    parts.push('🔧 DATA CIRCUITS (Cat6/Cat6a):');
-    parts.push('  • CRITICAL: Segregate 300mm from power cables or use screened cable');
-    parts.push('  • Ceiling: Cable basket (separate from power tray)');
-    parts.push('  • Surface: Plastic trunking (separate from power trunking)');
-    parts.push('  • Data centres: Raised floor containment or overhead basket per TIA-942');
-    parts.push('  • NEVER route data and power in same trunking/conduit');
-    parts.push('');
-    parts.push('⚠️ COST-CONSCIOUS DESIGN:');
-    parts.push('  • Match containment to actual requirements - avoid over-engineering');
-    parts.push('  • Steel conduit for 4A EPOS circuit = unnecessary expense (use PVC trunking)');
-    parts.push('  • Plastic trunking for 4A EPOS circuit = practical and compliant');
-    parts.push('  • Reserve heavy containment (steel conduit/tray) for high-load or fire-rated areas');
-    parts.push('');
-    parts.push('🔧 LSZH SINGLES (must be enclosed):');
-    parts.push('  • Steel conduit: Fire-rated routes, visible areas');
-    parts.push('  • Steel trunking: Distribution routes, plant rooms');
-    parts.push('  • PVC trunking: Low-load office circuits, non-fire-rated areas');
-    parts.push('  • Cable tray/basket: Ceiling voids (all phases together)');
-    parts.push('  • BS 7671 Reg 521.5.1: All phases and neutral MUST be grouped together');
+    parts.push('• <20A (EPOS, office sockets, lights): PVC/plastic trunking with LSZH singles');
+    parts.push('• 20-63A (ring finals, distribution): Steel trunking or cable tray/basket');
+    parts.push('• >63A (sub-mains): Heavy-duty tray/ladder. SWA clipped direct for individual runs');
+    parts.push('• Fire-rated areas: Steel trunking mandatory or FP200/FP400 clipped');
+    parts.push('• Ceiling voids: Perforated tray or cable basket');
+    parts.push('• Data circuits: Separate basket/trunking, 300mm from power or screened cable');
+    parts.push('• LSZH singles: Steel conduit/trunking (fire routes), PVC trunking (low-load), tray/basket (ceiling). All phases grouped per Reg 521.5.1');
     parts.push('');
     } else if (type === 'industrial') {
     parts.push('=== INDUSTRIAL INSTALLATION CONTEXT ===');
@@ -527,49 +538,14 @@ export class AIDesigner {
     parts.push('');
     parts.push('(CPC sizing rules: See above - Singles/SWA use equal size, T&E uses reduced CPC per Table 54.7)');
     parts.push('');
-    parts.push('=== INDUSTRIAL CONTAINMENT SELECTION (DETAILED) ===');
-    parts.push('🔧 LARGE CABLES (50mm² and above):');
-    parts.push('  • MANDATORY: Cable ladder (designed for heavy loads)');
-    parts.push('  • Suitable for: Long runs, grouped cables, distribution routes');
-    parts.push('  • Material: Hot-dip galvanised steel for corrosion resistance');
-    parts.push('  • Outdoor: Cable ladder with covers or drainage provisions');
-    parts.push('');
-    parts.push('🔧 GROUPED SWA CABLES (16-50mm²):');
-    parts.push('  • Preferred: Heavy-duty perforated tray (1.5-2.5mm gauge)');
-    parts.push('  • Alternative: Cable ladder for very long runs');
-    parts.push('  • Material: Galvanised steel, hot-dip for outdoor/harsh environments');
-    parts.push('  • Provides: Mechanical support, ventilation, easy access');
-    parts.push('');
-    parts.push('🔧 INDIVIDUAL SWA RUNS (up to 25mm²):');
-    parts.push('  • Preferred: Clipped direct with SWA cleats');
-    parts.push('  • Spacing: Per BS 7671 based on cable weight and route');
-    parts.push('  • Use LSF (Low Smoke & Fume) cleats in fire-rated areas');
-    parts.push('  • Short distances only - use tray for long runs');
-    parts.push('');
-    parts.push('🔧 MACHINERY CONNECTIONS (vibration/movement):');
-    parts.push('  • Cable: Flexible SWA or armoured flex');
-    parts.push('  • Containment: Liquid-tight flexible conduit (IP65+)');
-    parts.push('  • Fittings: Vibration-rated flexible SWA glands');
-    parts.push('  • Applications: Conveyors, overhead cranes, moving machinery');
-    parts.push('  • Critical: Regular inspection for flex fatigue');
-    parts.push('');
-    parts.push('🔧 HARSH/CORROSIVE ENVIRONMENTS:');
-    parts.push('  • For singles: Galvanised steel conduit (IP65+ fittings)');
-    parts.push('  • For SWA: Hot-dip galvanised tray/ladder');
-    parts.push('  • Chemical plants: Consider stainless steel or FRP containment');
-    parts.push('  • Coastal areas: Enhanced galvanising or epoxy coating');
-    parts.push('');
-    parts.push('🔧 LSZH SINGLES (fixed machinery, control panels):');
-    parts.push('  • Containment: Heavy-duty galvanised steel conduit');
-    parts.push('  • Alternative: Industrial cable tray (all phases together)');
-    parts.push('  • BS 7671 Reg 521.5.1: All phases and neutral MUST be grouped');
-    parts.push('  • NOT for harsh environments - use SWA instead');
-    parts.push('');
-    parts.push('🔧 OVERHEAD ROUTES (mezzanines, high bays):');
-    parts.push('  • Preferred: Cable ladder or heavy-duty tray');
-    parts.push('  • Industrial cable basket for modification-heavy areas');
-    parts.push('  • Support: Rated for cable weight + 50% safety factor');
-    parts.push('  • Access: Consideration for maintenance and future additions');
+    parts.push('=== INDUSTRIAL CONTAINMENT SELECTION ===');
+    parts.push('• ≥50mm²: Cable ladder (heavy loads, galvanised steel)');
+    parts.push('• 16-50mm² SWA: Heavy-duty perforated tray or ladder for long runs');
+    parts.push('• ≤25mm² SWA: Clipped direct with SWA cleats');
+    parts.push('• Machinery (vibration): Flexible SWA in liquid-tight flexible conduit (IP65+)');
+    parts.push('• Harsh/corrosive: Galvanised steel conduit (singles) or hot-dip tray/ladder (SWA)');
+    parts.push('• LSZH singles: Heavy-duty galvanised conduit or industrial tray. All phases grouped per Reg 521.5.1');
+    parts.push('• Overhead routes: Cable ladder or heavy-duty tray with 50% safety factor');
     parts.push('');
     }
     
