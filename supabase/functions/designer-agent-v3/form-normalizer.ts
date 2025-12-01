@@ -24,6 +24,8 @@ export class FormNormalizer {
     };
   }
 
+  private installationType: string = 'domestic';
+
   private normalizeSupply(supply: any, rawInput: any): NormalizedSupply {
     // PHASE 1: Multi-voltage support - validate voltage input
     const voltage = supply.voltage || 230;
@@ -40,12 +42,15 @@ export class FormNormalizer {
       console.log('Auto-corrected: Three-phase systems typically use 400V, not 230V');
     }
     
+    // Store installation type for ring detection
+    this.installationType = supply.installationType || rawInput.projectInfo?.installationType || 'domestic';
+    
     return {
       voltage: correctedVoltage,
       phases: phases,
       ze: Math.round((supply.ze || 0.35) * 100) / 100, // Round to 2 decimals
       earthing: (supply.earthingSystem || supply.earthing || 'TN-C-S').toUpperCase(),
-      installationType: supply.installationType || rawInput.projectInfo?.installationType || 'domestic'
+      installationType: this.installationType
     };
   }
 
@@ -127,6 +132,7 @@ export class FormNormalizer {
 
   /**
    * Detect if a circuit is a ring final circuit
+   * SMART DETECTION: Considers installation type and load power
    */
   private detectRingFinal(circuit: any): boolean {
     // If explicit topology is set, use it
@@ -137,16 +143,43 @@ export class FormNormalizer {
       return false;
     }
     
-    // Auto-detect mode: use existing heuristics
     const nameLower = (circuit.name || '').toLowerCase();
     const loadTypeLower = (circuit.loadType || '').toLowerCase();
-
-    // Check multiple indicators
-    return (
-      nameLower.includes('ring') ||
-      loadTypeLower.includes('ring') ||
-      // Typical ring final: socket circuit with power ≤ 7360W (32A × 230V)
-      (loadTypeLower.includes('socket') && circuit.loadPower <= 7360)
-    );
+    
+    // Explicit ring mentions
+    if (nameLower.includes('ring') || loadTypeLower.includes('ring')) {
+      return true;
+    }
+    
+    // COMMERCIAL/INDUSTRIAL: Radials preferred for dedicated circuits
+    // Only suggest rings for general-purpose socket outlets with high loads
+    if (['commercial', 'industrial'].includes(this.installationType.toLowerCase())) {
+      // Dedicated equipment (EPOS, ATM, server, etc.) = RADIAL
+      const dedicatedIndicators = ['epos', 'till', 'pos', 'atm', 'server', 'printer', 'dedicated', 'specific', 'workstation'];
+      if (dedicatedIndicators.some(ind => nameLower.includes(ind) || loadTypeLower.includes(ind))) {
+        console.log(`Detected dedicated commercial circuit: ${circuit.name} - using RADIAL`);
+        return false;
+      }
+      
+      // Low loads (<3680W / 16A) = RADIAL (20A circuit sufficient)
+      if (circuit.loadPower < 3680) {
+        console.log(`Low-load commercial circuit: ${circuit.name} (${circuit.loadPower}W) - using RADIAL`);
+        return false;
+      }
+      
+      // Medium loads (3680W-7360W) with "general" or "multiple" sockets = RING
+      const generalIndicators = ['general', 'multiple', 'various', 'open plan', 'office area'];
+      if (loadTypeLower.includes('socket') && circuit.loadPower >= 3680 && 
+          generalIndicators.some(ind => nameLower.includes(ind) || loadTypeLower.includes(ind))) {
+        console.log(`General-purpose commercial sockets: ${circuit.name} (${circuit.loadPower}W) - using RING`);
+        return true;
+      }
+      
+      // Default for commercial/industrial sockets = RADIAL
+      return false;
+    }
+    
+    // DOMESTIC: Traditional ring final detection
+    return loadTypeLower.includes('socket') && circuit.loadPower <= 7360;
   }
 }
