@@ -112,6 +112,38 @@ export function validateCircuitConsistency(
 }
 
 /**
+ * Determine disconnection time based on circuit type
+ * Per BS 7671 Regulation 411.3.2.3:
+ * - Final circuits ≤32A (sockets, lighting): 0.4s (Table 41.3)
+ * - Motors, conveyors, fixed equipment: 5s (Table 41.6)
+ * - Distribution circuits: 5s (Table 41.6)
+ */
+function getDisconnectionTime(circuit: DesignedCircuit): 0.4 | 5 {
+  const circuitType = circuit.loadType?.toLowerCase() || '';
+  const name = circuit.name?.toLowerCase() || '';
+  
+  // Motor/fixed equipment circuits = 5s
+  const motorKeywords = [
+    'motor', 'compressor', 'chiller', 'conveyor', 'pump', 'fan',
+    'auger', 'three-phase', 'machine', 'production', 'hvac',
+    'air handler', 'ventilation', 'extraction', 'cooling tower'
+  ];
+  
+  if (motorKeywords.some(kw => circuitType.includes(kw) || name.includes(kw))) {
+    return 5;
+  }
+  
+  // Distribution circuits = 5s
+  if (circuitType.includes('distribution') || circuitType.includes('sub-main') || 
+      name.includes('distribution') || name.includes('sub-main')) {
+    return 5;
+  }
+  
+  // Final circuits (sockets, lighting) = 0.4s (default)
+  return 0.4;
+}
+
+/**
  * Validate max Zs for industrial fuse types (BS88, BS1361, BS3036)
  * Also validates MCB/RCBO types B, C, D
  */
@@ -152,14 +184,25 @@ export function validateMaxZs(
     return { isValid: true };
   }
   
-  // Get correct max Zs from BS 7671 tables
-  const zsLookup = getMaxZsForDevice(deviceTypeForLookup, protectionDevice.rating);
+  // Determine disconnection time based on circuit type
+  const disconnectionTime = getDisconnectionTime(circuit);
+  
+  logger.info('Zs validation with disconnection time', {
+    circuit: circuit.name,
+    disconnectionTime: disconnectionTime + 's',
+    circuitType: circuit.loadType,
+    reason: disconnectionTime === 5 ? 'Motor/distribution circuit (Table 41.6)' : 'Final circuit (Table 41.3)'
+  });
+  
+  // Get correct max Zs from BS 7671 tables with appropriate disconnection time
+  const zsLookup = getMaxZsForDevice(deviceTypeForLookup, protectionDevice.rating, disconnectionTime);
   
   if (!zsLookup) {
     logger.warn('No max Zs data available', {
       circuit: circuit.name,
       deviceType: deviceTypeForLookup,
-      rating: protectionDevice.rating
+      rating: protectionDevice.rating,
+      disconnectionTime
     });
     return { isValid: true };
   }

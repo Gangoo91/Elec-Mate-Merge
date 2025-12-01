@@ -876,7 +876,15 @@ export class AIDesigner {
     parts.push('- diversifiedLoad: Diversified load in watts (Ib × diversityFactor × voltage)');
     parts.push('- voltageDrop: { volts, percent, limit, compliant }');
     parts.push('- zs: Earth fault loop impedance in Ohms');
-    parts.push('- maxZs: Maximum permitted Zs in Ohms (from BS 7671 Table 41.3)');
+    parts.push('- maxZs: Maximum permitted Zs in Ohms (Table 41.3 for 0.4s final circuits, Table 41.6 for 5s motors/distribution)');
+    parts.push('- disconnectionTime: 0.4 or 5 (seconds) - use 5s for motors/fixed equipment, 0.4s for final circuits');
+    parts.push('');
+    parts.push('=== DISCONNECTION TIMES (BS 7671 Regulation 411.3.2.3) ===');
+    parts.push('**CRITICAL: Use correct disconnection time to select appropriate Zs table:**');
+    parts.push('- **0.4s disconnection** (Table 41.3): Final circuits ≤32A (sockets, lighting, small loads)');
+    parts.push('- **5s disconnection** (Table 41.6): Motors, conveyors, fixed equipment, distribution circuits');
+    parts.push('  → Motors get HIGHER permitted Zs (e.g., 32A Type D: 0.36Ω @ 0.4s vs 0.72Ω @ 5s)');
+    parts.push('**Keywords for 5s:** motor, compressor, pump, fan, conveyor, chiller, HVAC, machine, production line');
     parts.push('');
     parts.push('=== EXPECTED TEST VALUES (BS 7671 PART 6) - MANDATORY NUMERICAL VALUES ===');
     parts.push('Generate expectedTests object for EVERY circuit with NUMERICAL values calculated using BS 7671 formulas:');
@@ -893,7 +901,8 @@ export class AIDesigner {
     parts.push('');
     parts.push('2. Zs (Earth fault loop impedance - BS 7671 Reg 612.9):');
     parts.push('   - Formula: Zs = Ze + R1+R2 (at 70°C)');
-    parts.push('   - Get maxPermitted from BS 7671 Table 41.3 based on device type/rating');
+    parts.push('   - Get maxPermitted from BS 7671 Table 41.3 (0.4s) or Table 41.6 (5s) based on circuit type');
+    parts.push('   - Use Table 41.6 (5s) for motors/fixed equipment, Table 41.3 (0.4s) for final circuits');
     parts.push('   - Calculate margin: marginPercent = ((maxPermitted - expected) / maxPermitted) × 100');
     parts.push('   - Set compliant: expected ≤ maxPermitted');
     parts.push('   - Example: Ze 0.35Ω + R1+R2 0.47Ω = 0.82Ω (max 1.37Ω for 32A Type B MCB)');
