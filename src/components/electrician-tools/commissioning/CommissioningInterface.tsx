@@ -76,6 +76,7 @@ const CommissioningInterface = () => {
   const handleGenerate = async (data: {
     prompt: string;
     selectedType: 'domestic' | 'commercial' | 'industrial';
+    queryMode: 'testing' | 'fault';
     projectName: string;
     location: string;
     clientName: string;
@@ -113,6 +114,7 @@ const CommissioningInterface = () => {
         const { data: result, error: invokeError } = await supabase.functions.invoke('commissioning-v3', {
           body: {
             query: data.prompt,
+            queryMode: data.queryMode,
             imageUrl: imageUrlsArray[0],
             imageUrls: imageUrlsArray,
             projectContext: {
@@ -182,6 +184,7 @@ const CommissioningInterface = () => {
     try {
       await createJob({
         query: data.prompt,
+        queryMode: data.queryMode,
         projectContext: {
           projectType: data.selectedType,
           buildingAge: 'modern',
@@ -297,6 +300,7 @@ const CommissioningInterface = () => {
             handleGenerate({
               prompt: followUpQuery,
               selectedType: projectInfo.selectedType,
+              queryMode: 'testing',
               projectName: projectInfo.projectName,
               location: projectInfo.location,
               clientName: projectInfo.clientName,
