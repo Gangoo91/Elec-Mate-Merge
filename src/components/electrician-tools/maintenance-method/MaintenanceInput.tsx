@@ -10,6 +10,7 @@ import { MaintenanceTemplateGrid } from "./MaintenanceTemplateGrid";
 import { MaintenanceEquipmentDetailsForm } from "./MaintenanceEquipmentDetails";
 import { FormSection } from "../installation-specialist/FormSection";
 import { MaintenanceTemplate } from "@/lib/maintenance-templates";
+import { cn } from "@/lib/utils";
 
 interface MaintenanceInputProps {
   query: string;
@@ -74,15 +75,25 @@ export const MaintenanceInput = ({
             disabled={isProcessing}
           />
 
-          <div className="space-y-1.5">
-            <div className="flex justify-between text-xs text-muted-foreground">
-              <span>{charCount} / {MAX_CHARS} characters</span>
-              <span className={charCount < 50 ? "text-amber-400" : "text-green-400"}>
-                {charCount < 50 ? `${50 - charCount} more needed` : "Ready"}
-              </span>
+            <div className="space-y-1.5">
+              <div className="flex justify-between text-xs text-muted-foreground">
+                <span>{charCount} / {MAX_CHARS} characters</span>
+                <span className={charCount < 50 ? "text-amber-400" : "text-green-400"}>
+                  {charCount < 50 ? `${50 - charCount} more needed` : "Ready"}
+                </span>
+              </div>
+              <div className="h-1 bg-muted rounded-full overflow-hidden">
+                <div 
+                  className={cn(
+                    "h-full transition-all duration-300",
+                    charProgress > 100 
+                      ? "bg-destructive" 
+                      : "bg-elec-yellow"
+                  )}
+                  style={{ width: `${Math.min(charProgress, 100)}%` }}
+                />
+              </div>
             </div>
-            <Progress value={charProgress} className="h-1.5" />
-          </div>
         </div>
       </FormSection>
 
@@ -128,7 +139,7 @@ export const MaintenanceInput = ({
         <Button
           onClick={onGenerate}
           disabled={!canGenerate || isProcessing}
-          className="w-full h-12 text-base font-semibold bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-lg"
+          className="w-full h-12 text-base font-semibold bg-gradient-to-r from-elec-yellow via-elec-yellow to-elec-yellow/90 text-black hover:scale-[1.02] active:scale-95 transition-all shadow-lg"
           size="lg"
         >
           <Wrench className="mr-2 h-5 w-5" />

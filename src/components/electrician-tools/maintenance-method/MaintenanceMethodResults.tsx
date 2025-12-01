@@ -9,8 +9,11 @@ import {
   Clock, 
   Wrench, 
   ShieldAlert,
-  AlertTriangle
+  AlertTriangle,
+  Plus
 } from 'lucide-react';
+import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
+import { cn } from '@/lib/utils';
 
 interface MaintenanceMethodResultsProps {
   methodData: MaintenanceMethodData;
@@ -24,9 +27,10 @@ export const MaintenanceMethodResults = ({
   onReset
 }: MaintenanceMethodResultsProps) => {
   const { maintenanceGuide, executiveSummary, steps, summary, recommendations, eicrObservations } = methodData;
+  const { isMobile } = useMobileEnhanced();
 
   return (
-    <div className="space-y-6 pb-20">
+    <div className={cn("space-y-6 pb-20", isMobile && "space-y-4")}>
       {/* Header */}
       <Card>
         <CardHeader>
@@ -40,14 +44,31 @@ export const MaintenanceMethodResults = ({
                 {executiveSummary.equipmentType}
               </p>
             </div>
-            <div className="flex gap-2">
+            <div className={cn(
+              "flex gap-2",
+              isMobile && "flex-col w-full"
+            )}>
               {onReset && (
-                <Button onClick={onReset} variant="outline" size="sm">
+                <Button 
+                  onClick={onReset}
+                  className={cn(
+                    "bg-gradient-to-r from-elec-yellow via-elec-yellow to-elec-yellow/90 text-black hover:scale-[1.02] active:scale-95 transition-all",
+                    isMobile && "w-full"
+                  )}
+                >
+                  <Plus className="h-4 w-4 mr-2" />
                   Generate New
                 </Button>
               )}
               {onExportPDF && (
-                <Button onClick={onExportPDF} size="sm">
+                <Button 
+                  onClick={onExportPDF}
+                  variant="outline"
+                  className={cn(
+                    "active:scale-95 transition-all",
+                    isMobile && "w-full"
+                  )}
+                >
                   <Download className="h-4 w-4 mr-2" />
                   Export PDF
                 </Button>

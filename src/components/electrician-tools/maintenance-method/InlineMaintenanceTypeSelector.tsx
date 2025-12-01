@@ -21,7 +21,7 @@ export const InlineMaintenanceTypeSelector = ({
 
   return (
     <div>
-      <label className="text-sm font-semibold mb-3 block">Installation Type</label>
+      <label className="text-sm font-semibold mb-3 block text-foreground">Maintenance Type</label>
       <div className="grid grid-cols-3 gap-2">
         {types.map(({ value, label, icon: Icon }) => {
           const isActive = selectedType === value;

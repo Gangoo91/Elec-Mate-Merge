@@ -189,6 +189,19 @@ timeout_sec = 600
 verify_jwt = false
 timeout_sec = 600
 
+# Maintenance Method Job Queue Architecture
+[functions.create-maintenance-method-job]
+verify_jwt = false
+timeout_sec = 30
+
+[functions.process-maintenance-method-job]
+verify_jwt = false
+timeout_sec = 600
+
+[functions.cancel-maintenance-method-job]
+verify_jwt = false
+timeout_sec = 30
+
 # Design Intelligence Field Enrichment (populates cable_sizes/load_types)
 [functions.enrich-design-intelligence-fields]
 verify_jwt = false
