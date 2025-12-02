@@ -618,6 +618,12 @@ async function generateInstallationGuidancePerCircuit(
   
   const cableSpec = circuit.cableType || `${circuit.cableSize}mm² cable`;
   
+  // Determine installation type for workflow selection
+  const installationType = projectInfo?.installationType || 'domestic';
+  const isCommercial = installationType === 'commercial';
+  const isIndustrial = installationType === 'industrial';
+  const isDomestic = !isCommercial && !isIndustrial;
+  
   // Determine circuit-specific testing requirements
   const isRingFinal = circuit.name?.toLowerCase().includes('ring') || 
                       circuit.loadType?.toLowerCase().includes('ring') ||
@@ -767,13 +773,37 @@ ${hasRCD ? `
 **Installation Steps (MINIMUM 7-10 steps):**
 - Generate 7-10 comprehensive installation steps SPECIFIC to ${cableSpec}
 - Each step must be 150-200 words with exact measurements, torques, stripping lengths, fixing centres
-- MANDATORY: FOLLOW FIRST FIX → SECOND FIX WORKFLOW ORDER:
-  * Step 1: Preparation & Planning (isolation, tools, materials, route marking, safety)
-  * Step 2: FIRST FIX - Cable Installation (install backboxes, conduit/trunking, pull ALL cables, fix cables to structure, label cables at both ends)
-  * Steps 3 to N-1: Intermediate preparation work (measurements, additional preparations as needed)
-  * Step N: SECOND FIX - All Terminations (strip and prepare cable ends, terminate at consumer unit, terminate at accessories/devices, torque settings)
-  * Final Step(s): Testing & Commissioning
-- DO NOT put cable pulling/installation after terminations - ALL cable installation MUST happen in Step 2 (First Fix)
+- MANDATORY: FOLLOW ${installationType.toUpperCase()} INSTALLATION WORKFLOW:
+${isDomestic ? `
+  * Step 1: Preparation & Planning (isolation procedure, gather tools/materials, route marking, safety checks)
+  * Step 2: FIRST FIX - Containment & Cable Routing (install backboxes, drill cable routes through joists/walls, pull T+E cables, clip at 300mm centres, leave cable tails UNSTRIPPED with labels attached)
+  * Step 3: SECOND FIX PREPARATION - Cable Prep (measure final lengths at both ends, cut cables to length allowing termination tails, strip outer sheath 50mm, strip insulation 8-10mm for terminals)
+  * Step 4: SECOND FIX - Consumer Unit Terminations (terminate CPCs to earth bar, neutrals to neutral bar, lines to MCBs/RCBOs with correct torque)
+  * Step 5: SECOND FIX - Accessory Terminations (connect sockets, switches, light fittings with correct torque settings)
+  * Final Step(s): Testing & Commissioning (continuity, insulation resistance, polarity, Zs, RCD tests)
+` : ''}${isCommercial ? `
+  * Step 1: Site Setup & Planning (isolation, RAMS review, tool/material staging, containment route marking)
+  * Step 2: CONTAINMENT INSTALLATION (install cable tray/trunking/dado trunking, fire barriers at penetrations, support brackets at max 1.5m centres)
+  * Step 3: FIRST FIX - Cable Installation (draw SWA/FP cables through containment, install glands where required, secure with cleats, label at 3m intervals, leave tails unstripped)
+  * Step 4: DISTRIBUTION BOARD PREPARATION (mount boards, install busbars, earth bars, gland plates, verify earthing)
+  * Step 5: CABLE PREP & TERMINATIONS - Supply Side (strip cables, terminate at distribution boards, apply gland shrouds, torque to manufacturer specs)
+  * Step 6: CABLE TERMINATIONS - Load Side (terminate at final circuits, switches, FCUs, equipment isolators)
+  * Step 7: SPECIALIST SYSTEMS (fire alarm interconnections, emergency lighting, BMS integration if applicable)
+  * Final Step(s): Testing & Commissioning (full EICR tests, emergency lighting duration test, handover documentation)
+` : ''}${isIndustrial ? `
+  * Step 1: Site Setup & Permit System (isolation permit, LOTO procedure, RAMS/method statement review, PPE check, tool inspection)
+  * Step 2: CONTAINMENT & SUPPORT SYSTEMS (install cable ladder/heavy-duty tray, unistrut supports, fire barriers, earthing to metallic containment)
+  * Step 3: CABLE PULLING - Main Feeders (install SWA/XLPE using cable rollers, maintain bend radius min 12×D, use pulling eyes, apply cable lubricant, leave tails unstripped)
+  * Step 4: CABLE PULLING - Sub-mains & Finals (draw cables through conduit/tray, install transit seals, apply identification sleeves at both ends)
+  * Step 5: SWITCHGEAR PREPARATION (verify panel earthing, install cable glands, prepare termination points, check busbar torques)
+  * Step 6: TERMINATIONS - MCC/Switchgear (strip cables, terminate using appropriate lugs, apply heat shrink, torque to manufacturer spec, photograph terminations)
+  * Step 7: TERMINATIONS - Field Devices (motors, isolators, control gear, junction boxes with correct gland sizes)
+  * Step 8: CONTROL WIRING (install multicore control cables, terminate at marshalling panels, ring out all cores, comprehensive labelling)
+  * Final Step(s): Testing & Pre-Commissioning (megger tests, protection relay settings verification, FAT documentation, handover)
+` : ''}
+- DO NOT repeat cable stripping/preparation in multiple steps - cable prep must appear in ONE step only
+- Each step must perform DISTINCT actions with no overlap between steps
+- ALL cable installation/routing MUST be completed BEFORE any termination work begins
 
 **Tools Required (MINIMUM 8 tools across categories):**
 - **Safe Isolation (minimum 3):** Voltage indicator (GS38 compliant), proving unit, lock-off devices
