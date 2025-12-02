@@ -253,7 +253,13 @@ Writing style:
 - Use paragraphs for explanations, bullets only for distinct steps or lists
 - Start with the main point, then explain details
 - Cite regulation numbers naturally: "According to Reg. 411.3.3, all circuits..."
-- Keep responses between 150-300 words unless more detail is needed
+- Provide comprehensive, thorough responses with full explanations
+  - For simple, straightforward questions: 200-400 words with key points
+  - For complex topics, calculations, or regulations: 600-1200 words covering all relevant aspects
+  - For multi-part questions: detailed responses addressing each component thoroughly
+- When explaining regulations, include practical implications and real-world application examples
+- For calculations or sizing questions, show complete methodology with worked examples
+- Include relevant related regulations that electricians should be aware of
 - Use British English
 - Be precise and safety-focused, but friendly and approachable
 
@@ -318,7 +324,7 @@ ${regulationsContext}`;
         model: 'gpt-5-mini-2025-08-07',
         messages: openAiMessages,
         stream: true,
-        max_completion_tokens: 2000
+        max_completion_tokens: 6000
       }),
     });
 

@@ -90,6 +90,11 @@ export default function ConversationalSearch() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
+  
+  // Token batching for smooth streaming
+  const tokenBufferRef = useRef('');
+  const lastUpdateRef = useRef(Date.now());
+  const rafIdRef = useRef<number | null>(null);
 
   // Rotate placeholder text
   useEffect(() => {
@@ -169,9 +174,42 @@ export default function ConversationalSearch() {
       let buffer = '';
       let assistantContent = '';
 
+      // Batched update function
+      const flushTokenBuffer = () => {
+        if (tokenBufferRef.current) {
+          assistantContent += tokenBufferRef.current;
+          tokenBufferRef.current = '';
+          lastUpdateRef.current = Date.now();
+          
+          setMessages(prev => {
+            const newMessages = [...prev];
+            const lastMessage = newMessages[newMessages.length - 1];
+            
+            if (lastMessage?.role === 'assistant') {
+              newMessages[newMessages.length - 1] = {
+                role: 'assistant',
+                content: assistantContent,
+                timestamp: lastMessage.timestamp
+              };
+            } else {
+              newMessages.push({
+                role: 'assistant',
+                content: assistantContent,
+                timestamp: new Date()
+              });
+            }
+            
+            return newMessages;
+          });
+        }
+      };
+
       while (true) {
         const { done, value } = await reader.read();
         if (done) {
+          // Flush any remaining tokens
+          flushTokenBuffer();
+          
           // Extract follow-up questions from final content
           const followUpMatch = assistantContent.match(/---FOLLOWUP---([\s\S]*?)---END_FOLLOWUP---/);
           if (followUpMatch) {
@@ -213,34 +251,29 @@ export default function ConversationalSearch() {
               const token = parsed.choices?.[0]?.delta?.content;
               
               if (token) {
-                assistantContent += token;
+                // Accumulate tokens in buffer
+                tokenBufferRef.current += token;
                 
-                setMessages(prev => {
-                  const newMessages = [...prev];
-                  const lastMessage = newMessages[newMessages.length - 1];
-                  
-                  if (lastMessage?.role === 'assistant') {
-                    newMessages[newMessages.length - 1] = {
-                      role: 'assistant',
-                      content: assistantContent,
-                      timestamp: lastMessage.timestamp
-                    };
-                  } else {
-                    newMessages.push({
-                      role: 'assistant',
-                      content: assistantContent,
-                      timestamp: new Date()
-                    });
-                  }
-                  
-                  return newMessages;
-                });
+                // Batch updates using requestAnimationFrame (every ~50-80ms)
+                const now = Date.now();
+                if (!rafIdRef.current && now - lastUpdateRef.current >= 50) {
+                  rafIdRef.current = requestAnimationFrame(() => {
+                    flushTokenBuffer();
+                    rafIdRef.current = null;
+                  });
+                }
               }
             } catch (e) {
               // Ignore JSON parse errors
             }
           }
         }
+      }
+      
+      // Cleanup any pending RAF
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
       }
 
     } catch (error: any) {
@@ -368,7 +401,7 @@ export default function ConversationalSearch() {
                   </div>
                 ) : (
                   <div className="flex justify-start">
-                    <div className="max-w-[90%] space-y-3">
+                    <div className="max-w-[90%] space-y-3 transition-all duration-150 ease-out">
                       <InspectorMessage
                         message={{
                           role: 'assistant',
