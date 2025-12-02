@@ -170,13 +170,44 @@ export class MinimalSafetyChecks {
       return true;
     }
     
+    // PRIORITY 0: HIGH-POWER LOADS (>32A/7.36kW) ARE NEVER RING CIRCUITS
+    // Ring circuits have 32A max protection - anything above MUST be radial
+    const loadPower = circuit.loadPower || 0;
+    const Ib = circuit.calculations?.Ib || (loadPower / 230);
+    if (loadPower > 7360 || Ib > 32) {
+      this.logger.info('High-power load - NOT a ring circuit', {
+        circuit: circuit.name,
+        loadPower,
+        Ib: Ib.toFixed(1),
+        reason: 'Exceeds 32A ring circuit design limit'
+      });
+      return false;
+    }
+    
+    // PRIORITY 0.5: DEDICATED INDUSTRIAL EQUIPMENT - NEVER RING
+    const name = circuit.name?.toLowerCase() || '';
+    const loadType = circuit.loadType?.toLowerCase() || '';
+    const industrialKeywords = [
+      'welding', 'welder', 'weld', 'motor', 'machine', 'machinery',
+      'compressor', 'pump', 'fan', 'hvac', 'chiller', 'conveyor',
+      'lathe', 'drill', 'press', 'oven', 'kiln', 'furnace',
+      'charger', 'ev', 'steam', 'generator', 'autoclave'
+    ];
+    
+    if (industrialKeywords.some(kw => name.includes(kw) || loadType.includes(kw))) {
+      this.logger.info('Industrial equipment detected - NOT a ring circuit', {
+        circuit: circuit.name,
+        reason: 'Dedicated industrial equipment must be radial'
+      });
+      return false;
+    }
+    
     // Priority 2: Check justifications for ring markers
     const hasRingJustification = circuit.justifications?.cableSize?.toLowerCase().includes('ring') ||
                                   circuit.justifications?.protection?.toLowerCase().includes('ring');
     
-    // Priority 3: Check circuit name/load type
-    const byKeyword = circuit.name?.toLowerCase().includes('ring') ||
-                      circuit.loadType?.toLowerCase().includes('ring');
+    // Priority 3: Check circuit name/load type for explicit "ring" keyword
+    const byKeyword = name.includes('ring') || loadType.includes('ring');
     
     return hasRingJustification || byKeyword;
   }

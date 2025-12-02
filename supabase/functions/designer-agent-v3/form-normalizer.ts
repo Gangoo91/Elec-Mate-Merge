@@ -154,8 +154,22 @@ export class FormNormalizer {
     // COMMERCIAL/INDUSTRIAL: Radials preferred for dedicated circuits
     // Only suggest rings for general-purpose socket outlets with high loads
     if (['commercial', 'industrial'].includes(this.installationType.toLowerCase())) {
-      // Dedicated equipment (EPOS, ATM, server, etc.) = RADIAL
-      const dedicatedIndicators = ['epos', 'till', 'pos', 'atm', 'server', 'printer', 'dedicated', 'specific', 'workstation'];
+      // HIGH-POWER DEDICATED LOADS (>7.36kW / 32A) = ALWAYS RADIAL
+      // These loads exceed ring circuit design current regardless of name
+      if (circuit.loadPower > 7360) {
+        console.log(`High-power load detected: ${circuit.name} (${circuit.loadPower}W) - MUST be RADIAL (exceeds 32A ring limit)`);
+        return false;
+      }
+      
+      // Dedicated equipment (EPOS, ATM, server, etc.) + INDUSTRIAL EQUIPMENT = RADIAL
+      const dedicatedIndicators = [
+        'epos', 'till', 'pos', 'atm', 'server', 'printer', 'dedicated', 'specific', 'workstation',
+        // Industrial equipment - NEVER ring circuits
+        'welding', 'welder', 'weld', 'motor', 'machine', 'machinery', 'compressor', 
+        'pump', 'fan', 'hvac', 'chiller', 'conveyor', 'lathe', 'drill', 'press',
+        'oven', 'kiln', 'furnace', 'charger', 'ev charger', 'vehicle charger',
+        'steam', 'generator', 'autoclave', 'steriliser', 'sterilizer'
+      ];
       if (dedicatedIndicators.some(ind => nameLower.includes(ind) || loadTypeLower.includes(ind))) {
         console.log(`Detected dedicated commercial circuit: ${circuit.name} - using RADIAL`);
         return false;

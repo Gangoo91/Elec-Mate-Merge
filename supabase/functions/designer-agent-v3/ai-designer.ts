@@ -439,6 +439,17 @@ export class AIDesigner {
     parts.push('  • WRONG: 10kW machine (43A) with 160A fuse - DANGEROUS!');
     parts.push('  • RIGHT: 10kW machine (43A) with 50A BS88 gM fuse - safe');
     parts.push('');
+    parts.push('🔴 CRITICAL: DEDICATED EQUIPMENT = NEVER RING CIRCUITS');
+    parts.push('  • Welding equipment → RADIAL (sized to load, typically 40-80A)');
+    parts.push('  • Motors/machines → RADIAL with BS88/Type D (motor protection)');
+    parts.push('  • EV chargers → RADIAL (7.4kW-22kW dedicated supply)');
+    parts.push('  • Steam generators → RADIAL (high-power single load)');
+    parts.push('  • Any load >7.36kW (32A) → RADIAL (exceeds ring limit)');
+    parts.push('  • Any single-point high-power load → RADIAL');
+    parts.push('');
+    parts.push('⚠️ Ring circuits are ONLY for general-purpose socket outlets');
+    parts.push('   with multiple unknown loads distributed across the ring.');
+    parts.push('');
     parts.push('🔴 RED-SPOT BOARDS (Industrial Standard):');
     parts.push('  • Distribution boards with BS88 HRC fuses');
     parts.push('  • Breaking capacity: 80kA minimum');
