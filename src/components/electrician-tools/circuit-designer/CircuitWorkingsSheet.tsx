@@ -89,7 +89,7 @@ export const CircuitWorkingsSheet = ({ circuit, design, isOpen, onClose }: Circu
                   </div>
                   <div className="p-2 bg-elec-yellow/20 rounded">
                     <div className="text-xs text-elec-light/60">In</div>
-                    <div className="text-sm font-bold text-elec-yellow">{circuit.protectionDevice.rating}A</div>
+                    <div className="text-sm font-bold text-elec-yellow">{calculations?.In || circuit.protectionDevice?.rating || '—'}A</div>
                   </div>
                   <div className="p-2 bg-elec-dark/80 rounded">
                     <div className="text-xs text-elec-light/60">Iz</div>
@@ -227,7 +227,7 @@ export const CircuitWorkingsSheet = ({ circuit, design, isOpen, onClose }: Circu
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-white/90">Maximum Zs ({circuit.protectionDevice.rating}A Type {circuit.protectionDevice.curve})</span>
+                    <span className="text-sm text-white/90">Maximum Zs ({calculations?.In || circuit.protectionDevice?.rating || '—'}A Type {circuit.protectionDevice?.curve || '—'})</span>
                     <div className="flex items-center gap-2">
                       <span className="text-sm text-white/90">
                         {fmt(calculations?.maxZs, 2)}Ω
