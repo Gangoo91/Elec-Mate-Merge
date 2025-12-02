@@ -18,8 +18,8 @@ const AIAnalysisHeader = ({
   recommendedQuote
 }: AIAnalysisHeaderProps) => {
   const getComplexityColor = (rating: number) => {
-    if (rating <= 2) return "bg-green-500/20 text-green-500 border-green-500/30";
-    if (rating <= 3) return "bg-yellow-500/20 text-yellow-500 border-yellow-500/30";
+    if (rating <= 4) return "bg-green-500/20 text-green-500 border-green-500/30";
+    if (rating <= 6) return "bg-yellow-500/20 text-yellow-500 border-yellow-500/30";
     return "bg-red-500/20 text-red-500 border-red-500/30";
   };
 
@@ -88,7 +88,7 @@ const AIAnalysisHeader = ({
               </div>
               <div className="flex items-center gap-2">
                 <span className={`text-lg font-bold px-2 py-0.5 rounded border ${getComplexityColor(complexity.rating)}`}>
-                  {complexity.rating}/5
+                  {complexity.rating}/10
                 </span>
                 <span className="text-base sm:text-sm font-medium text-white">{complexity.label}</span>
               </div>
