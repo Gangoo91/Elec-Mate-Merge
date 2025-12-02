@@ -91,10 +91,10 @@ export default function ConversationalSearch() {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
   
-  // Token batching for smooth streaming
+  // Token batching for smooth streaming with setInterval
   const tokenBufferRef = useRef('');
-  const lastUpdateRef = useRef(Date.now());
-  const rafIdRef = useRef<number | null>(null);
+  const assistantContentRef = useRef('');
+  const updateIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Rotate placeholder text
   useEffect(() => {
@@ -172,14 +172,14 @@ export default function ConversationalSearch() {
 
       const decoder = new TextDecoder();
       let buffer = '';
-      let assistantContent = '';
+      assistantContentRef.current = '';
+      tokenBufferRef.current = '';
 
-      // Batched update function
-      const flushTokenBuffer = () => {
+      // Start interval for batched updates (10 updates per second)
+      updateIntervalRef.current = setInterval(() => {
         if (tokenBufferRef.current) {
-          assistantContent += tokenBufferRef.current;
+          assistantContentRef.current += tokenBufferRef.current;
           tokenBufferRef.current = '';
-          lastUpdateRef.current = Date.now();
           
           setMessages(prev => {
             const newMessages = [...prev];
@@ -188,13 +188,13 @@ export default function ConversationalSearch() {
             if (lastMessage?.role === 'assistant') {
               newMessages[newMessages.length - 1] = {
                 role: 'assistant',
-                content: assistantContent,
+                content: assistantContentRef.current,
                 timestamp: lastMessage.timestamp
               };
             } else {
               newMessages.push({
                 role: 'assistant',
-                content: assistantContent,
+                content: assistantContentRef.current,
                 timestamp: new Date()
               });
             }
@@ -202,16 +202,25 @@ export default function ConversationalSearch() {
             return newMessages;
           });
         }
-      };
+      }, 100); // Update every 100ms = 10 updates per second
 
       while (true) {
         const { done, value } = await reader.read();
         if (done) {
-          // Flush any remaining tokens
-          flushTokenBuffer();
+          // Stop interval and flush any remaining tokens
+          if (updateIntervalRef.current) {
+            clearInterval(updateIntervalRef.current);
+            updateIntervalRef.current = null;
+          }
+          
+          // Final flush
+          if (tokenBufferRef.current) {
+            assistantContentRef.current += tokenBufferRef.current;
+            tokenBufferRef.current = '';
+          }
           
           // Extract follow-up questions from final content
-          const followUpMatch = assistantContent.match(/---FOLLOWUP---([\s\S]*?)---END_FOLLOWUP---/);
+          const followUpMatch = assistantContentRef.current.match(/---FOLLOWUP---([\s\S]*?)---END_FOLLOWUP---/);
           if (followUpMatch) {
             const questions = followUpMatch[1]
               .trim()
@@ -220,15 +229,15 @@ export default function ConversationalSearch() {
               .filter(q => q.length > 0 && q.endsWith('?'));
             
             // Remove follow-up section from displayed content
-            assistantContent = assistantContent.replace(/---FOLLOWUP---[\s\S]*?---END_FOLLOWUP---/g, '').trim();
+            assistantContentRef.current = assistantContentRef.current.replace(/---FOLLOWUP---[\s\S]*?---END_FOLLOWUP---/g, '').trim();
             
-            // Update last message with follow-ups
+            // Update last message with follow-ups and cleaned content
             setMessages(prev => {
               const newMessages = [...prev];
               const lastMessage = newMessages[newMessages.length - 1];
               if (lastMessage?.role === 'assistant') {
                 lastMessage.followUpQuestions = questions;
-                lastMessage.content = assistantContent;
+                lastMessage.content = assistantContentRef.current;
               }
               return newMessages;
             });
@@ -251,17 +260,8 @@ export default function ConversationalSearch() {
               const token = parsed.choices?.[0]?.delta?.content;
               
               if (token) {
-                // Accumulate tokens in buffer
+                // Simply accumulate tokens - interval will handle updates
                 tokenBufferRef.current += token;
-                
-                // Batch updates using requestAnimationFrame (every ~50-80ms)
-                const now = Date.now();
-                if (!rafIdRef.current && now - lastUpdateRef.current >= 50) {
-                  rafIdRef.current = requestAnimationFrame(() => {
-                    flushTokenBuffer();
-                    rafIdRef.current = null;
-                  });
-                }
               }
             } catch (e) {
               // Ignore JSON parse errors
@@ -270,10 +270,10 @@ export default function ConversationalSearch() {
         }
       }
       
-      // Cleanup any pending RAF
-      if (rafIdRef.current) {
-        cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = null;
+      // Cleanup interval
+      if (updateIntervalRef.current) {
+        clearInterval(updateIntervalRef.current);
+        updateIntervalRef.current = null;
       }
 
     } catch (error: any) {
@@ -289,6 +289,11 @@ export default function ConversationalSearch() {
       
       setMessages(prev => prev.slice(0, -1));
     } finally {
+      // Cleanup interval if still running
+      if (updateIntervalRef.current) {
+        clearInterval(updateIntervalRef.current);
+        updateIntervalRef.current = null;
+      }
       setIsStreaming(false);
       setIsSearching(false);
       abortControllerRef.current = null;
@@ -382,13 +387,12 @@ export default function ConversationalSearch() {
       {/* Active State - Messages Container (only show if messages exist) */}
       {messages.length > 0 && (
         <div className="flex-1 px-4 md:px-6 py-4 space-y-4">
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence>
             {messages.map((message, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, x: message.role === 'user' ? 20 : -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.2 }}
               >
                 {message.role === 'user' ? (
@@ -401,7 +405,7 @@ export default function ConversationalSearch() {
                   </div>
                 ) : (
                   <div className="flex justify-start">
-                    <div className="max-w-[90%] space-y-3 transition-all duration-150 ease-out">
+                    <div className="max-w-[90%] space-y-3">
                       <InspectorMessage
                         message={{
                           role: 'assistant',
