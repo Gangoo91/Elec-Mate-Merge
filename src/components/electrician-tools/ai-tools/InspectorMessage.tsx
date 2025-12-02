@@ -42,69 +42,65 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
         )}
         
         <div className="inspector-message prose prose-sm sm:prose-base max-w-none text-white">
-          {isStreaming ? (
-            <div className="whitespace-pre-wrap text-sm sm:text-base leading-relaxed text-white">
-              {message.content}
-              <span className="inline-block w-0.5 h-5 ml-1 bg-elec-yellow animate-[blink_1s_ease-in-out_infinite]" />
-            </div>
-          ) : (
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              components={{
-                h1: ({ children }) => (
-                  <h1 className="text-base sm:text-lg font-bold mt-4 mb-2 first:mt-0 text-white text-left">
-                    {children}
-                  </h1>
-                ),
-                h2: ({ children }) => (
-                  <h2 className="text-base sm:text-lg font-bold mt-6 mb-3 first:mt-0 text-white text-left pb-2 border-b-2 border-elec-yellow/30">
-                    {children}
-                  </h2>
-                ),
-                h3: ({ children }) => (
-                  <h3 className="text-sm sm:text-base font-semibold mt-4 mb-2 first:mt-0 text-elec-yellow text-left">
-                    {children}
-                  </h3>
-                ),
-                p: ({ children }) => (
-                  <p className="text-sm sm:text-base leading-relaxed my-3 text-white text-left">
-                    {children}
-                  </p>
-                ),
-                ul: ({ children }) => (
-                  <ul className="space-y-1.5 my-3 pl-4">
-                    {children}
-                  </ul>
-                ),
-                ol: ({ children }) => (
-                  <ol className="space-y-1.5 my-3 pl-4 list-decimal">
-                    {children}
-                  </ol>
-                ),
-                li: ({ children }) => (
-                  <li className="text-sm sm:text-base leading-relaxed list-disc marker:text-white/60 text-white text-left">
-                    {children}
-                  </li>
-                ),
-                strong: ({ children }) => (
-                  <strong className="font-semibold text-white">
-                    {children}
-                  </strong>
-                ),
-                code: ({ children }) => (
-                  <code className="bg-black/30 px-1.5 py-0.5 rounded text-xs font-mono text-elec-yellow">
-                    {children}
-                  </code>
-                ),
-                blockquote: ({ children }) => (
-                  <blockquote className="border-l-2 border-elec-yellow/50 pl-3 my-2 italic text-white/90">
-                    {children}
-                  </blockquote>
-                ),
-              }}
-            >
-              {message.content}
-            </ReactMarkdown>
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              h1: ({ children }) => (
+                <h1 className="text-base sm:text-lg font-bold mt-4 mb-2 first:mt-0 text-white text-left">
+                  {children}
+                </h1>
+              ),
+              h2: ({ children }) => (
+                <h2 className="text-base sm:text-lg font-bold mt-6 mb-3 first:mt-0 text-white text-left pb-2 border-b-2 border-elec-yellow/30">
+                  {children}
+                </h2>
+              ),
+              h3: ({ children }) => (
+                <h3 className="text-sm sm:text-base font-semibold mt-4 mb-2 first:mt-0 text-elec-yellow text-left">
+                  {children}
+                </h3>
+              ),
+              p: ({ children }) => (
+                <p className="text-sm sm:text-base leading-relaxed my-3 text-white text-left">
+                  {children}
+                </p>
+              ),
+              ul: ({ children }) => (
+                <ul className="space-y-1.5 my-3 pl-4">
+                  {children}
+                </ul>
+              ),
+              ol: ({ children }) => (
+                <ol className="space-y-1.5 my-3 pl-4 list-decimal">
+                  {children}
+                </ol>
+              ),
+              li: ({ children }) => (
+                <li className="text-sm sm:text-base leading-relaxed list-disc marker:text-white/60 text-white text-left">
+                  {children}
+                </li>
+              ),
+              strong: ({ children }) => (
+                <strong className="font-semibold text-white">
+                  {children}
+                </strong>
+              ),
+              code: ({ children }) => (
+                <code className="bg-black/30 px-1.5 py-0.5 rounded text-xs font-mono text-elec-yellow">
+                  {children}
+                </code>
+              ),
+              blockquote: ({ children }) => (
+                <blockquote className="border-l-2 border-elec-yellow/50 pl-3 my-2 italic text-white/90">
+                  {children}
+                </blockquote>
+              ),
+            }}
+          >
+            {message.content}
+          </ReactMarkdown>
+          {isStreaming && (
+            <span className="inline-block w-0.5 h-5 ml-1 bg-elec-yellow animate-[blink_1s_ease-in-out_infinite]" />
           )}
         </div>
 
