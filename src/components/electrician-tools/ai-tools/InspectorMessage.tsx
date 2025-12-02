@@ -27,11 +27,11 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
 
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
-      <div className={`max-w-[95%] sm:max-w-[85%] rounded-2xl px-4 sm:px-5 py-3 sm:py-4 shadow-sm ${
+      <div className={`max-w-[95%] sm:max-w-[85%] rounded-2xl px-4 sm:px-5 py-3 sm:py-4 shadow-sm transition-[height] duration-150 ease-out will-change-contents ${
         isUser
           ? 'bg-primary text-primary-foreground'
           : 'bg-muted text-white'
-      }`}>
+      }`} style={{ minHeight: '60px' }}>
         {message.agentName && (
           <div className="flex items-center gap-2 mb-3 pb-2 border-b border-white/10">
             <span className="text-lg">{message.agentName === 'inspector' ? '🔍' : message.agentName === 'designer' ? '📐' : '🔧'}</span>
@@ -101,7 +101,7 @@ export const InspectorMessage = ({ message, isStreaming }: InspectorMessageProps
           </ReactMarkdown>
           
           {isStreaming && (
-            <span className="inline-block w-2 h-4 ml-1 bg-elec-yellow animate-pulse" />
+            <span className="inline-block w-0.5 h-5 ml-1 bg-elec-yellow animate-[blink_1s_ease-in-out_infinite]" />
           )}
         </div>
 
