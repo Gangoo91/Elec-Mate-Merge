@@ -284,7 +284,23 @@ export const MAX_ZS_BS88_GG_04S: MaxZsData[] = [
 ];
 
 /**
- * BS 7671 Table 41.4 - Maximum Zs for BS 88-2 gG Fuses (HRC "Red-Spot")
+ * BS 7671 Table 41.4 - Maximum Zs for BS 88-3 Fuse System C
+ * Compact industrial fuses for 5s disconnection at 230V (Uo)
+ * Used for motor and fixed equipment protection
+ */
+export const MAX_ZS_BS88_3_5S: MaxZsData[] = [
+  { deviceType: 'BS88', deviceRating: 5, maxZs: 14.6, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 16, maxZs: 3.9, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 20, maxZs: 3.2, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 32, maxZs: 1.6, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 45, maxZs: 1.0, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 63, maxZs: 0.68, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 80, maxZs: 0.51, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+  { deviceType: 'BS88', deviceRating: 100, maxZs: 0.38, disconnectionTime: 5, voltage: 230, regulation: 'Table 41.4' },
+];
+
+/**
+ * BS 7671 Table 41.4 - Maximum Zs for BS 88-2 gG/gM Fuses (HRC "Red-Spot")
  * For 5s disconnection time at 230V (Uo) - Motors/Fixed Equipment
  * Using Cmin = 0.95 per BS 7671:2018+A2:2022
  */
