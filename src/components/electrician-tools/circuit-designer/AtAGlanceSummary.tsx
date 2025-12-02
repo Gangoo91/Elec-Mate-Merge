@@ -66,9 +66,12 @@ export const AtAGlanceSummary = ({ summary, circuit }: AtAGlanceSummaryProps) =>
     ? `${circuit.cableSize}mm² / ${circuit.cpcSize}mm² CPC, ${parseCableType(circuit.cableType)}`
     : (summary?.cable || 'Not specified');
   
-  const safeProtectiveDevice = circuit
-    ? `${circuit.protectionDevice.rating}A Type ${circuit.protectionDevice.curve} ${circuit.protectionDevice.type}${circuit.rcdProtected ? ` + ${circuit.protectionDevice.rcdRating || 30}mA RCD` : ''}`
-    : (summary?.protectiveDevice || 'Not specified');
+  // PRIORITY: Use summary.protectiveDevice from AI justification (single source of truth)
+  const safeProtectiveDevice = summary?.protectiveDevice 
+    ? summary.protectiveDevice
+    : circuit
+      ? `${circuit.protectionDevice.rating}A Type ${circuit.protectionDevice.curve} ${circuit.protectionDevice.type}${circuit.rcdProtected ? ` + ${circuit.protectionDevice.rcdRating || 30}mA RCD` : ''}`
+      : 'Not specified';
   
   const safeVoltageDrop = circuit
     ? `${circuit.calculations.voltageDrop.percent.toFixed(2)}% ${circuit.calculations.voltageDrop.compliant ? '✓' : '✗'} (Limit: ${circuit.calculations.voltageDrop.limit}%)`
