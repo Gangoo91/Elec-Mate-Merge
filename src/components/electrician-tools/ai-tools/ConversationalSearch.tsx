@@ -175,7 +175,7 @@ export default function ConversationalSearch() {
       assistantContentRef.current = '';
       tokenBufferRef.current = '';
 
-      // Start interval for batched updates (10 updates per second)
+      // Start interval for batched updates (~7 updates per second)
       updateIntervalRef.current = setInterval(() => {
         if (tokenBufferRef.current) {
           assistantContentRef.current += tokenBufferRef.current;
@@ -202,7 +202,7 @@ export default function ConversationalSearch() {
             return newMessages;
           });
         }
-      }, 100); // Update every 100ms = 10 updates per second
+      }, 150); // Update every 150ms = ~7 updates per second
 
       while (true) {
         const { done, value } = await reader.read();
