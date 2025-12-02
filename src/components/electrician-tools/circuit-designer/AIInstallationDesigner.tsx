@@ -227,7 +227,7 @@ export const AIInstallationDesigner = () => {
             ze: inputs.ze || 0.35,
             earthingSystem: inputs.earthingSystem || 'TN-C-S',
             consumerUnitType: 'split-load',
-            mainSwitchRating: 100
+            mainSwitchRating: inputs.mainSwitchRating || 100
           },
           circuits: inputs.circuits || [],
           additionalPrompt: inputs.additionalPrompt || '',
