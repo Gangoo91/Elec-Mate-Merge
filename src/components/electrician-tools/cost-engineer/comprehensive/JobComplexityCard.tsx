@@ -8,8 +8,8 @@ interface JobComplexityCardProps {
 
 const JobComplexityCard = ({ complexity }: JobComplexityCardProps) => {
   const getComplexityColor = (rating: number) => {
-    if (rating <= 2) return "text-green-500";
-    if (rating <= 3) return "text-yellow-500";
+    if (rating <= 4) return "text-green-500";
+    if (rating <= 6) return "text-yellow-500";
     return "text-red-500";
   };
 
@@ -22,9 +22,9 @@ const JobComplexityCard = ({ complexity }: JobComplexityCardProps) => {
             Job Complexity
           </CardTitle>
           <Badge className={`${
-            complexity.rating <= 2 
+            complexity.rating <= 4 
               ? 'bg-green-500/20 text-green-500 border-green-500/30' 
-              : complexity.rating <= 3 
+              : complexity.rating <= 6 
               ? 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30' 
               : 'bg-red-500/20 text-red-500 border-red-500/30'
           }`}>
@@ -36,13 +36,13 @@ const JobComplexityCard = ({ complexity }: JobComplexityCardProps) => {
         {/* Rating */}
         <div className="flex items-center gap-3">
           <div className={`text-5xl sm:text-4xl font-bold ${getComplexityColor(complexity.rating)}`}>
-            {complexity.rating}/5
+            {complexity.rating}/10
           </div>
-          <div className="flex gap-1">
-            {[1, 2, 3, 4, 5].map((star) => (
+          <div className="flex gap-0.5 flex-wrap max-w-[140px]">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((star) => (
               <Star
                 key={star}
-                className={`h-5 w-5 ${
+                className={`h-4 w-4 ${
                   star <= complexity.rating 
                     ? `fill-current ${getComplexityColor(complexity.rating)}` 
                     : 'text-white/30'

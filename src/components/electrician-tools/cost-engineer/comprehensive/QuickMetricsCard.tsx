@@ -13,8 +13,8 @@ const QuickMetricsCard = ({
   riskAssessment
 }: QuickMetricsCardProps) => {
   const getComplexityColor = (rating: number) => {
-    if (rating <= 2) return "bg-green-500/20 text-green-400 border-green-500/30";
-    if (rating <= 3) return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
+    if (rating <= 4) return "bg-green-500/20 text-green-400 border-green-500/30";
+    if (rating <= 6) return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
     return "bg-red-500/20 text-red-400 border-red-500/30";
   };
 
@@ -51,7 +51,7 @@ const QuickMetricsCard = ({
               </div>
               <div className="flex flex-col items-center gap-2">
                 <span className={`text-3xl sm:text-2xl font-bold px-3 py-1 rounded-lg border-2 ${getComplexityColor(complexity.rating)}`}>
-                  {complexity.rating}/5
+                  {complexity.rating}/10
                 </span>
                 <span className="text-lg sm:text-base font-medium text-white mt-1">{complexity.label}</span>
               </div>
