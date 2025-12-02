@@ -112,13 +112,15 @@ export default function ConversationalSearch() {
     return () => clearInterval(interval);
   }, []);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  const scrollToBottom = (instant?: boolean) => {
+    messagesEndRef.current?.scrollIntoView({ behavior: instant ? 'instant' : 'smooth', block: 'end' });
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    if (!isStreaming) {
+      scrollToBottom();
+    }
+  }, [messages, isStreaming]);
 
   const handleSend = async (queryText?: string) => {
     const messageText = queryText || input.trim();
@@ -175,7 +177,7 @@ export default function ConversationalSearch() {
       assistantContentRef.current = '';
       tokenBufferRef.current = '';
 
-      // Start interval for batched updates (~7 updates per second)
+      // Start interval for batched updates (~5 updates per second for smoother streaming)
       updateIntervalRef.current = setInterval(() => {
         if (tokenBufferRef.current) {
           assistantContentRef.current += tokenBufferRef.current;
@@ -201,8 +203,11 @@ export default function ConversationalSearch() {
             
             return newMessages;
           });
+          
+          // Use instant scroll during streaming
+          scrollToBottom(true);
         }
-      }, 150); // Update every 150ms = ~7 updates per second
+      }, 200); // Update every 200ms = 5 updates per second
 
       while (true) {
         const { done, value } = await reader.read();
@@ -388,10 +393,12 @@ export default function ConversationalSearch() {
       {messages.length > 0 && (
         <div className="flex-1 px-4 md:px-6 py-4 space-y-4">
           <AnimatePresence>
-            {messages.map((message, idx) => (
+            {messages.map((message, idx) => {
+              const isCurrentlyStreaming = isStreaming && idx === messages.length - 1;
+              return (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, x: message.role === 'user' ? 20 : -20 }}
+                initial={isCurrentlyStreaming ? false : { opacity: 0, x: message.role === 'user' ? 20 : -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.2 }}
               >
@@ -449,7 +456,7 @@ export default function ConversationalSearch() {
                   </div>
                 )}
               </motion.div>
-            ))}
+            );})}
           </AnimatePresence>
 
           {isSearching && (
@@ -478,10 +485,17 @@ export default function ConversationalSearch() {
 
       {/* Premium Input Area - STICKY AT BOTTOM */}
       <div className="sticky bottom-0 z-20 px-4 md:px-6 pb-4 pt-2 bg-gradient-to-t from-elec-dark via-elec-dark to-transparent backdrop-blur-lg border-t border-border/30">
-        {/* Conversation continuity indicator */}
+        {/* Conversation continuity indicator with inline clear */}
         {messages.length > 0 && (
-          <div className="text-xs text-white/50 mb-2 text-center">
-            💬 Continuing conversation • Ask follow-up questions
+          <div className="flex items-center justify-between text-xs text-white/50 mb-2">
+            <span>💬 Continuing conversation • Ask follow-up questions</span>
+            <button
+              onClick={handleClearConversation}
+              className="text-white/40 hover:text-destructive transition-colors p-1 -mr-1"
+              title="Clear conversation"
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+            </button>
           </div>
         )}
         
@@ -532,20 +546,6 @@ export default function ConversationalSearch() {
           </div>
         </div>
 
-        {/* Clear button - inline below input */}
-        {messages.length > 0 && (
-          <div className="flex justify-end mt-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleClearConversation}
-              className="border-border/50 bg-card/50 backdrop-blur-sm hover:bg-destructive/10 hover:border-destructive/50 hover:text-destructive"
-            >
-              <Trash2 className="w-4 h-4 mr-2" />
-              Clear
-            </Button>
-          </div>
-        )}
       </div>
     </div>
   );
