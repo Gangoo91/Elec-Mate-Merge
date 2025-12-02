@@ -74,7 +74,11 @@ function expandDesignQuery(query: string): string {
 function generateCacheKey(query: string, circuitType?: string): string {
   const normalized = query.toLowerCase().trim();
   const key = circuitType ? `${normalized}:${circuitType}` : normalized;
-  return btoa(key).substring(0, 32);
+  // UTF-8 safe base64 encoding to handle emojis/special characters
+  const encoder = new TextEncoder();
+  const data = encoder.encode(key);
+  const binString = Array.from(data, (byte) => String.fromCodePoint(byte)).join("");
+  return btoa(binString).substring(0, 32);
 }
 
 /**

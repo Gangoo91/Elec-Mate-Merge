@@ -37,7 +37,11 @@ interface CachedQuery {
 function generateCacheKey(query: string, jobType?: string): string {
   const normalized = query.toLowerCase().trim();
   const key = jobType ? `${normalized}:${jobType}` : normalized;
-  return btoa(key).substring(0, 32); // Base64 hash, first 32 chars
+  // UTF-8 safe base64 encoding to handle emojis/special characters
+  const encoder = new TextEncoder();
+  const data = encoder.encode(key);
+  const binString = Array.from(data, (byte) => String.fromCodePoint(byte)).join("");
+  return btoa(binString).substring(0, 32);
 }
 
 /**
