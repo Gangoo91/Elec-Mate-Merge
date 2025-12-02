@@ -34,23 +34,23 @@ export const CircuitPresetSelector = ({ installationType, onSelectPreset }: Circ
         </CollapsibleTrigger>
         
         <CollapsibleContent>
-          <div className="p-2.5 sm:p-4 pt-0 grid gap-3 sm:grid-cols-2">
+          <div className="p-3 sm:p-4 pt-0 grid gap-4 sm:grid-cols-2">
             {templates.map(template => (
-              <Card key={template.id} className="p-2.5 sm:p-4 hover:border-primary/50 transition-colors relative">
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between sm:gap-2">
-                  <div className="flex-1 min-w-0 mb-2 sm:mb-0 sm:pr-12">
-                    <h4 className="font-semibold text-sm text-foreground truncate">{template.name}</h4>
-                    <p className="text-xs text-muted-foreground mt-0.5 hidden sm:block line-clamp-2">{template.description}</p>
+              <Card key={template.id} className="p-4 hover:border-primary/50 transition-all touch-manipulation relative border-l-4 border-l-elec-yellow/40">
+                <div className="flex flex-col gap-3">
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold text-base sm:text-sm text-foreground leading-tight">{template.name}</h4>
+                    <p className="text-xs text-foreground/80 mt-1.5 line-clamp-2">{template.description}</p>
                     
-                    <div className="flex flex-wrap gap-1 mt-1.5">
-                      {template.circuits.slice(0, 2).map((c, i) => (
-                        <Badge key={i} variant="outline" className="text-[10px] sm:text-xs">
+                    <div className="flex flex-wrap gap-1.5 mt-3">
+                      {template.circuits.slice(0, 3).map((c, i) => (
+                        <Badge key={i} variant="outline" className="text-xs font-medium">
                           {c.name}
                         </Badge>
                       ))}
-                      {template.circuits.length > 2 && (
-                        <Badge variant="outline" className="text-[10px] sm:text-xs">
-                          +{template.circuits.length - 2} more
+                      {template.circuits.length > 3 && (
+                        <Badge variant="outline" className="text-xs font-medium">
+                          +{template.circuits.length - 3} more
                         </Badge>
                       )}
                     </div>
@@ -60,11 +60,10 @@ export const CircuitPresetSelector = ({ installationType, onSelectPreset }: Circ
                     size="sm"
                     variant="secondary"
                     onClick={() => onSelectPreset(template)}
-                    className="gap-1 shrink-0 w-full sm:w-auto sm:absolute sm:right-2.5 sm:top-2.5 min-h-[36px] sm:min-h-[32px] sm:min-w-[32px] justify-center"
+                    className="gap-2 shrink-0 w-full min-h-[44px] justify-center font-semibold"
                   >
-                    <Plus className="h-3.5 w-3.5 flex-shrink-0" />
-                    <span className="sm:hidden">Add Template</span>
-                    <span className="hidden sm:inline">Add</span>
+                    <Plus className="h-4 w-4 flex-shrink-0" />
+                    <span>Add Template</span>
                   </Button>
                 </div>
               </Card>
