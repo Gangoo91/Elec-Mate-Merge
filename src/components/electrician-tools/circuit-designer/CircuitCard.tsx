@@ -44,19 +44,19 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
     <Card className={`bg-card border-elec-yellow/30 overflow-hidden shadow-lg shadow-elec-yellow/5 transition-all duration-300 hover:shadow-elec-yellow/10 mx-auto max-w-2xl ${className}`}>
       {/* Header */}
       <div className="bg-gradient-to-br from-elec-yellow/15 via-elec-yellow/10 to-transparent border-b border-elec-yellow/20 p-5 sm:p-6">
-        <div className="flex items-start justify-between mb-2">
-          <div className="flex-1">
+        <div className="flex items-start justify-between gap-3 mb-2">
+          <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-2">
-              <Zap className="h-5 w-5 text-elec-yellow" />
+              <Zap className="h-5 w-5 text-elec-yellow shrink-0" />
               <h3 className="text-lg sm:text-xl font-bold text-elec-light">
                 Way {displayNumber ?? circuit.circuitNumber ?? 'N/A'}
-                {circuit.phases === 'three' && (
-                  <span className="text-sm font-normal text-elec-yellow/80 ml-2">
-                    (L1, L2, L3)
-                  </span>
-                )}
               </h3>
             </div>
+            {circuit.phases === 'three' && (
+              <p className="text-sm font-medium text-elec-yellow/80 mb-1 pl-7">
+                (L1, L2, L3)
+              </p>
+            )}
             <p className="text-base sm:text-lg font-semibold text-elec-light/90">{circuit.name}</p>
             <p className="text-sm text-white/90 mt-1 capitalize">
               {circuit.loadType.replace('-', ' ')}
@@ -68,7 +68,7 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
               status === 'pass' ? 'bg-green-500/20 text-green-400 border-green-500/30 animate-pulse-subtle' :
               status === 'warning' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' :
               'bg-red-500/20 text-red-400 border-red-500/30 animate-pulse-subtle'
-            } h-7 transition-all duration-300`}
+            } h-7 shrink-0 transition-all duration-300`}
           >
             {status === 'pass' && <CheckCircle2 className="h-3 w-3 mr-1" />}
             {status === 'warning' && <AlertTriangle className="h-3 w-3 mr-1" />}
