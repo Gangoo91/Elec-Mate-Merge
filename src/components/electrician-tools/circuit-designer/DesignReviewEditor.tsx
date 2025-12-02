@@ -1039,6 +1039,12 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
   const handleExportPDF = async () => {
     setIsExporting(true);
     
+    // Immediate feedback for mobile users
+    toast.loading('Generating PDF...', {
+      id: 'pdf-export',
+      description: 'Please wait while we prepare your document'
+    });
+    
     try {
       // Get current user
       const { data: { user } } = await supabase.auth.getUser();
@@ -1244,6 +1250,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         await downloadEICPDF(schedule, `${(design.projectName || 'Design').replace(/\s+/g, '_')}_Design.pdf`);
         
         toast.success('Professional PDF generated', {
+          id: 'pdf-export',
           description: 'BS 7671 compliant circuit design PDF ready'
         });
       } else if (data?.downloadUrl) {
@@ -1256,12 +1263,13 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         link.click();
         
         toast.success('Professional PDF Generated', {
+          id: 'pdf-export',
           description: 'Circuit design exported with BS 7671 compliance'
         });
       }
     } catch (error) {
       console.error('[PDF-EXPORT] Error:', error);
-      toast.error('Failed to export PDF');
+      toast.error('Failed to export PDF', { id: 'pdf-export' });
     } finally {
       setIsExporting(false);
     }
@@ -2346,11 +2354,16 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
 
       {/* Actions */}
       <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
-        <Button size="lg" onClick={handleExportPDF} className="w-full sm:flex-1 min-h-[44px] touch-manipulation" disabled={isExporting}>
+        <Button 
+          size="lg" 
+          onClick={handleExportPDF} 
+          className={`w-full sm:flex-1 min-h-[44px] touch-manipulation ${isExporting ? 'animate-pulse' : ''}`} 
+          disabled={isExporting}
+        >
           {isExporting ? (
             <>
-              <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-              Generating PDF...
+              <Loader2 className="h-6 w-6 mr-2 animate-spin" />
+              <span className="animate-pulse">Generating PDF...</span>
             </>
           ) : (
             <>
