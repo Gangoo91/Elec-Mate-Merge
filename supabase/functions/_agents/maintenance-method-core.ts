@@ -192,18 +192,56 @@ export async function generateMaintenanceMethod(
             content: getMaintenanceUserPrompt(query, equipmentDetails, practicalContext, regulationsContext)
           }
         ],
-        max_completion_tokens: 8000,
+        max_completion_tokens: 12000,
         response_format: { type: 'json_object' }
       })
     });
 
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
+      console.error('❌ OpenAI API HTTP error:', aiResponse.status, errorText);
       throw new Error(`OpenAI API error: ${errorText}`);
     }
 
     const aiData = await aiResponse.json();
-    const maintenanceMethod = JSON.parse(aiData.choices[0].message.content);
+
+    // Validate response structure
+    if (!aiData.choices || aiData.choices.length === 0) {
+      console.error('❌ OpenAI returned empty choices array');
+      throw new Error('OpenAI API returned no response');
+    }
+
+    const message = aiData.choices[0].message;
+
+    // Check for refusal (GPT-5 safety feature)
+    if (message.refusal) {
+      console.error('❌ OpenAI refused request:', message.refusal);
+      throw new Error(`OpenAI refused request: ${message.refusal}`);
+    }
+
+    // Check content exists
+    if (!message.content || message.content.trim() === '') {
+      console.error('❌ OpenAI returned empty content');
+      throw new Error('OpenAI API returned empty content');
+    }
+
+    // Log token usage and finish reason for debugging
+    console.log(`📊 Token usage: ${aiData.usage?.total_tokens || 'unknown'} (completion: ${aiData.usage?.completion_tokens || 'unknown'})`);
+    
+    if (aiData.choices[0].finish_reason === 'length') {
+      console.warn('⚠️ Response was truncated due to max_tokens limit');
+    }
+
+    // Safe JSON parse with error context
+    let maintenanceMethod;
+    try {
+      maintenanceMethod = JSON.parse(message.content);
+    } catch (parseError) {
+      console.error('❌ Failed to parse JSON response. Content length:', message.content.length);
+      console.error('❌ Content preview:', message.content.substring(0, 500));
+      console.error('❌ Content tail:', message.content.substring(message.content.length - 200));
+      throw new Error(`Invalid JSON response from OpenAI (length: ${message.content.length})`);
+    }
 
     // Update progress: Finalizing
     await updateProgress(supabase, jobId, 90, 'Finalizing maintenance method');
