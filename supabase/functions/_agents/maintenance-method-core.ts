@@ -209,10 +209,9 @@ export async function generateMaintenanceMethod(
     console.log(`📖 Regulations: ${regulations?.length || 0} relevant standards`);
 
     // Update progress: AI generation starting
-    await updateProgress(supabase, jobId, 40, 'Starting AI generation');
+    await updateProgress(supabase, jobId, 40, 'Generating maintenance instructions (0s elapsed)...');
 
-    // === Background progress simulation during AI generation ===
-    let simulatedProgress = 40;
+    // === Concurrent progress ticker (replaces setInterval which doesn't work during blocking fetch) ===
     const progressMessages = [
       'Analysing equipment maintenance requirements',
       'Generating safety isolation procedures',
@@ -224,16 +223,39 @@ export async function generateMaintenanceMethod(
       'Finalising maintenance intervals'
     ];
     
-    const progressInterval = setInterval(async () => {
-      if (simulatedProgress < 80) {
-        simulatedProgress += 5;
-        const messageIndex = Math.floor((simulatedProgress - 45) / 5);
-        const message = progressMessages[messageIndex] || 'Processing maintenance method';
-        await updateProgress(supabase, jobId, simulatedProgress, message);
-        console.log(`📊 Progress simulation: ${simulatedProgress}% - ${message}`);
+    const progressController = new AbortController();
+    const aiStartTime = Date.now();
+    
+    // Concurrent progress ticker function
+    async function runProgressTicker(): Promise<void> {
+      let progress = 40;
+      let tickCount = 0;
+      
+      while (!progressController.signal.aborted && progress < 80) {
+        await new Promise(resolve => setTimeout(resolve, 10000)); // 10 seconds
+        if (progressController.signal.aborted) break;
+        
+        tickCount++;
+        progress = Math.min(80, 40 + (tickCount * 5));
+        const messageIndex = Math.min(tickCount - 1, progressMessages.length - 1);
+        const elapsedSecs = Math.floor((Date.now() - aiStartTime) / 1000);
+        const elapsedStr = elapsedSecs >= 60 
+          ? `${Math.floor(elapsedSecs / 60)}m ${elapsedSecs % 60}s` 
+          : `${elapsedSecs}s`;
+        const message = `${progressMessages[messageIndex]} (${elapsedStr} elapsed)...`;
+        
+        try {
+          await updateProgress(supabase, jobId, progress, message);
+          console.log(`📊 Progress: ${progress}% - ${message}`);
+        } catch (e) {
+          console.warn('Progress update failed:', e);
+        }
       }
-    }, 12000); // Update every 12 seconds
-    // === End background progress simulation ===
+    }
+    
+    // Start progress ticker as concurrent task (NOT awaited)
+    const progressTickerPromise = runProgressTicker();
+    // === End concurrent progress ticker setup ===
 
     // Prepare context for AI
     const practicalContext = formatForAIContext(ragResult.results);
@@ -255,7 +277,6 @@ export async function generateMaintenanceMethod(
     }, 300000); // 5 minutes
 
     console.log(`🤖 Starting GPT-5 Mini AI generation (24000 max_completion_tokens)...`);
-    const aiStartTime = Date.now();
 
     let aiResponse;
     try {
@@ -284,7 +305,8 @@ export async function generateMaintenanceMethod(
       });
     } finally {
       clearTimeout(timeoutId);
-      clearInterval(progressInterval); // Stop simulated progress
+      progressController.abort(); // Stop the progress ticker
+      await progressTickerPromise.catch(() => {}); // Wait for ticker to stop, ignore abort error
     }
 
     console.log(`⏱️ OpenAI responded in ${Date.now() - aiStartTime}ms`);
