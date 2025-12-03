@@ -7,6 +7,7 @@ import { MaintenanceMethodProcessingView } from './MaintenanceMethodProcessingVi
 import { MaintenanceMethodResults } from './MaintenanceMethodResults';
 import { MaintenanceSuccess } from './MaintenanceSuccess';
 import { useMaintenanceMethodJobPolling } from '@/hooks/useMaintenanceMethodJobPolling';
+import { buildMaintenancePdfPayload } from '@/utils/maintenance-pdf-payload-builder';
 
 type ViewState = 'input' | 'processing' | 'success' | 'results';
 
@@ -143,15 +144,16 @@ export const MaintenanceMethodInterface = () => {
         description: 'Creating your maintenance instructions PDF...'
       });
 
-      const payload = {
-        ...job.method_data,
-        equipmentDetails: {
-          equipmentType: equipmentDetails.equipmentType,
-          location: equipmentDetails.location,
-          installationType: equipmentDetails.installationType
-        },
-        reportDate: new Date().toLocaleDateString('en-GB')
-      };
+      // Build properly structured payload using the builder
+      const payload = buildMaintenancePdfPayload(job.method_data, equipmentDetails);
+      
+      console.log('[Maintenance PDF] Payload structure:', {
+        reportTitle: payload.reportTitle,
+        equipmentType: payload.equipmentDetails.equipmentType,
+        stepsCount: payload.steps.length,
+        hasRecommendations: payload.recommendations.length > 0,
+        hasSummary: !!payload.summary
+      });
 
       const { data, error } = await supabase.functions.invoke('generate-maintenance-method-pdf', {
         body: payload
@@ -160,9 +162,7 @@ export const MaintenanceMethodInterface = () => {
       if (error) throw error;
 
       if (data.downloadUrl) {
-        // Open PDF in new tab
         window.open(data.downloadUrl, '_blank');
-        
         toast({
           title: 'PDF Generated',
           description: 'Your maintenance instructions PDF is ready'
