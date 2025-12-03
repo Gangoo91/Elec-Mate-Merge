@@ -18,8 +18,9 @@ The AI Assistant is a general-purpose conversational agent for electricians. It 
 
 ## AI Model
 
-- **Primary**: GPT-4.1 (`gpt-4.1-2025-04-14`) via OpenAI API
+- **Primary**: GPT-5 Mini (`gpt-5-mini-2025-08-07`) via OpenAI API
 - **Vision**: Supports image analysis for fault diagnosis
+- **Note**: GPT-5 uses `max_completion_tokens` instead of `max_tokens`, and does not support `temperature` parameter
 
 ## RAG Usage
 
