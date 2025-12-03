@@ -276,7 +276,7 @@ export async function generateMaintenanceMethod(
       controller.abort();
     }, 300000); // 5 minutes
 
-    console.log(`🤖 Starting GPT-5 Mini AI generation (24000 max_completion_tokens)...`);
+    console.log(`🤖 Starting GPT-5 Mini AI generation (20000 max_completion_tokens)...`);
 
     let aiResponse;
     try {
@@ -299,7 +299,7 @@ export async function generateMaintenanceMethod(
               content: getMaintenanceUserPrompt(query, equipmentDetails, practicalContext, regulationsContext, installationType)
             }
           ],
-          max_completion_tokens: 24000,
+          max_completion_tokens: 20000,
           response_format: { type: 'json_object' }
         })
       });
@@ -450,15 +450,8 @@ function getMaintenanceSystemPrompt(detailLevel: string, query: string, installa
   const isDomestic = installationType?.toLowerCase().includes('domestic');
   const isIndustrial = installationType?.toLowerCase().includes('industrial');
   
-  let stepRange: string;
-  if (isDomestic) {
-    stepRange = detailLevel === 'quick' ? '8-10' : detailLevel === 'comprehensive' ? '13-15' : '10-12';
-  } else if (isIndustrial) {
-    stepRange = detailLevel === 'quick' ? '13-15' : detailLevel === 'comprehensive' ? '18-20' : '15-17';
-  } else {
-    // Commercial default
-    stepRange = detailLevel === 'quick' ? '11-13' : detailLevel === 'comprehensive' ? '16-18' : '13-15';
-  }
+  // Simplified step counts: domestic 13-15, commercial/industrial 16-20
+  const stepRange = isDomestic ? '13-15' : '16-20';
   
   const focusAreas = isDomestic 
     ? 'consumer unit maintenance, RCD testing, circuit labelling, domestic installation safety'
@@ -475,7 +468,7 @@ QUALIFICATIONS: ${requiredQualifications.slice(0, 3).join(', ')}
 
 CRITICAL REQUIREMENTS:
 - Generate equipment-SPECIFIC maintenance procedures (not generic EICR steps)
-- Each step MUST be 150-200 words minimum with comprehensive detail
+- Each step MUST be 125-175 words with comprehensive detail
 - Include 6-8 actionable sub-points per step
 - Specify exact test values, torque settings, and acceptable ranges
 - Reference specific BS 7671 regulation numbers per step
@@ -512,7 +505,7 @@ ${regulationsContext || 'BS 7671:2018+A3:2024 Chapter 64 - Periodic Inspection &
 
 STEP REQUIREMENTS:
 - Generate ${minSteps}-${maxSteps} detailed maintenance steps
-- Each step MUST contain 150-200 words of practical guidance
+- Each step MUST contain 125-175 words of practical guidance
 - Describe WHAT to check, HOW to check it, and WHAT to look for
 - Include specific acceptance criteria and test values
 - Cover common faults, wear indicators, and failure modes
@@ -534,7 +527,7 @@ OUTPUT JSON (follow structure exactly):
     {
       "stepNumber": 1,
       "title": "Clear, action-oriented step title",
-      "content": "150-200 words: Describe the maintenance activity in detail. Explain WHAT needs to be done, WHY it's important, HOW to perform the task safely, and WHAT to look for. Include specific measurements, acceptable values, and common defects to identify. Reference manufacturer guidance where applicable.",
+      "content": "125-175 words: Describe the maintenance activity in detail. Explain WHAT needs to be done, WHY it's important, HOW to perform the task safely, and WHAT to look for. Include specific measurements, acceptable values, and common defects to identify.",
       "safety": ["Detailed safety precautions - be specific about hazards"],
       "toolsRequired": ["Specific tools with any specifications"],
       "materialsNeeded": ["Consumables and materials required"],
@@ -566,26 +559,16 @@ OUTPUT JSON (follow structure exactly):
   }
 }
 
-Generate ${minSteps}-${maxSteps} complete steps. EVERY step must have 150-200 words in the content field.`;
+Generate ${minSteps}-${maxSteps} complete steps. EVERY step must have 125-175 words in the content field.`;
 }
 
-function getStepCount(detailLevel: string | undefined, installationType: string | undefined): { minSteps: number; maxSteps: number } {
+function getStepCount(_detailLevel: string | undefined, installationType: string | undefined): { minSteps: number; maxSteps: number } {
+  // Simplified: Domestic 13-15 steps, Commercial/Industrial 16-20 steps
   const isDomestic = installationType?.toLowerCase().includes('domestic');
-  const isIndustrial = installationType?.toLowerCase().includes('industrial');
   
   if (isDomestic) {
-    // Domestic: 10-15 steps
-    if (detailLevel === 'quick') return { minSteps: 8, maxSteps: 10 };
-    if (detailLevel === 'comprehensive') return { minSteps: 13, maxSteps: 15 };
-    return { minSteps: 10, maxSteps: 12 }; // normal
-  } else if (isIndustrial) {
-    // Industrial: 15-20 steps
-    if (detailLevel === 'quick') return { minSteps: 13, maxSteps: 15 };
-    if (detailLevel === 'comprehensive') return { minSteps: 18, maxSteps: 20 };
-    return { minSteps: 15, maxSteps: 17 }; // normal
+    return { minSteps: 13, maxSteps: 15 };
   }
-  // Commercial: 13-18 steps
-  if (detailLevel === 'quick') return { minSteps: 11, maxSteps: 13 };
-  if (detailLevel === 'comprehensive') return { minSteps: 16, maxSteps: 18 };
-  return { minSteps: 13, maxSteps: 15 }; // normal
+  // Commercial and Industrial: 16-20 steps
+  return { minSteps: 16, maxSteps: 20 };
 }
