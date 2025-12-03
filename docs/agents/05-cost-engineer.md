@@ -20,6 +20,7 @@ The Cost Engineer generates detailed cost estimates for UK electrical installati
 ## AI Model
 
 - **Primary**: GPT-5 Mini (`gpt-5-mini-2025-08-07`) via OpenAI API
+- **Profitability Helper**: GPT-4o Mini (`gpt-4o-mini`) - used for background profitability calculations
 - **Embedding**: `text-embedding-3-small` for RAG queries
 - **Max Tokens**: 12,000 completion tokens
 - **Timeout**: 5 minutes (300,000ms)

@@ -20,7 +20,7 @@ The Health & Safety Agent generates comprehensive risk assessments for electrica
 
 ## AI Model
 
-- **Primary**: GPT-5 Mini (`gpt-5-mini-2025-08-07`) or GPT-4.1 via OpenAI API
+- **Primary**: GPT-5 Mini (`gpt-5-mini-2025-08-07`) via OpenAI API
 - **Embedding**: `text-embedding-3-small` for RAG queries
 - **Max Tokens**: 30,000 completion tokens
 

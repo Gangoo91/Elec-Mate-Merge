@@ -22,9 +22,8 @@ AI RAMS (Risk Assessment & Method Statement) is a unified generator that produce
 
 ## AI Model
 
-Both agents use their respective models:
-- **Health & Safety**: GPT-5 Mini or GPT-4.1
-- **Installer**: GPT-5 Mini
+- **Primary**: GPT-5 Mini (`gpt-5-mini-2025-08-07`) via OpenAI API
+- **Note**: Both Health & Safety and Installer agents use the same model
 
 ## RAG Usage
 
