@@ -849,14 +849,13 @@ ${isDomestic ? `
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'gpt-4o-mini',
+      model: 'gpt-5-mini-2025-08-07',
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt }
       ],
       response_format: { type: 'json_object' },
-      temperature: 0.3,
-      max_tokens: 4500  // Enhanced from 3000 for 30% more detailed output
+      max_completion_tokens: 4500
     }),
   });
 
