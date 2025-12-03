@@ -192,7 +192,7 @@ export async function generateMaintenanceMethod(
             content: getMaintenanceUserPrompt(query, equipmentDetails, practicalContext, regulationsContext)
           }
         ],
-        max_completion_tokens: 12000,
+        max_completion_tokens: 16000,
         response_format: { type: 'json_object' }
       })
     });
@@ -205,9 +205,35 @@ export async function generateMaintenanceMethod(
 
     const aiData = await aiResponse.json();
 
+    // Debug: Log the raw response with detailed token analysis
+    const usage = aiData.usage;
+    const reasoningTokens = usage?.completion_tokens_details?.reasoning_tokens || 0;
+    const outputTokens = (usage?.completion_tokens || 0) - reasoningTokens;
+    const reasoningPercent = usage?.completion_tokens ? (reasoningTokens / usage.completion_tokens * 100).toFixed(1) : '0';
+
+    console.log('📋 OpenAI Response:', {
+      hasChoices: !!aiData.choices,
+      choicesLength: aiData.choices?.length,
+      finishReason: aiData.choices?.[0]?.finish_reason,
+      hasContent: !!aiData.choices?.[0]?.message?.content,
+      contentLength: aiData.choices?.[0]?.message?.content?.length || 0,
+      usage: {
+        totalTokens: usage?.total_tokens,
+        completionTokens: usage?.completion_tokens,
+        reasoningTokens,
+        outputTokens,
+        reasoningPercent: `${reasoningPercent}%`
+      }
+    });
+
+    // Warn if reasoning tokens are consuming too much
+    if (parseFloat(reasoningPercent) > 80) {
+      console.warn(`⚠️ High reasoning token usage: ${reasoningPercent}% of completion tokens used for reasoning`);
+    }
+
     // Validate response structure
     if (!aiData.choices || aiData.choices.length === 0) {
-      console.error('❌ OpenAI returned empty choices array');
+      console.error('❌ No choices in OpenAI response:', JSON.stringify(aiData).substring(0, 500));
       throw new Error('OpenAI API returned no response');
     }
 
@@ -219,14 +245,23 @@ export async function generateMaintenanceMethod(
       throw new Error(`OpenAI refused request: ${message.refusal}`);
     }
 
-    // Check content exists
+    // Check content exists with detailed diagnostics
     if (!message.content || message.content.trim() === '') {
-      console.error('❌ OpenAI returned empty content');
-      throw new Error('OpenAI API returned empty content');
+      const finishReason = aiData.choices[0].finish_reason;
+      console.error('❌ Empty content from OpenAI. Finish reason:', finishReason);
+      console.error('📊 Full usage:', JSON.stringify(usage));
+      
+      // Special handling for finish_reason: length with empty content (reasoning token exhaustion)
+      if (finishReason === 'length') {
+        console.error(`⚠️ Token limit reached: ${reasoningTokens} reasoning tokens consumed all ${usage?.completion_tokens || 0} completion tokens, leaving ${outputTokens} for output`);
+        throw new Error('Maintenance method generation exhausted token limit during reasoning. The query may be too complex. Try simplifying or breaking into smaller tasks.');
+      }
+      
+      throw new Error(`Empty response from OpenAI (finish_reason: ${finishReason})`);
     }
 
-    // Log token usage and finish reason for debugging
-    console.log(`📊 Token usage: ${aiData.usage?.total_tokens || 'unknown'} (completion: ${aiData.usage?.completion_tokens || 'unknown'})`);
+    // Log successful token usage
+    console.log(`📊 Token usage: ${usage?.total_tokens || 'unknown'} total (reasoning: ${reasoningTokens}, output: ${outputTokens})`);
     
     if (aiData.choices[0].finish_reason === 'length') {
       console.warn('⚠️ Response was truncated due to max_tokens limit');
