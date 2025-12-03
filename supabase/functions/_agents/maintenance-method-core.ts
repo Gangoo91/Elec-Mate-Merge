@@ -208,8 +208,32 @@ export async function generateMaintenanceMethod(
 
     console.log(`📖 Regulations: ${regulations?.length || 0} relevant standards`);
 
-    // Update progress: AI generation
-    await updateProgress(supabase, jobId, 40, 'Generating maintenance instructions with AI');
+    // Update progress: AI generation starting
+    await updateProgress(supabase, jobId, 40, 'Starting AI generation');
+
+    // === Background progress simulation during AI generation ===
+    let simulatedProgress = 40;
+    const progressMessages = [
+      'Analysing equipment maintenance requirements',
+      'Generating safety isolation procedures',
+      'Creating step-by-step maintenance tasks',
+      'Adding equipment-specific checks',
+      'Incorporating regulation requirements',
+      'Building verification procedures',
+      'Compiling tools and materials list',
+      'Finalising maintenance intervals'
+    ];
+    
+    const progressInterval = setInterval(async () => {
+      if (simulatedProgress < 80) {
+        simulatedProgress += 5;
+        const messageIndex = Math.floor((simulatedProgress - 45) / 5);
+        const message = progressMessages[messageIndex] || 'Processing maintenance method';
+        await updateProgress(supabase, jobId, simulatedProgress, message);
+        console.log(`📊 Progress simulation: ${simulatedProgress}% - ${message}`);
+      }
+    }, 12000); // Update every 12 seconds
+    // === End background progress simulation ===
 
     // Prepare context for AI
     const practicalContext = formatForAIContext(ragResult.results);
@@ -260,9 +284,11 @@ export async function generateMaintenanceMethod(
       });
     } finally {
       clearTimeout(timeoutId);
+      clearInterval(progressInterval); // Stop simulated progress
     }
 
     console.log(`⏱️ OpenAI responded in ${Date.now() - aiStartTime}ms`);
+    await updateProgress(supabase, jobId, 85, 'Processing AI response');
 
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
