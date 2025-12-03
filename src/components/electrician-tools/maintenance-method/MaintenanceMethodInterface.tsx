@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { MaintenanceEquipmentDetails } from '@/types/maintenance-method';
@@ -25,6 +25,26 @@ export const MaintenanceMethodInterface = () => {
   const [startTime, setStartTime] = useState<number>(0);
 
   const { job, isPolling, cancelJob } = useMaintenanceMethodJobPolling(currentJobId);
+
+  // Auto-transition to success when job completes
+  useEffect(() => {
+    if (viewState === 'processing' && job?.status === 'completed' && job.method_data) {
+      setViewState('success');
+    }
+  }, [viewState, job?.status, job?.method_data]);
+
+  // Handle job failure
+  useEffect(() => {
+    if (job?.status === 'failed' && viewState !== 'input') {
+      toast({
+        title: 'Generation Failed',
+        description: job.error_message || 'Failed to generate maintenance instructions',
+        variant: 'destructive'
+      });
+      setViewState('input');
+      setCurrentJobId(null);
+    }
+  }, [job?.status, job?.error_message, viewState, toast]);
 
   const handleGenerate = async () => {
     if (!query.trim()) {
@@ -166,11 +186,6 @@ export const MaintenanceMethodInterface = () => {
     setViewState('results');
   };
 
-  // Auto-transition to success when job completes
-  if (viewState === 'processing' && job?.status === 'completed' && job.method_data) {
-    setViewState('success');
-  }
-
   // Show results if completed
   if (viewState === 'results' && job?.status === 'completed' && job.method_data) {
     return (
@@ -208,17 +223,6 @@ export const MaintenanceMethodInterface = () => {
         isCancelling={isCancelling}
       />
     );
-  }
-
-  // Show error if failed
-  if (job?.status === 'failed') {
-    toast({
-      title: 'Generation Failed',
-      description: job.error_message || 'Failed to generate maintenance instructions',
-      variant: 'destructive'
-    });
-    setViewState('input');
-    setCurrentJobId(null);
   }
 
   // Show input form
