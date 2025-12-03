@@ -1,10 +1,12 @@
 /**
  * Maintenance Method Generation Core Agent
- * Generates detailed step-by-step maintenance instructions (15+ steps)
+ * Generates detailed step-by-step maintenance instructions
  * Uses practical_work_intelligence with maintenance focus
+ * Uses ultra-fast regulations_intelligence with GIN keyword search
  */
 
 import { searchPracticalWorkIntelligence, formatForAIContext } from '../_shared/rag-practical-work.ts';
+import { searchRegulationsIntelligence } from '../_shared/intelligence-search.ts';
 
 // UK Electrical Qualifications - Proper Industry Standards
 const UK_ELECTRICAL_QUALIFICATIONS = {
@@ -123,14 +125,58 @@ interface MaintenanceMethodResult {
   error?: string;
 }
 
+/**
+ * Extract keywords for ultra-fast GIN index search on regulations_intelligence
+ */
+function extractMaintenanceKeywords(query: string, equipmentDetails: any): string[] {
+  const baseKeywords = [
+    'maintenance', 'inspection', 'testing', 'periodic',
+    'isolation', 'safety', 'earthing', 'bonding'
+  ];
+  
+  // Equipment-specific keywords
+  const equipmentKeywords: Record<string, string[]> = {
+    distribution: ['distribution', 'board', 'mcb', 'rcbo', 'rcd', 'consumer', 'busbar', 'protective device'],
+    busbar_system: ['busbar', 'rising main', 'tap-off', 'joints', 'torque', 'trunking'],
+    motor_control: ['motor', 'starter', 'vfd', 'inverter', 'contactor', 'overload', 'drive'],
+    emergency_lighting: ['emergency', 'lighting', 'battery', 'duration', 'lux', 'bs5266'],
+    transformer: ['transformer', 'oil', 'winding', 'tap changer', 'insulation', 'hv'],
+    switchgear: ['switchgear', 'circuit breaker', 'isolator', 'busbar', 'arc flash'],
+    standby_power: ['generator', 'ups', 'ats', 'transfer', 'battery', 'fuel', 'standby']
+  };
+  
+  const equipmentType = detectEquipmentCategory(query);
+  const specific = equipmentKeywords[equipmentType] || [];
+  
+  // Add installation type keywords
+  const installationType = equipmentDetails?.installationType?.toLowerCase() || '';
+  if (installationType.includes('domestic')) {
+    baseKeywords.push('domestic', 'dwelling', 'consumer unit', 'part p');
+  } else if (installationType.includes('industrial')) {
+    baseKeywords.push('industrial', 'factory', 'heavy', 'three-phase', 'hv');
+  } else {
+    baseKeywords.push('commercial', 'premises', 'three-phase');
+  }
+  
+  // Extract words from query
+  const queryWords = query.toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter(w => w.length > 3);
+  
+  return [...new Set([...baseKeywords, ...specific, ...queryWords])];
+}
+
 export async function generateMaintenanceMethod(
   params: GenerateMaintenanceMethodParams
 ): Promise<MaintenanceMethodResult> {
   const { supabase, jobId, query, equipmentDetails, detailLevel } = params;
   const startTime = Date.now();
+  const installationType = equipmentDetails?.installationType || 'commercial';
 
   try {
     console.log(`🔧 Starting maintenance method generation for job: ${jobId}`);
+    console.log(`📋 Installation type: ${installationType}, Detail level: ${detailLevel}`);
 
     // Update progress: RAG search
     await updateProgress(supabase, jobId, 10, 'Searching maintenance knowledge base');
@@ -144,18 +190,21 @@ export async function generateMaintenanceMethod(
 
     console.log(`📚 RAG Results: ${ragResult.results.length} records (quality: ${ragResult.qualityScore.toFixed(1)})`);
 
-    // Update progress: Regulation search
-    await updateProgress(supabase, jobId, 25, 'Searching BS 7671 regulations');
+    // Update progress: Ultra-fast regulations intelligence search
+    await updateProgress(supabase, jobId, 25, 'Searching regulations intelligence (keywords)');
 
-    // BS 7671 Regulations - Simplified search for better results
-    const { data: regulations, error: regError } = await supabase.rpc('search_bs7671_intelligence_hybrid', {
-      query_text: query,
-      match_count: 15
+    // Extract keywords for ultra-fast GIN index search
+    const maintenanceKeywords = extractMaintenanceKeywords(query, equipmentDetails);
+    console.log(`🔑 Maintenance keywords: ${maintenanceKeywords.slice(0, 10).join(', ')}...`);
+
+    // Ultra-fast regulations intelligence search (20-50ms vs 500ms-2s)
+    const regSearchStart = Date.now();
+    const regulations = await searchRegulationsIntelligence(supabase, {
+      keywords: maintenanceKeywords,
+      appliesTo: [installationType.toLowerCase()],
+      limit: 20
     });
-
-    if (regError) {
-      console.error('⚠️ BS 7671 search failed:', regError);
-    }
+    console.log(`⚡ Regulations search completed in ${Date.now() - regSearchStart}ms`);
 
     console.log(`📖 Regulations: ${regulations?.length || 0} relevant standards`);
 
@@ -165,7 +214,7 @@ export async function generateMaintenanceMethod(
     // Prepare context for AI
     const practicalContext = formatForAIContext(ragResult.results);
     const regulationsContext = regulations?.map((r: any) => 
-      `**${r.regulation_number}**: ${r.primary_topic}\n${r.content || ''}`
+      `**${r.regulation_number}**: ${r.primary_topic}\n${r.content || ''}\nKeywords: ${(r.keywords || []).slice(0, 5).join(', ')}`
     ).join('\n\n') || '';
 
     // Generate maintenance method with GPT-5 Mini
@@ -198,11 +247,11 @@ export async function generateMaintenanceMethod(
           messages: [
             {
               role: 'system',
-              content: getMaintenanceSystemPrompt(detailLevel, query)
+              content: getMaintenanceSystemPrompt(detailLevel, query, installationType)
             },
             {
               role: 'user',
-              content: getMaintenanceUserPrompt(query, equipmentDetails, practicalContext, regulationsContext)
+              content: getMaintenanceUserPrompt(query, equipmentDetails, practicalContext, regulationsContext, installationType)
             }
           ],
           max_completion_tokens: 16000,
@@ -312,7 +361,8 @@ export async function generateMaintenanceMethod(
         ragResults: ragResult.results.length,
         ragQuality: ragResult.qualityScore,
         regulationCount: regulations?.length || 0,
-        stepCount: maintenanceMethod.steps?.length || 0
+        stepCount: maintenanceMethod.steps?.length || 0,
+        installationType
       }
     };
 
@@ -344,84 +394,122 @@ function detectEquipmentCategory(query: string): string {
   return 'general';
 }
 
-function getMaintenanceSystemPrompt(detailLevel: string, query: string): string {
-  const stepCount = detailLevel === 'quick' ? '10-12' : detailLevel === 'comprehensive' ? '18-20' : '15-17';
+function getMaintenanceSystemPrompt(detailLevel: string, query: string, installationType: string): string {
   const equipmentType = detectEquipmentCategory(query);
   const requiredQualifications = getRequiredQualificationsForEquipment(equipmentType);
   
-  return `You are a UK electrical maintenance engineer. Generate ${stepCount} detailed maintenance steps per BS 7671:2018+A3:2024.
+  // Installation-type aware step counts
+  const isDomestic = installationType?.toLowerCase().includes('domestic');
+  const isIndustrial = installationType?.toLowerCase().includes('industrial');
+  
+  let stepRange: string;
+  if (isDomestic) {
+    stepRange = detailLevel === 'quick' ? '8-10' : detailLevel === 'comprehensive' ? '13-15' : '10-12';
+  } else if (isIndustrial) {
+    stepRange = detailLevel === 'quick' ? '13-15' : detailLevel === 'comprehensive' ? '18-20' : '15-17';
+  } else {
+    // Commercial default
+    stepRange = detailLevel === 'quick' ? '11-13' : detailLevel === 'comprehensive' ? '16-18' : '13-15';
+  }
+  
+  const focusAreas = isDomestic 
+    ? 'consumer unit maintenance, RCD testing, circuit labelling, domestic installation safety'
+    : isIndustrial 
+      ? 'heavy equipment, three-phase systems, high fault levels, arc flash protection, industrial isolation procedures'
+      : 'distribution boards, emergency lighting interfaces, fire alarm circuits, commercial installation requirements';
+  
+  return `You are a UK electrical maintenance engineer specialising in ${installationType || 'commercial'} installations.
+Generate ${stepRange} detailed maintenance steps per BS 7671:2018+A3:2024.
 
 EQUIPMENT: ${equipmentType}
+INSTALLATION TYPE: ${installationType || 'Commercial'}
 QUALIFICATIONS: ${requiredQualifications.slice(0, 3).join(', ')}
 
-REQUIREMENTS:
-- Generate equipment-SPECIFIC steps (not generic EICR steps)
-- Each step: 100-150 words, 5-7 sub-steps, specific test values
-- Reference BS 7671 regulations per step
-- Include tools, materials, safety, duration, risk level
-- Use UK English and exact UK qualification names
+CRITICAL REQUIREMENTS:
+- Generate equipment-SPECIFIC maintenance procedures (not generic EICR steps)
+- Each step MUST be 150-200 words minimum with comprehensive detail
+- Include 6-8 actionable sub-points per step
+- Specify exact test values, torque settings, and acceptable ranges
+- Reference specific BS 7671 regulation numbers per step
+- Include tools, materials, safety warnings, duration, and risk level
+- Use UK English and exact UK qualification names (City & Guilds, ECS, etc.)
+- For ${isDomestic ? 'DOMESTIC' : isIndustrial ? 'INDUSTRIAL' : 'COMMERCIAL'}: Focus on ${focusAreas}
 
-OUTPUT: Valid JSON object matching the schema provided. No markdown.`;
+OUTPUT: Valid JSON object matching the schema provided. No markdown, no code blocks.`;
 }
 
 function getMaintenanceUserPrompt(
   query: string, 
   equipmentDetails: any, 
   practicalContext: string, 
-  regulationsContext: string
+  regulationsContext: string,
+  installationType: string
 ): string {
-  const stepCount = getStepCount(equipmentDetails?.detailLevel);
+  const { minSteps, maxSteps } = getStepCount(equipmentDetails?.detailLevel, installationType);
   
-  return `Generate maintenance instructions for:
+  const isDomestic = installationType?.toLowerCase().includes('domestic');
+  const isIndustrial = installationType?.toLowerCase().includes('industrial');
+  
+  return `Generate comprehensive maintenance instructions for:
 
 QUERY: ${query}
-DETAILS: ${equipmentDetails ? JSON.stringify(equipmentDetails) : 'Not specified'}
+EQUIPMENT DETAILS: ${equipmentDetails ? JSON.stringify(equipmentDetails) : 'Not specified'}
+INSTALLATION TYPE: ${installationType?.toUpperCase() || 'COMMERCIAL'}
 
-PRACTICAL KNOWLEDGE:
-${practicalContext || 'Use industry best practice'}
+PRACTICAL MAINTENANCE KNOWLEDGE:
+${practicalContext || 'Use UK industry best practice for electrical maintenance'}
 
-BS 7671 REGULATIONS:
-${regulationsContext || 'BS 7671:2018+A3:2024 Chapter 64'}
+BS 7671 REGULATIONS (from regulations_intelligence):
+${regulationsContext || 'BS 7671:2018+A3:2024 Chapter 64 - Periodic Inspection & Testing'}
 
-OUTPUT JSON (follow exactly):
+STEP REQUIREMENTS:
+- Generate ${minSteps}-${maxSteps} detailed maintenance steps
+- Each step MUST contain 150-200 words of practical guidance
+- Describe WHAT to check, HOW to check it, and WHAT to look for
+- Include specific acceptance criteria and test values
+- Cover common faults, wear indicators, and failure modes
+${isDomestic ? '- Focus on domestic-specific requirements: consumer unit checks, RCD testing, Part P compliance' : ''}
+${isIndustrial ? '- Focus on industrial-specific requirements: three-phase systems, high fault levels, arc flash, heavy machinery isolation' : ''}
+
+OUTPUT JSON (follow structure exactly):
 {
-  "maintenanceGuide": "2-3 paragraph overview",
+  "maintenanceGuide": "3-4 paragraph comprehensive overview covering scope, importance, frequency, and key focus areas for ${installationType} installations",
   "executiveSummary": {
-    "equipmentType": "string",
+    "equipmentType": "string - full equipment description",
     "estimatedAge": "string or null",
     "maintenanceType": "Periodic Inspection | Preventive Maintenance | Condition-Based Maintenance",
-    "recommendedFrequency": "Annual | Bi-annual | Quarterly",
-    "overallCondition": "string",
-    "criticalFindings": ["array of strings"]
+    "recommendedFrequency": "Annual | Bi-annual | Quarterly | Monthly",
+    "overallCondition": "string - expected condition assessment approach",
+    "criticalFindings": ["array of key areas to focus on"]
   },
   "steps": [
     {
       "stepNumber": 1,
-      "title": "Step title",
-      "content": "100-150 words detailed procedure",
-      "safety": ["Safety notes array"],
-      "toolsRequired": ["Tools array"],
-      "materialsNeeded": ["Materials array"],
-      "estimatedDuration": "15-20 minutes",
+      "title": "Clear, action-oriented step title",
+      "content": "150-200 words: Describe the maintenance activity in detail. Explain WHAT needs to be done, WHY it's important, HOW to perform the task safely, and WHAT to look for. Include specific measurements, acceptable values, and common defects to identify. Reference manufacturer guidance where applicable.",
+      "safety": ["Detailed safety precautions - be specific about hazards"],
+      "toolsRequired": ["Specific tools with any specifications"],
+      "materialsNeeded": ["Consumables and materials required"],
+      "estimatedDuration": "Realistic time in minutes",
       "riskLevel": "low | medium | high",
-      "qualifications": ["UK qualification names"],
-      "inspectionCheckpoints": ["Checkpoints array"],
-      "linkedHazards": ["Hazards array"],
-      "bsReferences": ["BS 7671 regulation refs"],
+      "qualifications": ["UK qualifications required for this step"],
+      "inspectionCheckpoints": ["Specific items to verify completion"],
+      "linkedHazards": ["Electrical and non-electrical hazards"],
+      "bsReferences": ["Specific BS 7671 regulation references"],
       "observations": [],
       "defectCodes": []
     }
   ],
   "summary": {
-    "totalSteps": ${stepCount},
-    "estimatedDuration": "string",
-    "requiredQualifications": ["array"],
-    "toolsRequired": ["array"],
-    "materialsRequired": ["array"],
+    "totalSteps": number,
+    "estimatedDuration": "Total time including setup and completion",
+    "requiredQualifications": ["All qualifications needed"],
+    "toolsRequired": ["Complete tool list"],
+    "materialsRequired": ["Complete materials list"],
     "overallRiskLevel": "low | medium | high",
-    "criticalSafetyNotes": ["array"]
+    "criticalSafetyNotes": ["Key safety messages"]
   },
-  "recommendations": ["array of strings"],
+  "recommendations": ["5-8 specific recommendations for maintenance improvements or observations"],
   "eicrObservations": {
     "c1Dangerous": [],
     "c2UrgentRemedial": [],
@@ -430,11 +518,26 @@ OUTPUT JSON (follow exactly):
   }
 }
 
-Generate ${stepCount} complete steps. Each step must have all fields populated.`;
+Generate ${minSteps}-${maxSteps} complete steps. EVERY step must have 150-200 words in the content field.`;
 }
 
-function getStepCount(detailLevel: string | undefined): number {
-  if (detailLevel === 'quick') return 12;
-  if (detailLevel === 'comprehensive') return 18;
-  return 15;
+function getStepCount(detailLevel: string | undefined, installationType: string | undefined): { minSteps: number; maxSteps: number } {
+  const isDomestic = installationType?.toLowerCase().includes('domestic');
+  const isIndustrial = installationType?.toLowerCase().includes('industrial');
+  
+  if (isDomestic) {
+    // Domestic: 10-15 steps
+    if (detailLevel === 'quick') return { minSteps: 8, maxSteps: 10 };
+    if (detailLevel === 'comprehensive') return { minSteps: 13, maxSteps: 15 };
+    return { minSteps: 10, maxSteps: 12 }; // normal
+  } else if (isIndustrial) {
+    // Industrial: 15-20 steps
+    if (detailLevel === 'quick') return { minSteps: 13, maxSteps: 15 };
+    if (detailLevel === 'comprehensive') return { minSteps: 18, maxSteps: 20 };
+    return { minSteps: 15, maxSteps: 17 }; // normal
+  }
+  // Commercial: 13-18 steps
+  if (detailLevel === 'quick') return { minSteps: 11, maxSteps: 13 };
+  if (detailLevel === 'comprehensive') return { minSteps: 16, maxSteps: 18 };
+  return { minSteps: 13, maxSteps: 15 }; // normal
 }
