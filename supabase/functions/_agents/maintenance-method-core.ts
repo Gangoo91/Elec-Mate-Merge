@@ -230,7 +230,7 @@ export async function generateMaintenanceMethod(
       controller.abort();
     }, 300000); // 5 minutes
 
-    console.log(`🤖 Starting GPT-5 Mini AI generation (16000 max_completion_tokens)...`);
+    console.log(`🤖 Starting GPT-5 Mini AI generation (24000 max_completion_tokens)...`);
     const aiStartTime = Date.now();
 
     let aiResponse;
@@ -254,7 +254,7 @@ export async function generateMaintenanceMethod(
               content: getMaintenanceUserPrompt(query, equipmentDetails, practicalContext, regulationsContext, installationType)
             }
           ],
-          max_completion_tokens: 16000,
+          max_completion_tokens: 24000,
           response_format: { type: 'json_object' }
         })
       });
