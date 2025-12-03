@@ -141,19 +141,26 @@ const transformTestingRequirements = (testingReqs: any): any => {
 };
 
 // Transform backend expectedTests to frontend expectedTestResults format
+// Returns numerical values only (no Ω suffix) - null when data unavailable
 const transformExpectedTests = (expectedTests: any): any => {
-  if (!expectedTests) return undefined;
+  if (!expectedTests) return null;
+  
+  // Validate we have actual numerical data
+  const hasR1R2 = typeof expectedTests.r1r2?.at20C === 'number' || typeof expectedTests.r1r2?.at70C === 'number';
+  const hasZs = typeof expectedTests.zs?.expected === 'number' || typeof expectedTests.zs?.maxPermitted === 'number';
+  
+  if (!hasR1R2 && !hasZs) return null;
   
   return {
     r1r2: {
-      at20C: expectedTests.r1r2?.at20C?.toFixed(3) || 'N/A',
-      at70C: expectedTests.r1r2?.at70C?.toFixed(3) || 'N/A',
-      calculation: expectedTests.r1r2?.value || 'R1+R2 = (mΩ/m × length) / 1000'
+      at20C: typeof expectedTests.r1r2?.at20C === 'number' ? expectedTests.r1r2.at20C.toFixed(3) : null,
+      at70C: typeof expectedTests.r1r2?.at70C === 'number' ? expectedTests.r1r2.at70C.toFixed(3) : null,
+      calculation: expectedTests.r1r2?.value || null
     },
     zs: {
-      calculated: expectedTests.zs?.expected ? `${expectedTests.zs.expected.toFixed(2)}Ω` : 'N/A',
-      maxPermitted: expectedTests.zs?.maxPermitted ? `${expectedTests.zs.maxPermitted.toFixed(2)}Ω` : 'N/A',
-      compliant: expectedTests.zs?.compliant ?? true
+      calculated: typeof expectedTests.zs?.expected === 'number' ? expectedTests.zs.expected.toFixed(2) : null,
+      maxPermitted: typeof expectedTests.zs?.maxPermitted === 'number' ? expectedTests.zs.maxPermitted.toFixed(2) : null,
+      compliant: expectedTests.zs?.compliant ?? null
     },
     insulationResistance: {
       testVoltage: expectedTests.insulationResistance?.testVoltage || '500V DC',
@@ -164,7 +171,7 @@ const transformExpectedTests = (expectedTests: any): any => {
       at1x: `≤${expectedTests.rcd.maxTripTimeMs}ms @ ${expectedTests.rcd.ratingmA}mA`,
       at5x: `≤40ms @ ${expectedTests.rcd.ratingmA * 5}mA`,
       regulation: expectedTests.rcd.regulation || 'BS 7671 Reg 612.13.2'
-    } : undefined
+    } : null
   };
 };
 
@@ -296,12 +303,11 @@ export const AIInstallationDesigner = () => {
               undefined,
             // Pass structured guidance object for PDF consumption
             installationGuidanceStructured: circuitGuidance?.guidance || undefined,
-            // Use backend expectedTests as primary source, fallback to installation guidance transform
+            // Use backend expectedTests as primary source - NO text fallback
+            // Only numerical values from expectedTests, null if unavailable
             expectedTestResults: circuit.expectedTests 
               ? transformExpectedTests(circuit.expectedTests)
-              : (circuitGuidance?.guidance?.testingRequirements 
-                  ? transformTestingRequirements(circuitGuidance.guidance.testingRequirements) 
-                  : undefined),
+              : null,
             reasoning: circuit.reasoning,
             rcdProtected: circuit.rcdProtected,
             circuitNumber: circuit.circuitNumber,
