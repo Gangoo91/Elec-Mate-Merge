@@ -714,26 +714,29 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
           regulation: circuit.specialLocationCompliance.regulation
         } : null,
         
+        // Pass null for expectedTestResults if no data, otherwise pass numerical values only
         expectedTestResults: circuit.expectedTestResults ? {
           r1r2: {
-            at20C: circuit.expectedTestResults.r1r2?.at20C || 'N/A',
-            at70C: circuit.expectedTestResults.r1r2?.at70C || 'N/A',
-            calculation: circuit.expectedTestResults.r1r2?.calculation || ''
+            at20C: circuit.expectedTestResults.r1r2?.at20C || null,
+            at70C: circuit.expectedTestResults.r1r2?.at70C || null,
+            calculation: circuit.expectedTestResults.r1r2?.calculation || null
           },
           zs: {
-            calculated: circuit.expectedTestResults.zs?.calculated || 'N/A',
-            maxPermitted: circuit.expectedTestResults.zs?.maxPermitted || 'N/A',
-            compliant: circuit.expectedTestResults.zs?.compliant || false,
-            complianceText: circuit.expectedTestResults.zs?.compliant ? "✓ COMPLIANT" : "✗ NON-COMPLIANT"
+            calculated: circuit.expectedTestResults.zs?.calculated || null,
+            maxPermitted: circuit.expectedTestResults.zs?.maxPermitted || null,
+            compliant: circuit.expectedTestResults.zs?.compliant ?? null,
+            complianceText: circuit.expectedTestResults.zs?.compliant != null 
+              ? (circuit.expectedTestResults.zs.compliant ? "✓ COMPLIANT" : "✗ NON-COMPLIANT")
+              : null
           },
           insulationResistance: {
             testVoltage: circuit.expectedTestResults.insulationResistance?.testVoltage || '500V DC',
-            minResistance: circuit.expectedTestResults.insulationResistance?.minResistance || '≥1.0MΩ per BS 7671 Table 61'
+            minResistance: circuit.expectedTestResults.insulationResistance?.minResistance || '≥1.0MΩ'
           },
           polarity: circuit.expectedTestResults.polarity || 'Correct at all points',
           rcdTest: circuit.expectedTestResults.rcdTest ? {
-            at1x: circuit.expectedTestResults.rcdTest.at1x || 'N/A',
-            at5x: circuit.expectedTestResults.rcdTest.at5x || 'N/A',
+            at1x: circuit.expectedTestResults.rcdTest.at1x || null,
+            at5x: circuit.expectedTestResults.rcdTest.at5x || null,
             regulation: circuit.expectedTestResults.rcdTest.regulation || 'BS 7671 Regulation 643.2.2'
           } : null
         } : null,
@@ -742,9 +745,10 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         specialLocationType: circuit.specialLocationCompliance?.locationType || '',
         specialLocationRequirements: (circuit.specialLocationCompliance?.requirements || []).join('; '),
         
-        expectedR1R2: circuit.expectedTestResults?.r1r2?.at70C || 'N/A',
-        expectedZs: fmt(circuit.calculations?.zs, 2),
-        expectedInsulation: '>1MΩ',
+        // Use null instead of 'N/A' for missing test values
+        expectedR1R2: circuit.expectedTestResults?.r1r2?.at70C || null,
+        expectedZs: circuit.calculations?.zs ? fmt(circuit.calculations.zs, 2) : null,
+        expectedInsulation: circuit.expectedTestResults?.insulationResistance?.minResistance || '≥1.0MΩ',
         
         warnings: circuit.warnings || [],
         hasWarnings: (circuit.warnings?.length || 0) > 0
