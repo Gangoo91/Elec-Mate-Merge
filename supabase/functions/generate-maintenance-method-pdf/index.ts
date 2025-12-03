@@ -44,12 +44,23 @@ serve(async (req) => {
     // Parse request body - receive maintenance method data
     const rawPayload = await req.json();
     
-    console.log('[MAINTENANCE-PDF] Received payload:', {
+    console.log('[MAINTENANCE-PDF] Received payload structure:', {
+      hasReportDate: !!rawPayload.reportDate,
+      reportTitle: rawPayload.reportTitle,
       hasEquipmentDetails: !!rawPayload.equipmentDetails,
+      equipmentType: rawPayload.equipmentDetails?.equipmentType,
+      location: rawPayload.equipmentDetails?.location,
+      installationType: rawPayload.equipmentDetails?.installationType,
       hasExecutiveSummary: !!rawPayload.executiveSummary,
+      maintenanceType: rawPayload.executiveSummary?.maintenanceType,
+      recommendedFrequency: rawPayload.executiveSummary?.recommendedFrequency,
       hasSummary: !!rawPayload.summary,
-      stepsCount: rawPayload.steps?.length || 0,
-      recommendationsCount: rawPayload.recommendations?.length || 0
+      totalSteps: rawPayload.summary?.totalSteps,
+      overallRiskLevel: rawPayload.summary?.overallRiskLevel,
+      stepsArrayLength: rawPayload.steps?.length || 0,
+      recommendationsCount: rawPayload.recommendations?.length || 0,
+      hasMetadata: !!rawPayload.metadata,
+      metadataVersion: rawPayload.metadata?.version
     });
 
     // Pass payload directly to PDF Monkey (no transformation) - add reportDate if missing
