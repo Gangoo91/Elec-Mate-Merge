@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
 import { cn } from '@/lib/utils';
+import { StickyGenerateButton } from '../commissioning/StickyGenerateButton';
 
 interface MaintenanceMethodResultsProps {
   methodData: MaintenanceMethodData;
@@ -27,7 +28,7 @@ export const MaintenanceMethodResults = ({
   onExportPDF,
   onReset
 }: MaintenanceMethodResultsProps) => {
-  const { maintenanceGuide, executiveSummary, summary, recommendations, eicrObservations } = methodData;
+  const { maintenanceGuide, executiveSummary, summary, recommendations } = methodData;
   const { isMobile } = useMobileEnhanced();
   
   // Step management state
@@ -73,7 +74,7 @@ export const MaintenanceMethodResults = ({
   };
 
   return (
-    <div className={cn("space-y-6 pb-20", isMobile && "space-y-4")}>
+    <div className={cn("space-y-6", isMobile ? "space-y-4 pb-32" : "pb-8")}>
       {/* Header */}
       <Card>
         <CardHeader>
@@ -87,36 +88,17 @@ export const MaintenanceMethodResults = ({
                 {executiveSummary.equipmentType}
               </p>
             </div>
-            <div className={cn(
-              "flex gap-2",
-              isMobile && "flex-col w-full"
-            )}>
-              {onReset && (
-                <Button 
-                  onClick={onReset}
-                  className={cn(
-                    "bg-gradient-to-r from-elec-yellow via-elec-yellow to-elec-yellow/90 text-black hover:scale-[1.02] active:scale-95 transition-all",
-                    isMobile && "w-full"
-                  )}
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Generate New
-                </Button>
-              )}
-              {onExportPDF && (
-                <Button 
-                  onClick={onExportPDF}
-                  variant="outline"
-                  className={cn(
-                    "active:scale-95 transition-all",
-                    isMobile && "w-full"
-                  )}
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  Export PDF
-                </Button>
-              )}
-            </div>
+            {onReset && (
+              <Button 
+                onClick={onReset}
+                variant="outline"
+                size="sm"
+                className="shrink-0"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                New
+              </Button>
+            )}
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -331,72 +313,17 @@ export const MaintenanceMethodResults = ({
         </Card>
       )}
 
-      {/* EICR Observations */}
-      {eicrObservations && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg text-left">EICR Observations</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4 text-left">
-            {eicrObservations.c1Dangerous && eicrObservations.c1Dangerous.length > 0 && (
-              <div>
-                <Badge variant="destructive" className="mb-2">C1 - Danger Present</Badge>
-                <ul className="space-y-1.5 ml-4">
-                  {eicrObservations.c1Dangerous.map((obs, idx) => (
-                    <li key={idx} className="text-sm text-foreground flex items-start gap-2">
-                      <span className="text-destructive mt-0.5">•</span>
-                      <span>{obs}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {eicrObservations.c2UrgentRemedial && eicrObservations.c2UrgentRemedial.length > 0 && (
-              <div>
-                <Badge variant="destructive" className="mb-2 bg-orange-500/20 text-orange-400 border-orange-500/30">
-                  C2 - Potentially Dangerous
-                </Badge>
-                <ul className="space-y-1.5 ml-4">
-                  {eicrObservations.c2UrgentRemedial.map((obs, idx) => (
-                    <li key={idx} className="text-sm text-foreground flex items-start gap-2">
-                      <span className="text-orange-400 mt-0.5">•</span>
-                      <span>{obs}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {eicrObservations.c3Improvement && eicrObservations.c3Improvement.length > 0 && (
-              <div>
-                <Badge variant="secondary" className="mb-2">C3 - Improvement Recommended</Badge>
-                <ul className="space-y-1.5 ml-4">
-                  {eicrObservations.c3Improvement.map((obs, idx) => (
-                    <li key={idx} className="text-sm text-foreground flex items-start gap-2">
-                      <span className="text-primary mt-0.5">•</span>
-                      <span>{obs}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {eicrObservations.fir && eicrObservations.fir.length > 0 && (
-              <div>
-                <Badge variant="outline" className="mb-2">FI - Further Investigation</Badge>
-                <ul className="space-y-1.5 ml-4">
-                  {eicrObservations.fir.map((obs, idx) => (
-                    <li key={idx} className="text-sm text-foreground flex items-start gap-2">
-                      <span className="text-primary mt-0.5">•</span>
-                      <span>{obs}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+      {/* Sticky Export PDF Button */}
+      {onExportPDF && (
+        <StickyGenerateButton>
+          <Button 
+            onClick={onExportPDF}
+            className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-elec-yellow via-elec-yellow to-elec-yellow/90 text-black hover:scale-[1.02] active:scale-95 transition-all"
+          >
+            <Download className="h-5 w-5 mr-2" />
+            Export PDF
+          </Button>
+        </StickyGenerateButton>
       )}
     </div>
   );

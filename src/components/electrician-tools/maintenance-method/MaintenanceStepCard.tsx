@@ -287,16 +287,9 @@ export const MaintenanceStepCard = ({
                 />
               </div>
             ) : (
-              <div className="flex items-start justify-between gap-2">
-                <h3 className="text-lg font-semibold text-foreground text-left">
-                  {step.title}
-                </h3>
-                {step.riskLevel && (
-                  <Badge variant={getRiskColor(step.riskLevel)} className="shrink-0">
-                    {step.riskLevel.toUpperCase()}
-                  </Badge>
-                )}
-              </div>
+              <h3 className="text-lg font-semibold text-foreground text-left">
+                {step.title}
+              </h3>
             )}
           </div>
         </div>
@@ -407,16 +400,6 @@ export const MaintenanceStepCard = ({
             editedQualifications,
             setEditedQualifications,
             'cyan'
-          )}
-
-          {renderCollapsibleSection(
-            'observations',
-            'EICR Observations',
-            <FileText className="h-4 w-4" />,
-            step.observations || [],
-            editedObservations,
-            setEditedObservations,
-            'orange'
           )}
 
           {renderCollapsibleSection(
