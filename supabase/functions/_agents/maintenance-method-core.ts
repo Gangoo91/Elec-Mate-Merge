@@ -168,34 +168,52 @@ export async function generateMaintenanceMethod(
       `**${r.regulation_number}**: ${r.primary_topic}\n${r.content || ''}`
     ).join('\n\n') || '';
 
-    // Generate maintenance method with GPT-4o-mini
+    // Generate maintenance method with GPT-5 Mini
     const openAiKey = Deno.env.get('OPENAI_API_KEY');
     if (!openAiKey) {
       throw new Error('OpenAI API key not configured');
     }
 
-    const aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAiKey}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'gpt-5-mini-2025-08-07',
-        messages: [
-          {
-            role: 'system',
-            content: getMaintenanceSystemPrompt(detailLevel, query)
-          },
-          {
-            role: 'user',
-            content: getMaintenanceUserPrompt(query, equipmentDetails, practicalContext, regulationsContext)
-          }
-        ],
-        max_completion_tokens: 16000,
-        response_format: { type: 'json_object' }
-      })
-    });
+    // Create AbortController with 5-minute timeout for GPT-5 Mini's extended reasoning
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+      console.error('⏱️ OpenAI request timeout after 300 seconds');
+      controller.abort();
+    }, 300000); // 5 minutes
+
+    console.log(`🤖 Starting GPT-5 Mini AI generation (16000 max_completion_tokens)...`);
+    const aiStartTime = Date.now();
+
+    let aiResponse;
+    try {
+      aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${openAiKey}`,
+          'Content-Type': 'application/json'
+        },
+        signal: controller.signal,
+        body: JSON.stringify({
+          model: 'gpt-5-mini-2025-08-07',
+          messages: [
+            {
+              role: 'system',
+              content: getMaintenanceSystemPrompt(detailLevel, query)
+            },
+            {
+              role: 'user',
+              content: getMaintenanceUserPrompt(query, equipmentDetails, practicalContext, regulationsContext)
+            }
+          ],
+          max_completion_tokens: 16000,
+          response_format: { type: 'json_object' }
+        })
+      });
+    } finally {
+      clearTimeout(timeoutId);
+    }
+
+    console.log(`⏱️ OpenAI responded in ${Date.now() - aiStartTime}ms`);
 
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
@@ -331,84 +349,19 @@ function getMaintenanceSystemPrompt(detailLevel: string, query: string): string 
   const equipmentType = detectEquipmentCategory(query);
   const requiredQualifications = getRequiredQualificationsForEquipment(equipmentType);
   
-  return `You are an expert electrical maintenance engineer specialising in UK BS 7671 periodic inspection and preventive maintenance.
+  return `You are a UK electrical maintenance engineer. Generate ${stepCount} detailed maintenance steps per BS 7671:2018+A3:2024.
 
-Generate detailed maintenance instructions with ${stepCount} comprehensive steps covering the complete maintenance lifecycle.
+EQUIPMENT: ${equipmentType}
+QUALIFICATIONS: ${requiredQualifications.slice(0, 3).join(', ')}
 
-⚡ CRITICAL: EQUIPMENT-SPECIFIC STEPS REQUIRED ⚡
-Equipment Type Detected: ${equipmentType}
+REQUIREMENTS:
+- Generate equipment-SPECIFIC steps (not generic EICR steps)
+- Each step: 100-150 words, 5-7 sub-steps, specific test values
+- Reference BS 7671 regulations per step
+- Include tools, materials, safety, duration, risk level
+- Use UK English and exact UK qualification names
 
-REQUIRED QUALIFICATIONS FOR THIS EQUIPMENT:
-${requiredQualifications.map(q => `- ${q}`).join('\n')}
-Use these EXACT qualification names in your output. DO NOT use generic terms.
-
-You MUST generate steps that are SPECIFIC and UNIQUE to this equipment type.
-DO NOT generate generic EICR-style inspection steps unless the query explicitly asks for an EICR.
-The practical maintenance knowledge provided contains equipment-specific procedures - YOU MUST USE THEM.
-
-STEP GENERATION APPROACH:
-- Derive steps DIRECTLY from the equipment-specific RAG context provided below
-- Each step must be UNIQUE to the equipment being maintained
-- DO NOT use the same generic sequence for every equipment type
-- Adapt step count to equipment complexity (${stepCount} steps)
-- If RAG context mentions specific procedures (e.g., "busbar torque checks", "thermal imaging of joints", "contactor wear inspection"), these MUST appear as distinct steps
-
-EQUIPMENT-SPECIFIC EXAMPLES:
-• Busbar Systems: Joint torque verification, thermal imaging of connections, IP rating verification, phase-to-phase insulation resistance, dust/contamination inspection
-• Motor Control Centres: Contactor wear inspection, overload relay testing, DOL/Star-Delta functional checks, auxiliary contact verification, control circuit testing
-• Consumer Units: MCB/RCBO operation testing, busbar torque verification, RCD ramp testing, discrimination verification, surge protection device inspection
-• Emergency Lighting: Battery condition assessment, 3-hour duration test, charge circuit verification, lamp/LED function test, self-test facility check
-• Transformers: Oil quality testing, winding resistance measurement, turns ratio verification, temperature monitoring, cooling system inspection
-
-CRITICAL OUTPUT REQUIREMENTS:
-- Generate a valid JSON object (no markdown, no code blocks)
-- Follow the exact schema structure provided
-- Each step MUST be 100-150 words minimum with specific procedures
-- Each step MUST reference 2-3 BS 7671 regulations (e.g., "BS 7671:2018+A3:2024 Reg 612.3; Chapter 64; Table 61")
-- Include GN3 (Guidance Note 3: Inspection & Testing) references where relevant
-- Include IET Guidance Note and HSE/CDM regulations for safety-critical tasks
-
-PROCEDURE STEP REQUIREMENTS:
-- 5-7 detailed sub-steps per main step
-- Specific test instrument settings (e.g., "Set MFT to 500V IR test, confirm >1MΩ")
-- Expected values with units (e.g., "Zs should be <0.87Ω for 32A Type B MCB per Table 41.3")
-- Pass/fail criteria with exact thresholds
-- Documentation requirements per step
-
-SAFETY REQUIREMENTS:
-- Specific isolation procedures per Reg 132.10
-- Lockout/tagout requirements
-- PPE specifications (Arc-rated gloves, face shields)
-- Permit-to-work requirements for live testing
-
-TOOLS & EQUIPMENT:
-- Exact model specifications (e.g., "Megger MFT1835 or equivalent GS38-compliant")
-- Calibration requirements (e.g., "Within 12-month calibration certificate")
-- Test lead specifications per GS38
-
-UK ELECTRICAL QUALIFICATIONS - USE EXACT NAMES:
-When specifying qualifications, use SPECIFIC UK industry qualifications:
-✅ CORRECT:
-- "City & Guilds 2382-22 (18th Edition BS 7671:2018+A2:2022)" NOT "18th Edition trained"
-- "City & Guilds 2391-52 Inspection & Testing" NOT "Inspection qualified"
-- "ECS Gold Card (JIB Registered Electrician)" NOT "Competent Person"
-- "AM2 Practical Assessment" for installation competence
-- "City & Guilds 2377 PAT Testing" for portable appliance testing
-- "SSSTS Construction Site Safety" for site work
-- "City & Guilds 2365 / EAL Level 3 Electrical Installation"
-
-❌ AVOID GENERIC TERMS:
-- "18th Edition trained" → Use "City & Guilds 2382-22"
-- "Competent Person" → Use "ECS Gold Card (JIB Registered)"
-- "Inspection qualified" → Use "City & Guilds 2391-52"
-
-EQUIPMENT-SPECIFIC QUALIFICATIONS:
-- Emergency Lighting: "City & Guilds 2919 Emergency Lighting"
-- HV Work: "HV Authorised Person (AP)" for equipment >1kV
-- Control Systems: Include manufacturer training (e.g., "Siemens PLC certification")
-- PAT Testing: "City & Guilds 2377 PAT Testing"
-
-UK ENGLISH: Use British English spelling and electrical terminology throughout.`;
+OUTPUT: Valid JSON object matching the schema provided. No markdown.`;
 }
 
 function getMaintenanceUserPrompt(
@@ -417,109 +370,58 @@ function getMaintenanceUserPrompt(
   practicalContext: string, 
   regulationsContext: string
 ): string {
-  return `Generate comprehensive maintenance instructions for the following:
+  const stepCount = getStepCount(equipmentDetails?.detailLevel);
+  
+  return `Generate maintenance instructions for:
 
-**EQUIPMENT QUERY:**
-${query}
+QUERY: ${query}
+DETAILS: ${equipmentDetails ? JSON.stringify(equipmentDetails) : 'Not specified'}
 
-**EQUIPMENT DETAILS:**
-${equipmentDetails ? JSON.stringify(equipmentDetails, null, 2) : 'Not specified'}
+PRACTICAL KNOWLEDGE:
+${practicalContext || 'Use industry best practice'}
 
-**PRACTICAL MAINTENANCE KNOWLEDGE:**
-${practicalContext || 'No specific maintenance procedures found - use industry best practice'}
+BS 7671 REGULATIONS:
+${regulationsContext || 'BS 7671:2018+A3:2024 Chapter 64'}
 
-**RELEVANT BS 7671 REGULATIONS:**
-${regulationsContext || 'BS 7671:2018+A3:2024 - General Requirements for Periodic Inspection (Chapter 64)'}
-
-**OUTPUT JSON SCHEMA:**
+OUTPUT JSON (follow exactly):
 {
-  "maintenanceGuide": "2-3 paragraph executive overview of maintenance requirements",
+  "maintenanceGuide": "2-3 paragraph overview",
   "executiveSummary": {
-    "equipmentType": "Specific equipment name",
-    "estimatedAge": "Approximate age if known",
+    "equipmentType": "string",
+    "estimatedAge": "string or null",
     "maintenanceType": "Periodic Inspection | Preventive Maintenance | Condition-Based Maintenance",
     "recommendedFrequency": "Annual | Bi-annual | Quarterly",
-    "overallCondition": "Assessment category",
-    "criticalFindings": ["Key issues requiring immediate attention"]
+    "overallCondition": "string",
+    "criticalFindings": ["array of strings"]
   },
   "steps": [
     {
       "stepNumber": 1,
-      "title": "Pre-Inspection Safety Isolation",
-      "content": "100-150 word detailed procedure with specific actions, test values, and acceptance criteria",
-      "safety": [
-        "Isolation procedure per BS 7671 Reg 132.10",
-        "Prove dead with GS38-compliant voltage indicator",
-        "Apply safety locks and warning labels per HSE guidance"
-      ],
-      "toolsRequired": [
-        "Megger MFT1835 multifunction tester (calibrated within 12 months)",
-        "Fluke T6-1000 voltage indicator",
-        "Proving unit for voltage indicator verification"
-      ],
-      "materialsNeeded": [
-        "Isolation padlocks (minimum 3)",
-        "Electrical danger warning labels",
-        "Test record sheets"
-      ],
+      "title": "Step title",
+      "content": "100-150 words detailed procedure",
+      "safety": ["Safety notes array"],
+      "toolsRequired": ["Tools array"],
+      "materialsNeeded": ["Materials array"],
       "estimatedDuration": "15-20 minutes",
-      "riskLevel": "high",
-      "qualifications": [
-        "City & Guilds 2382-22 (18th Edition BS 7671:2018+A2:2022)",
-        "City & Guilds 2391-52 Inspection & Testing",
-        "ECS Gold Card (JIB Registered Electrician)"
-      ],
-      "inspectionCheckpoints": [
-        "Supply successfully isolated at main switch",
-        "Voltage absence proven on all phases",
-        "Adjacent circuits identified and protected"
-      ],
-      "linkedHazards": [
-        "Electric shock from live parts",
-        "Arc flash if isolation incomplete"
-      ],
-      "bsReferences": [
-        "BS 7671:2018+A3:2024 Reg 132.10 - Isolation and switching",
-        "BS 7671 Chapter 53 - Protection, isolation and switching",
-        "GS38 - Electrical test equipment for use by electricians"
-      ],
+      "riskLevel": "low | medium | high",
+      "qualifications": ["UK qualification names"],
+      "inspectionCheckpoints": ["Checkpoints array"],
+      "linkedHazards": ["Hazards array"],
+      "bsReferences": ["BS 7671 regulation refs"],
       "observations": [],
       "defectCodes": []
     }
-    // ... continue for all ${getStepCount(equipmentDetails?.detailLevel)} steps
   ],
   "summary": {
-    "totalSteps": ${getStepCount(equipmentDetails?.detailLevel)},
-    "estimatedDuration": "3-5 hours",
-    "requiredQualifications": [
-      "City & Guilds 2382-22 (18th Edition BS 7671:2018+A2:2022)",
-      "City & Guilds 2391-52 Inspection & Testing",
-      "ECS Gold Card (JIB Registered Electrician)",
-      "AM2 Practical Assessment",
-      "SSSTS Construction Site Safety (if construction site)"
-    ],
-    "toolsRequired": [
-      "Multifunction tester (MFT)",
-      "Thermal imaging camera",
-      "Torque screwdriver set",
-      "Earth electrode tester"
-    ],
-    "materialsRequired": [
-      "Electrical certificates (EICR)",
-      "Warning labels",
-      "Isolation equipment"
-    ],
-    "overallRiskLevel": "medium",
-    "criticalSafetyNotes": [
-      "All work must be carried out in accordance with BS 7671:2018+A3:2024",
-      "Dead testing preferred; live testing only when absolutely necessary under controlled conditions"
-    ]
+    "totalSteps": ${stepCount},
+    "estimatedDuration": "string",
+    "requiredQualifications": ["array"],
+    "toolsRequired": ["array"],
+    "materialsRequired": ["array"],
+    "overallRiskLevel": "low | medium | high",
+    "criticalSafetyNotes": ["array"]
   },
-  "recommendations": [
-    "Specific remedial actions required",
-    "Preventive measures to extend equipment life",
-    "Future maintenance scheduling based on findings"
-  ],
+  "recommendations": ["array of strings"],
   "eicrObservations": {
     "c1Dangerous": [],
     "c2UrgentRemedial": [],
@@ -528,7 +430,7 @@ ${regulationsContext || 'BS 7671:2018+A3:2024 - General Requirements for Periodi
   }
 }
 
-Generate the complete maintenance method following this exact schema. Ensure all steps are detailed, practical, and compliant with BS 7671:2018+A3:2024 and related UK electrical standards.`;
+Generate ${stepCount} complete steps. Each step must have all fields populated.`;
 }
 
 function getStepCount(detailLevel: string | undefined): number {
