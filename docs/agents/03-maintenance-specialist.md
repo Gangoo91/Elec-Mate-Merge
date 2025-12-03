@@ -18,8 +18,9 @@ The Maintenance Specialist generates comprehensive maintenance instructions for 
 
 ## AI Model
 
-- **Primary**: GPT-4o Mini (`gpt-4o-mini`) via OpenAI API
-- **Response Format**: Tool calling with structured schema
+- **Primary**: GPT-5 Mini (`gpt-5-mini-2025-08-07`) via OpenAI API
+- **Response Format**: JSON object with structured schema
+- **Note**: GPT-5 uses `max_completion_tokens` instead of `max_tokens`, and does not support `temperature` parameter
 
 ## RAG Usage
 

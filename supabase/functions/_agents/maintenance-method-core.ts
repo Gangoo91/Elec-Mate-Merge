@@ -181,7 +181,7 @@ export async function generateMaintenanceMethod(
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-5-mini-2025-08-07',
         messages: [
           {
             role: 'system',
@@ -192,7 +192,7 @@ export async function generateMaintenanceMethod(
             content: getMaintenanceUserPrompt(query, equipmentDetails, practicalContext, regulationsContext)
           }
         ],
-        temperature: 0.3,
+        max_completion_tokens: 8000,
         response_format: { type: 'json_object' }
       })
     });
