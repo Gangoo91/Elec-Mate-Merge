@@ -148,6 +148,79 @@ export const MaintenanceStepCard = ({
     }
   };
 
+  // Helper to format numbered items (1), 2), 3) etc.) onto separate lines
+  const formatNumberedItems = (text: string): React.ReactNode => {
+    const hasNumberedItems = /\d+\)/.test(text);
+    
+    if (!hasNumberedItems) {
+      return <p>{text}</p>;
+    }
+    
+    const parts = text.split(/(?=\d+\)\s*)/);
+    
+    return (
+      <div className="space-y-1.5">
+        {parts.map((part, idx) => {
+          const trimmed = part.trim();
+          if (!trimmed) return null;
+          
+          const numMatch = trimmed.match(/^(\d+)\)\s*/);
+          if (numMatch) {
+            const num = numMatch[1];
+            const content = trimmed.slice(numMatch[0].length);
+            return (
+              <div key={idx} className="flex gap-2 text-sm">
+                <span className="text-elec-yellow font-semibold flex-shrink-0 min-w-[1.25rem]">{num}.</span>
+                <span>{content}</span>
+              </div>
+            );
+          }
+          
+          return <p key={idx}>{trimmed}</p>;
+        })}
+      </div>
+    );
+  };
+
+  // Parse and format step content with sections and numbered items
+  const formatStepContent = (content: string): React.ReactNode => {
+    const sections = content.split(/(?=\b(?:WHAT|HOW|WHY|WHERE|WHEN|WHAT TO LOOK FOR|Acceptance criteria|Common faults)[:.])/gi);
+    
+    if (sections.length <= 1) {
+      return formatNumberedItems(content);
+    }
+    
+    return (
+      <div className="space-y-4">
+        {sections.map((section, idx) => {
+          const trimmed = section.trim();
+          if (!trimmed) return null;
+          
+          const labelMatch = trimmed.match(/^(WHAT|HOW|WHY|WHERE|WHEN|WHAT TO LOOK FOR|Acceptance criteria|Common faults)[:.]\s*/i);
+          
+          if (labelMatch) {
+            const label = labelMatch[1];
+            const text = trimmed.slice(labelMatch[0].length);
+            return (
+              <div key={idx} className="space-y-1.5">
+                <span className="text-xs font-bold text-elec-yellow uppercase tracking-wide">{label}</span>
+                <div className="text-sm text-foreground pl-0">
+                  {formatNumberedItems(text)}
+                </div>
+              </div>
+            );
+          }
+          
+          return (
+            <div key={idx} className="text-sm text-foreground">
+              {formatNumberedItems(trimmed)}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   const renderCollapsibleSection = (
     key: keyof typeof sectionsExpanded,
     title: string,
@@ -247,11 +320,11 @@ export const MaintenanceStepCard = ({
                     </Button>
                   </>
                 ) : (
-                  <ul className="space-y-1.5 text-foreground">
+                  <ul className="space-y-1.5 text-foreground text-left">
                     {items.map((item, idx) => (
-                      <li key={idx} className="text-sm flex items-start gap-2">
-                        <span className="text-primary mt-0.5">•</span>
-                        <span>{item}</span>
+                      <li key={idx} className="text-sm flex items-start gap-2 text-left">
+                        <span className="text-primary mt-0.5 flex-shrink-0">•</span>
+                        <span className="text-left">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -306,9 +379,9 @@ export const MaintenanceStepCard = ({
               placeholder="Step description"
             />
           ) : (
-            <p className="text-sm text-foreground leading-relaxed">
-              {step.content}
-            </p>
+            <div className="text-sm text-foreground leading-relaxed">
+              {formatStepContent(step.content)}
+            </div>
           )}
         </div>
 

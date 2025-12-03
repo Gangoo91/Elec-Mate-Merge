@@ -45,6 +45,7 @@ export const MaintenanceMethodResults = ({
   // Step management state
   const [steps, setSteps] = useState<MaintenanceStep[]>(methodData.steps);
   const [durationExpanded, setDurationExpanded] = useState(false);
+  const [overviewExpanded, setOverviewExpanded] = useState(false);
 
   const updateStep = (index: number, updated: MaintenanceStep) => {
     setSteps(prev => prev.map((step, i) => i === index ? updated : step));
@@ -127,7 +128,35 @@ export const MaintenanceMethodResults = ({
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="text-sm text-foreground leading-relaxed text-left">
-            {maintenanceGuide}
+            {isMobile && !overviewExpanded ? (
+              <>
+                <p className="line-clamp-4">{maintenanceGuide}</p>
+                {maintenanceGuide.length > 200 && (
+                  <Button 
+                    variant="link" 
+                    size="sm" 
+                    onClick={() => setOverviewExpanded(true)}
+                    className="p-0 h-auto text-elec-yellow mt-2 font-medium"
+                  >
+                    Show more
+                  </Button>
+                )}
+              </>
+            ) : (
+              <>
+                <p>{maintenanceGuide}</p>
+                {isMobile && maintenanceGuide.length > 200 && (
+                  <Button 
+                    variant="link" 
+                    size="sm" 
+                    onClick={() => setOverviewExpanded(false)}
+                    className="p-0 h-auto text-elec-yellow mt-2 font-medium"
+                  >
+                    Show less
+                  </Button>
+                )}
+              </>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -135,10 +164,13 @@ export const MaintenanceMethodResults = ({
       {/* Executive Summary */}
       <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-card via-elec-card to-elec-card/50">
         <CardHeader className="border-b border-elec-yellow/20 pb-4">
-          <CardTitle className="text-2xl font-bold text-left text-foreground">
+          <CardTitle className={cn(
+            "font-bold text-left text-foreground",
+            isMobile ? "text-lg leading-tight" : "text-2xl"
+          )}>
             {executiveSummary.equipmentType}
           </CardTitle>
-          <div className="h-1 w-16 bg-elec-yellow rounded-full mt-2"></div>
+          {!isMobile && <div className="h-1 w-16 bg-elec-yellow rounded-full mt-2"></div>}
         </CardHeader>
         <CardContent className="space-y-6 pt-6">
           {/* Key Information Grid */}
