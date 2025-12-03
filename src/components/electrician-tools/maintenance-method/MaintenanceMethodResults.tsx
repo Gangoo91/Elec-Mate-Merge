@@ -11,7 +11,9 @@ import {
   Wrench, 
   ShieldAlert,
   AlertTriangle,
-  Plus
+  Plus,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import { useMobileEnhanced } from '@/hooks/use-mobile-enhanced';
 import { cn } from '@/lib/utils';
@@ -23,6 +25,15 @@ interface MaintenanceMethodResultsProps {
   onReset?: () => void;
 }
 
+// Helper to extract short duration from long text
+const getShortDuration = (duration: string): string => {
+  const match = duration.match(/(\d+\.?\d*\s*(?:to|-)\s*\d+\.?\d*\s*(?:hours?|hrs?|minutes?|mins?))/i);
+  if (match) return match[1];
+  const hoursMatch = duration.match(/(\d+\.?\d*)\s*(?:hours?|hrs?)/i);
+  if (hoursMatch) return `${hoursMatch[1]} hrs`;
+  return duration.length > 20 ? duration.slice(0, 20) + '...' : duration;
+};
+
 export const MaintenanceMethodResults = ({
   methodData,
   onExportPDF,
@@ -33,6 +44,7 @@ export const MaintenanceMethodResults = ({
   
   // Step management state
   const [steps, setSteps] = useState<MaintenanceStep[]>(methodData.steps);
+  const [durationExpanded, setDurationExpanded] = useState(false);
 
   const updateStep = (index: number, updated: MaintenanceStep) => {
     setSteps(prev => prev.map((step, i) => i === index ? updated : step));
@@ -77,14 +89,23 @@ export const MaintenanceMethodResults = ({
     <div className={cn("space-y-6", isMobile ? "space-y-4 pb-32" : "pb-8")}>
       {/* Header */}
       <Card>
-        <CardHeader>
-          <div className="flex items-start justify-between gap-4">
+        <CardHeader className={isMobile ? "pb-3" : ""}>
+          <div className={cn(
+            "flex gap-3",
+            isMobile ? "flex-col" : "items-start justify-between"
+          )}>
             <div className="text-left flex-1">
-              <CardTitle className="text-2xl flex items-center gap-2">
-                <FileText className="h-6 w-6 text-primary" />
+              <CardTitle className={cn(
+                "flex items-center gap-2",
+                isMobile ? "text-xl" : "text-2xl"
+              )}>
+                <FileText className={cn(isMobile ? "h-5 w-5" : "h-6 w-6", "text-primary")} />
                 Maintenance Instructions
               </CardTitle>
-              <p className="text-sm text-foreground mt-1">
+              <p className={cn(
+                "text-foreground mt-1",
+                isMobile ? "text-xs line-clamp-2" : "text-sm"
+              )}>
                 {executiveSummary.equipmentType}
               </p>
             </div>
@@ -92,11 +113,14 @@ export const MaintenanceMethodResults = ({
               <Button 
                 onClick={onReset}
                 variant="outline"
-                size="sm"
-                className="shrink-0"
+                size={isMobile ? "default" : "sm"}
+                className={cn(
+                  "touch-manipulation",
+                  isMobile ? "w-full h-12" : "shrink-0"
+                )}
               >
                 <Plus className="h-4 w-4 mr-2" />
-                New
+                New Maintenance Method
               </Button>
             )}
           </div>
@@ -196,53 +220,111 @@ export const MaintenanceMethodResults = ({
 
       {/* Summary Overview */}
       <Card>
-        <CardHeader>
+        <CardHeader className={isMobile ? "pb-2" : ""}>
           <CardTitle className="text-lg text-left">Maintenance Overview</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid gap-4 sm:grid-cols-3">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
-                <FileText className="h-5 w-5 text-blue-400" />
-              </div>
-              <div className="text-left">
-                <p className="text-2xl font-bold text-foreground">{summary.totalSteps}</p>
-                <p className="text-xs text-foreground">Total Steps</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                <Clock className="h-5 w-5 text-purple-400" />
-              </div>
-              <div className="text-left">
-                <p className="text-lg font-semibold text-foreground">{summary.estimatedDuration}</p>
-                <p className="text-xs text-foreground">Duration</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
-                <ShieldAlert className="h-5 w-5 text-amber-400" />
-              </div>
-              <div className="text-left">
-                <Badge variant={summary.overallRiskLevel === 'high' ? 'destructive' : summary.overallRiskLevel === 'medium' ? 'default' : 'secondary'}>
-                  {summary.overallRiskLevel.toUpperCase()}
+        <CardContent className={cn("space-y-4", isMobile && "space-y-3")}>
+          {isMobile ? (
+            /* Mobile-optimised compact layout */
+            <div className="space-y-3">
+              {/* Compact stats row */}
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <div className="h-9 w-9 rounded-lg bg-blue-500/10 flex items-center justify-center">
+                    <FileText className="h-4 w-4 text-blue-400" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-xl font-bold text-foreground">{summary.totalSteps}</p>
+                    <p className="text-xs text-foreground/70">Steps</p>
+                  </div>
+                </div>
+                <Badge 
+                  variant={summary.overallRiskLevel === 'high' ? 'destructive' : summary.overallRiskLevel === 'medium' ? 'default' : 'secondary'}
+                  className="text-xs px-2 py-1"
+                >
+                  {summary.overallRiskLevel.toUpperCase()} RISK
                 </Badge>
-                <p className="text-xs text-foreground mt-1">Risk Level</p>
+              </div>
+
+              {/* Expandable duration section */}
+              <div 
+                className="p-3 rounded-lg bg-purple-500/5 border border-purple-500/20 touch-manipulation cursor-pointer"
+                onClick={() => setDurationExpanded(!durationExpanded)}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-purple-400" />
+                    <span className="text-sm font-semibold text-foreground">
+                      {getShortDuration(summary.estimatedDuration)}
+                    </span>
+                  </div>
+                  <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
+                    {durationExpanded ? (
+                      <ChevronUp className="h-4 w-4 text-foreground/70" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4 text-foreground/70" />
+                    )}
+                  </Button>
+                </div>
+                {durationExpanded && (
+                  <p className="text-xs text-foreground/80 mt-2 leading-relaxed animate-fade-in">
+                    {summary.estimatedDuration}
+                  </p>
+                )}
               </div>
             </div>
-          </div>
+          ) : (
+            /* Desktop layout */
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
+                  <FileText className="h-5 w-5 text-blue-400" />
+                </div>
+                <div className="text-left">
+                  <p className="text-2xl font-bold text-foreground">{summary.totalSteps}</p>
+                  <p className="text-xs text-foreground">Total Steps</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+                  <Clock className="h-5 w-5 text-purple-400" />
+                </div>
+                <div className="text-left">
+                  <p className="text-lg font-semibold text-foreground">{summary.estimatedDuration}</p>
+                  <p className="text-xs text-foreground">Duration</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                  <ShieldAlert className="h-5 w-5 text-amber-400" />
+                </div>
+                <div className="text-left">
+                  <Badge variant={summary.overallRiskLevel === 'high' ? 'destructive' : summary.overallRiskLevel === 'medium' ? 'default' : 'secondary'}>
+                    {summary.overallRiskLevel.toUpperCase()}
+                  </Badge>
+                  <p className="text-xs text-foreground mt-1">Risk Level</p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {summary.toolsRequired && summary.toolsRequired.length > 0 && (
-            <div className="space-y-2 pt-2 border-t border-elec-yellow/30 bg-elec-yellow/5 p-3 rounded-lg text-left">
+            <div className={cn(
+              "space-y-2 pt-2 border-t border-elec-yellow/30 bg-elec-yellow/5 rounded-lg text-left",
+              isMobile ? "p-2.5" : "p-3"
+            )}>
               <div className="flex items-center gap-2 text-sm font-medium text-foreground">
                 <Wrench className="h-4 w-4 text-elec-yellow" />
                 Required Tools ({summary.toolsRequired.length})
               </div>
-              <div className="flex flex-wrap gap-1.5 ml-6">
+              <div className={cn("flex flex-wrap gap-1.5", isMobile ? "ml-4" : "ml-6")}>
                 {summary.toolsRequired.map((tool, idx) => (
-                  <Badge key={idx} variant="secondary" className="bg-elec-yellow/20 text-foreground border-elec-yellow/30">
+                  <Badge key={idx} variant="secondary" className={cn(
+                    "bg-elec-yellow/20 text-foreground border-elec-yellow/30",
+                    isMobile && "text-xs"
+                  )}>
                     {tool}
                   </Badge>
                 ))}
@@ -253,9 +335,9 @@ export const MaintenanceMethodResults = ({
           {summary.requiredQualifications && summary.requiredQualifications.length > 0 && (
             <div className="space-y-2 pt-2 text-left">
               <div className="text-sm font-medium text-foreground">Required Qualifications:</div>
-              <div className="flex flex-wrap gap-1.5 ml-6">
+              <div className={cn("flex flex-wrap gap-1.5", isMobile ? "ml-4" : "ml-6")}>
                 {summary.requiredQualifications.map((qual, idx) => (
-                  <Badge key={idx} variant="outline" className="text-foreground">
+                  <Badge key={idx} variant="outline" className={cn("text-foreground", isMobile && "text-xs")}>
                     {qual}
                   </Badge>
                 ))}
