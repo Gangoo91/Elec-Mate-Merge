@@ -71,10 +71,15 @@ serve(async (req) => {
     
     console.log('[MAINTENANCE-PDF] Payload passed directly to PDF Monkey');
 
-    // Generate unique filename with equipment type
-    const equipmentType = rawPayload.equipmentDetails?.equipmentType || rawPayload.executiveSummary?.equipmentType || 'Equipment';
-    const uniqueId = crypto.randomUUID().split('-')[0].toUpperCase();
-    const filename = `Maintenance Instructions - ${equipmentType} - ${uniqueId}.pdf`;
+    // Generate filename using project name (location) or equipment type
+    const projectName = rawPayload.projectName || 
+                        rawPayload.equipmentDetails?.location || 
+                        rawPayload.equipmentDetails?.equipmentType || 
+                        'Equipment';
+    
+    // Clean the project name for filename (remove special chars, limit length)
+    const cleanProjectName = projectName.replace(/[^\w\s-]/g, '').trim().substring(0, 50);
+    const filename = `Maintenance - ${cleanProjectName}.pdf`;
     
     console.log('[MAINTENANCE-PDF] Generated filename:', filename);
 

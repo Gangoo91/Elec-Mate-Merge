@@ -6,6 +6,7 @@ import { MaintenanceMethodData, MaintenanceEquipmentDetails } from '@/types/main
 export interface MaintenancePdfPayload {
   reportDate: string;
   reportTitle: string;
+  projectName: string;
   equipmentDetails: {
     equipmentType: string;
     location: string;
@@ -51,6 +52,50 @@ export interface MaintenancePdfPayload {
 }
 
 /**
+ * Extract just the time value from a verbose duration string
+ * e.g., "8 hours 10 minutes (including setup...)" → "8 hours 10 minutes"
+ */
+function extractDurationValue(duration: string | undefined): string {
+  if (!duration) return 'Not specified';
+  
+  // Match time patterns like "8 hours 10 minutes", "2-3 hours", "45 mins"
+  const timeMatch = duration.match(/^(\d+\.?\d*\s*(?:to|-|\s)?\s*\d*\.?\d*\s*(?:hours?|hrs?|minutes?|mins?|days?|weeks?)(?:\s*(?:and|,)?\s*\d+\.?\d*\s*(?:hours?|hrs?|minutes?|mins?))?)/i);
+  
+  if (timeMatch) {
+    return timeMatch[1].trim();
+  }
+  
+  // If no match, return first part before parenthesis or semicolon
+  const shortMatch = duration.match(/^([^(;]+)/);
+  return shortMatch ? shortMatch[1].trim() : duration;
+}
+
+/**
+ * Extract condition status from verbose condition descriptions
+ * Returns "Good", "Monitor", "Immediate Action", or the original if short enough
+ */
+function extractConditionStatus(condition: string | undefined): string {
+  if (!condition) return 'Not assessed';
+  
+  const conditionLower = condition.toLowerCase();
+  
+  // Check for known status keywords
+  if (conditionLower.includes('immediate action')) return 'Immediate Action';
+  if (conditionLower.includes('critical')) return 'Critical';
+  if (conditionLower.includes('poor')) return 'Poor';
+  if (conditionLower.includes('monitor')) return 'Monitor';
+  if (conditionLower.includes('satisfactory')) return 'Satisfactory';
+  if (conditionLower.includes('good')) return 'Good';
+  if (conditionLower.includes('excellent')) return 'Excellent';
+  
+  // If condition is already short, return as-is
+  if (condition.length <= 30) return condition;
+  
+  // Default fallback
+  return 'Requires Assessment';
+}
+
+/**
  * Build properly structured payload for PDF Monkey template
  */
 export function buildMaintenancePdfPayload(
@@ -62,7 +107,7 @@ export function buildMaintenancePdfPayload(
     stepNumber: step.stepNumber,
     title: step.title || '',
     content: step.content || '',
-    estimatedDuration: step.estimatedDuration || 'Not specified',
+    estimatedDuration: extractDurationValue(step.estimatedDuration),
     safety: normalizeSafety(step.safety),
     toolsRequired: step.toolsRequired || [],
     materialsNeeded: step.materialsNeeded || [],
@@ -73,10 +118,14 @@ export function buildMaintenancePdfPayload(
   }));
 
   const equipmentType = methodData.executiveSummary?.equipmentType || equipmentDetails.equipmentType || 'Equipment';
+  
+  // Use location as project name, fallback to equipment type
+  const projectName = equipmentDetails.location || equipmentType;
 
   return {
     reportDate: new Date().toLocaleDateString('en-GB'),
     reportTitle: `Maintenance Instructions - ${equipmentType}`,
+    projectName: projectName,
     
     equipmentDetails: {
       equipmentType: equipmentDetails.equipmentType || equipmentType,
@@ -89,7 +138,7 @@ export function buildMaintenancePdfPayload(
       equipmentType: equipmentType,
       maintenanceType: methodData.executiveSummary?.maintenanceType || 'Periodic Inspection',
       recommendedFrequency: methodData.executiveSummary?.recommendedFrequency || 'Annual',
-      overallCondition: methodData.executiveSummary?.overallCondition || 'Not assessed',
+      overallCondition: extractConditionStatus(methodData.executiveSummary?.overallCondition),
       estimatedAge: methodData.executiveSummary?.estimatedAge || null,
       criticalFindings: methodData.executiveSummary?.criticalFindings || []
     },
@@ -98,7 +147,7 @@ export function buildMaintenancePdfPayload(
     
     summary: {
       totalSteps: methodData.summary?.totalSteps || transformedSteps.length,
-      estimatedDuration: methodData.summary?.estimatedDuration || 'Not specified',
+      estimatedDuration: extractDurationValue(methodData.summary?.estimatedDuration),
       overallRiskLevel: capitalise(methodData.summary?.overallRiskLevel) || 'Medium',
       toolsRequired: methodData.summary?.toolsRequired || [],
       materialsRequired: methodData.summary?.materialsRequired || [],
@@ -108,8 +157,6 @@ export function buildMaintenancePdfPayload(
     
     steps: transformedSteps,
     recommendations: methodData.recommendations || [],
-    
-    // Note: EICR observations removed as per user request
     
     metadata: {
       generatedAt: new Date().toISOString(),
