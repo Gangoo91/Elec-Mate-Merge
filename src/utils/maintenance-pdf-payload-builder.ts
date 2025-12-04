@@ -35,6 +35,7 @@ export interface MaintenancePdfPayload {
     stepNumber: number;
     title: string;
     content: string;
+    contentItems: string[];
     estimatedDuration: string;
     safety: string[];
     toolsRequired: string[];
@@ -68,6 +69,29 @@ function extractDurationValue(duration: string | undefined): string {
   // If no match, return first part before parenthesis or semicolon
   const shortMatch = duration.match(/^([^(;]+)/);
   return shortMatch ? shortMatch[1].trim() : duration;
+}
+
+/**
+ * Parse step content into an array of items
+ * Extracts numbered items (1., 2., 1), 2)) and converts to array
+ */
+function parseContentToArray(content: string | undefined): string[] {
+  if (!content) return [];
+  
+  // Check for numbered patterns like "1.", "2." or "1)", "2)"
+  const numberedPattern = /(?:^|\n)\s*\d+[.)]\s*/;
+  
+  if (!numberedPattern.test(content)) {
+    const trimmed = content.trim();
+    return trimmed ? [trimmed] : [];
+  }
+  
+  // Split by numbered patterns
+  const items = content.split(/(?:^|\n)\s*\d+[.)]\s*/)
+    .map(item => item.trim())
+    .filter(item => item.length > 0);
+  
+  return items;
 }
 
 /**
@@ -107,6 +131,7 @@ export function buildMaintenancePdfPayload(
     stepNumber: step.stepNumber,
     title: step.title || '',
     content: step.content || '',
+    contentItems: parseContentToArray(step.content),
     estimatedDuration: extractDurationValue(step.estimatedDuration),
     safety: normalizeSafety(step.safety),
     toolsRequired: step.toolsRequired || [],
