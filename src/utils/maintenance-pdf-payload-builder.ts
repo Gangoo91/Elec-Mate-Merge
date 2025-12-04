@@ -63,6 +63,55 @@ export interface MaintenancePdfPayload {
 }
 
 /**
+ * Sanitise text for PDF export - replace Unicode characters with ASCII equivalents
+ * Fixes "NO GLYPH" issues in PDF Monkey
+ */
+function sanitizeTextForPdf(text: string | undefined): string {
+  if (!text) return '';
+  
+  return text
+    // Em dash and en dash → hyphen
+    .replace(/[—–]/g, '-')
+    // Smart/curly quotes → straight quotes
+    .replace(/[""]/g, '"')
+    .replace(/['']/g, "'")
+    // Bullet points → hyphen
+    .replace(/[•·]/g, '-')
+    // Ellipsis → three dots
+    .replace(/…/g, '...')
+    // Degree symbol → word
+    .replace(/°/g, ' deg')
+    // Non-breaking space → regular space
+    .replace(/\u00A0/g, ' ')
+    // Mathematical symbols
+    .replace(/[×]/g, 'x')
+    .replace(/[÷]/g, '/')
+    .replace(/[±]/g, '+/-')
+    .replace(/[≤]/g, '<=')
+    .replace(/[≥]/g, '>=')
+    .replace(/[≈]/g, '~')
+    // Greek letters commonly used
+    .replace(/Ω/g, 'Ohms')
+    .replace(/μ/g, 'u')
+    // Trademark/copyright
+    .replace(/[™®©]/g, '')
+    // Fractions
+    .replace(/½/g, '1/2')
+    .replace(/¼/g, '1/4')
+    .replace(/¾/g, '3/4')
+    // Remove any remaining non-ASCII
+    .replace(/[^\x00-\x7F]/g, '');
+}
+
+/**
+ * Sanitise an array of strings for PDF export
+ */
+function sanitizeArrayForPdf(arr: string[] | undefined): string[] {
+  if (!arr) return [];
+  return arr.map(item => sanitizeTextForPdf(item));
+}
+
+/**
  * Extract just the time value from a verbose duration string
  * e.g., "8 hours 10 minutes (including setup...)" → "8 hours 10 minutes"
  */
@@ -73,12 +122,12 @@ function extractDurationValue(duration: string | undefined): string {
   const timeMatch = duration.match(/^(\d+\.?\d*\s*(?:to|-|\s)?\s*\d*\.?\d*\s*(?:hours?|hrs?|minutes?|mins?|days?|weeks?)(?:\s*(?:and|,)?\s*\d+\.?\d*\s*(?:hours?|hrs?|minutes?|mins?))?)/i);
   
   if (timeMatch) {
-    return timeMatch[1].trim();
+    return sanitizeTextForPdf(timeMatch[1].trim());
   }
   
   // If no match, return first part before parenthesis or semicolon
   const shortMatch = duration.match(/^([^(;]+)/);
-  return shortMatch ? shortMatch[1].trim() : duration;
+  return sanitizeTextForPdf(shortMatch ? shortMatch[1].trim() : duration);
 }
 
 /**
@@ -92,13 +141,13 @@ function parseContentToArray(content: string | undefined): string[] {
   const numberedPattern = /(?:^|\n)\s*\d+[.)]\s*/;
   
   if (!numberedPattern.test(content)) {
-    const trimmed = content.trim();
+    const trimmed = sanitizeTextForPdf(content.trim());
     return trimmed ? [trimmed] : [];
   }
   
   // Split by numbered patterns
   const items = content.split(/(?:^|\n)\s*\d+[.)]\s*/)
-    .map(item => item.trim())
+    .map(item => sanitizeTextForPdf(item.trim()))
     .filter(item => item.length > 0);
   
   return items;
@@ -122,11 +171,11 @@ function parseContentSections(content: string | undefined): ContentSections {
   
   // Extract WHAT section
   const whatMatch = content.match(/WHAT[:.]\s*([\s\S]*?)(?=HOW[:.|\s]|WHAT TO LOOK FOR|Common faults|Acceptance criteria|$)/i);
-  if (whatMatch) sections.what = whatMatch[1].trim();
+  if (whatMatch) sections.what = sanitizeTextForPdf(whatMatch[1].trim());
   
   // Extract HOW section
   const howMatch = content.match(/HOW[:.]\s*([\s\S]*?)(?=WHAT[:.|\s]|WHAT TO LOOK FOR|Common faults|Acceptance criteria|$)/i);
-  if (howMatch) sections.how = howMatch[1].trim();
+  if (howMatch) sections.how = sanitizeTextForPdf(howMatch[1].trim());
   
   // Extract WHAT TO LOOK FOR (numbered items)
   const lookForMatch = content.match(/WHAT TO LOOK FOR[:.]\s*([\s\S]*?)(?=Common faults|Acceptance criteria|$)/i);
@@ -136,11 +185,11 @@ function parseContentSections(content: string | undefined): ContentSections {
   
   // Extract Common faults
   const faultsMatch = content.match(/Common faults[:.]\s*([\s\S]*?)(?=Acceptance criteria|$)/i);
-  if (faultsMatch) sections.commonFaults = faultsMatch[1].trim();
+  if (faultsMatch) sections.commonFaults = sanitizeTextForPdf(faultsMatch[1].trim());
   
   // Extract Acceptance criteria
   const criteriaMatch = content.match(/Acceptance criteria[:.]\s*([\s\S]*?)$/i);
-  if (criteriaMatch) sections.acceptanceCriteria = criteriaMatch[1].trim();
+  if (criteriaMatch) sections.acceptanceCriteria = sanitizeTextForPdf(criteriaMatch[1].trim());
   
   return sections;
 }
@@ -171,8 +220,8 @@ function extractConditionStatus(condition: string | undefined): string {
   if (conditionLower.includes('good')) return 'Good';
   if (conditionLower.includes('excellent')) return 'Excellent';
   
-  // If condition is already short, return as-is
-  if (condition.length <= 30) return condition;
+  // If condition is already short, return as-is (sanitised)
+  if (condition.length <= 30) return sanitizeTextForPdf(condition);
   
   // Default fallback
   return 'Requires Assessment';
@@ -185,30 +234,30 @@ export function buildMaintenancePdfPayload(
   methodData: MaintenanceMethodData,
   equipmentDetails: MaintenanceEquipmentDetails
 ): MaintenancePdfPayload {
-  // Transform steps with proper fallbacks
+  // Transform steps with proper fallbacks and sanitisation
   const transformedSteps = (methodData.steps || []).map(step => ({
     stepNumber: step.stepNumber,
-    title: step.title || '',
-    content: step.content || '',
+    title: sanitizeTextForPdf(step.title),
+    content: sanitizeTextForPdf(step.content),
     contentItems: parseContentToArray(step.content),
     contentSections: parseContentSections(step.content),
     estimatedDuration: extractDurationValue(step.estimatedDuration),
     riskLevel: capitalise(step.riskLevel) || 'Medium',
-    safety: normalizeSafety(step.safety),
-    toolsRequired: step.toolsRequired || [],
-    materialsNeeded: step.materialsNeeded || [],
-    qualifications: step.qualifications || [],
-    inspectionCheckpoints: step.inspectionCheckpoints || [],
-    linkedHazards: step.linkedHazards || [],
-    bsReferences: step.bsReferences || [],
-    observations: step.observations || [],
-    defectCodes: step.defectCodes || []
+    safety: sanitizeArrayForPdf(normalizeSafety(step.safety)),
+    toolsRequired: sanitizeArrayForPdf(step.toolsRequired),
+    materialsNeeded: sanitizeArrayForPdf(step.materialsNeeded),
+    qualifications: sanitizeArrayForPdf(step.qualifications),
+    inspectionCheckpoints: sanitizeArrayForPdf(step.inspectionCheckpoints),
+    linkedHazards: sanitizeArrayForPdf(step.linkedHazards),
+    bsReferences: sanitizeArrayForPdf(step.bsReferences),
+    observations: sanitizeArrayForPdf(step.observations),
+    defectCodes: sanitizeArrayForPdf(step.defectCodes)
   }));
 
-  const equipmentType = methodData.executiveSummary?.equipmentType || equipmentDetails.equipmentType || 'Equipment';
+  const equipmentType = sanitizeTextForPdf(methodData.executiveSummary?.equipmentType || equipmentDetails.equipmentType || 'Equipment');
   
   // Use location as project name, fallback to equipment type
-  const projectName = equipmentDetails.location || equipmentType;
+  const projectName = sanitizeTextForPdf(equipmentDetails.location || equipmentType);
 
   return {
     reportDate: new Date().toLocaleDateString('en-GB'),
@@ -216,35 +265,35 @@ export function buildMaintenancePdfPayload(
     projectName: projectName,
     
     equipmentDetails: {
-      equipmentType: equipmentDetails.equipmentType || equipmentType,
-      location: equipmentDetails.location || 'Not specified',
+      equipmentType: sanitizeTextForPdf(equipmentDetails.equipmentType) || equipmentType,
+      location: sanitizeTextForPdf(equipmentDetails.location) || 'Not specified',
       installationType: capitalise(equipmentDetails.installationType) || 'Commercial',
-      estimatedAge: methodData.executiveSummary?.estimatedAge || null
+      estimatedAge: sanitizeTextForPdf(methodData.executiveSummary?.estimatedAge) || null
     },
     
     executiveSummary: {
       equipmentType: equipmentType,
-      maintenanceType: methodData.executiveSummary?.maintenanceType || 'Periodic Inspection',
-      recommendedFrequency: methodData.executiveSummary?.recommendedFrequency || 'Annual',
+      maintenanceType: sanitizeTextForPdf(methodData.executiveSummary?.maintenanceType) || 'Periodic Inspection',
+      recommendedFrequency: sanitizeTextForPdf(methodData.executiveSummary?.recommendedFrequency) || 'Annual',
       overallCondition: extractConditionStatus(methodData.executiveSummary?.overallCondition),
-      estimatedAge: methodData.executiveSummary?.estimatedAge || null,
-      criticalFindings: methodData.executiveSummary?.criticalFindings || []
+      estimatedAge: sanitizeTextForPdf(methodData.executiveSummary?.estimatedAge) || null,
+      criticalFindings: sanitizeArrayForPdf(methodData.executiveSummary?.criticalFindings)
     },
     
-    maintenanceGuide: methodData.maintenanceGuide || '',
+    maintenanceGuide: sanitizeTextForPdf(methodData.maintenanceGuide),
     
     summary: {
       totalSteps: methodData.summary?.totalSteps || transformedSteps.length,
       estimatedDuration: extractDurationValue(methodData.summary?.estimatedDuration),
       overallRiskLevel: capitalise(methodData.summary?.overallRiskLevel) || 'Medium',
-      toolsRequired: methodData.summary?.toolsRequired || [],
-      materialsRequired: methodData.summary?.materialsRequired || [],
-      requiredQualifications: methodData.summary?.requiredQualifications || [],
-      criticalSafetyNotes: methodData.summary?.criticalSafetyNotes || []
+      toolsRequired: sanitizeArrayForPdf(methodData.summary?.toolsRequired),
+      materialsRequired: sanitizeArrayForPdf(methodData.summary?.materialsRequired),
+      requiredQualifications: sanitizeArrayForPdf(methodData.summary?.requiredQualifications),
+      criticalSafetyNotes: sanitizeArrayForPdf(methodData.summary?.criticalSafetyNotes)
     },
     
     steps: transformedSteps,
-    recommendations: methodData.recommendations || [],
+    recommendations: sanitizeArrayForPdf(methodData.recommendations),
     
     metadata: {
       generatedAt: new Date().toISOString(),
@@ -264,4 +313,3 @@ function normalizeSafety(safety: any[] | undefined): string[] {
     return String(item);
   });
 }
-
