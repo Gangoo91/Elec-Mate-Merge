@@ -17,6 +17,9 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
   const [job, setJob] = useState<MaintenanceMethodJob | null>(null);
   const [isPolling, setIsPolling] = useState(false);
   
+  // Use ref for polling state to avoid stale closure issues
+  const isPollingRef = useRef(false);
+  
   // Activity tracking for stuck job detection
   const lastProgressRef = useRef(0);
   const lastCurrentStepRef = useRef<string>('');
@@ -68,6 +71,7 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
                 error_message: 'Generation timed out - no progress for 6 minutes. Please try again.'
               })
               .eq('id', jobId);
+            isPollingRef.current = false;
             setIsPolling(false);
             return;
           }
@@ -76,12 +80,15 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
 
       // Stop polling if job is in terminal state
       if (data.status === 'completed' || data.status === 'failed' || data.status === 'cancelled') {
+        console.log('✅ Job reached terminal state:', data.status);
+        isPollingRef.current = false;
         setTimeout(() => {
           setIsPolling(false);
         }, 500); // Delay to ensure state propagates
       }
     } catch (error) {
       console.error('Error fetching maintenance method job:', error);
+      isPollingRef.current = false;
       setIsPolling(false);
     }
   }, [jobId]);
@@ -89,6 +96,7 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
   useEffect(() => {
     if (!jobId) {
       setJob(null);
+      isPollingRef.current = false;
       setIsPolling(false);
       return;
     }
@@ -99,6 +107,7 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
     lastActivityUpdateRef.current = Date.now();
 
     // Start polling
+    isPollingRef.current = true;
     setIsPolling(true);
     fetchJob();
 
@@ -108,7 +117,9 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
     let timeoutId: number;
 
     const poll = () => {
-      if (!isPolling) return;
+      // Use ref to check current polling state (avoids stale closure)
+      if (!isPollingRef.current) return;
+      
       fetchJob();
       pollCount++;
       
@@ -130,11 +141,13 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
     poll();
 
     return () => {
+      // Stop polling on cleanup
+      isPollingRef.current = false;
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
     };
-  }, [jobId, fetchJob, isPolling]);
+  }, [jobId, fetchJob]); // Removed isPolling from dependencies
 
   const cancelJob = useCallback(async () => {
     if (!jobId) return;
