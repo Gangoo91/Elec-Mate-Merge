@@ -36,7 +36,15 @@ export interface MaintenancePdfPayload {
     title: string;
     content: string;
     contentItems: string[];
+    contentSections: {
+      what?: string;
+      how?: string;
+      whatToLookFor?: string[];
+      commonFaults?: string;
+      acceptanceCriteria?: string;
+    };
     estimatedDuration: string;
+    riskLevel: string;
     safety: string[];
     toolsRequired: string[];
     materialsNeeded: string[];
@@ -44,6 +52,8 @@ export interface MaintenancePdfPayload {
     inspectionCheckpoints: string[];
     linkedHazards: string[];
     bsReferences: string[];
+    observations: string[];
+    defectCodes: string[];
   }>;
   recommendations: string[];
   metadata: {
@@ -94,6 +104,55 @@ function parseContentToArray(content: string | undefined): string[] {
   return items;
 }
 
+interface ContentSections {
+  what?: string;
+  how?: string;
+  whatToLookFor?: string[];
+  commonFaults?: string;
+  acceptanceCriteria?: string;
+}
+
+/**
+ * Parse content into structured sections (WHAT, HOW, WHAT TO LOOK FOR, etc.)
+ */
+function parseContentSections(content: string | undefined): ContentSections {
+  if (!content) return {};
+  
+  const sections: ContentSections = {};
+  
+  // Extract WHAT section
+  const whatMatch = content.match(/WHAT[:.]\s*([\s\S]*?)(?=HOW[:.|\s]|WHAT TO LOOK FOR|Common faults|Acceptance criteria|$)/i);
+  if (whatMatch) sections.what = whatMatch[1].trim();
+  
+  // Extract HOW section
+  const howMatch = content.match(/HOW[:.]\s*([\s\S]*?)(?=WHAT[:.|\s]|WHAT TO LOOK FOR|Common faults|Acceptance criteria|$)/i);
+  if (howMatch) sections.how = howMatch[1].trim();
+  
+  // Extract WHAT TO LOOK FOR (numbered items)
+  const lookForMatch = content.match(/WHAT TO LOOK FOR[:.]\s*([\s\S]*?)(?=Common faults|Acceptance criteria|$)/i);
+  if (lookForMatch) {
+    sections.whatToLookFor = parseContentToArray(lookForMatch[1]);
+  }
+  
+  // Extract Common faults
+  const faultsMatch = content.match(/Common faults[:.]\s*([\s\S]*?)(?=Acceptance criteria|$)/i);
+  if (faultsMatch) sections.commonFaults = faultsMatch[1].trim();
+  
+  // Extract Acceptance criteria
+  const criteriaMatch = content.match(/Acceptance criteria[:.]\s*([\s\S]*?)$/i);
+  if (criteriaMatch) sections.acceptanceCriteria = criteriaMatch[1].trim();
+  
+  return sections;
+}
+
+/**
+ * Capitalise first letter of a string
+ */
+function capitalise(str: string | undefined): string {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
 /**
  * Extract condition status from verbose condition descriptions
  * Returns "Good", "Monitor", "Immediate Action", or the original if short enough
@@ -132,14 +191,18 @@ export function buildMaintenancePdfPayload(
     title: step.title || '',
     content: step.content || '',
     contentItems: parseContentToArray(step.content),
+    contentSections: parseContentSections(step.content),
     estimatedDuration: extractDurationValue(step.estimatedDuration),
+    riskLevel: capitalise(step.riskLevel) || 'Medium',
     safety: normalizeSafety(step.safety),
     toolsRequired: step.toolsRequired || [],
     materialsNeeded: step.materialsNeeded || [],
     qualifications: step.qualifications || [],
     inspectionCheckpoints: step.inspectionCheckpoints || [],
     linkedHazards: step.linkedHazards || [],
-    bsReferences: step.bsReferences || []
+    bsReferences: step.bsReferences || [],
+    observations: step.observations || [],
+    defectCodes: step.defectCodes || []
   }));
 
   const equipmentType = methodData.executiveSummary?.equipmentType || equipmentDetails.equipmentType || 'Equipment';
@@ -202,10 +265,3 @@ function normalizeSafety(safety: any[] | undefined): string[] {
   });
 }
 
-/**
- * Capitalise first letter
- */
-function capitalise(str: string | undefined): string {
-  if (!str) return '';
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-}
