@@ -162,10 +162,22 @@ export const MaintenanceMethodInterface = () => {
       if (error) throw error;
 
       if (data.downloadUrl) {
-        window.open(data.downloadUrl, '_blank');
+        // Fetch PDF as blob and download with custom filename
+        const pdfResponse = await fetch(data.downloadUrl);
+        const pdfBlob = await pdfResponse.blob();
+        
+        const blobUrl = URL.createObjectURL(pdfBlob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = data.filename || 'Maintenance Instructions.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(blobUrl);
+        
         toast({
-          title: 'PDF Generated',
-          description: 'Your maintenance instructions PDF is ready'
+          title: 'PDF Downloaded',
+          description: `Downloaded as ${data.filename || 'Maintenance Instructions.pdf'}`
         });
       } else {
         throw new Error('No download URL returned');
