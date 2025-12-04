@@ -39,9 +39,11 @@ export interface MaintenancePdfPayload {
     contentSections: {
       what?: string;
       how?: string;
-      whatToLookFor?: string[];
-      commonFaults?: string;
+      whatToLookForIntro?: string;
+      whatToLookForItems?: string[];
       acceptanceCriteria?: string;
+      commonFaults?: string;
+      bsReferences?: string;
     };
     estimatedDuration: string;
     riskLevel: string;
@@ -156,40 +158,92 @@ function parseContentToArray(content: string | undefined): string[] {
 interface ContentSections {
   what?: string;
   how?: string;
-  whatToLookFor?: string[];
-  commonFaults?: string;
+  whatToLookForIntro?: string;
+  whatToLookForItems?: string[];
   acceptanceCriteria?: string;
+  commonFaults?: string;
+  bsReferences?: string;
+}
+
+/**
+ * Extract numbered items from text (handles "1 Verify", "2 Confirm" format)
+ */
+function extractNumberedItems(text: string): string[] {
+  if (!text) return [];
+  
+  const items: string[] = [];
+  
+  // Match pattern: number followed by space then capital letter, capture until next number or end
+  // Handles: "1 Verify access space..." or "1. Verify access space..."
+  const regex = /(\d+)[.\s]+([A-Z][^0-9]*?)(?=\s*\d+\s+[A-Z]|$)/g;
+  let match;
+  
+  while ((match = regex.exec(text)) !== null) {
+    const item = sanitizeTextForPdf(match[2].trim());
+    if (item.length > 3) {
+      items.push(item);
+    }
+  }
+  
+  return items;
 }
 
 /**
  * Parse content into structured sections (WHAT, HOW, WHAT TO LOOK FOR, etc.)
+ * Handles AI output format with Actionable subpoints and Acceptance sections
  */
 function parseContentSections(content: string | undefined): ContentSections {
   if (!content) return {};
   
   const sections: ContentSections = {};
   
-  // Extract WHAT section
-  const whatMatch = content.match(/WHAT[:.]\s*([\s\S]*?)(?=HOW[:.|\s]|WHAT TO LOOK FOR|Common faults|Acceptance criteria|$)/i);
-  if (whatMatch) sections.what = sanitizeTextForPdf(whatMatch[1].trim());
-  
-  // Extract HOW section
-  const howMatch = content.match(/HOW[:.]\s*([\s\S]*?)(?=WHAT[:.|\s]|WHAT TO LOOK FOR|Common faults|Acceptance criteria|$)/i);
-  if (howMatch) sections.how = sanitizeTextForPdf(howMatch[1].trim());
-  
-  // Extract WHAT TO LOOK FOR (numbered items)
-  const lookForMatch = content.match(/WHAT TO LOOK FOR[:.]\s*([\s\S]*?)(?=Common faults|Acceptance criteria|$)/i);
-  if (lookForMatch) {
-    sections.whatToLookFor = parseContentToArray(lookForMatch[1]);
+  // 1. Extract WHAT section (stops at HOW:)
+  const whatMatch = content.match(/WHAT[:.]\s*([\s\S]*?)(?=\s*HOW[:.]\s)/i);
+  if (whatMatch) {
+    sections.what = sanitizeTextForPdf(whatMatch[1].trim());
   }
   
-  // Extract Common faults
-  const faultsMatch = content.match(/Common faults[:.]\s*([\s\S]*?)(?=Acceptance criteria|$)/i);
-  if (faultsMatch) sections.commonFaults = sanitizeTextForPdf(faultsMatch[1].trim());
+  // 2. Extract HOW section (stops at WHAT TO LOOK FOR:)
+  const howMatch = content.match(/HOW[:.]\s*([\s\S]*?)(?=\s*WHAT TO LOOK FOR[:.]\s)/i);
+  if (howMatch) {
+    sections.how = sanitizeTextForPdf(howMatch[1].trim());
+  }
   
-  // Extract Acceptance criteria
-  const criteriaMatch = content.match(/Acceptance criteria[:.]\s*([\s\S]*?)$/i);
-  if (criteriaMatch) sections.acceptanceCriteria = sanitizeTextForPdf(criteriaMatch[1].trim());
+  // 3. Extract WHAT TO LOOK FOR - needs special handling for sub-structure
+  const lookForMatch = content.match(/WHAT TO LOOK FOR[:.]\s*([\s\S]*?)(?=\s*Common faults[:.]\s|$)/i);
+  if (lookForMatch) {
+    const lookForContent = lookForMatch[1];
+    
+    // 3a. Extract intro (before "Actionable subpoints:")
+    const introMatch = lookForContent.match(/^([\s\S]*?)(?=\s*Actionable subpoints[:.]\s|$)/i);
+    if (introMatch && introMatch[1].trim()) {
+      sections.whatToLookForIntro = sanitizeTextForPdf(introMatch[1].trim());
+    }
+    
+    // 3b. Extract actionable subpoints numbered items
+    const actionableMatch = lookForContent.match(/Actionable subpoints[:.]\s*([\s\S]*?)(?=\s*Acceptance[:.]\s|$)/i);
+    if (actionableMatch) {
+      sections.whatToLookForItems = extractNumberedItems(actionableMatch[1]);
+    }
+    
+    // 3c. Extract Acceptance criteria (note: AI uses "Acceptance:" not "Acceptance criteria:")
+    const acceptMatch = lookForContent.match(/Acceptance[:.]\s*([\s\S]*?)$/i);
+    if (acceptMatch) {
+      sections.acceptanceCriteria = sanitizeTextForPdf(acceptMatch[1].trim());
+    }
+  }
+  
+  // 4. Extract Common faults (stops at BS refs:)
+  const faultsMatch = content.match(/Common faults[:.]\s*([\s\S]*?)(?=\s*BS refs[:.]\s|$)/i);
+  if (faultsMatch) {
+    sections.commonFaults = sanitizeTextForPdf(faultsMatch[1].trim());
+  }
+  
+  // 5. Extract BS refs separately
+  const bsRefsMatch = content.match(/BS refs[:.]\s*([\s\S]*?)$/i);
+  if (bsRefsMatch) {
+    sections.bsReferences = sanitizeTextForPdf(bsRefsMatch[1].trim());
+  }
   
   return sections;
 }
