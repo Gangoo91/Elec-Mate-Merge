@@ -855,7 +855,7 @@ ${isDomestic ? `
         { role: 'user', content: userPrompt }
       ],
       response_format: { type: 'json_object' },
-      max_completion_tokens: 4500
+      max_completion_tokens: 16000  // Increased from 4500 to prevent truncation
     }),
   });
 
@@ -865,9 +865,55 @@ ${isDomestic ? `
   }
 
   const aiResponse = await response.json();
-  const content = aiResponse.choices[0].message.content;
+  const finishReason = aiResponse.choices[0].finish_reason;
+  const completionTokens = aiResponse.usage?.completion_tokens || 0;
   
-  return JSON.parse(content);
+  console.log(`📊 Circuit ${circuitIndex + 1} response: ${completionTokens} tokens, finish_reason: ${finishReason}`);
+  
+  // Check for truncation
+  if (finishReason === 'length') {
+    console.warn(`⚠️ Circuit ${circuitIndex + 1} response truncated - output exceeded ${completionTokens} tokens`);
+  }
+  
+  let content = aiResponse.choices[0].message.content;
+  
+  // Attempt to parse JSON, with repair if truncated
+  try {
+    return JSON.parse(content);
+  } catch (parseError) {
+    console.error(`⚠️ JSON parse failed for circuit ${circuitIndex + 1}, attempting repair...`);
+    
+    // Try to close unclosed brackets/braces for truncated JSON
+    const openBraces = (content.match(/{/g) || []).length;
+    const closeBraces = (content.match(/}/g) || []).length;
+    const openBrackets = (content.match(/\[/g) || []).length;
+    const closeBrackets = (content.match(/]/g) || []).length;
+    
+    // Close any unclosed arrays first, then objects
+    const missingBrackets = ']'.repeat(Math.max(0, openBrackets - closeBrackets));
+    const missingBraces = '}'.repeat(Math.max(0, openBraces - closeBraces));
+    
+    // Check if content ends mid-string and close it
+    const lastQuoteIndex = content.lastIndexOf('"');
+    const hasUnclosedString = lastQuoteIndex > content.lastIndexOf(':') && 
+                              content.substring(lastQuoteIndex).indexOf(',') === -1 &&
+                              content.substring(lastQuoteIndex).indexOf('}') === -1;
+    
+    if (hasUnclosedString) {
+      content = content + '"';
+    }
+    
+    const repairedContent = content + missingBrackets + missingBraces;
+    
+    try {
+      const repaired = JSON.parse(repairedContent);
+      console.log(`✅ JSON repair successful for circuit ${circuitIndex + 1}`);
+      return repaired;
+    } catch (repairError) {
+      console.error(`❌ JSON repair failed for circuit ${circuitIndex + 1}:`, repairError);
+      throw new Error(`Failed to parse installation guidance for circuit ${circuitIndex + 1}: ${parseError instanceof Error ? parseError.message : 'Invalid JSON'} (finish_reason: ${finishReason}, tokens: ${completionTokens})`);
+    }
+  }
 }
 
 async function generateInstallationGuidance(
