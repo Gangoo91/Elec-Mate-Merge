@@ -122,23 +122,24 @@ export const InstallationGuidancePanel = ({ guidance }: InstallationGuidancePane
               {guidance.materialsRequired?.map((material, idx) => (
                 <div
                   key={idx}
-                  className="p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors text-left space-y-1.5"
+                  className="p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors text-left space-y-2"
                 >
-                  {/* Top row: Icon + Item + Quantity badge */}
-                  <div className="flex items-center gap-3">
-                    <div className="shrink-0 w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                      <Package className="h-4 w-4 text-blue-500" />
+                  {/* Row 1: Icon + Item name */}
+                  <div className="flex items-start gap-3">
+                    <div className="shrink-0 w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center mt-0.5">
+                      <Package className="h-3 w-3 text-blue-500" />
                     </div>
-                    <p className="flex-1 font-medium text-sm text-white">{material.item}</p>
-                    <Badge variant="secondary" className="font-mono shrink-0">
-                      {material.quantity}
-                    </Badge>
+                    <p className="font-medium text-sm text-white">{material.item}</p>
                   </div>
-                  {/* Specification - full width below, aligned past icon */}
-                  <p className="text-xs text-white/70 pl-11">{material.specification}</p>
-                  {/* Source - full width below */}
+                  {/* Row 2: Quantity badge */}
+                  <Badge variant="secondary" className="font-mono text-xs ml-9">
+                    {material.quantity}
+                  </Badge>
+                  {/* Row 3: Specification */}
+                  <p className="text-xs text-white/70 ml-9">{material.specification}</p>
+                  {/* Row 4: Source */}
                   {material.source && (
-                    <p className="text-xs text-white/70 pl-11">Source: {material.source}</p>
+                    <p className="text-xs text-white/70 ml-9">Source: {material.source}</p>
                   )}
                 </div>
               ))}
