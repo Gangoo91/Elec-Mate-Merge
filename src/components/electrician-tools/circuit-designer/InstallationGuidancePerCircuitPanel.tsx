@@ -7,10 +7,27 @@ import { CircuitDesign } from "@/types/installation-design";
 import { InstallationGuidancePanel } from "./InstallationGuidancePanel";
 import { Wrench, AlertCircle } from "lucide-react";
 
+// The backend may return either EnhancedInstallationGuidance directly or wrapped in { guidance: EnhancedInstallationGuidance }
+type GuidanceEntry = EnhancedInstallationGuidance | { guidance: EnhancedInstallationGuidance };
+
 interface InstallationGuidancePerCircuitPanelProps {
-  guidance: Record<string, EnhancedInstallationGuidance>;
+  guidance: Record<string, GuidanceEntry>;
   circuits: CircuitDesign[];
 }
+
+// Helper to extract the actual guidance object
+const extractGuidance = (entry: GuidanceEntry): EnhancedInstallationGuidance | undefined => {
+  if (!entry) return undefined;
+  // Check if it's wrapped in { guidance: ... }
+  if ('guidance' in entry && entry.guidance && typeof entry.guidance === 'object') {
+    return entry.guidance as EnhancedInstallationGuidance;
+  }
+  // Otherwise it's the direct object - check for expected properties
+  if ('safetyConsiderations' in entry || 'materialsRequired' in entry || 'executiveSummary' in entry) {
+    return entry as EnhancedInstallationGuidance;
+  }
+  return undefined;
+};
 
 export const InstallationGuidancePerCircuitPanel = ({ 
   guidance, 
@@ -71,49 +88,51 @@ export const InstallationGuidancePerCircuitPanel = ({
         </TabsList>
 
         {/* Display guidance for selected circuit */}
-        {circuitKeys.map((key) => (
-          <TabsContent key={key} value={key} className="mt-4">
-            {guidance[key] ? (
-              <>
-                {/* Circuit Header */}
-                <Card className="mb-4 border-primary/20 bg-primary/5">
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-base flex items-center gap-2">
-                      <Wrench className="h-5 w-5 text-primary" />
-                      {currentCircuit?.name || `Circuit ${circuitIndex + 1}`}
-                      <Badge variant="outline" className="ml-auto">
-                        {currentCircuit?.loadType || 'Unknown Load'}
-                      </Badge>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
-                      <div>
-                        <p className="text-muted-foreground text-xs">Cable Size</p>
-                        <p className="font-medium">{currentCircuit?.cableSize || '—'}mm²</p>
+        {circuitKeys.map((key) => {
+          const extractedGuidance = extractGuidance(guidance[key]);
+          return (
+            <TabsContent key={key} value={key} className="mt-4">
+              {extractedGuidance ? (
+                <>
+                  {/* Circuit Header */}
+                  <Card className="mb-4 border-primary/20 bg-primary/5">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-base flex items-center gap-2">
+                        <Wrench className="h-5 w-5 text-primary" />
+                        {currentCircuit?.name || `Circuit ${circuitIndex + 1}`}
+                        <Badge variant="outline" className="ml-auto">
+                          {currentCircuit?.loadType || 'Unknown Load'}
+                        </Badge>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+                        <div>
+                          <p className="text-muted-foreground text-xs">Cable Size</p>
+                          <p className="font-medium">{currentCircuit?.cableSize || '—'}mm²</p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground text-xs">Protection</p>
+                          <p className="font-medium">
+                            {typeof currentCircuit?.protectionDevice === 'object' 
+                              ? `${currentCircuit.protectionDevice.rating}A ${currentCircuit.protectionDevice.type} ${currentCircuit.protectionDevice.curve}`
+                              : currentCircuit?.protectionDevice || '—'}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground text-xs">Power</p>
+                          <p className="font-medium">{currentCircuit?.loadPower || '—'}W</p>
+                        </div>
+                        <div>
+                          <p className="text-muted-foreground text-xs">Length</p>
+                          <p className="font-medium">{currentCircuit?.cableLength || '—'}m</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-muted-foreground text-xs">Protection</p>
-                        <p className="font-medium">
-                          {typeof currentCircuit?.protectionDevice === 'object' 
-                            ? `${currentCircuit.protectionDevice.rating}A ${currentCircuit.protectionDevice.type} ${currentCircuit.protectionDevice.curve}`
-                            : currentCircuit?.protectionDevice || '—'}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-muted-foreground text-xs">Power</p>
-                        <p className="font-medium">{currentCircuit?.loadPower || '—'}W</p>
-                      </div>
-                      <div>
-                        <p className="text-muted-foreground text-xs">Length</p>
-                        <p className="font-medium">{currentCircuit?.cableLength || '—'}m</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
 
-                {/* Render guidance using existing component */}
-                <InstallationGuidancePanel guidance={guidance[key]} />
+                  {/* Render guidance using existing component */}
+                  <InstallationGuidancePanel guidance={extractedGuidance} />
               </>
             ) : (
               <Card className="border-warning/50 bg-warning/5">
@@ -130,8 +149,9 @@ export const InstallationGuidancePerCircuitPanel = ({
                 </CardContent>
               </Card>
             )}
-          </TabsContent>
-        ))}
+            </TabsContent>
+          );
+        })}
       </Tabs>
     </div>
   );
