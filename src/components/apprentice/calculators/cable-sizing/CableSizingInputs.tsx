@@ -144,7 +144,7 @@ const CableSizingForm = ({
             label="Ambient Temperature (°C)"
             type="text"
             inputMode="numeric"
-            value={inputs.ambientTemp || '30'}
+            value={inputs.ambientTemp ?? '30'}
             onChange={(e) => updateInput('ambientTemp', e.target.value)}
             placeholder="30"
             hint="Standard: 30°C"
@@ -155,7 +155,7 @@ const CableSizingForm = ({
             type="text"
             inputMode="numeric"
             min="1"
-            value={inputs.cableGrouping || '1'}
+            value={inputs.cableGrouping ?? '1'}
             onChange={(e) => updateInput('cableGrouping', e.target.value)}
             placeholder="1"
             hint="Affects current rating"
@@ -166,7 +166,7 @@ const CableSizingForm = ({
             type="text"
             inputMode="decimal"
             step="0.1"
-            value={inputs.voltageDrop || '3'}
+            value={inputs.voltageDrop ?? '3'}
             onChange={(e) => updateInput('voltageDrop', e.target.value)}
             placeholder="3"
             hint="Lighting: 3%, Power: 5%"
@@ -180,7 +180,7 @@ const CableSizingForm = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <MobileSelectWrapper
             label="Load Type"
-            value={inputs.loadType || 'resistive'}
+            value={inputs.loadType ?? 'resistive'}
             onValueChange={(value) => updateInput('loadType', value)}
             placeholder="Select load type"
             options={loadTypeOptions}
@@ -193,7 +193,7 @@ const CableSizingForm = ({
             step="0.1"
             min="0.1"
             max="1.0"
-            value={inputs.diversityFactor || '1.0'}
+            value={inputs.diversityFactor ?? '1.0'}
             onChange={(e) => updateInput('diversityFactor', e.target.value)}
             placeholder="1.0"
             hint="1.0 = 100% simultaneous load"
@@ -207,7 +207,7 @@ const CableSizingForm = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <MobileSelectWrapper
             label="System Voltage (V)"
-            value={inputs.voltage || '230'}
+            value={inputs.voltage ?? '230'}
             onValueChange={(value) => updateInput('voltage', value)}
             placeholder="Select voltage"
             options={voltageOptions}
@@ -220,7 +220,7 @@ const CableSizingForm = ({
             step="0.01"
             min="0.1"
             max="1.0"
-            value={inputs.powerFactor || '0.9'}
+            value={inputs.powerFactor ?? '0.9'}
             onChange={(e) => updateInput('powerFactor', e.target.value)}
             placeholder="0.9"
             hint="Typical: 0.8-0.9"

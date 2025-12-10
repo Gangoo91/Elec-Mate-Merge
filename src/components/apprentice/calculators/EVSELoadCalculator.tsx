@@ -207,8 +207,9 @@ const EVSELoadCalculator = () => {
             <div className="space-y-3">
               <MobileInput
                 label="Supply Voltage"
-                type="number"
-                value={supplyVoltage}
+                type="text"
+                inputMode="decimal"
+                value={supplyVoltage ?? ''}
                 onChange={(e) => setSupplyVoltage(e.target.value)}
                 placeholder="415"
                 unit="V"
@@ -216,8 +217,9 @@ const EVSELoadCalculator = () => {
 
               <MobileInput
                 label="Available Capacity"
-                type="number"
-                value={availableCapacity}
+                type="text"
+                inputMode="decimal"
+                value={availableCapacity ?? ''}
                 onChange={(e) => setAvailableCapacity(e.target.value)}
                 placeholder="100"
                 unit="kW"
@@ -239,8 +241,9 @@ const EVSELoadCalculator = () => {
               <div className="grid grid-cols-2 gap-3">
                 <MobileInput
                   label="Cable Length"
-                  type="number"
-                  value={cableLength}
+                  type="text"
+                  inputMode="decimal"
+                  value={cableLength ?? ''}
                   onChange={(e) => setCableLength(e.target.value)}
                   placeholder="50"
                   unit="m"
@@ -248,11 +251,12 @@ const EVSELoadCalculator = () => {
 
                 <MobileInput
                   label="Power Factor"
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
                   step="0.01"
                   min="0.8"
                   max="1"
-                  value={powerFactor}
+                  value={powerFactor ?? ''}
                   onChange={(e) => setPowerFactor(e.target.value)}
                   placeholder="0.95"
                 />

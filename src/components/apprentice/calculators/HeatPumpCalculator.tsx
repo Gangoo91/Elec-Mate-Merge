@@ -188,7 +188,7 @@ const HeatPumpCalculator = () => {
             <MobileInputWrapper
               label="Floor Area"
               placeholder="Enter total floor area"
-              value={inputs.floorArea || ""}
+              value={inputs.floorArea ?? ""}
               onChange={(value) => setInputs(prev => ({ ...prev, floorArea: value }))}
               type="text"
               inputMode="decimal"

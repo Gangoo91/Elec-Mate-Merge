@@ -75,8 +75,9 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <MobileInput
               label="Pool Volume"
-              type="number"
-              value={inputs.poolVolume || ''}
+              type="text"
+              inputMode="decimal"
+              value={inputs.poolVolume ?? ''}
               onChange={(e) => onInputChange('poolVolume', parseFloat(e.target.value) || 0)}
               placeholder="50000"
               unit="L"
@@ -84,8 +85,9 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
             />
             <MobileInput
               label="Cable Run Length"
-              type="number"
-              value={inputs.cableRunLength || ''}
+              type="text"
+              inputMode="decimal"
+              value={inputs.cableRunLength ?? ''}
               onChange={(e) => onInputChange('cableRunLength', parseFloat(e.target.value) || 0)}
               placeholder="25"
               unit="m"
@@ -96,24 +98,27 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <MobileInput
               label="Length"
-              type="number"
-              value={inputs.poolLength || ''}
+              type="text"
+              inputMode="decimal"
+              value={inputs.poolLength ?? ''}
               onChange={(e) => onInputChange('poolLength', parseFloat(e.target.value) || 0)}
               placeholder="8"
               unit="m"
             />
             <MobileInput
               label="Width"
-              type="number"
-              value={inputs.poolWidth || ''}
+              type="text"
+              inputMode="decimal"
+              value={inputs.poolWidth ?? ''}
               onChange={(e) => onInputChange('poolWidth', parseFloat(e.target.value) || 0)}
               placeholder="4"
               unit="m"
             />
             <MobileInput
               label="Depth"
-              type="number"
-              value={inputs.poolDepth || ''}
+              type="text"
+              inputMode="decimal"
+              value={inputs.poolDepth ?? ''}
               onChange={(e) => onInputChange('poolDepth', parseFloat(e.target.value) || 0)}
               placeholder="1.5"
               unit="m"
@@ -294,8 +299,9 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <MobileInput
               label="Ambient Temperature"
-              type="number"
-              value={inputs.ambientTemperature || ''}
+              type="text"
+              inputMode="decimal"
+              value={inputs.ambientTemperature ?? ''}
               onChange={(e) => onInputChange('ambientTemperature', parseFloat(e.target.value) || 20)}
               placeholder="20"
               unit="°C"
@@ -303,8 +309,9 @@ const PoolInputs = ({ inputs, errors, onInputChange }: PoolInputsProps) => {
             />
             <MobileInput
               label="Soil Resistivity"
-              type="number"
-              value={inputs.soilResistivity || ''}
+              type="text"
+              inputMode="decimal"
+              value={inputs.soilResistivity ?? ''}
               onChange={(e) => onInputChange('soilResistivity', parseFloat(e.target.value) || 100)}
               placeholder="100"
               unit="Ω.m"
