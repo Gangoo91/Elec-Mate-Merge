@@ -101,7 +101,8 @@ const DataCentreCalculator = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <MobileInput
                 label="IT Load"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 value={itLoad}
                 onChange={(e) => setItLoad(e.target.value)}
                 placeholder="e.g., 500"
@@ -144,7 +145,8 @@ const DataCentreCalculator = () => {
               />
               <MobileInput
                 label="Design Margin"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 value={designMargin}
                 onChange={(e) => setDesignMargin(e.target.value)}
                 placeholder="e.g., 20"
@@ -167,7 +169,8 @@ const DataCentreCalculator = () => {
               />
               <MobileInput
                 label="UPS Battery Runtime"
-                type="number"
+                type="text"
+                inputMode="numeric"
                 value={upsBatteryHours}
                 onChange={(e) => setUpsBatteryHours(e.target.value)}
                 placeholder="e.g., 15"
@@ -175,7 +178,8 @@ const DataCentreCalculator = () => {
               />
               <MobileInput
                 label="UPS Efficiency"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 value={upsEfficiency}
                 onChange={(e) => setUpsEfficiency(e.target.value)}
                 placeholder="e.g., 95"
@@ -190,7 +194,8 @@ const DataCentreCalculator = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <MobileInput
                 label="Lights & Misc Load"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 value={lightsAndMisc}
                 onChange={(e) => setLightsAndMisc(e.target.value)}
                 placeholder="e.g., 5"
@@ -198,21 +203,21 @@ const DataCentreCalculator = () => {
               />
               <MobileInput
                 label="Energy Cost"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 value={energyCost}
                 onChange={(e) => setEnergyCost(e.target.value)}
                 placeholder="e.g., 0.15"
                 unit="£/kWh"
-                step="0.01"
               />
               <MobileInput
                 label="Carbon Factor"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 value={carbonFactor}
                 onChange={(e) => setCarbonFactor(e.target.value)}
                 placeholder="e.g., 0.233"
                 unit="kg CO2e/kWh"
-                step="0.001"
                 hint="UK grid carbon intensity"
               />
             </div>

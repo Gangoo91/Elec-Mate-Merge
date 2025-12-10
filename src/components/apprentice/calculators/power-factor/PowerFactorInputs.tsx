@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import SmartInputSuggestions from "../smart-features/SmartInputSuggestions";
@@ -66,10 +66,11 @@ const PowerFactorInputs = ({
       {calculationMethod === "power" ? (
         <>
           <div className="space-y-2">
-            <Label htmlFor="active-power">Active Power (kW or W)</Label>
-            <Input 
+            <MobileInput 
               id="active-power" 
-              type="number" 
+              label="Active Power (kW or W)"
+              type="text"
+              inputMode="decimal"
               placeholder="Enter active power" 
               className="bg-elec-dark border-elec-yellow/20"
               value={activePower}
@@ -77,9 +78,9 @@ const PowerFactorInputs = ({
                 setActivePower(e.target.value);
                 clearError('activePower');
               }}
+              error={errors.activePower}
+              hint="Real power consumed by the load"
             />
-            {errors.activePower && <p className="text-xs text-destructive">{errors.activePower}</p>}
-            <p className="text-xs text-muted-foreground">Real power consumed by the load</p>
             <SmartInputSuggestions
               fieldType="power"
               currentValue={activePower}
@@ -88,10 +89,11 @@ const PowerFactorInputs = ({
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="apparent-power">Apparent Power (kVA or VA)</Label>
-            <Input 
+            <MobileInput 
               id="apparent-power" 
-              type="number" 
+              label="Apparent Power (kVA or VA)"
+              type="text"
+              inputMode="decimal"
               placeholder="Enter apparent power" 
               className="bg-elec-dark border-elec-yellow/20"
               value={apparentPower}
@@ -99,9 +101,9 @@ const PowerFactorInputs = ({
                 setApparentPower(e.target.value);
                 clearError('apparentPower');
               }}
+              error={errors.apparentPower}
+              hint="Total power supplied to the circuit"
             />
-            {errors.apparentPower && <p className="text-xs text-destructive">{errors.apparentPower}</p>}
-            <p className="text-xs text-muted-foreground">Total power supplied to the circuit</p>
             <SmartInputSuggestions
               fieldType="power"
               currentValue={apparentPower}
@@ -113,10 +115,11 @@ const PowerFactorInputs = ({
       ) : (
         <>
           <div className="space-y-2">
-            <Label htmlFor="active-power">Active Power (kW or W)</Label>
-            <Input 
-              id="active-power" 
-              type="number" 
+            <MobileInput 
+              id="active-power-iv" 
+              label="Active Power (kW or W)"
+              type="text"
+              inputMode="decimal"
               placeholder="Enter active power" 
               className="bg-elec-dark border-elec-yellow/20"
               value={activePower}
@@ -124,8 +127,8 @@ const PowerFactorInputs = ({
                 setActivePower(e.target.value);
                 clearError('activePower');
               }}
+              error={errors.activePower}
             />
-            {errors.activePower && <p className="text-xs text-destructive">{errors.activePower}</p>}
             <SmartInputSuggestions
               fieldType="power"
               currentValue={activePower}
@@ -134,10 +137,11 @@ const PowerFactorInputs = ({
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="voltage">Voltage (V)</Label>
-            <Input 
+            <MobileInput 
               id="voltage" 
-              type="number" 
+              label="Voltage (V)"
+              type="text"
+              inputMode="decimal"
               placeholder="Enter voltage" 
               className="bg-elec-dark border-elec-yellow/20"
               value={voltage}
@@ -145,8 +149,8 @@ const PowerFactorInputs = ({
                 setVoltage(e.target.value);
                 clearError('voltage');
               }}
+              error={errors.voltage}
             />
-            {errors.voltage && <p className="text-xs text-destructive">{errors.voltage}</p>}
             <SmartInputSuggestions
               fieldType="voltage"
               currentValue={voltage}
@@ -155,10 +159,11 @@ const PowerFactorInputs = ({
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="current">Current (A)</Label>
-            <Input 
+            <MobileInput 
               id="current" 
-              type="number" 
+              label="Current (A)"
+              type="text"
+              inputMode="decimal"
               placeholder="Enter current" 
               className="bg-elec-dark border-elec-yellow/20"
               value={current}
@@ -166,8 +171,8 @@ const PowerFactorInputs = ({
                 setCurrent(e.target.value);
                 clearError('current');
               }}
+              error={errors.current}
             />
-            {errors.current && <p className="text-xs text-destructive">{errors.current}</p>}
             <SmartInputSuggestions
               fieldType="current"
               currentValue={current}
@@ -179,10 +184,11 @@ const PowerFactorInputs = ({
       )}
 
       <div className="space-y-2">
-        <Label htmlFor="target-pf">Target Power Factor</Label>
-        <Input 
+        <MobileInput 
           id="target-pf" 
-          type="number" 
+          label="Target Power Factor"
+          type="text"
+          inputMode="decimal"
           placeholder="e.g., 0.95" 
           className="bg-elec-dark border-elec-yellow/20"
           value={targetPF}
@@ -190,9 +196,9 @@ const PowerFactorInputs = ({
             setTargetPF(e.target.value);
             clearError('targetPF');
           }}
+          error={errors.targetPF}
+          hint="Used to estimate capacitor size for PF correction"
         />
-        {errors.targetPF && <p className="text-xs text-destructive">{errors.targetPF}</p>}
-        <p className="text-xs text-muted-foreground">Used to estimate capacitor size for PF correction</p>
       </div>
 
       <div className="flex space-x-3 pt-2">

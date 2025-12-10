@@ -3,7 +3,7 @@ import { Copy, Download, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Label } from "@/components/ui/label";
 import { copyToClipboard } from "@/lib/calc-utils";
 import { useToast } from "@/hooks/use-toast";
@@ -158,9 +158,9 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
             {/* Filters */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
               <div>
-                <Label htmlFor="filter-curve" className="text-xs">Filter by Curve</Label>
-                <Input
+                <MobileInput
                   id="filter-curve"
+                  label="Filter by Curve"
                   placeholder="e.g., B, C, D"
                   value={filterCurve}
                   onChange={(e) => setFilterCurve(e.target.value)}
@@ -168,10 +168,11 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
                 />
               </div>
               <div>
-                <Label htmlFor="filter-min" className="text-xs">Min Rating (A)</Label>
-                <Input
+                <MobileInput
                   id="filter-min"
-                  type="number"
+                  label="Min Rating (A)"
+                  type="text"
+                  inputMode="numeric"
                   placeholder="e.g., 6"
                   value={filterRatingMin}
                   onChange={(e) => setFilterRatingMin(e.target.value)}
@@ -179,10 +180,11 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
                 />
               </div>
               <div>
-                <Label htmlFor="filter-max" className="text-xs">Max Rating (A)</Label>
-                <Input
+                <MobileInput
                   id="filter-max"
-                  type="number"
+                  label="Max Rating (A)"
+                  type="text"
+                  inputMode="numeric"
                   placeholder="e.g., 32"
                   value={filterRatingMax}
                   onChange={(e) => setFilterRatingMax(e.target.value)}

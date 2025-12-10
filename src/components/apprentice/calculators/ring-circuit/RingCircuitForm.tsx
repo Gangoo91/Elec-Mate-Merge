@@ -1,5 +1,5 @@
 import React from "react";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -97,40 +97,30 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
               </div>
               
               <div>
-                <Label htmlFor="cable-length" className="text-sm font-medium flex items-center gap-2">
-                  Total Cable Length (m)
-                  {errors.cableLength && <AlertCircle className="h-3 w-3 text-destructive" />}
-                </Label>
-                <Input
+                <MobileInput
                   id="cable-length"
-                  type="number"
-                  step="1"
+                  label="Total Cable Length (m)"
+                  type="text"
+                  inputMode="numeric"
                   placeholder="e.g. 80"
                   value={cableLength}
                   onChange={(e) => onCableLengthChange(e.target.value)}
-                  className="mt-1 bg-elec-dark border-elec-yellow/20 h-11"
+                  error={errors.cableLength}
+                  className="mt-1 bg-elec-dark border-elec-yellow/20"
                 />
-                {errors.cableLength && (
-                  <p className="text-xs text-destructive mt-1">{errors.cableLength}</p>
-                )}
               </div>
               
               <div className="sm:col-span-2 lg:col-span-1">
-                <Label htmlFor="temperature" className="text-sm font-medium flex items-center gap-2">
-                  Test Temperature (°C)
-                  {errors.temperature && <AlertCircle className="h-3 w-3 text-destructive" />}
-                </Label>
-                <Input
-                  id="temperature" 
-                  type="number"
-                  step="1"
+                <MobileInput
+                  id="temperature"
+                  label="Test Temperature (°C)"
+                  type="text"
+                  inputMode="numeric"
                   value={temperature}
                   onChange={(e) => onTemperatureChange(e.target.value)}
-                  className="mt-1 bg-elec-dark border-elec-yellow/20 h-11"
+                  error={errors.temperature}
+                  className="mt-1 bg-elec-dark border-elec-yellow/20"
                 />
-                {errors.temperature && (
-                  <p className="text-xs text-destructive mt-1">{errors.temperature}</p>
-                )}
               </div>
             </div>
 
@@ -152,60 +142,45 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
-                <Label htmlFor="end-to-end-live" className="text-sm font-medium flex items-center gap-2">
-                  Live Conductor (Ω)
-                  {errors.endToEndLive && <AlertCircle className="h-3 w-3 text-destructive" />}
-                </Label>
-                <Input
+                <MobileInput
                   id="end-to-end-live"
-                  type="number"
-                  step="0.01"
+                  label="Live Conductor (Ω)"
+                  type="text"
+                  inputMode="decimal"
                   placeholder="e.g. 1.20"
                   value={readings.endToEndLive}
                   onChange={(e) => onInputChange("endToEndLive", e.target.value)}
-                  className="mt-1 bg-elec-dark border-elec-yellow/20 h-11"
+                  error={errors.endToEndLive}
+                  className="mt-1 bg-elec-dark border-elec-yellow/20"
                 />
-                {errors.endToEndLive && (
-                  <p className="text-xs text-destructive mt-1">{errors.endToEndLive}</p>
-                )}
               </div>
               
               <div>
-                <Label htmlFor="end-to-end-neutral" className="text-sm font-medium flex items-center gap-2">
-                  Neutral Conductor (Ω)
-                  {errors.endToEndNeutral && <AlertCircle className="h-3 w-3 text-destructive" />}
-                </Label>
-                <Input
+                <MobileInput
                   id="end-to-end-neutral"
-                  type="number"
-                  step="0.01"
+                  label="Neutral Conductor (Ω)"
+                  type="text"
+                  inputMode="decimal"
                   placeholder="e.g. 1.20"
                   value={readings.endToEndNeutral}
                   onChange={(e) => onInputChange("endToEndNeutral", e.target.value)}
-                  className="mt-1 bg-elec-dark border-elec-yellow/20 h-11"
+                  error={errors.endToEndNeutral}
+                  className="mt-1 bg-elec-dark border-elec-yellow/20"
                 />
-                {errors.endToEndNeutral && (
-                  <p className="text-xs text-destructive mt-1">{errors.endToEndNeutral}</p>
-                )}
               </div>
               
               <div className="sm:col-span-2 lg:col-span-1">
-                <Label htmlFor="end-to-end-cpc" className="text-sm font-medium flex items-center gap-2">
-                  CPC (Earth) (Ω)
-                  {errors.endToEndCpc && <AlertCircle className="h-3 w-3 text-destructive" />}
-                </Label>
-                <Input
+                <MobileInput
                   id="end-to-end-cpc"
-                  type="number"
-                  step="0.01"
+                  label="CPC (Earth) (Ω)"
+                  type="text"
+                  inputMode="decimal"
                   placeholder="e.g. 1.92"
                   value={readings.endToEndCpc}
                   onChange={(e) => onInputChange("endToEndCpc", e.target.value)}
-                  className="mt-1 bg-elec-dark border-elec-yellow/20 h-11"
+                  error={errors.endToEndCpc}
+                  className="mt-1 bg-elec-dark border-elec-yellow/20"
                 />
-                {errors.endToEndCpc && (
-                  <p className="text-xs text-destructive mt-1">{errors.endToEndCpc}</p>
-                )}
               </div>
             </div>
           </div>
@@ -218,60 +193,45 @@ const RingCircuitForm: React.FC<RingCircuitFormProps> = ({
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
-                <Label htmlFor="live-to-neutral" className="text-sm font-medium flex items-center gap-2">
-                  Live to Neutral (Ω)
-                  {errors.liveToNeutral && <AlertCircle className="h-3 w-3 text-destructive" />}
-                </Label>
-                <Input
+                <MobileInput
                   id="live-to-neutral"
-                  type="number"
-                  step="0.01"
+                  label="Live to Neutral (Ω)"
+                  type="text"
+                  inputMode="decimal"
                   placeholder="e.g. 0.60"
                   value={readings.liveToNeutral}
                   onChange={(e) => onInputChange("liveToNeutral", e.target.value)}
-                  className="mt-1 bg-elec-dark border-elec-yellow/20 h-11"
+                  error={errors.liveToNeutral}
+                  className="mt-1 bg-elec-dark border-elec-yellow/20"
                 />
-                {errors.liveToNeutral && (
-                  <p className="text-xs text-destructive mt-1">{errors.liveToNeutral}</p>
-                )}
               </div>
               
               <div>
-                <Label htmlFor="live-to-cpc" className="text-sm font-medium flex items-center gap-2">
-                  Live to CPC (Ω)
-                  {errors.liveToCpc && <AlertCircle className="h-3 w-3 text-destructive" />}
-                </Label>
-                <Input
+                <MobileInput
                   id="live-to-cpc"
-                  type="number"
-                  step="0.01"
+                  label="Live to CPC (Ω)"
+                  type="text"
+                  inputMode="decimal"
                   placeholder="e.g. 1.56"
                   value={readings.liveToCpc}
                   onChange={(e) => onInputChange("liveToCpc", e.target.value)}
-                  className="mt-1 bg-elec-dark border-elec-yellow/20 h-11"
+                  error={errors.liveToCpc}
+                  className="mt-1 bg-elec-dark border-elec-yellow/20"
                 />
-                {errors.liveToCpc && (
-                  <p className="text-xs text-destructive mt-1">{errors.liveToCpc}</p>
-                )}
               </div>
               
               <div className="sm:col-span-2 lg:col-span-1">
-                <Label htmlFor="neutral-to-cpc" className="text-sm font-medium flex items-center gap-2">
-                  Neutral to CPC (Ω)
-                  {errors.neutralToCpc && <AlertCircle className="h-3 w-3 text-destructive" />}
-                </Label>
-                <Input
+                <MobileInput
                   id="neutral-to-cpc"
-                  type="number"
-                  step="0.01"
+                  label="Neutral to CPC (Ω)"
+                  type="text"
+                  inputMode="decimal"
                   placeholder="e.g. 1.56"
                   value={readings.neutralToCpc}
                   onChange={(e) => onInputChange("neutralToCpc", e.target.value)}
-                  className="mt-1 bg-elec-dark border-elec-yellow/20 h-11"
+                  error={errors.neutralToCpc}
+                  className="mt-1 bg-elec-dark border-elec-yellow/20"
                 />
-                {errors.neutralToCpc && (
-                  <p className="text-xs text-destructive mt-1">{errors.neutralToCpc}</p>
-                )}
               </div>
             </div>
           </div>

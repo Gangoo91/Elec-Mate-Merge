@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -171,11 +171,11 @@ const LEDDriverCalculator = () => {
               </div>
 
               <div>
-                <Label htmlFor="led-voltage">LED Forward Voltage (V)</Label>
-                <Input
+                <MobileInput
                   id="led-voltage"
-                  type="number"
-                  step="0.1"
+                  label="LED Forward Voltage (V)"
+                  type="text"
+                  inputMode="decimal"
                   value={ledVoltage}
                   onChange={(e) => setLedVoltage(e.target.value)}
                   placeholder="e.g., 3.2"
@@ -184,10 +184,11 @@ const LEDDriverCalculator = () => {
               </div>
 
               <div>
-                <Label htmlFor="led-current">LED Forward Current (mA)</Label>
-                <Input
+                <MobileInput
                   id="led-current"
-                  type="number"
+                  label="LED Forward Current (mA)"
+                  type="text"
+                  inputMode="numeric"
                   value={ledCurrent}
                   onChange={(e) => setLedCurrent(e.target.value)}
                   placeholder="e.g., 350"
@@ -196,10 +197,11 @@ const LEDDriverCalculator = () => {
               </div>
 
               <div>
-                <Label htmlFor="num-leds">Number of LEDs</Label>
-                <Input
+                <MobileInput
                   id="num-leds"
-                  type="number"
+                  label="Number of LEDs"
+                  type="text"
+                  inputMode="numeric"
                   value={numLeds}
                   onChange={(e) => setNumLeds(e.target.value)}
                   placeholder="e.g., 10"
@@ -221,10 +223,11 @@ const LEDDriverCalculator = () => {
               </div>
 
               <div>
-                <Label htmlFor="supply-voltage">Supply Voltage (V)</Label>
-                <Input
+                <MobileInput
                   id="supply-voltage"
-                  type="number"
+                  label="Supply Voltage (V)"
+                  type="text"
+                  inputMode="numeric"
                   value={supplyVoltage}
                   onChange={(e) => setSupplyVoltage(e.target.value)}
                   placeholder="e.g., 12"
@@ -233,16 +236,15 @@ const LEDDriverCalculator = () => {
               </div>
 
               <div>
-                <Label htmlFor="efficiency">Driver Efficiency</Label>
-                <Input
+                <MobileInput
                   id="efficiency"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  max="1"
+                  label="Driver Efficiency"
+                  type="text"
+                  inputMode="decimal"
                   value={efficiency}
                   onChange={(e) => setEfficiency(e.target.value)}
                   placeholder="e.g., 0.85"
+                  hint="Value between 0 and 1"
                   className="bg-elec-dark border-elec-yellow/20"
                 />
               </div>

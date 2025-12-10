@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
@@ -275,19 +275,18 @@ const UnitConverterCalculator = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="input-value">Value</Label>
-                  <Input
+                  <MobileInput
                     id="input-value"
-                    type="number"
+                    label="Value"
+                    type="text"
+                    inputMode="decimal"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyPress}
                     placeholder="Enter value"
+                    error={!isInputValid && inputValue ? "Please enter a valid number" : undefined}
                     className="bg-elec-dark border-elec-yellow/20"
                   />
-                  {!isInputValid && inputValue && (
-                    <p className="text-sm text-red-400 mt-1">Please enter a valid number</p>
-                  )}
                 </div>
 
                 <div>

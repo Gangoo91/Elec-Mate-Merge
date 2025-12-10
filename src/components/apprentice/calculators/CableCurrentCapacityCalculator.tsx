@@ -475,8 +475,8 @@ const CableCurrentCapacityCalculator = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <MobileInput
                   label="Design Current Ib (A) *"
-                  type="number"
-                  step="0.1"
+                  type="text"
+                  inputMode="decimal"
                   value={designCurrent}
                   onChange={(e) => setDesignCurrent(e.target.value)}
                   placeholder="Enter design current"
@@ -569,8 +569,8 @@ const CableCurrentCapacityCalculator = () => {
             {(installationMethod.includes('d1') || installationMethod.includes('d2')) && (
               <MobileInput
                 label="Soil Thermal Resistivity (K⋅m/W)"
-                type="number"
-                step="0.1"
+                type="text"
+                inputMode="decimal"
                 value={soilThermalResistivity}
                 onChange={(e) => setSoilThermalResistivity(e.target.value)}
                 placeholder="2.5"

@@ -289,9 +289,8 @@ const CableSizingCalculator = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <MobileInput
                     label="Load Power (W)"
-                    type="number"
+                    type="text"
                     inputMode="decimal"
-                    step="0.1"
                     value={loadPower}
                     onChange={(e) => setLoadPower(e.target.value)}
                     placeholder="e.g., 7200"
@@ -306,11 +305,8 @@ const CableSizingCalculator = () => {
 
                   <MobileInput
                     label="Power Factor"
-                    type="number"
+                    type="text"
                     inputMode="decimal"
-                    step="0.01"
-                    min="0.1"
-                    max="1.0"
                     value={powerFactor}
                     onChange={(e) => setPowerFactor(e.target.value)}
                     placeholder="0.8 - 1.0"

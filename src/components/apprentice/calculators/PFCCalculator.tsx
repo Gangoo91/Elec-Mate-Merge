@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Zap, RotateCcw, AlertTriangle, Info, Shield, BookOpen, CheckCircle, XCircle, Calculator, Target } from "lucide-react";
@@ -144,10 +144,11 @@ const PFCCalculator = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="voltage">Supply Voltage (V)</Label>
-                  <Input
+                  <MobileInput
                     id="voltage"
-                    type="number"
+                    label="Supply Voltage (V)"
+                    type="text"
+                    inputMode="decimal"
                     value={voltage}
                     onChange={(e) => setVoltage(e.target.value)}
                     className="bg-elec-dark border-elec-yellow/20"
@@ -155,11 +156,11 @@ const PFCCalculator = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="ze-value">Ze - External Loop Impedance (Ω)</Label>
-                  <Input
+                  <MobileInput
                     id="ze-value"
-                    type="number"
-                    step="0.001"
+                    label="Ze - External Loop Impedance (Ω)"
+                    type="text"
+                    inputMode="decimal"
                     value={zeValue}
                     onChange={(e) => setZeValue(e.target.value)}
                     placeholder="e.g. 0.35"
@@ -168,11 +169,11 @@ const PFCCalculator = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="r1r2-value">R1+R2 - Circuit Impedance (Ω)</Label>
-                  <Input
+                  <MobileInput
                     id="r1r2-value"
-                    type="number"
-                    step="0.001"
+                    label="R1+R2 - Circuit Impedance (Ω)"
+                    type="text"
+                    inputMode="decimal"
                     value={r1r2Value}
                     onChange={(e) => setR1r2Value(e.target.value)}
                     placeholder="e.g. 0.15"
