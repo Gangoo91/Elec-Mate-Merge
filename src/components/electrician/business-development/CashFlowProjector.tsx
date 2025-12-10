@@ -108,8 +108,9 @@ const CashFlowProjector = () => {
               <Label htmlFor="averageMonthlyIncome">Average Monthly Income (£)</Label>
               <Input
                 id="averageMonthlyIncome"
-                type="number"
-                value={inputs.averageMonthlyIncome || ""}
+                type="text"
+                inputMode="decimal"
+                value={inputs.averageMonthlyIncome ?? ""}
                 onChange={(e) => updateInput("averageMonthlyIncome", parseFloat(e.target.value) || 0)}
                 placeholder="Expected monthly income"
               />
@@ -119,8 +120,9 @@ const CashFlowProjector = () => {
               <Label htmlFor="seasonalVariation">Seasonal Variation (%)</Label>
               <Input
                 id="seasonalVariation"
-                type="number"
-                value={inputs.seasonalVariation || ""}
+                type="text"
+                inputMode="decimal"
+                value={inputs.seasonalVariation ?? ""}
                 onChange={(e) => updateInput("seasonalVariation", parseFloat(e.target.value) || 0)}
                 placeholder="Income variation percentage"
               />
@@ -130,8 +132,9 @@ const CashFlowProjector = () => {
               <Label htmlFor="monthlyExpenses">Monthly Expenses (£)</Label>
               <Input
                 id="monthlyExpenses"
-                type="number"
-                value={inputs.monthlyExpenses || ""}
+                type="text"
+                inputMode="decimal"
+                value={inputs.monthlyExpenses ?? ""}
                 onChange={(e) => updateInput("monthlyExpenses", parseFloat(e.target.value) || 0)}
                 placeholder="Regular monthly expenses"
               />
@@ -141,8 +144,9 @@ const CashFlowProjector = () => {
               <Label htmlFor="startingCash">Starting Cash (£)</Label>
               <Input
                 id="startingCash"
-                type="number"
-                value={inputs.startingCash || ""}
+                type="text"
+                inputMode="decimal"
+                value={inputs.startingCash ?? ""}
                 onChange={(e) => updateInput("startingCash", parseFloat(e.target.value) || 0)}
                 placeholder="Current cash balance"
               />
@@ -154,10 +158,11 @@ const CashFlowProjector = () => {
               <Label htmlFor="largeExpenseMonth">Large Expense Month</Label>
               <Input
                 id="largeExpenseMonth"
-                type="number"
+                type="text"
+                inputMode="numeric"
                 min="1"
                 max="12"
-                value={inputs.largeExpenseMonth || ""}
+                value={inputs.largeExpenseMonth ?? ""}
                 onChange={(e) => updateInput("largeExpenseMonth", parseFloat(e.target.value) || 0)}
                 placeholder="Month number (1-12)"
               />
@@ -167,8 +172,9 @@ const CashFlowProjector = () => {
               <Label htmlFor="largeExpenseAmount">Large Expense Amount (£)</Label>
               <Input
                 id="largeExpenseAmount"
-                type="number"
-                value={inputs.largeExpenseAmount || ""}
+                type="text"
+                inputMode="decimal"
+                value={inputs.largeExpenseAmount ?? ""}
                 onChange={(e) => updateInput("largeExpenseAmount", parseFloat(e.target.value) || 0)}
                 placeholder="Additional expense amount"
               />

@@ -136,8 +136,9 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
               <Label htmlFor="current" className="text-sm">Design Current (A) *</Label>
               <Input
                 id="current"
-                type="number"
-                value={inputs.current || ''}
+                type="text"
+                inputMode="decimal"
+                value={inputs.current ?? ''}
                 onChange={(e) => updateInput('current', parseFloat(e.target.value) || 0)}
                 placeholder="Enter current"
                 className={`mt-1 ${errors.current ? 'border-red-500' : ''}`}
@@ -244,8 +245,9 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
               <Label htmlFor="length" className="text-sm">Cable Length (m) *</Label>
               <Input
                 id="length"
-                type="number"
-                value={inputs.length || ''}
+                type="text"
+                inputMode="decimal"
+                value={inputs.length ?? ''}
                 onChange={(e) => updateInput('length', parseFloat(e.target.value) || 0)}
                 placeholder="Enter length"
                 className={`mt-1 ${errors.length ? 'border-red-500' : ''}`}
@@ -426,8 +428,9 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
               <Label htmlFor="protectionRating" className="text-sm">Protection Rating (A)</Label>
               <Input
                 id="protectionRating"
-                type="number"
-                value={inputs.protectionRating || ''}
+                type="text"
+                inputMode="decimal"
+                value={inputs.protectionRating ?? ''}
                 onChange={(e) => updateInput('protectionRating', parseFloat(e.target.value) || 0)}
                 placeholder="Auto-calculate if left blank"
                 className="mt-1"

@@ -155,9 +155,10 @@ const BreakEvenCalculator: React.FC = () => {
               <div className="space-y-2">
                 <MobileInput
                   label="Annual Overheads (ex VAT)"
-                  value={annualOverheads.toString()}
+                  value={annualOverheads ?? ''}
                   onChange={(e) => setAnnualOverheads(Number(e.target.value) || 0)}
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
                   unit="£"
                   hint="Insurance, van, tools, software, rent, etc."
                 />
@@ -165,9 +166,10 @@ const BreakEvenCalculator: React.FC = () => {
               <div className="space-y-2">
                 <MobileInput
                   label="Chargeable Hours / Year"
-                  value={chargeableHours.toString()}
+                  value={chargeableHours ?? ''}
                   onChange={(e) => setChargeableHours(Number(e.target.value) || 1)}
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
                   hint={`Current utilisation: ${utilisationRate.toFixed(0)}%`}
                 />
               </div>
@@ -198,25 +200,28 @@ const BreakEvenCalculator: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               <MobileInput
                 label="Labour Cost / Hour"
-                value={labourCostHr.toString()}
+                value={labourCostHr ?? ''}
                 onChange={(e) => setLabourCostHr(Number(e.target.value) || 0)}
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="£"
                 hint="Your hourly cost inc. NI, pension"
               />
               <MobileInput
                 label="Materials Share %"
-                value={materialShare.toString()}
+                value={materialShare ?? ''}
                 onChange={(e) => setMaterialShare(Number(e.target.value) || 0)}
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="%"
                 hint="Typical job materials %"
               />
               <MobileInput
                 label="Material Markup %"
-                value={materialMarkup.toString()}
+                value={materialMarkup ?? ''}
                 onChange={(e) => setMaterialMarkup(Number(e.target.value) || 0)}
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="%"
                 hint="Add for time, waste, storage"
               />
@@ -249,17 +254,19 @@ const BreakEvenCalculator: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               <MobileInput
                 label="Target Margin %"
-                value={targetMargin.toString()}
+                value={targetMargin ?? ''}
                 onChange={(e) => setTargetMargin(Number(e.target.value) || 0)}
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="%"
                 hint="Aim for 15-25% for sustainability"
               />
               <MobileInput
                 label="VAT Rate %"
-                value={vatRate.toString()}
+                value={vatRate ?? ''}
                 onChange={(e) => setVatRate(Number(e.target.value) || 0)}
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="%"
               />
               <div className="space-y-2">
@@ -353,16 +360,18 @@ const BreakEvenCalculator: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <MobileInput
                 label="Labour Hours"
-                value={exampleHours.toString()}
+                value={exampleHours ?? ''}
                 onChange={(e) => setExampleHours(Number(e.target.value) || 0)}
-                type="number"
+                type="text"
+                inputMode="decimal"
                 hint="Time on-site + travel"
               />
               <MobileInput
                 label="Materials Cost (ex VAT)"
-                value={exampleMats.toString()}
+                value={exampleMats ?? ''}
                 onChange={(e) => setExampleMats(Number(e.target.value) || 0)}
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="£"
                 hint="Your cost, not selling price"
               />
