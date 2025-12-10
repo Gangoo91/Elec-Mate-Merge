@@ -1,125 +1,194 @@
+// BS 7671 Maximum Zs Values - Official Tables 41.2, 41.3, 41.4, 41.5
+// All values for 230V nominal voltage (Uo)
 
-// Maximum Zs values for different protection devices (BS 7671)
+// Helper function to get 80% test value
+export const get80PercentZs = (maxZs: number): number => {
+  return Math.round(maxZs * 0.8 * 1000) / 1000;
+};
+
+// Table 41.3 - MCBs to BS EN 60898 and RCBOs to BS EN 61009-1
+// 0.4s disconnection time (final circuits)
 export const zsValues = {
   mcb: {
-    "type-a": {
-      6: 15.33, 10: 9.2, 16: 5.75, 20: 4.6, 25: 3.68, 32: 2.87, 40: 2.3, 50: 1.84, 63: 1.46
-    },
     "type-b": {
-      6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44, 40: 1.15, 50: 0.92, 63: 0.73
+      3: 7.28, 6: 3.64, 10: 2.19, 16: 1.37, 20: 1.09, 25: 0.87,
+      32: 0.68, 40: 0.55, 50: 0.44, 63: 0.35, 80: 0.27, 100: 0.22, 125: 0.17
     },
     "type-c": {
-      6: 3.83, 10: 2.3, 16: 1.44, 20: 1.15, 25: 0.92, 32: 0.72, 40: 0.57, 50: 0.46, 63: 0.37
+      3: 3.64, 6: 1.82, 10: 1.09, 16: 0.68, 20: 0.55, 25: 0.44,
+      32: 0.34, 40: 0.27, 50: 0.22, 63: 0.17, 80: 0.14, 100: 0.11, 125: 0.09
     },
     "type-d": {
-      6: 1.92, 10: 1.15, 16: 0.72, 20: 0.57, 25: 0.46, 32: 0.36, 40: 0.29, 50: 0.23, 63: 0.18
+      3: 1.82, 6: 0.91, 10: 0.55, 16: 0.34, 20: 0.27, 25: 0.22,
+      32: 0.17, 40: 0.14, 50: 0.11, 63: 0.09, 80: 0.07, 100: 0.05, 125: 0.04
     }
   },
   rcbo: {
-    "type-a": {
-      6: 15.33, 10: 9.2, 16: 5.75, 20: 4.6, 25: 3.68, 32: 2.87, 40: 2.3, 50: 1.84, 63: 1.46
-    },
     "type-b": {
-      6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44, 40: 1.15, 50: 0.92, 63: 0.73
+      3: 7.28, 6: 3.64, 10: 2.19, 16: 1.37, 20: 1.09, 25: 0.87,
+      32: 0.68, 40: 0.55, 50: 0.44, 63: 0.35, 80: 0.27, 100: 0.22, 125: 0.17
     },
     "type-c": {
-      6: 3.83, 10: 2.3, 16: 1.44, 20: 1.15, 25: 0.92, 32: 0.72, 40: 0.57, 50: 0.46, 63: 0.37
+      3: 3.64, 6: 1.82, 10: 1.09, 16: 0.68, 20: 0.55, 25: 0.44,
+      32: 0.34, 40: 0.27, 50: 0.22, 63: 0.17, 80: 0.14, 100: 0.11, 125: 0.09
     },
     "type-d": {
-      6: 1.92, 10: 1.15, 16: 0.72, 20: 0.57, 25: 0.46, 32: 0.36, 40: 0.29, 50: 0.23, 63: 0.18
+      3: 1.82, 6: 0.91, 10: 0.55, 16: 0.34, 20: 0.27, 25: 0.22,
+      32: 0.17, 40: 0.14, 50: 0.11, 63: 0.09, 80: 0.07, 100: 0.05, 125: 0.04
     }
   },
-  "bs88": {
-    2: 23, 4: 11.5, 5: 9.2, 6: 7.67, 10: 4.6, 15: 3.07, 16: 2.87, 20: 2.3, 25: 1.84, 30: 1.53, 32: 1.44, 35: 1.31, 40: 1.15, 45: 1.02, 50: 0.92, 63: 0.73, 80: 0.58, 100: 0.46
+  // Table 41.2 - Fuses (0.4s disconnection)
+  // BS 88-2 gG/gM fuses - Table 41.2(a)
+  "bs88-2": {
+    6: 7.80, 10: 4.65, 16: 2.43, 20: 1.68, 25: 1.29, 32: 0.99,
+    40: 0.75, 50: 0.57, 63: 0.44
   },
+  // BS 88-3 System C fuses - Table 41.2(b)
   "bs88-3": {
-    5: 14.6, 16: 3.9, 20: 3.2, 32: 1.6, 45: 1.0, 63: 0.68, 80: 0.51, 100: 0.38
+    5: 9.93, 16: 2.30, 20: 1.93, 32: 0.91, 45: 0.57, 63: 0.36
   },
-  "bs1361": {
-    5: 9.2, 15: 3.07, 20: 2.3, 30: 1.53, 45: 1.02
-  },
-  "bs1361-type2": {
-    5: 9.2, 15: 3.07, 20: 2.3, 30: 1.53, 45: 1.02
-  },
+  // BS 3036 Rewirable fuses - Table 41.2(c)
   "bs3036": {
-    5: 11.5, 15: 3.83, 20: 2.87, 30: 1.92, 45: 1.28
+    5: 9.10, 15: 2.43, 20: 1.68, 30: 1.04, 45: 0.56, 60: 0.40
   },
+  // BS 1362 Plug fuses - Table 41.2(d)
   "bs1362": {
-    3: 15.33, 5: 9.2, 13: 1.77
-  },
-  "bs646": {
-    5: 9.2, 15: 3.07, 20: 2.3, 30: 1.53, 45: 1.02, 60: 0.77
-  },
-  "bs88-4": {
-    2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44
-  },
-  "bs88-6": {
-    2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44, 40: 1.15, 50: 0.92, 63: 0.73, 80: 0.58, 100: 0.46
-  },
-  "iec60269": {
-    2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44, 40: 1.15, 50: 0.92, 63: 0.73
-  },
-  "iec60269-1": {
-    2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44, 40: 1.15, 50: 0.92, 63: 0.73, 80: 0.58, 100: 0.46
-  },
-  "iec60269-2": {
-    2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44, 50: 0.92, 63: 0.73
-  },
-  "din": {
-    2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44, 35: 1.31, 50: 0.92, 63: 0.73
-  },
-  "din43653": {
-    6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 35: 1.31, 50: 0.92, 63: 0.73
-  },
-  "neozed": {
-    2: 23, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 35: 1.31
-  },
-  "diazed": {
-    2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 35: 1.31, 50: 0.92, 63: 0.73
+    3: 15.6, 13: 2.30
   }
 };
 
-export const curveTypes = {
-  "type-a": "Type A (2-3 times In)",
-  "type-b": "Type B (3-5 times In)",
-  "type-c": "Type C (5-10 times In)",
-  "type-d": "Type D (10-20 times In)"
+// Table 41.3 - MCBs (5s disconnection time - distribution circuits)
+export const zsValues5s = {
+  mcb: {
+    "type-b": {
+      3: 14.57, 6: 7.28, 10: 4.37, 16: 2.73, 20: 2.19, 25: 1.75,
+      32: 1.37, 40: 1.09, 50: 0.87, 63: 0.69, 80: 0.55, 100: 0.44, 125: 0.35
+    },
+    "type-c": {
+      3: 7.28, 6: 3.64, 10: 2.19, 16: 1.37, 20: 1.09, 25: 0.87,
+      32: 0.68, 40: 0.55, 50: 0.44, 63: 0.35, 80: 0.27, 100: 0.22, 125: 0.17
+    },
+    "type-d": {
+      3: 3.64, 6: 1.82, 10: 1.09, 16: 0.68, 20: 0.55, 25: 0.44,
+      32: 0.34, 40: 0.27, 50: 0.22, 63: 0.17, 80: 0.14, 100: 0.11, 125: 0.09
+    }
+  },
+  rcbo: {
+    "type-b": {
+      3: 14.57, 6: 7.28, 10: 4.37, 16: 2.73, 20: 2.19, 25: 1.75,
+      32: 1.37, 40: 1.09, 50: 0.87, 63: 0.69, 80: 0.55, 100: 0.44, 125: 0.35
+    },
+    "type-c": {
+      3: 7.28, 6: 3.64, 10: 2.19, 16: 1.37, 20: 1.09, 25: 0.87,
+      32: 0.68, 40: 0.55, 50: 0.44, 63: 0.35, 80: 0.27, 100: 0.22, 125: 0.17
+    },
+    "type-d": {
+      3: 3.64, 6: 1.82, 10: 1.09, 16: 0.68, 20: 0.55, 25: 0.44,
+      32: 0.34, 40: 0.27, 50: 0.22, 63: 0.17, 80: 0.14, 100: 0.11, 125: 0.09
+    }
+  },
+  // Table 41.4 - Fuses (5s disconnection)
+  // BS 88-2 gG/gM fuses - Table 41.4(a)
+  "bs88-2": {
+    6: 12.0, 10: 6.8, 16: 4.0, 20: 2.8, 25: 2.2, 32: 1.7,
+    40: 1.3, 50: 0.99, 63: 0.78, 80: 0.55, 100: 0.42, 125: 0.32, 160: 0.27, 200: 0.18
+  },
+  // BS 88-3 System C fuses - Table 41.4(b)
+  "bs88-3": {
+    5: 14.6, 16: 3.9, 20: 3.2, 32: 1.6, 45: 1.0, 63: 0.68, 80: 0.51, 100: 0.38
+  },
+  // BS 3036 Rewirable fuses - Table 41.4(c)
+  "bs3036": {
+    5: 16.8, 15: 5.08, 20: 3.64, 30: 2.51, 45: 1.51, 60: 1.07, 100: 0.51
+  },
+  // BS 1362 Plug fuses - Table 41.4(d)
+  "bs1362": {
+    3: 22.0, 13: 3.64
+  }
 };
 
-export const fuseTypes = {
-  "bs88": "BS 88 Fuse (HRC)",
-  "bs88-3": "BS 88-3 Fuse System C (5s)",
-  "bs1361": "BS 1361 Cartridge Fuse Type I",
-  "bs1361-type2": "BS 1361 Cartridge Fuse Type II",
-  "bs3036": "BS 3036 Rewirable Fuse",
-  "bs1362": "BS 1362 Plug Fuse (13A Socket)",
-  "bs646": "BS 646 Cartridge Fuse",
-  "bs88-4": "BS 88-4 Compact HRC Fuse",
-  "bs88-6": "BS 88-6 Motor Circuit HRC Fuse",
-  "iec60269": "IEC 60269 European Fuse",
-  "iec60269-1": "IEC 60269-1 General Purpose",
-  "iec60269-2": "IEC 60269-2 Partial Range",
-  "din": "DIN VDE Industrial Fuse",
-  "din43653": "DIN 43653 Blade Fuse",
-  "neozed": "NEOZED Bottle Fuse",
-  "diazed": "DIAZED Screw-in Fuse"
+// Table 41.5 - RCDs (maximum Zs where RCD provides additional protection)
+export const rcdZsValues = {
+  30: 1667,   // 30mA RCD - max Zs 1667Ω
+  100: 500,  // 100mA RCD - max Zs 500Ω
+  300: 167,  // 300mA RCD - max Zs 167Ω
+  500: 100   // 500mA RCD - max Zs 100Ω
 };
 
-export const fuseRatings = {
-  "bs88": [2, 4, 5, 6, 10, 15, 16, 20, 25, 30, 32, 35, 40, 45, 50, 63, 80, 100],
+// MCB Curve Types (BS EN 60898) - Type A removed as not in BS 7671
+export const curveTypes: Record<string, string> = {
+  "type-b": "Type B (3-5 × In)",
+  "type-c": "Type C (5-10 × In)",
+  "type-d": "Type D (10-20 × In)"
+};
+
+// Fuse Types - UK BS standards only
+export const fuseTypes: Record<string, string> = {
+  "bs88-2": "BS 88-2 gG/gM (HRC Fuse)",
+  "bs88-3": "BS 88-3 System C",
+  "bs3036": "BS 3036 (Rewirable Fuse)",
+  "bs1362": "BS 1362 (Plug Fuse)"
+};
+
+// Available ratings for each fuse type
+export const fuseRatings: Record<string, number[]> = {
+  "bs88-2": [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125, 160, 200],
   "bs88-3": [5, 16, 20, 32, 45, 63, 80, 100],
-  "bs1361": [5, 15, 20, 30, 45],
-  "bs1361-type2": [5, 15, 20, 30, 45],
-  "bs3036": [5, 15, 20, 30, 45],
-  "bs1362": [3, 5, 13],
-  "bs646": [5, 15, 20, 30, 45, 60],
-  "bs88-4": [2, 4, 6, 10, 16, 20, 25, 32],
-  "bs88-6": [2, 4, 6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100],
-  "iec60269": [2, 4, 6, 10, 16, 20, 25, 32, 40, 50, 63],
-  "iec60269-1": [2, 4, 6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100],
-  "iec60269-2": [2, 4, 6, 10, 16, 20, 25, 32, 50, 63],
-  "din": [2, 4, 6, 10, 16, 20, 25, 32, 35, 50, 63],
-  "din43653": [6, 10, 16, 20, 25, 35, 50, 63],
-  "neozed": [2, 6, 10, 16, 20, 25, 35],
-  "diazed": [2, 4, 6, 10, 16, 20, 25, 35, 50, 63]
+  "bs3036": [5, 15, 20, 30, 45, 60, 100],
+  "bs1362": [3, 13]
+};
+
+// Available ratings for MCBs/RCBOs
+export const mcbRatings = [3, 6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
+
+// RCD ratings (mA)
+export const rcdRatings = [30, 100, 300, 500];
+
+// Disconnection times
+export const disconnectionTimes: Record<string, string> = {
+  "0.4": "0.4s (Final circuits ≤32A)",
+  "5": "5s (Distribution circuits)"
+};
+
+// Get Zs value based on device type, rating, and disconnection time
+export const getZsValue = (
+  deviceType: string,
+  rating: number,
+  curveType?: string,
+  disconnectionTime: "0.4" | "5" = "0.4"
+): number | null => {
+  const data = disconnectionTime === "0.4" ? zsValues : zsValues5s;
+  
+  if (deviceType === "mcb" || deviceType === "rcbo") {
+    if (!curveType) return null;
+    const deviceData = data[deviceType as keyof typeof data];
+    if (!deviceData || typeof deviceData !== 'object') return null;
+    const curveData = deviceData[curveType as keyof typeof deviceData];
+    if (!curveData || typeof curveData !== 'object') return null;
+    return (curveData as Record<number, number>)[rating] || null;
+  }
+  
+  if (deviceType === "rcd") {
+    return rcdZsValues[rating as keyof typeof rcdZsValues] || null;
+  }
+  
+  // Fuse types
+  const fuseData = data[deviceType as keyof typeof data];
+  if (!fuseData || typeof fuseData !== 'object') return null;
+  return (fuseData as Record<number, number>)[rating] || null;
+};
+
+// Get table reference for display
+export const getTableReference = (
+  deviceType: string,
+  disconnectionTime: "0.4" | "5" = "0.4"
+): string => {
+  if (deviceType === "mcb" || deviceType === "rcbo") {
+    return disconnectionTime === "0.4" ? "Table 41.3" : "Table 41.3";
+  }
+  if (deviceType === "rcd") {
+    return "Table 41.5";
+  }
+  // Fuses
+  return disconnectionTime === "0.4" ? "Table 41.2" : "Table 41.4";
 };

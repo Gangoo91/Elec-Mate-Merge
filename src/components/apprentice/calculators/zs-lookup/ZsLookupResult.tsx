@@ -222,12 +222,12 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
                       Max Zs (100%) {sortColumn === "maxZs" && (sortDirection === "asc" ? "↑" : "↓")}
                     </th>
                     <th className="text-left p-2">80% Test Value</th>
-                    <th className="text-left p-2">Notes</th>
+                    <th className="text-left p-2">Table Ref</th>
                   </tr>
                 </thead>
                 <tbody>
                   {sortedResults.map((item, index) => {
-                    const testValue = (parseFloat(item.maxZs.replace("Ω", "")) * 0.8).toFixed(3);
+                    const testValue = item.testZs || `${(parseFloat(item.maxZs.replace("Ω", "")) * 0.8).toFixed(3)}Ω`;
                     const compliance = getComplianceStatus(item);
                     
                     return (
@@ -240,13 +240,11 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
                         </td>
                         <td className="p-2">{item.rating}</td>
                         <td className="p-2 font-mono">{item.maxZs}</td>
-                        <td className="p-2 font-mono text-blue-300">{testValue}Ω</td>
+                        <td className="p-2 font-mono text-blue-300">{testValue}</td>
                         <td className="p-2">
-                          {compliance && (
-                            <Badge className={`text-xs ${compliance.color}`}>
-                              {compliance.text}
-                            </Badge>
-                          )}
+                          <Badge variant="secondary" className="text-xs">
+                            {item.tableRef || "Table 41.3"}
+                          </Badge>
                         </td>
                       </tr>
                     );
@@ -394,9 +392,10 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
         title="Key Assumptions"
         icon={<Info className="h-5 w-5 text-blue-400" />}
         points={[
-          "Nominal voltage: 230V (single phase), 400V (three phase)",
+          "Nominal voltage: 230V (Uo) single phase",
           "Standard ambient temperature (20°C for cables)",
-          "Values from BS7671 Tables 41.2, 41.3, and 41.4",
+          "Table 41.2: Fuses (0.4s), Table 41.3: MCBs/RCBOs, Table 41.4: Fuses (5s), Table 41.5: RCDs",
+          "80% rule per Regulation 643.7.2 for ambient temperature testing",
           "TN system unless otherwise specified"
         ]}
       />

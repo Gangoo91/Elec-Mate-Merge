@@ -1,8 +1,23 @@
-
 import { TestStep, TestResult, ValidationResult } from '@/types/inspection-testing';
+import { zsValues, rcdZsValues, get80PercentZs } from '@/components/apprentice/calculators/zs-values/ZsValuesData';
 
 export class BS7671Validator {
   
+  // BS 7671 Table 41.3 - Maximum Zs values for MCBs (0.4s disconnection)
+  private static maxZsValues: { [key: string]: number } = {
+    // Type B MCBs
+    'B3': 7.28, 'B6': 3.64, 'B10': 2.19, 'B16': 1.37, 'B20': 1.09, 'B25': 0.87,
+    'B32': 0.68, 'B40': 0.55, 'B50': 0.44, 'B63': 0.35, 'B80': 0.27, 'B100': 0.22, 'B125': 0.17,
+    // Type C MCBs
+    'C3': 3.64, 'C6': 1.82, 'C10': 1.09, 'C16': 0.68, 'C20': 0.55, 'C25': 0.44,
+    'C32': 0.34, 'C40': 0.27, 'C50': 0.22, 'C63': 0.17, 'C80': 0.14, 'C100': 0.11, 'C125': 0.09,
+    // Type D MCBs  
+    'D3': 1.82, 'D6': 0.91, 'D10': 0.55, 'D16': 0.34, 'D20': 0.27, 'D25': 0.22,
+    'D32': 0.17, 'D40': 0.14, 'D50': 0.11, 'D63': 0.09, 'D80': 0.07, 'D100': 0.05, 'D125': 0.04,
+    // RCDs (Table 41.5)
+    'RCD30': 1667, 'RCD100': 500, 'RCD300': 167, 'RCD500': 100
+  };
+
   static validateContinuityTest(result: TestResult): ValidationResult {
     const value = result.value;
     
@@ -79,7 +94,7 @@ export class BS7671Validator {
     };
   }
 
-  static validateEarthFaultLoop(result: TestResult, circuitType: string = 'standard'): ValidationResult {
+  static validateEarthFaultLoop(result: TestResult, circuitType: string = 'B32'): ValidationResult {
     const value = result.value;
     
     if (value === undefined) {
@@ -90,43 +105,29 @@ export class BS7671Validator {
       };
     }
 
-    // BS 7671 Appendix 3 - Maximum Zs values for different protective devices
-    const maxZsValues: { [key: string]: number } = {
-      'B6': 7.67,   // 6A Type B MCB
-      'B10': 4.60,  // 10A Type B MCB
-      'B16': 2.87,  // 16A Type B MCB
-      'B20': 2.30,  // 20A Type B MCB
-      'B32': 1.44,  // 32A Type B MCB
-      'C6': 3.83,   // 6A Type C MCB
-      'C10': 2.30,  // 10A Type C MCB
-      'C16': 1.44,  // 16A Type C MCB
-      'C20': 1.15,  // 20A Type C MCB
-      'C32': 0.72,  // 32A Type C MCB
-      'RCD': 1667   // 30mA RCD protection
-    };
-
-    // Default to common 32A Type B MCB if not specified
-    const maxZs = maxZsValues[circuitType] || maxZsValues['B32'];
+    // Get max Zs from BS 7671 tables
+    const maxZs = this.maxZsValues[circuitType] || this.maxZsValues['B32'];
+    const testZs = get80PercentZs(maxZs); // 80% rule for ambient temperature
 
     if (value > maxZs) {
       return {
         isValid: false,
-        message: `Zs of ${value}Ω exceeds BS 7671 maximum (${maxZs}Ω) for this protective device`,
+        message: `Zs of ${value}Ω exceeds BS 7671 maximum (${maxZs}Ω) for ${circuitType}`,
         severity: 'error'
       };
     }
 
-    if (value > maxZs * 0.8) {
+    if (value > testZs) {
       return {
         isValid: true,
-        message: `Zs acceptable but approaching limit. Consider temperature corrections`,
+        message: `Zs of ${value}Ω exceeds 80% test value (${testZs}Ω). May fail when cable is at operating temperature`,
         severity: 'warning'
       };
     }
 
     return {
       isValid: true,
-      message: `Earth fault loop impedance within BS 7671 limits`,
+      message: `Earth fault loop impedance within BS 7671 limits (max ${maxZs}Ω, 80% test value ${testZs}Ω)`,
       severity: 'info'
     };
   }
@@ -149,6 +150,14 @@ export class BS7671Validator {
         '5x': 40     // 5x rated current - max 40ms
       },
       100: { // 100mA RCD
+        '1x': 300,
+        '5x': 40
+      },
+      300: { // 300mA RCD
+        '1x': 300,
+        '5x': 40
+      },
+      500: { // 500mA RCD
         '1x': 300,
         '5x': 40
       }
@@ -261,7 +270,8 @@ export class BS7671Validator {
       'Ensure all test results are recorded in accordance with BS 7671 Chapter 63',
       'Consider environmental conditions during testing (temperature, humidity)',
       'Verify test equipment calibration certificates are current',
-      'Document any deviations from standard test procedures'
+      'Document any deviations from standard test procedures',
+      'Apply 80% rule when testing Zs at ambient temperature (Regulation 643.7.2)'
     );
 
     return {
@@ -270,5 +280,17 @@ export class BS7671Validator {
       warnings,
       recommendations
     };
+  }
+  
+  // Get maximum Zs value for a specific device
+  static getMaxZs(deviceType: string): number | null {
+    return this.maxZsValues[deviceType] || null;
+  }
+  
+  // Get 80% test value for a specific device
+  static getTestZs(deviceType: string): number | null {
+    const maxZs = this.maxZsValues[deviceType];
+    if (!maxZs) return null;
+    return get80PercentZs(maxZs);
   }
 }

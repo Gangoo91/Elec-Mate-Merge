@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Zap, BookOpen, AlertCircle, Info, Shield, AlertTriangle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { zsValues } from "./zs-values/ZsValuesData";
+import { zsValues, zsValues5s, rcdZsValues } from "./zs-values/ZsValuesData";
 import ZsCalculatorForm from "./zs-values/ZsCalculatorForm";
 import ZsCalculatorResult from "./zs-values/ZsCalculatorResult";
 import ZsCalculatorInfo from "./zs-values/ZsCalculatorInfo";
@@ -19,38 +19,33 @@ const ZsValuesCalculator = () => {
   const [ze, setZe] = useState<string>("");
   const [r1r2, setR1R2] = useState<string>("");
   const [result, setResult] = useState<number | null>(null);
+  const [disconnectionTime, setDisconnectionTime] = useState("0.4");
+  const [rcdRating, setRcdRating] = useState("30");
 
   const calculatedZs = ze && r1r2 ? parseFloat(ze) + parseFloat(r1r2) : null;
 
   const calculateZs = () => {
+    const data = disconnectionTime === "0.4" ? zsValues : zsValues5s;
     let rating: number;
-    let deviceType: keyof typeof zsValues;
-    let curveType: string | undefined;
-
-    if (protectionType === "mcb") {
-      rating = parseInt(mcbRating);
-      deviceType = "mcb";
-      curveType = mcbCurve;
-    } else if (protectionType === "rcbo") {
-      rating = parseInt(rcboRating);
-      deviceType = "rcbo";
-      curveType = rcboCurve;
-    } else if (protectionType === "fuse") {
-      rating = parseInt(fusRating);
-      deviceType = fuseType as keyof typeof zsValues;
-    } else {
-      return;
-    }
-
     let maxZs: number | undefined;
 
-    if ((deviceType === "mcb" || deviceType === "rcbo") && curveType) {
-      const deviceData = zsValues[deviceType] as any;
-      const curveData = deviceData[curveType];
-      maxZs = curveData?.[rating as keyof typeof curveData];
+    if (protectionType === "rcd") {
+      rating = parseInt(rcdRating);
+      maxZs = rcdZsValues[rating as keyof typeof rcdZsValues];
+    } else if (protectionType === "mcb") {
+      rating = parseInt(mcbRating);
+      const deviceData = data.mcb as any;
+      maxZs = deviceData?.[mcbCurve]?.[rating];
+    } else if (protectionType === "rcbo") {
+      rating = parseInt(rcboRating);
+      const deviceData = data.rcbo as any;
+      maxZs = deviceData?.[rcboCurve]?.[rating];
+    } else if (protectionType === "fuse") {
+      rating = parseInt(fusRating);
+      const deviceData = data[fuseType as keyof typeof data] as any;
+      maxZs = deviceData?.[rating];
     } else {
-      const deviceData = zsValues[deviceType] as any;
-      maxZs = deviceData?.[rating as keyof typeof deviceData];
+      return;
     }
 
     setResult(maxZs || null);
@@ -120,6 +115,10 @@ const resetCalculator = () => {
                 setR1R2={setR1R2}
                 onCalculate={calculateZs}
                 onReset={resetCalculator}
+                disconnectionTime={disconnectionTime}
+                setDisconnectionTime={setDisconnectionTime}
+                rcdRating={rcdRating}
+                setRcdRating={setRcdRating}
               />
               
               <ZsCalculatorResult
