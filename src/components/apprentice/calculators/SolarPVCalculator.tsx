@@ -1,11 +1,10 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Sun, Info, Calculator, RotateCcw, Zap, TrendingUp, Lightbulb, CheckCircle, AlertTriangle, FileText, Shield, PoundSterling, Building, Wrench } from "lucide-react";
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -56,6 +55,9 @@ const SolarPVCalculator = () => {
   const [roofTilt, setRoofTilt] = useState<string>("35");
   const [systemCost, setSystemCost] = useState<string>("6000");
   const [electricityRate, setElectricityRate] = useState<string>("0.25");
+  // Configurable assumptions
+  const [selfConsumptionRate, setSelfConsumptionRate] = useState<string>("35");
+  const [exportRate, setExportRate] = useState<string>("0.05");
   const [result, setResult] = useState<{
     annualGeneration: number;
     dailyGeneration: number;
@@ -170,16 +172,15 @@ const SolarPVCalculator = () => {
       // Get realistic cost estimate
       const costEstimate = calculateCostEstimate(size, efficiency);
 
-      // Financial calculations with realistic self-consumption
-      // Assume 35% self-consumption (typical UK average) and 5p/kWh export rate
-      const selfConsumptionRate = 0.35;
-      const exportRate = 0.05; // Typical SEG rate
+      // Financial calculations with configurable self-consumption
+      const selfConsumption = parseFloat(selfConsumptionRate) / 100;
+      const segExportRate = parseFloat(exportRate);
       
-      const selfConsumedEnergy = annualGeneration * selfConsumptionRate;
-      const exportedEnergy = annualGeneration * (1 - selfConsumptionRate);
+      const selfConsumedEnergy = annualGeneration * selfConsumption;
+      const exportedEnergy = annualGeneration * (1 - selfConsumption);
       
       const savingsFromSelfConsumption = selfConsumedEnergy * rate;
-      const incomeFromExport = exportedEnergy * exportRate;
+      const incomeFromExport = exportedEnergy * segExportRate;
       const annualSavings = savingsFromSelfConsumption + incomeFromExport;
       
       const paybackPeriod = costEstimate.totalCost / annualSavings;
@@ -220,6 +221,8 @@ const SolarPVCalculator = () => {
     setRoofTilt("35");
     setSystemCost("6000");
     setElectricityRate("0.25");
+    setSelfConsumptionRate("35");
+    setExportRate("0.05");
     setResult(null);
   };
 
@@ -253,86 +256,97 @@ const SolarPVCalculator = () => {
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="panel-efficiency" className="text-sm font-medium">Panel Efficiency (%)</Label>
-                <Select value={panelEfficiency} onValueChange={setPanelEfficiency}>
-                  <SelectTrigger className="mobile-touch-target bg-elec-dark border-elec-yellow/20">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                    <SelectItem value="15">15% (Budget panels - £1,000/kW)</SelectItem>
-                    <SelectItem value="18">18% (Standard panels - £1,400/kW)</SelectItem>
-                    <SelectItem value="20">20% (Premium panels - £1,800/kW)</SelectItem>
-                    <SelectItem value="22">22% (High-efficiency - £2,600/kW)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              <MobileSelect value={panelEfficiency} onValueChange={setPanelEfficiency}>
+                <MobileSelectTrigger label="Panel Efficiency (%)">
+                  <MobileSelectValue />
+                </MobileSelectTrigger>
+                <MobileSelectContent>
+                  <MobileSelectItem value="15">15% (Budget panels - £1,000/kW)</MobileSelectItem>
+                  <MobileSelectItem value="18">18% (Standard panels - £1,400/kW)</MobileSelectItem>
+                  <MobileSelectItem value="20">20% (Premium panels - £1,800/kW)</MobileSelectItem>
+                  <MobileSelectItem value="22">22% (High-efficiency - £2,600/kW)</MobileSelectItem>
+                </MobileSelectContent>
+              </MobileSelect>
             </div>
 
             {/* Location and Installation */}
             <div className="grid grid-cols-1 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="location" className="text-sm font-medium">Location</Label>
-                <Select value={location} onValueChange={setLocation}>
-                  <SelectTrigger className="mobile-touch-target bg-elec-dark border-elec-yellow/20">
-                    <SelectValue placeholder="Select your location" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20 max-h-60">
-                    {UK_LOCATIONS.map((loc) => (
-                      <SelectItem key={loc.name} value={loc.name}>
-                        {loc.name} ({loc.irradiance} kWh/m²/year)
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <MobileSelect value={location} onValueChange={setLocation}>
+                <MobileSelectTrigger label="Location">
+                  <MobileSelectValue placeholder="Select your location" />
+                </MobileSelectTrigger>
+                <MobileSelectContent className="max-h-60">
+                  {UK_LOCATIONS.map((loc) => (
+                    <MobileSelectItem key={loc.name} value={loc.name}>
+                      {loc.name} ({loc.irradiance} kWh/m²/year)
+                    </MobileSelectItem>
+                  ))}
+                </MobileSelectContent>
+              </MobileSelect>
 
-              <div className="space-y-2">
-                <Label htmlFor="roof-orientation" className="text-sm font-medium">Roof Orientation</Label>
-                <Select value={roofOrientation} onValueChange={setRoofOrientation}>
-                  <SelectTrigger className="mobile-touch-target bg-elec-dark border-elec-yellow/20">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                    <SelectItem value="south">South (Best - 100%)</SelectItem>
-                    <SelectItem value="southeast">South-East (95%)</SelectItem>
-                    <SelectItem value="southwest">South-West (95%)</SelectItem>
-                    <SelectItem value="east">East (85%)</SelectItem>
-                    <SelectItem value="west">West (85%)</SelectItem>
-                    <SelectItem value="north">North (60%)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              <MobileSelect value={roofOrientation} onValueChange={setRoofOrientation}>
+                <MobileSelectTrigger label="Roof Orientation">
+                  <MobileSelectValue />
+                </MobileSelectTrigger>
+                <MobileSelectContent>
+                  <MobileSelectItem value="south">South (Best - 100%)</MobileSelectItem>
+                  <MobileSelectItem value="southeast">South-East (95%)</MobileSelectItem>
+                  <MobileSelectItem value="southwest">South-West (95%)</MobileSelectItem>
+                  <MobileSelectItem value="east">East (85%)</MobileSelectItem>
+                  <MobileSelectItem value="west">West (85%)</MobileSelectItem>
+                  <MobileSelectItem value="north">North (60%)</MobileSelectItem>
+                </MobileSelectContent>
+              </MobileSelect>
             </div>
 
             {/* Technical Parameters */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="roof-tilt" className="text-sm font-medium">Roof Tilt (degrees)</Label>
-                <MobileInput
-                  id="roof-tilt"
-                  type="number"
-                  value={roofTilt}
-                  onChange={(e) => setRoofTilt(e.target.value)}
-                  placeholder="35"
-                  hint="Optimal: 35°"
-                  unit="°"
-                />
-              </div>
+              <MobileInput
+                label="Roof Tilt (degrees)"
+                type="number"
+                value={roofTilt}
+                onChange={(e) => setRoofTilt(e.target.value)}
+                placeholder="35"
+                hint="Optimal: 35°"
+                unit="°"
+              />
 
-              <div className="space-y-2">
-                <Label htmlFor="electricity-rate" className="text-sm font-medium">Electricity Rate</Label>
-                <MobileInput
-                  id="electricity-rate"
-                  type="number"
-                  step="0.01"
-                  value={electricityRate}
-                  onChange={(e) => setElectricityRate(e.target.value)}
-                  placeholder="0.25"
-                  hint="Current UK average: £0.25"
-                  unit="£/kWh"
-                />
-              </div>
+              <MobileInput
+                label="Electricity Rate"
+                type="number"
+                step="0.01"
+                value={electricityRate}
+                onChange={(e) => setElectricityRate(e.target.value)}
+                placeholder="0.25"
+                hint="Current UK average: £0.25"
+                unit="£/kWh"
+              />
+            </div>
+
+            {/* Configurable Assumptions */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <MobileSelect value={selfConsumptionRate} onValueChange={setSelfConsumptionRate}>
+                <MobileSelectTrigger label="Self-consumption Rate" hint="% of generated power used on-site">
+                  <MobileSelectValue />
+                </MobileSelectTrigger>
+                <MobileSelectContent>
+                  <MobileSelectItem value="25">25% (Low - mostly away)</MobileSelectItem>
+                  <MobileSelectItem value="35">35% (Average UK)</MobileSelectItem>
+                  <MobileSelectItem value="50">50% (Working from home)</MobileSelectItem>
+                  <MobileSelectItem value="70">70% (With battery storage)</MobileSelectItem>
+                </MobileSelectContent>
+              </MobileSelect>
+
+              <MobileInput
+                label="SEG Export Rate"
+                type="number"
+                step="0.01"
+                value={exportRate}
+                onChange={(e) => setExportRate(e.target.value)}
+                placeholder="0.05"
+                hint="Typical: £0.04-0.15/kWh"
+                unit="£/kWh"
+              />
             </div>
 
             <div className="flex gap-3 pt-4">
