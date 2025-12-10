@@ -293,7 +293,6 @@ const EarthFaultLoopCalculator = () => {
                           <SelectValue placeholder="Select curve" />
                         </SelectTrigger>
                         <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                          <SelectItem value="type-a">Type A (2-3×In)</SelectItem>
                           <SelectItem value="type-b">Type B (3-5×In)</SelectItem>
                           <SelectItem value="type-c">Type C (5-10×In)</SelectItem>
                           <SelectItem value="type-d">Type D (10-20×In)</SelectItem>

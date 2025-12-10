@@ -1,14 +1,12 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TrendingUp, Info, Calculator, RotateCcw, Plus, Trash2, Zap, AlertTriangle } from "lucide-react";
 import { useState, useEffect } from "react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface Load {
   id: number;
@@ -29,6 +27,18 @@ const LOAD_PRESETS = {
   "shower": { name: "Electric Showers", diversityFactor: 1.0 },
   "custom": { name: "Custom Load", diversityFactor: 1.0 }
 } as const;
+
+const loadTypeOptions = [
+  { value: "lighting", label: "Lighting Circuits" },
+  { value: "socket-outlets", label: "Socket Outlets" },
+  { value: "cooking", label: "Cooking Appliances" },
+  { value: "water-heating", label: "Water Heating" },
+  { value: "space-heating", label: "Space Heating" },
+  { value: "motors", label: "Motors" },
+  { value: "immersion", label: "Immersion Heaters" },
+  { value: "shower", label: "Electric Showers" },
+  { value: "custom", label: "Custom Load" },
+];
 
 const MaximumDemandCalculator = () => {
   const [loads, setLoads] = useState<Load[]>([
@@ -184,25 +194,13 @@ const MaximumDemandCalculator = () => {
                 <Calculator className="h-4 w-4" />
                 Load Configuration
               </h3>
-              <Select onValueChange={addLoad}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <div className="flex items-center gap-2">
-                    <Plus className="h-4 w-4" />
-                    <SelectValue placeholder="Add Load Type" />
-                  </div>
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
-                  <SelectItem value="lighting">Lighting Circuits</SelectItem>
-                  <SelectItem value="socket-outlets">Socket Outlets</SelectItem>
-                  <SelectItem value="cooking">Cooking Appliances</SelectItem>
-                  <SelectItem value="water-heating">Water Heating</SelectItem>
-                  <SelectItem value="space-heating">Space Heating</SelectItem>
-                  <SelectItem value="motors">Motors</SelectItem>
-                  <SelectItem value="immersion">Immersion Heaters</SelectItem>
-                  <SelectItem value="shower">Electric Showers</SelectItem>
-                  <SelectItem value="custom">Custom Load</SelectItem>
-                </SelectContent>
-              </Select>
+              <MobileSelectWrapper
+                placeholder="Add Load Type"
+                value=""
+                onValueChange={addLoad}
+                options={loadTypeOptions}
+                icon={<Plus className="h-4 w-4" />}
+              />
             </div>
 
             <div className="space-y-3 max-h-96 overflow-y-auto">
@@ -213,72 +211,55 @@ const MaximumDemandCalculator = () => {
                   <div className="space-y-3">
                     {/* Load Type and Remove Button */}
                     <div className="flex items-center gap-2">
-                      <Select 
-                        value={load.loadType} 
-                        onValueChange={(value) => updateLoad(load.id, 'loadType', value)}
-                      >
-                        <SelectTrigger className="flex-1 bg-elec-gray border-elec-yellow/20">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
-                          <SelectItem value="lighting">Lighting Circuits</SelectItem>
-                          <SelectItem value="socket-outlets">Socket Outlets</SelectItem>
-                          <SelectItem value="cooking">Cooking Appliances</SelectItem>
-                          <SelectItem value="water-heating">Water Heating</SelectItem>
-                          <SelectItem value="space-heating">Space Heating</SelectItem>
-                          <SelectItem value="motors">Motors</SelectItem>
-                          <SelectItem value="immersion">Immersion Heaters</SelectItem>
-                          <SelectItem value="shower">Electric Showers</SelectItem>
-                          <SelectItem value="custom">Custom Load</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <div className="flex-1">
+                        <MobileSelectWrapper
+                          value={load.loadType}
+                          onValueChange={(value) => updateLoad(load.id, 'loadType', value)}
+                          options={loadTypeOptions}
+                        />
+                      </div>
                       {loads.length > 1 && (
-                        <Button 
+                        <MobileButton 
                           onClick={() => removeLoad(load.id)} 
-                          size="sm" 
+                          size="icon" 
                           variant="outline"
                           className="text-destructive hover:text-destructive/80"
                         >
                           <Trash2 className="h-4 w-4" />
-                        </Button>
+                        </MobileButton>
                       )}
                     </div>
 
                     {/* Power and Diversity Factor */}
                     <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <Label className="text-xs font-medium text-muted-foreground">Power (kW)</Label>
-                        <Input
-                          type="number"
-                          step="0.1"
-                          min="0"
-                          value={load.power === 0 ? '' : load.power}
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            if (value === '' || value === '.') {
-                              updateLoad(load.id, 'power', 0);
-                            } else {
-                              const numValue = parseFloat(value);
-                              updateLoad(load.id, 'power', isNaN(numValue) ? 0 : numValue);
-                            }
-                          }}
-                          className="bg-elec-gray border-elec-yellow/20 mt-1"
-                          placeholder="0.0"
-                        />
-                      </div>
-                      <div>
-                        <Label className="text-xs font-medium text-muted-foreground">Diversity Factor</Label>
-                        <Input
-                          type="number"
-                          step="0.1"
-                          min="0"
-                          max="1"
-                          value={load.diversityFactor}
-                          onChange={(e) => updateLoad(load.id, 'diversityFactor', parseFloat(e.target.value) || 0)}
-                          className="bg-elec-gray border-elec-yellow/20 mt-1"
-                          placeholder="1.0"
-                        />
-                      </div>
+                      <MobileInput
+                        label="Power (kW)"
+                        type="number"
+                        inputMode="decimal"
+                        step="0.1"
+                        value={load.power === 0 ? '' : load.power.toString()}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (value === '' || value === '.') {
+                            updateLoad(load.id, 'power', 0);
+                          } else {
+                            const numValue = parseFloat(value);
+                            updateLoad(load.id, 'power', isNaN(numValue) ? 0 : numValue);
+                          }
+                        }}
+                        placeholder="0.0"
+                      />
+                      <MobileInput
+                        label="Diversity Factor"
+                        type="number"
+                        inputMode="decimal"
+                        step="0.1"
+                        min="0"
+                        max="1"
+                        value={load.diversityFactor.toString()}
+                        onChange={(e) => updateLoad(load.id, 'diversityFactor', parseFloat(e.target.value) || 0)}
+                        placeholder="1.0"
+                      />
                     </div>
 
                     {/* Error Display */}
@@ -300,10 +281,10 @@ const MaximumDemandCalculator = () => {
               ))}
             </div>
 
-            <Button variant="outline" onClick={reset} className="w-full">
+            <MobileButton variant="outline" onClick={reset} size="wide">
               <RotateCcw className="h-4 w-4 mr-2" />
               Reset Calculator
-            </Button>
+            </MobileButton>
           </div>
 
           {/* Result Section */}
@@ -392,53 +373,13 @@ const MaximumDemandCalculator = () => {
                 <div className="text-center py-8">
                   <Zap className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
                   <p className="text-muted-foreground">
-                    Add loads and enter power values to see calculation results
+                    Add loads and enter power values to calculate maximum demand
                   </p>
                 </div>
               )}
             </div>
-
-            {/* What This Means Panel */}
-            <Alert className="border-blue-500/20 bg-blue-500/10">
-              <Info className="h-4 w-4 text-blue-500" />
-              <AlertDescription className="text-blue-200">
-                <div className="space-y-2">
-                  <p className="font-medium">What This Means:</p>
-                  <ul className="text-sm space-y-1">
-                    <li>• Maximum demand determines supply requirements and main protection</li>
-                    <li>• Diversity factors prevent oversizing of electrical infrastructure</li>
-                    <li>• Current estimation helps size supply cables and equipment</li>
-                    <li>• Supply adequacy ensures sufficient network capacity</li>
-                  </ul>
-                </div>
-              </AlertDescription>
-            </Alert>
-
-            {/* BS 7671 Guidance */}
-            <Alert className="border-green-500/20 bg-green-500/10">
-              <Info className="h-4 w-4 text-green-500" />
-              <AlertDescription className="text-green-200">
-                <div className="space-y-2">
-                  <p className="font-medium">BS 7671 Requirements:</p>
-                  <ul className="text-sm space-y-1">
-                    <li>• Table 311: Diversity factors for different loads</li>
-                    <li>• Section 311: Assessment of general characteristics</li>
-                    <li>• Consider future expansion in maximum demand calculations</li>
-                    <li>• Consult DNO for supplies exceeding standard ratings</li>
-                  </ul>
-                </div>
-              </AlertDescription>
-            </Alert>
           </div>
         </div>
-
-        {/* Enhanced Information Section */}
-        <Alert className="bg-blue-500/10 border-blue-500/30">
-          <Info className="h-4 w-4" />
-          <AlertDescription className="text-blue-300">
-            <strong>BS 7671 Diversity:</strong> Diversity factors account for the statistical probability that not all loads operate simultaneously at full capacity. This enables more economical sizing of cables, switchgear, and distribution equipment while maintaining safety standards per BS 7671:2018+A3:2024.
-          </AlertDescription>
-        </Alert>
       </CardContent>
     </Card>
   );

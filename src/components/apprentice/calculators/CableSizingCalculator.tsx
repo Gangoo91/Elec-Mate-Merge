@@ -9,13 +9,42 @@ import CalculationReport from "./CalculationReport";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState, useMemo } from "react";
 import { SimpleValidator, SimpleValidationResult } from "@/services/simplifiedValidation";
-import { Button } from "@/components/ui/button";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+const protectiveDeviceOptions = [
+  { value: "mcb", label: "MCB" },
+  { value: "rcbo", label: "RCBO" },
+  { value: "fuse", label: "Fuse" },
+];
+
+const deviceRatingOptions = [
+  { value: "6", label: "6A" },
+  { value: "10", label: "10A" },
+  { value: "16", label: "16A" },
+  { value: "20", label: "20A" },
+  { value: "25", label: "25A" },
+  { value: "32", label: "32A" },
+  { value: "40", label: "40A" },
+  { value: "50", label: "50A" },
+  { value: "63", label: "63A" },
+];
+
+const voltageOptions = [
+  { value: "230", label: "230V Single Phase" },
+  { value: "400", label: "400V Three Phase" },
+  { value: "110", label: "110V Site Supply" },
+];
+
+const phaseOptions = [
+  { value: "single", label: "Single Phase" },
+  { value: "three", label: "Three Phase" },
+];
 
 const CableSizingCalculator = () => {
   const { toast } = useToast();
@@ -258,59 +287,42 @@ const CableSizingCalculator = () => {
                 </h4>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium text-white">Load Power (W)</Label>
-                    <input
-                      type="number"
-                      step="0.1"
-                      value={loadPower}
-                      onChange={(e) => setLoadPower(e.target.value)}
-                      placeholder="e.g., 7200"
-                      className="w-full h-14 px-4 py-2 bg-elec-dark border border-blue-500/40 rounded-md text-white placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-base"
-                    />
-                  </div>
+                  <MobileInput
+                    label="Load Power (W)"
+                    type="number"
+                    inputMode="decimal"
+                    step="0.1"
+                    value={loadPower}
+                    onChange={(e) => setLoadPower(e.target.value)}
+                    placeholder="e.g., 7200"
+                  />
 
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium text-white">System Voltage (V)</Label>
-                    <Select value={loadVoltage} onValueChange={setLoadVoltage}>
-                      <SelectTrigger className="bg-elec-dark border-blue-500/40 text-white h-14">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-elec-dark border-blue-500/40 text-white">
-                        <SelectItem value="230">230V Single Phase</SelectItem>
-                        <SelectItem value="400">400V Three Phase</SelectItem>
-                        <SelectItem value="110">110V Site Supply</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <MobileSelectWrapper
+                    label="System Voltage (V)"
+                    value={loadVoltage}
+                    onValueChange={setLoadVoltage}
+                    options={voltageOptions}
+                  />
 
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium text-white">Power Factor</Label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      min="0.1"
-                      max="1.0"
-                      value={powerFactor}
-                      onChange={(e) => setPowerFactor(e.target.value)}
-                      placeholder="0.8 - 1.0"
-                      className="w-full h-14 px-4 py-2 bg-elec-dark border border-blue-500/40 rounded-md text-white placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-base"
-                    />
-                    <p className="text-xs text-muted-foreground">Resistive: 1.0, Inductive: 0.8-0.9</p>
-                  </div>
+                  <MobileInput
+                    label="Power Factor"
+                    type="number"
+                    inputMode="decimal"
+                    step="0.01"
+                    min="0.1"
+                    max="1.0"
+                    value={powerFactor}
+                    onChange={(e) => setPowerFactor(e.target.value)}
+                    placeholder="0.8 - 1.0"
+                    hint="Resistive: 1.0, Inductive: 0.8-0.9"
+                  />
 
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium text-white">Phase Type</Label>
-                    <Select value={phases} onValueChange={(v) => setPhases(v as 'single' | 'three')}>
-                      <SelectTrigger className="bg-elec-dark border-blue-500/40 text-white h-14">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-elec-dark border-blue-500/40 text-white">
-                        <SelectItem value="single">Single Phase</SelectItem>
-                        <SelectItem value="three">Three Phase</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <MobileSelectWrapper
+                    label="Phase Type"
+                    value={phases}
+                    onValueChange={(v) => setPhases(v as 'single' | 'three')}
+                    options={phaseOptions}
+                  />
                 </div>
 
                 {/* Calculated Current Display */}
@@ -343,38 +355,18 @@ const CableSizingCalculator = () => {
               </h3>
               <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-elec-dark/50">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="space-y-3">
-                    <Label className="text-sm font-medium text-white">Device Type</Label>
-                    <Select value={protectiveDevice} onValueChange={setProtectiveDevice}>
-                      <SelectTrigger className="bg-elec-dark border-elec-yellow/40 text-white h-14">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-elec-dark border-elec-yellow/40 z-50 text-white">
-                        <SelectItem value="mcb">MCB</SelectItem>
-                        <SelectItem value="rcbo">RCBO</SelectItem>
-                        <SelectItem value="fuse">Fuse</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-3">
-                    <Label className="text-sm font-medium text-white">Device Rating (A)</Label>
-                    <Select value={deviceRating} onValueChange={setDeviceRating}>
-                      <SelectTrigger className="bg-elec-dark border-elec-yellow/40 text-white h-14">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-elec-dark border-elec-yellow/40 z-50 text-white">
-                        <SelectItem value="6">6A</SelectItem>
-                        <SelectItem value="10">10A</SelectItem>
-                        <SelectItem value="16">16A</SelectItem>
-                        <SelectItem value="20">20A</SelectItem>
-                        <SelectItem value="25">25A</SelectItem>
-                        <SelectItem value="32">32A</SelectItem>
-                        <SelectItem value="40">40A</SelectItem>
-                        <SelectItem value="50">50A</SelectItem>
-                        <SelectItem value="63">63A</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <MobileSelectWrapper
+                    label="Device Type"
+                    value={protectiveDevice}
+                    onValueChange={setProtectiveDevice}
+                    options={protectiveDeviceOptions}
+                  />
+                  <MobileSelectWrapper
+                    label="Device Rating (A)"
+                    value={deviceRating}
+                    onValueChange={setDeviceRating}
+                    options={deviceRatingOptions}
+                  />
                 </div>
               </div>
             </div>
@@ -408,97 +400,72 @@ const CableSizingCalculator = () => {
                     ) : (
                       <AlertCircle className="h-6 w-6 text-red-400" />
                     )}
-                    <span className="text-lg font-bold text-white">
-                      BS 7671 Compliance: {compliance.overallCompliant ? 'PASSED' : 'FAILED'}
+                    <span className={`font-semibold ${
+                      compliance.overallCompliant ? 'text-green-400' : 'text-red-400'
+                    }`}>
+                      BS 7671 Compliance: Ib ≤ In ≤ Iz
                     </span>
                   </div>
                   
+                  <div className="grid grid-cols-3 gap-4 text-sm">
+                    <div className="text-center p-2 rounded bg-card/50">
+                      <div className="text-muted-foreground text-xs">Ib (Design)</div>
+                      <div className="font-mono font-bold text-white">{compliance.Ib.toFixed(1)}A</div>
+                    </div>
+                    <div className="text-center p-2 rounded bg-card/50">
+                      <div className="text-muted-foreground text-xs">In (Device)</div>
+                      <div className="font-mono font-bold text-white">{compliance.In}A</div>
+                    </div>
+                    <div className="text-center p-2 rounded bg-card/50">
+                      <div className="text-muted-foreground text-xs">Iz (Cable)</div>
+                      <div className="font-mono font-bold text-white">{compliance.Iz.toFixed(1)}A</div>
+                    </div>
+                  </div>
+
+                  <div className="mt-3 space-y-1 text-xs">
+                    <div className={`flex items-center gap-2 ${compliance.ibInCompliant ? 'text-green-400' : 'text-red-400'}`}>
+                      {compliance.ibInCompliant ? <CheckCircle2 className="h-3 w-3" /> : <AlertCircle className="h-3 w-3" />}
+                      Ib ≤ In: {compliance.ibInCompliant ? 'PASS' : 'FAIL'}
+                    </div>
+                    <div className={`flex items-center gap-2 ${compliance.inIzCompliant ? 'text-green-400' : 'text-red-400'}`}>
+                      {compliance.inIzCompliant ? <CheckCircle2 className="h-3 w-3" /> : <AlertCircle className="h-3 w-3" />}
+                      In ≤ Iz: {compliance.inIzCompliant ? 'PASS' : 'FAIL'}
+                    </div>
+                  </div>
+
                   {compliance.usingFallbackCurrent && (
-                    <div className="text-xs text-yellow-400 mb-2">
-                      ⚠️ Using main current input ({compliance.Ib}A) - consider setting design current for proper validation
+                    <div className="mt-2 text-xs text-amber-400 flex items-center gap-1">
+                      <Info className="h-3 w-3" />
+                      Using main current input as design current
                     </div>
                   )}
-                  
-                  <div className="flex flex-wrap gap-4 text-sm">
-                    <div className="flex items-center gap-2">
-                      <span className="text-muted-foreground">Ib:</span>
-                      <span className="font-bold text-white">{compliance.Ib}A</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-muted-foreground">In:</span>
-                      <span className="font-bold text-white">{compliance.In}A</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-muted-foreground">Iz:</span>
-                      <span className="font-bold text-white">{compliance.Iz}A</span>
-                    </div>
-                  </div>
-                  
-                  <div className="text-xs mt-2 text-muted-foreground">
-                    Ib ≤ In: {compliance.ibInCompliant ? "✓" : "✗"} | In ≤ Iz: {compliance.inIzCompliant ? "✓" : "✗"} | 
-                    Safety margin: {compliance.safetyMargin.toFixed(1)}%
-                  </div>
                 </div>
               )}
-              
-              <div className="rounded-md bg-elec-dark border border-elec-yellow/40 p-6 flex-grow flex flex-col min-h-[400px]">
-                <CableSizingResult
-                  recommendedCable={result.recommendedCable}
-                  alternativeCables={result.alternativeCables}
-                  errors={result.errors}
-                  inputs={inputs}
+
+              {/* Validation Results */}
+              {validation && (
+                <SimpleValidationIndicator validation={validation} />
+              )}
+
+              {/* Cable Sizing Result */}
+              {result.recommendedCable && (
+                <CableSizingResult result={result} inputs={inputs} />
+              )}
+
+              {/* Calculation Report */}
+              {Object.keys(calculationInputs).length > 0 && Object.keys(calculationResults).length > 0 && (
+                <CalculationReport
+                  calculationType="cableSizing"
+                  inputs={calculationInputs}
+                  results={calculationResults}
                 />
-              </div>
-              
-              <CableSizingInfo />
-            </div>
+              )}
+          </div>
         </CardContent>
       </Card>
 
-      {/* Enhanced Safety Validation Results */}
-      <SimpleValidationIndicator validation={validation} calculationType="Cable Sizing" />
-
-      {/* What This Means Panel */}
-      <Alert className="border-blue-500/20 bg-blue-500/10">
-        <Info className="h-4 w-4 text-blue-500" />
-        <AlertDescription className="text-blue-200">
-          <div className="space-y-2">
-            <p className="font-medium">What This Means:</p>
-            <ul className="text-sm space-y-1">
-              <li>• Ib ≤ In ≤ Iz ensures safe circuit operation per BS 7671</li>
-              <li>• Design current (Ib) must not exceed device rating (In)</li>
-              <li>• Device rating (In) must not exceed cable capacity (Iz)</li>
-              <li>• Safety margin provides protection against overload conditions</li>
-            </ul>
-          </div>
-        </AlertDescription>
-      </Alert>
-
-      {/* BS 7671 Guidance */}
-      <Alert className="border-green-500/20 bg-green-500/10">
-        <Info className="h-4 w-4 text-green-500" />
-        <AlertDescription className="text-green-200">
-          <div className="space-y-2">
-            <p className="font-medium">BS 7671 Regulations:</p>
-            <ul className="text-sm space-y-1">
-              <li>• Section 433: Overcurrent protection requirements</li>
-              <li>• Appendix 4: Voltage drop limitations</li>
-              <li>• Table 4D5: Current-carrying capacity and correction factors</li>
-              <li>• Consider ambient temperature, grouping, and thermal insulation</li>
-            </ul>
-          </div>
-        </AlertDescription>
-      </Alert>
-
-      {/* Detailed Calculation Report */}
-      {validation && Object.keys(calculationResults).length > 0 && (
-        <CalculationReport
-          calculationType="Enhanced Cable Sizing"
-          inputs={calculationInputs}
-          results={calculationResults}
-          validation={validation}
-        />
-      )}
+      {/* Info Section */}
+      <CableSizingInfo />
     </div>
   );
 };

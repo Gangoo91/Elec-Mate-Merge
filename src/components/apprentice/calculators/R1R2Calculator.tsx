@@ -1,11 +1,10 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";  
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calculator, RotateCcw, Settings, BookOpen, FileText } from "lucide-react";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
+import { Calculator, RotateCcw } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import R1R2Result from "./r1r2/R1R2Result";
 import R1R2Guidance from "./r1r2/R1R2Guidance";
@@ -65,6 +64,31 @@ const R1R2Calculator = () => {
     "240.0": 0.125,
     "300.0": 0.100
   };
+
+  const csaOptions = [
+    { value: "1.0", label: "1.0 mm²" },
+    { value: "1.5", label: "1.5 mm²" },
+    { value: "2.5", label: "2.5 mm²" },
+    { value: "4.0", label: "4.0 mm²" },
+    { value: "6.0", label: "6.0 mm²" },
+    { value: "10.0", label: "10.0 mm²" },
+    { value: "16.0", label: "16.0 mm²" },
+    { value: "25.0", label: "25.0 mm²" },
+    { value: "35.0", label: "35.0 mm²" },
+    { value: "50.0", label: "50.0 mm²" },
+    { value: "70.0", label: "70.0 mm²" },
+    { value: "95.0", label: "95.0 mm²" },
+    { value: "120.0", label: "120.0 mm²" },
+    { value: "150.0", label: "150.0 mm²" },
+    { value: "185.0", label: "185.0 mm²" },
+    { value: "240.0", label: "240.0 mm²" },
+    { value: "300.0", label: "300.0 mm²" },
+  ];
+
+  const materialOptions = [
+    { value: "copper", label: "Copper" },
+    { value: "aluminium", label: "Aluminium" },
+  ];
 
   const calculateR1R2 = () => {
     if (!cableLength || !lineConductorCSA || !cpcConductorCSA || !conductorMaterial) {
@@ -147,122 +171,71 @@ const R1R2Calculator = () => {
                 <h3 className="text-lg font-semibold text-elec-light">Circuit Parameters</h3>
                 
                 <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="cable-length" className="text-sm font-medium text-elec-light">Cable Length (m)</Label>
-                    <Input
-                      id="cable-length"
-                      type="number"
-                      value={cableLength}
-                      onChange={(e) => setCableLength(e.target.value)}
-                      placeholder="Enter cable length"
-                      className="mt-2 h-11 bg-elec-dark border-elec-yellow/20 text-elec-light"
-                    />
-                  </div>
+                  <MobileInput
+                    label="Cable Length (m)"
+                    type="number"
+                    inputMode="decimal"
+                    value={cableLength}
+                    onChange={(e) => setCableLength(e.target.value)}
+                    placeholder="Enter cable length"
+                  />
 
-                  <div>
-                    <Label htmlFor="conductor-material" className="text-sm font-medium text-elec-light">Conductor Material</Label>
-                    <Select value={conductorMaterial} onValueChange={setConductorMaterial}>
-                      <SelectTrigger className="mt-2 h-11 bg-elec-dark border-elec-yellow/20">
-                        <SelectValue placeholder="Select material" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="copper">Copper</SelectItem>
-                        <SelectItem value="aluminium">Aluminium</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <MobileSelectWrapper
+                    label="Conductor Material"
+                    value={conductorMaterial}
+                    onValueChange={setConductorMaterial}
+                    placeholder="Select material"
+                    options={materialOptions}
+                  />
 
-                  <div>
-                    <Label htmlFor="line-csa" className="text-sm font-medium text-elec-light">Line Conductor CSA (mm²)</Label>
-                    <Select value={lineConductorCSA} onValueChange={setLineConductorCSA}>
-                      <SelectTrigger className="mt-2 h-11 bg-elec-dark border-elec-yellow/20">
-                        <SelectValue placeholder="Select CSA" />
-                      </SelectTrigger>
-                      <SelectContent className="max-h-48">
-                        <SelectItem value="1.0">1.0</SelectItem>
-                        <SelectItem value="1.5">1.5</SelectItem>
-                        <SelectItem value="2.5">2.5</SelectItem>
-                        <SelectItem value="4.0">4.0</SelectItem>
-                        <SelectItem value="6.0">6.0</SelectItem>
-                        <SelectItem value="10.0">10.0</SelectItem>
-                        <SelectItem value="16.0">16.0</SelectItem>
-                        <SelectItem value="25.0">25.0</SelectItem>
-                        <SelectItem value="35.0">35.0</SelectItem>
-                        <SelectItem value="50.0">50.0</SelectItem>
-                        <SelectItem value="70.0">70.0</SelectItem>
-                        <SelectItem value="95.0">95.0</SelectItem>
-                        <SelectItem value="120.0">120.0</SelectItem>
-                        <SelectItem value="150.0">150.0</SelectItem>
-                        <SelectItem value="185.0">185.0</SelectItem>
-                        <SelectItem value="240.0">240.0</SelectItem>
-                        <SelectItem value="300.0">300.0</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <MobileSelectWrapper
+                    label="Line Conductor CSA (mm²)"
+                    value={lineConductorCSA}
+                    onValueChange={setLineConductorCSA}
+                    placeholder="Select CSA"
+                    options={csaOptions}
+                  />
 
-                  <div>
-                    <Label htmlFor="cpc-csa" className="text-sm font-medium text-elec-light">CPC Conductor CSA (mm²)</Label>
-                    <Select value={cpcConductorCSA} onValueChange={setCpcConductorCSA}>
-                      <SelectTrigger className="mt-2 h-11 bg-elec-dark border-elec-yellow/20">
-                        <SelectValue placeholder="Select CSA" />
-                      </SelectTrigger>
-                      <SelectContent className="max-h-48">
-                        <SelectItem value="1.0">1.0</SelectItem>
-                        <SelectItem value="1.5">1.5</SelectItem>
-                        <SelectItem value="2.5">2.5</SelectItem>
-                        <SelectItem value="4.0">4.0</SelectItem>
-                        <SelectItem value="6.0">6.0</SelectItem>
-                        <SelectItem value="10.0">10.0</SelectItem>
-                        <SelectItem value="16.0">16.0</SelectItem>
-                        <SelectItem value="25.0">25.0</SelectItem>
-                        <SelectItem value="35.0">35.0</SelectItem>
-                        <SelectItem value="50.0">50.0</SelectItem>
-                        <SelectItem value="70.0">70.0</SelectItem>
-                        <SelectItem value="95.0">95.0</SelectItem>
-                        <SelectItem value="120.0">120.0</SelectItem>
-                        <SelectItem value="150.0">150.0</SelectItem>
-                        <SelectItem value="185.0">185.0</SelectItem>
-                        <SelectItem value="240.0">240.0</SelectItem>
-                        <SelectItem value="300.0">300.0</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <MobileSelectWrapper
+                    label="CPC Conductor CSA (mm²)"
+                    value={cpcConductorCSA}
+                    onValueChange={setCpcConductorCSA}
+                    placeholder="Select CSA"
+                    options={csaOptions}
+                  />
 
-                  <div>
-                    <Label htmlFor="temperature" className="text-sm font-medium text-elec-light">Operating Temperature (°C)</Label>
-                    <Input
-                      id="temperature"
-                      type="number"
-                      value={temperature}
-                      onChange={(e) => setTemperature(e.target.value)}
-                      className="mt-2 h-11 bg-elec-dark border-elec-yellow/20 text-elec-light"
-                    />
-                  </div>
+                  <MobileInput
+                    label="Operating Temperature (°C)"
+                    type="number"
+                    inputMode="numeric"
+                    value={temperature}
+                    onChange={(e) => setTemperature(e.target.value)}
+                  />
 
-                  <div>
-                    <Label htmlFor="measured-value" className="text-sm font-medium text-elec-light">Measured R1+R2 Value (Ω) - Optional</Label>
-                    <Input
-                      id="measured-value"
-                      type="number"
-                      step="0.0001"
-                      value={measuredValue}
-                      onChange={(e) => setMeasuredValue(e.target.value)}
-                      placeholder="Enter test result for comparison"
-                      className="mt-2 h-11 bg-elec-dark border-elec-yellow/20 text-elec-light"
-                    />
-                  </div>
+                  <MobileInput
+                    label="Measured R1+R2 Value (Ω) - Optional"
+                    type="number"
+                    inputMode="decimal"
+                    step="0.0001"
+                    value={measuredValue}
+                    onChange={(e) => setMeasuredValue(e.target.value)}
+                    placeholder="Enter test result for comparison"
+                    hint="Compare your test reading with calculated value"
+                  />
 
                   <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                    <Button 
+                    <MobileButton 
                       onClick={calculateR1R2} 
-                      className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium"
+                      variant="elec"
+                      size="wide"
+                      className="flex-1"
                       disabled={!cableLength || !lineConductorCSA || !cpcConductorCSA || !conductorMaterial}
                     >
                       Calculate R1+R2
-                    </Button>
-                    <Button onClick={resetCalculator} variant="outline" className="h-11 touch-target">
+                    </MobileButton>
+                    <MobileButton onClick={resetCalculator} variant="outline" size="icon">
                       <RotateCcw className="h-4 w-4" />
-                    </Button>
+                    </MobileButton>
                   </div>
                 </div>
               </div>
