@@ -202,7 +202,8 @@ const ArcFlashCalculator = () => {
               </div>
               <MobileInput
                 label=""
-                type="number"
+                type="text"
+                inputMode="decimal"
                 value={faultCurrent}
                 onChange={(e) => setFaultCurrent(e.target.value)}
                 placeholder="25000"
@@ -219,7 +220,8 @@ const ArcFlashCalculator = () => {
                 </div>
                 <MobileInput
                   label=""
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
                   step="0.01"
                   value={clearingTime}
                   onChange={(e) => setClearingTime(e.target.value)}
@@ -236,7 +238,8 @@ const ArcFlashCalculator = () => {
                 </div>
                 <MobileInput
                   label=""
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
                   value={workingDistance}
                   onChange={(e) => setWorkingDistance(e.target.value)}
                   placeholder="450"
@@ -280,7 +283,8 @@ const ArcFlashCalculator = () => {
               {!useAutoGap && (
                 <MobileInput
                   label="Conductor Gap (mm)"
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
                   value={conductorGap}
                   onChange={(e) => setConductorGap(e.target.value)}
                   placeholder="25"

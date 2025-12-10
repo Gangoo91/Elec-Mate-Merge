@@ -189,7 +189,8 @@ const BatteryBackupCalculator = () => {
             <div className="grid grid-cols-2 gap-4">
               <MobileInput
                 label="Voltage (V)"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 value={nominalVoltage}
                 onChange={(e) => setNominalVoltage(e.target.value)}
                 placeholder="12"
@@ -198,7 +199,8 @@ const BatteryBackupCalculator = () => {
               
               <MobileInput
                 label="Capacity (Ah)"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 value={capacityAh}
                 onChange={(e) => setCapacityAh(e.target.value)}
                 placeholder="100"
@@ -252,7 +254,8 @@ const BatteryBackupCalculator = () => {
               <div className="grid grid-cols-2 gap-4">
                 <MobileInput
                   label="Power (W)"
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
                   value={newLoadWatts}
                   onChange={(e) => setNewLoadWatts(e.target.value)}
                   placeholder="50"
@@ -291,7 +294,8 @@ const BatteryBackupCalculator = () => {
             {mode === 'sizing' && (
               <MobileInput
                 label="Required Runtime (hours)"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 value={requiredRuntime}
                 onChange={(e) => setRequiredRuntime(e.target.value)}
                 placeholder="8"
@@ -314,7 +318,8 @@ const BatteryBackupCalculator = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <MobileInput
                     label="Temperature (°C)"
-                    type="number"
+                    type="text"
+                    inputMode="decimal"
                     value={ambientTemp}
                     onChange={(e) => setAmbientTemp(e.target.value)}
                     placeholder="20"
@@ -323,7 +328,8 @@ const BatteryBackupCalculator = () => {
                   
                   <MobileInput
                     label="Battery Health (%)"
-                    type="number"
+                    type="text"
+                    inputMode="decimal"
                     value={batteryHealth}
                     onChange={(e) => setBatteryHealth(e.target.value)}
                     placeholder="100"

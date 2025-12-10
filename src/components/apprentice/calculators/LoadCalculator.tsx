@@ -95,7 +95,8 @@ const LoadCalculator = () => {
           <div className="space-y-4">
             <MobileInput
               label="Lighting Load (W)"
-              type="number"
+              type="text"
+              inputMode="decimal"
               value={lighting}
               onChange={(e) => setLighting(e.target.value)}
               placeholder="e.g., 2000"
@@ -104,7 +105,8 @@ const LoadCalculator = () => {
 
             <MobileInput
               label="Socket Outlets (W)"
-              type="number"
+              type="text"
+              inputMode="decimal"
               value={sockets}
               onChange={(e) => setSockets(e.target.value)}
               placeholder="e.g., 5000"
@@ -113,7 +115,8 @@ const LoadCalculator = () => {
 
             <MobileInput
               label="Heating Load (W)"
-              type="number"
+              type="text"
+              inputMode="decimal"
               value={heating}
               onChange={(e) => setHeating(e.target.value)}
               placeholder="e.g., 8000"
@@ -122,7 +125,8 @@ const LoadCalculator = () => {
 
             <MobileInput
               label="Motor Load (W)"
-              type="number"
+              type="text"
+              inputMode="decimal"
               value={motors}
               onChange={(e) => setMotors(e.target.value)}
               placeholder="e.g., 1500"
@@ -131,7 +135,8 @@ const LoadCalculator = () => {
 
             <MobileInput
               label="Diversity Factor"
-              type="number"
+              type="text"
+              inputMode="decimal"
               step="0.1"
               min="0.1"
               max="1"

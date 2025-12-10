@@ -234,7 +234,7 @@ const MaximumDemandCalculator = () => {
                     <div className="grid grid-cols-2 gap-3">
                       <MobileInput
                         label="Power (kW)"
-                        type="number"
+                        type="text"
                         inputMode="decimal"
                         step="0.1"
                         value={load.power === 0 ? '' : load.power.toString()}
@@ -251,7 +251,7 @@ const MaximumDemandCalculator = () => {
                       />
                       <MobileInput
                         label="Diversity Factor"
-                        type="number"
+                        type="text"
                         inputMode="decimal"
                         step="0.1"
                         min="0"

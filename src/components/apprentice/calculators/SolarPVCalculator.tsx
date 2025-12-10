@@ -247,7 +247,8 @@ const SolarPVCalculator = () => {
                 <Label htmlFor="system-size" className="text-sm font-medium">System Size (kW)</Label>
                 <MobileInput
                   id="system-size"
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
                   step="0.1"
                   value={systemSize}
                   onChange={(e) => setSystemSize(e.target.value)}
@@ -303,7 +304,8 @@ const SolarPVCalculator = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <MobileInput
                 label="Roof Tilt (degrees)"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 value={roofTilt}
                 onChange={(e) => setRoofTilt(e.target.value)}
                 placeholder="35"
@@ -313,7 +315,8 @@ const SolarPVCalculator = () => {
 
               <MobileInput
                 label="Electricity Rate"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 step="0.01"
                 value={electricityRate}
                 onChange={(e) => setElectricityRate(e.target.value)}
@@ -339,7 +342,8 @@ const SolarPVCalculator = () => {
 
               <MobileInput
                 label="SEG Export Rate"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 step="0.01"
                 value={exportRate}
                 onChange={(e) => setExportRate(e.target.value)}

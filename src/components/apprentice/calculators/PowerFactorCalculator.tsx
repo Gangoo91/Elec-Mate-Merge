@@ -79,7 +79,8 @@ const PowerFactorCalculator = () => {
               <>
                 <MobileInput
                   label="Active Power (W)"
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
                   value={activePower}
                   onChange={(e) => setActivePower(e.target.value)}
                   placeholder="e.g., 2000"
@@ -89,7 +90,8 @@ const PowerFactorCalculator = () => {
                 />
                 <MobileInput
                   label="Apparent Power (VA)"
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
                   value={apparentPower}
                   onChange={(e) => setApparentPower(e.target.value)}
                   placeholder="e.g., 2300"
@@ -102,7 +104,8 @@ const PowerFactorCalculator = () => {
               <>
                 <MobileInput
                   label="Voltage (V)"
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
                   value={voltage}
                   onChange={(e) => setVoltage(e.target.value)}
                   placeholder="e.g., 230"
@@ -112,7 +115,8 @@ const PowerFactorCalculator = () => {
                 />
                 <MobileInput
                   label="Current (A)"
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
                   value={current}
                   onChange={(e) => setCurrent(e.target.value)}
                   placeholder="e.g., 10"
@@ -122,7 +126,8 @@ const PowerFactorCalculator = () => {
                 />
                 <MobileInput
                   label="Active Power (W)"
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
                   value={activePower}
                   onChange={(e) => setActivePower(e.target.value)}
                   placeholder="e.g., 2000"
@@ -147,7 +152,8 @@ const PowerFactorCalculator = () => {
               {pfType === "lagging" && (
                 <MobileInput
                   label="Target PF for Correction"
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
                   step="0.01"
                   min="0.8"
                   max="0.99"

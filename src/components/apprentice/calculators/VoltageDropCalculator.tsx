@@ -123,7 +123,8 @@ const reset = () => {
           <div className="space-y-4">
             <MobileInput
               label="Supply Voltage (V)"
-              type="number"
+              type="text"
+              inputMode="decimal"
               value={voltage}
               onChange={(e) => setVoltage(e.target.value)}
               placeholder="e.g., 230"
@@ -132,7 +133,8 @@ const reset = () => {
 
             <MobileInput
               label="Load Current (A)"
-              type="number"
+              type="text"
+              inputMode="decimal"
               value={current}
               onChange={(e) => setCurrent(e.target.value)}
               placeholder="e.g., 20"
@@ -141,7 +143,8 @@ const reset = () => {
 
             <MobileInput
               label="Cable Length (m)"
-              type="number"
+              type="text"
+              inputMode="decimal"
               value={length}
               onChange={(e) => setLength(e.target.value)}
               placeholder="e.g., 50"
@@ -193,7 +196,8 @@ const reset = () => {
 
             <MobileInput
               label="Power Factor"
-              type="number"
+              type="text"
+              inputMode="decimal"
               step="0.01"
               min="0.1"
               max="1.0"

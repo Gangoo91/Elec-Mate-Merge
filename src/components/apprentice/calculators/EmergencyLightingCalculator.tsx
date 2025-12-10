@@ -105,7 +105,8 @@ const EmergencyLightingCalculator = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <MobileInputWrapper
                 label="Floor Area"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 value={floorArea}
                 onChange={setFloorArea}
                 placeholder="e.g., 500"
@@ -116,7 +117,8 @@ const EmergencyLightingCalculator = () => {
 
               <MobileInputWrapper
                 label="Ceiling Height"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 step="0.1"
                 value={ceilingHeight}
                 onChange={setCeilingHeight}
@@ -140,7 +142,8 @@ const EmergencyLightingCalculator = () => {
 
               <MobileInputWrapper
                 label="Exit Routes"
-                type="number"
+                type="text"
+                inputMode="numeric"
                 min="1"
                 value={exitRoutes}
                 onChange={setExitRoutes}
@@ -186,7 +189,8 @@ const EmergencyLightingCalculator = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <MobileInputWrapper
                 label="Corridor Length"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 step="0.1"
                 value={corridorLength}
                 onChange={setCorridorLength}
@@ -197,7 +201,8 @@ const EmergencyLightingCalculator = () => {
 
               <MobileInputWrapper
                 label="Corridor Width"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 step="0.1"
                 value={corridorWidth}
                 onChange={setCorridorWidth}
@@ -208,7 +213,8 @@ const EmergencyLightingCalculator = () => {
 
               <MobileInputWrapper
                 label="Staircase Flights"
-                type="number"
+                type="text"
+                inputMode="numeric"
                 min="0"
                 value={staircaseFlights}
                 onChange={setStaircaseFlights}
@@ -219,7 +225,8 @@ const EmergencyLightingCalculator = () => {
 
             <MobileInputWrapper
               label="Building Height"
-              type="number"
+              type="text"
+              inputMode="decimal"
               step="0.1"
               value={buildingHeight}
               onChange={setBuildingHeight}
