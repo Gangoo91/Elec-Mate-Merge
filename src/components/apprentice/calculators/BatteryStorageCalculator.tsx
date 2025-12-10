@@ -335,7 +335,8 @@ const BatteryStorageCalculator = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <MobileInput
                 label="Critical Load"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 value={criticalLoad}
                 onChange={(e) => setCriticalLoad(e.target.value)}
                 placeholder="e.g., 3.5"
@@ -344,7 +345,8 @@ const BatteryStorageCalculator = () => {
               />
               <MobileInput
                 label="Peak Load"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 value={peakLoad}
                 onChange={(e) => setPeakLoad(e.target.value)}
                 placeholder="e.g., 5.0"
@@ -353,7 +355,8 @@ const BatteryStorageCalculator = () => {
               />
               <MobileInput
                 label="Daily Energy Consumption"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 value={dailyConsumption}
                 onChange={(e) => setDailyConsumption(e.target.value)}
                 placeholder="e.g., 25"

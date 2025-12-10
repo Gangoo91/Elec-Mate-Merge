@@ -138,7 +138,8 @@ const EVChargingCalculator = () => {
                 placeholder="Enter vehicle battery capacity"
                 value={inputs.batteryCapacity}
                 onChange={(value) => setInputs({...inputs, batteryCapacity: value})}
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="kWh"
               />
               <MobileSelectWrapper
@@ -153,7 +154,8 @@ const EVChargingCalculator = () => {
                 placeholder="Current battery level"
                 value={inputs.currentCharge}
                 onChange={(value) => setInputs({...inputs, currentCharge: value})}
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="%"
                 min="0"
                 max="100"
@@ -163,7 +165,8 @@ const EVChargingCalculator = () => {
                 placeholder="Desired battery level"
                 value={inputs.targetCharge}
                 onChange={(value) => setInputs({...inputs, targetCharge: value})}
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="%"
                 min="0"
                 max="100"
@@ -196,7 +199,8 @@ const EVChargingCalculator = () => {
                 placeholder="Distance from consumer unit"
                 value={inputs.runLength}
                 onChange={(value) => setInputs({...inputs, runLength: value})}
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="m"
               />
               <MobileInputWrapper
@@ -204,7 +208,8 @@ const EVChargingCalculator = () => {
                 placeholder="Installation ambient temperature"
                 value={inputs.ambientTemp}
                 onChange={(value) => setInputs({...inputs, ambientTemp: value})}
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="°C"
               />
             </div>
@@ -228,7 +233,8 @@ const EVChargingCalculator = () => {
                 placeholder="Current installation load"
                 value={inputs.existingLoadCurrent}
                 onChange={(value) => setInputs({...inputs, existingLoadCurrent: value})}
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="A"
               />
               <MobileInputWrapper
@@ -236,7 +242,8 @@ const EVChargingCalculator = () => {
                 placeholder="Cost per unit of electricity"
                 value={inputs.electricityRate}
                 onChange={(value) => setInputs({...inputs, electricityRate: value})}
-                type="number"
+                type="text"
+                inputMode="decimal"
                 step="0.01"
                 unit="£/kWh"
               />

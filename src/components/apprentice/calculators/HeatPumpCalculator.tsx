@@ -190,7 +190,8 @@ const HeatPumpCalculator = () => {
               placeholder="Enter total floor area"
               value={inputs.floorArea || ""}
               onChange={(value) => setInputs(prev => ({ ...prev, floorArea: value }))}
-              type="number"
+              type="text"
+              inputMode="decimal"
               unit="m²"
               icon={<Home className="h-4 w-4" />}
               error={errors.floorArea}
@@ -236,7 +237,8 @@ const HeatPumpCalculator = () => {
               placeholder="Coldest expected temperature"
               value={inputs.designTemp}
               onChange={(value) => setInputs(prev => ({ ...prev, designTemp: value }))}
-              type="number"
+              type="text"
+              inputMode="decimal"
               unit="°C"
               icon={<Thermometer className="h-4 w-4" />}
               error={errors.designTemp}
@@ -248,7 +250,8 @@ const HeatPumpCalculator = () => {
               placeholder="Desired indoor temperature"
               value={inputs.indoorTemp}
               onChange={(value) => setInputs(prev => ({ ...prev, indoorTemp: value }))}
-              type="number"
+              type="text"
+              inputMode="decimal"
               unit="°C"
               icon={<Thermometer className="h-4 w-4" />}
               error={errors.indoorTemp}
@@ -294,7 +297,8 @@ const HeatPumpCalculator = () => {
               placeholder="Cost per kWh"
               value={inputs.electricityRate}
               onChange={(value) => setInputs(prev => ({ ...prev, electricityRate: value }))}
-              type="number"
+              type="text"
+              inputMode="decimal"
               step="0.01"
               unit="£/kWh"
               icon={<PoundSterling className="h-4 w-4" />}

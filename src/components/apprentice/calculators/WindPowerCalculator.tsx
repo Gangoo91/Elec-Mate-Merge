@@ -336,7 +336,8 @@ export function WindPowerCalculator() {
           <h3 className="text-lg font-semibold text-white">Site Conditions</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <MobileInput
-              type="number"
+              type="text"
+              inputMode="decimal"
               label="Average Wind Speed (at 10m)"
               placeholder="Enter wind speed"
               value={averageWindSpeed}

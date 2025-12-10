@@ -216,7 +216,7 @@ const ZsCalculatorForm = ({
           <Label htmlFor="ze">External Earth Loop Impedance Ze (Ω)</Label>
           <Input
             id="ze"
-            type="number"
+            type="text"
             inputMode="decimal"
             placeholder="e.g., 0.35"
             className="bg-elec-dark border-elec-yellow/20"
@@ -228,7 +228,7 @@ const ZsCalculatorForm = ({
           <Label htmlFor="r1r2">R1 + R2 (Ω)</Label>
           <Input
             id="r1r2"
-            type="number"
+            type="text"
             inputMode="decimal"
             placeholder="e.g., 0.23"
             className="bg-elec-dark border-elec-yellow/20"

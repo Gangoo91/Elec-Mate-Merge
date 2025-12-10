@@ -223,7 +223,7 @@ const EarthFaultLoopCalculator = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <MobileInput
                     label="Ze (External Earth Fault Loop Impedance)"
-                    type="number"
+                    type="text"
                     inputMode="decimal"
                     step="0.01"
                     value={ze}
@@ -234,7 +234,7 @@ const EarthFaultLoopCalculator = () => {
                   />
                   <MobileInput
                     label="R1 + R2 (Line + Earth Conductor Resistance)"
-                    type="number"
+                    type="text"
                     inputMode="decimal"
                     step="0.001"
                     value={r1PlusR2}
@@ -247,7 +247,7 @@ const EarthFaultLoopCalculator = () => {
               ) : (
                 <MobileInput
                   label="Measured Zs (Earth Fault Loop Impedance)"
-                  type="number"
+                  type="text"
                   inputMode="decimal"
                   step="0.01"
                   value={measuredZs}
@@ -346,7 +346,7 @@ const EarthFaultLoopCalculator = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <MobileInput
                     label="RA (Earth Electrode Resistance)"
-                    type="number"
+                    type="text"
                     inputMode="decimal"
                     step="0.1"
                     value={ra}
@@ -358,7 +358,7 @@ const EarthFaultLoopCalculator = () => {
                   <div>
                     <MobileInput
                       label="IΔn (RCD Rated Residual Operating Current)"
-                      type="number"
+                      type="text"
                       inputMode="decimal"
                       step="0.001"
                       value={iDeltaN}

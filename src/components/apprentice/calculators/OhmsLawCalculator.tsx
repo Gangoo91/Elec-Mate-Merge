@@ -160,7 +160,8 @@ const OhmsLawCalculator = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <MobileInput
               label="Voltage (V)"
-              type="number"
+              type="text"
+              inputMode="decimal"
               step="0.1"
               placeholder="230"
               value={voltage}
@@ -172,7 +173,8 @@ const OhmsLawCalculator = () => {
             />
             <MobileInput
               label="Current (A)"
-              type="number"
+              type="text"
+              inputMode="decimal"
               step="0.01"
               placeholder="10"
               value={current}
@@ -184,7 +186,8 @@ const OhmsLawCalculator = () => {
             />
             <MobileInput
               label="Resistance (Ω)"
-              type="number"
+              type="text"
+              inputMode="decimal"
               step="0.1"
               placeholder="23"
               value={resistance}
@@ -196,7 +199,8 @@ const OhmsLawCalculator = () => {
             />
             <MobileInput
               label="Power (W)"
-              type="number"
+              type="text"
+              inputMode="decimal"
               step="0.1"
               placeholder="2300"
               value={power}

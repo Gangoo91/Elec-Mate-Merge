@@ -72,7 +72,7 @@ const CableSizingForm = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-6 border border-blue-500/40 rounded-lg bg-blue-500/5">
           <MobileInput
             label="Design Current (A)"
-            type="number"
+            type="text"
             inputMode="decimal"
             step="0.1"
             value={inputs.current}
@@ -83,7 +83,7 @@ const CableSizingForm = ({
 
           <MobileInput
             label="Cable Length (m)"
-            type="number"
+            type="text"
             inputMode="decimal"
             step="0.1"
             value={inputs.length}
@@ -100,7 +100,7 @@ const CableSizingForm = ({
           <div className="space-y-3 max-w-md">
             <MobileInput
               label="Cable Length (m)"
-              type="number"
+              type="text"
               inputMode="decimal"
               step="0.1"
               value={inputs.length}
@@ -142,7 +142,7 @@ const CableSizingForm = ({
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <MobileInput
             label="Ambient Temperature (°C)"
-            type="number"
+            type="text"
             inputMode="numeric"
             value={inputs.ambientTemp || '30'}
             onChange={(e) => updateInput('ambientTemp', e.target.value)}
@@ -152,7 +152,7 @@ const CableSizingForm = ({
 
           <MobileInput
             label="Number of Cables Grouped"
-            type="number"
+            type="text"
             inputMode="numeric"
             min="1"
             value={inputs.cableGrouping || '1'}
@@ -163,7 +163,7 @@ const CableSizingForm = ({
 
           <MobileInput
             label="Voltage Drop Limit (%)"
-            type="number"
+            type="text"
             inputMode="decimal"
             step="0.1"
             value={inputs.voltageDrop || '3'}
@@ -188,7 +188,7 @@ const CableSizingForm = ({
 
           <MobileInput
             label="Diversity Factor"
-            type="number"
+            type="text"
             inputMode="decimal"
             step="0.1"
             min="0.1"
@@ -215,7 +215,7 @@ const CableSizingForm = ({
 
           <MobileInput
             label="Power Factor"
-            type="number"
+            type="text"
             inputMode="decimal"
             step="0.01"
             min="0.1"

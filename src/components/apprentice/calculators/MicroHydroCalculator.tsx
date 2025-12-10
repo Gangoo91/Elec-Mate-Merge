@@ -296,7 +296,8 @@ const MicroHydroCalculator = () => {
                 value={flow}
                 onChange={(e) => setFlow(e.target.value)}
                 placeholder="0.5"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 step="0.01"
               />
               <MobileInput
@@ -304,7 +305,8 @@ const MicroHydroCalculator = () => {
                 value={head}
                 onChange={(e) => setHead(e.target.value)}
                 placeholder="25"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 step="0.1"
               />
             </div>
@@ -333,7 +335,8 @@ const MicroHydroCalculator = () => {
                 value={penstockLength}
                 onChange={(e) => setPenstockLength(e.target.value)}
                 placeholder="100"
-                type="number"
+                type="text"
+                inputMode="decimal"
               />
             </div>
 
@@ -343,7 +346,8 @@ const MicroHydroCalculator = () => {
                 value={availabilityFactor}
                 onChange={(e) => setAvailabilityFactor(e.target.value)}
                 placeholder="85"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 step="1"
                 min="0"
                 max="100"
@@ -353,7 +357,8 @@ const MicroHydroCalculator = () => {
                 value={electricityRate}
                 onChange={(e) => setElectricityRate(e.target.value)}
                 placeholder="0.15"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 step="0.01"
               />
             </div>

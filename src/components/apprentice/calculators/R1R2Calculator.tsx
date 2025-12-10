@@ -173,7 +173,7 @@ const R1R2Calculator = () => {
                 <div className="space-y-4">
                   <MobileInput
                     label="Cable Length (m)"
-                    type="number"
+                    type="text"
                     inputMode="decimal"
                     value={cableLength}
                     onChange={(e) => setCableLength(e.target.value)}
@@ -206,7 +206,7 @@ const R1R2Calculator = () => {
 
                   <MobileInput
                     label="Operating Temperature (°C)"
-                    type="number"
+                    type="text"
                     inputMode="numeric"
                     value={temperature}
                     onChange={(e) => setTemperature(e.target.value)}
@@ -214,7 +214,7 @@ const R1R2Calculator = () => {
 
                   <MobileInput
                     label="Measured R1+R2 Value (Ω) - Optional"
-                    type="number"
+                    type="text"
                     inputMode="decimal"
                     step="0.0001"
                     value={measuredValue}
