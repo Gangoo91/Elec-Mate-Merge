@@ -128,9 +128,10 @@ const DebtRecoveryCalculator = () => {
                     <Label htmlFor="totalOutstanding">Total Outstanding Debt (£)</Label>
                     <Input
                       id="totalOutstanding"
-                      type="number"
-                      value={inputs.totalOutstanding}
-                      onChange={(e) => updateInput('totalOutstanding', Number(e.target.value))}
+                      type="text"
+                      inputMode="decimal"
+                      value={inputs.totalOutstanding ?? ''}
+                      onChange={(e) => updateInput('totalOutstanding', Number(e.target.value) || 0)}
                       className="bg-elec-dark border-elec-yellow/30"
                     />
                   </div>
@@ -139,9 +140,10 @@ const DebtRecoveryCalculator = () => {
                     <Label htmlFor="numberOfDebtors">Number of Debtors</Label>
                     <Input
                       id="numberOfDebtors"
-                      type="number"
-                      value={inputs.numberOfDebtors}
-                      onChange={(e) => updateInput('numberOfDebtors', Number(e.target.value))}
+                      type="text"
+                      inputMode="numeric"
+                      value={inputs.numberOfDebtors ?? ''}
+                      onChange={(e) => updateInput('numberOfDebtors', Number(e.target.value) || 0)}
                       className="bg-elec-dark border-elec-yellow/30"
                     />
                   </div>
@@ -150,9 +152,10 @@ const DebtRecoveryCalculator = () => {
                     <Label htmlFor="averageDebtAge">Average Debt Age (days)</Label>
                     <Input
                       id="averageDebtAge"
-                      type="number"
-                      value={inputs.averageDebtAge}
-                      onChange={(e) => updateInput('averageDebtAge', Number(e.target.value))}
+                      type="text"
+                      inputMode="numeric"
+                      value={inputs.averageDebtAge ?? ''}
+                      onChange={(e) => updateInput('averageDebtAge', Number(e.target.value) || 0)}
                       className="bg-elec-dark border-elec-yellow/30"
                     />
                   </div>
@@ -161,9 +164,10 @@ const DebtRecoveryCalculator = () => {
                     <Label htmlFor="largestSingleDebt">Largest Single Debt (£)</Label>
                     <Input
                       id="largestSingleDebt"
-                      type="number"
-                      value={inputs.largestSingleDebt}
-                      onChange={(e) => updateInput('largestSingleDebt', Number(e.target.value))}
+                      type="text"
+                      inputMode="decimal"
+                      value={inputs.largestSingleDebt ?? ''}
+                      onChange={(e) => updateInput('largestSingleDebt', Number(e.target.value) || 0)}
                       className="bg-elec-dark border-elec-yellow/30"
                     />
                   </div>
@@ -183,9 +187,10 @@ const DebtRecoveryCalculator = () => {
                     <Label htmlFor="monthlyRevenue">Monthly Revenue (£)</Label>
                     <Input
                       id="monthlyRevenue"
-                      type="number"
-                      value={inputs.monthlyRevenue}
-                      onChange={(e) => updateInput('monthlyRevenue', Number(e.target.value))}
+                      type="text"
+                      inputMode="decimal"
+                      value={inputs.monthlyRevenue ?? ''}
+                      onChange={(e) => updateInput('monthlyRevenue', Number(e.target.value) || 0)}
                       className="bg-elec-dark border-elec-yellow/30"
                     />
                   </div>
@@ -194,9 +199,10 @@ const DebtRecoveryCalculator = () => {
                     <Label htmlFor="creditTerms">Standard Credit Terms (days)</Label>
                     <Input
                       id="creditTerms"
-                      type="number"
-                      value={inputs.creditTerms}
-                      onChange={(e) => updateInput('creditTerms', Number(e.target.value))}
+                      type="text"
+                      inputMode="numeric"
+                      value={inputs.creditTerms ?? ''}
+                      onChange={(e) => updateInput('creditTerms', Number(e.target.value) || 0)}
                       className="bg-elec-dark border-elec-yellow/30"
                     />
                   </div>
@@ -205,10 +211,11 @@ const DebtRecoveryCalculator = () => {
                     <Label htmlFor="badDebtProvision">Bad Debt Provision (%)</Label>
                     <Input
                       id="badDebtProvision"
-                      type="number"
+                      type="text"
+                      inputMode="decimal"
                       step="0.1"
-                      value={inputs.badDebtProvision}
-                      onChange={(e) => updateInput('badDebtProvision', Number(e.target.value))}
+                      value={inputs.badDebtProvision ?? ''}
+                      onChange={(e) => updateInput('badDebtProvision', Number(e.target.value) || 0)}
                       className="bg-elec-dark border-elec-yellow/30"
                     />
                   </div>
@@ -232,9 +239,10 @@ const DebtRecoveryCalculator = () => {
                     <Label htmlFor="adminCosts">Internal Admin Costs (£)</Label>
                     <Input
                       id="adminCosts"
-                      type="number"
-                      value={inputs.adminCosts}
-                      onChange={(e) => updateInput('adminCosts', Number(e.target.value))}
+                      type="text"
+                      inputMode="decimal"
+                      value={inputs.adminCosts ?? ''}
+                      onChange={(e) => updateInput('adminCosts', Number(e.target.value) || 0)}
                       className="bg-elec-dark border-elec-yellow/30"
                     />
                   </div>
@@ -243,9 +251,10 @@ const DebtRecoveryCalculator = () => {
                     <Label htmlFor="legalFees">Legal Fees (£)</Label>
                     <Input
                       id="legalFees"
-                      type="number"
-                      value={inputs.legalFees}
-                      onChange={(e) => updateInput('legalFees', Number(e.target.value))}
+                      type="text"
+                      inputMode="decimal"
+                      value={inputs.legalFees ?? ''}
+                      onChange={(e) => updateInput('legalFees', Number(e.target.value) || 0)}
                       className="bg-elec-dark border-elec-yellow/30"
                     />
                   </div>
@@ -254,9 +263,10 @@ const DebtRecoveryCalculator = () => {
                     <Label htmlFor="collectionAgencyFees">Collection Agency Fees (£)</Label>
                     <Input
                       id="collectionAgencyFees"
-                      type="number"
-                      value={inputs.collectionAgencyFees}
-                      onChange={(e) => updateInput('collectionAgencyFees', Number(e.target.value))}
+                      type="text"
+                      inputMode="decimal"
+                      value={inputs.collectionAgencyFees ?? ''}
+                      onChange={(e) => updateInput('collectionAgencyFees', Number(e.target.value) || 0)}
                       className="bg-elec-dark border-elec-yellow/30"
                     />
                   </div>
@@ -265,9 +275,10 @@ const DebtRecoveryCalculator = () => {
                     <Label htmlFor="courtCosts">Court Costs (£)</Label>
                     <Input
                       id="courtCosts"
-                      type="number"
-                      value={inputs.courtCosts}
-                      onChange={(e) => updateInput('courtCosts', Number(e.target.value))}
+                      type="text"
+                      inputMode="decimal"
+                      value={inputs.courtCosts ?? ''}
+                      onChange={(e) => updateInput('courtCosts', Number(e.target.value) || 0)}
                       className="bg-elec-dark border-elec-yellow/30"
                     />
                   </div>
@@ -287,9 +298,10 @@ const DebtRecoveryCalculator = () => {
                     <Label htmlFor="earlySettlementDiscount">Early Settlement Discount (%)</Label>
                     <Input
                       id="earlySettlementDiscount"
-                      type="number"
-                      value={inputs.earlySettlementDiscount}
-                      onChange={(e) => updateInput('earlySettlementDiscount', Number(e.target.value))}
+                      type="text"
+                      inputMode="decimal"
+                      value={inputs.earlySettlementDiscount ?? ''}
+                      onChange={(e) => updateInput('earlySettlementDiscount', Number(e.target.value) || 0)}
                       className="bg-elec-dark border-elec-yellow/30"
                     />
                   </div>
@@ -298,9 +310,10 @@ const DebtRecoveryCalculator = () => {
                     <Label htmlFor="collectionAgencyRate">Collection Agency Commission (%)</Label>
                     <Input
                       id="collectionAgencyRate"
-                      type="number"
-                      value={inputs.collectionAgencyRate}
-                      onChange={(e) => updateInput('collectionAgencyRate', Number(e.target.value))}
+                      type="text"
+                      inputMode="decimal"
+                      value={inputs.collectionAgencyRate ?? ''}
+                      onChange={(e) => updateInput('collectionAgencyRate', Number(e.target.value) || 0)}
                       className="bg-elec-dark border-elec-yellow/30"
                     />
                   </div>

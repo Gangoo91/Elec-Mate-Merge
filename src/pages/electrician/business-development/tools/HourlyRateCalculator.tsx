@@ -210,23 +210,26 @@ const [calculated, setCalculated] = useState(false);
           <CardContent className="space-y-6">
             <MobileInput
               label="Desired Annual Salary"
-              type="number"
-              value={inputs.annualSalary || ""}
+              type="text"
+              inputMode="decimal"
+              value={inputs.annualSalary ?? ""}
               onChange={(e) => updateInput('annualSalary', parseFloat(e.target.value) || 0)}
               unit="£"
               hint="Your target personal income"
             />
             <MobileInput
               label="Working Days Per Year"
-              type="number"
-              value={inputs.workingDaysPerYear || ""}
+              type="text"
+              inputMode="numeric"
+              value={inputs.workingDaysPerYear ?? ""}
               onChange={(e) => updateInput('workingDaysPerYear', parseInt(e.target.value) || 0)}
               hint="Typically 230-250 days"
             />
             <MobileInput
               label="Hours Per Day"
-              type="number"
-              value={inputs.hoursPerDay || ""}
+              type="text"
+              inputMode="numeric"
+              value={inputs.hoursPerDay ?? ""}
               onChange={(e) => updateInput('hoursPerDay', parseInt(e.target.value) || 0)}
               hint="Standard working hours"
             />
@@ -234,28 +237,32 @@ const [calculated, setCalculated] = useState(false);
             <div className="grid sm:grid-cols-2 gap-4">
               <MobileInput
                 label="Paid Leave Days"
-                type="number"
-                value={inputs.paidLeaveDays || ""}
+                type="text"
+                inputMode="numeric"
+                value={inputs.paidLeaveDays ?? ""}
                 onChange={(e) => updateInput('paidLeaveDays', parseFloat(e.target.value) || 0)}
                 hint="Typical 20–28 days"
               />
               <MobileInput
                 label="Bank Holidays"
-                type="number"
-                value={inputs.bankHolidays || ""}
+                type="text"
+                inputMode="numeric"
+                value={inputs.bankHolidays ?? ""}
                 onChange={(e) => updateInput('bankHolidays', parseFloat(e.target.value) || 0)}
                 hint="UK standard ~8"
               />
               <MobileInput
                 label="Sick Days (allowance)"
-                type="number"
-                value={inputs.sickDays || ""}
+                type="text"
+                inputMode="numeric"
+                value={inputs.sickDays ?? ""}
                 onChange={(e) => updateInput('sickDays', parseFloat(e.target.value) || 0)}
               />
               <MobileInput
                 label="Training/CPD Days"
-                type="number"
-                value={inputs.trainingDays || ""}
+                type="text"
+                inputMode="numeric"
+                value={inputs.trainingDays ?? ""}
                 onChange={(e) => updateInput('trainingDays', parseFloat(e.target.value) || 0)}
               />
             </div>
@@ -264,71 +271,80 @@ const [calculated, setCalculated] = useState(false);
             <div className="grid sm:grid-cols-2 gap-4">
               <MobileInput
                 label="Employer NI"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="%"
-                value={inputs.employerNI || ""}
+                value={inputs.employerNI ?? ""}
                 onChange={(e) => updateInput('employerNI', parseFloat(e.target.value) || 0)}
                 hint="Typical 13.8%"
               />
               <MobileInput
                 label="Employer Pension"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="%"
-                value={inputs.employerPension || ""}
+                value={inputs.employerPension ?? ""}
                 onChange={(e) => updateInput('employerPension', parseFloat(e.target.value) || 0)}
                 hint="Typical 3%"
               />
               <MobileInput
                 label="Professional Fees (annual)"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="£"
-                value={inputs.profFeesAnnual || ""}
+                value={inputs.profFeesAnnual ?? ""}
                 onChange={(e) => updateInput('profFeesAnnual', parseFloat(e.target.value) || 0)}
                 hint="Schemes, insurances"
               />
               <MobileInput
                 label="Calibration/Tools (annual)"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="£"
-                value={inputs.calibrationAnnual || ""}
+                value={inputs.calibrationAnnual ?? ""}
                 onChange={(e) => updateInput('calibrationAnnual', parseFloat(e.target.value) || 0)}
               />
               <MobileInput
                 label="Software (annual)"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="£"
-                value={inputs.softwareAnnual || ""}
+                value={inputs.softwareAnnual ?? ""}
                 onChange={(e) => updateInput('softwareAnnual', parseFloat(e.target.value) || 0)}
               />
               <MobileInput
                 label="Vehicle Allowance (annual)"
-                type="number"
+                type="text"
+                inputMode="decimal"
                 unit="£"
-                value={inputs.vehicleAnnual || ""}
+                value={inputs.vehicleAnnual ?? ""}
                 onChange={(e) => updateInput('vehicleAnnual', parseFloat(e.target.value) || 0)}
               />
             </div>
 
             <MobileInput
               label="Overhead Percentage"
-              type="number"
-              value={inputs.overheadPercentage || ""}
+              type="text"
+              inputMode="decimal"
+              value={inputs.overheadPercentage ?? ""}
               onChange={(e) => updateInput('overheadPercentage', parseFloat(e.target.value) || 0)}
               unit="%"
               hint="Business costs (20-30%)"
             />
             <MobileInput
               label="Profit Margin"
-              type="number"
-              value={inputs.profitMargin || ""}
+              type="text"
+              inputMode="decimal"
+              value={inputs.profitMargin ?? ""}
               onChange={(e) => updateInput('profitMargin', parseFloat(e.target.value) || 0)}
               unit="%"
               hint="Target profit (20-30%)"
             />
             <MobileInput
               label="Utilization Rate"
-              type="number"
-              value={inputs.utilizationRate || ""}
+              type="text"
+              inputMode="decimal"
+              value={inputs.utilizationRate ?? ""}
               onChange={(e) => updateInput('utilizationRate', parseFloat(e.target.value) || 0)}
               unit="%"
               hint="Billable vs total hours (70-80%)"
@@ -388,22 +404,25 @@ const [calculated, setCalculated] = useState(false);
               <div className="grid sm:grid-cols-3 gap-3 items-end">
                 <MobileInput
                   label="Call-out min hours"
-                  type="number"
-                  value={inputs.callOutMinHours || ""}
+                  type="text"
+                  inputMode="decimal"
+                  value={inputs.callOutMinHours ?? ""}
                   onChange={(e) => updateInput('callOutMinHours', parseFloat(e.target.value) || 0)}
                   hint="Typical 1.5–2.0"
                 />
                 <MobileInput
                   label="After-hours multiplier"
-                  type="number"
-                  value={inputs.afterHoursMultiplier || ""}
+                  type="text"
+                  inputMode="decimal"
+                  value={inputs.afterHoursMultiplier ?? ""}
                   onChange={(e) => updateInput('afterHoursMultiplier', parseFloat(e.target.value) || 0)}
                   hint="e.g. 1.5x"
                 />
                 <MobileInput
                   label="Weekend multiplier"
-                  type="number"
-                  value={inputs.weekendMultiplier || ""}
+                  type="text"
+                  inputMode="decimal"
+                  value={inputs.weekendMultiplier ?? ""}
                   onChange={(e) => updateInput('weekendMultiplier', parseFloat(e.target.value) || 0)}
                   hint="e.g. 2.0x"
                 />

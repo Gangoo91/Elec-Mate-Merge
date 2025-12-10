@@ -143,9 +143,10 @@ const TaxFinancesCalculator = () => {
                 <Label htmlFor="annualRevenue">Annual Revenue (£)</Label>
                 <Input
                   id="annualRevenue"
-                  type="number"
-                  value={inputs.annualRevenue}
-                  onChange={(e) => updateInput("annualRevenue", Number(e.target.value))}
+                  type="text"
+                  inputMode="decimal"
+                  value={inputs.annualRevenue ?? ''}
+                  onChange={(e) => updateInput("annualRevenue", Number(e.target.value) || 0)}
                   className="bg-elec-dark border-elec-yellow/30"
                 />
               </div>
@@ -161,9 +162,10 @@ const TaxFinancesCalculator = () => {
                 <Label htmlFor="materialCosts">Materials & Stock (£)</Label>
                 <Input
                   id="materialCosts"
-                  type="number"
-                  value={inputs.materialCosts}
-                  onChange={(e) => updateInput("materialCosts", Number(e.target.value))}
+                  type="text"
+                  inputMode="decimal"
+                  value={inputs.materialCosts ?? ''}
+                  onChange={(e) => updateInput("materialCosts", Number(e.target.value) || 0)}
                   className="bg-elec-dark border-elec-yellow/30"
                 />
               </div>
@@ -172,9 +174,10 @@ const TaxFinancesCalculator = () => {
                 <Label htmlFor="vehicleExpenses">Vehicle Expenses (£)</Label>
                 <Input
                   id="vehicleExpenses"
-                  type="number"
-                  value={inputs.vehicleExpenses}
-                  onChange={(e) => updateInput("vehicleExpenses", Number(e.target.value))}
+                  type="text"
+                  inputMode="decimal"
+                  value={inputs.vehicleExpenses ?? ''}
+                  onChange={(e) => updateInput("vehicleExpenses", Number(e.target.value) || 0)}
                   className="bg-elec-dark border-elec-yellow/30"
                 />
               </div>
@@ -183,9 +186,10 @@ const TaxFinancesCalculator = () => {
                 <Label htmlFor="toolsEquipment">Tools & Equipment (£)</Label>
                 <Input
                   id="toolsEquipment"
-                  type="number"
-                  value={inputs.toolsEquipment}
-                  onChange={(e) => updateInput("toolsEquipment", Number(e.target.value))}
+                  type="text"
+                  inputMode="decimal"
+                  value={inputs.toolsEquipment ?? ''}
+                  onChange={(e) => updateInput("toolsEquipment", Number(e.target.value) || 0)}
                   className="bg-elec-dark border-elec-yellow/30"
                 />
               </div>
@@ -194,9 +198,10 @@ const TaxFinancesCalculator = () => {
                 <Label htmlFor="insuranceCosts">Insurance (£)</Label>
                 <Input
                   id="insuranceCosts"
-                  type="number"
-                  value={inputs.insuranceCosts}
-                  onChange={(e) => updateInput("insuranceCosts", Number(e.target.value))}
+                  type="text"
+                  inputMode="decimal"
+                  value={inputs.insuranceCosts ?? ''}
+                  onChange={(e) => updateInput("insuranceCosts", Number(e.target.value) || 0)}
                   className="bg-elec-dark border-elec-yellow/30"
                 />
               </div>
@@ -205,9 +210,10 @@ const TaxFinancesCalculator = () => {
                 <Label htmlFor="professionalFees">Professional Fees (£)</Label>
                 <Input
                   id="professionalFees"
-                  type="number"
-                  value={inputs.professionalFees}
-                  onChange={(e) => updateInput("professionalFees", Number(e.target.value))}
+                  type="text"
+                  inputMode="decimal"
+                  value={inputs.professionalFees ?? ''}
+                  onChange={(e) => updateInput("professionalFees", Number(e.target.value) || 0)}
                   className="bg-elec-dark border-elec-yellow/30"
                 />
               </div>
@@ -248,9 +254,10 @@ const TaxFinancesCalculator = () => {
                 <Label htmlFor="pensionContributions">Annual Pension Contributions (£)</Label>
                 <Input
                   id="pensionContributions"
-                  type="number"
-                  value={inputs.pensionContributions}
-                  onChange={(e) => updateInput("pensionContributions", Number(e.target.value))}
+                  type="text"
+                  inputMode="decimal"
+                  value={inputs.pensionContributions ?? ''}
+                  onChange={(e) => updateInput("pensionContributions", Number(e.target.value) || 0)}
                   className="bg-elec-dark border-elec-yellow/30"
                 />
               </div>
@@ -259,9 +266,10 @@ const TaxFinancesCalculator = () => {
                 <Label htmlFor="savingsGoal">Annual Savings Goal (£)</Label>
                 <Input
                   id="savingsGoal"
-                  type="number"
-                  value={inputs.savingsGoal}
-                  onChange={(e) => updateInput("savingsGoal", Number(e.target.value))}
+                  type="text"
+                  inputMode="decimal"
+                  value={inputs.savingsGoal ?? ''}
+                  onChange={(e) => updateInput("savingsGoal", Number(e.target.value) || 0)}
                   className="bg-elec-dark border-elec-yellow/30"
                 />
               </div>
