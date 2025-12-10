@@ -94,7 +94,7 @@ export function LoadEntry({
               label={inputMode === 'kw' ? "Connected Load" : "Connected Load"}
               value={load.connectedLoad}
               onChange={(value) => onUpdate(load.id, 'connectedLoad', value)}
-              type="number"
+              type="text"
               inputMode="decimal"
               unit={inputMode === 'kw' ? "kW" : "A"}
               error={errors[`${load.id}_connectedLoad`]}
@@ -105,7 +105,7 @@ export function LoadEntry({
               label="Number of Units"
               value={load.numberOfUnits}
               onChange={(value) => onUpdate(load.id, 'numberOfUnits', value)}
-              type="number"
+              type="text"
               inputMode="numeric"
               error={errors[`${load.id}_numberOfUnits`]}
               hint="Quantity of identical loads"
@@ -117,7 +117,7 @@ export function LoadEntry({
               label="Power Factor"
               value={load.powerFactor}
               onChange={(value) => onUpdate(load.id, 'powerFactor', value)}
-              type="number"
+              type="text"
               inputMode="decimal"
               error={errors[`${load.id}_powerFactor`]}
               hint="Power factor (0.1 to 1.0, typical 0.9)"

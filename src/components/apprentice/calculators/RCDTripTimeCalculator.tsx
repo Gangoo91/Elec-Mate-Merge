@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -180,21 +180,17 @@ const RCDTripTimeCalculator = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="actual-trip-time" className="text-elec-light">Actual Trip Time (ms) - Optional</Label>
-                  <Input
+                  <MobileInput
                     id="actual-trip-time"
-                    type="number"
+                    label="Actual Trip Time (ms) - Optional"
+                    type="text"
+                    inputMode="decimal"
                     value={actualTripTime}
                     onChange={(e) => setActualTripTime(e.target.value)}
                     placeholder="Enter measured trip time (e.g., 25)"
-                    className="bg-elec-dark border-elec-yellow/20 h-11"
-                    min="0"
-                    max="1000"
-                    step="0.1"
+                    hint="Enter the measured trip time from your RCD tester for compliance verification"
+                    className="bg-elec-dark border-elec-yellow/20"
                   />
-                  <p className="text-xs text-muted-foreground">
-                    Enter the measured trip time from your RCD tester for compliance verification
-                  </p>
                 </div>
 
                 <div className="flex gap-2 pt-2">

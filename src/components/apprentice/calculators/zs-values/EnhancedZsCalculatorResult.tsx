@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, XCircle, AlertTriangle, Calculator, Thermometer } from "lucide-react";
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Label } from "@/components/ui/label";
 
 interface EnhancedZsCalculatorResultProps {
@@ -75,20 +75,22 @@ const EnhancedZsCalculatorResult = ({
         <CardContent className="space-y-3">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <Label htmlFor="test-temp" className="text-xs">Test Temperature (°C)</Label>
-              <Input
+              <MobileInput
                 id="test-temp"
-                type="number"
+                label="Test Temperature (°C)"
+                type="text"
+                inputMode="numeric"
                 value={testTemperature}
                 onChange={(e) => setTestTemperature(e.target.value)}
                 className="bg-blue-500/10 border-blue-500/20 text-sm"
               />
             </div>
             <div>
-              <Label htmlFor="op-temp" className="text-xs">Operating Temperature (°C)</Label>
-              <Input
+              <MobileInput
                 id="op-temp"
-                type="number"
+                label="Operating Temperature (°C)"
+                type="text"
+                inputMode="numeric"
                 value={operatingTemperature}
                 onChange={(e) => setOperatingTemperature(e.target.value)}
                 className="bg-blue-500/10 border-blue-500/20 text-sm"
