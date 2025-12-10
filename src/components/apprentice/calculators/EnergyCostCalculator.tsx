@@ -365,9 +365,10 @@ const EnergyCostCalculator = () => {
                     </div>
                     <MobileInput
                       label="Quantity"
-                      type="number"
+                      type="text"
+                      inputMode="numeric"
                       min="1"
-                      value={appliance.quantity.toString()}
+                      value={appliance.quantity?.toString() ?? ''}
                       onChange={(e) => updateAppliance(appliance.id, { quantity: parseInt(e.target.value) || 1 })}
                     />
                     <MobileButton
@@ -383,15 +384,17 @@ const EnergyCostCalculator = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <MobileInput
                       label="Power"
-                      type="number"
-                      value={appliance.powerW.toString()}
+                      type="text"
+                      inputMode="decimal"
+                      value={appliance.powerW?.toString() ?? ''}
                       onChange={(e) => updateAppliance(appliance.id, { powerW: parseFloat(e.target.value) || 0 })}
                       unit="W"
                     />
                     <MobileInput
                       label="Standby"
-                      type="number"
-                      value={appliance.standbyW.toString()}
+                      type="text"
+                      inputMode="decimal"
+                      value={appliance.standbyW?.toString() ?? ''}
                       onChange={(e) => updateAppliance(appliance.id, { standbyW: parseFloat(e.target.value) || 0 })}
                       unit="W"
                     />
@@ -422,9 +425,10 @@ const EnergyCostCalculator = () => {
                     {appliance.usageMode === "hoursPerDay" ? (
                       <MobileInput
                         label="Hours per day"
-                        type="number"
+                        type="text"
+                        inputMode="decimal"
                         step="0.1"
-                        value={appliance.hoursPerDay?.toString() || ""}
+                        value={appliance.hoursPerDay?.toString() ?? ""}
                         onChange={(e) => updateAppliance(appliance.id, { hoursPerDay: parseFloat(e.target.value) || 0 })}
                         unit="hours"
                       />
@@ -432,16 +436,18 @@ const EnergyCostCalculator = () => {
                       <div className="grid grid-cols-2 gap-4">
                         <MobileInput
                           label="Cycle duration"
-                          type="number"
+                          type="text"
+                          inputMode="decimal"
                           step="0.1"
-                          value={appliance.cycleHours?.toString() || ""}
+                          value={appliance.cycleHours?.toString() ?? ""}
                           onChange={(e) => updateAppliance(appliance.id, { cycleHours: parseFloat(e.target.value) || 0 })}
                           unit="hours"
                         />
                         <MobileInput
                           label="Cycles per week"
-                          type="number"
-                          value={appliance.cyclesPerWeek?.toString() || ""}
+                          type="text"
+                          inputMode="numeric"
+                          value={appliance.cyclesPerWeek?.toString() ?? ""}
                           onChange={(e) => updateAppliance(appliance.id, { cyclesPerWeek: parseInt(e.target.value) || 0 })}
                         />
                       </div>
