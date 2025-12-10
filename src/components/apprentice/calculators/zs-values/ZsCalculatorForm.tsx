@@ -1,10 +1,9 @@
-
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Calculator } from "lucide-react";
-import { fuseTypes, fuseRatings, curveTypes } from "./ZsValuesData";
+import { fuseTypes, fuseRatings, curveTypes, mcbRatings, disconnectionTimes, rcdRatings } from "./ZsValuesData";
 
 interface ZsCalculatorFormProps {
   mcbRating: string;
@@ -27,6 +26,10 @@ interface ZsCalculatorFormProps {
   setR1R2: (value: string) => void;
   onCalculate: () => void;
   onReset: () => void;
+  disconnectionTime?: string;
+  setDisconnectionTime?: (value: string) => void;
+  rcdRating?: string;
+  setRcdRating?: (value: string) => void;
 }
 
 const ZsCalculatorForm = ({
@@ -49,7 +52,11 @@ const ZsCalculatorForm = ({
   r1r2,
   setR1R2,
   onCalculate,
-  onReset
+  onReset,
+  disconnectionTime = "0.4",
+  setDisconnectionTime,
+  rcdRating = "30",
+  setRcdRating
 }: ZsCalculatorFormProps) => {
   return (
     <div className="space-y-4">
@@ -63,14 +70,32 @@ const ZsCalculatorForm = ({
             <SelectItem value="mcb">MCB (Miniature Circuit Breaker)</SelectItem>
             <SelectItem value="rcbo">RCBO (RCD + MCB)</SelectItem>
             <SelectItem value="fuse">Fuse</SelectItem>
+            <SelectItem value="rcd">RCD Only (Table 41.5)</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
+      {/* Disconnection Time Selector - for MCB, RCBO, and Fuse */}
+      {(protectionType === "mcb" || protectionType === "rcbo" || protectionType === "fuse") && setDisconnectionTime && (
+        <div>
+          <Label htmlFor="disconnection-time">Disconnection Time</Label>
+          <Select value={disconnectionTime} onValueChange={setDisconnectionTime}>
+            <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+              <SelectValue placeholder="Select disconnection time" />
+            </SelectTrigger>
+            <SelectContent className="bg-elec-dark border-elec-yellow/20">
+              {Object.entries(disconnectionTimes).map(([key, label]) => (
+                <SelectItem key={key} value={key}>{label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+
       {protectionType === "mcb" && (
         <>
           <div>
-            <Label htmlFor="mcb-curve">MCB Curve Type</Label>
+            <Label htmlFor="mcb-curve">MCB Curve Type (BS EN 60898)</Label>
             <Select value={mcbCurve} onValueChange={setMcbCurve}>
               <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
                 <SelectValue placeholder="Select curve type" />
@@ -90,15 +115,9 @@ const ZsCalculatorForm = ({
                 <SelectValue placeholder="Select MCB rating" />
               </SelectTrigger>
               <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                <SelectItem value="6">6A</SelectItem>
-                <SelectItem value="10">10A</SelectItem>
-                <SelectItem value="16">16A</SelectItem>
-                <SelectItem value="20">20A</SelectItem>
-                <SelectItem value="25">25A</SelectItem>
-                <SelectItem value="32">32A</SelectItem>
-                <SelectItem value="40">40A</SelectItem>
-                <SelectItem value="50">50A</SelectItem>
-                <SelectItem value="63">63A</SelectItem>
+                {mcbRatings.map((rating) => (
+                  <SelectItem key={rating} value={rating.toString()}>{rating}A</SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
@@ -108,7 +127,7 @@ const ZsCalculatorForm = ({
       {protectionType === "rcbo" && (
         <>
           <div>
-            <Label htmlFor="rcbo-curve">RCBO Curve Type</Label>
+            <Label htmlFor="rcbo-curve">RCBO Curve Type (BS EN 61009-1)</Label>
             <Select value={rcboCurve} onValueChange={setRcboCurve}>
               <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
                 <SelectValue placeholder="Select curve type" />
@@ -128,15 +147,9 @@ const ZsCalculatorForm = ({
                 <SelectValue placeholder="Select RCBO rating" />
               </SelectTrigger>
               <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                <SelectItem value="6">6A</SelectItem>
-                <SelectItem value="10">10A</SelectItem>
-                <SelectItem value="16">16A</SelectItem>
-                <SelectItem value="20">20A</SelectItem>
-                <SelectItem value="25">25A</SelectItem>
-                <SelectItem value="32">32A</SelectItem>
-                <SelectItem value="40">40A</SelectItem>
-                <SelectItem value="50">50A</SelectItem>
-                <SelectItem value="63">63A</SelectItem>
+                {mcbRatings.map((rating) => (
+                  <SelectItem key={rating} value={rating.toString()}>{rating}A</SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
@@ -182,6 +195,22 @@ const ZsCalculatorForm = ({
         </>
       )}
 
+      {protectionType === "rcd" && setRcdRating && (
+        <div>
+          <Label htmlFor="rcd-rating">RCD Rated Residual Current (mA)</Label>
+          <Select value={rcdRating} onValueChange={setRcdRating}>
+            <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+              <SelectValue placeholder="Select RCD rating" />
+            </SelectTrigger>
+            <SelectContent className="bg-elec-dark border-elec-yellow/20">
+              {rcdRatings.map((rating) => (
+                <SelectItem key={rating} value={rating.toString()}>{rating}mA</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <Label htmlFor="ze">External Earth Loop Impedance Ze (Ω)</Label>
@@ -216,7 +245,8 @@ const ZsCalculatorForm = ({
           disabled={!protectionType || 
             (protectionType === "mcb" && (!mcbRating || !mcbCurve)) ||
             (protectionType === "rcbo" && (!rcboRating || !rcboCurve)) ||
-            (protectionType === "fuse" && (!fuseType || !fusRating))
+            (protectionType === "fuse" && (!fuseType || !fusRating)) ||
+            (protectionType === "rcd" && !rcdRating)
           }
         >
           <Calculator className="mr-2 h-4 w-4" />

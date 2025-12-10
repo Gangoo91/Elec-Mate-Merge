@@ -9136,6 +9136,28 @@ export type Database = {
         | {
             Args: {
               filter_activity_types?: string[]
+              match_count?: number
+              match_threshold?: number
+              query_embedding: string
+            }
+            Returns: {
+              activity_types: string[]
+              best_practices: Json
+              canonical_id: string
+              cluster_id: string
+              common_mistakes: Json
+              id: string
+              practical_work_id: string
+              safety_critical: boolean
+              similarity: number
+              source_tables: string[]
+              title: string
+              tools_required: Json
+            }[]
+          }
+        | {
+            Args: {
+              filter_activity_types?: string[]
               filter_equipment?: string[]
               filter_skill_level?: string[]
               match_count?: number
@@ -9159,28 +9181,6 @@ export type Database = {
               test_procedures: Json[]
               tools_required: string[]
               typical_duration_minutes: number
-            }[]
-          }
-        | {
-            Args: {
-              filter_activity_types?: string[]
-              match_count?: number
-              match_threshold?: number
-              query_embedding: string
-            }
-            Returns: {
-              activity_types: string[]
-              best_practices: Json
-              canonical_id: string
-              cluster_id: string
-              common_mistakes: Json
-              id: string
-              practical_work_id: string
-              safety_critical: boolean
-              similarity: number
-              source_tables: string[]
-              title: string
-              tools_required: Json
             }[]
           }
       search_practical_work_intelligence_hybrid: {

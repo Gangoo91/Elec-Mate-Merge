@@ -1,4 +1,5 @@
 // Shared utility functions for electrical calculators
+import { zsValues, get80PercentZs } from '@/components/apprentice/calculators/zs-values/ZsValuesData';
 
 export const parseNumber = (value: string | number): number => {
   if (typeof value === 'number') return value;
@@ -115,18 +116,26 @@ export const bs7671 = {
     domestic: 0.6
   },
   
-  // Maximum Zs values for different protective devices
+  // Maximum Zs values for different protective devices - BS 7671 Table 41.3 (0.4s)
   maxZsValues: {
-    // Type B MCBs at 230V
-    'B6': 7.67,
-    'B10': 4.60,
-    'B16': 2.87,
-    'B20': 2.30,
-    'B25': 1.84,
-    'B32': 1.44,
-    'B40': 1.15,
-    'B50': 0.92,
-    'B63': 0.73
+    // Type B MCBs
+    'B3': 7.28, 'B6': 3.64, 'B10': 2.19, 'B16': 1.37, 'B20': 1.09, 'B25': 0.87,
+    'B32': 0.68, 'B40': 0.55, 'B50': 0.44, 'B63': 0.35, 'B80': 0.27, 'B100': 0.22, 'B125': 0.17,
+    // Type C MCBs
+    'C3': 3.64, 'C6': 1.82, 'C10': 1.09, 'C16': 0.68, 'C20': 0.55, 'C25': 0.44,
+    'C32': 0.34, 'C40': 0.27, 'C50': 0.22, 'C63': 0.17, 'C80': 0.14, 'C100': 0.11, 'C125': 0.09,
+    // Type D MCBs
+    'D3': 1.82, 'D6': 0.91, 'D10': 0.55, 'D16': 0.34, 'D20': 0.27, 'D25': 0.22,
+    'D32': 0.17, 'D40': 0.14, 'D50': 0.11, 'D63': 0.09, 'D80': 0.07, 'D100': 0.05, 'D125': 0.04,
+    // RCDs (Table 41.5)
+    'RCD30': 1667, 'RCD100': 500, 'RCD300': 167, 'RCD500': 100
+  },
+  
+  // Get 80% test value for Zs
+  getTestZs: (deviceKey: string): number | null => {
+    const maxZs = bs7671.maxZsValues[deviceKey as keyof typeof bs7671.maxZsValues];
+    if (!maxZs) return null;
+    return get80PercentZs(maxZs);
   },
   
   // Ring circuit requirements
