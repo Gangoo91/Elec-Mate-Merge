@@ -360,12 +360,12 @@ const AdiabaticCalculator = () => {
               </div>
             </div>
 
-            <div className="flex gap-3">
-              <MobileButton onClick={calculateAdiabatic} className="flex-1" variant="elec" icon={<CalcIcon className="h-4 w-4" />}>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <MobileButton onClick={calculateAdiabatic} className="flex-1 min-h-[48px]" variant="elec" icon={<CalcIcon className="h-5 w-5" />}>
                 Calculate
               </MobileButton>
-              <MobileButton variant="elec-outline" onClick={reset} aria-label="Reset calculator">
-                <RotateCcw className="h-4 w-4" />
+              <MobileButton variant="elec-outline" onClick={reset} aria-label="Reset calculator" className="min-h-[48px]">
+                <RotateCcw className="h-5 w-5" />
               </MobileButton>
             </div>
             </div>

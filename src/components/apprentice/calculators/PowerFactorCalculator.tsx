@@ -138,7 +138,7 @@ const PowerFactorCalculator = () => {
               </>
             )}
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <MobileSelect value={pfType} onValueChange={setPfType}>
                 <MobileSelectTrigger label="Power Factor Type">
                   <MobileSelectValue />
@@ -165,12 +165,12 @@ const PowerFactorCalculator = () => {
               )}
             </div>
 
-            <div className="flex gap-2">
-              <MobileButton onClick={calculatePowerFactor} className="flex-1" variant="elec" icon={<Calculator className="h-4 w-4" />}>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <MobileButton onClick={calculatePowerFactor} className="flex-1 min-h-[48px]" variant="elec" icon={<Calculator className="h-5 w-5" />}>
                 Calculate
               </MobileButton>
-              <MobileButton variant="elec-outline" onClick={resetCalculator}>
-                <RotateCcw className="h-4 w-4" />
+              <MobileButton variant="elec-outline" onClick={resetCalculator} className="min-h-[48px]">
+                <RotateCcw className="h-5 w-5" />
               </MobileButton>
             </div>
           </div>

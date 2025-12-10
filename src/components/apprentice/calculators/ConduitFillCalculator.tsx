@@ -151,7 +151,7 @@ const ConduitFillCalculator = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Input Section */}
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <MobileSelect value={conduitMaterial} onValueChange={setConduitMaterial}>
                 <MobileSelectTrigger label="Conduit Material">
                   <MobileSelectValue placeholder="Select material" />
@@ -180,7 +180,7 @@ const ConduitFillCalculator = () => {
               </MobileSelect>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <MobileSelect value={cableSize} onValueChange={setCableSize}>
                 <MobileSelectTrigger label="Cable Size (mm²)">
                   <MobileSelectValue placeholder="Select cable size" />
@@ -208,7 +208,7 @@ const ConduitFillCalculator = () => {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <MobileSelect value={installationType} onValueChange={setInstallationType}>
                 <MobileSelectTrigger label="Installation Type">
                   <MobileSelectValue />
@@ -231,18 +231,18 @@ const ConduitFillCalculator = () => {
               </MobileSelect>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-3">
               <MobileButton 
                 onClick={calculateConduitFill} 
                 variant="elec"
                 disabled={!conduitSize || !cableSize || !cableQuantity}
-                icon={<Calculator className="h-4 w-4" />}
-                className="flex-1"
+                icon={<Calculator className="h-5 w-5" />}
+                className="flex-1 min-h-[48px]"
               >
                 Calculate
               </MobileButton>
-              <MobileButton variant="elec-outline" onClick={resetCalculator}>
-                <RotateCcw className="h-4 w-4" />
+              <MobileButton variant="elec-outline" onClick={resetCalculator} className="min-h-[48px]">
+                <RotateCcw className="h-5 w-5" />
               </MobileButton>
             </div>
           </div>

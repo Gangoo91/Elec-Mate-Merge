@@ -206,12 +206,12 @@ const reset = () => {
               placeholder="e.g., 0.95"
             />
 
-            <div className="flex gap-2">
-              <MobileButton onClick={calculateVoltageDrop} className="flex-1" variant="elec" icon={<Calculator className="h-4 w-4" />}>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <MobileButton onClick={calculateVoltageDrop} className="flex-1 min-h-[48px]" variant="elec" icon={<Calculator className="h-5 w-5" />}>
                 Calculate
               </MobileButton>
-              <MobileButton variant="elec-outline" onClick={reset}>
-                <RotateCcw className="h-4 w-4" />
+              <MobileButton variant="elec-outline" onClick={reset} className="min-h-[48px]">
+                <RotateCcw className="h-5 w-5" />
               </MobileButton>
             </div>
           </div>
