@@ -212,17 +212,17 @@ const ResistorColourCodeCalculator = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 sm:flex sm:gap-2">
+            <div className="flex flex-col sm:flex-row gap-3">
               <MobileButton 
                 onClick={calculateResistance} 
                 variant="elec"
                 disabled={!band1 || !band2 || !band3 || !band4}
-                className="text-sm sm:text-base"
+                className="flex-1 min-h-[48px]"
               >
                 <Sigma className="mr-2 h-4 w-4" />
                 Calculate
               </MobileButton>
-              <MobileButton variant="outline" onClick={resetCalculator} className="text-sm sm:text-base">
+              <MobileButton variant="elec-outline" onClick={resetCalculator} className="min-h-[48px]">
                 Reset
               </MobileButton>
             </div>

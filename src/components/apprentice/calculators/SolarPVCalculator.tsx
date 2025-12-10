@@ -9,6 +9,7 @@ import { Sun, Info, Calculator, RotateCcw, Zap, TrendingUp, Lightbulb, CheckCirc
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileButton } from "@/components/ui/mobile-button";
 
 // Expanded UK locations with solar irradiance data (kWh/m²/year)
 const UK_LOCATIONS = [
@@ -353,14 +354,13 @@ const SolarPVCalculator = () => {
               />
             </div>
 
-            <div className="flex gap-3 pt-4">
-              <Button onClick={calculateSolarPV} className="flex-1 mobile-touch-target bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium">
-                <Calculator className="h-4 w-4 mr-2" />
+            <div className="flex flex-col sm:flex-row gap-3 pt-4">
+              <MobileButton onClick={calculateSolarPV} className="flex-1 min-h-[48px]" variant="elec" icon={<Calculator className="h-4 w-4" />}>
                 Calculate
-              </Button>
-              <Button variant="outline" onClick={reset} className="mobile-touch-target">
-                <RotateCcw className="h-4 w-4" />
-              </Button>
+              </MobileButton>
+              <MobileButton variant="elec-outline" onClick={reset} className="min-h-[48px]">
+                <RotateCcw className="h-5 w-5" />
+              </MobileButton>
             </div>
           </div>
 
