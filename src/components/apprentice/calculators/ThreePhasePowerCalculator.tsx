@@ -216,7 +216,7 @@ const ThreePhasePowerCalculator = () => {
               </MobileSelect>
             )}
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <MobileSelect value={connection} onValueChange={setConnection}>
                 <MobileSelectTrigger label="Connection">
                   <MobileSelectValue />
@@ -240,7 +240,7 @@ const ThreePhasePowerCalculator = () => {
               </MobileSelect>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <MobileInput
                 label={voltageType === "line-line" ? "Line Voltage (V)" : "Phase Voltage (V)"}
                 type="number"
@@ -260,7 +260,7 @@ const ThreePhasePowerCalculator = () => {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <MobileSelect value={currentType} onValueChange={setCurrentType}>
                 <MobileSelectTrigger label="Current Type">
                   <MobileSelectValue />
@@ -281,7 +281,7 @@ const ThreePhasePowerCalculator = () => {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <MobileInput
                 label="Power Factor"
                 type="number"
@@ -360,7 +360,7 @@ const ThreePhasePowerCalculator = () => {
               <CollapsibleContent className="space-y-3 mt-3">
                 <div className="p-4 bg-elec-card/30 rounded-lg border border-elec-yellow/10">
                   <h5 className="font-medium mb-3 text-sm text-elec-yellow">Current Unbalance Analysis</h5>
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     <MobileInput
                       label="IA (A)"
                       type="number"
@@ -390,12 +390,12 @@ const ThreePhasePowerCalculator = () => {
               </CollapsibleContent>
             </Collapsible>
 
-            <div className="flex gap-2">
-              <MobileButton onClick={calculateThreePhasePower} className="flex-1" variant="elec" icon={<Calculator className="h-4 w-4" />}>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <MobileButton onClick={calculateThreePhasePower} className="flex-1 min-h-[48px]" variant="elec" icon={<Calculator className="h-5 w-5" />}>
                 Calculate
               </MobileButton>
-              <MobileButton variant="elec-outline" onClick={reset}>
-                <RotateCcw className="h-4 w-4" />
+              <MobileButton variant="elec-outline" onClick={reset} className="min-h-[48px]">
+                <RotateCcw className="h-5 w-5" />
               </MobileButton>
             </div>
           </div>
