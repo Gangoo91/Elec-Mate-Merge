@@ -444,20 +444,26 @@ const CableSizingCalculator = () => {
 
               {/* Validation Results */}
               {validation && (
-                <SimpleValidationIndicator validation={validation} />
+                <SimpleValidationIndicator validation={validation} calculationType="cableSizing" />
               )}
 
               {/* Cable Sizing Result */}
               {result.recommendedCable && (
-                <CableSizingResult result={result} inputs={inputs} />
+                <CableSizingResult 
+                  recommendedCable={result.recommendedCable}
+                  alternativeCables={result.alternativeCables || []}
+                  errors={result.errors || {}}
+                  inputs={inputs}
+                />
               )}
 
               {/* Calculation Report */}
-              {Object.keys(calculationInputs).length > 0 && Object.keys(calculationResults).length > 0 && (
+              {Object.keys(calculationInputs).length > 0 && Object.keys(calculationResults).length > 0 && validation && (
                 <CalculationReport
                   calculationType="cableSizing"
                   inputs={calculationInputs}
                   results={calculationResults}
+                  validation={validation}
                 />
               )}
           </div>
