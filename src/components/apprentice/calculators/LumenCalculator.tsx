@@ -330,12 +330,12 @@ const LumenCalculator = () => {
               {/* Area Input Mode Toggle */}
               <div className="space-y-2">
                 <Label>Area Input</Label>
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <Button
                     type="button"
                     variant={inputMode === "area" ? "default" : "outline"}
                     onClick={() => setInputMode("area")}
-                    className="flex-1 text-xs"
+                    className="flex-1 text-xs min-h-[48px]"
                   >
                     Direct Area
                   </Button>
@@ -343,7 +343,7 @@ const LumenCalculator = () => {
                     type="button"
                     variant={inputMode === "dimensions" ? "default" : "outline"}
                     onClick={() => setInputMode("dimensions")}
-                    className="flex-1 text-xs"
+                    className="flex-1 text-xs min-h-[48px]"
                   >
                     Length × Width
                   </Button>
@@ -366,7 +366,7 @@ const LumenCalculator = () => {
                     error={errors.area}
                   />
                 ) : (
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <MobileInput
                       label="Length"
                       type="number"
@@ -458,7 +458,7 @@ const LumenCalculator = () => {
               </div>
 
               {/* Optional height inputs */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <MobileInput
                   label="Mounting Height (optional)"
                   type="number"
@@ -603,10 +603,10 @@ const LumenCalculator = () => {
               </Collapsible>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-2 mt-6">
+              <div className="flex flex-col sm:flex-row gap-3 mt-6">
                 <Button 
                   onClick={calculate} 
-                  className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  className="flex-1 min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90"
                 >
                   <Calculator className="h-4 w-4 mr-2" />
                   Calculate
@@ -614,7 +614,7 @@ const LumenCalculator = () => {
                 <Button 
                   variant="outline" 
                   onClick={resetCalculator} 
-                  className="flex-1 border-elec-yellow/20 hover:bg-elec-yellow/10"
+                  className="flex-1 min-h-[48px] border-elec-yellow/20 hover:bg-elec-yellow/10"
                 >
                   Reset
                 </Button>

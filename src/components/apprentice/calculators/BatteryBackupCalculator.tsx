@@ -186,7 +186,7 @@ const BatteryBackupCalculator = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <MobileInput
                 label="Voltage (V)"
                 type="text"
@@ -251,7 +251,7 @@ const BatteryBackupCalculator = () => {
                 placeholder="e.g., LED Lights"
               />
               
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <MobileInput
                   label="Power (W)"
                   type="text"
@@ -339,18 +339,18 @@ const BatteryBackupCalculator = () => {
               </div>
             )}
 
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-3">
               <MobileButton 
                 onClick={calculateBackup} 
-                className="flex-1" 
+                className="flex-1 min-h-[48px]" 
                 variant="elec" 
                 icon={<Calculator className="h-4 w-4" />}
                 disabled={!capacityAh || loads.length === 0}
               >
                 Calculate
               </MobileButton>
-              <MobileButton variant="elec-outline" onClick={reset}>
-                <RotateCcw className="h-4 w-4" />
+              <MobileButton variant="elec-outline" onClick={reset} className="min-h-[48px]">
+                <RotateCcw className="h-5 w-5" />
               </MobileButton>
             </div>
           </div>
