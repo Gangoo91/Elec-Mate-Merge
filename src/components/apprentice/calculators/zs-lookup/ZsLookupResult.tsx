@@ -193,36 +193,37 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
           </CardHeader>
           
           <CardContent className="pt-0">
-            <div className="max-h-96 overflow-y-auto">
-              <table className="w-full text-sm">
+            {/* Mobile-friendly scrollable table wrapper */}
+            <div className="max-h-96 overflow-y-auto overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+              <table className="w-full text-sm min-w-[500px]">
                 <thead className="sticky top-0 bg-elec-card">
                   <tr className="border-b border-elec-yellow/20">
                     <th 
-                      className="text-left p-2 cursor-pointer hover:bg-elec-yellow/10"
+                      className="text-left p-2 cursor-pointer hover:bg-elec-yellow/10 whitespace-nowrap"
                       onClick={() => handleSort("device")}
                     >
                       Device {sortColumn === "device" && (sortDirection === "asc" ? "↑" : "↓")}
                     </th>
                     <th 
-                      className="text-left p-2 cursor-pointer hover:bg-elec-yellow/10"
+                      className="text-left p-2 cursor-pointer hover:bg-elec-yellow/10 whitespace-nowrap"
                       onClick={() => handleSort("curve")}
                     >
                       Curve {sortColumn === "curve" && (sortDirection === "asc" ? "↑" : "↓")}
                     </th>
                     <th 
-                      className="text-left p-2 cursor-pointer hover:bg-elec-yellow/10"
+                      className="text-left p-2 cursor-pointer hover:bg-elec-yellow/10 whitespace-nowrap"
                       onClick={() => handleSort("rating")}
                     >
                       Rating {sortColumn === "rating" && (sortDirection === "asc" ? "↑" : "↓")}
                     </th>
                     <th 
-                      className="text-left p-2 cursor-pointer hover:bg-elec-yellow/10"
+                      className="text-left p-2 cursor-pointer hover:bg-elec-yellow/10 whitespace-nowrap"
                       onClick={() => handleSort("maxZs")}
                     >
-                      Max Zs (100%) {sortColumn === "maxZs" && (sortDirection === "asc" ? "↑" : "↓")}
+                      Max Zs {sortColumn === "maxZs" && (sortDirection === "asc" ? "↑" : "↓")}
                     </th>
-                    <th className="text-left p-2">80% Test Value</th>
-                    <th className="text-left p-2">Table Ref</th>
+                    <th className="text-left p-2 whitespace-nowrap">80% Test</th>
+                    <th className="text-left p-2 whitespace-nowrap">Table</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -232,17 +233,17 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
                     
                     return (
                       <tr key={index} className="border-b border-elec-yellow/10 hover:bg-elec-yellow/5">
-                        <td className="p-2 font-medium">{item.device}</td>
+                        <td className="p-2 font-medium whitespace-nowrap">{item.device}</td>
                         <td className="p-2">
                           <Badge variant="outline" className="text-xs">
                             {item.curve}
                           </Badge>
                         </td>
-                        <td className="p-2">{item.rating}</td>
-                        <td className="p-2 font-mono">{item.maxZs}</td>
-                        <td className="p-2 font-mono text-blue-300">{testValue}</td>
+                        <td className="p-2 whitespace-nowrap">{item.rating}</td>
+                        <td className="p-2 font-mono whitespace-nowrap">{item.maxZs}</td>
+                        <td className="p-2 font-mono text-blue-300 whitespace-nowrap">{testValue}</td>
                         <td className="p-2">
-                          <Badge variant="secondary" className="text-xs">
+                          <Badge variant="secondary" className="text-xs whitespace-nowrap">
                             {item.tableRef || "Table 41.3"}
                           </Badge>
                         </td>
@@ -290,17 +291,18 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
                   </p>
                 </div>
                 
-                <div className="max-h-80 overflow-y-auto">
-                  <table className="w-full text-sm">
+                {/* Mobile-friendly scrollable table wrapper */}
+                <div className="max-h-80 overflow-y-auto overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+                  <table className="w-full text-sm min-w-[600px]">
                     <thead className="sticky top-0 bg-elec-card">
                       <tr className="border-b border-elec-yellow/20">
-                        <th className="text-left p-2">Device</th>
-                        <th className="text-left p-2">Curve</th>
-                        <th className="text-left p-2">Rating</th>
-                        <th className="text-left p-2">Max Zs</th>
-                        <th className="text-left p-2">Margin</th>
-                        <th className="text-left p-2">Headroom</th>
-                        <th className="text-left p-2">Status</th>
+                        <th className="text-left p-2 whitespace-nowrap">Device</th>
+                        <th className="text-left p-2 whitespace-nowrap">Curve</th>
+                        <th className="text-left p-2 whitespace-nowrap">Rating</th>
+                        <th className="text-left p-2 whitespace-nowrap">Max Zs</th>
+                        <th className="text-left p-2 whitespace-nowrap">Margin</th>
+                        <th className="text-left p-2 whitespace-nowrap">Headroom</th>
+                        <th className="text-left p-2 whitespace-nowrap">Status</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -319,23 +321,23 @@ const ZsLookupResult = ({ searchType, results, complianceCheck, measuredZs }: Zs
                         
                         return (
                           <tr key={index} className="border-b border-elec-yellow/10">
-                            <td className="p-2">{item.device}</td>
+                            <td className="p-2 whitespace-nowrap">{item.device}</td>
                             <td className="p-2">
                               <Badge variant="outline" className="text-xs">
                                 {item.curve}
                               </Badge>
                             </td>
-                            <td className="p-2">{item.rating}</td>
-                            <td className="p-2 font-mono">{item.maxZs}</td>
-                            <td className="p-2 font-mono text-green-400">{item.margin}</td>
+                            <td className="p-2 whitespace-nowrap">{item.rating}</td>
+                            <td className="p-2 font-mono whitespace-nowrap">{item.maxZs}</td>
+                            <td className="p-2 font-mono text-green-400 whitespace-nowrap">{item.margin}</td>
                             <td className="p-2">
                               <div className="flex items-center gap-2">
                                 {getHeadroomBar(item.margin, item.maxZs)}
-                                <span className="text-xs">{headroom}%</span>
+                                <span className="text-xs whitespace-nowrap">{headroom}%</span>
                               </div>
                             </td>
                             <td className="p-2">
-                              <Badge className={`text-xs ${statusColor}`}>
+                              <Badge className={`text-xs whitespace-nowrap ${statusColor}`}>
                                 {status}
                               </Badge>
                             </td>

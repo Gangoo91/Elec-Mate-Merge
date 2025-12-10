@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Zap, Search } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
+import { MobileInput } from "@/components/ui/mobile-input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { zsValues, zsValues5s, curveTypes, fuseTypes, rcdZsValues, disconnectionTimes, getTableReference, get80PercentZs } from "./zs-values/ZsValuesData";
 import ZsLookupResult from "./zs-lookup/ZsLookupResult";
@@ -206,83 +206,64 @@ const BS7671ZsLookupCalculator = () => {
             <TabsContent value="results" className="space-y-6">
               <div className="space-y-4">
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <Label htmlFor="search-type">Search Type</Label>
-                    <Select value={searchType} onValueChange={setSearchType}>
-                      <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                        <SelectValue placeholder="Select search type" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                        <SelectItem value="device">Lookup by Device Type</SelectItem>
-                        <SelectItem value="compliance">Check Compliance (80% rule)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <MobileSelect value={searchType} onValueChange={setSearchType}>
+                    <MobileSelectTrigger label="Search Type">
+                      <MobileSelectValue placeholder="Select search type" />
+                    </MobileSelectTrigger>
+                    <MobileSelectContent>
+                      <MobileSelectItem value="device">Lookup by Device Type</MobileSelectItem>
+                      <MobileSelectItem value="compliance">Check Compliance (80% rule)</MobileSelectItem>
+                    </MobileSelectContent>
+                  </MobileSelect>
 
-                  <div>
-                    <Label htmlFor="disconnection-time">Disconnection Time</Label>
-                    <Select value={disconnectionTime} onValueChange={(v) => setDisconnectionTime(v as "0.4" | "5")}>
-                      <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                        <SelectValue placeholder="Select disconnection time" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                        {Object.entries(disconnectionTimes).map(([key, label]) => (
-                          <SelectItem key={key} value={key}>{label}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <MobileSelect value={disconnectionTime} onValueChange={(v) => setDisconnectionTime(v as "0.4" | "5")}>
+                    <MobileSelectTrigger label="Disconnection Time">
+                      <MobileSelectValue placeholder="Select disconnection time" />
+                    </MobileSelectTrigger>
+                    <MobileSelectContent>
+                      {Object.entries(disconnectionTimes).map(([key, label]) => (
+                        <MobileSelectItem key={key} value={key}>{label}</MobileSelectItem>
+                      ))}
+                    </MobileSelectContent>
+                  </MobileSelect>
                 </div>
 
                 {searchType === "device" && (
                   <>
                     <div className="grid gap-4 sm:grid-cols-2">
-                      <div>
-                        <Label htmlFor="quick-device">Quick Device (e.g. B32, C16)</Label>
-                        <Input
-                          id="quick-device"
-                          value={quickDevice}
-                          onChange={(e) => handleQuickDevice(e.target.value)}
-                          placeholder="B32, C16, D40..."
-                          className="bg-elec-dark border-elec-yellow/20"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="device-type">Device Type</Label>
-                        <Select value={deviceType} onValueChange={setDeviceType}>
-                          <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                            <SelectValue placeholder="Select device type" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                            <SelectItem value="mcb">MCB (Table 41.3)</SelectItem>
-                            <SelectItem value="rcbo">RCBO (Table 41.3)</SelectItem>
-                            <SelectItem value="rcd">RCD (Table 41.5)</SelectItem>
-                            {Object.entries(fuseTypes).map(([key, label]) => (
-                              <SelectItem key={key} value={key}>{label}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
+                      <MobileInput
+                        label="Quick Device (e.g. B32, C16)"
+                        value={quickDevice}
+                        onChange={(e) => handleQuickDevice(e.target.value)}
+                        placeholder="B32, C16, D40..."
+                      />
+                      <MobileSelect value={deviceType} onValueChange={setDeviceType}>
+                        <MobileSelectTrigger label="Device Type">
+                          <MobileSelectValue placeholder="Select device type" />
+                        </MobileSelectTrigger>
+                        <MobileSelectContent>
+                          <MobileSelectItem value="mcb">MCB (Table 41.3)</MobileSelectItem>
+                          <MobileSelectItem value="rcbo">RCBO (Table 41.3)</MobileSelectItem>
+                          <MobileSelectItem value="rcd">RCD (Table 41.5)</MobileSelectItem>
+                          {Object.entries(fuseTypes).map(([key, label]) => (
+                            <MobileSelectItem key={key} value={key}>{label}</MobileSelectItem>
+                          ))}
+                        </MobileSelectContent>
+                      </MobileSelect>
                     </div>
                   </>
                 )}
 
                 {searchType === "compliance" && (
-                  <div>
-                    <Label htmlFor="measured-zs">Measured Zs Value (Ω)</Label>
-                    <Input
-                      id="measured-zs"
-                      type="number"
-                      step="0.001"
-                      value={measuredZs}
-                      onChange={(e) => setMeasuredZs(e.target.value)}
-                      placeholder="e.g., 0.75"
-                      className="bg-elec-dark border-elec-yellow/20"
-                    />
-                    <p className="text-sm text-muted-foreground mt-1">
-                      Checks against 80% of max Zs (ambient temperature correction)
-                    </p>
-                  </div>
+                  <MobileInput
+                    label="Measured Zs Value (Ω)"
+                    type="number"
+                    step="0.001"
+                    value={measuredZs}
+                    onChange={(e) => setMeasuredZs(e.target.value)}
+                    placeholder="e.g., 0.75"
+                    hint="Checks against 80% of max Zs (ambient temperature correction)"
+                  />
                 )}
 
                 <div className="flex gap-2">
