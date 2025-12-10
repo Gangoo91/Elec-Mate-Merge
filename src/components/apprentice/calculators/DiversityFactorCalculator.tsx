@@ -92,29 +92,51 @@ const DiversityFactorCalculator = () => {
         <div className="space-y-6">
           {/* Configuration Section */}
           <div className="space-y-4">
-            {/* Input Mode Toggle */}
-            <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
-              <div className="space-y-1">
-                <Label className="text-sm font-medium">Input Mode</Label>
-                <p className="text-xs text-muted-foreground">
-                  Choose between kilowatt or amperage input
-                </p>
-              </div>
-              <div className="flex items-center space-x-3">
-                <span className={`text-sm ${inputMode === 'amperage' ? 'font-semibold text-primary' : 'text-muted-foreground'}`}>
-                  Amperage (A)
-                </span>
-                <Switch
-                  checked={inputMode === 'kw'}
-                  onCheckedChange={(checked) => toggleInputMode(checked ? 'kw' : 'amperage')}
-                />
-                <span className={`text-sm ${inputMode === 'kw' ? 'font-semibold text-primary' : 'text-muted-foreground'}`}>
-                  Power (kW)
-                </span>
+            {/* Input Mode Toggle - Mobile Optimised */}
+            <div className="p-4 md:p-5 bg-muted/50 rounded-lg">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div className="text-center md:text-left">
+                  <Label className="text-base font-medium">Input Mode</Label>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Choose between kilowatt or amperage input
+                  </p>
+                </div>
+                
+                {/* Toggle Button Group */}
+                <div className="flex items-center justify-center gap-2 p-1.5 bg-background/50 rounded-lg border border-border/50">
+                  <button
+                    type="button"
+                    onClick={() => toggleInputMode('amperage')}
+                    className={`flex-1 md:flex-none min-h-[48px] px-5 py-3 rounded-md text-sm font-medium transition-all duration-200 ${
+                      inputMode === 'amperage'
+                        ? 'bg-primary text-primary-foreground shadow-md'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                    }`}
+                  >
+                    <div className="flex flex-col items-center gap-0.5">
+                      <span className="font-semibold">Amperage</span>
+                      <span className="text-xs opacity-80">(A)</span>
+                    </div>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => toggleInputMode('kw')}
+                    className={`flex-1 md:flex-none min-h-[48px] px-5 py-3 rounded-md text-sm font-medium transition-all duration-200 ${
+                      inputMode === 'kw'
+                        ? 'bg-primary text-primary-foreground shadow-md'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                    }`}
+                  >
+                    <div className="flex flex-col items-center gap-0.5">
+                      <span className="font-semibold">Power</span>
+                      <span className="text-xs opacity-80">(kW)</span>
+                    </div>
+                  </button>
+                </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <MobileSelectWrapper
                 label="Installation Type"
                 value={location}
@@ -174,17 +196,17 @@ const DiversityFactorCalculator = () => {
               ))}
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-3">
               <Button 
                 onClick={calculateDemand}
-                className="flex-1 bg-primary hover:bg-primary/90"
+                className="flex-1 min-h-[48px] bg-primary hover:bg-primary/90 text-base"
                 disabled={loads.some(load => !load.type || !load.connectedLoad)}
               >
-                <Calculator className="h-4 w-4 mr-2" />
+                <Calculator className="h-5 w-5 mr-2" />
                 Calculate Diversity
               </Button>
-              <Button variant="outline" onClick={resetCalculator}>
-                <RotateCcw className="h-4 w-4 mr-2" />
+              <Button variant="outline" onClick={resetCalculator} className="min-h-[48px]">
+                <RotateCcw className="h-5 w-5 mr-2" />
                 Reset
               </Button>
             </div>
