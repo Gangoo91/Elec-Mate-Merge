@@ -46,17 +46,14 @@ const CONDUCTOR_RESISTANCE_20C: Record<number, number> = {
 };
 
 /**
- * BS 7671:2018+A2:2022 Table 41.3
+ * BS 7671:2018+A3:2024 Table 41.3
  * Maximum earth fault loop impedance (Zs) for 0.4s disconnection
  * Based on Uo = 230V, Cmin = 0.95, Ia = In × trip multiplier
  * Type B: 5 × In, Type C: 10 × In, Type D: 20 × In
- * 
- * CRITICAL: Using Cmin = 0.95 per BS 7671:2018+A2:2022
- * Formula: Zs = (Uo × Cmin) / Ia = (230 × 0.95) / (In × multiplier)
  */
 const MAX_ZS_TABLE: Record<string, Record<number, number>> = {
   B: {
-    6: 7.28, 10: 4.37, 16: 2.73, 20: 2.19, 25: 1.75,
+    3: 14.57, 6: 7.28, 10: 4.37, 16: 2.73, 20: 2.19, 25: 1.75,
     32: 1.37, 40: 1.09, 50: 0.87, 63: 0.69, 80: 0.55, 100: 0.44, 125: 0.35
   },
   C: {
@@ -66,6 +63,27 @@ const MAX_ZS_TABLE: Record<string, Record<number, number>> = {
   D: {
     6: 1.82, 10: 1.09, 16: 0.68, 20: 0.55, 25: 0.44,
     32: 0.34, 40: 0.27, 50: 0.22, 63: 0.17, 80: 0.14, 100: 0.11, 125: 0.09
+  }
+};
+
+/**
+ * BS 7671:2018+A3:2024 Table 41.3
+ * Maximum earth fault loop impedance (Zs) for 5s disconnection (distribution circuits)
+ * Note: Type B and C 5s values equal Type B 0.4s values
+ * Type D has explicit 5s values in Table 41.3
+ */
+const MAX_ZS_TABLE_5S: Record<string, Record<number, number>> = {
+  B: {
+    3: 14.57, 6: 7.28, 10: 4.37, 16: 2.73, 20: 2.19, 25: 1.75,
+    32: 1.37, 40: 1.09, 50: 0.87, 63: 0.69, 80: 0.55, 100: 0.44, 125: 0.35
+  },
+  C: {
+    3: 14.57, 6: 7.28, 10: 4.37, 16: 2.73, 20: 2.19, 25: 1.75,
+    32: 1.37, 40: 1.09, 50: 0.87, 63: 0.69, 80: 0.55, 100: 0.44, 125: 0.35
+  },
+  D: {
+    6: 3.64, 10: 2.19, 16: 1.37, 20: 1.09, 25: 0.87,
+    32: 0.68, 40: 0.55, 50: 0.44, 63: 0.35, 80: 0.27, 100: 0.22, 125: 0.17
   }
 };
 
