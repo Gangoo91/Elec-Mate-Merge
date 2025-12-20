@@ -117,22 +117,46 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
                 const status = (c as any).complianceStatus;
                 return status === 'fail' || status === 'warning' || (c as any).validationIssues?.length > 0 || c.warnings?.length > 0;
               })
-              .map((c, idx) => (
-                <div key={idx} className="text-xs text-white mb-2 bg-elec-dark/40 rounded p-2">
-                  <span className="font-semibold text-elec-yellow">C{c.circuitNumber || (idx + 1)} - {c.name}</span>
-                  <ul className="mt-1 text-[10px] text-white/80 space-y-0.5">
-                    {(c as any).validationIssues?.map((issue: any, i: number) => (
-                      <li key={i}>• {issue.message} {issue.regulation && `(${issue.regulation})`}</li>
-                    ))}
-                    {c.warnings?.map((w: string, i: number) => (
-                      <li key={`w-${i}`}>• {w}</li>
-                    ))}
-                    {!(c as any).validationIssues?.length && !c.warnings?.length && (
-                      <li>• Requires manual verification</li>
-                    )}
-                  </ul>
-                </div>
-              ))
+              .map((c, idx) => {
+                const status = (c as any).complianceStatus;
+                const hasIssues = (c as any).validationIssues?.length > 0;
+                const hasWarnings = c.warnings?.length > 0;
+                
+                // Generate intelligent fallback reason if none provided but status is not pass
+                let fallbackReason = 'Requires manual verification';
+                if (!hasIssues && !hasWarnings && status !== 'pass') {
+                  const vdCompliant = c.calculations?.voltageDrop?.compliant !== false;
+                  const zsValue = c.calculations?.zs ?? 0;
+                  const maxZsValue = c.calculations?.maxZs ?? 999;
+                  const zsOk = zsValue <= maxZsValue;
+                  const hasDesignContent = c.structuredOutput?.sections?.circuitSummary?.trim()?.length > 0;
+                  
+                  if (!vdCompliant) {
+                    fallbackReason = 'Voltage drop exceeds limits';
+                  } else if (!zsOk) {
+                    fallbackReason = `Zs (${zsValue.toFixed(2)}Ω) exceeds maximum (${maxZsValue.toFixed(2)}Ω)`;
+                  } else if (!hasDesignContent) {
+                    fallbackReason = 'Design data incomplete - regenerate recommended';
+                  }
+                }
+                
+                return (
+                  <div key={idx} className="text-xs text-white mb-2 bg-elec-dark/40 rounded p-2">
+                    <span className="font-semibold text-elec-yellow">C{c.circuitNumber || (idx + 1)} - {c.name}</span>
+                    <ul className="mt-1 text-[10px] text-white/80 space-y-0.5">
+                      {(c as any).validationIssues?.map((issue: any, i: number) => (
+                        <li key={i}>• {issue.message} {issue.regulation && `(${issue.regulation})`}</li>
+                      ))}
+                      {c.warnings?.map((w: string, i: number) => (
+                        <li key={`w-${i}`}>• {w}</li>
+                      ))}
+                      {!hasIssues && !hasWarnings && (
+                        <li>• {fallbackReason}</li>
+                      )}
+                    </ul>
+                  </div>
+                );
+              })
             }
           </div>
         )}

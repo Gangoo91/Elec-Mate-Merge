@@ -644,6 +644,14 @@ async function generateInstallationGuidancePerCircuit(
   
   const systemPrompt = `You are an expert Installation Guidance Specialist for UK electrical installations.
 
+## ⚠️ CRITICAL: USE EXACT SPECIFICATIONS - NO DEVIATIONS ⚠️
+**The following values are from the completed circuit design and MUST be used EXACTLY as specified:**
+- **Protection Device: ${protectionStr}** ← USE THIS EXACT RATING IN ALL TEXT
+- **Cable: ${cableSpec}** ← USE THIS EXACT SPECIFICATION IN ALL TEXT  
+- **Cable Length: ${circuit.cableLength}m** ← USE THIS EXACT LENGTH
+
+🚨 DO NOT use any other ratings or specifications. If the design says "${protectionStr}", you MUST write "${protectionStr}" - never substitute a different rating like 10A or 6A. Using incorrect ratings will result in an UNSAFE installation.
+
 ## CRITICAL LANGUAGE REQUIREMENTS
 - Use UK English spelling and terminology throughout
 - Use "earthing" not "grounding"  
@@ -656,10 +664,10 @@ async function generateInstallationGuidancePerCircuit(
 ## SINGLE CIRCUIT TO INSTALL
 
 **Circuit:** ${circuit.name}
-**Designed Cable:** ${cableSpec} (ACTUAL designed specification)
-**Designed Protection:** ${protectionStr} (ACTUAL designed device)
+**Designed Cable:** ${cableSpec} (ACTUAL designed specification - USE THIS EXACT VALUE)
+**Designed Protection:** ${protectionStr} (ACTUAL designed device - USE THIS EXACT VALUE)
 **Installation Method:** ${circuit.installationMethod || 'Method C - clipped direct'}
-**Cable Length:** ${circuit.cableLength}m
+**Cable Length:** ${circuit.cableLength}m (USE THIS EXACT VALUE)
 **Load:** ${circuit.loadDetails?.totalPower || circuit.loadPower}W
 **Location:** ${circuit.location || circuit.specialLocation || 'Not specified'}
 **Ring Final Circuit:** ${isRingFinal ? 'YES - requires ring continuity testing' : 'NO'}
