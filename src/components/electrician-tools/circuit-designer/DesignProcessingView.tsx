@@ -4,8 +4,8 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { DesignProgress } from '@/hooks/useAIDesigner';
-import { CheckCircle2, Loader2, Clock, XCircle, Zap, Wrench } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { CheckCircle2, Loader2, Clock, XCircle, Zap, Wrench, AlertCircle } from 'lucide-react';
+import { useEffect, useState, useRef } from 'react';
 import { cn } from '@/lib/utils';
 
 interface DesignProcessingViewProps {
@@ -26,6 +26,8 @@ export const DesignProcessingView = ({
   const [elapsedTime, setElapsedTime] = useState(0);
   const [startTime] = useState(Date.now());
   const [displayPercent, setDisplayPercent] = useState(0);
+  const [lastProgressChange, setLastProgressChange] = useState(Date.now());
+  const lastProgressRef = useRef(0);
 
   // Determine current stage and percent early
   const currentStage = Math.min(progress?.stage || 0, 6);
@@ -38,6 +40,20 @@ export const DesignProcessingView = ({
     }, 1000);
     return () => clearInterval(interval);
   }, [startTime]);
+
+  // Track when progress last changed
+  useEffect(() => {
+    if (currentPercent !== lastProgressRef.current) {
+      lastProgressRef.current = currentPercent;
+      setLastProgressChange(Date.now());
+    }
+  }, [currentPercent]);
+
+  // Calculate if progress is stalled
+  const secondsSinceProgressChange = Math.floor((Date.now() - lastProgressChange) / 1000);
+  const isProgressStalled = secondsSinceProgressChange > 30 && elapsedTime > 90;
+  const isTakingLong = elapsedTime > 150;
+  const isTakingVeryLong = elapsedTime > 240;
 
   // Smooth progress animation to prevent frozen UI at 40%
   useEffect(() => {
@@ -212,6 +228,18 @@ export const DesignProcessingView = ({
             <Clock className="w-3.5 h-3.5" />
             <span className="text-left">Estimated time remaining: ~{formatTime(estimatedTimeRemaining)}</span>
           </div>
+
+          {/* Taking Longer Reassurance Message */}
+          {(isProgressStalled || isTakingLong) && (
+            <Alert className="mt-4 border-amber-500/30 bg-amber-500/10">
+              <AlertCircle className="h-4 w-4 text-amber-500" />
+              <AlertDescription className="text-amber-200 text-sm">
+                {isTakingVeryLong 
+                  ? "Taking longer than expected. Large installations may take up to 5 minutes — your design is still being generated."
+                  : "Your design is still processing. AI response times can vary — please wait a moment longer."}
+              </AlertDescription>
+            </Alert>
+          )}
 
           {/* Retry Message */}
           {retryMessage && (
