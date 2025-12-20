@@ -99,6 +99,18 @@ const formatInstallationGuidance = (guidance: any): string => {
   return sections.join('\n---\n\n');
 };
 
+// Map progress percentage to stage for accurate UI display
+// Phase 1 (Designer): 0-50%, Phase 2 (Installation): 50-100%
+const getStageFromProgress = (progress: number): number => {
+  if (progress < 5) return 0;   // Initialising
+  if (progress < 15) return 1;  // Understanding Requirements
+  if (progress < 25) return 2;  // Searching Regulations
+  if (progress < 50) return 3;  // AI Circuit Design (Phase 1)
+  if (progress < 70) return 4;  // Installation Guidance (Phase 2)
+  if (progress < 95) return 5;  // Compliance Validation
+  return 6;                      // Finalising/Downloading
+};
+
 // Transform Installation Agent's testingRequirements to expectedTestResults format
 const transformTestingRequirements = (testingReqs: any): any => {
   if (!testingReqs?.tests || !Array.isArray(testingReqs.tests)) return undefined;
@@ -482,7 +494,7 @@ export const AIInstallationDesigner = () => {
       {currentView === 'processing' && (
         <DesignProcessingView 
           progress={{ 
-            stage: Math.floor(progress / 14), 
+            stage: getStageFromProgress(progress), 
             percent: progress,
             message: currentStep || 'Processing...',
             designer_progress: job?.designer_progress || 0,
