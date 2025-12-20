@@ -28,11 +28,15 @@ export const MaintenanceMethodInterface = () => {
   const { job, isPolling, cancelJob } = useMaintenanceMethodJobPolling(currentJobId);
 
   // Auto-transition to success when job completes
+  // Use boolean for method_data dependency to avoid object reference issues
+  const hasMethodData = !!job?.method_data;
   useEffect(() => {
-    if (viewState === 'processing' && job?.status === 'completed' && job.method_data) {
+    console.log('🔄 Transition check:', { viewState, status: job?.status, hasData: hasMethodData });
+    if (viewState === 'processing' && job?.status === 'completed' && hasMethodData) {
+      console.log('✅ Transitioning to success view');
       setViewState('success');
     }
-  }, [viewState, job?.status, job?.method_data]);
+  }, [viewState, job?.status, hasMethodData]);
 
   // Handle job failure
   useEffect(() => {
@@ -211,6 +215,20 @@ export const MaintenanceMethodInterface = () => {
 
   // Show success celebration
   if (viewState === 'success' && job?.status === 'completed' && job.method_data) {
+    const generationTime = Date.now() - startTime;
+    return (
+      <MaintenanceSuccess
+        stepCount={job.method_data.steps?.length || 0}
+        equipmentType={equipmentDetails.equipmentType}
+        generationTimeMs={generationTime}
+        onViewResults={handleViewResults}
+      />
+    );
+  }
+
+  // Fallback: If job completed but useEffect hasn't fired yet, show success directly
+  if (viewState === 'processing' && job?.status === 'completed' && job.method_data) {
+    console.log('🎯 Fallback render: showing success for completed job');
     const generationTime = Date.now() - startTime;
     return (
       <MaintenanceSuccess
