@@ -52,8 +52,8 @@ export const MaintenanceMethodProcessingView = ({
 
   const currentStage = getStageFromProgress(progress);
 
-  // Enhanced timer: 4 minutes for maintenance methods
-  const estimatedTotal = 240; // 4 minutes
+  // Enhanced timer: 6 minutes for maintenance methods (they're complex)
+  const estimatedTotal = 360; // 6 minutes
   const estimatedRemaining = Math.max(0, estimatedTotal - elapsedTime);
 
   // Define all stages with their labels
