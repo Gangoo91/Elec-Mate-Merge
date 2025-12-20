@@ -108,56 +108,33 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
           )}
         </div>
 
-        {/* Review Reasons Summary - show for warnings OR fails */}
+        {/* Circuits Needing Review - Simple list using same logic as badge counts */}
         {(complianceStats.fails > 0 || complianceStats.warnings > 0) && (
           <div className="mt-2 bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
             <p className="text-xs text-amber-400 font-medium mb-2">Circuits Needing Review:</p>
-            {design.circuits
-              .filter(c => {
-                const status = (c as any).complianceStatus;
-                return status === 'fail' || status === 'warning' || (c as any).validationIssues?.length > 0 || c.warnings?.length > 0;
-              })
-              .map((c, idx) => {
-                const status = (c as any).complianceStatus;
-                const hasIssues = (c as any).validationIssues?.length > 0;
-                const hasWarnings = c.warnings?.length > 0;
-                
-                // Generate intelligent fallback reason if none provided but status is not pass
-                let fallbackReason = 'Requires manual verification';
-                if (!hasIssues && !hasWarnings && status !== 'pass') {
-                  const vdCompliant = c.calculations?.voltageDrop?.compliant !== false;
-                  const zsValue = c.calculations?.zs ?? 0;
-                  const maxZsValue = c.calculations?.maxZs ?? 999;
-                  const zsOk = zsValue <= maxZsValue;
-                  const hasDesignContent = c.structuredOutput?.sections?.circuitSummary?.trim()?.length > 0;
+            <div className="flex flex-wrap gap-2">
+              {design.circuits
+                .map((c, idx) => {
+                  // Use EXACT same logic as complianceStats calculation
+                  const status = (c as any).complianceStatus;
+                  const isCompliant = status === 'pass' || (!status && c.calculations?.voltageDrop?.compliant && (c.calculations?.zs ?? 0) <= (c.calculations?.maxZs ?? 999));
+                  const isWarning = status === 'warning' || c.warnings?.length > 0;
+                  const needsReview = !isCompliant || isWarning;
                   
-                  if (!vdCompliant) {
-                    fallbackReason = 'Voltage drop exceeds limits';
-                  } else if (!zsOk) {
-                    fallbackReason = `Zs (${zsValue.toFixed(2)}Ω) exceeds maximum (${maxZsValue.toFixed(2)}Ω)`;
-                  } else if (!hasDesignContent) {
-                    fallbackReason = 'Design data incomplete - regenerate recommended';
-                  }
-                }
-                
-                return (
-                  <div key={idx} className="text-xs text-white mb-2 bg-elec-dark/40 rounded p-2">
-                    <span className="font-semibold text-elec-yellow">C{c.circuitNumber || (idx + 1)} - {c.name}</span>
-                    <ul className="mt-1 text-[10px] text-white/80 space-y-0.5">
-                      {(c as any).validationIssues?.map((issue: any, i: number) => (
-                        <li key={i}>• {issue.message} {issue.regulation && `(${issue.regulation})`}</li>
-                      ))}
-                      {c.warnings?.map((w: string, i: number) => (
-                        <li key={`w-${i}`}>• {w}</li>
-                      ))}
-                      {!hasIssues && !hasWarnings && (
-                        <li>• {fallbackReason}</li>
-                      )}
-                    </ul>
-                  </div>
-                );
-              })
-            }
+                  if (!needsReview) return null;
+                  
+                  return (
+                    <Badge 
+                      key={idx}
+                      className={`${isWarning && isCompliant ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-red-500/20 text-red-400 border-red-500/30'} text-xs px-2 py-1`}
+                    >
+                      C{c.circuitNumber || (idx + 1)}
+                    </Badge>
+                  );
+                })
+                .filter(Boolean)
+              }
+            </div>
           </div>
         )}
 
