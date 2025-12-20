@@ -108,15 +108,29 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
           )}
         </div>
 
-        {/* Review Reasons Summary */}
-        {complianceStats.fails > 0 && (
-          <div className="mt-2 bg-red-500/10 border border-red-500/20 rounded-lg p-2">
-            <p className="text-xs text-red-400 font-medium mb-1">Review Required:</p>
+        {/* Review Reasons Summary - show for warnings OR fails */}
+        {(complianceStats.fails > 0 || complianceStats.warnings > 0) && (
+          <div className="mt-2 bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
+            <p className="text-xs text-amber-400 font-medium mb-2">Circuits Needing Review:</p>
             {design.circuits
-              .filter(c => (c as any).complianceStatus === 'fail' || (c as any).validationIssues?.length > 0)
+              .filter(c => {
+                const status = (c as any).complianceStatus;
+                return status === 'fail' || status === 'warning' || (c as any).validationIssues?.length > 0 || c.warnings?.length > 0;
+              })
               .map((c, idx) => (
-                <div key={idx} className="text-[10px] text-white/80 mb-0.5">
-                  • {c.name}: {(c as any).validationIssues?.[0]?.message || (c as any).warnings?.[0] || 'Requires manual review'}
+                <div key={idx} className="text-xs text-white mb-2 bg-elec-dark/40 rounded p-2">
+                  <span className="font-semibold text-elec-yellow">C{c.circuitNumber || (idx + 1)} - {c.name}</span>
+                  <ul className="mt-1 text-[10px] text-white/80 space-y-0.5">
+                    {(c as any).validationIssues?.map((issue: any, i: number) => (
+                      <li key={i}>• {issue.message} {issue.regulation && `(${issue.regulation})`}</li>
+                    ))}
+                    {c.warnings?.map((w: string, i: number) => (
+                      <li key={`w-${i}`}>• {w}</li>
+                    ))}
+                    {!(c as any).validationIssues?.length && !c.warnings?.length && (
+                      <li>• Requires manual verification</li>
+                    )}
+                  </ul>
                 </div>
               ))
             }

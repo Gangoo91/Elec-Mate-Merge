@@ -141,7 +141,9 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
         <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar snap-x snap-mandatory">
           {design.circuits.map((circuit, idx) => {
             const isActive = idx === selectedCircuitIndex;
-            const status = circuit.warnings?.length > 0 ? 'warning' : 'pass';
+            // Use backend complianceStatus, fallback to warning check
+            const status = (circuit as any).complianceStatus || 
+              (circuit.warnings?.length > 0 ? 'warning' : 'pass');
             
             return (
               <button
@@ -163,7 +165,9 @@ export const MobileCircuitResults = ({ design, onReset, onExport }: MobileCircui
                       <span className="text-[10px] ml-1 opacity-70">3Ø</span>
                     )}
                   </span>
-                  {status === 'warning' && <AlertTriangle className="h-3 w-3 text-amber-400" />}
+                  {status !== 'pass' && (
+                    <AlertTriangle className={`h-3 w-3 ${status === 'fail' ? 'text-red-400' : 'text-amber-400'}`} />
+                  )}
                 </div>
               </button>
             );

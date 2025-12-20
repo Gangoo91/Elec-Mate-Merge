@@ -100,8 +100,8 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
 
       {/* Content Area */}
       <div className="p-5 sm:p-6">
-        {/* PHASE 5: Structured Output Display */}
-        {circuit.structuredOutput ? (
+        {/* PHASE 5: Structured Output Display with null safety */}
+        {circuit.structuredOutput?.atAGlanceSummary && circuit.structuredOutput?.sections ? (
           <>
             {/* At a Glance Summary */}
             <AtAGlanceSummary 
@@ -126,6 +126,12 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
               </div>
             )}
           </>
+        ) : circuit.structuredOutput ? (
+          <div className="text-center py-12 text-white/60">
+            <AlertTriangle className="h-8 w-8 text-amber-400 mx-auto mb-3" />
+            <p className="text-sm mb-2 text-white">Design data incomplete</p>
+            <p className="text-xs text-white/60">Some circuit details may be missing - try regenerating</p>
+          </div>
         ) : (
           <div className="text-center py-12 text-white/60">
             <p className="text-sm mb-2">Legacy design format detected</p>
