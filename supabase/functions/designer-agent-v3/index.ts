@@ -65,14 +65,14 @@ serve(async (req) => {
       }
     };
 
-    // Progress heartbeat: RAG search phase
-    await updateJobProgress(10, 'Searching design knowledge base...');
+    // Progress heartbeat: RAG search phase (Phase 1: 0-50%)
+    await updateJobProgress(5, 'Searching design knowledge base...');
 
     // Progress callback for RAG (passes through to pipeline)
     const ragProgressCallback = async (msg: string) => {
       logger.info('RAG progress', { message: msg });
       if (jobId) {
-        await updateJobProgress(15, msg);
+        await updateJobProgress(10, msg);
       }
     };
 
@@ -98,8 +98,8 @@ serve(async (req) => {
     // Single entry point - all logic delegated to pipeline
     const pipeline = new DesignPipeline(logger, requestId, ragProgressCallback, circuitProgressCallback);
     
-    // Progress heartbeat: AI generation phase
-    await updateJobProgress(30, 'Generating circuit designs with AI...');
+    // Progress heartbeat: AI generation phase (Phase 1: 0-50%)
+    await updateJobProgress(15, 'Generating circuit designs with AI...');
     
     // CRITICAL: Update designer status immediately on startup
     if (jobId) {
@@ -108,7 +108,7 @@ serve(async (req) => {
         .update({
           designer_status: 'processing',
           designer_progress: 0,
-          progress: 35,
+          progress: 15,  // Phase 1: 0-50%
           current_step: 'Designer agent started - processing circuits...'
         })
         .eq('id', jobId);
@@ -140,10 +140,11 @@ serve(async (req) => {
     }, 600000); // 10 minutes
 
     // HEARTBEAT: Update progress during pipeline execution to prevent stuck detection
-    let heartbeatProgress = 30;
+    // Phase 1 caps at 45% to leave room for Phase 2 (installation agent)
+    let heartbeatProgress = 15;
     const heartbeatInterval = setInterval(async () => {
-      if (heartbeatProgress < 85) {
-        heartbeatProgress = Math.min(85, heartbeatProgress + 5);
+      if (heartbeatProgress < 45) {
+        heartbeatProgress = Math.min(45, heartbeatProgress + 3);
         await updateJobProgress(heartbeatProgress, 'AI is designing circuits...');
       }
     }, 15000); // Every 15 seconds
@@ -152,8 +153,8 @@ serve(async (req) => {
     try {
       result = await pipeline.execute(body);
       
-      // Progress heartbeat: Validation phase
-      await updateJobProgress(90, 'Validating compliance and finalizing...');
+      // Progress heartbeat: Validation phase - Phase 1 complete at 50%
+      await updateJobProgress(50, 'Circuit design complete. Starting installation guidance...');
       
     } catch (pipelineError) {
       // Pipeline failed - let outer catch handle it

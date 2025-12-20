@@ -39,12 +39,13 @@ Deno.serve(async (req) => {
       receivedActualSpecs: true 
     });
 
-    // Update job: Installation agent starting
+    // Update job: Installation agent starting (Phase 2: 50-100%)
     await supabase
       .from('circuit_design_jobs')
       .update({
         installation_agent_status: 'processing',
         installation_agent_progress: 5,
+        progress: 52,  // Phase 2 starts at 50%
         current_step: 'Generating installation guidance...'
       })
       .eq('id', jobId);
@@ -53,10 +54,13 @@ Deno.serve(async (req) => {
     const keywords = extractDesignKeywords(designedCircuits, supply, projectInfo);
     console.log(`📝 Extracted ${keywords.size} keywords from DESIGNED circuits`);
 
-    // Update progress
+    // Update progress (Phase 2: 50-100%)
     await supabase
       .from('circuit_design_jobs')
-      .update({ installation_agent_progress: 15 })
+      .update({ 
+        installation_agent_progress: 15,
+        progress: 58  // 50% + (15% of 50%)
+      })
       .eq('id', jobId);
 
     // STEP 2: Enhanced parallel RAG search with LIMITED keywords to prevent array overflow
@@ -105,11 +109,12 @@ Deno.serve(async (req) => {
       identifiedTools: toolsMentioned
     });
 
-    // Update progress
+    // Update progress (Phase 2: 50-100%)
     await supabase
       .from('circuit_design_jobs')
       .update({ 
         installation_agent_progress: 40,
+        progress: 70,  // 50% + (40% of 50%)
         current_step: 'Analyzing installation requirements...'
       })
       .eq('id', jobId);
@@ -117,11 +122,12 @@ Deno.serve(async (req) => {
     // STEP 3: Generate circuit-specific installation guidance
     const aiStart = Date.now();
     
-    // Initial progress update
+    // Initial progress update (Phase 2: 50-100%)
     await supabase
       .from('circuit_design_jobs')
       .update({ 
         installation_agent_progress: 50,
+        progress: 75,  // 50% + (50% of 50%)
         current_step: 'Generating circuit-specific installation guidance...'
       })
       .eq('id', jobId);
@@ -137,10 +143,13 @@ Deno.serve(async (req) => {
 
     console.log(`✅ Circuit-specific guidance complete in ${aiTime}ms`);
 
-    // Update progress
+    // Update progress (Phase 2: 50-100%)
     await supabase
       .from('circuit_design_jobs')
-      .update({ installation_agent_progress: 90 })
+      .update({ 
+        installation_agent_progress: 90,
+        progress: 95  // 50% + (90% of 50%)
+      })
       .eq('id', jobId);
 
     // STEP 4: Save to database and mark ENTIRE job complete
