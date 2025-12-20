@@ -238,7 +238,7 @@ serve(async (req) => {
           .from('circuit_design_jobs')
           .update({
             status: 'processing', // Keep processing for Installation Agent (Phase 2)
-            progress: 50, // Phase 1 of 2 complete
+            // FIXED: Don't regress progress - keep at current level (around 90%), installation agent will continue from here
             current_step: 'Circuit design complete. Generating installation guidance...',
             designer_status: 'complete',
             designer_progress: 100,
@@ -273,7 +273,7 @@ serve(async (req) => {
               .from('circuit_design_jobs')
               .update({
                 status: 'processing',
-                progress: 50,
+                // FIXED: Don't regress progress on retry either
                 current_step: 'Circuit design complete. Generating installation guidance...',
                 designer_status: 'complete',
                 designer_progress: 100,

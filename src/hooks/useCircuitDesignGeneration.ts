@@ -68,7 +68,7 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
 
     fetchInitialJob();
 
-    // Poll as fallback every 10s in case Realtime drops
+    // Poll as fallback every 3s for faster completion detection
     const pollInterval = setInterval(async () => {
       if (!jobId) return;
       
@@ -80,8 +80,19 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
       
       if (!error && data) {
         const jobStatus = (data as any).status;
-        console.log('📊 Polling update:', jobStatus, (data as any).progress + '%');
-        setJob(data as any as CircuitDesignJob);
+        const jobProgress = (data as any).progress;
+        console.log('📊 Polling update:', jobStatus, jobProgress + '%');
+        
+        // Only update if progress moves forward or status changes (prevent regression display)
+        setJob(prev => {
+          if (!prev) return data as any as CircuitDesignJob;
+          // Never allow progress to go backwards in UI
+          if (jobProgress < prev.progress && jobStatus === 'processing') {
+            console.warn('⚠️ Ignoring progress regression:', prev.progress, '->', jobProgress);
+            return { ...data as any, progress: prev.progress } as CircuitDesignJob;
+          }
+          return data as any as CircuitDesignJob;
+        });
         
         // Stop polling when job reaches terminal state
         if (jobStatus === 'complete' || jobStatus === 'failed' || jobStatus === 'cancelled') {
@@ -89,7 +100,7 @@ export const useCircuitDesignGeneration = (jobId: string | null): UseCircuitDesi
           clearInterval(pollInterval);
         }
       }
-    }, 10000);
+    }, 3000);
 
     // Subscribe to realtime updates
     const channel = supabase
