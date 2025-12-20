@@ -38,21 +38,32 @@ export const StructuredDesignSections = ({ sections }: StructuredDesignSectionsP
 
   return (
     <div className="space-y-4">
-      {sectionOrder.map(({ key, title, icon: Icon }) => (
-        <Card key={key} className="bg-card border-elec-yellow/20 hover:border-elec-yellow/30 transition-all">
-          <div className="p-4 sm:p-5">
-            <h4 className="text-base sm:text-lg font-bold text-elec-light flex items-center gap-2 mb-3">
-              <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
-              {title}
-            </h4>
-            <div className="prose prose-invert prose-sm max-w-none">
-              <p className="text-sm sm:text-base text-white whitespace-pre-wrap leading-relaxed text-left">
-                {sections[key]}
-              </p>
+      {sectionOrder.map(({ key, title, icon: Icon }) => {
+        const content = sections[key];
+        const hasContent = content && content.trim().length > 0;
+        
+        return (
+          <Card key={key} className="bg-card border-elec-yellow/20 hover:border-elec-yellow/30 transition-all">
+            <div className="p-4 sm:p-5">
+              <h4 className="text-base sm:text-lg font-bold text-elec-light flex items-center gap-2 mb-3">
+                <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
+                {title}
+              </h4>
+              <div className="prose prose-invert prose-sm max-w-none">
+                {hasContent ? (
+                  <p className="text-sm sm:text-base text-white whitespace-pre-wrap leading-relaxed text-left">
+                    {content}
+                  </p>
+                ) : (
+                  <p className="text-sm text-white/50 italic">
+                    Content not available - this section may need regeneration
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
-        </Card>
-      ))}
+          </Card>
+        );
+      })}
     </div>
   );
 };

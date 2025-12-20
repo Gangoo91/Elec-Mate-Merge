@@ -100,8 +100,10 @@ export const CircuitCard = ({ circuit, onViewWorkings, onViewJustification, clas
 
       {/* Content Area */}
       <div className="p-5 sm:p-6">
-        {/* PHASE 5: Structured Output Display with null safety */}
-        {circuit.structuredOutput?.atAGlanceSummary && circuit.structuredOutput?.sections ? (
+        {/* PHASE 5: Structured Output Display with null safety - check for actual content */}
+        {circuit.structuredOutput?.atAGlanceSummary && 
+         circuit.structuredOutput?.sections &&
+         Object.values(circuit.structuredOutput.sections).some(s => s && s.trim().length > 0) ? (
           <>
             {/* At a Glance Summary */}
             <AtAGlanceSummary 
