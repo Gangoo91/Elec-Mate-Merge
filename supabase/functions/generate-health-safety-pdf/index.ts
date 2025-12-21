@@ -60,12 +60,13 @@ serve(async (req) => {
           principalContractor: healthSafetyData.clientName || 'Not specified',
           assessmentDate: healthSafetyData.assessmentDate || new Date().toISOString().split('T')[0],
           reviewDate: healthSafetyData.reviewDate || new Date(Date.now() + 6 * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-          // Sort hazards by risk score (highest first)
-          hazards: [...(healthSafetyData.hazards || [])].sort((a: any, b: any) => (b.riskScore || 0) - (a.riskScore || 0)).map((hazard: any) => {
+          // Sort hazards by risk score (highest first), then assign sequential IDs
+          hazards: [...(healthSafetyData.hazards || [])].sort((a: any, b: any) => (b.riskScore || 0) - (a.riskScore || 0)).map((hazard: any, index: number) => {
             const rawControlMeasures = hazard.controlMeasures || hazard.controlMeasure || 'Control measures to be determined on site';
             const parsedControls = parseControlMeasures(rawControlMeasures);
             
             return {
+              id: `H${String(index + 1).padStart(2, '0')}`, // Sequential ID after sorting: H01 = highest risk
               hazard: hazard.hazard,
               likelihood: hazard.likelihood,
               severity: hazard.severity,

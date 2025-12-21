@@ -903,6 +903,26 @@ class ProfessionalRAMSPDFGenerator {
     this.doc.text("Hazards ranked 1-N where 1 = highest risk score", this.MARGIN, this.yPosition);
     this.yPosition += 16;
 
+    // Helper function to format control measures with proper spacing
+    const formatControlMeasures = (controlText: string): string => {
+      if (!controlText) return '';
+      
+      // Add line breaks before each section header for better readability
+      const formatted = controlText
+        .replace(/PRIMARY ACTION:/gi, '\n\nPRIMARY ACTION:')
+        .replace(/ELIMINATE:/gi, '\n\nELIMINATE:')
+        .replace(/SUBSTITUTE:/gi, '\n\nSUBSTITUTE:')
+        .replace(/ENGINEER CONTROLS:/gi, '\n\nENGINEER CONTROLS:')
+        .replace(/ADMINISTRATIVE CONTROLS:/gi, '\n\nADMINISTRATIVE CONTROLS:')
+        .replace(/VERIFICATION:/gi, '\n\nVERIFICATION:')
+        .replace(/COMPETENCY REQUIREMENT:/gi, '\n\nCOMPETENCY REQUIREMENT:')
+        .replace(/EQUIPMENT STANDARDS:/gi, '\n\nEQUIPMENT STANDARDS:')
+        .replace(/REGULATION:/gi, '\n\nREGULATION:')
+        .trim();
+      
+      return formatted;
+    };
+
     // Risks are already sorted by risk rating in backend (highest first)
     const sortedRisks = [...data.risks].sort((a, b) => (b.riskRating || 0) - (a.riskRating || 0));
     const deduplicatedRisks = deduplicateRisks(sortedRisks);
@@ -915,15 +935,16 @@ class ProfessionalRAMSPDFGenerator {
     }
 
     // Professional risk table with improved readability and no aggressive truncation
+    // Hazard IDs are sequential (H01, H02, H03...) reflecting risk-sorted order (H01 = highest risk)
     const riskTableData = deduplicatedRisks.map((risk, index) => [
-      (index + 1).toString(),
+      `H${String(index + 1).padStart(2, '0')}`, // Sequential ID: H01, H02, H03... (H01 = highest risk)
       safeText(risk.hazard), // Remove truncation for hazard
       safeText(risk.risk), // Remove truncation for who might be harmed
       safeNumber(risk.likelihood).toString(),
       safeNumber(risk.severity).toString(),
       `${safeNumber(risk.riskRating)}`,
       getRiskLevel(risk.riskRating),
-      safeText(risk.controls), // Remove truncation for control measures
+      formatControlMeasures(safeText(risk.controls)), // Format with line breaks between sections
       `${safeNumber(risk.residualRisk)}`,
       getRiskLevel(risk.residualRisk)
     ]);
