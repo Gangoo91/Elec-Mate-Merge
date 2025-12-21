@@ -201,11 +201,13 @@ export const MaintenanceStepCard = ({
           if (labelMatch) {
             const label = labelMatch[1];
             const text = trimmed.slice(labelMatch[0].length);
+            // Capitalise first letter after the label
+            const capitalisedText = text.charAt(0).toUpperCase() + text.slice(1);
             return (
               <div key={idx} className="space-y-1.5">
                 <span className="text-xs font-bold text-elec-yellow uppercase tracking-wide">{label}</span>
                 <div className="text-sm text-foreground pl-0">
-                  {formatNumberedItems(text)}
+                  {formatNumberedItems(capitalisedText)}
                 </div>
               </div>
             );
@@ -463,16 +465,6 @@ export const MaintenanceStepCard = ({
             editedCheckpoints,
             setEditedCheckpoints,
             'purple'
-          )}
-
-          {renderCollapsibleSection(
-            'qualifications',
-            'Required Qualifications',
-            <GraduationCap className="h-4 w-4" />,
-            step.qualifications || [],
-            editedQualifications,
-            setEditedQualifications,
-            'cyan'
           )}
 
           {renderCollapsibleSection(

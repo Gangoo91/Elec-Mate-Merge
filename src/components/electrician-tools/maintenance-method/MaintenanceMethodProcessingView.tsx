@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Wrench, X, CheckCircle2, Search, Zap, Clock, ShieldCheck, FileText, Loader2 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { MaintenanceEquipmentDetails } from "@/types/maintenance-method";
 import { cn } from "@/lib/utils";
 
@@ -25,6 +25,38 @@ export const MaintenanceMethodProcessingView = ({
   isCancelling
 }: MaintenanceMethodProcessingViewProps) => {
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [displayProgress, setDisplayProgress] = useState(progress);
+  const animationRef = useRef<number | null>(null);
+
+  // Smooth progress animation - prevents jarring jumps
+  useEffect(() => {
+    if (progress > displayProgress) {
+      const startProgress = displayProgress;
+      const startTime = Date.now();
+      const duration = 800; // 800ms animation
+
+      const animate = () => {
+        const elapsed = Date.now() - startTime;
+        const fraction = Math.min(elapsed / duration, 1);
+        // Ease-out curve for smooth deceleration
+        const eased = 1 - Math.pow(1 - fraction, 3);
+        const newProgress = Math.round(startProgress + (progress - startProgress) * eased);
+        setDisplayProgress(newProgress);
+
+        if (fraction < 1) {
+          animationRef.current = requestAnimationFrame(animate);
+        }
+      };
+
+      animationRef.current = requestAnimationFrame(animate);
+    }
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [progress]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -40,7 +72,7 @@ export const MaintenanceMethodProcessingView = ({
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  // Map progress percentage to stages
+  // Map progress percentage to stages - use displayProgress for smooth UI
   const getStageFromProgress = (prog: number): 'initializing' | 'rag' | 'ai' | 'generation' | 'validation' | 'complete' => {
     if (prog < 10) return 'initializing';
     if (prog < 30) return 'rag';
@@ -50,7 +82,7 @@ export const MaintenanceMethodProcessingView = ({
     return 'complete';
   };
 
-  const currentStage = getStageFromProgress(progress);
+  const currentStage = getStageFromProgress(displayProgress);
 
   // Enhanced timer: 5 minutes for maintenance methods
   const estimatedTotal = 300; // 5 minutes
@@ -112,7 +144,7 @@ export const MaintenanceMethodProcessingView = ({
               <div>
                 <h3 className="font-semibold text-base sm:text-lg text-foreground">Maintenance Method Specialist</h3>
                 <p className="text-xs sm:text-sm text-foreground">
-                  {progress < 100 ? 'Generating maintenance instructions...' : 'Complete'}
+                  {displayProgress < 100 ? 'Generating maintenance instructions...' : 'Complete'}
                 </p>
               </div>
             </div>
@@ -151,8 +183,8 @@ export const MaintenanceMethodProcessingView = ({
                     strokeWidth="8"
                     fill="none"
                     strokeDasharray={`${2 * Math.PI * 50}`}
-                    strokeDashoffset={`${2 * Math.PI * 50 * (1 - progress / 100)}`}
-                    className="text-elec-yellow transition-all duration-500 sm:hidden"
+                    strokeDashoffset={`${2 * Math.PI * 50 * (1 - displayProgress / 100)}`}
+                    className="text-elec-yellow transition-all duration-300 sm:hidden"
                     strokeLinecap="round"
                   />
                   <circle
@@ -163,14 +195,14 @@ export const MaintenanceMethodProcessingView = ({
                     strokeWidth="8"
                     fill="none"
                     strokeDasharray={`${2 * Math.PI * 56}`}
-                    strokeDashoffset={`${2 * Math.PI * 56 * (1 - progress / 100)}`}
-                    className="text-elec-yellow transition-all duration-500 hidden sm:block"
+                    strokeDashoffset={`${2 * Math.PI * 56 * (1 - displayProgress / 100)}`}
+                    className="text-elec-yellow transition-all duration-300 hidden sm:block"
                     strokeLinecap="round"
                   />
                 </svg>
                 {/* Percentage in center */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-2xl sm:text-3xl font-black text-foreground">{progress}%</span>
+                  <span className="text-2xl sm:text-3xl font-black text-foreground">{displayProgress}%</span>
                 </div>
               </div>
 

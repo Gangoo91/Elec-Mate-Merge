@@ -364,18 +364,6 @@ export const MaintenanceMethodResults = ({
             </div>
           )}
 
-          {summary.requiredQualifications && summary.requiredQualifications.length > 0 && (
-            <div className="space-y-2 pt-2 text-left">
-              <div className="text-sm font-medium text-foreground">Required Qualifications:</div>
-              <div className={cn("flex flex-wrap gap-1.5", isMobile ? "ml-4" : "ml-6")}>
-                {summary.requiredQualifications.map((qual, idx) => (
-                  <Badge key={idx} variant="outline" className={cn("text-foreground", isMobile && "text-xs")}>
-                    {qual}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          )}
         </CardContent>
       </Card>
 
