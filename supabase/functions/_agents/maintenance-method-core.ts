@@ -178,7 +178,11 @@ export async function generateMaintenanceMethod(
     console.log(`🔧 Starting maintenance method generation for job: ${jobId}`);
     console.log(`📋 Installation type: ${installationType}, Detail level: ${detailLevel}`);
 
-    // Update progress: RAG search
+    // Update progress: Starting - granular updates for smooth UI
+    await updateProgress(supabase, jobId, 5, 'Initializing maintenance analysis');
+    await new Promise(r => setTimeout(r, 300)); // Brief pause for UI to catch up
+
+    // Update progress: RAG search starting
     await updateProgress(supabase, jobId, 10, 'Searching maintenance knowledge base');
 
     // RAG Search - Practical Work Intelligence with maintenance focus
@@ -190,8 +194,12 @@ export async function generateMaintenanceMethod(
 
     console.log(`📚 RAG Results: ${ragResult.results.length} records (quality: ${ragResult.qualityScore.toFixed(1)})`);
 
+    // Update progress: RAG complete
+    await updateProgress(supabase, jobId, 18, 'Analysing maintenance procedures');
+    await new Promise(r => setTimeout(r, 200));
+
     // Update progress: Ultra-fast regulations intelligence search
-    await updateProgress(supabase, jobId, 25, 'Searching regulations intelligence (keywords)');
+    await updateProgress(supabase, jobId, 25, 'Searching regulations intelligence');
 
     // Extract keywords for ultra-fast GIN index search
     const maintenanceKeywords = extractMaintenanceKeywords(query, equipmentDetails);
@@ -207,6 +215,13 @@ export async function generateMaintenanceMethod(
     console.log(`⚡ Regulations search completed in ${Date.now() - regSearchStart}ms`);
 
     console.log(`📖 Regulations: ${regulations?.length || 0} relevant standards`);
+
+    // Granular progress updates before AI generation
+    await updateProgress(supabase, jobId, 32, 'Cross-referencing BS 7671 requirements');
+    await new Promise(r => setTimeout(r, 300));
+    
+    await updateProgress(supabase, jobId, 38, 'Preparing AI generation context');
+    await new Promise(r => setTimeout(r, 200));
 
     // Update progress: AI generation starting
     await updateProgress(supabase, jobId, 40, 'Generating maintenance instructions (0s elapsed)...');
@@ -310,7 +325,10 @@ export async function generateMaintenanceMethod(
     }
 
     console.log(`⏱️ OpenAI responded in ${Date.now() - aiStartTime}ms`);
+    
+    // Granular post-AI progress updates for smooth UI completion
     await updateProgress(supabase, jobId, 85, 'Processing AI response');
+    await new Promise(r => setTimeout(r, 400));
 
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
@@ -393,8 +411,15 @@ export async function generateMaintenanceMethod(
       throw new Error(`Invalid JSON response from OpenAI (length: ${message.content.length})`);
     }
 
-    // Update progress: Finalizing
-    await updateProgress(supabase, jobId, 90, 'Finalizing maintenance method');
+    // Update progress: Finalizing with granular steps
+    await updateProgress(supabase, jobId, 90, 'Validating maintenance procedures');
+    await new Promise(r => setTimeout(r, 300));
+    
+    await updateProgress(supabase, jobId, 94, 'Compiling equipment specifications');
+    await new Promise(r => setTimeout(r, 300));
+    
+    await updateProgress(supabase, jobId, 98, 'Finalising maintenance method');
+    await new Promise(r => setTimeout(r, 200));
 
     const endTime = Date.now();
     const totalDuration = endTime - startTime;

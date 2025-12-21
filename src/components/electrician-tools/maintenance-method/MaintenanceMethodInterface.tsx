@@ -33,8 +33,13 @@ export const MaintenanceMethodInterface = () => {
   useEffect(() => {
     console.log('🔄 Transition check:', { viewState, status: job?.status, hasData: hasMethodData });
     if (viewState === 'processing' && job?.status === 'completed' && hasMethodData) {
-      console.log('✅ Transitioning to success view');
-      setViewState('success');
+      console.log('✅ Delaying transition to allow 100% animation');
+      // Delay transition to allow progress animation to reach 100%
+      const timeout = setTimeout(() => {
+        console.log('✅ Transitioning to success view');
+        setViewState('success');
+      }, 1200); // 1.2s delay for smooth 100% display
+      return () => clearTimeout(timeout);
     }
   }, [viewState, job?.status, hasMethodData]);
 

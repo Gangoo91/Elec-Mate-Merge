@@ -30,13 +30,22 @@ export const MaintenanceMethodProcessingView = ({
 
   // Smooth progress animation - prevents jarring jumps
   useEffect(() => {
+    // When progress hits 100, immediately show 100% (skip animation)
+    if (progress >= 100) {
+      setDisplayProgress(100);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      return;
+    }
+    
     if (progress > displayProgress) {
       const startProgress = displayProgress;
-      const startTime = Date.now();
+      const animStartTime = Date.now();
       const duration = 800; // 800ms animation
 
       const animate = () => {
-        const elapsed = Date.now() - startTime;
+        const elapsed = Date.now() - animStartTime;
         const fraction = Math.min(elapsed / duration, 1);
         // Ease-out curve for smooth deceleration
         const eased = 1 - Math.pow(1 - fraction, 3);
@@ -56,7 +65,7 @@ export const MaintenanceMethodProcessingView = ({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [progress]);
+  }, [progress, displayProgress]);
 
   useEffect(() => {
     const interval = setInterval(() => {
