@@ -161,8 +161,9 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
     setIsPolling(true);
     fetchJob();
 
-    // Progressive polling backoff
-    let pollInterval = 1000; // Start at 1s
+    // Keep fast 1.5s polling during active processing (OpenAI can take 2-4 mins)
+    // Only slow down after 5 minutes (200 polls at 1.5s)
+    let pollInterval = 1500; // 1.5s - fast enough to catch completion quickly
     let pollCount = 0;
     let timeoutId: number;
 
@@ -173,16 +174,16 @@ export const useMaintenanceMethodJobPolling = (jobId: string | null) => {
       fetchJob();
       pollCount++;
       
-      // 0-20 polls: 1s interval
-      // 21-40 polls: 3s interval  
-      // 41+ polls: 5s interval
-      if (pollCount === 20) {
+      // Stay at 1.5s for first 200 polls (5 minutes)
+      // Then slow to 3s for polls 201-300 (another 5 mins)
+      // Only go to 5s after 10 minutes of processing
+      if (pollCount === 200) {
         pollInterval = 3000;
-        console.log('📊 Polling: Switching to 3s interval');
+        console.log('📊 Polling: Switching to 3s interval after 5 mins');
       }
-      if (pollCount === 40) {
+      if (pollCount === 300) {
         pollInterval = 5000;
-        console.log('📊 Polling: Switching to 5s interval');
+        console.log('📊 Polling: Switching to 5s interval after ~10 mins');
       }
       
       timeoutId = window.setTimeout(poll, pollInterval);
