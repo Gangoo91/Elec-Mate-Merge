@@ -64,7 +64,7 @@ export const MaintenanceStepCard = ({
   const [editedHazards, setEditedHazards] = useState<string[]>(step.linkedHazards || []);
   const [editedQualifications, setEditedQualifications] = useState<string[]>(step.qualifications || []);
   const [editedObservations, setEditedObservations] = useState<string[]>(step.observations || []);
-  const [editedDefectCodes, setEditedDefectCodes] = useState<string[]>(step.defectCodes || []);
+  
 
   // Collapsible sections state
   const [sectionsExpanded, setSectionsExpanded] = useState({
@@ -75,8 +75,7 @@ export const MaintenanceStepCard = ({
     materials: !isMobile,
     checkpoints: !isMobile,
     qualifications: !isMobile,
-    observations: !isMobile,
-    defectCodes: !isMobile
+    observations: !isMobile
   });
 
   const toggleSection = (section: keyof typeof sectionsExpanded) => {
@@ -98,8 +97,7 @@ export const MaintenanceStepCard = ({
       bsReferences: editedReferences.length > 0 ? editedReferences : undefined,
       linkedHazards: editedHazards.length > 0 ? editedHazards : undefined,
       qualifications: editedQualifications.length > 0 ? editedQualifications : undefined,
-      observations: editedObservations.length > 0 ? editedObservations : undefined,
-      defectCodes: editedDefectCodes.length > 0 ? editedDefectCodes : undefined
+      observations: editedObservations.length > 0 ? editedObservations : undefined
     });
     setIsEditing(false);
   };
@@ -116,7 +114,6 @@ export const MaintenanceStepCard = ({
     setEditedHazards(step.linkedHazards || []);
     setEditedQualifications(step.qualifications || []);
     setEditedObservations(step.observations || []);
-    setEditedDefectCodes(step.defectCodes || []);
     setIsEditing(false);
   };
 
@@ -150,13 +147,16 @@ export const MaintenanceStepCard = ({
 
   // Helper to format numbered items (1), 2), 3) etc.) onto separate lines
   const formatNumberedItems = (text: string): React.ReactNode => {
-    const hasNumberedItems = /\d+\)/.test(text);
+    // Only match numbered items like "1) Text" where it's at start or after punctuation/whitespace
+    // and followed by a capital letter to avoid splitting dates like "2018-12-2"
+    const hasNumberedItems = /(?:^|[.\s])(\d+)\)\s+[A-Z]/.test(text);
     
     if (!hasNumberedItems) {
       return <p>{text}</p>;
     }
     
-    const parts = text.split(/(?=\d+\)\s*)/);
+    // Split on numbered items that are at start of string or after sentence-ending punctuation
+    const parts = text.split(/(?:^|(?<=[.!?\s]))(?=\d+\)\s+[A-Z])/);
     
     return (
       <div className="space-y-1.5">
@@ -164,7 +164,8 @@ export const MaintenanceStepCard = ({
           const trimmed = part.trim();
           if (!trimmed) return null;
           
-          const numMatch = trimmed.match(/^(\d+)\)\s*/);
+          // Match numbered items like "1) " at the start
+          const numMatch = trimmed.match(/^(\d+)\)\s+/);
           if (numMatch) {
             const num = numMatch[1];
             const content = trimmed.slice(numMatch[0].length);
@@ -182,43 +183,36 @@ export const MaintenanceStepCard = ({
     );
   };
 
-  // Parse and format step content with sections and numbered items
+  // Parse and format step content with sections in WHAT → HOW → WHY order
   const formatStepContent = (content: string): React.ReactNode => {
-    const sections = content.split(/(?=\b(?:WHAT|HOW|WHY|WHERE|WHEN|WHAT TO LOOK FOR|Acceptance criteria|Common faults)[:.])/gi);
+    // Extract sections by looking for WHAT:, HOW:, WHY: labels
+    const whatMatch = content.match(/WHAT[:.]\s*([^]*?)(?=(?:HOW|WHY)[:.]\s*|$)/i);
+    const howMatch = content.match(/HOW[:.]\s*([^]*?)(?=WHY[:.]\s*|$)/i);
+    const whyMatch = content.match(/WHY[:.]\s*([^]*?)$/i);
     
-    if (sections.length <= 1) {
+    // If no structured sections found, fall back to simple formatting
+    if (!whatMatch && !howMatch && !whyMatch) {
       return formatNumberedItems(content);
     }
     
+    const renderSection = (label: string, text: string | undefined) => {
+      if (!text?.trim()) return null;
+      const capitalisedText = text.trim().charAt(0).toUpperCase() + text.trim().slice(1);
+      return (
+        <div className="space-y-1.5">
+          <span className="text-xs font-bold text-elec-yellow uppercase tracking-wide">{label}</span>
+          <div className="text-sm text-foreground pl-0">
+            {formatNumberedItems(capitalisedText)}
+          </div>
+        </div>
+      );
+    };
+    
     return (
       <div className="space-y-4">
-        {sections.map((section, idx) => {
-          const trimmed = section.trim();
-          if (!trimmed) return null;
-          
-          const labelMatch = trimmed.match(/^(WHAT|HOW|WHY|WHERE|WHEN|WHAT TO LOOK FOR|Acceptance criteria|Common faults)[:.]\s*/i);
-          
-          if (labelMatch) {
-            const label = labelMatch[1];
-            const text = trimmed.slice(labelMatch[0].length);
-            // Capitalise first letter after the label
-            const capitalisedText = text.charAt(0).toUpperCase() + text.slice(1);
-            return (
-              <div key={idx} className="space-y-1.5">
-                <span className="text-xs font-bold text-elec-yellow uppercase tracking-wide">{label}</span>
-                <div className="text-sm text-foreground pl-0">
-                  {formatNumberedItems(capitalisedText)}
-                </div>
-              </div>
-            );
-          }
-          
-          return (
-            <div key={idx} className="text-sm text-foreground">
-              {formatNumberedItems(trimmed)}
-            </div>
-          );
-        })}
+        {renderSection('WHAT', whatMatch?.[1])}
+        {renderSection('HOW', howMatch?.[1])}
+        {renderSection('WHY', whyMatch?.[1])}
       </div>
     );
   };
@@ -467,15 +461,6 @@ export const MaintenanceStepCard = ({
             'purple'
           )}
 
-          {renderCollapsibleSection(
-            'defectCodes',
-            'Defect Codes',
-            <AlertCircle className="h-4 w-4" />,
-            step.defectCodes || [],
-            editedDefectCodes,
-            setEditedDefectCodes,
-            'red'
-          )}
         </div>
 
         {/* Action Buttons */}

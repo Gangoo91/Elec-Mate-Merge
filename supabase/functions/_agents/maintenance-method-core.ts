@@ -506,11 +506,16 @@ ${regulationsContext || 'BS 7671:2018+A3:2024 Chapter 64 - Periodic Inspection &
 STEP REQUIREMENTS:
 - Generate ${minSteps}-${maxSteps} detailed maintenance steps
 - Each step MUST contain 125-175 words of practical guidance
-- Describe WHAT to check, HOW to check it, and WHAT to look for
+- Structure EVERY step with WHAT → HOW → WHY format
 - Include specific acceptance criteria and test values
 - Cover common faults, wear indicators, and failure modes
 ${isDomestic ? '- Focus on domestic-specific requirements: consumer unit checks, RCD testing, Part P compliance' : ''}
 ${isIndustrial ? '- Focus on industrial-specific requirements: three-phase systems, high fault levels, arc flash, heavy machinery isolation' : ''}
+
+STEP CONTENT FORMAT (mandatory for every step):
+- WHAT: Brief description of the maintenance activity (1-2 sentences)
+- HOW: Numbered sub-steps explaining the procedure. Format as 1) First action 2) Second action 3) Third action etc.
+- WHY: Explain the purpose and importance of this step (1-2 sentences at the end)
 
 OUTPUT JSON (follow structure exactly):
 {
@@ -527,7 +532,7 @@ OUTPUT JSON (follow structure exactly):
     {
       "stepNumber": 1,
       "title": "Clear, action-oriented step title",
-      "content": "125-175 words: Describe the maintenance activity in detail. Explain WHAT needs to be done, WHY it's important, HOW to perform the task safely, and WHAT to look for. Include specific measurements, acceptable values, and common defects to identify.",
+      "content": "WHAT: Brief description of activity. HOW: 1) First action with specific details 2) Second action with measurements 3) Third action with acceptance criteria. WHY: Explanation of why this step is important for safety and compliance.",
       "safety": ["Detailed safety precautions - be specific about hazards"],
       "toolsRequired": ["Specific tools with any specifications"],
       "materialsNeeded": ["Consumables and materials required"],
@@ -537,8 +542,7 @@ OUTPUT JSON (follow structure exactly):
       "inspectionCheckpoints": ["Specific items to verify completion"],
       "linkedHazards": ["Electrical and non-electrical hazards"],
       "bsReferences": ["Specific BS 7671 regulation references"],
-      "observations": [],
-      "defectCodes": []
+      "observations": []
     }
   ],
   "summary": {
