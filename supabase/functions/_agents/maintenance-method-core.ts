@@ -11,7 +11,7 @@ import { searchRegulationsIntelligence } from '../_shared/intelligence-search.ts
 // UK Electrical Qualifications - Proper Industry Standards
 const UK_ELECTRICAL_QUALIFICATIONS = {
   wiring_regulations: {
-    name: 'City & Guilds 2382-22 (18th Edition BS 7671:2018+A2:2022)',
+    name: 'City & Guilds 2382-22 (18th Edition BS 7671:2018+A3:2024)',
     fullTitle: 'C&G 2382-22 Requirements for Electrical Installations',
     level: 'Level 3'
   },
@@ -60,7 +60,7 @@ const UK_ELECTRICAL_QUALIFICATIONS = {
 // Equipment-specific qualification mapping
 function getRequiredQualificationsForEquipment(equipmentType: string): string[] {
   const baseQuals = [
-    'City & Guilds 2382-22 (18th Edition BS 7671:2018+A2:2022)',
+    'City & Guilds 2382-22 (18th Edition BS 7671:2018+A3:2024)',
     'ECS Gold Card (JIB Registered Electrician)'
   ];
   
