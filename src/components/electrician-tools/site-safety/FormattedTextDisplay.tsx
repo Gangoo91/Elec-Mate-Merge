@@ -107,7 +107,20 @@ export const FormattedTextDisplay = ({
 
   return (
     <div className="space-y-3">
-      <div className="bg-card border border-primary/20 rounded-lg p-4 min-h-[100px] relative group">
+      {/* Mobile edit button - always visible at top */}
+      <div className="sm:hidden mb-2 flex justify-end">
+        <Button
+          onClick={() => setIsEditing(true)}
+          variant="outline"
+          size="sm"
+          className="text-xs"
+        >
+          <Pencil className="h-3 w-3 mr-1" />
+          Edit
+        </Button>
+      </div>
+      
+      <div className="bg-card border border-primary/20 rounded-lg p-4 pr-16 sm:pr-4 min-h-[100px] relative group">
         {value ? (
           <div className="space-y-2">
             {renderFormattedContent(value)}
@@ -116,26 +129,17 @@ export const FormattedTextDisplay = ({
           <p className="text-sm text-muted-foreground italic">{placeholder}</p>
         )}
         
+        {/* Desktop hover edit button */}
         <Button
           onClick={() => setIsEditing(true)}
           variant="ghost"
           size="sm"
-          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute top-2 right-2 z-10 hidden sm:flex opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-sm"
         >
           <Pencil className="h-3 w-3 mr-1" />
           Edit
         </Button>
       </div>
-      
-      <Button
-        onClick={() => setIsEditing(true)}
-        variant="outline"
-        size="sm"
-        className="w-full sm:hidden"
-      >
-        <Pencil className="h-3 w-3 mr-1" />
-        Edit Content
-      </Button>
     </div>
   );
 };
