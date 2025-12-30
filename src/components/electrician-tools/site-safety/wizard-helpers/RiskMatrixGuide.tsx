@@ -106,7 +106,7 @@ export const RiskMatrixGuide = ({
                 </Badge>
               )}
               
-              <div className="flex flex-col items-center text-center space-y-2">
+              <div className="flex flex-col items-start text-left sm:items-center sm:text-center space-y-2">
                 <Icon className={`h-6 w-6 ${isSelected ? '' : 'text-elec-yellow/70'}`} />
                 <h4 className={`font-semibold text-sm ${isSelected ? '' : 'text-elec-light'}`}>
                   {level.label}
@@ -135,24 +135,24 @@ export const RiskMatrixGuide = ({
             if (!level) return null;
             
             return (
-              <div className="space-y-4">
+              <div className="space-y-4 text-left">
                 <div>
                   <h4 className="font-semibold text-elec-light mb-1 flex items-center gap-2">
                     <level.icon className="h-4 w-4 text-elec-yellow" />
                     {level.label}
                   </h4>
-                  <p className="text-sm text-elec-light/70">{level.description}</p>
+                  <p className="text-sm text-elec-light/70 text-left">{level.description}</p>
                 </div>
 
-                <div>
+                <div className="text-left">
                   <h5 className="text-xs font-semibold text-elec-yellow uppercase tracking-wide mb-2">
                     Examples
                   </h5>
                   <ul className="text-sm text-elec-light/70 space-y-1">
                     {level.examples.map((example, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="text-elec-yellow mt-1">•</span>
-                        <span>{example}</span>
+                      <li key={idx} className="flex items-start gap-2 text-left">
+                        <span className="text-elec-yellow mt-1 shrink-0">•</span>
+                        <span className="text-left">{example}</span>
                       </li>
                     ))}
                   </ul>
@@ -175,15 +175,15 @@ export const RiskMatrixGuide = ({
                   </div>
                 </div>
 
-                <div>
+                <div className="text-left">
                   <h5 className="text-xs font-semibold text-elec-yellow uppercase tracking-wide mb-2">
                     Required Controls
                   </h5>
                   <ul className="text-sm text-elec-light/70 space-y-1">
                     {level.controls.map((control, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="text-elec-yellow mt-1">✓</span>
-                        <span>{control}</span>
+                      <li key={idx} className="flex items-start gap-2 text-left">
+                        <span className="text-elec-yellow mt-1 shrink-0">✓</span>
+                        <span className="text-left">{control}</span>
                       </li>
                     ))}
                   </ul>

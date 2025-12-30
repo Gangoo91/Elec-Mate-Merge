@@ -623,7 +623,13 @@ export const BriefingFormWizard = ({ initialData, nearMissData, onClose, onSucce
               type="number"
               inputMode="numeric"
               value={formData.teamSize.toString()}
-              onChange={(v) => setFormData(prev => ({ ...prev, teamSize: parseInt(v) || 2 }))}
+              onChange={(v) => {
+                const parsed = parseInt(v);
+                setFormData(prev => ({ 
+                  ...prev, 
+                  teamSize: v === '' ? 1 : Math.max(1, Math.min(20, isNaN(parsed) ? 1 : parsed))
+                }));
+              }}
               min="1"
               max="20"
               icon={<Users className="h-4 w-4" />}
