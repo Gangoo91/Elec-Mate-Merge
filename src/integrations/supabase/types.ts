@@ -7020,6 +7020,84 @@ export type Database = {
         }
         Relationships: []
       }
+      safety_equipment: {
+        Row: {
+          assigned_to: string | null
+          calibration_due: string | null
+          calibration_interval_days: number | null
+          category: string
+          condition_notes: string | null
+          created_at: string | null
+          id: string
+          inspection_interval_days: number | null
+          last_calibration: string | null
+          last_inspection: string | null
+          location: string
+          name: string
+          next_inspection: string | null
+          photos: string[] | null
+          purchase_date: string | null
+          purchase_price: number | null
+          qr_code: string | null
+          requires_calibration: boolean | null
+          serial_number: string | null
+          status: string
+          updated_at: string | null
+          user_id: string
+          warranty_expiry: string | null
+        }
+        Insert: {
+          assigned_to?: string | null
+          calibration_due?: string | null
+          calibration_interval_days?: number | null
+          category: string
+          condition_notes?: string | null
+          created_at?: string | null
+          id?: string
+          inspection_interval_days?: number | null
+          last_calibration?: string | null
+          last_inspection?: string | null
+          location: string
+          name: string
+          next_inspection?: string | null
+          photos?: string[] | null
+          purchase_date?: string | null
+          purchase_price?: number | null
+          qr_code?: string | null
+          requires_calibration?: boolean | null
+          serial_number?: string | null
+          status?: string
+          updated_at?: string | null
+          user_id: string
+          warranty_expiry?: string | null
+        }
+        Update: {
+          assigned_to?: string | null
+          calibration_due?: string | null
+          calibration_interval_days?: number | null
+          category?: string
+          condition_notes?: string | null
+          created_at?: string | null
+          id?: string
+          inspection_interval_days?: number | null
+          last_calibration?: string | null
+          last_inspection?: string | null
+          location?: string
+          name?: string
+          next_inspection?: string | null
+          photos?: string[] | null
+          purchase_date?: string | null
+          purchase_price?: number | null
+          qr_code?: string | null
+          requires_calibration?: boolean | null
+          serial_number?: string | null
+          status?: string
+          updated_at?: string | null
+          user_id?: string
+          warranty_expiry?: string | null
+        }
+        Relationships: []
+      }
       safety_photos: {
         Row: {
           category: string
