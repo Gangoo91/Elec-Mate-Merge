@@ -15,7 +15,7 @@ interface EquipmentCardProps {
 
 export const EquipmentCard: React.FC<EquipmentCardProps> = ({ equipment, onEdit, onDelete, onMarkInspected, onMarkCalibrated }) => {
   const [expanded, setExpanded] = useState(false);
-  const statusConfig = { good: { color: "bg-green-500", label: "Good", textColor: "text-green-500" }, attention: { color: "bg-yellow-500", label: "Attention", textColor: "text-yellow-500" }, overdue: { color: "bg-red-500", label: "Overdue", textColor: "text-red-500" } };
+  const statusConfig = { good: { color: "bg-green-500", label: "Good", textColor: "text-green-500" }, needs_attention: { color: "bg-yellow-500", label: "Attention", textColor: "text-yellow-500" }, overdue: { color: "bg-red-500", label: "Overdue", textColor: "text-red-500" }, out_of_service: { color: "bg-gray-500", label: "Out of Service", textColor: "text-gray-500" } };
   const status = statusConfig[equipment.status] || statusConfig.good;
   const formatDate = (d: string | null) => { if (!d) return "Not set"; try { return format(new Date(d), "d MMM yyyy"); } catch { return "Invalid"; } };
 
@@ -28,7 +28,7 @@ export const EquipmentCard: React.FC<EquipmentCardProps> = ({ equipment, onEdit,
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-foreground text-base">{equipment.name}</h3>
             {equipment.location && <div className="flex items-center gap-1.5 mt-1"><MapPin className="h-3.5 w-3.5 text-foreground/60" /><span className="text-sm text-foreground/70 truncate">{equipment.location}</span></div>}
-            {equipment.next_due_date && <div className="flex items-center gap-1.5 mt-1"><Clock className="h-3.5 w-3.5 text-foreground/60" /><span className={`text-sm ${equipment.status === 'overdue' ? 'text-red-400 font-medium' : 'text-foreground/70'}`}>Due: {formatDate(equipment.next_due_date)}</span></div>}
+            {equipment.next_inspection && <div className="flex items-center gap-1.5 mt-1"><Clock className="h-3.5 w-3.5 text-foreground/60" /><span className={`text-sm ${equipment.status === 'overdue' ? 'text-red-400 font-medium' : 'text-foreground/70'}`}>Due: {formatDate(equipment.next_inspection)}</span></div>}
           </div>
           <ChevronDown className={`h-5 w-5 text-foreground/50 transition-transform ${expanded ? 'rotate-180' : ''}`} />
         </button>
@@ -39,13 +39,13 @@ export const EquipmentCard: React.FC<EquipmentCardProps> = ({ equipment, onEdit,
               <div><p className="text-xs text-foreground/60 uppercase">Category</p><p className="text-sm text-foreground font-medium">{equipment.category}</p></div>
               <div><p className="text-xs text-foreground/60 uppercase">Status</p><p className={`text-sm font-medium ${status.textColor}`}>{status.label}</p></div>
               {equipment.serial_number && <div><p className="text-xs text-foreground/60 uppercase">Serial</p><p className="text-sm text-foreground font-medium">{equipment.serial_number}</p></div>}
-              {equipment.manufacturer && <div><p className="text-xs text-foreground/60 uppercase">Manufacturer</p><p className="text-sm text-foreground font-medium">{equipment.manufacturer}</p></div>}
+              {equipment.assigned_to && <div><p className="text-xs text-foreground/60 uppercase">Assigned To</p><p className="text-sm text-foreground font-medium">{equipment.assigned_to}</p></div>}
             </div>
             <div className="space-y-2">
-              <div className="flex justify-between py-2 px-3 rounded-lg bg-muted/50"><span className="text-sm text-foreground/70">Last Inspection</span><span className="text-sm text-foreground font-medium">{formatDate(equipment.last_inspection_date)}</span></div>
-              <div className="flex justify-between py-2 px-3 rounded-lg bg-muted/50"><span className="text-sm text-foreground/70">Last Calibration</span><span className="text-sm text-foreground font-medium">{formatDate(equipment.last_calibration_date)}</span></div>
+              <div className="flex justify-between py-2 px-3 rounded-lg bg-muted/50"><span className="text-sm text-foreground/70">Last Inspection</span><span className="text-sm text-foreground font-medium">{formatDate(equipment.last_inspection)}</span></div>
+              <div className="flex justify-between py-2 px-3 rounded-lg bg-muted/50"><span className="text-sm text-foreground/70">Last Calibration</span><span className="text-sm text-foreground font-medium">{formatDate(equipment.last_calibration)}</span></div>
             </div>
-            {equipment.notes && <div><p className="text-xs text-foreground/60 uppercase mb-1">Notes</p><p className="text-sm text-foreground/80 bg-muted/50 p-3 rounded-lg">{equipment.notes}</p></div>}
+            {equipment.condition_notes && <div><p className="text-xs text-foreground/60 uppercase mb-1">Notes</p><p className="text-sm text-foreground/80 bg-muted/50 p-3 rounded-lg">{equipment.condition_notes}</p></div>}
             <div className="space-y-2 pt-2">
               <div className="grid grid-cols-2 gap-2">
                 <button onClick={() => onMarkInspected(equipment)} className="h-12 flex items-center justify-center gap-2 rounded-xl bg-green-500/20 text-green-400 font-medium text-sm touch-manipulation active:scale-95"><CheckCircle className="h-4 w-4" />Inspected</button>
