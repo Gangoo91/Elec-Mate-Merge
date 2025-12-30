@@ -1,152 +1,30 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { 
-  Zap, 
-  HardHat, 
-  Shield, 
-  Wrench, 
-  Ruler, 
-  Eye,
-  X 
-} from 'lucide-react';
-import { motion } from 'framer-motion';
-import { EquipmentFormData } from './AddEquipmentForm';
+import React from "react";
+import { SafetyEquipment } from "@/hooks/useSafetyEquipment";
+import { HardHat, Zap, Wrench, Shield, Flashlight, Gauge, BadgeCheck, Flame, Heart } from "lucide-react";
 
-interface QuickTemplatesProps {
-  onSelect: (template: Partial<EquipmentFormData>) => void;
-  onClose: () => void;
-}
+interface QuickTemplatesProps { onSelectTemplate: (data: Partial<SafetyEquipment>) => void; }
 
-interface EquipmentTemplate {
-  name: string;
-  category: string;
-  requires_inspection: boolean;
-  inspection_interval_days: number;
-  requires_calibration: boolean;
-  calibration_interval_days: number;
-  icon: React.ElementType;
-}
-
-const TEMPLATES: { category: string; icon: React.ElementType; items: EquipmentTemplate[] }[] = [
-  {
-    category: 'Test Equipment',
-    icon: Zap,
-    items: [
-      { name: 'Multifunction Tester (MFT)', category: 'test_equipment', requires_inspection: true, inspection_interval_days: 90, requires_calibration: true, calibration_interval_days: 365, icon: Zap },
-      { name: 'Insulation Resistance Tester', category: 'test_equipment', requires_inspection: true, inspection_interval_days: 90, requires_calibration: true, calibration_interval_days: 365, icon: Zap },
-      { name: 'Earth Loop Impedance Tester', category: 'test_equipment', requires_inspection: true, inspection_interval_days: 90, requires_calibration: true, calibration_interval_days: 365, icon: Zap },
-      { name: 'RCD Tester', category: 'test_equipment', requires_inspection: true, inspection_interval_days: 90, requires_calibration: true, calibration_interval_days: 365, icon: Zap },
-      { name: 'Voltage Indicator', category: 'test_equipment', requires_inspection: true, inspection_interval_days: 30, requires_calibration: false, calibration_interval_days: 0, icon: Zap },
-      { name: 'Proving Unit', category: 'test_equipment', requires_inspection: true, inspection_interval_days: 30, requires_calibration: false, calibration_interval_days: 0, icon: Zap },
-      { name: 'Clamp Meter', category: 'test_equipment', requires_inspection: true, inspection_interval_days: 90, requires_calibration: true, calibration_interval_days: 365, icon: Zap },
-      { name: 'PAT Tester', category: 'test_equipment', requires_inspection: true, inspection_interval_days: 90, requires_calibration: true, calibration_interval_days: 365, icon: Zap },
-      { name: 'Thermal Imaging Camera', category: 'test_equipment', requires_inspection: true, inspection_interval_days: 180, requires_calibration: true, calibration_interval_days: 365, icon: Zap },
-    ],
-  },
-  {
-    category: 'PPE',
-    icon: HardHat,
-    items: [
-      { name: 'Safety Helmet', category: 'ppe', requires_inspection: true, inspection_interval_days: 30, requires_calibration: false, calibration_interval_days: 0, icon: HardHat },
-      { name: 'Safety Glasses', category: 'ppe', requires_inspection: true, inspection_interval_days: 30, requires_calibration: false, calibration_interval_days: 0, icon: Eye },
-      { name: 'Hi-Vis Vest', category: 'ppe', requires_inspection: true, inspection_interval_days: 30, requires_calibration: false, calibration_interval_days: 0, icon: HardHat },
-      { name: 'Safety Boots', category: 'ppe', requires_inspection: true, inspection_interval_days: 90, requires_calibration: false, calibration_interval_days: 0, icon: HardHat },
-      { name: 'Insulated Gloves', category: 'ppe', requires_inspection: true, inspection_interval_days: 30, requires_calibration: false, calibration_interval_days: 0, icon: Shield },
-      { name: 'Ear Defenders', category: 'ppe', requires_inspection: true, inspection_interval_days: 90, requires_calibration: false, calibration_interval_days: 0, icon: HardHat },
-      { name: 'Dust Mask / FFP3', category: 'ppe', requires_inspection: true, inspection_interval_days: 30, requires_calibration: false, calibration_interval_days: 0, icon: Shield },
-      { name: 'Arc Flash Suit', category: 'ppe', requires_inspection: true, inspection_interval_days: 90, requires_calibration: false, calibration_interval_days: 0, icon: Shield },
-    ],
-  },
-  {
-    category: 'Safety Equipment',
-    icon: Shield,
-    items: [
-      { name: 'First Aid Kit', category: 'safety_equipment', requires_inspection: true, inspection_interval_days: 90, requires_calibration: false, calibration_interval_days: 0, icon: Shield },
-      { name: 'Fire Extinguisher', category: 'safety_equipment', requires_inspection: true, inspection_interval_days: 365, requires_calibration: false, calibration_interval_days: 0, icon: Shield },
-      { name: 'Safety Barriers', category: 'safety_equipment', requires_inspection: true, inspection_interval_days: 90, requires_calibration: false, calibration_interval_days: 0, icon: Shield },
-      { name: 'Warning Signs', category: 'safety_equipment', requires_inspection: true, inspection_interval_days: 180, requires_calibration: false, calibration_interval_days: 0, icon: Shield },
-      { name: 'Locking Off Kit', category: 'safety_equipment', requires_inspection: true, inspection_interval_days: 90, requires_calibration: false, calibration_interval_days: 0, icon: Shield },
-      { name: 'Rescue Hook', category: 'safety_equipment', requires_inspection: true, inspection_interval_days: 90, requires_calibration: false, calibration_interval_days: 0, icon: Shield },
-    ],
-  },
-  {
-    category: 'Hand Tools',
-    icon: Wrench,
-    items: [
-      { name: 'VDE Screwdriver Set', category: 'hand_tools', requires_inspection: true, inspection_interval_days: 90, requires_calibration: false, calibration_interval_days: 0, icon: Wrench },
-      { name: 'VDE Side Cutters', category: 'hand_tools', requires_inspection: true, inspection_interval_days: 90, requires_calibration: false, calibration_interval_days: 0, icon: Wrench },
-      { name: 'VDE Pliers', category: 'hand_tools', requires_inspection: true, inspection_interval_days: 90, requires_calibration: false, calibration_interval_days: 0, icon: Wrench },
-      { name: 'Cable Strippers', category: 'hand_tools', requires_inspection: true, inspection_interval_days: 90, requires_calibration: false, calibration_interval_days: 0, icon: Wrench },
-      { name: 'Crimp Tool', category: 'hand_tools', requires_inspection: true, inspection_interval_days: 90, requires_calibration: false, calibration_interval_days: 0, icon: Wrench },
-      { name: 'Torch / Head Torch', category: 'hand_tools', requires_inspection: true, inspection_interval_days: 30, requires_calibration: false, calibration_interval_days: 0, icon: Wrench },
-    ],
-  },
-  {
-    category: 'Measuring',
-    icon: Ruler,
-    items: [
-      { name: 'Tape Measure', category: 'measuring', requires_inspection: true, inspection_interval_days: 180, requires_calibration: false, calibration_interval_days: 0, icon: Ruler },
-      { name: 'Spirit Level', category: 'measuring', requires_inspection: true, inspection_interval_days: 180, requires_calibration: false, calibration_interval_days: 0, icon: Ruler },
-      { name: 'Cable Detector', category: 'measuring', requires_inspection: true, inspection_interval_days: 90, requires_calibration: true, calibration_interval_days: 365, icon: Ruler },
-      { name: 'Laser Level', category: 'measuring', requires_inspection: true, inspection_interval_days: 180, requires_calibration: true, calibration_interval_days: 365, icon: Ruler },
-    ],
-  },
+const templates = [
+  { category: "Test Equipment", items: [{ name: "Multifunction Tester", category: "Test Equipment", icon: <Gauge className="h-5 w-5" /> }, { name: "Insulation Tester", category: "Test Equipment", icon: <Zap className="h-5 w-5" /> }, { name: "PAT Tester", category: "Test Equipment", icon: <BadgeCheck className="h-5 w-5" /> }, { name: "Voltage Indicator", category: "Test Equipment", icon: <Zap className="h-5 w-5" /> }, { name: "Clamp Meter", category: "Test Equipment", icon: <Gauge className="h-5 w-5" /> }] },
+  { category: "PPE", items: [{ name: "Safety Helmet", category: "PPE", icon: <HardHat className="h-5 w-5" /> }, { name: "Safety Glasses", category: "PPE", icon: <Shield className="h-5 w-5" /> }, { name: "Insulated Gloves", category: "PPE", icon: <Shield className="h-5 w-5" /> }, { name: "Hi-Vis Vest", category: "PPE", icon: <Shield className="h-5 w-5" /> }, { name: "Safety Boots", category: "PPE", icon: <Shield className="h-5 w-5" /> }] },
+  { category: "Tools", items: [{ name: "Cordless Drill", category: "Power Tools", icon: <Wrench className="h-5 w-5" /> }, { name: "Step Ladder", category: "Ladders & Access", icon: <Wrench className="h-5 w-5" /> }, { name: "Extension Ladder", category: "Ladders & Access", icon: <Wrench className="h-5 w-5" /> }] },
+  { category: "Safety", items: [{ name: "Fire Extinguisher", category: "Fire Safety", icon: <Flame className="h-5 w-5" /> }, { name: "First Aid Kit", category: "First Aid", icon: <Heart className="h-5 w-5" /> }, { name: "Torch", category: "Other", icon: <Flashlight className="h-5 w-5" /> }] },
 ];
 
-export function QuickTemplates({ onSelect, onClose }: QuickTemplatesProps) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className="space-y-4"
-    >
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-xl font-bold text-foreground">Quick Add</h2>
-          <p className="text-sm text-muted-foreground">
-            Tap to add common equipment
-          </p>
-        </div>
-        <Button variant="ghost" size="icon" onClick={onClose}>
-          <X className="h-5 w-5" />
-        </Button>
-      </div>
-
-      <ScrollArea className="h-[70vh]">
-        <div className="space-y-6 pr-4">
-          {TEMPLATES.map((section) => (
-            <div key={section.category} className="space-y-3">
-              <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                <section.icon className="h-4 w-4" />
-                {section.category}
-              </div>
-              <div className="grid grid-cols-1 gap-2">
-                {section.items.map((template) => (
-                  <Button
-                    key={template.name}
-                    variant="outline"
-                    className="h-12 justify-start text-left"
-                    onClick={() => onSelect({
-                      name: template.name,
-                      category: template.category,
-                      requires_inspection: template.requires_inspection,
-                      inspection_interval_days: template.inspection_interval_days,
-                      requires_calibration: template.requires_calibration,
-                      calibration_interval_days: template.calibration_interval_days,
-                    })}
-                  >
-                    <template.icon className="h-4 w-4 mr-3 text-primary" />
-                    {template.name}
-                  </Button>
-                ))}
-              </div>
-            </div>
+export const QuickTemplates: React.FC<QuickTemplatesProps> = ({ onSelectTemplate }) => (
+  <div className="py-4 space-y-6 overflow-y-auto max-h-[70vh]">
+    {templates.map((g) => (
+      <div key={g.category}>
+        <h3 className="text-sm font-semibold text-foreground/60 uppercase tracking-wide mb-3">{g.category}</h3>
+        <div className="grid grid-cols-2 gap-2">
+          {g.items.map((t) => (
+            <button key={t.name} onClick={() => onSelectTemplate({ name: t.name, category: t.category, status: "good" })} className="h-14 flex items-center gap-3 px-4 rounded-xl bg-card border border-border/50 text-foreground text-left touch-manipulation active:scale-95 active:bg-elec-yellow/20 transition-all">
+              <div className="text-elec-yellow flex-shrink-0">{t.icon}</div>
+              <span className="text-sm font-medium truncate">{t.name}</span>
+            </button>
           ))}
         </div>
-      </ScrollArea>
-    </motion.div>
-  );
-}
+      </div>
+    ))}
+  </div>
+);
