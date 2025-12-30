@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, Loader2, Calendar, ChevronDown, ChevronUp, Plus, FileText } from "lucide-react";
+import { Users, Loader2, Calendar, ChevronDown, ChevronUp, Plus, FileText, AlertTriangle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { MobileGestureHandler } from "@/components/ui/mobile-gesture-handler";
@@ -8,10 +9,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { BriefingFormWizard } from "./BriefingFormWizard";
 import { BriefingHistory } from "./BriefingHistory";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { HeroAIBriefingCard } from "./HeroAIBriefingCard";
 import { TemplateLibrary } from "./briefing-templates/TemplateLibrary";
-
 
 interface TeamBriefing {
   id: string;
@@ -32,18 +31,66 @@ interface TeamBriefing {
   created_at: string;
 }
 
+interface NearMissData {
+  id: string;
+  category: string;
+  categoryLabel: string;
+  severity: string;
+  severityLabel: string;
+  description: string;
+  location: string;
+  incident_date: string;
+  incident_time: string;
+  reporter_name: string;
+  potential_consequences?: string;
+  immediate_actions?: string;
+  preventive_measures?: string;
+  photo_urls?: string[];
+}
+
 const TeamBriefingTemplates = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [briefings, setBriefings] = useState<TeamBriefing[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAIWizard, setShowAIWizard] = useState(false);
   const [editingBriefing, setEditingBriefing] = useState<any>(null);
-  const [activeTab, setActiveTab] = useState("history");
+  const [nearMissData, setNearMissData] = useState<NearMissData | null>(null);
   const [scheduledBriefingsExpanded, setScheduledBriefingsExpanded] = useState(false);
   const [showTemplateLibrary, setShowTemplateLibrary] = useState(false);
 
   useEffect(() => {
     fetchBriefings();
+    checkForNearMissData();
   }, []);
+
+  // Check for near miss data from sessionStorage (matching Cost Engineer → Quote Hub pattern)
+  const checkForNearMissData = () => {
+    const nearMissSessionId = searchParams.get('nearMissSessionId');
+    if (nearMissSessionId) {
+      const storedData = sessionStorage.getItem(`nearMissData_${nearMissSessionId}`);
+      if (storedData) {
+        try {
+          const parsedData = JSON.parse(storedData) as NearMissData;
+          setNearMissData(parsedData);
+          setShowAIWizard(true);
+          
+          // Clear the URL param but keep the data
+          searchParams.delete('nearMissSessionId');
+          setSearchParams(searchParams, { replace: true });
+          
+          // Clear from sessionStorage after retrieving
+          sessionStorage.removeItem(`nearMissData_${nearMissSessionId}`);
+          
+          toast({
+            title: "Creating Briefing from Near Miss",
+            description: "The form has been pre-filled with details from the near miss report.",
+          });
+        } catch (e) {
+          console.error('Error parsing near miss data:', e);
+        }
+      }
+    }
+  };
 
   const fetchBriefings = async () => {
     try {
@@ -79,9 +126,9 @@ const TeamBriefingTemplates = () => {
     }
   };
 
-
   const handleEdit = (briefing: any) => {
     setEditingBriefing(briefing);
+    setNearMissData(null);
     setShowAIWizard(true);
   };
 
@@ -93,6 +140,7 @@ const TeamBriefingTemplates = () => {
       briefing_date: null,
       briefing_time: "09:00",
     });
+    setNearMissData(null);
     setShowAIWizard(true);
   };
 
@@ -132,6 +180,13 @@ const TeamBriefingTemplates = () => {
   const handleCloseWizard = () => {
     setShowAIWizard(false);
     setEditingBriefing(null);
+    setNearMissData(null);
+  };
+
+  const handleCreateNew = () => {
+    setEditingBriefing(null);
+    setNearMissData(null);
+    setShowAIWizard(true);
   };
 
   const upcomingBriefings = briefings.filter(b => new Date(b.briefing_date) >= new Date() && b.status === 'scheduled').length;
@@ -152,6 +207,7 @@ const TeamBriefingTemplates = () => {
   if (showAIWizard) {
     return <BriefingFormWizard 
       initialData={editingBriefing}
+      nearMissData={nearMissData}
       onClose={handleCloseWizard} 
       onSuccess={() => {
         handleCloseWizard();
@@ -165,14 +221,14 @@ const TeamBriefingTemplates = () => {
       {/* MOBILE LAYOUT */}
       <div className="md:hidden space-y-4 px-3">
         {/* Hero AI Briefing Card */}
-        <HeroAIBriefingCard onCreateBriefing={() => setShowAIWizard(true)} />
+        <HeroAIBriefingCard onCreateBriefing={handleCreateNew} />
 
         {/* Quick Action Buttons */}
         <div className="grid grid-cols-2 gap-3">
           <MobileButton
             variant="elec"
             size="wide"
-            onClick={() => setShowAIWizard(true)}
+            onClick={handleCreateNew}
             className="font-semibold"
           >
             <Plus className="mr-2 h-5 w-5" />
@@ -280,7 +336,7 @@ const TeamBriefingTemplates = () => {
         </div>
       </div>
 
-      {/* DESKTOP LAYOUT - Keep existing functionality */}
+      {/* DESKTOP LAYOUT */}
       <div className="hidden md:block space-y-6">
         {/* Statistics Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -323,7 +379,7 @@ const TeamBriefingTemplates = () => {
 
         {/* Desktop Content */}
         <div className="space-y-6">
-          <HeroAIBriefingCard onCreateBriefing={() => setShowAIWizard(true)} />
+          <HeroAIBriefingCard onCreateBriefing={handleCreateNew} />
           
           <div>
             <h3 className="text-xl font-semibold text-elec-light mb-4">Recent Briefings</h3>
@@ -382,7 +438,6 @@ const TeamBriefingTemplates = () => {
           )}
         </div>
       </div>
-
     </div>
   );
 };
