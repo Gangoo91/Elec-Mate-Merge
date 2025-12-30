@@ -11,9 +11,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { 
   AlertTriangle, Plus, Camera, X, Zap, Flame, Users, HardHat,
-  Clock, MapPin, Shield, CheckCircle2, Loader2, ArrowLeft
+  Clock, MapPin, Shield, CheckCircle2, Loader2, ArrowLeft, ChevronRight
 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { NearMissReportDetail } from './NearMissReportDetail';
 
 interface NearMissReport {
   id: string;
@@ -66,10 +67,10 @@ const CATEGORIES = [
 ];
 
 const SEVERITIES = [
-  { value: 'low', label: 'Low', description: 'Minor incident, no injury likely', colour: 'bg-green-500/20 text-green-400 border-green-500/30' },
-  { value: 'medium', label: 'Medium', description: 'Moderate risk, minor injury possible', colour: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' },
-  { value: 'high', label: 'High', description: 'Significant risk, serious injury possible', colour: 'bg-orange-500/20 text-orange-400 border-orange-500/30' },
-  { value: 'critical', label: 'Critical', description: 'Life-threatening or major incident', colour: 'bg-red-500/20 text-red-400 border-red-500/30' }
+  { value: 'low', label: 'Low', description: 'Minor incident, no injury likely', colour: 'bg-green-500/20 text-green-400 border-green-500/30', border: 'border-l-green-500' },
+  { value: 'medium', label: 'Medium', description: 'Moderate risk, minor injury possible', colour: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30', border: 'border-l-yellow-500' },
+  { value: 'high', label: 'High', description: 'Significant risk, serious injury possible', colour: 'bg-orange-500/20 text-orange-400 border-orange-500/30', border: 'border-l-orange-500' },
+  { value: 'critical', label: 'Critical', description: 'Life-threatening or major incident', colour: 'bg-red-500/20 text-red-400 border-red-500/30', border: 'border-l-red-500' }
 ];
 
 export const NearMissReporting: React.FC = () => {
@@ -86,7 +87,7 @@ export const NearMissReporting: React.FC = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [lastSubmittedReport, setLastSubmittedReport] = useState<NearMissReport | null>(null);
-  // Removed team briefing generation - use dedicated Team Briefing tool instead
+  const [selectedReport, setSelectedReport] = useState<NearMissReport | null>(null);
   
   const now = new Date();
   const [formData, setFormData] = useState<FormData>({
@@ -171,23 +172,95 @@ export const NearMissReporting: React.FC = () => {
     finally { setIsSubmitting(false); }
   };
 
-  // Team briefing generation removed - use dedicated Team Briefing tool in Site Safety
-
   const getSeverityBadge = (severity: string) => { const sev = SEVERITIES.find(s => s.value === severity); return sev ? <Badge className={`${sev.colour} border`}>{sev.label}</Badge> : <Badge variant="secondary">{severity}</Badge>; };
+  const getSeverityBorder = (severity: string) => SEVERITIES.find(s => s.value === severity)?.border || 'border-l-muted';
   const getCategoryLabel = (value: string) => CATEGORIES.find(c => c.value === value)?.label || value;
+
+  // Show detail view if a report is selected
+  if (selectedReport) {
+    return <NearMissReportDetail report={selectedReport} onBack={() => setSelectedReport(null)} />;
+  }
 
   if (!showForm) {
     return (
       <div className="space-y-4">
         <div className="space-y-3">
-          <div><h2 className="text-xl font-semibold text-foreground">Near Miss Reports</h2><p className="text-sm text-muted-foreground">Record and track safety incidents</p></div>
-          <Button onClick={() => setShowForm(true)} className="w-full h-12 bg-primary text-primary-foreground"><Plus className="h-4 w-4 mr-2" />Report Near Miss</Button>
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-semibold text-foreground">Near Miss Reports</h2>
+              <p className="text-sm text-muted-foreground">Record and track safety incidents</p>
+            </div>
+            {reports.length > 0 && (
+              <Badge variant="secondary" className="text-xs">
+                {reports.length} report{reports.length !== 1 ? 's' : ''}
+              </Badge>
+            )}
+          </div>
+          <Button onClick={() => setShowForm(true)} className="w-full h-14 text-base bg-primary text-primary-foreground touch-manipulation">
+            <Plus className="h-5 w-5 mr-2" />
+            Report Near Miss
+          </Button>
         </div>
-        {loadingReports ? <div className="flex items-center justify-center py-12"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div> : reports.length === 0 ? (
-          <Card className="border-dashed"><CardContent className="flex flex-col items-center justify-center py-12 text-center"><AlertTriangle className="h-12 w-12 text-muted-foreground mb-4" /><h3 className="text-lg font-medium text-foreground mb-2">No reports yet</h3><p className="text-sm text-muted-foreground mb-4">Recording near misses helps prevent future accidents.</p><Button onClick={() => setShowForm(true)} variant="outline"><Plus className="h-4 w-4 mr-2" />Submit your first report</Button></CardContent></Card>
+        
+        {loadingReports ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+          </div>
+        ) : reports.length === 0 ? (
+          <Card className="border-dashed">
+            <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+              <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
+                <AlertTriangle className="h-8 w-8 text-muted-foreground" />
+              </div>
+              <h3 className="text-lg font-medium text-foreground mb-2">No reports yet</h3>
+              <p className="text-sm text-muted-foreground mb-4 max-w-[280px]">
+                Recording near misses helps prevent future accidents and keeps everyone safe.
+              </p>
+              <Button onClick={() => setShowForm(true)} className="h-12 touch-manipulation">
+                <Plus className="h-4 w-4 mr-2" />
+                Submit your first report
+              </Button>
+            </CardContent>
+          </Card>
         ) : (
-          <div className="space-y-3">{reports.map(report => (<Card key={report.id} className="hover:bg-muted/50 transition-colors"><CardContent className="p-4"><div className="flex items-start justify-between gap-4"><div className="flex-1 min-w-0"><div className="flex items-center gap-2 mb-2 flex-wrap">{getSeverityBadge(report.severity)}<Badge variant="outline" className="text-xs">{getCategoryLabel(report.category)}</Badge></div><p className="text-sm text-foreground line-clamp-2 mb-2">{report.description}</p><div className="flex items-center gap-4 text-xs text-muted-foreground"><span className="flex items-center gap-1"><MapPin className="h-3 w-3" />{report.location}</span><span className="flex items-center gap-1"><Clock className="h-3 w-3" />{new Date(report.incident_date).toLocaleDateString('en-GB')}</span></div></div></div></CardContent></Card>))}</div>
+          <div className="space-y-3">
+            {reports.map(report => (
+              <Card 
+                key={report.id} 
+                className={`border-l-4 ${getSeverityBorder(report.severity)} cursor-pointer hover:bg-muted/50 active:scale-[0.98] transition-all touch-manipulation`}
+                onClick={() => setSelectedReport(report)}
+              >
+                <CardContent className="p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-2 flex-wrap">
+                        {getSeverityBadge(report.severity)}
+                        <Badge variant="outline" className="text-xs">
+                          {getCategoryLabel(report.category)}
+                        </Badge>
+                      </div>
+                      <p className="text-sm text-foreground line-clamp-2 mb-3">
+                        {report.description}
+                      </p>
+                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <MapPin className="h-3 w-3" />
+                          <span className="truncate max-w-[120px]">{report.location}</span>
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="h-3 w-3" />
+                          {new Date(report.incident_date).toLocaleDateString('en-GB')}
+                        </span>
+                      </div>
+                    </div>
+                    <ChevronRight className="h-5 w-5 text-muted-foreground shrink-0 mt-1" />
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         )}
+        
         <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
           <DialogContent className="sm:max-w-[360px]">
             <DialogHeader className="text-center pb-2">
