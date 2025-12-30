@@ -11,9 +11,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { 
   AlertTriangle, Plus, Camera, X, Zap, Flame, Users, HardHat,
-  Clock, MapPin, Shield, CheckCircle2, Loader2, Sparkles, ArrowLeft
+  Clock, MapPin, Shield, CheckCircle2, Loader2, ArrowLeft
 } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 interface NearMissReport {
   id: string;
@@ -86,7 +86,7 @@ export const NearMissReporting: React.FC = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [lastSubmittedReport, setLastSubmittedReport] = useState<NearMissReport | null>(null);
-  const [generatingBriefing, setGeneratingBriefing] = useState(false);
+  // Removed team briefing generation - use dedicated Team Briefing tool instead
   
   const now = new Date();
   const [formData, setFormData] = useState<FormData>({
@@ -171,16 +171,7 @@ export const NearMissReporting: React.FC = () => {
     finally { setIsSubmitting(false); }
   };
 
-  const generateTeamBriefing = async () => {
-    if (!lastSubmittedReport) return;
-    setGeneratingBriefing(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('generate-briefing-from-near-miss', { body: { nearMissData: lastSubmittedReport } });
-      if (error) throw error;
-      if (data?.success) { toast({ title: "Briefing generated", description: "Team briefing content has been created" }); setShowSuccessDialog(false); }
-    } catch (error) { console.error('Error:', error); toast({ title: "Error", description: "Failed to generate team briefing", variant: "destructive" }); }
-    finally { setGeneratingBriefing(false); }
-  };
+  // Team briefing generation removed - use dedicated Team Briefing tool in Site Safety
 
   const getSeverityBadge = (severity: string) => { const sev = SEVERITIES.find(s => s.value === severity); return sev ? <Badge className={`${sev.colour} border`}>{sev.label}</Badge> : <Badge variant="secondary">{severity}</Badge>; };
   const getCategoryLabel = (value: string) => CATEGORIES.find(c => c.value === value)?.label || value;
@@ -188,16 +179,27 @@ export const NearMissReporting: React.FC = () => {
   if (!showForm) {
     return (
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="space-y-3">
           <div><h2 className="text-xl font-semibold text-foreground">Near Miss Reports</h2><p className="text-sm text-muted-foreground">Record and track safety incidents</p></div>
-          <Button onClick={() => setShowForm(true)} className="bg-primary text-primary-foreground"><Plus className="h-4 w-4 mr-2" />Report Near Miss</Button>
+          <Button onClick={() => setShowForm(true)} className="w-full h-12 bg-primary text-primary-foreground"><Plus className="h-4 w-4 mr-2" />Report Near Miss</Button>
         </div>
         {loadingReports ? <div className="flex items-center justify-center py-12"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div> : reports.length === 0 ? (
           <Card className="border-dashed"><CardContent className="flex flex-col items-center justify-center py-12 text-center"><AlertTriangle className="h-12 w-12 text-muted-foreground mb-4" /><h3 className="text-lg font-medium text-foreground mb-2">No reports yet</h3><p className="text-sm text-muted-foreground mb-4">Recording near misses helps prevent future accidents.</p><Button onClick={() => setShowForm(true)} variant="outline"><Plus className="h-4 w-4 mr-2" />Submit your first report</Button></CardContent></Card>
         ) : (
           <div className="space-y-3">{reports.map(report => (<Card key={report.id} className="hover:bg-muted/50 transition-colors"><CardContent className="p-4"><div className="flex items-start justify-between gap-4"><div className="flex-1 min-w-0"><div className="flex items-center gap-2 mb-2 flex-wrap">{getSeverityBadge(report.severity)}<Badge variant="outline" className="text-xs">{getCategoryLabel(report.category)}</Badge></div><p className="text-sm text-foreground line-clamp-2 mb-2">{report.description}</p><div className="flex items-center gap-4 text-xs text-muted-foreground"><span className="flex items-center gap-1"><MapPin className="h-3 w-3" />{report.location}</span><span className="flex items-center gap-1"><Clock className="h-3 w-3" />{new Date(report.incident_date).toLocaleDateString('en-GB')}</span></div></div></div></CardContent></Card>))}</div>
         )}
-        <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}><DialogContent><DialogHeader><DialogTitle className="flex items-center gap-2 text-foreground"><CheckCircle2 className="h-5 w-5 text-green-500" />Report Submitted</DialogTitle><DialogDescription>Would you like to create a team safety briefing from this incident?</DialogDescription></DialogHeader><DialogFooter className="flex-col sm:flex-row gap-2"><Button variant="outline" onClick={() => setShowSuccessDialog(false)}>Done</Button><Button onClick={generateTeamBriefing} disabled={generatingBriefing} className="bg-primary text-primary-foreground">{generatingBriefing ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Generating...</> : <><Sparkles className="h-4 w-4 mr-2" />Create Team Briefing</>}</Button></DialogFooter></DialogContent></Dialog>
+        <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+          <DialogContent className="sm:max-w-[360px]">
+            <DialogHeader className="text-center pb-2">
+              <div className="mx-auto w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mb-3">
+                <CheckCircle2 className="h-8 w-8 text-green-500" />
+              </div>
+              <DialogTitle className="text-xl text-foreground">Report Submitted</DialogTitle>
+              <DialogDescription className="text-base">Your near miss has been recorded successfully.</DialogDescription>
+            </DialogHeader>
+            <Button onClick={() => setShowSuccessDialog(false)} className="w-full h-12 mt-2">Done</Button>
+          </DialogContent>
+        </Dialog>
       </div>
     );
   }
