@@ -43,11 +43,11 @@ export const FormattedTextDisplay = ({
         elements.push(
           <div 
             key={`item-${key++}`} 
-            className="flex gap-2 items-start"
-            style={{ marginLeft: `${indent * 0.5}rem` }}
+            className="flex gap-2 items-start text-left"
+            style={{ marginLeft: `${Math.max(indent * 0.5, 0.5)}rem` }}
           >
-            <span className="text-elec-yellow mt-1 flex-shrink-0">•</span>
-            <span className="text-sm text-elec-light/90" dangerouslySetInnerHTML={{ 
+            <span className="text-primary mt-0.5 flex-shrink-0">•</span>
+            <span className="text-sm text-white" dangerouslySetInnerHTML={{ 
               __html: processInlineFormatting(content) 
             }} />
           </div>
@@ -59,7 +59,7 @@ export const FormattedTextDisplay = ({
       elements.push(
         <p 
           key={`line-${key++}`} 
-          className="text-sm text-elec-light/90 pl-6"
+          className="text-sm text-white text-left"
           dangerouslySetInnerHTML={{ __html: processInlineFormatting(line) }}
         />
       );

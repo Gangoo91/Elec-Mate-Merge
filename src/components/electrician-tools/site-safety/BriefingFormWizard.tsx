@@ -65,7 +65,7 @@ export const BriefingFormWizard = ({ initialData, nearMissData, onClose, onSucce
   const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
   const [showTemplateSelector, setShowTemplateSelector] = useState(!initialData && !nearMissData);
   const [showRestoreDialog, setShowRestoreDialog] = useState(false);
-  const [showJsonData, setShowJsonData] = useState(false);
+  
 
   // Build initial form data - pre-populate from editing OR near miss data
   const buildInitialFormData = () => {
@@ -756,82 +756,6 @@ export const BriefingFormWizard = ({ initialData, nearMissData, onClose, onSucce
                     ✅ AI content generated! Review and edit below.
                   </p>
                 </div>
-
-                {/* Raw JSON Data Viewer */}
-                <Collapsible open={showJsonData} onOpenChange={setShowJsonData}>
-                  <CollapsibleTrigger asChild>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      className="w-full justify-between border-primary/30 text-elec-light/70 hover:text-elec-light"
-                    >
-                      <span className="text-xs">View Complete JSON Data (Request + Response)</span>
-                      {showJsonData ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                    </Button>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent className="mt-2">
-                    <div className="bg-card/50 border border-primary/20 rounded-lg p-4 max-h-96 overflow-auto">
-                       <pre className="text-xs text-elec-light/80 whitespace-pre-wrap font-mono">
-                        {JSON.stringify({
-                          // PDF Monkey Template Metadata
-                          document_template_id: "your-pdfmonkey-template-id-here",
-                          
-                          // PDF Monkey Payload
-                          payload: {
-                            // Form Data (for PDF template variables)
-                            formData: {
-                              briefingType: formData.briefingType,
-                              briefingTitle: formData.briefingTitle,
-                              location: formData.location,
-                              contractorCompany: formData.contractorCompany,
-                              conductorName: formData.conductorName,
-                              briefingDate: formData.briefingDate,
-                              briefingTime: formData.briefingTime,
-                              briefingContent: formData.briefingContent,
-                              workScope: formData.workScope,
-                              environment: formData.environment,
-                              teamSize: formData.teamSize,
-                              experienceLevel: formData.experienceLevel,
-                              identifiedHazards: formData.identifiedHazards,
-                              customHazards: formData.customHazards,
-                              riskLevel: formData.riskLevel,
-                              specialConsiderations: formData.specialConsiderations,
-                              photos: formData.photos,
-                              attendees: formData.attendees
-                            },
-                            
-                            // Raw AI Generated Content (unmodified from OpenAI tool call)
-                            aiGeneratedContent: {
-                              // Safety briefings (site-work, safety-alert, lfe)
-                              briefingDescription: aiContent?.briefingDescription || "",
-                              hazardsAndControls: aiContent?.hazardsAndControls || "",
-                              safetyWarning: aiContent?.safetyWarning || "",
-                              equipmentRequired: aiContent?.equipmentRequired || [],
-                              keyRegulations: aiContent?.keyRegulations || [],
-                              
-                              // Business briefings (business-update, hse-update, regulatory)
-                              keyChanges: aiContent?.keyChanges || "",
-                              impactAssessment: aiContent?.impactAssessment || "",
-                              actionItems: aiContent?.actionItems || [],
-                              timeline: aiContent?.timeline || "",
-                              resourcesNeeded: aiContent?.resourcesNeeded || [],
-                              
-                              // General briefings
-                              keyPoints: aiContent?.keyPoints || [],
-                              additionalInfo: aiContent?.additionalInfo || ""
-                            }
-                          },
-                          
-                          // PDF Metadata
-                          meta: {
-                            _filename: `briefing-${formData.briefingTitle.replace(/[^a-z0-9]/gi, '-')}-${formData.briefingDate}.pdf`,
-                            generatedAt: new Date().toISOString()
-                          }
-                        }, null, 2)}
-                      </pre>
-                    </div>
-                  </CollapsibleContent>
-                </Collapsible>
 
                 <div className="space-y-2">
                   <Label className="text-elec-light text-sm">Briefing Overview</Label>
