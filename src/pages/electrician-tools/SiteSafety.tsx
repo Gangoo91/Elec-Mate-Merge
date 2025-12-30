@@ -13,7 +13,7 @@ import IntegratedRAMSGenerator from "@/components/electrician-tools/site-safety/
 import { EnhancedHazardDatabase } from "@/components/electrician-tools/site-safety/enhanced/EnhancedHazardDatabase";
 import PhotoDocumentation from "@/components/electrician-tools/site-safety/PhotoDocumentation";
 import TeamBriefingTemplates from "@/components/electrician-tools/site-safety/TeamBriefingTemplates";
-import NearMissReporting from "@/components/electrician-tools/site-safety/NearMissReporting";
+import { NearMissReporting } from "@/components/electrician-tools/site-safety/NearMissReporting";
 import SafetyEquipmentTracker from "@/components/electrician-tools/site-safety/SafetyEquipmentTracker";
 import EmergencyProcedures from "@/components/electrician-tools/site-safety/EmergencyProcedures";
 import { AIRAMSGenerator } from "@/components/electrician-tools/site-safety/ai-rams/AIRAMSGenerator";

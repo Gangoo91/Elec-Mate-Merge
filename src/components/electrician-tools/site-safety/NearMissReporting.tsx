@@ -1,836 +1,236 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import React, { useState, useRef, useEffect } from 'react';
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, Plus, Eye, Search, Filter, Clock, CheckCircle, ArrowLeft, ArrowRight, Camera, Upload, Loader2, Calendar, TrendingUp, BarChart3, AlertCircle, Zap, HardHat, Shield, X, Sparkles } from "lucide-react";
-import { MobileWizardStep } from "@/components/ui/mobile-wizard-step";
-import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
-import { hazardCategories } from "@/data/hazards";
-import { NearMissToBriefingDialog } from "./NearMissToBriefingDialog";
-import { NearMissSuccessDialog } from "./NearMissSuccessDialog";
+import { useAuth } from "@/contexts/AuthContext";
+import { 
+  AlertTriangle, Plus, Camera, X, Zap, Flame, Users, HardHat,
+  Clock, MapPin, Shield, CheckCircle2, Loader2, Sparkles, ArrowLeft
+} from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 
 interface NearMissReport {
   id: string;
-  incident_date: string;
-  incident_time: string;
-  location: string;
-  reporter_name: string;
   category: string;
   severity: string;
   description: string;
+  location: string;
+  incident_date: string;
+  incident_time: string;
+  reporter_name: string;
+  potential_consequences?: string;
+  immediate_actions?: string;
+  preventive_measures?: string;
+  photo_urls?: string[];
+  created_at: string;
+  user_id: string;
+}
+
+interface FormData {
+  category: string;
+  severity: string;
+  description: string;
+  location: string;
+  incident_date: string;
+  incident_time: string;
+  reporter_name: string;
   potential_consequences: string;
   immediate_actions: string;
   preventive_measures: string;
-  status: string;
-  follow_up_required: boolean;
-  assigned_to?: string;
-  due_date?: string;
-  completed_date?: string;
-  photos_attached: string[];
-  created_at: string;
 }
 
-interface QuickTemplate {
-  id: string;
-  name: string;
-  icon: React.ElementType;
-  category: string;
-  severity: string;
-  description: string;
-  consequences: string;
-  actions: string;
-}
-
-const quickTemplates: QuickTemplate[] = [
-  {
-    id: "electrical-shock",
-    name: "Electrical Shock Risk",
-    icon: Zap,
-    category: "Electrical Hazards",
-    severity: "High",
-    description: "Potential exposure to live electrical components",
-    consequences: "Electrical shock, burns, or electrocution",
-    actions: "Isolated circuit, installed protective barriers"
-  },
-  {
-    id: "fall-hazard",
-    name: "Fall Hazard",
-    icon: AlertTriangle,
-    category: "Working at Height",
-    severity: "High", 
-    description: "Unprotected edge or unstable working surface",
-    consequences: "Falls resulting in serious injury or fatality",
-    actions: "Installed edge protection, secured work platform"
-  },
-  {
-    id: "equipment-malfunction",
-    name: "Equipment Malfunction",
-    icon: HardHat,
-    category: "Equipment & Tools",
-    severity: "Medium",
-    description: "Faulty or damaged equipment identified",
-    consequences: "Equipment failure leading to injury or damage",
-    actions: "Removed equipment from service, arranged maintenance"
-  },
-  {
-    id: "unsafe-practice",
-    name: "Unsafe Work Practice",
-    icon: Shield,
-    category: "Unsafe Acts",
-    severity: "Medium",
-    description: "Worker observed not following safety procedures",
-    consequences: "Increased risk of injury or incident",
-    actions: "Provided immediate coaching, arranged additional training"
-  }
+const QUICK_TEMPLATES = [
+  { id: 'electrical', icon: Zap, label: 'Electrical', category: 'electrical_hazard', severity: 'high', description: 'Near miss involving electrical hazard - exposed wiring, shock risk, or electrical fault detected before incident occurred.' },
+  { id: 'fire', icon: Flame, label: 'Fire Risk', category: 'fire_risk', severity: 'critical', description: 'Near miss involving fire hazard - overheating equipment, sparking, or potential ignition source identified.' },
+  { id: 'ppe', icon: HardHat, label: 'PPE Issue', category: 'ppe_failure', severity: 'medium', description: 'Near miss due to PPE issue - missing or damaged personal protective equipment identified before work commenced.' },
+  { id: 'worksite', icon: Users, label: 'Worksite', category: 'worksite_hazard', severity: 'medium', description: 'Near miss involving worksite hazard - trip hazard, unstable surface, or access issue identified.' }
 ];
 
-const statusOptions = ["Reported", "Under Review", "Briefing Scheduled", "Action Taken", "Closed"];
+const CATEGORIES = [
+  { value: 'electrical_hazard', label: 'Electrical Hazard' },
+  { value: 'fire_risk', label: 'Fire Risk' },
+  { value: 'fall_hazard', label: 'Fall Hazard' },
+  { value: 'ppe_failure', label: 'PPE Failure/Issue' },
+  { value: 'worksite_hazard', label: 'Worksite Hazard' },
+  { value: 'tool_equipment', label: 'Tool/Equipment Issue' },
+  { value: 'chemical_exposure', label: 'Chemical Exposure' },
+  { value: 'manual_handling', label: 'Manual Handling' },
+  { value: 'vehicle_incident', label: 'Vehicle Incident' },
+  { value: 'other', label: 'Other' }
+];
 
-const NearMissReporting = () => {
-  const [reports, setReports] = useState<NearMissReport[]>([]);
-  const [loading, setLoading] = useState(true);
+const SEVERITIES = [
+  { value: 'low', label: 'Low', description: 'Minor incident, no injury likely', colour: 'bg-green-500/20 text-green-400 border-green-500/30' },
+  { value: 'medium', label: 'Medium', description: 'Moderate risk, minor injury possible', colour: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' },
+  { value: 'high', label: 'High', description: 'Significant risk, serious injury possible', colour: 'bg-orange-500/20 text-orange-400 border-orange-500/30' },
+  { value: 'critical', label: 'Critical', description: 'Life-threatening or major incident', colour: 'bg-red-500/20 text-red-400 border-red-500/30' }
+];
+
+export const NearMissReporting: React.FC = () => {
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
   const [showForm, setShowForm] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState("all");
-  const [filterSeverity, setFilterSeverity] = useState("all");
-  const [uploading, setUploading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [reports, setReports] = useState<NearMissReport[]>([]);
+  const [loadingReports, setLoadingReports] = useState(true);
+  const [photos, setPhotos] = useState<File[]>([]);
+  const [photoPreviewUrls, setPhotoPreviewUrls] = useState<string[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [selectedPhotos, setSelectedPhotos] = useState<File[]>([]);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
-  const [showBriefingDialog, setShowBriefingDialog] = useState(false);
-  const [submittedReport, setSubmittedReport] = useState<NearMissReport | null>(null);
-
-  const [formData, setFormData] = useState<Partial<NearMissReport>>({
-    incident_date: new Date().toISOString().split('T')[0],
-    incident_time: new Date().toTimeString().slice(0, 5),
-    location: "",
-    reporter_name: "",
-    category: "",
-    severity: "",
-    description: "",
-    potential_consequences: "",
-    immediate_actions: "",
-    preventive_measures: "",
-    follow_up_required: false,
-    photos_attached: []
+  const [lastSubmittedReport, setLastSubmittedReport] = useState<NearMissReport | null>(null);
+  const [generatingBriefing, setGeneratingBriefing] = useState(false);
+  
+  const now = new Date();
+  const [formData, setFormData] = useState<FormData>({
+    category: '', severity: '', description: '', location: '',
+    incident_date: now.toISOString().split('T')[0],
+    incident_time: now.toTimeString().slice(0, 5),
+    reporter_name: '', potential_consequences: '', immediate_actions: '', preventive_measures: ''
   });
 
-  const categories = hazardCategories.map(cat => cat.name);
-  const severityLevels = ["Low", "Medium", "High", "Critical"];
+  useEffect(() => {
+    const loadProfile = async () => {
+      if (!user) return;
+      const { data } = await supabase.from('profiles').select('full_name').eq('id', user.id).single();
+      if (data?.full_name) setFormData(prev => ({ ...prev, reporter_name: data.full_name }));
+    };
+    loadProfile();
+  }, [user]);
 
   useEffect(() => {
-    fetchReports();
-  }, []);
-
-  const fetchReports = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
+    const loadReports = async () => {
       if (!user) return;
-
-      const { data, error } = await supabase
-        .from('near_miss_reports')
-        .select('*')
-        .order('incident_date', { ascending: false });
-
-      if (error) throw error;
-      setReports(data || []);
-    } catch (error) {
-      console.error('Error fetching reports:', error);
-      toast({
-        title: "Error",
-        description: "Failed to load near miss reports",
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const validateStep = (step: number): boolean => {
-    const newErrors: Record<string, string> = {};
-
-    switch (step) {
-      case 0: // Basic Details
-        if (!formData.location?.trim()) newErrors.location = "Location is required";
-        if (!formData.incident_date) newErrors.incident_date = "Date is required";
-        if (!formData.incident_time) newErrors.incident_time = "Time is required";
-        break;
-      case 1: // Incident Description
-        if (!formData.description?.trim()) newErrors.description = "Description is required";
-        if (!formData.category) newErrors.category = "Category is required";
-        if (!formData.severity) newErrors.severity = "Severity is required";
-        break;
-      // Steps 2 and 3 are optional
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleNext = () => {
-    if (validateStep(currentStep)) {
-      setCurrentStep(prev => Math.min(prev + 1, 3));
-    }
-  };
-
-  const handlePrevious = () => {
-    setCurrentStep(prev => Math.max(prev - 1, 0));
-  };
-
-  const applyQuickTemplate = (template: QuickTemplate) => {
-    setFormData(prev => ({
-      ...prev,
-      category: template.category,
-      severity: template.severity,
-      description: template.description,
-      potential_consequences: template.consequences,
-      immediate_actions: template.actions
-    }));
-    setCurrentStep(1);
-  };
-
-  const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(event.target.files || []);
-    if (files.length + selectedPhotos.length > 5) {
-      toast({
-        title: "Error",
-        description: "Maximum 5 photos allowed per report",
-        variant: "destructive"
-      });
-      return;
-    }
-    setSelectedPhotos(prev => [...prev, ...files]);
-  };
-
-  const removePhoto = (index: number) => {
-    setSelectedPhotos(prev => prev.filter((_, i) => i !== index));
-  };
-
-  const submitReport = async () => {
-    if (!validateStep(0) || !validateStep(1)) {
-      toast({
-        title: "Error",
-        description: "Please complete all required fields",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setUploading(true);
-
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('No user logged in');
-
-      // Upload photos if any
-      const photoUrls: string[] = [];
-      for (const photo of selectedPhotos) {
-        const fileExt = photo.name.split('.').pop();
-        const fileName = `near-miss/${user.id}/${Date.now()}-${Math.random()}.${fileExt}`;
-        
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('safety-resources')
-          .upload(fileName, photo);
-
-        if (uploadError) throw uploadError;
-
-        const { data: { publicUrl } } = supabase.storage
-          .from('safety-resources')
-          .getPublicUrl(fileName);
-
-        photoUrls.push(publicUrl);
-      }
-
-      const { data, error } = await supabase
-        .from('near_miss_reports')
-        .insert({
-          user_id: user.id,
-          incident_date: formData.incident_date || new Date().toISOString().split('T')[0],
-          incident_time: formData.incident_time || new Date().toTimeString().slice(0, 5),
-          location: formData.location,
-          reporter_name: formData.reporter_name || "Current User",
-          category: formData.category,
-          severity: formData.severity || "Medium",
-          description: formData.description,
-          potential_consequences: formData.potential_consequences || "",
-          immediate_actions: formData.immediate_actions || "",
-          preventive_measures: formData.preventive_measures || "",
-          follow_up_required: formData.follow_up_required || false,
-          photos_attached: photoUrls
-        })
-        .select()
-        .single();
-
-      if (error) throw error;
-
-      setReports(prev => [data, ...prev]);
-      setSubmittedReport(data);
-      setShowSuccessDialog(true);
-      resetForm();
-    } catch (error) {
-      console.error('Error submitting report:', error);
-      toast({
-        title: "Error",
-        description: "Failed to submit report",
-        variant: "destructive"
-      });
-    } finally {
-      setUploading(false);
-    }
-  };
+      setLoadingReports(true);
+      const { data, error } = await supabase.from('near_miss_reports').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(10);
+      if (!error && data) setReports(data as NearMissReport[]);
+      setLoadingReports(false);
+    };
+    loadReports();
+  }, [user]);
 
   const resetForm = () => {
-    setFormData({
-      incident_date: new Date().toISOString().split('T')[0],
-      incident_time: new Date().toTimeString().slice(0, 5),
-      location: "",
-      reporter_name: "",
-      category: "",
-      severity: "",
-      description: "",
-      potential_consequences: "",
-      immediate_actions: "",
-      preventive_measures: "",
-      follow_up_required: false,
-      photos_attached: []
-    });
-    setSelectedPhotos([]);
-    setCurrentStep(0);
-    setShowForm(false);
+    const now = new Date();
+    setFormData({ category: '', severity: '', description: '', location: '', incident_date: now.toISOString().split('T')[0], incident_time: now.toTimeString().slice(0, 5), reporter_name: formData.reporter_name, potential_consequences: '', immediate_actions: '', preventive_measures: '' });
+    setPhotos([]); setPhotoPreviewUrls([]); setErrors({});
+  };
+
+  const applyTemplate = (template: typeof QUICK_TEMPLATES[0]) => {
+    setFormData(prev => ({ ...prev, category: template.category, severity: template.severity, description: template.description }));
     setErrors({});
   };
 
-  const updateFieldValue = (field: string, value: any) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    // Clear error when user starts typing
-    if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: "" }));
-    }
+  const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (photos.length + files.length > 5) { toast({ title: "Maximum 5 photos", variant: "destructive" }); return; }
+    const validFiles = files.filter(f => f.type.startsWith('image/') && f.size <= 10 * 1024 * 1024);
+    setPhotos(prev => [...prev, ...validFiles]);
+    validFiles.forEach(file => { const reader = new FileReader(); reader.onload = (e) => setPhotoPreviewUrls(prev => [...prev, e.target?.result as string]); reader.readAsDataURL(file); });
   };
 
-  const getSeverityColor = (severity: string) => {
-    switch (severity) {
-      case "Low": return "bg-green-500";
-      case "Medium": return "bg-yellow-500";
-      case "High": return "bg-orange-500";
-      case "Critical": return "bg-red-500";
-      default: return "bg-muted";
-    }
+  const removePhoto = (index: number) => { setPhotos(prev => prev.filter((_, i) => i !== index)); setPhotoPreviewUrls(prev => prev.filter((_, i) => i !== index)); };
+
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+    if (!formData.incident_date) newErrors.incident_date = 'Date is required';
+    if (!formData.incident_time) newErrors.incident_time = 'Time is required';
+    if (!formData.location.trim()) newErrors.location = 'Location is required';
+    if (!formData.category) newErrors.category = 'Category is required';
+    if (!formData.severity) newErrors.severity = 'Severity is required';
+    if (!formData.description.trim() || formData.description.trim().length < 20) newErrors.description = 'Description required (at least 20 characters)';
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) { const el = document.getElementById(`field-${Object.keys(newErrors)[0]}`); el?.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    return Object.keys(newErrors).length === 0;
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "Reported": return "bg-blue-500";
-      case "Under Review": return "bg-yellow-500";
-      case "Action Taken": return "bg-purple-500";
-      case "Closed": return "bg-green-500";
-      default: return "bg-muted";
-    }
+  const submitReport = async () => {
+    if (!validateForm()) { toast({ title: "Missing required fields", description: "Please fill in all highlighted fields", variant: "destructive" }); return; }
+    if (!user) { toast({ title: "Error", description: "You must be logged in", variant: "destructive" }); return; }
+    setIsSubmitting(true);
+    try {
+      const { data, error } = await supabase.from('near_miss_reports').insert({
+        user_id: user.id, category: formData.category, severity: formData.severity, description: formData.description,
+        location: formData.location, incident_date: formData.incident_date, incident_time: formData.incident_time,
+        reporter_name: formData.reporter_name || 'Anonymous', potential_consequences: formData.potential_consequences || null,
+        immediate_actions: formData.immediate_actions || null, preventive_measures: formData.preventive_measures || null
+      }).select().single();
+      if (error) throw error;
+      setLastSubmittedReport(data as NearMissReport);
+      setReports(prev => [data as NearMissReport, ...prev]);
+      resetForm(); setShowForm(false); setShowSuccessDialog(true);
+      toast({ title: "Report submitted", description: "Near miss report has been recorded successfully" });
+    } catch (error) { console.error('Error:', error); toast({ title: "Error", description: "Failed to submit report", variant: "destructive" }); }
+    finally { setIsSubmitting(false); }
   };
 
-  const filteredReports = reports.filter(report => {
-    const matchesSearch = report.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         report.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         report.category.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = filterStatus === "all" || report.status === filterStatus;
-    const matchesSeverity = filterSeverity === "all" || report.severity === filterSeverity;
-    
-    return matchesSearch && matchesStatus && matchesSeverity;
-  });
-
-  const renderStepContent = () => {
-    switch (currentStep) {
-      case 0:
-        return (
-          <div className="mobile-input-spacing">
-            <MobileInput
-              label="Date *"
-              type="date"
-              value={formData.incident_date || ""}
-              onChange={(e) => updateFieldValue("incident_date", e.target.value)}
-              error={errors.incident_date}
-            />
-            <MobileInput
-              label="Time *"
-              type="time"
-              value={formData.incident_time || ""}
-              onChange={(e) => updateFieldValue("incident_time", e.target.value)}
-              error={errors.incident_time}
-            />
-            <MobileInput
-              label="Location *"
-              value={formData.location || ""}
-              onChange={(e) => updateFieldValue("location", e.target.value)}
-              placeholder="Where did this occur?"
-              error={errors.location}
-              hint="Be specific about the exact location"
-            />
-            <MobileInput
-              label="Reporter Name"
-              value={formData.reporter_name || ""}
-              onChange={(e) => updateFieldValue("reporter_name", e.target.value)}
-              placeholder="Your name (optional)"
-              hint="Leave blank to use your profile name"
-            />
-          </div>
-        );
-
-      case 1:
-        return (
-          <div className="mobile-input-spacing">
-            <MobileSelectWrapper
-              label="Category *"
-              value={formData.category || ""}
-              onValueChange={(value) => updateFieldValue("category", value)}
-              placeholder="Select hazard category"
-              options={categories.map(cat => ({ value: cat, label: cat }))}
-              error={errors.category}
-            />
-            <MobileSelectWrapper
-              label="Severity Level *"
-              value={formData.severity || ""}
-              onValueChange={(value) => updateFieldValue("severity", value)}
-              placeholder="How severe was this near miss?"
-              options={severityLevels.map(level => ({ 
-                value: level, 
-                label: level,
-                description: level === "Low" ? "Minor risk" : 
-                           level === "Medium" ? "Moderate risk" :
-                           level === "High" ? "Significant risk" : "Life threatening"
-              }))}
-              error={errors.severity}
-            />
-            <MobileInputWrapper
-              label="Description of Near Miss *"
-              value={formData.description || ""}
-              onChange={(value) => updateFieldValue("description", value)}
-              placeholder="Describe what happened or could have happened..."
-              type="textarea"
-              error={errors.description}
-              hint="Be detailed - include what you saw, heard, or experienced"
-            />
-          </div>
-        );
-
-      case 2:
-        return (
-          <div className="mobile-input-spacing">
-            <MobileInputWrapper
-              label="Potential Consequences"
-              value={formData.potential_consequences || ""}
-              onChange={(value) => updateFieldValue("potential_consequences", value)}
-              placeholder="What could have resulted from this near miss?"
-              type="textarea"
-              hint="Consider injuries, damage, or other impacts that could have occurred"
-            />
-            <MobileInputWrapper
-              label="Immediate Actions Taken"
-              value={formData.immediate_actions || ""}
-              onChange={(value) => updateFieldValue("immediate_actions", value)}
-              placeholder="What immediate steps were taken?"
-              type="textarea"
-              hint="Describe any actions taken to address the immediate hazard"
-            />
-          </div>
-        );
-
-      case 3:
-        return (
-          <div className="mobile-input-spacing">
-            <MobileInputWrapper
-              label="Suggested Preventive Measures"
-              value={formData.preventive_measures || ""}
-              onChange={(value) => updateFieldValue("preventive_measures", value)}
-              placeholder="How can this be prevented in future?"
-              type="textarea"
-              hint="Your recommendations for preventing similar incidents"
-            />
-            
-            {/* Photo Upload Section */}
-            <div className="space-y-4">
-              <label className="text-sm font-medium">Attach Photos (Optional - Max 5)</label>
-              <div className="border-2 border-dashed border-border/40 rounded-lg p-6 text-center bg-card">
-                <input
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={handlePhotoUpload}
-                  className="hidden"
-                  id="photo-upload"
-                  disabled={uploading}
-                />
-                <label htmlFor="photo-upload" className="cursor-pointer flex flex-col items-center gap-3">
-                  <div className="p-3 rounded-full bg-primary/10">
-                    <Camera className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <span className="text-sm font-medium">Click to add photos</span>
-                    <p className="text-xs text-muted-foreground mt-1">JPG, PNG up to 5MB each</p>
-                  </div>
-                </label>
-              </div>
-              
-              {selectedPhotos.length > 0 && (
-                <div className="space-y-3">
-                  <label className="text-sm font-medium">Selected Photos ({selectedPhotos.length}/5)</label>
-                  <div className="space-y-2">
-                    {selectedPhotos.map((photo, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                        <div className="flex items-center gap-3">
-                          <Camera className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm truncate flex-1">{photo.name}</span>
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => removePhoto(index)}
-                          className="h-6 w-6 p-0 hover:bg-destructive/20 hover:text-destructive"
-                        >
-                          <X className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        );
-
-      default:
-        return null;
-    }
+  const generateTeamBriefing = async () => {
+    if (!lastSubmittedReport) return;
+    setGeneratingBriefing(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-briefing-from-near-miss', { body: { nearMissData: lastSubmittedReport } });
+      if (error) throw error;
+      if (data?.success) { toast({ title: "Briefing generated", description: "Team briefing content has been created" }); setShowSuccessDialog(false); }
+    } catch (error) { console.error('Error:', error); toast({ title: "Error", description: "Failed to generate team briefing", variant: "destructive" }); }
+    finally { setGeneratingBriefing(false); }
   };
 
-  if (loading) {
+  const getSeverityBadge = (severity: string) => { const sev = SEVERITIES.find(s => s.value === severity); return sev ? <Badge className={`${sev.colour} border`}>{sev.label}</Badge> : <Badge variant="secondary">{severity}</Badge>; };
+  const getCategoryLabel = (value: string) => CATEGORIES.find(c => c.value === value)?.label || value;
+
+  if (!showForm) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        <span className="ml-2 text-muted-foreground">Loading reports...</span>
-      </div>
-    );
-  }
-
-  if (showForm) {
-    const stepTitles = [
-      "Basic Details",
-      "Incident Description", 
-      "Actions & Consequences",
-      "Prevention & Photos"
-    ];
-
-    const stepDescriptions = [
-      "When and where did this near miss occur?",
-      "What happened and how serious was it?",
-      "What actions were taken and what could have happened?",
-      "How can we prevent this and add any photos"
-    ];
-
-    return (
-      <div className="space-y-6">
-        {/* Quick Templates */}
-        {currentStep === 0 && (
-          <Card className="mobile-card border-primary/20">
-            <CardHeader className="pb-4">
-              <CardTitle className="mobile-heading text-primary">Quick Report Templates</CardTitle>
-              <p className="mobile-text text-muted-foreground">
-                Start with a common scenario to save time
-              </p>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {quickTemplates.map((template) => {
-                  const IconComponent = template.icon;
-                  return (
-                    <Button
-                      key={template.id}
-                      variant="outline"
-                      className="h-auto p-4 text-left hover:border-primary/40 hover:bg-primary/5"
-                      onClick={() => applyQuickTemplate(template)}
-                    >
-                      <div className="flex items-start gap-3 w-full">
-                        <div className="p-2 rounded-lg bg-primary/10">
-                          <IconComponent className="h-4 w-4 text-primary" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="font-medium text-sm">{template.name}</div>
-                          <div className="text-xs text-muted-foreground truncate">
-                            {template.category} • {template.severity}
-                          </div>
-                        </div>
-                      </div>
-                    </Button>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div><h2 className="text-xl font-semibold text-foreground">Near Miss Reports</h2><p className="text-sm text-muted-foreground">Record and track safety incidents</p></div>
+          <Button onClick={() => setShowForm(true)} className="bg-primary text-primary-foreground"><Plus className="h-4 w-4 mr-2" />Report Near Miss</Button>
+        </div>
+        {loadingReports ? <div className="flex items-center justify-center py-12"><Loader2 className="h-6 w-6 animate-spin text-muted-foreground" /></div> : reports.length === 0 ? (
+          <Card className="border-dashed"><CardContent className="flex flex-col items-center justify-center py-12 text-center"><AlertTriangle className="h-12 w-12 text-muted-foreground mb-4" /><h3 className="text-lg font-medium text-foreground mb-2">No reports yet</h3><p className="text-sm text-muted-foreground mb-4">Recording near misses helps prevent future accidents.</p><Button onClick={() => setShowForm(true)} variant="outline"><Plus className="h-4 w-4 mr-2" />Submit your first report</Button></CardContent></Card>
+        ) : (
+          <div className="space-y-3">{reports.map(report => (<Card key={report.id} className="hover:bg-muted/50 transition-colors"><CardContent className="p-4"><div className="flex items-start justify-between gap-4"><div className="flex-1 min-w-0"><div className="flex items-center gap-2 mb-2 flex-wrap">{getSeverityBadge(report.severity)}<Badge variant="outline" className="text-xs">{getCategoryLabel(report.category)}</Badge></div><p className="text-sm text-foreground line-clamp-2 mb-2">{report.description}</p><div className="flex items-center gap-4 text-xs text-muted-foreground"><span className="flex items-center gap-1"><MapPin className="h-3 w-3" />{report.location}</span><span className="flex items-center gap-1"><Clock className="h-3 w-3" />{new Date(report.incident_date).toLocaleDateString('en-GB')}</span></div></div></div></CardContent></Card>))}</div>
         )}
-
-        {/* Wizard Steps */}
-        <MobileWizardStep
-          title={stepTitles[currentStep]}
-          description={stepDescriptions[currentStep]}
-          currentStep={currentStep}
-          totalSteps={4}
-          onNext={currentStep < 3 ? handleNext : undefined}
-          onPrevious={currentStep > 0 ? handlePrevious : undefined}
-          nextLabel={currentStep === 3 ? undefined : "Continue"}
-          previousLabel="Back"
-          nextDisabled={uploading}
-        >
-          {renderStepContent()}
-          
-          {/* Submit button on final step */}
-          {currentStep === 3 && (
-            <div className="pt-6 border-t border-border/40 space-y-3">
-              <Button
-                onClick={submitReport}
-                disabled={uploading}
-                className="mobile-button-primary w-full"
-              >
-                {uploading ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Submitting Report...
-                  </>
-                ) : (
-                  <>
-                    <CheckCircle className="h-4 w-4 mr-2" />
-                    Submit Near Miss Report
-                  </>
-                )}
-              </Button>
-              <Button
-                variant="outline"
-                onClick={resetForm}
-                className="w-full"
-                disabled={uploading}
-              >
-                Cancel & Start Over
-              </Button>
-            </div>
-          )}
-        </MobileWizardStep>
+        <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}><DialogContent><DialogHeader><DialogTitle className="flex items-center gap-2 text-foreground"><CheckCircle2 className="h-5 w-5 text-green-500" />Report Submitted</DialogTitle><DialogDescription>Would you like to create a team safety briefing from this incident?</DialogDescription></DialogHeader><DialogFooter className="flex-col sm:flex-row gap-2"><Button variant="outline" onClick={() => setShowSuccessDialog(false)}>Done</Button><Button onClick={generateTeamBriefing} disabled={generatingBriefing} className="bg-primary text-primary-foreground">{generatingBriefing ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Generating...</> : <><Sparkles className="h-4 w-4 mr-2" />Create Team Briefing</>}</Button></DialogFooter></DialogContent></Dialog>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      {/* Statistics Dashboard */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <Card className="border-primary/20 bg-card rounded-lg">
-          <CardContent className="p-3 text-center">
-            <div className="flex items-center justify-center gap-1.5 mb-1">
-              <BarChart3 className="h-4 w-4 text-primary" />
-              <div className="text-lg font-bold text-primary">{reports.length}</div>
-            </div>
-            <div className="text-xs text-muted-foreground">Total Reports</div>
-          </CardContent>
-        </Card>
-        
-        <Card className="border-orange-500/20 bg-card rounded-lg">
-          <CardContent className="p-3 text-center">
-            <div className="flex items-center justify-center gap-1.5 mb-1">
-              <AlertCircle className="h-4 w-4 text-orange-400" />
-              <div className="text-lg font-bold text-orange-400">
-                {reports.filter(r => r.severity === "High" || r.severity === "Critical").length}
-              </div>
-            </div>
-            <div className="text-xs text-muted-foreground">High Risk</div>
-          </CardContent>
-        </Card>
-        
-        <Card className="border-yellow-500/20 bg-card rounded-lg">
-          <CardContent className="p-3 text-center">
-            <div className="flex items-center justify-center gap-1.5 mb-1">
-              <Clock className="h-4 w-4 text-yellow-400" />
-              <div className="text-lg font-bold text-yellow-400">
-                {reports.filter(r => r.status === "Under Review").length}
-              </div>
-            </div>
-            <div className="text-xs text-muted-foreground">Under Review</div>
-          </CardContent>
-        </Card>
-        
-        <Card className="border-green-500/20 bg-card rounded-lg">
-          <CardContent className="p-3 text-center">
-            <div className="flex items-center justify-center gap-1.5 mb-1">
-              <TrendingUp className="h-4 w-4 text-green-400" />
-              <div className="text-lg font-bold text-green-400">
-                {reports.filter(r => r.status === "Closed").length}
-              </div>
-            </div>
-            <div className="text-xs text-muted-foreground">Resolved</div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Header and Controls */}
-      <Card className="mobile-card border-primary/20">
-        <CardHeader className="pb-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="space-y-2">
-              <CardTitle className="mobile-heading text-primary flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">
-                  <AlertTriangle className="h-5 w-5" />
-                </div>
-                Near Miss Reporting
-              </CardTitle>
-              <p className="mobile-text text-muted-foreground">
-                Report potential hazards to improve workplace safety. Help prevent future incidents.
-              </p>
-            </div>
-            <Button 
-              onClick={() => setShowForm(true)} 
-              className="mobile-button-primary shrink-0"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Report Near Miss
-            </Button>
+    <div className="space-y-4">
+      <div className="flex items-center gap-3"><Button variant="ghost" size="icon" onClick={() => { resetForm(); setShowForm(false); }}><ArrowLeft className="h-5 w-5" /></Button><div><h2 className="text-xl font-semibold text-foreground">Report Near Miss</h2><p className="text-sm text-muted-foreground">Fields with * are required</p></div></div>
+      <div className="space-y-2"><Label className="text-sm text-muted-foreground">Quick templates</Label><div className="grid grid-cols-2 gap-2">{QUICK_TEMPLATES.map(t => (<button key={t.id} onClick={() => applyTemplate(t)} className="flex items-center gap-2 p-3 rounded-lg border border-border bg-card hover:bg-muted/50 transition-colors text-left"><t.icon className="h-5 w-5 text-primary" /><span className="text-sm font-medium text-foreground">{t.label}</span></button>))}</div></div>
+      <Card><CardContent className="p-4 space-y-6">
+        <div className="space-y-4"><h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2"><Clock className="h-4 w-4" />When & Where</h3>
+          <div className="grid grid-cols-2 gap-3">
+            <div id="field-incident_date" className="space-y-2"><Label className="text-foreground">Date <span className="text-destructive">*</span></Label><Input type="date" value={formData.incident_date} onChange={(e) => setFormData(prev => ({ ...prev, incident_date: e.target.value }))} className={`h-12 text-base ${errors.incident_date ? 'border-destructive' : ''}`} />{errors.incident_date && <p className="text-xs text-destructive">{errors.incident_date}</p>}</div>
+            <div id="field-incident_time" className="space-y-2"><Label className="text-foreground">Time <span className="text-destructive">*</span></Label><Input type="time" value={formData.incident_time} onChange={(e) => setFormData(prev => ({ ...prev, incident_time: e.target.value }))} className={`h-12 text-base ${errors.incident_time ? 'border-destructive' : ''}`} />{errors.incident_time && <p className="text-xs text-destructive">{errors.incident_time}</p>}</div>
           </div>
-        </CardHeader>
-
-        {/* Search and Filters */}
-        <CardContent className="border-t border-border/40 pt-4">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search reports..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <Select value={filterStatus} onValueChange={setFilterStatus}>
-                <SelectTrigger className="w-32">
-                  <SelectValue placeholder="Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Status</SelectItem>
-                  {statusOptions.map(status => (
-                    <SelectItem key={status} value={status}>{status}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Select value={filterSeverity} onValueChange={setFilterSeverity}>
-                <SelectTrigger className="w-32">
-                  <SelectValue placeholder="Severity" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Severity</SelectItem>
-                  {severityLevels.map(level => (
-                    <SelectItem key={level} value={level}>{level}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Reports List */}
-      <div className="space-y-4">
-        {filteredReports.length === 0 ? (
-          <Card className="mobile-card text-center py-8">
-            <CardContent>
-              <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="mobile-subheading mb-2">No Near Miss Reports</h3>
-              <p className="mobile-text text-muted-foreground mb-4">
-                {searchTerm || filterStatus !== "all" || filterSeverity !== "all" 
-                  ? "No reports match your search criteria" 
-                  : "Start by reporting your first near miss to improve workplace safety"}
-              </p>
-              <Button onClick={() => setShowForm(true)} className="mobile-button-primary">
-                <Plus className="h-4 w-4 mr-2" />
-                Create First Report
-              </Button>
-            </CardContent>
-          </Card>
-        ) : (
-          filteredReports.map((report) => (
-            <Card key={report.id} className="mobile-card border-border/40 hover:border-primary/30 transition-colors">
-              <CardContent className="p-4">
-                <div className="space-y-4">
-                  {/* Header */}
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Badge variant="outline" className={`${getSeverityColor(report.severity)} text-white border-0`}>
-                          {report.severity}
-                        </Badge>
-                        <Badge variant="outline" className={`${getStatusColor(report.status)} text-white border-0`}>
-                          {report.status}
-                        </Badge>
-                      </div>
-                      <h3 className="font-medium text-sm truncate">{report.category}</h3>
-                      <p className="text-xs text-muted-foreground">{report.location} • {report.incident_date}</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {report.photos_attached?.length > 0 && (
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Camera className="h-3 w-3" />
-                          {report.photos_attached.length}
-                        </div>
-                      )}
-                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-sm text-muted-foreground line-clamp-2">
-                    {report.description}
-                  </p>
-
-                  {/* Footer */}
-                  <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t border-border/40">
-                    <span>Reported by {report.reporter_name}</span>
-                    <span>{new Date(report.created_at).toLocaleDateString()}</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))
-        )}
-      </div>
-
-      {/* Success Dialog */}
-      {submittedReport && (
-        <>
-          <NearMissSuccessDialog
-            open={showSuccessDialog}
-            onClose={() => setShowSuccessDialog(false)}
-            onCreateBriefing={() => setShowBriefingDialog(true)}
-            onViewReport={() => {
-              setShowForm(false);
-              // Report is already in the list, just close dialog
-            }}
-            reportId={submittedReport.id}
-          />
-
-          <NearMissToBriefingDialog
-            open={showBriefingDialog}
-            onClose={() => setShowBriefingDialog(false)}
-            nearMissReport={submittedReport}
-          />
-        </>
-      )}
+          <div id="field-location" className="space-y-2"><Label className="text-foreground">Location <span className="text-destructive">*</span></Label><Input placeholder="e.g. 123 High Street, London" value={formData.location} onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))} className={`h-12 text-base ${errors.location ? 'border-destructive' : ''}`} />{errors.location && <p className="text-xs text-destructive">{errors.location}</p>}</div>
+        </div>
+        <div className="space-y-4 pt-4 border-t border-border"><h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2"><AlertTriangle className="h-4 w-4" />What Happened</h3>
+          <div id="field-category" className="space-y-2"><Label className="text-foreground">Category <span className="text-destructive">*</span></Label><Select value={formData.category} onValueChange={(v) => setFormData(prev => ({ ...prev, category: v }))}><SelectTrigger className={`h-12 text-base ${errors.category ? 'border-destructive' : ''}`}><SelectValue placeholder="Select hazard type" /></SelectTrigger><SelectContent>{CATEGORIES.map(c => <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>)}</SelectContent></Select>{errors.category && <p className="text-xs text-destructive">{errors.category}</p>}</div>
+          <div id="field-severity" className="space-y-2"><Label className="text-foreground">Severity <span className="text-destructive">*</span></Label><div className="grid grid-cols-2 gap-2">{SEVERITIES.map(s => (<button key={s.value} type="button" onClick={() => setFormData(prev => ({ ...prev, severity: s.value }))} className={`p-3 rounded-lg border text-left transition-all ${formData.severity === s.value ? `${s.colour} border-2` : 'border-border bg-card hover:bg-muted/50'}`}><span className="font-medium text-sm text-foreground">{s.label}</span><p className="text-xs text-muted-foreground mt-0.5">{s.description}</p></button>))}</div>{errors.severity && <p className="text-xs text-destructive">{errors.severity}</p>}</div>
+          <div id="field-description" className="space-y-2"><Label className="text-foreground">Description <span className="text-destructive">*</span></Label><Textarea placeholder="Describe what happened..." value={formData.description} onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))} className={`min-h-[120px] text-base resize-none ${errors.description ? 'border-destructive' : ''}`} /><div className="flex justify-between">{errors.description ? <p className="text-xs text-destructive">{errors.description}</p> : <span />}<span className="text-xs text-muted-foreground">{formData.description.length} chars</span></div></div>
+        </div>
+        <div className="space-y-4 pt-4 border-t border-border"><h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2"><Shield className="h-4 w-4" />Actions (Optional)</h3>
+          <div className="space-y-2"><Label className="text-foreground">Potential Consequences</Label><Textarea placeholder="What could have happened?" value={formData.potential_consequences} onChange={(e) => setFormData(prev => ({ ...prev, potential_consequences: e.target.value }))} className="min-h-[80px] text-base resize-none" /></div>
+          <div className="space-y-2"><Label className="text-foreground">Immediate Actions</Label><Textarea placeholder="What did you do?" value={formData.immediate_actions} onChange={(e) => setFormData(prev => ({ ...prev, immediate_actions: e.target.value }))} className="min-h-[80px] text-base resize-none" /></div>
+          <div className="space-y-2"><Label className="text-foreground">Preventive Measures</Label><Textarea placeholder="How to prevent this?" value={formData.preventive_measures} onChange={(e) => setFormData(prev => ({ ...prev, preventive_measures: e.target.value }))} className="min-h-[80px] text-base resize-none" /></div>
+        </div>
+        <div className="space-y-4 pt-4 border-t border-border"><h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2"><Camera className="h-4 w-4" />Photos (Optional)</h3>
+          <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handlePhotoSelect} className="hidden" />
+          {photoPreviewUrls.length > 0 && <div className="grid grid-cols-3 gap-2">{photoPreviewUrls.map((url, i) => (<div key={i} className="relative aspect-square rounded-lg overflow-hidden bg-muted"><img src={url} alt="" className="w-full h-full object-cover" /><button onClick={() => removePhoto(i)} className="absolute top-1 right-1 p-1 rounded-full bg-background/80"><X className="h-4 w-4" /></button></div>))}</div>}
+          {photos.length < 5 && <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()} className="w-full h-12"><Camera className="h-4 w-4 mr-2" />Add Photo ({photos.length}/5)</Button>}
+        </div>
+        <div className="space-y-2 pt-4 border-t border-border"><Label className="text-foreground">Your Name</Label><Input placeholder="Optional" value={formData.reporter_name} onChange={(e) => setFormData(prev => ({ ...prev, reporter_name: e.target.value }))} className="h-12 text-base" /></div>
+      </CardContent></Card>
+      <div className="sticky bottom-0 bg-background/95 backdrop-blur-sm py-4 -mx-4 px-4 border-t border-border"><Button onClick={submitReport} disabled={isSubmitting} className="w-full h-14 text-base font-medium bg-primary text-primary-foreground">{isSubmitting ? <><Loader2 className="h-5 w-5 mr-2 animate-spin" />Submitting...</> : <><CheckCircle2 className="h-5 w-5 mr-2" />Submit Report</>}</Button></div>
     </div>
   );
 };
-
-export default NearMissReporting;
