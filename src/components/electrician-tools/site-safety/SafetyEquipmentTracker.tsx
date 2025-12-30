@@ -9,11 +9,10 @@ import { useSafetyEquipment, SafetyEquipment } from "@/hooks/useSafetyEquipment"
 import { EquipmentCard } from "./equipment/EquipmentCard";
 import { AddEquipmentForm } from "./equipment/AddEquipmentForm";
 import { QuickTemplates } from "./equipment/QuickTemplates";
-import { toast } from "sonner";
 
 export const SafetyEquipmentTracker: React.FC = () => {
   const navigate = useNavigate();
-  const { equipment, loading, addEquipment, updateEquipment, deleteEquipment } = useSafetyEquipment();
+  const { equipment, isLoading, stats, addEquipment, updateEquipment, deleteEquipment, markInspected, markCalibrated } = useSafetyEquipment();
   
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
@@ -23,13 +22,6 @@ export const SafetyEquipmentTracker: React.FC = () => {
   const [editingEquipment, setEditingEquipment] = useState<SafetyEquipment | null>(null);
   const [showFilters, setShowFilters] = useState(false);
 
-  const stats = {
-    total: equipment.length,
-    good: equipment.filter(e => e.status === 'good').length,
-    attention: equipment.filter(e => e.status === 'attention').length,
-    overdue: equipment.filter(e => e.status === 'overdue').length,
-  };
-
   const filteredEquipment = equipment.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          item.location?.toLowerCase().includes(searchQuery.toLowerCase());
@@ -38,35 +30,30 @@ export const SafetyEquipmentTracker: React.FC = () => {
     return matchesSearch && matchesStatus && matchesCategory;
   });
 
-  const handleAddEquipment = async (data: Partial<SafetyEquipment>) => {
-    await addEquipment(data);
+  const handleAddEquipment = (data: Partial<SafetyEquipment>) => {
+    addEquipment.mutate(data as any);
     setShowAddForm(false);
     setShowQuickTemplates(false);
-    toast.success("Equipment added");
   };
 
-  const handleUpdateEquipment = async (data: Partial<SafetyEquipment>) => {
+  const handleUpdateEquipment = (data: Partial<SafetyEquipment>) => {
     if (editingEquipment) {
-      await updateEquipment(editingEquipment.id, data);
+      updateEquipment.mutate({ id: editingEquipment.id, updates: data });
       setEditingEquipment(null);
       setShowAddForm(false);
-      toast.success("Equipment updated");
     }
   };
 
-  const handleDeleteEquipment = async (id: string) => {
-    await deleteEquipment(id);
-    toast.success("Equipment deleted");
+  const handleDeleteEquipment = (id: string) => {
+    deleteEquipment.mutate(id);
   };
 
-  const handleMarkInspected = async (item: SafetyEquipment) => {
-    await updateEquipment(item.id, { last_inspection_date: new Date().toISOString().split('T')[0], status: 'good' });
-    toast.success("Marked as inspected");
+  const handleMarkInspected = (item: SafetyEquipment) => {
+    markInspected.mutate(item.id);
   };
 
-  const handleMarkCalibrated = async (item: SafetyEquipment) => {
-    await updateEquipment(item.id, { last_calibration_date: new Date().toISOString().split('T')[0], status: 'good' });
-    toast.success("Marked as calibrated");
+  const handleMarkCalibrated = (item: SafetyEquipment) => {
+    markCalibrated.mutate(item.id);
   };
 
   const categories = [...new Set(equipment.map(e => e.category))];
@@ -96,7 +83,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
         <div className="grid grid-cols-2 gap-3">
           <Card className="bg-card border-border/50"><CardContent className="p-4"><div className="flex items-center gap-3"><div className="h-10 w-10 rounded-lg bg-primary/20 flex items-center justify-center"><Shield className="h-5 w-5 text-primary" /></div><div><p className="text-2xl font-bold text-foreground">{stats.total}</p><p className="text-xs text-foreground/70">Total</p></div></div></CardContent></Card>
           <Card className="bg-card border-border/50"><CardContent className="p-4"><div className="flex items-center gap-3"><div className="h-10 w-10 rounded-lg bg-green-500/20 flex items-center justify-center"><CheckCircle className="h-5 w-5 text-green-500" /></div><div><p className="text-2xl font-bold text-foreground">{stats.good}</p><p className="text-xs text-foreground/70">Good</p></div></div></CardContent></Card>
-          <Card className="bg-card border-border/50"><CardContent className="p-4"><div className="flex items-center gap-3"><div className="h-10 w-10 rounded-lg bg-yellow-500/20 flex items-center justify-center"><AlertTriangle className="h-5 w-5 text-yellow-500" /></div><div><p className="text-2xl font-bold text-foreground">{stats.attention}</p><p className="text-xs text-foreground/70">Attention</p></div></div></CardContent></Card>
+          <Card className="bg-card border-border/50"><CardContent className="p-4"><div className="flex items-center gap-3"><div className="h-10 w-10 rounded-lg bg-yellow-500/20 flex items-center justify-center"><AlertTriangle className="h-5 w-5 text-yellow-500" /></div><div><p className="text-2xl font-bold text-foreground">{stats.needsAttention}</p><p className="text-xs text-foreground/70">Attention</p></div></div></CardContent></Card>
           <Card className="bg-card border-border/50"><CardContent className="p-4"><div className="flex items-center gap-3"><div className="h-10 w-10 rounded-lg bg-red-500/20 flex items-center justify-center"><XCircle className="h-5 w-5 text-red-500" /></div><div><p className="text-2xl font-bold text-foreground">{stats.overdue}</p><p className="text-xs text-foreground/70">Overdue</p></div></div></CardContent></Card>
         </div>
 
@@ -131,14 +118,14 @@ export const SafetyEquipmentTracker: React.FC = () => {
           </div>
           {showFilters && (
             <div className="grid grid-cols-2 gap-3 animate-fade-in">
-              <Select value={statusFilter} onValueChange={setStatusFilter}><SelectTrigger className="h-14 bg-card border-border/50 text-foreground text-base"><SelectValue placeholder="Status" /></SelectTrigger><SelectContent><SelectItem value="all">All Status</SelectItem><SelectItem value="good">Good</SelectItem><SelectItem value="attention">Attention</SelectItem><SelectItem value="overdue">Overdue</SelectItem></SelectContent></Select>
+              <Select value={statusFilter} onValueChange={setStatusFilter}><SelectTrigger className="h-14 bg-card border-border/50 text-foreground text-base"><SelectValue placeholder="Status" /></SelectTrigger><SelectContent><SelectItem value="all">All Status</SelectItem><SelectItem value="good">Good</SelectItem><SelectItem value="needs_attention">Needs Attention</SelectItem><SelectItem value="overdue">Overdue</SelectItem><SelectItem value="out_of_service">Out of Service</SelectItem></SelectContent></Select>
               <Select value={categoryFilter} onValueChange={setCategoryFilter}><SelectTrigger className="h-14 bg-card border-border/50 text-foreground text-base"><SelectValue placeholder="Category" /></SelectTrigger><SelectContent><SelectItem value="all">All</SelectItem>{categories.map(cat => <SelectItem key={cat} value={cat}>{cat}</SelectItem>)}</SelectContent></Select>
             </div>
           )}
         </div>
 
         <div className="space-y-3">
-          {loading ? (
+          {isLoading ? (
             <div className="flex flex-col items-center py-12 gap-3"><div className="h-10 w-10 animate-spin rounded-full border-4 border-elec-yellow border-t-transparent" /><p className="text-foreground/70">Loading...</p></div>
           ) : filteredEquipment.length === 0 ? (
             <Card className="bg-card border-border/50"><CardContent className="py-12 text-center"><div className="h-16 w-16 mx-auto rounded-2xl bg-elec-yellow/20 flex items-center justify-center mb-4"><Package className="h-8 w-8 text-elec-yellow" /></div><h3 className="text-lg font-semibold text-foreground mb-2">No Equipment</h3><p className="text-foreground/70 mb-6">{searchQuery ? "Try a different search" : "Add your first equipment"}</p>{!searchQuery && <MobileButton variant="elec" onClick={() => setShowAddForm(true)} icon={<Plus className="h-5 w-5" />}>Add Equipment</MobileButton>}</CardContent></Card>
@@ -150,3 +137,5 @@ export const SafetyEquipmentTracker: React.FC = () => {
     </div>
   );
 };
+
+export default SafetyEquipmentTracker;
