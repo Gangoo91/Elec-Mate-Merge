@@ -159,7 +159,8 @@ export const NearMissReporting: React.FC = () => {
         user_id: user.id, category: formData.category, severity: formData.severity, description: formData.description,
         location: formData.location, incident_date: formData.incident_date, incident_time: formData.incident_time,
         reporter_name: formData.reporter_name || 'Anonymous', potential_consequences: formData.potential_consequences || null,
-        immediate_actions: formData.immediate_actions || null, preventive_measures: formData.preventive_measures || null
+        immediate_actions: formData.immediate_actions || null, preventive_measures: formData.preventive_measures || null,
+        status: 'open', follow_up_required: formData.severity === 'high' || formData.severity === 'critical'
       }).select().single();
       if (error) throw error;
       setLastSubmittedReport(data as NearMissReport);
