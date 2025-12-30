@@ -1,10 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
-  ArrowLeft, MapPin, Clock, AlertTriangle, Shield, 
-  Zap, Flame, HardHat, Users, FileText, Calendar
+  ArrowLeft, MapPin, AlertTriangle, Shield, 
+  Zap, Flame, HardHat, Users, FileText, Calendar, Sparkles
 } from "lucide-react";
 
 interface NearMissReport {
@@ -57,6 +58,7 @@ const SEVERITY_BORDER: Record<string, string> = {
 };
 
 export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ report, onBack }) => {
+  const navigate = useNavigate();
   const category = CATEGORIES[report.category] || CATEGORIES['other'];
   const severity = SEVERITIES[report.severity] || SEVERITIES['low'];
   const CategoryIcon = category.icon;
@@ -78,8 +80,34 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
     return `${hour12}:${minutes} ${ampm}`;
   };
 
+  const handleCreateTeamBriefing = () => {
+    // Package near miss data into sessionStorage (matching Cost Engineer → Quote Hub pattern)
+    const sessionId = `near-miss-${Date.now()}`;
+    const nearMissData = {
+      id: report.id,
+      category: report.category,
+      categoryLabel: category.label,
+      severity: report.severity,
+      severityLabel: severity.label,
+      description: report.description,
+      location: report.location,
+      incident_date: report.incident_date,
+      incident_time: report.incident_time,
+      reporter_name: report.reporter_name,
+      potential_consequences: report.potential_consequences,
+      immediate_actions: report.immediate_actions,
+      preventive_measures: report.preventive_measures,
+      photo_urls: report.photo_urls,
+    };
+    
+    sessionStorage.setItem(`nearMissData_${sessionId}`, JSON.stringify(nearMissData));
+    
+    // Navigate to briefings tab with sessionId
+    navigate(`/electrician/site-safety?tab=briefings&nearMissSessionId=${sessionId}`);
+  };
+
   return (
-    <div className="space-y-4 pb-6">
+    <div className="space-y-4 pb-24">
       {/* Header */}
       <div className="flex items-center gap-3">
         <Button 
@@ -118,17 +146,17 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
           </div>
 
           {/* Location & Time */}
-          <div className="grid grid-cols-1 gap-3 pt-2 border-t border-border">
+          <div className="space-y-3 pt-2 border-t border-border">
             <div className="flex items-start gap-3">
               <MapPin className="h-5 w-5 text-muted-foreground mt-0.5 shrink-0" />
-              <div>
+              <div className="flex-1">
                 <p className="text-xs text-muted-foreground uppercase tracking-wide">Location</p>
                 <p className="text-foreground">{report.location}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <Calendar className="h-5 w-5 text-muted-foreground mt-0.5 shrink-0" />
-              <div>
+              <div className="flex-1">
                 <p className="text-xs text-muted-foreground uppercase tracking-wide">Date & Time</p>
                 <p className="text-foreground">
                   {formatDate(report.incident_date)} at {formatTime(report.incident_time)}
@@ -137,7 +165,7 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
             </div>
             <div className="flex items-start gap-3">
               <Users className="h-5 w-5 text-muted-foreground mt-0.5 shrink-0" />
-              <div>
+              <div className="flex-1">
                 <p className="text-xs text-muted-foreground uppercase tracking-wide">Reported By</p>
                 <p className="text-foreground">{report.reporter_name || 'Anonymous'}</p>
               </div>
@@ -155,38 +183,40 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
               <h3 className="font-medium text-foreground">Actions & Analysis</h3>
             </div>
 
-            {report.potential_consequences && (
-              <div className="space-y-1">
-                <p className="text-xs text-muted-foreground uppercase tracking-wide">
-                  Potential Consequences
-                </p>
-                <p className="text-foreground text-sm leading-relaxed">
-                  {report.potential_consequences}
-                </p>
-              </div>
-            )}
+            <div className="space-y-4">
+              {report.potential_consequences && (
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">
+                    Potential Consequences
+                  </p>
+                  <p className="text-foreground text-sm leading-relaxed">
+                    {report.potential_consequences}
+                  </p>
+                </div>
+              )}
 
-            {report.immediate_actions && (
-              <div className="space-y-1">
-                <p className="text-xs text-muted-foreground uppercase tracking-wide">
-                  Immediate Actions Taken
-                </p>
-                <p className="text-foreground text-sm leading-relaxed">
-                  {report.immediate_actions}
-                </p>
-              </div>
-            )}
+              {report.immediate_actions && (
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">
+                    Immediate Actions Taken
+                  </p>
+                  <p className="text-foreground text-sm leading-relaxed">
+                    {report.immediate_actions}
+                  </p>
+                </div>
+              )}
 
-            {report.preventive_measures && (
-              <div className="space-y-1">
-                <p className="text-xs text-muted-foreground uppercase tracking-wide">
-                  Preventive Measures
-                </p>
-                <p className="text-foreground text-sm leading-relaxed">
-                  {report.preventive_measures}
-                </p>
-              </div>
-            )}
+              {report.preventive_measures && (
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">
+                    Preventive Measures
+                  </p>
+                  <p className="text-foreground text-sm leading-relaxed">
+                    {report.preventive_measures}
+                  </p>
+                </div>
+              )}
+            </div>
           </CardContent>
         </Card>
       )}
@@ -210,6 +240,17 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
           </CardContent>
         </Card>
       )}
+
+      {/* Fixed Action Button */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur-sm border-t border-border">
+        <Button 
+          onClick={handleCreateTeamBriefing}
+          className="w-full h-14 text-base font-medium bg-primary text-primary-foreground"
+        >
+          <Sparkles className="h-5 w-5 mr-2" />
+          Create Team Briefing
+        </Button>
+      </div>
     </div>
   );
 };

@@ -32,59 +32,107 @@ const HAZARD_CATEGORIES = [
   { id: 'restricted-access', label: 'Restricted Access', category: 'Access' },
 ];
 
+interface NearMissData {
+  id: string;
+  category: string;
+  categoryLabel: string;
+  severity: string;
+  severityLabel: string;
+  description: string;
+  location: string;
+  incident_date: string;
+  incident_time: string;
+  reporter_name: string;
+  potential_consequences?: string;
+  immediate_actions?: string;
+  preventive_measures?: string;
+  photo_urls?: string[];
+}
+
 interface BriefingFormWizardProps {
   initialData?: any;
+  nearMissData?: NearMissData | null;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: BriefingFormWizardProps) => {
+export const BriefingFormWizard = ({ initialData, nearMissData, onClose, onSuccess }: BriefingFormWizardProps) => {
   const { toast } = useToast();
-  const [step, setStep] = useState(0); // Start at 0 for template selection
+  const [step, setStep] = useState(nearMissData ? 1 : 0); // Skip template if from near miss
   const [aiGenerating, setAiGenerating] = useState(false);
   const [aiContent, setAiContent] = useState<any>(null);
   const [uploadingPhotos, setUploadingPhotos] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
-  const [showTemplateSelector, setShowTemplateSelector] = useState(!initialData);
+  const [showTemplateSelector, setShowTemplateSelector] = useState(!initialData && !nearMissData);
   const [showRestoreDialog, setShowRestoreDialog] = useState(false);
   const [showJsonData, setShowJsonData] = useState(false);
 
-  // Form data - pre-populate if editing
-  const [formData, setFormData] = useState({
-    // Step 1: Briefing Type & Basic Info
-    briefingType: initialData?.briefing_type || "site-work",
-    briefingTitle: initialData?.briefing_name || initialData?.title || "",
-    location: initialData?.location || "",
-    contractorCompany: initialData?.contractor_company || "",
-    conductorName: initialData?.conductor_name || "",
-    briefingDate: initialData?.briefing_date || new Date().toISOString().split('T')[0],
-    briefingTime: initialData?.briefing_time || "09:00",
+  // Build initial form data - pre-populate from editing OR near miss data
+  const buildInitialFormData = () => {
+    // If we have near miss data, pre-fill from it
+    if (nearMissData) {
+      const severityToRiskLevel: Record<string, string> = {
+        'low': 'low',
+        'medium': 'medium', 
+        'high': 'high',
+        'critical': 'critical'
+      };
+      
+      return {
+        briefingType: "near-miss-review",
+        briefingTitle: `Near Miss Review: ${nearMissData.categoryLabel} - ${nearMissData.location}`,
+        location: nearMissData.location,
+        contractorCompany: "",
+        conductorName: "",
+        briefingDate: new Date().toISOString().split('T')[0],
+        briefingTime: "09:00",
+        briefingContent: nearMissData.description,
+        workScope: `Review of near miss incident: ${nearMissData.description}`,
+        environment: "",
+        teamSize: 4,
+        experienceLevel: "",
+        identifiedHazards: [nearMissData.category],
+        customHazards: nearMissData.potential_consequences || "",
+        riskLevel: severityToRiskLevel[nearMissData.severity] || "medium",
+        specialConsiderations: nearMissData.preventive_measures || "",
+        briefingDescription: "",
+        hazards: "",
+        safetyWarning: "",
+        additionalInfo: nearMissData.immediate_actions || "",
+        photos: (nearMissData.photo_urls || []).map(url => ({ url, caption: 'From near miss report' })),
+        attendees: [] as any[],
+        linkedNearMissId: nearMissData.id,
+      };
+    }
     
-    // Step 2: Content Details
-    briefingContent: initialData?.briefing_content || "",
-    workScope: initialData?.work_scope || "",
-    environment: initialData?.environment || "",
-    teamSize: initialData?.team_size || 4,
-    experienceLevel: initialData?.experience_level || "",
-    
-    // Step 3: Hazards
-    identifiedHazards: initialData?.identified_hazards || [] as string[],
-    customHazards: initialData?.custom_hazards || "",
-    riskLevel: initialData?.risk_level || "medium",
-    specialConsiderations: initialData?.special_considerations || "",
-    
-    // Step 4: AI Generated (will be populated)
-    briefingDescription: initialData?.briefing_description || "",
-    hazards: initialData?.hazards || "",
-    safetyWarning: initialData?.safety_warning || "",
-    additionalInfo: initialData?.notes || "",
-    
-    // Step 5: Photos
-    photos: initialData?.photos || [] as any[],
-    
-    // Step 6: Review & Attendees
-    attendees: initialData?.attendees || [] as any[],
-  });
+    // Otherwise use initialData for editing
+    return {
+      briefingType: initialData?.briefing_type || "site-work",
+      briefingTitle: initialData?.briefing_name || initialData?.title || "",
+      location: initialData?.location || "",
+      contractorCompany: initialData?.contractor_company || "",
+      conductorName: initialData?.conductor_name || "",
+      briefingDate: initialData?.briefing_date || new Date().toISOString().split('T')[0],
+      briefingTime: initialData?.briefing_time || "09:00",
+      briefingContent: initialData?.briefing_content || "",
+      workScope: initialData?.work_scope || "",
+      environment: initialData?.environment || "",
+      teamSize: initialData?.team_size || 4,
+      experienceLevel: initialData?.experience_level || "",
+      identifiedHazards: initialData?.identified_hazards || [] as string[],
+      customHazards: initialData?.custom_hazards || "",
+      riskLevel: initialData?.risk_level || "medium",
+      specialConsiderations: initialData?.special_considerations || "",
+      briefingDescription: initialData?.briefing_description || "",
+      hazards: initialData?.hazards || "",
+      safetyWarning: initialData?.safety_warning || "",
+      additionalInfo: initialData?.notes || "",
+      photos: initialData?.photos || [] as any[],
+      attendees: initialData?.attendees || [] as any[],
+    };
+  };
+
+  const [formData, setFormData] = useState(buildInitialFormData());
 
   // Auto-save hook
   const {
@@ -94,14 +142,14 @@ export const BriefingFormWizard = ({ initialData, onClose, onSuccess }: Briefing
     lastSaved,
     hasUnsavedChanges,
     timeSinceLastSave,
-  } = useBriefingAutoSave(formData, step, !!initialData);
+  } = useBriefingAutoSave(formData, step, !!initialData || !!nearMissData);
 
   const totalSteps = 7; // Including template selection
   const progress = (step / totalSteps) * 100;
 
   // Check for saved data on mount
   useEffect(() => {
-    if (initialData) return; // Don't load auto-save when editing
+    if (initialData || nearMissData) return; // Don't load auto-save when editing or from near miss
     
     const saved = loadSavedData();
     if (saved) {
