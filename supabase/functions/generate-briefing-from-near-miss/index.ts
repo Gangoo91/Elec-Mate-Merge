@@ -17,6 +17,33 @@ serve(async (req) => {
 
     const systemPrompt = `You are a UK electrical safety expert specializing in BS 7671 regulations. Generate comprehensive team briefing content from near miss reports.`;
 
+    // Build witnesses string if present
+    const witnessesInfo = nearMissData.witnesses && Array.isArray(nearMissData.witnesses) && nearMissData.witnesses.length > 0
+      ? `\n**Witnesses:** ${nearMissData.witnesses.map((w: any) => w.name).join(', ')}`
+      : '';
+    
+    // Build environment info
+    const environmentInfo = [];
+    if (nearMissData.weather_conditions) environmentInfo.push(`Weather: ${nearMissData.weather_conditions}`);
+    if (nearMissData.lighting_conditions) environmentInfo.push(`Lighting: ${nearMissData.lighting_conditions}`);
+    const environmentString = environmentInfo.length > 0 ? `\n**Environment:** ${environmentInfo.join(', ')}` : '';
+    
+    // Build equipment info
+    let equipmentString = '';
+    if (nearMissData.equipment_involved) {
+      equipmentString = `\n**Equipment Involved:** ${nearMissData.equipment_involved}`;
+      if (nearMissData.equipment_faulty) {
+        equipmentString += ` (FAULTY${nearMissData.equipment_fault_details ? ': ' + nearMissData.equipment_fault_details : ''})`;
+      }
+    }
+    
+    // Build investigation info
+    const investigationInfo = [];
+    if (nearMissData.supervisor_notified) investigationInfo.push(`Supervisor notified: ${nearMissData.supervisor_name || 'Yes'}`);
+    if (nearMissData.previous_similar_incidents) investigationInfo.push(`Previous similar incidents: ${nearMissData.previous_similar_incidents}`);
+    if (nearMissData.third_party_involved) investigationInfo.push(`Third party involved: ${nearMissData.third_party_details || 'Yes'}`);
+    const investigationString = investigationInfo.length > 0 ? `\n**Investigation Notes:** ${investigationInfo.join('; ')}` : '';
+
     const userPrompt = `
 Create a professional safety briefing based on this near miss incident:
 
@@ -35,7 +62,7 @@ ${nearMissData.potential_consequences || 'Not specified'}
 ${nearMissData.immediate_actions || 'Not specified'}
 
 **Preventive Measures:**
-${nearMissData.preventive_measures || 'Not specified'}
+${nearMissData.preventive_measures || 'Not specified'}${witnessesInfo}${environmentString}${equipmentString}${investigationString}
 
 Generate a structured team briefing that includes:
 1. A clear, engaging briefing title (max 100 chars)

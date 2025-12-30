@@ -6,15 +6,23 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { 
   AlertTriangle, Plus, Camera, X, Zap, Flame, Users, HardHat,
-  Clock, MapPin, Shield, CheckCircle2, Loader2, ArrowLeft, ChevronRight
+  Clock, MapPin, Shield, CheckCircle2, Loader2, ArrowLeft, ChevronRight,
+  ChevronDown, ChevronUp, CloudSun, Wrench, UserCheck, Trash2
 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { NearMissReportDetail } from './NearMissReportDetail';
+
+interface Witness {
+  name: string;
+  contact: string;
+}
 
 interface NearMissReport {
   id: string;
@@ -31,6 +39,17 @@ interface NearMissReport {
   photo_urls?: string[];
   created_at: string;
   user_id: string;
+  witnesses?: Witness[] | unknown;
+  third_party_involved?: boolean;
+  third_party_details?: string;
+  weather_conditions?: string;
+  lighting_conditions?: string;
+  equipment_involved?: string;
+  equipment_faulty?: boolean;
+  equipment_fault_details?: string;
+  supervisor_notified?: boolean;
+  supervisor_name?: string;
+  previous_similar_incidents?: string;
 }
 
 interface FormData {
@@ -44,6 +63,17 @@ interface FormData {
   potential_consequences: string;
   immediate_actions: string;
   preventive_measures: string;
+  witnesses: Witness[];
+  third_party_involved: boolean;
+  third_party_details: string;
+  weather_conditions: string;
+  lighting_conditions: string;
+  equipment_involved: string;
+  equipment_faulty: boolean;
+  equipment_fault_details: string;
+  supervisor_notified: boolean;
+  supervisor_name: string;
+  previous_similar_incidents: string;
 }
 
 const QUICK_TEMPLATES = [
@@ -73,6 +103,24 @@ const SEVERITIES = [
   { value: 'critical', label: 'Critical', description: 'Life-threatening or major incident', colour: 'bg-red-500/20 text-red-400 border-red-500/30', border: 'border-l-red-500' }
 ];
 
+const WEATHER_CONDITIONS = [
+  { value: 'clear', label: 'Clear/Sunny' },
+  { value: 'overcast', label: 'Overcast' },
+  { value: 'rain', label: 'Rain' },
+  { value: 'wind', label: 'High Wind' },
+  { value: 'cold', label: 'Cold/Frost' },
+  { value: 'hot', label: 'Hot' },
+  { value: 'dark', label: 'Dark/Night' }
+];
+
+const LIGHTING_CONDITIONS = [
+  { value: 'good', label: 'Good Natural Light' },
+  { value: 'adequate', label: 'Adequate' },
+  { value: 'poor', label: 'Poor' },
+  { value: 'artificial', label: 'Artificial Only' },
+  { value: 'dark', label: 'Very Dark/No Light' }
+];
+
 export const NearMissReporting: React.FC = () => {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -89,12 +137,28 @@ export const NearMissReporting: React.FC = () => {
   const [lastSubmittedReport, setLastSubmittedReport] = useState<NearMissReport | null>(null);
   const [selectedReport, setSelectedReport] = useState<NearMissReport | null>(null);
   
+  // Collapsible section states
+  const [peopleOpen, setPeopleOpen] = useState(false);
+  const [environmentOpen, setEnvironmentOpen] = useState(false);
+  const [investigationOpen, setInvestigationOpen] = useState(false);
+  
   const now = new Date();
   const [formData, setFormData] = useState<FormData>({
     category: '', severity: '', description: '', location: '',
     incident_date: now.toISOString().split('T')[0],
     incident_time: now.toTimeString().slice(0, 5),
-    reporter_name: '', potential_consequences: '', immediate_actions: '', preventive_measures: ''
+    reporter_name: '', potential_consequences: '', immediate_actions: '', preventive_measures: '',
+    witnesses: [],
+    third_party_involved: false,
+    third_party_details: '',
+    weather_conditions: '',
+    lighting_conditions: '',
+    equipment_involved: '',
+    equipment_faulty: false,
+    equipment_fault_details: '',
+    supervisor_notified: false,
+    supervisor_name: '',
+    previous_similar_incidents: ''
   });
 
   useEffect(() => {
@@ -111,7 +175,7 @@ export const NearMissReporting: React.FC = () => {
       if (!user) return;
       setLoadingReports(true);
       const { data, error } = await supabase.from('near_miss_reports').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(10);
-      if (!error && data) setReports(data as NearMissReport[]);
+      if (!error && data) setReports(data as unknown as NearMissReport[]);
       setLoadingReports(false);
     };
     loadReports();
@@ -119,8 +183,26 @@ export const NearMissReporting: React.FC = () => {
 
   const resetForm = () => {
     const now = new Date();
-    setFormData({ category: '', severity: '', description: '', location: '', incident_date: now.toISOString().split('T')[0], incident_time: now.toTimeString().slice(0, 5), reporter_name: formData.reporter_name, potential_consequences: '', immediate_actions: '', preventive_measures: '' });
+    setFormData({ 
+      category: '', severity: '', description: '', location: '', 
+      incident_date: now.toISOString().split('T')[0], 
+      incident_time: now.toTimeString().slice(0, 5), 
+      reporter_name: formData.reporter_name, 
+      potential_consequences: '', immediate_actions: '', preventive_measures: '',
+      witnesses: [],
+      third_party_involved: false,
+      third_party_details: '',
+      weather_conditions: '',
+      lighting_conditions: '',
+      equipment_involved: '',
+      equipment_faulty: false,
+      equipment_fault_details: '',
+      supervisor_notified: false,
+      supervisor_name: '',
+      previous_similar_incidents: ''
+    });
     setPhotos([]); setPhotoPreviewUrls([]); setErrors({});
+    setPeopleOpen(false); setEnvironmentOpen(false); setInvestigationOpen(false);
   };
 
   const applyTemplate = (template: typeof QUICK_TEMPLATES[0]) => {
@@ -137,6 +219,21 @@ export const NearMissReporting: React.FC = () => {
   };
 
   const removePhoto = (index: number) => { setPhotos(prev => prev.filter((_, i) => i !== index)); setPhotoPreviewUrls(prev => prev.filter((_, i) => i !== index)); };
+
+  const addWitness = () => {
+    setFormData(prev => ({ ...prev, witnesses: [...prev.witnesses, { name: '', contact: '' }] }));
+  };
+
+  const updateWitness = (index: number, field: 'name' | 'contact', value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      witnesses: prev.witnesses.map((w, i) => i === index ? { ...w, [field]: value } : w)
+    }));
+  };
+
+  const removeWitness = (index: number) => {
+    setFormData(prev => ({ ...prev, witnesses: prev.witnesses.filter((_, i) => i !== index) }));
+  };
 
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -156,16 +253,39 @@ export const NearMissReporting: React.FC = () => {
     if (!user) { toast({ title: "Error", description: "You must be logged in", variant: "destructive" }); return; }
     setIsSubmitting(true);
     try {
-      const { data, error } = await supabase.from('near_miss_reports').insert({
-        user_id: user.id, category: formData.category, severity: formData.severity, description: formData.description,
-        location: formData.location, incident_date: formData.incident_date, incident_time: formData.incident_time,
-        reporter_name: formData.reporter_name || 'Anonymous', potential_consequences: formData.potential_consequences || null,
-        immediate_actions: formData.immediate_actions || null, preventive_measures: formData.preventive_measures || null,
-        status: 'open', follow_up_required: formData.severity === 'high' || formData.severity === 'critical'
-      }).select().single();
+      // Filter out empty witnesses
+      const validWitnesses = formData.witnesses.filter(w => w.name.trim());
+      
+      const insertData = {
+        user_id: user.id, 
+        category: formData.category, 
+        severity: formData.severity, 
+        description: formData.description,
+        location: formData.location, 
+        incident_date: formData.incident_date, 
+        incident_time: formData.incident_time,
+        reporter_name: formData.reporter_name || 'Anonymous', 
+        potential_consequences: formData.potential_consequences || null,
+        immediate_actions: formData.immediate_actions || null, 
+        preventive_measures: formData.preventive_measures || null,
+        status: 'open', 
+        follow_up_required: formData.severity === 'high' || formData.severity === 'critical',
+        witnesses: validWitnesses.length > 0 ? JSON.stringify(validWitnesses) : null,
+        third_party_involved: formData.third_party_involved,
+        third_party_details: formData.third_party_details || null,
+        weather_conditions: formData.weather_conditions || null,
+        lighting_conditions: formData.lighting_conditions || null,
+        equipment_involved: formData.equipment_involved || null,
+        equipment_faulty: formData.equipment_faulty,
+        equipment_fault_details: formData.equipment_fault_details || null,
+        supervisor_notified: formData.supervisor_notified,
+        supervisor_name: formData.supervisor_name || null,
+        previous_similar_incidents: formData.previous_similar_incidents || null
+      };
+      const { data, error } = await supabase.from('near_miss_reports').insert(insertData as any).select().single();
       if (error) throw error;
-      setLastSubmittedReport(data as NearMissReport);
-      setReports(prev => [data as NearMissReport, ...prev]);
+      setLastSubmittedReport(data as unknown as NearMissReport);
+      setReports(prev => [data as unknown as NearMissReport, ...prev]);
       resetForm(); setShowForm(false); setShowSuccessDialog(true);
       toast({ title: "Report submitted", description: "Near miss report has been recorded successfully" });
     } catch (error) { console.error('Error:', error); toast({ title: "Error", description: "Failed to submit report", variant: "destructive" }); }
@@ -279,34 +399,271 @@ export const NearMissReporting: React.FC = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-3"><Button variant="ghost" size="icon" onClick={() => { resetForm(); setShowForm(false); }}><ArrowLeft className="h-5 w-5" /></Button><div><h2 className="text-xl font-semibold text-foreground">Report Near Miss</h2><p className="text-sm text-muted-foreground">Fields with * are required</p></div></div>
-      <div className="space-y-2"><Label className="text-sm text-muted-foreground">Quick templates</Label><div className="grid grid-cols-2 gap-2">{QUICK_TEMPLATES.map(t => (<button key={t.id} onClick={() => applyTemplate(t)} className="flex items-center gap-2 p-3 rounded-lg border border-border bg-card hover:bg-muted/50 transition-colors text-left"><t.icon className="h-5 w-5 text-primary" /><span className="text-sm font-medium text-foreground">{t.label}</span></button>))}</div></div>
-      <Card><CardContent className="p-4 space-y-6">
-        <div className="space-y-4"><h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2"><Clock className="h-4 w-4" />When & Where</h3>
-          <div className="grid grid-cols-2 gap-3">
-            <div id="field-incident_date" className="space-y-2"><Label className="text-foreground">Date <span className="text-destructive">*</span></Label><Input type="date" value={formData.incident_date} onChange={(e) => setFormData(prev => ({ ...prev, incident_date: e.target.value }))} className={`h-12 text-base ${errors.incident_date ? 'border-destructive' : ''}`} />{errors.incident_date && <p className="text-xs text-destructive">{errors.incident_date}</p>}</div>
-            <div id="field-incident_time" className="space-y-2"><Label className="text-foreground">Time <span className="text-destructive">*</span></Label><Input type="time" value={formData.incident_time} onChange={(e) => setFormData(prev => ({ ...prev, incident_time: e.target.value }))} className={`h-12 text-base ${errors.incident_time ? 'border-destructive' : ''}`} />{errors.incident_time && <p className="text-xs text-destructive">{errors.incident_time}</p>}</div>
+      <div className="flex items-center gap-3">
+        <Button variant="ghost" size="icon" onClick={() => { resetForm(); setShowForm(false); }}>
+          <ArrowLeft className="h-5 w-5" />
+        </Button>
+        <div>
+          <h2 className="text-xl font-semibold text-foreground">Report Near Miss</h2>
+          <p className="text-sm text-muted-foreground">Fields with * are required</p>
+        </div>
+      </div>
+      
+      <div className="space-y-2">
+        <Label className="text-sm text-muted-foreground">Quick templates</Label>
+        <div className="grid grid-cols-2 gap-2">
+          {QUICK_TEMPLATES.map(t => (
+            <button key={t.id} onClick={() => applyTemplate(t)} className="flex items-center gap-2 p-3 rounded-lg border border-border bg-card hover:bg-muted/50 transition-colors text-left">
+              <t.icon className="h-5 w-5 text-primary" />
+              <span className="text-sm font-medium text-foreground">{t.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+      
+      <Card>
+        <CardContent className="p-4 space-y-6">
+          {/* When & Where Section */}
+          <div className="space-y-4">
+            <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2">
+              <Clock className="h-4 w-4" />When & Where
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div id="field-incident_date" className="space-y-2">
+                <Label className="text-foreground">Date <span className="text-destructive">*</span></Label>
+                <Input type="date" value={formData.incident_date} onChange={(e) => setFormData(prev => ({ ...prev, incident_date: e.target.value }))} className={`h-14 text-base ${errors.incident_date ? 'border-destructive' : ''}`} />
+                {errors.incident_date && <p className="text-xs text-destructive">{errors.incident_date}</p>}
+              </div>
+              <div id="field-incident_time" className="space-y-2">
+                <Label className="text-foreground">Time <span className="text-destructive">*</span></Label>
+                <Input type="time" value={formData.incident_time} onChange={(e) => setFormData(prev => ({ ...prev, incident_time: e.target.value }))} className={`h-14 text-base ${errors.incident_time ? 'border-destructive' : ''}`} />
+                {errors.incident_time && <p className="text-xs text-destructive">{errors.incident_time}</p>}
+              </div>
+            </div>
+            <div id="field-location" className="space-y-2">
+              <Label className="text-foreground">Location <span className="text-destructive">*</span></Label>
+              <Input placeholder="e.g. 123 High Street, London" value={formData.location} onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))} className={`h-14 text-base ${errors.location ? 'border-destructive' : ''}`} />
+              {errors.location && <p className="text-xs text-destructive">{errors.location}</p>}
+            </div>
           </div>
-          <div id="field-location" className="space-y-2"><Label className="text-foreground">Location <span className="text-destructive">*</span></Label><Input placeholder="e.g. 123 High Street, London" value={formData.location} onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))} className={`h-12 text-base ${errors.location ? 'border-destructive' : ''}`} />{errors.location && <p className="text-xs text-destructive">{errors.location}</p>}</div>
-        </div>
-        <div className="space-y-4 pt-4 border-t border-border"><h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2"><AlertTriangle className="h-4 w-4" />What Happened</h3>
-          <div id="field-category" className="space-y-2"><Label className="text-foreground">Category <span className="text-destructive">*</span></Label><Select value={formData.category} onValueChange={(v) => setFormData(prev => ({ ...prev, category: v }))}><SelectTrigger className={`h-12 text-base ${errors.category ? 'border-destructive' : ''}`}><SelectValue placeholder="Select hazard type" /></SelectTrigger><SelectContent>{CATEGORIES.map(c => <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>)}</SelectContent></Select>{errors.category && <p className="text-xs text-destructive">{errors.category}</p>}</div>
-          <div id="field-severity" className="space-y-2"><Label className="text-foreground">Severity <span className="text-destructive">*</span></Label><div className="grid grid-cols-2 gap-2">{SEVERITIES.map(s => (<button key={s.value} type="button" onClick={() => setFormData(prev => ({ ...prev, severity: s.value }))} className={`p-3 rounded-lg border text-left transition-all ${formData.severity === s.value ? `${s.colour} border-2` : 'border-border bg-card hover:bg-muted/50'}`}><span className="font-medium text-sm text-foreground">{s.label}</span><p className="text-xs text-muted-foreground mt-0.5">{s.description}</p></button>))}</div>{errors.severity && <p className="text-xs text-destructive">{errors.severity}</p>}</div>
-          <div id="field-description" className="space-y-2"><Label className="text-foreground">Description <span className="text-destructive">*</span></Label><Textarea placeholder="Describe what happened..." value={formData.description} onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))} className={`min-h-[120px] text-base resize-none ${errors.description ? 'border-destructive' : ''}`} /><div className="flex justify-between">{errors.description ? <p className="text-xs text-destructive">{errors.description}</p> : <span />}<span className="text-xs text-muted-foreground">{formData.description.length} chars</span></div></div>
-        </div>
-        <div className="space-y-4 pt-4 border-t border-border"><h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2"><Shield className="h-4 w-4" />Actions (Optional)</h3>
-          <div className="space-y-2"><Label className="text-foreground">Potential Consequences</Label><Textarea placeholder="What could have happened?" value={formData.potential_consequences} onChange={(e) => setFormData(prev => ({ ...prev, potential_consequences: e.target.value }))} className="min-h-[80px] text-base resize-none" /></div>
-          <div className="space-y-2"><Label className="text-foreground">Immediate Actions</Label><Textarea placeholder="What did you do?" value={formData.immediate_actions} onChange={(e) => setFormData(prev => ({ ...prev, immediate_actions: e.target.value }))} className="min-h-[80px] text-base resize-none" /></div>
-          <div className="space-y-2"><Label className="text-foreground">Preventive Measures</Label><Textarea placeholder="How to prevent this?" value={formData.preventive_measures} onChange={(e) => setFormData(prev => ({ ...prev, preventive_measures: e.target.value }))} className="min-h-[80px] text-base resize-none" /></div>
-        </div>
-        <div className="space-y-4 pt-4 border-t border-border"><h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2"><Camera className="h-4 w-4" />Photos (Optional)</h3>
-          <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handlePhotoSelect} className="hidden" />
-          {photoPreviewUrls.length > 0 && <div className="grid grid-cols-3 gap-2">{photoPreviewUrls.map((url, i) => (<div key={i} className="relative aspect-square rounded-lg overflow-hidden bg-muted"><img src={url} alt="" className="w-full h-full object-cover" /><button onClick={() => removePhoto(i)} className="absolute top-1 right-1 p-1 rounded-full bg-background/80"><X className="h-4 w-4" /></button></div>))}</div>}
-          {photos.length < 5 && <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()} className="w-full h-12"><Camera className="h-4 w-4 mr-2" />Add Photo ({photos.length}/5)</Button>}
-        </div>
-        <div className="space-y-2 pt-4 border-t border-border"><Label className="text-foreground">Your Name</Label><Input placeholder="Optional" value={formData.reporter_name} onChange={(e) => setFormData(prev => ({ ...prev, reporter_name: e.target.value }))} className="h-12 text-base" /></div>
-      </CardContent></Card>
-      <div className="sticky bottom-0 bg-background/95 backdrop-blur-sm py-4 -mx-4 px-4 border-t border-border"><Button onClick={submitReport} disabled={isSubmitting} className="w-full h-14 text-base font-medium bg-primary text-primary-foreground">{isSubmitting ? <><Loader2 className="h-5 w-5 mr-2 animate-spin" />Submitting...</> : <><CheckCircle2 className="h-5 w-5 mr-2" />Submit Report</>}</Button></div>
+
+          {/* What Happened Section */}
+          <div className="space-y-4 pt-4 border-t border-border">
+            <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4" />What Happened
+            </h3>
+            <div id="field-category" className="space-y-2">
+              <Label className="text-foreground">Category <span className="text-destructive">*</span></Label>
+              <Select value={formData.category} onValueChange={(v) => setFormData(prev => ({ ...prev, category: v }))}>
+                <SelectTrigger className={`h-14 text-base ${errors.category ? 'border-destructive' : ''}`}>
+                  <SelectValue placeholder="Select hazard type" />
+                </SelectTrigger>
+                <SelectContent>
+                  {CATEGORIES.map(c => <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>)}
+                </SelectContent>
+              </Select>
+              {errors.category && <p className="text-xs text-destructive">{errors.category}</p>}
+            </div>
+            <div id="field-severity" className="space-y-2">
+              <Label className="text-foreground">Severity <span className="text-destructive">*</span></Label>
+              <div className="grid grid-cols-2 gap-2">
+                {SEVERITIES.map(s => (
+                  <button key={s.value} type="button" onClick={() => setFormData(prev => ({ ...prev, severity: s.value }))} className={`p-3 rounded-lg border text-left transition-all ${formData.severity === s.value ? `${s.colour} border-2` : 'border-border bg-card hover:bg-muted/50'}`}>
+                    <span className="font-medium text-sm text-foreground">{s.label}</span>
+                    <p className="text-xs text-muted-foreground mt-0.5">{s.description}</p>
+                  </button>
+                ))}
+              </div>
+              {errors.severity && <p className="text-xs text-destructive">{errors.severity}</p>}
+            </div>
+            <div id="field-description" className="space-y-2">
+              <Label className="text-foreground">Description <span className="text-destructive">*</span></Label>
+              <Textarea placeholder="Describe what happened..." value={formData.description} onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))} className={`min-h-[120px] text-base resize-none ${errors.description ? 'border-destructive' : ''}`} />
+              <div className="flex justify-between">
+                {errors.description ? <p className="text-xs text-destructive">{errors.description}</p> : <span />}
+                <span className="text-xs text-muted-foreground">{formData.description.length} chars</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Actions (Optional) Section */}
+          <div className="space-y-4 pt-4 border-t border-border">
+            <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2">
+              <Shield className="h-4 w-4" />Actions (Optional)
+            </h3>
+            <div className="space-y-2">
+              <Label className="text-foreground">Potential Consequences</Label>
+              <Textarea placeholder="What could have happened?" value={formData.potential_consequences} onChange={(e) => setFormData(prev => ({ ...prev, potential_consequences: e.target.value }))} className="min-h-[80px] text-base resize-none" />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-foreground">Immediate Actions</Label>
+              <Textarea placeholder="What did you do?" value={formData.immediate_actions} onChange={(e) => setFormData(prev => ({ ...prev, immediate_actions: e.target.value }))} className="min-h-[80px] text-base resize-none" />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-foreground">Preventive Measures</Label>
+              <Textarea placeholder="How to prevent this?" value={formData.preventive_measures} onChange={(e) => setFormData(prev => ({ ...prev, preventive_measures: e.target.value }))} className="min-h-[80px] text-base resize-none" />
+            </div>
+          </div>
+
+          {/* People Involved (Optional) - Collapsible */}
+          <Collapsible open={peopleOpen} onOpenChange={setPeopleOpen} className="pt-4 border-t border-border">
+            <CollapsibleTrigger className="flex items-center justify-between w-full py-2 touch-manipulation">
+              <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2">
+                <Users className="h-4 w-4" />People Involved (Optional)
+              </h3>
+              {peopleOpen ? <ChevronUp className="h-5 w-5 text-muted-foreground" /> : <ChevronDown className="h-5 w-5 text-muted-foreground" />}
+            </CollapsibleTrigger>
+            <CollapsibleContent className="space-y-4 pt-4">
+              {/* Witnesses */}
+              <div className="space-y-3">
+                <Label className="text-foreground">Witnesses</Label>
+                {formData.witnesses.map((witness, index) => (
+                  <div key={index} className="flex gap-2 items-start">
+                    <div className="flex-1 space-y-2">
+                      <Input placeholder="Name" value={witness.name} onChange={(e) => updateWitness(index, 'name', e.target.value)} className="h-14 text-base" />
+                      <Input placeholder="Contact (optional)" value={witness.contact} onChange={(e) => updateWitness(index, 'contact', e.target.value)} className="h-14 text-base" />
+                    </div>
+                    <Button variant="ghost" size="icon" onClick={() => removeWitness(index)} className="h-14 w-14 shrink-0">
+                      <Trash2 className="h-5 w-5 text-muted-foreground" />
+                    </Button>
+                  </div>
+                ))}
+                <Button type="button" variant="outline" onClick={addWitness} className="w-full h-12">
+                  <Plus className="h-4 w-4 mr-2" />Add Witness
+                </Button>
+              </div>
+              
+              {/* Third Party */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <Label className="text-foreground">Third party involved?</Label>
+                  <Switch checked={formData.third_party_involved} onCheckedChange={(checked) => setFormData(prev => ({ ...prev, third_party_involved: checked }))} />
+                </div>
+                {formData.third_party_involved && (
+                  <Textarea placeholder="Details about third party..." value={formData.third_party_details} onChange={(e) => setFormData(prev => ({ ...prev, third_party_details: e.target.value }))} className="min-h-[80px] text-base resize-none" />
+                )}
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* Environment & Equipment (Optional) - Collapsible */}
+          <Collapsible open={environmentOpen} onOpenChange={setEnvironmentOpen} className="pt-4 border-t border-border">
+            <CollapsibleTrigger className="flex items-center justify-between w-full py-2 touch-manipulation">
+              <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2">
+                <CloudSun className="h-4 w-4" />Environment & Equipment (Optional)
+              </h3>
+              {environmentOpen ? <ChevronUp className="h-5 w-5 text-muted-foreground" /> : <ChevronDown className="h-5 w-5 text-muted-foreground" />}
+            </CollapsibleTrigger>
+            <CollapsibleContent className="space-y-4 pt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-2">
+                  <Label className="text-foreground">Weather Conditions</Label>
+                  <Select value={formData.weather_conditions} onValueChange={(v) => setFormData(prev => ({ ...prev, weather_conditions: v }))}>
+                    <SelectTrigger className="h-14 text-base"><SelectValue placeholder="Select weather" /></SelectTrigger>
+                    <SelectContent>
+                      {WEATHER_CONDITIONS.map(w => <SelectItem key={w.value} value={w.value}>{w.label}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-foreground">Lighting Conditions</Label>
+                  <Select value={formData.lighting_conditions} onValueChange={(v) => setFormData(prev => ({ ...prev, lighting_conditions: v }))}>
+                    <SelectTrigger className="h-14 text-base"><SelectValue placeholder="Select lighting" /></SelectTrigger>
+                    <SelectContent>
+                      {LIGHTING_CONDITIONS.map(l => <SelectItem key={l.value} value={l.value}>{l.label}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <Label className="text-foreground">Equipment Involved</Label>
+                <Input placeholder="e.g. Power drill, scaffold, cable" value={formData.equipment_involved} onChange={(e) => setFormData(prev => ({ ...prev, equipment_involved: e.target.value }))} className="h-14 text-base" />
+              </div>
+              
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <Label className="text-foreground">Equipment faulty?</Label>
+                  <Switch checked={formData.equipment_faulty} onCheckedChange={(checked) => setFormData(prev => ({ ...prev, equipment_faulty: checked }))} />
+                </div>
+                {formData.equipment_faulty && (
+                  <Textarea placeholder="Describe the fault..." value={formData.equipment_fault_details} onChange={(e) => setFormData(prev => ({ ...prev, equipment_fault_details: e.target.value }))} className="min-h-[80px] text-base resize-none" />
+                )}
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* Investigation (Optional) - Collapsible */}
+          <Collapsible open={investigationOpen} onOpenChange={setInvestigationOpen} className="pt-4 border-t border-border">
+            <CollapsibleTrigger className="flex items-center justify-between w-full py-2 touch-manipulation">
+              <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2">
+                <UserCheck className="h-4 w-4" />Investigation (Optional)
+              </h3>
+              {investigationOpen ? <ChevronUp className="h-5 w-5 text-muted-foreground" /> : <ChevronDown className="h-5 w-5 text-muted-foreground" />}
+            </CollapsibleTrigger>
+            <CollapsibleContent className="space-y-4 pt-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <Label className="text-foreground">Supervisor notified?</Label>
+                  <Switch checked={formData.supervisor_notified} onCheckedChange={(checked) => setFormData(prev => ({ ...prev, supervisor_notified: checked }))} />
+                </div>
+                {formData.supervisor_notified && (
+                  <Input placeholder="Supervisor name" value={formData.supervisor_name} onChange={(e) => setFormData(prev => ({ ...prev, supervisor_name: e.target.value }))} className="h-14 text-base" />
+                )}
+              </div>
+              
+              <div className="space-y-2">
+                <Label className="text-foreground">Previous similar incidents?</Label>
+                <Select value={formData.previous_similar_incidents} onValueChange={(v) => setFormData(prev => ({ ...prev, previous_similar_incidents: v }))}>
+                  <SelectTrigger className="h-14 text-base"><SelectValue placeholder="Select" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="yes">Yes</SelectItem>
+                    <SelectItem value="no">No</SelectItem>
+                    <SelectItem value="unknown">Unknown</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* Photos Section */}
+          <div className="space-y-4 pt-4 border-t border-border">
+            <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wide flex items-center gap-2">
+              <Camera className="h-4 w-4" />Photos (Optional)
+            </h3>
+            <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handlePhotoSelect} className="hidden" />
+            {photoPreviewUrls.length > 0 && (
+              <div className="grid grid-cols-3 gap-2">
+                {photoPreviewUrls.map((url, i) => (
+                  <div key={i} className="relative aspect-square rounded-lg overflow-hidden bg-muted">
+                    <img src={url} alt="" className="w-full h-full object-cover" />
+                    <button onClick={() => removePhoto(i)} className="absolute top-1 right-1 p-1 rounded-full bg-background/80">
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+            {photos.length < 5 && (
+              <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()} className="w-full h-12">
+                <Camera className="h-4 w-4 mr-2" />Add Photo ({photos.length}/5)
+              </Button>
+            )}
+          </div>
+
+          {/* Reporter Name */}
+          <div className="space-y-2 pt-4 border-t border-border">
+            <Label className="text-foreground">Your Name</Label>
+            <Input placeholder="Optional" value={formData.reporter_name} onChange={(e) => setFormData(prev => ({ ...prev, reporter_name: e.target.value }))} className="h-14 text-base" />
+          </div>
+        </CardContent>
+      </Card>
+      
+      <div className="sticky bottom-0 bg-background/95 backdrop-blur-sm py-4 -mx-4 px-4 border-t border-border">
+        <Button onClick={submitReport} disabled={isSubmitting} className="w-full h-14 text-base font-medium bg-primary text-primary-foreground">
+          {isSubmitting ? <><Loader2 className="h-5 w-5 mr-2 animate-spin" />Submitting...</> : <><CheckCircle2 className="h-5 w-5 mr-2" />Submit Report</>}
+        </Button>
+      </div>
     </div>
   );
 };
