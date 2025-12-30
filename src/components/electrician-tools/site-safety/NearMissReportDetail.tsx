@@ -5,8 +5,14 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { 
   ArrowLeft, MapPin, AlertTriangle, Shield, 
-  Zap, Flame, HardHat, Users, FileText, Calendar, Sparkles
+  Zap, Flame, HardHat, Users, FileText, Calendar, Sparkles,
+  CloudSun, Wrench, UserCheck, Eye
 } from "lucide-react";
+
+interface Witness {
+  name: string;
+  contact: string;
+}
 
 interface NearMissReport {
   id: string;
@@ -23,6 +29,17 @@ interface NearMissReport {
   photo_urls?: string[];
   created_at: string;
   user_id: string;
+  witnesses?: Witness[];
+  third_party_involved?: boolean;
+  third_party_details?: string;
+  weather_conditions?: string;
+  lighting_conditions?: string;
+  equipment_involved?: string;
+  equipment_faulty?: boolean;
+  equipment_fault_details?: string;
+  supervisor_notified?: boolean;
+  supervisor_name?: string;
+  previous_similar_incidents?: string;
 }
 
 interface NearMissReportDetailProps {
@@ -57,6 +74,24 @@ const SEVERITY_BORDER: Record<string, string> = {
   'critical': 'border-l-red-500'
 };
 
+const WEATHER_LABELS: Record<string, string> = {
+  'clear': 'Clear/Sunny',
+  'overcast': 'Overcast',
+  'rain': 'Rain',
+  'wind': 'High Wind',
+  'cold': 'Cold/Frost',
+  'hot': 'Hot',
+  'dark': 'Dark/Night'
+};
+
+const LIGHTING_LABELS: Record<string, string> = {
+  'good': 'Good Natural Light',
+  'adequate': 'Adequate',
+  'poor': 'Poor',
+  'artificial': 'Artificial Only',
+  'dark': 'Very Dark/No Light'
+};
+
 export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ report, onBack }) => {
   const navigate = useNavigate();
   const category = CATEGORIES[report.category] || CATEGORIES['other'];
@@ -81,7 +116,6 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
   };
 
   const handleCreateTeamBriefing = () => {
-    // Package near miss data into sessionStorage (matching Cost Engineer → Quote Hub pattern)
     const sessionId = `near-miss-${Date.now()}`;
     const nearMissData = {
       id: report.id,
@@ -98,13 +132,27 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
       immediate_actions: report.immediate_actions,
       preventive_measures: report.preventive_measures,
       photo_urls: report.photo_urls,
+      witnesses: report.witnesses,
+      third_party_involved: report.third_party_involved,
+      third_party_details: report.third_party_details,
+      weather_conditions: report.weather_conditions,
+      lighting_conditions: report.lighting_conditions,
+      equipment_involved: report.equipment_involved,
+      equipment_faulty: report.equipment_faulty,
+      equipment_fault_details: report.equipment_fault_details,
+      supervisor_notified: report.supervisor_notified,
+      supervisor_name: report.supervisor_name,
+      previous_similar_incidents: report.previous_similar_incidents,
     };
     
     sessionStorage.setItem(`nearMissData_${sessionId}`, JSON.stringify(nearMissData));
-    
-    // Navigate to briefings tab with sessionId
     navigate(`/electrician/site-safety?tab=briefings&nearMissSessionId=${sessionId}`);
   };
+
+  const hasWitnesses = report.witnesses && Array.isArray(report.witnesses) && report.witnesses.length > 0;
+  const hasPeopleInfo = hasWitnesses || report.third_party_involved;
+  const hasEnvironmentInfo = report.weather_conditions || report.lighting_conditions || report.equipment_involved || report.equipment_faulty;
+  const hasInvestigationInfo = report.supervisor_notified || report.previous_similar_incidents;
 
   return (
     <div className="space-y-4 pb-24">
@@ -214,6 +262,125 @@ export const NearMissReportDetail: React.FC<NearMissReportDetailProps> = ({ repo
                   <p className="text-foreground text-sm leading-relaxed">
                     {report.preventive_measures}
                   </p>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* People Involved */}
+      {hasPeopleInfo && (
+        <Card>
+          <CardContent className="p-4 space-y-4">
+            <div className="flex items-center gap-2">
+              <Eye className="h-5 w-5 text-primary" />
+              <h3 className="font-medium text-foreground">People Involved</h3>
+            </div>
+
+            <div className="space-y-4">
+              {hasWitnesses && (
+                <div className="space-y-2">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Witnesses</p>
+                  <div className="space-y-2">
+                    {(report.witnesses as Witness[]).map((witness, index) => (
+                      <div key={index} className="bg-muted/50 rounded-lg p-3">
+                        <p className="text-foreground text-sm font-medium">{witness.name}</p>
+                        {witness.contact && (
+                          <p className="text-muted-foreground text-xs">{witness.contact}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {report.third_party_involved && (
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Third Party Involved</p>
+                  <p className="text-foreground text-sm leading-relaxed">
+                    {report.third_party_details || 'Yes (no details provided)'}
+                  </p>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Environment & Equipment */}
+      {hasEnvironmentInfo && (
+        <Card>
+          <CardContent className="p-4 space-y-4">
+            <div className="flex items-center gap-2">
+              <CloudSun className="h-5 w-5 text-primary" />
+              <h3 className="font-medium text-foreground">Environment & Equipment</h3>
+            </div>
+
+            <div className="space-y-4">
+              {(report.weather_conditions || report.lighting_conditions) && (
+                <div className="grid grid-cols-2 gap-4">
+                  {report.weather_conditions && (
+                    <div className="space-y-1">
+                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Weather</p>
+                      <p className="text-foreground text-sm">{WEATHER_LABELS[report.weather_conditions] || report.weather_conditions}</p>
+                    </div>
+                  )}
+                  {report.lighting_conditions && (
+                    <div className="space-y-1">
+                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Lighting</p>
+                      <p className="text-foreground text-sm">{LIGHTING_LABELS[report.lighting_conditions] || report.lighting_conditions}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {report.equipment_involved && (
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Equipment Involved</p>
+                  <p className="text-foreground text-sm">{report.equipment_involved}</p>
+                </div>
+              )}
+
+              {report.equipment_faulty && (
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Equipment Fault</p>
+                  <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3">
+                    <p className="text-orange-400 text-sm font-medium">Faulty Equipment Reported</p>
+                    {report.equipment_fault_details && (
+                      <p className="text-foreground text-sm mt-1">{report.equipment_fault_details}</p>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Investigation */}
+      {hasInvestigationInfo && (
+        <Card>
+          <CardContent className="p-4 space-y-4">
+            <div className="flex items-center gap-2">
+              <UserCheck className="h-5 w-5 text-primary" />
+              <h3 className="font-medium text-foreground">Investigation</h3>
+            </div>
+
+            <div className="space-y-4">
+              {report.supervisor_notified && (
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Supervisor Notified</p>
+                  <p className="text-foreground text-sm">
+                    Yes{report.supervisor_name ? ` - ${report.supervisor_name}` : ''}
+                  </p>
+                </div>
+              )}
+
+              {report.previous_similar_incidents && (
+                <div className="space-y-1">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wide">Previous Similar Incidents</p>
+                  <p className="text-foreground text-sm capitalize">{report.previous_similar_incidents}</p>
                 </div>
               )}
             </div>

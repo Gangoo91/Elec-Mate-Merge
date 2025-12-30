@@ -4387,20 +4387,31 @@ export type Database = {
           created_at: string
           description: string
           due_date: string | null
+          equipment_fault_details: string | null
+          equipment_faulty: boolean | null
+          equipment_involved: string | null
           follow_up_required: boolean
           id: string
           immediate_actions: string | null
           incident_date: string
           incident_time: string
+          lighting_conditions: string | null
           location: string
           photos_attached: string[] | null
           potential_consequences: string | null
           preventive_measures: string | null
+          previous_similar_incidents: string | null
           reporter_name: string
           severity: string
           status: string
+          supervisor_name: string | null
+          supervisor_notified: boolean | null
+          third_party_details: string | null
+          third_party_involved: boolean | null
           updated_at: string
           user_id: string
+          weather_conditions: string | null
+          witnesses: Json | null
         }
         Insert: {
           assigned_to?: string | null
@@ -4412,20 +4423,31 @@ export type Database = {
           created_at?: string
           description: string
           due_date?: string | null
+          equipment_fault_details?: string | null
+          equipment_faulty?: boolean | null
+          equipment_involved?: string | null
           follow_up_required?: boolean
           id?: string
           immediate_actions?: string | null
           incident_date: string
           incident_time: string
+          lighting_conditions?: string | null
           location: string
           photos_attached?: string[] | null
           potential_consequences?: string | null
           preventive_measures?: string | null
+          previous_similar_incidents?: string | null
           reporter_name: string
           severity: string
           status?: string
+          supervisor_name?: string | null
+          supervisor_notified?: boolean | null
+          third_party_details?: string | null
+          third_party_involved?: boolean | null
           updated_at?: string
           user_id: string
+          weather_conditions?: string | null
+          witnesses?: Json | null
         }
         Update: {
           assigned_to?: string | null
@@ -4437,20 +4459,31 @@ export type Database = {
           created_at?: string
           description?: string
           due_date?: string | null
+          equipment_fault_details?: string | null
+          equipment_faulty?: boolean | null
+          equipment_involved?: string | null
           follow_up_required?: boolean
           id?: string
           immediate_actions?: string | null
           incident_date?: string
           incident_time?: string
+          lighting_conditions?: string | null
           location?: string
           photos_attached?: string[] | null
           potential_consequences?: string | null
           preventive_measures?: string | null
+          previous_similar_incidents?: string | null
           reporter_name?: string
           severity?: string
           status?: string
+          supervisor_name?: string | null
+          supervisor_notified?: boolean | null
+          third_party_details?: string | null
+          third_party_involved?: boolean | null
           updated_at?: string
           user_id?: string
+          weather_conditions?: string | null
+          witnesses?: Json | null
         }
         Relationships: [
           {
