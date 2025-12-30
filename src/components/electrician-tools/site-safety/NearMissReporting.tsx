@@ -104,6 +104,7 @@ export const NearMissReporting: React.FC = () => {
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [lastSubmittedReport, setLastSubmittedReport] = useState<NearMissReport | null>(null);
   const [selectedReport, setSelectedReport] = useState<NearMissReport | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   
   // Collapsible section states
   const [peopleOpen, setPeopleOpen] = useState(false);
@@ -169,11 +170,12 @@ export const NearMissReporting: React.FC = () => {
       supervisor_name: '',
       previous_similar_incidents: ''
     });
-    setPhotos([]); setPhotoPreviewUrls([]); setErrors({});
+    setPhotos([]); setPhotoPreviewUrls([]); setErrors({}); setSelectedTemplate(null);
     setPeopleOpen(false); setEnvironmentOpen(false); setInvestigationOpen(false);
   };
 
   const applyTemplate = (template: typeof QUICK_TEMPLATES[0]) => {
+    setSelectedTemplate(template.id);
     setFormData(prev => ({ ...prev, category: template.category, severity: template.severity, description: template.description }));
     setErrors({});
   };
@@ -381,8 +383,16 @@ export const NearMissReporting: React.FC = () => {
         <Label className="text-sm text-muted-foreground">Quick templates</Label>
         <div className="grid grid-cols-2 gap-2">
           {QUICK_TEMPLATES.map(t => (
-            <button key={t.id} onClick={() => applyTemplate(t)} className="flex items-center gap-2 p-3 rounded-lg border border-border bg-card hover:bg-muted/50 transition-colors text-left">
-              <t.icon className="h-5 w-5 text-primary" />
+            <button 
+              key={t.id} 
+              onClick={() => applyTemplate(t)} 
+              className={`flex items-center gap-2 p-3 rounded-lg border transition-colors text-left ${
+                selectedTemplate === t.id 
+                  ? 'border-primary bg-primary/20 ring-1 ring-primary' 
+                  : 'border-border bg-card hover:bg-muted/50'
+              }`}
+            >
+              <t.icon className={`h-5 w-5 ${selectedTemplate === t.id ? 'text-primary' : 'text-primary'}`} />
               <span className="text-sm font-medium text-foreground">{t.label}</span>
             </button>
           ))}

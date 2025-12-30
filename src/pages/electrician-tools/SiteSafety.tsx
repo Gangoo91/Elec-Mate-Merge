@@ -1,5 +1,6 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,7 +21,15 @@ import { AIRAMSGenerator } from "@/components/electrician-tools/site-safety/ai-r
 import { SavedRAMSLibrary } from "@/components/electrician-tools/site-safety/SavedRAMSLibrary";
 
 const SiteSafety = () => {
+  const [searchParams] = useSearchParams();
   const [activeView, setActiveView] = useState<string | null>(null);
+
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab === 'briefings') {
+      setActiveView('team-briefing');
+    }
+  }, [searchParams]);
 
   const primaryTools = [
     { 
