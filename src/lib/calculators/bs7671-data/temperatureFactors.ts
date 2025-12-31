@@ -9,7 +9,7 @@ export interface TemperatureFactor {
 
 // BS 7671 Table 4B1 - Ambient air temperature rating factors
 export const ambientTemperatureFactors: TemperatureFactor[] = [
-  { ambientTemp: 25, factor70C: 1.06, factor90C: 1.04 },
+  { ambientTemp: 25, factor70C: 1.04, factor90C: 1.02 }, // Fixed from 1.06/1.04
   { ambientTemp: 30, factor70C: 1.00, factor90C: 1.00 },
   { ambientTemp: 35, factor70C: 0.94, factor90C: 0.96 },
   { ambientTemp: 40, factor70C: 0.87, factor90C: 0.91 },
@@ -46,28 +46,48 @@ export const soilTemperatureFactors: SoilTemperatureFactor[] = [
 ];
 
 // BS 7671 Table 4C1 - Grouping factors (Cg)
+// Now with arrangement-specific factors
+export type GroupingArrangement = 
+  | 'bunched'           // Item 1 - Bunched in air, on surface, embedded, enclosed
+  | 'single-layer-wall' // Item 2 - Single layer on wall, floor or in trunking
+  | 'single-layer-tray' // Item 3 - Single layer multicore on perforated tray
+  | 'single-layer-ladder'; // Item 4 - Single layer on ladder/cleats
+
+export interface GroupingFactorEntry {
+  circuitsOrCables: number;
+  bunched: number;
+  singleLayerWall: number;
+  singleLayerTray: number;
+  singleLayerLadder: number;
+}
+
+// BS 7671 Table 4C1 - Complete grouping factors by arrangement
+export const groupingFactorsTable4C1: GroupingFactorEntry[] = [
+  { circuitsOrCables: 1, bunched: 1.00, singleLayerWall: 1.00, singleLayerTray: 1.00, singleLayerLadder: 1.00 },
+  { circuitsOrCables: 2, bunched: 0.80, singleLayerWall: 0.85, singleLayerTray: 0.88, singleLayerLadder: 0.87 },
+  { circuitsOrCables: 3, bunched: 0.70, singleLayerWall: 0.79, singleLayerTray: 0.82, singleLayerLadder: 0.82 },
+  { circuitsOrCables: 4, bunched: 0.65, singleLayerWall: 0.75, singleLayerTray: 0.77, singleLayerLadder: 0.80 },
+  { circuitsOrCables: 5, bunched: 0.60, singleLayerWall: 0.73, singleLayerTray: 0.75, singleLayerLadder: 0.80 },
+  { circuitsOrCables: 6, bunched: 0.57, singleLayerWall: 0.72, singleLayerTray: 0.73, singleLayerLadder: 0.79 },
+  { circuitsOrCables: 7, bunched: 0.54, singleLayerWall: 0.72, singleLayerTray: 0.73, singleLayerLadder: 0.79 },
+  { circuitsOrCables: 8, bunched: 0.52, singleLayerWall: 0.71, singleLayerTray: 0.72, singleLayerLadder: 0.78 },
+  { circuitsOrCables: 9, bunched: 0.50, singleLayerWall: 0.70, singleLayerTray: 0.72, singleLayerLadder: 0.78 },
+  { circuitsOrCables: 12, bunched: 0.45, singleLayerWall: 0.70, singleLayerTray: 0.72, singleLayerLadder: 0.78 },
+  { circuitsOrCables: 16, bunched: 0.41, singleLayerWall: 0.70, singleLayerTray: 0.72, singleLayerLadder: 0.78 },
+  { circuitsOrCables: 20, bunched: 0.38, singleLayerWall: 0.70, singleLayerTray: 0.72, singleLayerLadder: 0.78 },
+];
+
+// Legacy interface for backward compatibility
 export interface GroupingFactor {
   circuitsOrCables: number;
   factor: number;
 }
 
-export const groupingFactors: GroupingFactor[] = [
-  { circuitsOrCables: 1, factor: 1.00 },
-  { circuitsOrCables: 2, factor: 0.80 },
-  { circuitsOrCables: 3, factor: 0.70 },
-  { circuitsOrCables: 4, factor: 0.65 },
-  { circuitsOrCables: 5, factor: 0.60 },
-  { circuitsOrCables: 6, factor: 0.57 },
-  { circuitsOrCables: 7, factor: 0.54 },
-  { circuitsOrCables: 8, factor: 0.52 },
-  { circuitsOrCables: 9, factor: 0.50 },
-  { circuitsOrCables: 10, factor: 0.48 },
-  { circuitsOrCables: 12, factor: 0.45 },
-  { circuitsOrCables: 14, factor: 0.43 },
-  { circuitsOrCables: 16, factor: 0.41 },
-  { circuitsOrCables: 18, factor: 0.39 },
-  { circuitsOrCables: 20, factor: 0.38 },
-];
+// Legacy array for backward compatibility (bunched values)
+export const groupingFactors: GroupingFactor[] = groupingFactorsTable4C1.map(g => ({
+  circuitsOrCables: g.circuitsOrCables,
+  factor: g.bunched
+}));
 
 // Helper functions to get factors by interpolation or lookup
 export const getTemperatureFactor = (
@@ -138,16 +158,30 @@ export const getSoilTemperatureFactor = (
          ratio * (upperPoint[factorKey] - lowerPoint[factorKey]);
 };
 
-export const getGroupingFactor = (circuitsOrCables: number): number => {
+// Enhanced grouping factor function with arrangement support
+export const getGroupingFactor = (
+  circuitsOrCables: number,
+  arrangement: GroupingArrangement = 'bunched'
+): number => {
   if (circuitsOrCables <= 1) return 1.00;
   
-  const exactMatch = groupingFactors.find(g => g.circuitsOrCables === circuitsOrCables);
-  if (exactMatch) return exactMatch.factor;
+  const keyMap: Record<GroupingArrangement, keyof GroupingFactorEntry> = {
+    'bunched': 'bunched',
+    'single-layer-wall': 'singleLayerWall',
+    'single-layer-tray': 'singleLayerTray',
+    'single-layer-ladder': 'singleLayerLadder'
+  };
   
-  // Find the next highest value
-  const higherFactor = groupingFactors
+  const key = keyMap[arrangement];
+  
+  const exactMatch = groupingFactorsTable4C1.find(g => g.circuitsOrCables === circuitsOrCables);
+  if (exactMatch) return exactMatch[key] as number;
+  
+  // Find the next highest value for conservative approach
+  const higherFactor = groupingFactorsTable4C1
     .filter(g => g.circuitsOrCables > circuitsOrCables)
     .sort((a, b) => a.circuitsOrCables - b.circuitsOrCables)[0];
   
-  return higherFactor ? higherFactor.factor : groupingFactors[groupingFactors.length - 1].factor;
+  if (higherFactor) return higherFactor[key] as number;
+  return groupingFactorsTable4C1[groupingFactorsTable4C1.length - 1][key] as number;
 };
