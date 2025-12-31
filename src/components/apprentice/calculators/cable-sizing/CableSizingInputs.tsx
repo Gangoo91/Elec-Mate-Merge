@@ -277,6 +277,21 @@ const CableSizingForm = ({
           placeholder="Select cable type"
           options={cableTypeOptions}
         />
+        
+        {/* Core Selection for SWA/Armoured Cables */}
+        {(uiSelections.cableTypeUI === 'swa' || uiSelections.cableTypeUI === 'swa-single-core') && (
+          <MobileSelectWrapper
+            label="Number of Cores"
+            value={(inputs as any).cores || '2'}
+            onValueChange={(value) => updateInput('cores' as any, value)}
+            placeholder="Select cores"
+            options={[
+              { value: '2', label: '2-core (Single Phase)' },
+              { value: '3', label: '3-core (Three Phase)' },
+              { value: '4', label: '4-core (3P+N)' },
+            ]}
+          />
+        )}
       </div>
 
       {/* Underground-Specific Fields (Conditional) */}
@@ -370,32 +385,34 @@ const CableSizingForm = ({
         </div>
       </div>
 
-      {/* System Parameters */}
-      <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-elec-dark/30">
-        <h4 className="font-medium text-white">System Parameters</h4>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <MobileSelectWrapper
-            label="System Voltage (V)"
-            value={inputs.voltage ?? '230'}
-            onValueChange={(value) => updateInput('voltage', value)}
-            placeholder="Select voltage"
-            options={voltageOptions}
-          />
+      {/* System Parameters - Only show when NOT in load mode (already entered for load calc) */}
+      {inputMode !== 'load' && (
+        <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-elec-dark/30">
+          <h4 className="font-medium text-white">System Parameters</h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <MobileSelectWrapper
+              label="System Voltage (V)"
+              value={inputs.voltage ?? '230'}
+              onValueChange={(value) => updateInput('voltage', value)}
+              placeholder="Select voltage"
+              options={voltageOptions}
+            />
 
-          <MobileInput
-            label="Power Factor"
-            type="text"
-            inputMode="decimal"
-            step="0.01"
-            min="0.1"
-            max="1.0"
-            value={inputs.powerFactor ?? '0.9'}
-            onChange={(e) => updateInput('powerFactor', e.target.value)}
-            placeholder="0.9"
-            hint="Typical: 0.8-0.9"
-          />
+            <MobileInput
+              label="Power Factor"
+              type="text"
+              inputMode="decimal"
+              step="0.01"
+              min="0.1"
+              max="1.0"
+              value={inputs.powerFactor ?? '0.9'}
+              onChange={(e) => updateInput('powerFactor', e.target.value)}
+              placeholder="0.9"
+              hint="Typical: 0.8-0.9"
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Action Buttons */}
       <div className="flex flex-col sm:flex-row gap-4 pt-6">

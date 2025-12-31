@@ -144,6 +144,45 @@ const CableSizingResult = ({
                 </div>
               </div>
             </div>
+
+            {/* Suggested Protective Devices */}
+            <div className="p-4 bg-elec-dark/30 rounded-lg">
+              <h4 className="font-medium text-white mb-3 flex items-center gap-2">
+                Suggested MCB Ratings
+              </h4>
+              <p className="text-sm text-white/70 mb-3">
+                Select an MCB where Ib ≤ In ≤ Iz
+              </p>
+              {(() => {
+                const designCurrent = parseFloat(inputs.current);
+                const cableCapacity = recommendedCable.deratedCapacity;
+                const standardRatings = [6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100, 125];
+                const suitableRatings = standardRatings.filter(rating => 
+                  rating >= designCurrent && rating <= cableCapacity
+                );
+                
+                if (suitableRatings.length === 0) {
+                  return (
+                    <p className="text-sm text-amber-400">
+                      No standard MCB rating fits Ib ({designCurrent}A) ≤ In ≤ Iz ({cableCapacity}A). Consider larger cable.
+                    </p>
+                  );
+                }
+                
+                return (
+                  <div className="flex flex-wrap gap-2">
+                    {suitableRatings.map(rating => (
+                      <span 
+                        key={rating}
+                        className="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-medium border border-green-500/30"
+                      >
+                        {rating}A
+                      </span>
+                    ))}
+                  </div>
+                );
+              })()}
+            </div>
           </div>
 
           {/* Alternative Options */}

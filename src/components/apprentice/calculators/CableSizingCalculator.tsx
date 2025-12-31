@@ -76,6 +76,13 @@ const CableSizingCalculator = () => {
     }
   }, [calculatedCurrent, inputMode, updateInput]);
 
+  // Sync load voltage to main inputs for voltage drop calculation
+  useEffect(() => {
+    if (inputMode === 'load' && loadVoltage) {
+      updateInput('voltage', loadVoltage);
+    }
+  }, [loadVoltage, inputMode, updateInput]);
+
   // Enhanced validation with safety factors
   useEffect(() => {
     if (result.recommendedCable && !result.errors) {

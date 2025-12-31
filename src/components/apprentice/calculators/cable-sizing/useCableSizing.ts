@@ -336,13 +336,23 @@ export const useCableSizing = () => {
       
       // Standard reference method lookup
       if (!tabulatedCapacity) {
-        // Try different reference method keys
-        const methodKeys = [
-          referenceMethod,
-          `${referenceMethod}${cores === '3' || cores === '4' ? '3' : '2'}`, // C2, C3, D2, D3, E2, E3
-          referenceMethod.charAt(0), // Just the letter (A, B, C, D, E, F, G)
-          'C' // Default fallback
-        ];
+        // For SWA cables, try core-specific reference methods FIRST (C2, C3, D2, D3)
+        const isSWA = cableType === 'swa' || cableType === 'swa-single-core';
+        const coresSuffix = cores === '3' || cores === '4' ? '3' : '2';
+        
+        const methodKeys = isSWA 
+          ? [
+              `${referenceMethod}${coresSuffix}`, // C2, C3, D2, D3 first for SWA
+              referenceMethod,
+              `C${coresSuffix}`, // Fallback to C2/C3
+              'C'
+            ]
+          : [
+              referenceMethod,
+              `${referenceMethod}${coresSuffix}`, // C2, C3, D2, D3, E2, E3
+              referenceMethod.charAt(0), // Just the letter (A, B, C, D, E, F, G)
+              'C' // Default fallback
+            ];
         
         for (const key of methodKeys) {
           if (cableData.capacities[key]) {
