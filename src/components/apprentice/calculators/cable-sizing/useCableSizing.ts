@@ -336,7 +336,9 @@ export const useCableSizing = () => {
     const Cg = getGroupingFactor(cableGrouping);
     
     // Ci - Installation method factor
-    const Ci = getInstallationMethodFactor(installationMethod);
+    // For domestic thermal insulation methods (100-103), Ci = 1.0 because the tabulated
+    // values from thermal insulation tables already account for the installation derating
+    const Ci = isDomesticInsulation ? 1.0 : getInstallationMethodFactor(installationMethod);
     
     // Cs - Soil thermal resistivity factor (underground only)
     const burialType = installationMethod === 'buried-duct' ? 'duct' : 'direct';
