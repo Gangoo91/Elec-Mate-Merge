@@ -278,8 +278,8 @@ const CableSizingForm = ({
           options={cableTypeOptions}
         />
         
-        {/* Core Selection for SWA/Armoured Cables */}
-        {(uiSelections.cableTypeUI === 'swa' || uiSelections.cableTypeUI === 'swa-single-core') && (
+        {/* Core Selection for SWA Multicore Cables */}
+        {uiSelections.cableTypeUI === 'swa' && (
           <MobileSelectWrapper
             label="Number of Cores"
             value={(inputs as any).cores || '2'}
@@ -289,6 +289,20 @@ const CableSizingForm = ({
               { value: '2', label: '2-core (Single Phase)' },
               { value: '3', label: '3-core (Three Phase)' },
               { value: '4', label: '4-core (3P+N)' },
+            ]}
+          />
+        )}
+
+        {/* Cable Configuration for SWA Single-Core */}
+        {uiSelections.cableTypeUI === 'swa-single-core' && (
+          <MobileSelectWrapper
+            label="Cable Configuration"
+            value={(inputs as any).cores || '2'}
+            onValueChange={(value) => updateInput('cores' as any, value)}
+            placeholder="Select configuration"
+            options={[
+              { value: '2', label: '2 cables (Single Phase L+N)' },
+              { value: '3', label: '3 cables (Three Phase)' },
             ]}
           />
         )}
@@ -408,7 +422,7 @@ const CableSizingForm = ({
               value={inputs.powerFactor ?? '0.9'}
               onChange={(e) => updateInput('powerFactor', e.target.value)}
               placeholder="0.9"
-              hint="Typical: 0.8-0.9"
+              hint="For voltage drop calculation. Typical: 0.8-0.9"
             />
           </div>
         </div>
