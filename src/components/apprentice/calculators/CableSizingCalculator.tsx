@@ -33,6 +33,14 @@ const deviceRatingOptions = [
   { value: "40", label: "40A" },
   { value: "50", label: "50A" },
   { value: "63", label: "63A" },
+  { value: "80", label: "80A" },
+  { value: "100", label: "100A" },
+  { value: "125", label: "125A" },
+  { value: "160", label: "160A" },
+  { value: "200", label: "200A" },
+  { value: "250", label: "250A" },
+  { value: "315", label: "315A" },
+  { value: "400", label: "400A" },
 ];
 
 const voltageOptions = [
