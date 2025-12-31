@@ -68,6 +68,7 @@ export interface CableSizingResult {
   errors: CableSizingErrors;
   validation?: ValidationResult;
   deratingFactors?: DeratingFactors;
+  nextCableSizeUp?: { size: number; capacity: number };
 }
 
 // Map cable type to BS 7671 table reference
@@ -474,6 +475,11 @@ export const useCableSizing = () => {
     const recommended = compliantCables[0];
     const alternatives = compliantCables.slice(1, 4);
     
+    // Get next cable size up for protective device suggestions
+    const nextCableSizeUp = alternatives.length > 0 
+      ? { size: alternatives[0].size, capacity: alternatives[0].deratedCapacity }
+      : undefined;
+    
     // Professional validation
     const validation = CalculatorValidator.validateCableSizing(
       designCurrent,
@@ -488,7 +494,8 @@ export const useCableSizing = () => {
       alternativeCables: alternatives,
       errors: {},
       validation,
-      deratingFactors
+      deratingFactors,
+      nextCableSizeUp
     });
   };
 
