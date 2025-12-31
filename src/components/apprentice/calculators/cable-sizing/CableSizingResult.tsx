@@ -121,7 +121,7 @@ const CableSizingResult = ({
               <div className="flex items-center justify-between py-3 border-b border-elec-yellow/20">
                 <span className="text-sm text-muted-foreground">Derated Capacity</span>
                 <span className="text-2xl font-bold text-elec-yellow">
-                  {Math.round(recommendedCable.currentRating[inputs.installationType] * derating.temperature * derating.grouping)}A
+                  {Math.round(recommendedCable.currentRating[inputs.installationType] * totalDerating)}A
                 </span>
               </div>
               
@@ -184,7 +184,7 @@ const CableSizingResult = ({
                         <div className="flex justify-between text-sm">
                           <span className="text-muted-foreground">Derated:</span>
                           <span className="font-bold text-white">
-                            {Math.round(cable.currentRating[inputs.installationType] * derating.temperature * derating.grouping)}A
+                            {Math.round(cable.currentRating[inputs.installationType] * totalDerating)}A
                           </span>
                         </div>
                         <div className="flex justify-between text-sm">
@@ -242,10 +242,13 @@ const CableSizingResult = ({
                       Derating Factors
                     </h4>
                     <div className="space-y-1 text-sm text-muted-foreground">
-                      <p>Temperature factor (Ca): <span className="text-white font-mono">{derating.temperature.toFixed(3)}</span></p>
-                      <p>Grouping factor (Cg): <span className="text-white font-mono">{derating.grouping.toFixed(3)}</span></p>
+                      <p>Temperature factor (Ca): <span className="text-white font-mono">{Ca.toFixed(3)}</span> <span className="text-muted-foreground/70">— Table 4B1</span></p>
+                      <p>Grouping factor (Cg): <span className="text-white font-mono">{Cg.toFixed(3)}</span> <span className="text-muted-foreground/70">— Table 4C1</span></p>
+                      <p>Installation factor (Ci): <span className="text-white font-mono">{Ci.toFixed(3)}</span></p>
+                      {Cs !== 1.0 && <p>Soil resistivity (Cs): <span className="text-white font-mono">{Cs.toFixed(3)}</span> <span className="text-muted-foreground/70">— Table 4B3</span></p>}
+                      {Cd !== 1.0 && <p>Depth of laying (Cd): <span className="text-white font-mono">{Cd.toFixed(3)}</span> <span className="text-muted-foreground/70">— Table 4B4</span></p>}
                       <p className="pt-2 border-t border-elec-yellow/10 mt-2">
-                        Overall factor: <span className="text-white font-mono font-bold">{(derating.temperature * derating.grouping).toFixed(3)}</span>
+                        Overall factor: <span className="text-white font-mono font-bold">{totalDerating.toFixed(3)}</span>
                       </p>
                     </div>
                   </div>
@@ -256,12 +259,12 @@ const CableSizingResult = ({
                       Required Tabulated Current (It)
                     </h4>
                     <p className="text-sm text-muted-foreground mb-2">
-                      It = Ib ÷ (Ca × Cg)
+                      It = Ib ÷ (Ca × Cg × Ci{Cs !== 1.0 ? ' × Cs' : ''}{Cd !== 1.0 ? ' × Cd' : ''})
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      It = {inputs.current}A ÷ {(derating.temperature * derating.grouping).toFixed(3)} = 
+                      It = {inputs.current}A ÷ {totalDerating.toFixed(3)} = 
                       <span className="text-elec-yellow font-mono font-bold ml-1">
-                        {(parseFloat(inputs.current) / (derating.temperature * derating.grouping)).toFixed(1)}A
+                        {(parseFloat(inputs.current) / totalDerating).toFixed(1)}A
                       </span>
                     </p>
                   </div>
