@@ -243,32 +243,32 @@ const CableSizingResult = ({
                         <h4 className="font-semibold text-white text-base">Correction Factors</h4>
                         <p className="text-xs text-white/70 mb-2">BS 7671 Appendix 4</p>
                         <div className="space-y-1.5 text-sm">
-                          <div className="flex justify-between">
-                            <span className="text-white">Ca (Temperature):</span>
-                            <span className="text-white font-mono">{Ca.toFixed(3)} <span className="text-white/60 text-xs">Table 4B1</span></span>
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-white whitespace-nowrap">Ca (Temp):</span>
+                            <span className="text-white font-mono whitespace-nowrap">{Ca.toFixed(3)} <span className="text-white/60 text-xs hidden sm:inline">4B1</span></span>
                           </div>
-                          <div className="flex justify-between">
-                            <span className="text-white">Cg (Grouping):</span>
-                            <span className="text-white font-mono">{Cg.toFixed(3)} <span className="text-white/60 text-xs">Table 4C1</span></span>
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-white whitespace-nowrap">Cg (Group):</span>
+                            <span className="text-white font-mono whitespace-nowrap">{Cg.toFixed(3)} <span className="text-white/60 text-xs hidden sm:inline">4C1</span></span>
                           </div>
-                          <div className="flex justify-between">
-                            <span className="text-white">Ci (Installation):</span>
-                            <span className="text-white font-mono">{Ci.toFixed(3)}</span>
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-white whitespace-nowrap">Ci (Install):</span>
+                            <span className="text-white font-mono whitespace-nowrap">{Ci.toFixed(3)}</span>
                           </div>
                           {Cs !== 1.0 && (
-                            <div className="flex justify-between">
-                              <span className="text-white">Cs (Soil):</span>
-                              <span className="text-white font-mono">{Cs.toFixed(3)} <span className="text-white/60 text-xs">Table 4B3</span></span>
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="text-white whitespace-nowrap">Cs (Soil):</span>
+                              <span className="text-white font-mono whitespace-nowrap">{Cs.toFixed(3)} <span className="text-white/60 text-xs hidden sm:inline">4B3</span></span>
                             </div>
                           )}
                           {Cd !== 1.0 && (
-                            <div className="flex justify-between">
-                              <span className="text-white">Cd (Depth):</span>
-                              <span className="text-white font-mono">{Cd.toFixed(3)} <span className="text-white/60 text-xs">Table 4B4</span></span>
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="text-white whitespace-nowrap">Cd (Depth):</span>
+                              <span className="text-white font-mono whitespace-nowrap">{Cd.toFixed(3)} <span className="text-white/60 text-xs hidden sm:inline">4B4</span></span>
                             </div>
                           )}
-                          <div className="flex justify-between pt-2 border-t border-elec-yellow/10 mt-2">
-                            <span className="text-white font-medium">Overall:</span>
+                          <div className="flex items-center justify-between gap-2 pt-2 border-t border-elec-yellow/10 mt-2">
+                            <span className="text-white font-medium whitespace-nowrap">Overall:</span>
                             <span className="text-elec-yellow font-mono font-bold">{totalDerating.toFixed(3)}</span>
                           </div>
                         </div>
