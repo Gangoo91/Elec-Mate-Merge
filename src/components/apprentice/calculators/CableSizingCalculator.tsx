@@ -118,7 +118,7 @@ const CableSizingCalculator = () => {
     
     const Ib = parseFloat(currentToUse); // Design current (or main current as fallback)
     const In = parseFloat(deviceRating);  // Device rating  
-    const Iz = result.recommendedCable.currentRating[inputs.installationType] || 0; // Cable capacity
+    const Iz = result.recommendedCable.deratedCapacity || result.recommendedCable.tabulatedCapacity || 0; // Cable capacity
     
     const ibInCompliant = Ib <= In;
     const inIzCompliant = In <= Iz;
@@ -146,7 +146,7 @@ const CableSizingCalculator = () => {
       
       const safetyValidation = SimpleValidator.validateCableSizing(
         current,
-        result.recommendedCable.size,
+        result.recommendedCable.sizeLabel,
         inputs.installationType,
         ambientTemp,
         cableGrouping,
@@ -168,11 +168,9 @@ const CableSizingCalculator = () => {
       });
       
       setCalculationResults({
-        recommendedCable: result.recommendedCable.size,
-        currentRating: result.recommendedCable.currentRating[inputs.installationType],
-        deratedCurrentRating: result.recommendedCable.currentRating[inputs.installationType] * 
-                             safetyValidation.safetyFactors.temperatureDerating * 
-                             safetyValidation.safetyFactors.groupingFactor,
+        recommendedCable: result.recommendedCable.sizeLabel,
+        currentRating: result.recommendedCable.tabulatedCapacity,
+        deratedCurrentRating: result.recommendedCable.deratedCapacity,
         safetyMargin: safetyValidation.safetyFactors.safetyMargin,
         compliance: calculateCompliance()
       });
