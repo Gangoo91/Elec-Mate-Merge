@@ -453,12 +453,13 @@ const CableSizingCalculator = () => {
 
               {/* Cable Sizing Result */}
               {result.recommendedCable && (
-                <CableSizingResult 
-                  recommendedCable={result.recommendedCable}
-                  alternativeCables={result.alternativeCables || []}
-                  errors={result.errors || {}}
-                  inputs={inputs}
-                />
+              <CableSizingResult 
+                recommendedCable={result.recommendedCable}
+                alternativeCables={result.alternativeCables || []}
+                errors={result.errors || {}}
+                inputs={inputs}
+                deratingFactors={result.deratingFactors}
+              />
               )}
 
               {/* Calculation Report */}
