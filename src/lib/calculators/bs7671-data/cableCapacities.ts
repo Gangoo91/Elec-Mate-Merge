@@ -111,30 +111,28 @@ export const xlpeTwinEarthCapacities: CableCapacity[] = [
   { size: 50, capacities: { A1: 135, A2: 148, B: 148, C: 188, E: 188, F: 188 }, resistance: 0.387, reactance: 0.082 }
 ];
 
-// BS 7671 Table 4D4A - SWA cables, 3-core armoured, XLPE 90°C (clipped direct / on tray)
-// Reference Method C (clipped direct) - most common for industrial SWA
-// CRITICAL: These are the CORRECT values from BS 7671:2018+A3:2024 Table 4D4A
-// Use these for validation - AI outputs must match these values!
+// BS 7671 Table 4D4A - SWA cables, multicore armoured, XLPE 90°C
+// Reference Methods: C (clipped direct), D (buried direct), E (on tray/ladder)
+// Corrected from BS 7671:2018+A3:2024 Table 4D4A
+// 2-core and 3-core ratings where applicable
 export const swaCapacities: CableCapacity[] = [
-  { size: 1.5, capacities: { C: 20, D: 19, E: 20, F: 20 }, resistance: 12.1, reactance: 0.13 },
-  { size: 2.5, capacities: { C: 27, D: 26, E: 27, F: 27 }, resistance: 7.41, reactance: 0.12 },
-  { size: 4, capacities: { C: 37, D: 35, E: 37, F: 37 }, resistance: 4.61, reactance: 0.11 },
-  { size: 6, capacities: { C: 47, D: 45, E: 47, F: 47 }, resistance: 3.08, reactance: 0.11 },
-  { size: 10, capacities: { C: 64, D: 61, E: 64, F: 64 }, resistance: 1.83, reactance: 0.10 },
-  { size: 16, capacities: { C: 85, D: 81, E: 85, F: 85 }, resistance: 1.15, reactance: 0.095 },
-  { size: 25, capacities: { C: 112, D: 106, E: 112, F: 112 }, resistance: 0.727, reactance: 0.090 },
-  { size: 35, capacities: { C: 137, D: 129, E: 137, F: 137 }, resistance: 0.524, reactance: 0.085 },
-  { size: 50, capacities: { C: 164, D: 155, E: 164, F: 164 }, resistance: 0.387, reactance: 0.082 },
-  { size: 70, capacities: { C: 201, D: 190, E: 201, F: 201 }, resistance: 0.268, reactance: 0.079 },
-  { size: 95, capacities: { C: 238, D: 225, E: 238, F: 238 }, resistance: 0.193, reactance: 0.077 },
-  { size: 120, capacities: { C: 274, D: 259, E: 274, F: 274 }, resistance: 0.153, reactance: 0.075 },
-  { size: 150, capacities: { C: 310, D: 293, E: 310, F: 310 }, resistance: 0.124, reactance: 0.074 },
-  { size: 185, capacities: { C: 348, D: 329, E: 348, F: 348 }, resistance: 0.0991, reactance: 0.073 },
-  { size: 240, capacities: { C: 399, D: 377, E: 399, F: 399 }, resistance: 0.0754, reactance: 0.072 },
-  { size: 300, capacities: { C: 450, D: 425, E: 450, F: 450 }, resistance: 0.0601, reactance: 0.071 },
-  { size: 400, capacities: { C: 511, D: 483, E: 511, F: 511 }, resistance: 0.0470, reactance: 0.070 },
-  { size: 500, capacities: { C: 569, D: 538, E: 569, F: 569 }, resistance: 0.0366, reactance: 0.069 },
-  { size: 630, capacities: { C: 640, D: 605, E: 640, F: 640 }, resistance: 0.0283, reactance: 0.068 }
+  { size: 1.5, capacities: { C2: 24, C3: 21, D2: 29, D3: 24, E2: 27, E3: 22 }, resistance: 12.1, reactance: 0.13 },
+  { size: 2.5, capacities: { C2: 33, C3: 28, D2: 38, D3: 31, E2: 36, E3: 29 }, resistance: 7.41, reactance: 0.12 },
+  { size: 4, capacities: { C2: 45, C3: 38, D2: 49, D3: 40, E2: 48, E3: 38 }, resistance: 4.61, reactance: 0.11 },
+  { size: 6, capacities: { C2: 57, C3: 48, D2: 60, D3: 49, E2: 61, E3: 49 }, resistance: 3.08, reactance: 0.11 },
+  { size: 10, capacities: { C2: 78, C3: 66, D2: 79, D3: 64, E2: 84, E3: 68 }, resistance: 1.83, reactance: 0.10 },
+  { size: 16, capacities: { C2: 104, C3: 88, D2: 100, D3: 81, E2: 110, E3: 88 }, resistance: 1.15, reactance: 0.095 },
+  { size: 25, capacities: { C2: 137, C3: 114, D2: 126, D3: 101, E2: 146, E3: 117 }, resistance: 0.727, reactance: 0.090 },
+  { size: 35, capacities: { C2: 167, C3: 139, D2: 150, D3: 120, E2: 180, E3: 144 }, resistance: 0.524, reactance: 0.085 },
+  { size: 50, capacities: { C2: 202, C3: 167, D2: 177, D3: 141, E2: 219, E3: 175 }, resistance: 0.387, reactance: 0.082 },
+  { size: 70, capacities: { C2: 251, C3: 207, D2: 213, D3: 169, E2: 275, E3: 219 }, resistance: 0.268, reactance: 0.079 },
+  { size: 95, capacities: { C2: 302, C3: 248, D2: 249, D3: 197, E2: 335, E3: 267 }, resistance: 0.193, reactance: 0.077 },
+  { size: 120, capacities: { C2: 350, C3: 286, D2: 281, D3: 222, E2: 392, E3: 311 }, resistance: 0.153, reactance: 0.075 },
+  { size: 150, capacities: { C2: 398, C3: 324, D2: 312, D3: 246, E2: 449, E3: 356 }, resistance: 0.124, reactance: 0.074 },
+  { size: 185, capacities: { C2: 451, C3: 366, D2: 346, D3: 272, E2: 514, E3: 406 }, resistance: 0.0991, reactance: 0.073 },
+  { size: 240, capacities: { C2: 524, C3: 423, D2: 392, D3: 308, E2: 607, E3: 478 }, resistance: 0.0754, reactance: 0.072 },
+  { size: 300, capacities: { C2: 594, C3: 478, D2: 437, D3: 342, E2: 694, E3: 545 }, resistance: 0.0601, reactance: 0.071 },
+  { size: 400, capacities: { C2: 677, C3: 541, D2: 489, D3: 382, E2: 800, E3: 624 }, resistance: 0.0470, reactance: 0.070 },
 ];
 
 // BS 7671 Table 4D3A - Single-core armoured cables (non-magnetic armour), 70°C PVC
