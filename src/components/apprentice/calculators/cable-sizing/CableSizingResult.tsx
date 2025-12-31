@@ -1,9 +1,8 @@
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info, ChevronDown, ChevronUp, CheckCircle2, Cable, Calculator } from "lucide-react";
-import { CableSizingInputs } from "./useCableSizing";
+import { CableSizingInputs, DeratingFactors } from "./useCableSizing";
 import { CableSizeOption } from "./cableSizeData";
-import EmptyState from "./EmptyState";
 import { RequiredFieldTooltip } from "@/components/ui/required-field-tooltip";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useState } from "react";
@@ -15,6 +14,7 @@ interface CableSizingResultProps {
     general?: string;
   };
   inputs: CableSizingInputs;
+  deratingFactors?: DeratingFactors;
 }
 
 const CableSizingResult = ({
@@ -22,6 +22,7 @@ const CableSizingResult = ({
   alternativeCables,
   errors,
   inputs,
+  deratingFactors,
 }: CableSizingResultProps) => {
   const [showDerivation, setShowDerivation] = useState(false);
 
@@ -58,10 +59,13 @@ const CableSizingResult = ({
     return `This is the tabulated current-carrying capacity (It) for ${cable.size} cable using ${getInstallationMethodDisplay(installationType)} at 30°C ambient temperature with no grouping factors. This value comes from BS 7671 Appendix 4.`;
   };
 
-  const derating = {
-    temperature: parseFloat(inputs.ambientTemp || '30') === 30 ? 1.0 : 0.94,
-    grouping: parseInt(inputs.cableGrouping || '1') === 1 ? 1.0 : 0.8
-  };
+  // Use actual derating factors if available, otherwise fall back to simple calculation
+  const Ca = deratingFactors?.Ca ?? (parseFloat(inputs.ambientTemp || '30') === 30 ? 1.0 : 0.94);
+  const Cg = deratingFactors?.Cg ?? (parseInt(inputs.cableGrouping || '1') === 1 ? 1.0 : 0.8);
+  const Ci = deratingFactors?.Ci ?? 1.0;
+  const Cs = deratingFactors?.Cs ?? 1.0;
+  const Cd = deratingFactors?.Cd ?? 1.0;
+  const totalDerating = deratingFactors?.total ?? (Ca * Cg * Ci);
 
   const voltageDropPercent = ((recommendedCable?.calculatedVoltageDrop || 0) / parseFloat(inputs.voltage || '230')) * 100;
 

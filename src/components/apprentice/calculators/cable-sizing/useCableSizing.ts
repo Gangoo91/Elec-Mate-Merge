@@ -2,7 +2,9 @@
 import { useState } from "react";
 import { cableSizes, CableSizeOption } from "./cableSizeData";
 import { CalculatorValidator, ValidationResult } from "@/services/calculatorValidation";
-import { getTemperatureFactor, getGroupingFactor } from "@/lib/calculators/bs7671-data/temperatureFactors";
+import { getTemperatureFactor, getGroupingFactor, getSoilTemperatureFactor } from "@/lib/calculators/bs7671-data/temperatureFactors";
+import { getInstallationMethodFactor, getInstallationMethodCode, getInstallationMethodTableRef, isUndergroundMethod } from "@/lib/calculators/bs7671-data/installationMethodFactors";
+import { getSoilResistivityFactor, getDepthOfLayingFactor } from "@/lib/calculators/bs7671-data/soilAndBurialFactors";
 
 export interface CableSizingInputs {
   current: string;
@@ -17,10 +19,24 @@ export interface CableSizingInputs {
   loadType?: string;
   diversityFactor?: string;
   powerFactor?: string;
+  // Underground installation factors
+  soilResistivity?: string;
+  burialDepth?: string;
 }
 
 export interface CableSizingErrors {
   [key: string]: string;
+}
+
+export interface DeratingFactors {
+  Ca: number; // Ambient/Soil temperature factor
+  Cg: number; // Grouping factor
+  Ci: number; // Installation method factor
+  Cs: number; // Soil thermal resistivity factor
+  Cd: number; // Depth of laying factor
+  total: number;
+  referenceMethod: string;
+  tableRef: string;
 }
 
 export interface CableSizingResult {
@@ -28,6 +44,7 @@ export interface CableSizingResult {
   alternativeCables: CableSizeOption[];
   errors: CableSizingErrors;
   validation?: ValidationResult;
+  deratingFactors?: DeratingFactors;
 }
 
 export const useCableSizing = () => {
@@ -37,7 +54,9 @@ export const useCableSizing = () => {
     installationType: "pvc",
     voltageDrop: "5",
     voltage: "230",
-    cableType: "single"
+    cableType: "single",
+    soilResistivity: "2.5",
+    burialDepth: "0.7"
   });
   
   // UI state for dropdowns to display selected values correctly
@@ -50,7 +69,6 @@ export const useCableSizing = () => {
     alternativeCables: [],
     errors: {},
   });
-
   const updateInput = (field: keyof CableSizingInputs, value: string) => {
     setInputs(prev => ({ ...prev, [field]: value }));
     if (result.errors[field]) {
@@ -188,6 +206,8 @@ export const useCableSizing = () => {
     const cableGrouping = parseInt(inputs.cableGrouping || '1');
     const diversityFactor = parseFloat(inputs.diversityFactor || '1.0');
     const powerFactor = parseFloat(inputs.powerFactor || '0.9');
+    const soilResistivity = parseFloat(inputs.soilResistivity || '2.5');
+    const burialDepth = parseFloat(inputs.burialDepth || '0.7');
     
     // Apply diversity factor to current
     const effectiveCurrent = currentAmp * diversityFactor;
@@ -195,9 +215,15 @@ export const useCableSizing = () => {
     // Calculate maximum allowable voltage drop in volts
     const maxVoltageDrop = (maxVoltageDropPercentage / 100) * supplyVoltage;
     
+    // Get installation method details
+    const installationMethod = uiSelections.installationMethodUI;
+    const isUnderground = isUndergroundMethod(installationMethod);
+    const referenceMethod = getInstallationMethodCode(installationMethod);
+    const tableRef = getInstallationMethodTableRef(installationMethod);
+    
     console.log(`Enhanced calculation - Current: ${currentAmp}A (effective: ${effectiveCurrent}A), Length: ${cableLength}m, VD: ${maxVoltageDropPercentage}% (${maxVoltageDrop}V)`);
+    console.log(`Installation Method: ${installationMethod} (Reference ${referenceMethod})`);
     console.log(`Environmental - Ambient: ${ambientTemp}°C, Grouping: ${cableGrouping}, Diversity: ${diversityFactor}, PF: ${powerFactor}`);
-    console.log(`Looking for cable type: ${inputs.cableType}`);
     
     // Filter by cable type first
     const cablesByType = cableSizes.filter(cable => 
@@ -221,17 +247,52 @@ export const useCableSizing = () => {
     // Get the appropriate current rating for each cable with enhanced derating factors
     const safetyMargin = 1.25; // BS 7671 derating factor
     
-    // Apply temperature derating using BS 7671 Appendix 4 tables
+    // Calculate all BS 7671 Appendix 4 correction factors
     const cableRating = inputs.installationType === 'xlpe' ? '90C' : '70C';
-    const tempDerating = getTemperatureFactor(ambientTemp, cableRating);
     
-    // Apply grouping derating using BS 7671 tables
-    const groupingDerating = getGroupingFactor(cableGrouping);
+    // Ca - Temperature factor (use soil temp for underground, ambient for others)
+    const Ca = isUnderground 
+      ? getSoilTemperatureFactor(ambientTemp, cableRating)
+      : getTemperatureFactor(ambientTemp, cableRating);
     
-    const totalDerating = tempDerating * groupingDerating;
+    // Cg - Grouping factor
+    const Cg = getGroupingFactor(cableGrouping);
+    
+    // Ci - Installation method factor
+    const Ci = getInstallationMethodFactor(installationMethod);
+    
+    // Cs - Soil thermal resistivity factor (underground only)
+    const burialType = installationMethod === 'buried-duct' ? 'duct' : 'direct';
+    const Cs = isUnderground ? getSoilResistivityFactor(soilResistivity, burialType) : 1.0;
+    
+    // Cd - Depth of laying factor (underground only)
+    const Cd = isUnderground ? getDepthOfLayingFactor(burialDepth, burialType) : 1.0;
+    
+    // Calculate total derating
+    const totalDerating = Ca * Cg * Ci * Cs * Cd;
     const requiredCurrentCapacity = effectiveCurrent * safetyMargin / totalDerating;
     
-    console.log(`Derating factors - Temp: ${tempDerating.toFixed(3)}, Grouping: ${groupingDerating.toFixed(3)}, Total: ${totalDerating.toFixed(3)}`);
+    // Store derating factors for display
+    const deratingFactors: DeratingFactors = {
+      Ca,
+      Cg,
+      Ci,
+      Cs,
+      Cd,
+      total: totalDerating,
+      referenceMethod,
+      tableRef
+    };
+    
+    console.log(`BS 7671 Derating Factors:`);
+    console.log(`  Ca (Temperature): ${Ca.toFixed(3)}`);
+    console.log(`  Cg (Grouping): ${Cg.toFixed(3)}`);
+    console.log(`  Ci (Installation): ${Ci.toFixed(3)}`);
+    if (isUnderground) {
+      console.log(`  Cs (Soil Resistivity): ${Cs.toFixed(3)}`);
+      console.log(`  Cd (Burial Depth): ${Cd.toFixed(3)}`);
+    }
+    console.log(`  Total: ${totalDerating.toFixed(3)}`);
     console.log(`Required capacity: ${requiredCurrentCapacity.toFixed(1)}A (${effectiveCurrent}A × ${safetyMargin} ÷ ${totalDerating.toFixed(3)})`);
     
     const suitableCables = cablesByType.filter(cable => {
@@ -272,7 +333,8 @@ export const useCableSizing = () => {
         alternativeCables: [],
         errors: {
           current: `Current (${currentAmp}A + 25% safety margin = ${requiredCurrentCapacity.toFixed(1)}A) exceeds maximum rating for ${inputs.cableType} cables (${maxCurrentAvailable}A max).${suggestion}`
-        }
+        },
+        deratingFactors
       });
       return;
     }
@@ -315,7 +377,8 @@ export const useCableSizing = () => {
         alternativeCables: sortedByVoltageDrop.slice(0, 3),
         errors: {
           general: `No cable meets BS 7671 voltage drop requirements. Best available: ${bestCable.size} with ${bestCable.calculatedVoltageDrop?.toFixed(2)}V (${actualVoltageDropPercent.toFixed(1)}%) drop. Consider: larger cable, voltage boosting, or shorter route.`
-        }
+        },
+        deratingFactors
       });
       return;
     }
@@ -337,7 +400,8 @@ export const useCableSizing = () => {
       recommendedCable: recommended,
       alternativeCables: alternatives,
       errors: {},
-      validation
+      validation,
+      deratingFactors
     });
   };
 
@@ -349,12 +413,13 @@ export const useCableSizing = () => {
       voltageDrop: "5",
       voltage: "230",
       cableType: "single",
-      // Enhanced default values
       ambientTemp: "30",
       cableGrouping: "1",
       loadType: "resistive",
       diversityFactor: "1.0",
-      powerFactor: "0.9"
+      powerFactor: "0.9",
+      soilResistivity: "2.5",
+      burialDepth: "0.7"
     });
     setUiSelections({
       installationMethodUI: "clipped-direct",
