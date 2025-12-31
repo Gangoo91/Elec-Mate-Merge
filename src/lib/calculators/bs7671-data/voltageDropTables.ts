@@ -1,5 +1,5 @@
 // BS 7671 Appendix 4 Voltage Drop Tables
-// Tables 4D1B, 4D2B, 4D3B, 4D4B
+// Tables 4D1B, 4D2B, 4D3B, 4D4B, 4D5B
 
 export interface VoltageDropEntry {
   size: number; // mm²
@@ -431,6 +431,176 @@ export const voltageDropXlpeSingleCore: VoltageDropEntry[] = [
   },
 ];
 
+// Table 4D2B - Multicore PVC cables (70°C) - voltage drop mV/A/m
+// From BS 7671:2018+A3:2024 Table 4D2B
+export interface MulticoreVoltageDropEntry {
+  size: number; // mm²
+  twoCoreAc: number; // mV/A/m single-phase
+  threeFourCoreAc: number; // mV/A/m three-phase
+}
+
+export const voltageDropPvcMulticore: MulticoreVoltageDropEntry[] = [
+  { size: 1.0, twoCoreAc: 44, threeFourCoreAc: 38 },
+  { size: 1.5, twoCoreAc: 29, threeFourCoreAc: 25 },
+  { size: 2.5, twoCoreAc: 18, threeFourCoreAc: 15 },
+  { size: 4, twoCoreAc: 11, threeFourCoreAc: 9.5 },
+  { size: 6, twoCoreAc: 7.3, threeFourCoreAc: 6.4 },
+  { size: 10, twoCoreAc: 4.4, threeFourCoreAc: 3.8 },
+  { size: 16, twoCoreAc: 2.8, threeFourCoreAc: 2.4 },
+  { size: 25, twoCoreAc: 1.75, threeFourCoreAc: 1.50 },
+  { size: 35, twoCoreAc: 1.25, threeFourCoreAc: 1.10 },
+  { size: 50, twoCoreAc: 0.93, threeFourCoreAc: 0.81 },
+  { size: 70, twoCoreAc: 0.63, threeFourCoreAc: 0.55 },
+  { size: 95, twoCoreAc: 0.46, threeFourCoreAc: 0.40 },
+  { size: 120, twoCoreAc: 0.36, threeFourCoreAc: 0.31 },
+  { size: 150, twoCoreAc: 0.29, threeFourCoreAc: 0.25 },
+  { size: 185, twoCoreAc: 0.235, threeFourCoreAc: 0.20 },
+  { size: 240, twoCoreAc: 0.180, threeFourCoreAc: 0.155 },
+  { size: 300, twoCoreAc: 0.145, threeFourCoreAc: 0.125 },
+];
+
+// Table 4D3B - Single-core armoured 90°C XLPE cables - voltage drop
+// From BS 7671:2018+A3:2024 Table 4D3B
+export interface SingleCoreArmouredVoltageDropEntry {
+  size: number; // mm²
+  twoCableDc: number; // mV/A/m DC
+  twoCableAc: { r: number; x: number; z: number }; // mV/A/m AC single-phase
+  threeCableSpaced: { r: number; x: number; z: number }; // spaced cables
+  threeCableTrefoil: { r: number; x: number; z: number }; // trefoil/touching
+  threeCableFlatTouching: { r: number; x: number; z: number }; // flat touching
+  threeCableFlatSpaced: { r: number; x: number; z: number }; // flat spaced
+}
+
+export const voltageDropSingleCoreArmoured: SingleCoreArmouredVoltageDropEntry[] = [
+  { 
+    size: 50, 
+    twoCableDc: 0.93,
+    twoCableAc: { r: 0.93, x: 0.165, z: 0.95 },
+    threeCableSpaced: { r: 0.81, x: 0.145, z: 0.82 },
+    threeCableTrefoil: { r: 0.81, x: 0.125, z: 0.82 },
+    threeCableFlatTouching: { r: 0.81, x: 0.130, z: 0.82 },
+    threeCableFlatSpaced: { r: 0.81, x: 0.155, z: 0.83 }
+  },
+  { 
+    size: 70, 
+    twoCableDc: 0.63,
+    twoCableAc: { r: 0.63, x: 0.155, z: 0.65 },
+    threeCableSpaced: { r: 0.55, x: 0.135, z: 0.57 },
+    threeCableTrefoil: { r: 0.55, x: 0.120, z: 0.56 },
+    threeCableFlatTouching: { r: 0.55, x: 0.125, z: 0.56 },
+    threeCableFlatSpaced: { r: 0.55, x: 0.145, z: 0.57 }
+  },
+  { 
+    size: 95, 
+    twoCableDc: 0.46,
+    twoCableAc: { r: 0.46, x: 0.150, z: 0.48 },
+    threeCableSpaced: { r: 0.40, x: 0.130, z: 0.42 },
+    threeCableTrefoil: { r: 0.40, x: 0.115, z: 0.42 },
+    threeCableFlatTouching: { r: 0.40, x: 0.120, z: 0.42 },
+    threeCableFlatSpaced: { r: 0.40, x: 0.140, z: 0.42 }
+  },
+  { 
+    size: 120, 
+    twoCableDc: 0.36,
+    twoCableAc: { r: 0.36, x: 0.145, z: 0.38 },
+    threeCableSpaced: { r: 0.31, x: 0.125, z: 0.34 },
+    threeCableTrefoil: { r: 0.31, x: 0.110, z: 0.33 },
+    threeCableFlatTouching: { r: 0.31, x: 0.115, z: 0.33 },
+    threeCableFlatSpaced: { r: 0.31, x: 0.135, z: 0.34 }
+  },
+  { 
+    size: 150, 
+    twoCableDc: 0.29,
+    twoCableAc: { r: 0.29, x: 0.140, z: 0.32 },
+    threeCableSpaced: { r: 0.25, x: 0.120, z: 0.28 },
+    threeCableTrefoil: { r: 0.25, x: 0.105, z: 0.27 },
+    threeCableFlatTouching: { r: 0.25, x: 0.110, z: 0.27 },
+    threeCableFlatSpaced: { r: 0.25, x: 0.130, z: 0.28 }
+  },
+  { 
+    size: 185, 
+    twoCableDc: 0.235,
+    twoCableAc: { r: 0.235, x: 0.135, z: 0.27 },
+    threeCableSpaced: { r: 0.20, x: 0.115, z: 0.23 },
+    threeCableTrefoil: { r: 0.20, x: 0.100, z: 0.22 },
+    threeCableFlatTouching: { r: 0.20, x: 0.105, z: 0.23 },
+    threeCableFlatSpaced: { r: 0.20, x: 0.125, z: 0.24 }
+  },
+  { 
+    size: 240, 
+    twoCableDc: 0.180,
+    twoCableAc: { r: 0.180, x: 0.130, z: 0.22 },
+    threeCableSpaced: { r: 0.155, x: 0.110, z: 0.19 },
+    threeCableTrefoil: { r: 0.155, x: 0.095, z: 0.18 },
+    threeCableFlatTouching: { r: 0.155, x: 0.100, z: 0.18 },
+    threeCableFlatSpaced: { r: 0.155, x: 0.120, z: 0.20 }
+  },
+  { 
+    size: 300, 
+    twoCableDc: 0.145,
+    twoCableAc: { r: 0.145, x: 0.125, z: 0.19 },
+    threeCableSpaced: { r: 0.125, x: 0.105, z: 0.16 },
+    threeCableTrefoil: { r: 0.125, x: 0.090, z: 0.15 },
+    threeCableFlatTouching: { r: 0.125, x: 0.095, z: 0.16 },
+    threeCableFlatSpaced: { r: 0.125, x: 0.115, z: 0.17 }
+  },
+  { 
+    size: 400, 
+    twoCableDc: 0.110,
+    twoCableAc: { r: 0.110, x: 0.120, z: 0.16 },
+    threeCableSpaced: { r: 0.095, x: 0.100, z: 0.14 },
+    threeCableTrefoil: { r: 0.095, x: 0.085, z: 0.13 },
+    threeCableFlatTouching: { r: 0.095, x: 0.090, z: 0.13 },
+    threeCableFlatSpaced: { r: 0.095, x: 0.110, z: 0.15 }
+  },
+  { 
+    size: 500, 
+    twoCableDc: 0.086,
+    twoCableAc: { r: 0.086, x: 0.115, z: 0.14 },
+    threeCableSpaced: { r: 0.075, x: 0.095, z: 0.12 },
+    threeCableTrefoil: { r: 0.075, x: 0.080, z: 0.11 },
+    threeCableFlatTouching: { r: 0.075, x: 0.085, z: 0.11 },
+    threeCableFlatSpaced: { r: 0.075, x: 0.105, z: 0.13 }
+  },
+  { 
+    size: 630, 
+    twoCableDc: 0.067,
+    twoCableAc: { r: 0.067, x: 0.110, z: 0.13 },
+    threeCableSpaced: { r: 0.058, x: 0.090, z: 0.11 },
+    threeCableTrefoil: { r: 0.058, x: 0.075, z: 0.10 },
+    threeCableFlatTouching: { r: 0.058, x: 0.080, z: 0.10 },
+    threeCableFlatSpaced: { r: 0.058, x: 0.100, z: 0.12 }
+  },
+];
+
+// Table 4D4B - Multicore armoured cables 90°C XLPE - voltage drop
+// From BS 7671:2018+A3:2024 Table 4D4B
+export interface MulticoreArmouredVoltageDropEntry {
+  size: number; // mm²
+  twoCoreAc: number; // mV/A/m single-phase
+  threeFourCoreAc: number; // mV/A/m three-phase
+}
+
+export const voltageDropMulticoreArmoured: MulticoreArmouredVoltageDropEntry[] = [
+  { size: 1.5, twoCoreAc: 29, threeFourCoreAc: 25 },
+  { size: 2.5, twoCoreAc: 18, threeFourCoreAc: 15 },
+  { size: 4, twoCoreAc: 11, threeFourCoreAc: 9.5 },
+  { size: 6, twoCoreAc: 7.3, threeFourCoreAc: 6.4 },
+  { size: 10, twoCoreAc: 4.4, threeFourCoreAc: 3.8 },
+  { size: 16, twoCoreAc: 2.8, threeFourCoreAc: 2.4 },
+  { size: 25, twoCoreAc: 1.75, threeFourCoreAc: 1.50 },
+  { size: 35, twoCoreAc: 1.25, threeFourCoreAc: 1.10 },
+  { size: 50, twoCoreAc: 0.93, threeFourCoreAc: 0.81 },
+  { size: 70, twoCoreAc: 0.63, threeFourCoreAc: 0.55 },
+  { size: 95, twoCoreAc: 0.46, threeFourCoreAc: 0.40 },
+  { size: 120, twoCoreAc: 0.36, threeFourCoreAc: 0.31 },
+  { size: 150, twoCoreAc: 0.29, threeFourCoreAc: 0.25 },
+  { size: 185, twoCoreAc: 0.235, threeFourCoreAc: 0.20 },
+  { size: 240, twoCoreAc: 0.180, threeFourCoreAc: 0.155 },
+  { size: 300, twoCoreAc: 0.145, threeFourCoreAc: 0.125 },
+  { size: 400, twoCoreAc: 0.110, threeFourCoreAc: 0.095 },
+];
+
 // Table 4D5 - Flat twin and earth PVC cables (70°C)
 // Methods 100e-103e are thermal insulation scenarios
 export interface FlatTwinEarthVoltageDropEntry {
@@ -451,7 +621,7 @@ export const voltageDropFlatTwinEarth: FlatTwinEarthVoltageDropEntry[] = [
 
 // Helper function to get voltage drop value for a given cable type and size
 export const getVoltageDropValue = (
-  cableType: 'pvc-single' | 'xlpe-single' | 'flat-twin-earth',
+  cableType: 'pvc-single' | 'xlpe-single' | 'flat-twin-earth' | 'pvc-multicore' | 'swa-single-core' | 'swa-multicore',
   size: number,
   referenceMethod: string = 'C',
   isThreePhase: boolean = false
@@ -465,6 +635,25 @@ export const getVoltageDropValue = (
     return isThreePhase ? entry.mVPerAmThreePhase : entry.mVPerAm;
   }
   
+  if (cableType === 'pvc-multicore') {
+    const entry = voltageDropPvcMulticore.find(e => e.size === size);
+    if (!entry) return 18;
+    return isThreePhase ? entry.threeFourCoreAc : entry.twoCoreAc;
+  }
+  
+  if (cableType === 'swa-multicore') {
+    const entry = voltageDropMulticoreArmoured.find(e => e.size === size);
+    if (!entry) return 18;
+    return isThreePhase ? entry.threeFourCoreAc : entry.twoCoreAc;
+  }
+  
+  if (cableType === 'swa-single-core') {
+    const entry = voltageDropSingleCoreArmoured.find(e => e.size === size);
+    if (!entry) return 0.5;
+    // Return trefoil value for three-phase, two-cable for single-phase
+    return isThreePhase ? entry.threeCableTrefoil.z : entry.twoCableAc.z;
+  }
+  
   const table = cableType === 'pvc-single' ? voltageDropPvcSingleCore : voltageDropXlpeSingleCore;
   const entry = table.find(e => e.size === size);
   
@@ -474,4 +663,22 @@ export const getVoltageDropValue = (
   const coreKey = isThreePhase ? 'threeOrFourCoreAC' : 'twoCoreAC';
   
   return entry[coreKey][methodKey].z;
+};
+
+// Get detailed voltage drop data for single-core armoured cables
+export const getSingleCoreArmouredVoltageDrop = (
+  size: number,
+  arrangement: 'two-cable' | 'spaced' | 'trefoil' | 'flat-touching' | 'flat-spaced' = 'trefoil'
+): { r: number; x: number; z: number } | null => {
+  const entry = voltageDropSingleCoreArmoured.find(e => e.size === size);
+  if (!entry) return null;
+  
+  switch (arrangement) {
+    case 'two-cable': return entry.twoCableAc;
+    case 'spaced': return entry.threeCableSpaced;
+    case 'trefoil': return entry.threeCableTrefoil;
+    case 'flat-touching': return entry.threeCableFlatTouching;
+    case 'flat-spaced': return entry.threeCableFlatSpaced;
+    default: return entry.threeCableTrefoil;
+  }
 };
