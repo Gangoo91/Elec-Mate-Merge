@@ -222,70 +222,108 @@ const CableSizingResult = ({
                 </div>
 
                 <div className="space-y-3">
+                  {/* Step 1 */}
                   <div className="p-4 bg-elec-dark/30 rounded-lg">
-                    <h4 className="font-medium text-white mb-2 flex items-center gap-2">
-                      <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs">1</span>
-                      Design Current (Ib)
-                    </h4>
-                    <p className="text-sm text-white">Load current: <span className="text-elec-yellow font-mono font-bold">{inputs.current}A</span></p>
-                  </div>
-                  
-                  <div className="p-4 bg-elec-dark/30 rounded-lg">
-                    <h4 className="font-medium text-white mb-2 flex items-center gap-2">
-                      <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs">2</span>
-                      Correction Factors (BS 7671 Appendix 4)
-                    </h4>
-                    <div className="space-y-1 text-sm text-white">
-                      <p>Ca (Temperature): <span className="font-mono">{Ca.toFixed(3)}</span> <span className="text-white/70">— Table 4B1</span></p>
-                      <p>Cg (Grouping): <span className="font-mono">{Cg.toFixed(3)}</span> <span className="text-white/70">— Table 4C1</span></p>
-                      <p>Ci (Installation): <span className="font-mono">{Ci.toFixed(3)}</span></p>
-                      {Cs !== 1.0 && <p>Cs (Soil): <span className="font-mono">{Cs.toFixed(3)}</span> <span className="text-white/70">— Table 4B3</span></p>}
-                      {Cd !== 1.0 && <p>Cd (Depth): <span className="font-mono">{Cd.toFixed(3)}</span> <span className="text-white/70">— Table 4B4</span></p>}
-                      <p className="pt-2 border-t border-elec-yellow/10 mt-2">
-                        Overall: <span className="text-elec-yellow font-mono font-bold">{totalDerating.toFixed(3)}</span>
-                      </p>
+                    <div className="flex items-start gap-3 text-left">
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex-shrink-0">1</span>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-white text-base">Design Current (Ib)</h4>
+                        <p className="text-sm text-white mt-1">
+                          Load current: <span className="text-elec-yellow font-mono font-bold">{inputs.current}A</span>
+                        </p>
+                      </div>
                     </div>
                   </div>
                   
+                  {/* Step 2 */}
                   <div className="p-4 bg-elec-dark/30 rounded-lg">
-                    <h4 className="font-medium text-white mb-2 flex items-center gap-2">
-                      <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs">3</span>
-                      Required Tabulated Current (It)
-                    </h4>
-                    <p className="text-sm text-white mb-2">
-                      It ≥ Ib ÷ (Ca × Cg × Ci{Cs !== 1.0 ? ' × Cs' : ''}{Cd !== 1.0 ? ' × Cd' : ''})
-                    </p>
-                    <p className="text-sm text-white">
-                      It ≥ {inputs.current}A ÷ {totalDerating.toFixed(3)} = 
-                      <span className="text-elec-yellow font-mono font-bold ml-1">
-                        {(parseFloat(inputs.current) / totalDerating).toFixed(1)}A
-                      </span>
-                    </p>
+                    <div className="flex items-start gap-3 text-left">
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex-shrink-0">2</span>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-white text-base">Correction Factors</h4>
+                        <p className="text-xs text-white/70 mb-2">BS 7671 Appendix 4</p>
+                        <div className="space-y-1.5 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-white">Ca (Temperature):</span>
+                            <span className="text-white font-mono">{Ca.toFixed(3)} <span className="text-white/60 text-xs">Table 4B1</span></span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-white">Cg (Grouping):</span>
+                            <span className="text-white font-mono">{Cg.toFixed(3)} <span className="text-white/60 text-xs">Table 4C1</span></span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-white">Ci (Installation):</span>
+                            <span className="text-white font-mono">{Ci.toFixed(3)}</span>
+                          </div>
+                          {Cs !== 1.0 && (
+                            <div className="flex justify-between">
+                              <span className="text-white">Cs (Soil):</span>
+                              <span className="text-white font-mono">{Cs.toFixed(3)} <span className="text-white/60 text-xs">Table 4B3</span></span>
+                            </div>
+                          )}
+                          {Cd !== 1.0 && (
+                            <div className="flex justify-between">
+                              <span className="text-white">Cd (Depth):</span>
+                              <span className="text-white font-mono">{Cd.toFixed(3)} <span className="text-white/60 text-xs">Table 4B4</span></span>
+                            </div>
+                          )}
+                          <div className="flex justify-between pt-2 border-t border-elec-yellow/10 mt-2">
+                            <span className="text-white font-medium">Overall:</span>
+                            <span className="text-elec-yellow font-mono font-bold">{totalDerating.toFixed(3)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   
+                  {/* Step 3 */}
                   <div className="p-4 bg-elec-dark/30 rounded-lg">
-                    <h4 className="font-medium text-white mb-2 flex items-center gap-2">
-                      <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs">4</span>
-                      Cable Selection ({recommendedCable.tableReference})
-                    </h4>
-                    <p className="text-sm text-white">
-                      Selected <span className="text-elec-yellow font-medium text-base">{recommendedCable.sizeLabel}</span> with 
-                      It = <span className="font-mono font-bold">{recommendedCable.tabulatedCapacity}A</span>
-                    </p>
+                    <div className="flex items-start gap-3 text-left">
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex-shrink-0">3</span>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-white text-base">Required Tabulated Current (It)</h4>
+                        <p className="text-sm text-white/80 mt-1">
+                          It ≥ Ib ÷ (Ca × Cg × Ci{Cs !== 1.0 ? ' × Cs' : ''}{Cd !== 1.0 ? ' × Cd' : ''})
+                        </p>
+                        <p className="text-sm text-white mt-1">
+                          It ≥ {inputs.current}A ÷ {totalDerating.toFixed(3)} = <span className="text-elec-yellow font-mono font-bold">{(parseFloat(inputs.current) / totalDerating).toFixed(1)}A</span>
+                        </p>
+                      </div>
+                    </div>
                   </div>
                   
+                  {/* Step 4 */}
                   <div className="p-4 bg-elec-dark/30 rounded-lg">
-                    <h4 className="font-medium text-white mb-2 flex items-center gap-2">
-                      <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs">5</span>
-                      Voltage Drop (Table {recommendedCable.tableReference.replace('4D', '4D').replace('A', 'B')})
-                    </h4>
-                    <p className="text-sm text-white">
-                      ΔV = {recommendedCable.voltageDropMvAm} mV/A/m × {inputs.current}A × {inputs.length}m ÷ 1000 = 
-                      <span className={`font-mono font-bold ml-1 ${recommendedCable.meetsVoltageDrop ? 'text-green-400' : 'text-red-400'}`}>
-                        {recommendedCable.calculatedVoltageDrop}V
-                      </span>
-                      <span className="text-white/70"> ({recommendedCable.voltageDropPercent}%)</span>
-                    </p>
+                    <div className="flex items-start gap-3 text-left">
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex-shrink-0">4</span>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-white text-base">Cable Selection</h4>
+                        <p className="text-xs text-white/70 mb-1">{recommendedCable.tableReference}</p>
+                        <p className="text-sm text-white">
+                          Selected <span className="text-elec-yellow font-medium">{recommendedCable.sizeLabel}</span> with It = <span className="font-mono font-bold">{recommendedCable.tabulatedCapacity}A</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Step 5 */}
+                  <div className="p-4 bg-elec-dark/30 rounded-lg">
+                    <div className="flex items-start gap-3 text-left">
+                      <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex-shrink-0">5</span>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-white text-base">Voltage Drop</h4>
+                        <p className="text-xs text-white/70 mb-1">Table {recommendedCable.tableReference.replace('4D', '4D').replace('A', 'B')}</p>
+                        <p className="text-sm text-white">
+                          ΔV = {recommendedCable.voltageDropMvAm} mV/A/m × {inputs.current}A × {inputs.length}m ÷ 1000
+                        </p>
+                        <p className="text-sm mt-1">
+                          <span className={`font-mono font-bold ${recommendedCable.meetsVoltageDrop ? 'text-green-400' : 'text-red-400'}`}>
+                            = {recommendedCable.calculatedVoltageDrop}V
+                          </span>
+                          <span className="text-white/70 ml-1">({recommendedCable.voltageDropPercent}%)</span>
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -143,66 +143,57 @@ const ProtectiveDeviceSection = ({
             {/* Individual Checks */}
             <div className="space-y-3">
               {/* Check 1: Ib ≤ In */}
-              <div className="flex flex-col sm:flex-row sm:items-start gap-3 p-4 bg-elec-dark/30 rounded-lg min-h-[60px]">
-                <div className="flex items-center gap-3 flex-1">
+              <div className="p-4 bg-elec-dark/30 rounded-lg">
+                <div className="flex items-start gap-3 text-left">
                   <CheckIcon passed={validation.checks.ibLessEqualIn.passed} />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-medium text-white text-sm sm:text-base">Check 1:</span>
-                      <span className="text-white text-sm sm:text-base">Ib ≤ In</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-semibold text-white text-base">Check 1: Ib ≤ In</span>
+                      <span className={`text-sm font-bold flex-shrink-0 ${validation.checks.ibLessEqualIn.passed ? 'text-green-400' : 'text-red-400'}`}>
+                        {validation.checks.ibLessEqualIn.passed ? 'PASS' : 'FAIL'}
+                      </span>
                     </div>
                     <p className="text-sm text-white mt-1">
-                      Design current ({validation.checks.ibLessEqualIn.ib}A) 
-                      {validation.checks.ibLessEqualIn.passed ? ' ≤ ' : ' > '}
-                      Device rating ({validation.checks.ibLessEqualIn.in_}A)
+                      Design current ({validation.checks.ibLessEqualIn.ib}A) {validation.checks.ibLessEqualIn.passed ? '≤' : '>'} Device rating ({validation.checks.ibLessEqualIn.in_}A)
                     </p>
                   </div>
                 </div>
-                <span className={`text-sm font-bold self-start sm:self-center ${validation.checks.ibLessEqualIn.passed ? 'text-green-400' : 'text-red-400'}`}>
-                  {validation.checks.ibLessEqualIn.passed ? 'PASS' : 'FAIL'}
-                </span>
               </div>
 
               {/* Check 2: In ≤ Iz */}
-              <div className="flex flex-col sm:flex-row sm:items-start gap-3 p-4 bg-elec-dark/30 rounded-lg min-h-[60px]">
-                <div className="flex items-center gap-3 flex-1">
+              <div className="p-4 bg-elec-dark/30 rounded-lg">
+                <div className="flex items-start gap-3 text-left">
                   <CheckIcon passed={validation.checks.inLessEqualIz.passed} />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-medium text-white text-sm sm:text-base">Check 2:</span>
-                      <span className="text-white text-sm sm:text-base">In ≤ Iz</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-semibold text-white text-base">Check 2: In ≤ Iz</span>
+                      <span className={`text-sm font-bold flex-shrink-0 ${validation.checks.inLessEqualIz.passed ? 'text-green-400' : 'text-red-400'}`}>
+                        {validation.checks.inLessEqualIz.passed ? 'PASS' : 'FAIL'}
+                      </span>
                     </div>
                     <p className="text-sm text-white mt-1">
-                      Device rating ({validation.checks.inLessEqualIz.in_}A) 
-                      {validation.checks.inLessEqualIz.passed ? ' ≤ ' : ' > '}
-                      Effective capacity ({validation.checks.inLessEqualIz.iz}A)
+                      Device rating ({validation.checks.inLessEqualIz.in_}A) {validation.checks.inLessEqualIz.passed ? '≤' : '>'} Effective capacity ({validation.checks.inLessEqualIz.iz}A)
                     </p>
                   </div>
                 </div>
-                <span className={`text-sm font-bold self-start sm:self-center ${validation.checks.inLessEqualIz.passed ? 'text-green-400' : 'text-red-400'}`}>
-                  {validation.checks.inLessEqualIz.passed ? 'PASS' : 'FAIL'}
-                </span>
               </div>
 
               {/* Check 3: I2 ≤ 1.45 × Iz */}
-              <div className="flex flex-col sm:flex-row sm:items-start gap-3 p-4 bg-elec-dark/30 rounded-lg min-h-[60px]">
-                <div className="flex items-center gap-3 flex-1">
+              <div className="p-4 bg-elec-dark/30 rounded-lg">
+                <div className="flex items-start gap-3 text-left">
                   <CheckIcon passed={validation.checks.i2LessEqual145Iz.passed} />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-medium text-white text-sm sm:text-base">Check 3:</span>
-                      <span className="text-white text-sm sm:text-base">I₂ ≤ 1.45 × Iz</span>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-semibold text-white text-base">Check 3: I₂ ≤ 1.45 × Iz</span>
+                      <span className={`text-sm font-bold flex-shrink-0 ${validation.checks.i2LessEqual145Iz.passed ? 'text-green-400' : 'text-red-400'}`}>
+                        {validation.checks.i2LessEqual145Iz.passed ? 'PASS' : 'FAIL'}
+                      </span>
                     </div>
                     <p className="text-sm text-white mt-1">
-                      Overload trip current ({validation.checks.i2LessEqual145Iz.i2}A) 
-                      {validation.checks.i2LessEqual145Iz.passed ? ' ≤ ' : ' > '}
-                      1.45 × Iz ({validation.checks.i2LessEqual145Iz.limit}A)
+                      Overload trip ({validation.checks.i2LessEqual145Iz.i2}A) {validation.checks.i2LessEqual145Iz.passed ? '≤' : '>'} 1.45 × Iz ({validation.checks.i2LessEqual145Iz.limit}A)
                     </p>
                   </div>
                 </div>
-                <span className={`text-sm font-bold self-start sm:self-center ${validation.checks.i2LessEqual145Iz.passed ? 'text-green-400' : 'text-red-400'}`}>
-                  {validation.checks.i2LessEqual145Iz.passed ? 'PASS' : 'FAIL'}
-                </span>
               </div>
             </div>
 
@@ -226,15 +217,27 @@ const ProtectiveDeviceSection = ({
 
             {/* Device Reference Info */}
             <div className="p-4 bg-elec-dark/20 rounded-lg border border-elec-yellow/10">
-              <div className="flex items-center gap-2 mb-3">
+              <div className="flex items-center gap-2 mb-3 text-left">
                 <Info className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                <span className="text-sm font-medium text-white">Device I₂ Values (Conventional Operating Current)</span>
+                <span className="text-sm font-medium text-white">Device I₂ Values</span>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs text-white">
-                <div className="p-2 bg-white/5 rounded">MCB/RCBO: 1.45 × In</div>
-                <div className="p-2 bg-white/5 rounded">BS 88 gG: 1.6 × In</div>
-                <div className="p-2 bg-white/5 rounded">BS 3036: 2.0 × In</div>
-                <div className="p-2 bg-white/5 rounded">MCCB: 1.3 × In</div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-white">
+                <div className="flex justify-between p-2 bg-white/5 rounded">
+                  <span>MCB/RCBO</span>
+                  <span className="font-mono">1.45 × In</span>
+                </div>
+                <div className="flex justify-between p-2 bg-white/5 rounded">
+                  <span>BS 88 gG</span>
+                  <span className="font-mono">1.6 × In</span>
+                </div>
+                <div className="flex justify-between p-2 bg-white/5 rounded">
+                  <span>BS 3036</span>
+                  <span className="font-mono">2.0 × In</span>
+                </div>
+                <div className="flex justify-between p-2 bg-white/5 rounded">
+                  <span>MCCB</span>
+                  <span className="font-mono">1.3 × In</span>
+                </div>
               </div>
             </div>
           </div>
