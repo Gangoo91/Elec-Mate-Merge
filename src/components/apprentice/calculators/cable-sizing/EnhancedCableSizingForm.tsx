@@ -426,15 +426,34 @@ const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
 
             <div>
               <Label htmlFor="protectionRating" className="text-sm">Protection Rating (A)</Label>
-              <Input
-                id="protectionRating"
-                type="text"
-                inputMode="decimal"
-                value={inputs.protectionRating ?? ''}
-                onChange={(e) => updateInput('protectionRating', parseFloat(e.target.value) || 0)}
-                placeholder="Auto-calculate if left blank"
-                className="mt-1"
-              />
+              <Select
+                value={inputs.protectionRating ? String(inputs.protectionRating) : '0'}
+                onValueChange={(value) => updateInput('protectionRating', parseFloat(value) || 0)}
+              >
+                <SelectTrigger className="mt-1">
+                  <SelectValue placeholder="Auto-calculate" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="0">Auto-calculate</SelectItem>
+                  <SelectItem value="6">6A</SelectItem>
+                  <SelectItem value="10">10A</SelectItem>
+                  <SelectItem value="16">16A</SelectItem>
+                  <SelectItem value="20">20A</SelectItem>
+                  <SelectItem value="25">25A</SelectItem>
+                  <SelectItem value="32">32A</SelectItem>
+                  <SelectItem value="40">40A</SelectItem>
+                  <SelectItem value="50">50A</SelectItem>
+                  <SelectItem value="63">63A</SelectItem>
+                  <SelectItem value="80">80A</SelectItem>
+                  <SelectItem value="100">100A</SelectItem>
+                  <SelectItem value="125">125A</SelectItem>
+                  <SelectItem value="160">160A</SelectItem>
+                  <SelectItem value="200">200A</SelectItem>
+                  <SelectItem value="250">250A</SelectItem>
+                  <SelectItem value="315">315A</SelectItem>
+                  <SelectItem value="400">400A</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div>
