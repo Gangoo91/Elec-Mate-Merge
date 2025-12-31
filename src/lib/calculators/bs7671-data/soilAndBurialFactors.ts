@@ -8,14 +8,17 @@ export interface SoilResistivityFactor {
   inDuct: number; // Factor for cables in ducts
 }
 
+// BS 7671 Table 4B3 - Corrected values from official tables
+// Column 1 = Rating factor for cables in buried ducts
+// Column 2 = Rating factor for direct buried cables
 export const soilResistivityFactors: SoilResistivityFactor[] = [
-  { resistivity: 0.5, directBuried: 1.28, inDuct: 1.28 },
-  { resistivity: 0.7, directBuried: 1.20, inDuct: 1.20 },
-  { resistivity: 1.0, directBuried: 1.18, inDuct: 1.10 },
-  { resistivity: 1.5, directBuried: 1.10, inDuct: 1.05 },
-  { resistivity: 2.0, directBuried: 1.05, inDuct: 1.02 },
+  { resistivity: 0.5, directBuried: 1.88, inDuct: 1.28 },
+  { resistivity: 0.7, directBuried: 1.62, inDuct: 1.20 },
+  { resistivity: 1.0, directBuried: 1.50, inDuct: 1.18 },
+  { resistivity: 1.5, directBuried: 1.28, inDuct: 1.10 },
+  { resistivity: 2.0, directBuried: 1.12, inDuct: 1.05 },
   { resistivity: 2.5, directBuried: 1.00, inDuct: 1.00 }, // Reference value
-  { resistivity: 3.0, directBuried: 0.96, inDuct: 0.98 },
+  { resistivity: 3.0, directBuried: 0.90, inDuct: 0.96 },
 ];
 
 // Table 4B4 - Correction factors for depth of laying (Cd)
@@ -26,14 +29,17 @@ export interface DepthFactor {
   inDuct: number;
 }
 
+// BS 7671 Table 4B4 - Corrected values from official tables
 export const depthOfLayingFactors: DepthFactor[] = [
-  { depth: 0.5, directBuried: 1.04, inDuct: 1.00 },
-  { depth: 0.7, directBuried: 1.00, inDuct: 0.98 }, // Reference for direct buried
-  { depth: 0.8, directBuried: 0.98, inDuct: 0.97 },
-  { depth: 0.9, directBuried: 0.97, inDuct: 0.96 },
-  { depth: 1.0, directBuried: 0.95, inDuct: 0.95 },
-  { depth: 1.25, directBuried: 0.92, inDuct: 0.93 },
-  { depth: 1.5, directBuried: 0.89, inDuct: 0.91 },
+  { depth: 0.5, directBuried: 1.03, inDuct: 1.02 },
+  { depth: 0.7, directBuried: 1.00, inDuct: 1.00 }, // Reference
+  { depth: 1.0, directBuried: 0.97, inDuct: 0.98 },
+  { depth: 1.25, directBuried: 0.95, inDuct: 0.96 },
+  { depth: 1.5, directBuried: 0.94, inDuct: 0.95 },
+  { depth: 1.75, directBuried: 0.93, inDuct: 0.94 },
+  { depth: 2.0, directBuried: 0.92, inDuct: 0.93 },
+  { depth: 2.5, directBuried: 0.90, inDuct: 0.92 },
+  { depth: 3.0, directBuried: 0.89, inDuct: 0.91 },
 ];
 
 // Helper function to get soil resistivity factor with interpolation
