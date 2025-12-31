@@ -308,6 +308,7 @@ const CableSizingCalculator = () => {
                 errors={result.errors || {}}
                 inputs={inputs}
                 deratingFactors={result.deratingFactors}
+                nextCableSizeUp={result.nextCableSizeUp}
               />
               )}
 

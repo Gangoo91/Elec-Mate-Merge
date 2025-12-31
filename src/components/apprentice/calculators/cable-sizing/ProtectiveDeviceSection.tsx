@@ -1,0 +1,241 @@
+import { useState, useEffect, useMemo } from 'react';
+import { Shield, CheckCircle2, XCircle, AlertTriangle, Info, ChevronDown, ChevronUp } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { RequiredFieldTooltip } from '@/components/ui/required-field-tooltip';
+import { 
+  DeviceType, 
+  deviceTypeOptions, 
+  ratingsByDevice, 
+  getFilteredRatings,
+  validateProtectiveDevice,
+  getDeviceInfo,
+  getI2Multiplier
+} from './useProtectiveDeviceCheck';
+
+interface ProtectiveDeviceSectionProps {
+  designCurrent: number;
+  effectiveCapacity: number; // Iz
+  nextCableSizeUp?: { size: number; capacity: number };
+}
+
+const ProtectiveDeviceSection = ({
+  designCurrent,
+  effectiveCapacity,
+  nextCableSizeUp
+}: ProtectiveDeviceSectionProps) => {
+  const [isOpen, setIsOpen] = useState(true);
+  const [deviceType, setDeviceType] = useState<DeviceType>('mcb-b');
+  const [rating, setRating] = useState<number>(0);
+
+  // Get available ratings for selected device type
+  const availableRatings = useMemo(() => {
+    return getFilteredRatings(deviceType, designCurrent);
+  }, [deviceType, designCurrent]);
+
+  // Auto-select sensible default rating when device type changes
+  useEffect(() => {
+    const ratings = ratingsByDevice[deviceType];
+    // Find the smallest rating >= design current
+    const defaultRating = ratings.find(r => r >= designCurrent) || ratings[0];
+    setRating(defaultRating);
+  }, [deviceType, designCurrent]);
+
+  // Validate the current selection
+  const validation = useMemo(() => {
+    if (!rating || !effectiveCapacity) return null;
+    return validateProtectiveDevice(designCurrent, effectiveCapacity, deviceType, rating, nextCableSizeUp);
+  }, [designCurrent, effectiveCapacity, deviceType, rating, nextCableSizeUp]);
+
+  const deviceInfo = getDeviceInfo(deviceType);
+  const i2Multiplier = getI2Multiplier(deviceType);
+
+  const CheckIcon = ({ passed }: { passed: boolean }) => (
+    passed 
+      ? <CheckCircle2 className="h-5 w-5 text-green-400 flex-shrink-0" />
+      : <XCircle className="h-5 w-5 text-red-400 flex-shrink-0" />
+  );
+
+  return (
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="mt-8 pt-8 border-t border-elec-yellow/30">
+      <CollapsibleTrigger className="w-full flex items-center justify-between p-4 text-elec-yellow hover:text-elec-yellow/80 transition-colors bg-elec-gray/20 rounded-lg border border-elec-yellow/20 hover:border-elec-yellow/40">
+        <div className="flex items-center gap-2">
+          <Shield className="h-5 w-5" />
+          <span className="font-semibold">Protective Device Check</span>
+          <span className="text-xs text-white/60 font-normal">(BS 7671 Reg 433.1)</span>
+        </div>
+        {isOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+      </CollapsibleTrigger>
+
+      <CollapsibleContent className="pt-6 space-y-6">
+        {/* Device Selection */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-white flex items-center gap-1">
+              Device Type
+              <RequiredFieldTooltip content="Select the type of protective device for overload protection" />
+            </label>
+            <Select value={deviceType} onValueChange={(v) => setDeviceType(v as DeviceType)}>
+              <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/30">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {deviceTypeOptions.map(option => (
+                  <SelectItem key={option.value} value={option.value}>
+                    <div className="flex flex-col">
+                      <span>{option.label}</span>
+                      <span className="text-xs text-muted-foreground">{option.standard}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {deviceInfo && (
+              <p className="text-xs text-white/60">
+                I₂ = {i2Multiplier} × In ({deviceInfo.standard})
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-white flex items-center gap-1">
+              Rating (In)
+              <RequiredFieldTooltip content="Nominal current rating of the protective device" />
+            </label>
+            <Select value={rating.toString()} onValueChange={(v) => setRating(parseInt(v))}>
+              <SelectTrigger className="bg-elec-dark/50 border-elec-yellow/30">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="max-h-60">
+                {availableRatings.map(r => (
+                  <SelectItem key={r} value={r.toString()}>
+                    {r}A
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        {/* Validation Results */}
+        {validation && (
+          <div className="space-y-4">
+            {/* Overall Status */}
+            <div className={`p-4 rounded-lg border ${
+              validation.allPassed 
+                ? 'bg-green-900/20 border-green-500/30' 
+                : 'bg-red-900/20 border-red-500/30'
+            }`}>
+              <div className="flex items-center gap-2">
+                {validation.allPassed 
+                  ? <CheckCircle2 className="h-6 w-6 text-green-400" />
+                  : <AlertTriangle className="h-6 w-6 text-red-400" />
+                }
+                <span className={`font-semibold ${validation.allPassed ? 'text-green-400' : 'text-red-400'}`}>
+                  {validation.allPassed 
+                    ? 'All BS 7671 Coordination Checks Passed' 
+                    : 'Coordination Check Failed'
+                  }
+                </span>
+              </div>
+            </div>
+
+            {/* Individual Checks */}
+            <div className="space-y-3">
+              {/* Check 1: Ib ≤ In */}
+              <div className="flex items-start gap-3 p-3 bg-elec-dark/30 rounded-lg">
+                <CheckIcon passed={validation.checks.ibLessEqualIn.passed} />
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium text-white">Check 1:</span>
+                    <span className="text-white/80">Ib ≤ In</span>
+                  </div>
+                  <p className="text-sm text-white/60 mt-1">
+                    Design current ({validation.checks.ibLessEqualIn.ib}A) 
+                    {validation.checks.ibLessEqualIn.passed ? ' ≤ ' : ' > '}
+                    Device rating ({validation.checks.ibLessEqualIn.in_}A)
+                  </p>
+                </div>
+                <span className={`text-sm font-bold ${validation.checks.ibLessEqualIn.passed ? 'text-green-400' : 'text-red-400'}`}>
+                  {validation.checks.ibLessEqualIn.passed ? 'PASS' : 'FAIL'}
+                </span>
+              </div>
+
+              {/* Check 2: In ≤ Iz */}
+              <div className="flex items-start gap-3 p-3 bg-elec-dark/30 rounded-lg">
+                <CheckIcon passed={validation.checks.inLessEqualIz.passed} />
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium text-white">Check 2:</span>
+                    <span className="text-white/80">In ≤ Iz</span>
+                  </div>
+                  <p className="text-sm text-white/60 mt-1">
+                    Device rating ({validation.checks.inLessEqualIz.in_}A) 
+                    {validation.checks.inLessEqualIz.passed ? ' ≤ ' : ' > '}
+                    Effective capacity ({validation.checks.inLessEqualIz.iz}A)
+                  </p>
+                </div>
+                <span className={`text-sm font-bold ${validation.checks.inLessEqualIz.passed ? 'text-green-400' : 'text-red-400'}`}>
+                  {validation.checks.inLessEqualIz.passed ? 'PASS' : 'FAIL'}
+                </span>
+              </div>
+
+              {/* Check 3: I2 ≤ 1.45 × Iz */}
+              <div className="flex items-start gap-3 p-3 bg-elec-dark/30 rounded-lg">
+                <CheckIcon passed={validation.checks.i2LessEqual145Iz.passed} />
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium text-white">Check 3:</span>
+                    <span className="text-white/80">I₂ ≤ 1.45 × Iz</span>
+                  </div>
+                  <p className="text-sm text-white/60 mt-1">
+                    Overload trip current ({validation.checks.i2LessEqual145Iz.i2}A) 
+                    {validation.checks.i2LessEqual145Iz.passed ? ' ≤ ' : ' > '}
+                    1.45 × Iz ({validation.checks.i2LessEqual145Iz.limit}A)
+                  </p>
+                </div>
+                <span className={`text-sm font-bold ${validation.checks.i2LessEqual145Iz.passed ? 'text-green-400' : 'text-red-400'}`}>
+                  {validation.checks.i2LessEqual145Iz.passed ? 'PASS' : 'FAIL'}
+                </span>
+              </div>
+            </div>
+
+            {/* Suggestions if failed */}
+            {validation.suggestions.length > 0 && (
+              <div className="p-4 bg-amber-900/20 border border-amber-500/30 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <Info className="h-5 w-5 text-amber-400" />
+                  <span className="font-medium text-amber-400">Suggestions</span>
+                </div>
+                <ul className="space-y-1">
+                  {validation.suggestions.map((suggestion, idx) => (
+                    <li key={idx} className="text-sm text-white/80 flex items-start gap-2">
+                      <span className="text-amber-400">•</span>
+                      {suggestion}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Device Reference Info */}
+            <div className="p-3 bg-elec-dark/20 rounded-lg border border-elec-yellow/10">
+              <div className="flex items-center gap-2 mb-2">
+                <Info className="h-4 w-4 text-elec-yellow/60" />
+                <span className="text-sm font-medium text-white/80">Device I₂ Values (Conventional Operating Current)</span>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-white/60">
+                <div>MCB/RCBO: 1.45 × In</div>
+                <div>BS 88 gG: 1.6 × In</div>
+                <div>BS 3036: 2.0 × In</div>
+                <div>MCCB: 1.3 × In</div>
+              </div>
+            </div>
+          </div>
+        )}
+      </CollapsibleContent>
+    </Collapsible>
+  );
+};
+
+export default ProtectiveDeviceSection;

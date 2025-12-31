@@ -4,6 +4,7 @@ import { CableSizingInputs, DeratingFactors, BS7671CableOption } from "./useCabl
 import { RequiredFieldTooltip } from "@/components/ui/required-field-tooltip";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useState } from "react";
+import ProtectiveDeviceSection from "./ProtectiveDeviceSection";
 
 interface CableSizingResultProps {
   recommendedCable: BS7671CableOption | null;
@@ -13,6 +14,7 @@ interface CableSizingResultProps {
   };
   inputs: CableSizingInputs;
   deratingFactors?: DeratingFactors;
+  nextCableSizeUp?: { size: number; capacity: number };
 }
 
 const CableSizingResult = ({
@@ -21,8 +23,10 @@ const CableSizingResult = ({
   errors,
   inputs,
   deratingFactors,
+  nextCableSizeUp,
 }: CableSizingResultProps) => {
   const [showDerivation, setShowDerivation] = useState(false);
+  const designCurrent = parseFloat(inputs.current) || 0;
 
   const getInstallationMethodDisplay = (referenceMethod: string) => {
     const methodDescriptions: Record<string, string> = {
@@ -287,6 +291,13 @@ const CableSizingResult = ({
               </div>
             </CollapsibleContent>
           </Collapsible>
+
+          {/* Protective Device Check */}
+          <ProtectiveDeviceSection
+            designCurrent={designCurrent}
+            effectiveCapacity={recommendedCable.deratedCapacity}
+            nextCableSizeUp={nextCableSizeUp}
+          />
         </>
       )}
 
