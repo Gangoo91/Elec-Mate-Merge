@@ -26,20 +26,25 @@ const CableSizingResult = ({
 }: CableSizingResultProps) => {
   const [showDerivation, setShowDerivation] = useState(false);
 
-  const getInstallationMethodDisplay = (installationType: string) => {
-    const methodMap: Record<string, string> = {
-      'pvc': 'Method C (Clipped Direct)',
-      'xlpe': 'Method E (In Conduit/Trunking)',
-      'swa': 'Method D (Direct Burial)',
-      'lsf': 'Method C (Clipped Direct)',
-      'armored': 'Method D (Direct Burial)',
-      'clipped-direct': 'Method C (Clipped Direct)',
-      'in-conduit': 'Method B (In Conduit/Trunking)',
-      'buried-direct': 'Method D (Direct Burial)',
-      'cable-tray': 'Method F (On Cable Tray)',
-      'free-air': 'Method E (Free Air)'
+  const getInstallationMethodDisplay = (referenceMethod: string) => {
+    const methodDescriptions: Record<string, string> = {
+      'A': 'Enclosed in insulation',
+      'A1': 'Conduit in masonry',
+      'A2': 'Conduit on surface',
+      'B1': 'Trunking on surface',
+      'B2': 'Trunking flush in wall',
+      'C': 'Clipped direct to surface',
+      'D1': 'Buried direct in ground',
+      'D2': 'In buried ducts',
+      'E': 'On perforated tray/ladder',
+      'F': 'Single-core on tray',
+      'G': 'Free air, spaced',
+      '100': 'Above ceiling, insulation ≤100mm',
+      '101': 'Above ceiling, insulation >100mm',
+      '102': 'Stud wall, touching insulation',
+      '103': 'Stud wall, not touching'
     };
-    return methodMap[installationType] || installationType.toUpperCase();
+    return methodDescriptions[referenceMethod] || referenceMethod;
   };
 
   const getCableTypeDisplay = (cableType: string) => {
@@ -99,7 +104,7 @@ const CableSizingResult = ({
                   {getCableTypeDisplay(inputs.cableType)}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  {getInstallationMethodDisplay(inputs.installationType)}
+                  Method {deratingFactors?.referenceMethod || 'C'} — {getInstallationMethodDisplay(deratingFactors?.referenceMethod || 'C')}
                 </p>
               </div>
             </div>
