@@ -1,10 +1,17 @@
-
 import { useState } from "react";
-import { cableSizes, CableSizeOption } from "./cableSizeData";
 import { CalculatorValidator, ValidationResult } from "@/services/calculatorValidation";
 import { getTemperatureFactor, getGroupingFactor, getSoilTemperatureFactor } from "@/lib/calculators/bs7671-data/temperatureFactors";
-import { getInstallationMethodFactor, getInstallationMethodCode, getInstallationMethodTableRef, isUndergroundMethod } from "@/lib/calculators/bs7671-data/installationMethodFactors";
+import { getInstallationMethodFactor, getInstallationMethodCode, getInstallationMethodTableRef, isUndergroundMethod, isDomesticInsulationMethod, getReferenceMethod } from "@/lib/calculators/bs7671-data/installationMethodFactors";
 import { getSoilResistivityFactor, getDepthOfLayingFactor } from "@/lib/calculators/bs7671-data/soilAndBurialFactors";
+import { 
+  getCableCapacity, 
+  getNextCableSize, 
+  CableType, 
+  cableCapacityData,
+  getThermalInsulationCapacity,
+  flatTwinEarthThermalCapacities
+} from "@/lib/calculators/bs7671-data/cableCapacities";
+import { getVoltageDropValue } from "@/lib/calculators/bs7671-data/voltageDropTables";
 
 export interface CableSizingInputs {
   current: string;
@@ -12,7 +19,8 @@ export interface CableSizingInputs {
   installationType: "pvc" | "xlpe";
   voltageDrop: string;
   voltage: string;
-  cableType: string;
+  cableType: CableType;
+  cores: '2' | '3' | '4';
   // Enhanced inputs for professional calculations
   ambientTemp?: string;
   cableGrouping?: string;
@@ -39,13 +47,56 @@ export interface DeratingFactors {
   tableRef: string;
 }
 
+export interface BS7671CableOption {
+  size: number;
+  sizeLabel: string;
+  tabulatedCapacity: number;
+  deratedCapacity: number;
+  voltageDropMvAm: number;
+  calculatedVoltageDrop: number;
+  voltageDropPercent: number;
+  meetsVoltageDrop: boolean;
+  meetsCurrentCapacity: boolean;
+  tableReference: string;
+}
+
 export interface CableSizingResult {
-  recommendedCable: CableSizeOption | null;
-  alternativeCables: CableSizeOption[];
+  recommendedCable: BS7671CableOption | null;
+  alternativeCables: BS7671CableOption[];
   errors: CableSizingErrors;
   validation?: ValidationResult;
   deratingFactors?: DeratingFactors;
 }
+
+// Map cable type to BS 7671 table reference
+const getCableTableReference = (cableType: CableType): string => {
+  const tableRefs: Record<CableType, string> = {
+    'pvc-single': '4D1A',
+    'xlpe-single': '4D2A',
+    'pvc-twin-earth': '4D4A',
+    'xlpe-twin-earth': '4D4B',
+    'swa': '4D4A',
+    'swa-single-core': '4D3A',
+    'micc': '4E1A',
+    'aluminium-xlpe': '4J2A'
+  };
+  return tableRefs[cableType] || '4D1A';
+};
+
+// Map cable type to voltage drop table
+const getVoltageDropTableRef = (cableType: CableType): string => {
+  const tableRefs: Record<CableType, string> = {
+    'pvc-single': '4D1B',
+    'xlpe-single': '4D2B',
+    'pvc-twin-earth': '4D2B',
+    'xlpe-twin-earth': '4D2B',
+    'swa': '4D4B',
+    'swa-single-core': '4D3B',
+    'micc': '4E1B',
+    'aluminium-xlpe': '4J2B'
+  };
+  return tableRefs[cableType] || '4D1B';
+};
 
 export const useCableSizing = () => {
   const [inputs, setInputs] = useState<CableSizingInputs>({
@@ -54,7 +105,8 @@ export const useCableSizing = () => {
     installationType: "pvc",
     voltageDrop: "5",
     voltage: "230",
-    cableType: "single",
+    cableType: "pvc-twin-earth",
+    cores: '2',
     soilResistivity: "2.5",
     burialDepth: "0.7"
   });
@@ -62,13 +114,15 @@ export const useCableSizing = () => {
   // UI state for dropdowns to display selected values correctly
   const [uiSelections, setUiSelections] = useState({
     installationMethodUI: "clipped-direct",
-    cableTypeUI: "pvc-70"
+    cableTypeUI: "pvc-twin-earth"
   });
+  
   const [result, setResult] = useState<CableSizingResult>({
     recommendedCable: null,
     alternativeCables: [],
     errors: {},
   });
+
   const updateInput = (field: keyof CableSizingInputs, value: string) => {
     setInputs(prev => ({ ...prev, [field]: value }));
     if (result.errors[field]) {
@@ -82,6 +136,7 @@ export const useCableSizing = () => {
       "clipped-direct": "pvc",
       "in-conduit": "pvc", 
       "buried-direct": "xlpe",
+      "buried-duct": "xlpe",
       "cable-tray": "pvc",
       "free-air": "pvc",
       "pvc": "pvc",
@@ -89,29 +144,20 @@ export const useCableSizing = () => {
     };
     
     const mappedType = installationMapping[type] || "pvc";
-    console.log(`Installation type mapping: ${type} -> ${mappedType}`);
     setInputs(prev => ({ ...prev, installationType: mappedType }));
     setUiSelections(prev => ({ ...prev, installationMethodUI: type }));
   };
 
-  const setCableType = (type: string) => {
-    // Map professional terminology to simple cable types
-    const cableTypeMapping: Record<string, string> = {
-      "pvc-70": "single",
-      "xlpe-90": "single", 
-      "lsf-70": "lsf",
-      "mineral-70": "heat-resistant",
-      "single": "single",
-      "twin-and-earth": "twin-and-earth",
-      "swa": "swa",
-      "lsf": "lsf",
-      "armored": "swa", // Map armored to SWA as they're similar
-      "heat-resistant": "heat-resistant"
-    };
+  const setCableType = (type: CableType) => {
+    // Determine insulation type from cable type
+    const xlpeTypes: CableType[] = ['xlpe-single', 'xlpe-twin-earth', 'aluminium-xlpe'];
+    const installationType = xlpeTypes.includes(type) ? 'xlpe' : 'pvc';
     
-    const mappedType = cableTypeMapping[type] || type;
-    console.log(`Cable type mapping: ${type} -> ${mappedType}`);
-    setInputs(prev => ({ ...prev, cableType: mappedType }));
+    setInputs(prev => ({ 
+      ...prev, 
+      cableType: type,
+      installationType 
+    }));
     setUiSelections(prev => ({ ...prev, cableTypeUI: type }));
   };
 
@@ -130,7 +176,6 @@ export const useCableSizing = () => {
   const validateInputs = (): boolean => {
     const newErrors: CableSizingErrors = {};
     
-    // Enhanced validation with professional standards
     if (!inputs.current) {
       newErrors.current = "Current is required";
     } else {
@@ -138,7 +183,6 @@ export const useCableSizing = () => {
       if (isNaN(currentValue) || currentValue <= 0) {
         newErrors.current = "Please enter a valid positive number";
       } else {
-        // Professional range validation
         const currentValidation = CalculatorValidator.validateInputRange(currentValue, 'current');
         if (!currentValidation.isValid) {
           newErrors.current = currentValidation.errors[0];
@@ -153,7 +197,6 @@ export const useCableSizing = () => {
       if (isNaN(lengthValue) || lengthValue <= 0) {
         newErrors.length = "Please enter a valid positive number";
       } else {
-        // Professional range validation
         const lengthValidation = CalculatorValidator.validateInputRange(lengthValue, 'length');
         if (!lengthValidation.isValid) {
           newErrors.length = lengthValidation.errors[0];
@@ -177,7 +220,6 @@ export const useCableSizing = () => {
       if (isNaN(voltageValue) || voltageValue <= 0) {
         newErrors.voltage = "Please enter a valid positive number";
       } else {
-        // Professional range validation
         const voltageValidation = CalculatorValidator.validateInputRange(voltageValue, 'voltage');
         if (!voltageValidation.isValid) {
           newErrors.voltage = voltageValidation.errors[0];
@@ -196,21 +238,20 @@ export const useCableSizing = () => {
   const calculateCableSize = () => {
     if (!validateInputs()) return;
     
-    const currentAmp = parseFloat(inputs.current);
+    const designCurrent = parseFloat(inputs.current);
     const cableLength = parseFloat(inputs.length);
     const maxVoltageDropPercentage = parseFloat(inputs.voltageDrop);
     const supplyVoltage = parseFloat(inputs.voltage);
+    const cableType = inputs.cableType;
+    const cores = inputs.cores;
     
     // Enhanced calculations with professional factors
     const ambientTemp = parseFloat(inputs.ambientTemp || '30');
     const cableGrouping = parseInt(inputs.cableGrouping || '1');
     const diversityFactor = parseFloat(inputs.diversityFactor || '1.0');
-    const powerFactor = parseFloat(inputs.powerFactor || '0.9');
+    const powerFactor = parseFloat(inputs.powerFactor || '1.0');
     const soilResistivity = parseFloat(inputs.soilResistivity || '2.5');
     const burialDepth = parseFloat(inputs.burialDepth || '0.7');
-    
-    // Apply diversity factor to current
-    const effectiveCurrent = currentAmp * diversityFactor;
     
     // Calculate maximum allowable voltage drop in volts
     const maxVoltageDrop = (maxVoltageDropPercentage / 100) * supplyVoltage;
@@ -218,38 +259,14 @@ export const useCableSizing = () => {
     // Get installation method details
     const installationMethod = uiSelections.installationMethodUI;
     const isUnderground = isUndergroundMethod(installationMethod);
-    const referenceMethod = getInstallationMethodCode(installationMethod);
+    const isDomesticInsulation = isDomesticInsulationMethod(installationMethod);
+    const referenceMethod = getReferenceMethod(installationMethod);
     const tableRef = getInstallationMethodTableRef(installationMethod);
     
-    console.log(`Enhanced calculation - Current: ${currentAmp}A (effective: ${effectiveCurrent}A), Length: ${cableLength}m, VD: ${maxVoltageDropPercentage}% (${maxVoltageDrop}V)`);
-    console.log(`Installation Method: ${installationMethod} (Reference ${referenceMethod})`);
-    console.log(`Environmental - Ambient: ${ambientTemp}°C, Grouping: ${cableGrouping}, Diversity: ${diversityFactor}, PF: ${powerFactor}`);
-    
-    // Filter by cable type first
-    const cablesByType = cableSizes.filter(cable => 
-      cable.cableType === inputs.cableType
-    );
-    
-    console.log(`Found ${cablesByType.length} cables of type ${inputs.cableType}:`, cablesByType.map(c => c.size));
-    
-    if (cablesByType.length === 0) {
-      console.error(`No cables found for type: ${inputs.cableType}. Available types:`, [...new Set(cableSizes.map(c => c.cableType))]);
-      setResult({
-        recommendedCable: null,
-        alternativeCables: [],
-        errors: {
-          cableType: `No cables found for type: ${inputs.cableType}. Available types: ${[...new Set(cableSizes.map(c => c.cableType))].join(', ')}`
-        }
-      });
-      return;
-    }
-    
-    // Get the appropriate current rating for each cable with enhanced derating factors
-    const safetyMargin = 1.25; // BS 7671 derating factor
+    // Determine temperature rating based on cable type
+    const cableRating = cableType.includes('xlpe') ? '90C' : '70C';
     
     // Calculate all BS 7671 Appendix 4 correction factors
-    const cableRating = inputs.installationType === 'xlpe' ? '90C' : '70C';
-    
     // Ca - Temperature factor (use soil temp for underground, ambient for others)
     const Ca = isUnderground 
       ? getSoilTemperatureFactor(ambientTemp, cableRating)
@@ -270,7 +287,9 @@ export const useCableSizing = () => {
     
     // Calculate total derating
     const totalDerating = Ca * Cg * Ci * Cs * Cd;
-    const requiredCurrentCapacity = effectiveCurrent * safetyMargin / totalDerating;
+    
+    // Required tabulated current capacity: It ≥ Ib / (Ca × Cg × Ci × Cs × Cd)
+    const requiredTabulatedCapacity = designCurrent / totalDerating;
     
     // Store derating factors for display
     const deratingFactors: DeratingFactors = {
@@ -284,115 +303,127 @@ export const useCableSizing = () => {
       tableRef
     };
     
-    console.log(`BS 7671 Derating Factors:`);
-    console.log(`  Ca (Temperature): ${Ca.toFixed(3)}`);
-    console.log(`  Cg (Grouping): ${Cg.toFixed(3)}`);
-    console.log(`  Ci (Installation): ${Ci.toFixed(3)}`);
-    if (isUnderground) {
-      console.log(`  Cs (Soil Resistivity): ${Cs.toFixed(3)}`);
-      console.log(`  Cd (Burial Depth): ${Cd.toFixed(3)}`);
-    }
-    console.log(`  Total: ${totalDerating.toFixed(3)}`);
-    console.log(`Required capacity: ${requiredCurrentCapacity.toFixed(1)}A (${effectiveCurrent}A × ${safetyMargin} ÷ ${totalDerating.toFixed(3)})`);
-    
-    const suitableCables = cablesByType.filter(cable => {
-      let currentRating = 0;
-      
-      // Choose the correct current rating based on cable type and insulation
-      if (inputs.cableType === 'swa' && cable.currentRating.swa) {
-        currentRating = cable.currentRating.swa;
-      } else if (inputs.cableType === 'lsf' && cable.currentRating.lsf) {
-        currentRating = cable.currentRating.lsf;
-      } else if (inputs.cableType === 'armored' && cable.currentRating.armored) {
-        currentRating = cable.currentRating.armored;
-      } else {
-        currentRating = cable.currentRating[inputs.installationType];
-      }
-      
-      return currentRating >= requiredCurrentCapacity;
-    });
-    
-    if (suitableCables.length === 0) {
-      const maxCurrentAvailable = Math.max(...cablesByType.map(c => {
-        if (inputs.cableType === 'swa' && c.currentRating.swa) return c.currentRating.swa;
-        if (inputs.cableType === 'lsf' && c.currentRating.lsf) return c.currentRating.lsf;
-        if (inputs.cableType === 'armored' && c.currentRating.armored) return c.currentRating.armored;
-        return c.currentRating[inputs.installationType];
-      }));
-      
-      // Suggest better cable types for high currents
-      let suggestion = "";
-      if (currentAmp > 50 && inputs.cableType === 'twin-and-earth') {
-        suggestion = " Consider using SWA or single core cables for higher current applications.";
-      } else if (currentAmp > 100 && inputs.cableType !== 'swa') {
-        suggestion = " Consider using SWA (Steel Wire Armoured) cables for very high current applications.";
-      }
-      
+    // Get all available cable sizes for this type from BS 7671 tables
+    const cableDataArray = cableCapacityData[cableType];
+    if (!cableDataArray || cableDataArray.length === 0) {
       setResult({
         recommendedCable: null,
         alternativeCables: [],
         errors: {
-          current: `Current (${currentAmp}A + 25% safety margin = ${requiredCurrentCapacity.toFixed(1)}A) exceeds maximum rating for ${inputs.cableType} cables (${maxCurrentAvailable}A max).${suggestion}`
-        },
-        deratingFactors
+          cableType: `No cable data available for ${cableType}. Available types: ${Object.keys(cableCapacityData).join(', ')}`
+        }
       });
       return;
     }
     
-    // Enhanced voltage drop calculation with professional accuracy
-    const cablesWithVoltageDrop = suitableCables.map(cable => {
-      // Professional formula with power factor consideration for AC circuits
-      const voltageDropVolts = cable.voltageDropPerAmpereMeter * effectiveCurrent * cableLength * powerFactor;
-      
-      console.log(`Enhanced analysis - ${cable.size}: ${voltageDropVolts.toFixed(3)}V drop (${((voltageDropVolts/supplyVoltage)*100).toFixed(2)}%) at ${effectiveCurrent}A`);
-      
-      return {
-        ...cable,
-        calculatedVoltageDrop: voltageDropVolts,
-        meetsVoltageDrop: voltageDropVolts <= maxVoltageDrop
-      };
-    });
+    // Build cable options with BS 7671 data
+    const cableOptions: BS7671CableOption[] = [];
     
-    // Sort by cable size (ascending) for professional presentation
-    cablesWithVoltageDrop.sort((a, b) => {
-      const sizeA = parseFloat(a.size.replace(/[^\d.]/g, ''));
-      const sizeB = parseFloat(b.size.replace(/[^\d.]/g, ''));
-      return sizeA - sizeB;
-    });
+    for (const cableData of cableDataArray) {
+      // Get tabulated capacity for the reference method
+      let tabulatedCapacity: number | null = null;
+      
+      // Handle domestic thermal insulation methods (100-103)
+      if (isDomesticInsulation && (cableType === 'pvc-twin-earth' || cableType === 'xlpe-twin-earth')) {
+        const thermalMethod = installationMethod.includes('below100') ? '100e' :
+                              installationMethod.includes('over100') ? '101e' :
+                              installationMethod.includes('not-touching') ? '103e' : '102e';
+        const thermalCap = getThermalInsulationCapacity(cableData.size, thermalMethod as '100e' | '101e' | '102e' | '103e');
+        if (thermalCap) tabulatedCapacity = thermalCap;
+      }
+      
+      // Standard reference method lookup
+      if (!tabulatedCapacity) {
+        // Try different reference method keys
+        const methodKeys = [
+          referenceMethod,
+          `${referenceMethod}${cores === '3' || cores === '4' ? '3' : '2'}`, // C2, C3, D2, D3, E2, E3
+          referenceMethod.charAt(0), // Just the letter (A, B, C, D, E, F, G)
+          'C' // Default fallback
+        ];
+        
+        for (const key of methodKeys) {
+          if (cableData.capacities[key]) {
+            tabulatedCapacity = cableData.capacities[key];
+            break;
+          }
+        }
+        
+        // Final fallback: get minimum of all available capacities
+        if (!tabulatedCapacity) {
+          const capacityValues = Object.values(cableData.capacities).filter(v => typeof v === 'number') as number[];
+          if (capacityValues.length > 0) {
+            tabulatedCapacity = Math.min(...capacityValues);
+          }
+        }
+      }
+      
+      if (!tabulatedCapacity) continue;
+      
+      // Calculate derated capacity
+      const deratedCapacity = tabulatedCapacity * totalDerating;
+      
+      // Get voltage drop from BS 7671 tables
+      const isThreePhase = supplyVoltage > 250;
+      const voltageDropMvAm = getVoltageDropValue(cableType, cableData.size, isThreePhase, referenceMethod);
+      
+      // Calculate actual voltage drop: ΔV = mV/A/m × Ib × L / 1000
+      const calculatedVoltageDrop = (voltageDropMvAm * designCurrent * cableLength * powerFactor) / 1000;
+      const voltageDropPercent = (calculatedVoltageDrop / supplyVoltage) * 100;
+      
+      cableOptions.push({
+        size: cableData.size,
+        sizeLabel: `${cableData.size}mm²`,
+        tabulatedCapacity,
+        deratedCapacity: Math.round(deratedCapacity * 10) / 10,
+        voltageDropMvAm,
+        calculatedVoltageDrop: Math.round(calculatedVoltageDrop * 100) / 100,
+        voltageDropPercent: Math.round(voltageDropPercent * 100) / 100,
+        meetsVoltageDrop: voltageDropPercent <= maxVoltageDropPercentage,
+        meetsCurrentCapacity: deratedCapacity >= designCurrent,
+        tableReference: `Table ${getCableTableReference(cableType)} Col ${referenceMethod}`
+      });
+    }
     
-    // Filter cables that meet voltage drop criteria
-    const compliantCables = cablesWithVoltageDrop.filter(cable => cable.meetsVoltageDrop);
+    // Sort by size ascending
+    cableOptions.sort((a, b) => a.size - b.size);
+    
+    // Find cables that meet both criteria
+    const compliantCables = cableOptions.filter(c => c.meetsCurrentCapacity && c.meetsVoltageDrop);
     
     if (compliantCables.length === 0) {
-      // Professional feedback for non-compliant results
-      const sortedByVoltageDrop = cablesWithVoltageDrop.sort((a, b) => 
-        a.calculatedVoltageDrop! - b.calculatedVoltageDrop!
-      );
+      // Find best available options for feedback
+      const byCurrentCapacity = [...cableOptions].filter(c => c.meetsCurrentCapacity);
+      const byVoltageDrop = [...cableOptions].sort((a, b) => a.voltageDropPercent - b.voltageDropPercent);
       
-      const bestCable = sortedByVoltageDrop[0];
-      const actualVoltageDropPercent = ((bestCable.calculatedVoltageDrop!/supplyVoltage)*100);
+      let errorMessage = '';
+      if (byCurrentCapacity.length === 0) {
+        const maxCapacity = Math.max(...cableOptions.map(c => c.deratedCapacity));
+        errorMessage = `No cable meets current capacity requirement of ${designCurrent}A. Maximum available is ${maxCapacity}A derated. Consider using parallel cables or a different cable type.`;
+      } else {
+        const bestVD = byCurrentCapacity[byCurrentCapacity.length - 1];
+        errorMessage = `No cable meets both current capacity and voltage drop requirements. Best option: ${bestVD.sizeLabel} with ${bestVD.voltageDropPercent.toFixed(1)}% voltage drop (limit: ${maxVoltageDropPercentage}%). Consider shorter route or larger cable.`;
+      }
       
       setResult({
         recommendedCable: null,
-        alternativeCables: sortedByVoltageDrop.slice(0, 3),
-        errors: {
-          general: `No cable meets BS 7671 voltage drop requirements. Best available: ${bestCable.size} with ${bestCable.calculatedVoltageDrop?.toFixed(2)}V (${actualVoltageDropPercent.toFixed(1)}%) drop. Consider: larger cable, voltage boosting, or shorter route.`
-        },
+        alternativeCables: byVoltageDrop.slice(0, 3),
+        errors: { general: errorMessage },
         deratingFactors
       });
       return;
     }
     
-    // Professional recommendation: smallest compliant cable
+    // Recommended: smallest compliant cable
     const recommended = compliantCables[0];
     const alternatives = compliantCables.slice(1, 4);
     
-    // Professional validation using our enhanced validation service
+    // Professional validation
     const validation = CalculatorValidator.validateCableSizing(
-      currentAmp,
-      recommended.size,
+      designCurrent,
+      recommended.sizeLabel,
       inputs.installationType,
-      recommended.calculatedVoltageDrop!,
+      recommended.calculatedVoltageDrop,
       cableLength
     );
     
@@ -412,18 +443,19 @@ export const useCableSizing = () => {
       installationType: "pvc",
       voltageDrop: "5",
       voltage: "230",
-      cableType: "single",
+      cableType: "pvc-twin-earth",
+      cores: '2',
       ambientTemp: "30",
       cableGrouping: "1",
       loadType: "resistive",
       diversityFactor: "1.0",
-      powerFactor: "0.9",
+      powerFactor: "1.0",
       soilResistivity: "2.5",
       burialDepth: "0.7"
     });
     setUiSelections({
       installationMethodUI: "clipped-direct",
-      cableTypeUI: "pvc-70"
+      cableTypeUI: "pvc-twin-earth"
     });
     setResult({
       recommendedCable: null,
